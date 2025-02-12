@@ -100,4 +100,43 @@ describe("plutil-formatter", () => {
     const result = formatPlutilStyle(input);
     expect(result).toBe(expected);
   });
+
+  it("should order keys correctly", () => {
+    const input = {
+      "2x": {},
+      "3ABC": {},
+      "3x": {},
+      "4K": {},
+      "7 min": {},
+      "25": {},
+      "30": {},
+    };
+
+    const expected = `{
+  "2x" : {
+
+  },
+  "3ABC" : {
+
+  },
+  "3x" : {
+
+  },
+  "4K" : {
+
+  },
+  "7 min" : {
+
+  },
+  "25" : {
+
+  },
+  "30" : {
+
+  }
+}`;
+
+    const result = formatPlutilStyle(input);
+    expect(result).toBe(expected);
+  });
 });

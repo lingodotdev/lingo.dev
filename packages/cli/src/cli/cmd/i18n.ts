@@ -101,7 +101,8 @@ export default new Command()
         for (const bucket of buckets) {
           cacheOra.info(`Processing bucket: ${bucket.type}`);
           for (const bucketConfig of bucket.config) {
-            const bucketOra = ora.info(`Processing path: ${bucketConfig.pathPattern}`);
+            const bucketOra = Ora({ indent: 4 });
+            bucketOra.info(`Processing path: ${bucketConfig.pathPattern}`);
 
             const sourceLocale = resolveOverridenLocale(i18nConfig!.locale.source, bucketConfig.delimiter);
             const bucketLoader = createBucketLoader(bucket.type, bucketConfig.pathPattern);
@@ -228,12 +229,12 @@ export default new Command()
 
                     const progressLog = `[${sourceLocale} -> ${targetLocale}] [${Object.keys(processableData).length} entries] (${progress}%) AI localization in progress...`;
                     if (flags.verbose) {
-                      ora.info(progressLog);
-                      ora.info(
-                        `Caching chunk ${JSON.stringify(sourceChunk, null, 2)} -> ${JSON.stringify(processedChunk, null, 2)}`,
+                      bucketOra.info(progressLog);
+                      bucketOra.info(
+                        `(${progress}%) Caching chunk ${JSON.stringify(sourceChunk, null, 2)} -> ${JSON.stringify(processedChunk, null, 2)}`,
                       );
                     } else {
-                      ora.text = progressLog;
+                      bucketOra.text = progressLog;
                     }
                   },
                 );

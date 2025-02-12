@@ -29,7 +29,7 @@ export function formatPlutilStyle(jsonData: any, existingJson?: string): string 
 
       if (aIsWhitespace && !bIsWhitespace) return -1;
       if (!aIsWhitespace && bIsWhitespace) return 1;
-      return a.localeCompare(b, undefined, { numeric: false });
+      return a.localeCompare(b, undefined, { numeric: true });
     });
 
     const items = sortedKeys.map((key) => {
