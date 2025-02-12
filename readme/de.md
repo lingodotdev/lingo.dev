@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <strong>⚡️ Hochmoderne KI-Lokalisierung für Web & Mobile, direkt aus der CI/CD-Pipeline.</strong>
+  <strong>⚡️ KI-Lokalisierungs-Toolkit für Web & Mobile, direkt aus der CI/CD-Pipeline.</strong>
 </p>
 
 <br />
@@ -91,10 +91,11 @@ Interesse am Mitwirken, auch wenn Sie kein Kunde sind?
 
 Schauen Sie sich die [Good First Issues](https://github.com/lingodotdev/lingo.dev/labels/good%20first%20issue) an und lesen Sie den [Leitfaden zum Mitwirken](./CONTRIBUTING.md).
 
-## 🧠 Team
+## 👨‍💻 Team
 
 - **[Veronica](https://github.com/vrcprl)**
 - **[Max](https://github.com/maxprilutskiy)**
+- **[Matej](https://github.com/mathio)**
 
 Fragen oder Anfragen? E-Mail an veronica@lingo.dev
 

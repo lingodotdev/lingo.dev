@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <strong>⚡️ Localización con IA de última generación para web y móvil, directamente desde CI/CD.</strong>
+  <strong>⚡️ Kit de herramientas de localización con IA para web y móvil, directamente desde CI/CD.</strong>
 </p>
 
 <br />
@@ -30,9 +30,9 @@
 
 <br />
 
-Lingo.dev automatiza la localización de software de principio a fin utilizando los últimos modelos de LLM.
+Lingo.dev automatiza la localización de software de principio a fin utilizando los últimos modelos de IA.
 
-Produce traducciones auténticas al instante, eliminando el trabajo manual y la sobrecarga de gestión. El Motor de Localización de Lingo.dev comprende el contexto del producto, creando traducciones perfeccionadas que los hablantes nativos esperan en más de 60 idiomas. Como resultado, los equipos realizan la localización 100 veces más rápido, con calidad de última generación, llevando funcionalidades a más clientes de pago en todo el mundo.
+Produce traducciones auténticas al instante, eliminando el trabajo manual y la sobrecarga de gestión. El motor de localización de Lingo.dev comprende el contexto del producto, creando traducciones perfeccionadas que los hablantes nativos esperan en más de 60 idiomas. Como resultado, los equipos realizan la localización 100 veces más rápido, con calidad de vanguardia, llevando funcionalidades a más clientes de pago en todo el mundo.
 
 ## 💫 Inicio rápido
 
@@ -91,10 +91,11 @@ Para guías detalladas y referencias de la API, visita la [documentación](https
 
 Revisa los [Issues para Principiantes](https://github.com/lingodotdev/lingo.dev/labels/good%20first%20issue) y lee la [Guía de Contribución](./CONTRIBUTING.md).
 
-## 🧠 Equipo
+## 👨‍💻 Equipo
 
 - **[Veronica](https://github.com/vrcprl)**
 - **[Max](https://github.com/maxprilutskiy)**
+- **[Matej](https://github.com/mathio)**
 
 ¿Preguntas o consultas? Envía un correo a veronica@lingo.dev
 

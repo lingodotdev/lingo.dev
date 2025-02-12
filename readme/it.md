@@ -5,13 +5,13 @@
 </p>
 
 <p align="center">
-  <strong>⚡️ Localizzazione AI all'avanguardia per web e mobile, direttamente dal CI/CD.</strong>
+  <strong>⚡️ Toolkit di localizzazione AI per web e mobile, direttamente dal CI/CD.</strong>
 </p>
 
 <br />
 
 <p align="center">
-  <a href="https://lingo.dev">Sito web</a> •
+  <a href="https://lingo.dev">Website</a> •
   <a href="https://github.com/lingodotdev/lingo.dev/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22">Contribuisci</a> •
   <a href="#-github-action">GitHub Action</a>
 </p>
@@ -91,10 +91,11 @@ Interessato a contribuire, anche se non sei un cliente?
 
 Dai un'occhiata alle [Good First Issues](https://github.com/lingodotdev/lingo.dev/labels/good%20first%20issue) e leggi la [Guida per contribuire](./CONTRIBUTING.md).
 
-## 🧠 Team
+## 👨‍💻 Team
 
 - **[Veronica](https://github.com/vrcprl)**
 - **[Max](https://github.com/maxprilutskiy)**
+- **[Matej](https://github.com/mathio)**
 
 Domande o richieste? Scrivi a veronica@lingo.dev
 
