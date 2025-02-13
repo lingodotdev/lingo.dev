@@ -100,7 +100,7 @@ export class ReplexicaEngine {
     const res = await fetch(`${this.config.apiUrl}/i18n`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json; charset=utf-8",
         Authorization: `Bearer ${this.config.apiKey}`,
       },
       body: JSON.stringify(
@@ -414,7 +414,7 @@ export class ReplexicaEngine {
     const response = await fetch(`${this.config.apiUrl}/recognize`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json; charset=utf-8",
         Authorization: `Bearer ${this.config.apiKey}`,
       },
       body: JSON.stringify({ text }),
