@@ -40,7 +40,6 @@ export default function createBucketLoader(
     case "android":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
-        createNewLineLoader(),
         createAndroidLoader(),
         createFlatLoader(),
         createSyncLoader(),
@@ -49,7 +48,6 @@ export default function createBucketLoader(
     case "csv":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
-        createNewLineLoader(),
         createCsvLoader(),
         createFlatLoader(),
         createSyncLoader(),
@@ -58,7 +56,6 @@ export default function createBucketLoader(
     case "html":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
-        createNewLineLoader(),
         createPrettierLoader({ parser: "html", alwaysFormat: true }),
         createHtmlLoader(),
         createSyncLoader(),
@@ -76,7 +73,6 @@ export default function createBucketLoader(
     case "json":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
-        createNewLineLoader(),
         createPrettierLoader({ parser: "json" }),
         createJsonLoader(),
         createFlatLoader(),
@@ -86,7 +82,6 @@ export default function createBucketLoader(
     case "markdown":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
-        createNewLineLoader(),
         createPrettierLoader({ parser: "markdown" }),
         createMarkdownLoader(),
         createSyncLoader(),
@@ -95,7 +90,6 @@ export default function createBucketLoader(
     case "po":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
-        createNewLineLoader(),
         createPoLoader(),
         createFlatLoader(),
         createSyncLoader(),
@@ -105,7 +99,6 @@ export default function createBucketLoader(
     case "properties":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
-        createNewLineLoader(),
         createPropertiesLoader(),
         createSyncLoader(),
         createUnlocalizableLoader(),
@@ -113,7 +106,6 @@ export default function createBucketLoader(
     case "xcode-strings":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
-        createNewLineLoader(),
         createXcodeStringsLoader(),
         createSyncLoader(),
         createUnlocalizableLoader(),
@@ -121,7 +113,6 @@ export default function createBucketLoader(
     case "xcode-stringsdict":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
-        createNewLineLoader(),
         createXcodeStringsdictLoader(),
         createFlatLoader(),
         createSyncLoader(),
@@ -130,7 +121,6 @@ export default function createBucketLoader(
     case "xcode-xcstrings":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
-        createNewLineLoader(),
         createPlutilJsonTextLoader(),
         createJsonLoader(),
         createXcodeXcstringsLoader(),
@@ -142,7 +132,6 @@ export default function createBucketLoader(
     case "yaml":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
-        createNewLineLoader(),
         createPrettierLoader({ parser: "yaml" }),
         createYamlLoader(),
         createFlatLoader(),
@@ -152,7 +141,6 @@ export default function createBucketLoader(
     case "yaml-root-key":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
-        createNewLineLoader(),
         createPrettierLoader({ parser: "yaml" }),
         createYamlLoader(),
         createRootKeyLoader(true),
@@ -163,7 +151,6 @@ export default function createBucketLoader(
     case "flutter":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
-        createNewLineLoader(),
         createPrettierLoader({ parser: "json" }),
         createJsonLoader(),
         createFlutterLoader(),
@@ -174,7 +161,6 @@ export default function createBucketLoader(
     case "xliff":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
-        createNewLineLoader(),
         createXliffLoader(),
         createFlatLoader(),
         createSyncLoader(),
@@ -183,7 +169,6 @@ export default function createBucketLoader(
     case "xml":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
-        createNewLineLoader(),
         createXmlLoader(),
         createFlatLoader(),
         createSyncLoader(),
@@ -192,7 +177,6 @@ export default function createBucketLoader(
     case "srt":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
-        createNewLineLoader(),
         createSrtLoader(),
         createSyncLoader(),
         createUnlocalizableLoader(),
@@ -207,7 +191,6 @@ export default function createBucketLoader(
     case "vtt":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
-        createNewLineLoader(),
         createVttLoader(),
         createSyncLoader(),
         createUnlocalizableLoader(),

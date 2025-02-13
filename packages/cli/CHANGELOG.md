@@ -1,5 +1,29 @@
 # lingo.dev
 
+## 0.74.9
+
+### Patch Changes
+
+- [#461](https://github.com/lingodotdev/lingo.dev/pull/461) [`d31f9fc`](https://github.com/lingodotdev/lingo.dev/commit/d31f9fcc7fe1a729f093c68a0573f2a8ec077f0e) Thanks [@mathio](https://github.com/mathio)! - ordering of keys in xcstrings file to match that of Xcode
+
+## 0.74.8
+
+### Patch Changes
+
+- [#457](https://github.com/lingodotdev/lingo.dev/pull/457) [`8ffff97`](https://github.com/lingodotdev/lingo.dev/commit/8ffff9757e28e4beef071866835a491080d7cba5) Thanks [@mathio](https://github.com/mathio)! - fix trailing new lines
+
+## 0.74.7
+
+### Patch Changes
+
+- [#455](https://github.com/lingodotdev/lingo.dev/pull/455) [`96babb9`](https://github.com/lingodotdev/lingo.dev/commit/96babb956b0aa7b83627aefd596051ed1849e7ca) Thanks [@github-actions](https://github.com/apps/github-actions)! - i18n progress fix
+
+## 0.74.6
+
+### Patch Changes
+
+- [#454](https://github.com/lingodotdev/lingo.dev/pull/454) [`9856274`](https://github.com/lingodotdev/lingo.dev/commit/98562747f3cce0d7109b24f3e5b867f003ebdfbb) Thanks [@mathio](https://github.com/mathio)! - fix i18n progress indicator
+
 ## 0.74.5
 
 ### Patch Changes

@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <strong>⚡️ CI/CD에서 바로 사용 가능한 최첨단 AI 로컬라이제이션 솔루션</strong>
+  <strong>⚡️ CI/CD에서 바로 사용 가능한 웹 & 모바일용 AI 현지화 툴킷</strong>
 </p>
 
 <br />
@@ -30,9 +30,9 @@
 
 <br />
 
-Lingo.dev는 최신 LLM 모델을 활용하여 소프트웨어 로컬라이제이션을 엔드투엔드로 자동화합니다.
+Lingo.dev는 최신 LLM 모델을 사용하여 소프트웨어 현지화를 엔드투엔드로 자동화합니다.
 
-수동 작업과 관리 부담을 제거하고 즉시 자연스러운 번역을 제공합니다. Lingo.dev 로컬라이제이션 엔진은 제품의 맥락을 이해하여 60개 이상의 언어에서 원어민이 기대하는 수준의 완벽한 번역을 만들어냅니다. 결과적으로 팀은 최첨단 품질의 로컬라이제이션을 100배 더 빠르게 수행하여 전 세계의 더 많은 고객에게 기능을 제공할 수 있습니다.
+제품 컨텍스트를 이해하는 Lingo.dev 현지화 엔진은 60개 이상의 언어에서 원어민이 기대하는 수준의 완벽한 번역을 즉시 생성하여 수동 작업과 관리 부담을 제거합니다. 결과적으로 팀은 최첨단 품질로 100배 더 빠르게 현지화를 수행하여 전 세계의 더 많은 유료 고객에게 기능을 제공할 수 있습니다.
 
 ## 💫 빠른 시작
 
@@ -91,10 +91,11 @@ Lingo.dev는 CI/CD 파이프라인에서 로컬라이제이션을 자동화하�
 
 [Good First Issues](https://github.com/lingodotdev/lingo.dev/labels/good%20first%20issue)를 확인하고 [기여 가이드](./CONTRIBUTING.md)를 읽어보세요.
 
-## 🧠 팀
+## 👨‍💻 팀
 
 - **[Veronica](https://github.com/vrcprl)**
 - **[Max](https://github.com/maxprilutskiy)**
+- **[Matej](https://github.com/mathio)**
 
 문의사항이 있으신가요? veronica@lingo.dev로 이메일을 보내주세요
 

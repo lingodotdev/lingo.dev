@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <strong>⚡️ 通过 CI/CD 实现网页和移动端的最先进 AI 本地化。</strong>
+  <strong>⚡️ 专为网页和移动应用打造的 AI 本地化工具包，直接集成于 CI/CD。</strong>
 </p>
 
 <br />
@@ -32,7 +32,7 @@
 
 Lingo.dev 使用最新的 LLM 模型实现软件本地化的端到端自动化。
 
-它能即时生成地道的翻译，消除人工工作和管理开销。Lingo.dev 本地化引擎理解产品上下文，为 60 多种语言创建完美的翻译，确保符合母语者的期望。因此，团队可以以最先进的质量完成本地化工作，速度提升 100 倍，将功能更快地推向全球付费用户。
+它能即时生成地道的翻译，消除人工工作和管理开销。Lingo.dev 本地化引擎深入理解产品上下文，为 60 多种语言创建完美的翻译，确保符合母语者的期望。因此，团队可以以最先进的质量标准，将本地化速度提升 100 倍，为全球更多付费客户发布功能。
 
 ## 💫 快速开始
 
@@ -91,12 +91,13 @@ Lingo.dev 提供 GitHub Action 来在你的 CI/CD 流程中自动化本地化。
 
 查看[适合新手的议题](https://github.com/lingodotdev/lingo.dev/labels/good%20first%20issue)并阅读[贡献指南](./CONTRIBUTING.md)。
 
-## 🧠 团队
+## 👨‍💻 团队
 
 - **[Veronica](https://github.com/vrcprl)**
 - **[Max](https://github.com/maxprilutskiy)**
+- **[Matej](https://github.com/mathio)**
 
-有问题或咨询？发送邮件至 veronica@lingo.dev
+如有问题或咨询，请发送邮件至 veronica@lingo.dev
 
 ## 🌐 其他语言版本的说明文档
 

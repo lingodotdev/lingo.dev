@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <strong>⚡️ State-of-the-art AI localization for web & mobile, right from CI/CD.</strong>
+  <strong>⚡️ AI localization toolkit for web & mobile, right from CI/CD.</strong>
 </p>
 
 <br />
@@ -91,10 +91,11 @@ Interested in contributing, even if you aren't a customer?
 
 Check out the [Good First Issues](https://github.com/lingodotdev/lingo.dev/labels/good%20first%20issue) and read the [Contributing Guide](./CONTRIBUTING.md).
 
-## 🧠 Team
+## 👨‍💻 Team
 
 - **[Veronica](https://github.com/vrcprl)**
 - **[Max](https://github.com/maxprilutskiy)**
+- **[Matej](https://github.com/mathio)**
 
 Questions or inquiries? Email veronica@lingo.dev
 
