@@ -782,6 +782,28 @@ user.password=Contraseña
         },
       }
     },
+    "2a" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2a"
+          }
+        }
+      }
+    },
+    "3x" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "3x"
+          }
+        }
+      }
+    },
     "25" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -838,6 +860,40 @@ user.password=Contraseña
           "stringUnit" : {
             "state" : "translated",
             "value" : " and "
+          }
+        }
+      }
+    },
+    "2a" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2a"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2a"
+          }
+        }
+      }
+    },
+    "3x" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "3x"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "3x"
           }
         }
       }
