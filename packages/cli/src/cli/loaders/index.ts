@@ -64,7 +64,7 @@ export default function createBucketLoader(
         createTextFileLoader(bucketPathPattern),
         createPrettierLoader({ parser: "json" }),
         createJsonLoader(),
-        createFlatLoader(),
+        createFlatLoader(true),
         createSyncLoader(),
         createUnlocalizableLoader(),
       );
@@ -113,7 +113,7 @@ export default function createBucketLoader(
         createPlutilJsonTextLoader(),
         createJsonLoader(),
         createXcodeXcstringsLoader(),
-        createFlatLoader(),
+        createFlatLoader(true),
         createSyncLoader(),
         createUnlocalizableLoader(),
         createVariableLoader({ type: "ieee" }),
@@ -143,7 +143,7 @@ export default function createBucketLoader(
         createPrettierLoader({ parser: "json" }),
         createJsonLoader(),
         createFlutterLoader(),
-        createFlatLoader(),
+        createFlatLoader(true),
         createSyncLoader(),
         createUnlocalizableLoader(),
       );
