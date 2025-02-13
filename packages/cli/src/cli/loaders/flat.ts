@@ -14,6 +14,7 @@ export default function createFlatLoader(): ILoader<Record<string, any>, Record<
     },
     push: async (locale, data) => {
       return unflatten(data || {}, {
+        object: true,
         delimiter: "/",
         transformKey(key) {
           return decodeURIComponent(String(key));
