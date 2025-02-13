@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.74.9
+
+### Patch Changes
+
+- [#461](https://github.com/lingodotdev/lingo.dev/pull/461) [`d31f9fc`](https://github.com/lingodotdev/lingo.dev/commit/d31f9fcc7fe1a729f093c68a0573f2a8ec077f0e) Thanks [@mathio](https://github.com/mathio)! - ordering of keys in xcstrings file to match that of Xcode
+
 ## 0.74.8
 
 ### Patch Changes
