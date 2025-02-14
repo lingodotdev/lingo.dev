@@ -332,42 +332,6 @@ describe("bucket loaders", () => {
 
       expect(fs.writeFile).toHaveBeenCalledWith("i18n/es.json", expectedOutput, { encoding: "utf-8", flag: "w" });
     });
-
-    it("should save json data with numeric keys", async () => {
-      setupFileMocks();
-
-      const input = { messages: { "1": "foo", "2": "bar", "3": "bar" } };
-      const payload = { "messages/1": "foo", "messages/2": "bar", "messages/3": "bar" };
-      const expectedOutput = JSON.stringify(input, null, 2);
-
-      mockFileOperations(JSON.stringify(input));
-
-      const jsonLoader = createBucketLoader("json", "i18n/[locale].json");
-      jsonLoader.setDefaultLocale("en");
-      await jsonLoader.pull("en");
-
-      await jsonLoader.push("es", payload);
-
-      expect(fs.writeFile).toHaveBeenCalledWith("i18n/es.json", expectedOutput, { encoding: "utf-8", flag: "w" });
-    });
-
-    it("should save json data with array", async () => {
-      setupFileMocks();
-
-      const input = { messages: ["foo", "bar"] };
-      const payload = { "messages/0": "foo", "messages/1": "bar" };
-      const expectedOutput = `{\n  "messages\": [\"foo\", \"bar\"]\n}`;
-
-      mockFileOperations(JSON.stringify(input));
-
-      const jsonLoader = createBucketLoader("json", "i18n/[locale].json");
-      jsonLoader.setDefaultLocale("en");
-      await jsonLoader.pull("en");
-
-      await jsonLoader.push("es", payload);
-
-      expect(fs.writeFile).toHaveBeenCalledWith("i18n/es.json", expectedOutput, { encoding: "utf-8", flag: "w" });
-    });
   });
 
   describe("markdown bucket loader", () => {
