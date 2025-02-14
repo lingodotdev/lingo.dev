@@ -17,7 +17,7 @@ describe("flat loader", () => {
         messages: { "1": "foo", "2": "bar" },
         years: ["January 13, 2025", "February 14, 2025"],
       });
-      await loader.pull("en", {}); // run again to ensure state is preserved
+      await loader.pull("es", {}); // run again to ensure state is preserved
       const output = await loader.push("en", {
         "messages/1": "foo",
         "messages/2": "bar",
