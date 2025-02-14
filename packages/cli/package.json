@@ -37,6 +37,7 @@
     "dev": "tsup --watch",
     "build": "tsc --noEmit && tsup",
     "test": "vitest run",
+    "test:watch": "vitest",
     "clean": "rm -rf build"
   },
   "keywords": [],
