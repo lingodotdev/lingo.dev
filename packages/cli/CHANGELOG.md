@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.74.14
+
+### Patch Changes
+
+- [`0dbd288`](https://github.com/lingodotdev/lingo.dev/commit/0dbd288f292db922fa7fbaed239d26897bbe8a8e) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - refactor csv loader
+
 ## 0.74.13
 
 ### Patch Changes
