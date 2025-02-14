@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.74.12
+
+### Patch Changes
+
+- [`c5a785a`](https://github.com/lingodotdev/lingo.dev/commit/c5a785aae6a3d786c25e7082e5e3a5309d3327e2) Thanks [@mathio](https://github.com/mathio)! - revert
+
 ## 0.74.11
 
 ### Patch Changes
