@@ -3,6 +3,7 @@ import Ora from "ora";
 import { getConfig, saveConfig } from "../utils/config";
 import { defaultConfig, LocaleCode, resolveLocaleCode, bucketTypes } from "@lingo.dev/_spec";
 import fs from "fs";
+import path from "path";
 import { spawn } from "child_process";
 import _ from "lodash";
 import { confirm } from "@inquirer/prompts";
@@ -67,24 +68,26 @@ export default new InteractiveCommand()
       .default("json"),
   )
   .addOption(
-    new InteractiveOption("-p, --paths <path...>", "List of paths for the bucket")
+    new InteractiveOption("-p, --paths [path...]", "List of paths for the bucket")
       .argParser((value) => {
+        if (!value || value.length === 0) return [];
         const values = value.includes(",") ? value.split(",") : value.split(" ");
 
-        for (const path of values) {
+        for (const p of values) {
           try {
-            const stats = fs.statSync(path);
+            const dirPath = path.dirname(p);
+            const stats = fs.statSync(dirPath);
             if (!stats.isDirectory()) {
-              throw new Error(`${path} is not a directory`);
+              throw new Error(`${dirPath} is not a directory`);
             }
           } catch (err) {
-            throw new Error(`Invalid directory path: ${path}`);
+            throw new Error(`Invalid path: ${p}`);
           }
         }
 
         return values;
       })
-      .default("."),
+      .default([]),
   )
   .action(async (options) => {
     const settings = getSettings(undefined);
@@ -102,7 +105,9 @@ export default new InteractiveCommand()
     newConfig.locale.source = options.source;
     newConfig.locale.targets = options.targets;
     newConfig.buckets = {
-      [options.bucket]: options.paths,
+      [options.bucket]: {
+        include: options.paths || [],
+      },
     };
 
     await saveConfig(newConfig);
