@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.74.13
+
+### Patch Changes
+
+- [#469](https://github.com/lingodotdev/lingo.dev/pull/469) [`ba51b9b`](https://github.com/lingodotdev/lingo.dev/commit/ba51b9b6d6ecc36e7282d471cef7bf968ccc270e) Thanks [@mathio](https://github.com/mathio)! - transform object with numeric keys
+
 ## 0.74.12
 
 ### Patch Changes
