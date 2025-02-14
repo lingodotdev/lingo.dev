@@ -9,14 +9,14 @@ export default function createCsvLoader(): ILoader<string, Record<string, string
     async pull(locale, _input) {
       const input = parse(_input, {
         columns: true,
+        skip_empty_lines: true,
       });
 
       const result: Record<string, string> = {};
 
-      // Convert CSV rows to key-value pairs for the specified locale
       _.forEach(input, (row) => {
         const key = row.id;
-        if (key && row[locale]) {
+        if (key && row[locale] && row[locale].trim() !== "") {
           result[key] = row[locale];
         }
       });
@@ -24,27 +24,34 @@ export default function createCsvLoader(): ILoader<string, Record<string, string
       return result;
     },
     async push(locale, data, originalInput) {
-      const input = parse(originalInput || "", { columns: true }) as Record<string, any>[];
-      const columns = Object.keys(input[0] || { id: "" });
+      const input = parse(originalInput || "", {
+        columns: true,
+        skip_empty_lines: true,
+      }) as Record<string, any>[];
 
-      // Update existing rows and collect new keys
+      const columns = input.length > 0 ? Object.keys(input[0]) : ["id", locale];
+
       const updatedRows = input.map((row) => ({
         ...row,
         [locale]: data[row.id] || row[locale] || "",
       }));
       const existingKeys = new Set(input.map((row) => row.id));
 
-      // Add new keys
       Object.entries(data).forEach(([key, value]) => {
         if (!existingKeys.has(key)) {
-          updatedRows.push({
+          const newRow: Record<string, string> = {
             id: key,
-            ...Object.fromEntries(columns.map((column) => [column, column === locale ? value : ""])),
-          });
+            ...Object.fromEntries(columns.map((column) => [column, ""])),
+          };
+          newRow[locale] = value;
+          updatedRows.push(newRow);
         }
       });
 
-      return stringify(updatedRows, { header: true });
+      return stringify(updatedRows, {
+        header: true,
+        columns,
+      });
     },
   });
 }
