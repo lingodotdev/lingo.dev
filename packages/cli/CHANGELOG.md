@@ -1,5 +1,16 @@
 # lingo.dev
 
+## 0.74.10
+
+### Patch Changes
+
+- [#465](https://github.com/lingodotdev/lingo.dev/pull/465) [`e033656`](https://github.com/lingodotdev/lingo.dev/commit/e0336566758defbd6cf1f7ad3a210d9f94d0c8de) Thanks [@mathio](https://github.com/mathio)! - fix init cmd
+
+- [#463](https://github.com/lingodotdev/lingo.dev/pull/463) [`f249d8f`](https://github.com/lingodotdev/lingo.dev/commit/f249d8f69d04f0ce40fd94e500e7b829b7ba1ed4) Thanks [@vrcprl](https://github.com/vrcprl)! - set utf-8 encoding explicitly
+
+- Updated dependencies [[`f249d8f`](https://github.com/lingodotdev/lingo.dev/commit/f249d8f69d04f0ce40fd94e500e7b829b7ba1ed4)]:
+  - @lingo.dev/_sdk@0.7.14
+
 ## 0.74.9
 
 ### Patch Changes

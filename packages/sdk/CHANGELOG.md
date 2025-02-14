@@ -1,5 +1,11 @@
 # @lingo.dev/\_sdk
 
+## 0.7.14
+
+### Patch Changes
+
+- [#463](https://github.com/lingodotdev/lingo.dev/pull/463) [`f249d8f`](https://github.com/lingodotdev/lingo.dev/commit/f249d8f69d04f0ce40fd94e500e7b829b7ba1ed4) Thanks [@vrcprl](https://github.com/vrcprl)! - set utf-8 encoding explicitly
+
 ## 0.7.13
 
 ### Patch Changes
