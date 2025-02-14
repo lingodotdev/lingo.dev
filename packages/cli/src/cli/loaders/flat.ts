@@ -6,7 +6,7 @@ import _ from "lodash";
 export const OBJECT_NUMERIC_KEY_PREFIX = "__lingodotdev__obj__";
 
 export default function createFlatLoader(): ILoader<Record<string, any>, Record<string, string>> {
-  let normalizedKeysMap: Record<string, string>;
+  let denormalizedKeysMap: Record<string, string>;
 
   return createLoader({
     pull: async (locale, input) => {
@@ -17,12 +17,12 @@ export default function createFlatLoader(): ILoader<Record<string, any>, Record<
           return encodeURIComponent(String(key));
         },
       });
-      normalizedKeysMap = buildNormalizedKeysMap(flattened);
+      denormalizedKeysMap = buildDenormalizedKeysMap(flattened);
       const normalized = normalizeObjectKeys(flattened);
       return normalized;
     },
     push: async (locale, data) => {
-      const denormalized = mapNormalizedKeys(data, normalizedKeysMap);
+      const denormalized = mapDeormalizedKeys(data, denormalizedKeysMap);
       const unflattened: Record<string, any> = unflatten(denormalized || {}, {
         delimiter: "/",
         transformKey(key) {
@@ -35,7 +35,7 @@ export default function createFlatLoader(): ILoader<Record<string, any>, Record<
   });
 }
 
-export function buildNormalizedKeysMap(obj: Record<string, string>) {
+export function buildDenormalizedKeysMap(obj: Record<string, string>) {
   return Object.keys(obj).reduce(
     (acc, key) => {
       const normalizedKey = `${key}`.replace(OBJECT_NUMERIC_KEY_PREFIX, "");
@@ -46,10 +46,10 @@ export function buildNormalizedKeysMap(obj: Record<string, string>) {
   );
 }
 
-export function mapNormalizedKeys(obj: Record<string, any>, normalizedKeysMap: Record<string, string>) {
+export function mapDeormalizedKeys(obj: Record<string, any>, denormalizedKeysMap: Record<string, string>) {
   return Object.keys(obj).reduce(
     (acc, key) => {
-      const denormalizedKey = normalizedKeysMap[key];
+      const denormalizedKey = denormalizedKeysMap[key];
       acc[denormalizedKey] = obj[key];
       return acc;
     },

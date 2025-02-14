@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
 import { flatten, unflatten } from "flat";
 import {
-  buildNormalizedKeysMap,
+  buildDenormalizedKeysMap,
   denormalizeObjectKeys,
-  mapNormalizedKeys,
+  mapDeormalizedKeys,
   normalizeObjectKeys,
   OBJECT_NUMERIC_KEY_PREFIX,
 } from "./flat";
@@ -38,10 +38,10 @@ describe("flat loader helper functions", () => {
     });
   });
 
-  describe("buildNormalizedKeysMap", () => {
+  describe("buildDenormalizedKeysMap", () => {
     it("should build normalized keys map", () => {
       const denormalized: Record<string, string> = flatten(denormalizeObjectKeys(inputObj), { delimiter: "/" });
-      const output = buildNormalizedKeysMap(denormalized);
+      const output = buildDenormalizedKeysMap(denormalized);
       expect(output).toEqual({
         "messages/1": `messages/${OBJECT_NUMERIC_KEY_PREFIX}1`,
         "messages/2": `messages/${OBJECT_NUMERIC_KEY_PREFIX}2`,
@@ -50,7 +50,7 @@ describe("flat loader helper functions", () => {
 
     it("should build keys map array", () => {
       const denormalized: Record<string, string> = flatten(denormalizeObjectKeys(inputArray), { delimiter: "/" });
-      const output = buildNormalizedKeysMap(denormalized);
+      const output = buildDenormalizedKeysMap(denormalized);
       expect(output).toEqual({
         "messages/0": "messages/0",
         "messages/1": "messages/1",
@@ -71,20 +71,20 @@ describe("flat loader helper functions", () => {
     });
   });
 
-  describe("mapNormalizedKeys", () => {
+  describe("mapDeormalizedKeys", () => {
     it("should map normalized keys", () => {
       const denormalized: Record<string, string> = flatten(denormalizeObjectKeys(inputObj), { delimiter: "/" });
-      const keyMap = buildNormalizedKeysMap(denormalized);
+      const keyMap = buildDenormalizedKeysMap(denormalized);
       const flattened: Record<string, string> = flatten(inputObj, { delimiter: "/" });
-      const mapped = mapNormalizedKeys(flattened, keyMap);
+      const mapped = mapDeormalizedKeys(flattened, keyMap);
       expect(mapped).toEqual(denormalized);
     });
 
     it("should map array", () => {
       const denormalized: Record<string, string> = flatten(denormalizeObjectKeys(inputArray), { delimiter: "/" });
-      const keyMap = buildNormalizedKeysMap(denormalized);
+      const keyMap = buildDenormalizedKeysMap(denormalized);
       const flattened: Record<string, string> = flatten(inputArray, { delimiter: "/" });
-      const mapped = mapNormalizedKeys(flattened, keyMap);
+      const mapped = mapDeormalizedKeys(flattened, keyMap);
       expect(mapped).toEqual(denormalized);
     });
   });
