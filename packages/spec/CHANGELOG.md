@@ -1,5 +1,11 @@
 # @lingo.dev/\_spec
 
+## 0.24.4
+
+### Patch Changes
+
+- [#473](https://github.com/lingodotdev/lingo.dev/pull/473) [`3a99763`](https://github.com/lingodotdev/lingo.dev/commit/3a99763087512ba82955303d6f0567e813f4fa05) Thanks [@vrcprl](https://github.com/vrcprl)! - add new locales
+
 ## 0.24.3
 
 ### Patch Changes
