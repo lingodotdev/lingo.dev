@@ -134,8 +134,12 @@ const localeMap = {
   lv: ["lv-LV"],
   // Lithuanian (Lithuania)
   lt: ["lt-LT"],
-  // Norwegian (Norway)
-  no: ["no-NO"],
+  // Norwegian
+  no: [
+    "no-NO", // Norway (legacy)
+    "nb-NO", // Norwegian Bokmål
+    "nn-NO", // Norwegian Nynorsk
+  ],
   // Romanian (Romania)
   ro: ["ro-RO"],
   // Slovak (Slovakia)
