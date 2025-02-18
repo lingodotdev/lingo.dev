@@ -27,6 +27,8 @@ import createVttLoader from "./vtt";
 import createVariableLoader from "./variable";
 import createSyncLoader from "./sync";
 import createPlutilJsonTextLoader from "./plutil-json-loader";
+import createNewLineLoader from "./new-line";
+import createEjsLoader from "./ejs";
 
 export default function createBucketLoader(
   bucketType: Z.infer<typeof bucketTypeSchema>,
@@ -59,6 +61,15 @@ export default function createBucketLoader(
         createSyncLoader(),
         createUnlocalizableLoader(),
       );
+      case "ejs":
+        return composeLoaders(
+          createTextFileLoader(bucketPathPattern),
+          createNewLineLoader(),
+          createPrettierLoader({ parser: "html" }),
+          createEjsLoader(),
+          createSyncLoader(),
+          createUnlocalizableLoader(),
+      );      
     case "json":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
