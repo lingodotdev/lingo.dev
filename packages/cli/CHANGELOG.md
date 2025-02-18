@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.74.16
+
+### Patch Changes
+
+- [#477](https://github.com/lingodotdev/lingo.dev/pull/477) [`3d21698`](https://github.com/lingodotdev/lingo.dev/commit/3d21698e3783325ab7bb25aac6d5a8687774cf78) Thanks [@mathio](https://github.com/mathio)! - detect paths for existing locale files for each bucket during init
+
 ## 0.74.15
 
 ### Patch Changes
