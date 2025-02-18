@@ -6,10 +6,12 @@ import fs from "fs";
 import path from "path";
 import { spawn } from "child_process";
 import _ from "lodash";
-import { confirm } from "@inquirer/prompts";
+import { checkbox, confirm, input } from "@inquirer/prompts";
 import { login } from "./auth";
 import { getSettings, saveSettings } from "../utils/settings";
 import { createAuthenticator } from "../utils/auth";
+import findLocaleFiles from "../utils/find-locale-paths";
+import { ensurePatterns } from "../utils/ensure-patterns";
 
 const openUrl = (path: string) => {
   const settings = getSettings(undefined);
@@ -87,10 +89,12 @@ export default new InteractiveCommand()
 
         return values;
       })
+      .prompt(undefined) // make non-interactive
       .default([]),
   )
   .action(async (options) => {
     const settings = getSettings(undefined);
+    const isInteractive = options.interactive;
 
     const spinner = Ora().start("Initializing Lingo.dev project");
 
@@ -104,17 +108,54 @@ export default new InteractiveCommand()
 
     newConfig.locale.source = options.source;
     newConfig.locale.targets = options.targets;
-    newConfig.buckets = {
-      [options.bucket]: {
-        include: options.paths || [],
-      },
-    };
+
+    if (!isInteractive) {
+      newConfig.buckets = {
+        [options.bucket]: {
+          include: options.paths || [],
+        },
+      };
+    } else {
+      let selectedPatterns: string[] = [];
+      const { found, patterns } = findLocaleFiles(options.bucket);
+
+      if (found) {
+        spinner.succeed("Found existing locale files:");
+
+        selectedPatterns = await checkbox({
+          message: "Select the paths to use",
+          choices: patterns.map((value) => ({
+            value,
+          })),
+        });
+      } else {
+        spinner.succeed("No existing locale files found.");
+        const useDefault = await confirm({
+          message: `Use default path ${patterns.join(", ")}?`,
+        });
+        ensurePatterns(patterns, options.source);
+        if (useDefault) {
+          selectedPatterns = patterns;
+        }
+      }
+
+      if (selectedPatterns.length === 0) {
+        const customPaths = await input({
+          message: "Enter paths to use",
+        });
+        selectedPatterns = customPaths.includes(",") ? customPaths.split(",") : customPaths.split(" ");
+      }
+
+      newConfig.buckets = {
+        [options.bucket]: {
+          include: selectedPatterns || [],
+        },
+      };
+    }
 
     await saveConfig(newConfig);
 
     spinner.succeed("Lingo.dev project initialized");
-
-    const isInteractive = !process.argv.includes("-y") && !process.argv.includes("--no-interactive");
 
     if (isInteractive) {
       const openDocs = await confirm({ message: "Would you like to see our docs?" });
