@@ -41,6 +41,7 @@
     "json5": "^2.2.3",
     "jsonrepair": "^3.11.2",
     "lodash": "^4.17.21",
+    "mammoth": "^1.9.0",
     "markdown-it": "^14.1.0",
     "markdown-it-front-matter": "^0.2.4",
     "marked": "^15.0.4",
