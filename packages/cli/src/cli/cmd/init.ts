@@ -131,7 +131,7 @@ export default new InteractiveCommand()
       } else {
         spinner.succeed("No existing locale files found.");
         const useDefault = await confirm({
-          message: `Use default path ${patterns.join(", ")}?`,
+          message: `Use (and create) default path ${patterns.join(", ")}?`,
         });
         ensurePatterns(patterns, options.source);
         if (useDefault) {
