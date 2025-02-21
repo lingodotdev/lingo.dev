@@ -1577,7 +1577,7 @@ Mundo!`;
       expect(data).toEqual(expectedOutput);
     });
 
-    it.only("should save php array", async () => {
+    it("should save php array", async () => {
       setupFileMocks();
 
       const input = `<?php 
