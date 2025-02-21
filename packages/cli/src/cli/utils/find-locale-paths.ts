@@ -16,6 +16,8 @@ export default function findLocaleFiles(bucket: string) {
       return findLocaleFilesWithExtension(".xml");
     case "markdown":
       return findLocaleFilesWithExtension(".md");
+    case "php":
+      return findLocaleFilesWithExtension(".php");
     case "xcode-xcstrings":
       return findLocaleFilesForFilename("Localizable.xcstrings");
     case "xcode-strings":

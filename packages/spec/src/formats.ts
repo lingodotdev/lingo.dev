@@ -20,6 +20,7 @@ export const bucketTypes = [
   "dato",
   "compiler",
   "vtt",
+  "php",
 ] as const;
 
 export const bucketTypeSchema = Z.enum(bucketTypes);
