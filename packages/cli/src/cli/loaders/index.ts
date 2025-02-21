@@ -28,9 +28,14 @@ import createVariableLoader from "./variable";
 import createSyncLoader from "./sync";
 import createPlutilJsonTextLoader from "./plutil-json-loader";
 
+type BucketLoaderOptions = {
+  isCacheRestore?: boolean;
+};
+
 export default function createBucketLoader(
   bucketType: Z.infer<typeof bucketTypeSchema>,
   bucketPathPattern: string,
+  { isCacheRestore = false }: BucketLoaderOptions = {},
 ): ILoader<void, Record<string, string>> {
   switch (bucketType) {
     default:
@@ -41,7 +46,7 @@ export default function createBucketLoader(
         createAndroidLoader(),
         createFlatLoader(),
         createSyncLoader(),
-        createUnlocalizableLoader(),
+        createUnlocalizableLoader(isCacheRestore),
       );
     case "csv":
       return composeLoaders(
@@ -49,7 +54,7 @@ export default function createBucketLoader(
         createCsvLoader(),
         createFlatLoader(),
         createSyncLoader(),
-        createUnlocalizableLoader(),
+        createUnlocalizableLoader(isCacheRestore),
       );
     case "html":
       return composeLoaders(
@@ -57,7 +62,7 @@ export default function createBucketLoader(
         createPrettierLoader({ parser: "html", alwaysFormat: true }),
         createHtmlLoader(),
         createSyncLoader(),
-        createUnlocalizableLoader(),
+        createUnlocalizableLoader(isCacheRestore),
       );
     case "json":
       return composeLoaders(
@@ -66,7 +71,7 @@ export default function createBucketLoader(
         createJsonLoader(),
         createFlatLoader(),
         createSyncLoader(),
-        createUnlocalizableLoader(),
+        createUnlocalizableLoader(isCacheRestore),
       );
     case "markdown":
       return composeLoaders(
@@ -74,7 +79,7 @@ export default function createBucketLoader(
         createPrettierLoader({ parser: "markdown" }),
         createMarkdownLoader(),
         createSyncLoader(),
-        createUnlocalizableLoader(),
+        createUnlocalizableLoader(isCacheRestore),
       );
     case "po":
       return composeLoaders(
@@ -82,7 +87,7 @@ export default function createBucketLoader(
         createPoLoader(),
         createFlatLoader(),
         createSyncLoader(),
-        createUnlocalizableLoader(),
+        createUnlocalizableLoader(isCacheRestore),
         createVariableLoader({ type: "python" }),
       );
     case "properties":
@@ -90,14 +95,14 @@ export default function createBucketLoader(
         createTextFileLoader(bucketPathPattern),
         createPropertiesLoader(),
         createSyncLoader(),
-        createUnlocalizableLoader(),
+        createUnlocalizableLoader(isCacheRestore),
       );
     case "xcode-strings":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
         createXcodeStringsLoader(),
         createSyncLoader(),
-        createUnlocalizableLoader(),
+        createUnlocalizableLoader(isCacheRestore),
       );
     case "xcode-stringsdict":
       return composeLoaders(
@@ -105,7 +110,7 @@ export default function createBucketLoader(
         createXcodeStringsdictLoader(),
         createFlatLoader(),
         createSyncLoader(),
-        createUnlocalizableLoader(),
+        createUnlocalizableLoader(isCacheRestore),
       );
     case "xcode-xcstrings":
       return composeLoaders(
@@ -115,7 +120,7 @@ export default function createBucketLoader(
         createXcodeXcstringsLoader(),
         createFlatLoader(),
         createSyncLoader(),
-        createUnlocalizableLoader(),
+        createUnlocalizableLoader(isCacheRestore),
         createVariableLoader({ type: "ieee" }),
       );
     case "yaml":
@@ -125,7 +130,7 @@ export default function createBucketLoader(
         createYamlLoader(),
         createFlatLoader(),
         createSyncLoader(),
-        createUnlocalizableLoader(),
+        createUnlocalizableLoader(isCacheRestore),
       );
     case "yaml-root-key":
       return composeLoaders(
@@ -135,7 +140,7 @@ export default function createBucketLoader(
         createRootKeyLoader(true),
         createFlatLoader(),
         createSyncLoader(),
-        createUnlocalizableLoader(),
+        createUnlocalizableLoader(isCacheRestore),
       );
     case "flutter":
       return composeLoaders(
@@ -145,7 +150,7 @@ export default function createBucketLoader(
         createFlutterLoader(),
         createFlatLoader(),
         createSyncLoader(),
-        createUnlocalizableLoader(),
+        createUnlocalizableLoader(isCacheRestore),
       );
     case "xliff":
       return composeLoaders(
@@ -153,7 +158,7 @@ export default function createBucketLoader(
         createXliffLoader(),
         createFlatLoader(),
         createSyncLoader(),
-        createUnlocalizableLoader(),
+        createUnlocalizableLoader(isCacheRestore),
       );
     case "xml":
       return composeLoaders(
@@ -161,28 +166,28 @@ export default function createBucketLoader(
         createXmlLoader(),
         createFlatLoader(),
         createSyncLoader(),
-        createUnlocalizableLoader(),
+        createUnlocalizableLoader(isCacheRestore),
       );
     case "srt":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
         createSrtLoader(),
         createSyncLoader(),
-        createUnlocalizableLoader(),
+        createUnlocalizableLoader(isCacheRestore),
       );
     case "dato":
       return composeLoaders(
         createDatoLoader(bucketPathPattern),
         createSyncLoader(),
         createFlatLoader(),
-        createUnlocalizableLoader(),
+        createUnlocalizableLoader(isCacheRestore),
       );
     case "vtt":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
         createVttLoader(),
         createSyncLoader(),
-        createUnlocalizableLoader(),
+        createUnlocalizableLoader(isCacheRestore),
       );
   }
 }
