@@ -1560,6 +1560,63 @@ Mundo!`;
       });
     });
   });
+
+  describe("php bucket loader", () => {
+    it("should load php array", async () => {
+      setupFileMocks();
+
+      const input = `<?php return ['button.title' => 'Submit'];`;
+      const expectedOutput = { "button.title": "Submit" };
+
+      mockFileOperations(input);
+
+      const jsonLoader = createBucketLoader("php", "i18n/[locale].php");
+      jsonLoader.setDefaultLocale("en");
+      const data = await jsonLoader.pull("en");
+
+      expect(data).toEqual(expectedOutput);
+    });
+
+    it("should save php array", async () => {
+      setupFileMocks();
+
+      const input = `<?php 
+// this is locale
+
+return array(
+  'button.title' => 'Submit',
+  'button.description' => ['Hello', 'Goodbye'],
+  'button.index' => 1,
+  'button.class' => null,
+);`;
+      const expectedOutput = `<?php 
+// this is locale
+
+return array(
+  'button.title' => 'Enviar',
+  'button.description' => array(
+    'Hola',
+    'Adiós'
+  ),
+  'button.index' => 1,
+  'button.class' => null
+);`;
+
+      mockFileOperations(input);
+
+      const jsonLoader = createBucketLoader("php", "i18n/[locale].php");
+      jsonLoader.setDefaultLocale("en");
+      await jsonLoader.pull("en");
+
+      await jsonLoader.push("es", {
+        "button.title": "Enviar",
+        "button.description/0": "Hola",
+        "button.description/1": "Adiós",
+      });
+
+      expect(fs.writeFile).toHaveBeenCalledWith("i18n/es.php", expectedOutput, { encoding: "utf-8", flag: "w" });
+    });
+  });
 });
 
 // Helper functions

@@ -27,6 +27,7 @@ import createVttLoader from "./vtt";
 import createVariableLoader from "./variable";
 import createSyncLoader from "./sync";
 import createPlutilJsonTextLoader from "./plutil-json-loader";
+import createPhpLoader from "./php";
 
 type BucketLoaderOptions = {
   isCacheRestore?: boolean;
@@ -188,6 +189,14 @@ export default function createBucketLoader(
         createVttLoader(),
         createSyncLoader(),
         createUnlocalizableLoader(isCacheRestore),
+      );
+    case "php":
+      return composeLoaders(
+        createTextFileLoader(bucketPathPattern),
+        createPhpLoader(),
+        createSyncLoader(),
+        createFlatLoader(),
+        createUnlocalizableLoader(),
       );
   }
 }
