@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.74.17
+
+### Patch Changes
+
+- [#483](https://github.com/lingodotdev/lingo.dev/pull/483) [`d2963fc`](https://github.com/lingodotdev/lingo.dev/commit/d2963fc45a30d3e6972440e8ea7da8e425417cb6) Thanks [@mathio](https://github.com/mathio)! - fix partial cache restore
+
 ## 0.74.16
 
 ### Patch Changes
