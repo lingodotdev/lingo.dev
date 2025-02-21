@@ -5,7 +5,9 @@ import { isValid, parseISO } from "date-fns";
 import { ILoader } from "./_types";
 import { createLoader } from "./_utils";
 
-export default function createUnlocalizableLoader(): ILoader<Record<string, any>, Record<string, any>> {
+export default function createUnlocalizableLoader(
+  isCacheRestore: boolean = false,
+): ILoader<Record<string, any>, Record<string, any>> {
   const rules = {
     isEmpty: (v: any) => _.isEmpty(v),
     isNumber: (v: string) => !_.isNaN(_.toNumber(v)),
@@ -32,6 +34,10 @@ export default function createUnlocalizableLoader(): ILoader<Record<string, any>
       return result;
     },
     async push(locale, data, originalInput) {
+      if (isCacheRestore) {
+        return _.merge({}, data);
+      }
+
       const result = _.merge({}, originalInput, data);
       return result;
     },

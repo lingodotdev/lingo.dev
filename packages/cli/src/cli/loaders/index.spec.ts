@@ -368,6 +368,42 @@ describe("bucket loaders", () => {
 
       expect(fs.writeFile).toHaveBeenCalledWith("i18n/es.json", expectedOutput, { encoding: "utf-8", flag: "w" });
     });
+
+    it("should use key values from original input for missing keys", async () => {
+      setupFileMocks();
+
+      const input = { "button.title": "Submit", "button.description": "Submit description" };
+      const payload = { "button.title": "Enviar" };
+      const expectedOutput = JSON.stringify({ ...input, ...payload }, null, 2);
+
+      mockFileOperations(JSON.stringify(input));
+
+      const jsonLoader = createBucketLoader("json", "i18n/[locale].json");
+      jsonLoader.setDefaultLocale("en");
+      await jsonLoader.pull("en");
+
+      await jsonLoader.push("es", payload);
+
+      expect(fs.writeFile).toHaveBeenCalledWith("i18n/es.json", expectedOutput, { encoding: "utf-8", flag: "w" });
+    });
+
+    it("should not use key values from original input on cache restoration", async () => {
+      setupFileMocks();
+
+      const input = { "button.title": "Submit", "button.description": "Submit description" };
+      const payload = { "button.title": "Enviar" };
+      const expectedOutput = JSON.stringify(payload, null, 2);
+
+      mockFileOperations(JSON.stringify(input));
+
+      const jsonLoader = createBucketLoader("json", "i18n/[locale].json", { isCacheRestore: true });
+      jsonLoader.setDefaultLocale("en");
+      await jsonLoader.pull("en");
+
+      await jsonLoader.push("es", payload);
+
+      expect(fs.writeFile).toHaveBeenCalledWith("i18n/es.json", expectedOutput, { encoding: "utf-8", flag: "w" });
+    });
   });
 
   describe("markdown bucket loader", () => {

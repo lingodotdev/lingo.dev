@@ -105,7 +105,7 @@ export default new Command()
             bucketOra.info(`Processing path: ${bucketConfig.pathPattern}`);
 
             const sourceLocale = resolveOverridenLocale(i18nConfig!.locale.source, bucketConfig.delimiter);
-            const bucketLoader = createBucketLoader(bucket.type, bucketConfig.pathPattern);
+            const bucketLoader = createBucketLoader(bucket.type, bucketConfig.pathPattern, { isCacheRestore: true });
             bucketLoader.setDefaultLocale(sourceLocale);
             await bucketLoader.init();
             const sourceData = await bucketLoader.pull(sourceLocale);
