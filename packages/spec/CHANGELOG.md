@@ -1,5 +1,11 @@
 # @lingo.dev/\_spec
 
+## 0.25.0
+
+### Minor Changes
+
+- [#485](https://github.com/lingodotdev/lingo.dev/pull/485) [`a096300`](https://github.com/lingodotdev/lingo.dev/commit/a0963008ea2a8bbc910b0eaeb20f4e3b3cd641a7) Thanks [@mathio](https://github.com/mathio)! - add support for php buckets
+
 ## 0.24.4
 
 ### Patch Changes
