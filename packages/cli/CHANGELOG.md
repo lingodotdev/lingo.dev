@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.75.1
+
+### Patch Changes
+
+- [#488](https://github.com/lingodotdev/lingo.dev/pull/488) [`07241f5`](https://github.com/lingodotdev/lingo.dev/commit/07241f50aa7fe80d1f318106f50d8629b66628f6) Thanks [@mathio](https://github.com/mathio)! - init command fix
+
 ## 0.75.0
 
 ### Minor Changes
