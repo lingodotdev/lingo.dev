@@ -130,6 +130,9 @@ export default new InteractiveCommand()
         });
       } else {
         spinner.succeed("No existing locale files found.");
+      }
+
+      if (selectedPatterns.length === 0) {
         const useDefault = await confirm({
           message: `Use (and create) default path ${patterns.join(", ")}?`,
         });

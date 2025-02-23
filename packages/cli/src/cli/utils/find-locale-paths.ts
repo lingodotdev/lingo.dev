@@ -34,28 +34,38 @@ function findLocaleFilesWithExtension(ext: string) {
     ignore: ["node_modules/**", "package*.json", "i18n.json", "lingo.json"],
   });
 
-  const localeFilePattern = new RegExp(`[\/\\\\]([a-z]{2}(-[A-Z]{2})?)${ext}$`);
-  const localeDirectoryPattern = new RegExp(`[\/\\\\]([a-z]{2}(-[A-Z]{2})?)[\/\\\\][^\/\\\\]+${ext}$`);
+  const localeFilePattern = new RegExp(`\/([a-z]{2}(-[A-Z]{2})?)${ext}$`);
+  const localeDirectoryPattern = new RegExp(`\/([a-z]{2}(-[A-Z]{2})?)\/[^\/]+${ext}$`);
   const potentialLocaleFiles = files.filter(
     (file: string) => localeFilePattern.test(file) || localeDirectoryPattern.test(file),
   );
-  const localeFilesAndPatterns = potentialLocaleFiles
+
+  const potantialLocaleFilesAndPatterns = potentialLocaleFiles
     .map((file: string) => {
-      const match = file.match(new RegExp(`[\/|\\\\]([a-z]{2}(-[A-Z]{2})?)(\/|\\\\|${ext})`));
-      const locale = match?.[1];
-      const localeInDir = match?.[3] !== ext;
-      const filePattern = localeInDir
-        ? file.replace(`/${locale}/`, `/[locale]/`)
-        : path.join(path.dirname(file), `[locale]${ext}`);
-      return { file, locale, pattern: filePattern };
+      const matchPotentialLocales = file
+        .matchAll(new RegExp(`\/([a-z]{2}(-[A-Z]{2})?|[^\/]+)(?=\/|${ext})`, "g"))
+        .toArray();
+      const potantialLocales = matchPotentialLocales.map((match) => match[1]);
+      return { file, potantialLocales };
     })
-    .filter(({ locale }) => {
-      try {
-        resolveLocaleCode(locale as LocaleCode);
-        return true;
-      } catch (e) {}
-      return false;
-    });
+    .map(({ file, potantialLocales }) => {
+      for (const locale of potantialLocales) {
+        try {
+          resolveLocaleCode(locale as LocaleCode);
+          return { locale, file };
+        } catch (e) {}
+      }
+      return { file, locale: null };
+    })
+    .filter(({ locale }) => locale !== null);
+
+  const localeFilesAndPatterns = potantialLocaleFilesAndPatterns.map(({ file, locale }) => {
+    const localeInDir = file.match(`/${locale}/`);
+    const pattern = localeInDir
+      ? file.replace(`/${locale}/`, `/[locale]/`)
+      : path.join(path.dirname(file), `[locale]${ext}`);
+    return { pattern, file };
+  });
 
   const grouppedFilesAndPatterns = _.groupBy(localeFilesAndPatterns, "pattern");
   const patterns = Object.keys(grouppedFilesAndPatterns);

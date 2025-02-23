@@ -63,6 +63,10 @@ describe("findLocaleFiles", () => {
       "src/locales/fr/messages.json",
       "src/i18n/es/strings.json",
       "src/translations/es.json",
+      "src/aa/translations/en.json",
+      "src/aa/bb/foobar/cc/translations/es/values.json",
+      "src/aa/en.json",
+      "src/aa/translations/bb/en.json",
 
       // not a valid locale
       "src/xx/settings.json",
@@ -77,6 +81,10 @@ describe("findLocaleFiles", () => {
         "src/locales/[locale]/messages.json",
         "src/i18n/[locale]/strings.json",
         "src/translations/[locale].json",
+        "src/aa/translations/[locale].json",
+        "src/aa/bb/foobar/cc/translations/[locale]/values.json",
+        "src/aa/[locale].json",
+        "src/aa/translations/bb/[locale].json",
       ],
     });
   });
@@ -97,13 +105,18 @@ describe("findLocaleFiles", () => {
       "ios/MyApp/Localizable.xcstrings",
       "ios/MyApp/Onboarding/Localizable.xcstrings",
       "ios/MyApp/Onboarding/fr.xcstrings",
+      "ios/MyApp/xx/Localizable.xcstrings",
     ]);
 
     const result = findLocaleFiles("xcode-xcstrings");
 
     expect(result).toEqual({
       found: true,
-      patterns: ["ios/MyApp/Localizable.xcstrings", "ios/MyApp/Onboarding/Localizable.xcstrings"],
+      patterns: [
+        "ios/MyApp/Localizable.xcstrings",
+        "ios/MyApp/Onboarding/Localizable.xcstrings",
+        "ios/MyApp/xx/Localizable.xcstrings",
+      ],
     });
   });
 
