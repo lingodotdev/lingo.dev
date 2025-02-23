@@ -42,9 +42,9 @@ function findLocaleFilesWithExtension(ext: string) {
 
   const potantialLocaleFilesAndPatterns = potentialLocaleFiles
     .map((file: string) => {
-      const matchPotentialLocales = file
-        .matchAll(new RegExp(`\/([a-z]{2}(-[A-Z]{2})?|[^\/]+)(?=\/|${ext})`, "g"))
-        .toArray();
+      const matchPotentialLocales = Array.from(
+        file.matchAll(new RegExp(`\/([a-z]{2}(-[A-Z]{2})?|[^\/]+)(?=\/|${ext})`, "g")),
+      );
       const potantialLocales = matchPotentialLocales.map((match) => match[1]);
       return { file, potantialLocales };
     })
