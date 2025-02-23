@@ -67,6 +67,10 @@ describe("findLocaleFiles", () => {
       "src/aa/bb/foobar/cc/translations/es/values.json",
       "src/aa/en.json",
       "src/aa/translations/bb/en.json",
+      "foo/en-US/en-US.json",
+      "foo/en-US/en-US/messages.json",
+      "bar/es/baz/es.json",
+      "bar/es/es.json",
 
       // not a valid locale
       "src/xx/settings.json",
@@ -85,6 +89,10 @@ describe("findLocaleFiles", () => {
         "src/aa/bb/foobar/cc/translations/[locale]/values.json",
         "src/aa/[locale].json",
         "src/aa/translations/bb/[locale].json",
+        "foo/[locale]/[locale].json",
+        "foo/[locale]/[locale]/messages.json",
+        "bar/[locale]/baz/[locale].json",
+        "bar/[locale]/[locale].json",
       ],
     });
   });

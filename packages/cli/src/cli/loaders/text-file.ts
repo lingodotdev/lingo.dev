@@ -11,7 +11,7 @@ export default function createTextFileLoader(pathPattern: string): ILoader<void,
       return trimmedResult;
     },
     async push(locale, data, _, originalLocale) {
-      const draftPath = pathPattern.replace("[locale]", locale);
+      const draftPath = pathPattern.replaceAll("[locale]", locale);
       const finalPath = path.resolve(draftPath);
 
       // Create parent directories if needed
@@ -33,7 +33,7 @@ export default function createTextFileLoader(pathPattern: string): ILoader<void,
 }
 
 async function readFileForLocale(pathPattern: string, locale: string) {
-  const draftPath = pathPattern.replace("[locale]", locale);
+  const draftPath = pathPattern.replaceAll("[locale]", locale);
   const finalPath = path.resolve(draftPath);
   const exists = await fs
     .access(finalPath)

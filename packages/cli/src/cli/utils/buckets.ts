@@ -59,21 +59,18 @@ function expandPlaceholderedGlob(_pathPattern: string, sourceLocale: string): st
       docUrl: "invalidPathPattern",
     });
   }
-  // Throw error if pathPattern contains "[locale]" several times
-  if (pathPattern.split("[locale]").length > 2) {
-    throw new CLIError({
-      message: `Invalid path pattern: ${pathPattern}. Path pattern must contain at most one "[locale]" placeholder.`,
-      docUrl: "invalidPathPattern",
-    });
-  }
+
   // Break down path pattern into parts
   const pathPatternChunks = pathPattern.split(path.sep);
   // Find the index of the segment containing "[locale]"
-  const localeSegmentIndex = pathPatternChunks.findIndex((segment) => segment.includes("[locale]"));
-  // Find the position of the "[locale]" placeholder within the segment
-  const localePlaceholderIndex = pathPatternChunks[localeSegmentIndex]?.indexOf("[locale]") ?? -1;
+  const localeSegmentIndexes = pathPatternChunks.reduce((indexes, segment, index) => {
+    if (segment.includes("[locale]")) {
+      indexes.push(index);
+    }
+    return indexes;
+  }, [] as number[]);
   // substitute [locale] in pathPattern with sourceLocale
-  const sourcePathPattern = pathPattern.replace(/\[locale\]/g, sourceLocale);
+  const sourcePathPattern = pathPattern.replaceAll(/\[locale\]/g, sourceLocale);
   // get all files that match the sourcePathPattern
   const sourcePaths = glob
     .sync(sourcePathPattern, { follow: true, withFileTypes: true })
@@ -83,14 +80,18 @@ function expandPlaceholderedGlob(_pathPattern: string, sourceLocale: string): st
   // transform each source file path back to [locale] placeholder paths
   const placeholderedPaths = sourcePaths.map((sourcePath) => {
     const sourcePathChunks = sourcePath.split(path.sep);
-    if (localeSegmentIndex >= 0 && localePlaceholderIndex >= 0) {
-      const placeholderedPathChunk = sourcePathChunks[localeSegmentIndex];
-      const placeholderedSegment =
-        placeholderedPathChunk.substring(0, localePlaceholderIndex) +
-        "[locale]" +
-        placeholderedPathChunk.substring(localePlaceholderIndex + sourceLocale.length);
-      sourcePathChunks[localeSegmentIndex] = placeholderedSegment;
-    }
+    localeSegmentIndexes.forEach((localeSegmentIndex) => {
+      // Find the position of the "[locale]" placeholder within the segment
+      const localePlaceholderIndex = pathPatternChunks[localeSegmentIndex]?.indexOf("[locale]") ?? -1;
+      if (localeSegmentIndex >= 0 && localePlaceholderIndex >= 0) {
+        const placeholderedPathChunk = sourcePathChunks[localeSegmentIndex];
+        const placeholderedSegment =
+          placeholderedPathChunk.substring(0, localePlaceholderIndex) +
+          "[locale]" +
+          placeholderedPathChunk.substring(localePlaceholderIndex + sourceLocale.length);
+        sourcePathChunks[localeSegmentIndex] = placeholderedSegment;
+      }
+    });
     const placeholderedPath = sourcePathChunks.join(path.sep);
     return placeholderedPath;
   });
