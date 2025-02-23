@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.76.0
+
+### Minor Changes
+
+- [#490](https://github.com/lingodotdev/lingo.dev/pull/490) [`c3881c3`](https://github.com/lingodotdev/lingo.dev/commit/c3881c3d763c35d0e4fcad88e5f6918939c6b2a4) Thanks [@mathio](https://github.com/mathio)! - support multiple [locale] placeholders in bucket path
+
 ## 0.75.1
 
 ### Patch Changes
