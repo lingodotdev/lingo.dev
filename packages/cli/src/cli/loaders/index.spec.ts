@@ -404,6 +404,26 @@ describe("bucket loaders", () => {
 
       expect(fs.writeFile).toHaveBeenCalledWith("i18n/es.json", expectedOutput, { encoding: "utf-8", flag: "w" });
     });
+
+    it("should load and save json data for paths with multiple locales", async () => {
+      setupFileMocks();
+
+      const input = { "button.title": "Submit" };
+      const payload = { "button.title": "Enviar" };
+      const expectedOutput = JSON.stringify(payload, null, 2);
+
+      mockFileOperations(JSON.stringify(input));
+
+      const jsonLoader = createBucketLoader("json", "i18n/[locale]/[locale].json");
+      jsonLoader.setDefaultLocale("en");
+      const data = await jsonLoader.pull("en");
+
+      await jsonLoader.push("es", payload);
+
+      expect(data).toEqual(input);
+      expect(fs.access).toHaveBeenCalledWith("i18n/en/en.json");
+      expect(fs.writeFile).toHaveBeenCalledWith("i18n/es/es.json", expectedOutput, { encoding: "utf-8", flag: "w" });
+    });
   });
 
   describe("markdown bucket loader", () => {

@@ -60,10 +60,10 @@ function findLocaleFilesWithExtension(ext: string) {
     .filter(({ locale }) => locale !== null);
 
   const localeFilesAndPatterns = potantialLocaleFilesAndPatterns.map(({ file, locale }) => {
-    const localeInDir = file.match(`/${locale}/`);
-    const pattern = localeInDir
-      ? file.replace(`/${locale}/`, `/[locale]/`)
-      : path.join(path.dirname(file), `[locale]${ext}`);
+    const pattern = file
+      .replaceAll(new RegExp(`/${locale}${ext}`, "g"), `/[locale]${ext}`)
+      .replaceAll(new RegExp(`/${locale}/`, "g"), `/[locale]/`)
+      .replaceAll(new RegExp(`/${locale}/`, "g"), `/[locale]/`); // for when there are 2 locales one after another
     return { pattern, file };
   });
 
