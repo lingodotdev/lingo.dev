@@ -10,25 +10,25 @@ const engineParamsSchema = Z.object({
 }).passthrough();
 
 const payloadSchema = Z.record(Z.string(), Z.any());
+const referenceSchema = Z.record(localeCodeSchema, payloadSchema);
 
 const localizationParamsSchema = Z.object({
   sourceLocale: localeCodeSchema,
   targetLocale: localeCodeSchema,
   fast: Z.boolean().optional(),
+  reference: referenceSchema.optional(),
 });
 
-const referenceSchema = Z.record(localeCodeSchema, payloadSchema);
-
 /**
- * ReplexicaEngine class for interacting with the Lingo.dev API
+ * LingoDotDevEngine class for interacting with the LingoDotDev API
  * A powerful localization engine that supports various content types including
  * plain text, objects, chat sequences, and HTML documents.
  */
-export class ReplexicaEngine {
-  private config: Z.infer<typeof engineParamsSchema>;
+export class LingoDotDevEngine {
+  protected config: Z.infer<typeof engineParamsSchema>;
 
   /**
-   * Create a new ReplexicaEngine instance
+   * Create a new LingoDotDevEngine instance
    * @param config - Configuration options for the Engine
    */
   constructor(config: Partial<Z.infer<typeof engineParamsSchema>>) {
@@ -39,7 +39,6 @@ export class ReplexicaEngine {
    * Localize content using the Lingo.dev API
    * @param payload - The content to be localized
    * @param params - Localization parameters including source/target locales and fast mode option
-   * @param reference - Optional reference translations to maintain consistency
    * @param progressCallback - Optional callback function to report progress (0-100)
    * @returns Localized content
    * @internal
@@ -47,7 +46,6 @@ export class ReplexicaEngine {
   async _localizeRaw(
     payload: Z.infer<typeof payloadSchema>,
     params: Z.infer<typeof localizationParamsSchema>,
-    reference?: Z.infer<typeof referenceSchema>,
     progressCallback?: (
       progress: number,
       sourceChunk: Record<string, string>,
@@ -68,7 +66,7 @@ export class ReplexicaEngine {
       const processedPayloadChunk = await this.localizeChunk(
         finalParams.sourceLocale,
         finalParams.targetLocale,
-        { data: chunk, reference },
+        { data: chunk, reference: params.reference },
         workflowId,
         params.fast || false,
       );
@@ -93,7 +91,10 @@ export class ReplexicaEngine {
   private async localizeChunk(
     sourceLocale: string,
     targetLocale: string,
-    payload: { data: any; reference: any },
+    payload: {
+      data: Z.infer<typeof payloadSchema>;
+      reference?: Z.infer<typeof referenceSchema>;
+    },
     workflowId: string,
     fast: boolean,
   ): Promise<Record<string, string>> {
@@ -198,7 +199,7 @@ export class ReplexicaEngine {
       processedChunk: Record<string, string>,
     ) => void,
   ): Promise<Record<string, any>> {
-    return this._localizeRaw(obj, params, undefined, progressCallback);
+    return this._localizeRaw(obj, params, progressCallback);
   }
 
   /**
@@ -216,7 +217,7 @@ export class ReplexicaEngine {
     params: Z.infer<typeof localizationParamsSchema>,
     progressCallback?: (progress: number) => void,
   ): Promise<string> {
-    const response = await this._localizeRaw({ text }, params, undefined, progressCallback);
+    const response = await this._localizeRaw({ text }, params, progressCallback);
     return response.text || "";
   }
 
@@ -265,7 +266,7 @@ export class ReplexicaEngine {
     params: Z.infer<typeof localizationParamsSchema>,
     progressCallback?: (progress: number) => void,
   ): Promise<Array<{ name: string; text: string }>> {
-    const localized = await this._localizeRaw({ chat }, params, undefined, progressCallback);
+    const localized = await this._localizeRaw({ chat }, params, progressCallback);
 
     return Object.entries(localized).map(([key, value]) => ({
       name: chat[parseInt(key.split("_")[1])].name,
@@ -371,7 +372,7 @@ export class ReplexicaEngine {
       .filter((n) => n.nodeType === 1 || (n.nodeType === 3 && n.textContent?.trim()))
       .forEach(processNode);
 
-    const localizedContent = await this._localizeRaw(extractedContent, params, undefined, progressCallback);
+    const localizedContent = await this._localizeRaw(extractedContent, params, progressCallback);
 
     // Update the DOM with localized content
     document.documentElement.setAttribute("lang", params.targetLocale);
@@ -426,5 +427,25 @@ export class ReplexicaEngine {
 
     const jsonResponse = await response.json();
     return jsonResponse.locale;
+  }
+}
+
+/**
+ * @deprecated Use LingoDotDevEngine instead. This class is maintained for backwards compatibility.
+ */
+export class ReplexicaEngine extends LingoDotDevEngine {
+  constructor(config: Partial<Z.infer<typeof engineParamsSchema>>) {
+    super(config);
+    console.warn("ReplexicaEngine is deprecated. Please use LingoDotDevEngine instead.");
+  }
+}
+
+/**
+ * @deprecated Use LingoDotDevEngine instead. This class is maintained for backwards compatibility.
+ */
+export class LingoEngine extends LingoDotDevEngine {
+  constructor(config: Partial<Z.infer<typeof engineParamsSchema>>) {
+    super(config);
+    console.warn("LingoEngine is deprecated. Please use LingoDotDevEngine instead.");
   }
 }

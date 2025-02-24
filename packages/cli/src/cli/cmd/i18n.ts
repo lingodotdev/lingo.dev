@@ -1,5 +1,5 @@
 import { bucketTypeSchema, I18nConfig, localeCodeSchema, resolveOverridenLocale } from "@lingo.dev/_spec";
-import { ReplexicaEngine } from "@lingo.dev/_sdk";
+import { LingoDotDevEngine } from "@lingo.dev/_sdk";
 import { Command } from "interactive-commander";
 import Z from "zod";
 import _ from "lodash";
@@ -346,7 +346,7 @@ async function retryWithExponentialBackoff<T>(
 }
 
 function createLocalizationEngineConnection(params: { apiKey: string; apiUrl: string; maxRetries?: number }) {
-  const replexicaEngine = new ReplexicaEngine({
+  const replexicaEngine = new LingoDotDevEngine({
     apiKey: params.apiKey,
     apiUrl: params.apiUrl,
   });
@@ -373,6 +373,10 @@ function createLocalizationEngineConnection(params: { apiKey: string; apiUrl: st
             {
               sourceLocale: args.sourceLocale,
               targetLocale: args.targetLocale,
+              reference: {
+                [args.sourceLocale]: args.sourceData,
+                [args.targetLocale]: args.targetData,
+              },
             },
             onProgress,
           ),
