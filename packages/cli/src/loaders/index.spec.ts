@@ -302,6 +302,70 @@ describe("bucket loaders", () => {
     });
   });
 
+//docx bucket loader
+  describe("docx bucket loader", () => {
+    it("should parse a simple DOCX file", async () => {
+      setupFileMocks();
+
+      const input = `<p>Welcome to our documentation.</p>
+<h1>Getting Started</h1>
+<p>This is a sample DOCX file that contains:</p>
+<ul>
+<li>Basic formatting</li>
+<li>Multiple paragraphs</li>
+<li>Headers</li>
+</ul>`;
+
+      const expectedOutput = {
+        "p/0": "Welcome to our documentation.",
+        "h1/0": "Getting Started",
+        "p/1": "This is a sample DOCX file that contains:",
+        "ul/li/0": "Basic formatting",
+        "ul/li/1": "Multiple paragraphs",
+        "ul/li/2": "Headers"
+      };
+
+      mockFileOperations(input);
+
+      const docxLoader = createBucketLoader("docx", "docs/[locale].docx");
+      docxLoader.setDefaultLocale("en");
+      const data = await docxLoader.pull("en");
+
+      expect(data).toEqual(expectedOutput);
+    });
+
+    it("should handle comments in DOCX entries", async () => {
+      setupFileMocks();
+
+      const input = `<p>Welcome to our documentation.</p>
+<!-- Author: John Doe -->
+<h1>Getting Started</h1>
+<!-- Last updated: 2024-02-16 -->
+<p>This version includes the following updates:</p>
+<!-- Version 2.0 changes -->
+<ul>
+<li>Feature A</li>
+<li>Feature B</li>
+</ul>`;
+
+      const expectedOutput = {
+        "p/0": "Welcome to our documentation.",
+        "h1/0": "Getting Started",
+        "p/1": "This version includes the following updates:",
+        "ul/li/0": "Feature A",
+        "ul/li/1": "Feature B"
+      };
+
+      mockFileOperations(input);
+
+      const docxLoader = createBucketLoader("docx", "docs/[locale].docx");
+      docxLoader.setDefaultLocale("en");
+      const data = await docxLoader.pull("en");
+
+      expect(data).toEqual(expectedOutput);
+    });
+  });
+  
   describe("json bucket loader", () => {
     it("should load json data", async () => {
       setupFileMocks();
@@ -333,6 +397,7 @@ describe("bucket loaders", () => {
 
       expect(fs.writeFile).toHaveBeenCalledWith("i18n/es.json", expectedOutput, { encoding: "utf-8", flag: "w" });
     });
+   
   });
 
   describe("markdown bucket loader", () => {
