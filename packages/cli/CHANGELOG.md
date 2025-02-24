@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.77.0
+
+### Minor Changes
+
+- [#487](https://github.com/lingodotdev/lingo.dev/pull/487) [`81c6ddf`](https://github.com/lingodotdev/lingo.dev/commit/81c6ddfb1e7b4f0e530a46a873303a7996d7264a) Thanks [@mathio](https://github.com/mathio)! - add mcp command
+
 ## 0.76.0
 
 ### Minor Changes
