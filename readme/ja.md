@@ -1,71 +1,71 @@
 <p align="center">
-  <a href="https://replexica.com">
-    <img src="/content/banner.dark.png" width="100%" alt="Replexica" />
+  <a href="https://lingo.dev">
+    <img src="/content/banner.dark.png" width="100%" alt="Lingo.dev" />
   </a>
 </p>
 
 <p align="center">
-  <strong>⚡️ CI/CDから直接利用できる最先端のAIローカライゼーション for Web & モバイル</strong>
+  <strong>⚡️ CI/CDから直接使えるWeb＆モバイル向けAIローカライゼーションツールキット</strong>
 </p>
 
 <br />
 
 <p align="center">
-  <a href="https://replexica.com">ウェブサイト</a> •
-  <a href="https://github.com/replexica/replexica/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22">コントリビュート</a> •
+  <a href="https://lingo.dev">ウェブサイト</a> •
+  <a href="https://github.com/lingodotdev/lingo.dev/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22">コントリビュート</a> •
   <a href="#-github-action">GitHub Action</a>
 </p>
 
 <p align="center">
-  <a href="https://github.com/replexica/replexica/actions/workflows/release.yml">
-    <img src="https://github.com/replexica/replexica/actions/workflows/release.yml/badge.svg" alt="リリース" />
+  <a href="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml">
+    <img src="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml/badge.svg" alt="Release" />
   </a>
-  <a href="https://github.com/replexica/replexica/blob/main/LICENSE.md">
-    <img src="https://img.shields.io/github/license/replexica/replexica" alt="ライセンス" />
+  <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md">
+    <img src="https://img.shields.io/github/license/lingodotdev/lingo.dev" alt="License" />
   </a>
-  <a href="https://github.com/replexica/replexica/commits/main">
-    <img src="https://img.shields.io/github/last-commit/replexica/replexica" alt="最終コミット" />
+  <a href="https://github.com/lingodotdev/lingo.dev/commits/main">
+    <img src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev" alt="Last Commit" />
   </a>
 </p>
 
 <br />
 
-Replexica AIはソフトウェアのローカライゼーションを完全に自動化します。
+Lingo.devは、最新のLLMモデルを使用してソフトウェアのローカライゼーションを完全に自動化します。
 
-瞬時に自然な翻訳を生成し、手作業や管理の手間を排除します。Replexicaのローカライゼーションエンジンは製品のコンテキストを理解し、60以上の言語でネイティブスピーカーが期待する完璧な翻訳を作成します。その結果、チームは最先端の品質を保ちながら、ローカライゼーションを100倍速く実行し、世界中のより多くの有料顧客に向けて機能をリリースすることができます。
+手作業や管理の手間を省き、瞬時に自然な翻訳を生成します。Lingo.devのローカライゼーションエンジンは製品のコンテキストを理解し、60以上の言語でネイティブスピーカーが期待する完璧な翻訳を作成します。その結果、チームは最先端の品質を保ちながら、ローカライゼーションを100倍速く行い、世界中のより多くの有料顧客に向けて機能をリリースすることができます。
 
 ## 💫 クイックスタート
 
-1. [ウェブサイト](https://replexica.com)でアカウントを作成
+1. [ウェブサイト](https://lingo.dev)でアカウントを作成
 
 2. プロジェクトの初期化:
 
    ```bash
-   npx replexica@latest init
+   npx lingo.dev@latest init
    ```
 
-3. ドキュメントを確認: [docs.replexica.com](https://docs.replexica.com)
+3. ドキュメントを確認: [docs.lingo.dev](https://docs.lingo.dev)
 
 4. アプリのローカライズ（数秒で完了）:
    ```bash
-   npx replexica@latest i18n
+   npx lingo.dev@latest i18n
    ```
 
 ## 🤖 GitHub Action
 
-Replexicaは、CI/CDパイプラインでローカライゼーションを自動化するGitHub Actionを提供しています。基本的なセットアップは以下の通りです：
+Lingo.devは、CI/CDパイプラインでローカライゼーションを自動化するGitHub Actionを提供しています。基本的なセットアップは以下の通りです：
 
 ```yaml
-- uses: replexica/replexica@main
+- uses: lingodotdev/lingo.dev@main
   with:
-    api-key: ${{ secrets.REPLEXICA_API_KEY }}
+    api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
 ```
 
-このアクションは、プッシュごとに`replexica i18n`を実行し、翻訳を自動的に最新の状態に保ちます。
+このアクションは、プッシュごとに`lingo.dev i18n`を実行し、翻訳を自動的に最新の状態に保ちます。
 
-プルリクエストモードやその他の設定オプションについては、[GitHub Actionのドキュメント](https://docs.replexica.com/setup/gha)をご覧ください。
+プルリクエストモードやその他の設定オプションについては、[GitHub Actionのドキュメント](https://docs.lingo.dev/setup/gha)をご覧ください。
 
-## 🥇 チームがReplexicaを選ぶ理由
+## 🥇 チームがLingo.devを選ぶ理由
 
 - 🔥 **即時導入**: 数分でセットアップ完了
 - 🔄 **CI/CD自動化**: シームレスな開発パイプライン統合
@@ -83,24 +83,25 @@ Replexicaは、CI/CDパイプラインでローカライゼーションを自動
 
 ## 📚 ドキュメント
 
-詳細なガイドとAPIリファレンスは[ドキュメント](https://replexica.com/go/docs)をご覧ください。
+詳細なガイドやAPIリファレンスについては、[ドキュメント](https://lingo.dev/go/docs)をご覧ください。
 
 ## 🤝 コントリビュート
 
-顧客でなくてもコントリビュートに興味がありますか？
+顧客でなくても、コントリビュートに興味がありますか？
 
-[Good First Issues](https://github.com/replexica/replexica/labels/good%20first%20issue)をチェックして、[コントリビューションガイド](./CONTRIBUTING.md)をお読みください。
+[Good First Issues](https://github.com/lingodotdev/lingo.dev/labels/good%20first%20issue)をチェックして、[コントリビューションガイド](./CONTRIBUTING.md)をお読みください。
 
-## 🧠 チーム
+## 👨‍💻 チーム
 
 - **[Veronica](https://github.com/vrcprl)**
 - **[Max](https://github.com/maxprilutskiy)**
+- **[Matej](https://github.com/mathio)**
 
-質問やお問い合わせは veronica@replexica.com まで
+ご質問やお問い合わせは veronica@lingo.dev までメールでご連絡ください
 
 ## 🌐 他言語のREADME
 
-- [English](https://github.com/replexica/replexica)
+- [English](https://github.com/lingodotdev/lingo.dev)
 - [Spanish](/readme/es.md)
 - [French](/readme/fr.md)
 - [Russian](/readme/ru.md)
@@ -110,5 +111,6 @@ Replexicaは、CI/CDパイプラインでローカライゼーションを自動
 - [Japanese](/readme/ja.md)
 - [Italian](/readme/it.md)
 - [Arabic](/readme/ar.md)
+- [Hindi](/readme/hi.md)
 
-お使いの言語が見つかりませんか？[`i18n.json`](./i18n.json)ファイルに新しい言語コードを追加してPRを開いてください。
+お使いの言語が見つかりませんか？[`i18n.json`](./i18n.json)ファイルに新しい言語コードを追加してPRを作成してください。

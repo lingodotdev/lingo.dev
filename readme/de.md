@@ -1,71 +1,71 @@
 <p align="center">
-  <a href="https://replexica.com">
-    <img src="/content/banner.dark.png" width="100%" alt="Replexica" />
+  <a href="https://lingo.dev">
+    <img src="/content/banner.dark.png" width="100%" alt="Lingo.dev" />
   </a>
 </p>
 
 <p align="center">
-  <strong>⚡️ Hochmoderne KI-Lokalisierung für Web & Mobile, direkt aus der CI/CD-Pipeline.</strong>
+  <strong>⚡️ KI-Lokalisierungs-Toolkit für Web & Mobile, direkt aus der CI/CD-Pipeline.</strong>
 </p>
 
 <br />
 
 <p align="center">
-  <a href="https://replexica.com">Website</a> •
-  <a href="https://github.com/replexica/replexica/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22">Mitmachen</a> •
+  <a href="https://lingo.dev">Website</a> •
+  <a href="https://github.com/lingodotdev/lingo.dev/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22">Mitmachen</a> •
   <a href="#-github-action">GitHub Action</a>
 </p>
 
 <p align="center">
-  <a href="https://github.com/replexica/replexica/actions/workflows/release.yml">
-    <img src="https://github.com/replexica/replexica/actions/workflows/release.yml/badge.svg" alt="Release" />
+  <a href="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml">
+    <img src="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml/badge.svg" alt="Release" />
   </a>
-  <a href="https://github.com/replexica/replexica/blob/main/LICENSE.md">
-    <img src="https://img.shields.io/github/license/replexica/replexica" alt="License" />
+  <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md">
+    <img src="https://img.shields.io/github/license/lingodotdev/lingo.dev" alt="License" />
   </a>
-  <a href="https://github.com/replexica/replexica/commits/main">
-    <img src="https://img.shields.io/github/last-commit/replexica/replexica" alt="Last Commit" />
+  <a href="https://github.com/lingodotdev/lingo.dev/commits/main">
+    <img src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev" alt="Last Commit" />
   </a>
 </p>
 
 <br />
 
-Replexica AI automatisiert die Software-Lokalisierung von Anfang bis Ende.
+Lingo.dev automatisiert die Software-Lokalisierung End-to-End mit modernsten LLM-Modellen.
 
-Es erstellt sofort authentische Übersetzungen und eliminiert manuelle Arbeit und Verwaltungsaufwand. Die Replexica Lokalisierungs-Engine versteht den Produktkontext und erstellt perfekte Übersetzungen, die Muttersprachler in über 60 Sprachen erwarten. Teams können dadurch 100-mal schneller lokalisieren, mit modernster Qualität, und Features an mehr zahlende Kunden weltweit ausliefern.
+Es erstellt sofort authentische Übersetzungen und eliminiert manuelle Arbeit und Verwaltungsaufwand. Die Lingo.dev Lokalisierungs-Engine versteht den Produktkontext und erstellt perfekte Übersetzungen, die Muttersprachler in über 60 Sprachen erwarten. Teams können dadurch 100-mal schneller lokalisieren, mit modernster Qualität, und Features an mehr zahlende Kunden weltweit ausliefern.
 
 ## 💫 Schnellstart
 
-1. Erstellen Sie ein Konto auf [der Website](https://replexica.com)
+1. Erstelle einen Account auf [der Website](https://lingo.dev)
 
-2. Initialisieren Sie Ihr Projekt:
+2. Initialisiere dein Projekt:
 
    ```bash
-   npx replexica@latest init
+   npx lingo.dev@latest init
    ```
 
-3. Lesen Sie unsere Dokumentation: [docs.replexica.com](https://docs.replexica.com)
+3. Schau dir unsere Docs an: [docs.lingo.dev](https://docs.lingo.dev)
 
-4. Lokalisieren Sie Ihre App (dauert nur Sekunden):
+4. Lokalisiere deine App (dauert nur Sekunden):
    ```bash
-   npx replexica@latest i18n
+   npx lingo.dev@latest i18n
    ```
 
 ## 🤖 GitHub Action
 
-Replexica bietet eine GitHub Action zur Automatisierung der Lokalisierung in Ihrer CI/CD-Pipeline. Hier ist eine grundlegende Einrichtung:
+Lingo.dev bietet eine GitHub Action zur Automatisierung der Lokalisierung in deiner CI/CD-Pipeline. Hier ist ein grundlegendes Setup:
 
 ```yaml
-- uses: replexica/replexica@main
+- uses: lingodotdev/lingo.dev@main
   with:
-    api-key: ${{ secrets.REPLEXICA_API_KEY }}
+    api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
 ```
 
-Diese Action führt bei jedem Push `replexica i18n` aus und hält Ihre Übersetzungen automatisch auf dem neuesten Stand.
+Diese Action führt `lingo.dev i18n` bei jedem Push aus und hält deine Übersetzungen automatisch aktuell.
 
-Für den Pull-Request-Modus und weitere Konfigurationsoptionen besuchen Sie unsere [GitHub Action Dokumentation](https://docs.replexica.com/setup/gha).
+Für den Pull-Request-Modus und weitere Konfigurationsoptionen besuche unsere [GitHub Action Dokumentation](https://docs.lingo.dev/setup/gha).
 
-## 🥇 Warum Teams Replexica wählen
+## 🥇 Warum Teams sich für Lingo.dev entscheiden
 
 - 🔥 **Sofortige Integration**: Setup in Minuten
 - 🔄 **CI/CD Automation**: Nahtlose Integration in Dev-Pipelines
@@ -83,32 +83,34 @@ Für den Pull-Request-Modus und weitere Konfigurationsoptionen besuchen Sie unse
 
 ## 📚 Dokumentation
 
-Detaillierte Anleitungen und API-Referenzen finden Sie in der [Dokumentation](https://replexica.com/go/docs).
+Detaillierte Anleitungen und API-Referenzen finden Sie in der [Dokumentation](https://lingo.dev/go/docs).
 
 ## 🤝 Mitmachen
 
 Interesse am Mitwirken, auch wenn Sie kein Kunde sind?
 
-Sehen Sie sich die [Good First Issues](https://github.com/replexica/replexica/labels/good%20first%20issue) an und lesen Sie den [Contributing Guide](./CONTRIBUTING.md).
+Schauen Sie sich die [Good First Issues](https://github.com/lingodotdev/lingo.dev/labels/good%20first%20issue) an und lesen Sie den [Leitfaden zum Mitwirken](./CONTRIBUTING.md).
 
-## 🧠 Team
+## 👨‍💻 Team
 
 - **[Veronica](https://github.com/vrcprl)**
 - **[Max](https://github.com/maxprilutskiy)**
+- **[Matej](https://github.com/mathio)**
 
-Fragen oder Anfragen? E-Mail an veronica@replexica.com
+Fragen oder Anfragen? E-Mail an veronica@lingo.dev
 
 ## 🌐 Readme in anderen Sprachen
 
-- [English](https://github.com/replexica/replexica)
-- [Spanish](/readme/es.md)
-- [French](/readme/fr.md)
-- [Russian](/readme/ru.md)
-- [German](/readme/de.md)
-- [Chinese](/readme/zh-Hans.md)
-- [Korean](/readme/ko.md)
-- [Japanese](/readme/ja.md)
-- [Italian](/readme/it.md)
-- [Arabic](/readme/ar.md)
+- [English](https://github.com/lingodotdev/lingo.dev)
+- [Spanisch](/readme/es.md)
+- [Französisch](/readme/fr.md)
+- [Russisch](/readme/ru.md)
+- [Deutsch](/readme/de.md)
+- [Chinesisch](/readme/zh-Hans.md)
+- [Koreanisch](/readme/ko.md)
+- [Japanisch](/readme/ja.md)
+- [Italienisch](/readme/it.md)
+- [Arabisch](/readme/ar.md)
+- [Hindi](/readme/hi.md)
 
-Ihre Sprache nicht dabei? Fügen Sie einfach einen neuen Sprachcode zur [`i18n.json`](./i18n.json) Datei hinzu und öffnen Sie einen PR.
+Siehst du deine Sprache nicht? Füge einfach einen neuen Sprachcode zur [`i18n.json`](./i18n.json) Datei hinzu und erstelle einen PR.

@@ -1,0 +1,22 @@
+{
+  "name": "@replexica/sdk",
+  "version": "0.7.11",
+  "description": "[DEPRECATED] Replexica SDK (now Lingo.dev) - Please use lingo.dev instead",
+  "private": false,
+  "type": "module",
+  "sideEffects": false,
+  "types": "index.d.ts",
+  "module": "index.js",
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "index.d.ts"
+  ],
+  "keywords": [],
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "lingo.dev": "*"
+  },
+  "deprecated": "Replexica is now Lingo.dev! Please use our new SDK package by running: npm install lingo.dev. Visit https://lingo.dev for the latest features and documentation."
+}

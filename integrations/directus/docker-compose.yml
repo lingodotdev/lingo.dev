@@ -1,13 +1,14 @@
 version: "3"
 services:
   directus:
-    image: directus/directus:11
+    build:
+      context: ./
     ports:
       - 8055:8055
     volumes:
       - ./.directus/database:/directus/database
       - ./.directus/uploads:/directus/uploads
-      - ./:/directus/extensions/replexica-directus-extension
+      - ./:/directus/extensions/lingo.dev-directus-extension
     environment:
       SECRET: "replace-with-secure-random-value"
       ADMIN_EMAIL: "admin@example.com"

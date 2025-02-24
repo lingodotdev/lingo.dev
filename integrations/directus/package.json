@@ -1,7 +1,7 @@
 {
   "name": "@replexica/integration-directus",
   "version": "0.1.9",
-  "description": "Replexica integration for Directus",
+  "description": "Lingo.dev integration for Directus",
   "private": false,
   "sideEffects": false,
   "directus:extension": {
@@ -33,6 +33,7 @@
   "devDependencies": {
     "@directus/extensions-sdk": "12.1.4",
     "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
     "vitest": "^2.1.8"
   }
 }

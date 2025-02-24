@@ -1,71 +1,71 @@
 <p align="center">
-  <a href="https://replexica.com">
-    <img src="/content/banner.dark.png" width="100%" alt="Replexica" />
+  <a href="https://lingo.dev">
+    <img src="/content/banner.dark.png" width="100%" alt="Lingo.dev" />
   </a>
 </p>
 
 <p align="center">
-  <strong>⚡️ Передовая AI-локализация для веб и мобильных приложений прямо из CI/CD.</strong>
+  <strong>⚡️ AI-инструментарий для локализации веб и мобильных приложений прямо из CI/CD.</strong>
 </p>
 
 <br />
 
 <p align="center">
-  <a href="https://replexica.com">Сайт</a> •
-  <a href="https://github.com/replexica/replexica/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22">Внести вклад</a> •
+  <a href="https://lingo.dev">Сайт</a> •
+  <a href="https://github.com/lingodotdev/lingo.dev/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22">Внести вклад</a> •
   <a href="#-github-action">GitHub Action</a>
 </p>
 
 <p align="center">
-  <a href="https://github.com/replexica/replexica/actions/workflows/release.yml">
-    <img src="https://github.com/replexica/replexica/actions/workflows/release.yml/badge.svg" alt="Release" />
+  <a href="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml">
+    <img src="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml/badge.svg" alt="Release" />
   </a>
-  <a href="https://github.com/replexica/replexica/blob/main/LICENSE.md">
-    <img src="https://img.shields.io/github/license/replexica/replexica" alt="License" />
+  <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md">
+    <img src="https://img.shields.io/github/license/lingodotdev/lingo.dev" alt="License" />
   </a>
-  <a href="https://github.com/replexica/replexica/commits/main">
-    <img src="https://img.shields.io/github/last-commit/replexica/replexica" alt="Last Commit" />
+  <a href="https://github.com/lingodotdev/lingo.dev/commits/main">
+    <img src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev" alt="Last Commit" />
   </a>
 </p>
 
 <br />
 
-Replexica AI автоматизирует локализацию программного обеспечения от начала до конца.
+Lingo.dev автоматизирует локализацию программного обеспечения от начала до конца, используя новейшие LLM-модели.
 
-Она мгновенно создает аутентичные переводы, устраняя ручную работу и управленческие издержки. Движок локализации Replexica понимает контекст продукта, создавая идеальные переводы, которые носители языка ожидают увидеть на более чем 60 языках. В результате команды выполняют локализацию в 100 раз быстрее, с передовым качеством, доставляя функционал большему количеству платящих клиентов по всему миру.
+Он мгновенно создает аутентичные переводы, устраняя ручную работу и управленческие накладные расходы. Движок локализации Lingo.dev понимает контекст продукта, создавая идеальные переводы, которые ожидают носители языка, на более чем 60 языках. В результате команды выполняют локализацию в 100 раз быстрее, с современным качеством, доставляя функции большему количеству платящих клиентов по всему миру.
 
 ## 💫 Quickstart
 
-1. Создайте аккаунт на [сайте](https://replexica.com)
+1. Создайте аккаунт на [сайте](https://lingo.dev)
 
 2. Инициализируйте ваш проект:
 
    ```bash
-   npx replexica@latest init
+   npx lingo.dev@latest init
    ```
 
-3. Ознакомьтесь с нашей документацией: [docs.replexica.com](https://docs.replexica.com)
+3. Ознакомьтесь с нашей документацией: [docs.lingo.dev](https://docs.lingo.dev)
 
 4. Локализуйте ваше приложение (занимает секунды):
    ```bash
-   npx replexica@latest i18n
+   npx lingo.dev@latest i18n
    ```
 
 ## 🤖 GitHub Action
 
-Replexica дает возможность автоматизировать процесс локализации с помощью GitHub Action в вашем CI/CD пайплайне. Базовая установка:
+Lingo.dev предлагает GitHub Action для автоматизации локализации в вашем CI/CD пайплайне. Вот базовая настройка:
 
 ```yaml
-- uses: replexica/replexica@main
+- uses: lingodotdev/lingo.dev@main
   with:
-    api-key: ${{ secrets.REPLEXICA_API_KEY }}
+    api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
 ```
 
-Action запускает `replexica i18n` после каждого push-а, сохраняя актуальность ваших переводов автоматически
+Этот action выполняет `lingo.dev i18n` при каждом пуше, автоматически поддерживая ваши переводы в актуальном состоянии.
 
-Для подключения через pull request and и других настроек, посетите [GitHub Action documentation](https://docs.replexica.com/setup/gha).
+Для режима пул-реквестов и других опций конфигурации посетите нашу [документацию по GitHub Action](https://docs.lingo.dev/setup/gha).
 
-## 🥇 Почему команды выбирают Replexica
+## 🥇 Почему команды выбирают Lingo.dev
 
 - 🔥 **Мгновенная интеграция**: Настройка за считанные минуты
 - 🔄 **CI/CD автоматизация**: Бесшовная интеграция в процесс разработки
@@ -83,24 +83,25 @@ Action запускает `replexica i18n` после каждого push-а, с
 
 ## 📚 Документация
 
-Подробные руководства и API референсы доступны в [документации](https://replexica.com/go/docs).
+Подробные руководства и справочники по API доступны в [документации](https://lingo.dev/go/docs).
 
 ## 🤝 Участие в разработке
 
 Хотите внести свой вклад, даже если вы не являетесь клиентом?
 
-Посмотрите [задачи для начинающих](https://github.com/replexica/replexica/labels/good%20first%20issue) и прочитайте [руководство по участию](./CONTRIBUTING.md).
+Ознакомьтесь с [задачами для начинающих](https://github.com/lingodotdev/lingo.dev/labels/good%20first%20issue) и прочитайте [руководство по внесению вклада](./CONTRIBUTING.md).
 
-## 🧠 Команда
+## 👨‍💻 Команда
 
 - **[Вероника](https://github.com/vrcprl)**
 - **[Макс](https://github.com/maxprilutskiy)**
+- **[Матей](https://github.com/mathio)**
 
-Вопросы или запросы? Пишите на veronica@replexica.com
+Вопросы или запросы? Пишите на veronica@lingo.dev
 
 ## 🌐 Readme на других языках
 
-- [English](https://github.com/replexica/replexica)
+- [English](https://github.com/lingodotdev/lingo.dev)
 - [Spanish](/readme/es.md)
 - [French](/readme/fr.md)
 - [Russian](/readme/ru.md)
@@ -110,5 +111,6 @@ Action запускает `replexica i18n` после каждого push-а, с
 - [Japanese](/readme/ja.md)
 - [Italian](/readme/it.md)
 - [Arabic](/readme/ar.md)
+- [Hindi](/readme/hi.md)
 
 Не видите свой язык? Просто добавьте новый языковой код в файл [`i18n.json`](./i18n.json) и создайте PR.

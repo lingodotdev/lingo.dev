@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
-import { ReplexicaEngine } from "./index";
+import { LingoDotDevEngine } from "./index";
 
 describe("ReplexicaEngine", () => {
   it("should pass", () => {
@@ -36,13 +36,11 @@ describe("ReplexicaEngine", () => {
 </html>`.trim();
 
       // Mock the internal localization method
-      const engine = new ReplexicaEngine({ apiKey: "test" });
+      const engine = new LingoDotDevEngine({ apiKey: "test" });
       const mockLocalizeRaw = vi.spyOn(engine as any, "_localizeRaw");
       mockLocalizeRaw.mockImplementation(async (content: any) => {
         // Simulate translation by adding 'ES:' prefix to all strings
-        return Object.fromEntries(
-          Object.entries(content).map(([key, value]) => [key, `ES:${value}`]),
-        );
+        return Object.fromEntries(Object.entries(content).map(([key, value]) => [key, `ES:${value}`]));
       });
 
       // Execute the localization
@@ -74,7 +72,6 @@ describe("ReplexicaEngine", () => {
           targetLocale: "es",
         },
         undefined,
-        undefined,
       );
 
       // Verify the final HTML structure
@@ -86,9 +83,7 @@ describe("ReplexicaEngine", () => {
       expect(result).toContain('title="ES:Link title"');
       expect(result).toContain('alt="ES:Test image"');
       expect(result).toContain('placeholder="ES:Enter text"');
-      expect(result).toContain(
-        'const doNotTranslate = "this text should be ignored"',
-      );
+      expect(result).toContain('const doNotTranslate = "this text should be ignored"');
     });
   });
 });

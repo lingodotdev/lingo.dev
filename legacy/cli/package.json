@@ -1,0 +1,28 @@
+{
+  "name": "replexica",
+  "version": "0.71.0",
+  "description": "[DEPRECATED] Replexica CLI (now Lingo.dev) - Please use lingo.dev instead",
+  "private": false,
+  "type": "module",
+  "sideEffects": false,
+  "types": "build/index.d.ts",
+  "module": "build/index.mjs",
+  "main": "build/index.cjs",
+  "bin": {
+    "replexica": "./bin/cli.mjs"
+  },
+  "files": [
+    "bin",
+    "build"
+  ],
+  "scripts": {
+    "replexica": "./bin/cli.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "lingo.dev": "*"
+  },
+  "deprecated": "Replexica is now Lingo.dev! Please use our new CLI package by running: npx lingo.dev@latest. Visit https://lingo.dev for the latest features and documentation."
+}
