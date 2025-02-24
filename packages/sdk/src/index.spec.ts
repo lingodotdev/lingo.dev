@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
-import { ReplexicaEngine } from "./index";
+import { LingoDotDevEngine } from "./index";
 
 describe("ReplexicaEngine", () => {
   it("should pass", () => {
@@ -36,7 +36,7 @@ describe("ReplexicaEngine", () => {
 </html>`.trim();
 
       // Mock the internal localization method
-      const engine = new ReplexicaEngine({ apiKey: "test" });
+      const engine = new LingoDotDevEngine({ apiKey: "test" });
       const mockLocalizeRaw = vi.spyOn(engine as any, "_localizeRaw");
       mockLocalizeRaw.mockImplementation(async (content: any) => {
         // Simulate translation by adding 'ES:' prefix to all strings
@@ -71,7 +71,6 @@ describe("ReplexicaEngine", () => {
           sourceLocale: "en",
           targetLocale: "es",
         },
-        undefined,
         undefined,
       );
 
