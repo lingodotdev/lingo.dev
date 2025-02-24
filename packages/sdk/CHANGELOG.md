@@ -1,5 +1,11 @@
 # @lingo.dev/\_sdk
 
+## 0.7.17
+
+### Patch Changes
+
+- [#493](https://github.com/lingodotdev/lingo.dev/pull/493) [`81527a4`](https://github.com/lingodotdev/lingo.dev/commit/81527a457ad8ef7fe735232caacdf2cc575e5b20) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - fix payload references
+
 ## 0.7.16
 
 ### Patch Changes
