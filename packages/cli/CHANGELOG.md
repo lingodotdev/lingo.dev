@@ -1,5 +1,15 @@
 # lingo.dev
 
+## 0.77.2
+
+### Patch Changes
+
+- [#496](https://github.com/lingodotdev/lingo.dev/pull/496) [`beb0541`](https://github.com/lingodotdev/lingo.dev/commit/beb05411ee459461e05801a763b1fa28d288e04e) Thanks [@mathio](https://github.com/mathio)! - po files
+
+- Updated dependencies [[`beb0541`](https://github.com/lingodotdev/lingo.dev/commit/beb05411ee459461e05801a763b1fa28d288e04e)]:
+  - @lingo.dev/_spec@0.25.1
+  - @lingo.dev/_sdk@0.7.18
+
 ## 0.77.1
 
 ### Patch Changes
