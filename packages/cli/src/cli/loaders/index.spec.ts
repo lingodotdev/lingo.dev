@@ -1636,6 +1636,42 @@ return array(
 
       expect(fs.writeFile).toHaveBeenCalledWith("i18n/es.php", expectedOutput, { encoding: "utf-8", flag: "w" });
     });
+
+    describe("po bucket loader", () => {
+      it("should load po file", async () => {
+        setupFileMocks();
+
+        const input = `msgid "Hello"\nmsgstr "Hello"`;
+        const expectedOutput = { "Hello/singular": "Hello" };
+
+        mockFileOperations(input);
+
+        const jsonLoader = createBucketLoader("po", "i18n/[locale].po");
+        jsonLoader.setDefaultLocale("en");
+        const data = await jsonLoader.pull("en");
+
+        expect(data).toEqual(expectedOutput);
+      });
+
+      it("should save po file", async () => {
+        setupFileMocks();
+
+        const input = `msgid "Hello"\nmsgstr "Hello"`;
+        const expectedOutput = `msgid "Hello"\nmsgstr "Hola"`;
+
+        mockFileOperations(input);
+
+        const jsonLoader = createBucketLoader("po", "i18n/[locale].po");
+        jsonLoader.setDefaultLocale("en");
+        await jsonLoader.pull("en");
+
+        await jsonLoader.push("es", {
+          "Hello/singular": "Hola",
+        });
+
+        expect(fs.writeFile).toHaveBeenCalledWith("i18n/es.po", expectedOutput, { encoding: "utf-8", flag: "w" });
+      });
+    });
   });
 });
 
