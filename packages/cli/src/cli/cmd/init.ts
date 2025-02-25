@@ -12,6 +12,7 @@ import { getSettings, saveSettings } from "../utils/settings";
 import { createAuthenticator } from "../utils/auth";
 import findLocaleFiles from "../utils/find-locale-paths";
 import { ensurePatterns } from "../utils/ensure-patterns";
+import updateGitignore from "../utils/update-gitignore";
 
 const openUrl = (path: string) => {
   const settings = getSettings(undefined);
@@ -199,6 +200,8 @@ export default new InteractiveCommand()
     } else {
       Ora().succeed(`Authenticated as ${auth.email}`);
     }
+
+    updateGitignore();
 
     if (!isInteractive) {
       Ora().info("Please see https://docs.lingo.dev/");

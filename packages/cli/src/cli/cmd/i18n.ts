@@ -16,6 +16,7 @@ import { createTwoFilesPatch } from "diff";
 import inquirer from "inquirer";
 import externalEditor from "external-editor";
 import { cacheChunk, deleteCache, getNormalizedCache } from "../utils/cache";
+import updateGitignore from "../utils/update-gitignore";
 
 export default new Command()
   .command("i18n")
@@ -32,6 +33,8 @@ export default new Command()
   .option("--debug", "Debug mode")
   .option("--strict", "Stop on first error")
   .action(async function (options) {
+    updateGitignore();
+
     const ora = Ora();
     const flags = parseFlags(options);
 
