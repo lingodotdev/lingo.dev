@@ -1,5 +1,11 @@
 # @lingo.dev/\_spec
 
+## 0.25.2
+
+### Patch Changes
+
+- [#498](https://github.com/lingodotdev/lingo.dev/pull/498) [`ec2902e`](https://github.com/lingodotdev/lingo.dev/commit/ec2902e5dc31fd79cc3b6fbf478ed1f3c4df0345) Thanks [@mathio](https://github.com/mathio)! - build json schema for config
+
 ## 0.25.1
 
 ### Patch Changes
