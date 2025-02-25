@@ -200,8 +200,29 @@ export const configV1_3Definition = extendConfigDefinition(configV1_2Definition,
   }),
 });
 
+const configSchema = "https://lingo.dev/schema/i18n.json";
+
+// v1.3 -> v1.4
+// Changes: Add $schema to the config
+export const configV1_4Definition = extendConfigDefinition(configV1_3Definition, {
+  createSchema: (baseSchema) =>
+    baseSchema.extend({
+      $schema: Z.string().default(configSchema),
+    }),
+  createDefaultValue: (baseDefaultValue) => ({
+    ...baseDefaultValue,
+    version: 1.4,
+    $schema: configSchema,
+  }),
+  createUpgrader: (oldConfig) => ({
+    ...oldConfig,
+    version: 1.4,
+    $schema: configSchema,
+  }),
+});
+
 // exports
-const LATEST_CONFIG_DEFINITION = configV1_3Definition;
+export const LATEST_CONFIG_DEFINITION = configV1_4Definition;
 
 export type I18nConfig = Z.infer<(typeof LATEST_CONFIG_DEFINITION)["schema"]>;
 
