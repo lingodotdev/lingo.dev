@@ -1,5 +1,11 @@
 # @lingo.dev/\_spec
 
+## 0.25.1
+
+### Patch Changes
+
+- [#496](https://github.com/lingodotdev/lingo.dev/pull/496) [`beb0541`](https://github.com/lingodotdev/lingo.dev/commit/beb05411ee459461e05801a763b1fa28d288e04e) Thanks [@mathio](https://github.com/mathio)! - po files
+
 ## 0.25.0
 
 ### Minor Changes
