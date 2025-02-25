@@ -1,6 +1,6 @@
 import _ from "lodash";
 import path from "path";
-import * as glob from "glob";
+import { glob } from "glob";
 import { CLIError } from "./errors";
 import { I18nConfig, resolveOverridenLocale, BucketItem } from "@lingo.dev/_spec";
 import { bucketTypeSchema } from "@lingo.dev/_spec";
@@ -82,13 +82,17 @@ function expandPlaceholderedGlob(_pathPattern: string, sourceLocale: string): st
     const sourcePathChunks = sourcePath.split(path.sep);
     localeSegmentIndexes.forEach((localeSegmentIndex) => {
       // Find the position of the "[locale]" placeholder within the segment
-      const localePlaceholderIndex = pathPatternChunks[localeSegmentIndex]?.indexOf("[locale]") ?? -1;
-      if (localeSegmentIndex >= 0 && localePlaceholderIndex >= 0) {
-        const placeholderedPathChunk = sourcePathChunks[localeSegmentIndex];
-        const placeholderedSegment =
-          placeholderedPathChunk.substring(0, localePlaceholderIndex) +
-          "[locale]" +
-          placeholderedPathChunk.substring(localePlaceholderIndex + sourceLocale.length);
+      const pathPatternChunk = pathPatternChunks[localeSegmentIndex];
+      const sourcePathChunk = sourcePathChunks[localeSegmentIndex];
+      const regexp = new RegExp(
+        "(" +
+          pathPatternChunk.replaceAll(".", "\\.").replaceAll("*", ".*").replace("[locale]", `)${sourceLocale}(`) +
+          ")",
+      );
+      const match = sourcePathChunk.match(regexp);
+      if (match) {
+        const [, prefix, suffix] = match;
+        const placeholderedSegment = prefix + "[locale]" + suffix;
         sourcePathChunks[localeSegmentIndex] = placeholderedSegment;
       }
     });
