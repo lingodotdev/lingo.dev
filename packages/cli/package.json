@@ -45,7 +45,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@datocms/cma-client-node": "^3.4.0",
-    "@inquirer/prompts": "^7.2.3",
+    "@inquirer/prompts": "^7.3.2",
     "@lingo.dev/_sdk": "workspace:*",
     "@lingo.dev/_spec": "workspace:*",
     "@modelcontextprotocol/sdk": "^1.5.0",
