@@ -48,5 +48,6 @@
     "yaml-root-key": {
       "include": ["demo/yaml-root-key/[locale].yml"]
     }
-  }
+  },
+  "$schema": "https://lingo.dev/schema/i18n.json"
 }

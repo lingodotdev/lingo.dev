@@ -42,6 +42,17 @@ const createV1_2Config = () => ({
   version: 1.2,
 });
 
+const createV1_3Config = () => ({
+  ...createV1_2Config(),
+  version: 1.3,
+});
+
+const createV1_4Config = () => ({
+  ...createV1_3Config(),
+  version: 1.4,
+  $schema: "https://lingo.dev/schema/i18n.json",
+});
+
 const createInvalidLocaleConfig = () => ({
   version: 1,
   locale: {
@@ -55,20 +66,22 @@ const createInvalidLocaleConfig = () => ({
 });
 
 describe("I18n Config Parser", () => {
-  it("should upgrade v0 config to v1.2", () => {
+  it("should upgrade v0 config to latest version", () => {
     const v0Config = createV0Config();
     const result = parseI18nConfig(v0Config);
 
-    expect(result.version).toBe(1.3);
+    expect(result["$schema"]).toBeDefined();
+    expect(result.version).toBe(1.4);
     expect(result.locale).toEqual(defaultConfig.locale);
     expect(result.buckets).toEqual({});
   });
 
-  it("should upgrade v1 config to v1.2", () => {
+  it("should upgrade v1 config to latest version", () => {
     const v1Config = createV1Config();
     const result = parseI18nConfig(v1Config);
 
-    expect(result.version).toBe(1.3);
+    expect(result["$schema"]).toBeDefined();
+    expect(result.version).toBe(1.4);
     expect(result.locale).toEqual(v1Config.locale);
     expect(result.buckets).toEqual({
       json: {
@@ -78,13 +91,6 @@ describe("I18n Config Parser", () => {
         include: ["src/blog/[locale]/*.md"],
       },
     });
-  });
-
-  it("should not modify v1.1 config", () => {
-    const v1_1Config = createV1_1Config();
-    const result = parseI18nConfig(v1_1Config);
-
-    expect(result).toEqual(v1_1Config);
   });
 
   it("should throw an error for invalid configurations", () => {
@@ -101,13 +107,13 @@ describe("I18n Config Parser", () => {
 
   it("should ignore extra fields in the config", () => {
     const configWithExtra = {
-      ...createV1_1Config(),
+      ...createV1_4Config(),
       extraField: "should be ignored",
     };
     const result = parseI18nConfig(configWithExtra);
 
     expect(result).not.toHaveProperty("extraField");
-    expect(result).toEqual(createV1_1Config());
+    expect(result).toEqual(createV1_4Config());
   });
 
   it("should throw an error for unsupported locales", () => {
