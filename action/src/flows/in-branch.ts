@@ -16,6 +16,8 @@ export class InBranchFlow extends IntegrationFlow {
     await this.runLingoDotDev();
     this.ora.succeed("Done running Lingo.dev");
 
+    execSync(`rm -f i18n.cache`, { stdio: "inherit" }); // do not commit cache file if it exists
+
     this.ora.start("Checking for changes");
     const hasChanges = this.checkCommitableChanges();
     this.ora.succeed(hasChanges ? "Changes detected" : "No changes detected");
@@ -23,6 +25,7 @@ export class InBranchFlow extends IntegrationFlow {
     if (hasChanges) {
       this.ora.start("Committing changes");
       execSync(`git add .`, { stdio: "inherit" });
+      execSync(`git status --porcelain`, { stdio: "inherit" });
       execSync(`git commit -m "${this.platformKit.config.commitMessage}"`, {
         stdio: "inherit",
       });
