@@ -29,8 +29,8 @@ describe("findLocaleFiles", () => {
     const result = findLocaleFiles("json");
 
     expect(result).toEqual({
-      found: true,
       patterns: ["src/i18n/[locale].json", "src/translations/[locale].json"],
+      defaultPatterns: ["i18n/[locale].json"],
     });
   });
 
@@ -40,8 +40,8 @@ describe("findLocaleFiles", () => {
     const result = findLocaleFiles("yaml");
 
     expect(result).toEqual({
-      found: true,
       patterns: ["locales/[locale].yml", "translations/[locale].yml"],
+      defaultPatterns: ["i18n/[locale].yml"],
     });
   });
 
@@ -51,8 +51,8 @@ describe("findLocaleFiles", () => {
     const result = findLocaleFiles("flutter");
 
     expect(result).toEqual({
-      found: true,
       patterns: ["lib/l10n/[locale].arb", "lib/translations/[locale].arb"],
+      defaultPatterns: ["i18n/[locale].arb"],
     });
   });
 
@@ -80,7 +80,6 @@ describe("findLocaleFiles", () => {
     const result = findLocaleFiles("json");
 
     expect(result).toEqual({
-      found: true,
       patterns: [
         "src/locales/[locale]/messages.json",
         "src/i18n/[locale]/strings.json",
@@ -94,17 +93,18 @@ describe("findLocaleFiles", () => {
         "bar/[locale]/baz/[locale].json",
         "bar/[locale]/[locale].json",
       ],
+      defaultPatterns: ["i18n/[locale].json"],
     });
   });
 
-  it("should return default pattern when no files found", () => {
+  it("should return no patterns when no files found", () => {
     vi.mocked(glob.sync).mockReturnValue([]);
 
     const result = findLocaleFiles("json");
 
     expect(result).toEqual({
-      found: false,
-      patterns: ["i18n/[locale].json"],
+      patterns: [],
+      defaultPatterns: ["i18n/[locale].json"],
     });
   });
 
@@ -119,23 +119,23 @@ describe("findLocaleFiles", () => {
     const result = findLocaleFiles("xcode-xcstrings");
 
     expect(result).toEqual({
-      found: true,
       patterns: [
         "ios/MyApp/Localizable.xcstrings",
         "ios/MyApp/Onboarding/Localizable.xcstrings",
         "ios/MyApp/xx/Localizable.xcstrings",
       ],
+      defaultPatterns: ["Localizable.xcstrings"],
     });
   });
 
-  it("should return default pattern for xcode-xcstrings when no files found", () => {
+  it("should return no patterns for xcode-xcstrings when no files found", () => {
     vi.mocked(glob.sync).mockReturnValue([]);
 
     const result = findLocaleFiles("xcode-xcstrings");
 
     expect(result).toEqual({
-      found: false,
-      patterns: ["Localizable.xcstrings"],
+      patterns: [],
+      defaultPatterns: ["Localizable.xcstrings"],
     });
   });
 
