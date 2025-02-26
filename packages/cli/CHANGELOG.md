@@ -1,5 +1,13 @@
 # lingo.dev
 
+## 0.77.4
+
+### Patch Changes
+
+- [#503](https://github.com/lingodotdev/lingo.dev/pull/503) [`7f73148`](https://github.com/lingodotdev/lingo.dev/commit/7f73148e6acb67920ce1deaec8d16384115b1071) Thanks [@github-actions](https://github.com/apps/github-actions)! - release
+
+- [#500](https://github.com/lingodotdev/lingo.dev/pull/500) [`3a526b8`](https://github.com/lingodotdev/lingo.dev/commit/3a526b86ef55b501cab167d072791b7487a20c9c) Thanks [@mathio](https://github.com/mathio)! - fix bucket path with \* filenames
+
 ## 0.77.3
 
 ### Patch Changes
