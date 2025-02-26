@@ -2,11 +2,26 @@
   "version": 1.2,
   "locale": {
     "source": "en",
-    "targets": ["ru", "fr", "es", "de", "zh-Hans", "ko", "ja", "it", "ar", "hi", "pt-BR"]
+    "targets": [
+      "ru",
+      "fr",
+      "es",
+      "de",
+      "zh-Hans",
+      "ko",
+      "ja",
+      "it",
+      "ar",
+      "hi",
+      "pt-BR"
+    ]
   },
   "buckets": {
     "markdown": {
-      "include": ["readme/[locale].md"]
+      "include": [
+        "readme/[locale].md"
+      ]
     }
-  }
+  },
+  "$schema": "https://lingo.dev/schema/i18n.json"
 }
