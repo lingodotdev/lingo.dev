@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.77.5
+
+### Patch Changes
+
+- [#505](https://github.com/lingodotdev/lingo.dev/pull/505) [`1fc204b`](https://github.com/lingodotdev/lingo.dev/commit/1fc204bdc90ae59a9cda7cd13b0fbf61b7fc0749) Thanks [@mathio](https://github.com/mathio)! - init github/bitbucket/gitlab action
+
 ## 0.77.4
 
 ### Patch Changes
