@@ -71,12 +71,13 @@ function findLocaleFilesWithExtension(ext: string) {
 
   const grouppedFilesAndPatterns = _.groupBy(localeFilesAndPatterns, "pattern");
   const patterns = Object.keys(grouppedFilesAndPatterns);
+  const defaultPatterns = [`i18n/[locale]${ext}`];
 
   if (patterns.length > 0) {
-    return { found: true, patterns };
+    return { patterns, defaultPatterns };
   }
 
-  return { found: false, patterns: [`i18n/[locale]${ext}`] };
+  return { patterns: [], defaultPatterns };
 }
 
 function findLocaleFilesForFilename(fileName: string) {
@@ -91,10 +92,11 @@ function findLocaleFilesForFilename(fileName: string) {
   }));
   const grouppedFilesAndPatterns = _.groupBy(localeFilesAndPatterns, "pattern");
   const patterns = Object.keys(grouppedFilesAndPatterns);
+  const defaultPatterns = [fileName];
 
   if (patterns.length > 0) {
-    return { found: true, patterns };
+    return { patterns, defaultPatterns };
   }
 
-  return { found: false, patterns: [fileName] };
+  return { patterns: [], defaultPatterns };
 }

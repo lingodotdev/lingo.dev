@@ -13,6 +13,7 @@ import { createAuthenticator } from "../utils/auth";
 import findLocaleFiles from "../utils/find-locale-paths";
 import { ensurePatterns } from "../utils/ensure-patterns";
 import updateGitignore from "../utils/update-gitignore";
+import initCICD from "../utils/init-ci-cd";
 
 const openUrl = (path: string) => {
   const settings = getSettings(undefined);
@@ -118,9 +119,9 @@ export default new InteractiveCommand()
       };
     } else {
       let selectedPatterns: string[] = [];
-      const { found, patterns } = findLocaleFiles(options.bucket);
+      const { patterns, defaultPatterns } = findLocaleFiles(options.bucket);
 
-      if (found) {
+      if (patterns.length > 0) {
         spinner.succeed("Found existing locale files:");
 
         selectedPatterns = await checkbox({
@@ -135,11 +136,11 @@ export default new InteractiveCommand()
 
       if (selectedPatterns.length === 0) {
         const useDefault = await confirm({
-          message: `Use (and create) default path ${patterns.join(", ")}?`,
+          message: `Use (and create) default path ${defaultPatterns.join(", ")}?`,
         });
-        ensurePatterns(patterns, options.source);
         if (useDefault) {
-          selectedPatterns = patterns;
+          ensurePatterns(defaultPatterns, options.source);
+          selectedPatterns = defaultPatterns;
         }
       }
 
@@ -162,6 +163,8 @@ export default new InteractiveCommand()
     spinner.succeed("Lingo.dev project initialized");
 
     if (isInteractive) {
+      await initCICD(spinner);
+
       const openDocs = await confirm({ message: "Would you like to see our docs?" });
       if (openDocs) {
         openUrl("/go/docs");
