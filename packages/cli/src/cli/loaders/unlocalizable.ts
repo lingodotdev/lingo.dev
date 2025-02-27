@@ -10,11 +10,11 @@ export default function createUnlocalizableLoader(
 ): ILoader<Record<string, any>, Record<string, any>> {
   const rules = {
     isEmpty: (v: any) => _.isEmpty(v),
-    isNumber: (v: string) => !_.isNaN(_.toNumber(v)),
-    isBoolean: (v: string) => _.isBoolean(v),
-    isIsoDate: (v: string) => _.isString(v) && _isIsoDate(v),
-    isSystemId: (v: string) => _.isString(v) && _isSystemId(v),
-    isUrl: (v: string) => _.isString(v) && _isUrl(v),
+    isNumber: (v: any) => typeof v === "number" || /^[0-9]+$/.test(v),
+    isBoolean: (v: any) => _.isBoolean(v),
+    isIsoDate: (v: any) => _.isString(v) && _isIsoDate(v),
+    isSystemId: (v: any) => _.isString(v) && _isSystemId(v),
+    isUrl: (v: any) => _.isString(v) && _isUrl(v),
   };
   return createLoader({
     async pull(locale, input) {
