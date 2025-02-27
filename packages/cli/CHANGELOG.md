@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.77.6
+
+### Patch Changes
+
+- [#507](https://github.com/lingodotdev/lingo.dev/pull/507) [`f0c7f6e`](https://github.com/lingodotdev/lingo.dev/commit/f0c7f6e7fa669e4f049d0b1175eb54bae20ec330) Thanks [@mathio](https://github.com/mathio)! - fix handling numbers in unlocalizable loader
+
 ## 0.77.5
 
 ### Patch Changes
