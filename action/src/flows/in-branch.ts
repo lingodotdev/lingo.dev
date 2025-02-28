@@ -75,7 +75,10 @@ export class InBranchFlow extends IntegrationFlow {
     const currentAuthor = `${gitConfig.userName} <${gitConfig.userEmail}>`;
     const authorOfLastCommit = execSync(`git log -1 --pretty=format:'%an <%ae>'`).toString();
     if (authorOfLastCommit === currentAuthor) {
-      this.ora.fail(`The action will not run on commits by ${currentAuthor}`);
+      this.ora.warn(`The action will not run on commits by ${currentAuthor}`);
+      this.ora.warn(
+        `The last commit was already made by this action. Running this action again will not change anything.`,
+      );
       return false;
     }
 
