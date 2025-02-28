@@ -55,6 +55,7 @@ export class InBranchFlow extends IntegrationFlow {
   }
 
   private configureGit() {
+    const { processOwnCommits } = this.platformKit.config;
     const { baseBranchName } = this.platformKit.platformConfig;
 
     this.ora.info(`Current working directory:`);
@@ -72,14 +73,16 @@ export class InBranchFlow extends IntegrationFlow {
     execSync(`git fetch origin ${baseBranchName}`, { stdio: "inherit" });
     execSync(`git checkout ${baseBranchName} --`, { stdio: "inherit" });
 
-    const currentAuthor = `${gitConfig.userName} <${gitConfig.userEmail}>`;
-    const authorOfLastCommit = execSync(`git log -1 --pretty=format:'%an <%ae>'`).toString();
-    if (authorOfLastCommit === currentAuthor) {
-      this.ora.warn(`The action will not run on commits by ${currentAuthor}`);
-      this.ora.warn(
-        `The last commit was already made by this action. Running this action again will not change anything.`,
-      );
-      return false;
+    if (!processOwnCommits) {
+      const currentAuthor = `${gitConfig.userName} <${gitConfig.userEmail}>`;
+      const authorOfLastCommit = execSync(`git log -1 --pretty=format:'%an <%ae>'`).toString();
+      if (authorOfLastCommit === currentAuthor) {
+        this.ora.warn(`The action will not run on commits by ${currentAuthor}`);
+        this.ora.warn(
+          `The last commit was already made by this action. Running this action again will not change anything.`,
+        );
+        return false;
+      }
     }
 
     const workingDir = path.resolve(process.cwd(), this.platformKit.config.workingDir);
