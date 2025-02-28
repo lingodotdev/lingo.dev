@@ -32,6 +32,7 @@ export abstract class PlatformKit<PlatformConfig extends BasePlatformConfig = Ba
       LINGODOTDEV_COMMIT_MESSAGE: Z.string().optional(),
       LINGODOTDEV_PULL_REQUEST_TITLE: Z.string().optional(),
       LINGODOTDEV_WORKING_DIRECTORY: Z.string().optional(),
+      LINGODOTDEV_PROCESS_OWN_COMMITS: Z.preprocess((val) => val === "true" || val === true, Z.boolean()).optional(),
     }).parse(process.env);
 
     return {
@@ -40,6 +41,7 @@ export abstract class PlatformKit<PlatformConfig extends BasePlatformConfig = Ba
       commitMessage: env.LINGODOTDEV_COMMIT_MESSAGE || defaultMessage,
       pullRequestTitle: env.LINGODOTDEV_PULL_REQUEST_TITLE || defaultMessage,
       workingDir: env.LINGODOTDEV_WORKING_DIRECTORY || ".",
+      processOwnCommits: env.LINGODOTDEV_PROCESS_OWN_COMMITS || false,
     };
   }
 }

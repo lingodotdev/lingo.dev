@@ -15,7 +15,7 @@ runs:
     LINGODOTDEV_COMMIT_MESSAGE: ${{ inputs.commit-message }}
     LINGODOTDEV_PULL_REQUEST_TITLE: ${{ inputs.pull-request-title }}
     LINGODOTDEV_WORKING_DIRECTORY: ${{ inputs.working-directory }}
-
+    LINGODOTDEV_PROCESS_OWN_COMMITS: ${{ inputs.process-own-commits }}
 inputs:
   api-key:
     description: "Lingo.dev Platform API Key"
@@ -32,4 +32,7 @@ inputs:
     required: false
   working-directory:
     description: "Working directory"
+    required: false
+  process-own-commits:
+    description: "Process commits made by this action"
     required: false

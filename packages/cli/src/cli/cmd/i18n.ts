@@ -60,7 +60,7 @@ export default new Command()
       validateParams(i18nConfig, flags);
       ora.succeed("Localization configuration is valid");
 
-      ora.start("Connecting to Replexica Localization Engine...");
+      ora.start("Connecting to Lingo.dev Localization Engine...");
       const auth = await validateAuth(settings);
       ora.succeed(`Authenticated as ${auth.email}`);
 
