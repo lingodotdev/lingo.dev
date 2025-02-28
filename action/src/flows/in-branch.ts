@@ -77,9 +77,8 @@ export class InBranchFlow extends IntegrationFlow {
       const currentAuthor = `${gitConfig.userName} <${gitConfig.userEmail}>`;
       const authorOfLastCommit = execSync(`git log -1 --pretty=format:'%an <%ae>'`).toString();
       if (authorOfLastCommit === currentAuthor) {
-        this.ora.warn(`The action will not run on commits by ${currentAuthor}`);
         this.ora.warn(
-          `The last commit was already made by this action. Running this action again will not change anything.`,
+          `The last commit was already made by ${currentAuthor}, so this run will be skipped, as running again would have no effect. See docs: https://docs.lingo.dev/ci-action/overview`,
         );
         return false;
       }
