@@ -1,5 +1,14 @@
 # lingo.dev
 
+## 0.77.7
+
+### Patch Changes
+
+- [#515](https://github.com/lingodotdev/lingo.dev/pull/515) [`fd99a6c`](https://github.com/lingodotdev/lingo.dev/commit/fd99a6ca18ee21774ba5c2b7ce72d1712e374675) Thanks [@mathio](https://github.com/mathio)! - add typesVersions for support of older `moduleResolution`
+
+- Updated dependencies [[`fd99a6c`](https://github.com/lingodotdev/lingo.dev/commit/fd99a6ca18ee21774ba5c2b7ce72d1712e374675)]:
+  - @lingo.dev/_sdk@0.7.20
+
 ## 0.77.6
 
 ### Patch Changes
