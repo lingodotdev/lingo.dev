@@ -4,7 +4,6 @@ import { getConfig, saveConfig } from "../utils/config";
 import { defaultConfig, LocaleCode, resolveLocaleCode, bucketTypes } from "@lingo.dev/_spec";
 import fs from "fs";
 import path from "path";
-import { spawn } from "child_process";
 import _ from "lodash";
 import { checkbox, confirm, input } from "@inquirer/prompts";
 import { login } from "./auth";
@@ -14,10 +13,11 @@ import findLocaleFiles from "../utils/find-locale-paths";
 import { ensurePatterns } from "../utils/ensure-patterns";
 import updateGitignore from "../utils/update-gitignore";
 import initCICD from "../utils/init-ci-cd";
+import open from "open";
 
 const openUrl = (path: string) => {
   const settings = getSettings(undefined);
-  spawn("open", [`${settings.auth.webUrl}${path}`]);
+  open(`${settings.auth.webUrl}${path}`, { wait: false });
 };
 
 const throwHelpError = (option: string, value: string) => {
