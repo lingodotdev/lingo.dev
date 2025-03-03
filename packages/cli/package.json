@@ -25,6 +25,19 @@
       "require": "./build/spec.cjs"
     }
   },
+  "typesVersions": {
+    "*": {
+      "sdk": [
+        "./build/sdk.d.ts"
+      ],
+      "cli": [
+        "./build/cli.d.ts"
+      ],
+      "spec": [
+        "./build/spec.d.ts"
+      ]
+    }
+  },
   "bin": {
     "lingo.dev": "./bin/cli.mjs"
   },
