@@ -28,6 +28,7 @@ import createVariableLoader from "./variable";
 import createSyncLoader from "./sync";
 import createPlutilJsonTextLoader from "./plutil-json-loader";
 import createPhpLoader from "./php";
+import createVueJsonLoader from "./vue-json";
 
 type BucketLoaderOptions = {
   isCacheRestore: boolean;
@@ -198,6 +199,14 @@ export default function createBucketLoader(
         createSyncLoader(),
         createFlatLoader(),
         createUnlocalizableLoader(options.isCacheRestore),
+      );
+    case "vue-json":
+      return composeLoaders(
+        createTextFileLoader(bucketPathPattern),
+        createVueJsonLoader(),
+        createSyncLoader(),
+        createFlatLoader(),
+        createUnlocalizableLoader(),
       );
   }
 }

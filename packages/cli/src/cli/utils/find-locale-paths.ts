@@ -27,7 +27,7 @@ export default function findLocaleFiles(bucket: string) {
     case "xcode-stringsdict":
       return findLocaleFilesForFilename("Localizable.stringsdict");
     default:
-      throw new Error(`Unsupported bucket type: ${bucket}`);
+      return null;
   }
 }
 
