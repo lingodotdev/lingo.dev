@@ -22,6 +22,7 @@ export const bucketTypes = [
   "vtt",
   "php",
   "po",
+  "vue-json",
 ] as const;
 
 export const bucketTypeSchema = Z.enum(bucketTypes);

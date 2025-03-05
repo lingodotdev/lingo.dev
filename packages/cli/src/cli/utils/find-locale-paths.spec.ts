@@ -139,7 +139,7 @@ describe("findLocaleFiles", () => {
     });
   });
 
-  it("should throw error for unsupported bucket type", () => {
-    expect(() => findLocaleFiles("invalid")).toThrow("Unsupported bucket type: invalid");
+  it("should return null unsupported bucket type", () => {
+    expect(findLocaleFiles("invalid")).toBeNull();
   });
 });

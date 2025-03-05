@@ -1590,9 +1590,9 @@ Mundo!`;
 
       mockFileOperations(input);
 
-      const jsonLoader = createBucketLoader("php", "i18n/[locale].php");
-      jsonLoader.setDefaultLocale("en");
-      const data = await jsonLoader.pull("en");
+      const phpLoader = createBucketLoader("php", "i18n/[locale].php");
+      phpLoader.setDefaultLocale("en");
+      const data = await phpLoader.pull("en");
 
       expect(data).toEqual(expectedOutput);
     });
@@ -1624,11 +1624,11 @@ return array(
 
       mockFileOperations(input);
 
-      const jsonLoader = createBucketLoader("php", "i18n/[locale].php");
-      jsonLoader.setDefaultLocale("en");
-      await jsonLoader.pull("en");
+      const phpLoader = createBucketLoader("php", "i18n/[locale].php");
+      phpLoader.setDefaultLocale("en");
+      await phpLoader.pull("en");
 
-      await jsonLoader.push("es", {
+      await phpLoader.push("es", {
         "button.title": "Enviar",
         "button.description/0": "Hola",
         "button.description/1": "Adiós",
@@ -1636,41 +1636,135 @@ return array(
 
       expect(fs.writeFile).toHaveBeenCalledWith("i18n/es.php", expectedOutput, { encoding: "utf-8", flag: "w" });
     });
+  });
 
-    describe("po bucket loader", () => {
-      it("should load po file", async () => {
-        setupFileMocks();
+  describe("po bucket loader", () => {
+    it("should load po file", async () => {
+      setupFileMocks();
 
-        const input = `msgid "Hello"\nmsgstr "Hello"`;
-        const expectedOutput = { "Hello/singular": "Hello" };
+      const input = `msgid "Hello"\nmsgstr "Hello"`;
+      const expectedOutput = { "Hello/singular": "Hello" };
 
-        mockFileOperations(input);
+      mockFileOperations(input);
 
-        const jsonLoader = createBucketLoader("po", "i18n/[locale].po");
-        jsonLoader.setDefaultLocale("en");
-        const data = await jsonLoader.pull("en");
+      const poLoader = createBucketLoader("po", "i18n/[locale].po");
+      poLoader.setDefaultLocale("en");
+      const data = await poLoader.pull("en");
 
-        expect(data).toEqual(expectedOutput);
+      expect(data).toEqual(expectedOutput);
+    });
+
+    it("should save po file", async () => {
+      setupFileMocks();
+
+      const input = `msgid "Hello"\nmsgstr "Hello"`;
+      const expectedOutput = `msgid "Hello"\nmsgstr "Hola"`;
+
+      mockFileOperations(input);
+
+      const poLoader = createBucketLoader("po", "i18n/[locale].po");
+      poLoader.setDefaultLocale("en");
+      await poLoader.pull("en");
+
+      await poLoader.push("es", {
+        "Hello/singular": "Hola",
       });
 
-      it("should save po file", async () => {
-        setupFileMocks();
+      expect(fs.writeFile).toHaveBeenCalledWith("i18n/es.po", expectedOutput, { encoding: "utf-8", flag: "w" });
+    });
+  });
 
-        const input = `msgid "Hello"\nmsgstr "Hello"`;
-        const expectedOutput = `msgid "Hello"\nmsgstr "Hola"`;
+  describe("vue-json bucket loader", () => {
+    const template = `<template>
+  <div id="app">
+    <label for="locale">locale</label>
+    <select v-model="locale">
+      <option>en</option>
+      <option>ja</option>
+    </select>
+    <p>message: {{ $t('hello') }}</p>
+  </div>
+</template>`;
+    const script = `<script>
+export default {
+  name: 'app',
+  data () {
+    this.$i18n.locale = 'en';
+    return { locale: 'en' }
+  },
+  watch: {
+    locale (val) {
+      this.$i18n.locale = val
+    }
+  }
+}
+</script>`;
 
-        mockFileOperations(input);
+    it("should load vue-json file", async () => {
+      setupFileMocks();
 
-        const jsonLoader = createBucketLoader("po", "i18n/[locale].po");
-        jsonLoader.setDefaultLocale("en");
-        await jsonLoader.pull("en");
+      const input = `${template}
 
-        await jsonLoader.push("es", {
-          "Hello/singular": "Hola",
-        });
+<i18n>
+{
+  "en": {
+    "hello": "hello world!"
+  }
+}
+</i18n>
 
-        expect(fs.writeFile).toHaveBeenCalledWith("i18n/es.po", expectedOutput, { encoding: "utf-8", flag: "w" });
+${script}`;
+      const expectedOutput = { hello: "hello world!" };
+
+      mockFileOperations(input);
+
+      const vueLoader = createBucketLoader("vue-json", "i18n/[locale].vue");
+      vueLoader.setDefaultLocale("en");
+      const data = await vueLoader.pull("en");
+
+      expect(data).toEqual(expectedOutput);
+    });
+
+    it("should save vue-json file", async () => {
+      setupFileMocks();
+
+      const input = `${template}
+
+<i18n>
+{
+  "en": {
+    "hello": "hello world!"
+  }
+}
+</i18n>
+
+${script}`;
+      const expectedOutput = `${template}
+
+<i18n>
+{
+  "en": {
+    "hello": "hello world!"
+  },
+  "es": {
+    "hello": "hola mundo!"
+  }
+}
+</i18n>
+
+${script}`;
+
+      mockFileOperations(input);
+
+      const vueLoader = createBucketLoader("vue-json", "i18n/App.vue");
+      vueLoader.setDefaultLocale("en");
+      await vueLoader.pull("en");
+
+      await vueLoader.push("es", {
+        hello: "hola mundo!",
       });
+
+      expect(fs.writeFile).toHaveBeenCalledWith("i18n/App.vue", expectedOutput, { encoding: "utf-8", flag: "w" });
     });
   });
 });
