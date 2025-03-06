@@ -1938,6 +1938,29 @@ ${script}`;
 
       expect(fs.writeFile).toHaveBeenCalledWith("i18n/App.vue", expectedOutput, { encoding: "utf-8", flag: "w" });
     });
+
+    it("should ignore vue file without i18n tag", async () => {
+      setupFileMocks();
+
+      const input = `${template}
+
+${script}`;
+      const expectedOutput = `${template}
+
+${script}`;
+
+      mockFileOperations(input);
+
+      const vueLoader = createBucketLoader("vue-json", "i18n/App.vue", { isCacheRestore: false, defaultLocale: "en" });
+      vueLoader.setDefaultLocale("en");
+      await vueLoader.pull("en");
+
+      await vueLoader.push("es", {
+        hello: "hola mundo!",
+      });
+
+      expect(fs.writeFile).toHaveBeenCalledWith("i18n/App.vue", expectedOutput, { encoding: "utf-8", flag: "w" });
+    });
   });
 });
 
