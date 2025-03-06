@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.78.3
+
+### Patch Changes
+
+- [#524](https://github.com/lingodotdev/lingo.dev/pull/524) [`befa237`](https://github.com/lingodotdev/lingo.dev/commit/befa23704f9b010923292da89e232152c0423aed) Thanks [@mathio](https://github.com/mathio)! - fix vue json files
+
 ## 0.78.2
 
 ### Patch Changes
