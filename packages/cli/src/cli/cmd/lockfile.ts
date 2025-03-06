@@ -26,7 +26,7 @@ export default new Command()
       for (const bucket of buckets) {
         for (const bucketConfig of bucket.config) {
           const sourceLocale = resolveOverridenLocale(i18nConfig!.locale.source, bucketConfig.delimiter);
-          const bucketLoader = createBucketLoader(bucket.type, bucketConfig.pathPattern);
+          const bucketLoader = createBucketLoader(bucket.type, bucketConfig.pathPattern, { isCacheRestore: false, defaultLocale: sourceLocale });
           bucketLoader.setDefaultLocale(sourceLocale);
 
           const sourceData = await bucketLoader.pull(sourceLocale);

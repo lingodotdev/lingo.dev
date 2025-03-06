@@ -21,6 +21,9 @@ importers:
       '@commitlint/config-conventional':
         specifier: ^19.6.0
         version: 19.6.0
+      commitlint:
+        specifier: ^19.7.1
+        version: 19.7.1(@types/node@22.13.5)(typescript@5.7.2)
       husky:
         specifier: ^9.1.7
         version: 9.1.7
@@ -427,6 +430,11 @@ packages:
     engines: {node: '>=v18'}
     hasBin: true
 
+  '@commitlint/cli@19.7.1':
+    resolution: {integrity: sha512-iObGjR1tE/PfDtDTEfd+tnRkB3/HJzpQqRTyofS2MPPkDn1mp3DBC8SoPDayokfAy+xKhF8+bwRCJO25Nea0YQ==}
+    engines: {node: '>=v18'}
+    hasBin: true
+
   '@commitlint/config-conventional@19.6.0':
     resolution: {integrity: sha512-DJT40iMnTYtBtUfw9ApbsLZFke1zKh6llITVJ+x9mtpHD08gsNXaIRqHTmwTZL3dNX5+WoyK7pCN/5zswvkBCQ==}
     engines: {node: '>=v18'}
@@ -451,8 +459,16 @@ packages:
     resolution: {integrity: sha512-Ov6iBgxJQFR9koOupDPHvcHU9keFupDgtB3lObdEZDroiG4jj1rzky60fbQozFKVYRTUdrBGICHG0YVmRuAJmw==}
     engines: {node: '>=v18'}
 
+  '@commitlint/is-ignored@19.7.1':
+    resolution: {integrity: sha512-3IaOc6HVg2hAoGleRK3r9vL9zZ3XY0rf1RsUf6jdQLuaD46ZHnXBiOPTyQ004C4IvYjSWqJwlh0/u2P73aIE3g==}
+    engines: {node: '>=v18'}
+
   '@commitlint/lint@19.6.0':
     resolution: {integrity: sha512-LRo7zDkXtcIrpco9RnfhOKeg8PAnE3oDDoalnrVU/EVaKHYBWYL1DlRR7+3AWn0JiBqD8yKOfetVxJGdEtZ0tg==}
+    engines: {node: '>=v18'}
+
+  '@commitlint/lint@19.7.1':
+    resolution: {integrity: sha512-LhcPfVjcOcOZA7LEuBBeO00o3MeZa+tWrX9Xyl1r9PMd5FWsEoZI9IgnGqTKZ0lZt5pO3ZlstgnRyY1CJJc9Xg==}
     engines: {node: '>=v18'}
 
   '@commitlint/load@19.6.1':
@@ -2006,6 +2022,11 @@ packages:
   commander@7.2.0:
     resolution: {integrity: sha512-QrWXB+ZQSVPmIWIhtEO9H+gwHaMGYiF5ChvoJ+K9ZGHG/sVsa6yiesAD1GC/x46sET00Xlwo1u49RVVVzvcSkw==}
     engines: {node: '>= 10'}
+
+  commitlint@19.7.1:
+    resolution: {integrity: sha512-iNWqXl/A1WN8qd9JehqUpzbOxczNBE1nzBiYE33TkHeTptq7Cvg5U4j8PpvO92Nxganv6o/20IO3omP5N5M7/A==}
+    engines: {node: '>=v18'}
+    hasBin: true
 
   commondir@1.0.1:
     resolution: {integrity: sha512-W9pAhw0ja1Edb5GVdIF1mjZw/ASI0AlShXM83UUGe2DVr5TdAPEA1OA8m/g8zWp9x6On7gqufY+FatDbC3MDQg==}
@@ -4691,6 +4712,19 @@ snapshots:
       - '@types/node'
       - typescript
 
+  '@commitlint/cli@19.7.1(@types/node@22.13.5)(typescript@5.7.2)':
+    dependencies:
+      '@commitlint/format': 19.5.0
+      '@commitlint/lint': 19.7.1
+      '@commitlint/load': 19.6.1(@types/node@22.13.5)(typescript@5.7.2)
+      '@commitlint/read': 19.5.0
+      '@commitlint/types': 19.5.0
+      tinyexec: 0.3.1
+      yargs: 17.7.2
+    transitivePeerDependencies:
+      - '@types/node'
+      - typescript
+
   '@commitlint/config-conventional@19.6.0':
     dependencies:
       '@commitlint/types': 19.5.0
@@ -4722,9 +4756,21 @@ snapshots:
       '@commitlint/types': 19.5.0
       semver: 7.6.3
 
+  '@commitlint/is-ignored@19.7.1':
+    dependencies:
+      '@commitlint/types': 19.5.0
+      semver: 7.6.3
+
   '@commitlint/lint@19.6.0':
     dependencies:
       '@commitlint/is-ignored': 19.6.0
+      '@commitlint/parse': 19.5.0
+      '@commitlint/rules': 19.6.0
+      '@commitlint/types': 19.5.0
+
+  '@commitlint/lint@19.7.1':
+    dependencies:
+      '@commitlint/is-ignored': 19.7.1
       '@commitlint/parse': 19.5.0
       '@commitlint/rules': 19.6.0
       '@commitlint/types': 19.5.0
@@ -6369,6 +6415,14 @@ snapshots:
   commander@4.1.1: {}
 
   commander@7.2.0: {}
+
+  commitlint@19.7.1(@types/node@22.13.5)(typescript@5.7.2):
+    dependencies:
+      '@commitlint/cli': 19.7.1(@types/node@22.13.5)(typescript@5.7.2)
+      '@commitlint/types': 19.5.0
+    transitivePeerDependencies:
+      - '@types/node'
+      - typescript
 
   commondir@1.0.1: {}
 

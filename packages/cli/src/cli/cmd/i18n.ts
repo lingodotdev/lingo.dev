@@ -81,7 +81,10 @@ export default new Command()
           for (const bucketConfig of bucket.config) {
             const sourceLocale = resolveOverridenLocale(i18nConfig!.locale.source, bucketConfig.delimiter);
 
-            const bucketLoader = createBucketLoader(bucket.type, bucketConfig.pathPattern);
+            const bucketLoader = createBucketLoader(bucket.type, bucketConfig.pathPattern, {
+              isCacheRestore: false,
+              defaultLocale: sourceLocale,
+            });
             bucketLoader.setDefaultLocale(sourceLocale);
             await bucketLoader.init();
 
@@ -108,7 +111,10 @@ export default new Command()
             bucketOra.info(`Processing path: ${bucketConfig.pathPattern}`);
 
             const sourceLocale = resolveOverridenLocale(i18nConfig!.locale.source, bucketConfig.delimiter);
-            const bucketLoader = createBucketLoader(bucket.type, bucketConfig.pathPattern, { isCacheRestore: true });
+            const bucketLoader = createBucketLoader(bucket.type, bucketConfig.pathPattern, {
+              isCacheRestore: true,
+              defaultLocale: sourceLocale,
+            });
             bucketLoader.setDefaultLocale(sourceLocale);
             await bucketLoader.init();
             const sourceData = await bucketLoader.pull(sourceLocale);
@@ -150,7 +156,10 @@ export default new Command()
           for (const bucketConfig of bucket.config) {
             const sourceLocale = resolveOverridenLocale(i18nConfig!.locale.source, bucketConfig.delimiter);
 
-            const bucketLoader = createBucketLoader(bucket.type, bucketConfig.pathPattern);
+            const bucketLoader = createBucketLoader(bucket.type, bucketConfig.pathPattern, {
+              isCacheRestore: false,
+              defaultLocale: sourceLocale,
+            });
             bucketLoader.setDefaultLocale(sourceLocale);
             await bucketLoader.init();
 
@@ -183,7 +192,10 @@ export default new Command()
 
             const sourceLocale = resolveOverridenLocale(i18nConfig!.locale.source, bucketConfig.delimiter);
 
-            const bucketLoader = createBucketLoader(bucket.type, bucketConfig.pathPattern);
+            const bucketLoader = createBucketLoader(bucket.type, bucketConfig.pathPattern, {
+              isCacheRestore: false,
+              defaultLocale: sourceLocale,
+            });
             bucketLoader.setDefaultLocale(sourceLocale);
             await bucketLoader.init();
             let sourceData = await bucketLoader.pull(sourceLocale);
