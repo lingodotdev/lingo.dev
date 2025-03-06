@@ -119,43 +119,56 @@ export default new InteractiveCommand()
       };
     } else {
       let selectedPatterns: string[] = [];
-      const { patterns, defaultPatterns } = findLocaleFiles(options.bucket);
+      const localeFiles = findLocaleFiles(options.bucket);
 
-      if (patterns.length > 0) {
-        spinner.succeed("Found existing locale files:");
-
-        selectedPatterns = await checkbox({
-          message: "Select the paths to use",
-          choices: patterns.map((value) => ({
-            value,
-          })),
-        });
+      if (!localeFiles) {
+        spinner.warn(
+          `Bucket type "${options.bucket}" does not supported automatic initialization. Add paths to "i18n.json" manually.`,
+        );
+        newConfig.buckets = {
+          [options.bucket]: {
+            include: options.paths || [],
+          },
+        };
       } else {
-        spinner.succeed("No existing locale files found.");
-      }
+        const { patterns, defaultPatterns } = localeFiles;
 
-      if (selectedPatterns.length === 0) {
-        const useDefault = await confirm({
-          message: `Use (and create) default path ${defaultPatterns.join(", ")}?`,
-        });
-        if (useDefault) {
-          ensurePatterns(defaultPatterns, options.source);
-          selectedPatterns = defaultPatterns;
+        if (patterns.length > 0) {
+          spinner.succeed("Found existing locale files:");
+
+          selectedPatterns = await checkbox({
+            message: "Select the paths to use",
+            choices: patterns.map((value) => ({
+              value,
+            })),
+          });
+        } else {
+          spinner.succeed("No existing locale files found.");
         }
-      }
 
-      if (selectedPatterns.length === 0) {
-        const customPaths = await input({
-          message: "Enter paths to use",
-        });
-        selectedPatterns = customPaths.includes(",") ? customPaths.split(",") : customPaths.split(" ");
-      }
+        if (selectedPatterns.length === 0) {
+          const useDefault = await confirm({
+            message: `Use (and create) default path ${defaultPatterns.join(", ")}?`,
+          });
+          if (useDefault) {
+            ensurePatterns(defaultPatterns, options.source);
+            selectedPatterns = defaultPatterns;
+          }
+        }
 
-      newConfig.buckets = {
-        [options.bucket]: {
-          include: selectedPatterns || [],
-        },
-      };
+        if (selectedPatterns.length === 0) {
+          const customPaths = await input({
+            message: "Enter paths to use",
+          });
+          selectedPatterns = customPaths.includes(",") ? customPaths.split(",") : customPaths.split(" ");
+        }
+
+        newConfig.buckets = {
+          [options.bucket]: {
+            include: selectedPatterns || [],
+          },
+        };
+      }
     }
 
     await saveConfig(newConfig);
