@@ -2,14 +2,21 @@ import { ILoader } from "./_types";
 import { createLoader } from "./_utils";
 import _ from "lodash";
 
-export default function createXcodeXcstringsLoader(): ILoader<Record<string, any>, Record<string, any>> {
+export default function createXcodeXcstringsLoader(defaultLocale: string): ILoader<Record<string, any>, Record<string, any>> {
   return createLoader({
-    async pull(locale, input) {
+    async pull(locale, input, initCtx) {
       const resultData: Record<string, any> = {};
+      const isSourceLanguage = locale === defaultLocale;
 
-      for (const [translationKey, _translationEntity] of Object.entries(input.strings)) {
+      for (const [translationKey, _translationEntity] of Object.entries((input as any).strings)) {
         const rootTranslationEntity = _translationEntity as any;
+        
+        if (rootTranslationEntity.shouldTranslate === false) {
+          continue;
+        }
+        
         const langTranslationEntity = rootTranslationEntity?.localizations?.[locale];
+        
         if (langTranslationEntity) {
           if ("stringUnit" in langTranslationEntity) {
             resultData[translationKey] = langTranslationEntity.stringUnit.value;
@@ -24,6 +31,12 @@ export default function createXcodeXcstringsLoader(): ILoader<Record<string, any
               }
             }
           }
+        } else if (isSourceLanguage) {
+          const hasOtherLocalizations = rootTranslationEntity?.localizations && 
+                                      Object.keys(rootTranslationEntity.localizations).length > 0;
+          if (hasOtherLocalizations) {
+            resultData[translationKey] = translationKey;
+          }
         }
       }
 
@@ -32,8 +45,19 @@ export default function createXcodeXcstringsLoader(): ILoader<Record<string, any
     async push(locale, payload, originalInput) {
       const langDataToMerge: any = {};
       langDataToMerge.strings = {};
-
+      
+      const input = _.cloneDeep(originalInput) || { sourceLanguage: locale, strings: {} };
+      
       for (const [key, value] of Object.entries(payload)) {
+        if (value === null || value === undefined) {
+          continue;
+        }
+        
+        const hasDoNotTranslateFlag = originalInput && 
+                                     (originalInput as any).strings && 
+                                     (originalInput as any).strings[key] && 
+                                     (originalInput as any).strings[key].shouldTranslate === false;
+        
         if (typeof value === "string") {
           langDataToMerge.strings[key] = {
             extractionState: "manual",
@@ -46,6 +70,10 @@ export default function createXcodeXcstringsLoader(): ILoader<Record<string, any
               },
             },
           };
+          
+          if (hasDoNotTranslateFlag) {
+            langDataToMerge.strings[key].shouldTranslate = false;
+          }
         } else {
           const updatedVariations: any = {};
 
@@ -68,6 +96,10 @@ export default function createXcodeXcstringsLoader(): ILoader<Record<string, any
               },
             },
           };
+          
+          if (hasDoNotTranslateFlag) {
+            langDataToMerge.strings[key].shouldTranslate = false;
+          }
         }
       }
 

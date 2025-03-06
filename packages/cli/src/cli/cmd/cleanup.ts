@@ -40,7 +40,7 @@ export default new Command()
         for (const bucketConfig of bucket.config) {
           const sourceLocale = resolveOverridenLocale(i18nConfig!.locale.source, bucketConfig.delimiter);
           const bucketOra = Ora({ indent: 2 }).info(`Processing path: ${bucketConfig.pathPattern}`);
-          const bucketLoader = createBucketLoader(bucket.type, bucketConfig.pathPattern);
+          const bucketLoader = createBucketLoader(bucket.type, bucketConfig.pathPattern, { isCacheRestore: false, defaultLocale: sourceLocale });
           bucketLoader.setDefaultLocale(sourceLocale);
 
           // Load source data
