@@ -1,3 +1,4 @@
+import core from "@actions/core";
 import { Octokit } from "octokit";
 import { PlatformKit } from "./_base.js";
 import Z from "zod";
@@ -5,6 +6,17 @@ import { execSync } from "child_process";
 
 export class GitHubPlatformKit extends PlatformKit {
   private _octokit?: Octokit;
+
+  constructor() {
+    process.env.LINGODOTDEV_API_KEY = core.getInput("api-key");
+    process.env.LINGODOTDEV_PULL_REQUEST = core.getInput("pull-request");
+    process.env.LINGODOTDEV_COMMIT_MESSAGE = core.getInput("commit-message");
+    process.env.LINGODOTDEV_PULL_REQUEST_TITLE = core.getInput("pull-request-title");
+    process.env.LINGODOTDEV_WORKING_DIRECTORY = core.getInput("working-directory");
+    process.env.LINGODOTDEV_PROCESS_OWN_COMMITS = core.getInput("process-own-commits");
+    
+    super();
+  }
 
   get octokit() {
     if (!this._octokit) {
