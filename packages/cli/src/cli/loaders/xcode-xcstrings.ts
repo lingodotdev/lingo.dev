@@ -32,14 +32,11 @@ export default function createXcodeXcstringsLoader(defaultLocale: string): ILoad
             }
           }
         } else if (isSourceLanguage) {
-          const hasOtherLocalizations = rootTranslationEntity?.localizations && 
-                                      Object.keys(rootTranslationEntity.localizations).length > 0;
-          if (hasOtherLocalizations) {
-            resultData[translationKey] = translationKey;
-          }
+          resultData[translationKey] = translationKey;
         }
       }
 
+      console.log(resultData);
       return resultData;
     },
     async push(locale, payload, originalInput) {
@@ -60,7 +57,7 @@ export default function createXcodeXcstringsLoader(defaultLocale: string): ILoad
         
         if (typeof value === "string") {
           langDataToMerge.strings[key] = {
-            extractionState: "manual",
+            extractionState: originalInput?.strings?.[key]?.extractionState,
             localizations: {
               [locale]: {
                 stringUnit: {
