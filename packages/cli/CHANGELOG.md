@@ -1,5 +1,12 @@
 # lingo.dev
 
+## 0.78.0
+
+### Minor Changes
+
+- [#519](https://github.com/lingodotdev/lingo.dev/pull/519) [`64b9461`](https://github.com/lingodotdev/lingo.dev/commit/64b946163c5a588405abbe53ac1b0a45cc859d7f) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - treat keys w/ empty nodes as values in `Localizable.xcstrings`
+  skip keys w/ `shouldTranslate: false` in `Localizable.xcstrings`
+
 ## 0.77.7
 
 ### Patch Changes
