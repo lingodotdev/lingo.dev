@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.78.1
+
+### Patch Changes
+
+- [#521](https://github.com/lingodotdev/lingo.dev/pull/521) [`3cf6753`](https://github.com/lingodotdev/lingo.dev/commit/3cf675320f7534183e2921e0afb3dd7e50beac92) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - empty nodes in localizable files
+
 ## 0.78.0
 
 ### Minor Changes
