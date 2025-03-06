@@ -1,5 +1,15 @@
 # lingo.dev
 
+## 0.78.2
+
+### Patch Changes
+
+- [#518](https://github.com/lingodotdev/lingo.dev/pull/518) [`444a731`](https://github.com/lingodotdev/lingo.dev/commit/444a7319a1351e22e5666504169023b4c8a29d5f) Thanks [@mathio](https://github.com/mathio)! - support JSON messages in <i18n> block of .vue files
+
+- Updated dependencies [[`444a731`](https://github.com/lingodotdev/lingo.dev/commit/444a7319a1351e22e5666504169023b4c8a29d5f)]:
+  - @lingo.dev/_spec@0.25.3
+  - @lingo.dev/_sdk@0.7.21
+
 ## 0.78.1
 
 ### Patch Changes
