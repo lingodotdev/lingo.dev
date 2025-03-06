@@ -1,14 +1,39 @@
-name: Build Docker Image
+name: Build Action
 
 on:
   workflow_dispatch:
   push:
     paths:
       - action/**
+      - action.yml
     branches:
       - main
+      - gha
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18.20.4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        id: pnpm-install
+        with:
+          version: 9.12.3
+          run_install: true
+      - name: Build Action
+        run: pnpm -C action build
+      - uses: EndBug/add-and-commit@v9
+        with:
+          add: "-f ./action/build ./action/node_modules"
+          message: "fix(action): build gha [skip ci]"
   docker:
     runs-on: ubuntu-latest
     steps:

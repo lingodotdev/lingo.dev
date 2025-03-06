@@ -7,15 +7,9 @@ branding:
   color: "black"
 
 runs:
-  using: "docker"
-  image: "action/Dockerfile"
-  env:
-    LINGODOTDEV_API_KEY: ${{ inputs.api-key }}
-    LINGODOTDEV_PULL_REQUEST: ${{ inputs.pull-request }}
-    LINGODOTDEV_COMMIT_MESSAGE: ${{ inputs.commit-message }}
-    LINGODOTDEV_PULL_REQUEST_TITLE: ${{ inputs.pull-request-title }}
-    LINGODOTDEV_WORKING_DIRECTORY: ${{ inputs.working-directory }}
-    LINGODOTDEV_PROCESS_OWN_COMMITS: ${{ inputs.process-own-commits }}
+  using: "node20"
+  main: "action/build/index.js"
+
 inputs:
   api-key:
     description: "Lingo.dev Platform API Key"
