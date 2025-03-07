@@ -7,6 +7,7 @@ import { createLoader } from "./_utils";
 
 export default function createUnlocalizableLoader(
   isCacheRestore: boolean = false,
+  returnUnlocalizedKeys: boolean = false,
 ): ILoader<Record<string, any>, Record<string, any>> {
   const rules = {
     isEmpty: (v: any) => _.isEmpty(v),
@@ -31,6 +32,11 @@ export default function createUnlocalizableLoader(
         .map(([key, _]) => key);
 
       const result = _.omitBy(input, (_, key) => passthroughKeys.includes(key));
+
+      if (returnUnlocalizedKeys) {
+        result.unlocalizable = _.omitBy(input, (_, key) => !passthroughKeys.includes(key));
+      }
+
       return result;
     },
     async push(locale, data, originalInput) {
