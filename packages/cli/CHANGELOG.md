@@ -1,5 +1,13 @@
 # lingo.dev
 
+## 0.78.4
+
+### Patch Changes
+
+- [#529](https://github.com/lingodotdev/lingo.dev/pull/529) [`d75efba`](https://github.com/lingodotdev/lingo.dev/commit/d75efbaf243ff5fe256142dcda8f2b48f806a7fd) Thanks [@mathio](https://github.com/mathio)! - fix --frozen flag
+
+- [#527](https://github.com/lingodotdev/lingo.dev/pull/527) [`a404e2b`](https://github.com/lingodotdev/lingo.dev/commit/a404e2bf123e6a018945e5b6f9bfcfce9235ae77) Thanks [@mathio](https://github.com/mathio)! - update unlocalizable keys even with no translation changes
+
 ## 0.78.3
 
 ### Patch Changes
