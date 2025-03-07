@@ -151,31 +151,68 @@ export default new Command()
 
       if (flags.frozen) {
         ora.start("Checking for lockfile updates...");
-        let requiresUpdate = false;
-        for (const bucket of buckets) {
+        let requiresUpdate: string | null = null;
+        bucketLoop: for (const bucket of buckets) {
           for (const bucketConfig of bucket.config) {
             const sourceLocale = resolveOverridenLocale(i18nConfig!.locale.source, bucketConfig.delimiter);
 
             const bucketLoader = createBucketLoader(bucket.type, bucketConfig.pathPattern, {
               isCacheRestore: false,
               defaultLocale: sourceLocale,
+              returnUnlocalizedKeys: true,
             });
             bucketLoader.setDefaultLocale(sourceLocale);
             await bucketLoader.init();
 
-            const sourceData = await bucketLoader.pull(i18nConfig!.locale.source);
+            const { unlocalizable: sourceUnlocalizable, ...sourceData } = await bucketLoader.pull(
+              i18nConfig!.locale.source,
+            );
             const updatedSourceData = lockfileHelper.extractUpdatedData(bucketConfig.pathPattern, sourceData);
 
+            // translation was updated in the source file
             if (Object.keys(updatedSourceData).length > 0) {
-              requiresUpdate = true;
-              break;
+              requiresUpdate = "updated";
+              break bucketLoop;
+            }
+
+            for (const _targetLocale of targetLocales) {
+              const targetLocale = resolveOverridenLocale(_targetLocale, bucketConfig.delimiter);
+              const { unlocalizable: targetUnlocalizable, ...targetData } = await bucketLoader.pull(targetLocale);
+
+              const missingKeys = _.difference(Object.keys(sourceData), Object.keys(targetData));
+              const extraKeys = _.difference(Object.keys(targetData), Object.keys(sourceData));
+              const unlocalizableDataDiff = !_.isEqual(sourceUnlocalizable, targetUnlocalizable);
+
+              // translation is missing in the target file
+              if (missingKeys.length > 0) {
+                requiresUpdate = "missing";
+                break bucketLoop;
+              }
+
+              // target file has extra translations
+              if (extraKeys.length > 0) {
+                requiresUpdate = "extra";
+                break bucketLoop;
+              }
+
+              // unlocalizable keys do not match
+              if (unlocalizableDataDiff) {
+                requiresUpdate = "unlocalizable";
+                break bucketLoop;
+              }
             }
           }
-          if (requiresUpdate) break;
         }
 
         if (requiresUpdate) {
-          ora.fail("Localization data has changed; please update i18n.lock or run without --frozen.");
+          const message = {
+            updated: "Source file has been updated.",
+            missing: "Target file is missing translations.",
+            extra: "Target file has extra translations not present in the source file.",
+            unlocalizable: "Unlocalizable data (such as booleans, dates, URLs, etc.) do not match.",
+          }[requiresUpdate];
+          ora.fail(`Localization data has changed; please update i18n.lock or run without --frozen.`);
+          ora.fail(`  Details: ${message}`);
           process.exit(1);
         } else {
           ora.succeed("No lockfile updates required.");
