@@ -279,8 +279,11 @@ export default new Command()
                   .omitBy((value, key) => value === targetData[key])
                   .size()
                   .value();
+
+                // Push to bucket all the time as there might be changes to unlocalizable keys
+                await bucketLoader.push(targetLocale, finalTargetData);
+
                 if (finalDiffSize > 0 || flags.force) {
-                  await bucketLoader.push(targetLocale, finalTargetData);
                   bucketOra.succeed(`[${sourceLocale} -> ${targetLocale}] Localization completed`);
                 } else {
                   bucketOra.succeed(`[${sourceLocale} -> ${targetLocale}] Localization completed (no changes).`);
