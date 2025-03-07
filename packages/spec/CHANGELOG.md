@@ -1,5 +1,11 @@
 # @lingo.dev/\_spec
 
+## 0.26.0
+
+### Minor Changes
+
+- [#530](https://github.com/lingodotdev/lingo.dev/pull/530) [`bafa755`](https://github.com/lingodotdev/lingo.dev/commit/bafa755d9681e93741462eb7bcf9b85073d20fd7) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - Add Kazakh (Kazakhstan) locale (localization engine passed the benchmarks!)
+
 ## 0.25.3
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # @lingo.dev/\_sdk
 
+## 0.7.22
+
+### Patch Changes
+
+- Updated dependencies [[`bafa755`](https://github.com/lingodotdev/lingo.dev/commit/bafa755d9681e93741462eb7bcf9b85073d20fd7)]:
+  - @lingo.dev/_spec@0.26.0
+
 ## 0.7.21
 
 ### Patch Changes
