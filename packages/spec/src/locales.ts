@@ -55,6 +55,8 @@ const localeMap = {
   ca: ["ca-ES"],
   // Japanese (Japan)
   ja: ["ja-JP"],
+  // Kazakh (Kazakhstan)
+  kk: ["kk-KZ"],
   // German
   de: [
     "de-DE", // Germany
