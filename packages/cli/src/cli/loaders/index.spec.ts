@@ -1236,6 +1236,29 @@ user.password=Contraseña
 
       expect(fs.writeFile).toHaveBeenCalledWith("i18n/es.yaml", expectedOutput, { encoding: "utf-8", flag: "w" });
     });
+
+    describe("yaml with quoted keys and values", async () => {
+      it.each([
+        ["double quoted values", `greeting: "Hello!"`, `greeting: "¡Hola!"`],
+        ["double quoted keys", `"greeting": Hello!`, `"greeting": ¡Hola!`],
+        ["double quoted keys and values", `"greeting": "Hello!"`, `"greeting": "¡Hola!"`],
+      ])("should return correct value for %s", async (_, input, expectedOutput) => {
+        const payload = { greeting: "¡Hola!" };
+
+        mockFileOperations(input);
+
+        const yamlLoader = createBucketLoader("yaml", "i18n/[locale].yaml", {
+          isCacheRestore: false,
+          defaultLocale: "en",
+        });
+        yamlLoader.setDefaultLocale("en");
+        await yamlLoader.pull("en");
+
+        await yamlLoader.push("es", payload);
+
+        expect(fs.writeFile).toHaveBeenCalledWith("i18n/es.yaml", expectedOutput, { encoding: "utf-8", flag: "w" });
+      });
+    });
   });
 
   describe("yaml-root-key bucket loader", () => {
