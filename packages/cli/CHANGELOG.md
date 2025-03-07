@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.78.6
+
+### Patch Changes
+
+- [#532](https://github.com/lingodotdev/lingo.dev/pull/532) [`c3b6a04`](https://github.com/lingodotdev/lingo.dev/commit/c3b6a04c8fa3a2898b0f4b68d42e15f45184b5c4) Thanks [@mathio](https://github.com/mathio)! - save yaml with keys and values in quotes
+
 ## 0.78.5
 
 ### Patch Changes
