@@ -1,5 +1,11 @@
 # @lingo.dev/\_sdk
 
+## 0.7.23
+
+### Patch Changes
+
+- [#537](https://github.com/lingodotdev/lingo.dev/pull/537) [`7597b99`](https://github.com/lingodotdev/lingo.dev/commit/7597b99c4869f63a42e6de3c4ed25424498d15ae) Thanks [@mathio](https://github.com/mathio)! - automatic source locale detection
+
 ## 0.7.22
 
 ### Patch Changes
