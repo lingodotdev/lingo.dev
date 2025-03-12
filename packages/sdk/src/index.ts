@@ -13,7 +13,7 @@ const payloadSchema = Z.record(Z.string(), Z.any());
 const referenceSchema = Z.record(localeCodeSchema, payloadSchema);
 
 const localizationParamsSchema = Z.object({
-  sourceLocale: localeCodeSchema,
+  sourceLocale: Z.union([localeCodeSchema, Z.null()]),
   targetLocale: localeCodeSchema,
   fast: Z.boolean().optional(),
   reference: referenceSchema.optional(),
@@ -49,8 +49,8 @@ export class LingoDotDevEngine {
     progressCallback?: (
       progress: number,
       sourceChunk: Record<string, string>,
-      processedChunk: Record<string, string>,
-    ) => void,
+      processedChunk: Record<string, string>
+    ) => void
   ): Promise<Record<string, string>> {
     const finalPayload = payloadSchema.parse(payload);
     const finalParams = localizationParamsSchema.parse(params);
@@ -68,7 +68,7 @@ export class LingoDotDevEngine {
         finalParams.targetLocale,
         { data: chunk, reference: params.reference },
         workflowId,
-        params.fast || false,
+        params.fast || false
       );
 
       if (progressCallback) {
@@ -89,14 +89,14 @@ export class LingoDotDevEngine {
    * @returns Localized chunk
    */
   private async localizeChunk(
-    sourceLocale: string,
+    sourceLocale: string | null,
     targetLocale: string,
     payload: {
       data: Z.infer<typeof payloadSchema>;
       reference?: Z.infer<typeof referenceSchema>;
     },
     workflowId: string,
-    fast: boolean,
+    fast: boolean
   ): Promise<Record<string, string>> {
     const res = await fetch(`${this.config.apiUrl}/i18n`, {
       method: "POST",
@@ -115,7 +115,7 @@ export class LingoDotDevEngine {
           reference: payload.reference,
         },
         null,
-        2,
+        2
       ),
     });
 
@@ -196,8 +196,8 @@ export class LingoDotDevEngine {
     progressCallback?: (
       progress: number,
       sourceChunk: Record<string, string>,
-      processedChunk: Record<string, string>,
-    ) => void,
+      processedChunk: Record<string, string>
+    ) => void
   ): Promise<Record<string, any>> {
     return this._localizeRaw(obj, params, progressCallback);
   }
@@ -215,7 +215,7 @@ export class LingoDotDevEngine {
   async localizeText(
     text: string,
     params: Z.infer<typeof localizationParamsSchema>,
-    progressCallback?: (progress: number) => void,
+    progressCallback?: (progress: number) => void
   ): Promise<string> {
     const response = await this._localizeRaw({ text }, params, progressCallback);
     return response.text || "";
@@ -236,7 +236,7 @@ export class LingoDotDevEngine {
       sourceLocale: LocaleCode;
       targetLocales: LocaleCode[];
       fast?: boolean;
-    },
+    }
   ) {
     const responses = await Promise.all(
       params.targetLocales.map((targetLocale) =>
@@ -244,8 +244,8 @@ export class LingoDotDevEngine {
           sourceLocale: params.sourceLocale,
           targetLocale,
           fast: params.fast,
-        }),
-      ),
+        })
+      )
     );
 
     return responses;
@@ -264,7 +264,7 @@ export class LingoDotDevEngine {
   async localizeChat(
     chat: Array<{ name: string; text: string }>,
     params: Z.infer<typeof localizationParamsSchema>,
-    progressCallback?: (progress: number) => void,
+    progressCallback?: (progress: number) => void
   ): Promise<Array<{ name: string; text: string }>> {
     const localized = await this._localizeRaw({ chat }, params, progressCallback);
 
@@ -288,7 +288,7 @@ export class LingoDotDevEngine {
   async localizeHtml(
     html: string,
     params: Z.infer<typeof localizationParamsSchema>,
-    progressCallback?: (progress: number) => void,
+    progressCallback?: (progress: number) => void
   ): Promise<string> {
     const jsdomPackage = await import("jsdom");
     const { JSDOM } = jsdomPackage;
@@ -320,7 +320,7 @@ export class LingoDotDevEngine {
         }
 
         const siblings = Array.from(parent.childNodes).filter(
-          (n) => n.nodeType === 1 || (n.nodeType === 3 && n.textContent?.trim()),
+          (n) => n.nodeType === 1 || (n.nodeType === 3 && n.textContent?.trim())
         );
         const index = siblings.indexOf(current);
         if (index !== -1) {
@@ -386,7 +386,7 @@ export class LingoDotDevEngine {
 
       for (const index of indices) {
         const siblings = Array.from(parent.childNodes).filter(
-          (n) => n.nodeType === 1 || (n.nodeType === 3 && n.textContent?.trim()),
+          (n) => n.nodeType === 1 || (n.nodeType === 3 && n.textContent?.trim())
         );
         current = siblings[parseInt(index)] || null;
         if (current?.nodeType === 1) {
