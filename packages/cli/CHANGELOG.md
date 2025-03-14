@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.78.8
+
+### Patch Changes
+
+- [#540](https://github.com/lingodotdev/lingo.dev/pull/540) [`f82762a`](https://github.com/lingodotdev/lingo.dev/commit/f82762a958a795327b911c91f71d1cf550d37ad3) Thanks [@mathio](https://github.com/mathio)! - possible fix for loading markdown files
+
 ## 0.78.7
 
 ### Patch Changes
