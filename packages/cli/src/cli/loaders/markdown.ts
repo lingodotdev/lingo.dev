@@ -23,13 +23,13 @@ export default function createMarkdownLoader(): ILoader<string, Record<string, s
 
       const sections = content
         .split(SECTION_REGEX)
-        .map((section) => section.trim())
+        .map((section) => section?.trim() ?? "")
         .filter(Boolean);
 
       return {
         ...Object.fromEntries(
           sections
-            .map((section, index) => [`${MD_SECTION_PREFIX}${index}`, section.trim()])
+            .map((section, index) => [`${MD_SECTION_PREFIX}${index}`, section])
             .filter(([, section]) => Boolean(section)),
         ),
         ...Object.fromEntries(Object.entries(frontmatter).map(([key, value]) => [`${FM_ATTR_PREFIX}${key}`, value])),
@@ -45,7 +45,7 @@ export default function createMarkdownLoader(): ILoader<string, Record<string, s
       let content = Object.entries(data)
         .filter(([key]) => key.startsWith(MD_SECTION_PREFIX))
         .sort(([a], [b]) => Number(a.split("-").pop()) - Number(b.split("-").pop()))
-        .map(([, value]) => value.trim())
+        .map(([, value]) => value?.trim() ?? "")
         .filter(Boolean)
         .join("\n\n");
 
