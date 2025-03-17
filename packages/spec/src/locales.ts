@@ -150,6 +150,9 @@ const localeMap = {
   sw: [
     "sw-TZ", // Tanzania
     "sw-KE", // Kenya
+    "sw-UG", // Uganda
+    "sw-CD", // Democratic Republic of Congo
+    "sw-RW", // Rwanda
   ],
   // Persian (Iran)
   fa: ["fa-IR"],
@@ -189,6 +192,8 @@ const localeMap = {
   tl: ["tl-PH"],
   // Telugu (India)
   te: ["te-IN"],
+  // Kinyarwanda (Rwanda)
+  rw: ["rw-RW"],
 } as const;
 
 export type LocaleCodeShort = keyof typeof localeMap;
