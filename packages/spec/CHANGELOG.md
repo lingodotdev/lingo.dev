@@ -1,5 +1,11 @@
 # @lingo.dev/\_spec
 
+## 0.26.1
+
+### Patch Changes
+
+- [`0b48be1`](https://github.com/lingodotdev/lingo.dev/commit/0b48be197e88dac581cc4f257789a04b43acf932) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - add Kinyarwanda and Kiswahili
+
 ## 0.26.0
 
 ### Minor Changes
