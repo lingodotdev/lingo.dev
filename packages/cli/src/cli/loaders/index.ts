@@ -63,7 +63,7 @@ export default function createBucketLoader(
     case "html":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
-        createPrettierLoader({ parser: "html", alwaysFormat: true }),
+        createPrettierLoader({ parser: "html", bucketPathPattern }),
         createHtmlLoader(),
         createSyncLoader(),
         createUnlocalizableLoader(options.isCacheRestore, options.returnUnlocalizedKeys),
@@ -71,7 +71,7 @@ export default function createBucketLoader(
     case "json":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
-        createPrettierLoader({ parser: "json" }),
+        createPrettierLoader({ parser: "json", bucketPathPattern }),
         createJsonLoader(),
         createFlatLoader(),
         createSyncLoader(),
@@ -80,7 +80,7 @@ export default function createBucketLoader(
     case "markdown":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
-        createPrettierLoader({ parser: "markdown" }),
+        createPrettierLoader({ parser: "markdown", bucketPathPattern }),
         createMarkdownLoader(),
         createSyncLoader(),
         createUnlocalizableLoader(options.isCacheRestore, options.returnUnlocalizedKeys),
@@ -130,7 +130,7 @@ export default function createBucketLoader(
     case "yaml":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
-        createPrettierLoader({ parser: "yaml" }),
+        createPrettierLoader({ parser: "yaml", bucketPathPattern }),
         createYamlLoader(),
         createFlatLoader(),
         createSyncLoader(),
@@ -139,7 +139,7 @@ export default function createBucketLoader(
     case "yaml-root-key":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
-        createPrettierLoader({ parser: "yaml" }),
+        createPrettierLoader({ parser: "yaml", bucketPathPattern }),
         createYamlLoader(),
         createRootKeyLoader(true),
         createFlatLoader(),
@@ -149,7 +149,7 @@ export default function createBucketLoader(
     case "flutter":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
-        createPrettierLoader({ parser: "json" }),
+        createPrettierLoader({ parser: "json", bucketPathPattern }),
         createJsonLoader(),
         createFlutterLoader(),
         createFlatLoader(),
