@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.78.9
+
+### Patch Changes
+
+- [#543](https://github.com/lingodotdev/lingo.dev/pull/543) [`c6bd0ba`](https://github.com/lingodotdev/lingo.dev/commit/c6bd0ba188b3358bff7193d396be528da02aa026) Thanks [@mathio](https://github.com/mathio)! - run prettier in context of the target file
+
 ## 0.78.8
 
 ### Patch Changes
