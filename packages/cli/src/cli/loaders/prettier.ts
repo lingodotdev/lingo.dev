@@ -1,9 +1,11 @@
+import path from "path";
 import prettier, { Options } from "prettier";
 import { ILoader } from "./_types";
 import { createLoader } from "./_utils";
 
 export type PrettierLoaderOptions = {
   parser: Options["parser"];
+  bucketPathPattern: string;
   alwaysFormat?: boolean;
 };
 
@@ -13,8 +15,11 @@ export default function createPrettierLoader(options: PrettierLoaderOptions): IL
       return data;
     },
     async push(locale, data) {
-      const prettierConfig = await loadPrettierConfig();
-      if (!prettierConfig && !options.alwaysFormat) {
+      const draftPath = options.bucketPathPattern.replaceAll("[locale]", locale);
+      const finalPath = path.resolve(draftPath);
+
+      const prettierConfig = await loadPrettierConfig(finalPath);
+      if (!prettierConfig) {
         return data;
       }
 
@@ -36,9 +41,9 @@ export default function createPrettierLoader(options: PrettierLoaderOptions): IL
   });
 }
 
-async function loadPrettierConfig() {
+async function loadPrettierConfig(filePath: string) {
   try {
-    const config = await prettier.resolveConfig(process.cwd());
+    const config = await prettier.resolveConfig(filePath);
     return config;
   } catch (error) {
     return {};
