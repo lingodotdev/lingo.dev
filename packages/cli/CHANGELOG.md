@@ -1,5 +1,13 @@
 # lingo.dev
 
+## 0.78.12
+
+### Patch Changes
+
+- [#548](https://github.com/lingodotdev/lingo.dev/pull/548) [`d8b9f57`](https://github.com/lingodotdev/lingo.dev/commit/d8b9f57b2231262b0940a83af8cc16101209c029) Thanks [@mathio](https://github.com/mathio)! - warn if env vars override values from "auth --login"
+
+- [#550](https://github.com/lingodotdev/lingo.dev/pull/550) [`8eea2e4`](https://github.com/lingodotdev/lingo.dev/commit/8eea2e4ac148adbecbda9794885ed5486a549037) Thanks [@mathio](https://github.com/mathio)! - info message
+
 ## 0.78.11
 
 ### Patch Changes
