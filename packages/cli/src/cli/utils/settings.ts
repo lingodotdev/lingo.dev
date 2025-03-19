@@ -14,7 +14,7 @@ export function getSettings(explicitApiKey: string | undefined): CliSettings {
 
   _legacyEnvVarWarning();
 
-  _envVarsWarning();
+  _envVarsInfo();
 
   return {
     auth: {
@@ -105,20 +105,20 @@ Please use LINGODOTDEV_API_KEY instead.
   }
 }
 
-function _envVarsWarning() {
+function _envVarsInfo() {
   const env = _loadEnv();
   const systemFile = _loadSystemFile();
 
   if (env.LINGODOTDEV_API_KEY && systemFile.auth?.apiKey) {
-    console.warn(
-      "\x1b[33m%s\x1b[0m",
-      `⚠️  WARNING: Using LINGODOTDEV_API_KEY env var instead of credentials from login flow (saved in .lingodotdevrc)`,
+    console.info(
+      "\x1b[36m%s\x1b[0m",
+      `ℹ️  Using LINGODOTDEV_API_KEY env var instead of credentials from login flow (saved in .lingodotdevrc)`,
     );
   }
   if (env.LINGODOTDEV_API_URL) {
-    console.warn("\x1b[33m%s\x1b[0m", `⚠️  WARNING: Using LINGODOTDEV_API_URL: ${env.LINGODOTDEV_API_URL}`);
+    console.info("\x1b[36m%s\x1b[0m", `ℹ️  Using LINGODOTDEV_API_URL: ${env.LINGODOTDEV_API_URL}`);
   }
   if (env.LINGODOTDEV_WEB_URL) {
-    console.warn("\x1b[33m%s\x1b[0m", `⚠️  WARNING: Using LINGODOTDEV_WEB_URL: ${env.LINGODOTDEV_WEB_URL}`);
+    console.info("\x1b[36m%s\x1b[0m", `ℹ️  Using LINGODOTDEV_WEB_URL: ${env.LINGODOTDEV_WEB_URL}`);
   }
 }
