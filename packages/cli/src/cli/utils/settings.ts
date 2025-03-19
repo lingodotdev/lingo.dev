@@ -14,6 +14,8 @@ export function getSettings(explicitApiKey: string | undefined): CliSettings {
 
   _legacyEnvVarWarning();
 
+  _envVarsWarning();
+
   return {
     auth: {
       apiKey: explicitApiKey || env.LINGODOTDEV_API_KEY || systemFile.auth?.apiKey || defaults.auth.apiKey,
@@ -100,5 +102,23 @@ Please use LINGODOTDEV_API_KEY instead.
 ===========================================================
 `,
     );
+  }
+}
+
+function _envVarsWarning() {
+  const env = _loadEnv();
+  const systemFile = _loadSystemFile();
+
+  if (env.LINGODOTDEV_API_KEY && systemFile.auth?.apiKey) {
+    console.warn(
+      "\x1b[33m%s\x1b[0m",
+      `⚠️  WARNING: Using LINGODOTDEV_API_KEY env var instead of credentials from login flow (saved in .lingodotdevrc)`,
+    );
+  }
+  if (env.LINGODOTDEV_API_URL) {
+    console.warn("\x1b[33m%s\x1b[0m", `⚠️  WARNING: Using LINGODOTDEV_API_URL: ${env.LINGODOTDEV_API_URL}`);
+  }
+  if (env.LINGODOTDEV_WEB_URL) {
+    console.warn("\x1b[33m%s\x1b[0m", `⚠️  WARNING: Using LINGODOTDEV_WEB_URL: ${env.LINGODOTDEV_WEB_URL}`);
   }
 }
