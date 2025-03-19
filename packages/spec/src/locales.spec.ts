@@ -1,21 +1,26 @@
 import { describe, it, expect } from "vitest";
-import { getAlternativeLocaleCodes } from "./locales";
+import { normalizeLocale } from "./locales";
 
-describe("getAlternativeLocaleCodes", () => {
-  it("should convert dash to underscore format", () => {
-    expect(getAlternativeLocaleCodes("en-US")).toEqual(["en_US"]);
-    expect(getAlternativeLocaleCodes("fr-FR")).toEqual(["fr_FR"]);
-    expect(getAlternativeLocaleCodes("zh-Hans-CN")).toEqual(["zh_Hans_CN"]);
+describe("normalizeLocale", () => {
+  it("should return normalized locale for short locale codes", () => {
+    expect(normalizeLocale("en")).toEqual("en");
+    expect(normalizeLocale("fr")).toEqual("fr");
   });
 
-  it("should convert underscore to dash format", () => {
-    expect(getAlternativeLocaleCodes("en_US")).toEqual(["en-US"]);
-    expect(getAlternativeLocaleCodes("fr_FR")).toEqual(["fr-FR"]);
-    expect(getAlternativeLocaleCodes("zh_Hans_CN")).toEqual(["zh-Hans-CN"]);
+  it("should return normalized locale for full locale codes", () => {
+    expect(normalizeLocale("en-US")).toEqual("en-US");
+    expect(normalizeLocale("fr-FR")).toEqual("fr-FR");
   });
 
-  it("should return empty array for simple locale codes", () => {
-    expect(getAlternativeLocaleCodes("en")).toEqual([]);
-    expect(getAlternativeLocaleCodes("fr")).toEqual([]);
+  it("should return normalized locale for full underscore locale codes", () => {
+    expect(normalizeLocale("en_US")).toEqual("en-US");
+    expect(normalizeLocale("fr_FR")).toEqual("fr-FR");
+    expect(normalizeLocale("zh_Hans_CN")).toEqual("zh-Hans-CN");
+  });
+
+  it("should return normalized locale for full explicit region locale codes", () => {
+    expect(normalizeLocale("en-rUS")).toEqual("en-US");
+    expect(normalizeLocale("fr-rFR")).toEqual("fr-FR");
+    expect(normalizeLocale("zh-rCN")).toEqual("zh-CN");
   });
 });
