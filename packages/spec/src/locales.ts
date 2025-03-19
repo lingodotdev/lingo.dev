@@ -237,18 +237,6 @@ export const resolveLocaleCode = (value: LocaleCode): LocaleCodeFull => {
   throw new Error(`Invalid locale code: ${value}`);
 };
 
-export const getAlternativeLocaleCodes = (locale: string): string[] => {
-  if (locale.includes("-")) {
-    // Convert all dashes to underscores
-    return [locale.replace(/-/g, "_")];
-  } else if (locale.includes("_")) {
-    // Convert all underscores to dashes
-    return [locale.replace(/_/g, "-")];
-  } else {
-    return [];
-  }
-};
-
 export const getLocaleCodeDelimiter = (locale: string): string | null => {
   if (locale.includes("_")) {
     return "_";
@@ -271,3 +259,7 @@ export const resolveOverridenLocale = (locale: string, delimiter?: "-" | "_" | n
 
   return locale.replace(currentDelimiter, delimiter);
 };
+
+export function normalizeLocale(locale: string) {
+  return locale.replaceAll("_", "-").replace(/([a-z]{2,3}-)r/, "$1");
+}
