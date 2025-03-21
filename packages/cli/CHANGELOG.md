@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.78.13
+
+### Patch Changes
+
+- [#551](https://github.com/lingodotdev/lingo.dev/pull/551) [`30a56b6`](https://github.com/lingodotdev/lingo.dev/commit/30a56b65d3b2a0cfb32a57bfebeba0f4c014a400) Thanks [@mathio](https://github.com/mathio)! - support prettier plugins
+
 ## 0.78.12
 
 ### Patch Changes
