@@ -170,6 +170,8 @@ const localeMap = {
   ],
   // Irish (Ireland)
   ga: ["ga-IE"],
+  // Galician (Spain)
+  gl: ["gl-ES"],
   // Maltese (Malta)
   mt: ["mt-MT"],
   // Slovenian (Slovenia)
