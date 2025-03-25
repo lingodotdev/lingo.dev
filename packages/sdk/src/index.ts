@@ -129,6 +129,12 @@ export class LingoDotDevEngine {
     }
 
     const jsonResponse = await res.json();
+
+    // when streaming the error is returned in the response body
+    if (!jsonResponse.data && jsonResponse.error) {
+      throw new Error(jsonResponse.error);
+    }
+
     return jsonResponse.data || {};
   }
 
