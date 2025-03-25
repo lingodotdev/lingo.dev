@@ -2,10 +2,11 @@ import { Command } from "interactive-commander";
 import Z from "zod";
 import Ora from "ora";
 import { createLockfileHelper } from "../utils/lockfile";
-import { bucketTypeSchema, resolveOverridenLocale } from "@lingo.dev/_spec";
+import { bucketTypeSchema, resolveOverriddenLocale } from "@lingo.dev/_spec";
 import { getConfig } from "../utils/config";
 import createBucketLoader from "../loaders";
 import { getBuckets } from "../utils/buckets";
+
 
 export default new Command()
   .command("lockfile")
@@ -25,7 +26,7 @@ export default new Command()
 
       for (const bucket of buckets) {
         for (const bucketConfig of bucket.config) {
-          const sourceLocale = resolveOverridenLocale(i18nConfig!.locale.source, bucketConfig.delimiter);
+          const sourceLocale = resolveOverriddenLocale(i18nConfig!.locale.source, bucketConfig.delimiter);
           const bucketLoader = createBucketLoader(bucket.type, bucketConfig.pathPattern, { isCacheRestore: false, defaultLocale: sourceLocale });
           bucketLoader.setDefaultLocale(sourceLocale);
 

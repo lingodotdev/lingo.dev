@@ -2,9 +2,10 @@ import _ from "lodash";
 import path from "path";
 import { glob } from "glob";
 import { CLIError } from "./errors";
-import { I18nConfig, resolveOverridenLocale, BucketItem } from "@lingo.dev/_spec";
+import { I18nConfig, resolveOverriddenLocale, BucketItem } from "@lingo.dev/_spec";
 import { bucketTypeSchema } from "@lingo.dev/_spec";
 import Z from "zod";
+
 
 export function getBuckets(i18nConfig: I18nConfig) {
   const result = Object.entries(i18nConfig.buckets).map(([bucketType, bucketEntry]) => {
@@ -21,7 +22,7 @@ export function getBuckets(i18nConfig: I18nConfig) {
 
 function extractPathPatterns(sourceLocale: string, include: BucketItem[], exclude?: BucketItem[]) {
   const includedPatterns = include.flatMap((pattern) =>
-    expandPlaceholderedGlob(pattern.path, resolveOverridenLocale(sourceLocale, pattern.delimiter)).map(
+    expandPlaceholderedGlob(pattern.path, resolveOverriddenLocale(sourceLocale, pattern.delimiter)).map(
       (pathPattern) => ({
         pathPattern,
         delimiter: pattern.delimiter,
@@ -29,7 +30,7 @@ function extractPathPatterns(sourceLocale: string, include: BucketItem[], exclud
     ),
   );
   const excludedPatterns = exclude?.flatMap((pattern) =>
-    expandPlaceholderedGlob(pattern.path, resolveOverridenLocale(sourceLocale, pattern.delimiter)).map(
+    expandPlaceholderedGlob(pattern.path, resolveOverriddenLocale(sourceLocale, pattern.delimiter)).map(
       (pathPattern) => ({
         pathPattern,
         delimiter: pattern.delimiter,
