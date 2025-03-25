@@ -2,7 +2,7 @@ import { Gitlab } from "@gitbeaker/rest";
 import Z from "zod";
 import { PlatformKit } from "./_base.js";
 import { execSync } from "child_process";
-
+import { configureGitCredentials } from "./git-utils.js";
 const gl = new Gitlab({ token: "" });
 
 export class GitlabPlatformKit extends PlatformKit {
@@ -91,11 +91,21 @@ export class GitlabPlatformKit extends PlatformKit {
   }
 
   gitConfig(): Promise<void> | void {
-    const url = `https://oauth2:${this.platformConfig.glToken}@gitlab.com/${this.platformConfig.repositoryOwner}/${this.platformConfig.repositoryName}.git`;
-    execSync(`git remote set-url origin ${url}`, {
-      stdio: "inherit",
-    });
+    const { glToken, repositoryOwner, repositoryName } = this.platformConfig;
+  
+    if (!glToken) {
+      console.error("GitLab token is missing.");
+      return;
+    }
+  
+    const repoUrl = `https://oauth2:${glToken}@gitlab.com/${repositoryOwner}/${repositoryName}.git`;
+    const success = configureGitCredentials(glToken, repoUrl);
+  
+    if (!success) {
+      console.error("Failed to configure GitLab credentials.");
+    }
   }
+  
 
   buildPullRequestUrl(pullRequestNumber: number): string {
     return `https://gitlab.com/${this.platformConfig.repositoryOwner}/${this.platformConfig.repositoryName}/-/merge_requests/${pullRequestNumber}`;

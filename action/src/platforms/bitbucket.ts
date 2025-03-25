@@ -2,6 +2,7 @@ import { execSync } from "child_process";
 import bbLib from "bitbucket";
 import Z from "zod";
 import { PlatformKit } from "./_base.js";
+import { configureBitbucketProxy } from "./git-utils.js";
 
 const { Bitbucket } = bbLib;
 
@@ -92,14 +93,13 @@ export class BitbucketPlatformKit extends PlatformKit<BitbucketConfig> {
   }
 
   async gitConfig() {
-    execSync("git config --unset http.${BITBUCKET_GIT_HTTP_ORIGIN}.proxy", {
-      stdio: "inherit",
-    });
-    execSync("git config http.${BITBUCKET_GIT_HTTP_ORIGIN}.proxy http://host.docker.internal:29418/", {
-      stdio: "inherit",
-    });
+    const origin = process.env.BITBUCKET_GIT_HTTP_ORIGIN || "origin";
+    const proxyUrl = "http://host.docker.internal:29418/";
+  
+    // Using the imported configureBitbucketProxy function
+    configureBitbucketProxy(origin, proxyUrl);
   }
-
+  
   get platformConfig() {
     const env = Z.object({
       BITBUCKET_BRANCH: Z.string(),
