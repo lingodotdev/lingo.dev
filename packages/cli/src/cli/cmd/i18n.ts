@@ -401,7 +401,7 @@ async function retryWithExponentialBackoff<T>(
 }
 
 function createLocalizationEngineConnection(params: { apiKey: string; apiUrl: string; maxRetries?: number }) {
-  const replexicaEngine = new LingoDotDevEngine({
+  const engine = new LingoDotDevEngine({
     apiKey: params.apiKey,
     apiUrl: params.apiUrl,
   });
@@ -423,7 +423,7 @@ function createLocalizationEngineConnection(params: { apiKey: string; apiUrl: st
     ) => {
       return retryWithExponentialBackoff(
         () =>
-          replexicaEngine.localizeObject(
+          engine.localizeObject(
             args.processableData,
             {
               sourceLocale: args.sourceLocale,
