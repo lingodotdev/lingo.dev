@@ -1,7 +1,7 @@
 import { Gitlab } from "@gitbeaker/rest";
 import Z from "zod";
 import { PlatformKit } from "./_base.js";
-import { execSync } from "child_process";
+import { configureGitCredentials } from "./git-utils.js";
 
 const gl = new Gitlab({ token: "" });
 
@@ -81,7 +81,7 @@ export class GitlabPlatformKit extends PlatformKit {
       title,
       {
         description: body,
-      },
+      }
     );
     return mr.iid;
   }
@@ -91,10 +91,9 @@ export class GitlabPlatformKit extends PlatformKit {
   }
 
   gitConfig(): Promise<void> | void {
-    const url = `https://oauth2:${this.platformConfig.glToken}@gitlab.com/${this.platformConfig.repositoryOwner}/${this.platformConfig.repositoryName}.git`;
-    execSync(`git remote set-url origin ${url}`, {
-      stdio: "inherit",
-    });
+    const URL = `https://oauth2:${this.platformConfig.glToken}@gitlab.com/${this.platformConfig.repositoryOwner}/${this.platformConfig.repositoryName}.git`;
+
+    configureGitCredentials(this.platformConfig.glToken, URL);
   }
 
   buildPullRequestUrl(pullRequestNumber: number): string {

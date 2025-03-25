@@ -49,7 +49,7 @@ export class BitbucketPlatformKit extends PlatformKit<BitbucketConfig> {
         // https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pullrequests/#api-repositories-workspace-repo-slug-pullrequests-get
         return values?.find(
           ({ source, destination }) =>
-            source?.branch?.name === branch && destination?.branch?.name === this.platformConfig.baseBranchName,
+            source?.branch?.name === branch && destination?.branch?.name === this.platformConfig.baseBranchName
         );
       })
       .then((pr) => pr?.id);
