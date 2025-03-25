@@ -1,4 +1,4 @@
-import { bucketTypeSchema, I18nConfig, localeCodeSchema, resolveOverridenLocale } from "@lingo.dev/_spec";
+import { bucketTypeSchema, I18nConfig, localeCodeSchema, resolveOverriddenLocale } from "@lingo.dev/_spec";
 import { LingoDotDevEngine } from "@lingo.dev/_sdk";
 import { Command } from "interactive-commander";
 import Z from "zod";
@@ -79,7 +79,7 @@ export default new Command()
         ora.start("Creating i18n.lock...");
         for (const bucket of buckets) {
           for (const bucketConfig of bucket.config) {
-            const sourceLocale = resolveOverridenLocale(i18nConfig!.locale.source, bucketConfig.delimiter);
+            const sourceLocale = resolveOverriddenLocale(i18nConfig!.locale.source, bucketConfig.delimiter);
 
             const bucketLoader = createBucketLoader(bucket.type, bucketConfig.pathPattern, {
               isCacheRestore: false,
@@ -110,7 +110,7 @@ export default new Command()
             const bucketOra = Ora({ indent: 4 });
             bucketOra.info(`Processing path: ${bucketConfig.pathPattern}`);
 
-            const sourceLocale = resolveOverridenLocale(i18nConfig!.locale.source, bucketConfig.delimiter);
+            const sourceLocale = resolveOverriddenLocale(i18nConfig!.locale.source, bucketConfig.delimiter);
             const bucketLoader = createBucketLoader(bucket.type, bucketConfig.pathPattern, {
               isCacheRestore: true,
               defaultLocale: sourceLocale,
@@ -154,7 +154,7 @@ export default new Command()
         let requiresUpdate: string | null = null;
         bucketLoop: for (const bucket of buckets) {
           for (const bucketConfig of bucket.config) {
-            const sourceLocale = resolveOverridenLocale(i18nConfig!.locale.source, bucketConfig.delimiter);
+            const sourceLocale = resolveOverriddenLocale(i18nConfig!.locale.source, bucketConfig.delimiter);
 
             const bucketLoader = createBucketLoader(bucket.type, bucketConfig.pathPattern, {
               isCacheRestore: false,
@@ -176,7 +176,7 @@ export default new Command()
             }
 
             for (const _targetLocale of targetLocales) {
-              const targetLocale = resolveOverridenLocale(_targetLocale, bucketConfig.delimiter);
+              const targetLocale = resolveOverriddenLocale(_targetLocale, bucketConfig.delimiter);
               const { unlocalizable: targetUnlocalizable, ...targetData } = await bucketLoader.pull(targetLocale);
 
               const missingKeys = _.difference(Object.keys(sourceData), Object.keys(targetData));
@@ -227,7 +227,7 @@ export default new Command()
           for (const bucketConfig of bucket.config) {
             const bucketOra = Ora({ indent: 2 }).info(`Processing path: ${bucketConfig.pathPattern}`);
 
-            const sourceLocale = resolveOverridenLocale(i18nConfig!.locale.source, bucketConfig.delimiter);
+            const sourceLocale = resolveOverriddenLocale(i18nConfig!.locale.source, bucketConfig.delimiter);
 
             const bucketLoader = createBucketLoader(bucket.type, bucketConfig.pathPattern, {
               isCacheRestore: false,
@@ -238,7 +238,7 @@ export default new Command()
             let sourceData = await bucketLoader.pull(sourceLocale);
 
             for (const _targetLocale of targetLocales) {
-              const targetLocale = resolveOverridenLocale(_targetLocale, bucketConfig.delimiter);
+              const targetLocale = resolveOverriddenLocale(_targetLocale, bucketConfig.delimiter);
               try {
                 bucketOra.start(`[${sourceLocale} -> ${targetLocale}] (0%) Localization in progress...`);
 
