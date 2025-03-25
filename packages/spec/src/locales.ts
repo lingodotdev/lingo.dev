@@ -240,7 +240,7 @@ export const resolveLocaleCode = (value: LocaleCode): LocaleCodeFull => {
   throw new Error(`Invalid locale code: ${value}`);
 };
 
-export const getLocaleCodeDelimiter = (locale: LocaleCode): LocaleDelimiter => {
+export const getLocaleCodeDelimiter = (locale: string): LocaleDelimiter => {
   if (locale.includes("_")) {
     return "_";
   } else if (locale.includes("-")) {
@@ -250,7 +250,7 @@ export const getLocaleCodeDelimiter = (locale: LocaleCode): LocaleDelimiter => {
   }
 };
 
-export const resolveOverridenLocale = (locale: LocaleCode, delimiter?: LocaleDelimiter): string => {
+export const resolveOverridenLocale = (locale: string, delimiter?: LocaleDelimiter): string => {
   if (!delimiter) {
     return locale;
   }
@@ -263,6 +263,6 @@ export const resolveOverridenLocale = (locale: LocaleCode, delimiter?: LocaleDel
   return locale.replace(currentDelimiter, delimiter);
 };
 
-export function normalizeLocale(locale: LocaleCode): string {
+export function normalizeLocale(locale: string): string {
   return locale.replaceAll("_", "-").replace(/([a-z]{2,3}-)r/, "$1");
 }
