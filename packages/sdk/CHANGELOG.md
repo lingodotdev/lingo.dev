@@ -1,5 +1,11 @@
 # @lingo.dev/\_sdk
 
+## 0.7.27
+
+### Patch Changes
+
+- [#574](https://github.com/lingodotdev/lingo.dev/pull/574) [`dde7fbe`](https://github.com/lingodotdev/lingo.dev/commit/dde7fbe57fc9b1d3ce28e192b778921099354dad) Thanks [@mathio](https://github.com/mathio)! - handle errors from i18n when streaming
+
 ## 0.7.26
 
 ### Patch Changes
