@@ -72,6 +72,7 @@ describe("ReplexicaEngine", () => {
           targetLocale: "es",
         },
         undefined,
+        undefined,
       );
 
       // Verify the final HTML structure
@@ -84,6 +85,171 @@ describe("ReplexicaEngine", () => {
       expect(result).toContain('alt="ES:Test image"');
       expect(result).toContain('placeholder="ES:Enter text"');
       expect(result).toContain('const doNotTranslate = "this text should be ignored"');
+    });
+  });
+
+  describe("AbortController support", () => {
+    it("should abort localizeText when signal is triggered", async () => {
+      const engine = new LingoDotDevEngine({ apiKey: "test" });
+      const mockFetch = vi.spyOn(global, "fetch").mockImplementation(async (url, options) => {
+        // Check if the request was aborted
+        if (options?.signal?.aborted) {
+          throw new DOMException("The operation was aborted.", "AbortError");
+        }
+        
+        // Add a delay to simulate network request
+        await new Promise(resolve => setTimeout(resolve, 100));
+        
+        // After the delay, check again if aborted during the delay
+        if (options?.signal?.aborted) {
+          throw new DOMException("The operation was aborted.", "AbortError");
+        }
+        
+        return new Response(JSON.stringify({ data: { text: "translated text" } }));
+      });
+
+      const controller = new AbortController();
+      const signal = controller.signal;
+
+      // Start the request first, then abort after a small delay
+      const promise = engine.localizeText("Hello world", {
+        sourceLocale: "en",
+        targetLocale: "es"
+      }, undefined, signal);
+      
+      // Small delay to make sure the request starts
+      await new Promise(resolve => setTimeout(resolve, 10));
+      
+      // Now abort
+      controller.abort();
+
+      await expect(promise).rejects.toThrow("Localization was aborted");
+      mockFetch.mockRestore();
+    });
+
+    it("should abort localizeHtml when signal is triggered", async () => {
+      const engine = new LingoDotDevEngine({ apiKey: "test" });
+      
+      // Mock _localizeRaw to throw AbortError when signal is aborted
+      vi.spyOn(engine as any, "_localizeRaw").mockImplementation(async (...args: any[]) => {
+        const signal = args[3]; // signal is the 4th argument
+        
+        if (signal?.aborted) {
+          const error = new DOMException("The operation was aborted.", "AbortError");
+          throw error;
+        }
+        
+        // Add a delay to simulate network request
+        await new Promise(resolve => setTimeout(resolve, 100));
+        
+        // Check again if aborted during the delay
+        if (signal?.aborted) {
+          const error = new DOMException("The operation was aborted.", "AbortError");
+          throw error;
+        }
+        
+        return {};
+      });
+
+      const controller = new AbortController();
+      const signal = controller.signal;
+
+      const promise = engine.localizeHtml("<html><body>Test</body></html>", {
+        sourceLocale: "en",
+        targetLocale: "es"
+      }, undefined, signal);
+
+      // Small delay to ensure the request starts
+      await new Promise(resolve => setTimeout(resolve, 10));
+      
+      // Abort after the delay
+      controller.abort();
+
+      await expect(promise).rejects.toThrow("Localization was aborted");
+    });
+
+    it("should abort batchLocalizeText and propagate to all child operations", async () => {
+      const engine = new LingoDotDevEngine({ apiKey: "test" });
+      
+      // Track how many times localizeText is called
+      let localizeTextCalls = 0;
+      
+      // Mock localizeText to simulate aborting
+      vi.spyOn(engine, "localizeText").mockImplementation(async (text, params, callback, signal) => {
+        localizeTextCalls++;
+        
+        if (signal?.aborted) {
+          throw new Error("Localization was aborted");
+        }
+        
+        // Simulate a longer delay
+        await new Promise(resolve => setTimeout(resolve, 100));
+        
+        // Check again if aborted during the delay
+        if (signal?.aborted) {
+          throw new Error("Localization was aborted");
+        }
+        
+        return "translated";
+      });
+
+      const controller = new AbortController();
+      const signal = controller.signal;
+
+      const promise = engine.batchLocalizeText("Hello world", {
+        sourceLocale: "en",
+        targetLocales: ["es", "fr", "de", "it"]
+      }, signal);
+
+      // Start the process
+      await new Promise(resolve => setTimeout(resolve, 20));
+      
+      // Abort after the process has started
+      controller.abort();
+
+      await expect(promise).rejects.toThrow("Localization was aborted");
+      
+      // Verify that we attempted to start some localizeText calls
+      expect(localizeTextCalls).toBeGreaterThan(0);
+    });
+    
+    it("should abort recognizeLocale operation when signal is triggered", async () => {
+      const engine = new LingoDotDevEngine({ apiKey: "test" });
+      
+      vi.spyOn(global, "fetch").mockImplementation(async (...args: any[]) => {
+        const options = args[1] as RequestInit; // options is the 2nd argument
+        
+        // Check if already aborted
+        if (options?.signal?.aborted) {
+          throw new DOMException("The operation was aborted.", "AbortError");
+        }
+        
+        // Check if the abort signal is passed to fetch
+        expect(options?.signal).toBeDefined();
+        
+        // Simulate a delay
+        await new Promise(resolve => setTimeout(resolve, 100));
+        
+        // Check if aborted during the delay
+        if (options?.signal?.aborted) {
+          throw new DOMException("The operation was aborted.", "AbortError");
+        }
+        
+        return new Response(JSON.stringify({ locale: "en" }));
+      });
+
+      const controller = new AbortController();
+      const signal = controller.signal;
+
+      const promise = engine.recognizeLocale("Hello world", signal);
+      
+      // Small delay to ensure the request starts
+      await new Promise(resolve => setTimeout(resolve, 10));
+      
+      // Abort after the request has started
+      controller.abort();
+
+      await expect(promise).rejects.toThrow("Locale recognition was aborted");
     });
   });
 });

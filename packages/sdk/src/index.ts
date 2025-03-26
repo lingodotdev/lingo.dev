@@ -40,6 +40,7 @@ export class LingoDotDevEngine {
    * @param payload - The content to be localized
    * @param params - Localization parameters including source/target locales and fast mode option
    * @param progressCallback - Optional callback function to report progress (0-100)
+   * @param signal - Optional AbortSignal to cancel the request
    * @returns Localized content
    * @internal
    */
@@ -49,9 +50,14 @@ export class LingoDotDevEngine {
     progressCallback?: (
       progress: number,
       sourceChunk: Record<string, string>,
-      processedChunk: Record<string, string>
-    ) => void
+      processedChunk: Record<string, string>,
+    ) => void,
+    signal?: AbortSignal,
   ): Promise<Record<string, string>> {
+    if (signal?.aborted) {
+      throw new Error("Localization was aborted");
+    }
+
     const finalPayload = payloadSchema.parse(payload);
     const finalParams = localizationParamsSchema.parse(params);
 
@@ -60,6 +66,10 @@ export class LingoDotDevEngine {
 
     const workflowId = createId();
     for (let i = 0; i < chunkedPayload.length; i++) {
+      if (signal?.aborted) {
+        throw new Error("Localization was aborted");
+      }
+
       const chunk = chunkedPayload[i];
       const percentageCompleted = Math.round(((i + 1) / chunkedPayload.length) * 100);
 
@@ -68,7 +78,8 @@ export class LingoDotDevEngine {
         finalParams.targetLocale,
         { data: chunk, reference: params.reference },
         workflowId,
-        params.fast || false
+        params.fast || false,
+        signal,
       );
 
       if (progressCallback) {
@@ -86,6 +97,7 @@ export class LingoDotDevEngine {
    * @param sourceLocale - Source locale
    * @param targetLocale - Target locale
    * @param payload - Payload containing the chunk to be localized
+   * @param signal - Optional AbortSignal to cancel the request
    * @returns Localized chunk
    */
   private async localizeChunk(
@@ -96,46 +108,60 @@ export class LingoDotDevEngine {
       reference?: Z.infer<typeof referenceSchema>;
     },
     workflowId: string,
-    fast: boolean
+    fast: boolean,
+    signal?: AbortSignal,
   ): Promise<Record<string, string>> {
-    const res = await fetch(`${this.config.apiUrl}/i18n`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-        Authorization: `Bearer ${this.config.apiKey}`,
-      },
-      body: JSON.stringify(
-        {
-          params: { workflowId, fast },
-          locale: {
-            source: sourceLocale,
-            target: targetLocale,
-          },
-          data: payload.data,
-          reference: payload.reference,
+    if (signal?.aborted) {
+      throw new Error("Localization was aborted");
+    }
+
+    try {
+      const res = await fetch(`${this.config.apiUrl}/i18n`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${this.config.apiKey}`,
         },
-        null,
-        2
-      ),
-    });
+        body: JSON.stringify(
+          {
+            params: { workflowId, fast },
+            locale: {
+              source: sourceLocale,
+              target: targetLocale,
+            },
+            data: payload.data,
+            reference: payload.reference,
+          },
+          null,
+          2,
+        ),
+        signal,
+      });
 
-    if (!res.ok) {
-      if (res.status === 400) {
-        throw new Error(`Invalid request: ${res.statusText}`);
-      } else {
-        const errorText = await res.text();
-        throw new Error(errorText);
+      if (!res.ok) {
+        if (res.status === 400) {
+          throw new Error(`Invalid request: ${res.statusText}`);
+        } else {
+          const errorText = await res.text();
+          throw new Error(errorText);
+        }
       }
+
+      const jsonResponse = await res.json();
+
+      // when streaming the error is returned in the response body
+      if (!jsonResponse.data && jsonResponse.error) {
+        throw new Error(jsonResponse.error);
+      }
+
+      return jsonResponse.data || {};
+    } catch (error: any) {
+      // Convert AbortError from fetch to our standard error message
+      if (error.name === "AbortError" || (error.message && error.message.includes("aborted"))) {
+        throw new Error("Localization was aborted");
+      }
+      throw error;
     }
-
-    const jsonResponse = await res.json();
-
-    // when streaming the error is returned in the response body
-    if (!jsonResponse.data && jsonResponse.error) {
-      throw new Error(jsonResponse.error);
-    }
-
-    return jsonResponse.data || {};
   }
 
   /**
@@ -194,6 +220,7 @@ export class LingoDotDevEngine {
    *   - targetLocale: The target language code (e.g., 'es')
    *   - fast: Optional boolean to enable fast mode (faster but potentially lower quality)
    * @param progressCallback - Optional callback function to report progress (0-100)
+   * @param signal - Optional AbortSignal to cancel the request
    * @returns A new object with the same structure but localized string values
    */
   async localizeObject(
@@ -202,10 +229,11 @@ export class LingoDotDevEngine {
     progressCallback?: (
       progress: number,
       sourceChunk: Record<string, string>,
-      processedChunk: Record<string, string>
-    ) => void
+      processedChunk: Record<string, string>,
+    ) => void,
+    signal?: AbortSignal,
   ): Promise<Record<string, any>> {
-    return this._localizeRaw(obj, params, progressCallback);
+    return this._localizeRaw(obj, params, progressCallback, signal);
   }
 
   /**
@@ -216,14 +244,16 @@ export class LingoDotDevEngine {
    *   - targetLocale: The target language code (e.g., 'es')
    *   - fast: Optional boolean to enable fast mode (faster for bigger batches)
    * @param progressCallback - Optional callback function to report progress (0-100)
+   * @param signal - Optional AbortSignal to cancel the request
    * @returns The localized text string
    */
   async localizeText(
     text: string,
     params: Z.infer<typeof localizationParamsSchema>,
-    progressCallback?: (progress: number) => void
+    progressCallback?: (progress: number) => void,
+    signal?: AbortSignal,
   ): Promise<string> {
-    const response = await this._localizeRaw({ text }, params, progressCallback);
+    const response = await this._localizeRaw({ text }, params, progressCallback, signal);
     return response.text || "";
   }
 
@@ -234,6 +264,7 @@ export class LingoDotDevEngine {
    *   - sourceLocale: The source language code (e.g., 'en')
    *   - targetLocales: An array of target language codes (e.g., ['es', 'fr'])
    *   - fast: Optional boolean to enable fast mode (for bigger batches)
+   * @param signal - Optional AbortSignal to cancel the request
    * @returns An array of localized text strings
    */
   async batchLocalizeText(
@@ -242,19 +273,35 @@ export class LingoDotDevEngine {
       sourceLocale: LocaleCode;
       targetLocales: LocaleCode[];
       fast?: boolean;
-    }
+    },
+    signal?: AbortSignal,
   ) {
-    const responses = await Promise.all(
-      params.targetLocales.map((targetLocale) =>
-        this.localizeText(text, {
+    if (signal?.aborted) {
+      throw new Error("Localization was aborted");
+    }
+
+    const promises = params.targetLocales.map((targetLocale) => {
+      // Create a new signal for each request that will be aborted if the main signal is aborted
+      const controller = signal ? new AbortController() : undefined;
+      const localSignal = controller?.signal;
+
+      if (signal && controller) {
+        signal.addEventListener("abort", () => controller.abort(), { once: true });
+      }
+
+      return this.localizeText(
+        text,
+        {
           sourceLocale: params.sourceLocale,
           targetLocale,
           fast: params.fast,
-        })
-      )
-    );
+        },
+        undefined,
+        localSignal,
+      );
+    });
 
-    return responses;
+    return Promise.all(promises);
   }
 
   /**
@@ -265,14 +312,16 @@ export class LingoDotDevEngine {
    *   - targetLocale: The target language code (e.g., 'es')
    *   - fast: Optional boolean to enable fast mode (faster but potentially lower quality)
    * @param progressCallback - Optional callback function to report progress (0-100)
+   * @param signal - Optional AbortSignal to cancel the request
    * @returns Array of localized chat messages with preserved structure
    */
   async localizeChat(
     chat: Array<{ name: string; text: string }>,
     params: Z.infer<typeof localizationParamsSchema>,
-    progressCallback?: (progress: number) => void
+    progressCallback?: (progress: number) => void,
+    signal?: AbortSignal,
   ): Promise<Array<{ name: string; text: string }>> {
-    const localized = await this._localizeRaw({ chat }, params, progressCallback);
+    const localized = await this._localizeRaw({ chat }, params, progressCallback, signal);
 
     return Object.entries(localized).map(([key, value]) => ({
       name: chat[parseInt(key.split("_")[1])].name,
@@ -289,150 +338,178 @@ export class LingoDotDevEngine {
    *   - targetLocale: The target language code (e.g., 'es')
    *   - fast: Optional boolean to enable fast mode (faster but potentially lower quality)
    * @param progressCallback - Optional callback function to report progress (0-100)
+   * @param signal - Optional AbortSignal to cancel the request
    * @returns The localized HTML document as a string, with updated lang attribute
    */
   async localizeHtml(
     html: string,
     params: Z.infer<typeof localizationParamsSchema>,
-    progressCallback?: (progress: number) => void
+    progressCallback?: (progress: number) => void,
+    signal?: AbortSignal,
   ): Promise<string> {
-    const jsdomPackage = await import("jsdom");
-    const { JSDOM } = jsdomPackage;
-    const dom = new JSDOM(html);
-    const document = dom.window.document;
+    if (signal?.aborted) {
+      throw new Error("Localization was aborted");
+    }
 
-    const LOCALIZABLE_ATTRIBUTES: Record<string, string[]> = {
-      meta: ["content"],
-      img: ["alt"],
-      input: ["placeholder"],
-      a: ["title"],
-    };
-    const UNLOCALIZABLE_TAGS = ["script", "style"];
+    try {
+      const jsdomPackage = await import("jsdom");
+      const { JSDOM } = jsdomPackage;
+      const dom = new JSDOM(html);
+      const document = dom.window.document;
 
-    const extractedContent: Record<string, string> = {};
+      const LOCALIZABLE_ATTRIBUTES: Record<string, string[]> = {
+        meta: ["content"],
+        img: ["alt"],
+        input: ["placeholder"],
+        a: ["title"],
+      };
+      const UNLOCALIZABLE_TAGS = ["script", "style"];
 
-    const getPath = (node: Node, attribute?: string): string => {
-      const indices: number[] = [];
-      let current = node as ChildNode;
-      let rootParent = "";
+      const extractedContent: Record<string, string> = {};
 
-      while (current) {
-        const parent = current.parentElement as Element;
-        if (!parent) break;
+      const getPath = (node: Node, attribute?: string): string => {
+        const indices: number[] = [];
+        let current = node as ChildNode;
+        let rootParent = "";
 
-        if (parent === document.documentElement) {
-          rootParent = current.nodeName.toLowerCase();
-          break;
-        }
+        while (current) {
+          const parent = current.parentElement as Element;
+          if (!parent) break;
 
-        const siblings = Array.from(parent.childNodes).filter(
-          (n) => n.nodeType === 1 || (n.nodeType === 3 && n.textContent?.trim())
-        );
-        const index = siblings.indexOf(current);
-        if (index !== -1) {
-          indices.unshift(index);
-        }
-        current = parent;
-      }
-
-      const basePath = rootParent ? `${rootParent}/${indices.join("/")}` : indices.join("/");
-      return attribute ? `${basePath}#${attribute}` : basePath;
-    };
-
-    const processNode = (node: Node) => {
-      let parent = node.parentElement;
-      while (parent) {
-        if (UNLOCALIZABLE_TAGS.includes(parent.tagName.toLowerCase())) {
-          return;
-        }
-        parent = parent.parentElement;
-      }
-
-      if (node.nodeType === 3) {
-        const text = node.textContent?.trim() || "";
-        if (text) {
-          extractedContent[getPath(node)] = text;
-        }
-      } else if (node.nodeType === 1) {
-        const element = node as Element;
-        const tagName = element.tagName.toLowerCase();
-
-        const attributes = LOCALIZABLE_ATTRIBUTES[tagName] || [];
-        attributes.forEach((attr) => {
-          const value = element.getAttribute(attr);
-          if (value) {
-            extractedContent[getPath(element, attr)] = value;
+          if (parent === document.documentElement) {
+            rootParent = current.nodeName.toLowerCase();
+            break;
           }
-        });
 
-        Array.from(element.childNodes)
-          .filter((n) => n.nodeType === 1 || (n.nodeType === 3 && n.textContent?.trim()))
-          .forEach(processNode);
-      }
-    };
-
-    Array.from(document.head.childNodes)
-      .filter((n) => n.nodeType === 1 || (n.nodeType === 3 && n.textContent?.trim()))
-      .forEach(processNode);
-    Array.from(document.body.childNodes)
-      .filter((n) => n.nodeType === 1 || (n.nodeType === 3 && n.textContent?.trim()))
-      .forEach(processNode);
-
-    const localizedContent = await this._localizeRaw(extractedContent, params, progressCallback);
-
-    // Update the DOM with localized content
-    document.documentElement.setAttribute("lang", params.targetLocale);
-
-    Object.entries(localizedContent).forEach(([path, value]) => {
-      const [nodePath, attribute] = path.split("#");
-      const [rootTag, ...indices] = nodePath.split("/");
-
-      let parent: Element = rootTag === "head" ? document.head : document.body;
-      let current: Node | null = parent;
-
-      for (const index of indices) {
-        const siblings = Array.from(parent.childNodes).filter(
-          (n) => n.nodeType === 1 || (n.nodeType === 3 && n.textContent?.trim())
-        );
-        current = siblings[parseInt(index)] || null;
-        if (current?.nodeType === 1) {
-          parent = current as Element;
+          const siblings = Array.from(parent.childNodes).filter(
+            (n) => n.nodeType === 1 || (n.nodeType === 3 && n.textContent?.trim()),
+          );
+          const index = siblings.indexOf(current);
+          if (index !== -1) {
+            indices.unshift(index);
+          }
+          current = parent;
         }
-      }
 
-      if (current) {
-        if (attribute) {
-          (current as Element).setAttribute(attribute, value);
-        } else {
-          current.textContent = value;
+        const basePath = rootParent ? `${rootParent}/${indices.join("/")}` : indices.join("/");
+        return attribute ? `${basePath}#${attribute}` : basePath;
+      };
+
+      const processNode = (node: Node) => {
+        let parent = node.parentElement;
+        while (parent) {
+          if (UNLOCALIZABLE_TAGS.includes(parent.tagName.toLowerCase())) {
+            return;
+          }
+          parent = parent.parentElement;
         }
-      }
-    });
 
-    return dom.serialize();
+        if (node.nodeType === 3) {
+          const text = node.textContent?.trim() || "";
+          if (text) {
+            extractedContent[getPath(node)] = text;
+          }
+        } else if (node.nodeType === 1) {
+          const element = node as Element;
+          const tagName = element.tagName.toLowerCase();
+
+          const attributes = LOCALIZABLE_ATTRIBUTES[tagName] || [];
+          attributes.forEach((attr) => {
+            const value = element.getAttribute(attr);
+            if (value) {
+              extractedContent[getPath(element, attr)] = value;
+            }
+          });
+
+          Array.from(element.childNodes)
+            .filter((n) => n.nodeType === 1 || (n.nodeType === 3 && n.textContent?.trim()))
+            .forEach(processNode);
+        }
+      };
+
+      Array.from(document.head.childNodes)
+        .filter((n) => n.nodeType === 1 || (n.nodeType === 3 && n.textContent?.trim()))
+        .forEach(processNode);
+      Array.from(document.body.childNodes)
+        .filter((n) => n.nodeType === 1 || (n.nodeType === 3 && n.textContent?.trim()))
+        .forEach(processNode);
+
+      const localizedContent = await this._localizeRaw(extractedContent, params, progressCallback, signal);
+
+      // Update the DOM with localized content
+      document.documentElement.setAttribute("lang", params.targetLocale);
+
+      Object.entries(localizedContent).forEach(([path, value]) => {
+        const [nodePath, attribute] = path.split("#");
+        const [rootTag, ...indices] = nodePath.split("/");
+
+        let parent: Element = rootTag === "head" ? document.head : document.body;
+        let current: Node | null = parent;
+
+        for (const index of indices) {
+          const siblings = Array.from(parent.childNodes).filter(
+            (n) => n.nodeType === 1 || (n.nodeType === 3 && n.textContent?.trim()),
+          );
+          current = siblings[parseInt(index)] || null;
+          if (current?.nodeType === 1) {
+            parent = current as Element;
+          }
+        }
+
+        if (current) {
+          if (attribute) {
+            (current as Element).setAttribute(attribute, value);
+          } else {
+            current.textContent = value;
+          }
+        }
+      });
+
+      return dom.serialize();
+    } catch (error: any) {
+      // Convert AbortError from fetch to our standard error message
+      if (error.name === "AbortError" || (error.message && error.message.includes("aborted"))) {
+        throw new Error("Localization was aborted");
+      }
+      throw error;
+    }
   }
 
   /**
    * Detect the language of a given text
    * @param text - The text to analyze
+   * @param signal - Optional AbortSignal to cancel the request
    * @returns Promise resolving to a locale code (e.g., 'en', 'es', 'fr')
    */
-  async recognizeLocale(text: string): Promise<LocaleCode> {
-    const response = await fetch(`${this.config.apiUrl}/recognize`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-        Authorization: `Bearer ${this.config.apiKey}`,
-      },
-      body: JSON.stringify({ text }),
-    });
-
-    if (!response.ok) {
-      throw new Error(`Error recognizing locale: ${response.statusText}`);
+  async recognizeLocale(text: string, signal?: AbortSignal): Promise<LocaleCode> {
+    if (signal?.aborted) {
+      throw new Error("Locale recognition was aborted");
     }
 
-    const jsonResponse = await response.json();
-    return jsonResponse.locale;
+    try {
+      const response = await fetch(`${this.config.apiUrl}/recognize`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${this.config.apiKey}`,
+        },
+        body: JSON.stringify({ text }),
+        signal,
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error recognizing locale: ${response.statusText}`);
+      }
+
+      const jsonResponse = await response.json();
+      return jsonResponse.locale;
+    } catch (error: any) {
+      // Convert AbortError from fetch to our standard error message
+      if (error.name === "AbortError" || (error.message && error.message.includes("aborted"))) {
+        throw new Error("Locale recognition was aborted");
+      }
+      throw error;
+    }
   }
 }
 
