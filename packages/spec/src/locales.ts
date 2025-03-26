@@ -221,6 +221,19 @@ export const localeCodeSchema = Z.string().refine((value) => localeCodes.include
   message: "Invalid locale code",
 });
 
+/**
+ * Resolves a locale code to its full locale representation.
+ *
+ *  If the provided locale code is already a full locale code, it returns as is.
+ *  If the provided locale code is a short locale code, it returns the first corresponding full locale.
+ *  If the locale code is not found, it throws an error.
+ *
+ * @param {localeCodes} value - The locale code to resolve (either short or full)
+ * @return {LocaleCodeFull} The resolved full locale code
+ * @throws {Error} If the provided locale code is invalid.
+ */
+
+
 export const resolveLocaleCode = (value: LocaleCode): LocaleCodeFull => {
   const existingFullLocaleCode = Object.values(localeMap)
     .flat()
@@ -239,6 +252,15 @@ export const resolveLocaleCode = (value: LocaleCode): LocaleCodeFull => {
   throw new Error(`Invalid locale code: ${value}`);
 };
 
+
+/**
+ * Determines the delimiter used in a locale code
+ *
+ * @param {string} locale - the locale string (e.g.,"en_US","en-GB")
+ * @return { string | null} - The delimiter ("_" or "-") if found, otherwise `null`.
+ */
+
+
 export const getLocaleCodeDelimiter = (locale: string): string | null => {
   if (locale.includes("_")) {
     return "_";
@@ -248,6 +270,16 @@ export const getLocaleCodeDelimiter = (locale: string): string | null => {
     return null;
   }
 };
+
+/**
+ * Replaces the delimiter in a locale string with the specified delimiter.
+ *
+ * @param {string}locale - The locale string (e.g.,"en_US", "en-GB").
+ * @param {"-" | "_" | null} [delimiter] - The new delimiter to replace the existing one.
+ * @returns {string} The locale string with the replaced delimiter, or the original locale if no delimiter is provided.
+ */
+
+
 
 export const resolveOverridenLocale = (locale: string, delimiter?: "-" | "_" | null): string => {
   if (!delimiter) {
@@ -262,6 +294,15 @@ export const resolveOverridenLocale = (locale: string, delimiter?: "-" | "_" | n
   return locale.replace(currentDelimiter, delimiter);
 };
 
-export function normalizeLocale(locale: string) {
+/**
+ * Normalizes a locale string by replacing underscores with hyphens
+ * and removing the "r" in certain regional codes (e.g., "fr-rCA" → "fr-CA")
+ *
+ * @param {string} locale - The locale string (e.g.,"en_US", "en-GB").
+ * @return {string} The normalized locale string.
+ */
+
+
+export const  normalizeLocale = (locale: string): string => {
   return locale.replaceAll("_", "-").replace(/([a-z]{2,3}-)r/, "$1");
 }

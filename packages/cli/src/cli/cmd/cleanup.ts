@@ -11,9 +11,9 @@ export default new Command()
   .command("cleanup")
   .description("Remove keys from target files that do not exist in the source file")
   .helpOption("-h, --help", "Show help")
-  .option("--locale <locale>", "Clean up only the specified target locale.If not provided, processes all target locales.")
-  .option("--bucket <bucket>", " Clean up only the specified bucket type.If not provided, processes all buckets.")
-  .option("--dry-run", "Show what would be removed without actually modifying any files.")
+  .option("--locale <locale>", "Clean up only the specified target locale")
+  .option("--bucket <bucket>", " Clean up only the specified bucket type")
+  .option("--dry-run", "Show what would be removed without actually modifying any files")
   .option("--verbose", "Show detailed output including:\n" +
                       "  - List of keys that would be removed.\n" +
                       "  - Processing steps.")
