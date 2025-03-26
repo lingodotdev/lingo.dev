@@ -221,7 +221,7 @@ export const localeCodeSchema = Z.string().refine((value) => localeCodes.include
   message: "Invalid locale code",
 });
 
-export const resolveLocaleCode = (value: LocaleCode): LocaleCodeFull => {
+export const resolveLocaleCode = (value: string): LocaleCodeFull => {
   const existingFullLocaleCode = Object.values(localeMap)
     .flat()
     .includes(value as any);
