@@ -24,7 +24,7 @@ cd packages/cli
 pnpm run dev
 
 # in terminal window 2 - test the CLI
-cd packages/cli
+cd package
 pnpm lingo.dev --help # this command will use the current cli code + demo config from ./package/i18n.json
 ```
 
