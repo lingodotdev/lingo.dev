@@ -174,17 +174,42 @@ export class LingoDotDevEngine {
    * @param payload - The payload to count words in
    * @returns The total number of words
    */
+  // private countWordsInRecord(payload: any | Record<string, any> | Array<any>): number {
+  //   if (Array.isArray(payload)) {
+  //     return payload.reduce((acc, item) => acc + this.countWordsInRecord(item), 0);
+  //   } else if (typeof payload === "object" && payload !== null) {
+  //     return Object.values(payload).reduce((acc: number, item) => acc + this.countWordsInRecord(item), 0);
+  //   } else if (typeof payload === "string") {
+  //     return payload.trim().split(/\s+/).filter(Boolean).length;
+  //   } else {
+  //     return 0;
+  //   }
+  // }
+
   private countWordsInRecord(payload: any | Record<string, any> | Array<any>): number {
-    if (Array.isArray(payload)) {
-      return payload.reduce((acc, item) => acc + this.countWordsInRecord(item), 0);
-    } else if (typeof payload === "object" && payload !== null) {
-      return Object.values(payload).reduce((acc: number, item) => acc + this.countWordsInRecord(item), 0);
-    } else if (typeof payload === "string") {
-      return payload.trim().split(/\s+/).filter(Boolean).length;
-    } else {
-      return 0;
+    const stack: any[] = [payload];
+    let totalWordCount = 0;
+  
+    while (stack.length > 0) {
+      const current = stack.pop();
+  
+      if (current === null || current === undefined) {
+        continue;
+      }
+  
+      if (Array.isArray(current)) {
+        stack.push(...current);
+      } else if (typeof current === 'object') {
+        stack.push(...Object.values(current));
+      } else if (typeof current === 'string') {
+        totalWordCount += current.trim().split(/\s+/).filter(Boolean).length;
+      }
     }
+  
+    return totalWordCount;
   }
+
+
 
   /**
    * Localize a typical JavaScript object

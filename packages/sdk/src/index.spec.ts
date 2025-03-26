@@ -87,3 +87,66 @@ describe("ReplexicaEngine", () => {
     });
   });
 });
+
+
+describe("LingoDotDevEngine - countWordsInRecord", () => {
+  const engine = new LingoDotDevEngine({ apiKey: "test" });
+
+  it("should return 0 for falsy values and empty inputs", () => {
+    expect((engine as any).countWordsInRecord(null)).toBe(0);
+    expect((engine as any).countWordsInRecord(undefined)).toBe(0);
+    expect((engine as any).countWordsInRecord("")).toBe(0);
+    expect((engine as any).countWordsInRecord({})).toBe(0);
+    expect((engine as any).countWordsInRecord([])).toBe(0);
+  });
+
+  it("should count words in a simple string", () => {
+    expect((engine as any).countWordsInRecord("Hello world")).toBe(2);
+    expect((engine as any).countWordsInRecord("   one two   three  ")).toBe(3);
+    expect((engine as any).countWordsInRecord("\tNew\nlines  and\ttabs\r\n")).toBe(4);
+  });
+
+  it("should count words in an array of strings", () => {
+    // "a" -> 1, "b c" -> 2, "d" -> 1
+    expect((engine as any).countWordsInRecord(["a", "b c", "d"])).toBe(1 + 2 + 1);
+  });
+
+  it("should count words in a nested array", () => {
+    // Here, the function is fully recursive:
+    // "a" → 1, "b c" → 2, and nested ["d e"] → "d e" → 2 words.
+    // Total = 1 + 2 + 2 = 5 words.
+    expect((engine as any).countWordsInRecord(["a", "b c", ["d e"]])).toBe(5);
+  });
+
+  it("should count words in a nested object", () => {
+    // Object { a: "hello", b: { c: "c d" } }:
+    // "hello" → 1, and "c d" → 2 words.
+    // Total = 1 + 2 = 3.
+    expect((engine as any).countWordsInRecord({ a: "hello", b: { c: "c d" } })).toBe(3);
+  });
+  it("should perform efficiently on large payloads", () => {
+    // Generate a large payload with many key-value pairs (in lakhs)
+    const largePayload: Record<string, string> = {};
+    const sampleText = "This is a sample text for benchmarking the countWordsInRecord function";
+    // Count words in sampleText:
+    // ["This", "is", "a", "sample", "text", "for", "benchmarking", "the", "countWordsInRecord", "function"]
+    // That is 10 words.
+    const repetitions = 100_000; // 1 lakh
+    for (let i = 0; i < repetitions; i++) {
+      largePayload[`key_${i}`] = sampleText;
+    }
+    const expectedTotalWords = repetitions * 10;
+
+    const startTime = performance.now();
+    const result = (engine as any).countWordsInRecord(largePayload);
+    const endTime = performance.now();
+    const elapsed = endTime - startTime;
+
+    console.log(`Large payload processed in ${elapsed.toFixed(2)} ms`);
+
+    expect(result).toBe(expectedTotalWords);
+    // Optionally, assert that the function finishes within a reasonable time threshold:
+    expect(elapsed).toBeLessThan(5000); // e.g., under 5 seconds for 1 lakh entries
+});
+});
+
