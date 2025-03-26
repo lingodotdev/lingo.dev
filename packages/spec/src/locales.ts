@@ -201,6 +201,7 @@ const localeMap = {
 export type LocaleCodeShort = keyof typeof localeMap;
 export type LocaleCodeFull = (typeof localeMap)[LocaleCodeShort][number];
 export type LocaleCode = LocaleCodeShort | LocaleCodeFull;
+export type LocaleDelimiter = "-" | "_" | null;
 
 export const localeCodesShort = Object.keys(localeMap) as LocaleCodeShort[];
 export const localeCodesFull = Object.values(localeMap).flat() as LocaleCodeFull[];
@@ -239,7 +240,7 @@ export const resolveLocaleCode = (value: LocaleCode): LocaleCodeFull => {
   throw new Error(`Invalid locale code: ${value}`);
 };
 
-export const getLocaleCodeDelimiter = (locale: string): string | null => {
+export const getLocaleCodeDelimiter = (locale: string): LocaleDelimiter => {
   if (locale.includes("_")) {
     return "_";
   } else if (locale.includes("-")) {
@@ -249,7 +250,7 @@ export const getLocaleCodeDelimiter = (locale: string): string | null => {
   }
 };
 
-export const resolveOverriddenLocale = (locale: string, delimiter?: "-" | "_" | null): string => {
+export const resolveOverriddenLocale = (locale: string, delimiter?: LocaleDelimiter): string => {
   if (!delimiter) {
     return locale;
   }
@@ -262,6 +263,6 @@ export const resolveOverriddenLocale = (locale: string, delimiter?: "-" | "_" | 
   return locale.replace(currentDelimiter, delimiter);
 };
 
-export function normalizeLocale(locale: string) {
+export function normalizeLocale(locale: string): string {
   return locale.replaceAll("_", "-").replace(/([a-z]{2,3}-)r/, "$1");
 }
