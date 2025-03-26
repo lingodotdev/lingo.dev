@@ -249,7 +249,7 @@ export const getLocaleCodeDelimiter = (locale: string): string | null => {
   }
 };
 
-export const resolveOverridenLocale = (locale: string, delimiter?: "-" | "_" | null): string => {
+export const resolveOverriddenLocale = (locale: string, delimiter?: "-" | "_" | null): string => {
   if (!delimiter) {
     return locale;
   }

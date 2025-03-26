@@ -1,4 +1,4 @@
-import { I18nConfig, resolveOverridenLocale } from "@lingo.dev/_spec";
+import { I18nConfig, resolveOverriddenLocale } from "@lingo.dev/_spec";
 import { Command } from "interactive-commander";
 import _ from "lodash";
 import { getConfig } from "../utils/config";
@@ -38,9 +38,12 @@ export default new Command()
         ora.info(`Processing bucket: ${bucket.type}`);
 
         for (const bucketConfig of bucket.config) {
-          const sourceLocale = resolveOverridenLocale(i18nConfig!.locale.source, bucketConfig.delimiter);
+          const sourceLocale = resolveOverriddenLocale(i18nConfig!.locale.source, bucketConfig.delimiter);
           const bucketOra = Ora({ indent: 2 }).info(`Processing path: ${bucketConfig.pathPattern}`);
-          const bucketLoader = createBucketLoader(bucket.type, bucketConfig.pathPattern, { isCacheRestore: false, defaultLocale: sourceLocale });
+          const bucketLoader = createBucketLoader(bucket.type, bucketConfig.pathPattern, {
+            isCacheRestore: false,
+            defaultLocale: sourceLocale,
+          });
           bucketLoader.setDefaultLocale(sourceLocale);
 
           // Load source data
@@ -48,7 +51,7 @@ export default new Command()
           const sourceKeys = Object.keys(sourceData);
 
           for (const _targetLocale of targetLocales) {
-            const targetLocale = resolveOverridenLocale(_targetLocale, bucketConfig.delimiter);
+            const targetLocale = resolveOverriddenLocale(_targetLocale, bucketConfig.delimiter);
             try {
               const targetData = await bucketLoader.pull(targetLocale);
               const targetKeys = Object.keys(targetData);
