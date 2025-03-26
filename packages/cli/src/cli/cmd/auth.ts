@@ -11,8 +11,8 @@ export default new Command()
   .command("auth")
   .description("Authenticate with Lingo.dev API")
   .helpOption("-h, --help", "Show help")
-  .option("--logout", "Delete existing authentication")
-  .option("--login", "Authenticate with Lingo.dev API")
+  .option("--logout", "Delete existing authentication and clear your saved API key.")
+  .option("--login", "Authenticate with Lingo.dev API.")
   .action(async (options) => {
     try {
       let settings = await getSettings(undefined);

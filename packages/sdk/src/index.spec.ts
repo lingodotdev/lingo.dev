@@ -87,3 +87,110 @@ describe("ReplexicaEngine", () => {
     });
   });
 });
+
+
+
+describe("LingoDotDevEngine Abort Handling", () => {
+  describe("Abort Signal Propagation", () => {
+    it("should throw an error when abort signal is triggered before localization starts", async () => {
+      const engine = new LingoDotDevEngine({ apiKey: "test" });
+      const abortController = new AbortController();
+
+      // Abort immediately
+      abortController.abort();
+
+      await expect(
+        engine.localizeText("Test text", {
+          sourceLocale: "en",
+          targetLocale: "es"
+        }, undefined, abortController.signal)
+      ).rejects.toThrow("Operation was aborted");
+    });
+
+    it("should throw an error when abort signal is triggered during HTML localization", async () => {
+      const engine = new LingoDotDevEngine({ apiKey: "test" });
+      const abortController = new AbortController();
+
+      // Mock _localizeRaw to simulate a long-running operation
+      const mockLocalizeRaw = vi.spyOn(engine as any, "_localizeRaw");
+      mockLocalizeRaw.mockImplementation(async () => {
+        // Simulate an asynchronous operation
+        await new Promise(resolve => setTimeout(resolve, 100));
+        // Abort during the operation
+        abortController.abort();
+        return {};
+      });
+
+      await expect(
+        engine.localizeHtml("<html><body>Test</body></html>", {
+          sourceLocale: "en",
+          targetLocale: "es"
+        }, undefined, abortController.signal)
+      ).rejects.toThrow("Operation was aborted");
+    });
+
+    it("should propagate abort signal through nested method calls", async () => {
+      const engine = new LingoDotDevEngine({ apiKey: "test" });
+      const abortController = new AbortController();
+
+      // Spy on internal methods to ensure abort signal is passed
+      const spyLocalizeChunk = vi.spyOn(engine as any, "localizeChunk");
+      const spyCheckAbortSignal = vi.spyOn(engine as any, "checkAbortSignal");
+
+      // Abort during object localization
+      abortController.abort();
+
+      await expect(
+        engine.localizeObject({ text: "Test" }, {
+          sourceLocale: "en",
+          targetLocale: "es"
+        }, undefined, abortController.signal)
+      ).rejects.toThrow("Operation was aborted");
+
+      // Verify abort signal was checked in multiple places
+      expect(spyCheckAbortSignal).toHaveBeenCalledWith(abortController.signal);
+    });
+
+    it("should handle multiple concurrent abort scenarios", async () => {
+      const engine = new LingoDotDevEngine({ apiKey: "test" });
+
+      const abortControllers = [
+        new AbortController(),
+        new AbortController(),
+        new AbortController()
+      ];
+
+      const localizationPromises = abortControllers.map((controller, index) => {
+        // Stagger abort times
+        setTimeout(() => controller.abort(), index * 50);
+
+        return engine.localizeText(`Test ${index}`, {
+          sourceLocale: "en",
+          targetLocale: "es"
+        }, undefined, controller.signal).catch(err => err);
+      });
+
+      const results = await Promise.all(localizationPromises);
+
+      // All promises should result in abort errors
+      results.forEach(result => {
+        expect(result.message).toBe("Operation was aborted");
+      });
+    });
+
+    it("should allow localization when no abort signal is provided", async () => {
+      const engine = new LingoDotDevEngine({ apiKey: "test" });
+
+      // Mock _localizeRaw to return a predictable result
+      const mockLocalizeRaw = vi.spyOn(engine as any, "_localizeRaw");
+      mockLocalizeRaw.mockResolvedValue({ text: "Localized Text" });
+
+      const result = await engine.localizeText("Test text", {
+        sourceLocale: "en",
+        targetLocale: "es"
+      });
+
+      expect(result).toBe("Localized Text");
+    });
+  });
+});

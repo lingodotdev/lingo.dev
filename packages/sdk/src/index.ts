@@ -35,6 +35,12 @@ export class LingoDotDevEngine {
     this.config = engineParamsSchema.parse(config);
   }
 
+  private checkAbortSignal(signal? : AbortSignal) {
+    if (signal?.aborted) {
+      throw new Error('Operation was aborted');
+    }
+  }
+
   /**
    * Localize content using the Lingo.dev API
    * @param payload - The content to be localized
@@ -50,8 +56,12 @@ export class LingoDotDevEngine {
       progress: number,
       sourceChunk: Record<string, string>,
       processedChunk: Record<string, string>
-    ) => void
+    ) => void,
+    signal ? : AbortSignal
   ): Promise<Record<string, string>> {
+
+    this.checkAbortSignal(signal);
+
     const finalPayload = payloadSchema.parse(payload);
     const finalParams = localizationParamsSchema.parse(params);
 
@@ -60,6 +70,9 @@ export class LingoDotDevEngine {
 
     const workflowId = createId();
     for (let i = 0; i < chunkedPayload.length; i++) {
+      if(signal?.aborted) {
+        throw new Error('Operation was aborted before starting');
+      }
       const chunk = chunkedPayload[i];
       const percentageCompleted = Math.round(((i + 1) / chunkedPayload.length) * 100);
 
@@ -68,7 +81,8 @@ export class LingoDotDevEngine {
         finalParams.targetLocale,
         { data: chunk, reference: params.reference },
         workflowId,
-        params.fast || false
+        params.fast || false,
+        signal
       );
 
       if (progressCallback) {
@@ -96,46 +110,64 @@ export class LingoDotDevEngine {
       reference?: Z.infer<typeof referenceSchema>;
     },
     workflowId: string,
-    fast: boolean
+    fast: boolean,
+    signal? : AbortSignal
   ): Promise<Record<string, string>> {
-    const res = await fetch(`${this.config.apiUrl}/i18n`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-        Authorization: `Bearer ${this.config.apiKey}`,
-      },
-      body: JSON.stringify(
-        {
-          params: { workflowId, fast },
-          locale: {
-            source: sourceLocale,
-            target: targetLocale,
-          },
-          data: payload.data,
-          reference: payload.reference,
+
+    const controller = new AbortController();
+
+    if(signal) {
+      signal.addEventListener("abort",() => controller.abort());
+    }
+
+    try {
+      const res = await fetch(`${this.config.apiUrl}/i18n`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${this.config.apiKey}`,
         },
-        null,
-        2
-      ),
-    });
+        body: JSON.stringify(
+          {
+            params: { workflowId, fast },
+            locale: {
+              source: sourceLocale,
+              target: targetLocale,
+            },
+            data: payload.data,
+            reference: payload.reference,
+          },
+          null,
+          2
+        ),
+        signal : controller.signal,
+      });
 
-    if (!res.ok) {
-      if (res.status === 400) {
-        throw new Error(`Invalid request: ${res.statusText}`);
-      } else {
-        const errorText = await res.text();
-        throw new Error(errorText);
+      if (!res.ok) {
+        if (res.status === 400) {
+          throw new Error(`Invalid request: ${res.statusText}`);
+        } else {
+          const errorText = await res.text();
+          throw new Error(errorText);
+        }
       }
+
+      const jsonResponse = await res.json();
+
+      // when streaming the error is returned in the response body
+      if (!jsonResponse.data && jsonResponse.error) {
+        throw new Error(jsonResponse.error);
+      }
+
+      return jsonResponse.data || {};
+    }catch(err) {
+      if (err instanceof Error && err.name === 'AbortError') {
+        throw new Error('Operation was aborted');
+      }
+      throw err;
     }
 
-    const jsonResponse = await res.json();
 
-    // when streaming the error is returned in the response body
-    if (!jsonResponse.data && jsonResponse.error) {
-      throw new Error(jsonResponse.error);
-    }
-
-    return jsonResponse.data || {};
   }
 
   /**
@@ -203,9 +235,10 @@ export class LingoDotDevEngine {
       progress: number,
       sourceChunk: Record<string, string>,
       processedChunk: Record<string, string>
-    ) => void
+    ) => void,
+    signal?: AbortSignal
   ): Promise<Record<string, any>> {
-    return this._localizeRaw(obj, params, progressCallback);
+    return this._localizeRaw(obj, params, progressCallback,signal);
   }
 
   /**
@@ -221,9 +254,13 @@ export class LingoDotDevEngine {
   async localizeText(
     text: string,
     params: Z.infer<typeof localizationParamsSchema>,
-    progressCallback?: (progress: number) => void
+    progressCallback?: (progress: number) => void,
+    signal?: AbortSignal
   ): Promise<string> {
-    const response = await this._localizeRaw({ text }, params, progressCallback);
+
+    this.checkAbortSignal(signal);
+
+    const response = await this._localizeRaw({ text }, params, progressCallback,signal);
     return response.text || "";
   }
 
@@ -270,9 +307,10 @@ export class LingoDotDevEngine {
   async localizeChat(
     chat: Array<{ name: string; text: string }>,
     params: Z.infer<typeof localizationParamsSchema>,
-    progressCallback?: (progress: number) => void
+    progressCallback?: (progress: number) => void,
+    signal?: AbortSignal
   ): Promise<Array<{ name: string; text: string }>> {
-    const localized = await this._localizeRaw({ chat }, params, progressCallback);
+    const localized = await this._localizeRaw({ chat }, params, progressCallback,signal);
 
     return Object.entries(localized).map(([key, value]) => ({
       name: chat[parseInt(key.split("_")[1])].name,
@@ -294,8 +332,12 @@ export class LingoDotDevEngine {
   async localizeHtml(
     html: string,
     params: Z.infer<typeof localizationParamsSchema>,
-    progressCallback?: (progress: number) => void
+    progressCallback?: (progress: number) => void,
+    signal ? : AbortSignal
   ): Promise<string> {
+
+    this.checkAbortSignal(signal);
+
     const jsdomPackage = await import("jsdom");
     const { JSDOM } = jsdomPackage;
     const dom = new JSDOM(html);
@@ -340,6 +382,8 @@ export class LingoDotDevEngine {
     };
 
     const processNode = (node: Node) => {
+      this.checkAbortSignal(signal);
+
       let parent = node.parentElement;
       while (parent) {
         if (UNLOCALIZABLE_TAGS.includes(parent.tagName.toLowerCase())) {
@@ -378,12 +422,20 @@ export class LingoDotDevEngine {
       .filter((n) => n.nodeType === 1 || (n.nodeType === 3 && n.textContent?.trim()))
       .forEach(processNode);
 
+    this.checkAbortSignal(signal);
+
+
     const localizedContent = await this._localizeRaw(extractedContent, params, progressCallback);
+
+    this.checkAbortSignal(signal);
 
     // Update the DOM with localized content
     document.documentElement.setAttribute("lang", params.targetLocale);
 
     Object.entries(localizedContent).forEach(([path, value]) => {
+
+      if (signal?.aborted) return;
+
       const [nodePath, attribute] = path.split("#");
       const [rootTag, ...indices] = nodePath.split("/");
 
@@ -409,6 +461,8 @@ export class LingoDotDevEngine {
       }
     });
 
+    this.checkAbortSignal(signal);
+
     return dom.serialize();
   }
 
@@ -417,23 +471,43 @@ export class LingoDotDevEngine {
    * @param text - The text to analyze
    * @returns Promise resolving to a locale code (e.g., 'en', 'es', 'fr')
    */
-  async recognizeLocale(text: string): Promise<LocaleCode> {
-    const response = await fetch(`${this.config.apiUrl}/recognize`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-        Authorization: `Bearer ${this.config.apiKey}`,
-      },
-      body: JSON.stringify({ text }),
-    });
+  async recognizeLocale(
+    text: string,
+    signal? : AbortSignal
+  ): Promise<LocaleCode> {
 
-    if (!response.ok) {
-      throw new Error(`Error recognizing locale: ${response.statusText}`);
+    const controller = new AbortController();
+
+    if (signal) {
+      signal.addEventListener('abort', () => controller.abort());
     }
 
-    const jsonResponse = await response.json();
-    return jsonResponse.locale;
-  }
+    try {
+      const response = await fetch(`${this.config.apiUrl}/recognize`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${this.config.apiKey}`,
+        },
+        body: JSON.stringify({ text }),
+        signal : controller.signal,
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error recognizing locale: ${response.statusText}`);
+      }
+
+      const jsonResponse = await response.json();
+      return jsonResponse.locale;
+
+    }catch (err){
+      if (err instanceof Error && err.name === 'AbortError') {
+        throw new Error('Locale recognition was aborted');
+      }
+      throw err;
+    }
+    }
+
 }
 
 /**

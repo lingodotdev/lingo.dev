@@ -11,7 +11,7 @@ export default new Command()
   .command("lockfile")
   .description("Create a lockfile if it does not exist")
   .helpOption("-h, --help", "Show help")
-  .option("-f, --force", "Force create a lockfile")
+  .option("-f, --force", "Force create a lockfile.")
   .action(async (options) => {
     const flags = flagsSchema.parse(options);
     const ora = Ora();
