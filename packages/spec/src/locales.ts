@@ -250,7 +250,9 @@ export const getLocaleCodeDelimiter = (locale: string): LocaleDelimiter => {
   }
 };
 
+
 export const resolveOverridenLocale = (locale: string, delimiter?: LocaleDelimiter): string => {
+
   if (!delimiter) {
     return locale;
   }
