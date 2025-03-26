@@ -44,11 +44,10 @@ describe("resolveLocaleCode", () => {
   });
 
   it("should return first code for locales with multiple variants", () => {
-    expect(resolveLocaleCode("sr")).toEqual("sr-RS"); 
+    expect(resolveLocaleCode("sr")).toEqual("sr-RS");
     expect(resolveLocaleCode("zh")).toEqual("zh-CN");
   });
 });
-
 
 describe("getLocaleCodeDelimiter", () => {
   it("should return '-' for locale codes with hyphen delimiter", () => {
