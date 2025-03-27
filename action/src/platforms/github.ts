@@ -79,9 +79,7 @@ export class GitHubPlatformKit extends PlatformKit {
 
       const url = `https://${ghToken}@github.com/${repositoryOwner}/${repositoryName}.git`;
 
-      execSync(`git remote set-url origin ${url}`, {
-        stdio: "inherit",
-      });
+      super.gitConfig(ghToken, url);
     }
   }
 
