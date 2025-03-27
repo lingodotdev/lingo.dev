@@ -25,6 +25,9 @@ function variableExtractLoader(
     pull: async (locale, input) => {
       const result: Record<string, VariableExtractionPayload> = {};
       for (const [key, value] of Object.entries(input)) {
+        if (typeof value !== "string") {
+          continue;
+        }
         const matches = value.match(specifierPattern) || [];
         result[key] = result[key] || {
           value,
