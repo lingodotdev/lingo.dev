@@ -146,7 +146,7 @@ describe("LingoDotDevEngine - countWordsInRecord", () => {
 
     expect(result).toBe(expectedTotalWords);
     // Optionally, assert that the function finishes within a reasonable time threshold:
-    expect(elapsed).toBeLessThan(5000); // e.g., under 5 seconds for 1 lakh entries
+    expect(elapsed).toBeLessThan(5000); 
 });
 });
 

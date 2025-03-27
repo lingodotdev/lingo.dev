@@ -174,6 +174,7 @@ export class LingoDotDevEngine {
    * @param payload - The payload to count words in
    * @returns The total number of words
    */
+  
   // private countWordsInRecord(payload: any | Record<string, any> | Array<any>): number {
   //   if (Array.isArray(payload)) {
   //     return payload.reduce((acc, item) => acc + this.countWordsInRecord(item), 0);
@@ -186,31 +187,61 @@ export class LingoDotDevEngine {
   //   }
   // }
 
-  private countWordsInRecord(payload: any | Record<string, any> | Array<any>): number {
-    const stack: any[] = [payload];
-    let totalWordCount = 0;
-  
-    while (stack.length > 0) {
-      const current = stack.pop();
-  
-      if (current === null || current === undefined) {
-        continue;
-      }
-  
-      if (Array.isArray(current)) {
-        stack.push(...current);
-      } else if (typeof current === 'object') {
-        stack.push(...Object.values(current));
-      } else if (typeof current === 'string') {
-        totalWordCount += current.trim().split(/\s+/).filter(Boolean).length;
-      }
+  private countWordsInRecord(payload: unknown): number {
+    let wordCount = 0;
+    const processingStack: unknown[] = [payload];
+    const SPACE_CHAR_CODE = 32;
+    const TAB_CHAR_CODE = 9;
+    const NEWLINE_CHAR_CODE = 10;
+
+    while (processingStack.length > 0) {
+        const currentItem = processingStack.pop();
+
+        if (typeof currentItem === 'string') {
+            let isBetweenWords = true;
+            let currentWordCount = 0;
+            
+            for (let i = 0; i < currentItem.length; i++) {
+                const charCode = currentItem.charCodeAt(i);
+                const isWhitespace = charCode === SPACE_CHAR_CODE ||
+                                    charCode === TAB_CHAR_CODE ||
+                                    charCode === NEWLINE_CHAR_CODE;
+
+                if (isBetweenWords && !isWhitespace) {
+                    currentWordCount++;
+                    isBetweenWords = false;
+                } else if (!isBetweenWords && isWhitespace) {
+                    isBetweenWords = true;
+                }
+            }
+            
+            wordCount += currentWordCount;
+        }
+        else if (Array.isArray(currentItem)) {
+            // Process array elements in reverse to maintain original order
+            for (let i = currentItem.length - 1; i >= 0; i--) {
+                processingStack.push(currentItem[i]);
+            }
+        }
+        else if (this.isRecord(currentItem)) {
+            // Process object properties efficiently
+            for (const key in currentItem) {
+                if (Object.prototype.hasOwnProperty.call(currentItem, key)) {
+                    processingStack.push(currentItem[key]);
+                }
+            }
+        }
     }
+
+    return wordCount;
+}
+
+// Type guard for plain objects
+private isRecord(value: unknown): value is Record<string, unknown> {
+    return value !== null && typeof value === 'object' && !Array.isArray(value);
+}
+
   
-    return totalWordCount;
-  }
-
-
-
   /**
    * Localize a typical JavaScript object
    * @param obj - The object to be localized (strings will be extracted and translated)
