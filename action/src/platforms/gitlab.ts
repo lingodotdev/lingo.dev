@@ -1,7 +1,6 @@
 import { Gitlab } from "@gitbeaker/rest";
 import Z from "zod";
 import { PlatformKit } from "./_base.js";
-import { execSync } from "child_process";
 
 const gl = new Gitlab({ token: "" });
 

@@ -2,8 +2,6 @@ import { Octokit } from "octokit";
 import { PlatformKit } from "./_base.js";
 import Z from "zod";
 
-import { execSync } from "child_process";
-
 export class GitHubPlatformKit extends PlatformKit {
   private _octokit?: Octokit;
 
