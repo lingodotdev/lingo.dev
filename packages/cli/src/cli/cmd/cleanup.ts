@@ -14,7 +14,9 @@ export default new Command()
   .option("--locale <locale>", "Specific locale to cleanup")
   .option("--bucket <bucket>", "Specific bucket to cleanup")
   .option("--dry-run", "Show what would be removed without making changes")
-  .option("--verbose", "Show verbose output")
+  .option("--verbose", "Show detailed output including:\n" +
+                       "  - List of keys that would be removed.\n" +
+                       "  - Processing steps.")
   .action(async function (options) {
     const ora = Ora();
     const results: any = [];
