@@ -49,8 +49,8 @@ export class LingoDotDevEngine {
     progressCallback?: (
       progress: number,
       sourceChunk: Record<string, string>,
-      processedChunk: Record<string, string>
-    ) => void
+      processedChunk: Record<string, string>,
+    ) => void,
   ): Promise<Record<string, string>> {
     const finalPayload = payloadSchema.parse(payload);
     const finalParams = localizationParamsSchema.parse(params);
@@ -68,7 +68,7 @@ export class LingoDotDevEngine {
         finalParams.targetLocale,
         { data: chunk, reference: params.reference },
         workflowId,
-        params.fast || false
+        params.fast || false,
       );
 
       if (progressCallback) {
@@ -96,7 +96,7 @@ export class LingoDotDevEngine {
       reference?: Z.infer<typeof referenceSchema>;
     },
     workflowId: string,
-    fast: boolean
+    fast: boolean,
   ): Promise<Record<string, string>> {
     const res = await fetch(`${this.config.apiUrl}/i18n`, {
       method: "POST",
@@ -115,7 +115,7 @@ export class LingoDotDevEngine {
           reference: payload.reference,
         },
         null,
-        2
+        2,
       ),
     });
 
@@ -202,8 +202,8 @@ export class LingoDotDevEngine {
     progressCallback?: (
       progress: number,
       sourceChunk: Record<string, string>,
-      processedChunk: Record<string, string>
-    ) => void
+      processedChunk: Record<string, string>,
+    ) => void,
   ): Promise<Record<string, any>> {
     return this._localizeRaw(obj, params, progressCallback);
   }
@@ -221,7 +221,7 @@ export class LingoDotDevEngine {
   async localizeText(
     text: string,
     params: Z.infer<typeof localizationParamsSchema>,
-    progressCallback?: (progress: number) => void
+    progressCallback?: (progress: number) => void,
   ): Promise<string> {
     const response = await this._localizeRaw({ text }, params, progressCallback);
     return response.text || "";
@@ -242,7 +242,7 @@ export class LingoDotDevEngine {
       sourceLocale: LocaleCode;
       targetLocales: LocaleCode[];
       fast?: boolean;
-    }
+    },
   ) {
     const responses = await Promise.all(
       params.targetLocales.map((targetLocale) =>
@@ -250,8 +250,8 @@ export class LingoDotDevEngine {
           sourceLocale: params.sourceLocale,
           targetLocale,
           fast: params.fast,
-        })
-      )
+        }),
+      ),
     );
 
     return responses;
@@ -270,7 +270,7 @@ export class LingoDotDevEngine {
   async localizeChat(
     chat: Array<{ name: string; text: string }>,
     params: Z.infer<typeof localizationParamsSchema>,
-    progressCallback?: (progress: number) => void
+    progressCallback?: (progress: number) => void,
   ): Promise<Array<{ name: string; text: string }>> {
     const localized = await this._localizeRaw({ chat }, params, progressCallback);
 
@@ -294,7 +294,7 @@ export class LingoDotDevEngine {
   async localizeHtml(
     html: string,
     params: Z.infer<typeof localizationParamsSchema>,
-    progressCallback?: (progress: number) => void
+    progressCallback?: (progress: number) => void,
   ): Promise<string> {
     const jsdomPackage = await import("jsdom");
     const { JSDOM } = jsdomPackage;
@@ -326,7 +326,7 @@ export class LingoDotDevEngine {
         }
 
         const siblings = Array.from(parent.childNodes).filter(
-          (n) => n.nodeType === 1 || (n.nodeType === 3 && n.textContent?.trim())
+          (n) => n.nodeType === 1 || (n.nodeType === 3 && n.textContent?.trim()),
         );
         const index = siblings.indexOf(current);
         if (index !== -1) {
@@ -392,7 +392,7 @@ export class LingoDotDevEngine {
 
       for (const index of indices) {
         const siblings = Array.from(parent.childNodes).filter(
-          (n) => n.nodeType === 1 || (n.nodeType === 3 && n.textContent?.trim())
+          (n) => n.nodeType === 1 || (n.nodeType === 3 && n.textContent?.trim()),
         );
         current = siblings[parseInt(index)] || null;
         if (current?.nodeType === 1) {
@@ -440,9 +440,18 @@ export class LingoDotDevEngine {
  * @deprecated Use LingoDotDevEngine instead. This class is maintained for backwards compatibility.
  */
 export class ReplexicaEngine extends LingoDotDevEngine {
+  private static hasWarnedDeprecation = false;
+
   constructor(config: Partial<Z.infer<typeof engineParamsSchema>>) {
     super(config);
-    console.warn("ReplexicaEngine is deprecated. Please use LingoDotDevEngine instead.");
+    if (!ReplexicaEngine.hasWarnedDeprecation) {
+      console.warn(
+        "ReplexicaEngine is deprecated and will be removed in a future release. " +
+          "Please use LingoDotDevEngine instead. " +
+          "See https://docs.lingo.dev/migration for more information.",
+      );
+      ReplexicaEngine.hasWarnedDeprecation = true;
+    }
   }
 }
 
@@ -450,8 +459,17 @@ export class ReplexicaEngine extends LingoDotDevEngine {
  * @deprecated Use LingoDotDevEngine instead. This class is maintained for backwards compatibility.
  */
 export class LingoEngine extends LingoDotDevEngine {
+  private static hasWarnedDeprecation = false;
+
   constructor(config: Partial<Z.infer<typeof engineParamsSchema>>) {
     super(config);
-    console.warn("LingoEngine is deprecated. Please use LingoDotDevEngine instead.");
+    if (!LingoEngine.hasWarnedDeprecation) {
+      console.warn(
+        "LingoEngine is deprecated and will be removed in a future release. " +
+          "Please use LingoDotDevEngine instead. " +
+          "See https://docs.lingo.dev/migration for more information.",
+      );
+      LingoEngine.hasWarnedDeprecation = true;
+    }
   }
 }

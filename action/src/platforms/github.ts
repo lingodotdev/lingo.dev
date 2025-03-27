@@ -1,6 +1,7 @@
 import { Octokit } from "octokit";
 import { PlatformKit } from "./_base.js";
 import Z from "zod";
+
 import { execSync } from "child_process";
 
 export class GitHubPlatformKit extends PlatformKit {
@@ -76,7 +77,9 @@ export class GitHubPlatformKit extends PlatformKit {
     if (ghToken && processOwnCommits) {
       console.log("Using provided GH_TOKEN. This will trigger your CI/CD pipeline to run again.");
 
-      execSync(`git remote set-url origin https://${ghToken}@github.com/${repositoryOwner}/${repositoryName}.git`, {
+      const url = `https://${ghToken}@github.com/${repositoryOwner}/${repositoryName}.git`;
+
+      execSync(`git remote set-url origin ${url}`, {
         stdio: "inherit",
       });
     }
