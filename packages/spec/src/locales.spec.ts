@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { getLocaleCodeDelimiter, normalizeLocale, resolveLocaleCode, resolveOverridenLocale } from "./locales";
+import { getLocaleCodeDelimiter, normalizeLocale, resolveLocaleCode, resolveOverriddenLocale } from "./locales";
 
 describe("normalizeLocale", () => {
   it("should return normalized locale for short locale codes", () => {
@@ -68,17 +68,17 @@ describe("getLocaleCodeDelimiter", () => {
 
 describe("resolveOverridenLocale", () => {
   it("should return the same locale if no delimiter is provided", () => {
-    expect(resolveOverridenLocale("en-US")).toEqual("en-US");
-    expect(resolveOverridenLocale("fr_FR")).toEqual("fr_FR");
+    expect(resolveOverriddenLocale("en-US")).toEqual("en-US");
+    expect(resolveOverriddenLocale("fr_FR")).toEqual("fr_FR");
   });
 
   it("should replace the delimiter with the specified one", () => {
-    expect(resolveOverridenLocale("en-US", "_")).toEqual("en_US");
-    expect(resolveOverridenLocale("fr_FR", "-")).toEqual("fr-FR");
+    expect(resolveOverriddenLocale("en-US", "_")).toEqual("en_US");
+    expect(resolveOverriddenLocale("fr_FR", "-")).toEqual("fr-FR");
   });
 
   it("should return the same locale if no recognized delimiter is found", () => {
-    expect(resolveOverridenLocale("enUS", "_")).toEqual("enUS");
-    expect(resolveOverridenLocale("frFR", "-")).toEqual("frFR");
+    expect(resolveOverriddenLocale("enUS", "_")).toEqual("enUS");
+    expect(resolveOverriddenLocale("frFR", "-")).toEqual("frFR");
   });
 });
