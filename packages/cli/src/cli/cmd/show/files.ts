@@ -4,7 +4,7 @@ import Ora from "ora";
 import { getConfig } from "../../utils/config";
 import { CLIError } from "../../utils/errors";
 import { getBuckets } from "../../utils/buckets";
-import { resolveOverridenLocale } from "@lingo.dev/_spec";
+import { resolveOverriddenLocale } from "@lingo.dev/_spec";
 
 export default new Command()
   .command("files")
@@ -28,10 +28,10 @@ export default new Command()
         const buckets = getBuckets(i18nConfig);
         for (const bucket of buckets) {
           for (const bucketConfig of bucket.config) {
-            const sourceLocale = resolveOverridenLocale(i18nConfig.locale.source, bucketConfig.delimiter);
+            const sourceLocale = resolveOverriddenLocale(i18nConfig.locale.source, bucketConfig.delimiter);
             const sourcePath = bucketConfig.pathPattern.replace(/\[locale\]/g, sourceLocale);
             const targetPaths = i18nConfig.locale.targets.map((_targetLocale) => {
-              const targetLocale = resolveOverridenLocale(_targetLocale, bucketConfig.delimiter);
+              const targetLocale = resolveOverriddenLocale(_targetLocale, bucketConfig.delimiter);
               return bucketConfig.pathPattern.replace(/\[locale\]/g, targetLocale);
             });
 
