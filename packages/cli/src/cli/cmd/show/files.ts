@@ -9,8 +9,8 @@ import { resolveOverriddenLocale } from "@lingo.dev/_spec";
 export default new Command()
   .command("files")
   .description("Print out the list of files managed by Lingo.dev")
-  .option("--source", "Only show source files")
-  .option("--target", "Only show target files")
+  .option("--source", "Only show source files, files containing the original translations")
+  .option("--target", "Only show target files, files containing translated content")
   .helpOption("-h, --help", "Show help")
   .action(async (type) => {
     const ora = Ora();
