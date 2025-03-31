@@ -13,7 +13,8 @@
     "jsx": "react-jsx",
     "moduleResolution": "Bundler",
     "module": "ESNext",
-    "target": "ESNext"
+    "target": "ESNext",
+    "allowUnreachableCode": true
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "types"],
   "exclude": ["src/**/*.spec.ts", "src/**/*.spec.tsx"]
