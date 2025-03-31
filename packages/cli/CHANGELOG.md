@@ -1,5 +1,15 @@
 # lingo.dev
 
+## 0.78.16
+
+### Patch Changes
+
+- [#595](https://github.com/lingodotdev/lingo.dev/pull/595) [`ca73e26`](https://github.com/lingodotdev/lingo.dev/commit/ca73e269edd31a237aeebf49244798f7222b3c72) Thanks [@mathio](https://github.com/mathio)! - gitignore logic
+
+- Updated dependencies [[`743d93e`](https://github.com/lingodotdev/lingo.dev/commit/743d93e554841bbd96d23682d8aec63cb4eb3ec8)]:
+  - @lingo.dev/_spec@0.26.4
+  - @lingo.dev/_sdk@0.7.28
+
 ## 0.78.15
 
 ### Patch Changes
