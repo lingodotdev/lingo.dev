@@ -1,5 +1,11 @@
 # @lingo.dev/\_spec
 
+## 0.26.4
+
+### Patch Changes
+
+- [#584](https://github.com/lingodotdev/lingo.dev/pull/584) [`743d93e`](https://github.com/lingodotdev/lingo.dev/commit/743d93e554841bbd96d23682d8aec63cb4eb3ec8) Thanks [@khalatevarun](https://github.com/khalatevarun)! - Add unit test for utility function in locales.ts
+
 ## 0.26.3
 
 ### Patch Changes
