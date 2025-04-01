@@ -1,5 +1,15 @@
 # lingo.dev
 
+## 0.78.17
+
+### Patch Changes
+
+- [#596](https://github.com/lingodotdev/lingo.dev/pull/596) [`61b487e`](https://github.com/lingodotdev/lingo.dev/commit/61b487e1e059328a32c3cdf673255d9d2cd480d9) Thanks [@vrcprl](https://github.com/vrcprl)! - add new locale
+
+- Updated dependencies [[`61b487e`](https://github.com/lingodotdev/lingo.dev/commit/61b487e1e059328a32c3cdf673255d9d2cd480d9)]:
+  - @lingo.dev/_spec@0.26.5
+  - @lingo.dev/_sdk@0.7.29
+
 ## 0.78.16
 
 ### Patch Changes
