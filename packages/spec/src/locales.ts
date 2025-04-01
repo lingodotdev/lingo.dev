@@ -184,6 +184,8 @@ const localeMap = {
   nap: ["nap-IT"],
   // Afrikaans (South Africa)
   af: ["af-ZA"],
+  // Uzbek (Latin)
+  uz: ["uz-Latn"],
   // Somali (Somalia)
   so: ["so-SO"],
   // Tigrinya (Ethiopia)
@@ -257,8 +259,6 @@ export const resolveLocaleCode = (value: string): LocaleCodeFull => {
  * @param {string} locale - the locale string (e.g.,"en_US","en-GB")
  * @return { string | null} - The delimiter ("_" or "-") if found, otherwise `null`.
  */
-
-
 
 export const getLocaleCodeDelimiter = (locale: string): LocaleDelimiter => {
   if (locale.includes("_")) {
