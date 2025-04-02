@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.79.0
+
+### Minor Changes
+
+- [#599](https://github.com/lingodotdev/lingo.dev/pull/599) [`81b2447`](https://github.com/lingodotdev/lingo.dev/commit/81b244746acd54f3c69e40353e8a0b8f71a5e73c) Thanks [@mathio](https://github.com/mathio)! - add "ci" command
+
 ## 0.78.17
 
 ### Patch Changes
