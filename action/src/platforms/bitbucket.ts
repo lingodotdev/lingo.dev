@@ -15,7 +15,7 @@ interface BitbucketConfig {
 export class BitbucketPlatformKit extends PlatformKit<BitbucketConfig> {
   private _bb?: ReturnType<typeof Bitbucket>;
 
-  get bb() {
+  private get bb() {
     if (!this._bb) {
       this._bb = new Bitbucket({
         auth: { token: this.platformConfig.bbToken || "" },

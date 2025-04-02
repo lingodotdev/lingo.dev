@@ -92,6 +92,9 @@ importers:
       '@datocms/cma-client-node':
         specifier: ^3.4.0
         version: 3.4.0
+      '@gitbeaker/rest':
+        specifier: ^39.34.3
+        version: 39.34.3
       '@inquirer/prompts':
         specifier: ^7.2.3
         version: 7.2.3(@types/node@22.10.2)
@@ -107,6 +110,9 @@ importers:
       '@paralleldrive/cuid2':
         specifier: ^2.2.2
         version: 2.2.2
+      bitbucket:
+        specifier: ^2.12.0
+        version: 2.12.0(encoding@0.1.13)
       chalk:
         specifier: ^5.4.1
         version: 5.4.1
@@ -194,6 +200,9 @@ importers:
       object-hash:
         specifier: ^3.0.0
         version: 3.0.0
+      octokit:
+        specifier: ^4.0.2
+        version: 4.1.2
       open:
         specifier: ^10.1.0
         version: 10.1.0
