@@ -59,7 +59,7 @@
   "dependencies": {
     "@datocms/cma-client-node": "^3.4.0",
     "@gitbeaker/rest": "^39.34.3",
-    "@inquirer/prompts": "^7.2.3",
+    "@inquirer/prompts": "^7.4.0",
     "@lingo.dev/_sdk": "workspace:*",
     "@lingo.dev/_spec": "workspace:*",
     "@modelcontextprotocol/sdk": "^1.5.0",
