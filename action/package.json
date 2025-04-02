@@ -2,6 +2,8 @@
   "name": "@lingo.dev/~action",
   "private": true,
   "type": "module",
+  "main": "build/main.js",
+  "types": "build/main.d.ts",
   "scripts": {
     "build": "tsc"
   },

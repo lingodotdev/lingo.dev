@@ -61,6 +61,7 @@
     "@inquirer/prompts": "^7.2.3",
     "@lingo.dev/_sdk": "workspace:*",
     "@lingo.dev/_spec": "workspace:*",
+    "@lingo.dev/~action": "workspace:*",
     "@modelcontextprotocol/sdk": "^1.5.0",
     "@paralleldrive/cuid2": "^2.2.2",
     "chalk": "^5.4.1",

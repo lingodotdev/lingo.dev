@@ -12,7 +12,9 @@
     "target": "ESNext",
     "rootDir": "src",
     "outDir": "build",
-    "allowUnreachableCode": true
+    "allowUnreachableCode": true,
+    "declaration": true,
+    "declarationMap": true
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
   "exclude": ["src/**/*.spec.ts", "src/**/*.spec.tsx"]

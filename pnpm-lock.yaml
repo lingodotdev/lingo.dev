@@ -101,6 +101,9 @@ importers:
       '@lingo.dev/_spec':
         specifier: workspace:*
         version: link:../spec
+      '@lingo.dev/~action':
+        specifier: workspace:*
+        version: link:../../action
       '@modelcontextprotocol/sdk':
         specifier: ^1.5.0
         version: 1.5.0
