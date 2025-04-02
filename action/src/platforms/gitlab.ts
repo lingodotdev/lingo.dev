@@ -15,7 +15,7 @@ export class GitlabPlatformKit extends PlatformKit {
     process.chdir(this.platformConfig.projectDir);
   }
 
-  get gitlab() {
+  private get gitlab(): InstanceType<typeof Gitlab> {
     if (!this._gitlab) {
       this._gitlab = new Gitlab({
         token: this.platformConfig.glToken || "",
