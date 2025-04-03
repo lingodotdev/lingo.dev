@@ -24,8 +24,18 @@ export default new Command()
   .helpOption("-h, --help", "Show help")
   .option("--locale <locale>", "Locale to process", (val: string, prev: string[]) => (prev ? [...prev, val] : [val]))
   .option("--bucket <bucket>", "Bucket to process", (val: string, prev: string[]) => (prev ? [...prev, val] : [val]))
-  .option("--key <key>", "Key to process. Process only a specific translation key, useful for debugging or updating a single entry")
-  .option("--frozen", `Run in read-only mode - fails if any translations need updating, useful for CI/CD pipelines to detect missing translations`)
+  .option(
+    "--key <key>",
+    "Key to process. Process only a specific translation key, useful for debugging or updating a single entry",
+  )
+  .option(
+    "--file [files...]",
+    "File to process. Process only a specific path, may contain asterisk * to match multiple files. Useful if you have a lot of files and want to focus on a specific one. Specify more files separated by commas or spaces.",
+  )
+  .option(
+    "--frozen",
+    `Run in read-only mode - fails if any translations need updating, useful for CI/CD pipelines to detect missing translations`,
+  )
   .option("--force", "Ignore lockfile and process all keys, useful for full re-translation")
   .option("--verbose", "Show detailed output including intermediate processing data and API communication details")
   .option("--interactive", "Enable interactive mode for reviewing and editing translations before they are applied")
@@ -69,6 +79,29 @@ export default new Command()
         buckets = buckets.filter((bucket: any) => flags.bucket!.includes(bucket.type));
       }
       ora.succeed("Buckets retrieved");
+
+      if (flags.file?.length) {
+        buckets = buckets
+          .map((bucket: any) => {
+            const config = bucket.config.filter((config: any) =>
+              flags.file!.find((file) => config.pathPattern?.match(file)),
+            );
+            return { ...bucket, config };
+          })
+          .filter((bucket: any) => bucket.config.length > 0);
+        if (buckets.length === 0) {
+          ora.fail("No buckets found. All buckets were filtered out by --file option.");
+          process.exit(1);
+        } else {
+          ora.info(`\x1b[36mProcessing only filtered buckets:\x1b[0m`);
+          buckets.map((bucket: any) => {
+            ora.info(`  ${bucket.type}:`);
+            bucket.config.forEach((config: any) => {
+              ora.info(`    - ${config.pathPattern}`);
+            });
+          });
+        }
+      }
 
       const targetLocales = flags.locale?.length ? flags.locale : i18nConfig!.locale.targets;
       const lockfileHelper = createLockfileHelper();
@@ -451,6 +484,7 @@ function parseFlags(options: any) {
     verbose: Z.boolean().optional(),
     strict: Z.boolean().optional(),
     key: Z.string().optional(),
+    file: Z.array(Z.string()).optional(),
     interactive: Z.boolean().default(false),
     debug: Z.boolean().default(false),
   }).parse(options);
