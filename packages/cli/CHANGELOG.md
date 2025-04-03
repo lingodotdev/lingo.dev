@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.79.1
+
+### Patch Changes
+
+- [#602](https://github.com/lingodotdev/lingo.dev/pull/602) [`6d6eded`](https://github.com/lingodotdev/lingo.dev/commit/6d6ededbbd9310b9b4ae331e520da2a1e2722e79) Thanks [@mathio](https://github.com/mathio)! - add i18n command --file option
+
 ## 0.79.0
 
 ### Minor Changes
