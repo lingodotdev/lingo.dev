@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.79.3
+
+### Patch Changes
+
+- [#606](https://github.com/lingodotdev/lingo.dev/pull/606) [`997a447`](https://github.com/lingodotdev/lingo.dev/commit/997a447c079a0554df17c6a7b25415058b017331) Thanks [@mathio](https://github.com/mathio)! - support bun package manager
+
 ## 0.79.2
 
 ### Patch Changes
