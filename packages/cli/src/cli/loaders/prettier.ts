@@ -83,12 +83,19 @@ async function installDependencies() {
 // determine if yarn or pnpm is used based on lockfile, otherwise use npm
 async function getPackageManager() {
   const yarnLockfile = path.resolve(process.cwd(), "yarn.lock");
-  const pnpmLockfile = path.resolve(process.cwd(), "pnpm-lock.yaml");
   if (fs.existsSync(yarnLockfile)) {
     return "yarn";
   }
+
+  const pnpmLockfile = path.resolve(process.cwd(), "pnpm-lock.yaml");
   if (fs.existsSync(pnpmLockfile)) {
     return "pnpm";
   }
+
+  const bunLockfile = path.resolve(process.cwd(), "bun.lock");
+  if (fs.existsSync(bunLockfile)) {
+    return "bun";
+  }
+
   return "npm";
 }
