@@ -83,12 +83,10 @@ export default new Command()
       if (flags.file?.length) {
         buckets = buckets
           .map((bucket: any) => {
-            const config = bucket.config.filter((config: any) =>
-              flags.file!.find((file) => config.pathPattern?.match(file)),
-            );
-            return { ...bucket, config };
+            const paths = bucket.paths.filter((path: any) => flags.file!.find((file) => path.pathPattern?.match(file)));
+            return { ...bucket, paths };
           })
-          .filter((bucket: any) => bucket.config.length > 0);
+          .filter((bucket: any) => bucket.paths.length > 0);
         if (buckets.length === 0) {
           ora.fail("No buckets found. All buckets were filtered out by --file option.");
           process.exit(1);
@@ -96,8 +94,8 @@ export default new Command()
           ora.info(`\x1b[36mProcessing only filtered buckets:\x1b[0m`);
           buckets.map((bucket: any) => {
             ora.info(`  ${bucket.type}:`);
-            bucket.config.forEach((config: any) => {
-              ora.info(`    - ${config.pathPattern}`);
+            bucket.paths.forEach((path: any) => {
+              ora.info(`    - ${path.pathPattern}`);
             });
           });
         }
@@ -111,18 +109,19 @@ export default new Command()
       if (!lockfileHelper.isLockfileExists()) {
         ora.start("Creating i18n.lock...");
         for (const bucket of buckets) {
-          for (const bucketConfig of bucket.config) {
-            const sourceLocale = resolveOverriddenLocale(i18nConfig!.locale.source, bucketConfig.delimiter);
+          for (const bucketPath of bucket.paths) {
+            const sourceLocale = resolveOverriddenLocale(i18nConfig!.locale.source, bucketPath.delimiter);
 
-            const bucketLoader = createBucketLoader(bucket.type, bucketConfig.pathPattern, {
+            const bucketLoader = createBucketLoader(bucket.type, bucketPath.pathPattern, {
               isCacheRestore: false,
               defaultLocale: sourceLocale,
+              injectLocale: bucket.injectLocale,
             });
             bucketLoader.setDefaultLocale(sourceLocale);
             await bucketLoader.init();
 
             const sourceData = await bucketLoader.pull(i18nConfig!.locale.source);
-            lockfileHelper.registerSourceData(bucketConfig.pathPattern, sourceData);
+            lockfileHelper.registerSourceData(bucketPath.pathPattern, sourceData);
           }
         }
         ora.succeed("i18n.lock created");
@@ -139,14 +138,15 @@ export default new Command()
 
         for (const bucket of buckets) {
           cacheOra.info(`Processing bucket: ${bucket.type}`);
-          for (const bucketConfig of bucket.config) {
+          for (const bucketPath of bucket.paths) {
             const bucketOra = Ora({ indent: 4 });
-            bucketOra.info(`Processing path: ${bucketConfig.pathPattern}`);
+            bucketOra.info(`Processing path: ${bucketPath.pathPattern}`);
 
-            const sourceLocale = resolveOverriddenLocale(i18nConfig!.locale.source, bucketConfig.delimiter);
-            const bucketLoader = createBucketLoader(bucket.type, bucketConfig.pathPattern, {
+            const sourceLocale = resolveOverriddenLocale(i18nConfig!.locale.source, bucketPath.delimiter);
+            const bucketLoader = createBucketLoader(bucket.type, bucketPath.pathPattern, {
               isCacheRestore: true,
               defaultLocale: sourceLocale,
+              injectLocale: bucket.injectLocale,
             });
             bucketLoader.setDefaultLocale(sourceLocale);
             await bucketLoader.init();
@@ -166,7 +166,7 @@ export default new Command()
               }
 
               await bucketLoader.push(targetLocale, targetData);
-              lockfileHelper.registerPartialSourceData(bucketConfig.pathPattern, cachedSourceData);
+              lockfileHelper.registerPartialSourceData(bucketPath.pathPattern, cachedSourceData);
 
               bucketOra.succeed(
                 `[${sourceLocale} -> ${targetLocale}] Recovered ${Object.keys(cachedSourceData).length} entries from cache`,
@@ -186,13 +186,14 @@ export default new Command()
         ora.start("Checking for lockfile updates...");
         let requiresUpdate: string | null = null;
         bucketLoop: for (const bucket of buckets) {
-          for (const bucketConfig of bucket.config) {
-            const sourceLocale = resolveOverriddenLocale(i18nConfig!.locale.source, bucketConfig.delimiter);
+          for (const bucketPath of bucket.paths) {
+            const sourceLocale = resolveOverriddenLocale(i18nConfig!.locale.source, bucketPath.delimiter);
 
-            const bucketLoader = createBucketLoader(bucket.type, bucketConfig.pathPattern, {
+            const bucketLoader = createBucketLoader(bucket.type, bucketPath.pathPattern, {
               isCacheRestore: false,
               defaultLocale: sourceLocale,
               returnUnlocalizedKeys: true,
+              injectLocale: bucket.injectLocale,
             });
             bucketLoader.setDefaultLocale(sourceLocale);
             await bucketLoader.init();
@@ -200,7 +201,7 @@ export default new Command()
             const { unlocalizable: sourceUnlocalizable, ...sourceData } = await bucketLoader.pull(
               i18nConfig!.locale.source,
             );
-            const updatedSourceData = lockfileHelper.extractUpdatedData(bucketConfig.pathPattern, sourceData);
+            const updatedSourceData = lockfileHelper.extractUpdatedData(bucketPath.pathPattern, sourceData);
 
             // translation was updated in the source file
             if (Object.keys(updatedSourceData).length > 0) {
@@ -209,7 +210,7 @@ export default new Command()
             }
 
             for (const _targetLocale of targetLocales) {
-              const targetLocale = resolveOverriddenLocale(_targetLocale, bucketConfig.delimiter);
+              const targetLocale = resolveOverriddenLocale(_targetLocale, bucketPath.delimiter);
               const { unlocalizable: targetUnlocalizable, ...targetData } = await bucketLoader.pull(targetLocale);
 
               const missingKeys = _.difference(Object.keys(sourceData), Object.keys(targetData));
@@ -257,21 +258,22 @@ export default new Command()
         try {
           console.log();
           ora.info(`Processing bucket: ${bucket.type}`);
-          for (const bucketConfig of bucket.config) {
-            const bucketOra = Ora({ indent: 2 }).info(`Processing path: ${bucketConfig.pathPattern}`);
+          for (const bucketPath of bucket.paths) {
+            const bucketOra = Ora({ indent: 2 }).info(`Processing path: ${bucketPath.pathPattern}`);
 
-            const sourceLocale = resolveOverriddenLocale(i18nConfig!.locale.source, bucketConfig.delimiter);
+            const sourceLocale = resolveOverriddenLocale(i18nConfig!.locale.source, bucketPath.delimiter);
 
-            const bucketLoader = createBucketLoader(bucket.type, bucketConfig.pathPattern, {
+            const bucketLoader = createBucketLoader(bucket.type, bucketPath.pathPattern, {
               isCacheRestore: false,
               defaultLocale: sourceLocale,
+              injectLocale: bucket.injectLocale,
             });
             bucketLoader.setDefaultLocale(sourceLocale);
             await bucketLoader.init();
             let sourceData = await bucketLoader.pull(sourceLocale);
 
             for (const _targetLocale of targetLocales) {
-              const targetLocale = resolveOverriddenLocale(_targetLocale, bucketConfig.delimiter);
+              const targetLocale = resolveOverriddenLocale(_targetLocale, bucketPath.delimiter);
               try {
                 bucketOra.start(`[${sourceLocale} -> ${targetLocale}] (0%) Localization in progress...`);
 
@@ -279,7 +281,7 @@ export default new Command()
 
                 const updatedSourceData = flags.force
                   ? sourceData
-                  : lockfileHelper.extractUpdatedData(bucketConfig.pathPattern, sourceData);
+                  : lockfileHelper.extractUpdatedData(bucketPath.pathPattern, sourceData);
 
                 const targetData = await bucketLoader.pull(targetLocale);
                 let processableData = calculateDataDelta({
@@ -333,7 +335,7 @@ export default new Command()
                 if (flags.interactive) {
                   bucketOra.stop();
                   const reviewedData = await reviewChanges({
-                    pathPattern: bucketConfig.pathPattern,
+                    pathPattern: bucketPath.pathPattern,
                     targetLocale,
                     currentData: targetData,
                     proposedData: finalTargetData,
@@ -342,7 +344,7 @@ export default new Command()
                   });
 
                   finalTargetData = reviewedData;
-                  bucketOra.start(`Applying changes to ${bucketConfig} (${targetLocale})`);
+                  bucketOra.start(`Applying changes to ${bucketPath} (${targetLocale})`);
                 }
 
                 const finalDiffSize = _.chain(finalTargetData)
@@ -369,7 +371,7 @@ export default new Command()
               }
             }
 
-            lockfileHelper.registerSourceData(bucketConfig.pathPattern, sourceData);
+            lockfileHelper.registerSourceData(bucketPath.pathPattern, sourceData);
           }
         } catch (_error: any) {
           const error = new Error(`Failed to process bucket ${bucket.type}: ${_error.message}`);

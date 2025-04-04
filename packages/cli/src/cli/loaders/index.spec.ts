@@ -466,6 +466,45 @@ describe("bucket loaders", () => {
       expect(fs.access).toHaveBeenCalledWith("i18n/en/en.json");
       expect(fs.writeFile).toHaveBeenCalledWith("i18n/es/es.json", expectedOutput, { encoding: "utf-8", flag: "w" });
     });
+
+    it("should remove injected locales from json data", async () => {
+      setupFileMocks();
+
+      const input = { "button.title": "Submit", settings: { locale: "en" }, "not-a-locale": "bar" };
+      mockFileOperations(JSON.stringify(input));
+
+      const jsonLoader = createBucketLoader("json", "i18n/[locale].json", {
+        isCacheRestore: false,
+        defaultLocale: "en",
+        injectLocale: ["settings.locale", "not-a-locale"],
+      });
+      jsonLoader.setDefaultLocale("en");
+      const data = await jsonLoader.pull("en");
+
+      expect(data).toEqual({ "button.title": "Submit", "not-a-locale": "bar" });
+    });
+
+    it("should inject locales into json data", async () => {
+      setupFileMocks();
+
+      const input = { "button.title": "Submit", "not-a-locale": "bar", settings: { locale: "en" } };
+      const payload = { "button.title": "Enviar", "not-a-locale": "bar" };
+      const expectedOutput = JSON.stringify({ ...payload, settings: { locale: "es" } }, null, 2);
+
+      mockFileOperations(JSON.stringify(input));
+
+      const jsonLoader = createBucketLoader("json", "i18n/[locale].json", {
+        isCacheRestore: false,
+        defaultLocale: "en",
+        injectLocale: ["settings.locale", "not-a-locale"],
+      });
+      jsonLoader.setDefaultLocale("en");
+      await jsonLoader.pull("en");
+
+      await jsonLoader.push("es", payload);
+
+      expect(fs.writeFile).toHaveBeenCalledWith("i18n/es.json", expectedOutput, { encoding: "utf-8", flag: "w" });
+    });
   });
 
   describe("markdown bucket loader", () => {

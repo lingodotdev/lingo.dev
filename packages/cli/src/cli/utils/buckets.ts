@@ -2,18 +2,28 @@ import _ from "lodash";
 import path from "path";
 import { glob } from "glob";
 import { CLIError } from "./errors";
-import { I18nConfig, resolveOverriddenLocale, BucketItem } from "@lingo.dev/_spec";
+import { I18nConfig, resolveOverriddenLocale, BucketItem, LocaleDelimiter } from "@lingo.dev/_spec";
 import { bucketTypeSchema } from "@lingo.dev/_spec";
 import Z from "zod";
+
+type BucketConfig = {
+  type: Z.infer<typeof bucketTypeSchema>;
+  paths: Array<{ pathPattern: string; delimiter?: LocaleDelimiter }>;
+  injectLocale?: string[];
+};
 
 export function getBuckets(i18nConfig: I18nConfig) {
   const result = Object.entries(i18nConfig.buckets).map(([bucketType, bucketEntry]) => {
     const includeItems = bucketEntry.include.map((item) => resolveBucketItem(item));
     const excludeItems = bucketEntry.exclude?.map((item) => resolveBucketItem(item));
-    return {
+    const config: BucketConfig = {
       type: bucketType as Z.infer<typeof bucketTypeSchema>,
-      config: extractPathPatterns(i18nConfig.locale.source, includeItems, excludeItems),
+      paths: extractPathPatterns(i18nConfig.locale.source, includeItems, excludeItems),
     };
+    if (bucketEntry.injectLocale) {
+      config.injectLocale = bucketEntry.injectLocale;
+    }
+    return config;
   });
 
   return result;
