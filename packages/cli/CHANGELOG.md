@@ -1,5 +1,17 @@
 # lingo.dev
 
+## 0.79.2
+
+### Patch Changes
+
+- [#601](https://github.com/lingodotdev/lingo.dev/pull/601) [`27964ba`](https://github.com/lingodotdev/lingo.dev/commit/27964bacaf3772c573230a8967c9fc112c81d054) Thanks [@mathio](https://github.com/mathio)! - lingo.dev ci PR flow update
+
+- [#605](https://github.com/lingodotdev/lingo.dev/pull/605) [`1dbbfd2`](https://github.com/lingodotdev/lingo.dev/commit/1dbbfd2ed9f5a7e0479dc83f700fb68ee5347a18) Thanks [@mathio](https://github.com/mathio)! - inject locale
+
+- Updated dependencies [[`1dbbfd2`](https://github.com/lingodotdev/lingo.dev/commit/1dbbfd2ed9f5a7e0479dc83f700fb68ee5347a18)]:
+  - @lingo.dev/_spec@0.26.6
+  - @lingo.dev/_sdk@0.7.30
+
 ## 0.79.1
 
 ### Patch Changes
