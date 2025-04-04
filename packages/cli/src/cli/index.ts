@@ -12,6 +12,7 @@ import i18nCmd from "./cmd/i18n";
 import lockfileCmd from "./cmd/lockfile";
 import cleanupCmd from "./cmd/cleanup";
 import mcpCmd from "./cmd/mcp";
+import ciCmd from "./cmd/ci";
 
 import packageJson from "../../package.json";
 
@@ -42,6 +43,7 @@ Website: https://lingo.dev
   .addCommand(lockfileCmd)
   .addCommand(cleanupCmd)
   .addCommand(mcpCmd)
+  .addCommand(ciCmd)
   .exitOverride((err) => {
     // Exit with code 0 when help or version is displayed
     if (err.code === "commander.helpDisplayed" || err.code === "commander.version" || err.code === "commander.help") {

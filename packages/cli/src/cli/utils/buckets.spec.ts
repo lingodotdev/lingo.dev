@@ -31,7 +31,7 @@ describe("getBuckets", () => {
     expect(buckets).toEqual([
       {
         type: "json",
-        config: [
+        paths: [
           { pathPattern: "src/i18n/[locale].json", delimiter: null },
           { pathPattern: "src/translations/[locale]/messages.json", delimiter: null },
         ],
@@ -61,7 +61,7 @@ describe("getBuckets", () => {
     expect(buckets).toEqual([
       {
         type: "json",
-        config: [
+        paths: [
           { pathPattern: "src/translations/landing.[locale].json", delimiter: null },
           { pathPattern: "src/translations/app.[locale].json", delimiter: null },
           { pathPattern: "src/translations/email.[locale].json", delimiter: null },
@@ -83,7 +83,7 @@ describe("getBuckets", () => {
     mockGlobSync(["src/i18n/en.json"]);
     const i18nConfig = makeI18nConfig([{ path: "src/i18n/[locale].json", delimiter: "-" }]);
     const buckets = getBuckets(i18nConfig);
-    expect(buckets).toEqual([{ type: "json", config: [{ pathPattern: "src/i18n/[locale].json", delimiter: "-" }] }]);
+    expect(buckets).toEqual([{ type: "json", paths: [{ pathPattern: "src/i18n/[locale].json", delimiter: "-" }] }]);
   });
 
   it("should return bucket with multiple locale placeholders", () => {
@@ -96,7 +96,7 @@ describe("getBuckets", () => {
     expect(buckets).toEqual([
       {
         type: "json",
-        config: [
+        paths: [
           { pathPattern: "src/i18n/[locale]/[locale].json", delimiter: null },
           { pathPattern: "src/[locale]/translations/[locale]/messages.json", delimiter: null },
         ],

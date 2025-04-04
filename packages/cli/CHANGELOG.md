@@ -1,5 +1,55 @@
 # lingo.dev
 
+## 0.79.3
+
+### Patch Changes
+
+- [#606](https://github.com/lingodotdev/lingo.dev/pull/606) [`997a447`](https://github.com/lingodotdev/lingo.dev/commit/997a447c079a0554df17c6a7b25415058b017331) Thanks [@mathio](https://github.com/mathio)! - support bun package manager
+
+## 0.79.2
+
+### Patch Changes
+
+- [#601](https://github.com/lingodotdev/lingo.dev/pull/601) [`27964ba`](https://github.com/lingodotdev/lingo.dev/commit/27964bacaf3772c573230a8967c9fc112c81d054) Thanks [@mathio](https://github.com/mathio)! - lingo.dev ci PR flow update
+
+- [#605](https://github.com/lingodotdev/lingo.dev/pull/605) [`1dbbfd2`](https://github.com/lingodotdev/lingo.dev/commit/1dbbfd2ed9f5a7e0479dc83f700fb68ee5347a18) Thanks [@mathio](https://github.com/mathio)! - inject locale
+
+- Updated dependencies [[`1dbbfd2`](https://github.com/lingodotdev/lingo.dev/commit/1dbbfd2ed9f5a7e0479dc83f700fb68ee5347a18)]:
+  - @lingo.dev/_spec@0.26.6
+  - @lingo.dev/_sdk@0.7.30
+
+## 0.79.1
+
+### Patch Changes
+
+- [#602](https://github.com/lingodotdev/lingo.dev/pull/602) [`6d6eded`](https://github.com/lingodotdev/lingo.dev/commit/6d6ededbbd9310b9b4ae331e520da2a1e2722e79) Thanks [@mathio](https://github.com/mathio)! - add i18n command --file option
+
+## 0.79.0
+
+### Minor Changes
+
+- [#599](https://github.com/lingodotdev/lingo.dev/pull/599) [`81b2447`](https://github.com/lingodotdev/lingo.dev/commit/81b244746acd54f3c69e40353e8a0b8f71a5e73c) Thanks [@mathio](https://github.com/mathio)! - add "ci" command
+
+## 0.78.17
+
+### Patch Changes
+
+- [#596](https://github.com/lingodotdev/lingo.dev/pull/596) [`61b487e`](https://github.com/lingodotdev/lingo.dev/commit/61b487e1e059328a32c3cdf673255d9d2cd480d9) Thanks [@vrcprl](https://github.com/vrcprl)! - add new locale
+
+- Updated dependencies [[`61b487e`](https://github.com/lingodotdev/lingo.dev/commit/61b487e1e059328a32c3cdf673255d9d2cd480d9)]:
+  - @lingo.dev/_spec@0.26.5
+  - @lingo.dev/_sdk@0.7.29
+
+## 0.78.16
+
+### Patch Changes
+
+- [#595](https://github.com/lingodotdev/lingo.dev/pull/595) [`ca73e26`](https://github.com/lingodotdev/lingo.dev/commit/ca73e269edd31a237aeebf49244798f7222b3c72) Thanks [@mathio](https://github.com/mathio)! - gitignore logic
+
+- Updated dependencies [[`743d93e`](https://github.com/lingodotdev/lingo.dev/commit/743d93e554841bbd96d23682d8aec63cb4eb3ec8)]:
+  - @lingo.dev/_spec@0.26.4
+  - @lingo.dev/_sdk@0.7.28
+
 ## 0.78.15
 
 ### Patch Changes

@@ -184,6 +184,8 @@ const localeMap = {
   nap: ["nap-IT"],
   // Afrikaans (South Africa)
   af: ["af-ZA"],
+  // Uzbek (Latin)
+  uz: ["uz-Latn"],
   // Somali (Somalia)
   so: ["so-SO"],
   // Tigrinya (Ethiopia)
@@ -222,7 +224,6 @@ export const localeCodeSchema = Z.string().refine((value) => localeCodes.include
   message: "Invalid locale code",
 });
 
-
 /**
  * Resolves a locale code to its full locale representation.
  *
@@ -234,9 +235,7 @@ export const localeCodeSchema = Z.string().refine((value) => localeCodes.include
  * @return {LocaleCodeFull} The resolved full locale code
  * @throws {Error} If the provided locale code is invalid.
  */
-
-
-export const resolveLocaleCode = (value: LocaleCode): LocaleCodeFull => {
+export const resolveLocaleCode = (value: string): LocaleCodeFull => {
   const existingFullLocaleCode = Object.values(localeMap)
     .flat()
     .includes(value as any);
@@ -260,8 +259,6 @@ export const resolveLocaleCode = (value: LocaleCode): LocaleCodeFull => {
  * @param {string} locale - the locale string (e.g.,"en_US","en-GB")
  * @return { string | null} - The delimiter ("_" or "-") if found, otherwise `null`.
  */
-
-
 
 export const getLocaleCodeDelimiter = (locale: string): LocaleDelimiter => {
   if (locale.includes("_")) {

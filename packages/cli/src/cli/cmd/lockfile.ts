@@ -24,7 +24,7 @@ export default new Command()
       const buckets = getBuckets(i18nConfig!);
 
       for (const bucket of buckets) {
-        for (const bucketConfig of bucket.config) {
+        for (const bucketConfig of bucket.paths) {
           const sourceLocale = resolveOverriddenLocale(i18nConfig!.locale.source, bucketConfig.delimiter);
           const bucketLoader = createBucketLoader(bucket.type, bucketConfig.pathPattern, {
             isCacheRestore: false,

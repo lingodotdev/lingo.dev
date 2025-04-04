@@ -5,7 +5,7 @@ import Z from "zod";
 export class GitHubPlatformKit extends PlatformKit {
   private _octokit?: Octokit;
 
-  get octokit() {
+  private get octokit(): Octokit {
     if (!this._octokit) {
       this._octokit = new Octokit({ auth: this.platformConfig.ghToken });
     }
