@@ -14,9 +14,10 @@ export default new Command()
   .option("--locale <locale>", "Specific locale to cleanup")
   .option("--bucket <bucket>", "Specific bucket to cleanup")
   .option("--dry-run", "Show what would be removed without making changes")
-  .option("--verbose", "Show detailed output including:\n" +
-                       "  - List of keys that would be removed.\n" +
-                       "  - Processing steps.")
+  .option(
+    "--verbose",
+    "Show detailed output including:\n" + "  - List of keys that would be removed.\n" + "  - Processing steps.",
+  )
   .action(async function (options) {
     const ora = Ora();
     const results: any = [];
@@ -39,7 +40,7 @@ export default new Command()
         console.log();
         ora.info(`Processing bucket: ${bucket.type}`);
 
-        for (const bucketConfig of bucket.config) {
+        for (const bucketConfig of bucket.paths) {
           const sourceLocale = resolveOverriddenLocale(i18nConfig!.locale.source, bucketConfig.delimiter);
           const bucketOra = Ora({ indent: 2 }).info(`Processing path: ${bucketConfig.pathPattern}`);
           const bucketLoader = createBucketLoader(bucket.type, bucketConfig.pathPattern, {

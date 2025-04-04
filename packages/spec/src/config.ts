@@ -23,12 +23,12 @@ type ConfigDefinitionExtensionParams<T extends Z.ZodRawShape, P extends Z.ZodRaw
   createUpgrader: (
     config: Z.infer<Z.ZodObject<P>>,
     schema: Z.ZodObject<T>,
-    defaultValue: Z.infer<Z.ZodObject<T>>,
+    defaultValue: Z.infer<Z.ZodObject<T>>
   ) => Z.infer<Z.ZodObject<T>>;
 };
 const extendConfigDefinition = <T extends Z.ZodRawShape, P extends Z.ZodRawShape>(
   definition: ConfigDefinition<P, any>,
-  params: ConfigDefinitionExtensionParams<T, P>,
+  params: ConfigDefinitionExtensionParams<T, P>
 ) => {
   const schema = params.createSchema(definition.schema);
   const defaultValue = params.createDefaultValue(definition.defaultValue);
@@ -120,7 +120,7 @@ export const configV1_1Definition = extendConfigDefinition(configV1Definition, {
         Z.object({
           include: Z.array(Z.string()).default([]),
           exclude: Z.array(Z.string()).default([]).optional(),
-        }),
+        })
       ).default({}),
     }),
   createDefaultValue: (baseDefaultValue) => ({
@@ -187,7 +187,8 @@ export const configV1_3Definition = extendConfigDefinition(configV1_2Definition,
           exclude: Z.array(Z.union([Z.string(), bucketItemSchema]))
             .default([])
             .optional(),
-        }),
+          injectLocale: Z.array(Z.string()).optional(),
+        })
       ).default({}),
     }),
   createDefaultValue: (baseDefaultValue) => ({

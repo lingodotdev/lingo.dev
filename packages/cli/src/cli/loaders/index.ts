@@ -29,11 +29,13 @@ import createSyncLoader from "./sync";
 import createPlutilJsonTextLoader from "./plutil-json-loader";
 import createPhpLoader from "./php";
 import createVueJsonLoader from "./vue-json";
+import createInjectLocaleLoader from "./inject-locale";
 
 type BucketLoaderOptions = {
   isCacheRestore: boolean;
   returnUnlocalizedKeys?: boolean;
   defaultLocale: string;
+  injectLocale?: string[];
 };
 
 export default function createBucketLoader(
@@ -73,6 +75,7 @@ export default function createBucketLoader(
         createTextFileLoader(bucketPathPattern),
         createPrettierLoader({ parser: "json", bucketPathPattern }),
         createJsonLoader(),
+        createInjectLocaleLoader(options.injectLocale),
         createFlatLoader(),
         createSyncLoader(),
         createUnlocalizableLoader(options.isCacheRestore, options.returnUnlocalizedKeys),
