@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.79.5
+
+### Patch Changes
+
+- [#612](https://github.com/lingodotdev/lingo.dev/pull/612) [`e541a12`](https://github.com/lingodotdev/lingo.dev/commit/e541a12436eeb4947caa077143c0b6e00b07e9b0) Thanks [@mathio](https://github.com/mathio)! - inject locale
+
 ## 0.79.4
 
 ### Patch Changes
