@@ -39,20 +39,21 @@ export default function createPrettierLoader(options: PrettierLoaderOptions): IL
       };
 
       try {
+        // format with prettier
         const result = await prettier.format(data, config);
         return result;
       } catch (error) {
         if (error instanceof Error && error.message.startsWith("Cannot find package")) {
           console.log();
-          console.log("Prettier is missing some dependecies - installing all project dependencies");
+          console.log("⚠️  Prettier plugins are not installed. Formatting without plugins.");
+          console.log("⚠️  To use prettier plugins install project dependencies before running Lingo.dev.");
 
-          // prettier is missing dependencies - install all project dependencies
-          installDependencies();
+          config.plugins = [];
 
-          // clear file system structure cache to find newly installed dependencies
+          // clear file system structure cache
           await prettier.clearConfigCache();
 
-          // try to format again
+          // format again without plugins
           const result = await prettier.format(data, config);
           return result;
         } else {
@@ -70,32 +71,4 @@ async function loadPrettierConfig(filePath: string) {
   } catch (error) {
     return {};
   }
-}
-
-// install all dependencies using package manager
-async function installDependencies() {
-  const packageManager = await getPackageManager();
-  console.log(`Installing dependencies using ${packageManager}`);
-  execSync(`${packageManager} install --frozen-lockfile`, { stdio: "inherit" });
-  console.log(`Dependencies installed`);
-}
-
-// determine if yarn or pnpm is used based on lockfile, otherwise use npm
-async function getPackageManager() {
-  const yarnLockfile = path.resolve(process.cwd(), "yarn.lock");
-  if (fs.existsSync(yarnLockfile)) {
-    return "yarn";
-  }
-
-  const pnpmLockfile = path.resolve(process.cwd(), "pnpm-lock.yaml");
-  if (fs.existsSync(pnpmLockfile)) {
-    return "pnpm";
-  }
-
-  const bunLockfile = path.resolve(process.cwd(), "bun.lock");
-  if (fs.existsSync(bunLockfile)) {
-    return "bun";
-  }
-
-  return "npm";
 }
