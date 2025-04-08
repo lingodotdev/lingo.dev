@@ -5,55 +5,129 @@
 </p>
 
 <p align="center">
-  <strong>⚡️ CI/CDから直接使えるWeb＆モバイル向けAIローカライゼーションツールキット</strong>
+  <strong>⚡️ ウェブ＆モバイルローカリゼーション向けAI搭載オープンソースCLI。</strong>
 </p>
 
 <br />
 
 <p align="center">
-  <a href="https://lingo.dev">ウェブサイト</a> •
-  <a href="https://github.com/lingodotdev/lingo.dev/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22">コントリビュート</a> •
-  <a href="#-github-action">GitHub Action</a>
+  <a href="https://docs.lingo.dev">ドキュメント</a> •
+  <a href="https://github.com/lingodotdev/lingo.dev/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22">貢献する</a> •
+  <a href="#-github-action">GitHub Action</a> •
+  <a href="#">リポジトリにスターを付ける</a>
 </p>
 
 <p align="center">
   <a href="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml">
-    <img src="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml/badge.svg" alt="Release" />
+    <img src="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml/badge.svg" alt="リリース" />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md">
-    <img src="https://img.shields.io/github/license/lingodotdev/lingo.dev" alt="License" />
+    <img src="https://img.shields.io/github/license/lingodotdev/lingo.dev" alt="ライセンス" />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/commits/main">
-    <img src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev" alt="Last Commit" />
+    <img src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev" alt="最終コミット" />
   </a>
 </p>
 
 <br />
 
-Lingo.devは、最新のLLMモデルを使用してソフトウェアのローカライゼーションを完全に自動化します。
+Lingo.devは、AI搭載のウェブおよびモバイルアプリのローカリゼーションのためのコミュニティ主導のオープンソースCLIです。
 
-手作業や管理の手間を省き、瞬時に自然な翻訳を生成します。Lingo.devのローカライゼーションエンジンは製品のコンテキストを理解し、60以上の言語でネイティブスピーカーが期待する完璧な翻訳を作成します。その結果、チームは最先端の品質を保ちながら、ローカライゼーションを100倍速く行い、世界中のより多くの有料顧客に向けて機能をリリースすることができます。
+Lingo.devは、手作業と管理の負担を排除し、本物の翻訳を即座に生成するように設計されています。その結果、チームは100倍速く正確なローカリゼーションを行い、世界中のより多くの満足ユーザーに機能を提供できます。あなた自身のLLMまたはLingo.dev管理のローカリゼーションエンジンと共に使用できます。
+
+> **あまり知られていない事実:** Lingo.devは2023年に学生ハッカソンの小さなプロジェクトとして始まりました！多くの改良を経て、2024年にY Combinatorに採用され、現在は採用中です！次世代のローカリゼーションツールの構築に興味がありますか？履歴書をcareers@lingo.devに送ってください 🚀
+
+## 📑 このガイドの内容
+
+- [クイックスタート](#-quickstart) - 数分で始める
+- [キャッシング](#-caching-with-i18nlock) - 翻訳更新の最適化
+- [GitHub Action](#-github-action) - CI/CDでローカリゼーションを自動化
+- [機能](#-supercharged-features) - Lingo.devが強力な理由
+- [ドキュメント](#-documentation) - 詳細なガイドとリファレンス
+- [貢献](#-contribute) - コミュニティに参加する
 
 ## 💫 クイックスタート
 
-1. [ウェブサイト](https://lingo.dev)でアカウントを作成
+Lingo.dev CLIは、あなた自身のLLMとLingo.dev管理の最新のSOTA（最先端）LLM上に構築されたローカリゼーションエンジンの両方で動作するように設計されています。
 
-2. プロジェクトの初期化:
+### 自分のLLMを使用する（BYOKまたはBring Your Own Key）
 
-   ```bash
-   npx lingo.dev@latest init
-   ```
+1. `i18n.json`設定ファイルを作成します：
 
-3. ドキュメントを確認: [docs.lingo.dev](https://docs.lingo.dev)
+```json
+{
+  "version": 1.5,
+  "provider": {
+    "id": "anthropic",
+    "model": "claude-3-7-sonnet-latest",
+    "prompt": "You're translating text from {source} to {target}."
+  },
+  "locale": {
+    "source": "en",
+    "targets": ["es", "fr", "de"]
+  }
+}
+```
 
-4. アプリのローカライズ（数秒で完了）:
-   ```bash
-   npx lingo.dev@latest i18n
-   ```
+2. 環境変数としてAPIキーを設定します：
+
+```bash
+export ANTHROPIC_API_KEY=your_anthropic_api_key
+
+# または OpenAI の場合
+
+export OPENAI_API_KEY=your_openai_api_key
+```
+
+3. ローカライゼーションを実行します：
+
+```bash
+npx lingo.dev@latest i18n
+```
+
+### Lingo.dev Cloud の使用
+
+本番環境のアプリケーションでは、翻訳メモリ、用語集サポート、ローカライゼーション品質保証などの機能が必要になることがよくあります。また、どのLLMプロバイダーとモデルを使用するかを専門家に決定してもらい、新しいモデルがリリースされたときに自動的に更新することが望ましい場合もあります。Lingo.devはこれらの機能を提供する管理されたローカライゼーションエンジンです：
+
+1. `i18n.json`設定ファイルを作成します（providerノードなし）：
+
+```json
+{
+  "version": 1.5,
+  "locale": {
+    "source": "en",
+    "targets": ["es", "fr", "de"]
+  }
+}
+```
+
+2. Lingo.devで認証します：
+
+```bash
+npx lingo.dev@latest auth --login
+```
+
+3. ローカライゼーションを実行します：
+
+```bash
+npx lingo.dev@latest i18n
+```
+
+## 📖 ドキュメント
+
+詳細なガイドとAPIリファレンスについては、[ドキュメント](https://lingo.dev/go/docs)をご覧ください。
+
+## 🔒 `i18n.lock`によるキャッシング
+
+Lingo.devは`i18n.lock`ファイルを使用してコンテンツのチェックサムを追跡し、変更されたテキストのみが翻訳されるようにします。これにより以下が向上します：
+
+- ⚡️ **速度**：既に翻訳されたコンテンツをスキップ
+- 🔄 **一貫性**：不要な再翻訳を防止
+- 💰 **コスト**：繰り返しの翻訳に対する課金なし
 
 ## 🤖 GitHub Action
 
-Lingo.devは、CI/CDパイプラインでローカライゼーションを自動化するGitHub Actionを提供しています。基本的なセットアップは以下の通りです：
+Lingo.devはCI/CDパイプラインでローカライゼーションを自動化するGitHub Actionを提供しています。基本的なセットアップは次のとおりです：
 
 ```yaml
 - uses: lingodotdev/lingo.dev@main
@@ -63,41 +137,31 @@ Lingo.devは、CI/CDパイプラインでローカライゼーションを自動
 
 このアクションは、プッシュごとに`lingo.dev i18n`を実行し、翻訳を自動的に最新の状態に保ちます。
 
-プルリクエストモードやその他の設定オプションについては、[GitHub Actionのドキュメント](https://docs.lingo.dev/setup/gha)をご覧ください。
+プルリクエストモードやその他の設定オプションについては、[GitHub Actionドキュメント](https://docs.lingo.dev/setup/gha)をご覧ください。
 
-## 🥇 チームがLingo.devを選ぶ理由
+## ⚡️ Lingo.devのスーパーパワー
 
-- 🔥 **即時導入**: 数分でセットアップ完了
-- 🔄 **CI/CD自動化**: シームレスな開発パイプライン統合
-- 🌍 **60以上の言語**: グローバル展開を簡単に
-- 🧠 **AIローカライゼーションエンジン**: 製品に最適化された翻訳
-- 📊 **柔軟なフォーマット**: JSON、YAML、CSV、Markdown他に対応
+## ⚡️ Lingo.devのスーパーパワー
 
-## 🛠️ パワフルな機能
+- 🔥 **瞬時の統合**: 数分でコードベースと連携可能
+- 🔄 **CI/CD自動化**: 設定したら後は忘れるだけ
+- 🌍 **グローバルリーチ**: 世界中のユーザーに配信
+- 🧠 **AI搭載**: 最新の言語モデルで自然な翻訳を実現
+- 📊 **フォーマット非依存**: JSON、YAML、CSV、Markdown、Android、iOS、その他多数に対応
+- 🔍 **クリーンな差分**: ファイル構造を完全に保持
+- ⚡️ **超高速**: 翻訳は数日ではなく数秒で完了
+- 🔄 **常に同期**: コンテンツが変更されると自動的に更新
+- 🌟 **人間品質**: 機械的に聞こえない翻訳
+- 👨‍💻 **開発者が開発者のために作成**: 私たち自身が毎日使用
+- 📈 **あなたと共に成長**: サイドプロジェクトからエンタープライズ規模まで
 
-- ⚡️ **超高速**: 数秒でAIローカライゼーション
-- 🔄 **自動更新**: 最新コンテンツと同期
-- 🌟 **ネイティブ品質**: 自然な翻訳
-- 👨‍💻 **開発者フレンドリー**: ワークフローに統合できるCLI
-- 📈 **スケーラブル**: 成長中のスタートアップから大企業まで対応
+## 🤝 貢献する
 
-## 📚 ドキュメント
+Lingo.devはコミュニティ主導のため、すべての貢献を歓迎します！
 
-詳細なガイドやAPIリファレンスについては、[ドキュメント](https://lingo.dev/go/docs)をご覧ください。
+新機能のアイデアがありますか？GitHubのイシューを作成してください！
 
-## 🤝 コントリビュート
-
-顧客でなくても、コントリビュートに興味がありますか？
-
-[Good First Issues](https://github.com/lingodotdev/lingo.dev/labels/good%20first%20issue)をチェックして、[コントリビューションガイド](./CONTRIBUTING.md)をお読みください。
-
-## 👨‍💻 チーム
-
-- **[Veronica](https://github.com/vrcprl)**
-- **[Max](https://github.com/maxprilutskiy)**
-- **[Matej](https://github.com/mathio)**
-
-ご質問やお問い合わせは veronica@lingo.dev までメールでご連絡ください
+貢献したいですか？プルリクエストを作成してください！
 
 ## 🌐 他言語のREADME
 
@@ -113,4 +177,4 @@ Lingo.devは、CI/CDパイプラインでローカライゼーションを自動
 - [Arabic](/readme/ar.md)
 - [Hindi](/readme/hi.md)
 
-お使いの言語が見つかりませんか？[`i18n.json`](./i18n.json)ファイルに新しい言語コードを追加してPRを作成してください。
+あなたの言語が見つかりませんか？[`i18n.json`](./i18n.json)ファイルに新しい言語コードを追加してPRを開いてください。
