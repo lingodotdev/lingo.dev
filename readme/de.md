@@ -5,15 +5,16 @@
 </p>
 
 <p align="center">
-  <strong>⚡️ KI-Lokalisierungs-Toolkit für Web & Mobile, direkt aus der CI/CD-Pipeline.</strong>
+  <strong>⚡️ KI-gestützte Open-Source-CLI für Web- & Mobile-Lokalisierung.</strong>
 </p>
 
 <br />
 
 <p align="center">
-  <a href="https://lingo.dev">Website</a> •
-  <a href="https://github.com/lingodotdev/lingo.dev/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22">Mitmachen</a> •
-  <a href="#-github-action">GitHub Action</a>
+  <a href="https://docs.lingo.dev">Dokumentation</a> •
+  <a href="https://github.com/lingodotdev/lingo.dev/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22">Mitwirken</a> •
+  <a href="#-github-action">GitHub Action</a> •
+  <a href="#">Repo mit Stern versehen</a>
 </p>
 
 <p align="center">
@@ -21,39 +22,112 @@
     <img src="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml/badge.svg" alt="Release" />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md">
-    <img src="https://img.shields.io/github/license/lingodotdev/lingo.dev" alt="License" />
+    <img src="https://img.shields.io/github/license/lingodotdev/lingo.dev" alt="Lizenz" />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/commits/main">
-    <img src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev" alt="Last Commit" />
+    <img src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev" alt="Letzter Commit" />
   </a>
 </p>
 
 <br />
 
-Lingo.dev automatisiert die Software-Lokalisierung End-to-End mit modernsten LLM-Modellen.
+Lingo.dev ist eine Community-gesteuerte, Open-Source-CLI für KI-gestützte Web- und Mobile-App-Lokalisierung.
 
-Es erstellt sofort authentische Übersetzungen und eliminiert manuelle Arbeit und Verwaltungsaufwand. Die Lingo.dev Lokalisierungs-Engine versteht den Produktkontext und erstellt perfekte Übersetzungen, die Muttersprachler in über 60 Sprachen erwarten. Teams können dadurch 100-mal schneller lokalisieren, mit modernster Qualität, und Features an mehr zahlende Kunden weltweit ausliefern.
+Lingo.dev wurde entwickelt, um sofort authentische Übersetzungen zu liefern und manuelle Arbeit sowie Verwaltungsaufwand zu eliminieren. Dadurch führen Teams präzise Lokalisierungen 100-mal schneller durch und bringen Features zu mehr zufriedenen Nutzern weltweit. Es kann mit Ihrem eigenen LLM oder mit der von Lingo.dev verwalteten Lokalisierungs-Engine verwendet werden.
+
+> **Wenig bekannte Tatsache:** Lingo.dev begann 2023 als kleines Projekt bei einem Studenten-Hackathon! Nach vielen Iterationen wurden wir 2024 in Y Combinator aufgenommen, und wir stellen jetzt ein! Interessiert daran, die nächste Generation von Lokalisierungstools zu entwickeln? Senden Sie Ihren Lebenslauf an careers@lingo.dev 🚀
+
+## 📑 In diesem Leitfaden
+
+- [Schnellstart](#-quickstart) - In Minuten loslegen
+- [Caching](#-caching-with-i18nlock) - Übersetzungsaktualisierungen optimieren
+- [GitHub Action](#-github-action) - Lokalisierung in CI/CD automatisieren
+- [Funktionen](#-supercharged-features) - Was Lingo.dev leistungsstark macht
+- [Dokumentation](#-documentation) - Detaillierte Anleitungen und Referenzen
+- [Mitwirken](#-contribute) - Treten Sie unserer Community bei
 
 ## 💫 Schnellstart
 
-1. Erstelle einen Account auf [der Website](https://lingo.dev)
+Die Lingo.dev CLI ist so konzipiert, dass sie sowohl mit Ihrem eigenen LLM als auch mit der von Lingo.dev verwalteten Lokalisierungs-Engine funktioniert, die auf den neuesten SOTA (State-of-the-Art) LLMs basiert.
 
-2. Initialisiere dein Projekt:
+### Verwendung Ihres eigenen LLM (BYOK oder Bring Your Own Key)
 
-   ```bash
-   npx lingo.dev@latest init
-   ```
+1. Erstellen Sie eine `i18n.json` Konfigurationsdatei:
 
-3. Schau dir unsere Docs an: [docs.lingo.dev](https://docs.lingo.dev)
+```json
+{
+  "version": 1.5,
+  "provider": {
+    "id": "anthropic",
+    "model": "claude-3-7-sonnet-latest",
+    "prompt": "You're translating text from {source} to {target}."
+  },
+  "locale": {
+    "source": "en",
+    "targets": ["es", "fr", "de"]
+  }
+}
+```
 
-4. Lokalisiere deine App (dauert nur Sekunden):
-   ```bash
-   npx lingo.dev@latest i18n
-   ```
+2. Setzen Sie Ihren API-Schlüssel als Umgebungsvariable:
+
+```bash
+export ANTHROPIC_API_KEY=your_anthropic_api_key
+
+# oder für OpenAI
+
+export OPENAI_API_KEY=your_openai_api_key
+```
+
+3. Führen Sie die Lokalisierung aus:
+
+```bash
+npx lingo.dev@latest i18n
+```
+
+### Verwendung von Lingo.dev Cloud
+
+Produktionsreife Anwendungen benötigen oft Funktionen wie Translation Memory, Glossar-Unterstützung und Qualitätssicherung bei der Lokalisierung. Manchmal möchten Sie auch, dass ein Experte für Sie entscheidet, welcher LLM-Anbieter und welches Modell zu verwenden ist, und das Modell automatisch aktualisiert, wenn neue Versionen veröffentlicht werden. Lingo.dev ist eine verwaltete Lokalisierungs-Engine, die diese Funktionen bietet:
+
+1. Erstellen Sie eine `i18n.json` Konfigurationsdatei (ohne Provider-Knoten):
+
+```json
+{
+  "version": 1.5,
+  "locale": {
+    "source": "en",
+    "targets": ["es", "fr", "de"]
+  }
+}
+```
+
+2. Authentifizieren Sie sich bei Lingo.dev:
+
+```bash
+npx lingo.dev@latest auth --login
+```
+
+3. Führen Sie die Lokalisierung aus:
+
+```bash
+npx lingo.dev@latest i18n
+```
+
+## 📖 Dokumentation
+
+Für detaillierte Anleitungen und API-Referenzen besuchen Sie die [Dokumentation](https://lingo.dev/go/docs).
+
+## 🔒 Caching mit `i18n.lock`
+
+Lingo.dev verwendet eine `i18n.lock`-Datei, um Inhalts-Prüfsummen zu verfolgen und sicherzustellen, dass nur geänderte Texte übersetzt werden. Dies verbessert:
+
+- ⚡️ **Geschwindigkeit**: Bereits übersetzte Inhalte werden übersprungen
+- 🔄 **Konsistenz**: Verhindert unnötige Neuübersetzungen
+- 💰 **Kosten**: Keine Abrechnung für wiederholte Übersetzungen
 
 ## 🤖 GitHub Action
 
-Lingo.dev bietet eine GitHub Action zur Automatisierung der Lokalisierung in deiner CI/CD-Pipeline. Hier ist ein grundlegendes Setup:
+Lingo.dev bietet eine GitHub Action zur Automatisierung der Lokalisierung in Ihrer CI/CD-Pipeline. Hier ist eine grundlegende Einrichtung:
 
 ```yaml
 - uses: lingodotdev/lingo.dev@main
@@ -61,56 +135,46 @@ Lingo.dev bietet eine GitHub Action zur Automatisierung der Lokalisierung in dei
     api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
 ```
 
-Diese Action führt `lingo.dev i18n` bei jedem Push aus und hält deine Übersetzungen automatisch aktuell.
+Diese Action führt bei jedem Push `lingo.dev i18n` aus und hält Ihre Übersetzungen automatisch aktuell.
 
-Für den Pull-Request-Modus und weitere Konfigurationsoptionen besuche unsere [GitHub Action Dokumentation](https://docs.lingo.dev/setup/gha).
+Für den Pull-Request-Modus und andere Konfigurationsoptionen besuchen Sie unsere [GitHub Action Dokumentation](https://docs.lingo.dev/setup/gha).
 
-## 🥇 Warum Teams sich für Lingo.dev entscheiden
+## ⚡️ Lingo.devs Superkräfte
 
-- 🔥 **Sofortige Integration**: Setup in Minuten
-- 🔄 **CI/CD Automation**: Nahtlose Integration in Dev-Pipelines
-- 🌍 **60+ Sprachen**: Mühelose globale Expansion
-- 🧠 **KI-Lokalisierungs-Engine**: Übersetzungen, die wirklich zu Ihrem Produkt passen
-- 📊 **Format-Flexibel**: Unterstützt JSON, YAML, CSV, Markdown und mehr
+## ⚡️ Lingo.devs Superkräfte
 
-## 🛠️ Leistungsstarke Features
+- 🔥 **Sofortige Integration**: Funktioniert in Minuten mit Ihrem Codebase
+- 🔄 **CI/CD-Automatisierung**: Einrichten und vergessen
+- 🌍 **Globale Reichweite**: Liefern Sie an Nutzer überall
+- 🧠 **KI-gestützt**: Nutzt neueste Sprachmodelle für natürliche Übersetzungen
+- 📊 **Format-unabhängig**: JSON, YAML, CSV, Markdown, Android, iOS und viele mehr
+- 🔍 **Saubere Diffs**: Bewahrt Ihre Dateistruktur exakt
+- ⚡️ **Blitzschnell**: Übersetzungen in Sekunden, nicht Tagen
+- 🔄 **Immer synchronisiert**: Aktualisiert automatisch bei Inhaltsänderungen
+- 🌟 **Menschliche Qualität**: Übersetzungen, die nicht roboterhaft klingen
+- 👨‍💻 **Von Entwicklern für Entwickler**: Wir nutzen es selbst täglich
+- 📈 **Wächst mit Ihnen**: Vom Nebenprojekt bis zum Enterprise-Maßstab
 
-- ⚡️ **Blitzschnell**: KI-Lokalisierung in Sekunden
-- 🔄 **Auto-Updates**: Synchronisiert mit den neuesten Inhalten
-- 🌟 **Native Qualität**: Authentisch klingende Übersetzungen
-- 👨‍💻 **Developer-Friendly**: CLI, das sich in Ihren Workflow integriert
-- 📈 **Skalierbar**: Für wachsende Startups und Enterprise-Teams
+## 🤝 Mitwirken
 
-## 📚 Dokumentation
+Lingo.dev ist community-getrieben, daher begrüßen wir alle Beiträge!
 
-Detaillierte Anleitungen und API-Referenzen finden Sie in der [Dokumentation](https://lingo.dev/go/docs).
+Haben Sie eine Idee für ein neues Feature? Erstellen Sie ein GitHub Issue!
 
-## 🤝 Mitmachen
-
-Interesse am Mitwirken, auch wenn Sie kein Kunde sind?
-
-Schauen Sie sich die [Good First Issues](https://github.com/lingodotdev/lingo.dev/labels/good%20first%20issue) an und lesen Sie den [Leitfaden zum Mitwirken](./CONTRIBUTING.md).
-
-## 👨‍💻 Team
-
-- **[Veronica](https://github.com/vrcprl)**
-- **[Max](https://github.com/maxprilutskiy)**
-- **[Matej](https://github.com/mathio)**
-
-Fragen oder Anfragen? E-Mail an veronica@lingo.dev
+Möchten Sie beitragen? Erstellen Sie einen Pull Request!
 
 ## 🌐 Readme in anderen Sprachen
 
 - [English](https://github.com/lingodotdev/lingo.dev)
-- [Spanisch](/readme/es.md)
-- [Französisch](/readme/fr.md)
-- [Russisch](/readme/ru.md)
-- [Deutsch](/readme/de.md)
-- [Chinesisch](/readme/zh-Hans.md)
-- [Koreanisch](/readme/ko.md)
-- [Japanisch](/readme/ja.md)
-- [Italienisch](/readme/it.md)
-- [Arabisch](/readme/ar.md)
+- [Spanish](/readme/es.md)
+- [French](/readme/fr.md)
+- [Russian](/readme/ru.md)
+- [German](/readme/de.md)
+- [Chinese](/readme/zh-Hans.md)
+- [Korean](/readme/ko.md)
+- [Japanese](/readme/ja.md)
+- [Italian](/readme/it.md)
+- [Arabic](/readme/ar.md)
 - [Hindi](/readme/hi.md)
 
-Siehst du deine Sprache nicht? Füge einfach einen neuen Sprachcode zur [`i18n.json`](./i18n.json) Datei hinzu und erstelle einen PR.
+Sehen Sie Ihre Sprache nicht? Fügen Sie einfach einen neuen Sprachcode zur Datei [`i18n.json`](./i18n.json) hinzu und öffnen Sie einen PR.
