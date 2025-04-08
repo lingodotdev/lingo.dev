@@ -35,7 +35,7 @@ Lingo.dev is a community-driven, open-source CLI for AI-powered web and mobile a
 
 Lingo.dev is designed to produce authentic translations instantly, eliminating manual work and management overhead. As a result, teams do accurate localization 100x faster, shipping features to more happy users worldwide. It can be used with your own LLM or with Lingo.dev-managed Localization Engine.
 
-> **Little-known fact:** Lingo.dev began as a small project at a student hackathon back in 2023! Many iterations later, we got accepted into Y Combinator in 2024, and we're now hiring! Interested in building the next-gen localization tools? Send your CV to careers@lingo.dev 🚀
+> **Little-known fact:** Lingo.dev began as a small project at a student hackathon back in 2023! Many iterations later, we got accepted into Y Combinator in 2024, and we're now hiring! Interested in building the next-gen localization tools? Send your CV to careers@lingo.dev! 🚀
 
 ## 📑 In This Guide
 
@@ -136,8 +136,6 @@ Lingo.dev offers a GitHub Action to automate localization in your CI/CD pipeline
 This action runs `lingo.dev i18n` on every push, keeping your translations up-to-date automatically.
 
 For pull request mode and other configuration options, visit our [GitHub Action documentation](https://docs.lingo.dev/setup/gha).
-
-## ⚡️ Lingo.dev's Superpowers
 
 ## ⚡️ Lingo.dev's Superpowers
 
