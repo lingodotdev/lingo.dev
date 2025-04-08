@@ -1,5 +1,10 @@
 {
-  "version": 1.2,
+  "version": 1.5,
+  "provider": {
+    "id": "anthropic",
+    "model": "claude-3-7-sonnet-latest",
+    "prompt": "You're translating text from {source} to {target}."
+  },
   "locale": {
     "source": "en",
     "targets": ["es", "fr", "it", "de", "ar"]
