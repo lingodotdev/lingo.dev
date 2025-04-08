@@ -24,7 +24,8 @@ function variableExtractLoader(
   return createLoader({
     pull: async (locale, input) => {
       const result: Record<string, VariableExtractionPayload> = {};
-      for (const [key, value] of Object.entries(input)) {
+      const inputValues = _.omitBy(input, _.isEmpty);
+      for (const [key, value] of Object.entries(inputValues)) {
         const matches = value.match(specifierPattern) || [];
         result[key] = result[key] || {
           value,

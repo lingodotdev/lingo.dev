@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { parseI18nConfig, defaultConfig } from "./config"; // Adjust the import path as needed
+import { parseI18nConfig, defaultConfig, LATEST_CONFIG_DEFINITION } from "./config";
 
 // Helper function to create a v0 config
 const createV0Config = () => ({
@@ -71,7 +71,7 @@ describe("I18n Config Parser", () => {
     const result = parseI18nConfig(v0Config);
 
     expect(result["$schema"]).toBeDefined();
-    expect(result.version).toBe(1.4);
+    expect(result.version).toBe(LATEST_CONFIG_DEFINITION.defaultValue.version);
     expect(result.locale).toEqual(defaultConfig.locale);
     expect(result.buckets).toEqual({});
   });
@@ -81,7 +81,7 @@ describe("I18n Config Parser", () => {
     const result = parseI18nConfig(v1Config);
 
     expect(result["$schema"]).toBeDefined();
-    expect(result.version).toBe(1.4);
+    expect(result.version).toBe(LATEST_CONFIG_DEFINITION.defaultValue.version);
     expect(result.locale).toEqual(v1Config.locale);
     expect(result.buckets).toEqual({
       json: {
@@ -119,7 +119,7 @@ describe("I18n Config Parser", () => {
   it("should throw an error for unsupported locales", () => {
     const invalidLocaleConfig = createInvalidLocaleConfig();
     expect(() => parseI18nConfig(invalidLocaleConfig)).toThrow(
-      `\nUnsupported locale: ${invalidLocaleConfig.locale.source}\nUnsupported locale: ${invalidLocaleConfig.locale.targets[1]}`,
+      `\nUnsupported locale: ${invalidLocaleConfig.locale.source}\nUnsupported locale: ${invalidLocaleConfig.locale.targets[1]}`
     );
   });
 });
