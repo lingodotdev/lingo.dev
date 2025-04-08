@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.80.1
+
+### Patch Changes
+
+- [`fb450cb`](https://github.com/lingodotdev/lingo.dev/commit/fb450cb2e90dd67ec008691a03237bdeecce5807) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - upd banner message
+
 ## 0.80.0
 
 ### Minor Changes
