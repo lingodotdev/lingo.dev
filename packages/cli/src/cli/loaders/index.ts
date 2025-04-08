@@ -94,8 +94,8 @@ export default function createBucketLoader(
         createPoLoader(),
         createFlatLoader(),
         createSyncLoader(),
-        createUnlocalizableLoader(options.isCacheRestore, options.returnUnlocalizedKeys),
         createVariableLoader({ type: "python" }),
+        createUnlocalizableLoader(options.isCacheRestore, options.returnUnlocalizedKeys),
       );
     case "properties":
       return composeLoaders(
@@ -127,8 +127,8 @@ export default function createBucketLoader(
         createXcodeXcstringsLoader(options.defaultLocale),
         createFlatLoader(),
         createSyncLoader(),
-        createUnlocalizableLoader(options.isCacheRestore, options.returnUnlocalizedKeys),
         createVariableLoader({ type: "ieee" }),
+        createUnlocalizableLoader(options.isCacheRestore, options.returnUnlocalizedKeys),
       );
     case "yaml":
       return composeLoaders(
