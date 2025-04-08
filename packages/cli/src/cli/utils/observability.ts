@@ -7,6 +7,8 @@ export default async function trackEvent(distinctId: string, event: string, prop
 
   const posthog = new PostHog("phc_eR0iSoQufBxNY36k0f0T15UvHJdTfHlh8rJcxsfhfXk", {
     host: "https://eu.i.posthog.com",
+    flushAt: 1,
+    flushInterval: 0,
   });
 
   await posthog.capture({
@@ -14,4 +16,6 @@ export default async function trackEvent(distinctId: string, event: string, prop
     event,
     properties,
   });
+
+  await posthog.shutdown();
 }
