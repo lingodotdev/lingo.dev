@@ -31,11 +31,11 @@
 
 <br />
 
-Lingo.dev est un CLI open-source communautaire propulsé par l'IA pour la localisation d'applications web et mobiles.
+Lingo.dev est un CLI open-source communautaire pour la localisation d'applications web et mobiles propulsé par l'IA.
 
 Lingo.dev est conçu pour produire instantanément des traductions authentiques, éliminant le travail manuel et les frais de gestion. Ainsi, les équipes réalisent des localisations précises 100 fois plus rapidement, déployant des fonctionnalités pour davantage d'utilisateurs satisfaits dans le monde entier. Il peut être utilisé avec votre propre LLM ou avec le moteur de localisation géré par Lingo.dev.
 
-> **Anecdote peu connue :** Lingo.dev a débuté comme un petit projet lors d'un hackathon étudiant en 2023 ! Après de nombreuses itérations, nous avons été acceptés à Y Combinator en 2024, et nous recrutons maintenant ! Intéressé par la création d'outils de localisation de nouvelle génération ? Envoyez votre CV à careers@lingo.dev 🚀
+> **Anecdote peu connue :** Lingo.dev a débuté comme un petit projet lors d'un hackathon étudiant en 2023 ! Après de nombreuses itérations, nous avons été acceptés chez Y Combinator en 2024, et nous recrutons maintenant ! Intéressé par la création d'outils de localisation de nouvelle génération ? Envoyez votre CV à careers@lingo.dev ! 🚀
 
 ## 📑 Dans ce guide
 
@@ -141,23 +141,21 @@ Pour le mode pull request et d'autres options de configuration, consultez notre 
 
 ## ⚡️ Les superpouvoirs de Lingo.dev
 
-## ⚡️ Les superpouvoirs de Lingo.dev
-
-- 🔥 **Intégration instantanée** : Fonctionne avec votre base de code en quelques minutes
+- 🔥 **Intégration instantanée** : Fonctionne avec votre code en quelques minutes
 - 🔄 **Automatisation CI/CD** : Configurez-le et oubliez-le
-- 🌍 **Portée mondiale** : Livrez à des utilisateurs partout
+- 🌍 **Portée mondiale** : Déployez pour des utilisateurs partout
 - 🧠 **Propulsé par l'IA** : Utilise les derniers modèles linguistiques pour des traductions naturelles
-- 📊 **Indépendant du format** : JSON, YAML, CSV, Markdown, Android, iOS, et bien plus
+- 📊 **Format agnostique** : JSON, YAML, CSV, Markdown, Android, iOS et bien plus
 - 🔍 **Diffs propres** : Préserve exactement la structure de vos fichiers
 - ⚡️ **Ultra-rapide** : Traductions en secondes, pas en jours
-- 🔄 **Toujours synchronisé** : Se met à jour automatiquement lorsque le contenu change
+- 🔄 **Toujours synchronisé** : Mises à jour automatiques lors des changements de contenu
 - 🌟 **Qualité humaine** : Des traductions qui ne sonnent pas robotiques
 - 👨‍💻 **Créé par des développeurs, pour des développeurs** : Nous l'utilisons nous-mêmes quotidiennement
 - 📈 **Évolue avec vous** : Du projet personnel à l'échelle entreprise
 
 ## 🤝 Contribuer
 
-Lingo.dev est axé sur la communauté, nous accueillons donc toutes les contributions !
+Lingo.dev est piloté par la communauté, nous accueillons donc toutes les contributions !
 
 Vous avez une idée pour une nouvelle fonctionnalité ? Créez une issue GitHub !
 

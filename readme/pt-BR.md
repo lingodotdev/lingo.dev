@@ -22,10 +22,10 @@
     <img src="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml/badge.svg" alt="Release" />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md">
-    <img src="https://img.shields.io/github/license/lingodotdev/lingo.dev" alt="License" />
+    <img src="https://img.shields.io/github/license/lingodotdev/lingo.dev" alt="Licença" />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/commits/main">
-    <img src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev" alt="Last Commit" />
+    <img src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev" alt="Último commit" />
   </a>
 </p>
 
@@ -35,7 +35,7 @@ Lingo.dev é uma CLI de código aberto orientada pela comunidade para localizaç
 
 Lingo.dev foi projetado para produzir traduções autênticas instantaneamente, eliminando trabalho manual e sobrecarga de gerenciamento. Como resultado, as equipes realizam localização precisa 100x mais rápido, entregando recursos para mais usuários satisfeitos em todo o mundo. Pode ser usado com seu próprio LLM ou com o Motor de Localização gerenciado pelo Lingo.dev.
 
-> **Curiosidade pouco conhecida:** Lingo.dev começou como um pequeno projeto em um hackathon estudantil em 2023! Muitas iterações depois, fomos aceitos na Y Combinator em 2024, e agora estamos contratando! Interessado em construir as ferramentas de localização de próxima geração? Envie seu currículo para careers@lingo.dev 🚀
+> **Curiosidade pouco conhecida:** Lingo.dev começou como um pequeno projeto em um hackathon estudantil em 2023! Muitas iterações depois, fomos aceitos na Y Combinator em 2024, e agora estamos contratando! Interessado em construir as ferramentas de localização de próxima geração? Envie seu currículo para careers@lingo.dev! 🚀
 
 ## 📑 Neste guia
 
@@ -141,23 +141,21 @@ Para o modo de pull request e outras opções de configuração, visite nossa [d
 
 ## ⚡️ Superpoderes do Lingo.dev
 
-## ⚡️ Superpoderes do Lingo.dev
-
 - 🔥 **Integração instantânea**: Funciona com seu código em minutos
-- 🔄 **Automação de CI/CD**: Configure e esqueça
+- 🔄 **Automação CI/CD**: Configure e esqueça
 - 🌍 **Alcance global**: Entregue para usuários em todo lugar
-- 🧠 **Alimentado por IA**: Usa os modelos de linguagem mais recentes para traduções naturais
+- 🧠 **Alimentado por IA**: Usa os mais recentes modelos de linguagem para traduções naturais
 - 📊 **Agnóstico de formato**: JSON, YAML, CSV, Markdown, Android, iOS e muitos mais
 - 🔍 **Diffs limpos**: Preserva exatamente a estrutura do seu arquivo
 - ⚡️ **Extremamente rápido**: Traduções em segundos, não dias
 - 🔄 **Sempre sincronizado**: Atualiza automaticamente quando o conteúdo muda
 - 🌟 **Qualidade humana**: Traduções que não parecem robóticas
-- 👨‍💻 **Criado por devs, para devs**: Nós mesmos o usamos diariamente
-- 📈 **Cresce com você**: De projeto pessoal a escala empresarial
+- 👨‍💻 **Feito por devs, para devs**: Nós mesmos o usamos diariamente
+- 📈 **Cresce com você**: De projeto pessoal à escala empresarial
 
 ## 🤝 Contribua
 
-O Lingo.dev é orientado pela comunidade, então todas as contribuições são bem-vindas!
+Lingo.dev é orientado pela comunidade, então recebemos todas as contribuições!
 
 Tem uma ideia para um novo recurso? Crie uma issue no GitHub!
 
