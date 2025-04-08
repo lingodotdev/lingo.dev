@@ -1,5 +1,4 @@
 import { bucketTypeSchema, I18nConfig, localeCodeSchema, resolveOverriddenLocale } from "@lingo.dev/_spec";
-import { LingoDotDevEngine } from "@lingo.dev/_sdk";
 import { Command } from "interactive-commander";
 import Z from "zod";
 import _ from "lodash";
@@ -17,6 +16,8 @@ import inquirer from "inquirer";
 import externalEditor from "external-editor";
 import { cacheChunk, deleteCache, getNormalizedCache } from "../utils/cache";
 import updateGitignore from "../utils/update-gitignore";
+import createProcessor from "../processor";
+import { withExponentialBackoff } from "../utils/exp-backoff";
 
 export default new Command()
   .command("i18n")
@@ -299,11 +300,13 @@ export default new Command()
                 bucketOra.start(
                   `[${sourceLocale} -> ${targetLocale}] [${Object.keys(processableData).length} entries] (0%) AI localization in progress...`,
                 );
-                const localizationEngine = createLocalizationEngineConnection({
+                let processPayload = createProcessor(i18nConfig!.provider, {
                   apiKey: settings.auth.apiKey,
                   apiUrl: settings.auth.apiUrl,
                 });
-                const processedTargetData = await localizationEngine.process(
+                processPayload = withExponentialBackoff(processPayload, 3, 1000);
+
+                const processedTargetData = await processPayload(
                   {
                     sourceLocale,
                     sourceData,
@@ -433,47 +436,6 @@ async function retryWithExponentialBackoff<T>(
     }
   }
   throw new Error("Unreachable code");
-}
-
-function createLocalizationEngineConnection(params: { apiKey: string; apiUrl: string; maxRetries?: number }) {
-  const engine = new LingoDotDevEngine({
-    apiKey: params.apiKey,
-    apiUrl: params.apiUrl,
-  });
-
-  return {
-    process: async (
-      args: {
-        sourceLocale: string;
-        sourceData: Record<string, any>;
-        processableData: Record<string, any>;
-        targetLocale: string;
-        targetData: Record<string, any>;
-      },
-      onProgress: (
-        progress: number,
-        sourceChunk: Record<string, string>,
-        processedChunk: Record<string, string>,
-      ) => void,
-    ) => {
-      return retryWithExponentialBackoff(
-        () =>
-          engine.localizeObject(
-            args.processableData,
-            {
-              sourceLocale: args.sourceLocale,
-              targetLocale: args.targetLocale,
-              reference: {
-                [args.sourceLocale]: args.sourceData,
-                [args.targetLocale]: args.targetData,
-              },
-            },
-            onProgress,
-          ),
-        params.maxRetries ?? 3,
-      );
-    },
-  };
 }
 
 function parseFlags(options: any) {
