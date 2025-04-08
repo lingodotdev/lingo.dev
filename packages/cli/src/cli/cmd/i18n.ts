@@ -18,6 +18,7 @@ import { cacheChunk, deleteCache, getNormalizedCache } from "../utils/cache";
 import updateGitignore from "../utils/update-gitignore";
 import createProcessor from "../processor";
 import { withExponentialBackoff } from "../utils/exp-backoff";
+import trackEvent from "../utils/observability";
 
 export default new Command()
   .command("i18n")
@@ -61,6 +62,7 @@ export default new Command()
     }
 
     let hasErrors = false;
+    let authId: string | null = null;
     try {
       ora.start("Loading configuration...");
       const i18nConfig = getConfig();
@@ -73,7 +75,13 @@ export default new Command()
 
       ora.start("Connecting to Lingo.dev Localization Engine...");
       const auth = await validateAuth(settings);
+      authId = auth.id;
       ora.succeed(`Authenticated as ${auth.email}`);
+
+      trackEvent(authId, "cmd.i18n.start", {
+        i18nConfig,
+        flags,
+      });
 
       let buckets = getBuckets(i18nConfig!);
       if (flags.bucket?.length) {
@@ -393,11 +401,20 @@ export default new Command()
         if (flags.verbose) {
           ora.info("Cache file deleted.");
         }
+        trackEvent(auth.id, "cmd.i18n.success", {
+          i18nConfig,
+          flags,
+        });
       } else {
         ora.warn("Localization completed with errors.");
       }
     } catch (error: any) {
       ora.fail(error.message);
+
+      trackEvent(authId || "unknown", "cmd.i18n.error", {
+        flags,
+        error,
+      });
       process.exit(1);
     }
   });
