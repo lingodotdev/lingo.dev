@@ -1,5 +1,37 @@
 # lingo.dev
 
+## 0.80.1
+
+### Patch Changes
+
+- [`fb450cb`](https://github.com/lingodotdev/lingo.dev/commit/fb450cb2e90dd67ec008691a03237bdeecce5807) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - upd banner message
+
+## 0.80.0
+
+### Minor Changes
+
+- [#614](https://github.com/lingodotdev/lingo.dev/pull/614) [`2495afd`](https://github.com/lingodotdev/lingo.dev/commit/2495afd69e23700f96e19e5bbf74e393b29c2033) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - add basic translators
+
+### Patch Changes
+
+- [#616](https://github.com/lingodotdev/lingo.dev/pull/616) [`516a79c`](https://github.com/lingodotdev/lingo.dev/commit/516a79c75501c5960ae944379f38591806ca43e2) Thanks [@mathio](https://github.com/mathio)! - po files --frozen flag
+
+- Updated dependencies [[`2495afd`](https://github.com/lingodotdev/lingo.dev/commit/2495afd69e23700f96e19e5bbf74e393b29c2033), [`516a79c`](https://github.com/lingodotdev/lingo.dev/commit/516a79c75501c5960ae944379f38591806ca43e2), [`2cc6114`](https://github.com/lingodotdev/lingo.dev/commit/2cc61140fccc69ab73d40c7802a2d0e018889475)]:
+  - @lingo.dev/_spec@0.27.0
+  - @lingo.dev/_sdk@0.7.31
+
+## 0.79.5
+
+### Patch Changes
+
+- [#612](https://github.com/lingodotdev/lingo.dev/pull/612) [`e541a12`](https://github.com/lingodotdev/lingo.dev/commit/e541a12436eeb4947caa077143c0b6e00b07e9b0) Thanks [@mathio](https://github.com/mathio)! - inject locale
+
+## 0.79.4
+
+### Patch Changes
+
+- [#610](https://github.com/lingodotdev/lingo.dev/pull/610) [`ad05fbf`](https://github.com/lingodotdev/lingo.dev/commit/ad05fbf11b737c17a7cf2861be23ab2bf1189b52) Thanks [@mathio](https://github.com/mathio)! - handle prettier plugins deps
+
 ## 0.79.3
 
 ### Patch Changes

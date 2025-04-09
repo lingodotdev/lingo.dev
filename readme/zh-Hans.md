@@ -5,55 +5,129 @@
 </p>
 
 <p align="center">
-  <strong>⚡️ 专为网页和移动应用打造的 AI 本地化工具包，直接集成于 CI/CD。</strong>
+  <strong>⚡️ 基于AI的开源网页和移动应用本地化CLI工具。</strong>
 </p>
 
 <br />
 
 <p align="center">
-  <a href="https://lingo.dev">官网</a> •
-  <a href="https://github.com/lingodotdev/lingo.dev/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22">参与贡献</a> •
-  <a href="#-github-action">GitHub Action</a>
+  <a href="https://docs.lingo.dev">文档</a> •
+  <a href="https://github.com/lingodotdev/lingo.dev/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22">贡献</a> •
+  <a href="#-github-action">GitHub Action</a> •
+  <a href="#">为项目加星</a>
 </p>
 
 <p align="center">
   <a href="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml">
-    <img src="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml/badge.svg" alt="Release" />
+    <img src="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml/badge.svg" alt="发布" />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md">
-    <img src="https://img.shields.io/github/license/lingodotdev/lingo.dev" alt="License" />
+    <img src="https://img.shields.io/github/license/lingodotdev/lingo.dev" alt="许可证" />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/commits/main">
-    <img src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev" alt="Last Commit" />
+    <img src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev" alt="最近提交" />
   </a>
 </p>
 
 <br />
 
-Lingo.dev 使用最新的 LLM 模型实现软件本地化的端到端自动化。
+Lingo.dev是一个社区驱动的开源CLI工具，用于AI驱动的网页和移动应用本地化。
 
-它能即时生成地道的翻译，消除人工工作和管理开销。Lingo.dev 本地化引擎深入理解产品上下文，为 60 多种语言创建完美的翻译，确保符合母语者的期望。因此，团队可以以最先进的质量标准，将本地化速度提升 100 倍，为全球更多付费客户发布功能。
+Lingo.dev旨在即时生成地道的翻译，消除手动工作和管理开销。因此，团队可以以100倍的速度完成准确的本地化，将功能推送给全球更多满意的用户。它可以与您自己的LLM一起使用，也可以与Lingo.dev管理的本地化引擎一起使用。
+
+> **鲜为人知的事实：** Lingo.dev最初是2023年一个学生黑客马拉松的小项目！经过多次迭代后，我们在2024年被Y Combinator接纳，现在我们正在招聘！对构建下一代本地化工具感兴趣吗？请将您的简历发送至careers@lingo.dev！🚀
+
+## 📑 本指南内容
+
+- [快速开始](#-quickstart) - 几分钟内上手
+- [缓存](#-caching-with-i18nlock) - 优化翻译更新
+- [GitHub Action](#-github-action) - 在CI/CD中自动化本地化
+- [功能](#-supercharged-features) - Lingo.dev强大的原因
+- [文档](#-documentation) - 详细指南和参考
+- [贡献](#-contribute) - 加入我们的社区
 
 ## 💫 快速开始
 
-1. 在[官网](https://lingo.dev)创建账号
+Lingo.dev CLI设计为既可以与您自己的LLM一起工作，也可以与Lingo.dev管理的基于最新SOTA（最先进）LLM构建的本地化引擎一起工作。
 
-2. 初始化项目：
+### 使用您自己的LLM（BYOK或自带密钥）
 
-   ```bash
-   npx lingo.dev@latest init
-   ```
+1. 创建一个 `i18n.json` 配置文件：
 
-3. 查看我们的文档：[docs.lingo.dev](https://docs.lingo.dev)
+```json
+{
+  "version": 1.5,
+  "provider": {
+    "id": "anthropic",
+    "model": "claude-3-7-sonnet-latest",
+    "prompt": "You're translating text from {source} to {target}."
+  },
+  "locale": {
+    "source": "en",
+    "targets": ["es", "fr", "de"]
+  }
+}
+```
 
-4. 本地化你的应用（仅需几秒）：
-   ```bash
-   npx lingo.dev@latest i18n
-   ```
+2. 将您的 API 密钥设置为环境变量：
+
+```bash
+export ANTHROPIC_API_KEY=your_anthropic_api_key
+
+# 或者对于 OpenAI
+
+export OPENAI_API_KEY=your_openai_api_key
+```
+
+3. 运行本地化：
+
+```bash
+npx lingo.dev@latest i18n
+```
+
+### 使用 Lingo.dev 云服务
+
+通常，生产级应用需要翻译记忆库、术语表支持和本地化质量保证等功能。有时，您可能希望由专家为您决定使用哪个 LLM 提供商和模型，并在发布新模型时自动更新。Lingo.dev 是一个提供这些功能的托管本地化引擎：
+
+1. 创建一个 `i18n.json` 配置文件（不包含 provider 节点）：
+
+```json
+{
+  "version": 1.5,
+  "locale": {
+    "source": "en",
+    "targets": ["es", "fr", "de"]
+  }
+}
+```
+
+2. 与 Lingo.dev 进行身份验证：
+
+```bash
+npx lingo.dev@latest auth --login
+```
+
+3. 运行本地化：
+
+```bash
+npx lingo.dev@latest i18n
+```
+
+## 📖 文档
+
+有关详细指南和 API 参考，请访问[文档](https://lingo.dev/go/docs)。
+
+## 🔒 使用 `i18n.lock` 进行缓存
+
+Lingo.dev 使用 `i18n.lock` 文件跟踪内容校验和，确保只有更改过的文本才会被翻译。这样可以提高：
+
+- ⚡️ **速度**：跳过已翻译的内容
+- 🔄 **一致性**：防止不必要的重新翻译
+- 💰 **成本**：不对重复翻译计费
 
 ## 🤖 GitHub Action
 
-Lingo.dev 提供 GitHub Action 来在你的 CI/CD 流程中自动化本地化。以下是基本设置：
+Lingo.dev 提供 GitHub Action 来在您的 CI/CD 流程中自动化本地化。以下是基本设置：
 
 ```yaml
 - uses: lingodotdev/lingo.dev@main
@@ -61,45 +135,33 @@ Lingo.dev 提供 GitHub Action 来在你的 CI/CD 流程中自动化本地化。
     api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
 ```
 
-这个 action 会在每次推送时运行 `lingo.dev i18n`，自动保持翻译内容的更新。
+此操作在每次推送时运行 `lingo.dev i18n`，自动保持您的翻译最新。
 
-关于 pull request 模式和其他配置选项，请访问我们的 [GitHub Action 文档](https://docs.lingo.dev/setup/gha)。
+关于拉取请求模式和其他配置选项，请访问我们的 [GitHub Action 文档](https://docs.lingo.dev/setup/gha)。
 
-## 🥇 团队选择 Lingo.dev 的原因
+## ⚡️ Lingo.dev的超能力
 
-- 🔥 **即时集成**：几分钟内完成设置
-- 🔄 **CI/CD 自动化**：无缝开发流程集成
-- 🌍 **支持60+语言**：轻松实现全球化
-- 🧠 **AI本地化引擎**：完美契合产品的翻译
-- 📊 **格式灵活**：支持 JSON、YAML、CSV、Markdown 等
+- 🔥 **即时集成**：几分钟内即可与您的代码库协同工作
+- 🔄 **CI/CD自动化**：设置一次，无需再管
+- 🌍 **全球覆盖**：向全球用户推送
+- 🧠 **AI驱动**：使用最新的语言模型进行自然翻译
+- 📊 **格式无关**：支持JSON、YAML、CSV、Markdown、Android、iOS等多种格式
+- 🔍 **干净的差异**：完全保留您的文件结构
+- ⚡️ **闪电般速度**：翻译在几秒内完成，而非数天
+- 🔄 **始终同步**：内容变更时自动更新
+- 🌟 **人工质量**：翻译不会显得机械
+- 👨‍💻 **由开发者为开发者打造**：我们自己每天都在使用
+- 📈 **与您共同成长**：从小项目到企业规模
 
-## 🛠️ 超强功能
+## 🤝 贡献
 
-- ⚡️ **闪电般速度**：AI 本地化仅需几秒
-- 🔄 **自动更新**：与最新内容同步
-- 🌟 **原生品质**：地道自然的翻译
-- 👨‍💻 **开发者友好**：集成工作流的 CLI
-- 📈 **可扩展性**：适用于成长型初创企业和企业团队
+Lingo.dev 是社区驱动的，所以我们欢迎所有贡献！
 
-## 📚 文档
+有新功能的想法？创建一个 GitHub issue！
 
-详细指南和 API 参考，请访问[文档](https://lingo.dev/go/docs)。
+想要贡献代码？创建一个 pull request！
 
-## 🤝 参与贡献
-
-有兴趣参与贡献，即使您不是客户？
-
-查看[适合新手的议题](https://github.com/lingodotdev/lingo.dev/labels/good%20first%20issue)并阅读[贡献指南](./CONTRIBUTING.md)。
-
-## 👨‍💻 团队
-
-- **[Veronica](https://github.com/vrcprl)**
-- **[Max](https://github.com/maxprilutskiy)**
-- **[Matej](https://github.com/mathio)**
-
-如有问题或咨询，请发送邮件至 veronica@lingo.dev
-
-## 🌐 其他语言版本的说明文档
+## 🌐 其他语言的自述文件
 
 - [English](https://github.com/lingodotdev/lingo.dev)
 - [Spanish](/readme/es.md)
@@ -113,4 +175,4 @@ Lingo.dev 提供 GitHub Action 来在你的 CI/CD 流程中自动化本地化。
 - [Arabic](/readme/ar.md)
 - [Hindi](/readme/hi.md)
 
-没有看到您的语言？只需在 [`i18n.json`](./i18n.json) 文件中添加新的语言代码并提交 PR 即可。
+没有看到你的语言？只需在 [`i18n.json`](./i18n.json) 文件中添加一个新的语言代码并开启一个 PR。

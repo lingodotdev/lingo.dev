@@ -111,6 +111,8 @@ const localeMap = {
   bg: ["bg-BG"],
   // Czech (Czech Republic)
   cs: ["cs-CZ"],
+  // Welsh (Wales)
+  cy: ["cy-GB"],
   // Dutch
   nl: [
     "nl-NL", // Netherlands

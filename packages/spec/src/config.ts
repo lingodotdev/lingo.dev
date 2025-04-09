@@ -23,12 +23,12 @@ type ConfigDefinitionExtensionParams<T extends Z.ZodRawShape, P extends Z.ZodRaw
   createUpgrader: (
     config: Z.infer<Z.ZodObject<P>>,
     schema: Z.ZodObject<T>,
-    defaultValue: Z.infer<Z.ZodObject<T>>
+    defaultValue: Z.infer<Z.ZodObject<T>>,
   ) => Z.infer<Z.ZodObject<T>>;
 };
 const extendConfigDefinition = <T extends Z.ZodRawShape, P extends Z.ZodRawShape>(
   definition: ConfigDefinition<P, any>,
-  params: ConfigDefinitionExtensionParams<T, P>
+  params: ConfigDefinitionExtensionParams<T, P>,
 ) => {
   const schema = params.createSchema(definition.schema);
   const defaultValue = params.createDefaultValue(definition.defaultValue);
@@ -120,7 +120,7 @@ export const configV1_1Definition = extendConfigDefinition(configV1Definition, {
         Z.object({
           include: Z.array(Z.string()).default([]),
           exclude: Z.array(Z.string()).default([]).optional(),
-        })
+        }),
       ).default({}),
     }),
   createDefaultValue: (baseDefaultValue) => ({
@@ -188,7 +188,7 @@ export const configV1_3Definition = extendConfigDefinition(configV1_2Definition,
             .default([])
             .optional(),
           injectLocale: Z.array(Z.string()).optional(),
-        })
+        }),
       ).default({}),
     }),
   createDefaultValue: (baseDefaultValue) => ({
@@ -222,8 +222,47 @@ export const configV1_4Definition = extendConfigDefinition(configV1_3Definition,
   }),
 });
 
+// v1.4 -> v1.5
+// Changes: add "provider" field to the config
+const commonProviderSchema = Z.object({
+  id: Z.string(),
+  model: Z.string(),
+  prompt: Z.string(),
+  baseUrl: Z.string().optional(),
+});
+const providerSchema = Z.union([
+  commonProviderSchema.extend({
+    id: Z.literal("lingo"),
+    model: Z.literal("best"),
+  }),
+  commonProviderSchema.extend({
+    id: Z.enum(["openai", "anthropic"]),
+  }),
+]);
+export const configV1_5Definition = extendConfigDefinition(configV1_4Definition, {
+  createSchema: (baseSchema) =>
+    baseSchema.extend({
+      provider: providerSchema
+        .default({
+          id: "lingo",
+          model: "best",
+          baseUrl: "https://engine.lingo.dev",
+          prompt: "",
+        })
+        .optional(),
+    }),
+  createDefaultValue: (baseDefaultValue) => ({
+    ...baseDefaultValue,
+    version: 1.5,
+  }),
+  createUpgrader: (oldConfig) => ({
+    ...oldConfig,
+    version: 1.5,
+  }),
+});
+
 // exports
-export const LATEST_CONFIG_DEFINITION = configV1_4Definition;
+export const LATEST_CONFIG_DEFINITION = configV1_5Definition;
 
 export type I18nConfig = Z.infer<(typeof LATEST_CONFIG_DEFINITION)["schema"]>;
 

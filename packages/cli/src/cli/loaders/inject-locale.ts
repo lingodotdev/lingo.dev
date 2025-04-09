@@ -20,12 +20,17 @@ export default function createInjectLocaleLoader(
       if (!injectLocaleKeys) {
         return data;
       }
+
+      // ensures locale keys are in correct position
+      const mergedData = _.merge({}, originalInput, data);
+
       injectLocaleKeys.forEach((key) => {
-        if (_.get(originalInput, key) === originalLocale) {
-          _.set(data, key, locale);
+        if (_.get(mergedData, key) === originalLocale) {
+          _.set(mergedData, key, locale);
         }
       });
-      return data;
+
+      return mergedData;
     },
   });
 }
