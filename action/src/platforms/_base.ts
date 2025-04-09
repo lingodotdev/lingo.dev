@@ -1,3 +1,4 @@
+import { execSync } from "child_process";
 import Z from "zod";
 
 const defaultMessage = "feat: update translations via @lingodotdev";
@@ -23,7 +24,13 @@ export abstract class PlatformKit<PlatformConfig extends BasePlatformConfig = Ba
 
   abstract buildPullRequestUrl(pullRequestNumber: number): string;
 
-  gitConfig(): Promise<void> | void {}
+  gitConfig(token?: string, repoUrl?: string) {
+    if (token && repoUrl) {
+      execSync(`git remote set-url origin ${repoUrl}`, {
+        stdio: "inherit",
+      });
+    }
+  }
 
   get config() {
     const env = Z.object({
