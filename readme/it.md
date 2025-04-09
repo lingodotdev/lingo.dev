@@ -14,7 +14,7 @@
   <a href="https://docs.lingo.dev">Documentazione</a> •
   <a href="https://github.com/lingodotdev/lingo.dev/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22">Contribuisci</a> •
   <a href="#-github-action">GitHub Action</a> •
-  <a href="#">Metti una stella</a>
+  <a href="#">Aggiungi una stella</a>
 </p>
 
 <p align="center">
@@ -35,7 +35,7 @@ Lingo.dev è un CLI open-source guidato dalla community per la localizzazione di
 
 Lingo.dev è progettato per produrre traduzioni autentiche istantaneamente, eliminando il lavoro manuale e i costi di gestione. Di conseguenza, i team eseguono localizzazioni accurate 100 volte più velocemente, distribuendo funzionalità a più utenti soddisfatti in tutto il mondo. Può essere utilizzato con il tuo LLM o con il Motore di Localizzazione gestito da Lingo.dev.
 
-> **Curiosità poco nota:** Lingo.dev è nato come piccolo progetto in un hackathon studentesco nel 2023! Dopo molte iterazioni, siamo stati accettati in Y Combinator nel 2024, e ora stiamo assumendo! Interessato a costruire strumenti di localizzazione di nuova generazione? Invia il tuo CV a careers@lingo.dev 🚀
+> **Curiosità poco nota:** Lingo.dev è nato come piccolo progetto in un hackathon studentesco nel 2023! Dopo molte iterazioni, siamo stati accettati in Y Combinator nel 2024, e ora stiamo assumendo! Interessato a costruire gli strumenti di localizzazione di nuova generazione? Invia il tuo CV a careers@lingo.dev! 🚀
 
 ## 📑 In questa guida
 
@@ -141,23 +141,21 @@ Per la modalità pull request e altre opzioni di configurazione, visita la nostr
 
 ## ⚡️ I superpoteri di Lingo.dev
 
-## ⚡️ I superpoteri di Lingo.dev
-
-- 🔥 **Integrazione istantanea**: Funziona con il tuo codebase in pochi minuti
+- 🔥 **Integrazione istantanea**: Funziona con il tuo codice in pochi minuti
 - 🔄 **Automazione CI/CD**: Configuralo e dimenticatene
 - 🌍 **Portata globale**: Distribuisci ai tuoi utenti ovunque
-- 🧠 **Alimentato da AI**: Utilizza i più recenti modelli linguistici per traduzioni naturali
+- 🧠 **Basato su AI**: Utilizza i più recenti modelli linguistici per traduzioni naturali
 - 📊 **Indipendente dal formato**: JSON, YAML, CSV, Markdown, Android, iOS e molti altri
 - 🔍 **Diff puliti**: Preserva esattamente la struttura dei tuoi file
 - ⚡️ **Velocità fulminea**: Traduzioni in secondi, non giorni
-- 🔄 **Sempre sincronizzato**: Si aggiorna automaticamente quando i contenuti cambiano
+- 🔄 **Sempre sincronizzato**: Si aggiorna automaticamente quando il contenuto cambia
 - 🌟 **Qualità umana**: Traduzioni che non sembrano robotiche
 - 👨‍💻 **Creato da sviluppatori, per sviluppatori**: Lo usiamo noi stessi quotidianamente
 - 📈 **Cresce con te**: Dal progetto personale alla scala enterprise
 
 ## 🤝 Contribuisci
 
-Lingo.dev è guidato dalla community, quindi accogliamo tutti i contributi!
+Lingo.dev è guidato dalla community, quindi accogliamo con piacere tutti i contributi!
 
 Hai un'idea per una nuova funzionalità? Crea un issue su GitHub!
 

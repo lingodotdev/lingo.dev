@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <strong>⚡️ AI驱动的网页和移动应用本地化开源命令行工具。</strong>
+  <strong>⚡️ 基于AI的开源网页和移动应用本地化CLI工具。</strong>
 </p>
 
 <br />
@@ -14,7 +14,7 @@
   <a href="https://docs.lingo.dev">文档</a> •
   <a href="https://github.com/lingodotdev/lingo.dev/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22">贡献</a> •
   <a href="#-github-action">GitHub Action</a> •
-  <a href="#">为仓库点星</a>
+  <a href="#">为项目加星</a>
 </p>
 
 <p align="center">
@@ -25,17 +25,17 @@
     <img src="https://img.shields.io/github/license/lingodotdev/lingo.dev" alt="许可证" />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/commits/main">
-    <img src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev" alt="最后提交" />
+    <img src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev" alt="最近提交" />
   </a>
 </p>
 
 <br />
 
-Lingo.dev是一个社区驱动的、AI驱动的网页和移动应用本地化开源命令行工具。
+Lingo.dev是一个社区驱动的开源CLI工具，用于AI驱动的网页和移动应用本地化。
 
-Lingo.dev旨在即时生成地道的翻译，消除手动工作和管理开销。因此，团队可以以100倍的速度进行准确的本地化，将功能推送给全球更多满意的用户。它可以与您自己的LLM一起使用，也可以与Lingo.dev管理的本地化引擎一起使用。
+Lingo.dev旨在即时生成地道的翻译，消除手动工作和管理开销。因此，团队可以以100倍的速度完成准确的本地化，将功能推送给全球更多满意的用户。它可以与您自己的LLM一起使用，也可以与Lingo.dev管理的本地化引擎一起使用。
 
-> **鲜为人知的事实：** Lingo.dev最初是2023年一个学生黑客马拉松的小项目！经过多次迭代后，我们在2024年被Y Combinator接纳，现在我们正在招聘！对构建下一代本地化工具感兴趣吗？请将您的简历发送至careers@lingo.dev 🚀
+> **鲜为人知的事实：** Lingo.dev最初是2023年一个学生黑客马拉松的小项目！经过多次迭代后，我们在2024年被Y Combinator接纳，现在我们正在招聘！对构建下一代本地化工具感兴趣吗？请将您的简历发送至careers@lingo.dev！🚀
 
 ## 📑 本指南内容
 
@@ -141,27 +141,25 @@ Lingo.dev 提供 GitHub Action 来在您的 CI/CD 流程中自动化本地化。
 
 ## ⚡️ Lingo.dev的超能力
 
-## ⚡️ Lingo.dev的超能力
-
 - 🔥 **即时集成**：几分钟内即可与您的代码库协同工作
 - 🔄 **CI/CD自动化**：设置一次，无需再管
-- 🌍 **全球覆盖**：向全球用户发布
-- 🧠 **AI驱动**：使用最新语言模型实现自然翻译
+- 🌍 **全球覆盖**：向全球用户推送
+- 🧠 **AI驱动**：使用最新的语言模型进行自然翻译
 - 📊 **格式无关**：支持JSON、YAML、CSV、Markdown、Android、iOS等多种格式
-- 🔍 **整洁差异**：完全保留您的文件结构
-- ⚡️ **闪电般速度**：翻译只需几秒钟，而非数天
+- 🔍 **干净的差异**：完全保留您的文件结构
+- ⚡️ **闪电般速度**：翻译在几秒内完成，而非数天
 - 🔄 **始终同步**：内容变更时自动更新
-- 🌟 **人类品质**：翻译不会显得机械呆板
-- 👨‍💻 **由开发者构建，为开发者服务**：我们自己每天都在使用
-- 📈 **与您共同成长**：从小型项目到企业级规模
+- 🌟 **人工质量**：翻译不会显得机械
+- 👨‍💻 **由开发者为开发者打造**：我们自己每天都在使用
+- 📈 **与您共同成长**：从小项目到企业规模
 
 ## 🤝 贡献
 
-Lingo.dev是社区驱动的，因此我们欢迎所有贡献！
+Lingo.dev 是社区驱动的，所以我们欢迎所有贡献！
 
-有新功能的想法？创建GitHub问题！
+有新功能的想法？创建一个 GitHub issue！
 
-想要贡献代码？创建拉取请求！
+想要贡献代码？创建一个 pull request！
 
 ## 🌐 其他语言的自述文件
 
@@ -177,4 +175,4 @@ Lingo.dev是社区驱动的，因此我们欢迎所有贡献！
 - [Arabic](/readme/ar.md)
 - [Hindi](/readme/hi.md)
 
-没有看到您的语言？只需在[`i18n.json`](./i18n.json)文件中添加新的语言代码并开启PR。
+没有看到你的语言？只需在 [`i18n.json`](./i18n.json) 文件中添加一个新的语言代码并开启一个 PR。

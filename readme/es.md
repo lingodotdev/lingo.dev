@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <strong>⚡️ CLI de código abierto impulsado por IA para localización web y móvil.</strong>
+  <strong>⚡️ CLI de código abierto con IA para localización web y móvil.</strong>
 </p>
 
 <br />
@@ -31,11 +31,11 @@
 
 <br />
 
-Lingo.dev es una CLI de código abierto impulsada por la comunidad para la localización de aplicaciones web y móviles mediante IA.
+Lingo.dev es una CLI de código abierto impulsada por la comunidad para la localización de aplicaciones web y móviles con IA.
 
 Lingo.dev está diseñado para producir traducciones auténticas al instante, eliminando el trabajo manual y la sobrecarga de gestión. Como resultado, los equipos realizan localizaciones precisas 100 veces más rápido, lanzando funcionalidades a más usuarios satisfechos en todo el mundo. Puede utilizarse con tu propio LLM o con el Motor de Localización gestionado por Lingo.dev.
 
-> **Dato poco conocido:** ¡Lingo.dev comenzó como un pequeño proyecto en un hackathon estudiantil en 2023! Muchas iteraciones después, fuimos aceptados en Y Combinator en 2024, ¡y ahora estamos contratando! ¿Interesado en construir las herramientas de localización de próxima generación? Envía tu CV a careers@lingo.dev 🚀
+> **Dato poco conocido:** ¡Lingo.dev comenzó como un pequeño proyecto en un hackathon estudiantil en 2023! Muchas iteraciones después, fuimos aceptados en Y Combinator en 2024, ¡y ahora estamos contratando! ¿Interesado en construir las herramientas de localización de próxima generación? ¡Envía tu CV a careers@lingo.dev! 🚀
 
 ## 📑 En esta guía
 
@@ -141,8 +141,6 @@ Para el modo de pull request y otras opciones de configuración, visita nuestra 
 
 ## ⚡️ Superpoderes de Lingo.dev
 
-## ⚡️ Superpoderes de Lingo.dev
-
 - 🔥 **Integración instantánea**: Funciona con tu código en minutos
 - 🔄 **Automatización CI/CD**: Configúralo y olvídate
 - 🌍 **Alcance global**: Llega a usuarios en todas partes
@@ -150,9 +148,9 @@ Para el modo de pull request y otras opciones de configuración, visita nuestra 
 - 📊 **Agnóstico de formato**: JSON, YAML, CSV, Markdown, Android, iOS y muchos más
 - 🔍 **Diffs limpios**: Preserva exactamente la estructura de tus archivos
 - ⚡️ **Ultrarrápido**: Traducciones en segundos, no días
-- 🔄 **Siempre sincronizado**: Se actualiza automáticamente cuando cambia el contenido
+- 🔄 **Siempre sincronizado**: Se actualiza automáticamente cuando el contenido cambia
 - 🌟 **Calidad humana**: Traducciones que no suenan robóticas
-- 👨‍💻 **Creado por devs, para devs**: Lo usamos nosotros mismos a diario
+- 👨‍💻 **Creado por desarrolladores, para desarrolladores**: Lo usamos nosotros mismos a diario
 - 📈 **Crece contigo**: Desde proyectos pequeños hasta escala empresarial
 
 ## 🤝 Contribuir
