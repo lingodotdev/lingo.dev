@@ -41,7 +41,6 @@ export function createDeltaProcessor(fileKey: string) {
         return MD5(params.sourceData[key]) !== params.checksums[key] && params.checksums[key];
       });
 
-      // Find renamed keys - keys that exist in both but with different names (same content)
       const renamed: [string, string][] = [];
       for (const addedKey of added) {
         const addedHash = MD5(params.sourceData[addedKey]);
@@ -52,7 +51,6 @@ export function createDeltaProcessor(fileKey: string) {
           }
         }
       }
-      // Remove renamed keys from added and removed arrays
       added = added.filter((key) => !renamed.some(([oldKey, newKey]) => newKey === key));
       removed = removed.filter((key) => !renamed.some(([oldKey, newKey]) => oldKey === key));
 
