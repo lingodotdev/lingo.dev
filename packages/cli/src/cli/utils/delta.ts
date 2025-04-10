@@ -37,26 +37,24 @@ export function createDeltaProcessor(fileKey: string) {
     }) {
       let added = _.difference(Object.keys(params.sourceData), Object.keys(params.targetData));
       let removed = _.difference(Object.keys(params.targetData), Object.keys(params.sourceData));
+      const updated = _.filter(Object.keys(params.sourceData), (key) => {
+        return MD5(params.sourceData[key]) !== params.checksums[key] && params.checksums[key];
+      });
 
       // Find renamed keys - keys that exist in both but with different names (same content)
       const renamed: [string, string][] = [];
       for (const addedKey of added) {
         const addedHash = MD5(params.sourceData[addedKey]);
         for (const removedKey of removed) {
-          if (MD5(params.targetData[removedKey]) === addedHash) {
+          if (params.checksums[removedKey] === addedHash) {
             renamed.push([removedKey, addedKey]);
             break;
           }
         }
       }
       // Remove renamed keys from added and removed arrays
-      added = added.filter((key) => !renamed.some(([oldKey, newKey]) => oldKey === key));
-      removed = removed.filter((key) => !renamed.some(([oldKey, newKey]) => newKey === key));
-
-      // Find updated keys - keys for which the checksum of the source value differs from what's recorded in the lockfile
-      const updated = _.filter(Object.keys(params.sourceData), (key) => {
-        return MD5(params.sourceData[key]) !== params.checksums[key];
-      });
+      added = added.filter((key) => !renamed.some(([oldKey, newKey]) => newKey === key));
+      removed = removed.filter((key) => !renamed.some(([oldKey, newKey]) => oldKey === key));
 
       const hasChanges = [added.length > 0, removed.length > 0, updated.length > 0, renamed.length > 0].some((v) => v);
 
