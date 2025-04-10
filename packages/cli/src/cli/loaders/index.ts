@@ -30,6 +30,7 @@ import createPlutilJsonTextLoader from "./plutil-json-loader";
 import createPhpLoader from "./php";
 import createVueJsonLoader from "./vue-json";
 import createInjectLocaleLoader from "./inject-locale";
+import createRenameSyncLoader from "./lock";
 
 type BucketLoaderOptions = {
   isCacheRestore: boolean;
@@ -77,6 +78,7 @@ export default function createBucketLoader(
         createJsonLoader(),
         createInjectLocaleLoader(options.injectLocale),
         createFlatLoader(),
+        createRenameSyncLoader(),
         createSyncLoader(),
         createUnlocalizableLoader(options.isCacheRestore, options.returnUnlocalizedKeys),
       );
