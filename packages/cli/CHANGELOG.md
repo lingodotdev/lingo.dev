@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.81.0
+
+### Minor Changes
+
+- [`ddc2b7b`](https://github.com/lingodotdev/lingo.dev/commit/ddc2b7b3513d6118245bd01fc10c1b8563b52910) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - add key rename tracking
+
 ## 0.80.1
 
 ### Patch Changes
