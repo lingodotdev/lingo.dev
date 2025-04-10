@@ -3,6 +3,10 @@ import { LocalizerInput, LocalizerProgressFn } from "./_base";
 
 export function createLingoLocalizer(params: { apiKey: string; apiUrl: string }) {
   return async (input: LocalizerInput, onProgress: LocalizerProgressFn) => {
+    if (!Object.keys(input.processableData).length) {
+      return input.processableData;
+    }
+
     const lingo = new LingoDotDevEngine({
       apiKey: params.apiKey,
       apiUrl: params.apiUrl,

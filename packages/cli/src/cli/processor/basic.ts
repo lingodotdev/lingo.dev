@@ -3,6 +3,10 @@ import { LocalizerInput, LocalizerProgressFn } from "./_base";
 
 export function createBasicTranslator(model: LanguageModelV1, systemPrompt: string) {
   return async (input: LocalizerInput, onProgress: LocalizerProgressFn) => {
+    if (!Object.keys(input.processableData).length) {
+      return input.processableData;
+    }
+
     if (!process.env.OPENAI_API_KEY) {
       throw new Error("OPENAI_API_KEY is not set");
     }
@@ -50,6 +54,6 @@ export function createBasicTranslator(model: LanguageModelV1, systemPrompt: stri
 
     const result = JSON.parse(response.text);
 
-    return result;
+    return result?.data || {};
   };
 }
