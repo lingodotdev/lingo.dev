@@ -14,7 +14,13 @@ export default async function trackEvent(distinctId: string, event: string, prop
   await posthog.capture({
     distinctId,
     event,
-    properties,
+    properties: {
+      ...properties,
+      meta: {
+        version: process.env.npm_package_version,
+        isCi: process.env.CI === "true",
+      },
+    },
   });
 
   await posthog.shutdown();
