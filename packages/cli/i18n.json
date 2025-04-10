@@ -7,51 +7,11 @@
   },
   "locale": {
     "source": "en",
-    "targets": ["es", "fr", "it", "de", "ar"]
+    "targets": ["es"]
   },
   "buckets": {
-    "dato": {
-      "include": ["demo/dato/page.json5"]
-    },
-    "android": {
-      "include": ["demo/android/[locale].xml"]
-    },
-    "csv": {
-      "include": ["demo/csv/file.csv"]
-    },
-    "flutter": {
-      "include": ["demo/flutter/[locale].arb"]
-    },
-    "html": {
-      "include": ["demo/html/[locale].html"]
-    },
     "json": {
       "include": ["demo/json/[locale].json"]
-    },
-    "markdown": {
-      "include": ["demo/markdown/[locale]/*.md"],
-      "exclude": ["demo/markdown/[locale]/ignored.md"]
-    },
-    "po": {
-      "include": ["demo/po/[locale].po"]
-    },
-    "properties": {
-      "include": ["demo/properties/[locale].properties"]
-    },
-    "xcode-strings": {
-      "include": ["demo/xcode-strings/[locale].lproj/Localizable.strings"]
-    },
-    "xcode-stringsdict": {
-      "include": ["demo/xcode-stringsdict/[locale].lproj/Localizable.stringsdict"]
-    },
-    "xcode-xcstrings": {
-      "include": ["demo/xcode-xcstrings/Localizable.xcstrings"]
-    },
-    "yaml": {
-      "include": ["demo/yaml/[locale].yml"]
-    },
-    "yaml-root-key": {
-      "include": ["demo/yaml-root-key/[locale].yml"]
     }
   },
   "$schema": "https://lingo.dev/schema/i18n.json"

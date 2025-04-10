@@ -18,3 +18,7 @@ export function writeFile(filePath: string, content: string) {
   }
   fs.writeFileSync(filePath, content);
 }
+
+export function checkIfFileExists(filePath: string) {
+  return fs.existsSync(filePath);
+}

@@ -1,7 +1,7 @@
 import { I18nConfig } from "@lingo.dev/_spec";
 import { LocalizerFn } from "./_base";
 import { createLingoLocalizer } from "./lingo";
-import { createBasicTranslator } from "./openai";
+import { createBasicTranslator } from "./basic";
 import { createOpenAI } from "@ai-sdk/openai";
 import { createAnthropic } from "@ai-sdk/anthropic";
 

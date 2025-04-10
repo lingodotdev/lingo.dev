@@ -2,12 +2,12 @@ import { bucketTypeSchema, I18nConfig, localeCodeSchema, resolveOverriddenLocale
 import { Command } from "interactive-commander";
 import Z from "zod";
 import _ from "lodash";
+import * as path from "path";
 import { getConfig } from "../utils/config";
 import { getSettings } from "../utils/settings";
 import { CLIError } from "../utils/errors";
 import Ora from "ora";
 import createBucketLoader from "../loaders";
-import { createLockfileHelper } from "../utils/lockfile";
 import { createAuthenticator } from "../utils/auth";
 import { getBuckets } from "../utils/buckets";
 import chalk from "chalk";
@@ -19,6 +19,9 @@ import updateGitignore from "../utils/update-gitignore";
 import createProcessor from "../processor";
 import { withExponentialBackoff } from "../utils/exp-backoff";
 import trackEvent from "../utils/observability";
+import { createDeltaProcessor } from "../utils/delta";
+import { tryReadFile, writeFile } from "../utils/fs";
+import { flatten, unflatten } from "flat";
 
 export default new Command()
   .command("i18n")
@@ -111,16 +114,16 @@ export default new Command()
       }
 
       const targetLocales = flags.locale?.length ? flags.locale : i18nConfig!.locale.targets;
-      const lockfileHelper = createLockfileHelper();
 
       // Ensure the lockfile exists
-      ora.start("Ensuring i18n.lock exists...");
-      if (!lockfileHelper.isLockfileExists()) {
+      ora.start("Setting up localization cache...");
+      const checkLockfileProcessor = createDeltaProcessor("");
+      const lockfileExists = await checkLockfileProcessor.checkIfLockExists();
+      if (!lockfileExists) {
         ora.start("Creating i18n.lock...");
         for (const bucket of buckets) {
           for (const bucketPath of bucket.paths) {
             const sourceLocale = resolveOverriddenLocale(i18nConfig!.locale.source, bucketPath.delimiter);
-
             const bucketLoader = createBucketLoader(bucket.type, bucketPath.pathPattern, {
               isCacheRestore: false,
               defaultLocale: sourceLocale,
@@ -130,12 +133,73 @@ export default new Command()
             await bucketLoader.init();
 
             const sourceData = await bucketLoader.pull(i18nConfig!.locale.source);
-            lockfileHelper.registerSourceData(bucketPath.pathPattern, sourceData);
+
+            const deltaProcessor = createDeltaProcessor(bucketPath.pathPattern);
+            const checksums = await deltaProcessor.createChecksums(sourceData);
+            await deltaProcessor.saveChecksums(checksums);
           }
         }
-        ora.succeed("i18n.lock created");
+        ora.succeed("Localization cache initialized");
       } else {
-        ora.succeed("i18n.lock loaded");
+        ora.succeed("Localization cache loaded");
+      }
+      // Handle json key renames
+      for (const bucket of buckets) {
+        if (bucket.type !== "json") {
+          continue;
+        }
+        ora.start("Validating localization state...");
+        for (const bucketPath of bucket.paths) {
+          const sourceLocale = resolveOverriddenLocale(i18nConfig!.locale.source, bucketPath.delimiter);
+          const deltaProcessor = createDeltaProcessor(bucketPath.pathPattern);
+          const sourcePath = path.join(process.cwd(), bucketPath.pathPattern.replace("[locale]", sourceLocale));
+          const sourceContent = tryReadFile(sourcePath, null);
+          const sourceData = JSON.parse(sourceContent || "{}");
+          const sourceFlattenedData = flatten(sourceData, {
+            delimiter: "/",
+            transformKey(key) {
+              return encodeURIComponent(key);
+            },
+          }) as Record<string, any>;
+
+          for (const _targetLocale of targetLocales) {
+            const targetLocale = resolveOverriddenLocale(_targetLocale, bucketPath.delimiter);
+            const targetPath = path.join(process.cwd(), bucketPath.pathPattern.replace("[locale]", targetLocale));
+            const targetContent = tryReadFile(targetPath, null);
+            const targetData = JSON.parse(targetContent || "{}");
+            const targetFlattenedData = flatten(targetData, {
+              delimiter: "/",
+              transformKey(key) {
+                return encodeURIComponent(key);
+              },
+            }) as Record<string, any>;
+
+            const checksums = await deltaProcessor.loadChecksums();
+            const delta = await deltaProcessor.calculateDelta({
+              sourceData: sourceFlattenedData,
+              targetData: targetFlattenedData,
+              checksums,
+            });
+            if (!delta.hasChanges) {
+              continue;
+            }
+
+            for (const [oldKey, newKey] of delta.renamed) {
+              targetFlattenedData[newKey] = targetFlattenedData[oldKey];
+              delete targetFlattenedData[oldKey];
+            }
+
+            const updatedTargetData = unflatten(targetFlattenedData, {
+              delimiter: "/",
+              transformKey(key) {
+                return decodeURIComponent(key);
+              },
+            }) as Record<string, any>;
+
+            await writeFile(targetPath, JSON.stringify(updatedTargetData, null, 2));
+          }
+        }
+        ora.succeed("Localization state check completed");
       }
 
       // recover cache if exists
@@ -175,7 +239,9 @@ export default new Command()
               }
 
               await bucketLoader.push(targetLocale, targetData);
-              lockfileHelper.registerPartialSourceData(bucketPath.pathPattern, cachedSourceData);
+              const deltaProcessor = createDeltaProcessor(bucketPath.pathPattern);
+              const checksums = await deltaProcessor.createChecksums(cachedSourceData);
+              await deltaProcessor.saveChecksums(checksums);
 
               bucketOra.succeed(
                 `[${sourceLocale} -> ${targetLocale}] Recovered ${Object.keys(cachedSourceData).length} entries from cache`,
@@ -210,7 +276,15 @@ export default new Command()
             const { unlocalizable: sourceUnlocalizable, ...sourceData } = await bucketLoader.pull(
               i18nConfig!.locale.source,
             );
-            const updatedSourceData = lockfileHelper.extractUpdatedData(bucketPath.pathPattern, sourceData);
+            const deltaProcessor = createDeltaProcessor(bucketPath.pathPattern);
+            const sourceChecksums = await deltaProcessor.createChecksums(sourceData);
+            const savedChecksums = await deltaProcessor.loadChecksums();
+
+            // Get updated data by comparing current checksums with saved checksums
+            const updatedSourceData = _.pickBy(
+              sourceData,
+              (value, key) => sourceChecksums[key] !== savedChecksums[key],
+            );
 
             // translation was updated in the source file
             if (Object.keys(updatedSourceData).length > 0) {
@@ -288,16 +362,20 @@ export default new Command()
 
                 sourceData = await bucketLoader.pull(sourceLocale);
 
-                const updatedSourceData = flags.force
-                  ? sourceData
-                  : lockfileHelper.extractUpdatedData(bucketPath.pathPattern, sourceData);
-
                 const targetData = await bucketLoader.pull(targetLocale);
-                let processableData = calculateDataDelta({
+                const deltaProcessor = createDeltaProcessor(bucketPath.pathPattern);
+                const checksums = await deltaProcessor.loadChecksums();
+                const delta = await deltaProcessor.calculateDelta({
                   sourceData,
-                  updatedSourceData,
                   targetData,
+                  checksums,
                 });
+                let processableData = _.chain(sourceData)
+                  .entries()
+                  .filter(([key, value]) => delta.added.includes(key) || delta.updated.includes(key))
+                  .fromPairs()
+                  .value();
+
                 if (flags.key) {
                   processableData = _.pickBy(processableData, (_, key) => key === flags.key);
                 }
@@ -382,7 +460,9 @@ export default new Command()
               }
             }
 
-            lockfileHelper.registerSourceData(bucketPath.pathPattern, sourceData);
+            const deltaProcessor = createDeltaProcessor(bucketPath.pathPattern);
+            const checksums = await deltaProcessor.createChecksums(sourceData);
+            await deltaProcessor.saveChecksums(checksums);
           }
         } catch (_error: any) {
           const error = new Error(`Failed to process bucket ${bucket.type}: ${_error.message}`);
