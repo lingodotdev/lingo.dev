@@ -1,7 +1,7 @@
 {
   "home": {
-    "title/main": "Lingo.dev",
-    "description/dev": "Lingo.dev is an AI-powered localization-as-a-service platform for modern SaaS.",
-    "i-am-a-developer": "I'm a software developer that created this website."
+    "title/main": "¡Hola, Lingo.dev!",
+    "description/dev": "Lingo.dev es una plataforma de localización como servicio impulsada por IA para SaaS moderno.",
+    "i-am-a-developer": "Soy un desarrollador de software que creó este sitio web."
   }
 }

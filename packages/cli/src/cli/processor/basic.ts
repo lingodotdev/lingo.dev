@@ -54,6 +54,6 @@ export function createBasicTranslator(model: LanguageModelV1, systemPrompt: stri
 
     const result = JSON.parse(response.text);
 
-    return result;
+    return result?.data || {};
   };
 }

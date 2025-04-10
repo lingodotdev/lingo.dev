@@ -372,7 +372,7 @@ export default new Command()
                 });
                 let processableData = _.chain(sourceData)
                   .entries()
-                  .filter(([key, value]) => delta.added.includes(key) || delta.updated.includes(key))
+                  .filter(([key, value]) => delta.added.includes(key) || delta.updated.includes(key) || !!flags.force)
                   .fromPairs()
                   .value();
 
