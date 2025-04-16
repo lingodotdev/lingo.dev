@@ -1,5 +1,19 @@
 # lingo.dev
 
+## 0.82.0
+
+### Minor Changes
+
+- [#627](https://github.com/lingodotdev/lingo.dev/pull/627) [`fe922a4`](https://github.com/lingodotdev/lingo.dev/commit/fe922a469c2d5dac23a909a4fb67a6efd56d80d6) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - add support for json/yaml key locking
+
+### Patch Changes
+
+- [`e8ea955`](https://github.com/lingodotdev/lingo.dev/commit/e8ea95551c8a3b16afe078554ebcb1d79ce817cf) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - gracefully exit on o11y errors
+
+- Updated dependencies [[`fe922a4`](https://github.com/lingodotdev/lingo.dev/commit/fe922a469c2d5dac23a909a4fb67a6efd56d80d6)]:
+  - @lingo.dev/_spec@0.28.0
+  - @lingo.dev/_sdk@0.7.32
+
 ## 0.81.0
 
 ### Minor Changes
