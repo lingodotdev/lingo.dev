@@ -79,7 +79,7 @@ export default function createBucketLoader(
         createJsonLoader(),
         createInjectLocaleLoader(options.injectLocale),
         createFlatLoader(),
-        createLockedKeysLoader(lockedKeys || []),
+        createLockedKeysLoader(lockedKeys || [], options.isCacheRestore),
         createSyncLoader(),
         createUnlocalizableLoader(options.isCacheRestore, options.returnUnlocalizedKeys),
       );
@@ -139,7 +139,7 @@ export default function createBucketLoader(
         createPrettierLoader({ parser: "yaml", bucketPathPattern }),
         createYamlLoader(),
         createFlatLoader(),
-        createLockedKeysLoader(lockedKeys || []),
+        createLockedKeysLoader(lockedKeys || [], options.isCacheRestore),
         createSyncLoader(),
         createUnlocalizableLoader(options.isCacheRestore, options.returnUnlocalizedKeys),
       );
