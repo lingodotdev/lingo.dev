@@ -30,6 +30,7 @@ import createPlutilJsonTextLoader from "./plutil-json-loader";
 import createPhpLoader from "./php";
 import createVueJsonLoader from "./vue-json";
 import createInjectLocaleLoader from "./inject-locale";
+import createLockedKeysLoader from "./locked-keys";
 
 type BucketLoaderOptions = {
   isCacheRestore: boolean;
@@ -42,6 +43,7 @@ export default function createBucketLoader(
   bucketType: Z.infer<typeof bucketTypeSchema>,
   bucketPathPattern: string,
   options: BucketLoaderOptions,
+  lockedKeys?: string[],
 ): ILoader<void, Record<string, string>> {
   switch (bucketType) {
     default:
@@ -77,6 +79,7 @@ export default function createBucketLoader(
         createJsonLoader(),
         createInjectLocaleLoader(options.injectLocale),
         createFlatLoader(),
+        createLockedKeysLoader(lockedKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.isCacheRestore, options.returnUnlocalizedKeys),
       );
@@ -136,6 +139,7 @@ export default function createBucketLoader(
         createPrettierLoader({ parser: "yaml", bucketPathPattern }),
         createYamlLoader(),
         createFlatLoader(),
+        createLockedKeysLoader(lockedKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.isCacheRestore, options.returnUnlocalizedKeys),
       );

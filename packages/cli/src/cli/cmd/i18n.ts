@@ -124,11 +124,16 @@ export default new Command()
         for (const bucket of buckets) {
           for (const bucketPath of bucket.paths) {
             const sourceLocale = resolveOverriddenLocale(i18nConfig!.locale.source, bucketPath.delimiter);
-            const bucketLoader = createBucketLoader(bucket.type, bucketPath.pathPattern, {
-              isCacheRestore: false,
-              defaultLocale: sourceLocale,
-              injectLocale: bucket.injectLocale,
-            });
+            const bucketLoader = createBucketLoader(
+              bucket.type,
+              bucketPath.pathPattern,
+              {
+                isCacheRestore: false,
+                defaultLocale: sourceLocale,
+                injectLocale: bucket.injectLocale,
+              },
+              bucket.lockedKeys,
+            );
             bucketLoader.setDefaultLocale(sourceLocale);
             await bucketLoader.init();
 
@@ -216,11 +221,16 @@ export default new Command()
             bucketOra.info(`Processing path: ${bucketPath.pathPattern}`);
 
             const sourceLocale = resolveOverriddenLocale(i18nConfig!.locale.source, bucketPath.delimiter);
-            const bucketLoader = createBucketLoader(bucket.type, bucketPath.pathPattern, {
-              isCacheRestore: true,
-              defaultLocale: sourceLocale,
-              injectLocale: bucket.injectLocale,
-            });
+            const bucketLoader = createBucketLoader(
+              bucket.type,
+              bucketPath.pathPattern,
+              {
+                isCacheRestore: true,
+                defaultLocale: sourceLocale,
+                injectLocale: bucket.injectLocale,
+              },
+              bucket.lockedKeys,
+            );
             bucketLoader.setDefaultLocale(sourceLocale);
             await bucketLoader.init();
             const sourceData = await bucketLoader.pull(sourceLocale);
@@ -264,12 +274,17 @@ export default new Command()
           for (const bucketPath of bucket.paths) {
             const sourceLocale = resolveOverriddenLocale(i18nConfig!.locale.source, bucketPath.delimiter);
 
-            const bucketLoader = createBucketLoader(bucket.type, bucketPath.pathPattern, {
-              isCacheRestore: false,
-              defaultLocale: sourceLocale,
-              returnUnlocalizedKeys: true,
-              injectLocale: bucket.injectLocale,
-            });
+            const bucketLoader = createBucketLoader(
+              bucket.type,
+              bucketPath.pathPattern,
+              {
+                isCacheRestore: false,
+                defaultLocale: sourceLocale,
+                returnUnlocalizedKeys: true,
+                injectLocale: bucket.injectLocale,
+              },
+              bucket.lockedKeys,
+            );
             bucketLoader.setDefaultLocale(sourceLocale);
             await bucketLoader.init();
 
@@ -346,11 +361,16 @@ export default new Command()
 
             const sourceLocale = resolveOverriddenLocale(i18nConfig!.locale.source, bucketPath.delimiter);
 
-            const bucketLoader = createBucketLoader(bucket.type, bucketPath.pathPattern, {
-              isCacheRestore: false,
-              defaultLocale: sourceLocale,
-              injectLocale: bucket.injectLocale,
-            });
+            const bucketLoader = createBucketLoader(
+              bucket.type,
+              bucketPath.pathPattern,
+              {
+                isCacheRestore: false,
+                defaultLocale: sourceLocale,
+                injectLocale: bucket.injectLocale,
+              },
+              bucket.lockedKeys,
+            );
             bucketLoader.setDefaultLocale(sourceLocale);
             await bucketLoader.init();
             let sourceData = await bucketLoader.pull(sourceLocale);

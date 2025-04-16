@@ -10,6 +10,7 @@ type BucketConfig = {
   type: Z.infer<typeof bucketTypeSchema>;
   paths: Array<{ pathPattern: string; delimiter?: LocaleDelimiter }>;
   injectLocale?: string[];
+  lockedKeys?: string[];
 };
 
 export function getBuckets(i18nConfig: I18nConfig) {
@@ -22,6 +23,9 @@ export function getBuckets(i18nConfig: I18nConfig) {
     };
     if (bucketEntry.injectLocale) {
       config.injectLocale = bucketEntry.injectLocale;
+    }
+    if (bucketEntry.lockedKeys) {
+      config.lockedKeys = bucketEntry.lockedKeys;
     }
     return config;
   });
