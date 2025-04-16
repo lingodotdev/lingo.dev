@@ -12,16 +12,13 @@ export default function createLockedKeysLoader(
         .pickBy((value, key) => !lockedKeys.includes(key))
         .value(),
     push: async (locale, data, originalInput) => {
-      // Get locked keys from original input
       const lockedSubObject = _.chain(originalInput)
         .pickBy((value, key) => lockedKeys.includes(key))
         .value();
 
       if (isCacheRestore) {
-        // During cache restoration, only include the payload keys and locked keys
-        return { ...data, ...lockedSubObject };
+        return _.merge({}, data, lockedSubObject);
       } else {
-        // In normal operation, preserve all original keys
         return _.merge({}, originalInput, data, lockedSubObject);
       }
     },
