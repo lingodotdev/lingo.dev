@@ -2,4 +2,4 @@
 "lingo.dev": patch
 ---
 
-gracefully exist on o11y errors
+gracefully exit on o11y errors
