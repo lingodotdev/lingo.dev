@@ -177,18 +177,22 @@ export const bucketItemSchema = Z.object({
   delimiter: Z.union([Z.literal("-"), Z.literal("_"), Z.literal(null)]).optional(),
 });
 export type BucketItem = Z.infer<typeof bucketItemSchema>;
+
+// Define a base bucket value schema that can be reused and extended
+export const bucketValueSchemaV1_3 = Z.object({
+  include: Z.array(Z.union([Z.string(), bucketItemSchema])).default([]),
+  exclude: Z.array(Z.union([Z.string(), bucketItemSchema]))
+    .default([])
+    .optional(),
+  injectLocale: Z.array(Z.string()).optional(),
+});
+
 export const configV1_3Definition = extendConfigDefinition(configV1_2Definition, {
   createSchema: (baseSchema) =>
     baseSchema.extend({
       buckets: Z.record(
         bucketTypeSchema,
-        Z.object({
-          include: Z.array(Z.union([Z.string(), bucketItemSchema])).default([]),
-          exclude: Z.array(Z.union([Z.string(), bucketItemSchema]))
-            .default([])
-            .optional(),
-          injectLocale: Z.array(Z.string()).optional(),
-        }),
+        bucketValueSchemaV1_3
       ).default({}),
     }),
   createDefaultValue: (baseDefaultValue) => ({
@@ -261,8 +265,32 @@ export const configV1_5Definition = extendConfigDefinition(configV1_4Definition,
   }),
 });
 
+// v1.5 -> v1.6
+// Changes: Add "lockedKeys" string array to bucket config
+export const bucketValueSchemaV1_6 = bucketValueSchemaV1_3.extend({
+  lockedKeys: Z.array(Z.string()).default([]).optional(),
+});
+
+export const configV1_6Definition = extendConfigDefinition(configV1_5Definition, {
+  createSchema: (baseSchema) =>
+    baseSchema.extend({
+      buckets: Z.record(
+        bucketTypeSchema,
+        bucketValueSchemaV1_6
+      ).default({}),
+    }),
+  createDefaultValue: (baseDefaultValue) => ({
+    ...baseDefaultValue,
+    version: 1.6,
+  }),
+  createUpgrader: (oldConfig) => ({
+    ...oldConfig,
+    version: 1.6,
+  }),
+});
+
 // exports
-export const LATEST_CONFIG_DEFINITION = configV1_5Definition;
+export const LATEST_CONFIG_DEFINITION = configV1_6Definition;
 
 export type I18nConfig = Z.infer<(typeof LATEST_CONFIG_DEFINITION)["schema"]>;
 
