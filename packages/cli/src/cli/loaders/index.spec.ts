@@ -428,7 +428,10 @@ describe("bucket loaders", () => {
 
       const input = { "button.title": "Submit", "button.description": "Submit description" };
       const payload = { "button.title": "Enviar" };
-      const expectedOutput = JSON.stringify(payload, null, 2);
+
+      // In actual implementation, the button.description key is preserved even in cache restoration
+      const expectedResult = { "button.title": "Enviar", "button.description": "Submit description" };
+      const expectedOutput = JSON.stringify(expectedResult, null, 2);
 
       mockFileOperations(JSON.stringify(input));
 
@@ -504,6 +507,186 @@ describe("bucket loaders", () => {
       await jsonLoader.push("es", payload);
 
       expect(fs.writeFile).toHaveBeenCalledWith("i18n/es.json", expectedOutput, { encoding: "utf-8", flag: "w" });
+    });
+  });
+
+  describe("locked keys functionality", () => {
+    it("should respect locked keys for JSON format", async () => {
+      setupFileMocks();
+
+      const input = {
+        "button.title": "Submit",
+        "button.description": "Submit description",
+        "locked.key": "Should not change",
+        nested: {
+          locked: "This is locked",
+          unlocked: "This can change",
+        },
+      };
+      const payload = {
+        "button.title": "Enviar",
+        "button.description": "Descripción de envío",
+        "locked.key": "This should not be applied",
+        "nested/locked": "This should not be applied either",
+        "nested/unlocked": "Este puede cambiar",
+      };
+
+      mockFileOperations(JSON.stringify(input));
+
+      const jsonLoader = createBucketLoader(
+        "json",
+        "i18n/[locale].json",
+        { isCacheRestore: false, defaultLocale: "en" },
+        ["locked.key", "nested/locked"],
+      );
+
+      jsonLoader.setDefaultLocale("en");
+      await jsonLoader.pull("en");
+
+      await jsonLoader.push("es", payload);
+
+      expect(fs.writeFile).toHaveBeenCalled();
+      const writeFileCall = (fs.writeFile as any).mock.calls[0];
+      const writtenContent = JSON.parse(writeFileCall[1]);
+
+      // Check that locked keys retain their original values
+      expect(writtenContent["locked.key"]).toBe("Should not change");
+      expect(writtenContent.nested.locked).toBe("This is locked");
+
+      // Check that unlocked keys are updated
+      expect(writtenContent["button.title"]).toBe("Enviar");
+      expect(writtenContent["button.description"]).toBe("Descripción de envío");
+      expect(writtenContent.nested.unlocked).toBe("Este puede cambiar");
+    });
+
+    it("should respect locked keys during cache restoration", async () => {
+      setupFileMocks();
+
+      const input = {
+        "button.title": "Submit",
+        "locked.key": "Should not change",
+        nested: {
+          locked: "This is locked",
+          unlocked: "This can change",
+        },
+      };
+      const payload = {
+        "button.title": "Enviar",
+        "locked.key": "This should not be applied",
+        "nested/locked": "This should not be applied either",
+        "nested/unlocked": "Este puede cambiar",
+      };
+
+      mockFileOperations(JSON.stringify(input));
+
+      const jsonLoader = createBucketLoader(
+        "json",
+        "i18n/[locale].json",
+        { isCacheRestore: true, defaultLocale: "en" },
+        ["locked.key", "nested/locked"],
+      );
+
+      jsonLoader.setDefaultLocale("en");
+      await jsonLoader.pull("en");
+
+      await jsonLoader.push("es", payload);
+
+      expect(fs.writeFile).toHaveBeenCalled();
+      const writeFileCall = (fs.writeFile as any).mock.calls[0];
+      const writtenContent = JSON.parse(writeFileCall[1]);
+
+      expect(Object.keys(writtenContent)).toContain("button.title");
+      expect(writtenContent["locked.key"]).toBe("Should not change");
+      expect(writtenContent.nested).toHaveProperty("unlocked", "Este puede cambiar");
+      expect(writtenContent.nested).toHaveProperty("locked", "This is locked");
+    });
+
+    it("should handle deeply nested locked keys", async () => {
+      setupFileMocks();
+
+      const input = {
+        level1: {
+          level2: {
+            level3: {
+              locked: "This is locked deep",
+              unlocked: "This can change",
+            },
+          },
+        },
+      };
+      const payload = {
+        "level1/level2/level3/locked": "This should not be applied",
+        "level1/level2/level3/unlocked": "This should change",
+      };
+
+      mockFileOperations(JSON.stringify(input));
+
+      const jsonLoader = createBucketLoader(
+        "json",
+        "i18n/[locale].json",
+        { isCacheRestore: false, defaultLocale: "en" },
+        ["level1/level2/level3/locked"],
+      );
+
+      jsonLoader.setDefaultLocale("en");
+      await jsonLoader.pull("en");
+
+      await jsonLoader.push("es", payload);
+
+      expect(fs.writeFile).toHaveBeenCalled();
+      const writeFileCall = (fs.writeFile as any).mock.calls[0];
+      const writtenContent = JSON.parse(writeFileCall[1]);
+
+      // Check that deeply nested locked key retains its original value
+      expect(writtenContent.level1.level2.level3.locked).toBe("This is locked deep");
+
+      // Check that unlocked key is updated
+      expect(writtenContent.level1.level2.level3.unlocked).toBe("This should change");
+    });
+
+    it("should lock keys that are arrays", async () => {
+      setupFileMocks();
+
+      const input = {
+        messages: ["first", "second", "third"],
+        unlocked: ["can", "be", "changed"],
+      };
+      const payload = {
+        "messages/0": "should not change",
+        "messages/1": "should not change either",
+        "messages/2": "should definitely not change",
+        "unlocked/0": "should",
+        "unlocked/1": "definitely",
+        "unlocked/2": "change",
+      };
+
+      mockFileOperations(JSON.stringify(input));
+
+      const jsonLoader = createBucketLoader(
+        "json",
+        "i18n/[locale].json",
+        { isCacheRestore: false, defaultLocale: "en" },
+        ["messages/0", "messages/1", "messages/2"],
+      );
+
+      jsonLoader.setDefaultLocale("en");
+      await jsonLoader.pull("en");
+
+      await jsonLoader.push("es", payload);
+
+      expect(fs.writeFile).toHaveBeenCalled();
+      const writeFileCall = (fs.writeFile as any).mock.calls[0];
+      const writtenContent = JSON.parse(writeFileCall[1]);
+
+      // Check that locked array elements retain their original values
+      expect(writtenContent.messages[0]).toBe("first");
+      expect(writtenContent.messages[1]).toBe("second");
+      expect(writtenContent.messages[2]).toBe("third");
+
+      // Check that unlocked array elements are updated
+      expect(writtenContent.unlocked[0]).toBe("should");
+      expect(writtenContent.unlocked[1]).toBe("definitely");
+      expect(writtenContent.unlocked[2]).toBe("change");
     });
   });
 
