@@ -428,10 +428,7 @@ describe("bucket loaders", () => {
 
       const input = { "button.title": "Submit", "button.description": "Submit description" };
       const payload = { "button.title": "Enviar" };
-
-      // In actual implementation, the button.description key is preserved even in cache restoration
-      const expectedResult = { "button.title": "Enviar", "button.description": "Submit description" };
-      const expectedOutput = JSON.stringify(expectedResult, null, 2);
+      const expectedOutput = JSON.stringify(payload, null, 2);
 
       mockFileOperations(JSON.stringify(input));
 
@@ -445,6 +442,65 @@ describe("bucket loaders", () => {
       await jsonLoader.push("es", payload);
 
       expect(fs.writeFile).toHaveBeenCalledWith("i18n/es.json", expectedOutput, { encoding: "utf-8", flag: "w" });
+    });
+
+    it("should respect locked keys during cache restoration", async () => {
+      setupFileMocks();
+
+      const input = {
+        "button.title": "Submit",
+        "button.description": "Extra field not in payload",
+        "locked.key": "Should not change",
+        nested: {
+          locked: "This is locked",
+          unlocked: "This can change",
+          extra: "This should be removed in cache restore",
+        },
+      };
+      const payload = {
+        "button.title": "Enviar",
+        "locked.key": "This should not be applied",
+        "nested/locked": "This should not be applied either",
+        "nested/unlocked": "Este puede cambiar",
+      };
+
+      mockFileOperations(JSON.stringify(input));
+
+      const jsonLoader = createBucketLoader(
+        "json",
+        "i18n/[locale].json",
+        { isCacheRestore: true, defaultLocale: "en" },
+        ["locked.key", "nested/locked"],
+      );
+
+      jsonLoader.setDefaultLocale("en");
+      await jsonLoader.pull("en");
+
+      await jsonLoader.push("es", payload);
+
+      expect(fs.writeFile).toHaveBeenCalled();
+      const writeFileCall = (fs.writeFile as any).mock.calls[0];
+      const writtenContent = JSON.parse(writeFileCall[1]);
+
+      // During cache restoration, only keys in the payload should be included
+      // but locked keys should still be preserved
+      expect(Object.keys(writtenContent)).toContain("button.title");
+      expect(Object.keys(writtenContent)).toContain("locked.key");
+      expect(writtenContent["locked.key"]).toBe("Should not change");
+
+      // Fields not in the payload should be removed in cache restoration
+      expect(Object.keys(writtenContent)).not.toContain("button.description");
+
+      // Nested keys should follow the same pattern
+      expect(writtenContent.nested).toHaveProperty("unlocked", "Este puede cambiar");
+      expect(writtenContent.nested).toHaveProperty("locked", "This is locked");
+      expect(writtenContent.nested).not.toHaveProperty("extra");
+
+      // Only locked keys and payload keys should be present
+      expect(Object.keys(writtenContent)).toEqual(expect.arrayContaining(["button.title", "locked.key", "nested"]));
+      expect(Object.keys(writtenContent)).toHaveLength(3);
+      expect(Object.keys(writtenContent.nested)).toEqual(expect.arrayContaining(["locked", "unlocked"]));
+      expect(Object.keys(writtenContent.nested)).toHaveLength(2);
     });
 
     it("should load and save json data for paths with multiple locales", async () => {
