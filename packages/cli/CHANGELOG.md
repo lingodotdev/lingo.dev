@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.82.1
+
+### Patch Changes
+
+- [`fd2fd5c`](https://github.com/lingodotdev/lingo.dev/commit/fd2fd5cec4ebf8467b4fd8df9dc2892a3f0249f0) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - add startsWith for locked keys
+
 ## 0.82.0
 
 ### Minor Changes
