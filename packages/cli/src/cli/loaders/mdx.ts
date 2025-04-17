@@ -57,10 +57,7 @@ export function createDoubleSerializationLoader(): ILoader<string, string> {
   });
 }
 
-export function createMdxStructureLoader(): ILoader<
-  Record<string, any>,
-  Record<string, string>
-> {
+export function createMdxStructureLoader(): ILoader<Record<string, any>, Record<string, string>> {
   return createLoader({
     async pull(locale, input) {
       const result = _.chain(input)
