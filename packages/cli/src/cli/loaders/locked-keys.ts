@@ -9,11 +9,11 @@ export default function createLockedKeysLoader(
   return createLoader({
     pull: async (locale, data) =>
       _.chain(data)
-        .pickBy((value, key) => !lockedKeys.includes(key))
+        .pickBy((value, key) => !lockedKeys.some((lockedKey) => key.startsWith(lockedKey)))
         .value(),
     push: async (locale, data, originalInput) => {
       const lockedSubObject = _.chain(originalInput)
-        .pickBy((value, key) => lockedKeys.includes(key))
+        .pickBy((value, key) => lockedKeys.some((lockedKey) => key.startsWith(lockedKey)))
         .value();
 
       if (isCacheRestore) {
