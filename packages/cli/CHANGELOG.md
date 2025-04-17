@@ -1,5 +1,19 @@
 # lingo.dev
 
+## 0.84.0
+
+### Minor Changes
+
+- [#631](https://github.com/lingodotdev/lingo.dev/pull/631) [`82efe61`](https://github.com/lingodotdev/lingo.dev/commit/82efe6176db12cc7c5bbeb84f38bc3261f9eec4f) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - double formatting for mdx
+
+- [#631](https://github.com/lingodotdev/lingo.dev/pull/631) [`82efe61`](https://github.com/lingodotdev/lingo.dev/commit/82efe6176db12cc7c5bbeb84f38bc3261f9eec4f) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - advanced mdx support (shout out to @ZYJLiu!)
+
+### Patch Changes
+
+- Updated dependencies [[`82efe61`](https://github.com/lingodotdev/lingo.dev/commit/82efe6176db12cc7c5bbeb84f38bc3261f9eec4f), [`82efe61`](https://github.com/lingodotdev/lingo.dev/commit/82efe6176db12cc7c5bbeb84f38bc3261f9eec4f)]:
+  - @lingo.dev/_spec@0.30.0
+  - @lingo.dev/_sdk@0.7.34
+
 ## 0.83.0
 
 ### Minor Changes
