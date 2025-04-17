@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.85.0
+
+### Minor Changes
+
+- [`486f2d2`](https://github.com/lingodotdev/lingo.dev/commit/486f2d2fec021b0e9403277da5fec7ca510047c3) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - add status command
+
 ## 0.84.0
 
 ### Minor Changes
