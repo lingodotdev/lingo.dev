@@ -12,6 +12,7 @@ import createAndroidLoader from "./android";
 import createCsvLoader from "./csv";
 import createHtmlLoader from "./html";
 import createMarkdownLoader from "./markdown";
+import { createMdxFormatLoader, createMdxStructureLoader } from "./mdx";
 import createPropertiesLoader from "./properties";
 import createXcodeStringsLoader from "./xcode-strings";
 import createXcodeStringsdictLoader from "./xcode-stringsdict";
@@ -88,6 +89,16 @@ export default function createBucketLoader(
         createTextFileLoader(bucketPathPattern),
         createPrettierLoader({ parser: "markdown", bucketPathPattern }),
         createMarkdownLoader(),
+        createSyncLoader(),
+        createUnlocalizableLoader(options.isCacheRestore, options.returnUnlocalizedKeys),
+      );
+    case "mdx":
+      return composeLoaders(
+        createTextFileLoader(bucketPathPattern),
+        createPrettierLoader({ parser: "mdx", bucketPathPattern }),
+        createMdxFormatLoader(),
+        createFlatLoader(),
+        createMdxStructureLoader(),
         createSyncLoader(),
         createUnlocalizableLoader(options.isCacheRestore, options.returnUnlocalizedKeys),
       );

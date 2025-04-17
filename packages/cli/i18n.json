@@ -1,18 +1,9 @@
 {
-  "version": 1.5,
-  "provider": {
-    "id": "anthropic",
-    "model": "claude-3-7-sonnet-latest",
-    "prompt": "You're translating text from {source} to {target}."
-  },
+  "version": 1.6,
   "locale": {
     "source": "en",
-    "targets": ["es"]
+    "targets": ["de"]
   },
-  "buckets": {
-    "json": {
-      "include": ["demo/json/[locale].json"]
-    }
-  },
+  "buckets": {},
   "$schema": "https://lingo.dev/schema/i18n.json"
 }
