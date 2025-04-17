@@ -125,6 +125,16 @@ export default function createBucketLoader(
           options.returnUnlocalizedKeys,
         ),
       );
+    case "mdx":
+      return composeLoaders(
+        createTextFileLoader(bucketPathPattern),
+        createPrettierLoader({ parser: "mdx", bucketPathPattern }),
+        createMdxFormatLoader(),
+        createFlatLoader(),
+        createMdxStructureLoader(),
+        createSyncLoader(),
+        createUnlocalizableLoader(options.isCacheRestore, options.returnUnlocalizedKeys),
+      );
     case "po":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),

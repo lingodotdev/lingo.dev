@@ -1,5 +1,17 @@
 # lingo.dev
 
+## 0.83.0
+
+### Minor Changes
+
+- [#629](https://github.com/lingodotdev/lingo.dev/pull/629) [`58f3959`](https://github.com/lingodotdev/lingo.dev/commit/58f39599b3b765ad807e725b4089a5e9b11a01b2) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - advanced mdx support (shout out to @ZYJLiu!)
+
+### Patch Changes
+
+- Updated dependencies [[`58f3959`](https://github.com/lingodotdev/lingo.dev/commit/58f39599b3b765ad807e725b4089a5e9b11a01b2)]:
+  - @lingo.dev/_spec@0.29.0
+  - @lingo.dev/_sdk@0.7.33
+
 ## 0.82.1
 
 ### Patch Changes
