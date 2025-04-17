@@ -333,12 +333,12 @@ export default new Command()
 
       // Create a new table instance with cli-table3
       const table = new Table({
-        head: ["Language", "Status", "Complete", "Missing", "Updated", "Words"],
+        head: ["Language", "Status", "Complete", "Missing", "Updated", "Total Keys", "Words to Translate"],
         style: {
           head: ["white"], // White color for headers
           border: [], // No color for borders
         },
-        colWidths: [12, 20, 18, 12, 12, 15], // Explicit column widths, making Status column wider
+        colWidths: [12, 20, 18, 12, 12, 12, 15], // Explicit column widths, making Status column wider
       });
 
       // Data rows
@@ -346,6 +346,7 @@ export default new Command()
       for (const locale of targetLocales) {
         const stats = languageStats[locale];
         const percentComplete = ((stats.complete / totalSourceKeyCount) * 100).toFixed(1);
+        const totalNeeded = stats.missing + stats.updated;
 
         // Determine status text and color
         let statusText;
@@ -378,6 +379,7 @@ export default new Command()
           `${stats.complete}/${totalSourceKeyCount} (${percentComplete}%)`,
           stats.missing > 0 ? chalk.red(stats.missing.toString()) : "0",
           stats.updated > 0 ? chalk.yellow(stats.updated.toString()) : "0",
+          totalNeeded > 0 ? chalk.magenta(totalNeeded.toString()) : "0",
           words > 0 ? `~${words.toLocaleString()}` : "0",
         ]);
       }
@@ -388,8 +390,9 @@ export default new Command()
       // Total usage summary
       console.log(chalk.bold(`\n📊 USAGE ESTIMATE:`));
       console.log(
-        `• TOTAL: ~${chalk.yellow.bold(totalWordsToTranslate.toLocaleString())} words to translate across all languages`,
+        `• WORDS TO BE CONSUMED: ~${chalk.yellow.bold(totalWordsToTranslate.toLocaleString())} words across all languages`,
       );
+      console.log(`  (Words are counted from source language for keys that need translation in target languages)`);
 
       // Breakdown by language if we have multiple languages
       if (targetLocales.length > 1) {

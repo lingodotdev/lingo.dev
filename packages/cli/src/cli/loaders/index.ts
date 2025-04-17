@@ -12,11 +12,7 @@ import createAndroidLoader from "./android";
 import createCsvLoader from "./csv";
 import createHtmlLoader from "./html";
 import createMarkdownLoader from "./markdown";
-import {
-  createDoubleSerializationLoader,
-  createMdxFormatLoader,
-  createMdxStructureLoader,
-} from "./mdx";
+import { createDoubleSerializationLoader, createMdxFormatLoader, createMdxStructureLoader } from "./mdx";
 import createPropertiesLoader from "./properties";
 import createXcodeStringsLoader from "./xcode-strings";
 import createXcodeStringsdictLoader from "./xcode-stringsdict";
@@ -59,10 +55,7 @@ export default function createBucketLoader(
         createAndroidLoader(),
         createFlatLoader(),
         createSyncLoader(),
-        createUnlocalizableLoader(
-          options.isCacheRestore,
-          options.returnUnlocalizedKeys,
-        ),
+        createUnlocalizableLoader(options.isCacheRestore, options.returnUnlocalizedKeys),
       );
     case "csv":
       return composeLoaders(
@@ -70,10 +63,7 @@ export default function createBucketLoader(
         createCsvLoader(),
         createFlatLoader(),
         createSyncLoader(),
-        createUnlocalizableLoader(
-          options.isCacheRestore,
-          options.returnUnlocalizedKeys,
-        ),
+        createUnlocalizableLoader(options.isCacheRestore, options.returnUnlocalizedKeys),
       );
     case "html":
       return composeLoaders(
@@ -81,10 +71,7 @@ export default function createBucketLoader(
         createPrettierLoader({ parser: "html", bucketPathPattern }),
         createHtmlLoader(),
         createSyncLoader(),
-        createUnlocalizableLoader(
-          options.isCacheRestore,
-          options.returnUnlocalizedKeys,
-        ),
+        createUnlocalizableLoader(options.isCacheRestore, options.returnUnlocalizedKeys),
       );
     case "json":
       return composeLoaders(
@@ -95,10 +82,7 @@ export default function createBucketLoader(
         createFlatLoader(),
         createLockedKeysLoader(lockedKeys || [], options.isCacheRestore),
         createSyncLoader(),
-        createUnlocalizableLoader(
-          options.isCacheRestore,
-          options.returnUnlocalizedKeys,
-        ),
+        createUnlocalizableLoader(options.isCacheRestore, options.returnUnlocalizedKeys),
       );
     case "markdown":
       return composeLoaders(
@@ -106,28 +90,12 @@ export default function createBucketLoader(
         createPrettierLoader({ parser: "markdown", bucketPathPattern }),
         createMarkdownLoader(),
         createSyncLoader(),
-        createUnlocalizableLoader(
-          options.isCacheRestore,
-          options.returnUnlocalizedKeys,
-        ),
+        createUnlocalizableLoader(options.isCacheRestore, options.returnUnlocalizedKeys),
       );
     case "mdx":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
         createDoubleSerializationLoader(),
-        createPrettierLoader({ parser: "mdx", bucketPathPattern }),
-        createMdxFormatLoader(),
-        createFlatLoader(),
-        createMdxStructureLoader(),
-        createSyncLoader(),
-        createUnlocalizableLoader(
-          options.isCacheRestore,
-          options.returnUnlocalizedKeys,
-        ),
-      );
-    case "mdx":
-      return composeLoaders(
-        createTextFileLoader(bucketPathPattern),
         createPrettierLoader({ parser: "mdx", bucketPathPattern }),
         createMdxFormatLoader(),
         createFlatLoader(),
@@ -142,30 +110,21 @@ export default function createBucketLoader(
         createFlatLoader(),
         createSyncLoader(),
         createVariableLoader({ type: "python" }),
-        createUnlocalizableLoader(
-          options.isCacheRestore,
-          options.returnUnlocalizedKeys,
-        ),
+        createUnlocalizableLoader(options.isCacheRestore, options.returnUnlocalizedKeys),
       );
     case "properties":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
         createPropertiesLoader(),
         createSyncLoader(),
-        createUnlocalizableLoader(
-          options.isCacheRestore,
-          options.returnUnlocalizedKeys,
-        ),
+        createUnlocalizableLoader(options.isCacheRestore, options.returnUnlocalizedKeys),
       );
     case "xcode-strings":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
         createXcodeStringsLoader(),
         createSyncLoader(),
-        createUnlocalizableLoader(
-          options.isCacheRestore,
-          options.returnUnlocalizedKeys,
-        ),
+        createUnlocalizableLoader(options.isCacheRestore, options.returnUnlocalizedKeys),
       );
     case "xcode-stringsdict":
       return composeLoaders(
@@ -173,10 +132,7 @@ export default function createBucketLoader(
         createXcodeStringsdictLoader(),
         createFlatLoader(),
         createSyncLoader(),
-        createUnlocalizableLoader(
-          options.isCacheRestore,
-          options.returnUnlocalizedKeys,
-        ),
+        createUnlocalizableLoader(options.isCacheRestore, options.returnUnlocalizedKeys),
       );
     case "xcode-xcstrings":
       return composeLoaders(
@@ -187,10 +143,7 @@ export default function createBucketLoader(
         createFlatLoader(),
         createSyncLoader(),
         createVariableLoader({ type: "ieee" }),
-        createUnlocalizableLoader(
-          options.isCacheRestore,
-          options.returnUnlocalizedKeys,
-        ),
+        createUnlocalizableLoader(options.isCacheRestore, options.returnUnlocalizedKeys),
       );
     case "yaml":
       return composeLoaders(
@@ -200,10 +153,7 @@ export default function createBucketLoader(
         createFlatLoader(),
         createLockedKeysLoader(lockedKeys || [], options.isCacheRestore),
         createSyncLoader(),
-        createUnlocalizableLoader(
-          options.isCacheRestore,
-          options.returnUnlocalizedKeys,
-        ),
+        createUnlocalizableLoader(options.isCacheRestore, options.returnUnlocalizedKeys),
       );
     case "yaml-root-key":
       return composeLoaders(
@@ -213,10 +163,7 @@ export default function createBucketLoader(
         createRootKeyLoader(true),
         createFlatLoader(),
         createSyncLoader(),
-        createUnlocalizableLoader(
-          options.isCacheRestore,
-          options.returnUnlocalizedKeys,
-        ),
+        createUnlocalizableLoader(options.isCacheRestore, options.returnUnlocalizedKeys),
       );
     case "flutter":
       return composeLoaders(
@@ -226,10 +173,7 @@ export default function createBucketLoader(
         createFlutterLoader(),
         createFlatLoader(),
         createSyncLoader(),
-        createUnlocalizableLoader(
-          options.isCacheRestore,
-          options.returnUnlocalizedKeys,
-        ),
+        createUnlocalizableLoader(options.isCacheRestore, options.returnUnlocalizedKeys),
       );
     case "xliff":
       return composeLoaders(
@@ -237,10 +181,7 @@ export default function createBucketLoader(
         createXliffLoader(),
         createFlatLoader(),
         createSyncLoader(),
-        createUnlocalizableLoader(
-          options.isCacheRestore,
-          options.returnUnlocalizedKeys,
-        ),
+        createUnlocalizableLoader(options.isCacheRestore, options.returnUnlocalizedKeys),
       );
     case "xml":
       return composeLoaders(
@@ -248,40 +189,28 @@ export default function createBucketLoader(
         createXmlLoader(),
         createFlatLoader(),
         createSyncLoader(),
-        createUnlocalizableLoader(
-          options.isCacheRestore,
-          options.returnUnlocalizedKeys,
-        ),
+        createUnlocalizableLoader(options.isCacheRestore, options.returnUnlocalizedKeys),
       );
     case "srt":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
         createSrtLoader(),
         createSyncLoader(),
-        createUnlocalizableLoader(
-          options.isCacheRestore,
-          options.returnUnlocalizedKeys,
-        ),
+        createUnlocalizableLoader(options.isCacheRestore, options.returnUnlocalizedKeys),
       );
     case "dato":
       return composeLoaders(
         createDatoLoader(bucketPathPattern),
         createSyncLoader(),
         createFlatLoader(),
-        createUnlocalizableLoader(
-          options.isCacheRestore,
-          options.returnUnlocalizedKeys,
-        ),
+        createUnlocalizableLoader(options.isCacheRestore, options.returnUnlocalizedKeys),
       );
     case "vtt":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
         createVttLoader(),
         createSyncLoader(),
-        createUnlocalizableLoader(
-          options.isCacheRestore,
-          options.returnUnlocalizedKeys,
-        ),
+        createUnlocalizableLoader(options.isCacheRestore, options.returnUnlocalizedKeys),
       );
     case "php":
       return composeLoaders(
@@ -289,10 +218,7 @@ export default function createBucketLoader(
         createPhpLoader(),
         createSyncLoader(),
         createFlatLoader(),
-        createUnlocalizableLoader(
-          options.isCacheRestore,
-          options.returnUnlocalizedKeys,
-        ),
+        createUnlocalizableLoader(options.isCacheRestore, options.returnUnlocalizedKeys),
       );
     case "vue-json":
       return composeLoaders(
@@ -300,10 +226,7 @@ export default function createBucketLoader(
         createVueJsonLoader(),
         createSyncLoader(),
         createFlatLoader(),
-        createUnlocalizableLoader(
-          options.isCacheRestore,
-          options.returnUnlocalizedKeys,
-        ),
+        createUnlocalizableLoader(options.isCacheRestore, options.returnUnlocalizedKeys),
       );
   }
 }
