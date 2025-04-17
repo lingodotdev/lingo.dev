@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.85.1
+
+### Patch Changes
+
+- [`8da8bd0`](https://github.com/lingodotdev/lingo.dev/commit/8da8bd0039729876fdedc43d991908ccbc9a3a85) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - upd usage table
+
 ## 0.85.0
 
 ### Minor Changes
