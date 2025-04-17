@@ -7,6 +7,7 @@ export const bucketTypes = [
   "html",
   "json",
   "markdown",
+  "mdx",
   "xcode-strings",
   "xcode-stringsdict",
   "xcode-xcstrings",
