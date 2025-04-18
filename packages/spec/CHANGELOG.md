@@ -1,5 +1,85 @@
 # @lingo.dev/\_spec
 
+## 0.30.0
+
+### Minor Changes
+
+- [#631](https://github.com/lingodotdev/lingo.dev/pull/631) [`82efe61`](https://github.com/lingodotdev/lingo.dev/commit/82efe6176db12cc7c5bbeb84f38bc3261f9eec4f) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - double formatting for mdx
+
+- [#631](https://github.com/lingodotdev/lingo.dev/pull/631) [`82efe61`](https://github.com/lingodotdev/lingo.dev/commit/82efe6176db12cc7c5bbeb84f38bc3261f9eec4f) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - advanced mdx support (shout out to @ZYJLiu!)
+
+## 0.29.0
+
+### Minor Changes
+
+- [#629](https://github.com/lingodotdev/lingo.dev/pull/629) [`58f3959`](https://github.com/lingodotdev/lingo.dev/commit/58f39599b3b765ad807e725b4089a5e9b11a01b2) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - advanced mdx support (shout out to @ZYJLiu!)
+
+## 0.28.0
+
+### Minor Changes
+
+- [#627](https://github.com/lingodotdev/lingo.dev/pull/627) [`fe922a4`](https://github.com/lingodotdev/lingo.dev/commit/fe922a469c2d5dac23a909a4fb67a6efd56d80d6) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - add support for json/yaml key locking
+
+## 0.27.0
+
+### Minor Changes
+
+- [#614](https://github.com/lingodotdev/lingo.dev/pull/614) [`2495afd`](https://github.com/lingodotdev/lingo.dev/commit/2495afd69e23700f96e19e5bbf74e393b29c2033) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - add basic translators
+
+### Patch Changes
+
+- [#616](https://github.com/lingodotdev/lingo.dev/pull/616) [`516a79c`](https://github.com/lingodotdev/lingo.dev/commit/516a79c75501c5960ae944379f38591806ca43e2) Thanks [@mathio](https://github.com/mathio)! - po files --frozen flag
+
+- [`2cc6114`](https://github.com/lingodotdev/lingo.dev/commit/2cc61140fccc69ab73d40c7802a2d0e018889475) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - add Welsh language support
+
+## 0.26.6
+
+### Patch Changes
+
+- [#605](https://github.com/lingodotdev/lingo.dev/pull/605) [`1dbbfd2`](https://github.com/lingodotdev/lingo.dev/commit/1dbbfd2ed9f5a7e0479dc83f700fb68ee5347a18) Thanks [@mathio](https://github.com/mathio)! - inject locale
+
+## 0.26.5
+
+### Patch Changes
+
+- [#596](https://github.com/lingodotdev/lingo.dev/pull/596) [`61b487e`](https://github.com/lingodotdev/lingo.dev/commit/61b487e1e059328a32c3cdf673255d9d2cd480d9) Thanks [@vrcprl](https://github.com/vrcprl)! - add new locale
+
+## 0.26.4
+
+### Patch Changes
+
+- [#584](https://github.com/lingodotdev/lingo.dev/pull/584) [`743d93e`](https://github.com/lingodotdev/lingo.dev/commit/743d93e554841bbd96d23682d8aec63cb4eb3ec8) Thanks [@khalatevarun](https://github.com/khalatevarun)! - Add unit test for utility function in locales.ts
+
+## 0.26.3
+
+### Patch Changes
+
+- [#553](https://github.com/lingodotdev/lingo.dev/pull/553) [`95023f2`](https://github.com/lingodotdev/lingo.dev/commit/95023f2c8da3958e8582628a22bf40674f8d2317) Thanks [@vrcprl](https://github.com/vrcprl)! - Add new locales
+
+## 0.26.2
+
+### Patch Changes
+
+- [#546](https://github.com/lingodotdev/lingo.dev/pull/546) [`9089b08`](https://github.com/lingodotdev/lingo.dev/commit/9089b085b968ff3195866e377ecf3016aa06f959) Thanks [@mathio](https://github.com/mathio)! - add helper method to spec
+
+## 0.26.1
+
+### Patch Changes
+
+- [`0b48be1`](https://github.com/lingodotdev/lingo.dev/commit/0b48be197e88dac581cc4f257789a04b43acf932) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - add Kinyarwanda and Kiswahili
+
+## 0.26.0
+
+### Minor Changes
+
+- [#530](https://github.com/lingodotdev/lingo.dev/pull/530) [`bafa755`](https://github.com/lingodotdev/lingo.dev/commit/bafa755d9681e93741462eb7bcf9b85073d20fd7) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - Add Kazakh (Kazakhstan) locale (localization engine passed the benchmarks!)
+
+## 0.25.3
+
+### Patch Changes
+
+- [#518](https://github.com/lingodotdev/lingo.dev/pull/518) [`444a731`](https://github.com/lingodotdev/lingo.dev/commit/444a7319a1351e22e5666504169023b4c8a29d5f) Thanks [@mathio](https://github.com/mathio)! - support JSON messages in <i18n> block of .vue files
+
 ## 0.25.2
 
 ### Patch Changes

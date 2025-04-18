@@ -1,4 +1,6 @@
 {
+  "name": "@lingo.dev/~action",
+  "private": true,
   "type": "module",
   "scripts": {
     "build": "tsc"

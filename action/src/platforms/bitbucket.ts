@@ -15,7 +15,7 @@ interface BitbucketConfig {
 export class BitbucketPlatformKit extends PlatformKit<BitbucketConfig> {
   private _bb?: ReturnType<typeof Bitbucket>;
 
-  get bb() {
+  private get bb() {
     if (!this._bb) {
       this._bb = new Bitbucket({
         auth: { token: this.platformConfig.bbToken || "" },
@@ -49,7 +49,7 @@ export class BitbucketPlatformKit extends PlatformKit<BitbucketConfig> {
         // https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pullrequests/#api-repositories-workspace-repo-slug-pullrequests-get
         return values?.find(
           ({ source, destination }) =>
-            source?.branch?.name === branch && destination?.branch?.name === this.platformConfig.baseBranchName,
+            source?.branch?.name === branch && destination?.branch?.name === this.platformConfig.baseBranchName
         );
       })
       .then((pr) => pr?.id);

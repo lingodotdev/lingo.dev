@@ -5,7 +5,7 @@ import Z from "zod";
 export class GitHubPlatformKit extends PlatformKit {
   private _octokit?: Octokit;
 
-  get octokit() {
+  private get octokit(): Octokit {
     if (!this._octokit) {
       this._octokit = new Octokit({ auth: this.platformConfig.ghToken });
     }
@@ -66,6 +66,19 @@ export class GitHubPlatformKit extends PlatformKit {
       owner: this.platformConfig.repositoryOwner,
       repo: this.platformConfig.repositoryName,
     });
+  }
+
+  async gitConfig() {
+    const { ghToken, repositoryOwner, repositoryName } = this.platformConfig;
+    const { processOwnCommits } = this.config;
+
+    if (ghToken && processOwnCommits) {
+      console.log("Using provided GH_TOKEN. This will trigger your CI/CD pipeline to run again.");
+
+      const url = `https://${ghToken}@github.com/${repositoryOwner}/${repositoryName}.git`;
+
+      super.gitConfig(ghToken, url);
+    }
   }
 
   get platformConfig() {

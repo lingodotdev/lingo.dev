@@ -13,7 +13,7 @@ const payloadSchema = Z.record(Z.string(), Z.any());
 const referenceSchema = Z.record(localeCodeSchema, payloadSchema);
 
 const localizationParamsSchema = Z.object({
-  sourceLocale: localeCodeSchema,
+  sourceLocale: Z.union([localeCodeSchema, Z.null()]),
   targetLocale: localeCodeSchema,
   fast: Z.boolean().optional(),
   reference: referenceSchema.optional(),
@@ -89,7 +89,7 @@ export class LingoDotDevEngine {
    * @returns Localized chunk
    */
   private async localizeChunk(
-    sourceLocale: string,
+    sourceLocale: string | null,
     targetLocale: string,
     payload: {
       data: Z.infer<typeof payloadSchema>;
@@ -129,6 +129,12 @@ export class LingoDotDevEngine {
     }
 
     const jsonResponse = await res.json();
+
+    // when streaming the error is returned in the response body
+    if (!jsonResponse.data && jsonResponse.error) {
+      throw new Error(jsonResponse.error);
+    }
+
     return jsonResponse.data || {};
   }
 
@@ -434,9 +440,18 @@ export class LingoDotDevEngine {
  * @deprecated Use LingoDotDevEngine instead. This class is maintained for backwards compatibility.
  */
 export class ReplexicaEngine extends LingoDotDevEngine {
+  private static hasWarnedDeprecation = false;
+
   constructor(config: Partial<Z.infer<typeof engineParamsSchema>>) {
     super(config);
-    console.warn("ReplexicaEngine is deprecated. Please use LingoDotDevEngine instead.");
+    if (!ReplexicaEngine.hasWarnedDeprecation) {
+      console.warn(
+        "ReplexicaEngine is deprecated and will be removed in a future release. " +
+          "Please use LingoDotDevEngine instead. " +
+          "See https://docs.lingo.dev/migration for more information.",
+      );
+      ReplexicaEngine.hasWarnedDeprecation = true;
+    }
   }
 }
 
@@ -444,8 +459,17 @@ export class ReplexicaEngine extends LingoDotDevEngine {
  * @deprecated Use LingoDotDevEngine instead. This class is maintained for backwards compatibility.
  */
 export class LingoEngine extends LingoDotDevEngine {
+  private static hasWarnedDeprecation = false;
+
   constructor(config: Partial<Z.infer<typeof engineParamsSchema>>) {
     super(config);
-    console.warn("LingoEngine is deprecated. Please use LingoDotDevEngine instead.");
+    if (!LingoEngine.hasWarnedDeprecation) {
+      console.warn(
+        "LingoEngine is deprecated and will be removed in a future release. " +
+          "Please use LingoDotDevEngine instead. " +
+          "See https://docs.lingo.dev/migration for more information.",
+      );
+      LingoEngine.hasWarnedDeprecation = true;
+    }
   }
 }

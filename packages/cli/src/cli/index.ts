@@ -12,6 +12,8 @@ import i18nCmd from "./cmd/i18n";
 import lockfileCmd from "./cmd/lockfile";
 import cleanupCmd from "./cmd/cleanup";
 import mcpCmd from "./cmd/mcp";
+import ciCmd from "./cmd/ci";
+import statusCmd from "./cmd/status";
 
 import packageJson from "../../package.json";
 
@@ -30,7 +32,9 @@ ${vice(
   }),
 )}
 
-Website: https://lingo.dev
+⚡️ AI-powered open-source CLI for web & mobile localization.
+
+Star the the repo :) https://github.com/LingoDotDev/lingo.dev
 `,
   )
   .version(`v${packageJson.version}`, "-v, --version", "Show version")
@@ -42,6 +46,8 @@ Website: https://lingo.dev
   .addCommand(lockfileCmd)
   .addCommand(cleanupCmd)
   .addCommand(mcpCmd)
+  .addCommand(ciCmd)
+  .addCommand(statusCmd)
   .exitOverride((err) => {
     // Exit with code 0 when help or version is displayed
     if (err.code === "commander.helpDisplayed" || err.code === "commander.version" || err.code === "commander.help") {

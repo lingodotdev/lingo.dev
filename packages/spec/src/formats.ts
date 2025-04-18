@@ -7,6 +7,7 @@ export const bucketTypes = [
   "html",
   "json",
   "markdown",
+  "mdx",
   "xcode-strings",
   "xcode-stringsdict",
   "xcode-xcstrings",
@@ -22,6 +23,7 @@ export const bucketTypes = [
   "vtt",
   "php",
   "po",
+  "vue-json",
 ] as const;
 
 export const bucketTypeSchema = Z.enum(bucketTypes);

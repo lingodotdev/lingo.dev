@@ -7,6 +7,7 @@ export type AuthenticatorParams = {
 
 export type AuthPayload = {
   email: string;
+  id: string;
 };
 
 export function createAuthenticator(params: AuthenticatorParams) {
@@ -29,6 +30,7 @@ export function createAuthenticator(params: AuthenticatorParams) {
 
           return {
             email: payload.email,
+            id: payload.id,
           };
         }
 

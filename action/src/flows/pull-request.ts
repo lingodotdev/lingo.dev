@@ -61,42 +61,26 @@ export class PullRequestFlow extends InBranchFlow {
   private async ensureFreshPr(i18nBranchName: string) {
     // Check if PR exists
     this.ora.start(
-      `Checking for existing PR with head ${i18nBranchName} and base ${this.platformKit.platformConfig.baseBranchName}`,
+      `Checking for existing PR with head ${i18nBranchName} and base ${this.platformKit.platformConfig.baseBranchName}`
     );
-    const existingPrNumber = await this.platformKit.getOpenPullRequestNumber({
+    let prNumber = await this.platformKit.getOpenPullRequestNumber({
       branch: i18nBranchName,
     });
-    this.ora.succeed(existingPrNumber ? "PR found" : "No PR found");
 
-    if (existingPrNumber) {
-      // Close existing PR first
-      this.ora.start(`Closing existing PR ${existingPrNumber}`);
-      await this.platformKit.closePullRequest({
-        pullRequestNumber: existingPrNumber,
+    if (prNumber) {
+      this.ora.succeed(`Existing PR found: #${prNumber}`);
+    } else {
+      // Create new PR
+      this.ora.start(`Creating new PR`);
+      prNumber = await this.platformKit.createPullRequest({
+        head: i18nBranchName,
+        title: this.platformKit.config.pullRequestTitle,
+        body: this.getPrBodyContent(),
       });
-      this.ora.succeed(`Closed existing PR ${existingPrNumber}`);
+      this.ora.succeed(`Created new PR: #${prNumber}`);
     }
 
-    // Create new PR
-    this.ora.start(`Creating new PR`);
-    const newPrNumber = await this.platformKit.createPullRequest({
-      head: i18nBranchName,
-      title: this.platformKit.config.pullRequestTitle,
-      body: this.getPrBodyContent(),
-    });
-    this.ora.succeed(`Created new PR ${newPrNumber}`);
-
-    if (existingPrNumber) {
-      // Post comment about outdated PR
-      this.ora.start(`Posting comment about outdated PR ${existingPrNumber}`);
-      await this.platformKit.commentOnPullRequest({
-        pullRequestNumber: existingPrNumber,
-        body: `This PR is now outdated. A new version has been created at ${this.platformKit.buildPullRequestUrl(newPrNumber)}`,
-      });
-      this.ora.succeed(`Posted comment about outdated PR ${existingPrNumber}`);
-    }
-
-    return newPrNumber;
+    return prNumber;
   }
 
   private checkoutI18nBranch(i18nBranchName: string) {
@@ -107,10 +91,22 @@ export class PullRequestFlow extends InBranchFlow {
   }
 
   private createI18nBranch(i18nBranchName: string) {
-    execSync(`git fetch origin ${this.platformKit.platformConfig.baseBranchName}`, { stdio: "inherit" });
-    execSync(`git checkout -b ${i18nBranchName} origin/${this.platformKit.platformConfig.baseBranchName}`, {
-      stdio: "inherit",
-    });
+    try {
+      execSync(`git fetch origin ${this.platformKit.platformConfig.baseBranchName}`, { stdio: "inherit" });
+      execSync(`git checkout -b ${i18nBranchName} origin/${this.platformKit.platformConfig.baseBranchName}`, {
+        stdio: "inherit",
+      });
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
+      this.ora.fail(`Failed to create branch: ${errorMessage}`);
+      this.ora.info(`
+      Troubleshooting tips:
+      1. Make sure you have permission to create branches
+      2. Check if the branch already exists locally (try 'git branch -a')
+      3. Verify connectivity to remote repository
+    `);
+      throw new Error(`Branch creation failed: ${errorMessage}`);
+    }
   }
 
   private syncI18nBranch() {
@@ -141,7 +137,7 @@ export class PullRequestFlow extends InBranchFlow {
       const targetFiles = ["i18n.lock"];
       const targetFileNames = execSync(
         `npx lingo.dev@latest show files --target ${this.platformKit.platformConfig.baseBranchName}`,
-        { encoding: "utf8" },
+        { encoding: "utf8" }
       )
         .split("\n")
         .filter(Boolean);

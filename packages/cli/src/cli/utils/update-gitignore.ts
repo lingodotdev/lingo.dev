@@ -8,6 +8,10 @@ export default function updateGitignore() {
     return;
   }
   const gitignorePath = path.join(projectRoot, ".gitignore");
+  if (!fs.existsSync(gitignorePath)) {
+    return;
+  }
+
   const gitignore = fs.readFileSync(gitignorePath, "utf8").split("\n");
   const cacheIsIgnored = gitignore.includes(cacheFile);
 
@@ -15,11 +19,9 @@ export default function updateGitignore() {
     let content = "";
 
     // Ensure there's a trailing newline
-    if (fs.existsSync(gitignorePath)) {
-      content = fs.readFileSync(gitignorePath, "utf8");
-      if (content !== "" && !content.endsWith("\n")) {
-        content += "\n";
-      }
+    content = fs.readFileSync(gitignorePath, "utf8");
+    if (content !== "" && !content.endsWith("\n")) {
+      content += "\n";
     }
 
     content += `${cacheFile}\n`;

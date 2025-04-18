@@ -1,6 +1,6 @@
 {
   "name": "lingo.dev",
-  "version": "0.77.6",
+  "version": "0.85.1",
   "description": "Lingo.dev CLI",
   "private": false,
   "publishConfig": {
@@ -25,6 +25,19 @@
       "require": "./build/spec.cjs"
     }
   },
+  "typesVersions": {
+    "*": {
+      "sdk": [
+        "./build/sdk.d.ts"
+      ],
+      "cli": [
+        "./build/cli.d.ts"
+      ],
+      "spec": [
+        "./build/spec.d.ts"
+      ]
+    }
+  },
   "bin": {
     "lingo.dev": "./bin/cli.mjs"
   },
@@ -44,13 +57,20 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
+    "@ai-sdk/anthropic": "^1.2.6",
+    "@ai-sdk/openai": "^1.3.7",
     "@datocms/cma-client-node": "^3.4.0",
+    "@gitbeaker/rest": "^39.34.3",
     "@inquirer/prompts": "^7.2.3",
     "@lingo.dev/_sdk": "workspace:*",
     "@lingo.dev/_spec": "workspace:*",
     "@modelcontextprotocol/sdk": "^1.5.0",
     "@paralleldrive/cuid2": "^2.2.2",
+    "@types/mdast": "^4.0.4",
+    "ai": "^4.3.2",
+    "bitbucket": "^2.12.0",
     "chalk": "^5.4.1",
+    "cli-table3": "^0.6.5",
     "cors": "^2.8.5",
     "csv-parse": "^5.6.0",
     "csv-stringify": "^6.5.2",
@@ -77,18 +97,34 @@
     "markdown-it": "^14.1.0",
     "markdown-it-front-matter": "^0.2.4",
     "marked": "^15.0.6",
+    "mdast-util-from-markdown": "^2.0.2",
+    "mdast-util-frontmatter": "^2.0.1",
+    "mdast-util-gfm": "^3.1.0",
+    "mdast-util-mdx": "^3.0.0",
+    "mdast-util-to-markdown": "^2.1.2",
     "node-webvtt": "^1.9.4",
     "object-hash": "^3.0.0",
+    "octokit": "^4.0.2",
     "open": "^10.1.0",
     "ora": "^8.1.1",
     "p-limit": "^6.2.0",
     "php-array-reader": "^2.1.2",
     "plist": "^3.1.0",
+    "posthog-node": "^4.11.2",
     "prettier": "^3.4.2",
     "properties-parser": "^0.6.0",
+    "remark-frontmatter": "^5.0.0",
+    "remark-gfm": "^4.0.1",
+    "remark-mdx": "^3.1.0",
+    "remark-mdx-frontmatter": "^5.1.0",
+    "remark-parse": "^11.0.0",
+    "remark-stringify": "^11.0.0",
     "slugify": "^1.6.6",
     "srt-parser-2": "^1.2.3",
     "typescript": "^5.7.2",
+    "unified": "^11.0.5",
+    "unist-util-visit": "^5.0.0",
+    "vfile": "^6.0.3",
     "vitest": "^2.1.8",
     "xliff": "^6.2.1",
     "xml2js": "^0.6.2",
