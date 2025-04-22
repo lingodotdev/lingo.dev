@@ -124,7 +124,7 @@
     "unified": "^11.0.5",
     "unist-util-visit": "^5.0.0",
     "vfile": "^6.0.3",
-    "vitest": "^2.1.9",
+    "vitest": "^3.1.2",
     "xliff": "^6.2.1",
     "xml2js": "^0.6.2",
     "xpath": "^0.0.34",
