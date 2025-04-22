@@ -95,7 +95,9 @@ export default new Command()
       if (flags.file?.length) {
         buckets = buckets
           .map((bucket: any) => {
-            const paths = bucket.paths.filter((path: any) => flags.file!.find((file) => path.pathPattern?.match(file)));
+            const paths = bucket.paths.filter((path: any) =>
+              flags.file!.find((file) => path.pathPattern?.includes(file)),
+            );
             return { ...bucket, paths };
           })
           .filter((bucket: any) => bucket.paths.length > 0);
