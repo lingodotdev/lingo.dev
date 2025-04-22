@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.85.6
+
+### Patch Changes
+
+- [#651](https://github.com/lingodotdev/lingo.dev/pull/651) [`a6133f4`](https://github.com/lingodotdev/lingo.dev/commit/a6133f4074cce1ffd9e42b73efb5213e1fe6f76a) Thanks [@mathio](https://github.com/mathio)! - --file option
+
 ## 0.85.5
 
 ### Patch Changes
