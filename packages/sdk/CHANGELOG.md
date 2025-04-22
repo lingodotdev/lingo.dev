@@ -1,5 +1,14 @@
 # @lingo.dev/\_sdk
 
+## 0.7.35
+
+### Patch Changes
+
+- [#645](https://github.com/lingodotdev/lingo.dev/pull/645) [`d824b10`](https://github.com/lingodotdev/lingo.dev/commit/d824b106631f45fc428cf01f733aab4842b4fa81) Thanks [@mathio](https://github.com/mathio)! - update dependencies
+
+- Updated dependencies [[`d824b10`](https://github.com/lingodotdev/lingo.dev/commit/d824b106631f45fc428cf01f733aab4842b4fa81)]:
+  - @lingo.dev/_spec@0.30.1
+
 ## 0.7.34
 
 ### Patch Changes
