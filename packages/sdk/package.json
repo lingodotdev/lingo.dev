@@ -23,11 +23,11 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@paralleldrive/cuid2": "^2.2.2",
     "@lingo.dev/_spec": "workspace:*",
+    "@paralleldrive/cuid2": "^2.2.2",
     "jsdom": "^25.0.1",
     "typescript": "^5.7.2",
-    "vitest": "^2.1.8",
+    "vitest": "^2.1.9",
     "zod": "^3.24.1"
   },
   "devDependencies": {
