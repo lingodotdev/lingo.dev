@@ -1,5 +1,11 @@
 # @lingo.dev/\_spec
 
+## 0.30.2
+
+### Patch Changes
+
+- [#647](https://github.com/lingodotdev/lingo.dev/pull/647) [`235b6d9`](https://github.com/lingodotdev/lingo.dev/commit/235b6d914c5f542ee5f1a8a88085cfd9dea5409e) Thanks [@mathio](https://github.com/mathio)! - update vitest
+
 ## 0.30.1
 
 ### Patch Changes
