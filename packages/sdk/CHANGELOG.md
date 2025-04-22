@@ -1,5 +1,14 @@
 # @lingo.dev/\_sdk
 
+## 0.7.37
+
+### Patch Changes
+
+- [#649](https://github.com/lingodotdev/lingo.dev/pull/649) [`409018d`](https://github.com/lingodotdev/lingo.dev/commit/409018de74614a1fd99363c6749b0e4be9e1a278) Thanks [@mathio](https://github.com/mathio)! - refactor dependencies
+
+- Updated dependencies [[`409018d`](https://github.com/lingodotdev/lingo.dev/commit/409018de74614a1fd99363c6749b0e4be9e1a278)]:
+  - @lingo.dev/_spec@0.30.3
+
 ## 0.7.36
 
 ### Patch Changes
