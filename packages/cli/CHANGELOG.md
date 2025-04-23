@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.85.7
+
+### Patch Changes
+
+- [`a502caf`](https://github.com/lingodotdev/lingo.dev/commit/a502caf8680f02e769c819badd08ddb8b731d261) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - metadata transfers for .po
+
 ## 0.85.6
 
 ### Patch Changes
