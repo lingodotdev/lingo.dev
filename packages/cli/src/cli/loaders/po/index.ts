@@ -40,16 +40,31 @@ export function createPoDataLoader(params: PoLoaderParams): ILoader<string, PoTr
       return result;
     },
 
-    async push(locale, data, originalInput) {
+    async push(locale, data, originalInput, originalLocale, pullInput) {
       // Parse each section to maintain structure
-      const sections = originalInput?.split("\n\n").filter(Boolean) || [];
-      const result = sections
+      const currentSections = pullInput?.split("\n\n").filter(Boolean) || [];
+      const originalSections = originalInput?.split("\n\n").filter(Boolean) || [];
+      const result = originalSections
         .map((section) => {
           const sectionPo = gettextParser.po.parse(section);
           const contextKey = _.keys(sectionPo.translations)[0];
           const entries = sectionPo.translations[contextKey];
           const msgid = Object.keys(entries).find((key) => entries[key].msgid);
-          if (!msgid) return section;
+          if (!msgid) {
+            // If the section is empty, try to find it in the current sections
+            const currentSection = currentSections.find((cs) => {
+              const csPo = gettextParser.po.parse(cs);
+              const csContextKey = _.keys(csPo.translations)[0];
+              const csEntries = csPo.translations[csContextKey];
+              const csMsgid = Object.keys(csEntries).find((key) => csEntries[key].msgid);
+              return csMsgid === msgid;
+            });
+
+            if (currentSection) {
+              return currentSection;
+            }
+            return section;
+          }
           if (data[msgid]) {
             const updatedPo = _.merge({}, sectionPo, {
               translations: {

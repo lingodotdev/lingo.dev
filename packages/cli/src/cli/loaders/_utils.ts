@@ -34,6 +34,8 @@ export function createLoader<I, O, C>(lDefinition: ILoaderDefinition<I, O, C>): 
   const state = {
     defaultLocale: undefined as string | undefined,
     originalInput: undefined as I | undefined | null,
+    pullInput: undefined as I | undefined | null,
+    pullOutput: undefined as O | undefined | null,
     initCtx: undefined as C | undefined,
   };
   return {
@@ -62,7 +64,11 @@ export function createLoader<I, O, C>(lDefinition: ILoaderDefinition<I, O, C>): 
         state.originalInput = input || null;
       }
 
-      return lDefinition.pull(locale, input, state.initCtx);
+      state.pullInput = input;
+      const result = await lDefinition.pull(locale, input, state.initCtx);
+      state.pullOutput = result;
+
+      return result;
     },
     async push(locale, data) {
       if (!state.defaultLocale) {
@@ -72,7 +78,14 @@ export function createLoader<I, O, C>(lDefinition: ILoaderDefinition<I, O, C>): 
         throw new Error("Cannot push data without pulling first");
       }
 
-      const pushResult = await lDefinition.push(locale, data, state.originalInput, state.defaultLocale);
+      const pushResult = await lDefinition.push(
+        locale,
+        data,
+        state.originalInput,
+        state.defaultLocale,
+        state.pullInput!,
+        state.pullOutput!,
+      );
       return pushResult;
     },
   };

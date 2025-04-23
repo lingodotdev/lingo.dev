@@ -1,7 +1,14 @@
 export interface ILoaderDefinition<I, O, C> {
   init?(): Promise<C>;
   pull(locale: string, input: I, initCtx?: C): Promise<O>;
-  push(locale: string, data: O, originalInput: I | null, originalLocale: string): Promise<I>;
+  push(
+    locale: string,
+    data: O,
+    originalInput: I | null,
+    originalLocale: string,
+    pullInput: I | null,
+    pullOutput: O | null,
+  ): Promise<I>;
 }
 
 export interface ILoader<I, O, C = void> extends ILoaderDefinition<I, O, C> {
