@@ -135,7 +135,7 @@ Lingo.dev offers a GitHub Action to automate localization in your CI/CD pipeline
 
 This action runs `lingo.dev i18n` on every push, keeping your translations up-to-date automatically.
 
-For pull request mode and other configuration options, visit our [GitHub Action documentation](https://docs.lingo.dev/setup/gha).
+For pull request mode and other configuration options, visit our [GitHub Action documentation](https://docs.lingo.dev/ci-action/gha).
 
 ## ⚡️ Lingo.dev's Superpowers
 
