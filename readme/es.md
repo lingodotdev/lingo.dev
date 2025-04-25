@@ -137,7 +137,7 @@ Lingo.dev ofrece una GitHub Action para automatizar la localización en tu pipel
 
 Esta acción ejecuta `lingo.dev i18n` en cada push, manteniendo tus traducciones actualizadas automáticamente.
 
-Para el modo de pull request y otras opciones de configuración, visita nuestra [documentación de GitHub Action](https://docs.lingo.dev/setup/gha).
+Para el modo de pull request y otras opciones de configuración, visita nuestra [documentación de GitHub Action](https://docs.lingo.dev/ci-action/gha).
 
 ## ⚡️ Superpoderes de Lingo.dev
 

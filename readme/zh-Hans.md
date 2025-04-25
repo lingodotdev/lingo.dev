@@ -127,7 +127,7 @@ Lingo.dev 使用 `i18n.lock` 文件跟踪内容校验和，确保只有更改过
 
 ## 🤖 GitHub Action
 
-Lingo.dev 提供 GitHub Action 来在您的 CI/CD 流程中自动化本地化。以下是基本设置：
+Lingo.dev 提供了一个 GitHub Action 来在您的 CI/CD 流程中自动化本地化。以下是基本设置：
 
 ```yaml
 - uses: lingodotdev/lingo.dev@main
@@ -135,9 +135,9 @@ Lingo.dev 提供 GitHub Action 来在您的 CI/CD 流程中自动化本地化。
     api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
 ```
 
-此操作在每次推送时运行 `lingo.dev i18n`，自动保持您的翻译最新。
+此操作会在每次推送时运行 `lingo.dev i18n`，自动保持您的翻译内容最新。
 
-关于拉取请求模式和其他配置选项，请访问我们的 [GitHub Action 文档](https://docs.lingo.dev/setup/gha)。
+关于拉取请求模式和其他配置选项，请访问我们的 [GitHub Action 文档](https://docs.lingo.dev/ci-action/gha)。
 
 ## ⚡️ Lingo.dev的超能力
 
