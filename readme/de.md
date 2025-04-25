@@ -135,9 +135,9 @@ Lingo.dev bietet eine GitHub Action zur Automatisierung der Lokalisierung in Ihr
     api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
 ```
 
-Diese Action führt bei jedem Push `lingo.dev i18n` aus und hält Ihre Übersetzungen automatisch aktuell.
+Diese Action führt `lingo.dev i18n` bei jedem Push aus und hält Ihre Übersetzungen automatisch aktuell.
 
-Für den Pull-Request-Modus und andere Konfigurationsoptionen besuchen Sie unsere [GitHub Action Dokumentation](https://docs.lingo.dev/setup/gha).
+Für den Pull-Request-Modus und weitere Konfigurationsoptionen besuchen Sie unsere [GitHub Action Dokumentation](https://docs.lingo.dev/ci-action/gha).
 
 ## ⚡️ Lingo.devs Superkräfte
 

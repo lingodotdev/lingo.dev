@@ -137,7 +137,7 @@ Lingo.dev는 CI/CD 파이프라인에서 현지화를 자동화하는 GitHub Act
 
 이 액션은 모든 푸시에서 `lingo.dev i18n`을 실행하여 번역을 자동으로 최신 상태로 유지합니다.
 
-풀 리퀘스트 모드 및 기타 구성 옵션에 대해서는 [GitHub Action 문서](https://docs.lingo.dev/setup/gha)를 참조하세요.
+풀 리퀘스트 모드 및 기타 구성 옵션에 대해서는 [GitHub Action 문서](https://docs.lingo.dev/ci-action/gha)를 참조하세요.
 
 ## ⚡️ Lingo.dev의 특별한 기능
 

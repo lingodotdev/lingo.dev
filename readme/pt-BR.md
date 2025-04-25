@@ -127,7 +127,7 @@ O Lingo.dev usa um arquivo `i18n.lock` para rastrear checksums de conteúdo, gar
 
 ## 🤖 GitHub Action
 
-O Lingo.dev oferece uma GitHub Action para automatizar a localização em seu pipeline de CI/CD. Aqui está uma configuração básica:
+A Lingo.dev oferece uma GitHub Action para automatizar a localização em seu pipeline de CI/CD. Aqui está uma configuração básica:
 
 ```yaml
 - uses: lingodotdev/lingo.dev@main
@@ -137,7 +137,7 @@ O Lingo.dev oferece uma GitHub Action para automatizar a localização em seu pi
 
 Esta action executa `lingo.dev i18n` a cada push, mantendo suas traduções atualizadas automaticamente.
 
-Para o modo de pull request e outras opções de configuração, visite nossa [documentação da GitHub Action](https://docs.lingo.dev/setup/gha).
+Para o modo de pull request e outras opções de configuração, visite nossa [documentação da GitHub Action](https://docs.lingo.dev/ci-action/gha).
 
 ## ⚡️ Superpoderes do Lingo.dev
 
