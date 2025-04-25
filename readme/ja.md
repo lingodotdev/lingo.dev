@@ -127,7 +127,7 @@ Lingo.devは`i18n.lock`ファイルを使用してコンテンツのチェック
 
 ## 🤖 GitHub Action
 
-Lingo.devはCI/CDパイプラインでローカライゼーションを自動化するGitHub Actionを提供しています。基本的なセットアップは次のとおりです：
+Lingo.devはCI/CDパイプラインでローカライゼーションを自動化するためのGitHub Actionを提供しています。基本的なセットアップは以下の通りです：
 
 ```yaml
 - uses: lingodotdev/lingo.dev@main
@@ -137,7 +137,7 @@ Lingo.devはCI/CDパイプラインでローカライゼーションを自動化
 
 このアクションは、プッシュごとに`lingo.dev i18n`を実行し、翻訳を自動的に最新の状態に保ちます。
 
-プルリクエストモードやその他の設定オプションについては、[GitHub Actionドキュメント](https://docs.lingo.dev/setup/gha)をご覧ください。
+プルリクエストモードやその他の設定オプションについては、[GitHub Actionドキュメント](https://docs.lingo.dev/ci-action/gha)をご覧ください。
 
 ## ⚡️ Lingo.devのスーパーパワー
 
