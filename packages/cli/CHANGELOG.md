@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.86.0
+
+### Minor Changes
+
+- [#656](https://github.com/lingodotdev/lingo.dev/pull/656) [`915a0f5`](https://github.com/lingodotdev/lingo.dev/commit/915a0f5d8b74996f2b26dd01ac9c431c85a95d85) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - code formatting support for advanced mdx
+
 ## 0.85.7
 
 ### Patch Changes
