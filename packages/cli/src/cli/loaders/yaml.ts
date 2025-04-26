@@ -42,7 +42,6 @@ function getStringType(yamlString: string | null): ToStringOptions["defaultStrin
         (trimmedLine.endsWith('"') || trimmedLine.endsWith('",'))
       );
     });
-    console.log("hasDoubleQuotes", hasDoubleQuotes);
     if (hasDoubleQuotes) {
       return "QUOTE_DOUBLE";
     }
