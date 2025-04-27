@@ -1,6 +1,6 @@
 import _ from "lodash";
 import z from "zod";
-import { MD5 } from "object-hash";
+import { md5 } from "./md5";
 import { tryReadFile, writeFile, checkIfFileExists } from "../utils/fs";
 import * as path from "path";
 import YAML from "yaml";
@@ -38,12 +38,12 @@ export function createDeltaProcessor(fileKey: string) {
       let added = _.difference(Object.keys(params.sourceData), Object.keys(params.targetData));
       let removed = _.difference(Object.keys(params.targetData), Object.keys(params.sourceData));
       const updated = _.filter(Object.keys(params.sourceData), (key) => {
-        return MD5(params.sourceData[key]) !== params.checksums[key] && params.checksums[key];
+        return md5(params.sourceData[key]) !== params.checksums[key] && params.checksums[key];
       });
 
       const renamed: [string, string][] = [];
       for (const addedKey of added) {
-        const addedHash = MD5(params.sourceData[addedKey]);
+        const addedHash = md5(params.sourceData[addedKey]);
         for (const removedKey of removed) {
           if (params.checksums[removedKey] === addedHash) {
             renamed.push([removedKey, addedKey]);
@@ -80,18 +80,18 @@ export function createDeltaProcessor(fileKey: string) {
       writeFile(lockfilePath, lockfileYaml);
     },
     async loadChecksums() {
-      const id = MD5(fileKey);
+      const id = md5(fileKey);
       const lockfileData = await this.loadLock();
       return lockfileData.checksums[id] || {};
     },
     async saveChecksums(checksums: Record<string, string>) {
-      const id = MD5(fileKey);
+      const id = md5(fileKey);
       const lockfileData = await this.loadLock();
       lockfileData.checksums[id] = checksums;
       await this.saveLock(lockfileData);
     },
     async createChecksums(sourceData: Record<string, any>) {
-      const checksums = _.mapValues(sourceData, (value) => MD5(value));
+      const checksums = _.mapValues(sourceData, (value) => md5(value));
       return checksums;
     },
   };

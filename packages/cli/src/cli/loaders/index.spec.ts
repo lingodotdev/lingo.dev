@@ -23,10 +23,14 @@ describe("bucket loaders", () => {
 
       mockFileOperations(input);
 
-      const androidLoader = createBucketLoader("android", "values-[locale]/strings.xml", {
-        isCacheRestore: false,
-        defaultLocale: "en",
-      });
+      const androidLoader = createBucketLoader(
+        "android",
+        "values-[locale]/strings.xml",
+        {
+          isCacheRestore: false,
+          defaultLocale: "en",
+        },
+      );
       androidLoader.setDefaultLocale("en");
       const data = await androidLoader.pull("en");
 
@@ -47,10 +51,14 @@ describe("bucket loaders", () => {
 
       mockFileOperations(input);
 
-      const androidLoader = createBucketLoader("android", "values-[locale]/strings.xml", {
-        isCacheRestore: false,
-        defaultLocale: "en",
-      });
+      const androidLoader = createBucketLoader(
+        "android",
+        "values-[locale]/strings.xml",
+        {
+          isCacheRestore: false,
+          defaultLocale: "en",
+        },
+      );
       androidLoader.setDefaultLocale("en");
       const data = await androidLoader.pull("en");
 
@@ -70,19 +78,27 @@ describe("bucket loaders", () => {
 
       mockFileOperations(input);
 
-      const androidLoader = createBucketLoader("android", "values-[locale]/strings.xml", {
-        isCacheRestore: false,
-        defaultLocale: "en",
-      });
+      const androidLoader = createBucketLoader(
+        "android",
+        "values-[locale]/strings.xml",
+        {
+          isCacheRestore: false,
+          defaultLocale: "en",
+        },
+      );
       androidLoader.setDefaultLocale("en");
       await androidLoader.pull("en");
 
       await androidLoader.push("es", payload);
 
-      expect(fs.writeFile).toHaveBeenCalledWith("values-es/strings.xml", expectedOutput, {
-        encoding: "utf-8",
-        flag: "w",
-      });
+      expect(fs.writeFile).toHaveBeenCalledWith(
+        "values-es/strings.xml",
+        expectedOutput,
+        {
+          encoding: "utf-8",
+          flag: "w",
+        },
+      );
     });
   });
 
@@ -95,7 +111,10 @@ describe("bucket loaders", () => {
 
       mockFileOperations(input);
 
-      const csvLoader = createBucketLoader("csv", "i18n.csv", { isCacheRestore: false, defaultLocale: "en" });
+      const csvLoader = createBucketLoader("csv", "i18n.csv", {
+        isCacheRestore: false,
+        defaultLocale: "en",
+      });
       csvLoader.setDefaultLocale("en");
       const data = await csvLoader.pull("en");
 
@@ -111,7 +130,10 @@ describe("bucket loaders", () => {
 
       mockFileOperations(input);
 
-      const csvLoader = createBucketLoader("csv", "i18n.csv", { isCacheRestore: false, defaultLocale: "en" });
+      const csvLoader = createBucketLoader("csv", "i18n.csv", {
+        isCacheRestore: false,
+        defaultLocale: "en",
+      });
       csvLoader.setDefaultLocale("en");
       await csvLoader.pull("en");
 
@@ -145,10 +167,14 @@ describe("bucket loaders", () => {
 
       mockFileOperations(input);
 
-      const flutterLoader = createBucketLoader("flutter", "lib/l10n/app_[locale].arb", {
-        isCacheRestore: false,
-        defaultLocale: "en",
-      });
+      const flutterLoader = createBucketLoader(
+        "flutter",
+        "lib/l10n/app_[locale].arb",
+        {
+          isCacheRestore: false,
+          defaultLocale: "en",
+        },
+      );
       flutterLoader.setDefaultLocale("en");
       const data = await flutterLoader.pull("en");
 
@@ -192,19 +218,27 @@ describe("bucket loaders", () => {
 
       mockFileOperations(input);
 
-      const flutterLoader = createBucketLoader("flutter", "lib/l10n/app_[locale].arb", {
-        isCacheRestore: false,
-        defaultLocale: "en",
-      });
+      const flutterLoader = createBucketLoader(
+        "flutter",
+        "lib/l10n/app_[locale].arb",
+        {
+          isCacheRestore: false,
+          defaultLocale: "en",
+        },
+      );
       flutterLoader.setDefaultLocale("en");
       await flutterLoader.pull("en");
 
       await flutterLoader.push("es", payload);
 
-      expect(fs.writeFile).toHaveBeenCalledWith("lib/l10n/app_es.arb", expectedOutput, {
-        encoding: "utf-8",
-        flag: "w",
-      });
+      expect(fs.writeFile).toHaveBeenCalledWith(
+        "lib/l10n/app_es.arb",
+        expectedOutput,
+        {
+          encoding: "utf-8",
+          flag: "w",
+        },
+      );
     });
   });
 
@@ -318,7 +352,11 @@ describe("bucket loaders", () => {
 
       await htmlLoader.push("es", payload);
 
-      expect(fs.writeFile).toHaveBeenCalledWith("i18n/es.html", expectedOutput, { encoding: "utf-8", flag: "w" });
+      expect(fs.writeFile).toHaveBeenCalledWith(
+        "i18n/es.html",
+        expectedOutput,
+        { encoding: "utf-8", flag: "w" },
+      );
     });
   });
 
@@ -357,14 +395,22 @@ describe("bucket loaders", () => {
 
       await jsonLoader.push("es", payload);
 
-      expect(fs.writeFile).toHaveBeenCalledWith("i18n/es.json", expectedOutput, { encoding: "utf-8", flag: "w" });
+      expect(fs.writeFile).toHaveBeenCalledWith(
+        "i18n/es.json",
+        expectedOutput,
+        { encoding: "utf-8", flag: "w" },
+      );
     });
 
     it("should save json data with numeric keys", async () => {
       setupFileMocks();
 
       const input = { messages: { "1": "foo", "2": "bar", "3": "bar" } };
-      const payload = { "messages/1": "foo", "messages/2": "bar", "messages/3": "bar" };
+      const payload = {
+        "messages/1": "foo",
+        "messages/2": "bar",
+        "messages/3": "bar",
+      };
       const expectedOutput = JSON.stringify(input, null, 2);
 
       mockFileOperations(JSON.stringify(input));
@@ -378,7 +424,11 @@ describe("bucket loaders", () => {
 
       await jsonLoader.push("es", payload);
 
-      expect(fs.writeFile).toHaveBeenCalledWith("i18n/es.json", expectedOutput, { encoding: "utf-8", flag: "w" });
+      expect(fs.writeFile).toHaveBeenCalledWith(
+        "i18n/es.json",
+        expectedOutput,
+        { encoding: "utf-8", flag: "w" },
+      );
     });
 
     it("should save json data with array", async () => {
@@ -399,13 +449,20 @@ describe("bucket loaders", () => {
 
       await jsonLoader.push("es", payload);
 
-      expect(fs.writeFile).toHaveBeenCalledWith("i18n/es.json", expectedOutput, { encoding: "utf-8", flag: "w" });
+      expect(fs.writeFile).toHaveBeenCalledWith(
+        "i18n/es.json",
+        expectedOutput,
+        { encoding: "utf-8", flag: "w" },
+      );
     });
 
     it("should use key values from original input for missing keys", async () => {
       setupFileMocks();
 
-      const input = { "button.title": "Submit", "button.description": "Submit description" };
+      const input = {
+        "button.title": "Submit",
+        "button.description": "Submit description",
+      };
       const payload = { "button.title": "Enviar" };
       const expectedOutput = JSON.stringify({ ...input, ...payload }, null, 2);
 
@@ -420,13 +477,20 @@ describe("bucket loaders", () => {
 
       await jsonLoader.push("es", payload);
 
-      expect(fs.writeFile).toHaveBeenCalledWith("i18n/es.json", expectedOutput, { encoding: "utf-8", flag: "w" });
+      expect(fs.writeFile).toHaveBeenCalledWith(
+        "i18n/es.json",
+        expectedOutput,
+        { encoding: "utf-8", flag: "w" },
+      );
     });
 
     it("should not use key values from original input on cache restoration", async () => {
       setupFileMocks();
 
-      const input = { "button.title": "Submit", "button.description": "Submit description" };
+      const input = {
+        "button.title": "Submit",
+        "button.description": "Submit description",
+      };
       const payload = { "button.title": "Enviar" };
       const expectedOutput = JSON.stringify(payload, null, 2);
 
@@ -441,7 +505,11 @@ describe("bucket loaders", () => {
 
       await jsonLoader.push("es", payload);
 
-      expect(fs.writeFile).toHaveBeenCalledWith("i18n/es.json", expectedOutput, { encoding: "utf-8", flag: "w" });
+      expect(fs.writeFile).toHaveBeenCalledWith(
+        "i18n/es.json",
+        expectedOutput,
+        { encoding: "utf-8", flag: "w" },
+      );
     });
 
     it("should respect locked keys during cache restoration", async () => {
@@ -492,14 +560,21 @@ describe("bucket loaders", () => {
       expect(Object.keys(writtenContent)).not.toContain("button.description");
 
       // Nested keys should follow the same pattern
-      expect(writtenContent.nested).toHaveProperty("unlocked", "Este puede cambiar");
+      expect(writtenContent.nested).toHaveProperty(
+        "unlocked",
+        "Este puede cambiar",
+      );
       expect(writtenContent.nested).toHaveProperty("locked", "This is locked");
       expect(writtenContent.nested).not.toHaveProperty("extra");
 
       // Only locked keys and payload keys should be present
-      expect(Object.keys(writtenContent)).toEqual(expect.arrayContaining(["button.title", "locked.key", "nested"]));
+      expect(Object.keys(writtenContent)).toEqual(
+        expect.arrayContaining(["button.title", "locked.key", "nested"]),
+      );
       expect(Object.keys(writtenContent)).toHaveLength(3);
-      expect(Object.keys(writtenContent.nested)).toEqual(expect.arrayContaining(["locked", "unlocked"]));
+      expect(Object.keys(writtenContent.nested)).toEqual(
+        expect.arrayContaining(["locked", "unlocked"]),
+      );
       expect(Object.keys(writtenContent.nested)).toHaveLength(2);
     });
 
@@ -512,10 +587,14 @@ describe("bucket loaders", () => {
 
       mockFileOperations(JSON.stringify(input));
 
-      const jsonLoader = createBucketLoader("json", "i18n/[locale]/[locale].json", {
-        isCacheRestore: false,
-        defaultLocale: "en",
-      });
+      const jsonLoader = createBucketLoader(
+        "json",
+        "i18n/[locale]/[locale].json",
+        {
+          isCacheRestore: false,
+          defaultLocale: "en",
+        },
+      );
       jsonLoader.setDefaultLocale("en");
       const data = await jsonLoader.pull("en");
 
@@ -523,13 +602,21 @@ describe("bucket loaders", () => {
 
       expect(data).toEqual(input);
       expect(fs.access).toHaveBeenCalledWith("i18n/en/en.json");
-      expect(fs.writeFile).toHaveBeenCalledWith("i18n/es/es.json", expectedOutput, { encoding: "utf-8", flag: "w" });
+      expect(fs.writeFile).toHaveBeenCalledWith(
+        "i18n/es/es.json",
+        expectedOutput,
+        { encoding: "utf-8", flag: "w" },
+      );
     });
 
     it("should remove injected locales from json data", async () => {
       setupFileMocks();
 
-      const input = { "button.title": "Submit", settings: { locale: "en" }, "not-a-locale": "bar" };
+      const input = {
+        "button.title": "Submit",
+        settings: { locale: "en" },
+        "not-a-locale": "bar",
+      };
       mockFileOperations(JSON.stringify(input));
 
       const jsonLoader = createBucketLoader("json", "i18n/[locale].json", {
@@ -546,9 +633,17 @@ describe("bucket loaders", () => {
     it("should inject locales into json data", async () => {
       setupFileMocks();
 
-      const input = { "button.title": "Submit", "not-a-locale": "bar", settings: { locale: "en" } };
+      const input = {
+        "button.title": "Submit",
+        "not-a-locale": "bar",
+        settings: { locale: "en" },
+      };
       const payload = { "button.title": "Enviar", "not-a-locale": "bar" };
-      const expectedOutput = JSON.stringify({ ...payload, settings: { locale: "es" } }, null, 2);
+      const expectedOutput = JSON.stringify(
+        { ...payload, settings: { locale: "es" } },
+        null,
+        2,
+      );
 
       mockFileOperations(JSON.stringify(input));
 
@@ -562,7 +657,11 @@ describe("bucket loaders", () => {
 
       await jsonLoader.push("es", payload);
 
-      expect(fs.writeFile).toHaveBeenCalledWith("i18n/es.json", expectedOutput, { encoding: "utf-8", flag: "w" });
+      expect(fs.writeFile).toHaveBeenCalledWith(
+        "i18n/es.json",
+        expectedOutput,
+        { encoding: "utf-8", flag: "w" },
+      );
     });
   });
 
@@ -653,7 +752,10 @@ describe("bucket loaders", () => {
 
       expect(Object.keys(writtenContent)).toContain("button.title");
       expect(writtenContent["locked.key"]).toBe("Should not change");
-      expect(writtenContent.nested).toHaveProperty("unlocked", "Este puede cambiar");
+      expect(writtenContent.nested).toHaveProperty(
+        "unlocked",
+        "Este puede cambiar",
+      );
       expect(writtenContent.nested).toHaveProperty("locked", "This is locked");
     });
 
@@ -694,10 +796,14 @@ describe("bucket loaders", () => {
       const writtenContent = JSON.parse(writeFileCall[1]);
 
       // Check that deeply nested locked key retains its original value
-      expect(writtenContent.level1.level2.level3.locked).toBe("This is locked deep");
+      expect(writtenContent.level1.level2.level3.locked).toBe(
+        "This is locked deep",
+      );
 
       // Check that unlocked key is updated
-      expect(writtenContent.level1.level2.level3.unlocked).toBe("This should change");
+      expect(writtenContent.level1.level2.level3.unlocked).toBe(
+        "This should change",
+      );
     });
 
     it("should lock keys that are arrays", async () => {
@@ -767,15 +873,19 @@ Another paragraph with **bold** and *italic* text.`;
         "md-section-0": "# Heading 1",
         "md-section-1": "This is a paragraph.",
         "md-section-2": "## Heading 2",
-        "md-section-3": "Another paragraph with **bold** and *italic* text.",
+        "md-section-3": "Another paragraph with **bold** and _italic_ text.",
       };
 
       mockFileOperations(input);
 
-      const markdownLoader = createBucketLoader("markdown", "i18n/[locale].md", {
-        isCacheRestore: false,
-        defaultLocale: "en",
-      });
+      const markdownLoader = createBucketLoader(
+        "markdown",
+        "i18n/[locale].md",
+        {
+          isCacheRestore: false,
+          defaultLocale: "en",
+        },
+      );
       markdownLoader.setDefaultLocale("en");
       const data = await markdownLoader.pull("en");
 
@@ -821,10 +931,14 @@ Otro párrafo con texto en **negrita** y en _cursiva_.
 
       mockFileOperations(input);
 
-      const markdownLoader = createBucketLoader("markdown", "i18n/[locale].md", {
-        isCacheRestore: false,
-        defaultLocale: "en",
-      });
+      const markdownLoader = createBucketLoader(
+        "markdown",
+        "i18n/[locale].md",
+        {
+          isCacheRestore: false,
+          defaultLocale: "en",
+        },
+      );
       markdownLoader.setDefaultLocale("en");
       await markdownLoader.pull("en");
 
@@ -861,10 +975,14 @@ user.password=Password
 
       mockFileOperations(input);
 
-      const propertiesLoader = createBucketLoader("properties", "i18n/[locale].properties", {
-        isCacheRestore: false,
-        defaultLocale: "en",
-      });
+      const propertiesLoader = createBucketLoader(
+        "properties",
+        "i18n/[locale].properties",
+        {
+          isCacheRestore: false,
+          defaultLocale: "en",
+        },
+      );
       propertiesLoader.setDefaultLocale("en");
       const data = await propertiesLoader.pull("en");
 
@@ -886,8 +1004,10 @@ user.password=Password
       `.trim();
       const payload = {
         "welcome.message": "Bienvenido a nuestra aplicación!",
-        "error.message": "Se ha producido un error. Por favor, inténtelo de nuevo más tarde.",
-        "user.login": "Por favor, introduzca su nombre de usuario y contraseña.",
+        "error.message":
+          "Se ha producido un error. Por favor, inténtelo de nuevo más tarde.",
+        "user.login":
+          "Por favor, introduzca su nombre de usuario y contraseña.",
         "user.username": "Nombre de usuario",
         "user.password": "Contraseña",
       };
@@ -901,16 +1021,24 @@ user.password=Contraseña
 
       mockFileOperations(input);
 
-      const propertiesLoader = createBucketLoader("properties", "i18n/[locale].properties", {
-        isCacheRestore: false,
-        defaultLocale: "en",
-      });
+      const propertiesLoader = createBucketLoader(
+        "properties",
+        "i18n/[locale].properties",
+        {
+          isCacheRestore: false,
+          defaultLocale: "en",
+        },
+      );
       propertiesLoader.setDefaultLocale("en");
       await propertiesLoader.pull("en");
 
       await propertiesLoader.push("es", payload);
 
-      expect(fs.writeFile).toHaveBeenCalledWith("i18n/es.properties", expectedOutput, { encoding: "utf-8", flag: "w" });
+      expect(fs.writeFile).toHaveBeenCalledWith(
+        "i18n/es.properties",
+        expectedOutput,
+        { encoding: "utf-8", flag: "w" },
+      );
     });
   });
 
@@ -931,10 +1059,14 @@ user.password=Contraseña
 
       mockFileOperations(input);
 
-      const xcodeStringsLoader = createBucketLoader("xcode-strings", "i18n/[locale].strings", {
-        isCacheRestore: false,
-        defaultLocale: "en",
-      });
+      const xcodeStringsLoader = createBucketLoader(
+        "xcode-strings",
+        "i18n/[locale].strings",
+        {
+          isCacheRestore: false,
+          defaultLocale: "en",
+        },
+      );
       xcodeStringsLoader.setDefaultLocale("en");
       const data = await xcodeStringsLoader.pull("en");
 
@@ -952,16 +1084,24 @@ user.password=Contraseña
 
       mockFileOperations(input);
 
-      const xcodeStringsLoader = createBucketLoader("xcode-strings", "i18n/[locale].strings", {
-        isCacheRestore: false,
-        defaultLocale: "en",
-      });
+      const xcodeStringsLoader = createBucketLoader(
+        "xcode-strings",
+        "i18n/[locale].strings",
+        {
+          isCacheRestore: false,
+          defaultLocale: "en",
+        },
+      );
       xcodeStringsLoader.setDefaultLocale("en");
       await xcodeStringsLoader.pull("en");
 
       await xcodeStringsLoader.push("es", payload);
 
-      expect(fs.writeFile).toHaveBeenCalledWith("i18n/es.strings", expectedOutput, { encoding: "utf-8", flag: "w" });
+      expect(fs.writeFile).toHaveBeenCalledWith(
+        "i18n/es.strings",
+        expectedOutput,
+        { encoding: "utf-8", flag: "w" },
+      );
     });
   });
 
@@ -1006,10 +1146,14 @@ user.password=Contraseña
 
       mockFileOperations(input);
 
-      const xcodeStringsdictLoader = createBucketLoader("xcode-stringsdict", "i18n/[locale].stringsdict", {
-        isCacheRestore: false,
-        defaultLocale: "en",
-      });
+      const xcodeStringsdictLoader = createBucketLoader(
+        "xcode-stringsdict",
+        "i18n/[locale].stringsdict",
+        {
+          isCacheRestore: false,
+          defaultLocale: "en",
+        },
+      );
       xcodeStringsdictLoader.setDefaultLocale("en");
       const data = await xcodeStringsdictLoader.pull("en");
 
@@ -1042,19 +1186,27 @@ user.password=Contraseña
 
       mockFileOperations(input);
 
-      const xcodeStringsdictLoader = createBucketLoader("xcode-stringsdict", "[locale].lproj/Localizable.stringsdict", {
-        isCacheRestore: false,
-        defaultLocale: "en",
-      });
+      const xcodeStringsdictLoader = createBucketLoader(
+        "xcode-stringsdict",
+        "[locale].lproj/Localizable.stringsdict",
+        {
+          isCacheRestore: false,
+          defaultLocale: "en",
+        },
+      );
       xcodeStringsdictLoader.setDefaultLocale("en");
       await xcodeStringsdictLoader.pull("en");
 
       await xcodeStringsdictLoader.push("es", payload);
 
-      expect(fs.writeFile).toHaveBeenCalledWith("es.lproj/Localizable.stringsdict", expectedOutput, {
-        encoding: "utf-8",
-        flag: "w",
-      });
+      expect(fs.writeFile).toHaveBeenCalledWith(
+        "es.lproj/Localizable.stringsdict",
+        expectedOutput,
+        {
+          encoding: "utf-8",
+          flag: "w",
+        },
+      );
     });
   });
 
@@ -1129,10 +1281,14 @@ user.password=Contraseña
 
       mockFileOperations(input);
 
-      const xcodeXcstringsLoader = createBucketLoader("xcode-xcstrings", "i18n/[locale].xcstrings", {
-        isCacheRestore: false,
-        defaultLocale: "en",
-      });
+      const xcodeXcstringsLoader = createBucketLoader(
+        "xcode-xcstrings",
+        "i18n/[locale].xcstrings",
+        {
+          isCacheRestore: false,
+          defaultLocale: "en",
+        },
+      );
       xcodeXcstringsLoader.setDefaultLocale("en");
       const data = await xcodeXcstringsLoader.pull("en");
 
@@ -1189,10 +1345,14 @@ user.password=Contraseña
 
       mockFileOperations(input);
 
-      const xcodeXcstringsLoader = createBucketLoader("xcode-xcstrings", "i18n/[locale].xcstrings", {
-        isCacheRestore: false,
-        defaultLocale: "en",
-      });
+      const xcodeXcstringsLoader = createBucketLoader(
+        "xcode-xcstrings",
+        "i18n/[locale].xcstrings",
+        {
+          isCacheRestore: false,
+          defaultLocale: "en",
+        },
+      );
       xcodeXcstringsLoader.setDefaultLocale("en");
       const data = await xcodeXcstringsLoader.pull("en");
 
@@ -1229,10 +1389,14 @@ user.password=Contraseña
         "items_count/other": "%d éléments",
       };
 
-      const xcodeXcstringsLoader = createBucketLoader("xcode-xcstrings", "i18n/[locale].xcstrings", {
-        isCacheRestore: false,
-        defaultLocale: "en",
-      });
+      const xcodeXcstringsLoader = createBucketLoader(
+        "xcode-xcstrings",
+        "i18n/[locale].xcstrings",
+        {
+          isCacheRestore: false,
+          defaultLocale: "en",
+        },
+      );
       xcodeXcstringsLoader.setDefaultLocale("en");
       await xcodeXcstringsLoader.pull("en");
       await xcodeXcstringsLoader.push("fr", payload);
@@ -1242,24 +1406,29 @@ user.password=Contraseña
       const writtenContent = JSON.parse(writeFileCall[1]);
 
       expect(writtenContent.strings.greeting.localizations.fr).toBeDefined();
-      expect(writtenContent.strings.greeting.localizations.fr.stringUnit.value).toBe("Bonjour!");
+      expect(
+        writtenContent.strings.greeting.localizations.fr.stringUnit.value,
+      ).toBe("Bonjour!");
 
       if (writtenContent.strings.message) {
-        expect(writtenContent.strings.message.localizations.fr.stringUnit.value).toBe(
-          "Bienvenue dans notre application",
-        );
+        expect(
+          writtenContent.strings.message.localizations.fr.stringUnit.value,
+        ).toBe("Bienvenue dans notre application");
       }
 
       if (writtenContent.strings.items_count) {
-        expect(writtenContent.strings.items_count.localizations.fr.variations.plural.zero.stringUnit.value).toBe(
-          "Aucun élément",
-        );
-        expect(writtenContent.strings.items_count.localizations.fr.variations.plural.one.stringUnit.value).toBe(
-          "%d élément",
-        );
-        expect(writtenContent.strings.items_count.localizations.fr.variations.plural.other.stringUnit.value).toBe(
-          "%d éléments",
-        );
+        expect(
+          writtenContent.strings.items_count.localizations.fr.variations.plural
+            .zero.stringUnit.value,
+        ).toBe("Aucun élément");
+        expect(
+          writtenContent.strings.items_count.localizations.fr.variations.plural
+            .one.stringUnit.value,
+        ).toBe("%d élément");
+        expect(
+          writtenContent.strings.items_count.localizations.fr.variations.plural
+            .other.stringUnit.value,
+        ).toBe("%d éléments");
       }
     });
 
@@ -1317,10 +1486,14 @@ user.password=Contraseña
 
       mockFileOperations(input);
 
-      const xcodeXcstringsLoader = createBucketLoader("xcode-xcstrings", "i18n/[locale].xcstrings", {
-        isCacheRestore: false,
-        defaultLocale: "en",
-      });
+      const xcodeXcstringsLoader = createBucketLoader(
+        "xcode-xcstrings",
+        "i18n/[locale].xcstrings",
+        {
+          isCacheRestore: false,
+          defaultLocale: "en",
+        },
+      );
       xcodeXcstringsLoader.setDefaultLocale("en");
       const data = await xcodeXcstringsLoader.pull("en");
 
@@ -1328,7 +1501,6 @@ user.password=Contraseña
         if (key === "") {
           expect(data[key]).toBe("Empty key");
         } else if (key.includes("%20") || key === " ") {
-          console.log(`Found space key: "${key}"`);
           expect(data[key]).toBe("Space key");
         } else if (key === "25") {
           expect(data[key]).toBe("Numeric key");
@@ -1359,7 +1531,9 @@ user.password=Contraseña
       const writtenContent = JSON.parse(writeFileCall[1]);
 
       if (writtenContent.strings[""]) {
-        expect(writtenContent.strings[""].localizations.fr.stringUnit.value).toBe("Vide");
+        expect(
+          writtenContent.strings[""].localizations.fr.stringUnit.value,
+        ).toBe("Vide");
       }
 
       const hasSpaceKey = Object.keys(writtenContent.strings).some(
@@ -1369,18 +1543,23 @@ user.password=Contraseña
         const spaceKey = Object.keys(writtenContent.strings).find(
           (key) => key === " " || key === "%20" || key.includes("%20"),
         );
-        console.log(`Found space key in written content: "${spaceKey}"`);
         if (spaceKey) {
-          expect(writtenContent.strings[spaceKey].localizations.fr.stringUnit.value).toBe("Espace");
+          expect(
+            writtenContent.strings[spaceKey].localizations.fr.stringUnit.value,
+          ).toBe("Espace");
         }
       }
 
       if (writtenContent.strings["25"]) {
-        expect(writtenContent.strings["25"].localizations.fr.stringUnit.value).toBe("Numérique");
+        expect(
+          writtenContent.strings["25"].localizations.fr.stringUnit.value,
+        ).toBe("Numérique");
       }
 
       if (writtenContent.strings["apple"]) {
-        expect(writtenContent.strings["apple"].localizations.fr.stringUnit.value).toBe("Pomme");
+        expect(
+          writtenContent.strings["apple"].localizations.fr.stringUnit.value,
+        ).toBe("Pomme");
       }
 
       const stringKeys = Object.keys(writtenContent.strings);
@@ -1392,7 +1571,10 @@ user.password=Contraseña
 
       expect(stringKeys.indexOf("25")).toBeLessThan(stringKeys.indexOf(""));
 
-      const spaceIdx = stringKeys.indexOf(" ") === -1 ? stringKeys.indexOf("%20") : stringKeys.indexOf(" ");
+      const spaceIdx =
+        stringKeys.indexOf(" ") === -1
+          ? stringKeys.indexOf("%20")
+          : stringKeys.indexOf(" ");
       if (spaceIdx !== -1) {
         expect(stringKeys.indexOf("")).toBeLessThan(spaceIdx);
       }
@@ -1435,10 +1617,14 @@ user.password=Contraseña
 
       mockFileOperations(input);
 
-      const xcodeXcstringsLoader = createBucketLoader("xcode-xcstrings", "i18n/[locale].xcstrings", {
-        isCacheRestore: false,
-        defaultLocale: "en",
-      });
+      const xcodeXcstringsLoader = createBucketLoader(
+        "xcode-xcstrings",
+        "i18n/[locale].xcstrings",
+        {
+          isCacheRestore: false,
+          defaultLocale: "en",
+        },
+      );
       xcodeXcstringsLoader.setDefaultLocale("en");
 
       const data = await xcodeXcstringsLoader.pull("en");
@@ -1456,18 +1642,28 @@ user.password=Contraseña
       const writeFileCall = (fs.writeFile as any).mock.calls[0];
       const writtenContent = JSON.parse(writeFileCall[1]);
 
-      expect(writtenContent.strings.normal_key.localizations.fr.stringUnit.value).toBe("Ceci devrait être traduit");
+      expect(
+        writtenContent.strings.normal_key.localizations.fr.stringUnit.value,
+      ).toBe("Ceci devrait être traduit");
 
-      expect(writtenContent.strings.do_not_translate).toHaveProperty("shouldTranslate", false);
+      expect(writtenContent.strings.do_not_translate).toHaveProperty(
+        "shouldTranslate",
+        false,
+      );
 
-      expect(writtenContent.strings.do_not_translate.localizations).not.toHaveProperty("fr");
+      expect(
+        writtenContent.strings.do_not_translate.localizations,
+      ).not.toHaveProperty("fr");
 
       await xcodeXcstringsLoader.push("fr", {});
 
       const secondWriteFileCall = (fs.writeFile as any).mock.calls[1];
       const secondWrittenContent = JSON.parse(secondWriteFileCall[1]);
 
-      expect(secondWrittenContent.strings.do_not_translate).toHaveProperty("shouldTranslate", false);
+      expect(secondWrittenContent.strings.do_not_translate).toHaveProperty(
+        "shouldTranslate",
+        false,
+      );
     });
   });
 
@@ -1512,30 +1708,45 @@ user.password=Contraseña
 
       await yamlLoader.push("es", payload);
 
-      expect(fs.writeFile).toHaveBeenCalledWith("i18n/es.yaml", expectedOutput, { encoding: "utf-8", flag: "w" });
+      expect(fs.writeFile).toHaveBeenCalledWith(
+        "i18n/es.yaml",
+        expectedOutput,
+        { encoding: "utf-8", flag: "w" },
+      );
     });
 
     describe("yaml with quoted keys and values", async () => {
       it.each([
         ["double quoted values", `greeting: "Hello!"`, `greeting: "¡Hola!"`],
         ["double quoted keys", `"greeting": Hello!`, `"greeting": ¡Hola!`],
-        ["double quoted keys and values", `"greeting": "Hello!"`, `"greeting": "¡Hola!"`],
-      ])("should return correct value for %s", async (_, input, expectedOutput) => {
-        const payload = { greeting: "¡Hola!" };
+        [
+          "double quoted keys and values",
+          `"greeting": "Hello!"`,
+          `"greeting": "¡Hola!"`,
+        ],
+      ])(
+        "should return correct value for %s",
+        async (_, input, expectedOutput) => {
+          const payload = { greeting: "¡Hola!" };
 
-        mockFileOperations(input);
+          mockFileOperations(input);
 
-        const yamlLoader = createBucketLoader("yaml", "i18n/[locale].yaml", {
-          isCacheRestore: false,
-          defaultLocale: "en",
-        });
-        yamlLoader.setDefaultLocale("en");
-        await yamlLoader.pull("en");
+          const yamlLoader = createBucketLoader("yaml", "i18n/[locale].yaml", {
+            isCacheRestore: false,
+            defaultLocale: "en",
+          });
+          yamlLoader.setDefaultLocale("en");
+          await yamlLoader.pull("en");
 
-        await yamlLoader.push("es", payload);
+          await yamlLoader.push("es", payload);
 
-        expect(fs.writeFile).toHaveBeenCalledWith("i18n/es.yaml", expectedOutput, { encoding: "utf-8", flag: "w" });
-      });
+          expect(fs.writeFile).toHaveBeenCalledWith(
+            "i18n/es.yaml",
+            expectedOutput,
+            { encoding: "utf-8", flag: "w" },
+          );
+        },
+      );
     });
   });
 
@@ -1551,10 +1762,14 @@ user.password=Contraseña
 
       mockFileOperations(input);
 
-      const yamlRootKeyLoader = createBucketLoader("yaml-root-key", "i18n/[locale].yaml", {
-        isCacheRestore: false,
-        defaultLocale: "en",
-      });
+      const yamlRootKeyLoader = createBucketLoader(
+        "yaml-root-key",
+        "i18n/[locale].yaml",
+        {
+          isCacheRestore: false,
+          defaultLocale: "en",
+        },
+      );
       yamlRootKeyLoader.setDefaultLocale("en");
       const data = await yamlRootKeyLoader.pull("en");
 
@@ -1573,16 +1788,24 @@ user.password=Contraseña
 
       mockFileOperations(input);
 
-      const yamlRootKeyLoader = createBucketLoader("yaml-root-key", "i18n/[locale].yaml", {
-        isCacheRestore: false,
-        defaultLocale: "en",
-      });
+      const yamlRootKeyLoader = createBucketLoader(
+        "yaml-root-key",
+        "i18n/[locale].yaml",
+        {
+          isCacheRestore: false,
+          defaultLocale: "en",
+        },
+      );
       yamlRootKeyLoader.setDefaultLocale("en");
       await yamlRootKeyLoader.pull("en");
 
       await yamlRootKeyLoader.push("es", payload);
 
-      expect(fs.writeFile).toHaveBeenCalledWith("i18n/es.yaml", expectedOutput, { encoding: "utf-8", flag: "w" });
+      expect(fs.writeFile).toHaveBeenCalledWith(
+        "i18n/es.yaml",
+        expectedOutput,
+        { encoding: "utf-8", flag: "w" },
+      );
     });
   });
 
@@ -1615,7 +1838,10 @@ Bar
 
       mockFileOperations(input);
 
-      const vttLoader = createBucketLoader("vtt", "i18n/[locale].vtt", { isCacheRestore: false, defaultLocale: "en" });
+      const vttLoader = createBucketLoader("vtt", "i18n/[locale].vtt", {
+        isCacheRestore: false,
+        defaultLocale: "en",
+      });
       vttLoader.setDefaultLocale("en");
       const data = await vttLoader.pull("en");
 
@@ -1664,7 +1890,10 @@ Bar`.trim();
 
       mockFileOperations(input);
 
-      const vttLoader = createBucketLoader("vtt", "i18n/[locale].vtt", { isCacheRestore: false, defaultLocale: "en" });
+      const vttLoader = createBucketLoader("vtt", "i18n/[locale].vtt", {
+        isCacheRestore: false,
+        defaultLocale: "en",
+      });
       vttLoader.setDefaultLocale("en");
       await vttLoader.pull("en");
 
@@ -1702,7 +1931,10 @@ Bar`.trim();
 
       mockFileOperations(input);
 
-      const xmlLoader = createBucketLoader("xml", "i18n/[locale].xml", { isCacheRestore: false, defaultLocale: "en" });
+      const xmlLoader = createBucketLoader("xml", "i18n/[locale].xml", {
+        isCacheRestore: false,
+        defaultLocale: "en",
+      });
       xmlLoader.setDefaultLocale("en");
       const data = await xmlLoader.pull("en");
 
@@ -1747,13 +1979,19 @@ Bar`.trim();
         .replace(/>\s+</g, "><")
         .trim();
       mockFileOperations(input);
-      const xmlLoader = createBucketLoader("xml", "i18n/[locale].xml", { isCacheRestore: false, defaultLocale: "en" });
+      const xmlLoader = createBucketLoader("xml", "i18n/[locale].xml", {
+        isCacheRestore: false,
+        defaultLocale: "en",
+      });
       xmlLoader.setDefaultLocale("en");
       await xmlLoader.pull("en");
 
       await xmlLoader.push("es", payload);
 
-      expect(fs.writeFile).toHaveBeenCalledWith("i18n/es.xml", expectedOutput, { encoding: "utf-8", flag: "w" });
+      expect(fs.writeFile).toHaveBeenCalledWith("i18n/es.xml", expectedOutput, {
+        encoding: "utf-8",
+        flag: "w",
+      });
     });
   });
 
@@ -1777,7 +2015,10 @@ World!
 
       mockFileOperations(input);
 
-      const srtLoader = createBucketLoader("srt", "i18n/[locale].srt", { isCacheRestore: false, defaultLocale: "en" });
+      const srtLoader = createBucketLoader("srt", "i18n/[locale].srt", {
+        isCacheRestore: false,
+        defaultLocale: "en",
+      });
       srtLoader.setDefaultLocale("en");
       const data = await srtLoader.pull("en");
 
@@ -1812,7 +2053,10 @@ Mundo!`;
 
       mockFileOperations(input);
 
-      const srtLoader = createBucketLoader("srt", "i18n/[locale].srt", { isCacheRestore: false, defaultLocale: "en" });
+      const srtLoader = createBucketLoader("srt", "i18n/[locale].srt", {
+        isCacheRestore: false,
+        defaultLocale: "en",
+      });
       srtLoader.setDefaultLocale("en");
       await srtLoader.pull("en");
 
@@ -1862,7 +2106,8 @@ Mundo!`;
         "resources/namespace1/group/groupUnits/groupUnit/source": "Group",
         "resources/namespace1/key.nested/source": "XLIFF Data Manager",
         "resources/namespace1/key1/source": "Hello",
-        "resources/namespace1/key2/source": "An application to manipulate and process XLIFF documents",
+        "resources/namespace1/key2/source":
+          "An application to manipulate and process XLIFF documents",
         sourceLanguage: "en-US",
       };
 
@@ -1911,9 +2156,11 @@ Mundo!`;
         `.trim();
       const payload = {
         "resources/namespace1/group/groupUnits/groupUnit/source": "Grupo",
-        "resources/namespace1/key.nested/source": "Administrador de Datos XLIFF",
+        "resources/namespace1/key.nested/source":
+          "Administrador de Datos XLIFF",
         "resources/namespace1/key1/source": "Hola",
-        "resources/namespace1/key2/source": "Una aplicación para manipular y procesar documentos XLIFF",
+        "resources/namespace1/key2/source":
+          "Una aplicación para manipular y procesar documentos XLIFF",
         sourceLanguage: "es-ES",
       };
 
@@ -1982,7 +2229,11 @@ Mundo!`;
 
         await textFileLoader.push("es", "Hola");
 
-        expect(fs.writeFile).toHaveBeenCalledWith("i18n/es.txt", expectedOutput, { encoding: "utf-8", flag: "w" });
+        expect(fs.writeFile).toHaveBeenCalledWith(
+          "i18n/es.txt",
+          expectedOutput,
+          { encoding: "utf-8", flag: "w" },
+        );
       });
 
       it("should not add trailing new line based on the source locale", async () => {
@@ -2002,7 +2253,11 @@ Mundo!`;
 
         await textFileLoader.push("es", "Hola");
 
-        expect(fs.writeFile).toHaveBeenCalledWith("i18n/es.txt", expectedOutput, { encoding: "utf-8", flag: "w" });
+        expect(fs.writeFile).toHaveBeenCalledWith(
+          "i18n/es.txt",
+          expectedOutput,
+          { encoding: "utf-8", flag: "w" },
+        );
       });
     });
 
@@ -2025,7 +2280,11 @@ Mundo!`;
 
         await textFileLoader.push("es", "Hola (translated)");
 
-        expect(fs.writeFile).toHaveBeenCalledWith("i18n/es.txt", expectedOutput, { encoding: "utf-8", flag: "w" });
+        expect(fs.writeFile).toHaveBeenCalledWith(
+          "i18n/es.txt",
+          expectedOutput,
+          { encoding: "utf-8", flag: "w" },
+        );
       });
 
       it("should not add trailing new line based on the target locale", async () => {
@@ -2046,7 +2305,11 @@ Mundo!`;
 
         await textFileLoader.push("es", "Hola (translated)");
 
-        expect(fs.writeFile).toHaveBeenCalledWith("i18n/es.txt", expectedOutput, { encoding: "utf-8", flag: "w" });
+        expect(fs.writeFile).toHaveBeenCalledWith(
+          "i18n/es.txt",
+          expectedOutput,
+          { encoding: "utf-8", flag: "w" },
+        );
       });
     });
   });
@@ -2060,7 +2323,10 @@ Mundo!`;
 
       mockFileOperations(input);
 
-      const phpLoader = createBucketLoader("php", "i18n/[locale].php", { isCacheRestore: false, defaultLocale: "en" });
+      const phpLoader = createBucketLoader("php", "i18n/[locale].php", {
+        isCacheRestore: false,
+        defaultLocale: "en",
+      });
       phpLoader.setDefaultLocale("en");
       const data = await phpLoader.pull("en");
 
@@ -2094,7 +2360,10 @@ return array(
 
       mockFileOperations(input);
 
-      const phpLoader = createBucketLoader("php", "i18n/[locale].php", { isCacheRestore: false, defaultLocale: "en" });
+      const phpLoader = createBucketLoader("php", "i18n/[locale].php", {
+        isCacheRestore: false,
+        defaultLocale: "en",
+      });
       phpLoader.setDefaultLocale("en");
       await phpLoader.pull("en");
 
@@ -2104,7 +2373,10 @@ return array(
         "button.description/1": "Adiós",
       });
 
-      expect(fs.writeFile).toHaveBeenCalledWith("i18n/es.php", expectedOutput, { encoding: "utf-8", flag: "w" });
+      expect(fs.writeFile).toHaveBeenCalledWith("i18n/es.php", expectedOutput, {
+        encoding: "utf-8",
+        flag: "w",
+      });
     });
   });
 
@@ -2117,7 +2389,10 @@ return array(
 
       mockFileOperations(input);
 
-      const poLoader = createBucketLoader("po", "i18n/[locale].po", { isCacheRestore: false, defaultLocale: "en" });
+      const poLoader = createBucketLoader("po", "i18n/[locale].po", {
+        isCacheRestore: false,
+        defaultLocale: "en",
+      });
       poLoader.setDefaultLocale("en");
       const data = await poLoader.pull("en");
 
@@ -2132,7 +2407,10 @@ return array(
 
       mockFileOperations(input);
 
-      const poLoader = createBucketLoader("po", "i18n/[locale].po", { isCacheRestore: false, defaultLocale: "en" });
+      const poLoader = createBucketLoader("po", "i18n/[locale].po", {
+        isCacheRestore: false,
+        defaultLocale: "en",
+      });
       poLoader.setDefaultLocale("en");
       await poLoader.pull("en");
 
@@ -2140,7 +2418,10 @@ return array(
         "Hello/singular": "Hola",
       });
 
-      expect(fs.writeFile).toHaveBeenCalledWith("i18n/es.po", expectedOutput, { encoding: "utf-8", flag: "w" });
+      expect(fs.writeFile).toHaveBeenCalledWith("i18n/es.po", expectedOutput, {
+        encoding: "utf-8",
+        flag: "w",
+      });
     });
   });
 
@@ -2229,7 +2510,10 @@ ${script}`;
 
       mockFileOperations(input);
 
-      const vueLoader = createBucketLoader("vue-json", "i18n/App.vue", { isCacheRestore: false, defaultLocale: "en" });
+      const vueLoader = createBucketLoader("vue-json", "i18n/App.vue", {
+        isCacheRestore: false,
+        defaultLocale: "en",
+      });
       vueLoader.setDefaultLocale("en");
       await vueLoader.pull("en");
 
@@ -2237,7 +2521,11 @@ ${script}`;
         hello: "hola mundo!",
       });
 
-      expect(fs.writeFile).toHaveBeenCalledWith("i18n/App.vue", expectedOutput, { encoding: "utf-8", flag: "w" });
+      expect(fs.writeFile).toHaveBeenCalledWith(
+        "i18n/App.vue",
+        expectedOutput,
+        { encoding: "utf-8", flag: "w" },
+      );
     });
 
     it("should ignore vue file without i18n tag", async () => {
@@ -2252,7 +2540,10 @@ ${script}`;
 
       mockFileOperations(input);
 
-      const vueLoader = createBucketLoader("vue-json", "i18n/App.vue", { isCacheRestore: false, defaultLocale: "en" });
+      const vueLoader = createBucketLoader("vue-json", "i18n/App.vue", {
+        isCacheRestore: false,
+        defaultLocale: "en",
+      });
       vueLoader.setDefaultLocale("en");
       await vueLoader.pull("en");
 
@@ -2260,7 +2551,11 @@ ${script}`;
         hello: "hola mundo!",
       });
 
-      expect(fs.writeFile).toHaveBeenCalledWith("i18n/App.vue", expectedOutput, { encoding: "utf-8", flag: "w" });
+      expect(fs.writeFile).toHaveBeenCalledWith(
+        "i18n/App.vue",
+        expectedOutput,
+        { encoding: "utf-8", flag: "w" },
+      );
     });
   });
 });
@@ -2291,12 +2586,18 @@ function mockFileOperations(input: string) {
 
 function mockFileOperationsForPaths(input: Record<string, string>) {
   (fs.access as any).mockImplementation((path) =>
-    input.hasOwnProperty(path) ? Promise.resolve() : Promise.reject(`fs.access: ${path} not mocked`),
+    input.hasOwnProperty(path)
+      ? Promise.resolve()
+      : Promise.reject(`fs.access: ${path} not mocked`),
   );
   (fs.readFile as any).mockImplementation((path) =>
-    input.hasOwnProperty(path) ? Promise.resolve(input[path]) : Promise.reject(`fs.readFile: ${path} not mocked`),
+    input.hasOwnProperty(path)
+      ? Promise.resolve(input[path])
+      : Promise.reject(`fs.readFile: ${path} not mocked`),
   );
   (fs.writeFile as any).mockImplementation((path) =>
-    input.hasOwnProperty(path) ? Promise.resolve() : Promise.reject(`fs:writeFile: ${path} not mocked`),
+    input.hasOwnProperty(path)
+      ? Promise.resolve()
+      : Promise.reject(`fs:writeFile: ${path} not mocked`),
   );
 }

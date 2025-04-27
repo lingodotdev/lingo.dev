@@ -2,7 +2,7 @@
   "version": 1.6,
   "locale": {
     "source": "en",
-    "targets": ["de"]
+    "targets": ["es"]
   },
   "buckets": {},
   "$schema": "https://lingo.dev/schema/i18n.json"
