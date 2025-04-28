@@ -1,5 +1,16 @@
 # lingo.dev
 
+## 0.87.1
+
+### Patch Changes
+
+- [`a241343`](https://github.com/lingodotdev/lingo.dev/commit/a241343caf7ee326d4fcb6fc0d00b5f07350668b)
+  Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - mdx improvements
+
+- [`c0ee61c`](https://github.com/lingodotdev/lingo.dev/commit/c0ee61cb482253f3c0c1a2701b1124e445a6c253)
+  Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - mdx placeholder
+  replacement
+
 ## 0.87.0
 
 ### Minor Changes
