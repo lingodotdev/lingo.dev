@@ -1,5 +1,13 @@
 # lingo.dev
 
+## 0.87.4
+
+### Patch Changes
+
+- [`12afc85`](https://github.com/lingodotdev/lingo.dev/commit/12afc85dc1a9abdfd11eb9fa41fb574863cde176)
+  Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - support for
+  quoted and broken code blocks
+
 ## 0.87.3
 
 ### Patch Changes
