@@ -1,5 +1,13 @@
 # lingo.dev
 
+## 0.87.2
+
+### Patch Changes
+
+- [`e4c9e4f`](https://github.com/lingodotdev/lingo.dev/commit/e4c9e4f1264348ed842e341b6009b10ac5ae84ab)
+  Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - add safety fence
+  decoration with newlines
+
 ## 0.87.1
 
 ### Patch Changes
