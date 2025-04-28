@@ -1,21 +1,28 @@
 import { ILoader } from "../_types";
 import { createLoader } from "../_utils";
-import { PlaceholderedMdx, RawMdx } from "./_types";
 import { md5 } from "../../utils/md5";
-import { unified } from "unified";
-import remarkParse from "remark-parse";
-import remarkGfm from "remark-gfm";
-import { VFile } from "vfile";
-import remarkMdx from "remark-mdx";
+import _ from "lodash";
 
-function parseMdast(content: string) {
-  const file = new VFile(content);
+const unindentedFenceRegex = /(?<!\n\n)```([\s\S]*?)```(?!\n\n)/g;
+const indentedFenceRegex = /```([\s\S]*?)```/g;
 
-  const parser = unified().use(remarkParse).use(remarkGfm).use(remarkMdx);
+function ensureTrailingFenceNewline(_content: string) {
+  let found = false;
+  let content = _content;
 
-  const result = parser.parse(file);
+  do {
+    found = false;
+    const matches = content.match(unindentedFenceRegex);
+    if (matches) {
+      const match = matches[0];
+      content = content.replace(match, `\n\n${match}\n\n`);
+      found = true;
+    }
+  } while (found);
 
-  return result;
+  content = _.chain(content).split("\n\n").filter(Boolean).join("\n\n").value();
+
+  return content;
 }
 
 // Helper that replaces code (block & inline) with stable placeholders and returns
@@ -27,10 +34,11 @@ function extractCodePlaceholders(content: string): {
   codePlaceholders: Record<string, string>;
 } {
   let finalContent = content;
+  finalContent = ensureTrailingFenceNewline(finalContent);
+
   const codePlaceholders: Record<string, string> = {};
 
-  const codeBlockRegex = /^```.*\n([\s\S]*?)^```$/gm;
-  const codeBlockMatches = finalContent.matchAll(codeBlockRegex);
+  const codeBlockMatches = finalContent.matchAll(indentedFenceRegex);
 
   for (const match of codeBlockMatches) {
     const codeBlock = match[0];
