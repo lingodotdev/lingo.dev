@@ -31,7 +31,10 @@ import createPhpLoader from "./php";
 import createVueJsonLoader from "./vue-json";
 import createInjectLocaleLoader from "./inject-locale";
 import createLockedKeysLoader from "./locked-keys";
-import createMdxLoader from "./mdx2";
+import createMdxFrontmatterSplitLoader from "./mdx2/frontmatter-split";
+import createMdxCodePlaceholderLoader from "./mdx2/code-placeholder";
+import createLocalizableMdxDocumentLoader from "./mdx2/localizable-document";
+import createMdxSectionsSplit2Loader from "./mdx2/sections-split-2";
 
 type BucketLoaderOptions = {
   isCacheRestore: boolean;
@@ -110,8 +113,14 @@ export default function createBucketLoader(
     case "mdx":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
-        createPrettierLoader({ parser: "mdx", bucketPathPattern }),
-        createMdxLoader(),
+        createMdxCodePlaceholderLoader(),
+        createPrettierLoader({
+          parser: "mdx",
+          bucketPathPattern,
+        }),
+        createMdxFrontmatterSplitLoader(),
+        createMdxSectionsSplit2Loader(),
+        createLocalizableMdxDocumentLoader(),
         createFlatLoader(),
         createSyncLoader(),
         createUnlocalizableLoader(

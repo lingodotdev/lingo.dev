@@ -19,7 +19,7 @@ import chalk from "chalk";
 import { createTwoFilesPatch } from "diff";
 import inquirer from "inquirer";
 import externalEditor from "external-editor";
-import { cacheChunk, deleteCache, getNormalizedCache } from "../utils/cache";
+// import { cacheChunk, deleteCache, getNormalizedCache } from "../utils/cache";
 import updateGitignore from "../utils/update-gitignore";
 import createProcessor from "../processor";
 import { withExponentialBackoff } from "../utils/exp-backoff";
@@ -524,7 +524,7 @@ export default new Command()
                     targetData,
                   },
                   (progress, sourceChunk, processedChunk) => {
-                    cacheChunk(targetLocale, sourceChunk, processedChunk);
+                    // cacheChunk(targetLocale, sourceChunk, processedChunk);
 
                     const progressLog = `[${sourceLocale} -> ${targetLocale}] [${Object.keys(processableData).length} entries] (${progress}%) AI localization in progress...`;
                     if (flags.verbose) {
@@ -615,10 +615,10 @@ export default new Command()
       console.log();
       if (!hasErrors) {
         ora.succeed("Localization completed.");
-        deleteCache();
-        if (flags.verbose) {
-          ora.info("Cache file deleted.");
-        }
+        // deleteCache();
+        // if (flags.verbose) {
+        //   ora.info("Cache file deleted.");
+        // }
         trackEvent(auth.id, "cmd.i18n.success", {
           i18nConfig,
           flags,

@@ -6,6 +6,7 @@ import { createLoader } from "./_utils";
 export type PrettierLoaderOptions = {
   parser: Options["parser"];
   bucketPathPattern: string;
+  stage?: "pull" | "push" | "both";
   alwaysFormat?: boolean;
 };
 
@@ -14,6 +15,10 @@ export default function createPrettierLoader(
 ): ILoader<string, string> {
   return createLoader({
     async pull(locale, data) {
+      if (!["pull", "both"].includes(options.stage!)) {
+        return data;
+      }
+
       const draftPath = options.bucketPathPattern.replaceAll(
         "[locale]",
         locale,
@@ -23,6 +28,10 @@ export default function createPrettierLoader(
       return await formatDataWithPrettier(data, finalPath, options);
     },
     async push(locale, data) {
+      if (!["push", "both"].includes(options.stage!)) {
+        return data;
+      }
+
       const draftPath = options.bucketPathPattern.replaceAll(
         "[locale]",
         locale,
