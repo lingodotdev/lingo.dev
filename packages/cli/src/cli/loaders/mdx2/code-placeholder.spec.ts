@@ -4,7 +4,7 @@ import dedent from "dedent";
 import { md5 } from "../../utils/md5";
 
 const sampleMdxContent = dedent`
-Paragraph with some \`inline\` code.
+Paragraph with some code:
 
 \`\`\`js
 console.log("foo");
@@ -16,53 +16,36 @@ describe("mdx code placeholder loader", () => {
     const loader = createMdxCodePlaceholderLoader();
     loader.setDefaultLocale("en");
 
-    const result = await loader.pull("en", {
-      frontmatter: {},
-      content: sampleMdxContent,
-    });
+    const result = await loader.pull("en", sampleMdxContent);
     // expect two placeholders
-    const placeholderKeys = Object.keys(result.codePlaceholders);
-    const placeholder1 = `__PLACEHOLDER_${md5("`inline`")}__`;
-    const placeholder2 = `__PLACEHOLDER_${md5('```js\nconsole.log("foo");\n```')}__`;
-    expect(placeholderKeys).toEqual([placeholder1, placeholder2]);
+    const placeholder = `---CODE_PLACEHOLDER_${md5('```js\nconsole.log("foo");\n```')}---`;
 
-    // mapping values should equal original code snippets
-    const expectedInline = "`inline`";
-    const expectedBlock = '```js\nconsole.log("foo");\n```';
-    expect(Object.values(result.codePlaceholders).sort()).toEqual(
-      [expectedBlock, expectedInline].sort(),
+    expect(result).toEqual(
+      dedent`
+      Paragraph with some code:
+
+      ${placeholder}
+      `,
     );
-
-    // content should have placeholders substituted exactly
-    const expectedContent = `Paragraph with some ${placeholder1} code.\n\n${placeholder2}`;
-    expect(result.content.trim()).toBe(expectedContent.trim());
   });
 
   it("should restore original code segments on push", async () => {
     const loader = createMdxCodePlaceholderLoader();
     loader.setDefaultLocale("en");
 
-    const pulled = await loader.pull("en", {
-      frontmatter: {},
-      content: sampleMdxContent,
-    });
+    const pulled = await loader.pull("en", sampleMdxContent);
+    const modified = pulled.replace("Paragraph", "Párrafo");
 
-    // modify pulled data
-    pulled.content = pulled.content.replace("Paragraph", "Párrafo");
+    const output = await loader.push("es", modified);
 
-    const output = await loader.push("es", pulled);
-
-    const expectedOutput = {
-      frontmatter: {},
-      content: dedent`
-      Párrafo with some \`inline\` code.
+    expect(output).toEqual(
+      dedent`
+      Párrafo with some code:
 
       \`\`\`js
       console.log("foo");
       \`\`\`
       `,
-    };
-
-    expect(output).toEqual(expectedOutput);
+    );
   });
 });

@@ -13,9 +13,10 @@ export type PrettierLoaderOptions = {
 export default function createPrettierLoader(
   options: PrettierLoaderOptions,
 ): ILoader<string, string> {
+  const stage = options.stage || "both";
   return createLoader({
     async pull(locale, data) {
-      if (!["pull", "both"].includes(options.stage!)) {
+      if (!["pull", "both"].includes(stage)) {
         return data;
       }
 
@@ -28,7 +29,7 @@ export default function createPrettierLoader(
       return await formatDataWithPrettier(data, finalPath, options);
     },
     async push(locale, data) {
-      if (!["push", "both"].includes(options.stage!)) {
+      if (!["push", "both"].includes(stage)) {
         return data;
       }
 
