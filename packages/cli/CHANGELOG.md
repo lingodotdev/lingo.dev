@@ -1,5 +1,13 @@
 # lingo.dev
 
+## 0.87.3
+
+### Patch Changes
+
+- [`dcb119c`](https://github.com/lingodotdev/lingo.dev/commit/dcb119c0ec3cc22f5954a09607f89de5a9978732)
+  Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - extra slash n for
+  code fences
+
 ## 0.87.2
 
 ### Patch Changes
