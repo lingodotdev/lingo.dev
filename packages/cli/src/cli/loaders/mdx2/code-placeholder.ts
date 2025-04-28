@@ -3,7 +3,7 @@ import { createLoader } from "../_utils";
 import { md5 } from "../../utils/md5";
 import _ from "lodash";
 
-const fenceRegex = /```([\s\S]*?)```/g;
+const fenceRegex = /(>\s*)?```([\s\S]*?)```/g;
 
 function ensureTrailingFenceNewline(_content: string) {
   let found = false;
