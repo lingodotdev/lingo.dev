@@ -35,34 +35,64 @@ function extractCodePlaceholders(content: string): {
   content: string;
   codePlaceholders: Record<string, string>;
 } {
-  const ast = parseMdast(content);
-  const placeholderableElements: (keyof RootContentMap)[] = [
-    "code",
-    "inlineCode",
-  ];
+  let shouldSearchForPlaceholders = true;
   let finalContent = content;
   const codePlaceholders: Record<string, string> = {};
 
-  traverseMdast(ast, (_node) => {
-    if (!placeholderableElements.includes(_node.type as any)) {
-      return;
-    }
-    const node = _node as Code | InlineCode;
-    const nodeContent = node.value;
+  while (shouldSearchForPlaceholders) {
+    const ast = parseMdast(finalContent);
 
-    const nodeContentHash = md5(nodeContent);
-    const placeholderId = `__PLACEHOLDER_${nodeContentHash}__`;
+    traverseMdast(ast, (_node) => {
+      shouldSearchForPlaceholders = false;
 
-    const nodeContentStart = node.position?.start.offset;
-    const nodeContentEnd = node.position?.end.offset;
+      if (_node.type === "code") {
+        const node = _node as Code;
 
-    if (!nodeContentStart || !nodeContentEnd) {
-      return;
-    }
+        const nodeContentStartLine = node.position?.start.line;
+        const nodeContentEndLine = node.position?.end.line;
 
-    codePlaceholders[placeholderId] = nodeContent;
-    finalContent = finalContent.split(nodeContent).join(placeholderId);
-  });
+        if (!nodeContentStartLine || !nodeContentEndLine) {
+          return;
+        }
+
+        const nodeContentPreStartLine = nodeContentStartLine - 1;
+        const nodeContentPostEndLine = nodeContentEndLine + 1;
+
+        const nodeContent = finalContent
+          .split("\n")
+          .slice(nodeContentPreStartLine, nodeContentPostEndLine)
+          .join("\n");
+
+        const nodeContentHash = md5(nodeContent);
+        const placeholderId = `__PLACEHOLDER_${nodeContentHash}__`;
+
+        codePlaceholders[placeholderId] = nodeContent;
+        finalContent = finalContent.replace(nodeContent, placeholderId);
+        shouldSearchForPlaceholders = true;
+      } else if (_node.type === "inlineCode") {
+        const node = _node as InlineCode;
+
+        const nodeContentStartIndex = node.position?.start.offset;
+        const nodeContentEndIndex = node.position?.end.offset;
+
+        if (!nodeContentStartIndex || !nodeContentEndIndex) {
+          return;
+        }
+
+        const nodeContent = finalContent.slice(
+          nodeContentStartIndex,
+          nodeContentEndIndex,
+        );
+
+        const nodeContentHash = md5(nodeContent);
+        const placeholderId = `__PLACEHOLDER_${nodeContentHash}__`;
+
+        codePlaceholders[placeholderId] = nodeContent;
+        finalContent = finalContent.replace(nodeContent, placeholderId);
+        shouldSearchForPlaceholders = true;
+      }
+    });
+  }
 
   return {
     content: finalContent,

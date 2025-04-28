@@ -20,22 +20,21 @@ describe("mdx code placeholder loader", () => {
       frontmatter: {},
       content: sampleMdxContent,
     });
-
     // expect two placeholders
     const placeholderKeys = Object.keys(result.codePlaceholders);
-    const placeholder1 = `__PLACEHOLDER_${md5("inline")}__`;
-    const placeholder2 = `__PLACEHOLDER_${md5('console.log("foo");')}__`;
+    const placeholder1 = `__PLACEHOLDER_${md5("`inline`")}__`;
+    const placeholder2 = `__PLACEHOLDER_${md5('```js\nconsole.log("foo");\n```')}__`;
     expect(placeholderKeys).toEqual([placeholder1, placeholder2]);
 
     // mapping values should equal original code snippets
-    const expectedInline = "inline";
-    const expectedBlock = 'console.log("foo");';
+    const expectedInline = "`inline`";
+    const expectedBlock = '```js\nconsole.log("foo");\n```';
     expect(Object.values(result.codePlaceholders).sort()).toEqual(
       [expectedBlock, expectedInline].sort(),
     );
 
     // content should have placeholders substituted exactly
-    const expectedContent = `Paragraph with some \`${placeholder1}\` code.\n\n\`\`\`js\n${placeholder2}\n\`\`\``;
+    const expectedContent = `Paragraph with some ${placeholder1} code.\n\n${placeholder2}`;
     expect(result.content.trim()).toBe(expectedContent.trim());
   });
 
