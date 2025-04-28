@@ -3,24 +3,30 @@ import { createLoader } from "../_utils";
 import { md5 } from "../../utils/md5";
 import _ from "lodash";
 
-const unindentedFenceRegex = /(?<!\n\n)```([\s\S]*?)```(?!\n\n)/g;
-const indentedFenceRegex = /```([\s\S]*?)```/g;
+const fenceRegex = /```([\s\S]*?)```/g;
 
 function ensureTrailingFenceNewline(_content: string) {
   let found = false;
   let content = _content;
+  let workingContent = content;
 
   do {
     found = false;
-    const matches = content.match(unindentedFenceRegex);
+    const matches = workingContent.match(fenceRegex);
     if (matches) {
       const match = matches[0];
       content = content.replace(match, `\n\n${match}\n\n`);
+      workingContent = workingContent.replace(match, "");
       found = true;
     }
   } while (found);
 
-  content = _.chain(content).split("\n\n").filter(Boolean).join("\n\n").value();
+  content = _.chain(content)
+    .split("\n\n")
+    .map((section) => section.trim())
+    .filter(Boolean)
+    .join("\n\n")
+    .value();
 
   return content;
 }
@@ -38,7 +44,7 @@ function extractCodePlaceholders(content: string): {
 
   const codePlaceholders: Record<string, string> = {};
 
-  const codeBlockMatches = finalContent.matchAll(indentedFenceRegex);
+  const codeBlockMatches = finalContent.matchAll(fenceRegex);
 
   for (const match of codeBlockMatches) {
     const codeBlock = match[0];
