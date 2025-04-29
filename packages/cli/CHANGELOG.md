@@ -1,5 +1,13 @@
 # lingo.dev
 
+## 0.87.5
+
+### Patch Changes
+
+- [`dfefe32`](https://github.com/lingodotdev/lingo.dev/commit/dfefe3228683347beb9976e6e61632c65d68140c)
+  Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - fences after jsx
+  block
+
 ## 0.87.4
 
 ### Patch Changes
