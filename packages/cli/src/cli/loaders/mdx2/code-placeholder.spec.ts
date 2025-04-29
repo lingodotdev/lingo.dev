@@ -3,7 +3,7 @@ import createMdxCodePlaceholderLoader from "./code-placeholder";
 import dedent from "dedent";
 import { md5 } from "../../utils/md5";
 
-const PLACEHOLDER_REGEX = /---CODE_PLACEHOLDER_[0-9a-f]+---/g;
+const PLACEHOLDER_REGEX = /---CODE-PLACEHOLDER-[0-9a-f]+---/g;
 
 const sampleContent = dedent`
 Paragraph with some code:
@@ -20,7 +20,7 @@ describe("MDX Code Placeholder Loader", () => {
   it("should replace fenced code with placeholder on pull", async () => {
     const result = await loader.pull("en", sampleContent);
     const hash = md5('```js\nconsole.log("foo");\n```');
-    const expected = `Paragraph with some code:\n\n---CODE_PLACEHOLDER_${hash}---`;
+    const expected = `Paragraph with some code:\n\n---CODE-PLACEHOLDER-${hash}---`;
     expect(result.trim()).toBe(expected);
   });
 
@@ -282,7 +282,7 @@ describe("MDX Code Placeholder Loader", () => {
       const md = "This is some `inline()` code.";
       const pulled = await loader.pull("en", md);
       const hash = md5("`inline()`");
-      const expected = `This is some ---INLINE_CODE_PLACEHOLDER_${hash}--- code.`;
+      const expected = `This is some ---INLINE-CODE-PLACEHOLDER-${hash}--- code.`;
       expect(pulled).toBe(expected);
     });
 

@@ -53,7 +53,7 @@ function extractCodePlaceholders(content: string): {
   for (const match of codeBlockMatches) {
     const codeBlock = match[0];
     const codeBlockHash = md5(codeBlock);
-    const placeholder = `---CODE_PLACEHOLDER_${codeBlockHash}---`;
+    const placeholder = `---CODE-PLACEHOLDER-${codeBlockHash}---`;
 
     codePlaceholders[placeholder] = codeBlock;
 
@@ -67,7 +67,7 @@ function extractCodePlaceholders(content: string): {
   for (const match of inlineCodeMatches) {
     const inlineCode = match[0];
     const inlineCodeHash = md5(inlineCode);
-    const placeholder = `---INLINE_CODE_PLACEHOLDER_${inlineCodeHash}---`;
+    const placeholder = `---INLINE-CODE-PLACEHOLDER-${inlineCodeHash}---`;
 
     codePlaceholders[placeholder] = inlineCode;
 
