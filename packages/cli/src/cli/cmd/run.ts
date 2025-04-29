@@ -37,6 +37,7 @@ function createSafeRunner() {
   };
 }
 
+// TODO: instead of concurrently: boolean, use semaphors
 async function runConcurrently<I, O>(
   args: I[],
   fn: (arg: I) => Promise<O>,
