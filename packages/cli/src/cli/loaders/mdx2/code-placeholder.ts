@@ -15,7 +15,11 @@ function ensureTrailingFenceNewline(_content: string) {
     const matches = workingContent.match(fenceRegex);
     if (matches) {
       const match = matches[0];
-      content = content.replace(match, `\n\n${match}\n\n`);
+
+      const replacement = match.trim().startsWith(">")
+        ? match
+        : `\n\n${match}\n\n`;
+      content = content.replace(match, replacement);
       workingContent = workingContent.replace(match, "");
       found = true;
     }
@@ -23,7 +27,7 @@ function ensureTrailingFenceNewline(_content: string) {
 
   content = _.chain(content)
     .split("\n\n")
-    .map((section) => section.trim())
+    .map((section) => _.trim(section, "\n"))
     .filter(Boolean)
     .join("\n\n")
     .value();
