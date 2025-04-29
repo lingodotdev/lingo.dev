@@ -1,5 +1,16 @@
 # lingo.dev
 
+## 0.87.8
+
+### Patch Changes
+
+- [`f4cf34e`](https://github.com/lingodotdev/lingo.dev/commit/f4cf34eaa63150331dded008a1d819e8b3b960dc)
+  Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - add handling for
+  identical unspaces fences replacement
+
+- [`0d4142a`](https://github.com/lingodotdev/lingo.dev/commit/0d4142a2a7c92f6a04cfe30d64f967a6b8d8744d)
+  Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - quoted fences
+
 ## 0.87.7
 
 ### Patch Changes
