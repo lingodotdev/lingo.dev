@@ -254,6 +254,19 @@ describe("MDX Code Placeholder Loader", () => {
       );
     });
 
+    it("handles fenced code blocks inside quotes correctly", async () => {
+      const md = dedent`
+        > Code snippet inside quote:
+        >
+        > \`\`\`shell
+        > npx -y mucho@latest install
+        > \`\`\`
+      `;
+      const pulled = await loader.pull("en", md);
+      const pushed = await loader.push("es", pulled);
+      expect(pushed).toBe(md);
+    });
+
     it("leaves incomplete fences untouched", async () => {
       const md = "```js\nno close";
       const pulled = await loader.pull("en", md);

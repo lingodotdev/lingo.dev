@@ -53,10 +53,14 @@ function extractCodePlaceholders(content: string): {
   for (const match of codeBlockMatches) {
     const codeBlock = match[0];
     const codeBlockHash = md5(codeBlock);
-    const placeholderId = `---CODE_PLACEHOLDER_${codeBlockHash}---`;
+    const placeholder = `---CODE_PLACEHOLDER_${codeBlockHash}---`;
 
-    codePlaceholders[placeholderId] = codeBlock;
-    finalContent = finalContent.replace(codeBlock, placeholderId);
+    codePlaceholders[placeholder] = codeBlock;
+
+    const replacement = codeBlock.trim().startsWith(">")
+      ? `> ${placeholder}`
+      : `${placeholder}`;
+    finalContent = finalContent.replace(codeBlock, replacement);
   }
 
   return {
@@ -82,7 +86,10 @@ export default function createMdxCodePlaceholderLoader(): ILoader<
       for (const [placeholder, original] of Object.entries(
         response.codePlaceholders,
       )) {
-        result = result.replaceAll(placeholder, original);
+        const replacement = original.startsWith(">")
+          ? _.trimStart(original, "> ")
+          : original;
+        result = result.replaceAll(placeholder, replacement);
       }
 
       return result;
