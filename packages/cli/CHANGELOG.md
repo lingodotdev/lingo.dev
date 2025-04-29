@@ -1,5 +1,13 @@
 # lingo.dev
 
+## 0.87.6
+
+### Patch Changes
+
+- [`71bd89a`](https://github.com/lingodotdev/lingo.dev/commit/71bd89a3a074ecfb3cc1df4ec06529b9b04d2cfb)
+  Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - multiline fences
+  in quotes and jsx
+
 ## 0.87.5
 
 ### Patch Changes
