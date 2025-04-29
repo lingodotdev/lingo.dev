@@ -1,5 +1,13 @@
 # lingo.dev
 
+## 0.87.10
+
+### Patch Changes
+
+- [`1b17491`](https://github.com/lingodotdev/lingo.dev/commit/1b17491bdea7705858c13f84e2188cd37ad7b212)
+  Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - inline code
+  placeholder format
+
 ## 0.87.9
 
 ### Patch Changes
