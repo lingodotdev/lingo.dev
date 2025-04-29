@@ -1,5 +1,13 @@
 # lingo.dev
 
+## 0.87.7
+
+### Patch Changes
+
+- [`c4f6b0b`](https://github.com/lingodotdev/lingo.dev/commit/c4f6b0bdbd913195f0c2133584d3e77b55467c7d)
+  Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - trim fences'
+  newlines when in quote mode
+
 ## 0.87.6
 
 ### Patch Changes
