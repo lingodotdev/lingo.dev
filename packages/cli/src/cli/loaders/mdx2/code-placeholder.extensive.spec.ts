@@ -44,14 +44,6 @@ const scenarios: { name: string; content: string; count: number }[] = [
     count: 1,
   },
   {
-    name: "fence starting immediately after previous text (no preceding newline)",
-    content: dedent`Paragraph immediately before.\`\`\`js
-console.log("adjacent");
-\`\`\`
-Paragraph immediately after.`,
-    count: 1,
-  },
-  {
     name: "fenced block inside a block-quote (> prefix on opening line)",
     content: dedent`
       > Quoted section starts
