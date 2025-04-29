@@ -4,6 +4,7 @@ import { md5 } from "../../utils/md5";
 import _ from "lodash";
 
 const fenceRegex = /([ \t]*)(^>\s*)?```([\s\S]*?)```/gm;
+const inlineCodeRegex = /(?<!`)`([^`\r\n]+?)`(?!`)/g;
 
 function ensureTrailingFenceNewline(_content: string) {
   let found = false;
@@ -49,7 +50,6 @@ function extractCodePlaceholders(content: string): {
   const codePlaceholders: Record<string, string> = {};
 
   const codeBlockMatches = finalContent.matchAll(fenceRegex);
-
   for (const match of codeBlockMatches) {
     const codeBlock = match[0];
     const codeBlockHash = md5(codeBlock);
@@ -61,6 +61,18 @@ function extractCodePlaceholders(content: string): {
       ? `> ${placeholder}`
       : `${placeholder}`;
     finalContent = finalContent.replace(codeBlock, replacement);
+  }
+
+  const inlineCodeMatches = finalContent.matchAll(inlineCodeRegex);
+  for (const match of inlineCodeMatches) {
+    const inlineCode = match[0];
+    const inlineCodeHash = md5(inlineCode);
+    const placeholder = `---INLINE_CODE_PLACEHOLDER_${inlineCodeHash}---`;
+
+    codePlaceholders[placeholder] = inlineCode;
+
+    const replacement = placeholder;
+    finalContent = finalContent.replace(inlineCode, replacement);
   }
 
   return {

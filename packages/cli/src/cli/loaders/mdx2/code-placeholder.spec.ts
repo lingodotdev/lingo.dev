@@ -276,4 +276,36 @@ describe("MDX Code Placeholder Loader", () => {
       expect(pushed).toBe(md);
     });
   });
+
+  describe("inline code placeholder", () => {
+    it("should replace inline code with placeholder on pull", async () => {
+      const md = "This is some `inline()` code.";
+      const pulled = await loader.pull("en", md);
+      const hash = md5("`inline()`");
+      const expected = `This is some ---INLINE_CODE_PLACEHOLDER_${hash}--- code.`;
+      expect(pulled).toBe(expected);
+    });
+
+    it("should restore inline code from placeholder on push", async () => {
+      const md = "Some `code` here.";
+      const pulled = await loader.pull("en", md);
+      const translated = pulled.replace("Some", "Algún");
+      const pushed = await loader.push("es", translated);
+      expect(pushed).toBe("Algún `code` here.");
+    });
+
+    it("round-trips multiple inline code snippets", async () => {
+      const md = "Use `a` and `b` and `c`.";
+      const pulled = await loader.pull("en", md);
+      const pushed = await loader.push("es", pulled);
+      expect(pushed).toBe(md);
+    });
+
+    it("handles identical inline snippets correctly", async () => {
+      const md = "Repeat `x` and `x` again.";
+      const pulled = await loader.pull("en", md);
+      const pushed = await loader.push("es", pulled);
+      expect(pushed).toBe(md);
+    });
+  });
 });
