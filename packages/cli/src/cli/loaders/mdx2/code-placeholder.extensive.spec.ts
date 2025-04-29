@@ -129,6 +129,19 @@ Paragraph immediately after.`,
     `,
     count: 1,
   },
+  {
+    name: "code block with jsx component wrapping the fence markers",
+    content: dedent`
+      <Component>
+
+      \`\`\`js
+      console.log("jsx wrapped fence");
+      \`\`\`
+
+      </Component>
+    `,
+    count: 1,
+  },
 ];
 
 describe("mdx code placeholder loader – extensive combinations", () => {
