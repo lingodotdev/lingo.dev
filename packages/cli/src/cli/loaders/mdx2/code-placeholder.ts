@@ -19,8 +19,8 @@ function ensureTrailingFenceNewline(_content: string) {
       const replacement = match.trim().startsWith(">")
         ? match
         : `\n\n${match}\n\n`;
-      content = content.replace(match, replacement);
-      workingContent = workingContent.replace(match, "");
+      content = content.replaceAll(match, replacement);
+      workingContent = workingContent.replaceAll(match, "");
       found = true;
     }
   } while (found);

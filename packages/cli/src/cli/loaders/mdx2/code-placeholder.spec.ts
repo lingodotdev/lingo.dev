@@ -222,6 +222,38 @@ describe("MDX Code Placeholder Loader", () => {
       expect(pushed).toBe(md);
     });
 
+    it("handles identical code snippets correctly", async () => {
+      const md = dedent`
+        First paragraph:
+
+        \`\`\`shell
+        echo "hello world"
+        \`\`\`
+
+        Second paragraph:
+        \`\`\`shell
+        echo "hello world"
+        \`\`\`
+      `;
+      const pulled = await loader.pull("en", md);
+      const pushed = await loader.push("es", pulled);
+      expect(pushed).toBe(
+        dedent`
+        First paragraph:
+
+        \`\`\`shell
+        echo "hello world"
+        \`\`\`
+
+        Second paragraph:
+
+        \`\`\`shell
+        echo "hello world"
+        \`\`\`
+      `,
+      );
+    });
+
     it("leaves incomplete fences untouched", async () => {
       const md = "```js\nno close";
       const pulled = await loader.pull("en", md);
