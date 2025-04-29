@@ -1,14 +1,13 @@
 import { generateText, LanguageModelV1 } from "ai";
 import { LocalizerInput, LocalizerProgressFn } from "./_base";
 
-export function createBasicTranslator(model: LanguageModelV1, systemPrompt: string) {
+export function createBasicTranslator(
+  model: LanguageModelV1,
+  systemPrompt: string,
+) {
   return async (input: LocalizerInput, onProgress: LocalizerProgressFn) => {
     if (!Object.keys(input.processableData).length) {
       return input.processableData;
-    }
-
-    if (!process.env.OPENAI_API_KEY) {
-      throw new Error("OPENAI_API_KEY is not set");
     }
 
     const response = await generateText({
@@ -18,7 +17,9 @@ export function createBasicTranslator(model: LanguageModelV1, systemPrompt: stri
           role: "system",
           content: JSON.stringify({
             role: "system",
-            content: systemPrompt.replaceAll("{source}", input.sourceLocale).replaceAll("{target}", input.targetLocale),
+            content: systemPrompt
+              .replaceAll("{source}", input.sourceLocale)
+              .replaceAll("{target}", input.targetLocale),
           }),
         },
         {

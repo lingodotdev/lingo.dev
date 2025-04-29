@@ -253,34 +253,18 @@ export const configV1_4Definition = extendConfigDefinition(
 
 // v1.4 -> v1.5
 // Changes: add "provider" field to the config
-const commonProviderSchema = Z.object({
-  id: Z.string(),
+const providerSchema = Z.object({
+  id: Z.enum(["openai", "anthropic"]),
   model: Z.string(),
   prompt: Z.string(),
   baseUrl: Z.string().optional(),
 });
-const providerSchema = Z.union([
-  commonProviderSchema.extend({
-    id: Z.literal("lingo"),
-    model: Z.literal("best"),
-  }),
-  commonProviderSchema.extend({
-    id: Z.enum(["openai", "anthropic"]),
-  }),
-]);
 export const configV1_5Definition = extendConfigDefinition(
   configV1_4Definition,
   {
     createSchema: (baseSchema) =>
       baseSchema.extend({
-        provider: providerSchema
-          .default({
-            id: "lingo",
-            model: "best",
-            baseUrl: "https://engine.lingo.dev",
-            prompt: "",
-          })
-          .optional(),
+        provider: providerSchema.optional(),
       }),
     createDefaultValue: (baseDefaultValue) => ({
       ...baseDefaultValue,

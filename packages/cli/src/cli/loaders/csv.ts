@@ -4,7 +4,10 @@ import _ from "lodash";
 import { ILoader } from "./_types";
 import { createLoader } from "./_utils";
 
-export default function createCsvLoader(): ILoader<string, Record<string, string>> {
+export default function createCsvLoader(): ILoader<
+  string,
+  Record<string, string>
+> {
   return createLoader({
     async pull(locale, _input) {
       const input = parse(_input, {
@@ -30,6 +33,9 @@ export default function createCsvLoader(): ILoader<string, Record<string, string
       }) as Record<string, any>[];
 
       const columns = input.length > 0 ? Object.keys(input[0]) : ["id", locale];
+      if (!columns.includes(locale)) {
+        columns.push(locale);
+      }
 
       const updatedRows = input.map((row) => ({
         ...row,

@@ -1,4450 +1,479 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "" : {
-      "shouldTranslate" : false
-    },
-    " and " : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : " y "
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : " 和 "
-          }
-        }
-      }
-    },
-    "- " : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "- "
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "-"
-          }
-        }
-      }
-    },
-    "." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "。"
-          }
-        }
-      }
-    },
-    "·" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "·"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "·"
-          }
-        }
-      }
-    },
-    "/mo" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "/mes"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "/月"
-          }
-        }
-      }
-    },
-    "#%@ - %@" : {
-      "extractionState" : "manual",
+    "app.name" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "#%1$@ - %2$@"
+            "state" : "translated",
+            "value" : "My App"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "#%1$@ - %2$@"
+            "value" : "My App"
           }
         }
       }
     },
-    "#%lld - %@" : {
-      "extractionState" : "manual",
+    "common.cancel" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "#%1$lld - %2$@"
+            "state" : "translated",
+            "value" : "Cancel"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "#%1$lld - %2$@"
-          }
-        }
-      }
-    },
-    "%@" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@"
-          }
-        }
-      }
-    },
-    "%@ not connected" : {
-
-    },
-    "%@%@" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$@%2$@"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$@%2$@"
-          }
-        }
-      }
-    },
-    "%lf" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lf"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lf"
-          }
-        }
-      }
-    },
-    "%lld" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld"
-          }
-        }
-      }
-    },
-    "%lld / %lld" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$lld / %2$lld"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld / %2$lld"
-          }
-        }
-      }
-    },
-    "%lld files" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld archivos"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld 个文件"
-          }
-        }
-      }
-    },
-    "%lld Labels" : {
-
-    },
-    "%lld/%lld files" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$lld/%2$lld files"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld/%2$lld archivos"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld/%2$lld 个文件"
-          }
-        }
-      }
-    },
-    "%lld%%" : {
-
-    },
-    "+ " : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "+ "
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "+ "
-          }
-        }
-      }
-    },
-    "+ Everything from Pro" : {
-
-    },
-    "+ Make \"%@.swift\"" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "+ Crear \"%@.swift\""
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "+ 创建 “%@.swift”"
-          }
-        }
-      }
-    },
-    "+ top-up for $9 / 250 messages" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "+ recarga por $9 / 250 mensajes"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "+ 充值 $9 / 250 条消息"
-          }
-        }
-      }
-    },
-    "+ top-up for $9 / 250 Sonnet messages" : {
-
-    },
-    "⌘⌫ stop" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "⌘⌫ detener"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "⌘⌫ 停止"
-          }
-        }
-      }
-    },
-    "⌘⏎" : {
-
-    },
-    "⌘⏎ codebase" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "⌘⏎ base de código"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "⌘⏎ 代码库"
-          }
-        }
-      }
-    },
-    "⏎ chat" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "⏎ chat"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "⏎ 对话"
-          }
-        }
-      }
-    },
-    "$0/mo" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "$0/mes"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "$0/月"
-          }
-        }
-      }
-    },
-    "5 Code Applies" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "5 aplicaciones de código"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "5 次代码应用"
-          }
-        }
-      }
-    },
-    "5 Git Commit Generations" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "5 generaciones de commits de Git"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "5 次 Git 提交信息生成"
-          }
-        }
-      }
-    },
-    "5 Voice Inputs" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "5 entradas de voz"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "5 次语音输入"
-          }
-        }
-      }
-    },
-    "50 Chat Messages" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "50 mensajes de chat"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "50 条对话消息"
-          }
-        }
-      }
-    },
-    "50 Tab-to-Completes" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "50 autocompletados con tabulación"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "50 次 Tab 自动补全"
-          }
-        }
-      }
-    },
-    "500 Sonnet Messages / month" : {
-
-    },
-    "750 Chat Messages / month" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "750 mensajes de chat / mes"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "750 条对话消息/月"
-          }
-        }
-      }
-    },
-    "1000 Fast Sonnet Messages / month" : {
-
-    },
-    "Accept and Commit" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aceptar y confirmar"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "接受并提交"
-          }
-        }
-      }
-    },
-    "Account" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cuenta"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "账户"
-          }
-        }
-      }
-    },
-    "Account View" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Vista de cuenta"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "账户视图"
-          }
-        }
-      }
-    },
-    "Add" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Añadir"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "添加"
-          }
-        }
-      }
-    },
-    "Add File" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Añadir archivo"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "添加文件"
-          }
-        }
-      }
-    },
-    "Add File Errors" : {
-
-    },
-    "Add File to Xcode" : {
-
-    },
-    "Add File Warnings" : {
-
-    },
-    "Add files and docs (use @ for shortcut)" : {
-
-    },
-    "Add files errors to the chat" : {
-
-    },
-    "Add New Model" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Añadir nuevo modelo"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "添加新模型"
-          }
-        }
-      }
-    },
-    "Add New Prompt" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Añadir nuevo prompt"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "添加新提示"
-          }
-        }
-      }
-    },
-    "Add Selected" : {
-
-    },
-    "Add selected lines to context" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Añadir líneas seleccionadas al contexto"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "将所选行添加到上下文"
-          }
-        }
-      }
-    },
-    "Add suggested file" : {
-
-    },
-    "Add web page from browser (Cmd+L)" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Añadir página web desde el navegador (Cmd+L)"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "从浏览器添加网页 (Cmd+L)"
-          }
-        }
-      }
-    },
-    "Admin" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Administrador"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "管理员"
-          }
-        }
-      }
-    },
-    "Admin Settings" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ajustes de administrador"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "管理员设置"
-          }
-        }
-      }
-    },
-    "Advanced Search Panel" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Panel de búsqueda avanzada"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "高级搜索面板"
-          }
-        }
-      }
-    },
-    "Agent (Sonnet)" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Agente (Sonnet)"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "智能体（Sonnet）"
-          }
-        }
-      }
-    },
-    "Agent Mode" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Modo agente"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "智能体模式"
-          }
-        }
-      }
-    },
-    "Agent Settings" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ajustes del agente"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "智能体"
-          }
-        }
-      }
-    },
-    "Alex" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Alex"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Alex"
-          }
-        }
-      }
-    },
-    "All" : {
-
-    },
-    "Alpha" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Alfa"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Alpha"
-          }
-        }
-      }
-    },
-    "Already have an account?" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "¿Ya tienes una cuenta?"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已经有账户？"
-          }
-        }
-      }
-    },
-    "And %lld more…" : {
-
-    },
-    "Anthropic Key" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Clave de Anthropic"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Anthropic 密钥"
-          }
-        }
-      }
-    },
-    "API Key" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Clave API"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "API 密钥"
-          }
-        }
-      }
-    },
-    "Apple Docs" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Documentación de Apple"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "苹果文档"
-          }
-        }
-      }
-    },
-    "Apple Docs (Individual)" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Documentación de Apple (Individual)"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "苹果文档（单个）"
-          }
-        }
-      }
-    },
-    "Apply" : {
-
-    },
-    "Apply Changes (without seeing the preview)" : {
-
-    },
-    "Apply Code Suggestions" : {
-
-    },
-    "Apply Panel" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Panel de aplicación"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "应用面板"
-          }
-        }
-      }
-    },
-    "Are you sure you want to delete this chat?" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "¿Estás seguro de que quieres eliminar este chat?"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "确定要删除此对话吗？"
-          }
-        }
-      }
-    },
-    "Are you sure you want to delete this memory? This action cannot be undone." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "¿Estás seguro de que quieres eliminar esta memoria? Esta acción no se puede deshacer."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "确定要删除此上下文吗？此操作无法撤销。"
-          }
-        }
-      }
-    },
-    "Are you sure you want to disconnect?" : {
-
-    },
-    "Are you sure you want to log out?" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "¿Estás seguro de que quieres cerrar sesión?"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "确定要退出登录吗？"
-          }
-        }
-      }
-    },
-    "Assigned to: %@" : {
-
-    },
-    "Assignee" : {
-
-    },
-    "Assignees: %@" : {
-
-    },
-    "Attach image" : {
-
-    },
-    "Auto context" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Contexto automático"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "自动关联上下文"
-          }
-        }
-      }
-    },
-    "Auto-activate sidebar on hover" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Activar automáticamente la barra lateral al pasar el cursor"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "鼠标悬停时自动激活侧栏"
-          }
-        }
-      }
-    },
-    "Auto-activate sidebar when Xcode is activated" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Activar automáticamente la barra lateral cuando se active Xcode"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "跟随 Xcode 显示侧栏"
-          }
-        }
-      }
-    },
-    "Auto-position window next to Xcode" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Posicionar automáticamente la ventana junto a Xcode"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "窗口自动对齐 Xcode"
-          }
-        }
-      }
-    },
-    "Auto-send voice transcriptions" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Enviar automáticamente transcripciones de voz"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "自动发送语音转录"
-          }
-        }
-      }
-    },
-    "Autocomplete Settings" : {
-
-    },
-    "Autocomplete Text Opacity" : {
-
-    },
-    "Autofix Issues" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Corregir problemas automáticamente"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "自动修复问题"
-          }
-        }
-      }
-    },
-    "Base URL" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "URL base"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "基础 URL"
-          }
-        }
-      }
-    },
-    "Billing & Usage" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Facturación y uso"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "账单与使用情况"
-          }
-        }
-      }
-    },
-    "Billing History" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Historial de facturación"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "账单历史"
-          }
-        }
-      }
-    },
-    "Branch: %@" : {
-
-    },
-    "Buy More" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Comprar más"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "购买更多"
-          }
-        }
-      }
-    },
-    "By signing in, Alex will be happy again." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Al iniciar sesión, Alex volverá a estar feliz."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "登录后，Alex 将再次正常工作。"
-          }
-        }
-      }
-    },
-    "By signing up, you agree to our " : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Al registrarte, aceptas nuestros "
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "注册即表示您同意我们的"
-          }
-        }
-      }
-    },
-    "Can send images" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Puede enviar imágenes"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "可以发送图片"
-          }
-        }
-      }
-    },
-    "Can't send images in thinking mode" : {
-
-    },
-    "Cancel" : {
-      "extractionState" : "manual",
-      "localizations" : {
         "es" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cancelar"
           }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "取消"
-          }
         }
       }
     },
-    "Category" : {
-      "extractionState" : "manual",
+    "common.done" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Categoría"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "类别"
+            "value" : "Hecho"
           }
         }
       }
     },
-    "Change model" : {
-
-    },
-    "Changes committed successfully!" : {
-      "extractionState" : "manual",
+    "common.ok" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "¡Cambios confirmados con éxito!"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "更改提交成功！"
+            "value" : "OK"
           }
         }
       }
     },
-    "Chat History" : {
-
-    },
-    "Chat Models" : {
-      "extractionState" : "manual",
+    "common.save" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Modelos de chat"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "对话模型"
+            "value" : "Guardar"
           }
         }
       }
     },
-    "Chat Settings" : {
-      "extractionState" : "manual",
+    "error.generic" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Something went wrong. Please try again."
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ajustes de chat"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "对话设置"
+            "value" : "Algo salió mal. Por favor, inténtelo de nuevo."
           }
         }
       }
     },
-    "Check for Updates" : {
-
-    },
-    "Check for Updates…" : {
-
-    },
-    "Check Plan Options" : {
-      "extractionState" : "manual",
+    "error.network" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No internet connection. Please check your network settings."
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ver opciones de plan"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "查看方案选项"
+            "value" : "Sin conexión a internet. Por favor, compruebe su configuración de red."
           }
         }
       }
     },
-    "Clear" : {
-      "extractionState" : "manual",
+    "home.greeting" : {
+      "comment" : "Greeting message with parameter for user name",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hello, %@!"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Limpiar"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "清除"
+            "value" : "¡Hola, %@!"
           }
         }
       }
     },
-    "Closed" : {
-
-    },
-    "Code Applies" : {
-      "extractionState" : "manual",
+    "home.todayTasks" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Today's Tasks"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Aplicaciones de código"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "代码应用"
+            "value" : "Tareas de hoy"
           }
         }
       }
     },
-    "Code Apply failed: %@" : {
-
-    },
-    "Code Apply is running..." : {
-
-    },
-    "Codebase" : {
-      "extractionState" : "manual",
+    "home.viewAll" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "View All"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base de código"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "代码库"
+            "value" : "Ver todo"
           }
         }
       }
     },
-    "Color Scheme" : {
-
-    },
-    "Commit" : {
-
-    },
-    "Commit & Push" : {
-
-    },
-    "Confirm override path" : {
-      "extractionState" : "manual",
+    "login.createAccount" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create Account"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Confirmar ruta de anulación"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "确认覆盖路径"
+            "value" : "Crear cuenta"
           }
         }
       }
     },
-    "Connect" : {
-
-    },
-    "Copy" : {
-
-    },
-    "Copy Code" : {
-
-    },
-    "Copy Message" : {
-      "extractionState" : "manual",
+    "login.email" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Email Address"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Copiar mensaje"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "复制消息"
+            "value" : "Dirección de correo electrónico"
           }
         }
       }
     },
-    "Create Issue" : {
-
-    },
-    "Create new chat with selected lines" : {
-      "extractionState" : "manual",
+    "login.forgotPassword" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Forgot Password?"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Crear nuevo chat con las líneas seleccionadas"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "使用所选行创建新对话"
+            "value" : "¿Olvidó su contraseña?"
           }
         }
       }
     },
-    "Create New Issue" : {
-
-    },
-    "Current Directory:" : {
-      "extractionState" : "manual",
+    "login.password" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Password"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Directorio actual:"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "当前目录："
+            "value" : "Contraseña"
           }
         }
       }
     },
-    "Custom Models" : {
-      "extractionState" : "manual",
+    "login.signIn" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign In"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Modelos personalizados"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "自定义模型"
+            "value" : "Iniciar sesión"
           }
         }
       }
     },
-    "Custom Prompts" : {
-      "extractionState" : "manual",
+    "onboarding.description" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We're excited to have you try our app. Here's what you can do with it."
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Prompts personalizados"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "自定义提示"
+            "value" : "Estamos entusiasmados de que pruebe nuestra aplicación. Esto es lo que puede hacer con ella."
           }
         }
       }
     },
-    "Debug Support" : {
-      "extractionState" : "manual",
+    "onboarding.getStarted" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Get Started"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Soporte de depuración"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "调试支持"
+            "value" : "Comenzar"
           }
         }
       }
     },
-    "Default Status" : {
-
-    },
-    "Delete" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Eliminar"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "删除"
-          }
-        }
-      }
-    },
-    "Delete Chat" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Eliminar chat"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "删除对话"
-          }
-        }
-      }
-    },
-    "Delete Index" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Eliminar índice"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "删除索引"
-          }
-        }
-      }
-    },
-    "Delete Memory" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Eliminar memoria"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "删除上下文"
-          }
-        }
-      }
-    },
-    "Description" : {
-
-    },
-    "Diff" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Diferencias"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Diff 差异"
-          }
-        }
-      }
-    },
-    "Disconnect" : {
-
-    },
-    "Discord Support" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Soporte en Discord"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Discord 支持"
-          }
-        }
-      }
-    },
-    "Dismiss" : {
-
-    },
-    "Display Name" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nombre para mostrar"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "显示名称"
-          }
-        }
-      }
-    },
-    "Docs" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Documentación"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "文档"
-          }
-        }
-      }
-    },
-    "Don't have an account?" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "¿No tienes una cuenta?"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "还没有账户？"
-          }
-        }
-      }
-    },
-    "Edit Issue" : {
-
-    },
-    "Edit Issue #%lld" : {
-
-    },
-    "Email" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Correo electrónico"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "电子邮件"
-          }
-        }
-      }
-    },
-    "Email Us" : {
-
-    },
-    "Enable Autocomplete" : {
-
-    },
-    "Enable Memory" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Activar memoria"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "启用上下文"
-          }
-        }
-      }
-    },
-    "Enable Voice Mode (Shift + Cmd + V)" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Activar modo de voz (Mayús + Cmd + V)"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "启用语音模式（Shift + Cmd + V）"
-          }
-        }
-      }
-    },
-    "Ending %@" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Finalizando %@"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "结束于 %@"
-          }
-        }
-      }
-    },
-    "Enter debug token" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Introducir token de depuración"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "输入调试令牌"
-          }
-        }
-      }
-    },
-    "Enter ID" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Introducir ID"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "输入 ID"
-          }
-        }
-      }
-    },
-    "Enter Key" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Introducir clave"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "输入密钥"
-          }
-        }
-      }
-    },
-    "Enter override path" : {
-
-    },
-    "Enter prompt here" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Introduce el prompt aquí"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在此输入提示"
-          }
-        }
-      }
-    },
-    "Enter the name and value for the new prompt" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Introduce el nombre y valor para el nuevo prompt"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "输入新提示的名称和值"
-          }
-        }
-      }
-    },
-    "Enter URL" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Introducir URL"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "输入 URL"
-          }
-        }
-      }
-    },
-    "Enter your query" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Introduce tu consulta"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "输入您的查询"
-          }
-        }
-      }
-    },
-    "Error Applying Code" : {
-
-    },
-    "Expand %lld more lines" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Expandir %lld líneas más"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "展开 %lld 行更多内容"
-          }
-        }
-      }
-    },
-    "Failed to load issues" : {
-
-    },
-    "Feature Settings" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ajustes de funciones"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "功能设置"
-          }
-        }
-      }
-    },
-    "Features and Keybindings" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Funciones y atajos de teclado"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "功能和快捷键"
-          }
-        }
-      }
-    },
-    "Files" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Archivos"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "文件"
-          }
-        }
-      }
-    },
-    "Fill to expand available width" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Rellenar para expandir el ancho disponible"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "自适应宽度"
-          }
-        }
-      }
-    },
-    "Find relevant code from your codebase" : {
-
-    },
-    "Fix Swift 6 Issues" : {
-
-    },
-    "Fix Swift 6 issues automatically" : {
-
-    },
-    "FloatingPanel" : {
-
-    },
-    "Forgot Password?" : {
-
-    },
-    "Free Beta" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Beta gratuita"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "公测版"
-          }
-        }
-      }
-    },
-    "Free Plan" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Plan gratuito"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "免费方案"
-          }
-        }
-      }
-    },
-    "Gemini Key" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Clave de Gemini"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gemini 密钥"
-          }
-        }
-      }
-    },
-    "Generate Commit Message" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Generar mensaje de commit"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "生成提交信息"
-          }
-        }
-      }
-    },
-    "Generate Git Message" : {
-
-    },
-    "Get Receipt" : {
-
-    },
-    "Git Commit Generation" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Generación de commit de Git"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Git 提交信息生成"
-          }
-        }
-      }
-    },
-    "Git Commits" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Commits de Git"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Git 提交"
-          }
-        }
-      }
-    },
-    "Git Status" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Estado de Git"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Git 状态"
-          }
-        }
-      }
-    },
-    "GitHub Issues" : {
-
-    },
-    "Github Issues Integration" : {
-
-    },
-    "Go to Integrations" : {
-
-    },
-    "Go to Settings" : {
-
-    },
-    "Hello, World!" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "¡Hola, mundo!"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "你好，世界！"
-          }
-        }
-      }
-    },
-    "How is my data used?" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "¿Cómo se usa mi información?"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "我的数据是如何被使用的？"
-          }
-        }
-      }
-    },
-    "I've applied the code" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "He aplicado el código"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "我已应用了这段代码"
-          }
-        }
-      }
-    },
-    "If we request a remote debugging session with you through Discord, please enter the token here and click on \"Start Debug Session\"." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Si solicitamos una sesión de depuración remota contigo a través de Discord, por favor introduce el token aquí y haz clic en \"Iniciar sesión de depuración\"."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "如果我们通过 Discord 请求与您进行远程调试，请在此输入令牌并点击“Start Debug Session”。"
-          }
-        }
-      }
-    },
-    "Important: Please update to version %@. %@" : {
+    "onboarding.welcome" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "Important: Please update to version %1$@. %2$@"
+            "state" : "translated",
+            "value" : "Welcome to My App!"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Importante: Por favor, actualiza a la versión %1$@. %2$@"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "重要：请更新到版本 %1$@。%2$@"
+            "value" : "¡Bienvenido a My App!"
           }
         }
       }
     },
-    "In agent mode, Claude 3.5 Sonnet is used by default because it is the best model for code generation. If you'd like to switch to a different model, disable agent mode.\n\n(You can always turn it back on in the Agent Settings dropdown.)" : {
+    "pluralized.items" : {
+      "comment" : "Shows count of items with plural forms",
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld item"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld items"
+                }
+              }
+            }
+          }
+        },
+        "es" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld elemento"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld elementos"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "settings.account" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Account"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "En modo agente, Claude 3.5 Sonnet se usa por defecto porque es el mejor modelo para generación de código. Si quieres cambiar a un modelo diferente, desactiva el modo agente.\n\n(Siempre puedes volver a activarlo en el menú desplegable de Ajustes del Agente.)"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在智能体模式下，默认使用 Claude 3.5 Sonnet，因为它是最适合代码生成的模型。如果您想切换到其他模型，请禁用智能体模式。\n\n（您随时可以在智能体设置下拉菜单中重新启用它。）"
+            "value" : "Cuenta"
           }
         }
       }
     },
-    "Indexed" : {
-      "extractionState" : "manual",
+    "settings.appearance" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Appearance"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Indexado"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已索引"
+            "value" : "Apariencia"
           }
         }
       }
     },
-    "Indexed Files" : {
-      "extractionState" : "manual",
+    "settings.darkMode" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dark Mode"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Archivos indexados"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已索引文件"
+            "value" : "Modo oscuro"
           }
         }
       }
     },
-    "Inline completion" : {
-      "extractionState" : "manual",
+    "settings.logout" : {
       "localizations" : {
-        "es" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Autocompletado en línea"
+            "value" : "Log Out"
           }
         },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "行内代码补全"
-          }
-        }
-      }
-    },
-    "Integration" : {
-
-    },
-    "Integrations" : {
-
-    },
-    "Issue title" : {
-
-    },
-    "Join Discord" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Unirse a Discord"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "加入 Discord"
-          }
-        }
-      }
-    },
-    "Labels: %@" : {
-
-    },
-    "Learn more about Agent best practices here:\n\n[https://docs.alexcodes.app/chat/context/agents](https://docs.alexcodes.app/chat/context/agents)" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aprende más sobre las mejores prácticas del Agente aquí:\n\n[https://docs.alexcodes.app/chat/context/agents](https://docs.alexcodes.app/chat/context/agents)"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在此了解更多关于智能体最佳实践：\n\n[https://docs.alexcodes.app/chat/context/agents](https://docs.alexcodes.app/chat/context/agents)"
-          }
-        }
-      }
-    },
-    "Line %lld" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Línea %lld"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "第 %lld 行"
-          }
-        }
-      }
-    },
-    "Linear" : {
-
-    },
-    "Linear Integration" : {
-
-    },
-    "listening (press ⏎ to send)" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "escuchando (presiona ⏎ para enviar)"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "正在聆听（按 ⏎ 发送）"
-          }
-        }
-      }
-    },
-    "listening (press ⏎ to stop)" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "escuchando (presiona ⏎ para detener)"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "正在聆听（按 ⏎ 停止）"
-          }
-        }
-      }
-    },
-    "Load Index" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cargar índice"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "加载索引"
-          }
-        }
-      }
-    },
-    "Loading assignees..." : {
-
-    },
-    "Loading billing information..." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cargando información de facturación..."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "正在加载账单信息..."
-          }
-        }
-      }
-    },
-    "Loading Documentation..." : {
-
-    },
-    "Loading issues..." : {
-
-    },
-    "Loading repositories..." : {
-
-    },
-    "Loading..." : {
-
-    },
-    "Log Out" : {
-      "extractionState" : "manual",
-      "localizations" : {
         "es" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cerrar sesión"
           }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "退出登录"
-          }
-        }
-      }
-    },
-    "Logout" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cerrar sesión"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "退出登录"
-          }
-        }
-      }
-    },
-    "Made in SwiftUI" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hecho en SwiftUI"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "使用 SwiftUI 构建"
-          }
-        }
-      }
-    },
-    "Manage Subscription" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gestionar suscripción"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "管理订阅"
-          }
-        }
-      }
-    },
-    "Manage Trial Subscription" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gestionar suscripción de prueba"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "管理试用订阅"
-          }
-        }
-      }
-    },
-    "Managed Billing Option (Team Plan)" : {
-
-    },
-    "Match height with Xcode" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Igualar altura con Xcode"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "与 Xcode 高度匹配"
-          }
-        }
-      }
-    },
-    "Memory" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Memoria"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "上下文"
-          }
-        }
-      }
-    },
-    "Memory Settings" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ajustes de memoria"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "上下文设置"
-          }
-        }
-      }
-    },
-    "Message Top Ups" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Recargas de mensajes"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "消息充值"
-          }
-        }
-      }
-    },
-    "Model ID" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ID del modelo"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "模型 ID"
-          }
-        }
-      }
-    },
-    "Model Settings" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ajustes del modelo"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "模型设置"
-          }
-        }
-      }
-    },
-    "Models" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Modelos"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "模型"
-          }
-        }
-      }
-    },
-    "Monthly Messages" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mensajes mensuales"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "每月消息数"
-          }
-        }
-      }
-    },
-    "Name" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nombre"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "名称"
-          }
-        }
-      }
-    },
-    "New Chat" : {
-
-    },
-    "New GitHub Issue" : {
-
-    },
-    "New Issue" : {
-
-    },
-    "No" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "否"
-          }
-        }
-      }
-    },
-    "No Assignees" : {
-
-    },
-    "No billing history available" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No hay historial de facturación disponible"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "无可用账单历史"
-          }
-        }
-      }
-    },
-    "No context selected" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ningún contexto seleccionado"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "未选择任何上下文"
-          }
-        }
-      }
-    },
-    "No issues found" : {
-
-    },
-    "No Labels" : {
-
-    },
-    "No matching issues" : {
-
-    },
-    "No memories found" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No se encontraron memorias"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "未找到上下文"
-          }
-        }
-      }
-    },
-    "No Project" : {
-
-    },
-    "No Project Focused" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ningún proyecto enfocado"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "没有专注的项目"
-          }
-        }
-      }
-    },
-    "No Repository Selected" : {
-
-    },
-    "No results found" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No se encontraron resultados"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "未找到结果"
-          }
-        }
-      }
-    },
-    "No Team Selected" : {
-
-    },
-    "No userdata found" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No se encontraron datos de usuario"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "未找到用户数据"
-          }
-        }
-      }
-    },
-    "Not Indexed" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No indexado"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "未索引"
-          }
-        }
-      }
-    },
-    "Not logged in" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No ha iniciado sesión"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "未登录"
-          }
-        }
-      }
-    },
-    "Note: This URL must be publicly available (not a localhost URL)." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nota: Esta URL debe estar disponible públicamente (no una URL de localhost)."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "注意：此 URL 必须可公开访问（不能是 localhost）。"
-          }
-        }
-      }
-    },
-    "Notice an Issue?" : {
-
-    },
-    "o1 Credits" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Créditos o1"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "o1 额度"
-          }
-        }
-      }
-    },
-    "O1-Preview Credits" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Créditos O1-Preview"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "O1-Preview 额度"
-          }
-        }
-      }
-    },
-    "Only for this project, and will be used in combination with your custom system prompt." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Solo para este proyecto, y se usará en combinación con su prompt de sistema personalizado."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "仅适用于此项目，并将与您的自定义系统提示组合使用。"
-          }
-        }
-      }
-    },
-    "Open" : {
-
-    },
-    "Open file in Xcode" : {
-
-    },
-    "Open in GitHub" : {
-
-    },
-    "Open in Linear" : {
-
-    },
-    "Open Permission Settings" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Abrir ajustes de permisos"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "打开权限设置"
-          }
-        }
-      }
-    },
-    "OpenAI Key" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Clave de OpenAI"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OpenAI 密钥"
-          }
-        }
-      }
-    },
-    "Override Path:" : {
-
-    },
-    "Perplexity Key" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Clave de Perplexity"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Perplexity 密钥"
-          }
-        }
-      }
-    },
-    "Pin chat input to bottom" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fijar entrada de chat en la parte inferior"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "将对话输入固定在底部"
-          }
-        }
-      }
-    },
-    "Plan" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Plan"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "方案"
-          }
-        }
-      }
-    },
-    "Please grant accessibility permissions so Alex can work with Xcode." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Por favor, conceda permisos de accesibilidad para que Alex pueda trabajar con Xcode."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "请授予辅助功能权限，以便 Alex 可以与 Xcode 协同工作。"
-          }
-        }
-      }
-    },
-    "Please select a repository in GitHub settings first" : {
-
-    },
-    "Please select a team in Linear settings first" : {
-
-    },
-    "Popular" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Popular"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "热门"
-          }
-        }
-      }
-    },
-    "Premium" : {
-
-    },
-    "Preview:" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Vista previa:"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "预览："
-          }
-        }
-      }
-    },
-    "Privacy" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Privacidad"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "隐私"
-          }
-        }
-      }
-    },
-    "Privacy Policy" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Política de privacidad"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "隐私政策"
-          }
-        }
-      }
-    },
-    "Project-Specific Prompt" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Prompt específico del proyecto"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "项目特定提示"
-          }
-        }
-      }
-    },
-    "Prompt Name" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nombre del prompt"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "提示名称"
-          }
-        }
-      }
-    },
-    "Purchase Subscription" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Comprar suscripción"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "购买订阅"
-          }
-        }
-      }
-    },
-    "Quick Actions:" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Acciones rápidas:"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "快捷操作："
-          }
-        }
-      }
-    },
-    "record" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "grabar"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "录制"
-          }
-        }
-      }
-    },
-    "Refresh" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Actualizar"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "刷新"
-          }
-        }
-      }
-    },
-    "Refresh Issues" : {
-
-    },
-    "Related Files:" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Archivos relacionados:"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "相关文件："
-          }
-        }
-      }
-    },
-    "Reload Index" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Recargar índice"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "重新加载索引"
-          }
-        }
-      }
-    },
-    "Remote Debugging Session" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sesión de depuración remota"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "远程调试会话"
-          }
-        }
-      }
-    },
-    "Remove" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Eliminar"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "移除"
-          }
-        }
-      }
-    },
-    "Repository is clean" : {
-
-    },
-    "Rerank" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Reordenar"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "重新排序"
-          }
-        }
-      }
-    },
-    "Retry" : {
-
-    },
-    "Save Issue" : {
-
-    },
-    "Search Apple Documentation..." : {
-
-    },
-    "Search chats..." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Buscar chats..."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "搜索对话..."
-          }
-        }
-      }
-    },
-    "Search files" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Buscar archivos"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "搜索文件"
-          }
-        }
-      }
-    },
-    "Search issues..." : {
-
-    },
-    "Search memories..." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Buscar recuerdos..."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "搜索上下文..."
-          }
-        }
-      }
-    },
-    "Search the web for answers" : {
-
-    },
-    "Select a member" : {
-
-    },
-    "Select a project" : {
-
-    },
-    "Select a repository" : {
-
-    },
-    "Select All" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Seleccionar todo"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "全选"
-          }
-        }
-      }
-    },
-    "Select an assignee" : {
-
-    },
-    "Select Assignee" : {
-
-    },
-    "Select Member" : {
-
-    },
-    "Select Project" : {
-
-    },
-    "Select Repository" : {
-
-    },
-    "Select Team" : {
-
-    },
-    "Semantic" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Semántico"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "语义搜索"
-          }
-        }
-      }
-    },
-    "Send message" : {
-
-    },
-    "Send voice message" : {
-
-    },
-    "Set override path" : {
-
-    },
-    "Settings" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ajustes"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "设置"
-          }
-        }
-      }
-    },
-    "Show code apply view at bottom" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mostrar vista de aplicación de código en la parte inferior"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在底部显示代码应用视图"
-          }
-        }
-      }
-    },
-    "Show Hints" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mostrar pistas"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "显示提示"
-          }
-        }
-      }
-    },
-    "Show less" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mostrar menos"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "显示更少"
-          }
-        }
-      }
-    },
-    "Show less…" : {
-
-    },
-    "Show suggestion details" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mostrar detalles de sugerencia"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "显示建议详情"
-          }
-        }
-      }
-    },
-    "Shrink code view sections" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Reducir secciones de vista de código"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "收缩代码视图部分"
-          }
-        }
-      }
-    },
-    "Sign in" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Iniciar sesión"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "登录"
-          }
-        }
-      }
-    },
-    "Sign In" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Iniciar sesión"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "登录"
-          }
-        }
-      }
-    },
-    "Sign in with Google" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Iniciar sesión con Google"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "使用 Google 登录"
-          }
-        }
-      }
-    },
-    "Sign up" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Registrarse"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "注册"
-          }
-        }
-      }
-    },
-    "Sign Up" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Registrarse"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "注册"
-          }
-        }
-      }
-    },
-    "Sign up with Google" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Registrarse con Google"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "使用 Google 注册"
-          }
-        }
-      }
-    },
-    "Staged Changes" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cambios preparados"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已暂存更改"
-          }
-        }
-      }
-    },
-    "Standard" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Estándar"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "标准"
-          }
-        }
-      }
-    },
-    "Start Debug Session" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Iniciar sesión de depuración"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "开始调试会话"
-          }
-        }
-      }
-    },
-    "Start Free Trial (7 days)" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Iniciar prueba gratuita (7 días)"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "开始免费试用（7天）"
-          }
-        }
-      }
-    },
-    "Start Subscription" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Iniciar suscripción"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "开始订阅"
-          }
-        }
-      }
-    },
-    "Start without context" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Iniciar sin contexto"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "直接开始"
-          }
-        }
-      }
-    },
-    "Stop Debug Session" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Detener sesión de depuración"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "停止调试会话"
-          }
-        }
-      }
-    },
-    "Submit" : {
-
-    },
-    "Suggestion Details" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Detalles de sugerencia"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "建议详情"
-          }
-        }
-      }
-    },
-    "Suggestions" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sugerencias"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "建议"
-          }
-        }
-      }
-    },
-    "Support" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Soporte"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "支持"
-          }
-        }
-      }
-    },
-    "System Prompt" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Prompt del sistema"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "系统提示"
-          }
-        }
-      }
-    },
-    "Tab-to-Complete suggestions (beta)" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sugerencias de autocompletado con tabulación (beta)"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tab 自动补全建议（测试版）"
-          }
-        }
-      }
-    },
-    "Terms of Service" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Términos de servicio"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "服务条款"
-          }
-        }
-      }
-    },
-    "Terms of Sevice" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Términos de servicio"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "服务条款"
-          }
-        }
-      }
-    },
-    "Theme Settings" : {
-
-    },
-    "There are no changes to commit." : {
-
-    },
-    "These go as additional info with the default system prompt" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Estos van como información adicional con el prompt del sistema predeterminado"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "这些将作为默认系统提示的附加信息"
-          }
-        }
-      }
-    },
-    "Think before answering" : {
-
-    },
-    "This model doesn't support images" : {
-
-    },
-    "Top-K: %lld" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Top-K: %lld"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Top-K：%lld"
-          }
-        }
-      }
-    },
-    "transcribing..." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "transcribiendo..."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "正在转录..."
-          }
-        }
-      }
-    },
-    "Try adjusting your search criteria" : {
-
-    },
-    "Type something here (or ⌘+shift+v for voice)" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Escribe algo aquí (o ⌘+shift+v para voz)"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在此输入内容（或按 ⌘+Shift+V 进行语音输入）"
-          }
-        }
-      }
-    },
-    "Unlimited Code Applies" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aplicaciones de código ilimitadas"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "无限代码应用"
-          }
-        }
-      }
-    },
-    "Unlimited DeepSeek R1 Messages" : {
-
-    },
-    "Unlimited Slow Sonnet Messages" : {
-
-    },
-    "Unlimited Tab-to-Complete" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Autocompletado con tabulación ilimitado"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "无限 Tab 自动补全"
-          }
-        }
-      }
-    },
-    "Unstaged Changes" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cambios no preparados"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "未暂存更改"
-          }
-        }
-      }
-    },
-    "Update" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Actualizar"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "更新"
-          }
-        }
-      }
-    },
-    "Update available" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Actualización disponible"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "有可用更新"
-          }
-        }
-      }
-    },
-    "Update Issue" : {
-
-    },
-    "Update to %@" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Actualizar a %@"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "更新至 %@"
-          }
-        }
-      }
-    },
-    "Upgrade To Premium" : {
-
-    },
-    "Usage" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uso"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "使用情况"
-          }
-        }
-      }
-    },
-    "Use Agent" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Usar agente"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "智能体"
-          }
-        }
-      }
-    },
-    "Use Agent Mode" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Usar modo agente"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "使用智能体模式"
-          }
-        }
-      }
-    },
-    "User Activities" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Actividades del usuario"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "用户活动"
-          }
-        }
-      }
-    },
-    "Using Codebase Search" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Usando búsqueda en la base de código"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "使用代码库搜索"
-          }
-        }
-      }
-    },
-    "Using Docs" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Usando documentación"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "使用文档"
-          }
-        }
-      }
-    },
-    "Voice Inputs" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Entradas de voz"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "语音输入"
-          }
-        }
-      }
-    },
-    "Voice Mode" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Modo de voz"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "语音模式"
-          }
-        }
-      }
-    },
-    "Voice Settings" : {
-
-    },
-    "VoyageAI Key" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Clave de VoyageAI"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "VoyageAI 密钥"
-          }
         }
       }
     },
-    "Waiting for model%@" : {
-      "extractionState" : "manual",
+    "settings.notifications" : {
       "localizations" : {
-        "es" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Esperando el modelo%@"
+            "value" : "Notifications"
           }
         },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "等待模型 %@"
-          }
-        }
-      }
-    },
-    "Want to buy O1 credits? Join the Discord and message @DanielEdrisian" : {
-      "extractionState" : "manual",
-      "localizations" : {
         "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "¿Quieres comprar créditos O1? Únete al Discord y envía un mensaje a @DanielEdrisian"
-          }
-        },
-        "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "想要购买 O1 额度吗？加入 Discord 并联系 @DanielEdrisian"
+            "value" : "Notificaciones"
           }
         }
       }
     },
-    "We conduct all of our support through Discord. We also send new feature announcements there!" : {
-      "extractionState" : "manual",
+    "settings.title" : {
       "localizations" : {
-        "es" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Realizamos todo nuestro soporte a través de Discord. ¡También enviamos anuncios de nuevas funciones allí!"
+            "value" : "Settings"
           }
         },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "我们的所有支持都在 Discord 上进行。新功能公告也会在那里发布！"
-          }
-        }
-      }
-    },
-    "We couldn't find an exact match for this snippet. Please select the file to apply to:" : {
-      "extractionState" : "manual",
-      "localizations" : {
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No pudimos encontrar una coincidencia exacta para este fragmento. Por favor, selecciona el archivo al que aplicarlo:"
+            "value" : "Configuración"
           }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "我们无法为此代码片段找到确切匹配。请选择要应用的文件："
-          }
         }
       }
     },
-    "We recently migrated our billing, so if you notice a subscription missing, please contact us via email. We'll get back to you shortly." : {
-
-    },
-    "What's new:" : {
-      "extractionState" : "manual",
+    "task.complete" : {
       "localizations" : {
-        "es" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Novedades:"
+            "value" : "Mark Complete"
           }
         },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "更新内容："
-          }
-        }
-      }
-    },
-    "When enabled, Alex will maintain context from your previous messages to provide more relevant responses." : {
-      "extractionState" : "manual",
-      "localizations" : {
         "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cuando está activado, Alex mantendrá el contexto de tus mensajes anteriores para proporcionar respuestas más relevantes."
-          }
-        },
-        "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "启用后，Alex 将保留先前消息的上下文，以提供更相关的回答。"
+            "value" : "Marcar como completada"
           }
         }
       }
     },
-    "Why?" : {
-      "extractionState" : "manual",
+    "task.delete" : {
       "localizations" : {
-        "es" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "¿Por qué?"
+            "value" : "Delete Task"
           }
         },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "为什么？"
-          }
-        }
-      }
-    },
-    "Window Management" : {
-      "extractionState" : "manual",
-      "localizations" : {
         "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gestión de ventanas"
-          }
-        },
-        "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "窗口管理"
+            "value" : "Eliminar tarea"
           }
         }
       }
     },
-    "Window Settings" : {
-      "extractionState" : "manual",
+    "task.due" : {
+      "comment" : "Shows due date of task",
       "localizations" : {
-        "es" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ajustes de ventana"
+            "value" : "Due: %@"
           }
         },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "窗口设置"
-          }
-        }
-      }
-    },
-    "You can add custom models that comply with the OpenAI API scheme. Just add the base url, model name, and api key." : {
-      "extractionState" : "manual",
-      "localizations" : {
         "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Puedes añadir modelos personalizados que cumplan con el esquema de la API de OpenAI. Solo añade la url base, el nombre del modelo y la clave api."
-          }
-        },
-        "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "您可以添加符合 OpenAI API 规范的自定义模型。只需添加基础 URL、模型名称和 API 密钥即可。"
+            "value" : "Fecha límite: %@"
           }
         }
       }

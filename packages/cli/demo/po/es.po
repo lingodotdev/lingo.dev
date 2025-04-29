@@ -1,5 +1,6 @@
-msgid "greeting"
-msgstr "¡Hola, {name}!"
-
-msgid "farewell"
-msgstr "¡Adiós, {name}!"
+#: dashboard/users/templates/organizations/members.html:39
+#, python-format
+msgid "%(counter)s member"
+msgid_plural "%(counter)s members"
+msgstr[0] "%(counter)s miembro"
+msgstr[1] "%(counter)s miembros"

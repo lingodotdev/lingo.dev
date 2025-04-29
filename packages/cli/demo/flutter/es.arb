@@ -14,7 +14,7 @@
       }
     }
   },
-  "pluralMessage": "{count, plural, =0{Ningún elemento} =1{Un elemento} other{{count} elementos}}",
+  "pluralMessage": "{count, plural, =0{Sin elementos} =1{Un elemento} other{{count} elementos}}",
   "@pluralMessage": {
     "description": "A message with plural forms",
     "placeholders": {
@@ -24,7 +24,7 @@
       }
     }
   },
-  "genderMessage": "{gender, select, male{A él} female{A ella} other{A ellos}} le gustó tu publicación.",
+  "genderMessage": "{gender, select, male{Él} female{Ella} other{Ellos}} le gustó tu publicación.",
   "@genderMessage": {
     "description": "A gender-specific message",
     "placeholders": {
@@ -57,7 +57,7 @@
       }
     }
   },
-  "currencyMessage": "Tu saldo es de {amount}",
+  "currencyMessage": "Tu saldo es {amount}",
   "@currencyMessage": {
     "description": "A message with a currency amount",
     "placeholders": {
@@ -90,7 +90,7 @@
       }
     }
   },
-  "complexMessage": "El {date}, {name} {gender, select, male{invitó a} female{invitó a} other{invitó a}} {guestCount, plural, =0{ningún invitado} =1{un invitado} other{{guestCount} invitados}} a {eventName}.",
+  "complexMessage": "El {date}, {name} {gender, select, male{invitó a sus} female{invitó a sus} other{invitó a sus}} {guestCount, plural, =0{ningún invitado} =1{un invitado} other{{guestCount} invitados}} a {eventName}.",
   "@complexMessage": {
     "description": "A complex message combining multiple placeholders, gender, and plurals",
     "placeholders": {
@@ -119,11 +119,11 @@
   "@escapeMessage": {
     "description": "A message demonstrating how to escape special characters"
   },
-  "multilineMessage": "Este es un mensaje largo\nque abarca varias líneas\ny preserva los saltos de línea.",
+  "multilineMessage": "Este es un mensaje largo\nque abarca múltiples líneas\ny preserva los saltos de línea.",
   "@multilineMessage": {
     "description": "A multiline message"
   },
-  "htmlMessage": "Este mensaje contiene etiquetas <b>HTML</b> como <i>cursiva</i> y <u>subrayado</u>.",
+  "htmlMessage": "Este mensaje contiene etiquetas <b>HTML</b> como <i>cursivas</i> y <u>subrayado</u>.",
   "@htmlMessage": {
     "description": "A message with HTML tags (note: handling these requires additional processing in the app)"
   }

@@ -19,7 +19,6 @@ import chalk from "chalk";
 import { createTwoFilesPatch } from "diff";
 import inquirer from "inquirer";
 import externalEditor from "external-editor";
-// import { cacheChunk, deleteCache, getNormalizedCache } from "../utils/cache";
 import updateGitignore from "../utils/update-gitignore";
 import createProcessor from "../processor";
 import { withExponentialBackoff } from "../utils/exp-backoff";
@@ -108,8 +107,7 @@ export default new Command()
       ora.succeed("Localization configuration is valid");
 
       ora.start("Connecting to Lingo.dev Localization Engine...");
-      const isByokMode =
-        i18nConfig?.provider && i18nConfig.provider.id !== "lingo";
+      const isByokMode = !!i18nConfig?.provider;
 
       if (isByokMode) {
         authId = null;
@@ -275,66 +273,6 @@ export default new Command()
         }
         ora.succeed("Localization state check completed");
       }
-
-      // recover cache if exists
-      // const cache = getNormalizedCache();
-      // if (cache) {
-      //   console.log();
-      //   ora.succeed(`Cache loaded. Attempting recovery...`);
-      //   const cacheOra = Ora({ indent: 2 });
-
-      //   for (const bucket of buckets) {
-      //     cacheOra.info(`Processing bucket: ${bucket.type}`);
-      //     for (const bucketPath of bucket.paths) {
-      //       const bucketOra = Ora({ indent: 4 });
-      //       bucketOra.info(`Processing path: ${bucketPath.pathPattern}`);
-
-      //       const sourceLocale = resolveOverriddenLocale(i18nConfig!.locale.source, bucketPath.delimiter);
-      //       const bucketLoader = createBucketLoader(
-      //         bucket.type,
-      //         bucketPath.pathPattern,
-      //         {
-      //           isCacheRestore: true,
-      //           defaultLocale: sourceLocale,
-      //           injectLocale: bucket.injectLocale,
-      //         },
-      //         bucket.lockedKeys,
-      //       );
-      //       bucketLoader.setDefaultLocale(sourceLocale);
-      //       await bucketLoader.init();
-      //       const sourceData = await bucketLoader.pull(sourceLocale);
-      //       const cachedSourceData: Record<string, string> = {};
-
-      //       for (const targetLocale in cache) {
-      //         const targetData = await bucketLoader.pull(targetLocale);
-
-      //         for (const key in cache[targetLocale]) {
-      //           const { source, result } = cache[targetLocale][key];
-
-      //           if (sourceData[key] === source && targetData[key] !== result) {
-      //             targetData[key] = result;
-      //             cachedSourceData[key] = source;
-      //           }
-      //         }
-
-      //         await bucketLoader.push(targetLocale, targetData);
-      //         const deltaProcessor = createDeltaProcessor(bucketPath.pathPattern);
-      //         const checksums = await deltaProcessor.createChecksums(cachedSourceData);
-      //         await deltaProcessor.saveChecksums(checksums);
-
-      //         bucketOra.succeed(
-      //           `[${sourceLocale} -> ${targetLocale}] Recovered ${Object.keys(cachedSourceData).length} entries from cache`,
-      //         );
-      //       }
-      //     }
-      //   }
-      //   deleteCache();
-      //   if (flags.verbose) {
-      //     cacheOra.info("Cache file deleted.");
-      //   }
-      // } else if (flags.verbose) {
-      //   ora.info("Cache file not found. Skipping recovery.");
-      // }
 
       if (flags.frozen) {
         ora.start("Checking for lockfile updates...");
@@ -536,17 +474,7 @@ export default new Command()
                     targetData,
                   },
                   (progress, sourceChunk, processedChunk) => {
-                    // cacheChunk(targetLocale, sourceChunk, processedChunk);
-
-                    const progressLog = `[${sourceLocale} -> ${targetLocale}] [${Object.keys(processableData).length} entries] (${progress}%) AI localization in progress...`;
-                    if (flags.verbose) {
-                      bucketOra.info(progressLog);
-                      bucketOra.info(
-                        `(${progress}%) Caching chunk ${JSON.stringify(sourceChunk, null, 2)} -> ${JSON.stringify(processedChunk, null, 2)}`,
-                      );
-                    } else {
-                      bucketOra.text = progressLog;
-                    }
+                    bucketOra.text = `[${sourceLocale} -> ${targetLocale}] [${Object.keys(processableData).length} entries] (${progress}%) AI localization in progress...`;
                   },
                 );
 
@@ -627,10 +555,6 @@ export default new Command()
       console.log();
       if (!hasErrors) {
         ora.succeed("Localization completed.");
-        // deleteCache();
-        // if (flags.verbose) {
-        //   ora.info("Cache file deleted.");
-        // }
         trackEvent(authId, "cmd.i18n.success", {
           i18nConfig,
           flags,
@@ -652,45 +576,6 @@ export default new Command()
     }
   });
 
-function calculateDataDelta(args: {
-  sourceData: Record<string, any>;
-  updatedSourceData: Record<string, any>;
-  targetData: Record<string, any>;
-}) {
-  // Calculate missing keys
-  const newKeys = _.difference(
-    Object.keys(args.sourceData),
-    Object.keys(args.targetData),
-  );
-  // Calculate updated keys
-  const updatedKeys = Object.keys(args.updatedSourceData);
-
-  // Calculate delta payload
-  const result = _.chain(args.sourceData)
-    .pickBy((value, key) => newKeys.includes(key) || updatedKeys.includes(key))
-    .value() as Record<string, any>;
-
-  return result;
-}
-
-async function retryWithExponentialBackoff<T>(
-  operation: () => Promise<T>,
-  maxAttempts: number,
-  baseDelay: number = 1000,
-): Promise<T> {
-  for (let attempt = 0; attempt < maxAttempts; attempt++) {
-    try {
-      return await operation();
-    } catch (error) {
-      if (attempt === maxAttempts - 1) throw error;
-
-      const delay = baseDelay * Math.pow(2, attempt);
-      await new Promise((resolve) => setTimeout(resolve, delay));
-    }
-  }
-  throw new Error("Unreachable code");
-}
-
 function parseFlags(options: any) {
   return Z.object({
     apiKey: Z.string().optional(),
@@ -707,7 +592,8 @@ function parseFlags(options: any) {
   }).parse(options);
 }
 
-async function validateAuth(settings: ReturnType<typeof getSettings>) {
+// Export validateAuth for use in other commands
+export async function validateAuth(settings: ReturnType<typeof getSettings>) {
   if (!settings.auth.apiKey) {
     throw new CLIError({
       message:

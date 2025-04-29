@@ -1,0 +1,72 @@
+<!DOCTYPE html><html lang="ru"><head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Это метаописание нуждается в локализации">
+    <meta name="keywords" content="локализация, i18n, пример, демо">
+    <title>Добро пожаловать в демонстрацию локализации</title>
+  </head>
+  <body>
+    <!-- Text in attributes -->
+    <img src="logo.png" alt="Логотип компании" title="Hover to see this tooltip">
+    <input type="text" placeholder="Введите ваше имя" aria-label="Name input field">
+
+    <!-- Plain text content -->
+    <h1>Добро пожаловать на наш сайт</h1>
+    <p>Это простой абзац, который нужно перевести.</p>
+
+    <!-- Text with HTML entities -->
+    <p>Цена: €99.99 — Специальное предложение!</p>
+
+    <!-- Text with variables -->
+    <div>Привет, {username}! У вас {count} сообщений.</div>
+
+    <!-- Text in different contexts -->
+    <button type="button" aria-label="Close dialog">Закрыть</button>
+    <a href="/about" title="Узнайте больше о нас">О нас</a>
+
+    <!-- Lists with text -->
+    <ul>
+      <li>Первый элемент нуждается в переводе</li>
+      <li>Второй элемент с<strong>отформатированным текстом</strong></li>
+      <li>Третий элемент с<a href="#">ссылкой внутри</a></li>
+    </ul>
+
+    <!-- Form elements -->
+    <form>
+      <label for="email">Адрес электронной почты:</label>
+      <input type="email" id="email" required="">
+      <select aria-label="Choose your country">
+        <option value="">Пожалуйста, выберите</option>
+        <option value="us">Соединенные Штаты</option>
+        <option value="uk">Соединенное Королевство</option>
+      </select>
+      <button type="submit">Отправить сообщение</button>
+    </form>
+
+    <!-- Text with special characters -->
+    <p>Специальные символы: "кавычки" и 'апострофы' требуют внимания!</p>
+
+    <!-- Dynamic content -->
+    <div id="notification" role="alert" aria-live="polite">Вы успешно вошли в систему!</div>
+
+    <!-- Text in JavaScript -->
+    <script>
+      const messages = {
+        welcome: "Welcome back!",
+        error: "Something went wrong.",
+        confirm: "Are you sure you want to continue?",
+      };
+    </script>
+
+    <style>
+      .test {
+        content: "This does not need translation";
+      }
+    </style>
+
+    <!-- Footer with multiple text elements -->
+    <footer>
+      <p>© 2024 Название компании. Все права защищены.</p>
+      <small>Юридический текст, который требуется перевести |<a href="/privacy">Политика конфиденциальности</a></small>
+    </footer>
+  
+</body></html>
