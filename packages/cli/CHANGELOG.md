@@ -1,5 +1,13 @@
 # lingo.dev
 
+## 0.87.11
+
+### Patch Changes
+
+- [`c0d801e`](https://github.com/lingodotdev/lingo.dev/commit/c0d801e6b7efa2ec5115f27e5b8726704a5e5f99)
+  Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - retain custom
+  inlinde code values
+
 ## 0.87.10
 
 ### Patch Changes
