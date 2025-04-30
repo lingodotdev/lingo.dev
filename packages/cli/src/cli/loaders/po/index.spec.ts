@@ -234,6 +234,86 @@ msgstr "[upd] Role"
     const result = await loader.push("en-upd", payload);
     expect(result).toEqual(updatedInput);
   });
+
+  it("fallbacks to msgid when single msgstr value is empty", async () => {
+    const loader = createLoader();
+    const input = `
+#: hello.py:1
+msgid "File"
+msgstr ""
+    `.trim();
+
+    const data = await loader.pull("en", input);
+    expect(data).toEqual({
+      File: {
+        singular: "File",
+        plural: null,
+      },
+    });
+  });
+
+  it("fallbacks to msgid when msgstr values are empty", async () => {
+    const loader = createLoader();
+    const input = `
+#: hello.py:1
+msgid "File"
+msgstr[0] ""
+msgstr[1] ""
+    `.trim();
+
+    const data = await loader.pull("en", input);
+    expect(data).toEqual({
+      File: {
+        singular: "File",
+        plural: "File",
+      },
+    });
+  });
+
+  it("does not fallback to msgid for non-source locale when single msgstr value is empty", async () => {
+    const loader = createLoader();
+    const input = `
+#: hello.py:1
+msgid "File"
+msgstr ""
+    `.trim();
+
+    // First, pull default locale to satisfy loader invariants
+    await loader.pull("en", input);
+
+    // Pull a different locale with the same content
+    const data = await loader.pull("fr", input);
+
+    expect(data).toEqual({
+      File: {
+        singular: null,
+        plural: null,
+      },
+    });
+  });
+
+  it("does not fallback to msgid for non-source locale when msgstr values are empty", async () => {
+    const loader = createLoader();
+    const input = `
+#: hello.py:1
+msgid "File"
+msgstr[0] ""
+msgstr[1] ""
+    `.trim();
+
+    // Pull default locale first
+    await loader.pull("en", input);
+
+    // Pull a different locale
+    const data = await loader.pull("fr", input);
+
+    expect(data).toEqual({
+      File: {
+        singular: null,
+        plural: null,
+      },
+    });
+  });
 });
 
 function createLoader(params: PoLoaderParams = { multiline: false }) {

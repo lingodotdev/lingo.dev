@@ -17,7 +17,9 @@ export default function createPoLoader(
   return composeLoaders(createPoDataLoader(params), createPoContentLoader());
 }
 
-export function createPoDataLoader(params: PoLoaderParams): ILoader<string, PoTranslationEntry> {
+export function createPoDataLoader(
+  params: PoLoaderParams,
+): ILoader<string, PoTranslationEntry> {
   return createLoader({
     async pull(locale, input) {
       const parsedPo = gettextParser.po.parse(input);
@@ -43,7 +45,8 @@ export function createPoDataLoader(params: PoLoaderParams): ILoader<string, PoTr
     async push(locale, data, originalInput, originalLocale, pullInput) {
       // Parse each section to maintain structure
       const currentSections = pullInput?.split("\n\n").filter(Boolean) || [];
-      const originalSections = originalInput?.split("\n\n").filter(Boolean) || [];
+      const originalSections =
+        originalInput?.split("\n\n").filter(Boolean) || [];
       const result = originalSections
         .map((section) => {
           const sectionPo = gettextParser.po.parse(section);
@@ -56,7 +59,9 @@ export function createPoDataLoader(params: PoLoaderParams): ILoader<string, PoTr
               const csPo = gettextParser.po.parse(cs);
               const csContextKey = _.keys(csPo.translations)[0];
               const csEntries = csPo.translations[csContextKey];
-              const csMsgid = Object.keys(csEntries).find((key) => csEntries[key].msgid);
+              const csMsgid = Object.keys(csEntries).find(
+                (key) => csEntries[key].msgid,
+              );
               return csMsgid === msgid;
             });
 
@@ -78,7 +83,10 @@ export function createPoDataLoader(params: PoLoaderParams): ILoader<string, PoTr
             return gettextParser.po
               .compile(updatedPo, { foldLength: params.multiline ? 76 : false })
               .toString()
-              .replace([`msgid ""`, `msgstr "Content-Type: text/plain\\n"`].join("\n"), "")
+              .replace(
+                [`msgid ""`, `msgstr "Content-Type: text/plain\\n"`].join("\n"),
+                "",
+              )
               .trim();
           }
           return section.trim();
@@ -89,19 +97,33 @@ export function createPoDataLoader(params: PoLoaderParams): ILoader<string, PoTr
   });
 }
 
-export function createPoContentLoader(): ILoader<PoTranslationEntry, Record<string, PoTranslationEntry>> {
+export function createPoContentLoader(): ILoader<
+  PoTranslationEntry,
+  Record<string, PoTranslationEntry>
+> {
   return createLoader({
-    async pull(locale, input) {
+    async pull(locale, input, initCtx, originalLocale) {
       const result = _.chain(input)
         .entries()
         .filter(([, entry]) => !!entry.msgid)
-        .map(([, entry]) => [
-          entry.msgid,
-          {
-            singular: entry.msgstr[0] || entry.msgid,
-            plural: (entry.msgstr[1] || entry.msgid_plural || null) as string | null,
-          },
-        ])
+        .map(([, entry]) => {
+          const singularFallback =
+            locale === originalLocale ? entry.msgid : null;
+          const pluralFallback =
+            locale === originalLocale
+              ? entry.msgid_plural || entry.msgid
+              : null;
+          const hasPlural = entry.msgstr.length > 1;
+          return [
+            entry.msgid,
+            {
+              singular: entry.msgstr[0] || singularFallback,
+              plural: hasPlural
+                ? ((entry.msgstr[1] || pluralFallback) as string | null)
+                : null,
+            },
+          ];
+        })
         .fromPairs()
         .value();
       return result;
@@ -113,7 +135,10 @@ export function createPoContentLoader(): ILoader<PoTranslationEntry, Record<stri
           entry.msgid,
           {
             ...entry,
-            msgstr: [data[entry.msgid]?.singular, data[entry.msgid]?.plural || null].filter(Boolean),
+            msgstr: [
+              data[entry.msgid]?.singular,
+              data[entry.msgid]?.plural || null,
+            ].filter(Boolean),
           },
         ])
         .fromPairs()
