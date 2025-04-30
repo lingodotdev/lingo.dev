@@ -307,5 +307,22 @@ describe("MDX Code Placeholder Loader", () => {
       const pushed = await loader.push("es", pulled);
       expect(pushed).toBe(md);
     });
+
+    it("retains custom inline code in target locale when it differs from source", async () => {
+      const enMd = "Use `foo` function.";
+      const ruMd = "Используйте `бар` функцию.";
+
+      // Pull English source to establish originalInput in loader state
+      await loader.pull("en", enMd);
+
+      // Pull Russian content (with its own inline code value)
+      const ruPulled = await loader.pull("ru", ruMd);
+      // Simulate translator editing surrounding text but keeping placeholder intact
+      const ruTranslated = ruPulled.replace("Используйте", "Примените");
+
+      // Push back to Russian locale and ensure inline code is preserved
+      const ruPushed = await loader.push("ru", ruTranslated);
+      expect(ruPushed).toBe("Примените `бар` функцию.");
+    });
   });
 });

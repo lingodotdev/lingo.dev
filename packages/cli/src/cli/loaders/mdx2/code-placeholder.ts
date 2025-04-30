@@ -91,13 +91,17 @@ export default function createMdxCodePlaceholderLoader(): ILoader<
       return response.content;
     },
 
-    async push(locale, data, originalInput) {
-      const response = extractCodePlaceholders(originalInput ?? "");
+    async push(locale, data, originalInput, originalLocale, pullInput) {
+      const sourceInfo = extractCodePlaceholders(originalInput ?? "");
+      const currentInfo = extractCodePlaceholders(pullInput ?? "");
+
+      const codePlaceholders = _.merge(
+        sourceInfo.codePlaceholders,
+        currentInfo.codePlaceholders,
+      );
 
       let result = data;
-      for (const [placeholder, original] of Object.entries(
-        response.codePlaceholders,
-      )) {
+      for (const [placeholder, original] of Object.entries(codePlaceholders)) {
         const replacement = original.startsWith(">")
           ? _.trimStart(original, "> ")
           : original;
