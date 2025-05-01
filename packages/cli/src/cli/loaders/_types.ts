@@ -1,6 +1,11 @@
 export interface ILoaderDefinition<I, O, C> {
   init?(): Promise<C>;
-  pull(locale: string, input: I, initCtx?: C): Promise<O>;
+  pull(
+    locale: string,
+    input: I,
+    initCtx?: C,
+    originalLocale?: string,
+  ): Promise<O>;
   push(
     locale: string,
     data: O,
