@@ -1,5 +1,18 @@
 # lingo.dev
 
+## 0.87.12
+
+### Patch Changes
+
+- [#675](https://github.com/lingodotdev/lingo.dev/pull/675)
+  [`99d9901`](https://github.com/lingodotdev/lingo.dev/commit/99d99013dfcfd92ad35baf94801ecee22041ae42)
+  Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - avoid msg id
+  fallbacks in .po files
+
+- [#677](https://github.com/lingodotdev/lingo.dev/pull/677)
+  [`bb2be5f`](https://github.com/lingodotdev/lingo.dev/commit/bb2be5faba6a9e26000293a55185376eff4ebc22)
+  Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - reorder prettier
+
 ## 0.87.11
 
 ### Patch Changes
