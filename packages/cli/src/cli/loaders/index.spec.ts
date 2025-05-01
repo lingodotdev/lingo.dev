@@ -1,4 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
+import dedent from "dedent";
 import _ from "lodash";
 import fs from "fs/promises";
 import createBucketLoader from "./index";
@@ -849,6 +850,39 @@ describe("bucket loaders", () => {
       expect(writtenContent.unlocked[0]).toBe("should");
       expect(writtenContent.unlocked[1]).toBe("definitely");
       expect(writtenContent.unlocked[2]).toBe("change");
+    });
+  });
+
+  describe("mdx bucket loader", () => {
+    it("should skip locked keys", async () => {
+      setupFileMocks();
+
+      const input = dedent`
+---
+title: Test Mdx
+category: test
+---
+
+# Heading 1
+`;
+      const expectedPayload = {
+        "meta/title": "Test Mdx",
+        "content/0": "\n# Heading 1",
+      };
+
+      mockFileOperations(input);
+
+      const mdxLoader = createBucketLoader(
+        "mdx",
+        "i18n/[locale].mdx",
+        { isCacheRestore: false, defaultLocale: "en" },
+        ["meta/category"],
+      );
+
+      mdxLoader.setDefaultLocale("en");
+      const data = await mdxLoader.pull("en");
+
+      expect(data).toEqual(expectedPayload);
     });
   });
 

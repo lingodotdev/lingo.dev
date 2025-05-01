@@ -29,6 +29,24 @@ describe("flat loader", () => {
         years: ["January 13, 2025", "February 14, 2025"],
       });
     });
+
+    it("handles date objects correctly", async () => {
+      const loader = createFlatLoader();
+      loader.setDefaultLocale("en");
+      const date = new Date("2023-01-01T00:00:00Z");
+      await loader.pull("en", {
+        publishedAt: date,
+        metadata: { createdAt: date },
+      });
+      const output = await loader.push("en", {
+        publishedAt: date.toISOString(),
+        "metadata/createdAt": date.toISOString(),
+      });
+      expect(output).toEqual({
+        publishedAt: date.toISOString(),
+        metadata: { createdAt: date.toISOString() },
+      });
+    });
   });
 
   describe("helper functions", () => {
@@ -59,11 +77,21 @@ describe("flat loader", () => {
           messages: ["a", "b", "c"],
         });
       });
+
+      it("should preserve date objects", () => {
+        const date = new Date();
+        const input = { createdAt: date };
+        const output = denormalizeObjectKeys(input);
+        expect(output).toEqual({ createdAt: date });
+      });
     });
 
     describe("buildDenormalizedKeysMap", () => {
       it("should build normalized keys map", () => {
-        const denormalized: Record<string, string> = flatten(denormalizeObjectKeys(inputObj), { delimiter: "/" });
+        const denormalized: Record<string, string> = flatten(
+          denormalizeObjectKeys(inputObj),
+          { delimiter: "/" },
+        );
         const output = buildDenormalizedKeysMap(denormalized);
         expect(output).toEqual({
           "messages/1": `messages/${OBJECT_NUMERIC_KEY_PREFIX}1`,
@@ -72,7 +100,10 @@ describe("flat loader", () => {
       });
 
       it("should build keys map array", () => {
-        const denormalized: Record<string, string> = flatten(denormalizeObjectKeys(inputArray), { delimiter: "/" });
+        const denormalized: Record<string, string> = flatten(
+          denormalizeObjectKeys(inputArray),
+          { delimiter: "/" },
+        );
         const output = buildDenormalizedKeysMap(denormalized);
         expect(output).toEqual({
           "messages/0": "messages/0",
@@ -92,21 +123,38 @@ describe("flat loader", () => {
         const output = normalizeObjectKeys(denormalizeObjectKeys(inputArray));
         expect(output).toEqual(inputArray);
       });
+
+      it("should preserve date objects", () => {
+        const date = new Date();
+        const input = { createdAt: date };
+        const output = normalizeObjectKeys(input);
+        expect(output).toEqual({ createdAt: date });
+      });
     });
 
     describe("mapDeormalizedKeys", () => {
       it("should map normalized keys", () => {
-        const denormalized: Record<string, string> = flatten(denormalizeObjectKeys(inputObj), { delimiter: "/" });
+        const denormalized: Record<string, string> = flatten(
+          denormalizeObjectKeys(inputObj),
+          { delimiter: "/" },
+        );
         const keyMap = buildDenormalizedKeysMap(denormalized);
-        const flattened: Record<string, string> = flatten(inputObj, { delimiter: "/" });
+        const flattened: Record<string, string> = flatten(inputObj, {
+          delimiter: "/",
+        });
         const mapped = mapDenormalizedKeys(flattened, keyMap);
         expect(mapped).toEqual(denormalized);
       });
 
       it("should map array", () => {
-        const denormalized: Record<string, string> = flatten(denormalizeObjectKeys(inputArray), { delimiter: "/" });
+        const denormalized: Record<string, string> = flatten(
+          denormalizeObjectKeys(inputArray),
+          { delimiter: "/" },
+        );
         const keyMap = buildDenormalizedKeysMap(denormalized);
-        const flattened: Record<string, string> = flatten(inputArray, { delimiter: "/" });
+        const flattened: Record<string, string> = flatten(inputArray, {
+          delimiter: "/",
+        });
         const mapped = mapDenormalizedKeys(flattened, keyMap);
         expect(mapped).toEqual(denormalized);
       });

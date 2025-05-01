@@ -14,7 +14,10 @@ type DenormalizeResult = {
   keysMap: Record<string, string>;
 };
 
-function createDenormalizeLoader(): ILoader<Record<string, any>, DenormalizeResult> {
+function createDenormalizeLoader(): ILoader<
+  Record<string, any>,
+  DenormalizeResult
+> {
   return createLoader({
     pull: async (locale, input) => {
       const inputDenormalized = denormalizeObjectKeys(input || {});
@@ -34,7 +37,10 @@ function createDenormalizeLoader(): ILoader<Record<string, any>, DenormalizeResu
   });
 }
 
-function createNormalizeLoader(): ILoader<DenormalizeResult, Record<string, string>> {
+function createNormalizeLoader(): ILoader<
+  DenormalizeResult,
+  Record<string, string>
+> {
   return createLoader({
     pull: async (locale, input) => {
       const normalized = normalizeObjectKeys(input.denormalized);
@@ -69,7 +75,10 @@ export function buildDenormalizedKeysMap(obj: Record<string, string>) {
   );
 }
 
-export function mapDenormalizedKeys(obj: Record<string, any>, denormalizedKeysMap: Record<string, string>) {
+export function mapDenormalizedKeys(
+  obj: Record<string, any>,
+  denormalizedKeysMap: Record<string, string>,
+) {
   return Object.keys(obj).reduce(
     (acc, key) => {
       const denormalizedKey = denormalizedKeysMap[key] ?? key;
@@ -80,13 +89,20 @@ export function mapDenormalizedKeys(obj: Record<string, any>, denormalizedKeysMa
   );
 }
 
-export function denormalizeObjectKeys(obj: Record<string, any>): Record<string, any> {
+export function denormalizeObjectKeys(
+  obj: Record<string, any>,
+): Record<string, any> {
   if (_.isObject(obj) && !_.isArray(obj)) {
     return _.transform(
       obj,
       (result, value, key) => {
-        const newKey = !isNaN(Number(key)) ? `${OBJECT_NUMERIC_KEY_PREFIX}${key}` : key;
-        result[newKey] = _.isObject(value) ? denormalizeObjectKeys(value) : value;
+        const newKey = !isNaN(Number(key))
+          ? `${OBJECT_NUMERIC_KEY_PREFIX}${key}`
+          : key;
+        result[newKey] =
+          _.isObject(value) && !_.isDate(value)
+            ? denormalizeObjectKeys(value)
+            : value;
       },
       {} as Record<string, any>,
     );
@@ -95,13 +111,18 @@ export function denormalizeObjectKeys(obj: Record<string, any>): Record<string, 
   }
 }
 
-export function normalizeObjectKeys(obj: Record<string, any>): Record<string, any> {
+export function normalizeObjectKeys(
+  obj: Record<string, any>,
+): Record<string, any> {
   if (_.isObject(obj) && !_.isArray(obj)) {
     return _.transform(
       obj,
       (result, value, key) => {
         const newKey = `${key}`.replace(OBJECT_NUMERIC_KEY_PREFIX, "");
-        result[newKey] = _.isObject(value) ? normalizeObjectKeys(value) : value;
+        result[newKey] =
+          _.isObject(value) && !_.isDate(value)
+            ? normalizeObjectKeys(value)
+            : value;
       },
       {} as Record<string, any>,
     );
