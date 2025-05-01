@@ -113,11 +113,11 @@ export default function createBucketLoader(
     case "mdx":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
-        createMdxCodePlaceholderLoader(),
         createPrettierLoader({
           parser: "mdx",
           bucketPathPattern,
         }),
+        createMdxCodePlaceholderLoader(),
         createMdxFrontmatterSplitLoader(),
         createMdxSectionsSplit2Loader(),
         createLocalizableMdxDocumentLoader(),
