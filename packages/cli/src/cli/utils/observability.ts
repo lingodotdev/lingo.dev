@@ -9,6 +9,7 @@ export default async function trackEvent(
 
   try {
     const { PostHog } = await import("posthog-node");
+    console.log("--- ---");
     const safeProperties = properties
       ? JSON.parse(
           JSON.stringify(properties, (key, value) => {
@@ -33,6 +34,7 @@ export default async function trackEvent(
       },
     );
 
+    console.log("--- ---");
     await posthog.capture({
       distinctId,
       event,
@@ -45,7 +47,10 @@ export default async function trackEvent(
       },
     });
 
+    console.log("--- ---");
     await posthog.shutdown();
+
+    console.log("--- ---");
   } catch (error) {
     if (process.env.DEBUG) {
       console.error(error);
