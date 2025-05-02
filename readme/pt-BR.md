@@ -164,13 +164,13 @@ Quer contribuir? Crie um pull request!
 ## 🌐 Readme em outros idiomas
 
 - [Inglês](https://github.com/lingodotdev/lingo.dev)
+- [Chinês](/readme/zh-Hans.md)
+- [Japonês](/readme/ja.md)
 - [Espanhol](/readme/es.md)
 - [Francês](/readme/fr.md)
 - [Russo](/readme/ru.md)
 - [Alemão](/readme/de.md)
-- [Chinês](/readme/zh-Hans.md)
 - [Coreano](/readme/ko.md)
-- [Japonês](/readme/ja.md)
 - [Italiano](/readme/it.md)
 - [Árabe](/readme/ar.md)
 - [Hindi](/readme/hi.md)

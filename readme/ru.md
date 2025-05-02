@@ -164,13 +164,13 @@ Lingo.dev развивается сообществом, поэтому мы п�
 ## 🌐 Readme на других языках
 
 - [English](https://github.com/lingodotdev/lingo.dev)
+- [Chinese](/readme/zh-Hans.md)
+- [Japanese](/readme/ja.md)
 - [Spanish](/readme/es.md)
 - [French](/readme/fr.md)
 - [Russian](/readme/ru.md)
 - [German](/readme/de.md)
-- [Chinese](/readme/zh-Hans.md)
 - [Korean](/readme/ko.md)
-- [Japanese](/readme/ja.md)
 - [Italian](/readme/it.md)
 - [Arabic](/readme/ar.md)
 - [Hindi](/readme/hi.md)
