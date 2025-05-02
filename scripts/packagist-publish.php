@@ -23,11 +23,34 @@ if (!$username || !$apiToken || !$packageName) {
 
 echo "Starting Packagist publishing process for package: $packageName\n";
 
-$apiUrl = "https://packagist.org/api/update-package?username=$username&apiToken=$apiToken";
+$checkUrl = "https://packagist.org/packages/$packageName.json";
+$ch = curl_init($checkUrl);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, [
+    'Accept: application/json'
+]);
+
+echo "Checking if package exists on Packagist...\n";
+$response = curl_exec($ch);
+$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+curl_close($ch);
+
+$packageExists = ($httpCode === 200);
+
+if ($packageExists) {
+    echo "Package $packageName already exists on Packagist. Updating...\n";
+    $apiUrl = "https://packagist.org/api/update-package?username=$username&apiToken=$apiToken";
+} else {
+    echo "Package $packageName does not exist on Packagist. Creating new package...\n";
+    $apiUrl = "https://packagist.org/api/create-package?username=$username&apiToken=$apiToken";
+}
+
+$repoUrl = "https://github.com/lingodotdev/lingo.dev";
 
 $data = [
     'repository' => [
-        'url' => "https://github.com/lingodotdev/lingo.dev"
+        'url' => $repoUrl
     ]
 ];
 
@@ -41,7 +64,7 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, [
     'Accept: application/json'
 ]);
 
-echo "Sending request to Packagist API...\n";
+echo "Sending request to Packagist API ($apiUrl)...\n";
 $response = curl_exec($ch);
 $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
@@ -59,9 +82,9 @@ echo "HTTP Response Code: $httpCode\n";
 echo "Response: " . print_r($responseData, true) . "\n";
 
 if ($httpCode >= 200 && $httpCode < 300) {
-    echo "Package $packageName successfully published to Packagist!\n";
+    echo "Package $packageName successfully " . ($packageExists ? "updated" : "submitted") . " to Packagist!\n";
     exit(0);
 } else {
-    echo "Failed to publish package $packageName to Packagist.\n";
+    echo "Failed to " . ($packageExists ? "update" : "submit") . " package $packageName to Packagist.\n";
     exit(1);
 }

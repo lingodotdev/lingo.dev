@@ -64,7 +64,10 @@ jobs:
       - name: Get current version
         id: current_version
         run: |
-          VERSION=$(php -r 'echo json_decode(file_get_contents("php/sdk/composer.json"), true)["version"];')
+          VERSION=$(php -r '
+            $composerJson = json_decode(file_get_contents("php/sdk/composer.json"), true);
+            echo $composerJson["version"];
+          ')
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Bump patch version
@@ -73,7 +76,7 @@ jobs:
           # Get current version
           CURRENT_VERSION=${{ steps.current_version.outputs.version }}
           
-          # Use PHP to increment patch version instead of composer semver
+          # Use PHP to increment patch version
           NEW_VERSION=$(php -r '
             $version = "${{ steps.current_version.outputs.version }}";
             list($major, $minor, $patch) = explode(".", $version);
