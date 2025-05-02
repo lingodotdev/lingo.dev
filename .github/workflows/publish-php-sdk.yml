@@ -26,7 +26,7 @@ jobs:
           coverage: none
           tools: composer:v2
 
-      - name: Install dependencies
+      - name: Install dependencies for SDK
         working-directory: ./php/sdk
         run: composer install --prefer-dist
 
@@ -57,9 +57,25 @@ jobs:
           coverage: none
           tools: composer:v2
 
-      - name: Install dependencies
-        working-directory: ./php/sdk
-        run: composer install --no-dev --no-interaction --prefer-dist
+      - name: Ensure valid version exists in SDK
+        run: |
+          # Check if version is empty or invalid
+          VERSION=$(php -r '
+            $composerJson = json_decode(file_get_contents("php/sdk/composer.json"), true);
+            echo isset($composerJson["version"]) ? $composerJson["version"] : "";
+          ')
+          
+          if [[ -z "$VERSION" || ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Setting initial version to 0.1.0"
+            php -r '
+              $composerJson = json_decode(file_get_contents("php/sdk/composer.json"), true);
+              $composerJson["version"] = "0.1.0";
+              file_put_contents("php/sdk/composer.json", json_encode($composerJson, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+            '
+            VERSION="0.1.0"
+          fi
+          
+          echo "Initial version: $VERSION"
 
       - name: Get current version
         id: current_version
@@ -86,12 +102,18 @@ jobs:
           
           echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
           
-          # Update version in composer.json
+          # Update version in SDK composer.json
           php -r '
           $composerJson = json_decode(file_get_contents("php/sdk/composer.json"), true);
           $composerJson["version"] = "${{ steps.bump_version.outputs.new_version }}";
           file_put_contents("php/sdk/composer.json", json_encode($composerJson, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
           '
+
+      - name: Install root composer dependencies
+        run: |
+          # Install composer dependencies from root composer.json
+          # This will create a vendor directory with the PHP SDK symlinked
+          composer install --no-dev --no-interaction --prefer-dist
 
       - name: Commit and push version bump
         uses: stefanzweifel/git-auto-commit-action@v4

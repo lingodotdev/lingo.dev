@@ -1,5 +1,21 @@
 # @lingo.dev/\_spec
 
+## 0.31.0
+
+### Minor Changes
+
+- [#700](https://github.com/lingodotdev/lingo.dev/pull/700) [`c5ccf81`](https://github.com/lingodotdev/lingo.dev/commit/c5ccf81e9c2bd27bae332306da2a41e41bbeb87d) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - Add support for locked patterns in MDX loader
+
+  This change adds support for preserving specific patterns in MDX files during translation, including:
+
+  - !params syntax for parameter documentation
+  - !! parameter_name headings
+  - !type declarations
+  - !required flags
+  - !values lists
+
+  The implementation adds a new config version 1.7 with a "lockedPatterns" field that accepts an array of regex patterns to be preserved during translation.
+
 ## 0.30.3
 
 ### Patch Changes

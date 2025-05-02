@@ -1,5 +1,5 @@
 import { Octokit } from "octokit";
-import { PlatformKit } from "./_base.js";
+import { PlatformKit } from "./_base";
 import Z from "zod";
 
 export class GitHubPlatformKit extends PlatformKit {
@@ -46,7 +46,15 @@ export class GitHubPlatformKit extends PlatformKit {
     });
   }
 
-  async createPullRequest({ head, title, body }: { head: string; title: string; body?: string }) {
+  async createPullRequest({
+    head,
+    title,
+    body,
+  }: {
+    head: string;
+    title: string;
+    body?: string;
+  }) {
     return await this.octokit.rest.pulls
       .create({
         head,
@@ -59,7 +67,13 @@ export class GitHubPlatformKit extends PlatformKit {
       .then(({ data }) => data.number);
   }
 
-  async commentOnPullRequest({ pullRequestNumber, body }: { pullRequestNumber: number; body: string }) {
+  async commentOnPullRequest({
+    pullRequestNumber,
+    body,
+  }: {
+    pullRequestNumber: number;
+    body: string;
+  }) {
     await this.octokit.rest.issues.createComment({
       issue_number: pullRequestNumber,
       body,
@@ -73,7 +87,9 @@ export class GitHubPlatformKit extends PlatformKit {
     const { processOwnCommits } = this.config;
 
     if (ghToken && processOwnCommits) {
-      console.log("Using provided GH_TOKEN. This will trigger your CI/CD pipeline to run again.");
+      console.log(
+        "Using provided GH_TOKEN. This will trigger your CI/CD pipeline to run again.",
+      );
 
       const url = `https://${ghToken}@github.com/${repositoryOwner}/${repositoryName}.git`;
 
@@ -90,7 +106,9 @@ export class GitHubPlatformKit extends PlatformKit {
       GH_TOKEN: Z.string().optional(),
     }).parse(process.env);
 
-    const baseBranchName = !env.GITHUB_REF_NAME.endsWith("/merge") ? env.GITHUB_REF_NAME : env.GITHUB_HEAD_REF;
+    const baseBranchName = !env.GITHUB_REF_NAME.endsWith("/merge")
+      ? env.GITHUB_REF_NAME
+      : env.GITHUB_HEAD_REF;
 
     return {
       ghToken: env.GH_TOKEN,

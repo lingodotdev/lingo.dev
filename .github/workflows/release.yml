@@ -2,6 +2,11 @@ name: Release
 
 on:
   workflow_dispatch:
+    inputs:
+      skip_lingo:
+        description: "Skip Lingo.dev step"
+        type: "boolean"
+        default: false
   push:
     branches:
       - main
@@ -56,6 +61,7 @@ jobs:
         run: pnpm install
 
       - name: Lingo.dev
+        if: ${{ !inputs.skip_lingo }}
         uses: ./
         with:
           api-key: ${{ secrets.LINGODOTDEV_API_KEY }}

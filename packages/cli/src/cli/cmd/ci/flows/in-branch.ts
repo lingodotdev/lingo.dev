@@ -1,6 +1,7 @@
 import { execSync } from "child_process";
 import path from "path";
-import { gitConfig, IntegrationFlow } from "./_base.js";
+import { gitConfig, IntegrationFlow } from "./_base";
+import i18nCmd from "../../i18n";
 
 export class InBranchFlow extends IntegrationFlow {
   async preRun() {
@@ -32,10 +33,14 @@ export class InBranchFlow extends IntegrationFlow {
       this.ora.succeed("Changes committed");
 
       this.ora.start("Pushing changes to remote");
-      const currentBranch = this.i18nBranchName ?? this.platformKit.platformConfig.baseBranchName;
-      execSync(`git push origin ${currentBranch} ${forcePush ? "--force" : ""}`, {
-        stdio: "inherit",
-      });
+      const currentBranch =
+        this.i18nBranchName ?? this.platformKit.platformConfig.baseBranchName;
+      execSync(
+        `git push origin ${currentBranch} ${forcePush ? "--force" : ""}`,
+        {
+          stdio: "inherit",
+        },
+      );
       this.ora.succeed("Changes pushed to remote");
     }
 
@@ -51,7 +56,16 @@ export class InBranchFlow extends IntegrationFlow {
   }
 
   private async runLingoDotDev() {
-    execSync(`npx lingo.dev@latest i18n --api-key ${this.platformKit.config.replexicaApiKey}`, { stdio: "inherit" });
+    try {
+      await i18nCmd
+        .exitOverride()
+        .parseAsync(["--api-key", this.platformKit.config.replexicaApiKey], {
+          from: "user",
+        });
+    } catch (err: any) {
+      if (err.code === "commander.helpDisplayed") return;
+      throw err;
+    }
   }
 
   private configureGit() {
@@ -75,7 +89,9 @@ export class InBranchFlow extends IntegrationFlow {
 
     if (!processOwnCommits) {
       const currentAuthor = `${gitConfig.userName} <${gitConfig.userEmail}>`;
-      const authorOfLastCommit = execSync(`git log -1 --pretty=format:'%an <%ae>'`).toString();
+      const authorOfLastCommit = execSync(
+        `git log -1 --pretty=format:'%an <%ae>'`,
+      ).toString();
       if (authorOfLastCommit === currentAuthor) {
         this.ora.warn(
           `The last commit was already made by ${currentAuthor}, so this run will be skipped, as running again would have no effect. See docs: https://docs.lingo.dev/ci-action/overview`,
@@ -84,9 +100,14 @@ export class InBranchFlow extends IntegrationFlow {
       }
     }
 
-    const workingDir = path.resolve(process.cwd(), this.platformKit.config.workingDir);
+    const workingDir = path.resolve(
+      process.cwd(),
+      this.platformKit.config.workingDir,
+    );
     if (workingDir !== process.cwd()) {
-      this.ora.info(`Changing to working directory: ${this.platformKit.config.workingDir}`);
+      this.ora.info(
+        `Changing to working directory: ${this.platformKit.config.workingDir}`,
+      );
       process.chdir(workingDir);
     }
 

@@ -1,6 +1,6 @@
-import { BitbucketPlatformKit } from "./bitbucket.js";
-import { GitHubPlatformKit } from "./github.js";
-import { GitlabPlatformKit } from "./gitlab.js";
+import { BitbucketPlatformKit } from "./bitbucket";
+import { GitHubPlatformKit } from "./github";
+import { GitlabPlatformKit } from "./gitlab";
 
 export const getPlatformKit = () => {
   if (process.env.BITBUCKET_PIPELINE_UUID) {

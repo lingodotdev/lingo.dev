@@ -450,4 +450,64 @@ describe("MDX Code Placeholder Loader", () => {
       expect(ruPushed).toBe("Примените `бар` функцию.");
     });
   });
+
+  describe("Image URLs with Parentheses", () => {
+    it("should handle image URLs with parentheses", async () => {
+      const md = dedent`
+        Text above.
+
+        ![](https://example.com/image(with)parentheses.jpg)
+
+        Text below.
+      `;
+
+      const pulled = await loader.pull("en", md);
+      const pushed = await loader.push("es", pulled);
+      expect(pushed).toBe(md);
+    });
+
+    it("should handle image URLs with nested parentheses", async () => {
+      const md = dedent`
+        Text above.
+
+        ![Alt text](https://example.com/image(with(nested)parentheses).jpg)
+
+        Text below.
+      `;
+
+      const pulled = await loader.pull("en", md);
+      const pushed = await loader.push("es", pulled);
+      expect(pushed).toBe(md);
+    });
+
+    it("should handle image URLs with parentheses in blockquotes", async () => {
+      const md = dedent`
+        > ![Blockquote image](https://example.com/image(in)blockquote.jpg)
+      `;
+
+      const pulled = await loader.pull("en", md);
+      const pushed = await loader.push("es", pulled);
+      expect(pushed).toBe(md);
+    });
+
+    it("should handle image URLs with parentheses in JSX components", async () => {
+      const md = dedent`
+        <Component>
+        ![Component image](https://example.com/image(in)component.jpg)
+        </Component>
+      `;
+
+      const expected = dedent`
+        <Component>
+
+        ![Component image](https://example.com/image(in)component.jpg)
+
+        </Component>
+      `;
+
+      const pulled = await loader.pull("en", md);
+      const pushed = await loader.push("es", pulled);
+      expect(pushed).toBe(expected);
+    });
+  });
 });

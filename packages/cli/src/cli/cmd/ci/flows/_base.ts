@@ -1,5 +1,5 @@
 import { Ora } from "ora";
-import { PlatformKit } from "../platforms/_base.js";
+import { PlatformKit } from "../platforms/_base";
 
 export interface IIntegrationFlow {
   preRun?(): Promise<boolean>;

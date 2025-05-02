@@ -1,7 +1,11 @@
 import { Command } from "interactive-commander";
-import { getSettings } from "../utils/settings";
-import { createAuthenticator } from "../utils/auth";
-import main from "../../action/src/main";
+import createOra from "ora";
+import { getSettings } from "../../utils/settings";
+import { createAuthenticator } from "../../utils/auth";
+import { IIntegrationFlow } from "./flows/_base";
+import { PullRequestFlow } from "./flows/pull-request";
+import { InBranchFlow } from "./flows/in-branch";
+import { getPlatformKit } from "./platforms";
 
 interface CIOptions {
   pullRequest?: boolean;
@@ -43,13 +47,41 @@ export default new Command()
     const env = {
       LINGODOTDEV_API_KEY: settings.auth.apiKey,
       LINGODOTDEV_PULL_REQUEST: options.pullRequest?.toString() || "false",
-      ...(options.commitMessage && { LINGODOTDEV_COMMIT_MESSAGE: options.commitMessage }),
-      ...(options.pullRequestTitle && { LINGODOTDEV_PULL_REQUEST_TITLE: options.pullRequestTitle }),
-      ...(options.workingDirectory && { LINGODOTDEV_WORKING_DIRECTORY: options.workingDirectory }),
-      ...(options.processOwnCommits && { LINGODOTDEV_PROCESS_OWN_COMMITS: options.processOwnCommits.toString() }),
+      ...(options.commitMessage && {
+        LINGODOTDEV_COMMIT_MESSAGE: options.commitMessage,
+      }),
+      ...(options.pullRequestTitle && {
+        LINGODOTDEV_PULL_REQUEST_TITLE: options.pullRequestTitle,
+      }),
+      ...(options.workingDirectory && {
+        LINGODOTDEV_WORKING_DIRECTORY: options.workingDirectory,
+      }),
+      ...(options.processOwnCommits && {
+        LINGODOTDEV_PROCESS_OWN_COMMITS: options.processOwnCommits.toString(),
+      }),
     };
 
     process.env = { ...process.env, ...env };
 
-    main();
+    const ora = createOra();
+    const platformKit = getPlatformKit();
+    const { isPullRequestMode } = platformKit.config;
+
+    ora.info(`Pull request mode: ${isPullRequestMode ? "on" : "off"}`);
+
+    const flow: IIntegrationFlow = isPullRequestMode
+      ? new PullRequestFlow(ora, platformKit)
+      : new InBranchFlow(ora, platformKit);
+
+    const canRun = await flow.preRun?.();
+    if (canRun === false) {
+      return;
+    }
+
+    const hasChanges = await flow.run();
+    if (!hasChanges) {
+      return;
+    }
+
+    await flow.postRun?.();
   });

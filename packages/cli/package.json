@@ -1,6 +1,6 @@
 {
   "name": "lingo.dev",
-  "version": "0.87.15",
+  "version": "0.89.2",
   "description": "Lingo.dev CLI",
   "private": false,
   "publishConfig": {
@@ -86,7 +86,7 @@
     "gradient-string": "^3.0.0",
     "gray-matter": "^4.0.3",
     "ini": "^5.0.0",
-    "inquirer": "^12.5.2",
+    "inquirer": "^12.6.0",
     "interactive-commander": "^0.5.194",
     "is-url": "^1.2.4",
     "jsdom": "^25.0.1",
@@ -100,7 +100,7 @@
     "node-webvtt": "^1.9.4",
     "object-hash": "^3.0.0",
     "octokit": "^4.0.2",
-    "open": "^10.1.0",
+    "open": "^10.1.2",
     "ora": "^8.1.1",
     "p-limit": "^6.2.0",
     "php-array-reader": "^2.1.2",
