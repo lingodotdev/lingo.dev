@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.89.6
+
+### Patch Changes
+
+- [#717](https://github.com/lingodotdev/lingo.dev/pull/717) [`437d5a1`](https://github.com/lingodotdev/lingo.dev/commit/437d5a1c07f702d0f7a37ae916f27ec9055a9d01) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - fix: prevent truncation of commit message and PR title by properly escaping special characters in shell commands
+
 ## 0.89.5
 
 ### Patch Changes
