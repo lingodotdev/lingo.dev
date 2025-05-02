@@ -25,7 +25,7 @@
     },
     "scripts": {
         "test": "phpunit",
-        "cs": "phpcs",
-        "cs-fix": "phpcbf"
+        "cs": "phpcs src/ tests/",
+        "cs-fix": "phpcbf src/ tests/"
     }
 }
