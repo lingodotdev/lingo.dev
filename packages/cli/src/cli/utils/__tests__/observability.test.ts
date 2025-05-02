@@ -1,19 +1,18 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import trackEvent from '../observability';
 
+const mockCapture = vi.fn();
+const mockShutdown = vi.fn().mockResolvedValue(undefined);
+const MockPostHogConstructor = vi.fn().mockImplementation(() => ({
+  capture: mockCapture,
+  shutdown: mockShutdown
+}));
+
 vi.mock('posthog-node', () => {
-  const mockCapture = vi.fn();
-  const mockShutdown = vi.fn().mockResolvedValue(undefined);
-  
-  const MockPostHog = vi.fn().mockImplementation(() => ({
-    capture: mockCapture,
-    shutdown: mockShutdown
-  }));
-  
   return {
-    PostHog: MockPostHog,
+    PostHog: MockPostHogConstructor,
     default: {
-      PostHog: MockPostHog
+      PostHog: MockPostHogConstructor
     }
   };
 });
@@ -34,18 +33,14 @@ describe('trackEvent', () => {
   it('should track an event with PostHog', async () => {
     await trackEvent('user123', 'test_event', { test: true });
     
-    const { PostHog } = await import('posthog-node');
-    
-    expect(PostHog).toHaveBeenCalledWith(
+    expect(MockPostHogConstructor).toHaveBeenCalledWith(
       expect.any(String),
       expect.objectContaining({
         host: expect.any(String)
       })
     );
     
-    const mockInstance = PostHog.mock.results[0].value;
-    
-    expect(mockInstance.capture).toHaveBeenCalledWith({
+    expect(mockCapture).toHaveBeenCalledWith({
       distinctId: 'user123',
       event: 'test_event',
       properties: expect.objectContaining({
@@ -56,7 +51,7 @@ describe('trackEvent', () => {
       })
     });
     
-    expect(mockInstance.shutdown).toHaveBeenCalled();
+    expect(mockShutdown).toHaveBeenCalled();
   });
   
   it('should not track when DO_NOT_TRACK is set', async () => {
@@ -64,20 +59,14 @@ describe('trackEvent', () => {
     
     await trackEvent('user123', 'test_event');
     
-    const { PostHog } = await import('posthog-node');
-    expect(PostHog).not.toHaveBeenCalled();
+    expect(MockPostHogConstructor).not.toHaveBeenCalled();
   });
   
   it('should handle errors gracefully', async () => {
     const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
     process.env.DEBUG = 'true';
     
-    const { PostHog } = await import('posthog-node');
-    const mockInstance = PostHog.mock.results[0]?.value;
-    
-    if (mockInstance && mockInstance.capture) {
-      mockInstance.capture.mockRejectedValueOnce(new Error('Test error'));
-    }
+    mockCapture.mockRejectedValueOnce(new Error('Test error'));
     
     await trackEvent('user123', 'test_event');
     
