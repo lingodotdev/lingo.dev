@@ -2,11 +2,11 @@
 /**
  * PHP SDK for Lingo.dev
  *
- * @category  Localization
- * @package   Lingodotdev\Sdk
- * @author    Lingo.dev Team <hi@lingo.dev>
- * @license   MIT
- * @link      https://lingo.dev
+ * @category Localization
+ * @package  Lingodotdev\Sdk
+ * @author   Lingo.dev Team <hi@lingo.dev>
+ * @license  MIT https://opensource.org/licenses/MIT
+ * @link     https://lingo.dev
  */
 
 namespace Lingodotdev\Sdk;
@@ -20,11 +20,11 @@ use Respect\Validation\Validator as v;
  * A powerful localization engine that supports various content types including
  * plain text, objects, and chat sequences.
  *
- * @category  Localization
- * @package   Lingodotdev\Sdk
- * @author    Lingo.dev Team <hi@lingo.dev>
- * @license   MIT
- * @link      https://lingo.dev
+ * @category Localization
+ * @package  Lingodotdev\Sdk
+ * @author   Lingo.dev Team <hi@lingo.dev>
+ * @license  MIT https://opensource.org/licenses/MIT
+ * @link     https://lingo.dev
  */
 class LingoDotDevEngine
 {
@@ -87,9 +87,9 @@ class LingoDotDevEngine
     /**
      * Localize content using the Lingo.dev API
      * 
-     * @param    array         $payload          The content to be localized
-     * @param    array         $params           Localization parameters including source/target locales and fast mode option
-     * @param    callable|null $progressCallback Optional callback function to report progress (0-100)
+     * @param array         $payload          The content to be localized
+     * @param array         $params           Localization parameters including source/target locales and fast mode option
+     * @param callable|null $progressCallback Optional callback function to report progress (0-100)
      * 
      * @return   array Localized content
      * @internal
@@ -130,11 +130,11 @@ class LingoDotDevEngine
     /**
      * Localize a single chunk of content
      * 
-     * @param  string|null $sourceLocale Source locale
-     * @param  string      $targetLocale Target locale
-     * @param  array       $payload      Payload containing the chunk to be localized
-     * @param  string      $workflowId   Workflow ID
-     * @param  bool        $fast         Whether to use fast mode
+     * @param string|null $sourceLocale Source locale
+     * @param string      $targetLocale Target locale
+     * @param array       $payload      Payload containing the chunk to be localized
+     * @param string      $workflowId   Workflow ID
+     * @param bool        $fast         Whether to use fast mode
      * 
      * @return array Localized chunk
      */
@@ -176,7 +176,7 @@ class LingoDotDevEngine
     /**
      * Extract payload chunks based on the ideal chunk size
      * 
-     * @param  array $payload The payload to be chunked
+     * @param array $payload The payload to be chunked
      * 
      * @return array An array of payload chunks
      */
@@ -214,7 +214,7 @@ class LingoDotDevEngine
     /**
      * Count words in a record or array
      * 
-     * @param  mixed $payload The payload to count words in
+     * @param mixed $payload The payload to count words in
      * 
      * @return int The total number of words
      */
@@ -252,19 +252,13 @@ class LingoDotDevEngine
     /**
      * Localize a typical PHP array or object
      * 
-     * @param  array         $obj              The object to be localized (strings will be extracted and translated)
-     * @param  array         $params           Localization parameters:
-     *                                         - sourceLocale: The
-     *                                         source language code
-     *                                         (e.g., 'en') -
-     *                                         targetLocale: The target
-     *                                         language code (e.g.,
-     *                                         'es') - fast: Optional
-     *                                         boolean to enable fast
-     *                                         mode (faster but
-     *                                         potentially lower
-     *                                         quality)
-     * @param  callable|null $progressCallback Optional callback function to report progress (0-100)
+     * @param array         $obj              The object to be localized (strings will be extracted and translated)
+     * @param array         $params           Localization parameters:
+     *                                        - sourceLocale: The source language code (e.g., 'en')
+     *                                        - targetLocale: The target language code (e.g., 'es')
+     *                                        - fast: Optional boolean to enable fast mode
+     * @param callable|null $progressCallback Optional callback function to report progress (0-100)
+     * 
      * @return array A new object with the same structure but localized string values
      */
     public function localizeObject(array $obj, array $params, callable $progressCallback = null): array
@@ -275,18 +269,13 @@ class LingoDotDevEngine
     /**
      * Localize a single text string
      * 
-     * @param  string        $text             The text string to be localized
-     * @param  array         $params           Localization parameters:
-     *                                         - sourceLocale: The
-     *                                         source language code
-     *                                         (e.g., 'en') -
-     *                                         targetLocale: The target
-     *                                         language code (e.g.,
-     *                                         'es') - fast: Optional
-     *                                         boolean to enable fast
-     *                                         mode (faster for bigger
-     *                                         batches)
-     * @param  callable|null $progressCallback Optional callback function to report progress (0-100)
+     * @param string        $text             The text string to be localized
+     * @param array         $params           Localization parameters:
+     *                                        - sourceLocale: The source language code (e.g., 'en')
+     *                                        - targetLocale: The target language code (e.g., 'es')
+     *                                        - fast: Optional boolean to enable fast mode
+     * @param callable|null $progressCallback Optional callback function to report progress (0-100)
+     * 
      * @return string The localized text string
      */
     public function localizeText(string $text, array $params, callable $progressCallback = null): string
@@ -298,17 +287,12 @@ class LingoDotDevEngine
     /**
      * Localize a text string to multiple target locales
      * 
-     * @param  string $text   The text string to be localized
-     * @param  array  $params Localization parameters:
-     *                        - sourceLocale: The
-     *                        source language code
-     *                        (e.g., 'en') -
-     *                        targetLocales: An array
-     *                        of target language codes
-     *                        (e.g., ['es', 'fr']) -
-     *                        fast: Optional boolean
-     *                        to enable fast mode (for
-     *                        bigger batches)
+     * @param string $text   The text string to be localized
+     * @param array  $params Localization parameters:
+     *                       - sourceLocale: The source language code (e.g., 'en')
+     *                       - targetLocales: An array of target language codes (e.g., ['es', 'fr'])
+     *                       - fast: Optional boolean to enable fast mode
+     * 
      * @return array An array of localized text strings
      */
     public function batchLocalizeText(string $text, array $params): array
@@ -338,19 +322,13 @@ class LingoDotDevEngine
     /**
      * Localize a chat sequence while preserving speaker names
      * 
-     * @param  array         $chat             Array of chat messages, each with 'name' and 'text' properties
-     * @param  array         $params           Localization parameters:
-     *                                         - sourceLocale: The
-     *                                         source language code
-     *                                         (e.g., 'en') -
-     *                                         targetLocale: The target
-     *                                         language code (e.g.,
-     *                                         'es') - fast: Optional
-     *                                         boolean to enable fast
-     *                                         mode (faster but
-     *                                         potentially lower
-     *                                         quality)
-     * @param  callable|null $progressCallback Optional callback function to report progress (0-100)
+     * @param array         $chat             Array of chat messages, each with 'name' and 'text' properties
+     * @param array         $params           Localization parameters:
+     *                                        - sourceLocale: The source language code (e.g., 'en')
+     *                                        - targetLocale: The target language code (e.g., 'es')
+     *                                        - fast: Optional boolean to enable fast mode
+     * @param callable|null $progressCallback Optional callback function to report progress (0-100)
+     * 
      * @return array Array of localized chat messages with preserved structure
      */
     public function localizeChat(array $chat, array $params, callable $progressCallback = null): array
@@ -380,8 +358,9 @@ class LingoDotDevEngine
     /**
      * Detect the language of a given text
      * 
-     * @param  string $text The text to analyze
-     * @return string Promise resolving to a locale code (e.g., 'en', 'es', 'fr')
+     * @param string $text The text to analyze
+     * 
+     * @return string Locale code (e.g., 'en', 'es', 'fr')
      */
     public function recognizeLocale(string $text): string
     {

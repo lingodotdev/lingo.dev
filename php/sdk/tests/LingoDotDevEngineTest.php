@@ -1,4 +1,13 @@
 <?php
+/**
+ * Tests for the LingoDotDevEngine class
+ *
+ * @category Tests
+ * @package  Lingodotdev\Sdk\Tests
+ * @author   Lingo.dev Team <hi@lingo.dev>
+ * @license  MIT https://opensource.org/licenses/MIT
+ * @link     https://lingo.dev
+ */
 
 namespace Lingodotdev\Sdk\Tests;
 
@@ -10,9 +19,25 @@ use Lingodotdev\Sdk\LingoDotDevEngine;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 
+/**
+ * Test cases for the LingoDotDevEngine class
+ *
+ * @category Tests
+ * @package  Lingodotdev\Sdk\Tests
+ * @author   Lingo.dev Team <hi@lingo.dev>
+ * @license  MIT https://opensource.org/licenses/MIT
+ * @link     https://lingo.dev
+ */
 class LingoDotDevEngineTest extends TestCase
 {
-    private function createMockEngine($responses)
+    /**
+     * Creates a mock engine with predefined responses
+     *
+     * @param array $responses Array of mock responses
+     *
+     * @return LingoDotDevEngine Mocked engine instance
+     */
+    private function _createMockEngine($responses)
     {
         $mock = new MockHandler($responses);
         $handlerStack = HandlerStack::create($mock);
@@ -28,21 +53,36 @@ class LingoDotDevEngineTest extends TestCase
         return $engine;
     }
 
+    /**
+     * Tests constructor with valid configuration
+     *
+     * @return void
+     */
     public function testConstructorWithValidConfig()
     {
         $engine = new LingoDotDevEngine(['apiKey' => 'test-api-key']);
         $this->assertInstanceOf(LingoDotDevEngine::class, $engine);
     }
 
+    /**
+     * Tests constructor with invalid configuration
+     *
+     * @return void
+     */
     public function testConstructorWithInvalidConfig()
     {
         $this->expectException(\InvalidArgumentException::class);
         new LingoDotDevEngine([]);
     }
 
+    /**
+     * Tests the localizeText method
+     *
+     * @return void
+     */
     public function testLocalizeText()
     {
-        $engine = $this->createMockEngine(
+        $engine = $this->_createMockEngine(
             [
             new Response(
                 200, [], json_encode(
@@ -64,9 +104,14 @@ class LingoDotDevEngineTest extends TestCase
         $this->assertEquals('Hola, mundo!', $result);
     }
 
+    /**
+     * Tests the localizeObject method
+     *
+     * @return void
+     */
     public function testLocalizeObject()
     {
-        $engine = $this->createMockEngine(
+        $engine = $this->_createMockEngine(
             [
             new Response(
                 200, [], json_encode(
@@ -99,9 +144,14 @@ class LingoDotDevEngineTest extends TestCase
         );
     }
 
+    /**
+     * Tests the batchLocalizeText method
+     *
+     * @return void
+     */
     public function testBatchLocalizeText()
     {
-        $engine = $this->createMockEngine(
+        $engine = $this->_createMockEngine(
             [
             new Response(
                 200, [], json_encode(
@@ -130,9 +180,14 @@ class LingoDotDevEngineTest extends TestCase
         $this->assertEquals(['Hola, mundo!', 'Bonjour, monde!'], $result);
     }
 
+    /**
+     * Tests the localizeChat method
+     *
+     * @return void
+     */
     public function testLocalizeChat()
     {
-        $engine = $this->createMockEngine(
+        $engine = $this->_createMockEngine(
             [
             new Response(
                 200, [], json_encode(
@@ -167,9 +222,14 @@ class LingoDotDevEngineTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
+    /**
+     * Tests the recognizeLocale method
+     *
+     * @return void
+     */
     public function testRecognizeLocale()
     {
-        $engine = $this->createMockEngine(
+        $engine = $this->_createMockEngine(
             [
             new Response(
                 200, [], json_encode(
@@ -185,9 +245,14 @@ class LingoDotDevEngineTest extends TestCase
         $this->assertEquals('fr', $result);
     }
 
+    /**
+     * Tests error handling in the SDK
+     *
+     * @return void
+     */
     public function testErrorHandling()
     {
-        $engine = $this->createMockEngine(
+        $engine = $this->_createMockEngine(
             [
             new Response(
                 400, [], json_encode(
@@ -208,9 +273,14 @@ class LingoDotDevEngineTest extends TestCase
         );
     }
 
+    /**
+     * Tests the progress callback functionality
+     *
+     * @return void
+     */
     public function testProgressCallback()
     {
-        $engine = $this->createMockEngine(
+        $engine = $this->_createMockEngine(
             [
             new Response(
                 200, [], json_encode(
