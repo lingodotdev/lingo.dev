@@ -62,10 +62,6 @@ export default new Command()
       }),
     };
 
-    console.log("--- config ---");
-    console.log(env);
-    console.log("--- ---");
-
     process.env = { ...process.env, ...env };
 
     const ora = createOra();
