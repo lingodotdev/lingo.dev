@@ -9,7 +9,35 @@ on:
   workflow_dispatch:
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
+          extensions: mbstring, intl
+          coverage: none
+          tools: composer:v2
+
+      - name: Install dependencies
+        working-directory: ./php/sdk
+        run: composer install --prefer-dist
+
+      - name: Run tests
+        working-directory: ./php/sdk
+        run: composer test
+
+      - name: Check code style
+        working-directory: ./php/sdk
+        run: composer cs
+
   publish:
+    needs: test
+    if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -26,9 +54,8 @@ jobs:
           tools: composer:v2, composer-semver
 
       - name: Install dependencies
-        run: |
-          cd php/sdk
-          composer install --no-dev --no-interaction --prefer-dist
+        working-directory: ./php/sdk
+        run: composer install --no-dev --no-interaction --prefer-dist
 
       - name: Get current version
         id: current_version
@@ -50,14 +77,14 @@ jobs:
           file_put_contents("php/sdk/composer.json", json_encode($composerJson, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
           '
 
-      - name: Commit version bump
-        if: github.ref == 'refs/heads/main'
-        run: |
-          git config --local user.email "devin-ai-integration[bot]@users.noreply.github.com"
-          git config --local user.name "Devin AI"
-          git add php/sdk/composer.json
-          git commit -m "chore: bump PHP SDK version to ${{ steps.bump_version.outputs.new_version }}"
-          git push
+      - name: Commit and push version bump
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "chore: bump PHP SDK version to ${{ steps.bump_version.outputs.new_version }}"
+          file_pattern: php/sdk/composer.json
+          commit_user_name: "Devin AI"
+          commit_user_email: "devin-ai-integration[bot]@users.noreply.github.com"
+          push_options: "--force"
 
       - name: Publish to Packagist
         uses: wscourge/packagist-publish@v1
