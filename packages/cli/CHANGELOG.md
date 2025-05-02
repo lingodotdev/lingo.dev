@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.89.5
+
+### Patch Changes
+
+- [`e93f405`](https://github.com/lingodotdev/lingo.dev/commit/e93f405a06e026bc6a4f71f534af615970cefdda) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - add --no-verify to ci commits
+
 ## 0.89.4
 
 ### Patch Changes
