@@ -1,5 +1,13 @@
 # lingo.dev
 
+## 0.87.14
+
+### Patch Changes
+
+- [#680](https://github.com/lingodotdev/lingo.dev/pull/680) [`b1c397b`](https://github.com/lingodotdev/lingo.dev/commit/b1c397bcd117b2ba2eea5edd713f9e3b0d4d71d5) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - split images into sections
+
+- [#680](https://github.com/lingodotdev/lingo.dev/pull/680) [`b1c397b`](https://github.com/lingodotdev/lingo.dev/commit/b1c397bcd117b2ba2eea5edd713f9e3b0d4d71d5) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - dates in mdx
+
 ## 0.87.13
 
 ### Patch Changes
