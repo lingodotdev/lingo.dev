@@ -26,6 +26,23 @@ jobs:
           coverage: none
           tools: composer:v2
 
+      - name: Ensure valid version exists in SDK
+        run: |
+          # Check if version is empty or invalid
+          VERSION=$(php -r '
+            $composerJson = json_decode(file_get_contents("php/sdk/composer.json"), true);
+            echo isset($composerJson["version"]) ? $composerJson["version"] : "";
+          ')
+          
+          if [[ -z "$VERSION" || ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Setting initial version to 0.1.0"
+            php -r '
+              $composerJson = json_decode(file_get_contents("php/sdk/composer.json"), true);
+              $composerJson["version"] = "0.1.0";
+              file_put_contents("php/sdk/composer.json", json_encode($composerJson, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+            '
+          fi
+
       - name: Install dependencies for SDK
         working-directory: ./php/sdk
         run: composer install --prefer-dist
@@ -57,25 +74,7 @@ jobs:
           coverage: none
           tools: composer:v2
 
-      - name: Ensure valid version exists in SDK
-        run: |
-          # Check if version is empty or invalid
-          VERSION=$(php -r '
-            $composerJson = json_decode(file_get_contents("php/sdk/composer.json"), true);
-            echo isset($composerJson["version"]) ? $composerJson["version"] : "";
-          ')
-          
-          if [[ -z "$VERSION" || ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-            echo "Setting initial version to 0.1.0"
-            php -r '
-              $composerJson = json_decode(file_get_contents("php/sdk/composer.json"), true);
-              $composerJson["version"] = "0.1.0";
-              file_put_contents("php/sdk/composer.json", json_encode($composerJson, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
-            '
-            VERSION="0.1.0"
-          fi
-          
-          echo "Initial version: $VERSION"
+
 
       - name: Get current version
         id: current_version
@@ -92,9 +91,18 @@ jobs:
           # Get current version
           CURRENT_VERSION=${{ steps.current_version.outputs.version }}
           
+          # Validate current version format
+          if [[ ! "$CURRENT_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Warning: Invalid version format: $CURRENT_VERSION. Using 0.1.0 as base."
+            CURRENT_VERSION="0.1.0"
+          fi
+          
           # Use PHP to increment patch version
           NEW_VERSION=$(php -r '
             $version = "${{ steps.current_version.outputs.version }}";
+            if (!preg_match("/^[0-9]+\.[0-9]+\.[0-9]+$/", $version)) {
+              $version = "0.1.0";
+            }
             list($major, $minor, $patch) = explode(".", $version);
             $patch++;
             echo "$major.$minor.$patch";
@@ -126,6 +134,10 @@ jobs:
 
       - name: Publish to Packagist
         run: |
+          # Debug info
+          echo "Publishing version ${{ steps.bump_version.outputs.new_version }} to Packagist"
+          echo "Repository: lingodotdev/sdk"
+          
           # Use our custom script for reliable Packagist publishing
           export PACKAGIST_USERNAME=lingodotdev
           export PACKAGIST_API_TOKEN=${{ secrets.PACKAGIST_API_TOKEN }}
