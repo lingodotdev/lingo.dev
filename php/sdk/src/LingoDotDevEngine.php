@@ -1,4 +1,13 @@
 <?php
+/**
+ * PHP SDK for Lingo.dev
+ *
+ * @category  Localization
+ * @package   Lingodotdev\Sdk
+ * @author    Lingo.dev Team <hi@lingo.dev>
+ * @license   MIT
+ * @link      https://lingo.dev
+ */
 
 namespace Lingodotdev\Sdk;
 
@@ -10,18 +19,28 @@ use Respect\Validation\Validator as v;
  * LingoDotDevEngine class for interacting with the LingoDotDev API
  * A powerful localization engine that supports various content types including
  * plain text, objects, and chat sequences.
+ *
+ * @category  Localization
+ * @package   Lingodotdev\Sdk
+ * @author    Lingo.dev Team <hi@lingo.dev>
+ * @license   MIT
+ * @link      https://lingo.dev
  */
 class LingoDotDevEngine
 {
     /**
-     * @var array Configuration options for the Engine
+     * Configuration options for the Engine
+     *
+     * @var array
      */
     protected $config;
 
     /**
-     * @var Client HTTP client
+     * HTTP client for API requests
+     *
+     * @var Client
      */
-    private $httpClient;
+    private $_httpClient;
 
     /**
      * Create a new LingoDotDevEngine instance
@@ -30,11 +49,13 @@ class LingoDotDevEngine
      */
     public function __construct(array $config = [])
     {
-        $this->config = array_merge([
+        $this->config = array_merge(
+            [
             'apiUrl' => 'https://engine.lingo.dev',
             'batchSize' => 25,
             'idealBatchItemSize' => 250
-        ], $config);
+            ], $config
+        );
 
         if (!isset($this->config['apiKey'])) {
             throw new \InvalidArgumentException('API key is required');
@@ -52,40 +73,43 @@ class LingoDotDevEngine
             throw new \InvalidArgumentException('Ideal batch item size must be an integer between 1 and 2500');
         }
 
-        $this->httpClient = new Client([
+        $this->_httpClient = new Client(
+            [
             'base_uri' => $this->config['apiUrl'],
             'headers' => [
                 'Content-Type' => 'application/json; charset=utf-8',
                 'Authorization' => 'Bearer ' . $this->config['apiKey']
             ]
-        ]);
+            ]
+        );
     }
 
     /**
      * Localize content using the Lingo.dev API
      * 
-     * @param array $payload The content to be localized
-     * @param array $params Localization parameters including source/target locales and fast mode option
-     * @param callable|null $progressCallback Optional callback function to report progress (0-100)
-     * @return array Localized content
+     * @param    array         $payload          The content to be localized
+     * @param    array         $params           Localization parameters including source/target locales and fast mode option
+     * @param    callable|null $progressCallback Optional callback function to report progress (0-100)
+     * 
+     * @return   array Localized content
      * @internal
      */
-    protected function _localizeRaw(array $payload, array $params, callable $progressCallback = null): array
+    protected function localizeRaw(array $payload, array $params, callable $progressCallback = null): array
     {
         if (!isset($params['targetLocale'])) {
             throw new \InvalidArgumentException('Target locale is required');
         }
 
-        $chunkedPayload = $this->extractPayloadChunks($payload);
+        $chunkedPayload = $this->_extractPayloadChunks($payload);
         $processedPayloadChunks = [];
 
-        $workflowId = $this->createId();
+        $workflowId = $this->_createId();
 
         for ($i = 0; $i < count($chunkedPayload); $i++) {
             $chunk = $chunkedPayload[$i];
             $percentageCompleted = round((($i + 1) / count($chunkedPayload)) * 100);
 
-            $processedPayloadChunk = $this->localizeChunk(
+            $processedPayloadChunk = $this->_localizeChunk(
                 $params['sourceLocale'] ?? null,
                 $params['targetLocale'],
                 ['data' => $chunk, 'reference' => $params['reference'] ?? null],
@@ -106,17 +130,19 @@ class LingoDotDevEngine
     /**
      * Localize a single chunk of content
      * 
-     * @param string|null $sourceLocale Source locale
-     * @param string $targetLocale Target locale
-     * @param array $payload Payload containing the chunk to be localized
-     * @param string $workflowId Workflow ID
-     * @param bool $fast Whether to use fast mode
+     * @param  string|null $sourceLocale Source locale
+     * @param  string      $targetLocale Target locale
+     * @param  array       $payload      Payload containing the chunk to be localized
+     * @param  string      $workflowId   Workflow ID
+     * @param  bool        $fast         Whether to use fast mode
+     * 
      * @return array Localized chunk
      */
-    private function localizeChunk(?string $sourceLocale, string $targetLocale, array $payload, string $workflowId, bool $fast): array
+    private function _localizeChunk(?string $sourceLocale, string $targetLocale, array $payload, string $workflowId, bool $fast): array
     {
         try {
-            $response = $this->httpClient->post('/i18n', [
+            $response = $this->_httpClient->post(
+                '/i18n', [
                 'json' => [
                     'params' => [
                         'workflowId' => $workflowId,
@@ -129,7 +155,8 @@ class LingoDotDevEngine
                     'data' => $payload['data'],
                     'reference' => $payload['reference']
                 ]
-            ]);
+                ]
+            );
 
             $jsonResponse = json_decode($response->getBody()->getContents(), true);
 
@@ -149,10 +176,11 @@ class LingoDotDevEngine
     /**
      * Extract payload chunks based on the ideal chunk size
      * 
-     * @param array $payload The payload to be chunked
+     * @param  array $payload The payload to be chunked
+     * 
      * @return array An array of payload chunks
      */
-    private function extractPayloadChunks(array $payload): array
+    private function _extractPayloadChunks(array $payload): array
     {
         $result = [];
         $currentChunk = [];
@@ -168,12 +196,11 @@ class LingoDotDevEngine
             $currentChunk[$key] = $value;
             $currentChunkItemCount++;
 
-            $currentChunkSize = $this->countWordsInRecord($currentChunk);
+            $currentChunkSize = $this->_countWordsInRecord($currentChunk);
             
-            if (
-                $currentChunkSize > $this->config['idealBatchItemSize'] ||
-                $currentChunkItemCount >= $this->config['batchSize'] ||
-                $i === count($keys) - 1
+            if ($currentChunkSize > $this->config['idealBatchItemSize'] 
+                || $currentChunkItemCount >= $this->config['batchSize'] 
+                || $i === count($keys) - 1
             ) {
                 $result[] = $currentChunk;
                 $currentChunk = [];
@@ -187,21 +214,22 @@ class LingoDotDevEngine
     /**
      * Count words in a record or array
      * 
-     * @param mixed $payload The payload to count words in
+     * @param  mixed $payload The payload to count words in
+     * 
      * @return int The total number of words
      */
-    private function countWordsInRecord($payload): int
+    private function _countWordsInRecord($payload): int
     {
         if (is_array($payload)) {
             $count = 0;
             foreach ($payload as $item) {
-                $count += $this->countWordsInRecord($item);
+                $count += $this->_countWordsInRecord($item);
             }
             return $count;
         } elseif (is_object($payload)) {
             $count = 0;
             foreach ((array)$payload as $item) {
-                $count += $this->countWordsInRecord($item);
+                $count += $this->_countWordsInRecord($item);
             }
             return $count;
         } elseif (is_string($payload)) {
@@ -216,7 +244,7 @@ class LingoDotDevEngine
      * 
      * @return string Unique ID
      */
-    private function createId(): string
+    private function _createId(): string
     {
         return bin2hex(random_bytes(8));
     }
@@ -224,44 +252,63 @@ class LingoDotDevEngine
     /**
      * Localize a typical PHP array or object
      * 
-     * @param array $obj The object to be localized (strings will be extracted and translated)
-     * @param array $params Localization parameters:
-     *   - sourceLocale: The source language code (e.g., 'en')
-     *   - targetLocale: The target language code (e.g., 'es')
-     *   - fast: Optional boolean to enable fast mode (faster but potentially lower quality)
-     * @param callable|null $progressCallback Optional callback function to report progress (0-100)
+     * @param  array         $obj              The object to be localized (strings will be extracted and translated)
+     * @param  array         $params           Localization parameters:
+     *                                         - sourceLocale: The
+     *                                         source language code
+     *                                         (e.g., 'en') -
+     *                                         targetLocale: The target
+     *                                         language code (e.g.,
+     *                                         'es') - fast: Optional
+     *                                         boolean to enable fast
+     *                                         mode (faster but
+     *                                         potentially lower
+     *                                         quality)
+     * @param  callable|null $progressCallback Optional callback function to report progress (0-100)
      * @return array A new object with the same structure but localized string values
      */
     public function localizeObject(array $obj, array $params, callable $progressCallback = null): array
     {
-        return $this->_localizeRaw($obj, $params, $progressCallback);
+        return $this->localizeRaw($obj, $params, $progressCallback);
     }
 
     /**
      * Localize a single text string
      * 
-     * @param string $text The text string to be localized
-     * @param array $params Localization parameters:
-     *   - sourceLocale: The source language code (e.g., 'en')
-     *   - targetLocale: The target language code (e.g., 'es')
-     *   - fast: Optional boolean to enable fast mode (faster for bigger batches)
-     * @param callable|null $progressCallback Optional callback function to report progress (0-100)
+     * @param  string        $text             The text string to be localized
+     * @param  array         $params           Localization parameters:
+     *                                         - sourceLocale: The
+     *                                         source language code
+     *                                         (e.g., 'en') -
+     *                                         targetLocale: The target
+     *                                         language code (e.g.,
+     *                                         'es') - fast: Optional
+     *                                         boolean to enable fast
+     *                                         mode (faster for bigger
+     *                                         batches)
+     * @param  callable|null $progressCallback Optional callback function to report progress (0-100)
      * @return string The localized text string
      */
     public function localizeText(string $text, array $params, callable $progressCallback = null): string
     {
-        $response = $this->_localizeRaw(['text' => $text], $params, $progressCallback);
+        $response = $this->localizeRaw(['text' => $text], $params, $progressCallback);
         return $response['text'] ?? '';
     }
 
     /**
      * Localize a text string to multiple target locales
      * 
-     * @param string $text The text string to be localized
-     * @param array $params Localization parameters:
-     *   - sourceLocale: The source language code (e.g., 'en')
-     *   - targetLocales: An array of target language codes (e.g., ['es', 'fr'])
-     *   - fast: Optional boolean to enable fast mode (for bigger batches)
+     * @param  string $text   The text string to be localized
+     * @param  array  $params Localization parameters:
+     *                        - sourceLocale: The
+     *                        source language code
+     *                        (e.g., 'en') -
+     *                        targetLocales: An array
+     *                        of target language codes
+     *                        (e.g., ['es', 'fr']) -
+     *                        fast: Optional boolean
+     *                        to enable fast mode (for
+     *                        bigger batches)
      * @return array An array of localized text strings
      */
     public function batchLocalizeText(string $text, array $params): array
@@ -276,11 +323,13 @@ class LingoDotDevEngine
 
         $responses = [];
         foreach ($params['targetLocales'] as $targetLocale) {
-            $responses[] = $this->localizeText($text, [
+            $responses[] = $this->localizeText(
+                $text, [
                 'sourceLocale' => $params['sourceLocale'],
                 'targetLocale' => $targetLocale,
                 'fast' => $params['fast'] ?? false
-            ]);
+                ]
+            );
         }
 
         return $responses;
@@ -289,12 +338,19 @@ class LingoDotDevEngine
     /**
      * Localize a chat sequence while preserving speaker names
      * 
-     * @param array $chat Array of chat messages, each with 'name' and 'text' properties
-     * @param array $params Localization parameters:
-     *   - sourceLocale: The source language code (e.g., 'en')
-     *   - targetLocale: The target language code (e.g., 'es')
-     *   - fast: Optional boolean to enable fast mode (faster but potentially lower quality)
-     * @param callable|null $progressCallback Optional callback function to report progress (0-100)
+     * @param  array         $chat             Array of chat messages, each with 'name' and 'text' properties
+     * @param  array         $params           Localization parameters:
+     *                                         - sourceLocale: The
+     *                                         source language code
+     *                                         (e.g., 'en') -
+     *                                         targetLocale: The target
+     *                                         language code (e.g.,
+     *                                         'es') - fast: Optional
+     *                                         boolean to enable fast
+     *                                         mode (faster but
+     *                                         potentially lower
+     *                                         quality)
+     * @param  callable|null $progressCallback Optional callback function to report progress (0-100)
      * @return array Array of localized chat messages with preserved structure
      */
     public function localizeChat(array $chat, array $params, callable $progressCallback = null): array
@@ -307,7 +363,7 @@ class LingoDotDevEngine
             $payload["chat_{$index}"] = $message['text'];
         }
 
-        $localized = $this->_localizeRaw($payload, $params, $progressCallback);
+        $localized = $this->localizeRaw($payload, $params, $progressCallback);
 
         $result = [];
         foreach ($localized as $key => $value) {
@@ -324,15 +380,17 @@ class LingoDotDevEngine
     /**
      * Detect the language of a given text
      * 
-     * @param string $text The text to analyze
+     * @param  string $text The text to analyze
      * @return string Promise resolving to a locale code (e.g., 'en', 'es', 'fr')
      */
     public function recognizeLocale(string $text): string
     {
         try {
-            $response = $this->httpClient->post('/recognize', [
+            $response = $this->_httpClient->post(
+                '/recognize', [
                 'json' => ['text' => $text]
-            ]);
+                ]
+            );
 
             $jsonResponse = json_decode($response->getBody()->getContents(), true);
             return $jsonResponse['locale'];

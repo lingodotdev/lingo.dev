@@ -21,7 +21,7 @@ class LingoDotDevEngineTest extends TestCase
         $engine = new LingoDotDevEngine(['apiKey' => 'test-api-key']);
         
         $reflection = new ReflectionClass($engine);
-        $property = $reflection->getProperty('httpClient');
+        $property = $reflection->getProperty('_httpClient');
         $property->setAccessible(true);
         $property->setValue($engine, $client);
         
@@ -42,84 +42,122 @@ class LingoDotDevEngineTest extends TestCase
 
     public function testLocalizeText()
     {
-        $engine = $this->createMockEngine([
-            new Response(200, [], json_encode([
-                'data' => ['text' => 'Hola, mundo!']
-            ]))
-        ]);
+        $engine = $this->createMockEngine(
+            [
+            new Response(
+                200, [], json_encode(
+                    [
+                    'data' => ['text' => 'Hola, mundo!']
+                    ]
+                )
+            )
+            ]
+        );
 
-        $result = $engine->localizeText('Hello, world!', [
+        $result = $engine->localizeText(
+            'Hello, world!', [
             'sourceLocale' => 'en',
             'targetLocale' => 'es'
-        ]);
+            ]
+        );
 
         $this->assertEquals('Hola, mundo!', $result);
     }
 
     public function testLocalizeObject()
     {
-        $engine = $this->createMockEngine([
-            new Response(200, [], json_encode([
-                'data' => [
+        $engine = $this->createMockEngine(
+            [
+            new Response(
+                200, [], json_encode(
+                    [
+                    'data' => [
                     'greeting' => 'Hola',
                     'farewell' => 'Adiós'
-                ]
-            ]))
-        ]);
+                    ]
+                    ]
+                )
+            )
+            ]
+        );
 
-        $result = $engine->localizeObject([
+        $result = $engine->localizeObject(
+            [
             'greeting' => 'Hello',
             'farewell' => 'Goodbye'
-        ], [
+            ], [
             'sourceLocale' => 'en',
             'targetLocale' => 'es'
-        ]);
+            ]
+        );
 
-        $this->assertEquals([
+        $this->assertEquals(
+            [
             'greeting' => 'Hola',
             'farewell' => 'Adiós'
-        ], $result);
+            ], $result
+        );
     }
 
     public function testBatchLocalizeText()
     {
-        $engine = $this->createMockEngine([
-            new Response(200, [], json_encode([
-                'data' => ['text' => 'Hola, mundo!']
-            ])),
-            new Response(200, [], json_encode([
-                'data' => ['text' => 'Bonjour, monde!']
-            ]))
-        ]);
+        $engine = $this->createMockEngine(
+            [
+            new Response(
+                200, [], json_encode(
+                    [
+                    'data' => ['text' => 'Hola, mundo!']
+                    ]
+                )
+            ),
+            new Response(
+                200, [], json_encode(
+                    [
+                    'data' => ['text' => 'Bonjour, monde!']
+                    ]
+                )
+            )
+            ]
+        );
 
-        $result = $engine->batchLocalizeText('Hello, world!', [
+        $result = $engine->batchLocalizeText(
+            'Hello, world!', [
             'sourceLocale' => 'en',
             'targetLocales' => ['es', 'fr']
-        ]);
+            ]
+        );
 
         $this->assertEquals(['Hola, mundo!', 'Bonjour, monde!'], $result);
     }
 
     public function testLocalizeChat()
     {
-        $engine = $this->createMockEngine([
-            new Response(200, [], json_encode([
-                'data' => [
+        $engine = $this->createMockEngine(
+            [
+            new Response(
+                200, [], json_encode(
+                    [
+                    'data' => [
                     'chat_0' => '¡Hola, cómo estás?',
                     'chat_1' => '¡Estoy bien, gracias!'
-                ]
-            ]))
-        ]);
+                    ]
+                    ]
+                )
+            )
+            ]
+        );
 
         $chat = [
             ['name' => 'Alice', 'text' => 'Hello, how are you?'],
             ['name' => 'Bob', 'text' => 'I am fine, thank you!']
         ];
 
-        $result = $engine->localizeChat($chat, [
+        $result = $engine->localizeChat(
+            $chat, [
             'sourceLocale' => 'en',
             'targetLocale' => 'es'
-        ]);
+            ]
+        );
 
         $expected = [
             ['name' => 'Alice', 'text' => '¡Hola, cómo estás?'],
@@ -131,11 +169,17 @@ class LingoDotDevEngineTest extends TestCase
 
     public function testRecognizeLocale()
     {
-        $engine = $this->createMockEngine([
-            new Response(200, [], json_encode([
-                'locale' => 'fr'
-            ]))
-        ]);
+        $engine = $this->createMockEngine(
+            [
+            new Response(
+                200, [], json_encode(
+                    [
+                    'locale' => 'fr'
+                    ]
+                )
+            )
+            ]
+        );
 
         $result = $engine->recognizeLocale('Bonjour le monde');
         $this->assertEquals('fr', $result);
@@ -143,37 +187,53 @@ class LingoDotDevEngineTest extends TestCase
 
     public function testErrorHandling()
     {
-        $engine = $this->createMockEngine([
-            new Response(400, [], json_encode([
-                'error' => 'Invalid request'
-            ]))
-        ]);
+        $engine = $this->createMockEngine(
+            [
+            new Response(
+                400, [], json_encode(
+                    [
+                    'error' => 'Invalid request'
+                    ]
+                )
+            )
+            ]
+        );
 
         $this->expectException(\InvalidArgumentException::class);
-        $engine->localizeText('Hello, world!', [
+        $engine->localizeText(
+            'Hello, world!', [
             'sourceLocale' => 'en',
             'targetLocale' => 'es'
-        ]);
+            ]
+        );
     }
 
     public function testProgressCallback()
     {
-        $engine = $this->createMockEngine([
-            new Response(200, [], json_encode([
-                'data' => ['text' => 'Hola, mundo!']
-            ]))
-        ]);
+        $engine = $this->createMockEngine(
+            [
+            new Response(
+                200, [], json_encode(
+                    [
+                    'data' => ['text' => 'Hola, mundo!']
+                    ]
+                )
+            )
+            ]
+        );
 
         $progressCalled = false;
         $progressValue = 0;
 
-        $engine->localizeText('Hello, world!', [
+        $engine->localizeText(
+            'Hello, world!', [
             'sourceLocale' => 'en',
             'targetLocale' => 'es'
-        ], function ($progress) use (&$progressCalled, &$progressValue) {
-            $progressCalled = true;
-            $progressValue = $progress;
-        });
+            ], function ($progress) use (&$progressCalled, &$progressValue) {
+                $progressCalled = true;
+                $progressValue = $progress;
+            }
+        );
 
         $this->assertTrue($progressCalled);
         $this->assertEquals(100, $progressValue);
