@@ -59,8 +59,8 @@ jobs:
           git commit -m "chore: bump PHP SDK version to ${{ steps.bump_version.outputs.new_version }}"
           git push
 
-      - name: Update Packagist
-        run: |
-          curl -XPOST -H "content-type:application/json" \
-          "https://packagist.org/api/update-package?username=lingodotdev&apiToken=${{ secrets.PACKAGIST_API_TOKEN }}" \
-          -d '{"repository":{"url":"https://github.com/lingodotdev/lingo.dev"}}'
+      - name: Publish to Packagist
+        uses: wscourge/packagist-publish@v1
+        with:
+          username: lingodotdev
+          api_token: ${{ secrets.PACKAGIST_API_TOKEN }}
