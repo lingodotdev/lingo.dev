@@ -59,16 +59,14 @@ export default function createMdxLockedPatternsLoader(defaultPatterns?: string[]
       return content;
     },
 
-    async push(locale, data) {
+    async push(locale, data, originalInput, originalLocale, pullInput, pullOutput) {
       const patterns = defaultPatterns || [];
-      
-      const pullInput = (global as any).__pullInput || null;
       
       if (!pullInput) {
         return data;
       }
       
-      const { lockedPlaceholders } = extractLockedPatterns(pullInput, patterns);
+      const { lockedPlaceholders } = extractLockedPatterns(pullInput as string, patterns);
       
       let result = data;
       for (const [placeholder, original] of Object.entries(lockedPlaceholders)) {

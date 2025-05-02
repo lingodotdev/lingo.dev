@@ -28,12 +28,8 @@ describe("MDX Locked Patterns Loader", () => {
       
       expect(result).toBe(md);
       
-      (global as any).__pullInput = md;
-      
       const pushed = await loader.push("es", result);
       expect(pushed).toBe(md);
-      
-      delete (global as any).__pullInput;
     });
     
     it("should preserve content matching patterns", async () => {
@@ -83,11 +79,7 @@ describe("MDX Locked Patterns Loader", () => {
         .replace("# Title", "# Título")
         .replace("Some content.", "Algún contenido.");
       
-      (global as any).__pullInput = md;
-      
       const pushed = await loader.push("es", translated);
-      
-      delete (global as any).__pullInput;
       
       const expectedPushed = dedent`
         # Título
@@ -126,11 +118,7 @@ describe("MDX Locked Patterns Loader", () => {
       const placeholders = result.match(placeholderRegex) || [];
       expect(placeholders.length).toBe(0); // No patterns should be replaced
       
-      (global as any).__pullInput = md;
-      
       const pushed = await loader.push("es", result);
-      
-      delete (global as any).__pullInput;
       
       expect(pushed).toBe(md);
     });
@@ -181,11 +169,7 @@ describe("MDX Locked Patterns Loader", () => {
         .replace("The public key of the account to query.", "La clave pública de la cuenta a consultar.")
         .replace("Encoding format for the returned Account data.", "Formato de codificación para los datos de la cuenta devueltos.");
       
-      (global as any).__pullInput = md;
-      
       const pushed = await loader.push("es", translated);
-      
-      delete (global as any).__pullInput;
       
       const expectedPushed = dedent`
         # Parámetros
@@ -258,11 +242,7 @@ describe("MDX Locked Patterns Loader", () => {
         .replace("The public key of the account to query.", "La clave pública de la cuenta a consultar.")
         .replace("Encoding format for the returned Account data.", "Formato de codificación para los datos de la cuenta devueltos.");
       
-      (global as any).__pullInput = md;
-      
       const pushed = await loader.push("es", translated);
-      
-      delete (global as any).__pullInput;
       
       const expectedPushed = dedent`
         !! pubkey
