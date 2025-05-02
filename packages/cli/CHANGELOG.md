@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.89.1
+
+### Patch Changes
+
+- [`5ce634d`](https://github.com/lingodotdev/lingo.dev/commit/5ce634d3d54701868365d384de90bef51f432fa5) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - reuse i18n inside ci cmd
+
 ## 0.89.0
 
 ### Minor Changes
