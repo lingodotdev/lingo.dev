@@ -52,7 +52,7 @@ jobs:
           php-version: '8.0'
           extensions: mbstring, intl
           coverage: none
-          tools: composer:v2, composer-semver
+          tools: composer:v2
 
       - name: Install dependencies
         working-directory: ./php/sdk
@@ -67,8 +67,17 @@ jobs:
       - name: Bump patch version
         id: bump_version
         run: |
-          # Use composer-semver for version bumping (always patch for main branch pushes)
-          NEW_VERSION=$(composer semver ${{ steps.current_version.outputs.version }} --increment=patch)
+          # Get current version
+          CURRENT_VERSION=${{ steps.current_version.outputs.version }}
+          
+          # Use PHP to increment patch version instead of composer semver
+          NEW_VERSION=$(php -r '
+            $version = "${{ steps.current_version.outputs.version }}";
+            list($major, $minor, $patch) = explode(".", $version);
+            $patch++;
+            echo "$major.$minor.$patch";
+          ')
+          
           echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
           
           # Update version in composer.json
