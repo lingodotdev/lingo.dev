@@ -7,52 +7,84 @@ export default function createAndroidLoader(): ILoader<string, Record<string, an
   return createLoader({
     async pull(locale, input) {
       try {
-        const result: Record<string, any> = {};
-        const parsed: AndroidResources = !input
-          ? { resources: {} }
-          : await parseStringPromise(input, { explicitArray: true });
-
-        if (!parsed || !parsed.resources) {
-          console.warn("No resources found in the Android resource file");
-          return result;
+        if (!input) {
+          return {};
         }
 
-        const processResource = (resourceType: string) => {
-          const resources = parsed.resources[resourceType as keyof AndroidResources["resources"]];
-          if (!resources) return;
-
-          resources.forEach((item: AndroidResource) => {
-            if (item.$ && item.$.translatable === "false") return;
-
-            if (resourceType === "string") {
-              result[item.$.name] = item._ || "";
-            } else if (resourceType === "string-array") {
-              result[item.$.name] = (item.item || [])
-                .map((subItem: any) => {
-                  if (typeof subItem === "string") return subItem;
-                  return subItem._ || "";
-                })
-                .filter(Boolean); // Remove any empty strings
-            } else if (resourceType === "plurals") {
-              const pluralObj: Record<string, string> = {};
-              if (Array.isArray(item.item)) {
-                item.item.forEach((subItem: any) => {
-                  if (subItem.$ && subItem.$.quantity) {
-                    pluralObj[subItem.$.quantity] = subItem._ || "";
-                  }
-                });
-              }
-              result[item.$.name] = pluralObj;
-            } else if (resourceType === "bool") {
-              result[item.$.name] = item._ === "true";
-            } else if (resourceType === "integer") {
-              result[item.$.name] = parseInt(item._ || "0", 10);
-            }
-          });
-        };
-
-        ["string", "string-array", "plurals", "bool", "integer"].forEach(processResource);
-
+        const result: Record<string, any> = {};
+        
+        const stringRegex = /<string\s+name="([^"]+)"(?:\s+translatable="([^"]+)")?[^>]*>([\s\S]*?)<\/string>/gi;
+        let stringMatch;
+        while ((stringMatch = stringRegex.exec(input)) !== null) {
+          const name = stringMatch[1];
+          const translatable = stringMatch[2];
+          const value = stringMatch[3];
+          
+          if (translatable === "false") {
+            continue;
+          }
+          
+          result[name] = value.trim();
+        }
+        
+        const arrayRegex = /<string-array\s+name="([^"]+)"(?:\s+translatable="([^"]+)")?[^>]*>([\s\S]*?)<\/string-array>/gi;
+        let arrayMatch;
+        while ((arrayMatch = arrayRegex.exec(input)) !== null) {
+          const name = arrayMatch[1];
+          const translatable = arrayMatch[2];
+          const arrayContent = arrayMatch[3];
+          
+          if (translatable === "false") {
+            continue;
+          }
+          
+          const items: string[] = [];
+          const itemRegex = /<item>([\s\S]*?)<\/item>/gi;
+          let itemMatch;
+          while ((itemMatch = itemRegex.exec(arrayContent)) !== null) {
+            items.push(itemMatch[1].trim());
+          }
+          
+          result[name] = items;
+        }
+        
+        const pluralsRegex = /<plurals\s+name="([^"]+)"(?:\s+translatable="([^"]+)")?[^>]*>([\s\S]*?)<\/plurals>/gi;
+        let pluralsMatch;
+        while ((pluralsMatch = pluralsRegex.exec(input)) !== null) {
+          const name = pluralsMatch[1];
+          const translatable = pluralsMatch[2];
+          const pluralsContent = pluralsMatch[3];
+          
+          if (translatable === "false") {
+            continue;
+          }
+          
+          const pluralObj: Record<string, string> = {};
+          const quantityRegex = /<item\s+quantity="([^"]+)">([\s\S]*?)<\/item>/gi;
+          let quantityMatch;
+          while ((quantityMatch = quantityRegex.exec(pluralsContent)) !== null) {
+            const quantity = quantityMatch[1];
+            const value = quantityMatch[2];
+            pluralObj[quantity] = value.trim();
+          }
+          
+          result[name] = pluralObj;
+        }
+        
+        const cdataRegex = /<string\s+name="([^"]+)"(?:\s+translatable="([^"]+)")?[^>]*><!\[CDATA\[([\s\S]*?)\]\]><\/string>/gi;
+        let cdataMatch;
+        while ((cdataMatch = cdataRegex.exec(input)) !== null) {
+          const name = cdataMatch[1];
+          const translatable = cdataMatch[2];
+          const value = cdataMatch[3];
+          
+          if (translatable === "false") {
+            continue;
+          }
+          
+          result[name] = value.trim();
+        }
+        
         return result;
       } catch (error) {
         console.error("Error parsing Android resource file:", error);
@@ -63,66 +95,48 @@ export default function createAndroidLoader(): ILoader<string, Record<string, an
       }
     },
     async push(locale, payload) {
-      const builder = new Builder({ headless: true });
-      const xmlObj: AndroidResources = { resources: {} };
-
-      // Helper function to escape single quotes, avoiding double escaping
-      const escapeSingleQuotes = (str: string) => {
-        return str.replace(/(?<!\\)'/g, "\\'");
-      };
-
-      for (const [key, value] of Object.entries(payload)) {
-        if (typeof value === "string") {
-          if (!xmlObj.resources.string) xmlObj.resources.string = [];
-          xmlObj.resources.string.push({ $: { name: key }, _: escapeSingleQuotes(value) });
-        } else if (Array.isArray(value)) {
-          if (!xmlObj.resources["string-array"]) xmlObj.resources["string-array"] = [];
-          xmlObj.resources["string-array"].push({
-            $: { name: key },
-            item: value.map((item) => ({ _: escapeSingleQuotes(item) })),
-          });
-        } else if (typeof value === "object") {
-          if (!xmlObj.resources.plurals) xmlObj.resources.plurals = [];
-          xmlObj.resources.plurals.push({
-            $: { name: key },
-            item: Object.entries(value).map(([quantity, text]) => ({
-              $: { quantity },
-              _: escapeSingleQuotes(text as string),
-            })),
-          });
-        } else if (typeof value === "boolean") {
-          if (!xmlObj.resources.bool) xmlObj.resources.bool = [];
-          xmlObj.resources.bool.push({ $: { name: key }, _: value.toString() });
-        } else if (typeof value === "number") {
-          if (!xmlObj.resources.integer) xmlObj.resources.integer = [];
-          xmlObj.resources.integer.push({
-            $: { name: key },
-            _: value.toString(),
-          });
+      try {
+        let xmlContent = '<?xml version="1.0" encoding="utf-8"?>\n<resources>\n';
+        
+        const escapeXml = (str: string) => {
+          if (typeof str !== 'string') return str;
+          if (/<[a-z][\s\S]*>/i.test(str)) {
+            return `<![CDATA[${str}]]>`;
+          }
+          return str;
+        };
+        
+        for (const [key, value] of Object.entries(payload)) {
+          if (typeof value === "string") {
+            xmlContent += `  <string name="${key}">${escapeXml(value)}</string>\n`;
+          } else if (Array.isArray(value)) {
+            xmlContent += `  <string-array name="${key}">\n`;
+            for (const item of value) {
+              xmlContent += `    <item>${escapeXml(item)}</item>\n`;
+            }
+            xmlContent += `  </string-array>\n`;
+          } else if (typeof value === "object") {
+            xmlContent += `  <plurals name="${key}">\n`;
+            for (const [quantity, text] of Object.entries(value)) {
+              xmlContent += `    <item quantity="${quantity}">${escapeXml(text as string)}</item>\n`;
+            }
+            xmlContent += `  </plurals>\n`;
+          } else if (typeof value === "boolean") {
+            xmlContent += `  <bool name="${key}">${value}</bool>\n`;
+          } else if (typeof value === "number") {
+            xmlContent += `  <integer name="${key}">${value}</integer>\n`;
+          }
         }
+        
+        xmlContent += '</resources>';
+        return xmlContent;
+      } catch (error) {
+        console.error("Error generating Android resource file:", error);
+        throw new CLIError({
+          message: "Failed to generate Android resource file",
+          docUrl: "androidResouceError",
+        });
       }
-
-      const result = builder.buildObject(xmlObj);
-      return result;
     },
   });
-}
-
-interface AndroidResource {
-  $: {
-    name: string;
-    [key: string]: string;
-  };
-  _?: string;
-  item?: Array<{ $?: { quantity?: string }; _: string } | string>;
-}
-
-interface AndroidResources {
-  resources: {
-    string?: AndroidResource[];
-    "string-array"?: AndroidResource[];
-    plurals?: AndroidResource[];
-    bool?: AndroidResource[];
-    integer?: AndroidResource[];
-  };
 }
