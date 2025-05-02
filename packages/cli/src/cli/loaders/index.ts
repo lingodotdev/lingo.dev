@@ -122,6 +122,7 @@ export default function createBucketLoader(
         createMdxSectionsSplit2Loader(),
         createLocalizableMdxDocumentLoader(),
         createFlatLoader(),
+        createLockedKeysLoader(lockedKeys || [], options.isCacheRestore),
         createSyncLoader(),
         createUnlocalizableLoader(
           options.isCacheRestore,
