@@ -2,7 +2,7 @@
   "version": 1.6,
   "locale": {
     "source": "en",
-    "targets": ["es"]
+    "targets": ["de"]
   },
   "buckets": {
     "mdx": {

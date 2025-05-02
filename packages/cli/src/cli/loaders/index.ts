@@ -1,4 +1,5 @@
 import Z from "zod";
+import jsdom from "jsdom";
 import { bucketTypeSchema } from "@lingo.dev/_spec";
 import { composeLoaders } from "./_utils";
 import createJsonLoader from "./json";
