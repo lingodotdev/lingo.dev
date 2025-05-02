@@ -1,4 +1,5 @@
-import { PostHog } from "posthog-node";
+import pkg from "posthog-node";
+const { PostHog } = pkg;
 
 export default async function trackEvent(distinctId: string, event: string, properties?: Record<string, any>) {
   if (process.env.DO_NOT_TRACK) {
