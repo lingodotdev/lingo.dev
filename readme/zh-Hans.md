@@ -166,14 +166,14 @@ Lingo.dev 是社区驱动的，所以我们欢迎所有贡献！
 - [英语](https://github.com/lingodotdev/lingo.dev)
 - [中文](/readme/zh-Hans.md)
 - [日语](/readme/ja.md)
+- [韩语](/readme/ko.md)
 - [西班牙语](/readme/es.md)
 - [法语](/readme/fr.md)
 - [俄语](/readme/ru.md)
 - [德语](/readme/de.md)
-- [韩语](/readme/ko.md)
 - [意大利语](/readme/it.md)
 - [阿拉伯语](/readme/ar.md)
 - [印地语](/readme/hi.md)
 - [孟加拉语](/readme/bn.md)
 
-没有看到您的语言？只需将新的语言代码添加到 [`i18n.json`](./i18n.json) 文件中并提交一个 PR。
+没有看到您的语言？只需将新的语言代码添加到[`i18n.json`](./i18n.json)文件中并提交一个PR。
