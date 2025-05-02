@@ -1,5 +1,13 @@
 # lingo.dev
 
+## 0.87.13
+
+### Patch Changes
+
+- [#678](https://github.com/lingodotdev/lingo.dev/pull/678)
+  [`0e3916c`](https://github.com/lingodotdev/lingo.dev/commit/0e3916c4817cd0bc77f426aa66c97df61c6617bf)
+  Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - dates in mdx
+
 ## 0.87.12
 
 ### Patch Changes
