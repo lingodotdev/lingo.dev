@@ -148,6 +148,116 @@ describe("android loader", () => {
     });
   });
   
+  it("should correctly handle multiple CDATA sections in a single string", async () => {
+    const input = `
+      <resources>
+        <string name="multiple_cdata"><![CDATA[<first>section</first>]]><![CDATA[<second>section</second>]]></string>
+      </resources>
+    `.trim();
+    
+    const androidLoader = createAndroidLoader().setDefaultLocale("en");
+    const result = await androidLoader.pull("en", input);
+    
+    expect(result).toEqual({
+      "multiple_cdata": "<first>section</first><second>section</second>"
+    });
+  });
+  
+  it("should correctly handle nested HTML tags with attributes", async () => {
+    const input = `
+      <resources>
+        <string name="complex_html">This is <span style="color:red">red text</span> and <a href="https://example.com">a link</a></string>
+      </resources>
+    `.trim();
+    
+    const androidLoader = createAndroidLoader().setDefaultLocale("en");
+    const result = await androidLoader.pull("en", input);
+    
+    expect(result).toEqual({
+      "complex_html": "This is <span style=\"color:red\">red text</span> and <a href=\"https://example.com\">a link</a>"
+    });
+  });
+  
+  it("should correctly handle XML entities in strings", async () => {
+    const input = `
+      <resources>
+        <string name="entities">This string contains &lt;brackets&gt; and &amp;ampersands</string>
+      </resources>
+    `.trim();
+    
+    const androidLoader = createAndroidLoader().setDefaultLocale("en");
+    const result = await androidLoader.pull("en", input);
+    
+    expect(result).toEqual({
+      "entities": "This string contains <brackets> and &ampersands"
+    });
+  });
+  
+  it("should correctly handle empty strings", async () => {
+    const input = `
+      <resources>
+        <string name="empty"></string>
+        <string name="whitespace">   </string>
+      </resources>
+    `.trim();
+    
+    const androidLoader = createAndroidLoader().setDefaultLocale("en");
+    const result = await androidLoader.pull("en", input);
+    
+    expect(result).toEqual({
+      "empty": "",
+      "whitespace": "   "
+    });
+  });
+  
+  it("should correctly handle very long strings", async () => {
+    const longText = "This is a very long string.".repeat(100);
+    const input = `
+      <resources>
+        <string name="long_text">${longText}</string>
+      </resources>
+    `.trim();
+    
+    const androidLoader = createAndroidLoader().setDefaultLocale("en");
+    const result = await androidLoader.pull("en", input);
+    
+    expect(result).toEqual({
+      "long_text": longText
+    });
+  });
+  
+  it("should correctly handle strings with newlines and whitespace", async () => {
+    const input = `
+      <resources>
+        <string name="multiline">Line 1
+Line 2
+  Line 3 with indent</string>
+      </resources>
+    `.trim();
+    
+    const androidLoader = createAndroidLoader().setDefaultLocale("en");
+    const result = await androidLoader.pull("en", input);
+    
+    expect(result).toEqual({
+      "multiline": "Line 1\nLine 2\n  Line 3 with indent"
+    });
+  });
+  
+  it("should correctly handle Unicode characters", async () => {
+    const input = `
+      <resources>
+        <string name="unicode">Unicode: 你好, こんにちは, Привет, مرحبا, 안녕하세요</string>
+      </resources>
+    `.trim();
+    
+    const androidLoader = createAndroidLoader().setDefaultLocale("en");
+    const result = await androidLoader.pull("en", input);
+    
+    expect(result).toEqual({
+      "unicode": "Unicode: 你好, こんにちは, Привет, مرحبا, 안녕하세요"
+    });
+  });
+  
   it("should skip non-translatable strings", async () => {
     const input = `
       <resources>

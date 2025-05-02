@@ -4,22 +4,6 @@ import { CLIError } from "../utils/errors";
 import { createLoader } from "./_utils";
 
 export default function createAndroidLoader(): ILoader<string, Record<string, any>> {
-  const extractRawXmlContent = (input: string, tagName: string, nameAttr: string): Record<string, string> => {
-    const result: Record<string, string> = {};
-    const regex = new RegExp(`<${tagName}\\s+name="${nameAttr}"(?:\\s+translatable="([^"]+)")?[^>]*>((?:(?!<\\/${tagName}>).)*)<\\/${tagName}>`, 'gi');
-    let match;
-    
-    while ((match = regex.exec(input)) !== null) {
-      const translatable = match[1];
-      if (translatable === 'false') continue;
-      
-      const name = match[2];
-      const content = match[3];
-      result[name] = content.trim();
-    }
-    
-    return result;
-  };
   
   return createLoader({
     async pull(locale, input) {
@@ -41,13 +25,16 @@ export default function createAndroidLoader(): ILoader<string, Record<string, an
             continue;
           }
           
-          const cdataRegex = /<!\[CDATA\[([\s\S]*?)\]\]>/;
-          const cdataMatch = cdataRegex.exec(value);
-          if (cdataMatch) {
-            value = cdataMatch[1];
-          }
+          const cdataRegex = /<!\[CDATA\[([\s\S]*?)\]\]>/g;
+          value = value.replace(cdataRegex, (match, content) => content);
           
-          result[name] = value.trim();
+          value = value.replace(/&lt;/g, '<')
+                       .replace(/&gt;/g, '>')
+                       .replace(/&amp;/g, '&')
+                       .replace(/&quot;/g, '"')
+                       .replace(/&apos;/g, "'");
+          
+          result[name] = value === "" || /^\s+$/.test(value) ? value : value.trim();
         }
         
         const parsed = await parseStringPromise(input, {
@@ -83,7 +70,7 @@ export default function createAndroidLoader(): ILoader<string, Record<string, an
                 } else if (item._ === '') {
                   itemValue = '';
                 }
-                items.push(itemValue.trim());
+                items.push(itemValue === "" || /^\s+$/.test(itemValue) ? itemValue : itemValue.trim());
               });
             }
             
@@ -109,7 +96,7 @@ export default function createAndroidLoader(): ILoader<string, Record<string, an
                   } else if (item._ === '') {
                     value = '';
                   }
-                  pluralObj[item.$.quantity] = value.trim();
+                  pluralObj[item.$.quantity] = value === "" || /^\s+$/.test(value) ? value : value.trim();
                 }
               });
             }
@@ -163,6 +150,9 @@ export default function createAndroidLoader(): ILoader<string, Record<string, an
         
         const processHtmlContent = (str: string): { _: string } => {
           if (typeof str !== 'string') return { _: String(str) };
+          
+          const containsHtml = /<[a-z][\s\S]*>/i.test(str);
+          const containsSpecialChars = /[<>&]/.test(str);
           
           return { _: str };
         };
