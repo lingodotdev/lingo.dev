@@ -1,6 +1,7 @@
 {
     "name": "lingodotdev/sdk",
     "description": "Official PHP SDK for Lingo.dev",
+    "version": "0.1.0",
     "type": "library",
     "license": "MIT",
     "autoload": {
