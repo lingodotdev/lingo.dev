@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.89.3
+
+### Patch Changes
+
+- [`4b080b9`](https://github.com/lingodotdev/lingo.dev/commit/4b080b9e89ec858d4638ef73a96599721e7e90ce) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - upd deps
+
 ## 0.89.2
 
 ### Patch Changes
