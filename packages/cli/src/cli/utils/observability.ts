@@ -1,5 +1,3 @@
-import { PostHog } from "posthog-node";
-
 export default async function trackEvent(
   distinctId: string,
   event: string,
@@ -10,6 +8,7 @@ export default async function trackEvent(
   }
 
   try {
+    const { PostHog } = await import("posthog-node");
     const safeProperties = properties
       ? JSON.parse(
           JSON.stringify(properties, (key, value) => {

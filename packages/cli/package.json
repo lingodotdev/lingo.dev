@@ -105,7 +105,7 @@
     "p-limit": "^6.2.0",
     "php-array-reader": "^2.1.2",
     "plist": "^3.1.0",
-    "posthog-node": "^4.11.2",
+    "posthog-node": "^4.17.0",
     "prettier": "^3.4.2",
     "rehype-stringify": "^10.0.1",
     "remark-disable-tokenizers": "^1.1.1",
