@@ -1,18 +1,26 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import trackEvent from '../observability';
 
-const mockCapture = vi.fn();
-const mockShutdown = vi.fn().mockResolvedValue(undefined);
-const MockPostHogConstructor = vi.fn().mockImplementation(() => ({
-  capture: mockCapture,
-  shutdown: mockShutdown
-}));
+const mocks = vi.hoisted(() => {
+  const mockCapture = vi.fn();
+  const mockShutdown = vi.fn().mockResolvedValue(undefined);
+  const MockPostHogConstructor = vi.fn().mockImplementation(() => ({
+    capture: mockCapture,
+    shutdown: mockShutdown
+  }));
+  
+  return {
+    mockCapture,
+    mockShutdown,
+    MockPostHogConstructor
+  };
+});
 
 vi.mock('posthog-node', () => {
   return {
-    PostHog: MockPostHogConstructor,
+    PostHog: mocks.MockPostHogConstructor,
     default: {
-      PostHog: MockPostHogConstructor
+      PostHog: mocks.MockPostHogConstructor
     }
   };
 });
@@ -33,14 +41,14 @@ describe('trackEvent', () => {
   it('should track an event with PostHog', async () => {
     await trackEvent('user123', 'test_event', { test: true });
     
-    expect(MockPostHogConstructor).toHaveBeenCalledWith(
+    expect(mocks.MockPostHogConstructor).toHaveBeenCalledWith(
       expect.any(String),
       expect.objectContaining({
         host: expect.any(String)
       })
     );
     
-    expect(mockCapture).toHaveBeenCalledWith({
+    expect(mocks.mockCapture).toHaveBeenCalledWith({
       distinctId: 'user123',
       event: 'test_event',
       properties: expect.objectContaining({
@@ -51,7 +59,7 @@ describe('trackEvent', () => {
       })
     });
     
-    expect(mockShutdown).toHaveBeenCalled();
+    expect(mocks.mockShutdown).toHaveBeenCalled();
   });
   
   it('should not track when DO_NOT_TRACK is set', async () => {
@@ -59,14 +67,14 @@ describe('trackEvent', () => {
     
     await trackEvent('user123', 'test_event');
     
-    expect(MockPostHogConstructor).not.toHaveBeenCalled();
+    expect(mocks.MockPostHogConstructor).not.toHaveBeenCalled();
   });
   
   it('should handle errors gracefully', async () => {
     const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
     process.env.DEBUG = 'true';
     
-    mockCapture.mockRejectedValueOnce(new Error('Test error'));
+    mocks.mockCapture.mockRejectedValueOnce(new Error('Test error'));
     
     await trackEvent('user123', 'test_event');
     
