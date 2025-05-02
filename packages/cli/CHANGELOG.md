@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.89.2
+
+### Patch Changes
+
+- [`14edaed`](https://github.com/lingodotdev/lingo.dev/commit/14edaed1b3a4d3020e3358aaecc6aae2825a1886) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - fix o11y
+
 ## 0.89.1
 
 ### Patch Changes
