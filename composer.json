@@ -1,0 +1,20 @@
+{
+    "name": "lingodotdev/lingo.dev",
+    "description": "Lingo.dev Monorepo",
+    "type": "project",
+    "license": "MIT",
+    "repositories": [
+        {
+            "type": "path",
+            "url": "php/sdk",
+            "options": {
+                "symlink": false
+            }
+        }
+    ],
+    "require": {
+        "lingodotdev/sdk": "*"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
