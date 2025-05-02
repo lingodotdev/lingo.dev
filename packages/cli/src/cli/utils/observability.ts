@@ -1,31 +1,38 @@
-import pkg from "posthog-node";
-const { PostHog } = pkg;
+import { PostHog } from "posthog-node";
 
-export default async function trackEvent(distinctId: string, event: string, properties?: Record<string, any>) {
+export default async function trackEvent(
+  distinctId: string,
+  event: string,
+  properties?: Record<string, any>,
+) {
   if (process.env.DO_NOT_TRACK) {
     return;
   }
 
   try {
-    const safeProperties = properties ? JSON.parse(JSON.stringify(
-      properties,
-      (key, value) => {
-        if (value instanceof Error) {
-          return {
-            name: value.name,
-            message: value.message,
-            stack: value.stack,
-          };
-        }
-        return value;
-      }
-    )) : {};
+    const safeProperties = properties
+      ? JSON.parse(
+          JSON.stringify(properties, (key, value) => {
+            if (value instanceof Error) {
+              return {
+                name: value.name,
+                message: value.message,
+                stack: value.stack,
+              };
+            }
+            return value;
+          }),
+        )
+      : {};
 
-    const posthog = new PostHog("phc_eR0iSoQufBxNY36k0f0T15UvHJdTfHlh8rJcxsfhfXk", {
-      host: "https://eu.i.posthog.com",
-      flushAt: 1,
-      flushInterval: 0,
-    });
+    const posthog = new PostHog(
+      "phc_eR0iSoQufBxNY36k0f0T15UvHJdTfHlh8rJcxsfhfXk",
+      {
+        host: "https://eu.i.posthog.com",
+        flushAt: 1,
+        flushInterval: 0,
+      },
+    );
 
     await posthog.capture({
       distinctId,
