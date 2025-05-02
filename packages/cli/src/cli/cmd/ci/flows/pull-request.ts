@@ -1,5 +1,5 @@
 import { execSync } from "child_process";
-import { InBranchFlow } from "./in-branch.js";
+import { InBranchFlow } from "./in-branch";
 
 export class PullRequestFlow extends InBranchFlow {
   async preRun() {
@@ -10,7 +10,9 @@ export class PullRequestFlow extends InBranchFlow {
 
     this.ora.start("Calculating automated branch name");
     this.i18nBranchName = this.calculatePrBranchName();
-    this.ora.succeed(`Automated branch name calculated: ${this.i18nBranchName}`);
+    this.ora.succeed(
+      `Automated branch name calculated: ${this.i18nBranchName}`,
+    );
 
     this.ora.start("Checking if branch exists");
     const branchExists = await this.checkBranchExistance(this.i18nBranchName);
@@ -21,7 +23,9 @@ export class PullRequestFlow extends InBranchFlow {
       this.checkoutI18nBranch(this.i18nBranchName);
       this.ora.succeed(`Checked out branch ${this.i18nBranchName}`);
 
-      this.ora.start(`Syncing with ${this.platformKit.platformConfig.baseBranchName}`);
+      this.ora.start(
+        `Syncing with ${this.platformKit.platformConfig.baseBranchName}`,
+      );
       this.syncI18nBranch();
       this.ora.succeed(`Checked out and synced branch ${this.i18nBranchName}`);
     } else {
@@ -39,13 +43,17 @@ export class PullRequestFlow extends InBranchFlow {
 
   async postRun() {
     if (!this.i18nBranchName) {
-      throw new Error("i18nBranchName is not set. Did you forget to call preRun?");
+      throw new Error(
+        "i18nBranchName is not set. Did you forget to call preRun?",
+      );
     }
 
     this.ora.start("Checking if PR already exists");
     const pullRequestNumber = await this.ensureFreshPr(this.i18nBranchName);
     // await this.createLabelIfNotExists(pullRequestNumber, 'lingo.dev/i18n', false);
-    this.ora.succeed(`Pull request ready: ${this.platformKit.buildPullRequestUrl(pullRequestNumber)}`);
+    this.ora.succeed(
+      `Pull request ready: ${this.platformKit.buildPullRequestUrl(pullRequestNumber)}`,
+    );
   }
 
   private calculatePrBranchName(): string {
@@ -61,7 +69,7 @@ export class PullRequestFlow extends InBranchFlow {
   private async ensureFreshPr(i18nBranchName: string) {
     // Check if PR exists
     this.ora.start(
-      `Checking for existing PR with head ${i18nBranchName} and base ${this.platformKit.platformConfig.baseBranchName}`
+      `Checking for existing PR with head ${i18nBranchName} and base ${this.platformKit.platformConfig.baseBranchName}`,
     );
     let prNumber = await this.platformKit.getOpenPullRequestNumber({
       branch: i18nBranchName,
@@ -92,12 +100,19 @@ export class PullRequestFlow extends InBranchFlow {
 
   private createI18nBranch(i18nBranchName: string) {
     try {
-      execSync(`git fetch origin ${this.platformKit.platformConfig.baseBranchName}`, { stdio: "inherit" });
-      execSync(`git checkout -b ${i18nBranchName} origin/${this.platformKit.platformConfig.baseBranchName}`, {
-        stdio: "inherit",
-      });
+      execSync(
+        `git fetch origin ${this.platformKit.platformConfig.baseBranchName}`,
+        { stdio: "inherit" },
+      );
+      execSync(
+        `git checkout -b ${i18nBranchName} origin/${this.platformKit.platformConfig.baseBranchName}`,
+        {
+          stdio: "inherit",
+        },
+      );
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
+      const errorMessage =
+        error instanceof Error ? error.message : "Unknown error occurred";
       this.ora.fail(`Failed to create branch: ${errorMessage}`);
       this.ora.info(`
       Troubleshooting tips:
@@ -114,13 +129,23 @@ export class PullRequestFlow extends InBranchFlow {
       throw new Error("i18nBranchName is not set");
     }
 
-    this.ora.start(`Fetching latest changes from ${this.platformKit.platformConfig.baseBranchName}`);
-    execSync(`git fetch origin ${this.platformKit.platformConfig.baseBranchName}`, { stdio: "inherit" });
-    this.ora.succeed(`Fetched latest changes from ${this.platformKit.platformConfig.baseBranchName}`);
+    this.ora.start(
+      `Fetching latest changes from ${this.platformKit.platformConfig.baseBranchName}`,
+    );
+    execSync(
+      `git fetch origin ${this.platformKit.platformConfig.baseBranchName}`,
+      { stdio: "inherit" },
+    );
+    this.ora.succeed(
+      `Fetched latest changes from ${this.platformKit.platformConfig.baseBranchName}`,
+    );
 
     try {
       this.ora.start("Attempting to rebase branch");
-      execSync(`git rebase origin/${this.platformKit.platformConfig.baseBranchName}`, { stdio: "inherit" });
+      execSync(
+        `git rebase origin/${this.platformKit.platformConfig.baseBranchName}`,
+        { stdio: "inherit" },
+      );
       this.ora.succeed("Successfully rebased branch");
     } catch (error) {
       this.ora.warn("Rebase failed, falling back to alternative sync method");
@@ -129,15 +154,22 @@ export class PullRequestFlow extends InBranchFlow {
       execSync("git rebase --abort", { stdio: "inherit" });
       this.ora.succeed("Aborted failed rebase");
 
-      this.ora.start(`Resetting to ${this.platformKit.platformConfig.baseBranchName}`);
-      execSync(`git reset --hard origin/${this.platformKit.platformConfig.baseBranchName}`, { stdio: "inherit" });
-      this.ora.succeed(`Reset to ${this.platformKit.platformConfig.baseBranchName}`);
+      this.ora.start(
+        `Resetting to ${this.platformKit.platformConfig.baseBranchName}`,
+      );
+      execSync(
+        `git reset --hard origin/${this.platformKit.platformConfig.baseBranchName}`,
+        { stdio: "inherit" },
+      );
+      this.ora.succeed(
+        `Reset to ${this.platformKit.platformConfig.baseBranchName}`,
+      );
 
       this.ora.start("Restoring target files");
       const targetFiles = ["i18n.lock"];
       const targetFileNames = execSync(
         `npx lingo.dev@latest show files --target ${this.platformKit.platformConfig.baseBranchName}`,
-        { encoding: "utf8" }
+        { encoding: "utf8" },
       )
         .split("\n")
         .filter(Boolean);
@@ -160,9 +192,12 @@ export class PullRequestFlow extends InBranchFlow {
     const hasChanges = this.checkCommitableChanges();
     if (hasChanges) {
       execSync("git add .", { stdio: "inherit" });
-      execSync(`git commit -m "chore: sync with ${this.platformKit.platformConfig.baseBranchName}"`, {
-        stdio: "inherit",
-      });
+      execSync(
+        `git commit -m "chore: sync with ${this.platformKit.platformConfig.baseBranchName}"`,
+        {
+          stdio: "inherit",
+        },
+      );
       this.ora.succeed("Committed additional changes");
     } else {
       this.ora.succeed("No changes to commit");

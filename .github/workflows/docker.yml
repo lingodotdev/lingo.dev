@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - action/**
+      - Dockerfile
     branches:
       - main
 
@@ -28,6 +28,6 @@ jobs:
         with:
           push: true
           platforms: linux/amd64
-          context: ./action
-          file: ./action/Dockerfile
+          context: ./
+          file: ./Dockerfile
           tags: ${{ secrets.DOCKERHUB_LINGODOTDEV_USERNAME }}/ci-action:latest

@@ -9,22 +9,16 @@ branding:
 runs:
   using: "composite"
   steps:
-    - name: Install pnpm
-      run: cd ${{ github.action_path }} && npm install -g pnpm && pnpm install
-      shell: bash
-    - name: Build
-      run: cd ${{ github.action_path }}/action && pnpm build
-      shell: bash
     - name: Run
-      run: node ${{ github.action_path }}/action/build/index.js
+      run: |
+        npx lingo.dev@latest ci \
+          --api-key ${{ inputs.api-key }} \
+          --pull-request ${{ inputs.pull-request }} \
+          --commit-message ${{ inputs.commit-message }} \
+          --pull-request-title ${{ inputs.pull-request-title }} \
+          --working-directory ${{ inputs.working-directory }} \
+          --process-own-commits ${{ inputs.process-own-commits }}
       shell: bash
-      env:
-        LINGODOTDEV_API_KEY: ${{ inputs.api-key }}
-        LINGODOTDEV_PULL_REQUEST: ${{ inputs.pull-request }}
-        LINGODOTDEV_COMMIT_MESSAGE: ${{ inputs.commit-message }}
-        LINGODOTDEV_PULL_REQUEST_TITLE: ${{ inputs.pull-request-title }}
-        LINGODOTDEV_WORKING_DIRECTORY: ${{ inputs.working-directory }}
-        LINGODOTDEV_PROCESS_OWN_COMMITS: ${{ inputs.process-own-commits }}
 inputs:
   api-key:
     description: "Lingo.dev Platform API Key"
