@@ -42,8 +42,8 @@ if ($packageExists) {
     echo "Package $packageName already exists on Packagist. Updating...\n";
     $apiUrl = "https://packagist.org/api/update-package?username=$username&apiToken=$apiToken";
 } else {
-    echo "Package $packageName does not exist on Packagist. Submitting new package...\n";
-    $apiUrl = "https://packagist.org/api/submit?username=$username&apiToken=$apiToken";
+    echo "Package $packageName does not exist on Packagist. Creating new package...\n";
+    $apiUrl = "https://packagist.org/api/create-package?username=$username&apiToken=$apiToken";
 }
 
 $repoUrl = "https://github.com/lingodotdev/lingo.dev";
