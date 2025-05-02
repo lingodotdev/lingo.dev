@@ -1,5 +1,5 @@
 {
-  "version": 1.2,
+  "version": 1.7,
   "locale": {
     "source": "en",
     "targets": [
@@ -22,6 +22,16 @@
     "markdown": {
       "include": [
         "readme/[locale].md"
+      ]
+    },
+    "mdx": {
+      "include": [],
+      "lockedPatterns": [
+        "!params",
+        "!! [\\w_]+",
+        "!type [\\w<>\\[\\]\"',]+",
+        "!required",
+        "!values [\\s\\S]*?(?=\\n\\n|$)"
       ]
     }
   },

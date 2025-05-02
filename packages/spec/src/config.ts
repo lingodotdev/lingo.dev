@@ -289,8 +289,31 @@ export const configV1_6Definition = extendConfigDefinition(configV1_5Definition,
   }),
 });
 
+// Changes: Add "lockedPatterns" string array of regex patterns to bucket config
+export const bucketValueSchemaV1_7 = bucketValueSchemaV1_6.extend({
+  lockedPatterns: Z.array(Z.string()).default([]).optional(),
+});
+
+export const configV1_7Definition = extendConfigDefinition(configV1_6Definition, {
+  createSchema: (baseSchema) =>
+    baseSchema.extend({
+      buckets: Z.record(
+        bucketTypeSchema,
+        bucketValueSchemaV1_7
+      ).default({}),
+    }),
+  createDefaultValue: (baseDefaultValue) => ({
+    ...baseDefaultValue,
+    version: 1.7,
+  }),
+  createUpgrader: (oldConfig) => ({
+    ...oldConfig,
+    version: 1.7,
+  }),
+});
+
 // exports
-export const LATEST_CONFIG_DEFINITION = configV1_6Definition;
+export const LATEST_CONFIG_DEFINITION = configV1_7Definition;
 
 export type I18nConfig = Z.infer<(typeof LATEST_CONFIG_DEFINITION)["schema"]>;
 

@@ -36,6 +36,7 @@ import createMdxFrontmatterSplitLoader from "./mdx2/frontmatter-split";
 import createMdxCodePlaceholderLoader from "./mdx2/code-placeholder";
 import createLocalizableMdxDocumentLoader from "./mdx2/localizable-document";
 import createMdxSectionsSplit2Loader from "./mdx2/sections-split-2";
+import createMdxLockedPatternsLoader from "./mdx2/locked-patterns";
 
 type BucketLoaderOptions = {
   isCacheRestore: boolean;
@@ -119,6 +120,7 @@ export default function createBucketLoader(
           bucketPathPattern,
         }),
         createMdxCodePlaceholderLoader(),
+        createMdxLockedPatternsLoader(),
         createMdxFrontmatterSplitLoader(),
         createMdxSectionsSplit2Loader(),
         createLocalizableMdxDocumentLoader(),
