@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.89.4
+
+### Patch Changes
+
+- [`90c8334`](https://github.com/lingodotdev/lingo.dev/commit/90c83344087a712f238c69b756f86dbab0a3c1e9) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - add missing --api-key option to ci
+
 ## 0.89.3
 
 ### Patch Changes
