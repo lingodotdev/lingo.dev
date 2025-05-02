@@ -8,6 +8,9 @@ on:
       - 'php/sdk/**'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   test:
     runs-on: ubuntu-latest
