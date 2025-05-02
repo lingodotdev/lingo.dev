@@ -12,12 +12,12 @@ runs:
     - name: Run
       run: |
         npx lingo.dev@latest ci \
-          --api-key ${{ inputs.api-key }} \
-          --pull-request ${{ inputs.pull-request }} \
-          --commit-message ${{ inputs.commit-message }} \
-          --pull-request-title ${{ inputs.pull-request-title }} \
-          --working-directory ${{ inputs.working-directory }} \
-          --process-own-commits ${{ inputs.process-own-commits }}
+          --api-key "${{ inputs.api-key }}" \
+          --pull-request "${{ inputs.pull-request }}" \
+          --commit-message "${{ inputs.commit-message }}" \
+          --pull-request-title "${{ inputs.pull-request-title }}" \
+          --working-directory "${{ inputs.working-directory }}" \
+          --process-own-commits "${{ inputs.process-own-commits }}"
       shell: bash
 inputs:
   api-key:
