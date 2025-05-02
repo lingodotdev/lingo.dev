@@ -27,9 +27,12 @@ export class InBranchFlow extends IntegrationFlow {
       this.ora.start("Committing changes");
       execSync(`git add .`, { stdio: "inherit" });
       execSync(`git status --porcelain`, { stdio: "inherit" });
-      execSync(`git commit -m "${this.platformKit.config.commitMessage}"`, {
-        stdio: "inherit",
-      });
+      execSync(
+        `git commit -m "${this.platformKit.config.commitMessage}" --no-verify`,
+        {
+          stdio: "inherit",
+        },
+      );
       this.ora.succeed("Changes committed");
 
       this.ora.start("Pushing changes to remote");

@@ -193,7 +193,7 @@ export class PullRequestFlow extends InBranchFlow {
     if (hasChanges) {
       execSync("git add .", { stdio: "inherit" });
       execSync(
-        `git commit -m "chore: sync with ${this.platformKit.platformConfig.baseBranchName}"`,
+        `git commit -m "chore: sync with ${this.platformKit.platformConfig.baseBranchName}" --no-verify`,
         {
           stdio: "inherit",
         },
