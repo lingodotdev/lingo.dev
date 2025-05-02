@@ -96,7 +96,7 @@ export default function createAndroidLoader(): ILoader<string, Record<string, an
     },
     async push(locale, payload) {
       try {
-        let xmlContent = '<?xml version="1.0" encoding="utf-8"?>\n<resources>\n';
+        let xmlContent = '<resources>\n';
         
         const escapeXml = (str: string) => {
           if (typeof str !== 'string') return str;
