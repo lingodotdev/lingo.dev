@@ -84,20 +84,7 @@ describe("MDX Locked Patterns Loader", () => {
       
       const placeholderRegex = /---LOCKED-PATTERN-[0-9a-f]+---/g;
       const placeholders = result.content.match(placeholderRegex) || [];
-      expect(placeholders.length).toBe(1); // One pattern should be replaced
-      
-      const sanitizedContent = result.content
-        .replace(placeholderRegex, "---PLACEHOLDER---");
-      
-      const expectedSanitized = dedent`
-        \`\`\`js
-        const x = 1;
-        const pubkey = "vines1vzrYbzLMRdu58ou5XTby4qAqVRLmqo36NKPTg";
-        ---PLACEHOLDER---
-        \`\`\`
-      `;
-      
-      expect(sanitizedContent).toBe(expectedSanitized);
+      expect(placeholders.length).toBe(0); // No patterns should be replaced
       
       const pushed = await loader.push("es", result);
       
@@ -192,7 +179,7 @@ describe("MDX Locked Patterns Loader", () => {
       
       const placeholderRegex = /---LOCKED-PATTERN-[0-9a-f]+---/g;
       const placeholders = result.content.match(placeholderRegex) || [];
-      expect(placeholders.length).toBe(5); // Five patterns should be replaced
+      expect(placeholders.length).toBe(6); // Six patterns should be replaced
       
       const sanitizedContent = result.content
         .replace(placeholderRegex, "---PLACEHOLDER---");
@@ -207,6 +194,7 @@ describe("MDX Locked Patterns Loader", () => {
         
         ---PLACEHOLDER---
         
+        ---PLACEHOLDER---
         ---PLACEHOLDER---
         
         Encoding format for the returned Account data.

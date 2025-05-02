@@ -63,8 +63,8 @@ export default function createMdxLockedPatternsLoader(): ILoader<
         "!type [\\w<>\\[\\]\"',]+",
         "!required",
         "!values [\\s\\S]*?(?=\\n\\n|$)",
-        "// !hover[\\s\\S]*?\\n",
-        "// !hover\\([\\d:]+\\)[\\s\\S]*?\\n"
+        "// !hover[\\s\\S]*?(?=\\n|$)",
+        "// !hover\\([\\d:]+\\)[\\s\\S]*?(?=\\n|$)"
       ];
       
       const { content, lockedPlaceholders } = extractLockedPatterns(input || "", patterns);
