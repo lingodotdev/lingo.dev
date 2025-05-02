@@ -8,7 +8,7 @@ const inlineCodeRegex = /(?<!`)`([^`\r\n]+?)`(?!`)/g;
 
 // Matches markdown image tags, with optional alt text & parenthesis URL, possibly inside blockquotes
 // Captures patterns like ![](url) or ![alt](url), with optional leading '> ' for blockquotes
-const imageRegex = /([ \t]*)(^>\s*)?!\[[^\]]*?\]\([^\n\r]*?\)/gm;
+const imageRegex = /([ \t]*)(^>\s*)?!\[[^\]]*?\]\(([^()]*(\([^()]*\)[^()]*)*)\)/gm;
 
 /**
  * Ensures that markdown image tags are surrounded by blank lines (\n\n) so that they are properly
