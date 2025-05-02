@@ -392,4 +392,113 @@ Line 2
     expect(result).toContain('<string-array name="planets">');
     expect(result).toContain('<plurals name="numberOfSongsAvailable">');
   });
+
+  it("should correctly handle Unicode escape sequences", async () => {
+    const input = `
+      <resources>
+        <string name="unicode_escape">Unicode escape: \\u0041\\u0042\\u0043 and \\u65e5\\u672c\\u8a9e</string>
+      </resources>
+    `.trim();
+    
+    const androidLoader = createAndroidLoader().setDefaultLocale("en");
+    const result = await androidLoader.pull("en", input);
+    
+    expect(result).toEqual({
+      "unicode_escape": "Unicode escape: \\u0041\\u0042\\u0043 and \\u65e5\\u672c\\u8a9e"
+    });
+    
+    const pushed = await androidLoader.push("en", result);
+    expect(pushed).toContain('Unicode escape: \\u0041\\u0042\\u0043 and \\u65e5\\u672c\\u8a9e');
+  });
+
+  it("should correctly handle double quote escaping", async () => {
+    const input = `
+      <resources>
+        <string name="double_quotes">He said, \\"Hello World\\"</string>
+      </resources>
+    `.trim();
+    
+    const androidLoader = createAndroidLoader().setDefaultLocale("en");
+    const result = await androidLoader.pull("en", input);
+    
+    expect(result).toEqual({
+      "double_quotes": "He said, \\\"Hello World\\\""
+    });
+    
+    const pushed = await androidLoader.push("en", result);
+    expect(pushed).toContain('He said, \\"Hello World\\"');
+  });
+
+  it("should correctly handle resource references", async () => {
+    const input = `
+      <resources>
+        <string name="welcome_message">Welcome to @string/app_name</string>
+        <string name="app_name">My App</string>
+      </resources>
+    `.trim();
+    
+    const androidLoader = createAndroidLoader().setDefaultLocale("en");
+    const result = await androidLoader.pull("en", input);
+    
+    expect(result).toEqual({
+      "welcome_message": "Welcome to @string/app_name",
+      "app_name": "My App"
+    });
+    
+    const pushed = await androidLoader.push("en", result);
+    expect(pushed).toContain('<string name="welcome_message">Welcome to @string/app_name</string>');
+  });
+
+  it("should correctly handle tools namespace attributes", async () => {
+    const input = `
+      <resources>
+        <string name="debug_only" tools:ignore="MissingTranslation">Debug message</string>
+        <string name="normal">Normal message</string>
+      </resources>
+    `.trim();
+    
+    const androidLoader = createAndroidLoader().setDefaultLocale("en");
+    const result = await androidLoader.pull("en", input);
+    
+    expect(result).toEqual({
+      "debug_only": "Debug message",
+      "normal": "Normal message"
+    });
+  });
+
+  it("should correctly handle whitespace preservation with double quotes", async () => {
+    const input = `
+      <resources>
+        <string name="preserved_whitespace">"   This string preserves    whitespace   "</string>
+      </resources>
+    `.trim();
+    
+    const androidLoader = createAndroidLoader().setDefaultLocale("en");
+    const result = await androidLoader.pull("en", input);
+    
+    expect(result).toEqual({
+      "preserved_whitespace": "   This string preserves    whitespace   "
+    });
+    
+    const pushed = await androidLoader.push("en", result);
+    expect(pushed).toContain('<string name="preserved_whitespace">   This string preserves    whitespace   </string>');
+  });
+
+  it("should correctly handle special characters that need escaping", async () => {
+    const input = `
+      <resources>
+        <string name="special_chars">Special chars: \\@, \\?, \\#, \\$, \\%</string>
+      </resources>
+    `.trim();
+    
+    const androidLoader = createAndroidLoader().setDefaultLocale("en");
+    const result = await androidLoader.pull("en", input);
+    
+    expect(result).toEqual({
+      "special_chars": "Special chars: \\@, \\?, \\#, \\$, \\%"
+    });
+    
+    const pushed = await androidLoader.push("en", result);
+    expect(pushed).toContain('Special chars: \\@, \\?, \\#, \\$, \\%');
+  });
 });

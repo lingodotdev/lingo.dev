@@ -34,7 +34,13 @@ export default function createAndroidLoader(): ILoader<string, Record<string, an
                        .replace(/&quot;/g, '"')
                        .replace(/&apos;/g, "'");
           
-          result[name] = value === "" || /^\s+$/.test(value) ? value : value.trim();
+          if (value.startsWith('"') && value.endsWith('"') && value.length >= 2) {
+            value = value.substring(1, value.length - 1); // Remove surrounding quotes but preserve whitespace
+          } else {
+            value = value === "" || /^\s+$/.test(value) ? value : value.trim();
+          }
+          
+          result[name] = value;
         }
         
         const parsed = await parseStringPromise(input, {
