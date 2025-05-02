@@ -88,7 +88,8 @@ jobs:
           push_options: "--force"
 
       - name: Publish to Packagist
-        uses: wscourge/packagist-publish@v1
+        uses: wscourge/gha-packagist-publish@v1.0
         with:
           username: lingodotdev
           api_token: ${{ secrets.PACKAGIST_API_TOKEN }}
+          package_name: lingodotdev/sdk
