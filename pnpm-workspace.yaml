@@ -3,3 +3,4 @@ packages:
   - "./integrations/*"
   - "./legacy/*"
   - "./action"
+  - "./php/*"
