@@ -1,5 +1,31 @@
 # lingo.dev
 
+## 0.88.0
+
+### Minor Changes
+
+- [#700](https://github.com/lingodotdev/lingo.dev/pull/700) [`c5ccf81`](https://github.com/lingodotdev/lingo.dev/commit/c5ccf81e9c2bd27bae332306da2a41e41bbeb87d) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - Add support for locked patterns in MDX loader
+
+  This change adds support for preserving specific patterns in MDX files during translation, including:
+
+  - !params syntax for parameter documentation
+  - !! parameter_name headings
+  - !type declarations
+  - !required flags
+  - !values lists
+
+  The implementation adds a new config version 1.7 with a "lockedPatterns" field that accepts an array of regex patterns to be preserved during translation.
+
+### Patch Changes
+
+- [#704](https://github.com/lingodotdev/lingo.dev/pull/704) [`f78bd68`](https://github.com/lingodotdev/lingo.dev/commit/f78bd6862b85d10c3f26542f55614dbc301ac90a) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - Fix image regex in MDX2 loader to handle URLs with parentheses
+
+- [#696](https://github.com/lingodotdev/lingo.dev/pull/696) [`b8c73cb`](https://github.com/lingodotdev/lingo.dev/commit/b8c73cb947f8c445e3515f8c23b3b607e5ea38c2) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - Fix PostHog import in CLI to support both ESM and CommonJS environments
+
+- Updated dependencies [[`c5ccf81`](https://github.com/lingodotdev/lingo.dev/commit/c5ccf81e9c2bd27bae332306da2a41e41bbeb87d)]:
+  - @lingo.dev/_spec@0.31.0
+  - @lingo.dev/_sdk@0.7.38
+
 ## 0.87.15
 
 ### Patch Changes
