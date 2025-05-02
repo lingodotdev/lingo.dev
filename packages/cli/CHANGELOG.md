@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.87.15
+
+### Patch Changes
+
+- [#685](https://github.com/lingodotdev/lingo.dev/pull/685) [`15b448f`](https://github.com/lingodotdev/lingo.dev/commit/15b448ff79bb58f021619fcb460837b353007609) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - Fix npm package readme by making packages/cli/README.md the source of truth and creating symlinks from root readme.md and readme/en.md
+
 ## 0.87.14
 
 ### Patch Changes
