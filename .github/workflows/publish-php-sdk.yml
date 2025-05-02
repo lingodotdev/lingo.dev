@@ -29,7 +29,7 @@ jobs:
 
       - name: Run tests
         working-directory: ./php/sdk
-        run: composer test
+        run: vendor/bin/phpunit tests/
 
       - name: Check code style
         working-directory: ./php/sdk
@@ -82,8 +82,8 @@ jobs:
         with:
           commit_message: "chore: bump PHP SDK version to ${{ steps.bump_version.outputs.new_version }}"
           file_pattern: php/sdk/composer.json
-          commit_user_name: "Devin AI"
-          commit_user_email: "devin-ai-integration[bot]@users.noreply.github.com"
+          commit_user_name: "Lingo.dev"
+          commit_user_email: "hi@lingo.dev"
           push_options: "--force"
 
       - name: Publish to Packagist
