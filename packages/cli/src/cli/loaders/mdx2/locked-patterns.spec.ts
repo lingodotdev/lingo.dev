@@ -4,8 +4,40 @@ import dedent from "dedent";
 
 describe("MDX Locked Patterns Loader", () => {
   describe("Basic functionality", () => {
-    it("should preserve content matching patterns", async () => {
+    it("should do nothing when no patterns are provided", async () => {
       const loader = createMdxLockedPatternsLoader();
+      loader.setDefaultLocale("en");
+      
+      const md = dedent`
+        # Title
+        
+        Some content.
+        
+        !params
+        
+        !! parameter_name
+        
+        !type string
+      `;
+      
+      const result = await loader.pull("en", md);
+      
+      const placeholderRegex = /---LOCKED-PATTERN-[0-9a-f]+---/g;
+      const placeholders = result.content.match(placeholderRegex) || [];
+      expect(placeholders.length).toBe(0); // No patterns should be replaced
+      
+      expect(result.content).toBe(md);
+      
+      const pushed = await loader.push("es", result);
+      expect(pushed).toBe(md);
+    });
+    
+    it("should preserve content matching patterns", async () => {
+      const loader = createMdxLockedPatternsLoader([
+        "!params",
+        "!! [\\w_]+",
+        "!type [\\w<>\\[\\]\"',]+"
+      ]);
       loader.setDefaultLocale("en");
       
       const md = dedent`
@@ -70,7 +102,10 @@ describe("MDX Locked Patterns Loader", () => {
   
   describe("Real-world patterns", () => {
     it("should handle !hover syntax in code blocks", async () => {
-      const loader = createMdxLockedPatternsLoader();
+      const loader = createMdxLockedPatternsLoader([
+        "// !hover[\\s\\S]*?(?=\\n|$)",
+        "// !hover\\([\\d:]+\\)[\\s\\S]*?(?=\\n|$)"
+      ]);
       loader.setDefaultLocale("en");
       
       const md = dedent`
@@ -92,7 +127,9 @@ describe("MDX Locked Patterns Loader", () => {
     });
     
     it("should handle !! parameter headings", async () => {
-      const loader = createMdxLockedPatternsLoader();
+      const loader = createMdxLockedPatternsLoader([
+        "!! [\\w_]+"
+      ]);
       loader.setDefaultLocale("en");
       
       const md = dedent`
@@ -156,7 +193,12 @@ describe("MDX Locked Patterns Loader", () => {
     });
     
     it("should handle !type, !required, and !values declarations", async () => {
-      const loader = createMdxLockedPatternsLoader();
+      const loader = createMdxLockedPatternsLoader([
+        "!! [\\w_]+",
+        "!type [\\w<>\\[\\]\"',]+",
+        "!required",
+        "!values [\\s\\S]*?(?=\\n\\n|$)"
+      ]);
       loader.setDefaultLocale("en");
       
       const md = dedent`

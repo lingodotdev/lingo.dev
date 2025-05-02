@@ -57,15 +57,7 @@ export default function createMdxLockedPatternsLoader(defaultPatterns?: string[]
 > {
   return createLoader({
     async pull(locale, input, initCtx, originalLocale) {
-      const patterns = defaultPatterns || [
-        "!params",
-        "!! [\\w_]+",
-        "!type [\\w<>\\[\\]\"',]+",
-        "!required",
-        "!values [\\s\\S]*?(?=\\n\\n|$)",
-        "// !hover[\\s\\S]*?(?=\\n|$)",
-        "// !hover\\([\\d:]+\\)[\\s\\S]*?(?=\\n|$)"
-      ];
+      const patterns = defaultPatterns || [];
       
       const { content, lockedPlaceholders } = extractLockedPatterns(input || "", patterns);
       
