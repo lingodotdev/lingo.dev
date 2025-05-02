@@ -1,6 +1,7 @@
 import { execSync } from "child_process";
 import path from "path";
 import { gitConfig, IntegrationFlow } from "./_base";
+import i18nCmd from "../../i18n";
 
 export class InBranchFlow extends IntegrationFlow {
   async preRun() {
@@ -55,10 +56,16 @@ export class InBranchFlow extends IntegrationFlow {
   }
 
   private async runLingoDotDev() {
-    execSync(
-      `npx lingo.dev@latest i18n --api-key ${this.platformKit.config.replexicaApiKey}`,
-      { stdio: "inherit" },
-    );
+    try {
+      await i18nCmd
+        .exitOverride()
+        .parseAsync(["--api-key", this.platformKit.config.replexicaApiKey], {
+          from: "user",
+        });
+    } catch (err: any) {
+      if (err.code === "commander.helpDisplayed") return;
+      throw err;
+    }
   }
 
   private configureGit() {
