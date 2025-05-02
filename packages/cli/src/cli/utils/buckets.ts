@@ -11,6 +11,7 @@ type BucketConfig = {
   paths: Array<{ pathPattern: string; delimiter?: LocaleDelimiter }>;
   injectLocale?: string[];
   lockedKeys?: string[];
+  lockedPatterns?: string[];
 };
 
 export function getBuckets(i18nConfig: I18nConfig) {
@@ -26,6 +27,9 @@ export function getBuckets(i18nConfig: I18nConfig) {
     }
     if (bucketEntry.lockedKeys) {
       config.lockedKeys = bucketEntry.lockedKeys;
+    }
+    if (bucketEntry.lockedPatterns) {
+      config.lockedPatterns = bucketEntry.lockedPatterns;
     }
     return config;
   });

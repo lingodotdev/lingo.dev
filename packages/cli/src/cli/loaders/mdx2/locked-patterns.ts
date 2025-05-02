@@ -51,13 +51,13 @@ export interface MdxWithLockedPatterns {
   lockedPlaceholders: Record<string, string>;
 }
 
-export default function createMdxLockedPatternsLoader(): ILoader<
+export default function createMdxLockedPatternsLoader(defaultPatterns?: string[]): ILoader<
   string,
   MdxWithLockedPatterns
 > {
   return createLoader({
-    async pull(locale, input) {
-      const patterns = [
+    async pull(locale, input, initCtx, originalLocale) {
+      const patterns = defaultPatterns || [
         "!params",
         "!! [\\w_]+",
         "!type [\\w<>\\[\\]\"',]+",

@@ -50,6 +50,7 @@ export default function createBucketLoader(
   bucketPathPattern: string,
   options: BucketLoaderOptions,
   lockedKeys?: string[],
+  lockedPatterns?: string[],
 ): ILoader<void, Record<string, string>> {
   switch (bucketType) {
     default:
@@ -120,7 +121,7 @@ export default function createBucketLoader(
           bucketPathPattern,
         }),
         createMdxCodePlaceholderLoader(),
-        createMdxLockedPatternsLoader(),
+        createMdxLockedPatternsLoader(lockedPatterns),
         createMdxFrontmatterSplitLoader(),
         createMdxSectionsSplit2Loader(),
         createLocalizableMdxDocumentLoader(),

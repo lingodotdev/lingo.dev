@@ -175,6 +175,7 @@ export default new Command()
                 injectLocale: bucket.injectLocale,
               },
               bucket.lockedKeys,
+              bucket.lockedPatterns,
             );
             bucketLoader.setDefaultLocale(sourceLocale);
             await bucketLoader.init();
@@ -454,6 +455,7 @@ export default new Command()
                 injectLocale: bucket.injectLocale,
               },
               bucket.lockedKeys,
+              bucket.lockedPatterns,
             );
             bucketLoader.setDefaultLocale(sourceLocale);
             await bucketLoader.init();
