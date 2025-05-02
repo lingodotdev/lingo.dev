@@ -163,16 +163,17 @@ Lingo.dev يعتمد على المجتمع، لذلك نرحب بجميع الم
 
 ## 🌐 الملف التعريفي بلغات أخرى
 
-- [English](https://github.com/lingodotdev/lingo.dev)
-- [Spanish](/readme/es.md)
-- [French](/readme/fr.md)
-- [Russian](/readme/ru.md)
-- [German](/readme/de.md)
-- [Chinese](/readme/zh-Hans.md)
-- [Korean](/readme/ko.md)
-- [Japanese](/readme/ja.md)
-- [Italian](/readme/it.md)
-- [Arabic](/readme/ar.md)
-- [Hindi](/readme/hi.md)
+- [الإنجليزية](https://github.com/lingodotdev/lingo.dev)
+- [الإسبانية](/readme/es.md)
+- [الفرنسية](/readme/fr.md)
+- [الروسية](/readme/ru.md)
+- [الألمانية](/readme/de.md)
+- [الصينية](/readme/zh-Hans.md)
+- [الكورية](/readme/ko.md)
+- [اليابانية](/readme/ja.md)
+- [الإيطالية](/readme/it.md)
+- [العربية](/readme/ar.md)
+- [الهندية](/readme/hi.md)
+- [البنغالية](/readme/bn.md)
 
 لا ترى لغتك؟ ما عليك سوى إضافة رمز لغة جديد إلى ملف [`i18n.json`](./i18n.json) وفتح طلب سحب.

@@ -163,16 +163,17 @@ Lingo.dev está impulsado por la comunidad, ¡así que damos la bienvenida a tod
 
 ## 🌐 Readme en otros idiomas
 
-- [English](https://github.com/lingodotdev/lingo.dev)
-- [Spanish](/readme/es.md)
-- [French](/readme/fr.md)
-- [Russian](/readme/ru.md)
-- [German](/readme/de.md)
-- [Chinese](/readme/zh-Hans.md)
-- [Korean](/readme/ko.md)
-- [Japanese](/readme/ja.md)
-- [Italian](/readme/it.md)
-- [Arabic](/readme/ar.md)
+- [Inglés](https://github.com/lingodotdev/lingo.dev)
+- [Español](/readme/es.md)
+- [Francés](/readme/fr.md)
+- [Ruso](/readme/ru.md)
+- [Alemán](/readme/de.md)
+- [Chino](/readme/zh-Hans.md)
+- [Coreano](/readme/ko.md)
+- [Japonés](/readme/ja.md)
+- [Italiano](/readme/it.md)
+- [Árabe](/readme/ar.md)
 - [Hindi](/readme/hi.md)
+- [Bengalí](/readme/bn.md)
 
 ¿No ves tu idioma? Simplemente añade un nuevo código de idioma al archivo [`i18n.json`](./i18n.json) y abre un PR.

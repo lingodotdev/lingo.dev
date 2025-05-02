@@ -174,5 +174,6 @@ Möchten Sie beitragen? Erstellen Sie einen Pull Request!
 - [Italian](/readme/it.md)
 - [Arabic](/readme/ar.md)
 - [Hindi](/readme/hi.md)
+- [Bengali](/readme/bn.md)
 
-Sehen Sie Ihre Sprache nicht? Fügen Sie einfach einen neuen Sprachcode zur Datei [`i18n.json`](./i18n.json) hinzu und öffnen Sie einen PR.
+Sehen Sie Ihre Sprache nicht? Fügen Sie einfach einen neuen Sprachcode zur Datei [`i18n.json`](./i18n.json) hinzu und eröffnen Sie einen PR.

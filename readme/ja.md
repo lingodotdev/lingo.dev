@@ -174,5 +174,6 @@ Lingo.devはコミュニティ主導のプロジェクトですので、すべ�
 - [Italian](/readme/it.md)
 - [Arabic](/readme/ar.md)
 - [Hindi](/readme/hi.md)
+- [Bengali](/readme/bn.md)
 
-あなたの言語が見つかりませんか？[`i18n.json`](./i18n.json)ファイルに新しい言語コードを追加して、PRを開いてください。
+お使いの言語が見つかりませんか？[`i18n.json`](./i18n.json)ファイルに新しい言語コードを追加して、PRを開いてください。

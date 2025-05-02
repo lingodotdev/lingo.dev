@@ -163,16 +163,17 @@ Lingo.dev কমিউনিটি-চালিত, তাই আমরা স�
 
 ## 🌐 অন্যান্য ভাষায় রিডমি
 
-- [English](https://github.com/lingodotdev/lingo.dev)
-- [Spanish](/readme/es.md)
-- [French](/readme/fr.md)
-- [Russian](/readme/ru.md)
-- [German](/readme/de.md)
-- [Chinese](/readme/zh-Hans.md)
-- [Korean](/readme/ko.md)
-- [Japanese](/readme/ja.md)
-- [Italian](/readme/it.md)
-- [Arabic](/readme/ar.md)
-- [Hindi](/readme/hi.md)
+- [ইংরেজি](https://github.com/lingodotdev/lingo.dev)
+- [স্প্যানিশ](/readme/es.md)
+- [ফরাসি](/readme/fr.md)
+- [রাশিয়ান](/readme/ru.md)
+- [জার্মান](/readme/de.md)
+- [চাইনিজ](/readme/zh-Hans.md)
+- [কোরিয়ান](/readme/ko.md)
+- [জাপানিজ](/readme/ja.md)
+- [ইতালিয়ান](/readme/it.md)
+- [আরবি](/readme/ar.md)
+- [হিন্দি](/readme/hi.md)
+- [বাংলা](/readme/bn.md)
 
 আপনার ভাষা দেখতে পাচ্ছেন না? শুধু [`i18n.json`](./i18n.json) ফাইলে একটি নতুন ভাষা কোড যোগ করুন এবং একটি PR খুলুন।
