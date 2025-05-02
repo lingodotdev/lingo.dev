@@ -4,11 +4,6 @@
     "source": "en",
     "targets": ["de"]
   },
-  "buckets": {
-    "mdx": {
-      "lockedKeys": ["meta/slug", "meta/category"],
-      "include": ["demo/mdx/[locale].mdx"]
-    }
-  },
+  "main": {},
   "$schema": "https://lingo.dev/schema/i18n.json"
 }
