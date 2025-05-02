@@ -1,0 +1,33 @@
+name: Publish PHP SDK to Packagist
+
+on:
+  release:
+    types: [created]
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    if: contains(github.ref, 'refs/tags/')
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
+          extensions: mbstring, intl
+          coverage: none
+          tools: composer:v2
+
+      - name: Install dependencies
+        run: |
+          cd php/sdk
+          composer install --no-dev --no-interaction --prefer-dist
+
+      - name: Update Packagist
+        run: |
+          curl -XPOST -H "content-type:application/json" \
+          "https://packagist.org/api/update-package?username=lingodotdev&apiToken=${{ secrets.PACKAGIST_API_TOKEN }}" \
+          -d '{"repository":{"url":"https://github.com/lingodotdev/lingo.dev"}}'
