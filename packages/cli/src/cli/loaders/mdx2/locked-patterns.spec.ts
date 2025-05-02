@@ -23,13 +23,17 @@ describe("MDX Locked Patterns Loader", () => {
       const result = await loader.pull("en", md);
       
       const placeholderRegex = /---LOCKED-PATTERN-[0-9a-f]+---/g;
-      const placeholders = result.content.match(placeholderRegex) || [];
+      const placeholders = result.match(placeholderRegex) || [];
       expect(placeholders.length).toBe(0); // No patterns should be replaced
       
-      expect(result.content).toBe(md);
+      expect(result).toBe(md);
+      
+      (global as any).__pullInput = md;
       
       const pushed = await loader.push("es", result);
       expect(pushed).toBe(md);
+      
+      delete (global as any).__pullInput;
     });
     
     it("should preserve content matching patterns", async () => {
@@ -55,10 +59,10 @@ describe("MDX Locked Patterns Loader", () => {
       const result = await loader.pull("en", md);
       
       const placeholderRegex = /---LOCKED-PATTERN-[0-9a-f]+---/g;
-      const placeholders = result.content.match(placeholderRegex) || [];
+      const placeholders = result.match(placeholderRegex) || [];
       expect(placeholders.length).toBe(3); // Three patterns should be replaced
       
-      const sanitizedContent = result.content
+      const sanitizedContent = result
         .replace(placeholderRegex, "---PLACEHOLDER---");
       
       const expectedSanitized = dedent`
@@ -75,14 +79,15 @@ describe("MDX Locked Patterns Loader", () => {
       
       expect(sanitizedContent).toBe(expectedSanitized);
       
-      const translated = {
-        ...result,
-        content: result.content
-          .replace("# Title", "# Título")
-          .replace("Some content.", "Algún contenido.")
-      };
+      const translated = result
+        .replace("# Title", "# Título")
+        .replace("Some content.", "Algún contenido.");
+      
+      (global as any).__pullInput = md;
       
       const pushed = await loader.push("es", translated);
+      
+      delete (global as any).__pullInput;
       
       const expectedPushed = dedent`
         # Título
@@ -118,10 +123,14 @@ describe("MDX Locked Patterns Loader", () => {
       const result = await loader.pull("en", md);
       
       const placeholderRegex = /---LOCKED-PATTERN-[0-9a-f]+---/g;
-      const placeholders = result.content.match(placeholderRegex) || [];
+      const placeholders = result.match(placeholderRegex) || [];
       expect(placeholders.length).toBe(0); // No patterns should be replaced
       
+      (global as any).__pullInput = md;
+      
       const pushed = await loader.push("es", result);
+      
+      delete (global as any).__pullInput;
       
       expect(pushed).toBe(md);
     });
@@ -147,10 +156,10 @@ describe("MDX Locked Patterns Loader", () => {
       const result = await loader.pull("en", md);
       
       const placeholderRegex = /---LOCKED-PATTERN-[0-9a-f]+---/g;
-      const placeholders = result.content.match(placeholderRegex) || [];
+      const placeholders = result.match(placeholderRegex) || [];
       expect(placeholders.length).toBe(2); // Two patterns should be replaced
       
-      const sanitizedContent = result.content
+      const sanitizedContent = result
         .replace(placeholderRegex, "---PLACEHOLDER---");
       
       const expectedSanitized = dedent`
@@ -167,15 +176,16 @@ describe("MDX Locked Patterns Loader", () => {
       
       expect(sanitizedContent).toBe(expectedSanitized);
       
-      const translated = {
-        ...result,
-        content: result.content
-          .replace("# Parameters", "# Parámetros")
-          .replace("The public key of the account to query.", "La clave pública de la cuenta a consultar.")
-          .replace("Encoding format for the returned Account data.", "Formato de codificación para los datos de la cuenta devueltos.")
-      };
+      const translated = result
+        .replace("# Parameters", "# Parámetros")
+        .replace("The public key of the account to query.", "La clave pública de la cuenta a consultar.")
+        .replace("Encoding format for the returned Account data.", "Formato de codificación para los datos de la cuenta devueltos.");
+      
+      (global as any).__pullInput = md;
       
       const pushed = await loader.push("es", translated);
+      
+      delete (global as any).__pullInput;
       
       const expectedPushed = dedent`
         # Parámetros
@@ -220,10 +230,10 @@ describe("MDX Locked Patterns Loader", () => {
       const result = await loader.pull("en", md);
       
       const placeholderRegex = /---LOCKED-PATTERN-[0-9a-f]+---/g;
-      const placeholders = result.content.match(placeholderRegex) || [];
+      const placeholders = result.match(placeholderRegex) || [];
       expect(placeholders.length).toBe(6); // Six patterns should be replaced
       
-      const sanitizedContent = result.content
+      const sanitizedContent = result
         .replace(placeholderRegex, "---PLACEHOLDER---");
       
       const expectedSanitized = dedent`
@@ -244,14 +254,15 @@ describe("MDX Locked Patterns Loader", () => {
       
       expect(sanitizedContent).toBe(expectedSanitized);
       
-      const translated = {
-        ...result,
-        content: result.content
-          .replace("The public key of the account to query.", "La clave pública de la cuenta a consultar.")
-          .replace("Encoding format for the returned Account data.", "Formato de codificación para los datos de la cuenta devueltos.")
-      };
+      const translated = result
+        .replace("The public key of the account to query.", "La clave pública de la cuenta a consultar.")
+        .replace("Encoding format for the returned Account data.", "Formato de codificación para los datos de la cuenta devueltos.");
+      
+      (global as any).__pullInput = md;
       
       const pushed = await loader.push("es", translated);
+      
+      delete (global as any).__pullInput;
       
       const expectedPushed = dedent`
         !! pubkey

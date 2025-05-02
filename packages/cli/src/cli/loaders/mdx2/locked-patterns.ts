@@ -46,30 +46,32 @@ function extractLockedPatterns(
   };
 }
 
-export interface MdxWithLockedPatterns {
-  content: string;
-  lockedPlaceholders: Record<string, string>;
-}
-
 export default function createMdxLockedPatternsLoader(defaultPatterns?: string[]): ILoader<
   string,
-  MdxWithLockedPatterns
+  string
 > {
   return createLoader({
     async pull(locale, input, initCtx, originalLocale) {
       const patterns = defaultPatterns || [];
       
-      const { content, lockedPlaceholders } = extractLockedPatterns(input || "", patterns);
+      const { content } = extractLockedPatterns(input || "", patterns);
       
-      return {
-        content,
-        lockedPlaceholders,
-      };
+      return content;
     },
 
     async push(locale, data) {
-      let result = data.content;
-      for (const [placeholder, original] of Object.entries(data.lockedPlaceholders)) {
+      const patterns = defaultPatterns || [];
+      
+      const pullInput = (global as any).__pullInput || null;
+      
+      if (!pullInput) {
+        return data;
+      }
+      
+      const { lockedPlaceholders } = extractLockedPatterns(pullInput, patterns);
+      
+      let result = data;
+      for (const [placeholder, original] of Object.entries(lockedPlaceholders)) {
         result = result.replaceAll(placeholder, original);
       }
       
