@@ -267,6 +267,50 @@ describe("MDX Code Placeholder Loader", () => {
       expect(pushed).toBe(md);
     });
 
+    it("round-trips an image block with surrounding blank lines unchanged", async () => {
+      const md = dedent`
+        Text above.
+
+        ![](https://example.com/img.png)
+
+        Text below.
+      `;
+
+      const pulled = await loader.pull("en", md);
+      const pushed = await loader.push("es", pulled);
+      expect(pushed).toBe(md);
+    });
+
+    it("round-trips and adds blank lines around an image block when missing", async () => {
+      const md = dedent`
+        Text above.
+        ![](https://example.com/img.png)
+        Text below.
+      `;
+
+      const expected = dedent`
+        Text above.
+
+        ![](https://example.com/img.png)
+
+        Text below.
+      `;
+
+      const pulled = await loader.pull("en", md);
+      const pushed = await loader.push("es", pulled);
+      expect(pushed).toBe(expected);
+    });
+
+    it("keeps image inside blockquote as-is", async () => {
+      const md = dedent`
+        > ![](https://example.com/img.png)
+      `;
+
+      const pulled = await loader.pull("en", md);
+      const pushed = await loader.push("es", pulled);
+      expect(pushed).toBe(md);
+    });
+
     it("leaves incomplete fences untouched", async () => {
       const md = "```js\nno close";
       const pulled = await loader.pull("en", md);
@@ -274,6 +318,87 @@ describe("MDX Code Placeholder Loader", () => {
 
       const pushed = await loader.push("es", pulled);
       expect(pushed).toBe(md);
+    });
+
+    // Edge cases for image spacing
+
+    it("adds blank line after image when only before exists", async () => {
+      const md = dedent`
+        Before.
+
+        ![alt](https://example.com/i.png)
+        After.
+      `;
+
+      const expected = dedent`
+        Before.
+
+        ![alt](https://example.com/i.png)
+
+        After.
+      `;
+
+      const pulled = await loader.pull("en", md);
+      const pushed = await loader.push("es", pulled);
+      expect(pushed).toBe(expected);
+    });
+
+    it("adds blank line before image when only after exists", async () => {
+      const md = dedent`
+        Before.
+        ![alt](https://example.com/i.png)
+
+        After.
+      `;
+
+      const expected = dedent`
+        Before.
+
+        ![alt](https://example.com/i.png)
+
+        After.
+      `;
+
+      const pulled = await loader.pull("en", md);
+      const pushed = await loader.push("es", pulled);
+      expect(pushed).toBe(expected);
+    });
+
+    it("inserts spacing between consecutive images", async () => {
+      const md = dedent`
+        ![](a.png)
+        ![](b.png)
+      `;
+
+      const expected = dedent`
+        ![](a.png)
+
+        ![](b.png)
+      `;
+
+      const pulled = await loader.pull("en", md);
+      const pushed = await loader.push("es", pulled);
+      expect(pushed).toBe(expected);
+    });
+
+    it("handles image inside JSX component - adds blank lines", async () => {
+      const md = dedent`
+        <Wrapper>
+        ![](pic.png)
+        </Wrapper>
+      `;
+
+      const expected = dedent`
+        <Wrapper>
+
+        ![](pic.png)
+
+        </Wrapper>
+      `;
+
+      const pulled = await loader.pull("en", md);
+      const pushed = await loader.push("es", pulled);
+      expect(pushed).toBe(expected);
     });
   });
 

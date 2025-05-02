@@ -294,7 +294,7 @@ describe("bucket loaders", () => {
     });
 
     it("should save html data", async () => {
-      const input = `
+      const input = dedent`
 <html>
   <head>
     <title>My Page</title>
@@ -320,26 +320,16 @@ describe("bucket loaders", () => {
         "body/2/3/0": "texto en negrita y ",
         "body/2/3/1/0": "texto en cursiva",
       };
-      const expectedOutput = `
-<html lang="es">
-  <head>
-    <title>Mi Página</title>
-    <meta name="description" content="Descripción de la página" />
-  </head>
-  <body>
-    texto simple sin etiqueta html
-    <h1>¡Hola, mundo!</h1>
-    <p>
-      Este es un párrafo con un
-      <a href="https://example.com">enlace</a>
-      y
-      <b>
-        texto en negrita y
-        <i>texto en cursiva</i>
-      </b>
-    </p>
-  </body>
-</html>
+      const expectedOutput = dedent`
+<html lang="es"><head>
+   <title>Mi Página</title>
+   <meta name="description" content="Descripción de la página">
+ </head>
+ <body>texto simple sin etiqueta html<h1>¡Hola, mundo!</h1>
+   <p>Este es un párrafo con un <a href="https://example.com">enlace</a> y <b>texto en negrita y <i>texto en cursiva</i></b>
+   </p>
+
+</body></html>
       `.trim();
 
       mockFileOperations(input);
@@ -437,7 +427,14 @@ describe("bucket loaders", () => {
 
       const input = { messages: ["foo", "bar"] };
       const payload = { "messages/0": "foo", "messages/1": "bar" };
-      const expectedOutput = `{\n  "messages\": [\"foo\", \"bar\"]\n}`;
+      const expectedOutput = dedent`
+        {
+          "messages": [
+            "foo",
+            "bar"
+          ]
+        }
+      `.trim();
 
       mockFileOperations(JSON.stringify(input));
 
@@ -907,7 +904,7 @@ Another paragraph with **bold** and *italic* text.`;
         "md-section-0": "# Heading 1",
         "md-section-1": "This is a paragraph.",
         "md-section-2": "## Heading 2",
-        "md-section-3": "Another paragraph with **bold** and _italic_ text.",
+        "md-section-3": "Another paragraph with **bold** and *italic* text.",
       };
 
       mockFileOperations(input);

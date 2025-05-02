@@ -6,6 +6,50 @@ import _ from "lodash";
 const fenceRegex = /([ \t]*)(^>\s*)?```([\s\S]*?)```/gm;
 const inlineCodeRegex = /(?<!`)`([^`\r\n]+?)`(?!`)/g;
 
+// Matches markdown image tags, with optional alt text & parenthesis URL, possibly inside blockquotes
+// Captures patterns like ![](url) or ![alt](url), with optional leading '> ' for blockquotes
+const imageRegex = /([ \t]*)(^>\s*)?!\[[^\]]*?\]\([^\n\r]*?\)/gm;
+
+/**
+ * Ensures that markdown image tags are surrounded by blank lines (\n\n) so that they are properly
+ * treated as separate blocks during subsequent processing and serialization.
+ *
+ * Behaviour mirrors `ensureTrailingFenceNewline` logic for code fences:
+ *   • If an image tag is already inside a blockquote (starts with `>` after trimming) we leave it untouched.
+ *   • Otherwise we add two newlines before and after the image tag, then later collapse multiple
+ *     consecutive blank lines back to exactly one separation using lodash chain logic.
+ */
+function ensureSurroundingImageNewlines(_content: string) {
+  let found = false;
+  let content = _content;
+  let workingContent = content;
+
+  do {
+    found = false;
+    const matches = workingContent.match(imageRegex);
+    if (matches) {
+      const match = matches[0];
+
+      const replacement = match.trim().startsWith(">")
+        ? match
+        : `\n\n${match}\n\n`;
+
+      content = content.replaceAll(match, replacement);
+      workingContent = workingContent.replaceAll(match, "");
+      found = true;
+    }
+  } while (found);
+
+  content = _.chain(content)
+    .split("\n\n")
+    .map((section) => _.trim(section, "\n"))
+    .filter(Boolean)
+    .join("\n\n")
+    .value();
+
+  return content;
+}
+
 function ensureTrailingFenceNewline(_content: string) {
   let found = false;
   let content = _content;
@@ -46,6 +90,7 @@ function extractCodePlaceholders(content: string): {
 } {
   let finalContent = content;
   finalContent = ensureTrailingFenceNewline(finalContent);
+  finalContent = ensureSurroundingImageNewlines(finalContent);
 
   const codePlaceholders: Record<string, string> = {};
 
