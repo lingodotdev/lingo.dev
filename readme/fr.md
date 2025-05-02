@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://lingo.dev">
-    <img src="/content/banner.dark.png" width="100%" alt="Lingo.dev" />
+    <img src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.dark.png" width="100%" alt="Lingo.dev" />
   </a>
 </p>
 
@@ -14,12 +14,12 @@
   <a href="https://docs.lingo.dev">Documentation</a> •
   <a href="https://github.com/lingodotdev/lingo.dev/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22">Contribuer</a> •
   <a href="#-github-action">Action GitHub</a> •
-  <a href="#">Ajouter une étoile</a>
+  <a href="#">Mettre une étoile au dépôt</a>
 </p>
 
 <p align="center">
   <a href="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml">
-    <img src="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml/badge.svg" alt="Publication" />
+    <img src="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml/badge.svg" alt="Release" />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md">
     <img src="https://img.shields.io/github/license/lingodotdev/lingo.dev" alt="Licence" />
@@ -31,11 +31,11 @@
 
 <br />
 
-Lingo.dev est un CLI open-source communautaire pour la localisation d'applications web et mobiles propulsé par l'IA.
+Lingo.dev est un CLI open-source communautaire propulsé par l'IA pour la localisation d'applications web et mobiles.
 
-Lingo.dev est conçu pour produire instantanément des traductions authentiques, éliminant le travail manuel et les frais de gestion. Ainsi, les équipes réalisent des localisations précises 100 fois plus rapidement, déployant des fonctionnalités pour davantage d'utilisateurs satisfaits dans le monde entier. Il peut être utilisé avec votre propre LLM ou avec le moteur de localisation géré par Lingo.dev.
+Lingo.dev est conçu pour produire instantanément des traductions authentiques, éliminant le travail manuel et les frais de gestion. En conséquence, les équipes réalisent des localisations précises 100 fois plus rapidement, déployant des fonctionnalités pour davantage d'utilisateurs satisfaits dans le monde entier. Il peut être utilisé avec votre propre LLM ou avec le moteur de localisation géré par Lingo.dev.
 
-> **Anecdote peu connue :** Lingo.dev a débuté comme un petit projet lors d'un hackathon étudiant en 2023 ! Après de nombreuses itérations, nous avons été acceptés chez Y Combinator en 2024, et nous recrutons maintenant ! Intéressé par la création d'outils de localisation de nouvelle génération ? Envoyez votre CV à careers@lingo.dev ! 🚀
+> **Anecdote peu connue :** Lingo.dev a débuté comme un petit projet lors d'un hackathon étudiant en 2023 ! Après de nombreuses itérations, nous avons été acceptés à Y Combinator en 2024, et nous recrutons maintenant ! Intéressé(e) par la création d'outils de localisation de nouvelle génération ? Envoyez votre CV à careers@lingo.dev ! 🚀
 
 ## 📑 Dans ce guide
 

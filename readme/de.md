@@ -1,20 +1,20 @@
 <p align="center">
   <a href="https://lingo.dev">
-    <img src="/content/banner.dark.png" width="100%" alt="Lingo.dev" />
+    <img src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.dark.png" width="100%" alt="Lingo.dev" />
   </a>
 </p>
 
 <p align="center">
-  <strong>⚡️ KI-gestütztes Open-Source-CLI für Web- & Mobile-Lokalisierung.</strong>
+  <strong>⚡️ KI-gestützte Open-Source-CLI für Web- & Mobile-Lokalisierung.</strong>
 </p>
 
 <br />
 
 <p align="center">
-  <a href="https://docs.lingo.dev">Docs</a> •
+  <a href="https://docs.lingo.dev">Dokumentation</a> •
   <a href="https://github.com/lingodotdev/lingo.dev/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22">Mitwirken</a> •
   <a href="#-github-action">GitHub Action</a> •
-  <a href="#">Repo mit Stern versehen</a>
+  <a href="#">Repository mit Stern versehen</a>
 </p>
 
 <p align="center">
@@ -31,9 +31,9 @@
 
 <br />
 
-Lingo.dev ist ein Community-getriebenes, Open-Source-CLI für KI-gestützte Web- und Mobile-App-Lokalisierung.
+Lingo.dev ist eine community-getriebene, Open-Source-CLI für KI-gestützte Web- und Mobile-App-Lokalisierung.
 
-Lingo.dev wurde entwickelt, um sofort authentische Übersetzungen zu liefern und manuelle Arbeit sowie Verwaltungsaufwand zu eliminieren. Teams können dadurch 100-mal schneller präzise Lokalisierungen durchführen und Features an mehr zufriedene Nutzer weltweit ausliefern. Es kann mit Ihrem eigenen LLM oder mit der von Lingo.dev verwalteten Lokalisierungs-Engine verwendet werden.
+Lingo.dev wurde entwickelt, um authentische Übersetzungen sofort zu erstellen und dabei manuelle Arbeit und Verwaltungsaufwand zu eliminieren. Dadurch führen Teams präzise Lokalisierungen 100-mal schneller durch und liefern Features an mehr zufriedene Nutzer weltweit. Es kann mit Ihrem eigenen LLM oder mit der von Lingo.dev verwalteten Lokalisierungs-Engine verwendet werden.
 
 > **Wenig bekannte Tatsache:** Lingo.dev begann 2023 als kleines Projekt bei einem Studenten-Hackathon! Nach vielen Iterationen wurden wir 2024 in Y Combinator aufgenommen, und wir stellen jetzt ein! Interessiert daran, die nächste Generation von Lokalisierungstools zu entwickeln? Senden Sie Ihren Lebenslauf an careers@lingo.dev! 🚀
 

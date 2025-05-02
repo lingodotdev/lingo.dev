@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://lingo.dev">
-    <img src="/content/banner.dark.png" width="100%" alt="Lingo.dev" />
+    <img src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.dark.png" width="100%" alt="Lingo.dev" />
   </a>
 </p>
 
@@ -13,8 +13,8 @@
 <p align="center">
   <a href="https://docs.lingo.dev">문서</a> •
   <a href="https://github.com/lingodotdev/lingo.dev/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22">기여하기</a> •
-  <a href="#-github-action">GitHub Action</a> •
-  <a href="#">저장소에 별표 주기</a>
+  <a href="#-github-action">GitHub 액션</a> •
+  <a href="#">저장소에 스타 주기</a>
 </p>
 
 <p align="center">
@@ -33,7 +33,7 @@
 
 Lingo.dev는 AI 기반 웹 및 모바일 앱 현지화를 위한 커뮤니티 주도 오픈소스 CLI입니다.
 
-Lingo.dev는 수작업과 관리 부담을 제거하고 즉시 정확한 번역을 제공하도록 설계되었습니다. 그 결과, 팀은 100배 더 빠르게 정확한 현지화를 수행하여 전 세계 더 많은 사용자에게 기능을 제공할 수 있습니다. 자체 LLM 또는 Lingo.dev에서 관리하는 현지화 엔진과 함께 사용할 수 있습니다.
+Lingo.dev는 수작업과 관리 오버헤드를 제거하여 즉시 정확한 번역을 생성하도록 설계되었습니다. 결과적으로 팀은 100배 빠르게 정확한 현지화를 수행하여 전 세계 더 많은 사용자에게 기능을 제공할 수 있습니다. 자체 LLM 또는 Lingo.dev에서 관리하는 현지화 엔진과 함께 사용할 수 있습니다.
 
 > **잘 알려지지 않은 사실:** Lingo.dev는 2023년 학생 해커톤에서 작은 프로젝트로 시작되었습니다! 여러 번의 반복 끝에 2024년 Y Combinator에 합격했으며, 현재 채용 중입니다! 차세대 현지화 도구 구축에 관심이 있으신가요? 이력서를 careers@lingo.dev로 보내주세요! 🚀
 
