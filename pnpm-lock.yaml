@@ -71,8 +71,8 @@ importers:
         specifier: ^1.3.7
         version: 1.3.7(zod@3.24.1)
       '@datocms/cma-client-node':
-        specifier: ^3.4.0
-        version: 3.4.0
+        specifier: ^4.0.1
+        version: 4.0.1
       '@gitbeaker/rest':
         specifier: ^39.34.3
         version: 39.34.3
@@ -591,11 +591,20 @@ packages:
   '@datocms/cma-client-node@3.4.0':
     resolution: {integrity: sha512-JfdTQRwyjMfWlfS9WgnBudILZ+kjMcs4y/71qDRI+cUm/TUuRKKeayeVpzWoIH5foZGPUb7aYlk0yRZst7IrVA==}
 
-  '@datocms/cma-client@3.4.0':
-    resolution: {integrity: sha512-Pi6qhqKJ2jZPFCyLj7KwiOVbJOwaMFurc0rhzyqJZRFSs/PzfNjbVR4MKdkB/bQFp3fq+Oyx0ST+8pTAK36Log==}
+  '@datocms/cma-client-node@4.0.1':
+    resolution: {integrity: sha512-yDznbx3/NBwbvehuneV7M3zKl70LGfEhgcuYPgo+SBsvgKuP5w9Z1C5tc8tdRQU6Yu/T/huccP6Lnu9KJSMkdQ==}
 
-  '@datocms/rest-client-utils@3.3.15':
-    resolution: {integrity: sha512-QFxnsaV9rtkojP8IoW5ucqpLtpvJOxCanTrtaYf6SOR20cYAhMT34Blf+BtObyeK4IaLfYYyR2IQ3EBqR4R3xQ==}
+  '@datocms/cma-client@3.4.5':
+    resolution: {integrity: sha512-ddwqN1c0gNf6D79GjxkcZZXKqGk4541GTZfrpXUnU5H0NQJoh1avkCqaecaI9CybJClYwKmoEWgcXZYWjednCQ==}
+
+  '@datocms/cma-client@4.0.1':
+    resolution: {integrity: sha512-sGT7fRuh5XUao2vm0qzl/S7SguIFS2PMaznTJZ3+WZNs9iLP9VRd8ib9AdwesfS8DhKIFWz1gKhS6YUbdvZ6OQ==}
+
+  '@datocms/rest-client-utils@3.4.2':
+    resolution: {integrity: sha512-VjAtxySGH2c1qlZkJUnaRkujDiGAtoc5BtN1V42lvz35hFi/s/fkVOL40Ybr+lkIYsNtFdCPFaE5sW0tABHqaA==}
+
+  '@datocms/rest-client-utils@4.0.0':
+    resolution: {integrity: sha512-BHEo7TjQIqqwOjGOt2Eap1HjPMbWpu9GIgPPAwTI9nbP4PbqKoYZ9kYXAkk+kmlXcqHE8GsoI0zN1Ux6DM3Q8g==}
 
   '@directus/composables@11.1.5':
     resolution: {integrity: sha512-lMPmOc9ps4aVvknRS2DIJZYUN8Qgh9/eGrp5T8LdPo0H7aigSTdElZTZBSxbjS9Ynd42xUMTDnsT22yh+r6Bdw==}
@@ -5756,18 +5765,34 @@ snapshots:
 
   '@datocms/cma-client-node@3.4.0':
     dependencies:
-      '@datocms/cma-client': 3.4.0
-      '@datocms/rest-client-utils': 3.3.15
+      '@datocms/cma-client': 3.4.5
+      '@datocms/rest-client-utils': 3.4.2
       got: 11.8.6
       mime-types: 2.1.35
       tmp-promise: 3.0.3
 
-  '@datocms/cma-client@3.4.0':
+  '@datocms/cma-client-node@4.0.1':
     dependencies:
-      '@datocms/rest-client-utils': 3.3.15
+      '@datocms/cma-client': 4.0.1
+      '@datocms/rest-client-utils': 4.0.0
+      mime-types: 2.1.35
+      tmp-promise: 3.0.3
+
+  '@datocms/cma-client@3.4.5':
+    dependencies:
+      '@datocms/rest-client-utils': 3.4.2
       uuid: 9.0.1
 
-  '@datocms/rest-client-utils@3.3.15':
+  '@datocms/cma-client@4.0.1':
+    dependencies:
+      '@datocms/rest-client-utils': 4.0.0
+      uuid: 9.0.1
+
+  '@datocms/rest-client-utils@3.4.2':
+    dependencies:
+      async-scheduler: 1.4.4
+
+  '@datocms/rest-client-utils@4.0.0':
     dependencies:
       async-scheduler: 1.4.4
 

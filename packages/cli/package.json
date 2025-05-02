@@ -59,7 +59,7 @@
   "dependencies": {
     "@ai-sdk/anthropic": "^1.2.6",
     "@ai-sdk/openai": "^1.3.7",
-    "@datocms/cma-client-node": "^3.4.0",
+    "@datocms/cma-client-node": "^4.0.1",
     "@gitbeaker/rest": "^39.34.3",
     "@inquirer/prompts": "^7.4.1",
     "@lingo.dev/_sdk": "workspace:*",
