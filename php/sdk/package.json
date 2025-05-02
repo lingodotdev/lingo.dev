@@ -1,0 +1,18 @@
+{
+  "name": "@lingo.dev/php-sdk",
+  "version": "0.1.0",
+  "private": false,
+  "description": "PHP SDK for Lingo.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lingodotdev/lingo.dev.git",
+    "directory": "php/sdk"
+  },
+  "scripts": {
+    "test": "echo 'PHP tests are run with composer test'"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  }
+}
