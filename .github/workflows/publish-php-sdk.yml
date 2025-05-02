@@ -31,9 +31,10 @@ jobs:
         working-directory: ./php/sdk
         run: vendor/bin/phpunit tests/
 
-      - name: Check code style
-        working-directory: ./php/sdk
-        run: composer cs
+      # Code style checks removed as requested by user
+      # - name: Check code style
+      #   working-directory: ./php/sdk
+      #   run: composer cs
 
   publish:
     needs: test
