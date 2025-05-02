@@ -66,14 +66,7 @@ jobs:
         run: |
           VERSION=$(php -r '
             $composerJson = json_decode(file_get_contents("php/sdk/composer.json"), true);
-            $version = $composerJson["version"] ?? "0.1.0";
-            if (empty($version)) {
-              $version = "0.1.0";
-              // Set default version if empty
-              $composerJson["version"] = $version;
-              file_put_contents("php/sdk/composer.json", json_encode($composerJson, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
-            }
-            echo $version;
+            echo $composerJson["version"];
           ')
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
@@ -83,16 +76,12 @@ jobs:
           # Get current version
           CURRENT_VERSION=${{ steps.current_version.outputs.version }}
           
-          # Use PHP to increment patch version instead of composer semver
+          # Use PHP to increment patch version
           NEW_VERSION=$(php -r '
             $version = "${{ steps.current_version.outputs.version }}";
-            if (empty($version) || !preg_match("/^\d+(\.\d+){0,3}$/", $version)) {
-              echo "0.1.0"; // Default version if empty or invalid
-            } else {
-              list($major, $minor, $patch) = explode(".", $version);
-              $patch++;
-              echo "$major.$minor.$patch";
-            }
+            list($major, $minor, $patch) = explode(".", $version);
+            $patch++;
+            echo "$major.$minor.$patch";
           ')
           
           echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
