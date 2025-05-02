@@ -1,6 +1,6 @@
 import { execSync } from "child_process";
 import path from "path";
-import { gitConfig, IntegrationFlow } from "./_base";
+import { gitConfig, IntegrationFlow, escapeShellArg } from "./_base";
 import i18nCmd from "../../i18n";
 
 export class InBranchFlow extends IntegrationFlow {
@@ -28,7 +28,7 @@ export class InBranchFlow extends IntegrationFlow {
       execSync(`git add .`, { stdio: "inherit" });
       execSync(`git status --porcelain`, { stdio: "inherit" });
       execSync(
-        `git commit -m "${this.platformKit.config.commitMessage}" --no-verify`,
+        `git commit -m ${escapeShellArg(this.platformKit.config.commitMessage)} --no-verify`,
         {
           stdio: "inherit",
         },
