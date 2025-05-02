@@ -1,11 +1,11 @@
 <p align="center">
   <a href="https://lingo.dev">
-    <img src="/content/banner.dark.png" width="100%" alt="Lingo.dev" />
+    <img src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.dark.png" width="100%" alt="Lingo.dev" />
   </a>
 </p>
 
 <p align="center">
-  <strong>⚡️ 基于AI的开源网页和移动应用本地化CLI工具。</strong>
+  <strong>⚡️ 基于 AI 的开源 CLI，用于网页和移动端本地化。</strong>
 </p>
 
 <br />
@@ -14,28 +14,28 @@
   <a href="https://docs.lingo.dev">文档</a> •
   <a href="https://github.com/lingodotdev/lingo.dev/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22">贡献</a> •
   <a href="#-github-action">GitHub Action</a> •
-  <a href="#">为项目加星</a>
+  <a href="#">为仓库加星</a>
 </p>
 
 <p align="center">
   <a href="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml">
-    <img src="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml/badge.svg" alt="发布" />
+    <img src="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml/badge.svg" alt="Release" />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md">
-    <img src="https://img.shields.io/github/license/lingodotdev/lingo.dev" alt="许可证" />
+    <img src="https://img.shields.io/github/license/lingodotdev/lingo.dev" alt="License" />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/commits/main">
-    <img src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev" alt="最近提交" />
+    <img src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev" alt="Last Commit" />
   </a>
 </p>
 
 <br />
 
-Lingo.dev是一个社区驱动的开源CLI工具，用于AI驱动的网页和移动应用本地化。
+Lingo.dev 是一个社区驱动的开源 CLI，专为基于 AI 的网页和移动应用本地化而设计。
 
-Lingo.dev旨在即时生成地道的翻译，消除手动工作和管理开销。因此，团队可以以100倍的速度完成准确的本地化，将功能推送给全球更多满意的用户。它可以与您自己的LLM一起使用，也可以与Lingo.dev管理的本地化引擎一起使用。
+Lingo.dev 旨在即时生成高质量的翻译，消除手动工作和管理负担。因此，团队可以以 100 倍的速度完成精准本地化，将功能快速交付给全球更多满意的用户。它可以与您自己的 LLM 一起使用，也可以使用 Lingo.dev 管理的本地化引擎。
 
-> **鲜为人知的事实：** Lingo.dev最初是2023年一个学生黑客马拉松的小项目！经过多次迭代后，我们在2024年被Y Combinator接纳，现在我们正在招聘！对构建下一代本地化工具感兴趣吗？请将您的简历发送至careers@lingo.dev！🚀
+> **鲜为人知的事实：** Lingo.dev 起源于 2023 年的一次学生黑客马拉松中的一个小项目！经过多次迭代，我们在 2024 年被 Y Combinator 接受，现在正在招聘！有兴趣构建下一代本地化工具吗？请将您的简历发送至 careers@lingo.dev！🚀
 
 ## 📑 本指南内容
 

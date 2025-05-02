@@ -1,20 +1,20 @@
 <p align="center">
   <a href="https://lingo.dev">
-    <img src="/content/banner.dark.png" width="100%" alt="Lingo.dev" />
+    <img src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.dark.png" width="100%" alt="Lingo.dev" />
   </a>
 </p>
 
 <p align="center">
-  <strong>⚡️ CLI de código aberto com IA para localização web e mobile.</strong>
+  <strong>⚡️ CLI open-source com tecnologia de IA para localização de web e mobile.</strong>
 </p>
 
 <br />
 
 <p align="center">
   <a href="https://docs.lingo.dev">Documentação</a> •
-  <a href="https://github.com/lingodotdev/lingo.dev/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22">Contribua</a> •
+  <a href="https://github.com/lingodotdev/lingo.dev/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22">Contribuir</a> •
   <a href="#-github-action">GitHub Action</a> •
-  <a href="#">Favorite o repositório</a>
+  <a href="#">Favoritar o repositório</a>
 </p>
 
 <p align="center">
@@ -22,20 +22,20 @@
     <img src="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml/badge.svg" alt="Release" />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md">
-    <img src="https://img.shields.io/github/license/lingodotdev/lingo.dev" alt="Licença" />
+    <img src="https://img.shields.io/github/license/lingodotdev/lingo.dev" alt="License" />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/commits/main">
-    <img src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev" alt="Último commit" />
+    <img src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev" alt="Last Commit" />
   </a>
 </p>
 
 <br />
 
-Lingo.dev é uma CLI de código aberto orientada pela comunidade para localização de aplicativos web e mobile com IA.
+Lingo.dev é uma CLI open-source orientada pela comunidade para localização de aplicativos web e mobile com tecnologia de IA.
 
-Lingo.dev foi projetado para produzir traduções autênticas instantaneamente, eliminando trabalho manual e sobrecarga de gerenciamento. Como resultado, as equipes realizam localização precisa 100x mais rápido, entregando recursos para mais usuários satisfeitos em todo o mundo. Pode ser usado com seu próprio LLM ou com o Motor de Localização gerenciado pelo Lingo.dev.
+Lingo.dev foi projetado para produzir traduções autênticas instantaneamente, eliminando trabalho manual e overhead de gerenciamento. Como resultado, as equipes realizam localização precisa 100x mais rápido, entregando recursos para mais usuários satisfeitos em todo o mundo. Pode ser utilizado com seu próprio LLM ou com o Motor de Localização gerenciado pelo Lingo.dev.
 
-> **Curiosidade pouco conhecida:** Lingo.dev começou como um pequeno projeto em um hackathon estudantil em 2023! Muitas iterações depois, fomos aceitos na Y Combinator em 2024, e agora estamos contratando! Interessado em construir as ferramentas de localização de próxima geração? Envie seu currículo para careers@lingo.dev! 🚀
+> **Fato pouco conhecido:** Lingo.dev começou como um pequeno projeto em um hackathon estudantil em 2023! Muitas iterações depois, fomos aceitos na Y Combinator em 2024, e agora estamos contratando! Interessado em construir as ferramentas de localização de próxima geração? Envie seu CV para careers@lingo.dev! 🚀
 
 ## 📑 Neste guia
 
