@@ -1,0 +1,93 @@
+name: Publish PHP SDK to Packagist
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'php/sdk/**'
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
+          extensions: mbstring, intl
+          coverage: none
+          tools: composer:v2
+
+      - name: Install dependencies
+        working-directory: ./php/sdk
+        run: composer install --prefer-dist
+
+      - name: Run tests
+        working-directory: ./php/sdk
+        run: composer test
+
+      - name: Check code style
+        working-directory: ./php/sdk
+        run: composer cs
+
+  publish:
+    needs: test
+    if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
+          extensions: mbstring, intl
+          coverage: none
+          tools: composer:v2, composer-semver
+
+      - name: Install dependencies
+        working-directory: ./php/sdk
+        run: composer install --no-dev --no-interaction --prefer-dist
+
+      - name: Get current version
+        id: current_version
+        run: |
+          VERSION=$(php -r 'echo json_decode(file_get_contents("php/sdk/composer.json"), true)["version"];')
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Bump patch version
+        id: bump_version
+        run: |
+          # Use composer-semver for version bumping (always patch for main branch pushes)
+          NEW_VERSION=$(composer semver ${{ steps.current_version.outputs.version }} --increment=patch)
+          echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+          
+          # Update version in composer.json
+          php -r '
+          $composerJson = json_decode(file_get_contents("php/sdk/composer.json"), true);
+          $composerJson["version"] = "${{ steps.bump_version.outputs.new_version }}";
+          file_put_contents("php/sdk/composer.json", json_encode($composerJson, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+          '
+
+      - name: Commit and push version bump
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "chore: bump PHP SDK version to ${{ steps.bump_version.outputs.new_version }}"
+          file_pattern: php/sdk/composer.json
+          commit_user_name: "Devin AI"
+          commit_user_email: "devin-ai-integration[bot]@users.noreply.github.com"
+          push_options: "--force"
+
+      - name: Publish to Packagist
+        uses: wscourge/packagist-publish@v1
+        with:
+          username: lingodotdev
+          api_token: ${{ secrets.PACKAGIST_API_TOKEN }}
