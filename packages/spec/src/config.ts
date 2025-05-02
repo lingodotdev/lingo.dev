@@ -269,6 +269,10 @@ export const configV1_5Definition = extendConfigDefinition(configV1_4Definition,
 // Changes: Add "lockedKeys" string array to bucket config
 export const bucketValueSchemaV1_6 = bucketValueSchemaV1_3.extend({
   lockedKeys: Z.array(Z.string()).default([]).optional(),
+  codehikeOptions: Z.object({
+    preserveAnnotations: Z.boolean().default(true).optional(),
+    preserveComponents: Z.boolean().default(true).optional(),
+  }).optional(),
 });
 
 export const configV1_6Definition = extendConfigDefinition(configV1_5Definition, {

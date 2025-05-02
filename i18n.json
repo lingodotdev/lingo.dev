@@ -23,6 +23,13 @@
       "include": [
         "readme/[locale].md"
       ]
+    },
+    "mdx": {
+      "include": [],
+      "codehikeOptions": {
+        "preserveAnnotations": true,
+        "preserveComponents": true
+      }
     }
   },
   "$schema": "https://lingo.dev/schema/i18n.json"
