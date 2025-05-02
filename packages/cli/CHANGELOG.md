@@ -1,5 +1,15 @@
 # lingo.dev
 
+## 0.89.0
+
+### Minor Changes
+
+- [`c3171c4`](https://github.com/lingodotdev/lingo.dev/commit/c3171c412bb2efab38f311ebb1c740b3cd225c32) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - add `ci` cmd
+
+### Patch Changes
+
+- [#709](https://github.com/lingodotdev/lingo.dev/pull/709) [`3fa1c35`](https://github.com/lingodotdev/lingo.dev/commit/3fa1c35b52a521fe2cfd0155ffc8cae6961a4066) Thanks [@vrcprl](https://github.com/vrcprl)! - Fix error tracking in PostHog by properly serializing error objects
+
 ## 0.88.0
 
 ### Minor Changes
