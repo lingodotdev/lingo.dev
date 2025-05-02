@@ -77,7 +77,7 @@
     "dedent": "^1.5.3",
     "diff": "^7.0.0",
     "dotenv": "^16.4.7",
-    "express": "^4.21.2",
+    "express": "^5.1.0",
     "external-editor": "^3.1.0",
     "figlet": "^1.8.0",
     "flat": "^6.0.1",
@@ -129,7 +129,7 @@
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/diff": "^7.0.0",
-    "@types/express": "^5.0.0",
+    "@types/express": "^5.0.1",
     "@types/figlet": "^1.7.0",
     "@types/gettext-parser": "^4.0.4",
     "@types/glob": "^8.1.0",
