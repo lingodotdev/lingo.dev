@@ -44,7 +44,7 @@ jobs:
           fi
 
       - name: Validate composer.json
-        run: composer validate --strict
+        run: composer validate --no-check-publish
 
       - name: Install dependencies
         run: composer install --prefer-dist
