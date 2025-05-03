@@ -9,7 +9,7 @@
  * @link     https://lingo.dev
  */
 
-namespace Lingodotdev\Sdk\Tests;
+namespace LingoDotDev\Sdk\Tests;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;

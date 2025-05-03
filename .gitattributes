@@ -1,0 +1,7 @@
+# Exclude non-PHP artefacts from Composer's dist archive
+/sdk/**            export-ignore
+/js/**             export-ignore
+/docs/**           export-ignore
+/tests/**          export-ignore
+*.md               export-ignore
+*.yml              export-ignore

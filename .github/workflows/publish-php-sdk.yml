@@ -43,13 +43,14 @@ jobs:
             '
           fi
 
-      - name: Install dependencies for SDK
-        working-directory: ./php/sdk
+      - name: Validate composer.json
+        run: composer validate --strict
+
+      - name: Install dependencies
         run: composer install --prefer-dist
 
       - name: Run tests
-        working-directory: ./php/sdk
-        run: vendor/bin/phpunit tests/
+        run: vendor/bin/phpunit php/sdk/tests/
 
       # Code style checks removed as requested by user
       # - name: Check code style

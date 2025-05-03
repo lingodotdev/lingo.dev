@@ -9,7 +9,7 @@
  * @link     https://lingo.dev
  */
 
-namespace Lingodotdev\Sdk;
+namespace LingoDotDev\Sdk;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
