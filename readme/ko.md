@@ -163,17 +163,17 @@ Lingo.dev는 커뮤니티 중심으로 운영되므로 모든 기여를 환영�
 
 ## 🌐 다른 언어로 된 README
 
-- [English](https://github.com/lingodotdev/lingo.dev)
-- [Chinese](/readme/zh-Hans.md)
-- [Japanese](/readme/ja.md)
-- [Spanish](/readme/es.md)
-- [French](/readme/fr.md)
-- [Russian](/readme/ru.md)
-- [German](/readme/de.md)
-- [Korean](/readme/ko.md)
-- [Italian](/readme/it.md)
-- [Arabic](/readme/ar.md)
-- [Hindi](/readme/hi.md)
-- [Bengali](/readme/bn.md)
+- [영어](https://github.com/lingodotdev/lingo.dev)
+- [중국어](/readme/zh-Hans.md)
+- [일본어](/readme/ja.md)
+- [한국어](/readme/ko.md)
+- [스페인어](/readme/es.md)
+- [프랑스어](/readme/fr.md)
+- [러시아어](/readme/ru.md)
+- [독일어](/readme/de.md)
+- [이탈리아어](/readme/it.md)
+- [아랍어](/readme/ar.md)
+- [힌디어](/readme/hi.md)
+- [벵골어](/readme/bn.md)
 
 원하는 언어가 보이지 않나요? [`i18n.json`](./i18n.json) 파일에 새 언어 코드를 추가하고 PR을 열어주세요.
