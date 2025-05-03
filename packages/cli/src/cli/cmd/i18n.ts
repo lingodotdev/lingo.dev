@@ -639,45 +639,6 @@ export default new Command()
     }
   });
 
-function calculateDataDelta(args: {
-  sourceData: Record<string, any>;
-  updatedSourceData: Record<string, any>;
-  targetData: Record<string, any>;
-}) {
-  // Calculate missing keys
-  const newKeys = _.difference(
-    Object.keys(args.sourceData),
-    Object.keys(args.targetData),
-  );
-  // Calculate updated keys
-  const updatedKeys = Object.keys(args.updatedSourceData);
-
-  // Calculate delta payload
-  const result = _.chain(args.sourceData)
-    .pickBy((value, key) => newKeys.includes(key) || updatedKeys.includes(key))
-    .value() as Record<string, any>;
-
-  return result;
-}
-
-async function retryWithExponentialBackoff<T>(
-  operation: () => Promise<T>,
-  maxAttempts: number,
-  baseDelay: number = 1000,
-): Promise<T> {
-  for (let attempt = 0; attempt < maxAttempts; attempt++) {
-    try {
-      return await operation();
-    } catch (error) {
-      if (attempt === maxAttempts - 1) throw error;
-
-      const delay = baseDelay * Math.pow(2, attempt);
-      await new Promise((resolve) => setTimeout(resolve, delay));
-    }
-  }
-  throw new Error("Unreachable code");
-}
-
 function parseFlags(options: any) {
   return Z.object({
     apiKey: Z.string().optional(),
