@@ -43,19 +43,19 @@ php index.php your-api-key-here
 
 For Linux/macOS:
 ```bash
-export LINGO_API_KEY=your-api-key-here
+export LINGODOTDEV_API_KEY=your-api-key-here
 php index.php
 ```
 
 For Windows Command Prompt:
 ```cmd
-set LINGO_API_KEY=your-api-key-here
+set LINGODOTDEV_API_KEY=your-api-key-here
 php index.php
 ```
 
 For Windows PowerShell:
 ```powershell
-$env:LINGO_API_KEY="your-api-key-here"
+$env:LINGODOTDEV_API_KEY="your-api-key-here"
 php index.php
 ```
 

@@ -4,13 +4,13 @@ require 'vendor/autoload.php';
 
 use LingoDotDev\Sdk\LingoDotDevEngine;
 
-if (!isset($_ENV['LINGO_API_KEY']) && !isset($argv[1])) {
-    echo "Error: API key is required. Either set the LINGO_API_KEY environment variable or pass it as a command-line argument.\n";
+if (!isset($_ENV['LINGODOTDEV_API_KEY']) && !isset($argv[1])) {
+    echo "Error: API key is required. Either set the LINGODOTDEV_API_KEY environment variable or pass it as a command-line argument.\n";
     echo "Usage: php index.php <your-api-key>\n";
     exit(1);
 }
 
-$apiKey = $_ENV['LINGO_API_KEY'] ?? $argv[1];
+$apiKey = $_ENV['LINGODOTDEV_API_KEY'] ?? $argv[1];
 
 $engine = new LingoDotDevEngine([
     'apiKey' => $apiKey,
