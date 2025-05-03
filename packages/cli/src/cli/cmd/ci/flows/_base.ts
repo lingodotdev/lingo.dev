@@ -10,7 +10,6 @@ export interface IIntegrationFlow {
 
 export abstract class IntegrationFlow implements IIntegrationFlow {
   protected i18nBranchName?: string;
-  protected originalBranch?: string;
 
   constructor(
     protected ora: Ora,
