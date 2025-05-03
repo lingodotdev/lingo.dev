@@ -79,6 +79,16 @@ export class InBranchFlow extends IntegrationFlow {
     execSync(`pwd`, { stdio: "inherit" });
     execSync(`ls -la`, { stdio: "inherit" });
 
+    try {
+      this.originalBranch = execSync(`git rev-parse --abbrev-ref HEAD`, { 
+        encoding: "utf8",
+        stdio: ["pipe", "pipe", "inherit"] 
+      }).trim();
+      this.ora.info(`Original branch: ${this.originalBranch}`);
+    } catch (error) {
+      this.ora.warn(`Could not determine original branch, will not be able to return to it`);
+    }
+
     execSync(`git config --global safe.directory ${process.cwd()}`);
 
     execSync(`git config user.name "${gitConfig.userName}"`);
@@ -116,4 +126,21 @@ export class InBranchFlow extends IntegrationFlow {
 
     return true;
   }
+  async returnToOriginalBranch() {
+    if (this.originalBranch) {
+      this.ora.start(`Returning to original branch: ${this.originalBranch}`);
+      
+      try {
+        execSync(`git checkout ${this.originalBranch}`, { 
+          stdio: "inherit",
+          encoding: "utf8"
+        });
+        this.ora.succeed(`Returned to original branch: ${this.originalBranch}`);
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
+        this.ora.fail(`Failed to return to original branch: ${errorMessage}`);
+      }
+    }
+  }
+
 }

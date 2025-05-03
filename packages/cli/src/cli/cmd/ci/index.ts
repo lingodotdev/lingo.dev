@@ -74,15 +74,19 @@ export default new Command()
       ? new PullRequestFlow(ora, platformKit)
       : new InBranchFlow(ora, platformKit);
 
-    const canRun = await flow.preRun?.();
-    if (canRun === false) {
-      return;
-    }
+    try {
+      const canRun = await flow.preRun?.();
+      if (canRun === false) {
+        return;
+      }
 
-    const hasChanges = await flow.run();
-    if (!hasChanges) {
-      return;
-    }
+      const hasChanges = await flow.run();
+      if (!hasChanges) {
+        return;
+      }
 
-    await flow.postRun?.();
+      await flow.postRun?.();
+    } finally {
+      await flow.returnToOriginalBranch?.();
+    }
   });

@@ -5,10 +5,12 @@ export interface IIntegrationFlow {
   preRun?(): Promise<boolean>;
   run(): Promise<boolean>;
   postRun?(): Promise<void>;
+  returnToOriginalBranch?(): Promise<void>;
 }
 
 export abstract class IntegrationFlow implements IIntegrationFlow {
   protected i18nBranchName?: string;
+  protected originalBranch?: string;
 
   constructor(
     protected ora: Ora,
