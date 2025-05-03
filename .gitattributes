@@ -1,7 +1,51 @@
 # Exclude non-PHP artefacts from Composer's dist archive
-/sdk/**            export-ignore
+
+# Exclude all directories except php/sdk/src
+/.changeset/**     export-ignore
+/.github/**        export-ignore
+/.husky/**         export-ignore
+/.turbo/**         export-ignore
+/.vscode/**        export-ignore
+/action/**         export-ignore
+/content/**        export-ignore
+/integrations/**   export-ignore
 /js/**             export-ignore
+/legacy/**         export-ignore
+/node_modules/**   export-ignore
+/packages/**       export-ignore
+/readme/**         export-ignore
+/scripts/**        export-ignore
+/sdk/**            export-ignore
 /docs/**           export-ignore
-/tests/**          export-ignore
+
+# Exclude tests directory within php/sdk
+/php/sdk/tests/**  export-ignore
+
+# Exclude common file types not needed for PHP package
 *.md               export-ignore
 *.yml              export-ignore
+*.yaml             export-ignore
+*.json             export-ignore
+!composer.json     export-ignore
+*.lock             export-ignore
+*.js               export-ignore
+*.ts               export-ignore
+*.jsx              export-ignore
+*.tsx              export-ignore
+*.css              export-ignore
+*.scss             export-ignore
+*.html             export-ignore
+*.svg              export-ignore
+*.png              export-ignore
+*.jpg              export-ignore
+*.gif              export-ignore
+
+# Exclude development and CI files
+.editorconfig      export-ignore
+.gitattributes     export-ignore
+.gitignore         export-ignore
+.npmrc             export-ignore
+.prettierrc        export-ignore
+.eslintrc          export-ignore
+phpcs.xml          export-ignore
+phpunit.xml        export-ignore
