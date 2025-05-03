@@ -15,7 +15,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
-use Lingodotdev\Sdk\LingoDotDevEngine;
+use LingoDotDev\Sdk\LingoDotDevEngine;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 
