@@ -164,17 +164,17 @@ Lingo.dev समुदाय-संचालित है, इसलिए ह�
 
 ## 🌐 अन्य भाषाओं में रीडमी
 
-- [English](https://github.com/lingodotdev/lingo.dev)
-- [Chinese](/readme/zh-Hans.md)
-- [Japanese](/readme/ja.md)
-- [Spanish](/readme/es.md)
-- [French](/readme/fr.md)
-- [Russian](/readme/ru.md)
-- [German](/readme/de.md)
-- [Korean](/readme/ko.md)
-- [Italian](/readme/it.md)
-- [Arabic](/readme/ar.md)
-- [Hindi](/readme/hi.md)
-- [Bengali](/readme/bn.md)
+- [अंग्रेज़ी](https://github.com/lingodotdev/lingo.dev)
+- [चीनी](/readme/zh-Hans.md)
+- [जापानी](/readme/ja.md)
+- [कोरियाई](/readme/ko.md)
+- [स्पेनिश](/readme/es.md)
+- [फ्रेंच](/readme/fr.md)
+- [रूसी](/readme/ru.md)
+- [जर्मन](/readme/de.md)
+- [इतालवी](/readme/it.md)
+- [अरबी](/readme/ar.md)
+- [हिंदी](/readme/hi.md)
+- [बंगाली](/readme/bn.md)
 
 क्या आपकी भाषा नहीं दिख रही है? बस [`i18n.json`](./i18n.json) फ़ाइल में एक नया भाषा कोड जोड़ें और एक PR खोलें।
