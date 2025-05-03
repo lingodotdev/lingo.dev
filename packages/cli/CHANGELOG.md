@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.90.1
+
+### Patch Changes
+
+- [#728](https://github.com/lingodotdev/lingo.dev/pull/728) [`a7f287d`](https://github.com/lingodotdev/lingo.dev/commit/a7f287d9913dd5e2537110a5d6feb8af1198eca6) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - Return users to their original branch after CI command completes, even when it fails
+
 ## 0.90.0
 
 ### Minor Changes
