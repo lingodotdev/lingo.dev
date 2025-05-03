@@ -79,10 +79,7 @@ export class InBranchFlow extends IntegrationFlow {
     execSync(`pwd`, { stdio: "inherit" });
     execSync(`ls -la`, { stdio: "inherit" });
 
-    this.originalBranch = execSync(`git rev-parse --abbrev-ref HEAD`, { 
-      encoding: "utf8",
-      stdio: ["pipe", "pipe", "inherit"] 
-    }).trim();
+    this.originalBranch = this.platformKit.platformConfig.baseBranchName;
     this.ora.info(`Original branch: ${this.originalBranch}`);
 
     execSync(`git config --global safe.directory ${process.cwd()}`);
