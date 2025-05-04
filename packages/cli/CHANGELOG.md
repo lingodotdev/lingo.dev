@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.90.2
+
+### Patch Changes
+
+- [`8443a9e`](https://github.com/lingodotdev/lingo.dev/commit/8443a9e83bbbb33f20eff1b3bf5f107e5bd18b7d) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - easter egg ;)
+
 ## 0.90.1
 
 ### Patch Changes
