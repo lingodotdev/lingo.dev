@@ -2,8 +2,10 @@
   "version": 1.6,
   "locale": {
     "source": "en",
-    "targets": ["de"]
+    "targets": [
+      "de"
+    ]
   },
-  "main": {},
+  "buckets": {},
   "$schema": "https://lingo.dev/schema/i18n.json"
 }

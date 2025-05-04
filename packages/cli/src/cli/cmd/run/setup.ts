@@ -23,7 +23,7 @@ export async function setup(): Promise<SetupState> {
           if (!i18nConfig) {
             throw new CLIError({
               message:
-                "i18n.json not found in the current directory. Please run `lingo.dev init` to initialize the project.",
+                "Couldn't load i18n configuration: i18n.json not found in the current directory. Please run `lingo.dev init` to initialize the project.",
               docUrl: "i18nNotFound",
             });
           }
