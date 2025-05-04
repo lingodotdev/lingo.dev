@@ -5,7 +5,7 @@ import { vice } from "gradient-string";
 
 // Local modules
 import { colors } from "./constants";
-import { setup, SetupState } from "./setup";
+import { setup } from "./setup";
 import { plan, PlanState } from "./plan";
 import { process as runProcess, ProcessState } from "./process";
 
@@ -25,7 +25,7 @@ export default new Command()
     await renderHero();
     await renderSpacer();
 
-    const setupState: SetupState = await setup();
+    const setupState = await setup();
     await renderSpacer();
 
     const planState: PlanState = await plan(setupState.i18nConfig);

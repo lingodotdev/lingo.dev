@@ -2,14 +2,14 @@ import chalk from "chalk";
 import { Listr, ListrDefaultRendererLogLevels } from "listr2";
 
 import { colors } from "./constants";
-
-export interface SetupState {
-  i18nConfig: any;
-  auth: any;
-}
+import { I18nConfig } from "@lingo.dev/_spec";
+import { SetupState } from "./_types";
 
 export async function setup(): Promise<SetupState> {
   console.log(chalk.hex(colors.orange)("[Setup]"));
+
+  let i18nConfig: SetupState["i18nConfig"] | null = null;
+  let authConfig: SetupState["auth"] | null = null;
 
   const setupTasks = new Listr<SetupState>(
     [
@@ -17,7 +17,7 @@ export async function setup(): Promise<SetupState> {
         title: "Loading i18n configuration",
         task: async (ctx, task) => {
           await new Promise((res) => setTimeout(res, 500));
-          ctx.i18nConfig = {};
+          // i18nConfig = await loadI18nConfig();
           task.title = `Loaded i18n configuration`;
         },
       },
@@ -26,7 +26,7 @@ export async function setup(): Promise<SetupState> {
         task: async (ctx, task) => {
           await new Promise((res) => setTimeout(res, 750));
           const email = "user@example.com";
-          ctx.auth = { email };
+          authConfig = { email, id: "123" }; // TODO
           task.title = `Authenticated as ${chalk.hex(colors.yellow)(email)}`;
         },
       },
@@ -53,6 +53,6 @@ export async function setup(): Promise<SetupState> {
     },
   );
 
-  const result = await setupTasks.run({ i18nConfig: {}, auth: {} });
+  const result = await setupTasks.run();
   return result;
 }
