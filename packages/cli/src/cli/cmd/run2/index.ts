@@ -8,6 +8,9 @@ export default new Command()
   .description("Demo Ink UI for Lingo.dev")
   .helpOption("-h, --help", "Show help")
   .action(async () => {
+    // Clear terminal screen
+    process.stdout.write("\x1Bc");
+
     const { waitUntilExit } = render(React.createElement(Run2UI));
     await waitUntilExit();
   });

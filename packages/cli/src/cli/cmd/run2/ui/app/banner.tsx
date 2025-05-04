@@ -13,7 +13,7 @@ const asciiArt = vice(
 
 export default function Banner() {
   return (
-    <Box>
+    <Box flexDirection="column">
       <Text>{asciiArt}</Text>
     </Box>
   );
