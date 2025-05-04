@@ -655,7 +655,8 @@ function parseFlags(options: any) {
   }).parse(options);
 }
 
-async function validateAuth(settings: ReturnType<typeof getSettings>) {
+// Export validateAuth for use in other commands
+export async function validateAuth(settings: ReturnType<typeof getSettings>) {
   if (!settings.auth.apiKey) {
     throw new CLIError({
       message:

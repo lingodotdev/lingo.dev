@@ -5,7 +5,7 @@ export type SetupState = {
   auth: {
     id: string;
     email: string;
-  };
+  } | null;
 };
 
 export type LocalizationTask = {

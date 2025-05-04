@@ -2,17 +2,14 @@ import chalk from "chalk";
 import { Listr, ListrDefaultRendererLogLevels } from "listr2";
 
 import { colors } from "./constants";
-import { I18nConfig } from "@lingo.dev/_spec";
 import { SetupState } from "./_types";
 import { getSettings } from "../../utils/settings";
 import { getConfig } from "../../utils/config";
 import { CLIError } from "../../utils/errors";
+import { validateAuth } from "../i18n";
 
 export async function setup(): Promise<SetupState> {
   console.log(chalk.hex(colors.orange)("[Setup]"));
-
-  let i18nConfig: SetupState["i18nConfig"] | null = null;
-  let authConfig: SetupState["auth"] | null = null;
 
   const setupTasks = new Listr<SetupState>(
     [
@@ -32,12 +29,36 @@ export async function setup(): Promise<SetupState> {
         },
       },
       {
-        title: "Authenticating with Lingo.dev",
+        title: "Authenticating with Lingo.dev / Checking Provider",
         task: async (ctx, task) => {
-          await new Promise((res) => setTimeout(res, 750));
-          const email = "user@example.com";
-          authConfig = { email, id: "123" }; // TODO
-          task.title = `Authenticated as ${chalk.hex(colors.yellow)(email)}`; // or tell it's skipped
+          let providerName: string;
+          if (ctx.i18nConfig.provider) {
+            providerName = ctx.i18nConfig.provider.id;
+          } else {
+            providerName = "lingo.dev";
+          }
+
+          if (providerName !== "lingo.dev") {
+            task.title = `Using provider: ${chalk.hex(colors.yellow)(providerName)}`;
+            ctx.auth = null;
+            return;
+          }
+
+          task.title = "Authenticating with Lingo.dev...";
+          const settings = getSettings(undefined);
+          try {
+            const auth = await validateAuth(settings);
+            ctx.auth = auth;
+            task.title = `Authenticated as ${chalk.hex(colors.yellow)(auth.email)}`;
+          } catch (error: any) {
+            if (error instanceof CLIError) {
+              throw error;
+            }
+            throw new CLIError({
+              message: `Authentication failed: ${error.message}. Please run 'lingo.dev auth --login'.`,
+              docUrl: "authError",
+            });
+          }
         },
       },
       {
