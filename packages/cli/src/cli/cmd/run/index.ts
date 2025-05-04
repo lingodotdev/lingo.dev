@@ -235,15 +235,45 @@ export default new Command()
 
                   for (const taskToProcess of tasksForThread) {
                     // Simulate processing
-                    await new Promise((res) =>
-                      setTimeout(res, 500 + Math.random() * 1000),
-                    );
-                    completedTasks++;
-                    threadCompleted++;
-                    // Update main task title
-                    task.title = `Processing translation tasks (${completedTasks}/${totalTasks})`;
-                    // Update subtask title with current task info
-                    subTask.title = `Processing: ${chalk.dim(taskToProcess.filePath)} (${chalk.yellow(taskToProcess.sourceLocale)} -> ${chalk.yellow(taskToProcess.targetLocale)})`;
+                    try {
+                      // Update subtask title with current task info
+                      subTask.title = `Processing: ${chalk.dim(taskToProcess.filePath)} (${chalk.yellow(taskToProcess.sourceLocale)} -> ${chalk.yellow(taskToProcess.targetLocale)})`;
+                      await new Promise((res, rej) =>
+                        setTimeout(
+                          () => {
+                            // Simulate a potential error
+                            if (Math.random() < 0.05) {
+                              // 5% chance of error
+                              rej(
+                                new Error(
+                                  `Failed processing ${taskToProcess.filePath}`,
+                                ),
+                              );
+                            }
+                            res(undefined);
+                          },
+                          500 + Math.random() * 1000,
+                        ),
+                      );
+                      completedTasks++;
+                      threadCompleted++;
+                      // Update main task title with detailed status
+                      const processedCount = completedTasks;
+                      const failedCount = errors.length;
+                      const status = `Processed ${chalk.green(processedCount)}/${totalTasks}, Failed ${chalk.red(failedCount)}/${totalTasks}`;
+                      task.title = `Processing translation tasks: ${chalk.dim(status)}`;
+                    } catch (error: any) {
+                      // Record the error
+                      errors.push(error);
+
+                      // Update main task title with detailed status after error
+                      const processedCountAfterError = completedTasks; // completedTasks hasn't incremented here
+                      const failedCountAfterError = errors.length;
+                      const statusAfterError = `Processed ${chalk.green(processedCountAfterError)}/${totalTasks}, Failed ${chalk.red(failedCountAfterError)}/${totalTasks}`;
+                      task.title = `Processing translation tasks: ${chalk.dim(statusAfterError)}`;
+
+                      // Continue to the next task
+                    }
                   }
                   subTask.title = "Done"; // Final title
                 },
@@ -271,6 +301,11 @@ export default new Command()
                   },
                 },
               });
+
+              // Set the final title after all subtasks complete
+              const finalCompletedCount = completedTasks;
+              const finalFailedCount = errors.length;
+              task.title = `Processing translation tasks: Completed ${chalk.green(finalCompletedCount)}/${totalTasks}, Failed ${chalk.red(finalFailedCount)}/${totalTasks}`;
             },
           },
           {
@@ -283,6 +318,7 @@ export default new Command()
           },
         ],
         {
+          exitOnError: false,
           rendererOptions: {
             collapseSubtasks: true,
             color: {
