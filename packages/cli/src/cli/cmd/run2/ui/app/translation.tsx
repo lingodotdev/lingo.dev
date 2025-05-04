@@ -14,7 +14,7 @@ export default function Translation() {
   return (
     <Box flexDirection="column" paddingY={1}>
       <Box flexDirection="row" alignItems="center">
-        <Text color="#ff6600">[Translation]</Text>
+        <Text color="#ff6600">Localization</Text>
         <Text> </Text>
         <Text color="yellow">Completed: {p}/100</Text>
         <Text color="grey"> | </Text>

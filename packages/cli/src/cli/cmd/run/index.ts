@@ -1,8 +1,14 @@
 import { Command } from "interactive-commander";
 import chalk from "chalk";
 import figlet from "figlet";
-import { Listr, ListrTaskWrapper } from "listr2";
+import {
+  Listr,
+  ListrTaskWrapper,
+  ListrDefaultRendererLogLevels,
+  LoggerFormat,
+} from "listr2";
 import pLimit from "p-limit";
+import { z } from "zod";
 import {
   processPayload,
   findBuckets,
@@ -11,6 +17,16 @@ import {
   getSourceLocale,
   getTargetLocales,
 } from "./_mocks";
+import { vice } from "gradient-string";
+
+const colors = {
+  organge: "#ff6600",
+  green: "#6ae300",
+  blue: "#0090ff",
+  yellow: "#ffcc00",
+  grey: "#808080",
+  red: "#ff0000",
+};
 
 type PayloadProcessingTask = {
   bucketType: string;
@@ -33,178 +49,287 @@ export default new Command()
     "0",
   )
   .action(async (args) => {
-    // 1. Beautiful banner
-    console.log(
-      chalk.cyan(
-        figlet.textSync("Lingo.dev", {
-          horizontalLayout: "default",
-          verticalLayout: "default",
-        }),
-      ),
-    );
+    await renderClear();
+    await renderSpacer();
+    await renderBanner();
+    await renderHero();
+    await renderSpacer();
+    const setupState = await setup();
+    await renderSpacer();
+    const planState = await plan(setupState.i18nConfig);
+    await renderSpacer();
+    const processState = await process(setupState.auth, planState.tasks);
+    await renderSpacer();
+    await summarize(processState);
+    await renderSpacer();
 
-    // 2. Define our tasks using Listr2
-    interface Ctx {
-      buckets: Awaited<ReturnType<typeof findBuckets>>;
-      processingTasks: PayloadProcessingTask[];
+    // ---
+    return;
+    // ---
+
+    async function renderClear() {
+      console.log("\x1Bc");
     }
 
-    const tasksRunner = new Listr<Ctx>([
-      {
-        title: "Loading i18n configuration",
-        task: async () => {
-          // Simulate loading configuration
-          await new Promise((res) => setTimeout(res, 250));
+    async function renderSpacer() {
+      console.log(" ");
+    }
+
+    async function renderBanner() {
+      console.log(
+        vice(
+          figlet.textSync("LINGO.DEV", {
+            font: "ANSI Shadow",
+            horizontalLayout: "default",
+            verticalLayout: "default",
+          }),
+        ),
+      );
+    }
+
+    async function renderHero() {
+      console.log(
+        `⚡️ ${chalk.hex(colors.green)("Lingo.dev")} - open-source, AI-powered i18n CLI for web & mobile localization.`,
+      );
+      console.log(" ");
+      console.log(
+        chalk.hex(colors.blue)("⭐ GitHub Repo: https://lingo.dev/go/gh"),
+      );
+      console.log(chalk.hex(colors.blue)("💬 24/7 Support: hi@lingo.dev"));
+    }
+
+    async function setup() {
+      console.log(chalk.hex(colors.organge)("[Setup]"));
+
+      const setupTasks = new Listr<{ i18nConfig: any; auth: any }>(
+        [
+          {
+            title: "Loading i18n configuration",
+            task: async (ctx, task) => {
+              await new Promise((res) => setTimeout(res, 500));
+              ctx.i18nConfig = {};
+              task.title = `Loaded i18n configuration`;
+            },
+          },
+          {
+            title: "Authenticating with Lingo.dev",
+            task: async (ctx, task) => {
+              await new Promise((res) => setTimeout(res, 750));
+              const email = "user@example.com";
+              ctx.auth = { email };
+              task.title = `Authenticated as ${chalk.hex(colors.yellow)(email)}`;
+            },
+          },
+          {
+            title: "Choosing localization provider",
+            task: async (ctx, task) => {
+              await new Promise((res) => setTimeout(res, 750));
+              task.title = `Using ${chalk.hex(colors.green)("Lingo.dev")} instead of raw LLM API`;
+            },
+          },
+        ],
+        {
+          rendererOptions: {
+            color: {
+              [ListrDefaultRendererLogLevels.COMPLETED]: (msg?: string) =>
+                msg
+                  ? chalk.hex(colors.green)(msg)
+                  : chalk.hex(colors.green)(""),
+            },
+            icon: {
+              [ListrDefaultRendererLogLevels.COMPLETED]: chalk.hex(
+                colors.green,
+              )("✓"),
+            },
+          },
         },
-      },
-      {
-        title: "Authenticating translation service",
-        task: async (ctx: Ctx, task: ListrTaskWrapper<Ctx, any, any>) => {
-          await new Promise((res) => setTimeout(res, 250));
-          task.title = `Authenticated as ${chalk.green("<email>")}`;
+      );
+
+      const result = await setupTasks.run({
+        i18nConfig: {},
+        auth: {},
+      });
+
+      return result;
+    }
+
+    async function plan(i18nConfig: any) {
+      console.log(chalk.hex(colors.organge)("[Planning]"));
+
+      const planTasks = new Listr(
+        [
+          {
+            title: "Analyzing project structure",
+            task: async (ctx, task) => {
+              await new Promise((res) => setTimeout(res, 300));
+              const buckets = ["json", "mdx"];
+              const files = 24;
+              task.title = `Found ${chalk.hex(colors.yellow)(buckets.length.toString())} buckets (${chalk.dim(buckets.join(", "))})`;
+            },
+          },
+          {
+            title: "Scanning files",
+            task: async (ctx, task) => {
+              await new Promise((res) => setTimeout(res, 500));
+              const files = 24;
+              task.title = `Found ${chalk.hex(colors.yellow)(files.toString())} files to localize`;
+            },
+          },
+          {
+            title: "Identifying locales",
+            task: async (ctx, task) => {
+              await new Promise((res) => setTimeout(res, 400));
+              const sourceLocale = "en";
+              const targetLocales = ["es", "fr"];
+              task.title = `Using ${chalk.hex(colors.yellow)(sourceLocale)} as source, targeting ${chalk.hex(colors.yellow)(targetLocales.length.toString())} locales (${chalk.dim(targetLocales.join(", "))})`;
+            },
+          },
+          {
+            title: "Preparing translation tasks",
+            task: async (ctx, task) => {
+              await new Promise((res) => setTimeout(res, 350));
+              const translationTasks = 48; // 24 files * 2 target locales
+              task.title = `Prepared ${chalk.hex(colors.yellow)(translationTasks.toString())} translation tasks`;
+            },
+          },
+        ],
+        {
+          rendererOptions: {
+            color: {
+              [ListrDefaultRendererLogLevels.COMPLETED]: (msg?: string) =>
+                msg
+                  ? chalk.hex(colors.green)(msg)
+                  : chalk.hex(colors.green)(""),
+            },
+            icon: {
+              [ListrDefaultRendererLogLevels.COMPLETED]: chalk.hex(
+                colors.green,
+              )("✓"),
+            },
+          },
         },
-      },
-      {
-        title: "Loading localization buckets",
-        task: async (ctx: Ctx) => {
-          const start = Date.now();
-          ctx.buckets = await findBuckets();
-          const duration = Date.now() - start;
-          ctx.buckets.forEach((bucket) => {
-            // you can attach additional info to ctx if needed
-          });
-          // Provide some feedback after completion
-          console.log(
-            chalk.dim(
-              `  → Loaded ${ctx.buckets.length} localization buckets in ${duration}ms`,
-            ),
-          );
-        },
-      },
-      {
-        title: "Preparing translation tasks",
-        task: async (ctx: Ctx) => {
-          const processingTasks: PayloadProcessingTask[] = [];
+      );
 
-          await Promise.all(
-            ctx.buckets.map(async (bucket: any) => {
-              const patterns = await findBucketPatterns(bucket);
+      await planTasks.run();
 
-              await Promise.all(
-                patterns.map(async (pattern: any) => {
-                  const files = await findBucketFiles(pattern);
+      return {
+        tasks: [],
+      };
+    }
 
-                  await Promise.all(
-                    files.map(async (file: any) => {
-                      const targetLocales = getTargetLocales();
+    async function process(auth: any, tasks: any) {
+      console.log(chalk.hex(colors.organge)("[Localization]"));
 
-                      await Promise.all(
-                        targetLocales.map(async (targetLocale: string) => {
-                          const sourceLocale = getSourceLocale();
-                          const sourcePayload = {};
-                          const targetPayload = {};
-                          const processablePayload = {};
+      const errors: Error[] = [];
 
-                          processingTasks.push({
-                            bucketType: bucket.type,
-                            bucketPattern: pattern.pattern,
-                            filePath: file.path,
-                            sourceLocale,
-                            targetLocale,
-                            sourcePayload,
-                            targetPayload,
-                            processablePayload,
+      const processTasks = new Listr(
+        [
+          {
+            title: "Initializing translation engine",
+            task: async (ctx, task) => {
+              await new Promise((res) => setTimeout(res, 300));
+              task.title = `Translation engine ${chalk.hex(colors.green)("ready")}`;
+            },
+          },
+          {
+            title: "Processing translation tasks",
+            task: async (ctx, task) => {
+              // Create subtasks for each bucket type
+              const bucketTypes = ["json", "yaml", "xml"];
+              const targetLocales = ["es", "fr"];
+
+              return new Listr(
+                bucketTypes.map((bucketType) => ({
+                  title: `[${chalk.hex(colors.yellow)(bucketType)}]`,
+                  task: () => {
+                    // Create subtasks for each target locale
+                    return task.newListr(
+                      targetLocales.map((locale) => ({
+                        title: `[${chalk.hex(colors.yellow)(`en → ${locale}`)}]`,
+                        task: (ctx, t) => {
+                          // Generate pseudo file paths to simulate workload
+                          const filePaths = Array.from(
+                            { length: 10 },
+                            (_, i) => `file_${i}.${bucketType}`,
+                          );
+                          const limit1 = pLimit(1);
+                          return limit1(async () => {
+                            for (const filePath of filePaths) {
+                              t.title = `[${chalk.hex(colors.yellow)("en")} → ${chalk.hex(colors.yellow)(locale)}] ${chalk.dim(filePath)}`;
+                              await new Promise((res) => setTimeout(res, 1000));
+                              // Randomly throw an error with 10% chance
+                              if (Math.random() < 0.1) {
+                                const error = new Error(
+                                  `Failed to translate ${filePath} to ${locale}`,
+                                );
+                                errors.push(error);
+                                throw error;
+                              }
+                            }
                           });
-                        }),
-                      );
-                    }),
-                  );
-                }),
+                        },
+                      })),
+                      {
+                        // Process locales concurrently
+                        concurrent: true,
+                        exitOnError: false,
+                      },
+                    );
+                  },
+                })),
+                {
+                  // Run bucket-type tasks concurrently, capped at 10 in parallel
+                  concurrent: 10,
+                  exitOnError: false,
+                },
               );
-            }),
-          );
-
-          ctx.processingTasks = processingTasks;
-          console.log(
-            chalk.dim(
-              `  → Created ${processingTasks.length} translation tasks`,
-            ),
-          );
+            },
+          },
+          {
+            title: "Finalizing translations",
+            task: async (ctx, task) => {
+              await new Promise((res) => setTimeout(res, 250));
+              const totalTranslated = 1248; // Example number
+              task.title = `Finalized ${chalk.hex(colors.yellow)(totalTranslated.toString())} translations`;
+            },
+          },
+        ],
+        {
+          rendererOptions: {
+            color: {
+              [ListrDefaultRendererLogLevels.COMPLETED]: (msg?: string) =>
+                msg
+                  ? chalk.hex(colors.green)(msg)
+                  : chalk.hex(colors.green)(""),
+            },
+            icon: {
+              [ListrDefaultRendererLogLevels.COMPLETED]: chalk.hex(
+                colors.green,
+              )("✓"),
+            },
+          },
         },
-      },
-      {
-        title: "Translating content (0/0)",
-        task: async (ctx: Ctx, task: ListrTaskWrapper<Ctx, any, any>) => {
-          const { processingTasks } = ctx;
+      );
 
-          const total = processingTasks.length;
-          let completed = 0;
+      await processTasks.run();
 
-          const active = new Map<string, number>();
+      // Print errors after the run
+      if (errors.length > 0) {
+        console.log(" ");
+        console.log(chalk.hex(colors.red)("[Errors]"));
+        errors.forEach((error, index) => {
+          console.log(`${chalk.hex(colors.red)(`✗`)} ${error.message}`);
+        });
+      }
 
-          const refresh = () => {
-            // Update title with progress count
-            task.title = `Translating content (${completed}/${total})`;
+      return {
+        results: [],
+      };
+    }
 
-            // Render active payload list in task output with progress
-            if (active.size > 0) {
-              const barWidth = 20;
-              task.output = [...active.entries()]
-                .map(([lbl, prog]) => {
-                  const filled = Math.round((prog / 100) * barWidth);
-                  const bar =
-                    chalk.green("█".repeat(filled)) +
-                    chalk.dim("░".repeat(barWidth - filled));
-
-                  const pctStr = `${Math.round(prog)
-                    .toString()
-                    .padStart(3, " ")}%`;
-
-                  return `${bar} ${chalk.yellow(pctStr)} ${chalk.gray(lbl)}`;
-                })
-                .join("\n");
-            } else {
-              task.output = chalk.dim("No active translations (waiting)...");
-            }
-          };
-
-          const concurrencyLevel = Number(args.concurrency);
-          const limiter = pLimit(
-            concurrencyLevel === 0 ? Infinity : concurrencyLevel,
-          );
-
-          await Promise.all(
-            processingTasks.map((p) =>
-              limiter(async () => {
-                const label = `(${p.sourceLocale} → ${p.targetLocale}) ${p.filePath}`;
-
-                active.set(label, 0);
-                refresh();
-
-                await processPayload(
-                  {
-                    content: p.filePath,
-                    sourceLocale: p.sourceLocale,
-                    targetLocale: p.targetLocale,
-                  },
-                  (progressPercentage: number) => {
-                    active.set(label, progressPercentage);
-                    refresh();
-                  },
-                );
-
-                active.delete(label);
-                completed += 1;
-                refresh();
-              }),
-            ),
-          );
-
-          // Final state
-          task.output = chalk.green(`Localized ${total} files successfully`);
-        },
-      },
-    ]);
-
-    await tasksRunner.run();
+    async function summarize(results: any) {
+      return {
+        summary: [],
+      };
+    }
   });

@@ -8,7 +8,7 @@ export default function Hero() {
         for web & mobile localization.
       </Text>
       <Text> </Text>
-      <Text color="#0090ff">⭐ GitHub Repo: lingo.dev/go/gh</Text>
+      <Text color="#0090ff">⭐ GitHub Repo: https://lingo.dev/go/gh</Text>
       <Text color="#0090ff">💬 24/7 Support: hi@lingo.dev</Text>
     </Box>
   );
