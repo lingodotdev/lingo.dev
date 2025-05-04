@@ -14,6 +14,7 @@ import cleanupCmd from "./cmd/cleanup";
 import mcpCmd from "./cmd/mcp";
 import ciCmd from "./cmd/ci";
 import statusCmd from "./cmd/status";
+import mayTheFourthCmd from "./cmd/may-the-fourth";
 
 import packageJson from "../../package.json";
 
@@ -48,6 +49,7 @@ Star the the repo :) https://github.com/LingoDotDev/lingo.dev
   .addCommand(mcpCmd)
   .addCommand(ciCmd)
   .addCommand(statusCmd)
+  .addCommand(mayTheFourthCmd, { hidden: true })
   .exitOverride((err) => {
     // Exit with code 0 when help or version is displayed
     if (err.code === "commander.helpDisplayed" || err.code === "commander.version" || err.code === "commander.help") {
