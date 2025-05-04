@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.90.1
+
+### Patch Changes
+
+- [#739](https://github.com/lingodotdev/lingo.dev/pull/739) [`bee8861`](https://github.com/lingodotdev/lingo.dev/commit/bee8861f4725344f8157f264d3c5a80870ec9ba2) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - Add hidden "may-the-fourth" command for Star Wars Day easter egg
+
 ## 0.90.0
 
 ### Minor Changes
