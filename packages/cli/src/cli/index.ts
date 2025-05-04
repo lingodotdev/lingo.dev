@@ -18,6 +18,7 @@ import mayTheFourthCmd from "./cmd/may-the-fourth";
 
 import packageJson from "../../package.json";
 import run from "./cmd/run";
+import run2 from "./cmd/run2";
 
 export default new InteractiveCommand()
   .name("lingo.dev")
@@ -52,6 +53,7 @@ Star the the repo :) https://github.com/LingoDotDev/lingo.dev
   .addCommand(statusCmd)
   .addCommand(mayTheFourthCmd, { hidden: true })
   .addCommand(run, { hidden: true }) // WIP
+  .addCommand(run2)
   .exitOverride((err) => {
     // Exit with code 0 when help or version is displayed
     if (
