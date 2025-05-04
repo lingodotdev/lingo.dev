@@ -2,7 +2,7 @@ import { Command } from "interactive-commander";
 import chalk from "chalk";
 import figlet from "figlet";
 import { vice } from "gradient-string";
-
+import Table from "cli-table3";
 // Local modules
 import { colors } from "./constants";
 import { setup } from "./setup";
@@ -75,11 +75,22 @@ export async function renderHero() {
   console.log(
     `⚡️ ${chalk.hex(colors.green)("Lingo.dev")} - open-source, AI-powered i18n CLI for web & mobile localization.`,
   );
-  console.log(" ");
+  console.log("");
+
+  const label1 = "⭐ GitHub Repo:";
+  const label2 = "📚 Docs:";
+  const label3 = "💬 24/7 Support:";
+  const maxLabelWidth = 17; // Approximate visual width accounting for emoji
+
   console.log(
-    chalk.hex(colors.blue)("⭐ GitHub Repo: https://lingo.dev/go/gh"),
+    `${chalk.hex(colors.blue)(label1.padEnd(maxLabelWidth))} ${chalk.hex(colors.blue)("https://lingo.dev/go/gh")}`,
   );
-  console.log(chalk.hex(colors.blue)("💬 24/7 Support: hi@lingo.dev"));
+  console.log(
+    `${chalk.hex(colors.blue)(label2.padEnd(maxLabelWidth + 1))} ${chalk.hex(colors.blue)("https://lingo.dev/go/docs")}`,
+  ); // Docs emoji seems narrower
+  console.log(
+    `${chalk.hex(colors.blue)(label3.padEnd(maxLabelWidth + 1))} ${chalk.hex(colors.blue)("hi@lingo.dev")}`,
+  );
 }
 
 export async function renderSummary(_processState: ProcessState) {
