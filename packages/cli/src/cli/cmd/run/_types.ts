@@ -1,4 +1,5 @@
 import { I18nConfig } from "@lingo.dev/_spec";
+import { LocalizerFn } from "../../processor/_base";
 
 export type SetupState = {
   i18nConfig: I18nConfig;
@@ -6,6 +7,10 @@ export type SetupState = {
     id: string;
     email: string;
   } | null;
+  localizer: {
+    type: string;
+    processor: LocalizerFn;
+  };
 };
 
 export type LocalizationTask = {

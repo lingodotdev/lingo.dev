@@ -2,7 +2,7 @@ import chalk from "chalk";
 import { Listr, ListrDefaultRendererLogLevels } from "listr2";
 import pLimit from "p-limit";
 
-import { colors } from "./constants";
+import { colors } from "../../constants";
 
 export interface ProcessState {
   results: any[];

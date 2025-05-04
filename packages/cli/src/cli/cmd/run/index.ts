@@ -4,7 +4,7 @@ import figlet from "figlet";
 import { vice } from "gradient-string";
 import Table from "cli-table3";
 // Local modules
-import { colors } from "./constants";
+import { colors } from "../../constants";
 import { setup } from "./setup";
 import { plan, PlanState } from "./plan";
 import { process as runProcess, ProcessState } from "./process";
@@ -42,7 +42,6 @@ export default new Command()
       await renderSummary(processState);
       await renderSpacer();
     } catch (error: any) {
-      console.error(`${chalk.red("✗")} ${error.message}`);
       process.exit(1);
     }
   });

@@ -1,12 +1,13 @@
 import chalk from "chalk";
 import { Listr, ListrDefaultRendererLogLevels } from "listr2";
 
-import { colors } from "./constants";
+import { colors } from "../../constants";
 import { SetupState } from "./_types";
 import { getSettings } from "../../utils/settings";
 import { getConfig } from "../../utils/config";
 import { CLIError } from "../../utils/errors";
 import { validateAuth } from "../i18n";
+import createProcessor from "../../processor";
 
 export async function setup(): Promise<SetupState> {
   console.log(chalk.hex(colors.orange)("[Setup]"));
@@ -29,43 +30,43 @@ export async function setup(): Promise<SetupState> {
         },
       },
       {
-        title: "Authenticating with Lingo.dev / Checking Provider",
+        title: "Selecting translation provider",
         task: async (ctx, task) => {
-          let providerName: string;
-          if (ctx.i18nConfig.provider) {
-            providerName = ctx.i18nConfig.provider.id;
+          const provider = ctx.i18nConfig.provider;
+          const providerName = provider?.id ?? "lingo.dev";
+          task.output = `Initializing ${chalk.hex(colors.yellow)(providerName)} processor...`;
+
+          const processor = createProcessor(provider, {
+            apiKey: "",
+            apiUrl: "",
+          });
+          ctx.localizer = {
+            type: providerName,
+            processor: processor,
+          };
+
+          if (providerName === "lingo.dev") {
+            task.title = `Using ${chalk.hex(colors.green)("Lingo.dev")} instead of raw LLM API`;
           } else {
-            providerName = "lingo.dev";
-          }
-
-          if (providerName !== "lingo.dev") {
-            task.title = `Using provider: ${chalk.hex(colors.yellow)(providerName)}`;
-            ctx.auth = null;
-            return;
-          }
-
-          task.title = "Authenticating with Lingo.dev...";
-          const settings = getSettings(undefined);
-          try {
-            const auth = await validateAuth(settings);
-            ctx.auth = auth;
-            task.title = `Authenticated as ${chalk.hex(colors.yellow)(auth.email)}`;
-          } catch (error: any) {
-            if (error instanceof CLIError) {
-              throw error;
-            }
-            throw new CLIError({
-              message: `Authentication failed: ${error.message}. Please run 'lingo.dev auth --login'.`,
-              docUrl: "authError",
-            });
+            task.title = `Using raw ${chalk.hex(colors.yellow)(providerName)} LLM API instead of Lingo.dev`;
           }
         },
       },
       {
-        title: "Choosing localization provider",
+        title: "Authenticating",
         task: async (ctx, task) => {
-          await new Promise((res) => setTimeout(res, 750));
-          task.title = `Using ${chalk.hex(colors.green)("Lingo.dev")} instead of raw LLM API`;
+          if (ctx.localizer.type === "lingo.dev") {
+            task.title = "Authenticating with Lingo.dev...";
+            const settings = getSettings(undefined);
+            const auth = await validateAuth(settings);
+            ctx.auth = auth;
+            task.title = `Authenticated with Lingo.dev as ${chalk.hex(
+              colors.yellow,
+            )(auth.email)}`;
+          } else {
+            ctx.auth = null;
+            task.title = `Lingo.dev authentication not required for ${chalk.hex(colors.yellow)(ctx.localizer.type)} processor`;
+          }
         },
       },
     ],

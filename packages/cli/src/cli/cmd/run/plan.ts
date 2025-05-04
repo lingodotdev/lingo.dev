@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import { Listr, ListrDefaultRendererLogLevels } from "listr2";
 
-import { colors } from "./constants";
+import { colors } from "../../constants";
 
 export interface PlanState {
   tasks: any[];
