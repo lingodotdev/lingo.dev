@@ -1,22 +1,8 @@
 import { Command } from "interactive-commander";
 import chalk from "chalk";
 import figlet from "figlet";
-import {
-  Listr,
-  ListrTaskWrapper,
-  ListrDefaultRendererLogLevels,
-  LoggerFormat,
-} from "listr2";
+import { Listr, ListrDefaultRendererLogLevels } from "listr2";
 import pLimit from "p-limit";
-import { z } from "zod";
-import {
-  processPayload,
-  findBuckets,
-  findBucketPatterns,
-  findBucketFiles,
-  getSourceLocale,
-  getTargetLocales,
-} from "./_mocks";
 import { vice } from "gradient-string";
 
 const colors = {
@@ -26,17 +12,6 @@ const colors = {
   yellow: "#ffcc00",
   grey: "#808080",
   red: "#ff0000",
-};
-
-type PayloadProcessingTask = {
-  bucketType: string;
-  bucketPattern: string;
-  filePath: string;
-  sourceLocale: string;
-  targetLocale: string;
-  sourcePayload: any;
-  targetPayload: any;
-  processablePayload: any;
 };
 
 export default new Command()
@@ -237,52 +212,65 @@ export default new Command()
               // Create subtasks for each bucket type
               const bucketTypes = ["json", "yaml", "xml"];
               const targetLocales = ["es", "fr"];
+              const allTasks = Array.from({ length: 100 }, (_, i) => ({
+                id: i,
+                bucketType: bucketTypes[i % bucketTypes.length],
+                sourceLocale: "en",
+                targetLocale: targetLocales[i % targetLocales.length],
+                filePath: `file_${i}.${bucketTypes[i % bucketTypes.length]}`,
+              }));
+              const concurrency = parseInt(args.concurrency) || 10;
+              const limit = pLimit(concurrency); // Use p-limit for concurrency control if needed elsewhere
+              let completedTasks = 0;
+              const totalTasks = allTasks.length;
 
-              return new Listr(
-                bucketTypes.map((bucketType) => ({
-                  title: `[${chalk.hex(colors.yellow)(bucketType)}]`,
-                  task: () => {
-                    // Create subtasks for each target locale
-                    return task.newListr(
-                      targetLocales.map((locale) => ({
-                        title: `[${chalk.hex(colors.yellow)(`en → ${locale}`)}]`,
-                        task: (ctx, t) => {
-                          // Generate pseudo file paths to simulate workload
-                          const filePaths = Array.from(
-                            { length: 10 },
-                            (_, i) => `file_${i}.${bucketType}`,
-                          );
-                          const limit1 = pLimit(1);
-                          return limit1(async () => {
-                            for (const filePath of filePaths) {
-                              t.title = `[${chalk.hex(colors.yellow)("en")} → ${chalk.hex(colors.yellow)(locale)}] ${chalk.dim(filePath)}`;
-                              await new Promise((res) => setTimeout(res, 1000));
-                              // Randomly throw an error with 10% chance
-                              if (Math.random() < 0.1) {
-                                const error = new Error(
-                                  `Failed to translate ${filePath} to ${locale}`,
-                                );
-                                errors.push(error);
-                                throw error;
-                              }
-                            }
-                          });
-                        },
-                      })),
-                      {
-                        // Process locales concurrently
-                        concurrent: true,
-                        exitOnError: false,
-                      },
+              // Create 10 threads (subtasks)
+              const threads = Array.from({ length: 10 }, (_, threadIndex) => ({
+                title: "Initializing...", // Initial title
+                task: async (subCtx: any, subTask: any) => {
+                  const tasksForThread = allTasks.filter(
+                    (_, taskIndex) => taskIndex % 10 === threadIndex,
+                  );
+                  let threadCompleted = 0;
+
+                  for (const taskToProcess of tasksForThread) {
+                    // Simulate processing
+                    await new Promise((res) =>
+                      setTimeout(res, 500 + Math.random() * 1000),
                     );
-                  },
-                })),
-                {
-                  // Run bucket-type tasks concurrently, capped at 10 in parallel
-                  concurrent: 10,
-                  exitOnError: false,
+                    completedTasks++;
+                    threadCompleted++;
+                    // Update main task title
+                    task.title = `Processing translation tasks (${completedTasks}/${totalTasks})`;
+                    // Update subtask title with current task info
+                    subTask.title = `Processing: ${chalk.dim(taskToProcess.filePath)} (${chalk.yellow(taskToProcess.sourceLocale)} -> ${chalk.yellow(taskToProcess.targetLocale)})`;
+                  }
+                  subTask.title = "Done"; // Final title
                 },
-              );
+              }));
+
+              // Run the subtasks concurrently
+              return task.newListr(threads, {
+                concurrent: true,
+                exitOnError: false,
+                rendererOptions: {
+                  collapseSubtasks: true,
+                  collapseErrors: false,
+                  color: {
+                    [ListrDefaultRendererLogLevels.COMPLETED]: (
+                      msg?: string,
+                    ) =>
+                      msg
+                        ? chalk.hex(colors.green)(msg)
+                        : chalk.hex(colors.green)(""),
+                  },
+                  icon: {
+                    [ListrDefaultRendererLogLevels.COMPLETED]: chalk.hex(
+                      colors.green,
+                    )("✓"),
+                  },
+                },
+              });
             },
           },
           {
@@ -296,6 +284,7 @@ export default new Command()
         ],
         {
           rendererOptions: {
+            collapseSubtasks: true,
             color: {
               [ListrDefaultRendererLogLevels.COMPLETED]: (msg?: string) =>
                 msg
