@@ -4,6 +4,9 @@ import { Listr, ListrDefaultRendererLogLevels } from "listr2";
 import { colors } from "./constants";
 import { I18nConfig } from "@lingo.dev/_spec";
 import { SetupState } from "./_types";
+import { getSettings } from "../../utils/settings";
+import { getConfig } from "../../utils/config";
+import { CLIError } from "../../utils/errors";
 
 export async function setup(): Promise<SetupState> {
   console.log(chalk.hex(colors.orange)("[Setup]"));
@@ -16,8 +19,15 @@ export async function setup(): Promise<SetupState> {
       {
         title: "Loading i18n configuration",
         task: async (ctx, task) => {
-          await new Promise((res) => setTimeout(res, 500));
-          // i18nConfig = await loadI18nConfig();
+          const i18nConfig = getConfig();
+          if (!i18nConfig) {
+            throw new CLIError({
+              message:
+                "i18n.json not found in the current directory. Please run `lingo.dev init` to initialize the project.",
+              docUrl: "i18nNotFound",
+            });
+          }
+          ctx.i18nConfig = i18nConfig;
           task.title = `Loaded i18n configuration`;
         },
       },
@@ -27,7 +37,7 @@ export async function setup(): Promise<SetupState> {
           await new Promise((res) => setTimeout(res, 750));
           const email = "user@example.com";
           authConfig = { email, id: "123" }; // TODO
-          task.title = `Authenticated as ${chalk.hex(colors.yellow)(email)}`;
+          task.title = `Authenticated as ${chalk.hex(colors.yellow)(email)}`; // or tell it's skipped
         },
       },
       {
@@ -39,6 +49,7 @@ export async function setup(): Promise<SetupState> {
       },
     ],
     {
+      exitOnError: true,
       rendererOptions: {
         color: {
           [ListrDefaultRendererLogLevels.COMPLETED]: (msg?: string) =>

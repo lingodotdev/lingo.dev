@@ -4,6 +4,7 @@ dotenv.config();
 import { InteractiveCommand } from "interactive-commander";
 import figlet from "figlet";
 import { vice } from "gradient-string";
+import chalk from "chalk";
 
 import authCmd from "./cmd/auth";
 import initCmd from "./cmd/init";
@@ -51,7 +52,7 @@ Star the the repo :) https://github.com/LingoDotDev/lingo.dev
   .addCommand(ciCmd)
   .addCommand(statusCmd)
   .addCommand(mayTheFourthCmd, { hidden: true })
-  .addCommand(run, { hidden: true }) // WIP
+  .addCommand(run, { hidden: true })
   .exitOverride((err) => {
     // Exit with code 0 when help or version is displayed
     if (
@@ -61,5 +62,5 @@ Star the the repo :) https://github.com/LingoDotDev/lingo.dev
     ) {
       process.exit(0);
     }
-    throw err;
+    process.exit(1);
   });

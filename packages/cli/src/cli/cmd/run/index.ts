@@ -19,27 +19,32 @@ export default new Command()
     "0",
   )
   .action(async (args) => {
-    await renderClear();
-    await renderSpacer();
-    await renderBanner();
-    await renderHero();
-    await renderSpacer();
+    try {
+      await renderClear();
+      await renderSpacer();
+      await renderBanner();
+      await renderHero();
+      await renderSpacer();
 
-    const setupState = await setup();
-    await renderSpacer();
+      const setupState = await setup();
+      await renderSpacer();
 
-    const planState: PlanState = await plan(setupState.i18nConfig);
-    await renderSpacer();
+      const planState: PlanState = await plan(setupState.i18nConfig);
+      await renderSpacer();
 
-    const concurrency = parseInt(args.concurrency, 10) || 0;
-    const processState: ProcessState = await runProcess(
-      setupState.auth,
-      planState.tasks,
-      concurrency,
-    );
-    await renderSpacer();
-    await renderSummary(processState);
-    await renderSpacer();
+      const concurrency = parseInt(args.concurrency, 10) || 0;
+      const processState: ProcessState = await runProcess(
+        setupState.auth,
+        planState.tasks,
+        concurrency,
+      );
+      await renderSpacer();
+      await renderSummary(processState);
+      await renderSpacer();
+    } catch (error: any) {
+      console.error(`${chalk.red("✗")} ${error.message}`);
+      process.exit(1);
+    }
   });
 
 // ---------------------------------------------------------------------------
