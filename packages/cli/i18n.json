@@ -5,10 +5,5 @@
     "targets": ["de"]
   },
   "buckets": {},
-  "$schema": "https://lingo.dev/schema/i18n.json",
-  "provider": {
-    "id": "openai",
-    "model": "gpt-4o-mini",
-    "prompt": ""
-  }
+  "$schema": "https://lingo.dev/schema/i18n.json"
 }

@@ -46,27 +46,56 @@ export async function setup(): Promise<SetupState> {
           };
 
           if (providerName === "lingo.dev") {
-            task.title = `Using ${chalk.hex(colors.green)("Lingo.dev")} instead of raw LLM API`;
+            task.title = `Using ${chalk.hex(colors.green)("Lingo.dev")} provider`;
           } else {
-            task.title = `Using raw ${chalk.hex(colors.yellow)(providerName)} LLM API instead of Lingo.dev`;
+            task.title = `Using raw ${chalk.hex(colors.yellow)(`${providerName} (${provider?.model})`)} instead of ${chalk.hex(colors.green)("Lingo.dev")} Engine`;
           }
-        },
-      },
-      {
-        title: "Authenticating",
-        task: async (ctx, task) => {
-          if (ctx.localizer.type === "lingo.dev") {
-            task.title = "Authenticating with Lingo.dev...";
-            const settings = getSettings(undefined);
-            const auth = await validateAuth(settings);
-            ctx.auth = auth;
-            task.title = `Authenticated with Lingo.dev as ${chalk.hex(
-              colors.yellow,
-            )(auth.email)}`;
-          } else {
-            ctx.auth = null;
-            task.title = `Lingo.dev authentication not required for ${chalk.hex(colors.yellow)(ctx.localizer.type)} processor`;
+
+          const isLingoDev = providerName === "lingo.dev";
+
+          if (!isLingoDev) {
+            const skippedFeatureTitles = [
+              "Lingo.dev authentication skipped",
+              "Skipping brand voice",
+              "Skipping glossary",
+              "Skipping translation memory",
+              "Skipping quality assurance",
+            ];
+
+            return task.newListr(
+              skippedFeatureTitles.map((title) => ({
+                title: chalk.dim(title),
+                task: () => {},
+                skip: true,
+              })),
+              {
+                concurrent: true,
+                rendererOptions: { collapseSubtasks: false },
+              },
+            );
           }
+
+          // Lingo.dev provider: perform authentication and show enabled features
+          task.output = "Authenticating with Lingo.dev...";
+          const settings = getSettings(undefined);
+          const auth = await validateAuth(settings);
+          ctx.auth = auth;
+
+          // Update the parent task title to reflect successful authentication
+          task.title = `Authenticated as ${chalk.hex(colors.yellow)(auth.email)}`;
+
+          return task.newListr(
+            [
+              "Brand voice enabled",
+              "Translation memory connected",
+              "Glossary enabled",
+              "Quality assurance enabled",
+            ].map((item) => ({ title: item, task: () => {} })),
+            {
+              concurrent: true,
+              rendererOptions: { collapseSubtasks: false },
+            },
+          );
         },
       },
     ],
