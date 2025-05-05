@@ -176,4 +176,4 @@ Lingo.dev está impulsado por la comunidad, ¡así que damos la bienvenida a tod
 - [Hindi](/readme/hi.md)
 - [Bengalí](/readme/bn.md)
 
-¿No ves tu idioma? Simplemente añade un nuevo código de idioma al archivo [`i18n.json`](./i18n.json) y abre un PR.
+¿No ves tu idioma? Simplemente añade un nuevo código de idioma al archivo [`i18n.json`](./i18n.json) y abre un PR!

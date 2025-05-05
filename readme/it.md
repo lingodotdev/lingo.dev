@@ -176,4 +176,4 @@ Vuoi contribuire? Crea una pull request!
 - [Hindi](/readme/hi.md)
 - [Bengali](/readme/bn.md)
 
-Non vedi la tua lingua? Aggiungi semplicemente un nuovo codice lingua al file [`i18n.json`](./i18n.json) e apri una PR.
+Non vedi la tua lingua? Aggiungi semplicemente un nuovo codice lingua al file [`i18n.json`](./i18n.json) e apri una PR!
