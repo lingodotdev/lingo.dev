@@ -575,4 +575,33 @@ Line 2
     const pushed = await androidLoader.push("en", result);
     expect(pushed).toContain('"J\\\'accepte les terms"');
   });
+
+  it("should correctly handle strings with apostrophes and avoid double escaping", async () => {
+    const input = `
+      <resources>
+        <string name="welcome_message">Please don't hesitate to contact us</string>
+        <item quantity="one">- %d user\'s item</item>
+        <item quantity="other">- %d user\'s items</item>
+      </resources>
+    `.trim();
+
+    const androidLoader = createAndroidLoader().setDefaultLocale("en");
+    const result = await androidLoader.pull("en", input);
+
+    // During pull, escaped apostrophes should be properly handled
+    expect(result.welcome_message).toBe("Please don't hesitate to contact us");
+
+    // When pushing back, apostrophes should be escaped but not double-escaped
+    const pushed = await androidLoader.push("en", {
+      welcome_message: "Please don't hesitate to contact us",
+      "item_count": {
+        one: "- %d user's item",
+        other: "- %d user's items"
+      }
+    });
+
+    expect(pushed).toContain("Please don\\'t hesitate to contact us");
+    expect(pushed).toContain("- %d user\\'s item");
+    expect(pushed).not.toContain("- %d user\\\\'s item");
+  });
 });

@@ -161,8 +161,7 @@ export default function createAndroidLoader(): ILoader<
         const processHtmlContent = (str: string): { _: string } => {
           if (typeof str !== "string") return { _: String(str) };
 
-          // Always escape single quotes, regardless of whether the string is double-quoted
-          const processedStr = str.replace(/'/g, "\\'");
+          const processedStr = str.replace(/(?<!\\)'/g, "\\'");
 
           return { _: processedStr };
         };
