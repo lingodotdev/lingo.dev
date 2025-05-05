@@ -1,5 +1,13 @@
 # lingo.dev
 
+## 0.90.3
+
+### Patch Changes
+
+- [`fa87f8b`](https://github.com/lingodotdev/lingo.dev/commit/fa87f8b959305b080c964634cb94d81fea1c8caf) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - fix android single quotes + add tests
+
+- [`3e6c0d6`](https://github.com/lingodotdev/lingo.dev/commit/3e6c0d68b440604100936130bea5e47098418040) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - fix boolean flags in ci cmd
+
 ## 0.90.2
 
 ### Patch Changes
