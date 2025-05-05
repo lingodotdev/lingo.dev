@@ -6,9 +6,11 @@ import { IIntegrationFlow } from "./flows/_base";
 import { PullRequestFlow } from "./flows/pull-request";
 import { InBranchFlow } from "./flows/in-branch";
 import { getPlatformKit } from "./platforms";
+import inquirer from "inquirer";
 
 interface CIOptions {
   apiKey?: string;
+  debug?: boolean;
   pullRequest?: boolean;
   commitMessage?: string;
   pullRequestTitle?: string;
@@ -21,12 +23,31 @@ export default new Command()
   .description("Run Lingo.dev CI/CD action")
   .helpOption("-h, --help", "Show help")
   .option("--api-key <key>", "API key")
-  .option("--pull-request", "Create a pull request with the changes", false)
+  .option("--pull-request [boolean]", "Create a pull request with the changes")
   .option("--commit-message <message>", "Commit message")
   .option("--pull-request-title <title>", "Pull request title")
   .option("--working-directory <dir>", "Working directory")
-  .option("--process-own-commits", "Process commits made by this action", false)
+  .option(
+    "--process-own-commits [boolean]",
+    "Process commits made by this action",
+  )
+  .option(
+    "--debug",
+    "Debug mode. Wait for user input before continuing.",
+    false,
+  )
   .action(async (options: CIOptions) => {
+    if (options.debug) {
+      // wait for user input, use inquirer
+      const { debug } = await inquirer.prompt([
+        {
+          type: "confirm",
+          name: "debug",
+          message: "Debug mode. Wait for user input before continuing.",
+        },
+      ]);
+    }
+
     const settings = getSettings(options.apiKey);
 
     if (!settings.auth.apiKey) {
