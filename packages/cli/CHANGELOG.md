@@ -1,5 +1,17 @@
 # lingo.dev
 
+## 0.91.0
+
+### Minor Changes
+
+- [#757](https://github.com/lingodotdev/lingo.dev/pull/757) [`5170449`](https://github.com/lingodotdev/lingo.dev/commit/517044905dfc682d6a5fa95b0605b8715e2b72c7) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - Add TypeScript loader for .ts files that extracts string literals from default exports
+
+### Patch Changes
+
+- Updated dependencies [[`5170449`](https://github.com/lingodotdev/lingo.dev/commit/517044905dfc682d6a5fa95b0605b8715e2b72c7)]:
+  - @lingo.dev/_spec@0.32.0
+  - @lingo.dev/_sdk@0.7.39
+
 ## 0.90.4
 
 ### Patch Changes
