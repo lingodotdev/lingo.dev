@@ -2,11 +2,14 @@ import { parse } from "@babel/parser";
 import traverse, { NodePath } from "@babel/traverse";
 import * as t from "@babel/types";
 import generate from "@babel/generator";
+import { flatten, unflatten } from "flat";
+import _ from "lodash";
 import { ILoader } from "./_types";
 import { createLoader } from "./_utils";
 
 /**
  * Creates a TypeScript loader that extracts string literals from default exports
+ * including nested objects and arrays
  */
 export default function createTypescriptLoader(): ILoader<string, Record<string, any>> {
   return createLoader({
@@ -17,7 +20,8 @@ export default function createTypescriptLoader(): ILoader<string, Record<string,
 
       try {
         const ast = parseTypeScript(input);
-        return extractStringsFromDefaultExport(ast);
+        const extractedStrings = extractStringsFromDefaultExport(ast);
+        return flattenExtractedStrings(extractedStrings);
       } catch (error) {
         console.error("Error parsing TypeScript file:", error);
         return {};
@@ -32,7 +36,8 @@ export default function createTypescriptLoader(): ILoader<string, Record<string,
       
       try {
         const ast = parseTypeScript(input);
-        const modified = updateStringsInDefaultExport(ast, data);
+        const nestedData = unflattenStringData(data);
+        const modified = updateStringsInDefaultExport(ast, nestedData);
 
         if (!modified) {
           return input;
@@ -59,17 +64,44 @@ function parseTypeScript(input: string) {
 }
 
 /**
+ * Flatten nested object structure into dot-notation paths
+ * and filter out non-string values
+ */
+/**
+ * Flatten nested object structure into dot-notation paths
+ * and filter out non-string values
+ */
+function flattenExtractedStrings(obj: Record<string, any>): Record<string, string> {
+  const flattened = flatten(obj, { delimiter: "/" }) as Record<string, any>;
+  
+  // Filter out non-string values
+  return Object.entries(flattened).reduce((acc, [key, value]) => {
+    if (typeof value === 'string') {
+      acc[key] = value;
+    }
+    return acc;
+  }, {} as Record<string, string>);
+}
+
+/**
+ * Unflatten dot-notation paths back into nested object structure
+ */
+function unflattenStringData(data: Record<string, string>): Record<string, any> {
+  return unflatten(data, { delimiter: "/" });
+}
+
+/**
  * Extract string literals from a default export in TypeScript
  */
-function extractStringsFromDefaultExport(ast: t.File): Record<string, string> {
-  const result: Record<string, string> = {};
+function extractStringsFromDefaultExport(ast: t.File): Record<string, any> {
+  const result: Record<string, any> = {};
 
   traverse(ast, {
     ExportDefaultDeclaration(path: NodePath<t.ExportDefaultDeclaration>) {
       if (t.isObjectExpression(path.node.declaration)) {
-        extractStringsFromObjectExpression(path.node.declaration, result);
+        extractStringsFromObjectExpression(path.node.declaration, result, "");
       } else if (t.isIdentifier(path.node.declaration)) {
-        extractStringsFromExportedIdentifier(path, result);
+        extractStringsFromExportedIdentifier(path, result, "");
       }
     }
   });
@@ -78,19 +110,46 @@ function extractStringsFromDefaultExport(ast: t.File): Record<string, string> {
 }
 
 /**
- * Extract string literals from an object expression
+ * Extract string literals from an object expression with path tracking for nesting
  */
 function extractStringsFromObjectExpression(
   objectExpression: t.ObjectExpression, 
-  result: Record<string, string>
+  result: Record<string, any>,
+  path: string
 ): void {
   objectExpression.properties.forEach((prop) => {
     if (t.isObjectProperty(prop)) {
       const key = getPropertyKey(prop);
+      const currentPath = path ? `${path}/${key}` : key;
       
       if (t.isStringLiteral(prop.value)) {
-        result[key] = prop.value.value;
+        _.set(result, currentPath, prop.value.value);
+      } else if (t.isObjectExpression(prop.value)) {
+        extractStringsFromObjectExpression(prop.value, result, currentPath);
+      } else if (t.isArrayExpression(prop.value)) {
+        extractStringsFromArrayExpression(prop.value, result, currentPath);
       }
+    }
+  });
+}
+
+/**
+ * Extract string literals from an array expression
+ */
+function extractStringsFromArrayExpression(
+  arrayExpression: t.ArrayExpression,
+  result: Record<string, any>,
+  path: string
+): void {
+  arrayExpression.elements.forEach((element, index) => {
+    const currentPath = `${path}/${index}`;
+    
+    if (t.isStringLiteral(element)) {
+      _.set(result, currentPath, element.value);
+    } else if (t.isObjectExpression(element)) {
+      extractStringsFromObjectExpression(element, result, currentPath);
+    } else if (t.isArrayExpression(element)) {
+      extractStringsFromArrayExpression(element, result, currentPath);
     }
   });
 }
@@ -100,7 +159,8 @@ function extractStringsFromObjectExpression(
  */
 function extractStringsFromExportedIdentifier(
   path: NodePath<t.ExportDefaultDeclaration>,
-  result: Record<string, string>
+  result: Record<string, any>,
+  basePath: string
 ): void {
   const exportName = (path.node.declaration as t.Identifier).name;
   const binding = path.scope.bindings[exportName];
@@ -110,10 +170,13 @@ function extractStringsFromExportedIdentifier(
     
     if (
       t.isVariableDeclarator(bindingPath.node) && 
-      bindingPath.node.init && 
-      t.isObjectExpression(bindingPath.node.init)
+      bindingPath.node.init
     ) {
-      extractStringsFromObjectExpression(bindingPath.node.init, result);
+      if (t.isObjectExpression(bindingPath.node.init)) {
+        extractStringsFromObjectExpression(bindingPath.node.init, result, basePath);
+      } else if (t.isArrayExpression(bindingPath.node.init)) {
+        extractStringsFromArrayExpression(bindingPath.node.init, result, basePath);
+      }
     }
   }
 }
@@ -123,16 +186,16 @@ function extractStringsFromExportedIdentifier(
  */
 function updateStringsInDefaultExport(
   ast: t.File, 
-  data: Record<string, string>
+  data: Record<string, any>
 ): boolean {
   let modified = false;
 
   traverse(ast, {
     ExportDefaultDeclaration(path: NodePath<t.ExportDefaultDeclaration>) {
       if (t.isObjectExpression(path.node.declaration)) {
-        modified = updateStringsInObjectExpression(path.node.declaration, data) || modified;
+        modified = updateStringsInObjectExpression(path.node.declaration, data, "") || modified;
       } else if (t.isIdentifier(path.node.declaration)) {
-        modified = updateStringsInExportedIdentifier(path, data) || modified;
+        modified = updateStringsInExportedIdentifier(path, data, "") || modified;
       }
     }
   });
@@ -145,17 +208,84 @@ function updateStringsInDefaultExport(
  */
 function updateStringsInObjectExpression(
   objectExpression: t.ObjectExpression, 
-  data: Record<string, string>
+  data: Record<string, any>,
+  path: string
 ): boolean {
   let modified = false;
 
   objectExpression.properties.forEach((prop) => {
     if (t.isObjectProperty(prop)) {
       const key = getPropertyKey(prop);
+      const currentPath = path ? `${path}/${key}` : key;
       
-      if (t.isStringLiteral(prop.value) && data[key] !== undefined) {
-        prop.value.value = data[key];
+      if (t.isStringLiteral(prop.value)) {
+        if (data[currentPath] !== undefined) {
+          prop.value.value = data[currentPath];
+          modified = true;
+        } else if (path === "" && data[key] !== undefined) {
+          prop.value.value = data[key];
+          modified = true;
+        }
+      } else if (t.isObjectExpression(prop.value)) {
+        if (data[key] && typeof data[key] === 'object') {
+          const subModified = updateStringsInObjectExpression(prop.value, data[key], "");
+          modified = subModified || modified;
+        } else {
+          const subModified = updateStringsInObjectExpression(prop.value, data, currentPath);
+          modified = subModified || modified;
+        }
+      } else if (t.isArrayExpression(prop.value)) {
+        if (data[key] && Array.isArray(data[key])) {
+          const subModified = updateStringsInArrayExpression(prop.value, data[key], "");
+          modified = subModified || modified;
+        } else {
+          const subModified = updateStringsInArrayExpression(prop.value, data, currentPath);
+          modified = subModified || modified;
+        }
+      }
+    }
+  });
+
+  return modified;
+}
+
+/**
+ * Update string literals in an array expression
+ */
+function updateStringsInArrayExpression(
+  arrayExpression: t.ArrayExpression,
+  data: Record<string, any> | any[],
+  path: string
+): boolean {
+  let modified = false;
+
+  arrayExpression.elements.forEach((element, index) => {
+    const currentPath = `${path}/${index}`;
+    
+    if (t.isStringLiteral(element)) {
+      if (Array.isArray(data) && data[index] !== undefined) {
+        element.value = data[index];
         modified = true;
+      } 
+      else if (!Array.isArray(data) && data[currentPath] !== undefined) {
+        element.value = data[currentPath];
+        modified = true;
+      }
+    } else if (t.isObjectExpression(element)) {
+      if (Array.isArray(data) && data[index] && typeof data[index] === 'object') {
+        const subModified = updateStringsInObjectExpression(element, data[index], "");
+        modified = subModified || modified;
+      } else {
+        const subModified = updateStringsInObjectExpression(element, data, currentPath);
+        modified = subModified || modified;
+      }
+    } else if (t.isArrayExpression(element)) {
+      if (Array.isArray(data) && data[index] && Array.isArray(data[index])) {
+        const subModified = updateStringsInArrayExpression(element, data[index], "");
+        modified = subModified || modified;
+      } else {
+        const subModified = updateStringsInArrayExpression(element, data, currentPath);
+        modified = subModified || modified;
       }
     }
   });
@@ -168,7 +298,8 @@ function updateStringsInObjectExpression(
  */
 function updateStringsInExportedIdentifier(
   path: NodePath<t.ExportDefaultDeclaration>,
-  data: Record<string, string>
+  data: Record<string, any>,
+  basePath: string
 ): boolean {
   let modified = false;
   const exportName = (path.node.declaration as t.Identifier).name;
@@ -179,10 +310,13 @@ function updateStringsInExportedIdentifier(
     
     if (
       t.isVariableDeclarator(bindingPath.node) && 
-      bindingPath.node.init && 
-      t.isObjectExpression(bindingPath.node.init)
+      bindingPath.node.init
     ) {
-      modified = updateStringsInObjectExpression(bindingPath.node.init, data) || modified;
+      if (t.isObjectExpression(bindingPath.node.init)) {
+        modified = updateStringsInObjectExpression(bindingPath.node.init, data, basePath) || modified;
+      } else if (t.isArrayExpression(bindingPath.node.init)) {
+        modified = updateStringsInArrayExpression(bindingPath.node.init, data, basePath) || modified;
+      }
     }
   }
 
