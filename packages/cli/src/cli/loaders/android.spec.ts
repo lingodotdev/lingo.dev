@@ -576,12 +576,12 @@ Line 2
     expect(pushed).toContain('"J\\\'accepte les terms"');
   });
 
-  it("should correctly handle Dutch strings with apostrophes and avoid double escaping", async () => {
+  it("should correctly handle strings with apostrophes and avoid double escaping", async () => {
     const input = `
       <resources>
-        <string name="profile_delete_sheet_restoration_warning_hint">Als u zich opnieuw wilt aanmelden, moet je een ander e-mailadres of telefoonnummer gebruiken</string>
-        <item quantity="one">- %d AI-video\'s</item>
-        <item quantity="other">- %d AI-video\'s</item>
+        <string name="welcome_message">Please don't hesitate to contact us</string>
+        <item quantity="one">- %d user\'s item</item>
+        <item quantity="other">- %d user\'s items</item>
       </resources>
     `.trim();
 
@@ -589,20 +589,19 @@ Line 2
     const result = await androidLoader.pull("en", input);
 
     // During pull, escaped apostrophes should be properly handled
-    expect(result).toMatchObject({
-      profile_delete_sheet_restoration_warning_hint: "Als u zich opnieuw wilt aanmelden, moet je een ander e-mailadres of telefoonnummer gebruiken"
-    });
+    expect(result.welcome_message).toBe("Please don't hesitate to contact us");
 
     // When pushing back, apostrophes should be escaped but not double-escaped
-    const pushed = await androidLoader.push("nl", {
-      profile_delete_sheet_restoration_warning_hint: "Als u zich opnieuw wilt aanmelden, moet je een ander e-mailadres of telefoonnummer gebruiken",
-      "credit_ai_videos": {
-        one: "- %d AI-video's",
-        other: "- %d AI-video's"
+    const pushed = await androidLoader.push("en", {
+      welcome_message: "Please don't hesitate to contact us",
+      "item_count": {
+        one: "- %d user's item",
+        other: "- %d user's items"
       }
     });
 
-    expect(pushed).toContain("- %d AI-video\\'s");
-    expect(pushed).not.toContain("- %d AI-video\\\\'s");
+    expect(pushed).toContain("Please don\\'t hesitate to contact us");
+    expect(pushed).toContain("- %d user\\'s item");
+    expect(pushed).not.toContain("- %d user\\\\'s item");
   });
 });
