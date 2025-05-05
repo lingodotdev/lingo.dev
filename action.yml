@@ -13,7 +13,7 @@ runs:
       run: |
         npx lingo.dev@latest ci \
           --api-key "${{ inputs.api-key }}" \
-          --pull-request "${{ inputs.pull-request }}" \
+          --pull-request ${{ inputs.pull-request }} \
           --commit-message "${{ inputs.commit-message }}" \
           --pull-request-title "${{ inputs.pull-request-title }}" \
           --working-directory "${{ inputs.working-directory }}" \
