@@ -1,6 +1,7 @@
 import { parse } from "@babel/parser";
 import traverse, { NodePath } from "@babel/traverse";
 import * as t from "@babel/types";
+import generate from "@babel/generator";
 import { ILoader } from "./_types";
 import { createLoader } from "./_utils";
 import { generate } from "@babel/generator";
