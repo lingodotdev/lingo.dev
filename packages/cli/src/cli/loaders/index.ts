@@ -30,6 +30,7 @@ import createSyncLoader from "./sync";
 import createPlutilJsonTextLoader from "./plutil-json-loader";
 import createPhpLoader from "./php";
 import createVueJsonLoader from "./vue-json";
+import createTypescriptLoader from "./typescript";
 import createInjectLocaleLoader from "./inject-locale";
 import createLockedKeysLoader from "./locked-keys";
 import createMdxFrontmatterSplitLoader from "./mdx2/frontmatter-split";
@@ -296,6 +297,18 @@ export default function createBucketLoader(
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
         createVueJsonLoader(),
+        createSyncLoader(),
+        createFlatLoader(),
+        createUnlocalizableLoader(
+          options.isCacheRestore,
+          options.returnUnlocalizedKeys,
+        ),
+      );
+    case "typescript":
+      return composeLoaders(
+        createTextFileLoader(bucketPathPattern),
+        createPrettierLoader({ parser: "typescript", bucketPathPattern }),
+        createTypescriptLoader(),
         createSyncLoader(),
         createFlatLoader(),
         createUnlocalizableLoader(
