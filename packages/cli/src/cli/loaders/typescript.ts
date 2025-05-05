@@ -4,7 +4,6 @@ import * as t from "@babel/types";
 import generate from "@babel/generator";
 import { ILoader } from "./_types";
 import { createLoader } from "./_utils";
-import { generate } from "@babel/generator";
 
 /**
  * Creates a TypeScript loader that extracts string literals from default exports
