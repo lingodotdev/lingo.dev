@@ -1,3 +1,4 @@
 <resources>
-  <string name="terms_of_use">Términos de uso</string>
+  <string name="sign_in_agreeement_text_1">"Acepto los "</string>
+  <string name="sign_in_agreeement_text_2">" y reconozco la "</string>
 </resources>

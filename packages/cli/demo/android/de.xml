@@ -1,0 +1,4 @@
+<resources>
+  <string name="sign_in_agreeement_text_1">"Ich akzeptiere die "</string>
+  <string name="sign_in_agreeement_text_2">" und ich bestätige die "</string>
+</resources>
