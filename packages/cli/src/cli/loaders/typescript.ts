@@ -3,6 +3,7 @@ import traverse, { NodePath } from "@babel/traverse";
 import * as t from "@babel/types";
 import { ILoader } from "./_types";
 import { createLoader } from "./_utils";
+import { generate } from "@babel/generator";
 
 /**
  * Creates a TypeScript loader that extracts string literals from default exports
@@ -37,7 +38,6 @@ export default function createTypescriptLoader(): ILoader<string, Record<string,
           return input;
         }
 
-        const generate = require('@babel/generator').default;
         const { code } = generate(ast);
         return code;
       } catch (error) {
