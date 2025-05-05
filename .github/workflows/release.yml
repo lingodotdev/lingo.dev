@@ -65,9 +65,9 @@ jobs:
         uses: ./
         with:
           api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
-          pull-request: true
-        env:
-          GH_TOKEN: ${{ github.token }}
+          # pull-request: true
+        # env:
+        #   GH_TOKEN: ${{ github.token }}
 
       - name: Setup
         run: |
