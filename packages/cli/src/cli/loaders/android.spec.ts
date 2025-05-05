@@ -575,4 +575,34 @@ Line 2
     const pushed = await androidLoader.push("en", result);
     expect(pushed).toContain('"J\\\'accepte les terms"');
   });
+
+  it("should correctly handle Dutch strings with apostrophes and avoid double escaping", async () => {
+    const input = `
+      <resources>
+        <string name="profile_delete_sheet_restoration_warning_hint">Als u zich opnieuw wilt aanmelden, moet je een ander e-mailadres of telefoonnummer gebruiken</string>
+        <item quantity="one">- %d AI-video\'s</item>
+        <item quantity="other">- %d AI-video\'s</item>
+      </resources>
+    `.trim();
+
+    const androidLoader = createAndroidLoader().setDefaultLocale("en");
+    const result = await androidLoader.pull("en", input);
+
+    // During pull, escaped apostrophes should be properly handled
+    expect(result).toMatchObject({
+      profile_delete_sheet_restoration_warning_hint: "Als u zich opnieuw wilt aanmelden, moet je een ander e-mailadres of telefoonnummer gebruiken"
+    });
+
+    // When pushing back, apostrophes should be escaped but not double-escaped
+    const pushed = await androidLoader.push("nl", {
+      profile_delete_sheet_restoration_warning_hint: "Als u zich opnieuw wilt aanmelden, moet je een ander e-mailadres of telefoonnummer gebruiken",
+      "credit_ai_videos": {
+        one: "- %d AI-video's",
+        other: "- %d AI-video's"
+      }
+    });
+
+    expect(pushed).toContain("- %d AI-video\\'s");
+    expect(pushed).not.toContain("- %d AI-video\\\\'s");
+  });
 });
