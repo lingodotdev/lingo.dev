@@ -2,11 +2,11 @@ import { Command } from "interactive-commander";
 import chalk from "chalk";
 import figlet from "figlet";
 import { vice } from "gradient-string";
-import Table from "cli-table3";
+import readline from "readline";
 // Local modules
 import { colors } from "../../constants";
 import { setup } from "./setup";
-import { plan, PlanState } from "./plan";
+import { plan } from "./plan";
 import { process as runProcess, ProcessState } from "./process";
 
 export default new Command()
@@ -18,8 +18,15 @@ export default new Command()
     "Max parallel translation processes (default: unlimited)",
     "0",
   )
+  .option("--debug", "Run in debug mode with user prompts between steps", false)
   .action(async (args) => {
     try {
+      if (args.debug) {
+        await waitForUserPrompt(
+          "Debug mode enabled. Press Enter to continue to planning...",
+        );
+      }
+
       await renderClear();
       await renderSpacer();
       await renderBanner();
@@ -29,8 +36,9 @@ export default new Command()
       const setupState = await setup();
       await renderSpacer();
 
-      const planState: PlanState = await plan(setupState.i18nConfig);
+      const planState = await plan(setupState.i18nConfig);
       await renderSpacer();
+      await exitIfNoTasks(planState.tasks);
 
       const concurrency = parseInt(args.concurrency, 10) || 0;
       const processState: ProcessState = await runProcess(
@@ -39,12 +47,35 @@ export default new Command()
         concurrency,
       );
       await renderSpacer();
+
       await renderSummary(processState);
       await renderSpacer();
     } catch (error: any) {
       process.exit(1);
     }
   });
+
+// ---------------------------------------------------------------------------
+// Helper Functions
+// ---------------------------------------------------------------------------
+
+async function exitIfNoTasks(tasks: unknown[]): Promise<void> {
+  if (!tasks.length) {
+    console.log(
+      chalk.yellow(
+        `Notice: Nothing to translate. Please check your i18n configuration file for proper bucket and locale settings.`,
+      ),
+    );
+    await renderSpacer();
+    console.log(
+      chalk.dim(
+        `Hint: Ensure your i18n.json has valid source and target locales, and that your bucket paths match existing files.`,
+      ),
+    );
+    await renderSpacer(); // Add spacer for better visual separation before exit
+    process.exit(1);
+  }
+}
 
 // ---------------------------------------------------------------------------
 // Render helpers (kept in this file for quick reference & CLI UX tweaks)
@@ -90,6 +121,20 @@ export async function renderHero() {
   console.log(
     `${chalk.hex(colors.blue)(label3.padEnd(maxLabelWidth + 1))} ${chalk.hex(colors.blue)("hi@lingo.dev")}`,
   );
+}
+
+async function waitForUserPrompt(message: string): Promise<void> {
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
+
+  return new Promise((resolve) => {
+    rl.question(chalk.dim(`[${message}]\n`), () => {
+      rl.close();
+      resolve();
+    });
+  });
 }
 
 export async function renderSummary(_processState: ProcessState) {
