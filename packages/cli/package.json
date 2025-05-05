@@ -127,6 +127,7 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@types/babel__generator": "^7.27.0",
     "@types/cors": "^2.8.17",
     "@types/diff": "^7.0.0",
     "@types/express": "^5.0.1",
