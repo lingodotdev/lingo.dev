@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.90.4
+
+### Patch Changes
+
+- [#755](https://github.com/lingodotdev/lingo.dev/pull/755) [`3ad5974`](https://github.com/lingodotdev/lingo.dev/commit/3ad597416b2b39daf53abce2a3d6d255e07b4a2e) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - Fix extra escaping issue in Android loader for Dutch strings
+
 ## 0.90.3
 
 ### Patch Changes
