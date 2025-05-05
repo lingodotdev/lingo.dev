@@ -42,7 +42,7 @@ export default new Command()
 
       const concurrency = parseInt(args.concurrency, 10) || 0;
       const processState: ProcessState = await runProcess(
-        setupState.auth,
+        setupState,
         planState.tasks,
         concurrency,
       );

@@ -1,22 +1,89 @@
 import chalk from "chalk";
 import { Listr, ListrDefaultRendererLogLevels } from "listr2";
 import pLimit from "p-limit";
+import _ from "lodash";
+import path from "path";
 
 import { colors } from "../../constants";
-
-export interface ProcessState {
-  results: any[];
-}
+import { SetupState, LocalizationTask, ProcessState } from "./_types";
+import createBucketLoader from "../../loaders";
+import { createDeltaProcessor } from "../../utils/delta";
 
 export async function process(
-  _auth: any,
-  _tasks: any,
+  setupState: SetupState,
+  tasks: LocalizationTask[],
   concurrency: number,
 ): Promise<ProcessState> {
   console.log(chalk.hex(colors.orange)("[Localization]"));
 
+  const results: ProcessState["results"] = [];
   const errors: Error[] = [];
-  const totalTasks = 100;
+
+  const limit = pLimit(concurrency > 0 ? concurrency : 10);
+
+  async function runSingleTask(localizationTask: LocalizationTask) {
+    const { bucketType, filePathPlaceholder, sourceLocale, targetLocale } =
+      localizationTask;
+
+    try {
+      const bucketLoader = createBucketLoader(
+        bucketType as any,
+        filePathPlaceholder,
+        {
+          isCacheRestore: false,
+          defaultLocale: sourceLocale,
+          injectLocale: [],
+        },
+      );
+
+      bucketLoader.setDefaultLocale(sourceLocale);
+      await bucketLoader.init();
+
+      const sourceData = await bucketLoader.pull(sourceLocale);
+      const targetData = await bucketLoader.pull(targetLocale);
+
+      const deltaProcessor = createDeltaProcessor(filePathPlaceholder);
+      const checksums = await deltaProcessor.loadChecksums();
+      const delta = await deltaProcessor.calculateDelta({
+        sourceData,
+        targetData,
+        checksums,
+      });
+
+      const processableData = _.chain(sourceData)
+        .entries()
+        .filter(
+          ([key]) => delta.added.includes(key) || delta.updated.includes(key),
+        )
+        .fromPairs()
+        .value();
+
+      if (!Object.keys(processableData).length) {
+        return { success: true } as const;
+      }
+
+      const processedChunk = await setupState.localizer.processor(
+        {
+          sourceLocale,
+          sourceData,
+          processableData,
+          targetLocale,
+          targetData,
+        },
+        () => {},
+      );
+
+      const finalTargetData = _.merge({}, targetData, processedChunk);
+      await bucketLoader.push(targetLocale, finalTargetData);
+
+      const updatedChecksums = await deltaProcessor.createChecksums(sourceData);
+      await deltaProcessor.saveChecksums(updatedChecksums);
+
+      return { success: true } as const;
+    } catch (error: any) {
+      return { success: false as const, error: error as Error };
+    }
+  }
 
   const processTasks = new Listr(
     [
@@ -24,48 +91,64 @@ export async function process(
         title: "Initializing translation engine",
         task: async (_ctx, task) => {
           await sleep(300);
-          task.title = `Translation engine ${chalk.hex(colors.green)("ready")}`;
+          const providerName = setupState.localizer.type;
+          task.title = `Translation engine ${chalk.hex(colors.green)("ready")} (${providerName})`;
         },
       },
       {
         title: "Processing translation tasks",
-        task: async (ctx, task) => {
-          const bucketTypes = ["json", "yaml", "xml"];
-          const targetLocales = ["es", "fr"];
-          const allTasks = Array.from({ length: totalTasks }, (_, i) => ({
-            id: i,
-            bucketType: bucketTypes[i % bucketTypes.length],
-            sourceLocale: "en",
-            targetLocale: targetLocales[i % targetLocales.length],
-            filePath: `file_${i}.${bucketTypes[i % bucketTypes.length]}`,
-          }));
+        task: (_ctx, task) => {
+          const completed = { success: 0, failed: 0 };
 
-          const limit = pLimit(concurrency || 10);
-          let completed = 0;
+          const workerCount =
+            Number.isFinite(concurrency) && concurrency > 0
+              ? concurrency
+              : Math.min(10, tasks.length);
+          const workerTasks = Array.from(
+            { length: workerCount },
+            (_, workerIdx) => ({
+              title: "Initializing...",
+              task: async (_subCtx: any, subTask: any) => {
+                const assignedTasks = tasks.filter(
+                  (_, idx) => idx % workerCount === workerIdx,
+                );
 
-          const subtasks = Array.from({ length: 10 }, (_, threadIndex) => ({
-            title: "Initializing...",
-            task: async (_subCtx: any, subTask: any) => {
-              const tasksForThread = allTasks.filter(
-                (_, idx) => idx % 10 === threadIndex,
-              );
+                for (const assignedTask of assignedTasks) {
+                  const displayPath = path.relative(
+                    globalThis.process.cwd(),
+                    assignedTask.filePathPlaceholder.replace(
+                      "[locale]",
+                      assignedTask.targetLocale,
+                    ),
+                  );
+                  subTask.title = `Processing: ${chalk.dim(displayPath)} (${chalk.yellow(
+                    assignedTask.sourceLocale,
+                  )} -> ${chalk.yellow(assignedTask.targetLocale)})`;
 
-              for (const t of tasksForThread) {
-                try {
-                  subTask.title = `Processing: ${chalk.dim(t.filePath)} (${chalk.yellow(t.sourceLocale)} -> ${chalk.yellow(t.targetLocale)})`;
-                  await limit(() => sleep(500 + Math.random() * 1000));
-                  completed++;
-                  task.title = `Processed ${chalk.green(completed)}/${totalTasks}, Failed ${chalk.red(errors.length)}`;
-                } catch (err: any) {
-                  errors.push(err);
-                  task.title = `Processed ${chalk.green(completed)}/${totalTasks}, Failed ${chalk.red(errors.length)}`;
+                  const { success, error } = await limit(() =>
+                    runSingleTask(assignedTask),
+                  );
+
+                  results.push({ task: assignedTask, success, error });
+
+                  if (success) {
+                    completed.success++;
+                  } else {
+                    completed.failed++;
+                    if (error) errors.push(error);
+                  }
+
+                  task.title = `Processed ${chalk.green(completed.success)}/${tasks.length}, Failed ${chalk.red(
+                    completed.failed,
+                  )}`;
                 }
-              }
-              subTask.title = "Done";
-            },
-          }));
 
-          return task.newListr(subtasks, {
+                subTask.title = "Done";
+              },
+            }),
+          );
+
+          return task.newListr(workerTasks, {
             concurrent: true,
             exitOnError: false,
             rendererOptions: {
@@ -89,8 +172,8 @@ export async function process(
         title: "Finalizing translations",
         task: async (_ctx, task) => {
           await sleep(250);
-          const totalTranslated = 1248;
-          task.title = `Finalized ${chalk.hex(colors.yellow)(totalTranslated.toString())} translations`;
+          const succeedCount = tasks.length - errors.length;
+          task.title = `Finalized ${chalk.hex(colors.yellow)(succeedCount.toString())} translations`;
         },
       },
     ],
@@ -121,9 +204,14 @@ export async function process(
     );
   }
 
-  return { results: [] };
+  return {
+    results,
+    errors,
+  };
 }
 
 function sleep(ms: number) {
   return new Promise((res) => setTimeout(res, ms));
 }
+
+export type { ProcessState } from "./_types";

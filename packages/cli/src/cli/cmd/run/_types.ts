@@ -24,6 +24,10 @@ export type PlanState = {
 };
 
 export type ProcessState = {
-  tasks: [LocalizationTask, boolean][];
+  results: {
+    task: LocalizationTask;
+    success: boolean;
+    error?: Error;
+  }[];
   errors: Error[];
 };
