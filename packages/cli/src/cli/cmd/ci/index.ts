@@ -6,7 +6,6 @@ import { IIntegrationFlow } from "./flows/_base";
 import { PullRequestFlow } from "./flows/pull-request";
 import { InBranchFlow } from "./flows/in-branch";
 import { getPlatformKit } from "./platforms";
-import inquirer from "inquirer";
 
 interface CIOptions {
   apiKey?: string;
@@ -31,23 +30,7 @@ export default new Command()
     "--process-own-commits [boolean]",
     "Process commits made by this action",
   )
-  .option(
-    "--debug",
-    "Debug mode. Wait for user input before continuing.",
-    false,
-  )
   .action(async (options: CIOptions) => {
-    if (options.debug) {
-      // wait for user input, use inquirer
-      const { debug } = await inquirer.prompt([
-        {
-          type: "confirm",
-          name: "debug",
-          message: "Debug mode. Wait for user input before continuing.",
-        },
-      ]);
-    }
-
     const settings = getSettings(options.apiKey);
 
     if (!settings.auth.apiKey) {
