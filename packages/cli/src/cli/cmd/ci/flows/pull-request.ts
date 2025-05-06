@@ -57,7 +57,7 @@ export class PullRequestFlow extends InBranchFlow {
   }
 
   private calculatePrBranchName(): string {
-    return `lingo.dev/${this.platformKit.platformConfig.baseBranchName}`;
+    return `pr-localization/${this.platformKit.platformConfig.baseBranchName}`;
   }
 
   private async checkBranchExistance(prBranchName: string) {
