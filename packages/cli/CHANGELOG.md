@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.92.2
+
+### Patch Changes
+
+- [`8539842`](https://github.com/lingodotdev/lingo.dev/commit/8539842f878a29572c6ed8b6d077e51a247b28d0) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - fix missing deps
+
 ## 0.92.1
 
 ### Patch Changes
