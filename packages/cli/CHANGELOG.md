@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.92.3
+
+### Patch Changes
+
+- [#764](https://github.com/lingodotdev/lingo.dev/pull/764) [`a45a11a`](https://github.com/lingodotdev/lingo.dev/commit/a45a11a7323baa6a5f119b9b0913da7a910a324b) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - fix babel imports in ts loader
+
 ## 0.92.2
 
 ### Patch Changes
