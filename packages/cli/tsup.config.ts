@@ -14,7 +14,7 @@ export default defineConfig({
   splitting: true,
   bundle: true,
   sourcemap: true,
-  external: ["readline/promises"],
+  external: ["readline/promises", "@babel/traverse"],
   outExtension: (ctx) => ({
     js: ctx.format === "cjs" ? ".cjs" : ".mjs",
   }),
