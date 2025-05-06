@@ -1,5 +1,11 @@
 # @lingo.dev/\_spec
 
+## 0.33.0
+
+### Minor Changes
+
+- [#759](https://github.com/lingodotdev/lingo.dev/pull/759) [`9aa7004`](https://github.com/lingodotdev/lingo.dev/commit/9aa700491446865dc131b80419f681132b888652) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - Enhance TypeScript loader to support nested fields and arrays
+
 ## 0.32.0
 
 ### Minor Changes
