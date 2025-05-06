@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.92.1
+
+### Patch Changes
+
+- [`2977542`](https://github.com/lingodotdev/lingo.dev/commit/29775423c728c7b0146c0c62f167806d85f2d5c6) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - fix babel traverse import
+
 ## 0.92.0
 
 ### Minor Changes
