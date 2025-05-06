@@ -4,6 +4,10 @@
     "source": "en",
     "targets": ["de"]
   },
-  "main": {},
+  "buckets": {
+    "typescript": {
+      "include": ["demo/typescript/[locale].ts"]
+    }
+  },
   "$schema": "https://lingo.dev/schema/i18n.json"
 }
