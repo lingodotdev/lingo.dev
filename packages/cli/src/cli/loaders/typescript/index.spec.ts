@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import createTypescriptLoader from "./typescript";
+import createTypescriptLoader from ".";
 
 describe("typescript loader", () => {
   it("should extract string literals from default export object", async () => {
@@ -17,7 +17,7 @@ describe("typescript loader", () => {
 
     expect(result).toEqual({
       greeting: "Hello, world!",
-      farewell: "Goodbye!"
+      farewell: "Goodbye!",
     });
   });
 
@@ -36,16 +36,16 @@ describe("typescript loader", () => {
 
     expect(result).toEqual({
       welcome: "Welcome to our app",
-      error: "Something went wrong"
+      error: "Something went wrong",
     });
   });
 
   it("should handle empty or invalid input", async () => {
     const loader = createTypescriptLoader().setDefaultLocale("en");
-    
+
     let result = await loader.pull("en", "");
     expect(result).toEqual({});
-    
+
     result = await loader.pull("en", "const x = 5;");
     expect(result).toEqual({});
   });
@@ -60,18 +60,18 @@ describe("typescript loader", () => {
     `;
 
     const loader = createTypescriptLoader().setDefaultLocale("en");
-    
+
     await loader.pull("en", input);
-    
+
     const data = {
       greeting: "Hola, mundo!",
-      farewell: "Adiós!"
+      farewell: "Adiós!",
     };
-    
+
     const result = await loader.push("es", data);
-    
-    expect(result).toContain("greeting: \"Hola, mundo!\"");
-    expect(result).toContain("farewell: \"Adi");
+
+    expect(result).toContain('greeting: "Hola, mundo!"');
+    expect(result).toContain('farewell: "Adi');
     expect(result).toContain("number: 42");
   });
 
@@ -103,7 +103,7 @@ describe("typescript loader", () => {
       "messages/error": "Something went wrong",
       "settings/theme/name": "Dark Mode",
       "settings/theme/colors/primary": "blue",
-      "settings/theme/colors/secondary": "gray"
+      "settings/theme/colors/secondary": "gray",
     });
   });
 
@@ -128,7 +128,7 @@ describe("typescript loader", () => {
       "categories/0/name": "Electronics",
       "categories/0/description": "Electronic devices",
       "categories/1/name": "Books",
-      "categories/1/description": "Reading materials"
+      "categories/1/description": "Reading materials",
     });
   });
 
@@ -151,18 +151,18 @@ describe("typescript loader", () => {
     `;
 
     const loader = createTypescriptLoader().setDefaultLocale("en");
-    
+
     await loader.pull("en", input);
-    
+
     const data = {
       "messages/welcome": "Bienvenido a nuestra aplicación",
       "messages/error": "Algo salió mal",
       "settings/theme/name": "Modo Oscuro",
-      "settings/theme/colors/primary": "azul"
+      "settings/theme/colors/primary": "azul",
     };
-    
+
     const result = await loader.push("es", data);
-    
+
     const resultStr = JSON.stringify(result);
     expect(resultStr).toContain("Bienvenido a nuestra aplicaci");
     expect(resultStr).toContain("Algo sali");
@@ -182,9 +182,9 @@ describe("typescript loader", () => {
     `;
 
     const loader = createTypescriptLoader().setDefaultLocale("en");
-    
+
     await loader.pull("en", input);
-    
+
     const data = {
       "greetings/0": "Hola",
       "greetings/1": "Hola",
@@ -192,11 +192,11 @@ describe("typescript loader", () => {
       "categories/0/name": "Electrónica",
       "categories/0/description": "Dispositivos electrónicos",
       "categories/1/name": "Libros",
-      "categories/1/description": "Materiales de lectura"
+      "categories/1/description": "Materiales de lectura",
     };
-    
+
     const result = await loader.push("es", data);
-    
+
     const resultStr = JSON.stringify(result);
     expect(resultStr).toContain("Hola");
     expect(resultStr).toContain("Oye");
@@ -248,7 +248,7 @@ describe("typescript loader", () => {
       "app/pages/0/sections/1/content": "Check out our features",
       "app/pages/1/title": "About",
       "app/pages/1/sections/0/heading": "Our Story",
-      "app/pages/1/sections/0/content": "We started in 2020"
+      "app/pages/1/sections/0/content": "We started in 2020",
     });
   });
 });

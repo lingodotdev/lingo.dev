@@ -1,25 +1,17 @@
 import { parse } from "@babel/parser";
-import traverseModule, { type NodePath } from "@babel/traverse";
+import babelTraverseModule from "@babel/traverse";
+import type { NodePath } from "@babel/traverse";
 import * as t from "@babel/types";
-import generateModule from "@babel/generator";
+import babelGenerateModule from "@babel/generator";
 import { flatten, unflatten } from "flat";
 import _ from "lodash";
-import { ILoader } from "./_types";
-import { createLoader } from "./_utils";
+import { ILoader } from "../_types";
+import { createLoader } from "../_utils";
+import { resolveCjsExport } from "./cjs-interop";
 
-/**
- * 🥲 🥲 🥲
- * we need this because we marked babel traverse as external in tsup config.
- * and we needed to exclude it,
- * because it was throwing the "can't resolve dynamically resolve tty" error
- */
-const traverse = (traverseModule as any)["default"] as typeof traverseModule;
-const generate = (generateModule as any)["default"] as typeof generateModule;
+const traverse: any = resolveCjsExport(babelTraverseModule, "@babel/traverse");
+const generate: any = resolveCjsExport(babelGenerateModule, "@babel/generator");
 
-/**
- * Creates a TypeScript loader that extracts string literals from default exports
- * including nested objects and arrays
- */
 export default function createTypescriptLoader(): ILoader<
   string,
   Record<string, any>
