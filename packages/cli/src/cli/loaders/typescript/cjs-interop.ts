@@ -44,10 +44,7 @@
  * @param name Friendly name of the module (for error messages).
  * @returns    The resolved default export value.
  */
-export function resolveCjsExport<T = any>(
-  mod: any,
-  name: string = "module",
-): T {
+export function resolveCjsExport<T = any>(mod: T, name: string = "module"): T {
   // If the module value itself is callable or clearly not an object, assume it's
   // already the export we want (covers most bundler scenarios).
   if (typeof mod === "function" || typeof mod !== "object" || mod === null) {
@@ -56,7 +53,7 @@ export function resolveCjsExport<T = any>(
 
   // Otherwise, look for a `.default` property which is common in Node's CJS->ESM
   // wrapper as well as in Babel's `interopRequireDefault` helpers.
-  if (typeof mod.default !== "undefined") {
+  if ("default" in mod && typeof mod.default !== "undefined") {
     return mod.default as T;
   }
 
