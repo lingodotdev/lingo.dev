@@ -1,5 +1,7 @@
+import { machineIdSync } from "node-machine-id";
+
 export default async function trackEvent(
-  distinctId: string,
+  distinctId: string | null | undefined,
   event: string,
   properties?: Record<string, any>,
 ) {
@@ -8,6 +10,8 @@ export default async function trackEvent(
   }
 
   try {
+    const actualId = distinctId || `device-${machineIdSync()}`;
+    
     const { PostHog } = await import("posthog-node");
     const safeProperties = properties
       ? JSON.parse(
@@ -34,7 +38,7 @@ export default async function trackEvent(
     );
 
     await posthog.capture({
-      distinctId,
+      distinctId: actualId,
       event,
       properties: {
         ...safeProperties,
