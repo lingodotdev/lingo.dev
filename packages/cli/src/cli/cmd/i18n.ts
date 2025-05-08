@@ -27,6 +27,7 @@ import trackEvent from "../utils/observability";
 import { createDeltaProcessor } from "../utils/delta";
 import { tryReadFile, writeFile } from "../utils/fs";
 import { flatten, unflatten } from "flat";
+import { machineIdSync } from "node-machine-id";
 
 export default new Command()
   .command("i18n")
@@ -111,7 +112,8 @@ export default new Command()
       const isByokMode = i18nConfig?.provider && i18nConfig.provider.id !== "lingo";
       
       if (isByokMode) {
-        authId = "byok-mode";
+        const machineId = machineIdSync();
+        authId = `byok-${machineId}`;
         ora.succeed("Using external provider (BYOK mode)");
       } else {
         const auth = await validateAuth(settings);
