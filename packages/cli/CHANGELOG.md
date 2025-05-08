@@ -1,5 +1,13 @@
 # lingo.dev
 
+## 0.92.4
+
+### Patch Changes
+
+- [#766](https://github.com/lingodotdev/lingo.dev/pull/766) [`bfc2b7e`](https://github.com/lingodotdev/lingo.dev/commit/bfc2b7e395ddfe01a31dfa193e94726c1d682826) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - Skip lingo.dev authentication when in "Bring Your Own Key" mode
+
+- [#768](https://github.com/lingodotdev/lingo.dev/pull/768) [`fcdf04e`](https://github.com/lingodotdev/lingo.dev/commit/fcdf04eb111c06ad24bcb1a22e66db442b6a2bc7) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - fix nested typescript support
+
 ## 0.92.3
 
 ### Patch Changes
