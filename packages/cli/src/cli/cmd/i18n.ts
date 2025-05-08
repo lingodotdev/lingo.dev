@@ -695,6 +695,14 @@ function parseFlags(options: any) {
 }
 
 async function validateAuth(settings: ReturnType<typeof getSettings>) {
+  const i18nConfig = getConfig();
+  if (i18nConfig?.provider && i18nConfig.provider.id !== "lingo") {
+    return {
+      id: "byok-user",
+      email: "byok-mode@example.com",
+    };
+  }
+
   if (!settings.auth.apiKey) {
     throw new CLIError({
       message:
