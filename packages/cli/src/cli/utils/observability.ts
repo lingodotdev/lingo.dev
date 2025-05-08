@@ -1,7 +1,7 @@
 import { machineIdSync } from "node-machine-id";
 
 export default async function trackEvent(
-  distinctId: string | undefined,
+  distinctId: string | null | undefined,
   event: string,
   properties?: Record<string, any>,
 ) {

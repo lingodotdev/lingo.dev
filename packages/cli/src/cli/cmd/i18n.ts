@@ -111,7 +111,7 @@ export default new Command()
       const isByokMode = i18nConfig?.provider && i18nConfig.provider.id !== "lingo";
       
       if (isByokMode) {
-        authId = "";
+        authId = null;
         ora.succeed("Using external provider (BYOK mode)");
       } else {
         const auth = await validateAuth(settings);
