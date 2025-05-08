@@ -1,4 +1,5 @@
-import { machineIdSync } from "node-machine-id";
+import pkg from "node-machine-id";
+const { machineIdSync } = pkg;
 
 export default async function trackEvent(
   distinctId: string | null | undefined,
@@ -11,7 +12,7 @@ export default async function trackEvent(
 
   try {
     const actualId = distinctId || `device-${machineIdSync()}`;
-    
+
     const { PostHog } = await import("posthog-node");
     const safeProperties = properties
       ? JSON.parse(
