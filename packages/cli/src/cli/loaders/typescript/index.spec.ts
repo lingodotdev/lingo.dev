@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import createTypescriptLoader from ".";
+import createTypescriptLoader from "./index";
+import dedent from "dedent";
 
 describe("typescript loader", () => {
   it("should extract string literals from default export object", async () => {
@@ -99,11 +100,19 @@ describe("typescript loader", () => {
     const result = await loader.pull("en", input);
 
     expect(result).toEqual({
-      "messages/welcome": "Welcome to our app",
-      "messages/error": "Something went wrong",
-      "settings/theme/name": "Dark Mode",
-      "settings/theme/colors/primary": "blue",
-      "settings/theme/colors/secondary": "gray",
+      messages: {
+        welcome: "Welcome to our app",
+        error: "Something went wrong",
+      },
+      settings: {
+        theme: {
+          name: "Dark Mode",
+          colors: {
+            primary: "blue",
+            secondary: "gray",
+          },
+        },
+      },
     });
   });
 
@@ -122,18 +131,16 @@ describe("typescript loader", () => {
     const result = await loader.pull("en", input);
 
     expect(result).toEqual({
-      "greetings/0": "Hello",
-      "greetings/1": "Hi",
-      "greetings/2": "Hey",
-      "categories/0/name": "Electronics",
-      "categories/0/description": "Electronic devices",
-      "categories/1/name": "Books",
-      "categories/1/description": "Reading materials",
+      greetings: ["Hello", "Hi", "Hey"],
+      categories: [
+        { name: "Electronics", description: "Electronic devices" },
+        { name: "Books", description: "Reading materials" },
+      ],
     });
   });
 
   it("should update string literals in nested objects", async () => {
-    const input = `
+    const input = dedent`
       export default {
         messages: {
           welcome: "Welcome to our app",
@@ -152,58 +159,52 @@ describe("typescript loader", () => {
 
     const loader = createTypescriptLoader().setDefaultLocale("en");
 
-    await loader.pull("en", input);
+    let data = await loader.pull("en", input);
 
-    const data = {
-      "messages/welcome": "Bienvenido a nuestra aplicación",
-      "messages/error": "Algo salió mal",
-      "settings/theme/name": "Modo Oscuro",
-      "settings/theme/colors/primary": "azul",
-    };
+    data.settings.theme.colors.primary = "red";
 
     const result = await loader.push("es", data);
 
-    const resultStr = JSON.stringify(result);
-    expect(resultStr).toContain("Bienvenido a nuestra aplicaci");
-    expect(resultStr).toContain("Algo sali");
-    expect(resultStr).toContain("Modo Oscuro");
-    expect(resultStr).toContain("azul");
+    expect(result).toBe(dedent`
+      export default {
+        messages: {
+          welcome: "Welcome to our app",
+          error: "Something went wrong"
+        },
+        settings: {
+          theme: {
+            name: "Dark Mode",
+            colors: {
+              primary: "red"
+            }
+          }
+        }
+      };
+      `);
   });
 
   it("should update string literals in arrays", async () => {
     const input = `
       export default {
         greetings: ["Hello", "Hi", "Hey"],
-        categories: [
-          { name: "Electronics", description: "Electronic devices" },
-          { name: "Books", description: "Reading materials" }
-        ]
       };
     `;
 
     const loader = createTypescriptLoader().setDefaultLocale("en");
 
-    await loader.pull("en", input);
+    let data = await loader.pull("en", input);
 
-    const data = {
-      "greetings/0": "Hola",
-      "greetings/1": "Hola",
-      "greetings/2": "Oye",
-      "categories/0/name": "Electrónica",
-      "categories/0/description": "Dispositivos electrónicos",
-      "categories/1/name": "Libros",
-      "categories/1/description": "Materiales de lectura",
-    };
+    data.greetings[0] = "Hola";
+    data.greetings[1] = "Hola";
+    data.greetings[2] = "Oye";
 
     const result = await loader.push("es", data);
 
-    const resultStr = JSON.stringify(result);
-    expect(resultStr).toContain("Hola");
-    expect(resultStr).toContain("Oye");
-    expect(resultStr).toContain("Electr");
-    expect(resultStr).toContain("Dispositivos electr");
-    expect(resultStr).toContain("Libros");
-    expect(resultStr).toContain("Materiales de lectura");
+    expect(result).toBe(dedent`
+      export default {
+        greetings: ["Hola", "Hola", "Oye"]
+      };
+      `);
   });
 
   it("should handle mixed nested structures", async () => {
@@ -236,19 +237,41 @@ describe("typescript loader", () => {
     const result = await loader.pull("en", input);
 
     expect(result).toEqual({
-      "app/name": "My App",
-      "app/version": "1.0.0",
-      "app/features/0": "Login",
-      "app/features/1": "Dashboard",
-      "app/features/2": "Settings",
-      "app/pages/0/title": "Home",
-      "app/pages/0/sections/0/heading": "Welcome",
-      "app/pages/0/sections/0/content": "Welcome to our app",
-      "app/pages/0/sections/1/heading": "Features",
-      "app/pages/0/sections/1/content": "Check out our features",
-      "app/pages/1/title": "About",
-      "app/pages/1/sections/0/heading": "Our Story",
-      "app/pages/1/sections/0/content": "We started in 2020",
+      app: {
+        name: "My App",
+        version: "1.0.0",
+        features: ["Login", "Dashboard", "Settings"],
+        pages: [
+          {
+            title: "Home",
+            sections: [
+              { heading: "Welcome", content: "Welcome to our app" },
+              { heading: "Features", content: "Check out our features" },
+            ],
+          },
+          {
+            title: "About",
+            sections: [{ heading: "Our Story", content: "We started in 2020" }],
+          },
+        ],
+      },
+    });
+  });
+
+  it("should extract string literals when default export has 'as const'", async () => {
+    const input = `
+      export default {
+        greeting: "Hello, world!",
+        farewell: "Goodbye!"
+      } as const;
+    `;
+
+    const loader = createTypescriptLoader().setDefaultLocale("en");
+    const result = await loader.pull("en", input);
+
+    expect(result).toEqual({
+      greeting: "Hello, world!",
+      farewell: "Goodbye!",
     });
   });
 });

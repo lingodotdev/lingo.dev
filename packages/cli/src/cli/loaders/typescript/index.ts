@@ -1,16 +1,15 @@
 import { parse } from "@babel/parser";
+import _ from "lodash";
 import babelTraverseModule from "@babel/traverse";
 import type { NodePath } from "@babel/traverse";
 import * as t from "@babel/types";
 import babelGenerateModule from "@babel/generator";
-import { flatten, unflatten } from "flat";
-import _ from "lodash";
 import { ILoader } from "../_types";
 import { createLoader } from "../_utils";
 import { resolveCjsExport } from "./cjs-interop";
 
-const traverse: any = resolveCjsExport(babelTraverseModule, "@babel/traverse");
-const generate: any = resolveCjsExport(babelGenerateModule, "@babel/generator");
+const traverse = resolveCjsExport(babelTraverseModule, "@babel/traverse");
+const generate = resolveCjsExport(babelGenerateModule, "@babel/generator");
 
 export default function createTypescriptLoader(): ILoader<
   string,
@@ -22,14 +21,9 @@ export default function createTypescriptLoader(): ILoader<
         return {};
       }
 
-      try {
-        const ast = parseTypeScript(input);
-        const extractedStrings = extractStringsFromDefaultExport(ast);
-        return flattenExtractedStrings(extractedStrings);
-      } catch (error) {
-        console.error("Error parsing TypeScript file:", error);
-        return {};
-      }
+      const ast = parseTypeScript(input);
+      const extractedStrings = extractStringsFromDefaultExport(ast);
+      return extractedStrings;
     },
     push: async (
       locale,
@@ -39,27 +33,16 @@ export default function createTypescriptLoader(): ILoader<
       pullInput,
       pullOutput,
     ) => {
-      if (!data) {
-        return "";
-      }
+      const ast = parseTypeScript(originalInput || "");
+      const finalData = _.merge({}, pullOutput, data);
+      updateStringsInDefaultExport(ast, finalData);
 
-      const input = originalInput as string;
-
-      try {
-        const ast = parseTypeScript(input);
-        const nestedData = unflattenStringData(data);
-        const modified = updateStringsInDefaultExport(ast, nestedData);
-
-        if (!modified) {
-          return input;
-        }
-
-        const { code } = generate(ast);
-        return code;
-      } catch (error) {
-        console.error("Error updating TypeScript file:", error);
-        return input;
-      }
+      const { code } = generate(ast, {
+        jsescOption: {
+          minimal: true,
+        },
+      });
+      return code;
     },
   });
 }
@@ -75,138 +58,127 @@ function parseTypeScript(input: string) {
 }
 
 /**
- * Flatten nested object structure into dot-notation paths
- * and filter out non-string values
- */
-/**
- * Flatten nested object structure into dot-notation paths
- * and filter out non-string values
- */
-function flattenExtractedStrings(
-  obj: Record<string, any>,
-): Record<string, string> {
-  const flattened = flatten(obj, { delimiter: "/" }) as Record<string, any>;
-
-  // Filter out non-string values
-  return Object.entries(flattened).reduce(
-    (acc, [key, value]) => {
-      if (typeof value === "string") {
-        acc[key] = value;
-      }
-      return acc;
-    },
-    {} as Record<string, string>,
-  );
-}
-
-/**
- * Unflatten dot-notation paths back into nested object structure
- */
-function unflattenStringData(
-  data: Record<string, string>,
-): Record<string, any> {
-  return unflatten(data, { delimiter: "/" });
-}
-
-/**
- * Extract string literals from a default export in TypeScript
+ * Extract the localizable (string literal) content from the default export
+ * and return it as a nested object that mirrors the original structure.
  */
 function extractStringsFromDefaultExport(ast: t.File): Record<string, any> {
-  const result: Record<string, any> = {};
+  let extracted: Record<string, any> = {};
 
   traverse(ast, {
     ExportDefaultDeclaration(path: NodePath<t.ExportDefaultDeclaration>) {
-      if (t.isObjectExpression(path.node.declaration)) {
-        extractStringsFromObjectExpression(path.node.declaration, result, "");
-      } else if (t.isIdentifier(path.node.declaration)) {
-        extractStringsFromExportedIdentifier(path, result, "");
+      const { declaration } = path.node;
+
+      const decl = unwrapTSAsExpression(declaration);
+
+      if (t.isObjectExpression(decl)) {
+        extracted = objectExpressionToObject(decl);
+      } else if (t.isArrayExpression(decl)) {
+        extracted = arrayExpressionToArray(decl) as unknown as Record<
+          string,
+          any
+        >;
+      } else if (t.isIdentifier(decl)) {
+        // Handle: const foo = {...}; export default foo;
+        const binding = path.scope.bindings[decl.name];
+        if (
+          binding &&
+          t.isVariableDeclarator(binding.path.node) &&
+          binding.path.node.init
+        ) {
+          const initRaw = binding.path.node.init;
+          const init = initRaw ? unwrapTSAsExpression(initRaw) : initRaw;
+          if (t.isObjectExpression(init)) {
+            extracted = objectExpressionToObject(init);
+          } else if (t.isArrayExpression(init)) {
+            extracted = arrayExpressionToArray(init) as unknown as Record<
+              string,
+              any
+            >;
+          }
+        }
       }
     },
   });
 
-  return result;
+  return extracted;
 }
 
 /**
- * Extract string literals from an object expression with path tracking for nesting
+ * Helper: unwraps nested TSAsExpression nodes (e.g. `obj as const`)
+ * to get to the underlying expression/node we care about.
  */
-function extractStringsFromObjectExpression(
-  objectExpression: t.ObjectExpression,
-  result: Record<string, any>,
-  path: string,
-): void {
-  objectExpression.properties.forEach((prop) => {
-    if (t.isObjectProperty(prop)) {
-      const key = getPropertyKey(prop);
-      const currentPath = path ? `${path}/${key}` : key;
+function unwrapTSAsExpression<T extends t.Node>(node: T): t.Node {
+  let current: t.Node = node;
+  // TSAsExpression is produced for `expr as const` assertions.
+  // We want to get to the underlying expression so that the rest of the
+  // loader logic can work unchanged.
+  // There could theoretically be multiple nested `as const` assertions, so we
+  // unwrap in a loop.
+  // eslint-disable-next-line no-constant-condition
+  while (t.isTSAsExpression(current)) {
+    current = current.expression;
+  }
+  return current;
+}
 
-      if (t.isStringLiteral(prop.value)) {
-        _.set(result, currentPath, prop.value.value);
-      } else if (t.isObjectExpression(prop.value)) {
-        extractStringsFromObjectExpression(prop.value, result, currentPath);
-      } else if (t.isArrayExpression(prop.value)) {
-        extractStringsFromArrayExpression(prop.value, result, currentPath);
+/**
+ * Recursively converts an `ObjectExpression` into a plain JavaScript object that
+ * only contains the string-literal values we care about. Non-string primitives
+ * (numbers, booleans, etc.) are ignored.
+ */
+function objectExpressionToObject(
+  objectExpression: t.ObjectExpression,
+): Record<string, any> {
+  const obj: Record<string, any> = {};
+
+  objectExpression.properties.forEach((prop) => {
+    if (!t.isObjectProperty(prop)) return;
+
+    const key = getPropertyKey(prop);
+
+    if (t.isStringLiteral(prop.value)) {
+      obj[key] = prop.value.value;
+    } else if (t.isObjectExpression(prop.value)) {
+      const nested = objectExpressionToObject(prop.value);
+      if (Object.keys(nested).length > 0) {
+        obj[key] = nested;
+      }
+    } else if (t.isArrayExpression(prop.value)) {
+      const arr = arrayExpressionToArray(prop.value);
+      if (arr.length > 0) {
+        obj[key] = arr;
       }
     }
   });
+
+  return obj;
 }
 
 /**
- * Extract string literals from an array expression
+ * Recursively converts an `ArrayExpression` into a JavaScript array that
+ * contains string literals and nested objects/arrays when relevant.
  */
-function extractStringsFromArrayExpression(
-  arrayExpression: t.ArrayExpression,
-  result: Record<string, any>,
-  path: string,
-): void {
-  arrayExpression.elements.forEach((element, index) => {
-    const currentPath = `${path}/${index}`;
+function arrayExpressionToArray(arrayExpression: t.ArrayExpression): any[] {
+  const arr: any[] = [];
+
+  arrayExpression.elements.forEach((element) => {
+    if (!element) return; // holes in the array
 
     if (t.isStringLiteral(element)) {
-      _.set(result, currentPath, element.value);
+      arr.push(element.value);
     } else if (t.isObjectExpression(element)) {
-      extractStringsFromObjectExpression(element, result, currentPath);
+      const nestedObj = objectExpressionToObject(element);
+      arr.push(nestedObj);
     } else if (t.isArrayExpression(element)) {
-      extractStringsFromArrayExpression(element, result, currentPath);
+      arr.push(arrayExpressionToArray(element));
     }
   });
+
+  return arr;
 }
 
-/**
- * Extract string literals from an exported identifier (variable)
- */
-function extractStringsFromExportedIdentifier(
-  path: NodePath<t.ExportDefaultDeclaration>,
-  result: Record<string, any>,
-  basePath: string,
-): void {
-  const exportName = (path.node.declaration as t.Identifier).name;
-  const binding = path.scope.bindings[exportName];
+// ------------------ updating helpers (nested data) ------------------------
 
-  if (binding && binding.path.node) {
-    const bindingPath = binding.path;
-
-    if (t.isVariableDeclarator(bindingPath.node) && bindingPath.node.init) {
-      if (t.isObjectExpression(bindingPath.node.init)) {
-        extractStringsFromObjectExpression(
-          bindingPath.node.init,
-          result,
-          basePath,
-        );
-      } else if (t.isArrayExpression(bindingPath.node.init)) {
-        extractStringsFromArrayExpression(
-          bindingPath.node.init,
-          result,
-          basePath,
-        );
-      }
-    }
-  }
-}
-
-/**
- * Update string literals in a default export with new values
- */
 function updateStringsInDefaultExport(
   ast: t.File,
   data: Record<string, any>,
@@ -215,13 +187,18 @@ function updateStringsInDefaultExport(
 
   traverse(ast, {
     ExportDefaultDeclaration(path: NodePath<t.ExportDefaultDeclaration>) {
-      if (t.isObjectExpression(path.node.declaration)) {
-        modified =
-          updateStringsInObjectExpression(path.node.declaration, data, "") ||
-          modified;
-      } else if (t.isIdentifier(path.node.declaration)) {
-        modified =
-          updateStringsInExportedIdentifier(path, data, "") || modified;
+      const { declaration } = path.node;
+
+      const decl = unwrapTSAsExpression(declaration);
+
+      if (t.isObjectExpression(decl)) {
+        modified = updateStringsInObjectExpression(decl, data) || modified;
+      } else if (t.isArrayExpression(decl)) {
+        if (Array.isArray(data)) {
+          modified = updateStringsInArrayExpression(decl, data) || modified;
+        }
+      } else if (t.isIdentifier(decl)) {
+        modified = updateStringsInExportedIdentifier(path, data) || modified;
       }
     },
   });
@@ -229,166 +206,103 @@ function updateStringsInDefaultExport(
   return modified;
 }
 
-/**
- * Update string literals in an object expression with new values
- */
 function updateStringsInObjectExpression(
   objectExpression: t.ObjectExpression,
   data: Record<string, any>,
-  path: string,
 ): boolean {
   let modified = false;
 
   objectExpression.properties.forEach((prop) => {
-    if (t.isObjectProperty(prop)) {
-      const key = getPropertyKey(prop);
-      const currentPath = path ? `${path}/${key}` : key;
+    if (!t.isObjectProperty(prop)) return;
 
-      if (t.isStringLiteral(prop.value)) {
-        if (data[currentPath] !== undefined) {
-          prop.value.value = data[currentPath];
-          modified = true;
-        } else if (path === "" && data[key] !== undefined) {
-          prop.value.value = data[key];
-          modified = true;
-        }
-      } else if (t.isObjectExpression(prop.value)) {
-        if (data[key] && typeof data[key] === "object") {
-          const subModified = updateStringsInObjectExpression(
-            prop.value,
-            data[key],
-            "",
-          );
-          modified = subModified || modified;
-        } else {
-          const subModified = updateStringsInObjectExpression(
-            prop.value,
-            data,
-            currentPath,
-          );
-          modified = subModified || modified;
-        }
-      } else if (t.isArrayExpression(prop.value)) {
-        if (data[key] && Array.isArray(data[key])) {
-          const subModified = updateStringsInArrayExpression(
-            prop.value,
-            data[key],
-            "",
-          );
-          modified = subModified || modified;
-        } else {
-          const subModified = updateStringsInArrayExpression(
-            prop.value,
-            data,
-            currentPath,
-          );
-          modified = subModified || modified;
-        }
+    const key = getPropertyKey(prop);
+    const incomingVal = data?.[key];
+
+    if (incomingVal === undefined) {
+      // nothing to update for this key
+      return;
+    }
+
+    if (t.isStringLiteral(prop.value) && typeof incomingVal === "string") {
+      if (prop.value.value !== incomingVal) {
+        prop.value.value = incomingVal;
+        modified = true;
       }
+    } else if (
+      t.isObjectExpression(prop.value) &&
+      typeof incomingVal === "object" &&
+      !Array.isArray(incomingVal)
+    ) {
+      const subModified = updateStringsInObjectExpression(
+        prop.value,
+        incomingVal,
+      );
+      modified = subModified || modified;
+    } else if (t.isArrayExpression(prop.value) && Array.isArray(incomingVal)) {
+      const subModified = updateStringsInArrayExpression(
+        prop.value,
+        incomingVal,
+      );
+      modified = subModified || modified;
     }
   });
 
   return modified;
 }
 
-/**
- * Update string literals in an array expression
- */
 function updateStringsInArrayExpression(
   arrayExpression: t.ArrayExpression,
-  data: Record<string, any> | any[],
-  path: string,
+  incoming: any[],
 ): boolean {
   let modified = false;
 
   arrayExpression.elements.forEach((element, index) => {
-    const currentPath = `${path}/${index}`;
+    if (!element) return;
 
-    if (t.isStringLiteral(element)) {
-      if (Array.isArray(data) && data[index] !== undefined) {
-        element.value = data[index];
+    const incomingVal = incoming?.[index];
+    if (incomingVal === undefined) return;
+
+    if (t.isStringLiteral(element) && typeof incomingVal === "string") {
+      if (element.value !== incomingVal) {
+        element.value = incomingVal;
         modified = true;
-      } else if (!Array.isArray(data) && data[currentPath] !== undefined) {
-        element.value = data[currentPath];
-        modified = true;
       }
-    } else if (t.isObjectExpression(element)) {
-      if (
-        Array.isArray(data) &&
-        data[index] &&
-        typeof data[index] === "object"
-      ) {
-        const subModified = updateStringsInObjectExpression(
-          element,
-          data[index],
-          "",
-        );
-        modified = subModified || modified;
-      } else {
-        const subModified = updateStringsInObjectExpression(
-          element,
-          data,
-          currentPath,
-        );
-        modified = subModified || modified;
-      }
-    } else if (t.isArrayExpression(element)) {
-      if (Array.isArray(data) && data[index] && Array.isArray(data[index])) {
-        const subModified = updateStringsInArrayExpression(
-          element,
-          data[index],
-          "",
-        );
-        modified = subModified || modified;
-      } else {
-        const subModified = updateStringsInArrayExpression(
-          element,
-          data,
-          currentPath,
-        );
-        modified = subModified || modified;
-      }
+    } else if (
+      t.isObjectExpression(element) &&
+      typeof incomingVal === "object" &&
+      !Array.isArray(incomingVal)
+    ) {
+      const subModified = updateStringsInObjectExpression(element, incomingVal);
+      modified = subModified || modified;
+    } else if (t.isArrayExpression(element) && Array.isArray(incomingVal)) {
+      const subModified = updateStringsInArrayExpression(element, incomingVal);
+      modified = subModified || modified;
     }
   });
 
   return modified;
 }
 
-/**
- * Update string literals in an exported identifier (variable) with new values
- */
 function updateStringsInExportedIdentifier(
   path: NodePath<t.ExportDefaultDeclaration>,
   data: Record<string, any>,
-  basePath: string,
 ): boolean {
-  let modified = false;
   const exportName = (path.node.declaration as t.Identifier).name;
   const binding = path.scope.bindings[exportName];
 
-  if (binding && binding.path.node) {
-    const bindingPath = binding.path;
+  if (!binding || !binding.path.node) return false;
 
-    if (t.isVariableDeclarator(bindingPath.node) && bindingPath.node.init) {
-      if (t.isObjectExpression(bindingPath.node.init)) {
-        modified =
-          updateStringsInObjectExpression(
-            bindingPath.node.init,
-            data,
-            basePath,
-          ) || modified;
-      } else if (t.isArrayExpression(bindingPath.node.init)) {
-        modified =
-          updateStringsInArrayExpression(
-            bindingPath.node.init,
-            data,
-            basePath,
-          ) || modified;
-      }
+  if (t.isVariableDeclarator(binding.path.node) && binding.path.node.init) {
+    const initRaw = binding.path.node.init;
+    const init = initRaw ? unwrapTSAsExpression(initRaw) : initRaw;
+    if (t.isObjectExpression(init)) {
+      return updateStringsInObjectExpression(init, data);
+    } else if (t.isArrayExpression(init)) {
+      return updateStringsInArrayExpression(init, data as any[]);
     }
   }
 
-  return modified;
+  return false;
 }
 
 /**

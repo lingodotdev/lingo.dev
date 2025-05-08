@@ -1,8 +1,9 @@
 export default {
-  title: "Dies ist ein Titel",
+  title: "Hallo Welt",
   description: "Dies ist eine Beschreibung",
-  nested: {
-    title: "Dies ist ein verschachtelter Titel",
-    description: "Dies ist eine verschachtelte Beschreibung"
+  field1: "Hallo",
+  field2: "Welt",
+  field3: {
+    field4: "Hallo Welt"
   }
-};
+} as const;

@@ -1,7 +1,8 @@
 version: 1
 checksums:
   aeece0e59000b5e246fcd47641fde067:
-    title: 2cafb734db93144c6593f7afb62b50c0
+    title: 18b89a4c985977256f3f4aca14834f58
     description: 4759574560d93c33276f3c57a2d3f003
-    nested%2Ftitle: 29d4b80b3f4b541096dd3afd5410b70d
-    nested%2Fdescription: 17e151fe8e4ad556000dc1d2096d5f64
+    field1: f01e599cced8b7d7105329947b5096de
+    field2: 591116d7c70944a65821b8ac01f30e6a
+    field3/field4: 18b89a4c985977256f3f4aca14834f58
