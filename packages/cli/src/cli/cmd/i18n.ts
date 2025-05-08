@@ -108,9 +108,16 @@ export default new Command()
       ora.succeed("Localization configuration is valid");
 
       ora.start("Connecting to Lingo.dev Localization Engine...");
-      const auth = await validateAuth(settings);
-      authId = auth.id;
-      ora.succeed(`Authenticated as ${auth.email}`);
+      const isByokMode = i18nConfig?.provider && i18nConfig.provider.id !== "lingo";
+      
+      if (isByokMode) {
+        authId = null;
+        ora.succeed("Using external provider (BYOK mode)");
+      } else {
+        const auth = await validateAuth(settings);
+        authId = auth.id;
+        ora.succeed(`Authenticated as ${auth.email}`);
+      }
 
       trackEvent(authId, "cmd.i18n.start", {
         i18nConfig,
@@ -621,7 +628,7 @@ export default new Command()
         // if (flags.verbose) {
         //   ora.info("Cache file deleted.");
         // }
-        trackEvent(auth.id, "cmd.i18n.success", {
+        trackEvent(authId, "cmd.i18n.success", {
           i18nConfig,
           flags,
         });
