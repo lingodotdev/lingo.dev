@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.92.5
+
+### Patch Changes
+
+- [#770](https://github.com/lingodotdev/lingo.dev/pull/770) [`d25eb8c`](https://github.com/lingodotdev/lingo.dev/commit/d25eb8cb6be5e3b24a4940651776f23bdc84ed56) Thanks [@vrcprl](https://github.com/vrcprl)! - upd package
+
 ## 0.92.4
 
 ### Patch Changes
