@@ -214,6 +214,9 @@ importers:
       micromark-extension-gfm:
         specifier: ^3.0.0
         version: 3.0.0
+      node-machine-id:
+        specifier: ^1.1.12
+        version: 1.1.12
       node-webvtt:
         specifier: ^1.9.4
         version: 1.9.4
