@@ -138,6 +138,12 @@ function objectExpressionToObject(
 
     if (t.isStringLiteral(prop.value)) {
       obj[key] = prop.value.value;
+    } else if (
+      t.isTemplateLiteral(prop.value) &&
+      prop.value.expressions.length === 0
+    ) {
+      // Handle template literals without expressions as plain strings
+      obj[key] = prop.value.quasis[0].value.cooked ?? "";
     } else if (t.isObjectExpression(prop.value)) {
       const nested = objectExpressionToObject(prop.value);
       if (Object.keys(nested).length > 0) {
@@ -166,6 +172,11 @@ function arrayExpressionToArray(arrayExpression: t.ArrayExpression): any[] {
 
     if (t.isStringLiteral(element)) {
       arr.push(element.value);
+    } else if (
+      t.isTemplateLiteral(element) &&
+      element.expressions.length === 0
+    ) {
+      arr.push(element.quasis[0].value.cooked ?? "");
     } else if (t.isObjectExpression(element)) {
       const nestedObj = objectExpressionToObject(element);
       arr.push(nestedObj);
@@ -229,6 +240,18 @@ function updateStringsInObjectExpression(
         modified = true;
       }
     } else if (
+      t.isTemplateLiteral(prop.value) &&
+      prop.value.expressions.length === 0 &&
+      typeof incomingVal === "string"
+    ) {
+      const currentVal = prop.value.quasis[0].value.cooked ?? "";
+      if (currentVal !== incomingVal) {
+        // Replace the existing template literal with an updated one
+        prop.value.quasis[0].value.raw = incomingVal;
+        prop.value.quasis[0].value.cooked = incomingVal;
+        modified = true;
+      }
+    } else if (
       t.isObjectExpression(prop.value) &&
       typeof incomingVal === "object" &&
       !Array.isArray(incomingVal)
@@ -265,6 +288,17 @@ function updateStringsInArrayExpression(
     if (t.isStringLiteral(element) && typeof incomingVal === "string") {
       if (element.value !== incomingVal) {
         element.value = incomingVal;
+        modified = true;
+      }
+    } else if (
+      t.isTemplateLiteral(element) &&
+      element.expressions.length === 0 &&
+      typeof incomingVal === "string"
+    ) {
+      const currentVal = element.quasis[0].value.cooked ?? "";
+      if (currentVal !== incomingVal) {
+        element.quasis[0].value.raw = incomingVal;
+        element.quasis[0].value.cooked = incomingVal;
         modified = true;
       }
     } else if (
@@ -313,6 +347,8 @@ function getPropertyKey(prop: t.ObjectProperty): string {
     return prop.key.name;
   } else if (t.isStringLiteral(prop.key)) {
     return prop.key.value;
+  } else if (t.isNumericLiteral(prop.key)) {
+    return String(prop.key.value);
   }
   return String(prop.key);
 }
