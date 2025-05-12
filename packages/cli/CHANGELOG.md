@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.92.7
+
+### Patch Changes
+
+- [#772](https://github.com/lingodotdev/lingo.dev/pull/772) [`f859352`](https://github.com/lingodotdev/lingo.dev/commit/f859352a8d573bb0cff7a79790e5bb94ee8d16a3) Thanks [@vrcprl](https://github.com/vrcprl)! - fix error tracking
+
 ## 0.92.6
 
 ### Patch Changes
