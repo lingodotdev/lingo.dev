@@ -97,7 +97,6 @@ export default new Command()
 
     let hasErrors = false;
     let authId: string | null = null;
-    let lastError: Error | null = null;
     try {
       ora.start("Loading configuration...");
       const i18nConfig = getConfig();
@@ -603,7 +602,6 @@ export default new Command()
                 } else {
                   bucketOra.fail(error.message);
                   hasErrors = true;
-                  lastError = error;
                 }
               }
             }
@@ -621,7 +619,6 @@ export default new Command()
           } else {
             ora.fail(error.message);
             hasErrors = true;
-            lastError = error;
           }
         }
       }
@@ -640,7 +637,6 @@ export default new Command()
         ora.warn("Localization completed with errors.");
         trackEvent(authId || "unknown", "cmd.i18n.error", {
           flags,
-          error: lastError?.message || "Unknown error occurred",
         });
       }
     } catch (error: any) {

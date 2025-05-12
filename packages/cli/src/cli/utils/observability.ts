@@ -19,9 +19,9 @@ export default async function trackEvent(
           JSON.stringify(properties, (key, value) => {
             if (value instanceof Error) {
               return {
-                name: value.name,
-                message: value.message,
-                stack: value.stack,
+                name: value?.name,
+                message: value?.message,
+                stack: value?.stack,
               };
             }
             return value;
