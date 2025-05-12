@@ -71,9 +71,13 @@ describe("typescript loader", () => {
 
     const result = await loader.push("es", data);
 
-    expect(result).toContain('greeting: "Hola, mundo!"');
-    expect(result).toContain('farewell: "Adi');
-    expect(result).toContain("number: 42");
+    expect(result).toBe(dedent`
+      export default {
+        greeting: "Hola, mundo!",
+        farewell: "Adiós!",
+        number: 42
+      };
+      `);
   });
 
   it("should extract string literals from nested objects", async () => {
@@ -274,4 +278,69 @@ describe("typescript loader", () => {
       farewell: "Goodbye!",
     });
   });
+
+  it("should extract and update string literals including multiline template literals, URLs, and numeric keys", async () => {
+    const input = dedent`
+      export default {
+        multilineContent: \`Multiline test
+
+  Super content
+
+  Includes also "test"\`,
+        testUrl: 'https://someurl.com',
+        6: '6. Class',
+        9: '9. Class',
+      };
+    `;
+
+    const loader = createTypescriptLoader().setDefaultLocale("en");
+
+    // Pull phase – ensure the loader extracts all expected strings
+    const pulled = await loader.pull("en", input);
+
+    expect(pulled).toEqual({
+      multilineContent: dedent`
+      Multiline test
+
+      Super content
+
+      Includes also "test"`,
+      testUrl: "https://someurl.com",
+      6: "6. Class",
+      9: "9. Class",
+    });
+
+    // Push phase – modify some values and ensure they are written back
+    const updatedData = {
+      ...pulled,
+      multilineContent: dedent`
+      Prueba multilínea
+
+      Contenido superior
+
+      Incluye también "prueba"`,
+      testUrl: "https://algunaurl.com",
+      6: "6. Clase",
+      9: "9. Clase",
+    } as any;
+
+    const result = await loader.push("es", updatedData);
+
+    expect(result).toBe(
+      `
+export default {
+  multilineContent: \`Prueba multilínea
+
+Contenido superior
+
+Incluye también "prueba"\`,
+  testUrl: "https://algunaurl.com",
+  6: "6. Clase",
+  9: "9. Clase"
+};
+      `.trim(),
+    );
+  });
+
+  // TODO
 });
