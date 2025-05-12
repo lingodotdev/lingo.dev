@@ -108,8 +108,9 @@ export default new Command()
       ora.succeed("Localization configuration is valid");
 
       ora.start("Connecting to Lingo.dev Localization Engine...");
-      const isByokMode = i18nConfig?.provider && i18nConfig.provider.id !== "lingo";
-      
+      const isByokMode =
+        i18nConfig?.provider && i18nConfig.provider.id !== "lingo";
+
       if (isByokMode) {
         authId = null;
         ora.succeed("Using external provider (BYOK mode)");
@@ -634,6 +635,9 @@ export default new Command()
         });
       } else {
         ora.warn("Localization completed with errors.");
+        trackEvent(authId || "unknown", "cmd.i18n.error", {
+          flags,
+        });
       }
     } catch (error: any) {
       ora.fail(error.message);

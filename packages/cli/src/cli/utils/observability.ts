@@ -14,21 +14,6 @@ export default async function trackEvent(
     const actualId = distinctId || `device-${machineIdSync()}`;
 
     const { PostHog } = await import("posthog-node");
-    const safeProperties = properties
-      ? JSON.parse(
-          JSON.stringify(properties, (key, value) => {
-            if (value instanceof Error) {
-              return {
-                name: value.name,
-                message: value.message,
-                stack: value.stack,
-              };
-            }
-            return value;
-          }),
-        )
-      : {};
-
     const posthog = new PostHog(
       "phc_eR0iSoQufBxNY36k0f0T15UvHJdTfHlh8rJcxsfhfXk",
       {
@@ -42,7 +27,7 @@ export default async function trackEvent(
       distinctId: actualId,
       event,
       properties: {
-        ...safeProperties,
+        ...properties,
         meta: {
           version: process.env.npm_package_version,
           isCi: process.env.CI === "true",
