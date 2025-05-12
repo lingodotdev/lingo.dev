@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.92.6
+
+### Patch Changes
+
+- [#775](https://github.com/lingodotdev/lingo.dev/pull/775) [`f2e416a`](https://github.com/lingodotdev/lingo.dev/commit/f2e416a02456f7e35dfa81822d319911202e6b43) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - template strings support for ts loader
+
 ## 0.92.5
 
 ### Patch Changes
