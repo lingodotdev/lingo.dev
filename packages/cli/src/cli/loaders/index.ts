@@ -309,8 +309,8 @@ export default function createBucketLoader(
         createTextFileLoader(bucketPathPattern),
         createPrettierLoader({ parser: "typescript", bucketPathPattern }),
         createTypescriptLoader(),
-        createSyncLoader(),
         createFlatLoader(),
+        createSyncLoader(),
         createUnlocalizableLoader(
           options.isCacheRestore,
           options.returnUnlocalizedKeys,
