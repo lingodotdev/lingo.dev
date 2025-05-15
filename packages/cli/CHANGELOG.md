@@ -1,5 +1,15 @@
 # lingo.dev
 
+## 0.92.8
+
+### Patch Changes
+
+- [#778](https://github.com/lingodotdev/lingo.dev/pull/778) [`3f2aba9`](https://github.com/lingodotdev/lingo.dev/commit/3f2aba9c1d5834faf89a26194f1f3d9f9b878d40) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - add ignoredKeys
+
+- Updated dependencies [[`3f2aba9`](https://github.com/lingodotdev/lingo.dev/commit/3f2aba9c1d5834faf89a26194f1f3d9f9b878d40)]:
+  - @lingo.dev/_spec@0.33.1
+  - @lingo.dev/_sdk@0.7.41
+
 ## 0.92.7
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @lingo.dev/\_spec
 
+## 0.33.1
+
+### Patch Changes
+
+- [#778](https://github.com/lingodotdev/lingo.dev/pull/778) [`3f2aba9`](https://github.com/lingodotdev/lingo.dev/commit/3f2aba9c1d5834faf89a26194f1f3d9f9b878d40) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - add ignoredKeys
+
 ## 0.33.0
 
 ### Minor Changes
