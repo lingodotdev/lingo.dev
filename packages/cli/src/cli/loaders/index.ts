@@ -38,6 +38,7 @@ import createMdxCodePlaceholderLoader from "./mdx2/code-placeholder";
 import createLocalizableMdxDocumentLoader from "./mdx2/localizable-document";
 import createMdxSectionsSplit2Loader from "./mdx2/sections-split-2";
 import createMdxLockedPatternsLoader from "./mdx2/locked-patterns";
+import createIgnoredKeysLoader from "./ignored-keys";
 
 type BucketLoaderOptions = {
   isCacheRestore: boolean;
@@ -52,6 +53,7 @@ export default function createBucketLoader(
   options: BucketLoaderOptions,
   lockedKeys?: string[],
   lockedPatterns?: string[],
+  ignoredKeys?: string[],
 ): ILoader<void, Record<string, string>> {
   switch (bucketType) {
     default:
@@ -311,6 +313,8 @@ export default function createBucketLoader(
         createTypescriptLoader(),
         createFlatLoader(),
         createSyncLoader(),
+        createLockedKeysLoader(lockedKeys || [], options.isCacheRestore),
+        createIgnoredKeysLoader(ignoredKeys || []),
         createUnlocalizableLoader(
           options.isCacheRestore,
           options.returnUnlocalizedKeys,
