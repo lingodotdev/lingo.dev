@@ -14,6 +14,14 @@ export abstract class IntegrationFlow implements IIntegrationFlow {
     protected ora: Ora,
     protected platformKit: PlatformKit,
   ) {}
+  // Added detailed logging method for CI environments
+  protected log(message: string, level: "info" | "debug" | "error" = "info") {
+    if (level === "debug" && !process.env.LINGO_DEBUG) {
+      return;
+    }
+    const timestamp = new Date().toISOString();
+    console.log(`[${timestamp}] [Lingo.dev] [${level.toUpperCase()}] ${message}`);
+  }
 
   abstract run(): Promise<boolean>;
 }
