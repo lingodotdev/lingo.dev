@@ -1,5 +1,15 @@
 # lingo.dev
 
+## 0.92.9
+
+### Patch Changes
+
+- [#782](https://github.com/lingodotdev/lingo.dev/pull/782) [`d913c20`](https://github.com/lingodotdev/lingo.dev/commit/d913c20fdf0086741c8b50fd4ddfb38eae304a24) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - parallel processing
+
+- Updated dependencies [[`d913c20`](https://github.com/lingodotdev/lingo.dev/commit/d913c20fdf0086741c8b50fd4ddfb38eae304a24)]:
+  - @lingo.dev/_spec@0.33.2
+  - @lingo.dev/_sdk@0.7.42
+
 ## 0.92.8
 
 ### Patch Changes
