@@ -45,8 +45,8 @@ export function createBasicTranslator(
         {
           role: "user",
           content: JSON.stringify({
-            sourceLocale: "en",
-            targetLocale: "es",
+            sourceLocale: input.sourceLocale,
+            targetLocale: input.targetLocale,
             data: input.processableData,
           }),
         },
