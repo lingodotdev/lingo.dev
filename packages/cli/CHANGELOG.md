@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.92.11
+
+### Patch Changes
+
+- [#787](https://github.com/lingodotdev/lingo.dev/pull/787) [`3c27920`](https://github.com/lingodotdev/lingo.dev/commit/3c27920843b37adc71f08a49aa6c0d482decea86) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - fix byok params
+
 ## 0.92.10
 
 ### Patch Changes
