@@ -1,0 +1,4 @@
+<resources>
+  <string name="sign_in_agreeement_text_1">"Я принимаю "</string>
+  <string name="sign_in_agreeement_text_2">" и подтверждаю "</string>
+</resources>

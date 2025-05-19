@@ -13,7 +13,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>lld</string>
         <key>zero</key>
-        <string>No hay elementos</string>
+        <string>Sin elementos</string>
         <key>one</key>
         <string>Un elemento</string>
         <key>two</key>
@@ -53,7 +53,7 @@
     <key>greeting</key>
     <string>¡Hola!</string>
     <key>welcome_user</key>
-    <string>¡Bienvenido, %@!</string>
+    <string>¡Bienvenido/a, %@!</string>
     <key>complex_format</key>
     <string>El usuario %1$@ tiene %2$lld puntos y un saldo de $%3$.2f</string>
     <key>date_format</key>

@@ -1,3 +1,3 @@
-id,en,es
-dashboard.title,Dashboard,Panel de control
-greeting.message,Hello world!,¡Hola mundo!
+id,en,es,ru
+dashboard.title,Dashboard,Panel de control,Панель управления
+greeting.message,Hello world!,¡Hola mundo!,"Привет, мир!"

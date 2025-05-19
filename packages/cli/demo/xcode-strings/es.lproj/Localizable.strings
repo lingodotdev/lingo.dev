@@ -1,9 +1,9 @@
 "greeting" = "¡Hola!";
-"welcome_user" = "¡Bienvenido, %@!";
+"welcome_user" = "¡Bienvenido/a, %@!";
 "complex_format" = "El usuario %1$@ tiene %2$lld puntos y un saldo de $%3$.2f";
 "date_format" = "Hoy es %@";
 "multiline_html" = "Esto es una cadena <b>multilínea</b> con:\n• Etiquetas HTML\n• Caracteres especiales: ©®™\n• Un <a href=\"https://example.com\">enlace</a>";
-"items_count_zero" = "No hay elementos";
+"items_count_zero" = "Sin elementos";
 "items_count_one" = "Un elemento";
 "items_count_two" = "Dos elementos";
 "items_count_few" = "%lld elementos";

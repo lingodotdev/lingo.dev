@@ -36,7 +36,8 @@ export function createAuthenticator(params: AuthenticatorParams) {
 
         return null;
       } catch (error) {
-        const isNetworkError = error instanceof TypeError && error.message === "fetch failed";
+        const isNetworkError =
+          error instanceof TypeError && error.message === "fetch failed";
         if (isNetworkError) {
           throw new CLIError({
             message: `Failed to connect to the API at ${params.apiUrl}. Please check your connection and try again.`,
