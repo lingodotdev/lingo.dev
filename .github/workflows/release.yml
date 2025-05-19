@@ -66,6 +66,7 @@ jobs:
         with:
           api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
           pull-request: true
+          version: 0.92.9
         env:
           GH_TOKEN: ${{ github.token }}
 
