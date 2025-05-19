@@ -1,5 +1,11 @@
 # @lingo.dev/\_spec
 
+## 0.33.2
+
+### Patch Changes
+
+- [#782](https://github.com/lingodotdev/lingo.dev/pull/782) [`d913c20`](https://github.com/lingodotdev/lingo.dev/commit/d913c20fdf0086741c8b50fd4ddfb38eae304a24) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - parallel processing
+
 ## 0.33.1
 
 ### Patch Changes
