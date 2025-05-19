@@ -11,7 +11,7 @@ runs:
   steps:
     - name: Run
       run: |
-        npx lingo.dev@latest ci \
+        npx lingo.dev@${{ inputs.version }} ci \
           --api-key "${{ inputs.api-key }}" \
           --pull-request "${{ inputs.pull-request }}" \
           --commit-message "${{ inputs.commit-message }}" \
@@ -20,6 +20,10 @@ runs:
           --process-own-commits "${{ inputs.process-own-commits }}"
       shell: bash
 inputs:
+  version:
+    description: "Lingo.dev CLI version"
+    default: "latest"
+    required: false
   api-key:
     description: "Lingo.dev Platform API Key"
     required: true
