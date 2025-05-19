@@ -12,7 +12,7 @@ export default function createProcessor(
   provider: I18nConfig["provider"],
   params: { apiKey: string; apiUrl: string },
 ): LocalizerFn {
-  if (!provider || provider.id === "lingo") {
+  if (!provider) {
     const result = createLingoLocalizer(params);
     return result;
   } else {
