@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.92.10
+
+### Patch Changes
+
+- [#785](https://github.com/lingodotdev/lingo.dev/pull/785) [`af1315a`](https://github.com/lingodotdev/lingo.dev/commit/af1315a3fd1f3247dd56f7a8d5d7101debd43a98) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - race condition in lingo.dev run
+
 ## 0.92.9
 
 ### Patch Changes
