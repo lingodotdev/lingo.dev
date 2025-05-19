@@ -74,9 +74,7 @@ export async function renderSummary(ctx: CmdRunContext) {
     .values()
     .filter((r) => r.status === "skipped")
     .toArray().length;
-  console.log(
-    `• ${chalk.hex(colors.yellow)(skippedTasksCount)} restored from cache`,
-  );
+  console.log(`• ${chalk.hex(colors.yellow)(skippedTasksCount)} from cache`);
 
   const succeededTasksCount = ctx.results
     .values()
