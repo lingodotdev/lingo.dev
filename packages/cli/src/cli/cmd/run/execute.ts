@@ -37,7 +37,7 @@ export default async function execute(input: CmdRunContext) {
           }
 
           const i18nLimiter = pLimit(effectiveConcurrency);
-          const lockfileLimiter = pLimit(1);
+          const ioLimiter = pLimit(1);
           const workersCount = effectiveConcurrency;
 
           const workerTasks: ListrTask[] = [];
@@ -49,7 +49,7 @@ export default async function execute(input: CmdRunContext) {
               createWorkerTask({
                 ctx,
                 assignedTasks,
-                lockfileLimiter,
+                ioLimiter,
                 i18nLimiter,
                 onDone() {
                   task.title = createExecutionProgressMessage(ctx);
@@ -128,7 +128,7 @@ function createLoaderForTask(assignedTask: CmdRunTask) {
 function createWorkerTask(args: {
   ctx: CmdRunContext;
   assignedTasks: CmdRunTask[];
-  lockfileLimiter: LimitFunction;
+  ioLimiter: LimitFunction;
   i18nLimiter: LimitFunction;
   onDone: () => void;
 }): ListrTask {
@@ -198,9 +198,13 @@ function createWorkerTask(args: {
               processedTargetData,
             );
 
-            await bucketLoader.push(assignedTask.targetLocale, finalTargetData);
+            await args.ioLimiter(async () => {
+              await bucketLoader.pull(assignedTask.sourceLocale);
+              await bucketLoader.push(
+                assignedTask.targetLocale,
+                finalTargetData,
+              );
 
-            await args.lockfileLimiter(async () => {
               const checksums =
                 await deltaProcessor.createChecksums(sourceData);
               await deltaProcessor.saveChecksums(checksums);
