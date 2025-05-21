@@ -48,6 +48,37 @@ describe("createVariableLoader", () => {
       const result = await loader.pull("en", {});
       expect(result).toEqual({});
     });
+
+    it("preserves variable order for target locale during push", async () => {
+      const loader = createLoader("ieee");
+
+      const sourceInput = {
+        message: "Value: %d and %f",
+      };
+
+      // Pull the default (source) locale first
+      await loader.pull("en", sourceInput);
+
+      // Target locale has variables in different order due to linguistic specifics
+      const targetInput = {
+        message: "Wert: %f und %d",
+      };
+
+      // Pull the target locale to capture its variable ordering
+      await loader.pull("de", targetInput);
+
+      // Translator updates the string while keeping placeholders
+      const payload = {
+        message: "[aktualisiert] Wert: {variable:0} und {variable:1}",
+      };
+
+      // Push the updated translation back
+      const result = await loader.push("de", payload);
+
+      expect(result).toEqual({
+        message: "[aktualisiert] Wert: %f und %d",
+      });
+    });
   });
 
   describe("python format", () => {
@@ -82,6 +113,33 @@ describe("createVariableLoader", () => {
       expect(result).toEqual({
         simple: "Hello %(name)s!",
         multiple: "Value: %(num)d and %(float)f",
+      });
+    });
+
+    it("preserves variable order for target locale during push", async () => {
+      const loader = createLoader("python");
+
+      const sourceInput = {
+        message: "Hello %(name)s, you have %(count)d items.",
+      };
+
+      // Pull default locale first
+      await loader.pull("en", sourceInput);
+
+      // Target locale with reversed variable order
+      const targetInput = {
+        message: "Du hast %(count)d Artikel, %(name)s.",
+      };
+      await loader.pull("de", targetInput);
+
+      const payload = {
+        message: "[aktualisiert] Du hast {variable:0} Artikel, {variable:1}.",
+      };
+
+      const result = await loader.push("de", payload);
+
+      expect(result).toEqual({
+        message: "[aktualisiert] Du hast %(count)d Artikel, %(name)s.",
       });
     });
   });
