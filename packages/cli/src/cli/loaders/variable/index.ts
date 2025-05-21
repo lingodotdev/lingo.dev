@@ -58,14 +58,19 @@ function variableExtractLoader(
   });
 }
 
-function variableContentLoader(): ILoader<Record<string, VariableExtractionPayload>, Record<string, string>> {
+function variableContentLoader(): ILoader<
+  Record<string, VariableExtractionPayload>,
+  Record<string, string>
+> {
   return createLoader({
     pull: async (locale, input) => {
       const result = _.mapValues(input, (payload) => payload.value);
       return result;
     },
-    push: async (locale, data, originalInput) => {
-      const result: Record<string, VariableExtractionPayload> = _.cloneDeep(originalInput || {});
+    push: async (locale, data, originalInput, defaultLocale, pullInput) => {
+      const result: Record<string, VariableExtractionPayload> = _.cloneDeep(
+        pullInput || {},
+      );
       for (const [key, originalValueObj] of Object.entries(result)) {
         result[key] = {
           ...originalValueObj,
