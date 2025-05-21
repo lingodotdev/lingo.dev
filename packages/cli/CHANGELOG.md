@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.92.12
+
+### Patch Changes
+
+- [#792](https://github.com/lingodotdev/lingo.dev/pull/792) [`2bce8de`](https://github.com/lingodotdev/lingo.dev/commit/2bce8deabd06b413b8f284ca102fd0669aa8aaf3) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - fix variables ordering mismatch
+
 ## 0.92.11
 
 ### Patch Changes
