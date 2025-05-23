@@ -2,4 +2,4 @@
 "lingo.dev": patch
 ---
 
-add chuncking to cli with byok model
+add chunking to cli with byok model
