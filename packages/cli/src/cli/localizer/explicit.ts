@@ -6,6 +6,7 @@ import dedent from "dedent";
 import { ILocalizer, LocalizerData } from "./_types";
 import { LanguageModel, Message, generateText } from "ai";
 import { colors } from "../constants";
+import { jsonrepair } from "jsonrepair";
 
 export default function createExplicitLocalizer(
   provider: NonNullable<I18nConfig["provider"]>,
@@ -135,8 +136,13 @@ function createAiSdkLocalizer(params: {
       });
 
       const result = JSON.parse(response.text);
+      const index = result.data.indexOf("{");
+      const lastIndex = result.data.lastIndexOf("}");
+      const trimmed = result.data.slice(index, lastIndex + 1);
+      const repaired = jsonrepair(trimmed);
+      const finalResult = JSON.parse(repaired);
 
-      return result.data;
+      return finalResult.data;
     },
   };
 }
