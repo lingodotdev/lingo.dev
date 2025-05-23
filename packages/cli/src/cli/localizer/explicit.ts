@@ -142,7 +142,7 @@ function createAiSdkLocalizer(params: {
       const repaired = jsonrepair(trimmed);
       const finalResult = JSON.parse(repaired);
 
-      return finalResult;
+      return finalResult.data;
     },
   };
 }
