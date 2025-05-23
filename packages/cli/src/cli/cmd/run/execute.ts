@@ -191,12 +191,26 @@ function createWorkerTask(args: {
               },
             );
 
-            const finalTargetData = _.merge(
+            let finalTargetData = _.merge(
               {},
               sourceData,
               targetData,
               processedTargetData,
             );
+
+            finalTargetData = _.chain(finalTargetData)
+              .entries()
+              .map(([key, value]) => {
+                const renaming = delta.renamed.find(
+                  ([oldKey]) => oldKey === key,
+                );
+                if (!renaming) {
+                  return [key, value];
+                }
+                return [renaming[1], value];
+              })
+              .fromPairs()
+              .value();
 
             await args.ioLimiter(async () => {
               await bucketLoader.pull(assignedTask.sourceLocale);
