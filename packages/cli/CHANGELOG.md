@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.92.14
+
+### Patch Changes
+
+- [#801](https://github.com/lingodotdev/lingo.dev/pull/801) [`3764be3`](https://github.com/lingodotdev/lingo.dev/commit/3764be3b23ee8af474ebc4751e137102af315e5e) Thanks [@vrcprl](https://github.com/vrcprl)! - add chunking to cli with byok model
+
 ## 0.92.13
 
 ### Patch Changes
