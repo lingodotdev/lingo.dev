@@ -200,79 +200,6 @@ export default new Command()
       } else {
         ora.succeed("Localization cache loaded");
       }
-      // Handle json key renames
-      for (const bucket of buckets) {
-        if (bucket.type !== "json") {
-          continue;
-        }
-        ora.start("Validating localization state...");
-        for (const bucketPath of bucket.paths) {
-          const sourceLocale = resolveOverriddenLocale(
-            i18nConfig!.locale.source,
-            bucketPath.delimiter,
-          );
-          const deltaProcessor = createDeltaProcessor(bucketPath.pathPattern);
-          const sourcePath = path.join(
-            process.cwd(),
-            bucketPath.pathPattern.replace("[locale]", sourceLocale),
-          );
-          const sourceContent = tryReadFile(sourcePath, null);
-          const sourceData = JSON.parse(sourceContent || "{}");
-          const sourceFlattenedData = flatten(sourceData, {
-            delimiter: "/",
-            transformKey(key) {
-              return encodeURIComponent(key);
-            },
-          }) as Record<string, any>;
-
-          for (const _targetLocale of targetLocales) {
-            const targetLocale = resolveOverriddenLocale(
-              _targetLocale,
-              bucketPath.delimiter,
-            );
-            const targetPath = path.join(
-              process.cwd(),
-              bucketPath.pathPattern.replace("[locale]", targetLocale),
-            );
-            const targetContent = tryReadFile(targetPath, null);
-            const targetData = JSON.parse(targetContent || "{}");
-            const targetFlattenedData = flatten(targetData, {
-              delimiter: "/",
-              transformKey(key) {
-                return encodeURIComponent(key);
-              },
-            }) as Record<string, any>;
-
-            const checksums = await deltaProcessor.loadChecksums();
-            const delta = await deltaProcessor.calculateDelta({
-              sourceData: sourceFlattenedData,
-              targetData: targetFlattenedData,
-              checksums,
-            });
-            if (!delta.hasChanges) {
-              continue;
-            }
-
-            for (const [oldKey, newKey] of delta.renamed) {
-              targetFlattenedData[newKey] = targetFlattenedData[oldKey];
-              delete targetFlattenedData[oldKey];
-            }
-
-            const updatedTargetData = unflatten(targetFlattenedData, {
-              delimiter: "/",
-              transformKey(key) {
-                return decodeURIComponent(key);
-              },
-            }) as Record<string, any>;
-
-            await writeFile(
-              targetPath,
-              JSON.stringify(updatedTargetData, null, 2),
-            );
-          }
-        }
-        ora.succeed("Localization state check completed");
-      }
 
       if (flags.frozen) {
         ora.start("Checking for lockfile updates...");
@@ -488,6 +415,21 @@ export default new Command()
                   targetData,
                   processedTargetData,
                 );
+
+                // rename keys
+                finalTargetData = _.chain(finalTargetData)
+                  .entries()
+                  .map(([key, value]) => {
+                    const renaming = delta.renamed.find(
+                      ([oldKey, newKey]) => oldKey === key,
+                    );
+                    if (!renaming) {
+                      return [key, value];
+                    }
+                    return [renaming[1], value];
+                  })
+                  .fromPairs()
+                  .value();
 
                 if (flags.interactive) {
                   bucketOra.stop();
