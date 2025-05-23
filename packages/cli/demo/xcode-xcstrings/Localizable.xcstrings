@@ -14,6 +14,12 @@
             "state" : "translated",
             "value" : "My App"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "My App"
+          }
         }
       }
     },
@@ -29,6 +35,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cancelar"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отмена"
           }
         }
       }
@@ -46,6 +58,12 @@
             "state" : "translated",
             "value" : "Hecho"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Готово"
+          }
         }
       }
     },
@@ -61,6 +79,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "OK"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ОК"
           }
         }
       }
@@ -78,6 +102,12 @@
             "state" : "translated",
             "value" : "Guardar"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сохранить"
+          }
         }
       }
     },
@@ -94,6 +124,12 @@
             "state" : "translated",
             "value" : "Algo salió mal. Por favor, inténtelo de nuevo."
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Что-то пошло не так. Пожалуйста, попробуйте ещё раз."
+          }
         }
       }
     },
@@ -109,6 +145,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sin conexión a internet. Por favor, compruebe su configuración de red."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нет подключения к интернету. Проверьте настройки сети."
           }
         }
       }
@@ -127,6 +169,12 @@
             "state" : "translated",
             "value" : "¡Hola, %@!"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Привет, %@!"
+          }
         }
       }
     },
@@ -142,6 +190,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tareas de hoy"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Задачи на сегодня"
           }
         }
       }
@@ -159,6 +213,12 @@
             "state" : "translated",
             "value" : "Ver todo"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Посмотреть все"
+          }
         }
       }
     },
@@ -174,6 +234,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Crear cuenta"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Создать аккаунт"
           }
         }
       }
@@ -191,6 +257,12 @@
             "state" : "translated",
             "value" : "Dirección de correo electrónico"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Адрес электронной почты"
+          }
         }
       }
     },
@@ -206,6 +278,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "¿Olvidó su contraseña?"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Забыли пароль?"
           }
         }
       }
@@ -223,6 +301,12 @@
             "state" : "translated",
             "value" : "Contraseña"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пароль"
+          }
         }
       }
     },
@@ -238,6 +322,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Iniciar sesión"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Войти"
           }
         }
       }
@@ -255,6 +345,12 @@
             "state" : "translated",
             "value" : "Estamos entusiasmados de que pruebe nuestra aplicación. Esto es lo que puede hacer con ella."
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Мы рады, что вы решили попробовать наше приложение. Вот что вы можете с ним делать."
+          }
         }
       }
     },
@@ -270,6 +366,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Comenzar"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Начать"
           }
         }
       }
@@ -287,6 +389,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "¡Bienvenido a My App!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добро пожаловать в My App!"
           }
         }
       }
@@ -330,6 +438,24 @@
               }
             }
           }
+        },
+        "ru" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld элемент"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld элементов"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -345,6 +471,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cuenta"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Аккаунт"
           }
         }
       }
@@ -362,6 +494,12 @@
             "state" : "translated",
             "value" : "Apariencia"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Оформление"
+          }
         }
       }
     },
@@ -377,6 +515,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Modo oscuro"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тёмный режим"
           }
         }
       }
@@ -394,6 +538,12 @@
             "state" : "translated",
             "value" : "Cerrar sesión"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выйти"
+          }
         }
       }
     },
@@ -409,6 +559,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Notificaciones"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Уведомления"
           }
         }
       }
@@ -426,6 +582,12 @@
             "state" : "translated",
             "value" : "Configuración"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Настройки"
+          }
         }
       }
     },
@@ -441,6 +603,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Marcar como completada"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отметить как выполненное"
           }
         }
       }
@@ -458,6 +626,12 @@
             "state" : "translated",
             "value" : "Eliminar tarea"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удалить задачу"
+          }
         }
       }
     },
@@ -474,6 +648,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fecha límite: %@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Срок: %@"
           }
         }
       }
