@@ -18,6 +18,7 @@ import createXcodeStringsLoader from "./xcode-strings";
 import createXcodeStringsdictLoader from "./xcode-stringsdict";
 import createXcodeXcstringsLoader from "./xcode-xcstrings";
 import createPrettierLoader from "./prettier";
+import createBiomeLoader from "./biome";
 import createUnlocalizableLoader from "./unlocalizable";
 import createPoLoader from "./po";
 import createXliffLoader from "./xliff";

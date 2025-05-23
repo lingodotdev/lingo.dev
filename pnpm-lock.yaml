@@ -8,6 +8,12 @@ importers:
 
   .:
     dependencies:
+      '@biomejs/js-api':
+        specifier: ^0.7.1
+        version: 0.7.1(@biomejs/wasm-nodejs@1.9.4)
+      '@biomejs/wasm-nodejs':
+        specifier: ^1.9.4
+        version: 1.9.4
       '@changesets/changelog-github':
         specifier: ^0.5.0
         version: 0.5.0(encoding@0.1.13)
@@ -532,6 +538,23 @@ packages:
   '@babel/types@7.27.1':
     resolution: {integrity: sha512-+EzkxvLNfiUeKMgy/3luqfsCWFRXLb7U6wNQTk60tovuckwB15B191tJWvpp4HjiQWdJkCxO3Wbvc6jlk3Xb2Q==}
     engines: {node: '>=6.9.0'}
+
+  '@biomejs/js-api@0.7.1':
+    resolution: {integrity: sha512-VFdgFFZWcyCQxZcAasyv8Enpexn4CblMdWmr6izLYHTLcbd+z9x/LuKU71qnmClABfnYqZjiY7c8DKTVri3Ajw==}
+    peerDependencies:
+      '@biomejs/wasm-bundler': ^1.9.2
+      '@biomejs/wasm-nodejs': ^1.9.2
+      '@biomejs/wasm-web': ^1.9.2
+    peerDependenciesMeta:
+      '@biomejs/wasm-bundler':
+        optional: true
+      '@biomejs/wasm-nodejs':
+        optional: true
+      '@biomejs/wasm-web':
+        optional: true
+
+  '@biomejs/wasm-nodejs@1.9.4':
+    resolution: {integrity: sha512-ZqNlhKcZW6MW1LxWIOfh9YVrBykvzyFad3bOh6JJFraDnNa3NXboRDiaI8dmrbb0ZHXCU1Tsq6WQsKV2Vpp5dw==}
 
   '@changesets/apply-release-plan@7.0.7':
     resolution: {integrity: sha512-qnPOcmmmnD0MfMg9DjU1/onORFyRpDXkMMl2IJg9mECY6RnxL3wN0TCCc92b2sXt1jt8DgjAUUsZYGUGTdYIXA==}
@@ -5816,6 +5839,12 @@ snapshots:
     dependencies:
       '@babel/helper-string-parser': 7.27.1
       '@babel/helper-validator-identifier': 7.27.1
+
+  '@biomejs/js-api@0.7.1(@biomejs/wasm-nodejs@1.9.4)':
+    optionalDependencies:
+      '@biomejs/wasm-nodejs': 1.9.4
+
+  '@biomejs/wasm-nodejs@1.9.4': {}
 
   '@changesets/apply-release-plan@7.0.7':
     dependencies:
