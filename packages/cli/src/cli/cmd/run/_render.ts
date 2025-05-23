@@ -70,21 +70,18 @@ export async function waitForUserPrompt(message: string): Promise<void> {
 export async function renderSummary(ctx: CmdRunContext) {
   console.log(chalk.hex(colors.green)("[Done]"));
 
-  const skippedTasksCount = ctx.results
-    .values()
-    .filter((r) => r.status === "skipped")
-    .toArray().length;
+  const skippedTasksCount = Array.from(ctx.results.values()).filter(
+    (r) => r.status === "skipped",
+  ).length;
   console.log(`• ${chalk.hex(colors.yellow)(skippedTasksCount)} from cache`);
 
-  const succeededTasksCount = ctx.results
-    .values()
-    .filter((r) => r.status === "success")
-    .toArray().length;
+  const succeededTasksCount = Array.from(ctx.results.values()).filter(
+    (r) => r.status === "success",
+  ).length;
   console.log(`• ${chalk.hex(colors.yellow)(succeededTasksCount)} processed`);
 
-  const failedTasksCount = ctx.results
-    .values()
-    .filter((r) => r.status === "error")
-    .toArray().length;
+  const failedTasksCount = Array.from(ctx.results.values()).filter(
+    (r) => r.status === "error",
+  ).length;
   console.log(`• ${chalk.hex(colors.yellow)(failedTasksCount)} failed`);
 }
