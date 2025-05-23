@@ -68,9 +68,6 @@ describe("getLocaleCodeDelimiter", () => {
   it("should return undefined for locale codes without a recognized delimiter", () => {
     expect(getLocaleCodeDelimiter("enUS")).toBeNull();
     expect(getLocaleCodeDelimiter("frFR")).toBeNull();
-  });
-
-  it("should return undefined for locale codes without a recognized delimiter", () => {
     expect(getLocaleCodeDelimiter("kaGE")).toBeNull();
   });
 });

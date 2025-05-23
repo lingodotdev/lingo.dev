@@ -201,7 +201,7 @@ const localeMap = {
   // Kinyarwanda (Rwanda)
   rw: ["rw-RW"],
   // Georgian (Georgia)
-  ka: ["ka"],
+  ka: ["ka-GE"],
 } as const;
 
 export type LocaleCodeShort = keyof typeof localeMap;
