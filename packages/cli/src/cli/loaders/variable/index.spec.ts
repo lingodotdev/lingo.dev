@@ -69,7 +69,7 @@ describe("createVariableLoader", () => {
 
       // Translator updates the string while keeping placeholders
       const payload = {
-        message: "[aktualisiert] Wert: {variable:0} und {variable:1}",
+        message: "[aktualisiert] Wert: {variable:1} und {variable:0}",
       };
 
       // Push the updated translation back
@@ -77,6 +77,36 @@ describe("createVariableLoader", () => {
 
       expect(result).toEqual({
         message: "[aktualisiert] Wert: %f und %d",
+      });
+    });
+
+    it("extracts variables with positional specifiers during pull", async () => {
+      const loader = createLoader("ieee");
+      const input = {
+        message: "You have %2$d new items and %1$s.",
+      };
+
+      const result = await loader.pull("en", input);
+      expect(result).toEqual({
+        message: "You have {variable:0} new items and {variable:1}.",
+      });
+    });
+
+    it("restores variables with positional specifiers during push", async () => {
+      const loader = createLoader("ieee");
+      const input = {
+        message: "You have %2$d new items and %1$s.",
+      };
+
+      const payload = {
+        message: "[updated] You have {variable:0} new items and {variable:1}.",
+      };
+
+      await loader.pull("en", input);
+      const result = await loader.push("en", payload);
+
+      expect(result).toEqual({
+        message: "[updated] You have %2$d new items and %1$s.",
       });
     });
   });
@@ -133,7 +163,7 @@ describe("createVariableLoader", () => {
       await loader.pull("de", targetInput);
 
       const payload = {
-        message: "[aktualisiert] Du hast {variable:0} Artikel, {variable:1}.",
+        message: "[aktualisiert] Du hast {variable:1} Artikel, {variable:0}.",
       };
 
       const result = await loader.push("de", payload);

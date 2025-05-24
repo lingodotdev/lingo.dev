@@ -72,8 +72,9 @@ export function createLoader<I, O, C>(
       const result = await lDefinition.pull(
         locale,
         input,
-        state.initCtx,
+        state.initCtx!,
         state.defaultLocale,
+        state.originalInput!,
       );
       state.pullOutput = result;
 

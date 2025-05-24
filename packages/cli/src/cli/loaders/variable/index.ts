@@ -22,11 +22,12 @@ function variableExtractLoader(
 ): ILoader<Record<string, string>, Record<string, VariableExtractionPayload>> {
   const specifierPattern = getFormatSpecifierPattern(params.type);
   return createLoader({
-    pull: async (locale, input) => {
+    pull: async (locale, input, initXtx, originalLocale, originalInput) => {
       const result: Record<string, VariableExtractionPayload> = {};
       const inputValues = _.omitBy(input, _.isEmpty);
       for (const [key, value] of Object.entries(inputValues)) {
-        const matches = value.match(specifierPattern) || [];
+        const originalValue = originalInput[key];
+        const matches = originalValue.match(specifierPattern) || [];
         result[key] = result[key] || {
           value,
           variables: [],
@@ -42,7 +43,14 @@ function variableExtractLoader(
       }
       return result;
     },
-    push: async (locale, data) => {
+    push: async (
+      locale,
+      data,
+      originalInput,
+      originalDefaultLocale,
+      pullInput,
+      pullOutput,
+    ) => {
       const result: Record<string, string> = {};
       for (const [key, valueObj] of Object.entries(data)) {
         result[key] = valueObj.value;
@@ -69,7 +77,7 @@ function variableContentLoader(): ILoader<
     },
     push: async (locale, data, originalInput, defaultLocale, pullInput) => {
       const result: Record<string, VariableExtractionPayload> = _.cloneDeep(
-        pullInput || {},
+        originalInput || {},
       );
       for (const [key, originalValueObj] of Object.entries(result)) {
         result[key] = {
