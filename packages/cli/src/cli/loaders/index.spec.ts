@@ -1696,6 +1696,57 @@ user.password=Contraseña
         false,
       );
     });
+
+    it("should extract and restore variables during pull/push", async () => {
+      setupFileMocks();
+
+      const input = JSON.stringify({
+        sourceLanguage: "en",
+        strings: {
+          message: {
+            extractionState: "manual",
+            localizations: {
+              en: {
+                stringUnit: {
+                  state: "translated",
+                  value: "Value: %d items",
+                },
+              },
+            },
+          },
+        },
+      });
+
+      mockFileOperations(input);
+
+      const xcLoader = createBucketLoader(
+        "xcode-xcstrings",
+        "i18n/[locale].xcstrings",
+        {
+          isCacheRestore: false,
+          defaultLocale: "en",
+        },
+      );
+      xcLoader.setDefaultLocale("en");
+
+      const data = await xcLoader.pull("en");
+
+      expect(data).toEqual({ message: "Value: {variable:0} items" });
+
+      const payload = {
+        message: "Valeur: {variable:0} éléments",
+      };
+
+      await xcLoader.push("fr", payload);
+
+      expect(fs.writeFile).toHaveBeenCalled();
+      const writeFileCall = (fs.writeFile as any).mock.calls[0];
+      const writtenContent = JSON.parse(writeFileCall[1]);
+
+      expect(
+        writtenContent.strings.message.localizations.fr.stringUnit.value,
+      ).toBe("Valeur: %d éléments");
+    });
   });
 
   describe("yaml bucket loader", () => {
@@ -2453,6 +2504,42 @@ return array(
         encoding: "utf-8",
         flag: "w",
       });
+    });
+
+    it("should extract and restore variables", async () => {
+      setupFileMocks();
+
+      const input = `msgid "You have %(count)d items"\nmsgstr "You have %(count)d items"`;
+
+      const expectedPullOutput = {
+        "You%20have%20%25(count)d%20items/singular":
+          "You have {variable:0} items",
+      };
+
+      mockFileOperations(input);
+
+      const poLoader = createBucketLoader("po", "i18n/[locale].po", {
+        isCacheRestore: false,
+        defaultLocale: "en",
+      });
+      poLoader.setDefaultLocale("en");
+
+      const data = await poLoader.pull("en");
+
+      expect(data).toEqual(expectedPullOutput);
+
+      const payload = {
+        "You%20have%20%25(count)d%20items/singular":
+          "Sie haben {variable:0} Elemente",
+      };
+
+      await poLoader.push("de", payload);
+
+      expect(fs.writeFile).toHaveBeenCalledWith(
+        "i18n/de.po",
+        `msgid "You have %(count)d items"\nmsgstr "Sie haben %(count)d Elemente"`,
+        { encoding: "utf-8", flag: "w" },
+      );
     });
   });
 
