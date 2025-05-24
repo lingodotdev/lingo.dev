@@ -10,7 +10,7 @@ import {
   renderHero,
   pauseIfDebug,
   renderSummary,
-} from "./_render";
+} from "../../utils/ui";
 
 export default new Command()
   .command("run")
@@ -79,7 +79,7 @@ export default new Command()
       await execute(ctx);
       await renderSpacer();
 
-      await renderSummary(ctx);
+      await renderSummary(ctx.results);
       await renderSpacer();
     } catch (error: any) {
       process.exit(1);
