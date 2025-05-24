@@ -66,7 +66,7 @@
     "@datocms/cma-client-node": "^4.0.1",
     "@gitbeaker/rest": "^39.34.3",
     "@inkjs/ui": "^2.0.0",
-    "@inquirer/prompts": "^7.4.1",
+    "@inquirer/prompts": "^7.5.1",
     "@lingo.dev/_sdk": "workspace:*",
     "@lingo.dev/_spec": "workspace:*",
     "@modelcontextprotocol/sdk": "^1.5.0",
