@@ -5,6 +5,12 @@ import cors from "cors";
 import open from "open";
 import readline from "readline/promises";
 import { getSettings, saveSettings } from "../utils/settings";
+import {
+  renderClear,
+  renderSpacer,
+  renderBanner,
+  renderHero,
+} from "../utils/ui";
 
 export default new Command()
   .command("login")
@@ -12,6 +18,12 @@ export default new Command()
   .helpOption("-h, --help", "Show help")
   .action(async () => {
     try {
+      await renderClear();
+      await renderSpacer();
+      await renderBanner();
+      await renderHero();
+      await renderSpacer();
+
       const settings = await getSettings(undefined);
       const apiKey = await login(settings.auth.webUrl);
       settings.auth.apiKey = apiKey;
