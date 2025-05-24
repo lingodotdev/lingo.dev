@@ -3,9 +3,12 @@ import _ from "lodash";
 import { ILoader } from "./_types";
 import { createLoader } from "./_utils";
 
-export default function createSyncLoader(): ILoader<Record<string, string>, Record<string, string>> {
+export default function createSyncLoader(): ILoader<
+  Record<string, string>,
+  Record<string, string>
+> {
   return createLoader({
-    async pull(locale, input, originalInput) {
+    async pull(locale, input, initCtx, originalLocale, originalInput) {
       if (!originalInput) {
         return input;
       }
