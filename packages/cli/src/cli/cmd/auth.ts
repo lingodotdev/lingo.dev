@@ -9,25 +9,11 @@ import { createAuthenticator } from "../utils/auth";
 
 export default new Command()
   .command("auth")
-  .description("Authenticate with Lingo.dev API")
+  .description("Show current authentication status")
   .helpOption("-h, --help", "Show help")
-  .option("--logout", "Delete existing authentication and clear your saved API key")
-  .option("--login", "Authenticate with Lingo.dev API")
-  .action(async (options) => {
+  .action(async () => {
     try {
-      let settings = await getSettings(undefined);
-
-      if (options.logout) {
-        settings.auth.apiKey = "";
-        await saveSettings(settings);
-      }
-      if (options.login) {
-        const apiKey = await login(settings.auth.webUrl);
-        settings.auth.apiKey = apiKey;
-        await saveSettings(settings);
-        settings = await getSettings(undefined);
-      }
-
+      const settings = await getSettings(undefined);
       const authenticator = createAuthenticator({
         apiUrl: settings.auth.apiUrl,
         apiKey: settings.auth.apiKey!,
@@ -44,30 +30,30 @@ export default new Command()
     }
   });
 
-export async function login(webAppUrl: string) {
-  await readline
-    .createInterface({
-      input: process.stdin,
-      output: process.stdout,
-    })
-    .question(
-      `
-Press Enter to open the browser for authentication.
+// export async function login(webAppUrl: string) {
+//   await readline
+//     .createInterface({
+//       input: process.stdin,
+//       output: process.stdout,
+//     })
+//     .question(
+//       `
+// Press Enter to open the browser for authentication.
 
----
+// ---
 
-Having issues? Put LINGODOTDEV_API_KEY in your .env file instead.
-    `.trim() + "\n",
-    );
+// Having issues? Put LINGODOTDEV_API_KEY in your .env file instead.
+//     `.trim() + "\n",
+//     );
 
-  const spinner = Ora().start("Waiting for the API key");
-  const apiKey = await waitForApiKey(async (port) => {
-    await open(`${webAppUrl}/app/cli?port=${port}`, { wait: false });
-  });
-  spinner.succeed("API key received");
+//   const spinner = Ora().start("Waiting for the API key");
+//   const apiKey = await waitForApiKey(async (port) => {
+//     await open(`${webAppUrl}/app/cli?port=${port}`, { wait: false });
+//   });
+//   spinner.succeed("API key received");
 
-  return apiKey;
-}
+//   return apiKey;
+// }
 
 async function waitForApiKey(cb: (port: string) => void): Promise<string> {
   // start a sever on an ephemeral port and return the port number
