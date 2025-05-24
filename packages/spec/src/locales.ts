@@ -200,6 +200,8 @@ const localeMap = {
   te: ["te-IN"],
   // Kinyarwanda (Rwanda)
   rw: ["rw-RW"],
+  // Georgian (Georgia)
+  ka: ["ka-GE"],
 } as const;
 
 export type LocaleCodeShort = keyof typeof localeMap;
@@ -208,8 +210,12 @@ export type LocaleCode = LocaleCodeShort | LocaleCodeFull;
 export type LocaleDelimiter = "-" | "_" | null;
 
 export const localeCodesShort = Object.keys(localeMap) as LocaleCodeShort[];
-export const localeCodesFull = Object.values(localeMap).flat() as LocaleCodeFull[];
-export const localeCodesFullUnderscore = localeCodesFull.map((value) => value.replace("-", "_"));
+export const localeCodesFull = Object.values(
+  localeMap,
+).flat() as LocaleCodeFull[];
+export const localeCodesFullUnderscore = localeCodesFull.map((value) =>
+  value.replace("-", "_"),
+);
 export const localeCodesFullExplicitRegion = localeCodesFull.map((value) => {
   const chunks = value.split("-");
   const result = [chunks[0], "-r", chunks.slice(1).join("-")].join("");
@@ -222,9 +228,12 @@ export const localeCodes = [
   ...localeCodesFullExplicitRegion,
 ] as LocaleCode[];
 
-export const localeCodeSchema = Z.string().refine((value) => localeCodes.includes(value as any), {
-  message: "Invalid locale code",
-});
+export const localeCodeSchema = Z.string().refine(
+  (value) => localeCodes.includes(value as any),
+  {
+    message: "Invalid locale code",
+  },
+);
 
 /**
  * Resolves a locale code to its full locale representation.
@@ -280,7 +289,10 @@ export const getLocaleCodeDelimiter = (locale: string): LocaleDelimiter => {
  * @returns {string} The locale string with the replaced delimiter, or the original locale if no delimiter is provided.
  */
 
-export const resolveOverriddenLocale = (locale: string, delimiter?: LocaleDelimiter): string => {
+export const resolveOverriddenLocale = (
+  locale: string,
+  delimiter?: LocaleDelimiter,
+): string => {
   if (!delimiter) {
     return locale;
   }

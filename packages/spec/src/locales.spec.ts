@@ -1,5 +1,10 @@
 import { describe, it, expect } from "vitest";
-import { getLocaleCodeDelimiter, normalizeLocale, resolveLocaleCode, resolveOverriddenLocale } from "./locales";
+import {
+  getLocaleCodeDelimiter,
+  normalizeLocale,
+  resolveLocaleCode,
+  resolveOverriddenLocale,
+} from "./locales";
 
 describe("normalizeLocale", () => {
   it("should return normalized locale for short locale codes", () => {
@@ -63,6 +68,7 @@ describe("getLocaleCodeDelimiter", () => {
   it("should return undefined for locale codes without a recognized delimiter", () => {
     expect(getLocaleCodeDelimiter("enUS")).toBeNull();
     expect(getLocaleCodeDelimiter("frFR")).toBeNull();
+    expect(getLocaleCodeDelimiter("kaGE")).toBeNull();
   });
 });
 
