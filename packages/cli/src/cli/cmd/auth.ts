@@ -30,31 +30,6 @@ export default new Command()
     }
   });
 
-// export async function login(webAppUrl: string) {
-//   await readline
-//     .createInterface({
-//       input: process.stdin,
-//       output: process.stdout,
-//     })
-//     .question(
-//       `
-// Press Enter to open the browser for authentication.
-
-// ---
-
-// Having issues? Put LINGODOTDEV_API_KEY in your .env file instead.
-//     `.trim() + "\n",
-//     );
-
-//   const spinner = Ora().start("Waiting for the API key");
-//   const apiKey = await waitForApiKey(async (port) => {
-//     await open(`${webAppUrl}/app/cli?port=${port}`, { wait: false });
-//   });
-//   spinner.succeed("API key received");
-
-//   return apiKey;
-// }
-
 async function waitForApiKey(cb: (port: string) => void): Promise<string> {
   // start a sever on an ephemeral port and return the port number
   // from the function
