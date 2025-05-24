@@ -1,5 +1,11 @@
 # @lingo.dev/\_spec
 
+## 0.33.3
+
+### Patch Changes
+
+- [#805](https://github.com/lingodotdev/lingo.dev/pull/805) [`0272fbf`](https://github.com/lingodotdev/lingo.dev/commit/0272fbf8847240ed9453130237d5843b918f869f) Thanks [@Vicentesan](https://github.com/Vicentesan)! - Introduce the gregorian language (ka-GE)
+
 ## 0.33.2
 
 ### Patch Changes
