@@ -1,11 +1,11 @@
 <p align="center">
   <a href="https://lingo.dev">
-    <img src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.dark.png" width="100%" alt="Lingo.dev" />
+    <img src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.launch.png" width="100%" alt="Lingo.dev" />
   </a>
 </p>
 
 <p align="center">
-  <strong>⚡️ Webおよびモバイルローカリゼーション向けAI搭載オープンソースCLI。</strong>
+  <strong>⚡️ ウェブ＆モバイルローカリゼーション向けAI搭載オープンソースCLI。</strong>
 </p>
 
 <br />
@@ -31,9 +31,9 @@
 
 <br />
 
-Lingo.devは、AI搭載のWebおよびモバイルアプリローカリゼーション向けのコミュニティ主導オープンソースCLIです。
+Lingo.devは、AI搭載のウェブおよびモバイルアプリのローカリゼーションのためのコミュニティ主導のオープンソースCLIです。
 
-Lingo.devは、手作業と管理オーバーヘッドを排除し、本格的な翻訳を即座に生成するように設計されています。その結果、チームは100倍速く正確なローカリゼーションを行い、世界中のより多くの満足ユーザーに機能を提供できます。これは独自のLLMまたはLingo.dev管理のローカリゼーションエンジンと共に使用できます。
+Lingo.devは、手作業と管理オーバーヘッドを排除し、本格的な翻訳を即座に生成するように設計されています。その結果、チームは100倍速く正確なローカリゼーションを行い、世界中のより多くの満足ユーザーに機能を提供できます。自分のLLMまたはLingo.dev管理のローカリゼーションエンジンと共に使用できます。
 
 > **あまり知られていない事実：** Lingo.devは2023年に学生ハッカソンの小さなプロジェクトとして始まりました！多くの改良を経て、2024年にY Combinatorに採用され、現在は採用中です！次世代ローカリゼーションツールの構築に興味がありますか？履歴書をcareers@lingo.devに送ってください！🚀
 

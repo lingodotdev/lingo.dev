@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://lingo.dev">
-    <img src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.dark.png" width="100%" alt="Lingo.dev" />
+    <img src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.launch.png" width="100%" alt="Lingo.dev" />
   </a>
 </p>
 
@@ -12,9 +12,9 @@
 
 <p align="center">
   <a href="https://docs.lingo.dev">Documentação</a> •
-  <a href="https://github.com/lingodotdev/lingo.dev/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22">Contribuir</a> •
+  <a href="https://github.com/lingodotdev/lingo.dev/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22">Contribua</a> •
   <a href="#-github-action">GitHub Action</a> •
-  <a href="#">Favoritar o repositório</a>
+  <a href="#">Favorite o repositório</a>
 </p>
 
 <p align="center">
