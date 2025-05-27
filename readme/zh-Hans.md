@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://lingo.dev">
-    <img src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.dark.png" width="100%" alt="Lingo.dev" />
+    <img src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.launch.png" width="100%" alt="Lingo.dev" />
   </a>
 </p>
 
@@ -33,9 +33,9 @@
 
 Lingo.dev 是一个社区驱动的开源 CLI，专为基于 AI 的网页和移动应用本地化而设计。
 
-Lingo.dev 旨在即时生成高质量的翻译，消除手动工作和管理负担。因此，团队可以以 100 倍的速度完成精准本地化，将功能快速交付给全球更多满意的用户。它可以与您自己的 LLM 一起使用，也可以使用 Lingo.dev 管理的本地化引擎。
+Lingo.dev 能够即时生成高质量的翻译，消除手动工作和管理负担。因此，团队可以以 100 倍的速度完成精准的本地化，将功能快速交付给全球更多满意的用户。它可以与您自己的 LLM 一起使用，也可以使用 Lingo.dev 管理的本地化引擎。
 
-> **鲜为人知的事实：** Lingo.dev 起源于 2023 年的一次学生黑客马拉松中的一个小项目！经过多次迭代，我们在 2024 年被 Y Combinator 接受，现在正在招聘！有兴趣构建下一代本地化工具吗？请将您的简历发送至 careers@lingo.dev！🚀
+> **鲜为人知的事实：** Lingo.dev 起初是 2023 年一次学生黑客马拉松上的一个小项目！经过多次迭代，我们在 2024 年被 Y Combinator 接纳，现在正在招聘！有兴趣构建下一代本地化工具吗？请将您的简历发送至 careers@lingo.dev！🚀
 
 ## 📑 本指南内容
 

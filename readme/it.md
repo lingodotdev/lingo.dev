@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://lingo.dev">
-    <img src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.dark.png" width="100%" alt="Lingo.dev" />
+    <img src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.launch.png" width="100%" alt="Lingo.dev" />
   </a>
 </p>
 
@@ -31,11 +31,11 @@
 
 <br />
 
-Lingo.dev è un CLI open-source guidato dalla community per la localizzazione di app web e mobile potenziata dall'IA.
+Lingo.dev è un CLI open-source guidato dalla community per la localizzazione di applicazioni web e mobile potenziata dall'IA.
 
 Lingo.dev è progettato per produrre traduzioni autentiche istantaneamente, eliminando il lavoro manuale e l'overhead di gestione. Di conseguenza, i team eseguono localizzazioni accurate 100 volte più velocemente, distribuendo funzionalità a più utenti soddisfatti in tutto il mondo. Può essere utilizzato con il proprio LLM o con il Motore di Localizzazione gestito da Lingo.dev.
 
-> **Curiosità poco nota:** Lingo.dev è nato come piccolo progetto in un hackathon studentesco nel 2023! Dopo numerose iterazioni, siamo stati accettati in Y Combinator nel 2024, e ora stiamo assumendo! Interessati a costruire gli strumenti di localizzazione di nuova generazione? Invia il tuo CV a careers@lingo.dev! 🚀
+> **Curiosità poco nota:** Lingo.dev è nato come piccolo progetto in un hackathon studentesco nel 2023! Dopo numerose iterazioni, siamo stati accettati in Y Combinator nel 2024, e ora stiamo assumendo! Interessati a costruire gli strumenti di localizzazione di nuova generazione? Inviate il vostro CV a careers@lingo.dev! 🚀
 
 ## 📑 In questa guida
 
