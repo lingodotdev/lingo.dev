@@ -26,9 +26,9 @@ export default new Command()
     const settings = loadSystemSettings();
     const value = _.get(settings, key);
 
-    if (value === undefined) {
+    if (!value) {
       // Key is valid but not set in the configuration file.
-      console.log("");
+      console.log(`${chalk.cyan("ℹ")} ${chalk.bold(key)} is not set.`);
       return;
     }
 
