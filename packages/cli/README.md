@@ -173,5 +173,6 @@ Want to contribute? Create a pull request!
 - [Arabic](/readme/ar.md)
 - [Hindi](/readme/hi.md)
 - [Bengali](/readme/bn.md)
+- [Farsi](/readme/fa.md)
 
 Don't see your language? Just add a new language code to the [`i18n.json`](./i18n.json) file and open a PR!
