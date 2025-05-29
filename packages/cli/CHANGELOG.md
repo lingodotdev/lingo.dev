@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.92.17
+
+### Patch Changes
+
+- [#816](https://github.com/lingodotdev/lingo.dev/pull/816) [`28a19e6`](https://github.com/lingodotdev/lingo.dev/commit/28a19e686bc13788b10fd7d9fa6769a34f86d523) Thanks [@vrcprl](https://github.com/vrcprl)! - add config get/set/unset commands
+
 ## 0.92.16
 
 ### Patch Changes
