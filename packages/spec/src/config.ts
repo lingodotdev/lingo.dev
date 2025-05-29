@@ -370,17 +370,11 @@ export type Providers = Z.infer<typeof providersSchema>;
 
 // Define model key pattern (either "*:*" or "<locale1>:<locale2>")
 const modelKeyWildcardSchema = Z.literal("*:*");
-const modelKeyLocaleSpecificSchema = Z.string().refine(
-  (value) => {
-    const parts = value.split(":");
-    return parts.length === 2 && 
-      localeCodes.includes(parts[0] as any) && 
-      localeCodes.includes(parts[1] as any);
-  },
-  {
-    message: "Model key must be in format '<sourceLocale>:<targetLocale>' using valid locale codes",
-  }
+const localeSpecificKeys = localeCodes.flatMap(sourceLocale => 
+  localeCodes.map(targetLocale => `${sourceLocale}:${targetLocale}`)
 );
+
+const modelKeyLocaleSpecificSchema = Z.enum(localeSpecificKeys as [string, ...string[]]);
 const modelKeySchema = Z.union([modelKeyWildcardSchema, modelKeyLocaleSpecificSchema]);
 export type ModelKey = Z.infer<typeof modelKeySchema>;
 
@@ -421,48 +415,36 @@ export const configV1_9Definition = extendConfigDefinition(
     createDefaultValue: (baseDefaultValue) => ({
       ...baseDefaultValue,
       version: 1.9,
-      providers: {
-        groq: true,
-        openai: true,
-        anthropic: true,
-      },
-      models: {
-        "*:*": "groq/mistral-7b-instruct",
-      },
-      prompt: "You're a helpful assistant that translates between languages.",
+      prompt: "You're a precise, context-aware localization tool, that besides translating between languages transfers the meaning and intent of the input.",
     }),
     createUpgrader: (oldConfig) => {
       const upgradedConfig = {
         ...oldConfig,
         version: 1.9,
-        providers: {} as Record<string, boolean | { baseUrl?: string; prompt?: string }>,
-        models: {} as Record<string, string>,
-        prompt: "" as string,
+        prompt: "You're a precise, context-aware localization tool, that besides translating between languages transfers the meaning and intent of the input.",
       };
 
+      const result = { ...upgradedConfig };
+      
       if (oldConfig.provider) {
-        upgradedConfig.providers = {
-          [oldConfig.provider.id]: true,
+        const providers: Record<string, boolean | { baseUrl?: string; prompt?: string }> = {};
+        providers[oldConfig.provider.id] = oldConfig.provider.baseUrl 
+          ? { baseUrl: oldConfig.provider.baseUrl, prompt: oldConfig.provider.prompt }
+          : true;
+        
+        const models: Record<string, string> = {
+          "*:*": `${oldConfig.provider.id}/${oldConfig.provider.model}`
         };
-
-        upgradedConfig.models = {
-          "*:*": `${oldConfig.provider.id}/${oldConfig.provider.model}`,
-        };
-
-        upgradedConfig.prompt = oldConfig.provider.prompt;
-      } else {
-        upgradedConfig.providers = {
-          groq: true,
-          openai: true,
-          anthropic: true,
-        };
-        upgradedConfig.models = {
-          "*:*": "groq/mistral-7b-instruct",
-        };
-        upgradedConfig.prompt = "You're a helpful assistant that translates between languages.";
+        
+        (result as any).providers = providers;
+        (result as any).models = models;
+        
+        if (oldConfig.provider.prompt) {
+          result.prompt = oldConfig.provider.prompt;
+        }
       }
-
-      return upgradedConfig;
+      
+      return result;
     },
   },
 );

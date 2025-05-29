@@ -1,4 +1,4 @@
-import { I18nConfig } from "@lingo.dev/_spec";
+import { I18nConfig, ProviderConfig, ProviderId } from "@lingo.dev/_spec";
 import chalk from "chalk";
 import dedent from "dedent";
 import { LocalizerFn } from "./_base";
@@ -10,17 +10,76 @@ import { createAnthropic } from "@ai-sdk/anthropic";
 import { createGroq } from "@ai-sdk/groq";
 
 export default function createProcessor(
-  provider: I18nConfig["provider"],
+  config: I18nConfig,
   params: { apiKey: string; apiUrl: string },
+  sourceLocale?: string,
+  targetLocale?: string,
 ): LocalizerFn {
-  if (!provider) {
-    const result = createLingoLocalizer(params);
-    return result;
-  } else {
-    const model = getPureModelProvider(provider);
-    const result = createBasicTranslator(model, provider.prompt);
+  if (config.provider) {
+    const model = getPureModelProvider(config.provider);
+    const result = createBasicTranslator(model, config.provider.prompt);
     return result;
   }
+  
+  if (!config.providers && !config.models) {
+    const result = createLingoLocalizer(params);
+    return result;
+  }
+  
+  const modelKey = resolveModelKey(config.models, sourceLocale, targetLocale);
+  if (!modelKey) {
+    const result = createLingoLocalizer(params);
+    return result;
+  }
+  
+  const [providerId, modelName] = modelKey.split("/");
+  
+  const providerConfig = config.providers?.[providerId as ProviderId];
+  if (!providerConfig) {
+    const result = createLingoLocalizer(params);
+    return result;
+  }
+  
+  const provider: ProviderConfig = {
+    id: providerId as ProviderId,
+    model: modelName,
+    prompt: resolvePrompt(config.prompt, sourceLocale, targetLocale),
+  };
+  
+  if (typeof providerConfig === 'object') {
+    if (providerConfig.baseUrl) {
+      provider.baseUrl = providerConfig.baseUrl;
+    }
+    if (providerConfig.prompt) {
+      provider.prompt = providerConfig.prompt;
+    }
+  }
+  
+  const model = getPureModelProvider(provider);
+  const result = createBasicTranslator(model, provider.prompt);
+  return result;
+}
+
+function resolveModelKey(models: I18nConfig["models"], sourceLocale?: string, targetLocale?: string): string | null {
+  if (!models) return null;
+  
+  if (sourceLocale && targetLocale) {
+    const specificKey = `${sourceLocale}:${targetLocale}`;
+    if (models[specificKey]) {
+      return models[specificKey];
+    }
+  }
+  
+  return models["*:*"] || Object.values(models)[0] || null;
+}
+
+function resolvePrompt(prompt: I18nConfig["prompt"], sourceLocale?: string, targetLocale?: string): string {
+  if (typeof prompt === 'function' && sourceLocale && targetLocale) {
+    return prompt({ sourceLocale, targetLocale });
+  }
+  return typeof prompt === 'string' 
+    ? prompt 
+    : "You're a helpful assistant that translates between languages.";
 }
 
 function getPureModelProvider(provider: NonNullable<I18nConfig["provider"]>) {

@@ -382,10 +382,15 @@ export default new Command()
                 bucketOra.start(
                   `[${sourceLocale} -> ${targetLocale}] [${Object.keys(processableData).length} entries] (0%) AI localization in progress...`,
                 );
-                let processPayload = createProcessor(i18nConfig!.provider, {
-                  apiKey: settings.auth.apiKey,
-                  apiUrl: settings.auth.apiUrl,
-                });
+                let processPayload = createProcessor(
+                  i18nConfig!, 
+                  {
+                    apiKey: settings.auth.apiKey,
+                    apiUrl: settings.auth.apiUrl,
+                  },
+                  sourceLocale,
+                  targetLocale
+                );
                 processPayload = withExponentialBackoff(
                   processPayload,
                   3,

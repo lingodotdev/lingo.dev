@@ -58,7 +58,12 @@ export default async function setup(input: CmdRunContext) {
       {
         title: "Selecting localization provider",
         task: async (ctx, task) => {
-          ctx.localizer = createLocalizer(ctx.config?.provider);
+          if (!ctx.config) {
+            throw new Error(
+              "i18n.json not found. Please run `lingo.dev init` to initialize the project.",
+            );
+          }
+          ctx.localizer = createLocalizer(ctx.config);
           if (!ctx.localizer) {
             throw new Error(
               "Could not create localization provider. Please check your i18n.json configuration.",
