@@ -15,14 +15,13 @@
       "hi",
       "pt-BR",
       "uk-UA",
-      "bn"
+      "bn",
+      "fa"
     ]
   },
   "buckets": {
     "markdown": {
-      "include": [
-        "readme/[locale].md"
-      ]
+      "include": ["readme/[locale].md"]
     },
     "mdx": {
       "include": [],
