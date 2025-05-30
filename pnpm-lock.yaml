@@ -260,8 +260,8 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0
       posthog-node:
-        specifier: ^4.17.0
-        version: 4.17.0
+        specifier: ^4.17.2
+        version: 4.17.2
       prettier:
         specifier: ^3.4.2
         version: 3.4.2
@@ -4591,8 +4591,8 @@ packages:
     resolution: {integrity: sha512-6oz2beyjc5VMn/KV1pPw8fliQkhBXrVn1Z3TVyqZxU8kZpzEKhBdmCFqI6ZbmGtamQvQGuU1sgPTk8ZrXDD7jQ==}
     engines: {node: ^10 || ^12 || >=14}
 
-  posthog-node@4.17.0:
-    resolution: {integrity: sha512-e3P9nutxKoSYslYzDHuf2qahKlufHlgk3MmgoCOWyEFf/T8pBk77ro+3IQdofInrpB6cHHkhdnlIUwiXlZw2AQ==}
+  posthog-node@4.17.2:
+    resolution: {integrity: sha512-bFmwOTk4QdYavopeHVXtyFGQ9vyLMVaNWkWocwjix+0n6sQgv7Zq5nYjYulz7ThmK18zsvNJ337ahuMLv3ulow==}
     engines: {node: '>=15.0.0'}
 
   prettier@2.8.8:
@@ -10505,7 +10505,7 @@ snapshots:
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
-  posthog-node@4.17.0:
+  posthog-node@4.17.2:
     dependencies:
       axios: 1.9.0
     transitivePeerDependencies:
