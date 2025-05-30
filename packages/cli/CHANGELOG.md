@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.92.18
+
+### Patch Changes
+
+- [#824](https://github.com/lingodotdev/lingo.dev/pull/824) [`69d9568`](https://github.com/lingodotdev/lingo.dev/commit/69d9568e85f4f56de3b300b4dd5973bd9c410b99) Thanks [@mathio](https://github.com/mathio)! - skip obsolete entries in po files
+
 ## 0.92.17
 
 ### Patch Changes
