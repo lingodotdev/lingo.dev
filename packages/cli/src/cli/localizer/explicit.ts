@@ -1,5 +1,6 @@
 import { createAnthropic } from "@ai-sdk/anthropic";
 import { createOpenAI } from "@ai-sdk/openai";
+import { createGroq } from "@ai-sdk/groq";
 import { I18nConfig } from "@lingo.dev/_spec";
 import chalk from "chalk";
 import dedent from "dedent";
@@ -39,6 +40,15 @@ export default function createExplicitLocalizer(
         id: provider.id,
         prompt: provider.prompt,
         apiKeyName: "ANTHROPIC_API_KEY",
+        baseUrl: provider.baseUrl,
+      });
+    case "groq":
+      return createAiSdkLocalizer({
+        factory: (params) =>
+          createGroq(params).languageModel(provider.model),
+        id: provider.id,
+        prompt: provider.prompt,
+        apiKeyName: "GROQ_API_KEY",
         baseUrl: provider.baseUrl,
       });
   }

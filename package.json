@@ -22,6 +22,7 @@
     "turbo": "^2.5.0"
   },
   "dependencies": {
+    "@ai-sdk/groq": "^1.2.9",
     "@changesets/changelog-github": "^0.5.0",
     "@changesets/cli": "^2.27.10",
     "node-machine-id": "^1.1.12"

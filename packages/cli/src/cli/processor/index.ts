@@ -7,6 +7,7 @@ import { createBasicTranslator } from "./basic";
 import { createOpenAI } from "@ai-sdk/openai";
 import { colors } from "../constants";
 import { createAnthropic } from "@ai-sdk/anthropic";
+import { createGroq } from "@ai-sdk/groq";
 
 export default function createProcessor(
   provider: I18nConfig["provider"],
@@ -22,7 +23,7 @@ export default function createProcessor(
   }
 }
 
-function getPureModelProvider(provider: I18nConfig["provider"]) {
+function getPureModelProvider(provider: NonNullable<I18nConfig["provider"]>) {
   const createMissingKeyErrorMessage = (
     providerId: string,
     envVar: string,
@@ -47,7 +48,7 @@ function getPureModelProvider(provider: I18nConfig["provider"]) {
   ${chalk.hex(colors.blue)("Docs: https://lingo.dev/go/docs")}
   `;
 
-  switch (provider?.id) {
+  switch (provider.id) {
     case "openai":
       if (!process.env.OPENAI_API_KEY) {
         throw new Error(
@@ -67,7 +68,17 @@ function getPureModelProvider(provider: I18nConfig["provider"]) {
       return createAnthropic({
         apiKey: process.env.ANTHROPIC_API_KEY,
       })(provider.model);
+    case "groq":
+      if (!process.env.GROQ_API_KEY) {
+        throw new Error(
+          createMissingKeyErrorMessage("Groq", "GROQ_API_KEY"),
+        );
+      }
+      return createGroq({
+        apiKey: process.env.GROQ_API_KEY,
+        baseURL: provider.baseUrl,
+      })(provider.model);
     default:
-      throw new Error(createUnsupportedProviderErrorMessage(provider?.id));
+      throw new Error(createUnsupportedProviderErrorMessage(provider.id));
   }
 }
