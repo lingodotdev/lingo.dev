@@ -1,5 +1,5 @@
 import Z from "zod";
-import { localeCodeSchema } from "./locales";
+import { localeCodeSchema, localeCodes } from "./locales";
 import { bucketTypeSchema } from "./formats";
 
 // common
@@ -254,7 +254,7 @@ export const configV1_4Definition = extendConfigDefinition(
 // v1.4 -> v1.5
 // Changes: add "provider" field to the config
 const providerSchema = Z.object({
-  id: Z.enum(["openai", "anthropic"]),
+  id: Z.enum(["openai", "anthropic", "groq"]),
   model: Z.string(),
   prompt: Z.string(),
   baseUrl: Z.string().optional(),
@@ -348,10 +348,125 @@ export const configV1_8Definition = extendConfigDefinition(
   },
 );
 
+// Changes: 
+
+// Define provider ID schema as union of literals
+const providerIdSchema = Z.enum(["groq", "openai", "anthropic"]);
+export type ProviderId = Z.infer<typeof providerIdSchema>;
+
+// Define provider value schema (boolean or object with baseUrl and prompt)
+const providerValueSchema = Z.union([
+  Z.boolean(),
+  Z.object({
+    baseUrl: Z.string().optional(),
+    prompt: Z.string().optional(),
+  }),
+]);
+export type ProviderValue = Z.infer<typeof providerValueSchema>;
+
+// Define providers schema
+const providersSchema = Z.record(providerIdSchema, providerValueSchema).optional();
+export type Providers = Z.infer<typeof providersSchema>;
+
+// Define model key pattern (either "*:*" or "<locale1>:<locale2>")
+const modelKeyWildcardSchema = Z.literal("*:*");
+const modelKeyLocaleSpecificSchema = Z.string().refine(
+  (value) => {
+    const parts = value.split(":");
+    return parts.length === 2 && 
+      localeCodes.includes(parts[0] as any) && 
+      localeCodes.includes(parts[1] as any);
+  },
+  {
+    message: "Model key must be in format '<sourceLocale>:<targetLocale>' using valid locale codes",
+  }
+);
+const modelKeySchema = Z.union([modelKeyWildcardSchema, modelKeyLocaleSpecificSchema]);
+export type ModelKey = Z.infer<typeof modelKeySchema>;
+
+// Define model value schema (provider/model string in format "provider/model")
+const modelValueSchema = Z.string().refine(
+  (value) => {
+    const parts = value.split("/");
+    return parts.length === 2 && ["groq", "openai", "anthropic"].includes(parts[0]);
+  },
+  {
+    message: "Model value must be in format 'provider/model' where provider is one of: groq, openai, anthropic",
+  }
+);
+export type ModelValue = Z.infer<typeof modelValueSchema>;
+
+// Define models schema
+const modelsSchema = Z.record(modelKeySchema, modelValueSchema).optional();
+export type Models = Z.infer<typeof modelsSchema>;
+
+// Define prompt schema (string or function)
+const promptSchema = Z.union([
+  Z.string(),
+  Z.function()
+    .args(Z.object({ sourceLocale: Z.string(), targetLocale: Z.string() }))
+    .returns(Z.string()),
+]).optional();
+export type Prompt = Z.infer<typeof promptSchema>;
+
+export const configV1_9Definition = extendConfigDefinition(
+  configV1_8Definition,
+  {
+    createSchema: (baseSchema) =>
+      baseSchema.extend({
+        providers: providersSchema,
+        models: modelsSchema,
+        prompt: promptSchema,
+      }),
+    createDefaultValue: (baseDefaultValue) => ({
+      ...baseDefaultValue,
+      version: 1.9,
+      prompt: "You're a precise, context-aware localization tool, that besides translating between languages transfers the meaning and intent of the input.",
+    }),
+    createUpgrader: (oldConfig) => {
+      const upgradedConfig = {
+        ...oldConfig,
+        version: 1.9,
+        prompt: "You're a precise, context-aware localization tool, that besides translating between languages transfers the meaning and intent of the input.",
+      };
+
+      if (oldConfig.provider) {
+        const providers: Record<string, boolean | { baseUrl?: string; prompt?: string }> = {};
+        providers[oldConfig.provider.id] = oldConfig.provider.baseUrl || oldConfig.provider.prompt
+          ? { 
+              ...(oldConfig.provider.baseUrl && { baseUrl: oldConfig.provider.baseUrl }),
+              ...(oldConfig.provider.prompt && { prompt: oldConfig.provider.prompt })
+            }
+          : true;
+        
+        const models: Record<string, string> = {
+          "*:*": `${oldConfig.provider.id}/${oldConfig.provider.model}`
+        };
+        
+        (upgradedConfig as any).providers = providers;
+        (upgradedConfig as any).models = models;
+        
+        if (oldConfig.provider.prompt) {
+          upgradedConfig.prompt = oldConfig.provider.prompt;
+        }
+      }
+
+      return upgradedConfig;
+    },
+  },
+);
+
 // exports
-export const LATEST_CONFIG_DEFINITION = configV1_8Definition;
+export const LATEST_CONFIG_DEFINITION = configV1_9Definition;
 
 export type I18nConfig = Z.infer<(typeof LATEST_CONFIG_DEFINITION)["schema"]>;
+
+export type ProviderConfig = {
+  id: ProviderId;
+  model: string;
+  prompt: string;
+  baseUrl?: string;
+};
 
 export function parseI18nConfig(rawConfig: unknown) {
   try {

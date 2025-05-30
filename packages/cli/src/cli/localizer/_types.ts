@@ -11,7 +11,7 @@ export type LocalizerData = {
 export type LocalizerProgressFn = (progress: number) => void;
 
 export interface ILocalizer {
-  id: "Lingo.dev" | NonNullable<I18nConfig["provider"]>["id"];
+  id: "Lingo.dev" | "openai" | "anthropic" | "groq";
   checkAuth: () => Promise<{ authenticated: boolean; username?: string }>;
   localize: (
     input: LocalizerData,
