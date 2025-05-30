@@ -27,6 +27,11 @@ export function createPoDataLoader(
       const sections = input.split("\n\n").filter(Boolean);
       for (const section of sections) {
         const sectionPo = gettextParser.po.parse(section);
+        // skip section with no translations (some sections might have only obsolete entries)
+        if (Object.keys(sectionPo.translations).length === 0) {
+          continue;
+        }
+
         const contextKey = _.keys(sectionPo.translations)[0];
         const entries = sectionPo.translations[contextKey];
         Object.entries(entries).forEach(([msgid, entry]) => {
@@ -50,6 +55,11 @@ export function createPoDataLoader(
       const result = originalSections
         .map((section) => {
           const sectionPo = gettextParser.po.parse(section);
+          // skip section with no translations (some sections might have only obsolete entries)
+          if (Object.keys(sectionPo.translations).length === 0) {
+            return null;
+          }
+
           const contextKey = _.keys(sectionPo.translations)[0];
           const entries = sectionPo.translations[contextKey];
           const msgid = Object.keys(entries).find((key) => entries[key].msgid);
@@ -91,6 +101,7 @@ export function createPoDataLoader(
           }
           return section.trim();
         })
+        .filter(Boolean)
         .join("\n\n");
       return result;
     },

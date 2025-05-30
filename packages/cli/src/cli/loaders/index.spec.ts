@@ -2509,7 +2509,7 @@ return array(
     it("should extract and restore variables", async () => {
       setupFileMocks();
 
-      const input = `msgid "You have %(count)d items"\nmsgstr "You have %(count)d items"`;
+      const input = `msgid "You have %(count)d items"\nmsgstr "You have %(count)d items"\n\n#~ msgid "I am obsolete"\n#~ msgstr "I am obsolete"`;
 
       const expectedPullOutput = {
         "You%20have%20%25(count)d%20items/singular":
