@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.92.19
+
+### Patch Changes
+
+- [#828](https://github.com/lingodotdev/lingo.dev/pull/828) [`4e9734c`](https://github.com/lingodotdev/lingo.dev/commit/4e9734ce32749caa95703d2b96ba8af6cc83ef94) Thanks [@mathio](https://github.com/mathio)! - preserve order of comments in po files
+
 ## 0.92.18
 
 ### Patch Changes
