@@ -1,0 +1,61 @@
+import { getJsxAttributeValue } from "./utils";
+import _ from "lodash";
+import { getAstKey } from "./utils/ast-key";
+import { LCP } from "./lib/lcp";
+import { getJsxElementHash } from "./utils/hash";
+import { getJsxAttributesMap } from "./utils/jsx-attribute";
+import { extractJsxContent } from "./utils/jsx-content";
+import { collectJsxScopes } from "./utils/jsx-scope";
+import { CompilerPayload } from "./_base";
+
+// Processes only JSX element scopes
+export function jsxScopesExportMutation(
+  payload: CompilerPayload,
+): CompilerPayload {
+  const scopes = collectJsxScopes(payload.ast);
+  if (_.isEmpty(scopes)) {
+    return payload;
+  }
+
+  const lcp = LCP.getInstance({
+    sourceRoot: payload.params.sourceRoot,
+    lingoDir: payload.params.lingoDir,
+  });
+
+  for (const scope of scopes) {
+    const scopeKey = getAstKey(scope);
+
+    lcp.resetScope(payload.fileKey, scopeKey);
+
+    lcp.setScopeType(payload.fileKey, scopeKey, "element");
+
+    const hash = getJsxElementHash(scope);
+    lcp.setScopeHash(payload.fileKey, scopeKey, hash);
+
+    const context = getJsxAttributeValue(scope, "data-lingo-context");
+    lcp.setScopeContext(payload.fileKey, scopeKey, String(context || ""));
+
+    const skip = getJsxAttributeValue(scope, "data-lingo-skip");
+    lcp.setScopeSkip(payload.fileKey, scopeKey, Boolean(skip || false));
+
+    const attributesMap = getJsxAttributesMap(scope);
+    const overrides = _.chain(attributesMap)
+      .entries()
+      .filter(([attributeKey]) =>
+        attributeKey.startsWith("data-lingo-override-"),
+      )
+      .map(([k, v]) => [k.split("data-lingo-override-")[1], v])
+      .filter(([k]) => !!k)
+      .filter(([, v]) => !!v)
+      .fromPairs()
+      .value();
+    lcp.setScopeOverrides(payload.fileKey, scopeKey, overrides);
+
+    const content = extractJsxContent(scope);
+    lcp.setScopeContent(payload.fileKey, scopeKey, content);
+  }
+
+  lcp.save();
+
+  return payload;
+}

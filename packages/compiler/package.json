@@ -1,0 +1,53 @@
+{
+  "name": "@lingo.dev/_compiler",
+  "version": "0.0.1",
+  "description": "Lingo.dev Compiler",
+  "private": true,
+  "sideEffects": false,
+  "type": "module",
+  "main": "build/index.cjs",
+  "types": "build/index.d.ts",
+  "module": "build/index.mjs",
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "dev": "tsup --watch",
+    "build": "tsc --noEmit && tsup",
+    "clean": "rm -rf build",
+    "test": "vitest --run",
+    "test:watch": "vitest -w"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/babel__generator": "^7.6.8",
+    "@types/babel__traverse": "^7.20.6",
+    "@types/ini": "^4.1.1",
+    "@types/lodash": "^4.17.4",
+    "@types/object-hash": "^3.0.6",
+    "@types/react": "^18.3.18",
+    "next": "15.2.4",
+    "tsup": "^8.3.5",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "@ai-sdk/groq": "^1.2.3",
+    "@babel/generator": "^7.26.5",
+    "@babel/parser": "^7.26.7",
+    "@babel/traverse": "^7.26.7",
+    "@babel/types": "^7.26.7",
+    "ai": "^4.2.10",
+    "dedent": "^1.6.0",
+    "dotenv": "^16.4.5",
+    "fast-xml-parser": "^5.0.8",
+    "ini": "^5.0.0",
+    "lodash": "^4.17.21",
+    "object-hash": "^3.0.0",
+    "prettier": "^3.4.2",
+    "unplugin": "^2.1.2",
+    "vitest": "^2.1.4",
+    "zod": "^3.24.1"
+  }
+}
