@@ -1,4 +1,5 @@
-> [!Note] > **Introducing: Lingo.dev Compiler** - Make any React app multilingual at build time without changing your components. [Read the docs](https://lingo.dev/compiler).
+> [!NOTE] 
+> **Introducing: Lingo.dev Compiler** - Make any React app multilingual at build time without changing your components. [Read the docs](https://lingo.dev/compiler).
 
 <p align="center">
   <a href="https://lingo.dev/compiler">
