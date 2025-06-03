@@ -42,6 +42,7 @@ Lingo.dev is designed to produce authentic translations instantly, eliminating m
 - [Quickstart](#-quickstart) - Get started in minutes
 - [Caching](#-caching-with-i18nlock) - Optimize translation updates
 - [GitHub Action](#-github-action) - Automate localization in CI/CD
+- [Lingo.dev Compiler 💚](#-lingodev-compiler) - Zero-effort localization for React apps
 - [Features](#-supercharged-features) - What makes Lingo.dev powerful
 - [Documentation](#-documentation) - Detailed guides and references
 - [Contribute](#-contribute) - Join our community
@@ -137,6 +138,17 @@ This action runs `lingo.dev i18n` on every push, keeping your translations up-to
 
 For pull request mode and other configuration options, visit our [GitHub Action documentation](https://docs.lingo.dev/ci-action/gha).
 
+## 💚 Lingo.dev Compiler
+
+Tired of copy-pasting translations? [Lingo.dev Compiler](https://lingo.dev/en/compiler/) automates localization so you can focus on building features, not managing language files.
+
+Learn more:
+
+- [Overview](https://lingo.dev/en/compiler)
+- [How it works](https://lingo.dev/en/compiler/how-it-works)
+- [Implement it in your React app](https://lingo.dev/en/compiler/quick-start)
+- [Browse the code](https://github.com/lingodotdev/lingo.dev/tree/main/packages/compiler)
+
 ## ⚡️ Lingo.dev's Superpowers
 
 - 🔥 **Instant integration**: Works with your codebase in minutes
@@ -175,3 +187,7 @@ Want to contribute? Create a pull request!
 - [Bengali](/readme/bn.md)
 
 Don't see your language? Just add a new language code to the [`i18n.json`](./i18n.json) file and open a PR!
+
+## 💬 Talk to us
+
+Have feedback, feature requests, bug reports or other suggestions? [Talk to us on Discord!](https://lingo.dev/go/discord)
