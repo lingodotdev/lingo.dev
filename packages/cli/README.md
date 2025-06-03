@@ -55,13 +55,22 @@ Simply run the compiler and your app will support multiple languages automatical
 
 After watching the demo, check out the [docs](https://lingo.dev/compiler) to learn more.
 
-## 🤝 Contribute
+## 🤝 Community
 
 Lingo.dev is community-driven, so we welcome all contributions!
 
 Have an idea for a new feature? Create a GitHub issue!
 
 Want to contribute? Create a pull request!
+
+Want to discuss your idea or get help? [Join us on Discord!](https://lingo.dev/go/discord)
+
+## Star History
+
+If you like the work we're doing, consider giving us a ⭐️ to help us reach 3,000 stars! 🌟
+
+[![Star History Chart](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
 
 ## 🌐 Readme in other languages
 
@@ -79,14 +88,3 @@ Want to contribute? Create a pull request!
 - [Bengali](/readme/bn.md)
 
 Don't see your language? Just add a new language code to the [`i18n.json`](./i18n.json) file and open a PR!
-
-## Star History
-
-If you like the work we're doing, consider giving us a ⭐️ to help us reach 3,000 stars! 🌟
-
-[![Star History Chart](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
-
-
-## 💬 Talk to us
-
-Have feedback, feature requests, bug reports or other suggestions? [Talk to us on Discord!](https://lingo.dev/go/discord)
