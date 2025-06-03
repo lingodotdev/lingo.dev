@@ -57,7 +57,7 @@ function Component() {
 `.trim();
 
       const expected = `
-import { LingoComponent } from "@lingo.dev/~react/client";
+import { LingoComponent } from "lingo.dev/react/client";
 function Component() {
   return <div>
     <LingoComponent data-jsx-scope="0/my/custom/path/1" className="text-foreground" $as="p" $fileKey="test" $entryKey="0/my/custom/path/1" />
@@ -81,7 +81,7 @@ function Component() {
 `.trim();
 
       const expected = `
-import { LingoComponent, loadDictionary } from "@lingo.dev/~react/rsc";
+import { LingoComponent, loadDictionary } from "lingo.dev/react/rsc";
 function Component() {
   return <div>
     <LingoComponent data-jsx-scope="0/body/0/argument/1" className="text-foreground" $as="p" $fileKey="test" $entryKey="0/body/0/argument/1" $loadDictionary={locale => loadDictionary(locale)} />
@@ -118,7 +118,7 @@ function Component({ dynamicClass }) {
 `.trim();
 
       const expected = `
-import { LingoComponent } from "@lingo.dev/~react/client";
+import { LingoComponent } from "lingo.dev/react/client";
 function Component({
   dynamicClass
 }) {
@@ -142,7 +142,7 @@ function Component() {
 `.trim();
 
       const expected = `
-import { LingoComponent } from "@lingo.dev/~react/client";
+import { LingoComponent } from "lingo.dev/react/client";
 function Component() {
   return <div>
     <LingoComponent data-jsx-scope="0/body/0/argument/1" disabled $as="button" $fileKey="test" $entryKey="0/body/0/argument/1" />
@@ -166,7 +166,7 @@ function Component({ count, category }) {
 `.trim();
 
       const expected = `
-import { LingoComponent } from "@lingo.dev/~react/client";
+import { LingoComponent } from "lingo.dev/react/client";
 function Component({ count, category }) {
   return <div>
     <LingoComponent
@@ -195,7 +195,7 @@ function Component({ count, category }) {
 `.trim();
 
       const expected = `
-import { LingoComponent, loadDictionary } from "@lingo.dev/~react/rsc";
+import { LingoComponent, loadDictionary } from "lingo.dev/react/rsc";
 function Component({ count, category }) {
   return <div>
     <LingoComponent
@@ -227,7 +227,7 @@ function Component({ count, user }) {
 `.trim();
 
       const expected = `
-import { LingoComponent } from "@lingo.dev/~react/client";
+import { LingoComponent } from "lingo.dev/react/client";
 function Component({ count, user }) {
   return <div>
     <LingoComponent
@@ -260,7 +260,7 @@ function Component() {
 `.trim();
 
       const expected = `
-import { LingoComponent } from "@lingo.dev/~react/client";
+import { LingoComponent } from "lingo.dev/react/client";
 function Component() {
   return <div>
     <LingoComponent
@@ -302,7 +302,7 @@ function Component() {
 `.trim();
 
       const expected = `
-import { LingoComponent } from "@lingo.dev/~react/client";
+import { LingoComponent } from "lingo.dev/react/client";
 function Component() {
   return <div>
     <LingoComponent
@@ -343,7 +343,7 @@ function Component({ name }) {
 `.trim();
 
       const expected = `
-import { LingoComponent } from "@lingo.dev/~react/client";
+import { LingoComponent } from "lingo.dev/react/client";
 function Component({ name }) {
   return <div>
     <LingoComponent
@@ -381,7 +381,7 @@ function Component() {
 `.trim();
 
       const expected = `
-import { LingoComponent } from "@lingo.dev/~react/client";
+import { LingoComponent } from "lingo.dev/react/client";
 function Component() {
   return <div>
     <LingoComponent
@@ -415,7 +415,7 @@ function Component({ user }) {
 `.trim();
 
       const expected = `
-import { LingoComponent } from "@lingo.dev/~react/client";
+import { LingoComponent } from "lingo.dev/react/client";
 function Component({ user }) {
   return <div>
     <LingoComponent
@@ -517,7 +517,7 @@ function Component() {
 `.trim();
 
       const expected = `
-import { LingoComponent } from "@lingo.dev/~react/client";
+import { LingoComponent } from "lingo.dev/react/client";
 function Component() {
   return <div>
     <LingoComponent
@@ -556,7 +556,7 @@ function Component() {
 `.trim();
 
       const expected = `
-import { LingoComponent } from "@lingo.dev/~react/client";
+import { LingoComponent } from "lingo.dev/react/client";
 function Component() {
   return <div>
     <LingoComponent
