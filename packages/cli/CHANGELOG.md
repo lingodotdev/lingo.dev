@@ -1,5 +1,19 @@
 # lingo.dev
 
+## 0.93.0
+
+### Minor Changes
+
+- [`e980e84`](https://github.com/lingodotdev/lingo.dev/commit/e980e84178439ad70417d38b425acf9148cfc4b6) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - added the compiler
+
+### Patch Changes
+
+- Updated dependencies [[`e980e84`](https://github.com/lingodotdev/lingo.dev/commit/e980e84178439ad70417d38b425acf9148cfc4b6)]:
+  - @lingo.dev/_compiler@0.1.0
+  - @lingo.dev/_react@0.1.0
+  - @lingo.dev/_sdk@0.8.0
+  - @lingo.dev/_spec@0.34.0
+
 ## 0.92.19
 
 ### Patch Changes
