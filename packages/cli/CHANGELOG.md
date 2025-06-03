@@ -1,5 +1,15 @@
 # lingo.dev
 
+## 0.93.1
+
+### Patch Changes
+
+- [`caef325`](https://github.com/lingodotdev/lingo.dev/commit/caef3253bc99fa7bf7a0b40e5604c3590dcb4958) Thanks [@mathio](https://github.com/mathio)! - release fix
+
+- Updated dependencies [[`caef325`](https://github.com/lingodotdev/lingo.dev/commit/caef3253bc99fa7bf7a0b40e5604c3590dcb4958)]:
+  - @lingo.dev/_compiler@0.1.1
+  - @lingo.dev/_react@0.1.1
+
 ## 0.93.0
 
 ### Minor Changes
