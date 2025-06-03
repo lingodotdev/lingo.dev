@@ -2,7 +2,10 @@
   "name": "@lingo.dev/_react",
   "version": "0.1.0",
   "description": "Lingo.dev React Kit",
-  "private": true,
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "sideEffects": false,
   "type": "module",
   "exports": {
