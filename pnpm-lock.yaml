@@ -25,7 +25,7 @@ importers:
         specifier: ^7.27.1
         version: 7.27.1
       '@babel/traverse':
-        specifier: ^7.26.7
+        specifier: ^7.27.4
         version: 7.27.4
       '@babel/types':
         specifier: ^7.27.1
@@ -236,7 +236,7 @@ importers:
         specifier: ^7.27.1
         version: 7.27.1
       '@babel/traverse':
-        specifier: ^7.26.7
+        specifier: ^7.27.4
         version: 7.27.4
       '@babel/types':
         specifier: ^7.27.1
@@ -549,8 +549,8 @@ importers:
         specifier: ^7.26.7
         version: 7.27.1
       '@babel/traverse':
-        specifier: ^7.26.7
-        version: 7.27.1
+        specifier: ^7.27.4
+        version: 7.27.4
       '@babel/types':
         specifier: ^7.26.7
         version: 7.27.1
@@ -911,16 +911,8 @@ packages:
     resolution: {integrity: sha512-UwgBRMjJP+xv857DCngvqXI3Iq6J4v0wXmwc6sapg+zyhbwmQX67LUEFrkK5tbyJ30jGuG3ZvWpBiB9LCy1kWw==}
     engines: {node: '>=6.9.0'}
 
-  '@babel/template@7.27.1':
-    resolution: {integrity: sha512-Fyo3ghWMqkHHpHQCoBs2VnYjR4iWFFjguTDEqA5WgZDOrFesVjMhMM2FSqTKSoUSDO1VQtavj8NFpdRBEvJTtg==}
-    engines: {node: '>=6.9.0'}
-
   '@babel/template@7.27.2':
     resolution: {integrity: sha512-LPDZ85aEJyYSd18/DkjNh4/y1ntkE5KwUHWTiqgRxruuZL2F1yuHligVHLvcHY2vMHXttKFpJn6LwfI7cw7ODw==}
-    engines: {node: '>=6.9.0'}
-
-  '@babel/traverse@7.27.1':
-    resolution: {integrity: sha512-ZCYtZciz1IWJB4U61UPu4KEaqyfj+r5T1Q5mqPo+IBpcG9kHv30Z0aD8LXPgC1trYa6rK0orRyAhqUgk4MjmEg==}
     engines: {node: '>=6.9.0'}
 
   '@babel/traverse@7.27.4':
@@ -8621,29 +8613,11 @@ snapshots:
     dependencies:
       regenerator-runtime: 0.14.1
 
-  '@babel/template@7.27.1':
-    dependencies:
-      '@babel/code-frame': 7.27.1
-      '@babel/parser': 7.27.4
-      '@babel/types': 7.27.3
-
   '@babel/template@7.27.2':
     dependencies:
       '@babel/code-frame': 7.27.1
       '@babel/parser': 7.27.4
       '@babel/types': 7.27.3
-
-  '@babel/traverse@7.27.1':
-    dependencies:
-      '@babel/code-frame': 7.27.1
-      '@babel/generator': 7.27.1
-      '@babel/parser': 7.27.1
-      '@babel/template': 7.27.1
-      '@babel/types': 7.27.1
-      debug: 4.4.0
-      globals: 11.12.0
-    transitivePeerDependencies:
-      - supports-color
 
   '@babel/traverse@7.27.4':
     dependencies:
@@ -11295,7 +11269,7 @@ snapshots:
       chai: 5.2.0
       tinyrainbow: 2.0.0
 
-  '@vitest/mocker@2.1.9(vite@5.4.10(@types/node@22.15.3))':
+  '@vitest/mocker@2.1.9(vite@5.4.10(@types/node@22.15.3)(lightningcss@1.30.1)(terser@5.36.0))':
     dependencies:
       '@vitest/spy': 2.1.9
       estree-walker: 3.0.3
@@ -16812,7 +16786,7 @@ snapshots:
   vitest@2.1.9(@types/node@22.15.3)(jsdom@25.0.1)(lightningcss@1.30.1)(terser@5.36.0):
     dependencies:
       '@vitest/expect': 2.1.9
-      '@vitest/mocker': 2.1.9(vite@5.4.10(@types/node@22.15.3))
+      '@vitest/mocker': 2.1.9(vite@5.4.10(@types/node@22.15.3)(lightningcss@1.30.1)(terser@5.36.0))
       '@vitest/pretty-format': 2.1.9
       '@vitest/runner': 2.1.9
       '@vitest/snapshot': 2.1.9
