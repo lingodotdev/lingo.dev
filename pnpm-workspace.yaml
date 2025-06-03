@@ -1,5 +1,6 @@
 packages:
   - "./packages/*"
+  - "./demo/*"
   - "./integrations/*"
   - "./legacy/*"
   - "./action"

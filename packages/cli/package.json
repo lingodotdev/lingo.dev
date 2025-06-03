@@ -23,6 +23,31 @@
       "types": "./build/spec.d.ts",
       "import": "./build/spec.mjs",
       "require": "./build/spec.cjs"
+    },
+    "./compiler": {
+      "types": "./build/compiler.d.ts",
+      "import": "./build/compiler.mjs",
+      "require": "./build/compiler.cjs"
+    },
+    "./react": {
+      "types": "./build/react.d.ts",
+      "import": "./build/react.mjs",
+      "require": "./build/react.cjs"
+    },
+    "./react/client": {
+      "types": "./build/react/client.d.ts",
+      "import": "./build/react/client.mjs",
+      "require": "./build/react/client.cjs"
+    },
+    "./react/rsc": {
+      "types": "./build/react/rsc.d.ts",
+      "import": "./build/react/rsc.mjs",
+      "require": "./build/react/rsc.cjs"
+    },
+    "./react/react-router": {
+      "types": "./build/react/react-router.d.ts",
+      "import": "./build/react/react-router.mjs",
+      "require": "./build/react/react-router.cjs"
     }
   },
   "typesVersions": {
@@ -35,6 +60,21 @@
       ],
       "spec": [
         "./build/spec.d.ts"
+      ],
+      "compiler": [
+        "./build/compiler.d.ts"
+      ],
+      "react": [
+        "./build/react.d.ts"
+      ],
+      "react/client": [
+        "./build/react/client.d.ts"
+      ],
+      "react/rsc": [
+        "./build/react/rsc.d.ts"
+      ],
+      "react/react-router": [
+        "./build/react/react-router.d.ts"
       ]
     }
   },
@@ -69,6 +109,8 @@
     "@inquirer/prompts": "^7.4.1",
     "@lingo.dev/_sdk": "workspace:*",
     "@lingo.dev/_spec": "workspace:*",
+    "@lingo.dev/_react": "workspace:*",
+    "@lingo.dev/_compiler": "workspace:*",
     "@modelcontextprotocol/sdk": "^1.5.0",
     "@paralleldrive/cuid2": "^2.2.2",
     "ai": "^4.3.15",
