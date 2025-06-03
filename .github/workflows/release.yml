@@ -60,14 +60,14 @@ jobs:
       - name: Install deps
         run: pnpm install
 
-      # - name: Lingo.dev
-      #   if: ${{ !inputs.skip_lingo }}
-      #   uses: ./
-      #   with:
-      #     api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
-      #     pull-request: true
-      #   env:
-      #     GH_TOKEN: ${{ github.token }}
+      - name: Lingo.dev
+        if: ${{ !inputs.skip_lingo }}
+        uses: ./
+        with:
+          api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
+          pull-request: true
+        env:
+          GH_TOKEN: ${{ github.token }}
 
       - name: Setup
         run: |
