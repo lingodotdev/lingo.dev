@@ -1,5 +1,11 @@
 # @lingo.dev/\_compiler
 
+## 0.1.2
+
+### Patch Changes
+
+- [`920e3f5`](https://github.com/lingodotdev/lingo.dev/commit/920e3f5c3ca1fd51b0919db13a4787cfd616de54) Thanks [@mathio](https://github.com/mathio)! - remove cloneDeep for optimization
+
 ## 0.1.1
 
 ### Patch Changes
