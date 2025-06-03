@@ -454,7 +454,7 @@ function Component() {
 `.trim();
 
       const expected = `
-import { LingoComponent } from "@lingo.dev/~react/client";
+import { LingoComponent } from "lingo.dev/react/client";
 function Component() {
   return <div>
     <LingoComponent
@@ -484,7 +484,7 @@ function Component() {
 `.trim();
 
       const expected = `
-import { LingoComponent } from "@lingo.dev/~react/client";
+import { LingoComponent } from "lingo.dev/react/client";
 function Component() {
   return <div>
     <LingoComponent
