@@ -44,7 +44,7 @@
       "import": "./build/react/rsc.mjs",
       "require": "./build/react/rsc.cjs"
     },
-    "./react/react/router": {
+    "./react/react-router": {
       "types": "./build/react/react-router.d.ts",
       "import": "./build/react/react-router.mjs",
       "require": "./build/react/react-router.cjs"
