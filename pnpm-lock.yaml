@@ -25,8 +25,8 @@ importers:
         specifier: ^7.27.1
         version: 7.27.1
       '@babel/traverse':
-        specifier: ^7.27.1
-        version: 7.27.1
+        specifier: ^7.26.7
+        version: 7.27.4
       '@babel/types':
         specifier: ^7.27.1
         version: 7.27.1
@@ -48,6 +48,49 @@ importers:
       turbo:
         specifier: ^2.5.0
         version: 2.5.0
+
+  demo/next-app:
+    dependencies:
+      lingo.dev:
+        specifier: workspace:*
+        version: link:../../packages/cli
+      next:
+        specifier: 15.3.1
+        version: 15.3.1(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      react:
+        specifier: ^19.0.0
+        version: 19.1.0
+      react-dom:
+        specifier: ^19.0.0
+        version: 19.1.0(react@19.1.0)
+    devDependencies:
+      '@eslint/eslintrc':
+        specifier: ^3
+        version: 3.3.1
+      '@tailwindcss/postcss':
+        specifier: ^4
+        version: 4.1.8
+      '@types/node':
+        specifier: ^20
+        version: 20.17.57
+      '@types/react':
+        specifier: ^19
+        version: 19.1.6
+      '@types/react-dom':
+        specifier: ^19
+        version: 19.1.5(@types/react@19.1.6)
+      eslint:
+        specifier: ^9
+        version: 9.28.0(jiti@2.4.2)
+      eslint-config-next:
+        specifier: 15.3.1
+        version: 15.3.1(eslint@9.28.0(jiti@2.4.2))(typescript@5.8.3)
+      tailwindcss:
+        specifier: ^4
+        version: 4.1.8
+      typescript:
+        specifier: ^5
+        version: 5.8.3
 
   demo/react-router-app:
     dependencies:
@@ -100,49 +143,6 @@ importers:
       vite-tsconfig-paths:
         specifier: ^5.1.4
         version: 5.1.4(typescript@5.8.3)(vite@6.3.5(@types/node@20.17.57)(jiti@2.4.2)(lightningcss@1.30.1)(terser@5.36.0)(yaml@2.7.0))
-
-  demo/next-app:
-    dependencies:
-      lingo.dev:
-        specifier: workspace:*
-        version: link:../../packages/cli
-      next:
-        specifier: 15.3.1
-        version: 15.3.1(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      react:
-        specifier: ^19.0.0
-        version: 19.1.0
-      react-dom:
-        specifier: ^19.0.0
-        version: 19.1.0(react@19.1.0)
-    devDependencies:
-      '@eslint/eslintrc':
-        specifier: ^3
-        version: 3.3.1
-      '@tailwindcss/postcss':
-        specifier: ^4
-        version: 4.1.8
-      '@types/node':
-        specifier: ^20
-        version: 20.17.57
-      '@types/react':
-        specifier: ^19
-        version: 19.1.6
-      '@types/react-dom':
-        specifier: ^19
-        version: 19.1.5(@types/react@19.1.6)
-      eslint:
-        specifier: ^9
-        version: 9.28.0(jiti@2.4.2)
-      eslint-config-next:
-        specifier: 15.3.1
-        version: 15.3.1(eslint@9.28.0(jiti@2.4.2))(typescript@5.8.3)
-      tailwindcss:
-        specifier: ^4
-        version: 4.1.8
-      typescript:
-        specifier: ^5
-        version: 5.8.3
 
   demo/vite-project:
     dependencies:
@@ -236,8 +236,8 @@ importers:
         specifier: ^7.27.1
         version: 7.27.1
       '@babel/traverse':
-        specifier: ^7.27.1
-        version: 7.27.1
+        specifier: ^7.26.7
+        version: 7.27.4
       '@babel/types':
         specifier: ^7.27.1
         version: 7.27.1
