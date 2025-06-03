@@ -1,4 +1,5 @@
-> [!NOTE] > **Introducing: Lingo.dev Compiler** - Make any React app multilingual at build time without changing your components. [Read the docs](https://lingo.dev/compiler).
+> [!NOTE]
+> **Introducing Lingo.dev Compiler** - Make any React app multilingual at build time without changing your components. [Read the docs](https://lingo.dev/compiler).
 
 <p align="center">
   <a href="https://lingo.dev/compiler">
@@ -36,9 +37,9 @@ Lingo.dev is an open-source, i18n toolkit designed to help use LLMs for localiza
 
 Lingo.dev includes:
 
-- **Lingo.dev CLI** - a CLI tool built to help translate apps and markdown content with lightning speed and accuracy. [Docs](https://lingo.dev/cli)
-- **Lingo.dev CI/CD** - a CI/CD integration for GitHub, GitLab, and Bitbucket built to keep translations up-to-date automatically as soon as new content is added. [Docs](https://lingo.dev/ci)
-- **Lingo.dev Compiler 🆕** - makes React app multilingual at build time without requiring changes to your existing components. [Docs](https://lingo.dev/compiler)
+1. **Lingo.dev CLI** - a CLI tool built to help translate apps and markdown content with lightning speed and accuracy. [Docs](https://lingo.dev/cli)
+1. **Lingo.dev CI/CD** - a CI/CD integration for GitHub, GitLab, and Bitbucket built to keep translations up-to-date automatically as soon as new content is added. [Docs](https://lingo.dev/ci)
+1. **Lingo.dev Compiler 🆕** - makes React app multilingual at build time without requiring changes to your existing components. [Docs](https://lingo.dev/compiler)
 
 All tools are designed to help use LLM models for precise translation and localization, and to eliminate manual work.
 
@@ -48,7 +49,11 @@ See Lingo.dev Compiler in action:
 
 [![Lingo.dev Compiler Demo](https://img.youtube.com/vi/sSo2ERxAvB4/0.jpg)](https://youtu.be/sSo2ERxAvB4)
 
-The Lingo.dev Compiler makes React apps multilingual at build time without requiring changes to your existing components. Simply run the compiler and your app will support multiple languages automatically, using your existing LLM API key. After watching the demo, check out the [docs](https://lingo.dev/compiler) to learn more.
+The Lingo.dev Compiler makes React apps multilingual at build time without requiring changes to your existing components.
+
+Simply run the compiler and your app will support multiple languages automatically, using your existing LLM API key.
+
+After watching the demo, check out the [docs](https://lingo.dev/compiler) to learn more.
 
 ## 🤝 Contribute
 
@@ -77,9 +82,10 @@ Don't see your language? Just add a new language code to the [`i18n.json`](./i18
 
 ## Star History
 
+If you like the work we're doing, consider giving us a ⭐️ to help us reach 3,000 stars! 🌟
+
 [![Star History Chart](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
 
-If you like the work we're doing, consider giving us a ⭐️ to help us reach 3,000 stars! 🌟
 
 ## 💬 Talk to us
 
