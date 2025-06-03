@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.93.2
+
+### Patch Changes
+
+- [`cdb59dd`](https://github.com/lingodotdev/lingo.dev/commit/cdb59dddcd14da1ba3181a33c4c119af877cb4f3) Thanks [@mathio](https://github.com/mathio)! - update deps
+
 ## 0.93.1
 
 ### Patch Changes
