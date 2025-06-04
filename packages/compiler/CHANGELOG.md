@@ -1,5 +1,11 @@
 # @lingo.dev/\_compiler
 
+## 0.1.3
+
+### Patch Changes
+
+- [`f42cff8`](https://github.com/lingodotdev/lingo.dev/commit/f42cff8355b1ff7bba1445bd04d11ee4672903c2) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - flat reexports
+
 ## 0.1.2
 
 ### Patch Changes
