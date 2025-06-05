@@ -47,7 +47,11 @@ Lingo.dev включає:
 
 Перегляньте Lingo.dev Compiler в дії:
 
-[![Демонстрація Lingo.dev Compiler](https://img.youtube.com/vi/sSo2ERxAvB4/0.jpg)](https://youtu.be/sSo2ERxAvB4)
+[
+
+![Демонстрація Lingo.dev Compiler](https://img.youtube.com/vi/sSo2ERxAvB4/0.jpg)
+
+](https://youtu.be/sSo2ERxAvB4)
 
 Lingo.dev Compiler робить React додатки багатомовними під час збірки без необхідності змінювати існуючі компоненти.
 
@@ -69,7 +73,11 @@ Lingo.dev розвивається спільнотою, тому ми віта�
 
 Якщо вам подобається наша робота, поставте нам ⭐️, щоб допомогти нам досягти 3000 зірок! 🌟
 
-[![Графік історії зірок](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+[
+
+![Графік історії зірок](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
 
 ## 🌐 Readme іншими мовами
 

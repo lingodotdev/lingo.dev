@@ -47,7 +47,11 @@ Lingo.dev 包括：
 
 观看 Lingo.dev 编译器的实际操作：
 
-[![Lingo.dev 编译器演示](https://img.youtube.com/vi/sSo2ERxAvB4/0.jpg)](https://youtu.be/sSo2ERxAvB4)
+[
+
+![Lingo.dev 编译器演示](https://img.youtube.com/vi/sSo2ERxAvB4/0.jpg)
+
+](https://youtu.be/sSo2ERxAvB4)
 
 Lingo.dev 编译器在构建时让 React 应用支持多语言，无需更改现有组件。
 
@@ -69,7 +73,11 @@ Lingo.dev 是一个社区驱动的项目，我们欢迎所有的贡献！
 
 如果你喜欢我们正在做的工作，请考虑给我们一个 ⭐️，帮助我们达到 3,000 个星标！🌟
 
-[![Star 历史图表](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+[
+
+![Star 历史图表](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
 
 ## 🌐 其他语言的自述文件
 

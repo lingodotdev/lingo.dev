@@ -47,7 +47,11 @@ Lingo.dev هو مجموعة أدوات مفتوحة المصدر للتدويل 
 
 شاهد Lingo.dev Compiler قيد العمل:
 
-[![عرض توضيحي لـ Lingo.dev Compiler](https://img.youtube.com/vi/sSo2ERxAvB4/0.jpg)](https://youtu.be/sSo2ERxAvB4)
+[
+
+![عرض توضيحي لـ Lingo.dev Compiler](https://img.youtube.com/vi/sSo2ERxAvB4/0.jpg)
+
+](https://youtu.be/sSo2ERxAvB4)
 
 يجعل Lingo.dev Compiler تطبيقات React متعددة اللغات في وقت البناء دون الحاجة إلى تغييرات في المكونات الحالية.
 
@@ -69,7 +73,11 @@ Lingo.dev مدفوع بالمجتمع، لذلك نرحب بجميع المسا�
 
 إذا أعجبك العمل الذي نقوم به، فكر في منحنا ⭐️ لمساعدتنا في الوصول إلى 3,000 نجمة! 🌟
 
-[![مخطط تاريخ النجوم](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+[
+
+![مخطط تاريخ النجوم](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
 
 ## 🌐 الملف التعريفي بلغات أخرى
 

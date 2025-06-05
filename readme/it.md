@@ -47,7 +47,11 @@ Tutti gli strumenti sono progettati per aiutare a utilizzare i modelli LLM per t
 
 Guarda Lingo.dev Compiler in azione:
 
-[![Demo di Lingo.dev Compiler](https://img.youtube.com/vi/sSo2ERxAvB4/0.jpg)](https://youtu.be/sSo2ERxAvB4)
+[
+
+![Demo di Lingo.dev Compiler](https://img.youtube.com/vi/sSo2ERxAvB4/0.jpg)
+
+](https://youtu.be/sSo2ERxAvB4)
 
 Il Lingo.dev Compiler rende le app React multilingue in fase di compilazione senza richiedere modifiche ai componenti esistenti.
 
@@ -69,7 +73,11 @@ Vuoi discutere la tua idea o ricevere aiuto? [Unisciti a noi su Discord!](https:
 
 Se ti piace il lavoro che stiamo facendo, considera di darci una ⭐️ per aiutarci a raggiungere 3.000 stelle! 🌟
 
-[![Grafico della cronologia delle stelle](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+[
+
+![Grafico della cronologia delle stelle](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
 
 ## 🌐 Readme in altre lingue
 
