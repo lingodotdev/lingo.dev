@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.93.6
+
+### Patch Changes
+
+- [#843](https://github.com/lingodotdev/lingo.dev/pull/843) [`b67a331`](https://github.com/lingodotdev/lingo.dev/commit/b67a33141253fa755b5531e52cd690bf5824d4b6) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - explicit source / targets in run cmd, parallel mode for ci/cd
+
 ## 0.93.5
 
 ### Patch Changes
