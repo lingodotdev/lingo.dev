@@ -35,14 +35,6 @@ export default async function setup(input: CmdRunContext) {
               "No buckets found in i18n.json. Please add at least one bucket containing i18n content.",
             );
           } else if (
-            ctx.flags.locale?.some(
-              (locale) => !ctx.config?.locale.targets.includes(locale),
-            )
-          ) {
-            throw new Error(
-              `One or more specified locales do not exist in i18n.json locale.targets. Please add them to the list first and try again.`,
-            );
-          } else if (
             ctx.flags.bucket?.some(
               (bucket) =>
                 !ctx.config?.buckets[bucket as keyof typeof ctx.config.buckets],

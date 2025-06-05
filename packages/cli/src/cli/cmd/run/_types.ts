@@ -31,7 +31,6 @@ export type CmdRunTask = {
 };
 
 export const flagsSchema = z.object({
-  locale: z.array(localeCodeSchema).optional(),
   bucket: z.array(bucketTypeSchema).optional(),
   key: z.array(z.string()).optional(),
   file: z.array(z.string()).optional(),
@@ -43,5 +42,7 @@ export const flagsSchema = z.object({
   interactive: z.boolean().default(false),
   concurrency: z.number().positive().default(10),
   debug: z.boolean().default(false),
+  sourceLocale: z.string().optional(),
+  targetLocale: z.array(z.string()).optional(),
 });
 export type CmdRunFlags = z.infer<typeof flagsSchema>;
