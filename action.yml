@@ -18,7 +18,7 @@ runs:
           --pull-request-title "${{ inputs.pull-request-title }}" \
           --working-directory "${{ inputs.working-directory }}" \
           --process-own-commits "${{ inputs.process-own-commits }}" \
-          --parallel "${{ inputs.parallel }}"
+          --parallel ${{ inputs.parallel }}
       shell: bash
 inputs:
   version:
