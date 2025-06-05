@@ -22,18 +22,20 @@ export default new Command()
   .command("ci")
   .description("Run Lingo.dev CI/CD action")
   .helpOption("-h, --help", "Show help")
-  .option("--parallel", "Run in parallel mode", (val: string | boolean) => {
-    if (typeof val === "boolean") return val;
-    return val?.toLowerCase() === "true";
-  })
+  .option("--parallel [boolean]", "Run in parallel mode", parseBooleanArg)
   .option("--api-key <key>", "API key")
-  .option("--pull-request [boolean]", "Create a pull request with the changes")
+  .option(
+    "--pull-request [boolean]",
+    "Create a pull request with the changes",
+    parseBooleanArg,
+  )
   .option("--commit-message <message>", "Commit message")
   .option("--pull-request-title <title>", "Pull request title")
   .option("--working-directory <dir>", "Working directory")
   .option(
     "--process-own-commits [boolean]",
     "Process commits made by this action",
+    parseBooleanArg,
   )
   .action(async (options: CIOptions) => {
     const settings = getSettings(options.apiKey);
@@ -99,3 +101,11 @@ export default new Command()
 
     await flow.postRun?.();
   });
+
+function parseBooleanArg(val: string | boolean | undefined): boolean {
+  if (val === true) return true;
+  if (typeof val === "string") {
+    return val.toLowerCase() === "true";
+  }
+  return false;
+}
