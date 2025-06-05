@@ -47,7 +47,11 @@ Lingo.devには以下が含まれます：
 
 Lingo.dev Compilerの動作を確認してください：
 
-[![Lingo.dev Compilerデモ](https://img.youtube.com/vi/sSo2ERxAvB4/0.jpg)](https://youtu.be/sSo2ERxAvB4)
+[
+
+![Lingo.dev Compilerデモ](https://img.youtube.com/vi/sSo2ERxAvB4/0.jpg)
+
+](https://youtu.be/sSo2ERxAvB4)
 
 Lingo.dev Compilerは、既存のコンポーネントを変更することなく、ビルド時にReactアプリを多言語対応にします。
 
@@ -69,7 +73,11 @@ Lingo.devはコミュニティ主導のプロジェクトですので、あら�
 
 私たちの取り組みが気に入っていただけたら、3,000スターを達成するために⭐️をつけることをご検討ください！🌟
 
-[![スター履歴チャート](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+[
+
+![スター履歴チャート](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
 
 ## 🌐 他言語のREADME
 

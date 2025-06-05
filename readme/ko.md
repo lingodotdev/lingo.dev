@@ -47,7 +47,11 @@ Lingo.dev는 다음을 포함합니다:
 
 Lingo.dev 컴파일러 작동 모습을 확인하세요:
 
-[![Lingo.dev 컴파일러 데모](https://img.youtube.com/vi/sSo2ERxAvB4/0.jpg)](https://youtu.be/sSo2ERxAvB4)
+[
+
+![Lingo.dev 컴파일러 데모](https://img.youtube.com/vi/sSo2ERxAvB4/0.jpg)
+
+](https://youtu.be/sSo2ERxAvB4)
 
 Lingo.dev 컴파일러는 기존 컴포넌트를 변경할 필요 없이 빌드 타임에 React 앱을 다국어로 만듭니다.
 
@@ -69,7 +73,11 @@ Lingo.dev는 커뮤니티 중심으로 운영되므로 모든 기여를 환영�
 
 저희가 하는 작업이 마음에 드신다면, 3,000개의 스타를 달성하는 데 도움이 되도록 ⭐️을 눌러주세요! 🌟
 
-[![스타 히스토리 차트](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+[
+
+![스타 히스토리 차트](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
 
 ## 🌐 다른 언어로 된 README
 
