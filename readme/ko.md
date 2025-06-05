@@ -85,5 +85,6 @@ Lingo.dev는 커뮤니티 중심으로 운영되므로 모든 기여를 환영�
 - [아랍어](/readme/ar.md)
 - [힌디어](/readme/hi.md)
 - [벵골어](/readme/bn.md)
+- [페르시아어](/readme/fa.md)
 
 원하는 언어가 보이지 않나요? [`i18n.json`](./i18n.json) 파일에 새 언어 코드를 추가하고 PR을 열어주세요!

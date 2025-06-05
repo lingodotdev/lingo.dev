@@ -85,5 +85,6 @@ Se ti piace il lavoro che stiamo facendo, considera di darci una ⭐️ per aiut
 - [Arabic](/readme/ar.md)
 - [Hindi](/readme/hi.md)
 - [Bengali](/readme/bn.md)
+- [Farsi](/readme/fa.md)
 
 Non vedi la tua lingua? Aggiungi semplicemente un nuovo codice lingua al file [`i18n.json`](./i18n.json) e apri una PR!
