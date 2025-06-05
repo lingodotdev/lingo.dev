@@ -14,9 +14,7 @@ export function getGroqKeyFromRc() {
 
 // retrieve key from process.env, with .env file as fallback
 export function getGroqKeyFromEnv() {
-  const ephemeralEnv = {
-    GROQ_API_KEY: process.env.GROQ_API_KEY,
-  } as {
+  const ephemeralEnv = {} as {
     GROQ_API_KEY?: string;
   };
   dotenv.config({ processEnv: ephemeralEnv });
