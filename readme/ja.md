@@ -1,22 +1,20 @@
-> [!NOTE]
-> **Lingo.dev Compilerの紹介** - ビルド時にコンポーネントを変更せずにReactアプリを多言語対応にします。[ドキュメントを読む](https://lingo.dev/compiler)。
-
 <p align="center">
-  <a href="https://lingo.dev/compiler">
+  <a href="https://lingo.dev">
     <img src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.compiler.png" width="100%" alt="Lingo.dev" />
   </a>
 </p>
 
 <p align="center">
-  <strong>⚡️ ウェブ＆モバイルローカリゼーション向けAI駆動オープンソースツール。</strong>
+  <strong>⚡️ LLMを活用したオープンソースi18nツールキットで即時ローカライゼーションを実現。</strong>
 </p>
 
 <br />
 
 <p align="center">
+  <a href="https://lingo.dev/compiler">Lingo.dev コンパイラ</a> •
   <a href="https://lingo.dev/cli">Lingo.dev CLI</a> •
   <a href="https://lingo.dev/ci">Lingo.dev CI/CD</a> •
-  <a href="https://lingo.dev/compiler">Lingo.dev Compiler 🆕</a>
+  <a href="https://lingo.dev/sdk">Lingo.dev SDK</a>
 </p>
 
 <p align="center">
@@ -31,47 +29,111 @@
   </a>
 </p>
 
-<br />
+---
 
-Lingo.devは、ウェブ、モバイルアプリ、マークダウンコンテンツのローカリゼーションと翻訳にLLMを活用するためのオープンソースi18nツールキットです。
+## コンパイラの紹介 🆕
 
-Lingo.devには以下が含まれます：
+**Lingo.dev コンパイラ**は、既存のReactコンポーネントに変更を加えることなく、ビルド時にReactアプリを多言語対応にするための無料のオープンソースコンパイラミドルウェアです。
 
-1. **Lingo.dev CLI** - アプリやマークダウンコンテンツを高速かつ正確に翻訳するために構築されたCLIツール。[ドキュメント](https://lingo.dev/cli)
-1. **Lingo.dev CI/CD** - 新しいコンテンツが追加されるとすぐに自動的に翻訳を最新の状態に保つためのGitHub、GitLab、BitbucketのCI/CD統合。[ドキュメント](https://lingo.dev/ci)
-1. **Lingo.dev Compiler 🆕** - 既存のコンポーネントを変更することなく、ビルド時にReactアプリを多言語対応にします。[ドキュメント](https://lingo.dev/compiler)
+```bash
+# install once
+npm install lingo.dev
 
-すべてのツールは、正確な翻訳とローカリゼーションのためにLLMモデルを活用し、手作業を排除するように設計されています。
+# next.config.js
+import lingoCompiler from "lingo.dev/compiler";
 
-## Lingo.dev Compilerデモ
+export default lingoCompiler.next({
+  sourceLocale: "en",
+  targetLocales: ["es", "fr"],
+});
+```
 
-Lingo.dev Compilerの動作を確認してください：
+`next build`を実行すると、スペイン語とフランス語のバンドルが自動的に生成されます ✨
 
-[
+完全なガイドは[ドキュメントを読む →](https://lingo.dev/compiler)をご覧ください。
 
-![Lingo.dev Compilerデモ](https://img.youtube.com/vi/sSo2ERxAvB4/0.jpg)
+---
 
-](https://youtu.be/sSo2ERxAvB4)
+### このリポジトリには何が含まれていますか？
 
-Lingo.dev Compilerは、既存のコンポーネントを変更することなく、ビルド時にReactアプリを多言語対応にします。
+| ツール       | 概要                                                                         | ドキュメント                                |
+| ------------ | --------------------------------------------------------------------------- | ----------------------------------------- |
+| **コンパイラ** | ビルド時のReactローカライゼーション                                              | [/compiler](https://lingo.dev/compiler) |
+| **CLI**      | ウェブ・モバイルアプリ、JSON、YAML、マークダウンなどのワンコマンドローカライゼーション | [/cli](https://lingo.dev/cli)           |
+| **CI/CD**    | プッシュごとに翻訳を自動コミット + 必要に応じてプルリクエストを作成                | [/ci](https://lingo.dev/ci)             |
+| **SDK**      | ユーザー生成コンテンツのリアルタイム翻訳                                        | [/sdk](https://lingo.dev/sdk)           |
 
-コンパイラを実行するだけで、既存のLLM APIキーを使用して、アプリが自動的に複数の言語をサポートします。
+以下は各ツールの簡単な説明です 👇
 
-デモを見た後、詳細については[ドキュメント](https://lingo.dev/compiler)をご確認ください。
+---
+
+### ⚡️ Lingo.dev CLI
+
+ターミナルから直接コードとコンテンツを翻訳します。
+
+```bash
+npx lingo.dev@latest i18n
+```
+
+各文字列にフィンガープリントを付け、結果をキャッシュし、変更された部分のみを再翻訳します。
+
+[ドキュメントを読む →](https://lingo.dev/cli)
+
+---
+
+### 🔄 Lingo.dev CI/CD
+
+完璧な翻訳を自動的に提供します。
+
+```yaml
+# .github/workflows/i18n.yml
+name: Lingo.dev i18n
+on: [push]
+
+jobs:
+  i18n:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: lingodotdev/lingo.dev@main
+        with:
+          api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
+```
+
+手動の手順なしでリポジトリを常に最新の状態に保ち、製品を多言語対応させます。
+
+[ドキュメントを読む →](https://lingo.dev/ci)
+
+---
+
+### 🧩 Lingo.dev SDK
+
+動的コンテンツのリクエストごとの即時翻訳。
+
+```ts
+import { translate } from "lingo.dev/sdk";
+
+const text = await translate("Hello world", { to: "es" });
+// → "¡Hola mundo!"
+```
+
+チャット、ユーザーコメント、その他のリアルタイムフローに最適です。
+
+[ドキュメントを読む →](https://lingo.dev/sdk)
+
+---
 
 ## 🤝 コミュニティ
 
-Lingo.devはコミュニティ主導のプロジェクトですので、あらゆる貢献を歓迎します！
+私たちはコミュニティ主導であり、貢献を歓迎します！
 
-新機能のアイデアがありますか？GitHubイシューを作成してください！
+- アイデアがありますか？ [イシューを開く](https://github.com/lingodotdev/lingo.dev/issues)
+- 何かを修正したいですか？ [PRを送信](https://github.com/lingodotdev/lingo.dev/pulls)
+- サポートが必要ですか？ [Discordに参加](https://lingo.dev/go/discord)
 
-貢献したいですか？プルリクエストを作成してください！
+## ⭐ スター履歴
 
-アイデアについて議論したり、サポートが必要ですか？[Discordに参加してください！](https://lingo.dev/go/discord)
-
-## スター履歴
-
-私たちの取り組みが気に入っていただけたら、3,000スターを達成するために⭐️をつけることをご検討ください！🌟
+私たちの取り組みが気に入ったら、⭐をつけて3,000スター達成を手伝ってください！🌟
 
 [
 
@@ -81,18 +143,6 @@ Lingo.devはコミュニティ主導のプロジェクトですので、あら�
 
 ## 🌐 他言語のREADME
 
-- [英語](https://github.com/lingodotdev/lingo.dev)
-- [中国語](/readme/zh-Hans.md)
-- [日本語](/readme/ja.md)
-- [韓国語](/readme/ko.md)
-- [スペイン語](/readme/es.md)
-- [フランス語](/readme/fr.md)
-- [ロシア語](/readme/ru.md)
-- [ドイツ語](/readme/de.md)
-- [イタリア語](/readme/it.md)
-- [アラビア語](/readme/ar.md)
-- [ヒンディー語](/readme/hi.md)
-- [ベンガル語](/readme/bn.md)
-- [ペルシャ語](/readme/fa.md)
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
 
-お使いの言語が見つかりませんか？[`i18n.json`](./i18n.json)ファイルに新しい言語コードを追加してPRを開いてください！
+あなたの言語が見つかりませんか？[`i18n.json`](./i18n.json)に追加してPRを開いてください！
