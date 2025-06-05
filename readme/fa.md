@@ -144,3 +144,19 @@ npx lingo.dev@latest i18n
 - [فارسی](/readme/fa.md)
 
 زبان خود را نمی‌بینید؟ کافیست یک کد زبان جدید به فایل [`i18n.json`](./i18n.json) اضافه کنید و یک PR باز کنید!
+
+- [انگلیسی](https://github.com/lingodotdev/lingo.dev)
+- [چینی](/readme/zh-Hans.md)
+- [ژاپنی](/readme/ja.md)
+- [کره‌ای](/readme/ko.md)
+- [اسپانیایی](/readme/es.md)
+- [فرانسوی](/readme/fr.md)
+- [روسی](/readme/ru.md)
+- [آلمانی](/readme/de.md)
+- [ایتالیایی](/readme/it.md)
+- [عربی](/readme/ar.md)
+- [هندی](/readme/hi.md)
+- [بنگالی](/readme/bn.md)
+- [فارسی](/readme/fa.md)
+
+زبان خود را نمی‌بینید؟ کافیست یک کد زبان جدید به فایل [`i18n.json`](./i18n.json) اضافه کنید و یک PR باز کنید!
