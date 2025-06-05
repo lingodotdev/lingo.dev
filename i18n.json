@@ -20,18 +20,8 @@
     ]
   },
   "buckets": {
-    "markdown": {
-      "include": ["readme/[locale].md"]
-    },
     "mdx": {
-      "include": [],
-      "lockedPatterns": [
-        "!params",
-        "!! [\\w_]+",
-        "!type [\\w<>\\[\\]\"',]+",
-        "!required",
-        "!values [\\s\\S]*?(?=\\n\\n|$)"
-      ]
+      "include": ["readme/[locale].md"]
     }
   },
   "$schema": "https://lingo.dev/schema/i18n.json"
