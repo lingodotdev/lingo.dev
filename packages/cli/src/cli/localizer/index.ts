@@ -6,9 +6,10 @@ import { ILocalizer } from "./_types";
 
 export default function createLocalizer(
   provider: I18nConfig["provider"],
+  apiKey?: string,
 ): ILocalizer {
   if (!provider) {
-    return createLingoDotDevLocalizer();
+    return createLingoDotDevLocalizer(apiKey);
   } else {
     return createExplicitLocalizer(provider);
   }

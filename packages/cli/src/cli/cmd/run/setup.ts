@@ -50,7 +50,10 @@ export default async function setup(input: CmdRunContext) {
       {
         title: "Selecting localization provider",
         task: async (ctx, task) => {
-          ctx.localizer = createLocalizer(ctx.config?.provider);
+          ctx.localizer = createLocalizer(
+            ctx.config?.provider,
+            ctx.flags.apiKey,
+          );
           if (!ctx.localizer) {
             throw new Error(
               "Could not create localization provider. Please check your i18n.json configuration.",

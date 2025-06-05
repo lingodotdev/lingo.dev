@@ -17,7 +17,8 @@ runs:
           --commit-message "${{ inputs.commit-message }}" \
           --pull-request-title "${{ inputs.pull-request-title }}" \
           --working-directory "${{ inputs.working-directory }}" \
-          --process-own-commits "${{ inputs.process-own-commits }}"
+          --process-own-commits "${{ inputs.process-own-commits }}" \
+          --parallel "${{ inputs.parallel }}"
       shell: bash
 inputs:
   version:
@@ -45,5 +46,9 @@ inputs:
     required: false
   process-own-commits:
     description: "Process commits made by this action"
+    default: false
+    required: false
+  parallel:
+    description: "Run in parallel mode"
     default: false
     required: false
