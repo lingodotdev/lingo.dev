@@ -73,17 +73,18 @@ Lingo.dev развивается благодаря сообществу, поэ
 
 ## 🌐 Readme на других языках
 
-- [Английский](https://github.com/lingodotdev/lingo.dev)
-- [Китайский](/readme/zh-Hans.md)
-- [Японский](/readme/ja.md)
-- [Корейский](/readme/ko.md)
-- [Испанский](/readme/es.md)
-- [Французский](/readme/fr.md)
-- [Русский](/readme/ru.md)
-- [Немецкий](/readme/de.md)
-- [Итальянский](/readme/it.md)
-- [Арабский](/readme/ar.md)
-- [Хинди](/readme/hi.md)
-- [Бенгальский](/readme/bn.md)
+- [English](https://github.com/lingodotdev/lingo.dev)
+- [Chinese](/readme/zh-Hans.md)
+- [Japanese](/readme/ja.md)
+- [Korean](/readme/ko.md)
+- [Spanish](/readme/es.md)
+- [French](/readme/fr.md)
+- [Russian](/readme/ru.md)
+- [German](/readme/de.md)
+- [Italian](/readme/it.md)
+- [Arabic](/readme/ar.md)
+- [Hindi](/readme/hi.md)
+- [Bengali](/readme/bn.md)
+- [Farsi](/readme/fa.md)
 
-Не видите своего языка? Просто добавьте новый языковой код в файл [`i18n.json`](./i18n.json) и откройте PR!
+Не видите своего языка? Просто добавьте новый код языка в файл [`i18n.json`](./i18n.json) и создайте PR!

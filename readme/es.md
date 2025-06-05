@@ -73,17 +73,18 @@ Si te gusta el trabajo que estamos haciendo, ¡considera darnos una ⭐️ para 
 
 ## 🌐 Readme en otros idiomas
 
-- [English](https://github.com/lingodotdev/lingo.dev)
-- [Chinese](/readme/zh-Hans.md)
-- [Japanese](/readme/ja.md)
-- [Korean](/readme/ko.md)
-- [Spanish](/readme/es.md)
-- [French](/readme/fr.md)
-- [Russian](/readme/ru.md)
-- [German](/readme/de.md)
-- [Italian](/readme/it.md)
-- [Arabic](/readme/ar.md)
+- [Inglés](https://github.com/lingodotdev/lingo.dev)
+- [Chino](/readme/zh-Hans.md)
+- [Japonés](/readme/ja.md)
+- [Coreano](/readme/ko.md)
+- [Español](/readme/es.md)
+- [Francés](/readme/fr.md)
+- [Ruso](/readme/ru.md)
+- [Alemán](/readme/de.md)
+- [Italiano](/readme/it.md)
+- [Árabe](/readme/ar.md)
 - [Hindi](/readme/hi.md)
-- [Bengali](/readme/bn.md)
+- [Bengalí](/readme/bn.md)
+- [Farsi](/readme/fa.md)
 
-¿No ves tu idioma? ¡Simplemente agrega un nuevo código de idioma al archivo [`i18n.json`](./i18n.json) y abre un PR!
+¿No ves tu idioma? ¡Simplemente añade un nuevo código de idioma al archivo [`i18n.json`](./i18n.json) y abre un PR!
