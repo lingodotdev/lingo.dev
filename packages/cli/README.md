@@ -142,3 +142,63 @@ If you like what we're doing, give us a ⭐ and help us reach 3,000 stars! 🌟
 [English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
 
 Don't see your language? Add it to [`i18n.json`](./i18n.json) and open a PR!
+
+## 🤝 Community
+
+We're community-driven and love contributions!
+
+- Got an idea? [Open an issue](https://github.com/lingodotdev/lingo.dev/issues)
+- Want to fix something? [Send a PR](https://github.com/lingodotdev/lingo.dev/pulls)
+- Need help? [Join our Discord](https://lingo.dev/go/discord)
+
+## ⭐ Star History
+
+If you like what we're doing, give us a ⭐ and help us reach 3,000 stars! 🌟
+
+[![Star History Chart](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 Readme in other languages
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+Don't see your language? Add it to [`i18n.json`](./i18n.json) and open a PR!
+
+## 🤝 Community
+
+We're community-driven and love contributions!
+
+- Got an idea? [Open an issue](https://github.com/lingodotdev/lingo.dev/issues)
+- Want to fix something? [Send a PR](https://github.com/lingodotdev/lingo.dev/pulls)
+- Need help? [Join our Discord](https://lingo.dev/go/discord)
+
+## ⭐ Star History
+
+If you like what we're doing, give us a ⭐ and help us reach 3,000 stars! 🌟
+
+[![Star History Chart](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 Readme in other languages
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+Don't see your language? Add it to [`i18n.json`](./i18n.json) and open a PR!
+
+## 🤝 Community
+
+We're community-driven and love contributions!
+
+- Got an idea? [Open an issue](https://github.com/lingodotdev/lingo.dev/issues)
+- Want to fix something? [Send a PR](https://github.com/lingodotdev/lingo.dev/pulls)
+- Need help? [Join our Discord](https://lingo.dev/go/discord)
+
+## ⭐ Star History
+
+If you like what we're doing, give us a ⭐ and help us reach 3,000 stars! 🌟
+
+[![Star History Chart](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 Readme in other languages
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+Don't see your language? Add it to [`i18n.json`](./i18n.json) and open a PR!
