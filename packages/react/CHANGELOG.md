@@ -1,5 +1,11 @@
 # @lingo.dev/\_react
 
+## 0.2.0
+
+### Minor Changes
+
+- [#838](https://github.com/lingodotdev/lingo.dev/pull/838) [`e75e615`](https://github.com/lingodotdev/lingo.dev/commit/e75e615ab17e279deb5a505dbda682fdfc7ead62) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - switch from tsup to unbuild
+
 ## 0.1.1
 
 ### Patch Changes
