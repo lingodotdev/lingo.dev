@@ -7,9 +7,6 @@ on:
         description: "Lingo.dev CLI version"
         default: "latest"
         required: false
-      api-key:
-        description: "Lingo.dev Platform API Key"
-        required: true
       pull-request:
         description: "Create a pull request with the changes"
         type: boolean
@@ -56,7 +53,7 @@ jobs:
       - name: Lingo.dev
         uses: ./
         with:
-          api-key: ${{ inputs.api-key }}
+          api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
           version: ${{ inputs.version }}
           pull-request: ${{ inputs.pull-request }}
           commit-message: ${{ inputs.commit-message }}
