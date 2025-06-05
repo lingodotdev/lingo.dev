@@ -17,8 +17,7 @@ runs:
           --commit-message "${{ inputs.commit-message }}" \
           --pull-request-title "${{ inputs.pull-request-title }}" \
           --working-directory "${{ inputs.working-directory }}" \
-          --process-own-commits "${{ inputs.process-own-commits }}" \
-          --parallel "${{ inputs.parallel }}"
+          --process-own-commits "${{ inputs.process-own-commits }}"
       shell: bash
 inputs:
   version:
