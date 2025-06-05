@@ -1,7 +1,13 @@
 import { execSync } from "child_process";
 import path from "path";
-import { gitConfig, IntegrationFlow, escapeShellArg } from "./_base";
+import {
+  gitConfig,
+  IntegrationFlow,
+  escapeShellArg,
+  IIntegrationFlowOptions,
+} from "./_base";
 import i18nCmd from "../../i18n";
+import runCmd from "../../run";
 
 export class InBranchFlow extends IntegrationFlow {
   async preRun() {
@@ -12,9 +18,9 @@ export class InBranchFlow extends IntegrationFlow {
     return canContinue;
   }
 
-  async run(forcePush = false) {
+  async run(options: IIntegrationFlowOptions) {
     this.ora.start("Running Lingo.dev");
-    await this.runLingoDotDev();
+    await this.runLingoDotDev(options.parallel);
     this.ora.succeed("Done running Lingo.dev");
 
     execSync(`rm -f i18n.cache`, { stdio: "inherit" }); // do not commit cache file if it exists
@@ -39,7 +45,7 @@ export class InBranchFlow extends IntegrationFlow {
       const currentBranch =
         this.i18nBranchName ?? this.platformKit.platformConfig.baseBranchName;
       execSync(
-        `git push origin ${currentBranch} ${forcePush ? "--force" : ""}`,
+        `git push origin ${currentBranch} ${options.force ? "--force" : ""}`,
         {
           stdio: "inherit",
         },
@@ -58,13 +64,21 @@ export class InBranchFlow extends IntegrationFlow {
     );
   }
 
-  private async runLingoDotDev() {
+  private async runLingoDotDev(isParallel?: boolean) {
     try {
-      await i18nCmd
-        .exitOverride()
-        .parseAsync(["--api-key", this.platformKit.config.replexicaApiKey], {
-          from: "user",
-        });
+      if (!isParallel) {
+        await i18nCmd
+          .exitOverride()
+          .parseAsync(["--api-key", this.platformKit.config.replexicaApiKey], {
+            from: "user",
+          });
+      } else {
+        await runCmd
+          .exitOverride()
+          .parseAsync(["--api-key", this.platformKit.config.replexicaApiKey], {
+            from: "user",
+          });
+      }
     } catch (err: any) {
       if (err.code === "commander.helpDisplayed") return;
       throw err;

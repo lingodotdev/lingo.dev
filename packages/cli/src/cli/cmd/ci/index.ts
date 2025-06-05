@@ -8,6 +8,7 @@ import { InBranchFlow } from "./flows/in-branch";
 import { getPlatformKit } from "./platforms";
 
 interface CIOptions {
+  parallel?: boolean;
   apiKey?: string;
   debug?: boolean;
   pullRequest?: boolean;
@@ -21,6 +22,10 @@ export default new Command()
   .command("ci")
   .description("Run Lingo.dev CI/CD action")
   .helpOption("-h, --help", "Show help")
+  .option("--parallel", "Run in parallel mode", (val: string | boolean) => {
+    if (typeof val === "boolean") return val;
+    return val?.toLowerCase() === "true";
+  })
   .option("--api-key <key>", "API key")
   .option("--pull-request [boolean]", "Create a pull request with the changes")
   .option("--commit-message <message>", "Commit message")
@@ -32,6 +37,8 @@ export default new Command()
   )
   .action(async (options: CIOptions) => {
     const settings = getSettings(options.apiKey);
+
+    console.log(options);
 
     if (!settings.auth.apiKey) {
       console.error("No API key provided");
@@ -83,7 +90,9 @@ export default new Command()
       return;
     }
 
-    const hasChanges = await flow.run();
+    const hasChanges = await flow.run({
+      parallel: options.parallel,
+    });
     if (!hasChanges) {
       return;
     }

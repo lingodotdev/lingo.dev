@@ -17,9 +17,18 @@ export default async function plan(
     buckets = buckets.filter((b) => input.flags.bucket!.includes(b.type));
   }
 
-  let locales = input.config!.locale.targets;
-  if (input.flags.locale) {
-    locales = locales.filter((l) => input.flags.locale!.includes(l));
+  const _sourceLocale = input.flags.sourceLocale || input.config!.locale.source;
+  if (!_sourceLocale) {
+    throw new Error(
+      `No source locale provided. Use --source-locale to specify the source locale or add it to i18n.json (locale.source)`,
+    );
+  }
+  const _targetLocales =
+    input.flags.targetLocale || input.config!.locale.targets;
+  if (!_targetLocales.length) {
+    throw new Error(
+      `No target locales provided. Use --target-locale to specify the target locales or add them to i18n.json (locale.targets)`,
+    );
   }
 
   return new Listr<CmdRunContext>(
@@ -37,16 +46,7 @@ export default async function plan(
       {
         title: "Detecting locales",
         task: async (ctx, task) => {
-          if (!locales.length) {
-            throw new Error(
-              `No target locales found in config. Please add locales to your i18n.json config file.`,
-            );
-          }
-
-          const localeFilter = input.flags.locale
-            ? ` ${chalk.dim(`(filtered by: ${chalk.hex(colors.yellow)(input.flags.locale!.join(", "))})`)}`
-            : "";
-          task.title = `Found ${chalk.hex(colors.yellow)(locales.length.toString())} target locale(s)${localeFilter}`;
+          task.title = `Found ${chalk.hex(colors.yellow)(_targetLocales.length.toString())} target locale(s)`;
         },
       },
       {
@@ -92,11 +92,11 @@ export default async function plan(
               }
 
               const sourceLocale = resolveOverriddenLocale(
-                ctx.config!.locale.source,
+                _sourceLocale,
                 bucketPath.delimiter,
               );
 
-              for (const _targetLocale of locales) {
+              for (const _targetLocale of _targetLocales) {
                 const targetLocale = resolveOverriddenLocale(
                   _targetLocale,
                   bucketPath.delimiter,

@@ -1,9 +1,14 @@
 import { Ora } from "ora";
 import { PlatformKit } from "../platforms/_base";
 
+export type IIntegrationFlowOptions = {
+  parallel?: boolean;
+  force?: boolean;
+};
+
 export interface IIntegrationFlow {
   preRun?(): Promise<boolean>;
-  run(): Promise<boolean>;
+  run(options: IIntegrationFlowOptions): Promise<boolean>;
   postRun?(): Promise<void>;
 }
 
@@ -15,7 +20,7 @@ export abstract class IntegrationFlow implements IIntegrationFlow {
     protected platformKit: PlatformKit,
   ) {}
 
-  abstract run(): Promise<boolean>;
+  abstract run(options: IIntegrationFlowOptions): Promise<boolean>;
 }
 
 export const gitConfig = {
