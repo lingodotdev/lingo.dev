@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.93.7
+
+### Patch Changes
+
+- [`5d27455`](https://github.com/lingodotdev/lingo.dev/commit/5d2745545044cbaddb099f7920c96fe198879ba3) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - add boolean parsing
+
 ## 0.93.6
 
 ### Patch Changes
