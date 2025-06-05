@@ -55,11 +55,11 @@ jobs:
         with:
           api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
           version: ${{ inputs.version }}
-          pull-request: ${{ inputs.pull-request }}
-          commit-message: ${{ inputs.commit-message }}
-          pull-request-title: ${{ inputs["pull-request-title"] }}
-          working-directory: ${{ inputs["working-directory"] }}
-          process-own-commits: ${{ inputs["process-own-commits"] }}
+          pull-request: ${{ inputs['pull-request'] }}
+          commit-message: ${{ inputs['commit-message'] }}
+          pull-request-title: ${{ inputs['pull-request-title'] }}
+          working-directory: ${{ inputs['working-directory'] }}
+          process-own-commits: ${{ inputs['process-own-commits'] }}
           parallel: ${{ inputs.parallel }}
         env:
           GH_TOKEN: ${{ github.token }}
