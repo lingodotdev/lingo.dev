@@ -146,3 +146,237 @@ const text = await translate("Hello world", { to: "es" });
 [English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
 
 لا ترى لغتك؟ أضفها إلى [`i18n.json`](./i18n.json) وافتح طلب سحب!
+
+---
+
+## 🤝 المجتمع
+
+نحن مدفوعون بالمجتمع ونحب المساهمات!
+
+- لديك فكرة؟ [افتح مشكلة](https://github.com/lingodotdev/lingo.dev/issues)
+- تريد إصلاح شيء ما؟ [أرسل طلب سحب](https://github.com/lingodotdev/lingo.dev/pulls)
+- تحتاج إلى مساعدة؟ [انضم إلى Discord الخاص بنا](https://lingo.dev/go/discord)
+
+## ⭐ تاريخ النجوم
+
+إذا أعجبك ما نقوم به، امنحنا ⭐ وساعدنا في الوصول إلى 3,000 نجمة! 🌟
+
+[
+
+![مخطط تاريخ النجوم](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 ملف القراءة بلغات أخرى
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+لا ترى لغتك؟ أضفها إلى [`i18n.json`](./i18n.json) وافتح طلب سحب!
+
+---
+
+## 🤝 المجتمع
+
+نحن مدفوعون بالمجتمع ونحب المساهمات!
+
+- لديك فكرة؟ [افتح مشكلة](https://github.com/lingodotdev/lingo.dev/issues)
+- تريد إصلاح شيء ما؟ [أرسل طلب سحب](https://github.com/lingodotdev/lingo.dev/pulls)
+- تحتاج إلى مساعدة؟ [انضم إلى Discord الخاص بنا](https://lingo.dev/go/discord)
+
+## ⭐ تاريخ النجوم
+
+إذا أعجبك ما نقوم به، امنحنا ⭐ وساعدنا في الوصول إلى 3,000 نجمة! 🌟
+
+[
+
+![مخطط تاريخ النجوم](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 ملف القراءة بلغات أخرى
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+لا ترى لغتك؟ أضفها إلى [`i18n.json`](./i18n.json) وافتح طلب سحب!
+
+---
+
+## 🤝 المجتمع
+
+نحن مدفوعون بالمجتمع ونحب المساهمات!
+
+- لديك فكرة؟ [افتح مشكلة](https://github.com/lingodotdev/lingo.dev/issues)
+- تريد إصلاح شيء ما؟ [أرسل طلب سحب](https://github.com/lingodotdev/lingo.dev/pulls)
+- تحتاج إلى مساعدة؟ [انضم إلى Discord الخاص بنا](https://lingo.dev/go/discord)
+
+## ⭐ تاريخ النجوم
+
+إذا أعجبك ما نقوم به، امنحنا ⭐ وساعدنا في الوصول إلى 3,000 نجمة! 🌟
+
+[
+
+![مخطط تاريخ النجوم](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 ملف القراءة بلغات أخرى
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+لا ترى لغتك؟ أضفها إلى [`i18n.json`](./i18n.json) وافتح طلب سحب!
+
+---
+
+## 🤝 المجتمع
+
+نحن مدفوعون بالمجتمع ونحب المساهمات!
+
+- لديك فكرة؟ [افتح مشكلة](https://github.com/lingodotdev/lingo.dev/issues)
+- تريد إصلاح شيء ما؟ [أرسل طلب سحب](https://github.com/lingodotdev/lingo.dev/pulls)
+- تحتاج إلى مساعدة؟ [انضم إلى Discord الخاص بنا](https://lingo.dev/go/discord)
+
+## ⭐ تاريخ النجوم
+
+إذا أعجبك ما نقوم به، امنحنا ⭐ وساعدنا في الوصول إلى 3,000 نجمة! 🌟
+
+[
+
+![مخطط تاريخ النجوم](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 ملف القراءة بلغات أخرى
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+لا ترى لغتك؟ أضفها إلى [`i18n.json`](./i18n.json) وافتح طلب سحب!
+
+---
+
+## 🤝 المجتمع
+
+نحن مدفوعون بالمجتمع ونحب المساهمات!
+
+- لديك فكرة؟ [افتح مشكلة](https://github.com/lingodotdev/lingo.dev/issues)
+- تريد إصلاح شيء ما؟ [أرسل طلب سحب](https://github.com/lingodotdev/lingo.dev/pulls)
+- تحتاج إلى مساعدة؟ [انضم إلى Discord الخاص بنا](https://lingo.dev/go/discord)
+
+## ⭐ تاريخ النجوم
+
+إذا أعجبك ما نقوم به، امنحنا ⭐ وساعدنا في الوصول إلى 3,000 نجمة! 🌟
+
+[
+
+![مخطط تاريخ النجوم](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 ملف القراءة بلغات أخرى
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+لا ترى لغتك؟ أضفها إلى [`i18n.json`](./i18n.json) وافتح طلب سحب!
+
+---
+
+## 🤝 المجتمع
+
+نحن مدفوعون بالمجتمع ونحب المساهمات!
+
+- لديك فكرة؟ [افتح مشكلة](https://github.com/lingodotdev/lingo.dev/issues)
+- تريد إصلاح شيء ما؟ [أرسل طلب سحب](https://github.com/lingodotdev/lingo.dev/pulls)
+- تحتاج إلى مساعدة؟ [انضم إلى Discord الخاص بنا](https://lingo.dev/go/discord)
+
+## ⭐ تاريخ النجوم
+
+إذا أعجبك ما نقوم به، امنحنا ⭐ وساعدنا في الوصول إلى 3,000 نجمة! 🌟
+
+[
+
+![مخطط تاريخ النجوم](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 ملف القراءة بلغات أخرى
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+لا ترى لغتك؟ أضفها إلى [`i18n.json`](./i18n.json) وافتح طلب سحب!
+
+---
+
+## 🤝 المجتمع
+
+نحن مدفوعون بالمجتمع ونحب المساهمات!
+
+- لديك فكرة؟ [افتح مشكلة](https://github.com/lingodotdev/lingo.dev/issues)
+- تريد إصلاح شيء ما؟ [أرسل طلب سحب](https://github.com/lingodotdev/lingo.dev/pulls)
+- تحتاج إلى مساعدة؟ [انضم إلى Discord الخاص بنا](https://lingo.dev/go/discord)
+
+## ⭐ تاريخ النجوم
+
+إذا أعجبك ما نقوم به، امنحنا ⭐ وساعدنا في الوصول إلى 3,000 نجمة! 🌟
+
+[
+
+![مخطط تاريخ النجوم](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 ملف القراءة بلغات أخرى
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+لا ترى لغتك؟ أضفها إلى [`i18n.json`](./i18n.json) وافتح طلب سحب!
+
+---
+
+## 🤝 المجتمع
+
+نحن مدفوعون بالمجتمع ونحب المساهمات!
+
+- لديك فكرة؟ [افتح مشكلة](https://github.com/lingodotdev/lingo.dev/issues)
+- تريد إصلاح شيء ما؟ [أرسل طلب سحب](https://github.com/lingodotdev/lingo.dev/pulls)
+- تحتاج إلى مساعدة؟ [انضم إلى Discord الخاص بنا](https://lingo.dev/go/discord)
+
+## ⭐ تاريخ النجوم
+
+إذا أعجبك ما نقوم به، امنحنا ⭐ وساعدنا في الوصول إلى 3,000 نجمة! 🌟
+
+[
+
+![مخطط تاريخ النجوم](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 ملف القراءة بلغات أخرى
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+لا ترى لغتك؟ أضفها إلى [`i18n.json`](./i18n.json) وافتح طلب سحب!
+
+---
+
+## 🤝 المجتمع
+
+نحن مدفوعون بالمجتمع ونحب المساهمات!
+
+- لديك فكرة؟ [افتح مشكلة](https://github.com/lingodotdev/lingo.dev/issues)
+- تريد إصلاح شيء ما؟ [أرسل طلب سحب](https://github.com/lingodotdev/lingo.dev/pulls)
+- تحتاج إلى مساعدة؟ [انضم إلى Discord الخاص بنا](https://lingo.dev/go/discord)
+
+## ⭐ تاريخ النجوم
+
+إذا أعجبك ما نقوم به، امنحنا ⭐ وساعدنا في الوصول إلى 3,000 نجمة! 🌟
+
+[
+
+![مخطط تاريخ النجوم](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 ملف القراءة بلغات أخرى
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+لا ترى لغتك؟ أضفها إلى [`i18n.json`](./i18n.json) وافتح طلب سحب!

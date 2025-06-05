@@ -146,3 +146,237 @@ const text = await translate("Hello world", { to: "es" });
 [English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
 
 あなたの言語が見つかりませんか？[`i18n.json`](./i18n.json)に追加してPRを開いてください！
+
+---
+
+## 🤝 コミュニティ
+
+私たちはコミュニティ主導であり、貢献を歓迎します！
+
+- アイデアがありますか？ [イシューを開く](https://github.com/lingodotdev/lingo.dev/issues)
+- 何かを修正したいですか？ [PRを送信](https://github.com/lingodotdev/lingo.dev/pulls)
+- サポートが必要ですか？ [Discordに参加](https://lingo.dev/go/discord)
+
+## ⭐ スター履歴
+
+私たちの取り組みが気に入ったら、⭐をつけて3,000スター達成を手伝ってください！🌟
+
+[
+
+![スター履歴チャート](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 他言語のREADME
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+あなたの言語が見つかりませんか？[`i18n.json`](./i18n.json)に追加してPRを開いてください！
+
+---
+
+## 🤝 コミュニティ
+
+私たちはコミュニティ主導であり、貢献を歓迎します！
+
+- アイデアがありますか？ [イシューを開く](https://github.com/lingodotdev/lingo.dev/issues)
+- 何かを修正したいですか？ [PRを送信](https://github.com/lingodotdev/lingo.dev/pulls)
+- サポートが必要ですか？ [Discordに参加](https://lingo.dev/go/discord)
+
+## ⭐ スター履歴
+
+私たちの取り組みが気に入ったら、⭐をつけて3,000スター達成を手伝ってください！🌟
+
+[
+
+![スター履歴チャート](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 他言語のREADME
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+あなたの言語が見つかりませんか？[`i18n.json`](./i18n.json)に追加してPRを開いてください！
+
+---
+
+## 🤝 コミュニティ
+
+私たちはコミュニティ主導であり、貢献を歓迎します！
+
+- アイデアがありますか？ [イシューを開く](https://github.com/lingodotdev/lingo.dev/issues)
+- 何かを修正したいですか？ [PRを送信](https://github.com/lingodotdev/lingo.dev/pulls)
+- サポートが必要ですか？ [Discordに参加](https://lingo.dev/go/discord)
+
+## ⭐ スター履歴
+
+私たちの取り組みが気に入ったら、⭐をつけて3,000スター達成を手伝ってください！🌟
+
+[
+
+![スター履歴チャート](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 他言語のREADME
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+あなたの言語が見つかりませんか？[`i18n.json`](./i18n.json)に追加してPRを開いてください！
+
+---
+
+## 🤝 コミュニティ
+
+私たちはコミュニティ主導であり、貢献を歓迎します！
+
+- アイデアがありますか？ [イシューを開く](https://github.com/lingodotdev/lingo.dev/issues)
+- 何かを修正したいですか？ [PRを送信](https://github.com/lingodotdev/lingo.dev/pulls)
+- サポートが必要ですか？ [Discordに参加](https://lingo.dev/go/discord)
+
+## ⭐ スター履歴
+
+私たちの取り組みが気に入ったら、⭐をつけて3,000スター達成を手伝ってください！🌟
+
+[
+
+![スター履歴チャート](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 他言語のREADME
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+あなたの言語が見つかりませんか？[`i18n.json`](./i18n.json)に追加してPRを開いてください！
+
+---
+
+## 🤝 コミュニティ
+
+私たちはコミュニティ主導であり、貢献を歓迎します！
+
+- アイデアがありますか？ [イシューを開く](https://github.com/lingodotdev/lingo.dev/issues)
+- 何かを修正したいですか？ [PRを送信](https://github.com/lingodotdev/lingo.dev/pulls)
+- サポートが必要ですか？ [Discordに参加](https://lingo.dev/go/discord)
+
+## ⭐ スター履歴
+
+私たちの取り組みが気に入ったら、⭐をつけて3,000スター達成を手伝ってください！🌟
+
+[
+
+![スター履歴チャート](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 他言語のREADME
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+あなたの言語が見つかりませんか？[`i18n.json`](./i18n.json)に追加してPRを開いてください！
+
+---
+
+## 🤝 コミュニティ
+
+私たちはコミュニティ主導であり、貢献を歓迎します！
+
+- アイデアがありますか？ [イシューを開く](https://github.com/lingodotdev/lingo.dev/issues)
+- 何かを修正したいですか？ [PRを送信](https://github.com/lingodotdev/lingo.dev/pulls)
+- サポートが必要ですか？ [Discordに参加](https://lingo.dev/go/discord)
+
+## ⭐ スター履歴
+
+私たちの取り組みが気に入ったら、⭐をつけて3,000スター達成を手伝ってください！🌟
+
+[
+
+![スター履歴チャート](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 他言語のREADME
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+あなたの言語が見つかりませんか？[`i18n.json`](./i18n.json)に追加してPRを開いてください！
+
+---
+
+## 🤝 コミュニティ
+
+私たちはコミュニティ主導であり、貢献を歓迎します！
+
+- アイデアがありますか？ [イシューを開く](https://github.com/lingodotdev/lingo.dev/issues)
+- 何かを修正したいですか？ [PRを送信](https://github.com/lingodotdev/lingo.dev/pulls)
+- サポートが必要ですか？ [Discordに参加](https://lingo.dev/go/discord)
+
+## ⭐ スター履歴
+
+私たちの取り組みが気に入ったら、⭐をつけて3,000スター達成を手伝ってください！🌟
+
+[
+
+![スター履歴チャート](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 他言語のREADME
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+あなたの言語が見つかりませんか？[`i18n.json`](./i18n.json)に追加してPRを開いてください！
+
+---
+
+## 🤝 コミュニティ
+
+私たちはコミュニティ主導であり、貢献を歓迎します！
+
+- アイデアがありますか？ [イシューを開く](https://github.com/lingodotdev/lingo.dev/issues)
+- 何かを修正したいですか？ [PRを送信](https://github.com/lingodotdev/lingo.dev/pulls)
+- サポートが必要ですか？ [Discordに参加](https://lingo.dev/go/discord)
+
+## ⭐ スター履歴
+
+私たちの取り組みが気に入ったら、⭐をつけて3,000スター達成を手伝ってください！🌟
+
+[
+
+![スター履歴チャート](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 他言語のREADME
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+あなたの言語が見つかりませんか？[`i18n.json`](./i18n.json)に追加してPRを開いてください！
+
+---
+
+## 🤝 コミュニティ
+
+私たちはコミュニティ主導であり、貢献を歓迎します！
+
+- アイデアがありますか？ [イシューを開く](https://github.com/lingodotdev/lingo.dev/issues)
+- 何かを修正したいですか？ [PRを送信](https://github.com/lingodotdev/lingo.dev/pulls)
+- サポートが必要ですか？ [Discordに参加](https://lingo.dev/go/discord)
+
+## ⭐ スター履歴
+
+私たちの取り組みが気に入ったら、⭐をつけて3,000スター達成を手伝ってください！🌟
+
+[
+
+![スター履歴チャート](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 他言語のREADME
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+あなたの言語が見つかりませんか？[`i18n.json`](./i18n.json)に追加してPRを開いてください！

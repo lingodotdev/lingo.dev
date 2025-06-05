@@ -146,3 +146,237 @@ const text = await translate("Hello world", { to: "es" });
 [English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
 
 원하는 언어가 보이지 않나요? [`i18n.json`](./i18n.json)에 추가하고 PR을 열어주세요!
+
+---
+
+## 🤝 커뮤니티
+
+저희는 커뮤니티 중심이며 기여를 환영합니다!
+
+- 아이디어가 있으신가요? [이슈 열기](https://github.com/lingodotdev/lingo.dev/issues)
+- 무언가 수정하고 싶으신가요? [PR 보내기](https://github.com/lingodotdev/lingo.dev/pulls)
+- 도움이 필요하신가요? [Discord에 참여하기](https://lingo.dev/go/discord)
+
+## ⭐ 스타 히스토리
+
+저희가 하는 일이 마음에 드신다면, ⭐을 주시고 3,000 스타 달성을 도와주세요! 🌟
+
+[
+
+![스타 히스토리 차트](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 다른 언어로 된 README
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+원하는 언어가 보이지 않나요? [`i18n.json`](./i18n.json)에 추가하고 PR을 열어주세요!
+
+---
+
+## 🤝 커뮤니티
+
+저희는 커뮤니티 중심이며 기여를 환영합니다!
+
+- 아이디어가 있으신가요? [이슈 열기](https://github.com/lingodotdev/lingo.dev/issues)
+- 무언가 수정하고 싶으신가요? [PR 보내기](https://github.com/lingodotdev/lingo.dev/pulls)
+- 도움이 필요하신가요? [Discord에 참여하기](https://lingo.dev/go/discord)
+
+## ⭐ 스타 히스토리
+
+저희가 하는 일이 마음에 드신다면, ⭐을 주시고 3,000 스타 달성을 도와주세요! 🌟
+
+[
+
+![스타 히스토리 차트](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 다른 언어로 된 README
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+원하는 언어가 보이지 않나요? [`i18n.json`](./i18n.json)에 추가하고 PR을 열어주세요!
+
+---
+
+## 🤝 커뮤니티
+
+저희는 커뮤니티 중심이며 기여를 환영합니다!
+
+- 아이디어가 있으신가요? [이슈 열기](https://github.com/lingodotdev/lingo.dev/issues)
+- 무언가 수정하고 싶으신가요? [PR 보내기](https://github.com/lingodotdev/lingo.dev/pulls)
+- 도움이 필요하신가요? [Discord에 참여하기](https://lingo.dev/go/discord)
+
+## ⭐ 스타 히스토리
+
+저희가 하는 일이 마음에 드신다면, ⭐을 주시고 3,000 스타 달성을 도와주세요! 🌟
+
+[
+
+![스타 히스토리 차트](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 다른 언어로 된 README
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+원하는 언어가 보이지 않나요? [`i18n.json`](./i18n.json)에 추가하고 PR을 열어주세요!
+
+---
+
+## 🤝 커뮤니티
+
+저희는 커뮤니티 중심이며 기여를 환영합니다!
+
+- 아이디어가 있으신가요? [이슈 열기](https://github.com/lingodotdev/lingo.dev/issues)
+- 무언가 수정하고 싶으신가요? [PR 보내기](https://github.com/lingodotdev/lingo.dev/pulls)
+- 도움이 필요하신가요? [Discord에 참여하기](https://lingo.dev/go/discord)
+
+## ⭐ 스타 히스토리
+
+저희가 하는 일이 마음에 드신다면, ⭐을 주시고 3,000 스타 달성을 도와주세요! 🌟
+
+[
+
+![스타 히스토리 차트](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 다른 언어로 된 README
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+원하는 언어가 보이지 않나요? [`i18n.json`](./i18n.json)에 추가하고 PR을 열어주세요!
+
+---
+
+## 🤝 커뮤니티
+
+저희는 커뮤니티 중심이며 기여를 환영합니다!
+
+- 아이디어가 있으신가요? [이슈 열기](https://github.com/lingodotdev/lingo.dev/issues)
+- 무언가 수정하고 싶으신가요? [PR 보내기](https://github.com/lingodotdev/lingo.dev/pulls)
+- 도움이 필요하신가요? [Discord에 참여하기](https://lingo.dev/go/discord)
+
+## ⭐ 스타 히스토리
+
+저희가 하는 일이 마음에 드신다면, ⭐을 주시고 3,000 스타 달성을 도와주세요! 🌟
+
+[
+
+![스타 히스토리 차트](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 다른 언어로 된 README
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+원하는 언어가 보이지 않나요? [`i18n.json`](./i18n.json)에 추가하고 PR을 열어주세요!
+
+---
+
+## 🤝 커뮤니티
+
+저희는 커뮤니티 중심이며 기여를 환영합니다!
+
+- 아이디어가 있으신가요? [이슈 열기](https://github.com/lingodotdev/lingo.dev/issues)
+- 무언가 수정하고 싶으신가요? [PR 보내기](https://github.com/lingodotdev/lingo.dev/pulls)
+- 도움이 필요하신가요? [Discord에 참여하기](https://lingo.dev/go/discord)
+
+## ⭐ 스타 히스토리
+
+저희가 하는 일이 마음에 드신다면, ⭐을 주시고 3,000 스타 달성을 도와주세요! 🌟
+
+[
+
+![스타 히스토리 차트](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 다른 언어로 된 README
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+원하는 언어가 보이지 않나요? [`i18n.json`](./i18n.json)에 추가하고 PR을 열어주세요!
+
+---
+
+## 🤝 커뮤니티
+
+저희는 커뮤니티 중심이며 기여를 환영합니다!
+
+- 아이디어가 있으신가요? [이슈 열기](https://github.com/lingodotdev/lingo.dev/issues)
+- 무언가 수정하고 싶으신가요? [PR 보내기](https://github.com/lingodotdev/lingo.dev/pulls)
+- 도움이 필요하신가요? [Discord에 참여하기](https://lingo.dev/go/discord)
+
+## ⭐ 스타 히스토리
+
+저희가 하는 일이 마음에 드신다면, ⭐을 주시고 3,000 스타 달성을 도와주세요! 🌟
+
+[
+
+![스타 히스토리 차트](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 다른 언어로 된 README
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+원하는 언어가 보이지 않나요? [`i18n.json`](./i18n.json)에 추가하고 PR을 열어주세요!
+
+---
+
+## 🤝 커뮤니티
+
+저희는 커뮤니티 중심이며 기여를 환영합니다!
+
+- 아이디어가 있으신가요? [이슈 열기](https://github.com/lingodotdev/lingo.dev/issues)
+- 무언가 수정하고 싶으신가요? [PR 보내기](https://github.com/lingodotdev/lingo.dev/pulls)
+- 도움이 필요하신가요? [Discord에 참여하기](https://lingo.dev/go/discord)
+
+## ⭐ 스타 히스토리
+
+저희가 하는 일이 마음에 드신다면, ⭐을 주시고 3,000 스타 달성을 도와주세요! 🌟
+
+[
+
+![스타 히스토리 차트](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 다른 언어로 된 README
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+원하는 언어가 보이지 않나요? [`i18n.json`](./i18n.json)에 추가하고 PR을 열어주세요!
+
+---
+
+## 🤝 커뮤니티
+
+저희는 커뮤니티 중심이며 기여를 환영합니다!
+
+- 아이디어가 있으신가요? [이슈 열기](https://github.com/lingodotdev/lingo.dev/issues)
+- 무언가 수정하고 싶으신가요? [PR 보내기](https://github.com/lingodotdev/lingo.dev/pulls)
+- 도움이 필요하신가요? [Discord에 참여하기](https://lingo.dev/go/discord)
+
+## ⭐ 스타 히스토리
+
+저희가 하는 일이 마음에 드신다면, ⭐을 주시고 3,000 스타 달성을 도와주세요! 🌟
+
+[
+
+![스타 히스토리 차트](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 다른 언어로 된 README
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+원하는 언어가 보이지 않나요? [`i18n.json`](./i18n.json)에 추가하고 PR을 열어주세요!

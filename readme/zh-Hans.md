@@ -146,3 +146,237 @@ const text = await translate("Hello world", { to: "es" });
 [English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
 
 没有看到您的语言？将其添加到 [`i18n.json`](./i18n.json) 并提交一个 PR！
+
+---
+
+## 🤝 社区
+
+我们以社区为驱动，欢迎您的贡献！
+
+- 有想法？[提交问题](https://github.com/lingodotdev/lingo.dev/issues)
+- 想修复问题？[发送 PR](https://github.com/lingodotdev/lingo.dev/pulls)
+- 需要帮助？[加入我们的 Discord](https://lingo.dev/go/discord)
+
+## ⭐ Star 历史
+
+如果您喜欢我们的工作，请给我们一个 ⭐，帮助我们达到 3,000 个星标！🌟
+
+[
+
+![Star 历史图表](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 其他语言的自述文件
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+没有看到您的语言？将其添加到 [`i18n.json`](./i18n.json) 并提交一个 PR！
+
+---
+
+## 🤝 社区
+
+我们以社区为驱动，欢迎您的贡献！
+
+- 有想法？[提交问题](https://github.com/lingodotdev/lingo.dev/issues)
+- 想修复问题？[发送 PR](https://github.com/lingodotdev/lingo.dev/pulls)
+- 需要帮助？[加入我们的 Discord](https://lingo.dev/go/discord)
+
+## ⭐ Star 历史
+
+如果您喜欢我们的工作，请给我们一个 ⭐，帮助我们达到 3,000 个星标！🌟
+
+[
+
+![Star 历史图表](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 其他语言的自述文件
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+没有看到您的语言？将其添加到 [`i18n.json`](./i18n.json) 并提交一个 PR！
+
+---
+
+## 🤝 社区
+
+我们以社区为驱动，欢迎您的贡献！
+
+- 有想法？[提交问题](https://github.com/lingodotdev/lingo.dev/issues)
+- 想修复问题？[发送 PR](https://github.com/lingodotdev/lingo.dev/pulls)
+- 需要帮助？[加入我们的 Discord](https://lingo.dev/go/discord)
+
+## ⭐ Star 历史
+
+如果您喜欢我们的工作，请给我们一个 ⭐，帮助我们达到 3,000 个星标！🌟
+
+[
+
+![Star 历史图表](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 其他语言的自述文件
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+没有看到您的语言？将其添加到 [`i18n.json`](./i18n.json) 并提交一个 PR！
+
+---
+
+## 🤝 社区
+
+我们以社区为驱动，欢迎您的贡献！
+
+- 有想法？[提交问题](https://github.com/lingodotdev/lingo.dev/issues)
+- 想修复问题？[发送 PR](https://github.com/lingodotdev/lingo.dev/pulls)
+- 需要帮助？[加入我们的 Discord](https://lingo.dev/go/discord)
+
+## ⭐ Star 历史
+
+如果您喜欢我们的工作，请给我们一个 ⭐，帮助我们达到 3,000 个星标！🌟
+
+[
+
+![Star 历史图表](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 其他语言的自述文件
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+没有看到您的语言？将其添加到 [`i18n.json`](./i18n.json) 并提交一个 PR！
+
+---
+
+## 🤝 社区
+
+我们以社区为驱动，欢迎您的贡献！
+
+- 有想法？[提交问题](https://github.com/lingodotdev/lingo.dev/issues)
+- 想修复问题？[发送 PR](https://github.com/lingodotdev/lingo.dev/pulls)
+- 需要帮助？[加入我们的 Discord](https://lingo.dev/go/discord)
+
+## ⭐ Star 历史
+
+如果您喜欢我们的工作，请给我们一个 ⭐，帮助我们达到 3,000 个星标！🌟
+
+[
+
+![Star 历史图表](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 其他语言的自述文件
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+没有看到您的语言？将其添加到 [`i18n.json`](./i18n.json) 并提交一个 PR！
+
+---
+
+## 🤝 社区
+
+我们以社区为驱动，欢迎您的贡献！
+
+- 有想法？[提交问题](https://github.com/lingodotdev/lingo.dev/issues)
+- 想修复问题？[发送 PR](https://github.com/lingodotdev/lingo.dev/pulls)
+- 需要帮助？[加入我们的 Discord](https://lingo.dev/go/discord)
+
+## ⭐ Star 历史
+
+如果您喜欢我们的工作，请给我们一个 ⭐，帮助我们达到 3,000 个星标！🌟
+
+[
+
+![Star 历史图表](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 其他语言的自述文件
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+没有看到您的语言？将其添加到 [`i18n.json`](./i18n.json) 并提交一个 PR！
+
+---
+
+## 🤝 社区
+
+我们以社区为驱动，欢迎您的贡献！
+
+- 有想法？[提交问题](https://github.com/lingodotdev/lingo.dev/issues)
+- 想修复问题？[发送 PR](https://github.com/lingodotdev/lingo.dev/pulls)
+- 需要帮助？[加入我们的 Discord](https://lingo.dev/go/discord)
+
+## ⭐ Star 历史
+
+如果您喜欢我们的工作，请给我们一个 ⭐，帮助我们达到 3,000 个星标！🌟
+
+[
+
+![Star 历史图表](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 其他语言的自述文件
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+没有看到您的语言？将其添加到 [`i18n.json`](./i18n.json) 并提交一个 PR！
+
+---
+
+## 🤝 社区
+
+我们以社区为驱动，欢迎您的贡献！
+
+- 有想法？[提交问题](https://github.com/lingodotdev/lingo.dev/issues)
+- 想修复问题？[发送 PR](https://github.com/lingodotdev/lingo.dev/pulls)
+- 需要帮助？[加入我们的 Discord](https://lingo.dev/go/discord)
+
+## ⭐ Star 历史
+
+如果您喜欢我们的工作，请给我们一个 ⭐，帮助我们达到 3,000 个星标！🌟
+
+[
+
+![Star 历史图表](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 其他语言的自述文件
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+没有看到您的语言？将其添加到 [`i18n.json`](./i18n.json) 并提交一个 PR！
+
+---
+
+## 🤝 社区
+
+我们以社区为驱动，欢迎您的贡献！
+
+- 有想法？[提交问题](https://github.com/lingodotdev/lingo.dev/issues)
+- 想修复问题？[发送 PR](https://github.com/lingodotdev/lingo.dev/pulls)
+- 需要帮助？[加入我们的 Discord](https://lingo.dev/go/discord)
+
+## ⭐ Star 历史
+
+如果您喜欢我们的工作，请给我们一个 ⭐，帮助我们达到 3,000 个星标！🌟
+
+[
+
+![Star 历史图表](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 其他语言的自述文件
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+没有看到您的语言？将其添加到 [`i18n.json`](./i18n.json) 并提交一个 PR！

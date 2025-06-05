@@ -146,3 +146,237 @@ const text = await translate("Hello world", { to: "es" });
 [English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
 
 Не видите своего языка? Добавьте его в [`i18n.json`](./i18n.json) и отправьте PR!
+
+---
+
+## 🤝 Сообщество
+
+Мы ориентированы на сообщество и рады вашим вкладам!
+
+- Есть идея? [Создайте задачу](https://github.com/lingodotdev/lingo.dev/issues)
+- Хотите что-то исправить? [Отправьте PR](https://github.com/lingodotdev/lingo.dev/pulls)
+- Нужна помощь? [Присоединяйтесь к нашему Discord](https://lingo.dev/go/discord)
+
+## ⭐ История звёзд
+
+Если вам нравится то, что мы делаем, поставьте нам ⭐ и помогите достичь 3,000 звёзд! 🌟
+
+[
+
+![График истории звёзд](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 Readme на других языках
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+Не видите своего языка? Добавьте его в [`i18n.json`](./i18n.json) и отправьте PR!
+
+---
+
+## 🤝 Сообщество
+
+Мы ориентированы на сообщество и рады вашим вкладам!
+
+- Есть идея? [Создайте задачу](https://github.com/lingodotdev/lingo.dev/issues)
+- Хотите что-то исправить? [Отправьте PR](https://github.com/lingodotdev/lingo.dev/pulls)
+- Нужна помощь? [Присоединяйтесь к нашему Discord](https://lingo.dev/go/discord)
+
+## ⭐ История звёзд
+
+Если вам нравится то, что мы делаем, поставьте нам ⭐ и помогите достичь 3,000 звёзд! 🌟
+
+[
+
+![График истории звёзд](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 Readme на других языках
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+Не видите своего языка? Добавьте его в [`i18n.json`](./i18n.json) и отправьте PR!
+
+---
+
+## 🤝 Сообщество
+
+Мы ориентированы на сообщество и рады вашим вкладам!
+
+- Есть идея? [Создайте задачу](https://github.com/lingodotdev/lingo.dev/issues)
+- Хотите что-то исправить? [Отправьте PR](https://github.com/lingodotdev/lingo.dev/pulls)
+- Нужна помощь? [Присоединяйтесь к нашему Discord](https://lingo.dev/go/discord)
+
+## ⭐ История звёзд
+
+Если вам нравится то, что мы делаем, поставьте нам ⭐ и помогите достичь 3,000 звёзд! 🌟
+
+[
+
+![График истории звёзд](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 Readme на других языках
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+Не видите своего языка? Добавьте его в [`i18n.json`](./i18n.json) и отправьте PR!
+
+---
+
+## 🤝 Сообщество
+
+Мы ориентированы на сообщество и рады вашим вкладам!
+
+- Есть идея? [Создайте задачу](https://github.com/lingodotdev/lingo.dev/issues)
+- Хотите что-то исправить? [Отправьте PR](https://github.com/lingodotdev/lingo.dev/pulls)
+- Нужна помощь? [Присоединяйтесь к нашему Discord](https://lingo.dev/go/discord)
+
+## ⭐ История звёзд
+
+Если вам нравится то, что мы делаем, поставьте нам ⭐ и помогите достичь 3,000 звёзд! 🌟
+
+[
+
+![График истории звёзд](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 Readme на других языках
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+Не видите своего языка? Добавьте его в [`i18n.json`](./i18n.json) и отправьте PR!
+
+---
+
+## 🤝 Сообщество
+
+Мы ориентированы на сообщество и рады вашим вкладам!
+
+- Есть идея? [Создайте задачу](https://github.com/lingodotdev/lingo.dev/issues)
+- Хотите что-то исправить? [Отправьте PR](https://github.com/lingodotdev/lingo.dev/pulls)
+- Нужна помощь? [Присоединяйтесь к нашему Discord](https://lingo.dev/go/discord)
+
+## ⭐ История звёзд
+
+Если вам нравится то, что мы делаем, поставьте нам ⭐ и помогите достичь 3,000 звёзд! 🌟
+
+[
+
+![График истории звёзд](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 Readme на других языках
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+Не видите своего языка? Добавьте его в [`i18n.json`](./i18n.json) и отправьте PR!
+
+---
+
+## 🤝 Сообщество
+
+Мы ориентированы на сообщество и рады вашим вкладам!
+
+- Есть идея? [Создайте задачу](https://github.com/lingodotdev/lingo.dev/issues)
+- Хотите что-то исправить? [Отправьте PR](https://github.com/lingodotdev/lingo.dev/pulls)
+- Нужна помощь? [Присоединяйтесь к нашему Discord](https://lingo.dev/go/discord)
+
+## ⭐ История звёзд
+
+Если вам нравится то, что мы делаем, поставьте нам ⭐ и помогите достичь 3,000 звёзд! 🌟
+
+[
+
+![График истории звёзд](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 Readme на других языках
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+Не видите своего языка? Добавьте его в [`i18n.json`](./i18n.json) и отправьте PR!
+
+---
+
+## 🤝 Сообщество
+
+Мы ориентированы на сообщество и рады вашим вкладам!
+
+- Есть идея? [Создайте задачу](https://github.com/lingodotdev/lingo.dev/issues)
+- Хотите что-то исправить? [Отправьте PR](https://github.com/lingodotdev/lingo.dev/pulls)
+- Нужна помощь? [Присоединяйтесь к нашему Discord](https://lingo.dev/go/discord)
+
+## ⭐ История звёзд
+
+Если вам нравится то, что мы делаем, поставьте нам ⭐ и помогите достичь 3,000 звёзд! 🌟
+
+[
+
+![График истории звёзд](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 Readme на других языках
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+Не видите своего языка? Добавьте его в [`i18n.json`](./i18n.json) и отправьте PR!
+
+---
+
+## 🤝 Сообщество
+
+Мы ориентированы на сообщество и рады вашим вкладам!
+
+- Есть идея? [Создайте задачу](https://github.com/lingodotdev/lingo.dev/issues)
+- Хотите что-то исправить? [Отправьте PR](https://github.com/lingodotdev/lingo.dev/pulls)
+- Нужна помощь? [Присоединяйтесь к нашему Discord](https://lingo.dev/go/discord)
+
+## ⭐ История звёзд
+
+Если вам нравится то, что мы делаем, поставьте нам ⭐ и помогите достичь 3,000 звёзд! 🌟
+
+[
+
+![График истории звёзд](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 Readme на других языках
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+Не видите своего языка? Добавьте его в [`i18n.json`](./i18n.json) и отправьте PR!
+
+---
+
+## 🤝 Сообщество
+
+Мы ориентированы на сообщество и рады вашим вкладам!
+
+- Есть идея? [Создайте задачу](https://github.com/lingodotdev/lingo.dev/issues)
+- Хотите что-то исправить? [Отправьте PR](https://github.com/lingodotdev/lingo.dev/pulls)
+- Нужна помощь? [Присоединяйтесь к нашему Discord](https://lingo.dev/go/discord)
+
+## ⭐ История звёзд
+
+Если вам нравится то, что мы делаем, поставьте нам ⭐ и помогите достичь 3,000 звёзд! 🌟
+
+[
+
+![График истории звёзд](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+
+](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 Readme на других языках
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+Не видите своего языка? Добавьте его в [`i18n.json`](./i18n.json) и отправьте PR!
