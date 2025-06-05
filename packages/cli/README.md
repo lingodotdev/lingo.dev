@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <strong>⚡️ AI-powered, open-source i18n toolkit for instant localization with LLMs.</strong>
+  <strong>⚡ Lingo.dev - open-source, AI-powered i18n toolkit for instant localization with LLMs.</strong>
 </p>
 
 <br />
