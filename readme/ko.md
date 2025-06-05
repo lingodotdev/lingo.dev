@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <strong>⚡️ LLM을 활용한 즉각적인 현지화를 위한 AI 기반 오픈소스 i18n 툴킷.</strong>
+  <strong>⚡ Lingo.dev - LLM을 활용한 즉각적인 현지화를 위한 오픈소스, AI 기반 i18n 툴킷.</strong>
 </p>
 
 <br />
@@ -35,22 +35,28 @@
 
 **Lingo.dev 컴파일러**는 기존 React 컴포넌트를 변경하지 않고도 빌드 타임에 모든 React 앱을 다국어로 만들 수 있도록 설계된 무료 오픈소스 컴파일러 미들웨어입니다.
 
-```bash
-# install once
-npm install lingo.dev
+한 번만 설치하세요:
 
-# next.config.js
+```bash
+npm install lingo.dev
+```
+
+빌드 구성에서 활성화하세요:
+
+```js
 import lingoCompiler from "lingo.dev/compiler";
+
+const existingNextConfig = {};
 
 export default lingoCompiler.next({
   sourceLocale: "en",
   targetLocales: ["es", "fr"],
-});
+})(existingNextConfig);
 ```
 
 `next build`를 실행하면 스페인어와 프랑스어 번들이 자동으로 생성됩니다 ✨
 
-전체 가이드는 [문서 보기 →](https://lingo.dev/compiler)를 참조하세요.
+전체 가이드는 [문서 읽기 →](https://lingo.dev/compiler)를 참조하고, 설정에 도움이 필요하면 [Discord에 참여하세요](https://lingo.dev/go/discord).
 
 ---
 
@@ -58,26 +64,26 @@ export default lingoCompiler.next({
 
 | 도구         | 요약                                                                          | 문서                                    |
 | ------------ | ------------------------------------------------------------------------------ | --------------------------------------- |
-| **컴파일러** | 빌드 타임 React 현지화                                                  | [/compiler](https://lingo.dev/compiler) |
+| **Compiler** | 빌드 타임 React 현지화                                                  | [/compiler](https://lingo.dev/compiler) |
 | **CLI**      | 웹 및 모바일 앱, JSON, YAML, 마크다운 등을 위한 원커맨드 현지화 | [/cli](https://lingo.dev/cli)           |
-| **CI/CD**    | 모든 푸시에서 자동 번역 커밋 및 필요시 풀 리퀘스트 생성        | [/ci](https://lingo.dev/ci)             |
+| **CI/CD**    | 모든 푸시에서 자동 커밋 번역 및 필요시 풀 리퀘스트 생성        | [/ci](https://lingo.dev/ci)             |
 | **SDK**      | 사용자 생성 콘텐츠를 위한 실시간 번역                                | [/sdk](https://lingo.dev/sdk)           |
 
-각 도구에 대한 간략한 설명은 아래와 같습니다 👇
+각 도구에 대한 간략한 설명은 아래를 참조하세요 👇
 
 ---
 
 ### ⚡️ Lingo.dev CLI
 
-터미널에서 직접 코드와 콘텐츠를 번역하세요.
+터미널에서 직접 코드 및 콘텐츠를 번역하세요.
 
 ```bash
-npx lingo.dev@latest i18n
+npx lingo.dev@latest run
 ```
 
-모든 문자열에 지문을 생성하고 결과를 캐싱하며 변경된 부분만 다시 번역합니다.
+모든 문자열에 지문을 생성하고, 결과를 캐싱하며, 변경된 부분만 재번역합니다.
 
-[문서 보기 →](https://lingo.dev/cli)
+설정 방법을 알아보려면 [문서를 따라가세요 →](https://lingo.dev/cli).
 
 ---
 
@@ -100,7 +106,7 @@ jobs:
           api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
 ```
 
-수동 단계 없이 레포지토리를 그린 상태로 유지하고 제품을 다국어로 만들어 줍니다.
+수동 단계 없이 저장소를 안정적으로 유지하고 제품을 다국어로 만듭니다.
 
 [문서 읽기 →](https://lingo.dev/ci)
 
@@ -111,10 +117,24 @@ jobs:
 동적 콘텐츠를 위한 즉각적인 요청별 번역.
 
 ```ts
-import { translate } from "lingo.dev/sdk";
+import { LingoDotDevEngine } from "lingo.dev/sdk";
 
-const text = await translate("Hello world", { to: "es" });
-// → "¡Hola mundo!"
+const lingoDotDev = new LingoDotDevEngine({
+  apiKey: "your-api-key-here",
+});
+
+const content = {
+  greeting: "Hello",
+  farewell: "Goodbye",
+  message: "Welcome to our platform",
+};
+
+const translated = await lingoDotDev.localizeObject(content, {
+  sourceLocale: "en",
+  targetLocale: "es",
+});
+// Returns: { greeting: "Hola", farewell: "Adiós", message: "Bienvenido a nuestra plataforma" }
+
 ```
 
 채팅, 사용자 댓글 및 기타 실시간 흐름에 완벽합니다.
@@ -133,7 +153,7 @@ const text = await translate("Hello world", { to: "es" });
 
 ## ⭐ 스타 히스토리
 
-저희가 하는 일이 마음에 드신다면, ⭐을 주시고 3,000 스타 달성을 도와주세요! 🌟
+저희가 하는 일이 마음에 드신다면, ⭐을 주시고 3,000개 스타 달성을 도와주세요! 🌟
 
 [
 

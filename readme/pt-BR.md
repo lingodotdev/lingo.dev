@@ -35,18 +35,7 @@
 
 **Lingo.dev Compiler** é um middleware compilador gratuito e de código aberto, projetado para tornar qualquer aplicativo React multilíngue durante o tempo de compilação sem exigir alterações nos componentes React existentes.
 
-```bash
-# install once
-npm install lingo.dev
-
-# next.config.js
-import lingoCompiler from "lingo.dev/compiler";
-
-export default lingoCompiler.next({
-  sourceLocale: "en",
-  targetLocales: ["es", "fr"],
-});
-```
+---CODE-PLACEHOLDER-f159f7253d409892d00e70ee045902a5---
 
 Execute `next build` e veja os pacotes em espanhol e francês surgirem ✨
 
@@ -71,9 +60,7 @@ Abaixo estão os destaques de cada um 👇
 
 Traduza código e conteúdo diretamente do seu terminal.
 
-```bash
-npx lingo.dev@latest i18n
-```
+---CODE-PLACEHOLDER-a4836309dda7477e1ba399e340828247---
 
 Ele cria uma impressão digital de cada string, armazena resultados em cache e apenas retraduz o que foi alterado.
 
@@ -110,12 +97,7 @@ Mantém seu repositório verde e seu produto multilíngue sem etapas manuais.
 
 Tradução instantânea por requisição para conteúdo dinâmico.
 
-```ts
-import { translate } from "lingo.dev/sdk";
-
-const text = await translate("Hello world", { to: "es" });
-// → "¡Hola mundo!"
-```
+---CODE-PLACEHOLDER-c50e1e589a70e31dd2dde95be8da6ddf---
 
 Perfeito para chat, comentários de usuários e outros fluxos em tempo real.
 
@@ -140,6 +122,12 @@ Se você gosta do que estamos fazendo, dê-nos uma ⭐ e ajude-nos a alcançar 3
 ![Gráfico de Histórico de Estrelas](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
 
 ](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
+## 🌐 Readme em outros idiomas
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+Não vê seu idioma? Adicione-o ao [`i18n.json`](./i18n.json) e abra um PR!
 
 ## 🌐 Readme em outros idiomas
 

@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <strong>⚡️ Toolkit i18n open-source potenziato dall'IA per la localizzazione istantanea con LLM.</strong>
+  <strong>⚡ Lingo.dev - toolkit open-source per l'i18n, potenziato dall'IA per la localizzazione istantanea con LLM.</strong>
 </p>
 
 <br />
@@ -35,35 +35,41 @@
 
 **Lingo.dev Compiler** è un middleware compiler gratuito e open-source, progettato per rendere qualsiasi applicazione React multilingue in fase di compilazione senza richiedere modifiche ai componenti React esistenti.
 
-```bash
-# install once
-npm install lingo.dev
+Installa una volta:
 
-# next.config.js
+```bash
+npm install lingo.dev
+```
+
+Abilita nella configurazione di build:
+
+```js
 import lingoCompiler from "lingo.dev/compiler";
+
+const existingNextConfig = {};
 
 export default lingoCompiler.next({
   sourceLocale: "en",
   targetLocales: ["es", "fr"],
-});
+})(existingNextConfig);
 ```
 
 Esegui `next build` e guarda apparire i bundle in spagnolo e francese ✨
 
-[Leggi la documentazione →](https://lingo.dev/compiler) per la guida completa.
+[Leggi la documentazione →](https://lingo.dev/compiler) per la guida completa, e [Unisciti al nostro Discord](https://lingo.dev/go/discord) per ricevere assistenza con la tua configurazione.
 
 ---
 
 ### Cosa contiene questo repository?
 
-| Strumento    | TL;DR                                                                                | Documentazione                            |
-| ------------ | ------------------------------------------------------------------------------------ | ----------------------------------------- |
-| **Compiler** | Localizzazione React in fase di compilazione                                         | [/compiler](https://lingo.dev/compiler)   |
-| **CLI**      | Localizzazione con un solo comando per app web e mobile, JSON, YAML, markdown e altro | [/cli](https://lingo.dev/cli)             |
-| **CI/CD**    | Auto-commit delle traduzioni ad ogni push + creazione di pull request se necessario   | [/ci](https://lingo.dev/ci)               |
-| **SDK**      | Traduzione in tempo reale per contenuti generati dagli utenti                        | [/sdk](https://lingo.dev/sdk)             |
+| Strumento    | In breve                                                                      | Documentazione                          |
+| ------------ | ----------------------------------------------------------------------------- | --------------------------------------- |
+| **Compiler** | Localizzazione React in fase di build                                         | [/compiler](https://lingo.dev/compiler) |
+| **CLI**      | Localizzazione con un solo comando per app web e mobile, JSON, YAML, markdown e altro | [/cli](https://lingo.dev/cli)           |
+| **CI/CD**    | Auto-commit delle traduzioni ad ogni push + creazione di pull request se necessario | [/ci](https://lingo.dev/ci)             |
+| **SDK**      | Traduzione in tempo reale per contenuti generati dagli utenti                 | [/sdk](https://lingo.dev/sdk)           |
 
-Di seguito una panoramica rapida di ciascuno 👇
+Di seguito i punti salienti per ciascuno 👇
 
 ---
 
@@ -72,12 +78,12 @@ Di seguito una panoramica rapida di ciascuno 👇
 Traduci codice e contenuti direttamente dal tuo terminale.
 
 ```bash
-npx lingo.dev@latest i18n
+npx lingo.dev@latest run
 ```
 
-Crea un'impronta digitale di ogni stringa, memorizza i risultati nella cache e ritraduce solo ciò che è cambiato.
+Crea un'impronta digitale per ogni stringa, memorizza i risultati nella cache e ritraduce solo ciò che è cambiato.
 
-[Leggi la documentazione →](https://lingo.dev/cli)
+[Segui la documentazione →](https://lingo.dev/cli) per imparare come configurarlo.
 
 ---
 
@@ -100,7 +106,7 @@ jobs:
           api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
 ```
 
-Mantiene il tuo repository verde e il tuo prodotto multilingue senza passaggi manuali.
+Mantiene il tuo repository aggiornato e il tuo prodotto multilingue senza passaggi manuali.
 
 [Leggi la documentazione →](https://lingo.dev/ci)
 
@@ -111,10 +117,24 @@ Mantiene il tuo repository verde e il tuo prodotto multilingue senza passaggi ma
 Traduzione istantanea per richiesta per contenuti dinamici.
 
 ```ts
-import { translate } from "lingo.dev/sdk";
+import { LingoDotDevEngine } from "lingo.dev/sdk";
 
-const text = await translate("Hello world", { to: "es" });
-// → "¡Hola mundo!"
+const lingoDotDev = new LingoDotDevEngine({
+  apiKey: "your-api-key-here",
+});
+
+const content = {
+  greeting: "Hello",
+  farewell: "Goodbye",
+  message: "Welcome to our platform",
+};
+
+const translated = await lingoDotDev.localizeObject(content, {
+  sourceLocale: "en",
+  targetLocale: "es",
+});
+// Returns: { greeting: "Hola", farewell: "Adiós", message: "Bienvenido a nuestra plataforma" }
+
 ```
 
 Perfetto per chat, commenti degli utenti e altri flussi in tempo reale.

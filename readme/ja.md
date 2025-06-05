@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <strong>⚡️ LLMを活用したオープンソースi18nツールキットで即時ローカライゼーションを実現。</strong>
+  <strong>⚡ Lingo.dev - オープンソース、AI駆動のi18nツールキットでLLMによる即時ローカライゼーションを実現。</strong>
 </p>
 
 <br />
@@ -35,55 +35,61 @@
 
 **Lingo.dev コンパイラ**は、既存のReactコンポーネントに変更を加えることなく、ビルド時にReactアプリを多言語対応にするための無料のオープンソースコンパイラミドルウェアです。
 
-```bash
-# install once
-npm install lingo.dev
+一度インストール:
 
-# next.config.js
+```bash
+npm install lingo.dev
+```
+
+ビルド設定で有効化:
+
+```js
 import lingoCompiler from "lingo.dev/compiler";
+
+const existingNextConfig = {};
 
 export default lingoCompiler.next({
   sourceLocale: "en",
   targetLocales: ["es", "fr"],
-});
+})(existingNextConfig);
 ```
 
-`next build`を実行すると、スペイン語とフランス語のバンドルが自動的に生成されます ✨
+`next build` を実行すると、スペイン語とフランス語のバンドルが自動的に生成されます ✨
 
-完全なガイドは[ドキュメントを読む →](https://lingo.dev/compiler)をご覧ください。
+[ドキュメントを読む →](https://lingo.dev/compiler) で完全ガイドを確認し、[Discordに参加](https://lingo.dev/go/discord) してセットアップのサポートを受けましょう。
 
 ---
 
 ### このリポジトリには何が含まれていますか？
 
-| ツール       | 概要                                                                         | ドキュメント                                |
-| ------------ | --------------------------------------------------------------------------- | ----------------------------------------- |
-| **コンパイラ** | ビルド時のReactローカライゼーション                                              | [/compiler](https://lingo.dev/compiler) |
+| ツール       | 要約                                                                          | ドキュメント                                |
+| ------------ | ------------------------------------------------------------------------------ | --------------------------------------- |
+| **Compiler** | ビルド時のReactローカライゼーション                                                | [/compiler](https://lingo.dev/compiler) |
 | **CLI**      | ウェブ・モバイルアプリ、JSON、YAML、マークダウンなどのワンコマンドローカライゼーション | [/cli](https://lingo.dev/cli)           |
-| **CI/CD**    | プッシュごとに翻訳を自動コミット + 必要に応じてプルリクエストを作成                | [/ci](https://lingo.dev/ci)             |
+| **CI/CD**    | プッシュごとに翻訳を自動コミット + 必要に応じてプルリクエストを作成               | [/ci](https://lingo.dev/ci)             |
 | **SDK**      | ユーザー生成コンテンツのリアルタイム翻訳                                        | [/sdk](https://lingo.dev/sdk)           |
 
-以下は各ツールの簡単な説明です 👇
+以下は各ツールの概要です 👇
 
 ---
 
 ### ⚡️ Lingo.dev CLI
 
-ターミナルから直接コードとコンテンツを翻訳します。
+ターミナルから直接コードとコンテンツを翻訳。
 
 ```bash
-npx lingo.dev@latest i18n
+npx lingo.dev@latest run
 ```
 
 各文字列にフィンガープリントを付け、結果をキャッシュし、変更された部分のみを再翻訳します。
 
-[ドキュメントを読む →](https://lingo.dev/cli)
+[ドキュメントに従う →](https://lingo.dev/cli) でセットアップ方法を学びましょう。
 
 ---
 
 ### 🔄 Lingo.dev CI/CD
 
-完璧な翻訳を自動的に提供します。
+完璧な翻訳を自動的に提供。
 
 ```yaml
 # .github/workflows/i18n.yml
@@ -100,7 +106,7 @@ jobs:
           api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
 ```
 
-手動の手順なしでリポジトリを常に最新の状態に保ち、製品を多言語対応させます。
+手動操作なしでリポジトリを常に最新状態に保ち、製品の多言語対応を維持します。
 
 [ドキュメントを読む →](https://lingo.dev/ci)
 
@@ -108,13 +114,27 @@ jobs:
 
 ### 🧩 Lingo.dev SDK
 
-動的コンテンツのリクエストごとの即時翻訳。
+動的コンテンツのためのリクエストごとの即時翻訳。
 
 ```ts
-import { translate } from "lingo.dev/sdk";
+import { LingoDotDevEngine } from "lingo.dev/sdk";
 
-const text = await translate("Hello world", { to: "es" });
-// → "¡Hola mundo!"
+const lingoDotDev = new LingoDotDevEngine({
+  apiKey: "your-api-key-here",
+});
+
+const content = {
+  greeting: "Hello",
+  farewell: "Goodbye",
+  message: "Welcome to our platform",
+};
+
+const translated = await lingoDotDev.localizeObject(content, {
+  sourceLocale: "en",
+  targetLocale: "es",
+});
+// Returns: { greeting: "Hola", farewell: "Adiós", message: "Bienvenido a nuestra plataforma" }
+
 ```
 
 チャット、ユーザーコメント、その他のリアルタイムフローに最適です。

@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <strong>⚡️ Kit de herramientas i18n de código abierto, potenciado por IA para localización instantánea con LLMs.</strong>
+  <strong>⚡ Lingo.dev - kit de herramientas de i18n de código abierto, impulsado por IA para localización instantánea con LLMs.</strong>
 </p>
 
 <br />
@@ -35,35 +35,41 @@
 
 **Lingo.dev Compiler** es un middleware compilador gratuito y de código abierto, diseñado para hacer que cualquier aplicación React sea multilingüe durante el tiempo de compilación sin requerir cambios en los componentes React existentes.
 
-```bash
-# install once
-npm install lingo.dev
+Instalar una vez:
 
-# next.config.js
+```bash
+npm install lingo.dev
+```
+
+Habilitar en tu configuración de compilación:
+
+```js
 import lingoCompiler from "lingo.dev/compiler";
+
+const existingNextConfig = {};
 
 export default lingoCompiler.next({
   sourceLocale: "en",
   targetLocales: ["es", "fr"],
-});
+})(existingNextConfig);
 ```
 
 Ejecuta `next build` y observa cómo aparecen los paquetes en español y francés ✨
 
-[Lee la documentación →](https://lingo.dev/compiler) para la guía completa.
+[Lee la documentación →](https://lingo.dev/compiler) para la guía completa, y [Únete a nuestro Discord](https://lingo.dev/go/discord) para obtener ayuda con tu configuración.
 
 ---
 
 ### ¿Qué hay dentro de este repositorio?
 
-| Herramienta  | Resumen                                                                        | Documentación                            |
-| ------------ | ------------------------------------------------------------------------------ | --------------------------------------- |
-| **Compiler** | Localización de React en tiempo de compilación                                 | [/compiler](https://lingo.dev/compiler) |
+| Herramienta  | Resumen                                                                       | Documentación                           |
+| ------------ | ----------------------------------------------------------------------------- | --------------------------------------- |
+| **Compiler** | Localización de React en tiempo de compilación                                | [/compiler](https://lingo.dev/compiler) |
 | **CLI**      | Localización con un solo comando para aplicaciones web y móviles, JSON, YAML, markdown y más | [/cli](https://lingo.dev/cli)           |
 | **CI/CD**    | Auto-commit de traducciones en cada push + creación de pull requests si es necesario | [/ci](https://lingo.dev/ci)             |
-| **SDK**      | Traducción en tiempo real para contenido generado por usuarios                 | [/sdk](https://lingo.dev/sdk)           |
+| **SDK**      | Traducción en tiempo real para contenido generado por usuarios                | [/sdk](https://lingo.dev/sdk)           |
 
-A continuación, un resumen rápido de cada uno 👇
+A continuación, los aspectos más destacados de cada uno 👇
 
 ---
 
@@ -72,12 +78,12 @@ A continuación, un resumen rápido de cada uno 👇
 Traduce código y contenido directamente desde tu terminal.
 
 ```bash
-npx lingo.dev@latest i18n
+npx lingo.dev@latest run
 ```
 
-Genera una huella digital para cada cadena, almacena resultados en caché y solo retraduce lo que ha cambiado.
+Genera huellas digitales de cada cadena, almacena resultados en caché y solo retraduce lo que ha cambiado.
 
-[Lee la documentación →](https://lingo.dev/cli)
+[Sigue la documentación →](https://lingo.dev/cli) para aprender cómo configurarlo.
 
 ---
 
@@ -100,21 +106,35 @@ jobs:
           api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
 ```
 
-Mantiene tu repositorio activo y tu producto multilingüe sin pasos manuales.
+Mantiene tu repositorio actualizado y tu producto multilingüe sin pasos manuales.
 
-[Leer la documentación →](https://lingo.dev/ci)
+[Lee la documentación →](https://lingo.dev/ci)
 
 ---
 
-### 🧩 SDK de Lingo.dev
+### 🧩 Lingo.dev SDK
 
 Traducción instantánea por solicitud para contenido dinámico.
 
 ```ts
-import { translate } from "lingo.dev/sdk";
+import { LingoDotDevEngine } from "lingo.dev/sdk";
 
-const text = await translate("Hello world", { to: "es" });
-// → "¡Hola mundo!"
+const lingoDotDev = new LingoDotDevEngine({
+  apiKey: "your-api-key-here",
+});
+
+const content = {
+  greeting: "Hello",
+  farewell: "Goodbye",
+  message: "Welcome to our platform",
+};
+
+const translated = await lingoDotDev.localizeObject(content, {
+  sourceLocale: "en",
+  targetLocale: "es",
+});
+// Returns: { greeting: "Hola", farewell: "Adiós", message: "Bienvenido a nuestra plataforma" }
+
 ```
 
 Perfecto para chat, comentarios de usuarios y otros flujos en tiempo real.
@@ -125,7 +145,7 @@ Perfecto para chat, comentarios de usuarios y otros flujos en tiempo real.
 
 ## 🤝 Comunidad
 
-¡Somos impulsados por la comunidad y nos encantan las contribuciones!
+Somos impulsados por la comunidad y nos encantan las contribuciones!
 
 - ¿Tienes una idea? [Abre un issue](https://github.com/lingodotdev/lingo.dev/issues)
 - ¿Quieres arreglar algo? [Envía un PR](https://github.com/lingodotdev/lingo.dev/pulls)
@@ -133,7 +153,7 @@ Perfecto para chat, comentarios de usuarios y otros flujos en tiempo real.
 
 ## ⭐ Historial de estrellas
 
-Si te gusta lo que estamos haciendo, danos una ⭐ y ¡ayúdanos a alcanzar las 3.000 estrellas! 🌟
+Si te gusta lo que estamos haciendo, danos una ⭐ y ayúdanos a alcanzar 3,000 estrellas! 🌟
 
 [
 
@@ -145,4 +165,4 @@ Si te gusta lo que estamos haciendo, danos una ⭐ y ¡ayúdanos a alcanzar las 
 
 [English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
 
-¿No ves tu idioma? ¡Añádelo a [`i18n.json`](./i18n.json) y abre un PR!
+¿No ves tu idioma? ¡Agrégalo a [`i18n.json`](./i18n.json) y abre un PR!

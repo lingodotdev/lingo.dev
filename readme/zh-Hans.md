@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <strong>⚡️ 基于 AI 的开源国际化工具包，使用 LLM 实现即时本地化。</strong>
+  <strong>⚡ Lingo.dev - 开源的、由 AI 驱动的 i18n 工具包，使用 LLM 实现即时本地化。</strong>
 </p>
 
 <br />
@@ -35,35 +35,41 @@
 
 **Lingo.dev 编译器** 是一个免费、开源的编译中间件，旨在无需更改现有 React 组件的情况下，在构建时让任何 React 应用支持多语言。
 
-```bash
-# install once
-npm install lingo.dev
+一次安装：
 
-# next.config.js
+```bash
+npm install lingo.dev
+```
+
+在构建配置中启用：
+
+```js
 import lingoCompiler from "lingo.dev/compiler";
+
+const existingNextConfig = {};
 
 export default lingoCompiler.next({
   sourceLocale: "en",
   targetLocales: ["es", "fr"],
-});
+})(existingNextConfig);
 ```
 
 运行 `next build`，即可看到西班牙语和法语的包生成 ✨
 
-[阅读文档 →](https://lingo.dev/compiler) 获取完整指南。
+[阅读文档 →](https://lingo.dev/compiler) 获取完整指南，并[加入我们的 Discord](https://lingo.dev/go/discord) 以获得设置帮助。
 
 ---
 
-### 这个仓库里有什么？
+### 此仓库包含什么内容？
 
 | 工具         | 简介                                                                          | 文档                                    |
 | ------------ | ------------------------------------------------------------------------------ | --------------------------------------- |
-| **编译器**   | 构建时的 React 本地化                                                         | [/compiler](https://lingo.dev/compiler) |
-| **CLI**      | 一键本地化网页和移动应用，支持 JSON、YAML、Markdown 等                        | [/cli](https://lingo.dev/cli)           |
-| **CI/CD**    | 每次推送时自动提交翻译 + 根据需要创建拉取请求                                 | [/ci](https://lingo.dev/ci)             |
+| **Compiler** | 构建时的 React 本地化                                                         | [/compiler](https://lingo.dev/compiler) |
+| **CLI**      | 一键本地化网页和移动应用、JSON、YAML、Markdown 等                              | [/cli](https://lingo.dev/cli)           |
+| **CI/CD**    | 每次推送时自动提交翻译 + 根据需要创建拉取请求                                  | [/ci](https://lingo.dev/ci)             |
 | **SDK**      | 用户生成内容的实时翻译                                                        | [/sdk](https://lingo.dev/sdk)           |
 
-以下是每个工具的快速介绍 👇
+以下是每个工具的快速概览 👇
 
 ---
 
@@ -72,12 +78,12 @@ export default lingoCompiler.next({
 直接从终端翻译代码和内容。
 
 ```bash
-npx lingo.dev@latest i18n
+npx lingo.dev@latest run
 ```
 
-它会为每个字符串生成指纹，缓存结果，并且只重新翻译发生更改的内容。
+它会为每个字符串生成指纹，缓存结果，并仅重新翻译更改的部分。
 
-[阅读文档 →](https://lingo.dev/cli)
+[查看文档 →](https://lingo.dev/cli) 了解如何设置。
 
 ---
 
@@ -100,7 +106,7 @@ jobs:
           api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
 ```
 
-让您的代码库保持绿色，让您的产品支持多语言，无需手动操作。
+让你的代码库保持绿色，让你的产品无需手动步骤即可实现多语言支持。
 
 [阅读文档 →](https://lingo.dev/ci)
 
@@ -108,13 +114,27 @@ jobs:
 
 ### 🧩 Lingo.dev SDK
 
-为动态内容提供即时的按需翻译。
+为动态内容提供即时按需翻译。
 
 ```ts
-import { translate } from "lingo.dev/sdk";
+import { LingoDotDevEngine } from "lingo.dev/sdk";
 
-const text = await translate("Hello world", { to: "es" });
-// → "¡Hola mundo!"
+const lingoDotDev = new LingoDotDevEngine({
+  apiKey: "your-api-key-here",
+});
+
+const content = {
+  greeting: "Hello",
+  farewell: "Goodbye",
+  message: "Welcome to our platform",
+};
+
+const translated = await lingoDotDev.localizeObject(content, {
+  sourceLocale: "en",
+  targetLocale: "es",
+});
+// Returns: { greeting: "Hola", farewell: "Adiós", message: "Bienvenido a nuestra plataforma" }
+
 ```
 
 非常适合聊天、用户评论和其他实时流程。

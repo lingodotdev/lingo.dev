@@ -35,18 +35,7 @@
 
 **Lingo.dev Compiler** — це безкоштовне проміжне програмне забезпечення компілятора з відкритим кодом, розроблене для того, щоб зробити будь-який React-додаток багатомовним під час збірки без необхідності внесення змін до існуючих React-компонентів.
 
-```bash
-# install once
-npm install lingo.dev
-
-# next.config.js
-import lingoCompiler from "lingo.dev/compiler";
-
-export default lingoCompiler.next({
-  sourceLocale: "en",
-  targetLocales: ["es", "fr"],
-});
-```
+---CODE-PLACEHOLDER-f159f7253d409892d00e70ee045902a5---
 
 Запустіть `next build` і спостерігайте, як з'являються іспанські та французькі бандли ✨
 
@@ -71,9 +60,7 @@ export default lingoCompiler.next({
 
 Перекладайте код і контент прямо з терміналу.
 
-```bash
-npx lingo.dev@latest i18n
-```
+---CODE-PLACEHOLDER-a4836309dda7477e1ba399e340828247---
 
 Він створює відбитки кожного рядка, кешує результати і перекладає лише те, що змінилося.
 
@@ -110,12 +97,7 @@ jobs:
 
 Миттєвий переклад для динамічного контенту на кожен запит.
 
-```ts
-import { translate } from "lingo.dev/sdk";
-
-const text = await translate("Hello world", { to: "es" });
-// → "¡Hola mundo!"
-```
+---CODE-PLACEHOLDER-c50e1e589a70e31dd2dde95be8da6ddf---
 
 Ідеально підходить для чатів, коментарів користувачів та інших потоків у реальному часі.
 
@@ -146,3 +128,9 @@ const text = await translate("Hello world", { to: "es" });
 [English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
 
 Не бачите своєї мови? Додайте її до [`i18n.json`](./i18n.json) і відкрийте PR!
+
+## 🌐 Readme іншими мовами
+
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+
+Не бачите своєї мови? Додайте її до [`i18n.json`](./i18n.json) та відкрийте PR!
