@@ -1,20 +1,22 @@
+> [!NOTE]
+> **Introducing Lingo.dev Compiler** - Make any React app multilingual at build time without changing your components. [Read the docs](https://lingo.dev/compiler).
+
 <p align="center">
-  <a href="https://lingo.dev">
-    <img src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.launch.png" width="100%" alt="Lingo.dev" />
+  <a href="https://lingo.dev/compiler">
+    <img src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.compiler.png" width="100%" alt="Lingo.dev" />
   </a>
 </p>
 
 <p align="center">
-  <strong>⚡️ AI-powered open-source CLI for web & mobile localization.</strong>
+  <strong>⚡️ AI-powered open-source tools for web & mobile localization.</strong>
 </p>
 
 <br />
 
 <p align="center">
-  <a href="https://docs.lingo.dev">Docs</a> •
-  <a href="https://github.com/lingodotdev/lingo.dev/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22">Contribute</a> •
-  <a href="#-github-action">GitHub Action</a> •
-  <a href="#">Star the repo</a>
+  <a href="https://lingo.dev/cli">Lingo.dev CLI</a> •
+  <a href="https://lingo.dev/ci">Lingo.dev CI/CD</a> •
+  <a href="https://lingo.dev/compiler">Lingo.dev Compiler 🆕</a>
 </p>
 
 <p align="center">
@@ -31,133 +33,44 @@
 
 <br />
 
-Lingo.dev is a community-driven, open-source CLI for AI-powered web and mobile app localization.
+Lingo.dev is an open-source, i18n toolkit designed to help use LLMs for localization and translation of web, mobile apps and markdown content.
 
-Lingo.dev is designed to produce authentic translations instantly, eliminating manual work and management overhead. As a result, teams do accurate localization 100x faster, shipping features to more happy users worldwide. It can be used with your own LLM or with Lingo.dev-managed Localization Engine.
+Lingo.dev includes:
 
-> **Little-known fact:** Lingo.dev began as a small project at a student hackathon back in 2023! Many iterations later, we got accepted into Y Combinator in 2024, and we're now hiring! Interested in building the next-gen localization tools? Send your CV to careers@lingo.dev! 🚀
+1. **Lingo.dev CLI** - a CLI tool built to help translate apps and markdown content with lightning speed and accuracy. [Docs](https://lingo.dev/cli)
+1. **Lingo.dev CI/CD** - a CI/CD integration for GitHub, GitLab, and Bitbucket built to keep translations up-to-date automatically as soon as new content is added. [Docs](https://lingo.dev/ci)
+1. **Lingo.dev Compiler 🆕** - makes React app multilingual at build time without requiring changes to your existing components. [Docs](https://lingo.dev/compiler)
 
-## 📑 In This Guide
+All tools are designed to help use LLM models for precise translation and localization, and to eliminate manual work.
 
-- [Quickstart](#-quickstart) - Get started in minutes
-- [Caching](#-caching-with-i18nlock) - Optimize translation updates
-- [GitHub Action](#-github-action) - Automate localization in CI/CD
-- [Features](#-supercharged-features) - What makes Lingo.dev powerful
-- [Documentation](#-documentation) - Detailed guides and references
-- [Contribute](#-contribute) - Join our community
+## Lingo.dev Compiler Demo
 
-## 💫 Quickstart
+See Lingo.dev Compiler in action:
 
-Lingo.dev CLI is designed to work with both your own LLM, and Lingo.dev-managed Localization Engine built on top of latest SOTA (state-of-the-art) LLMs.
+[![Lingo.dev Compiler Demo](https://img.youtube.com/vi/sSo2ERxAvB4/0.jpg)](https://youtu.be/sSo2ERxAvB4)
 
-### Using Your Own LLM (BYOK or Bring Your Own Key)
+The Lingo.dev Compiler makes React apps multilingual at build time without requiring changes to your existing components.
 
-1. Create an `i18n.json` configuration file:
+Simply run the compiler and your app will support multiple languages automatically, using your existing LLM API key.
 
-```json
-{
-  "version": 1.5,
-  "provider": {
-    "id": "anthropic",
-    "model": "claude-3-7-sonnet-latest",
-    "prompt": "You're translating text from {source} to {target}."
-  },
-  "locale": {
-    "source": "en",
-    "targets": ["es", "fr", "de"]
-  }
-}
-```
+After watching the demo, check out the [docs](https://lingo.dev/compiler) to learn more.
 
-2. Set your API key as an environment variable:
-
-```bash
-export ANTHROPIC_API_KEY=your_anthropic_api_key
-# or for OpenAI
-export OPENAI_API_KEY=your_openai_api_key
-```
-
-3. Run the localization:
-
-```bash
-npx lingo.dev@latest i18n
-```
-
-### Using Lingo.dev Cloud
-
-Oftentimes, production-grade apps require features like translation memory, glossary support, and localization quality assurance. Also, sometimes, you want an expert to decide for you which LLM provider and model to use, and to update the model automatically when new ones are released. Lingo.dev is a managed Localization Engine that provides these features:
-
-1. Create an `i18n.json` configuration file (without provider node):
-
-```json
-{
-  "version": 1.5,
-  "locale": {
-    "source": "en",
-    "targets": ["es", "fr", "de"]
-  }
-}
-```
-
-2. Authenticate with Lingo.dev:
-
-```bash
-npx lingo.dev@latest auth --login
-```
-
-3. Run localization:
-
-```bash
-npx lingo.dev@latest i18n
-```
-
-## 📖 Documentation
-
-For detailed guides and API references, visit the [documentation](https://lingo.dev/go/docs).
-
-## 🔒 Caching with `i18n.lock`
-
-Lingo.dev uses an `i18n.lock` file to track content checksums, ensuring only changed text gets translated. This improves:
-
-- ⚡️ **Speed**: Skip already translated content
-- 🔄 **Consistency**: Prevent unnecessary retranslations
-- 💰 **Cost**: No billing for repeated translations
-
-## 🤖 GitHub Action
-
-Lingo.dev offers a GitHub Action to automate localization in your CI/CD pipeline. Here's a basic setup:
-
-```yaml
-- uses: lingodotdev/lingo.dev@main
-  with:
-    api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
-```
-
-This action runs `lingo.dev i18n` on every push, keeping your translations up-to-date automatically.
-
-For pull request mode and other configuration options, visit our [GitHub Action documentation](https://docs.lingo.dev/ci-action/gha).
-
-## ⚡️ Lingo.dev's Superpowers
-
-- 🔥 **Instant integration**: Works with your codebase in minutes
-- 🔄 **CI/CD Automation**: Set it and forget it
-- 🌍 **Global reach**: Ship to users everywhere
-- 🧠 **AI-powered**: Uses latest language models for natural translations
-- 📊 **Format-agnostic**: JSON, YAML, CSV, Markdown, Android, iOS, and many more
-- 🔍 **Clean diffs**: Preserves your file structure exactly
-- ⚡️ **Lightning-fast**: Translations in seconds, not days
-- 🔄 **Always synced**: Automatically updates when content changes
-- 🌟 **Human quality**: Translations that don't sound robotic
-- 👨‍💻 **Built by devs, for devs**: We use it ourselves daily
-- 📈 **Grows with you**: From side project to enterprise scale
-
-## 🤝 Contribute
+## 🤝 Community
 
 Lingo.dev is community-driven, so we welcome all contributions!
 
 Have an idea for a new feature? Create a GitHub issue!
 
 Want to contribute? Create a pull request!
+
+Want to discuss your idea or get help? [Join us on Discord!](https://lingo.dev/go/discord)
+
+## Star History
+
+If you like the work we're doing, consider giving us a ⭐️ to help us reach 3,000 stars! 🌟
+
+[![Star History Chart](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+
 
 ## 🌐 Readme in other languages
 

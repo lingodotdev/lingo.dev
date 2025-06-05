@@ -314,6 +314,59 @@ msgstr[1] ""
       },
     });
   });
+
+  it("should preserve order of comments (file and line number, translator notes)", async () => {
+    const loader = createLoader();
+    const input = `
+# My animal
+#, animal
+#. This is an animal
+#: hello.py:1
+# I like animals
+#| foobar
+msgid "Zebra"
+msgstr ""
+
+#. This is a bird
+#: hello.py:2
+msgid "Parrot"
+msgstr ""
+
+#. Food
+msgid "Apple"
+msgstr ""
+    `.trim();
+
+    const data = await loader.pull("en", input);
+
+    const updatedData = {
+      Zebra: { singular: "[upd] Zebra", plural: null },
+      Parrot: { singular: "[upd] Parrot", plural: null },
+      Apple: { singular: "[upd] Apple", plural: null },
+    };
+    const expectedOutput = `
+# My animal
+#, animal
+#. This is an animal
+#: hello.py:1
+# I like animals
+#| foobar
+msgid "Zebra"
+msgstr "[upd] Zebra"
+
+#. This is a bird
+#: hello.py:2
+msgid "Parrot"
+msgstr "[upd] Parrot"
+
+#. Food
+msgid "Apple"
+msgstr "[upd] Apple"
+    `.trim();
+
+    const result = await loader.push("en", updatedData);
+    expect(result).toEqual(expectedOutput);
+  });
 });
 
 function createLoader(params: PoLoaderParams = { multiline: false }) {

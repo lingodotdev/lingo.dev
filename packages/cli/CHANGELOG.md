@@ -1,5 +1,65 @@
 # lingo.dev
 
+## 0.93.4
+
+### Patch Changes
+
+- [`f42cff8`](https://github.com/lingodotdev/lingo.dev/commit/f42cff8355b1ff7bba1445bd04d11ee4672903c2) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - flat reexports
+
+- Updated dependencies [[`f42cff8`](https://github.com/lingodotdev/lingo.dev/commit/f42cff8355b1ff7bba1445bd04d11ee4672903c2)]:
+  - @lingo.dev/_compiler@0.1.3
+
+## 0.93.3
+
+### Patch Changes
+
+- [`920e3f5`](https://github.com/lingodotdev/lingo.dev/commit/920e3f5c3ca1fd51b0919db13a4787cfd616de54) Thanks [@mathio](https://github.com/mathio)! - remove cloneDeep for optimization
+
+- Updated dependencies [[`920e3f5`](https://github.com/lingodotdev/lingo.dev/commit/920e3f5c3ca1fd51b0919db13a4787cfd616de54)]:
+  - @lingo.dev/_compiler@0.1.2
+
+## 0.93.2
+
+### Patch Changes
+
+- [`cdb59dd`](https://github.com/lingodotdev/lingo.dev/commit/cdb59dddcd14da1ba3181a33c4c119af877cb4f3) Thanks [@mathio](https://github.com/mathio)! - update deps
+
+## 0.93.1
+
+### Patch Changes
+
+- [`caef325`](https://github.com/lingodotdev/lingo.dev/commit/caef3253bc99fa7bf7a0b40e5604c3590dcb4958) Thanks [@mathio](https://github.com/mathio)! - release fix
+
+- Updated dependencies [[`caef325`](https://github.com/lingodotdev/lingo.dev/commit/caef3253bc99fa7bf7a0b40e5604c3590dcb4958)]:
+  - @lingo.dev/_compiler@0.1.1
+  - @lingo.dev/_react@0.1.1
+
+## 0.93.0
+
+### Minor Changes
+
+- [`e980e84`](https://github.com/lingodotdev/lingo.dev/commit/e980e84178439ad70417d38b425acf9148cfc4b6) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - added the compiler
+
+### Patch Changes
+
+- Updated dependencies [[`e980e84`](https://github.com/lingodotdev/lingo.dev/commit/e980e84178439ad70417d38b425acf9148cfc4b6)]:
+  - @lingo.dev/_compiler@0.1.0
+  - @lingo.dev/_react@0.1.0
+  - @lingo.dev/_sdk@0.8.0
+  - @lingo.dev/_spec@0.34.0
+
+## 0.92.19
+
+### Patch Changes
+
+- [#828](https://github.com/lingodotdev/lingo.dev/pull/828) [`4e9734c`](https://github.com/lingodotdev/lingo.dev/commit/4e9734ce32749caa95703d2b96ba8af6cc83ef94) Thanks [@mathio](https://github.com/mathio)! - preserve order of comments in po files
+
+## 0.92.18
+
+### Patch Changes
+
+- [#824](https://github.com/lingodotdev/lingo.dev/pull/824) [`69d9568`](https://github.com/lingodotdev/lingo.dev/commit/69d9568e85f4f56de3b300b4dd5973bd9c410b99) Thanks [@mathio](https://github.com/mathio)! - skip obsolete entries in po files
+
 ## 0.92.17
 
 ### Patch Changes

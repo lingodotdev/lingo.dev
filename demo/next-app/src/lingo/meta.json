@@ -1,0 +1,49 @@
+{
+  "version": 0.1,
+  "files": {
+    "components/hero-actions.tsx": {
+      "scopes": {
+        "0/declaration/body/0/argument/1": {
+          "type": "element",
+          "hash": "5a1286e11084538b67b35c7fbd06045c",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Get Started"
+        },
+        "0/declaration/body/0/argument/3": {
+          "type": "element",
+          "hash": "d4cbae1d26b53d07939a02401b4943e4",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Learn More"
+        }
+      }
+    },
+    "components/hero-subtitle.tsx": {
+      "scopes": {
+        "0/declaration/body/0/argument": {
+          "type": "element",
+          "hash": "e5647ab6153ee718eef168dfba2ded1c",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Localize your React app in every language in seconds.<element:br></element:br> Scale to millions from day one."
+        }
+      }
+    },
+    "components/hero-title.tsx": {
+      "scopes": {
+        "0/declaration/body/0/argument": {
+          "type": "element",
+          "hash": "cd763a54ee2abb8e8ceaf83d79a25363",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Lingo.dev"
+        }
+      }
+    }
+  }
+}

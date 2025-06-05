@@ -1,6 +1,6 @@
 {
   "name": "lingo.dev",
-  "version": "0.92.17",
+  "version": "0.93.4",
   "description": "Lingo.dev CLI",
   "private": false,
   "publishConfig": {
@@ -23,6 +23,46 @@
       "types": "./build/spec.d.ts",
       "import": "./build/spec.mjs",
       "require": "./build/spec.cjs"
+    },
+    "./compiler": {
+      "types": "./build/compiler.d.ts",
+      "import": "./build/compiler.mjs",
+      "require": "./build/compiler.cjs"
+    },
+    "./react": {
+      "types": "./build/react.d.ts",
+      "import": "./build/react.mjs",
+      "require": "./build/react.cjs"
+    },
+    "./react-client": {
+      "types": "./build/react/client.d.ts",
+      "import": "./build/react/client.mjs",
+      "require": "./build/react/client.cjs"
+    },
+    "./react/client": {
+      "types": "./build/react/client.d.ts",
+      "import": "./build/react/client.mjs",
+      "require": "./build/react/client.cjs"
+    },
+    "./react-rsc": {
+      "types": "./build/react/rsc.d.ts",
+      "import": "./build/react/rsc.mjs",
+      "require": "./build/react/rsc.cjs"
+    },
+    "./react/rsc": {
+      "types": "./build/react/rsc.d.ts",
+      "import": "./build/react/rsc.mjs",
+      "require": "./build/react/rsc.cjs"
+    },
+    "./react-router": {
+      "types": "./build/react/react-router.d.ts",
+      "import": "./build/react/react-router.mjs",
+      "require": "./build/react/react-router.cjs"
+    },
+    "./react/react-router": {
+      "types": "./build/react/react-router.d.ts",
+      "import": "./build/react/react-router.mjs",
+      "require": "./build/react/react-router.cjs"
     }
   },
   "typesVersions": {
@@ -35,6 +75,21 @@
       ],
       "spec": [
         "./build/spec.d.ts"
+      ],
+      "compiler": [
+        "./build/compiler.d.ts"
+      ],
+      "react": [
+        "./build/react.d.ts"
+      ],
+      "react/client": [
+        "./build/react/client.d.ts"
+      ],
+      "react/rsc": [
+        "./build/react/rsc.d.ts"
+      ],
+      "react/react-router": [
+        "./build/react/react-router.d.ts"
       ]
     }
   },
@@ -61,7 +116,7 @@
     "@ai-sdk/openai": "^1.3.22",
     "@babel/generator": "^7.27.1",
     "@babel/parser": "^7.27.1",
-    "@babel/traverse": "^7.27.1",
+    "@babel/traverse": "^7.27.4",
     "@babel/types": "^7.27.1",
     "@datocms/cma-client-node": "^4.0.1",
     "@gitbeaker/rest": "^39.34.3",
@@ -69,6 +124,8 @@
     "@inquirer/prompts": "^7.4.1",
     "@lingo.dev/_sdk": "workspace:*",
     "@lingo.dev/_spec": "workspace:*",
+    "@lingo.dev/_react": "workspace:*",
+    "@lingo.dev/_compiler": "workspace:*",
     "@modelcontextprotocol/sdk": "^1.5.0",
     "@paralleldrive/cuid2": "^2.2.2",
     "ai": "^4.3.15",
@@ -164,5 +221,6 @@
   },
   "engines": {
     "node": ">=18"
-  }
+  },
+  "packageManager": "pnpm@9.12.3"
 }
