@@ -35,22 +35,28 @@
 
 **Lingo.dev Compiler** is a free, open-source compiler middleware, designed to make any React app multilingual at build time without requiring any changes to the existing React components.
 
-```bash
-# install once
-npm install lingo.dev
+Install once:
 
-# next.config.js
+```bash
+npm install lingo.dev
+```
+
+Enable in your build config:
+
+```js
 import lingoCompiler from "lingo.dev/compiler";
+
+const existingNextConfig = {};
 
 export default lingoCompiler.next({
   sourceLocale: "en",
   targetLocales: ["es", "fr"],
-});
+})(existingNextConfig);
 ```
 
 Run `next build` and watch Spanish and French bundles pop out ✨
 
-[Read the docs →](https://lingo.dev/compiler) for the full guide.
+[Read the docs →](https://lingo.dev/compiler) for the full guide, and [Join our Discord](https://lingo.dev/go/discord) to get help with your setup.
 
 ---
 
@@ -72,12 +78,12 @@ Below are the quick hits for each 👇
 Translate code & content straight from your terminal.
 
 ```bash
-npx lingo.dev@latest i18n
+npx lingo.dev@latest run
 ```
 
 It fingerprints every string, caches results, and only re-translates what changed.
 
-[Read the docs →](https://lingo.dev/cli)
+[Follow the docs →](https://lingo.dev/cli) to learn how to set it up.
 
 ---
 
@@ -111,10 +117,24 @@ Keeps your repo green and your product multilingual without the manual steps.
 Instant per-request translation for dynamic content.
 
 ```ts
-import { translate } from "lingo.dev/sdk";
+import { LingoDotDevEngine } from "lingo.dev/sdk";
 
-const text = await translate("Hello world", { to: "es" });
-// → "¡Hola mundo!"
+const lingoDotDev = new LingoDotDevEngine({
+  apiKey: "your-api-key-here",
+});
+
+const content = {
+  greeting: "Hello",
+  farewell: "Goodbye",
+  message: "Welcome to our platform",
+};
+
+const translated = await lingoDotDev.localizeObject(content, {
+  sourceLocale: "en",
+  targetLocale: "es",
+});
+// Returns: { greeting: "Hola", farewell: "Adiós", message: "Bienvenido a nuestra plataforma" }
+
 ```
 
 Perfect for chat, user comments, and other real-time flows.
