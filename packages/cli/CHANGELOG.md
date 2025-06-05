@@ -1,5 +1,14 @@
 # lingo.dev
 
+## 0.93.8
+
+### Patch Changes
+
+- [#853](https://github.com/lingodotdev/lingo.dev/pull/853) [`cb7d5e2`](https://github.com/lingodotdev/lingo.dev/commit/cb7d5e213282c00af658159472183a763f84ca3d) Thanks [@vrcprl](https://github.com/vrcprl)! - Fix groq api key retrieval from .env
+
+- Updated dependencies [[`cb7d5e2`](https://github.com/lingodotdev/lingo.dev/commit/cb7d5e213282c00af658159472183a763f84ca3d)]:
+  - @lingo.dev/_compiler@0.1.4
+
 ## 0.93.7
 
 ### Patch Changes
