@@ -30,8 +30,8 @@
     "build"
   ],
   "scripts": {
-    "dev": "tsup --watch",
-    "build": "tsc --noEmit && tsup",
+    "dev": "unbuild --watch",
+    "build": "tsc --noEmit && unbuild",
     "clean": "rm -rf build",
     "test": "vitest --run",
     "test:watch": "vitest -w"
@@ -50,6 +50,7 @@
     "react-dom": "^19.0.0",
     "tsup": "^8.3.5",
     "typescript": "^5.4.5",
+    "unbuild": "^3.5.0",
     "vitest": "^3.1.1"
   },
   "peerDependencies": {
