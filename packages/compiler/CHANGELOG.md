@@ -1,5 +1,11 @@
 # @lingo.dev/\_compiler
 
+## 0.1.5
+
+### Patch Changes
+
+- [`7013b53`](https://github.com/lingodotdev/lingo.dev/commit/7013b5300d6c2c26f39da62b5ad2c7cf11158c74) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - value.trim() issue
+
 ## 0.1.4
 
 ### Patch Changes
