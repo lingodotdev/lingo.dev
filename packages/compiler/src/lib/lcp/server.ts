@@ -266,13 +266,16 @@ export class LCPServer {
         const sourceFile = _.get(sourceDictionary.files, fileName);
         const targetFile = _.get(targetDictionary.files, fileName);
         const entries = removeEmptyEntries
-          ? _.pickBy(sourceFile?.entries, (value) => value?.trim()?.length > 0)
-          : sourceFile?.entries;
+          ? _.pickBy(
+              sourceFile?.entries || {},
+              (value) => value?.trim()?.length > 0,
+            )
+          : sourceFile?.entries || {};
         return [
           fileName,
           {
             ...targetFile,
-            entries: _.merge(targetFile?.entries, entries),
+            entries: _.merge(targetFile?.entries || {}, entries),
           },
         ];
       })
