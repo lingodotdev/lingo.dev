@@ -34,9 +34,17 @@ export function LingoProviderWrapper<D>(props: LingoProviderWrapperProps<D>) {
   // for client-side rendered apps, the dictionary is also loaded on the client
   useEffect(() => {
     (async () => {
-      const locale = getLocaleFromCookies();
-      const localeDictionary = await props.loadDictionary(locale);
-      setDictionary(localeDictionary);
+      try {
+        const locale = getLocaleFromCookies();
+        const localeDictionary = await props.loadDictionary(locale);
+        console.log({
+          locale,
+          localeDictionary,
+        });
+        setDictionary(localeDictionary);
+      } catch (error) {
+        console.error("Failed to load dictionary:", error);
+      }
     })();
   }, []);
 
