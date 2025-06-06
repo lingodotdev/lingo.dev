@@ -1,5 +1,11 @@
 # @lingo.dev/\_compiler
 
+## 0.1.6
+
+### Patch Changes
+
+- [`7a5898b`](https://github.com/lingodotdev/lingo.dev/commit/7a5898b12dcd0015a5e57236bf65172cedb8a6ee) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - merge dictionaries
+
 ## 0.1.5
 
 ### Patch Changes
