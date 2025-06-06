@@ -28,7 +28,7 @@ export function getJsxScopes(node: t.Node) {
         .concat(path.getAllNextSiblings())
         .some(
           (sibling) =>
-            t.isJSXText(sibling.node) && sibling.node.value.trim() !== "",
+            t.isJSXText(sibling.node) && sibling.node.value?.trim() !== "",
         );
 
       if (hasNonEmptyTextSiblings) {
@@ -39,7 +39,7 @@ export function getJsxScopes(node: t.Node) {
       const hasNonEmptyTextChild = path
         .get("children")
         .some(
-          (child) => t.isJSXText(child.node) && child.node.value.trim() !== "",
+          (child) => t.isJSXText(child.node) && child.node.value?.trim() !== "",
         );
 
       if (hasNonEmptyTextChild) {

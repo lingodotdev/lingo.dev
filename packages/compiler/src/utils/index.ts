@@ -22,7 +22,7 @@ export function getJsxRoots(node: t.Node) {
 }
 
 export function isGoodJsxText(path: NodePath<t.JSXText>) {
-  return path.node.value.trim() !== "";
+  return path.node.value?.trim() !== "";
 }
 
 export function getOrCreateImport(
