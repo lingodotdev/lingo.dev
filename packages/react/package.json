@@ -1,6 +1,6 @@
 {
   "name": "@lingo.dev/_react",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Lingo.dev React Kit",
   "private": false,
   "publishConfig": {
