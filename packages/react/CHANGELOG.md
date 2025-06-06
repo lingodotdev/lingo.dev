@@ -1,5 +1,11 @@
 # @lingo.dev/\_react
 
+## 0.2.1
+
+### Patch Changes
+
+- [`1f9db11`](https://github.com/lingodotdev/lingo.dev/commit/1f9db11a53d8c75ce0e83517b73d43544d0f0fd2) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - add console log to lingoproviderwrapper
+
 ## 0.2.0
 
 ### Minor Changes

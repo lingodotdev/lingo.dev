@@ -1,5 +1,12 @@
 # lingo.dev
 
+## 0.93.11
+
+### Patch Changes
+
+- Updated dependencies [[`1f9db11`](https://github.com/lingodotdev/lingo.dev/commit/1f9db11a53d8c75ce0e83517b73d43544d0f0fd2)]:
+  - @lingo.dev/_react@0.2.1
+
 ## 0.93.10
 
 ### Patch Changes
