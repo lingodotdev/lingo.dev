@@ -268,7 +268,7 @@ export class LCPServer {
         const entries = removeEmptyEntries
           ? _.pickBy(
               sourceFile?.entries || {},
-              (value) => value?.trim()?.length > 0,
+              (value) => String(value || "")?.trim?.()?.length > 0,
             )
           : sourceFile?.entries || {};
         return [
