@@ -72,9 +72,6 @@ function ifNotEmpty<T>(
   testValue: T,
   nodes: ReactNode[],
 ): ReactNode[] {
-  if (_.isEmpty(testValue)) {
-    return nodes;
-  }
   return callback(nodes, _.clone(testValue));
 }
 
@@ -137,40 +134,56 @@ function replaceElements(
   elements?: Array<FunctionComponent>,
 ): ReactNode[] {
   if (_.isEmpty(elements)) {
-    return nodes;
-  }
-  return nodes
-    .map((node) => {
+    return nodes.map((node) => {
       if (typeof node !== "string") return node;
+      
+      return node.replace(/<element:(\w+)>(.*?)<\/element:\1>/gs, (match, elementName, content) => {
+        return content;
+      });
+    });
+  }
+  
+  let elementIndex = 0;
+  
+  function processWithIndex(nodeList: ReactNode[]): ReactNode[] {
+    return nodeList
+      .map((node) => {
+        if (typeof node !== "string") return node;
 
-      const segments: ReactNode[] = [];
-      let lastIndex = 0;
-      const ELEMENT_PATTERN = /<element:(\w+)>(.*?)<\/element:\1>/gs;
-      let match;
+        const segments: ReactNode[] = [];
+        let lastIndex = 0;
+        const ELEMENT_PATTERN = /<element:(\w+)>(.*?)<\/element:\1>/gs;
+        let match;
 
-      while ((match = ELEMENT_PATTERN.exec(node)) !== null) {
-        if (match.index > lastIndex) {
-          segments.push(node.slice(lastIndex, match.index));
+        while ((match = ELEMENT_PATTERN.exec(node)) !== null) {
+          if (match.index > lastIndex) {
+            segments.push(node.slice(lastIndex, match.index));
+          }
+
+          const [fullMatch, elementName, content] = match;
+          const Element = elements?.[elementIndex++];
+
+          if (Element) {
+            const innerContent = processWithIndex([content]);
+            segments.push(createElement(Element, {}, ...innerContent));
+          } else {
+            const innerContent = processWithIndex([content]);
+            segments.push(...innerContent);
+          }
+
+          lastIndex = match.index + fullMatch.length;
         }
 
-        const [fullMatch, elementName, content] = match;
-        const Element = elements?.shift();
-
-        if (Element) {
-          const innerContent = replaceElements([content], elements);
-          segments.push(createElement(Element, {}, ...innerContent));
+        if (lastIndex < node.length) {
+          segments.push(node.slice(lastIndex));
         }
 
-        lastIndex = match.index + fullMatch.length;
-      }
-
-      if (lastIndex < node.length) {
-        segments.push(node.slice(lastIndex));
-      }
-
-      return segments;
-    })
-    .flat();
+        return segments;
+      })
+      .flat();
+  }
+  
+  return processWithIndex(nodes);
 }
 
 function replaceFunctions(
@@ -180,6 +193,9 @@ function replaceFunctions(
   if (_.isEmpty(functions)) {
     return nodes;
   }
+  
+  const functionIndices: Record<string, number> = {};
+  
   return nodes
     .map((node) => {
       if (typeof node === "string") {
@@ -194,7 +210,10 @@ function replaceFunctions(
           }
 
           const [fullMatch, name] = match;
-          const value = functions[name]?.shift();
+          if (!functionIndices[name]) {
+            functionIndices[name] = 0;
+          }
+          const value = functions[name]?.[functionIndices[name]++];
           segments.push(value ?? fullMatch);
 
           lastIndex = match.index + fullMatch.length;
@@ -225,39 +244,46 @@ function replaceExpressions(
   if (_.isEmpty(expressions)) {
     return nodes;
   }
-  return nodes
-    .map((node) => {
-      if (typeof node === "string") {
-        const segments: ReactNode[] = [];
-        let lastIndex = 0;
-        const expressionRegex = /<expression\/>/g;
-        let match;
+  
+  let expressionIndex = 0;
+  
+  function processWithIndex(nodeList: ReactNode[]): ReactNode[] {
+    return nodeList
+      .map((node) => {
+        if (typeof node === "string") {
+          const segments: ReactNode[] = [];
+          let lastIndex = 0;
+          const expressionRegex = /<expression\/>/g;
+          let match;
 
-        while ((match = expressionRegex.exec(node)) !== null) {
-          if (match.index > lastIndex) {
-            segments.push(node.slice(lastIndex, match.index));
+          while ((match = expressionRegex.exec(node)) !== null) {
+            if (match.index > lastIndex) {
+              segments.push(node.slice(lastIndex, match.index));
+            }
+
+            const value = expressions[expressionIndex++];
+            segments.push(value ?? match[0]);
+
+            lastIndex = match.index + match[0].length;
           }
 
-          const value = expressions.shift();
-          segments.push(value ?? match[0]);
+          if (lastIndex < node.length) {
+            segments.push(node.slice(lastIndex));
+          }
 
-          lastIndex = match.index + match[0].length;
+          return segments;
+        } else if (isReactElement(node)) {
+          const props = node.props as { children?: ReactNode };
+          return createElement(
+            node.type,
+            { ...props },
+            ...processWithIndex(_.castArray(props.children || [])),
+          );
         }
-
-        if (lastIndex < node.length) {
-          segments.push(node.slice(lastIndex));
-        }
-
-        return segments;
-      } else if (isReactElement(node)) {
-        const props = node.props as { children?: ReactNode };
-        return createElement(
-          node.type,
-          { ...props },
-          ...replaceExpressions(_.castArray(props.children || []), expressions),
-        );
-      }
-      return node;
-    })
-    .flat();
+        return node;
+      })
+      .flat();
+  }
+  
+  return processWithIndex(nodes);
 }
