@@ -6,7 +6,7 @@ import fs from "fs";
 import path from "path";
 import _ from "lodash";
 import { checkbox, confirm, input } from "@inquirer/prompts";
-import { login } from "./auth";
+import { login } from "./login";
 import { getSettings, saveSettings } from "../utils/settings";
 import { createAuthenticator } from "../utils/auth";
 import findLocaleFiles from "../utils/find-locale-paths";
