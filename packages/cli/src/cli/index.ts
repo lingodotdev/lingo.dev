@@ -7,6 +7,8 @@ import { vice } from "gradient-string";
 import chalk from "chalk";
 
 import authCmd from "./cmd/auth";
+import loginCmd from "./cmd/login";
+import logoutCmd from "./cmd/logout";
 import initCmd from "./cmd/init";
 import showCmd from "./cmd/show";
 import configCmd from "./cmd/config";
@@ -46,6 +48,8 @@ Star the the repo :) https://github.com/LingoDotDev/lingo.dev
   .interactive("-y, --no-interactive", "Disable interactive mode") // all interactive commands above
   .addCommand(i18nCmd)
   .addCommand(authCmd)
+  .addCommand(loginCmd)
+  .addCommand(logoutCmd)
   .addCommand(showCmd)
   .addCommand(configCmd)
   .addCommand(lockfileCmd)
