@@ -1,5 +1,12 @@
 # lingo.dev
 
+## 0.94.1
+
+### Patch Changes
+
+- Updated dependencies [[`a7bf553`](https://github.com/lingodotdev/lingo.dev/commit/a7bf5538b5b72e41f90371f6211378aac7d5f800), [`562e667`](https://github.com/lingodotdev/lingo.dev/commit/562e667471abb51d7dd193217eefb8e8b3f8a686)]:
+  - @lingo.dev/_react@0.2.2
+
 ## 0.94.0
 
 ### Minor Changes
