@@ -32,7 +32,7 @@ import { LCP_DICTIONARY_FILE_NAME } from "./_const";
 import { LCPCache } from "./lib/lcp/cache";
 import { getInvalidLocales } from "./utils/locales";
 import { clientDictionaryLoaderMutation } from "./client-dictionary-loader";
-import { getGroqKeyFromEnv, getGroqKeyFromRc } from "./utils/groq";
+import { getGroqKeyFromEnv, getGroqKeyFromRc } from "./utils/llm-api-key";
 import { isRunningInCIOrDocker } from "./utils/env";
 
 const unplugin = createUnplugin<Partial<typeof defaultParams> | undefined>(
@@ -60,7 +60,7 @@ const unplugin = createUnplugin<Partial<typeof defaultParams> | undefined>(
         1. Refer to documentation for help: https://docs.lingo.dev/
         2. If you want to use a different LLM, raise an issue in our open-source repo: https://lingo.dev/go/gh
         3. If you have questions, feature requests, or would like to contribute, join our Discord: https://lingo.dev/go/discord
-  
+
         ✨
       `);
       process.exit(1);
