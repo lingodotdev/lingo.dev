@@ -348,4 +348,210 @@ describe("LingoComponent", () => {
       );
     });
   });
+
+  describe("array mutation prevention (shift() bug fix)", () => {
+    const mutationDictionary = {
+      files: {
+        test: {
+          entries: {
+            elements: "First <element:0>text</element:0> and <element:1>more</element:1>",
+            functions: "Call <function:fn1/> then <function:fn2/>",
+            expressions: "Value <expression/> and <expression/>",
+            mixed: "Element <element:0>content</element:0> with <function:fn1/> and <expression/>",
+          },
+        },
+      },
+    };
+
+    it("does not mutate elements array during processing", () => {
+      const elements = [
+        ({ children }: any) => <span>{children}</span>,
+        ({ children }: any) => <strong>{children}</strong>,
+      ];
+      const originalElements = [...elements];
+
+      render(
+        <LingoComponent
+          $dictionary={mutationDictionary}
+          $as="div"
+          $fileKey="test"
+          $entryKey="elements"
+          $elements={elements}
+        />,
+      );
+
+      expect(elements).toEqual(originalElements);
+      expect(elements.length).toBe(2);
+    });
+
+    it("does not mutate functions arrays during processing", () => {
+      const functions = {
+        fn1: ["result1", "result2"],
+        fn2: ["result3", "result4"],
+      };
+      const originalFunctions = {
+        fn1: [...functions.fn1],
+        fn2: [...functions.fn2],
+      };
+
+      render(
+        <LingoComponent
+          $dictionary={mutationDictionary}
+          $as="div"
+          $fileKey="test"
+          $entryKey="functions"
+          $functions={functions}
+        />,
+      );
+
+      expect(functions.fn1).toEqual(originalFunctions.fn1);
+      expect(functions.fn2).toEqual(originalFunctions.fn2);
+      expect(functions.fn1.length).toBe(2);
+      expect(functions.fn2.length).toBe(2);
+    });
+
+    it("does not mutate expressions array during processing", () => {
+      const expressions = ["value1", "value2"];
+      const originalExpressions = [...expressions];
+
+      render(
+        <LingoComponent
+          $dictionary={mutationDictionary}
+          $as="div"
+          $fileKey="test"
+          $entryKey="expressions"
+          $expressions={expressions}
+        />,
+      );
+
+      expect(expressions).toEqual(originalExpressions);
+      expect(expressions.length).toBe(2);
+    });
+
+    it("produces consistent output across multiple renders", () => {
+      const elements = [
+        ({ children }: any) => <span>{children}</span>,
+        ({ children }: any) => <strong>{children}</strong>,
+      ];
+      const functions = { fn1: ["result1"] };
+      const expressions = ["value1"];
+
+      const { container: container1 } = render(
+        <LingoComponent
+          $dictionary={mutationDictionary}
+          $as="div"
+          $fileKey="test"
+          $entryKey="mixed"
+          $elements={elements}
+          $functions={functions}
+          $expressions={expressions}
+        />,
+      );
+
+      const { container: container2 } = render(
+        <LingoComponent
+          $dictionary={mutationDictionary}
+          $as="div"
+          $fileKey="test"
+          $entryKey="mixed"
+          $elements={elements}
+          $functions={functions}
+          $expressions={expressions}
+        />,
+      );
+
+      expect(container1.innerHTML).toBe(container2.innerHTML);
+    });
+
+    it("handles shared arrays across multiple component instances", () => {
+      const sharedElements = [
+        ({ children }: any) => <span>{children}</span>,
+        ({ children }: any) => <strong>{children}</strong>,
+      ];
+
+      const { container: container1 } = render(
+        <div>
+          <LingoComponent
+            $dictionary={mutationDictionary}
+            $as="div"
+            $fileKey="test"
+            $entryKey="elements"
+            $elements={sharedElements}
+          />
+        </div>,
+      );
+
+      const { container: container2 } = render(
+        <div>
+          <LingoComponent
+            $dictionary={mutationDictionary}
+            $as="div"
+            $fileKey="test"
+            $entryKey="elements"
+            $elements={sharedElements}
+          />
+        </div>,
+      );
+
+      expect(container1.innerHTML).toBe(container2.innerHTML);
+      expect(sharedElements.length).toBe(2);
+    });
+
+    it("extracts inner content when elements array is exhausted", () => {
+      const { container } = render(
+        <LingoComponent
+          $dictionary={mutationDictionary}
+          $as="div"
+          $fileKey="test"
+          $entryKey="elements"
+          $elements={[({ children }: any) => <span>{children}</span>]}
+        />,
+      );
+
+      expect(container.textContent).toBe("First text and more");
+      expect(container.innerHTML).toBe("<div>First <span>text</span> and more</div>");
+    });
+
+    it("handles completely empty elements array gracefully", () => {
+      const { container } = render(
+        <LingoComponent
+          $dictionary={mutationDictionary}
+          $as="div"
+          $fileKey="test"
+          $entryKey="elements"
+          $elements={[]}
+        />,
+      );
+
+      expect(container.textContent).toBe("First text and more");
+      expect(container.innerHTML).toBe("<div>First text and more</div>");
+    });
+
+    it("maintains function index tracking per function name", () => {
+      const multiCallDictionary = {
+        files: {
+          test: {
+            entries: {
+              multiCall: "First <function:fn1/>, second <function:fn1/>, third <function:fn2/>",
+            },
+          },
+        },
+      };
+
+      const { container } = render(
+        <LingoComponent
+          $dictionary={multiCallDictionary}
+          $as="div"
+          $fileKey="test"
+          $entryKey="multiCall"
+          $functions={{
+            fn1: ["A", "B"],
+            fn2: ["C"],
+          }}
+        />,
+      );
+
+      expect(container.textContent).toBe("First A, second B, third C");
+    });
+  });
 });
