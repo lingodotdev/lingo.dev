@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.94.2
+
+### Patch Changes
+
+- [#872](https://github.com/lingodotdev/lingo.dev/pull/872) [`af011b1`](https://github.com/lingodotdev/lingo.dev/commit/af011b18fe96f15287609278f4d4d2b343b6c2cc) Thanks [@NamesMT](https://github.com/NamesMT)! - Allows user to type even less and benefit from lingo.dev <3
+
 ## 0.94.1
 
 ### Patch Changes
