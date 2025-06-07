@@ -1,5 +1,11 @@
 # @lingo.dev/\_compiler
 
+## 0.1.8
+
+### Patch Changes
+
+- [#861](https://github.com/lingodotdev/lingo.dev/pull/861) [`1bccb7e`](https://github.com/lingodotdev/lingo.dev/commit/1bccb7ed51ac1f13ea79e618bbee551d5529efdc) Thanks [@vrcprl](https://github.com/vrcprl)! - support filePath on Windows
+
 ## 0.1.7
 
 ### Patch Changes
