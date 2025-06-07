@@ -1,5 +1,11 @@
 # @lingo.dev/\_compiler
 
+## 0.1.7
+
+### Patch Changes
+
+- [`5b68641`](https://github.com/lingodotdev/lingo.dev/commit/5b686414f363f8ee4b79fd4e804a434db5cfcb36) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - feat: unshift the plugins
+
 ## 0.1.6
 
 ### Patch Changes
