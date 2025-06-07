@@ -134,7 +134,7 @@ export class LCP {
       fs.readFileSync(this.filePath, "utf8") !== this.toString();
 
     if (hasChanges) {
-      const dir = this.filePath.substring(0, this.filePath.lastIndexOf("/"));
+      const dir = path.dirname(this.filePath);
       if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir, { recursive: true });
       }
@@ -145,7 +145,7 @@ export class LCP {
   }
 
   private _triggerLCPReload() {
-    const dir = this.filePath.substring(0, this.filePath.lastIndexOf("/"));
+    const dir = path.dirname(this.filePath);
     const filePath = path.resolve(dir, LCP_DICTIONARY_FILE_NAME);
     if (fs.existsSync(filePath)) {
       const now = Date.now();
