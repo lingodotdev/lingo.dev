@@ -1,4 +1,5 @@
 import { createGroq } from "@ai-sdk/groq";
+import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { generateText } from "ai";
 import { DictionarySchema } from "../schema";
 import _ from "lodash";

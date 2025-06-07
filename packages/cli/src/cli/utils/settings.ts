@@ -36,6 +36,7 @@ export function getSettings(explicitApiKey: string | undefined): CliSettings {
       openaiApiKey: env.OPENAI_API_KEY || systemFile.llm?.openaiApiKey,
       anthropicApiKey: env.ANTHROPIC_API_KEY || systemFile.llm?.anthropicApiKey,
       groqApiKey: env.GROQ_API_KEY || systemFile.llm?.groqApiKey,
+      googleApiKey: env.GOOGLE_API_KEY || systemFile.llm?.googleApiKey,
     },
   };
 }
@@ -68,6 +69,7 @@ const SettingsSchema = Z.object({
     openaiApiKey: Z.string().optional(),
     anthropicApiKey: Z.string().optional(),
     groqApiKey: Z.string().optional(),
+    googleApiKey: Z.string().optional(),
   }),
 });
 
