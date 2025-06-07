@@ -1,5 +1,11 @@
 # @lingo.dev/\_compiler
 
+## 0.1.9
+
+### Patch Changes
+
+- [#866](https://github.com/lingodotdev/lingo.dev/pull/866) [`77461a7`](https://github.com/lingodotdev/lingo.dev/commit/77461a7872eec3ea188b3ca6c6f7ce1fd13fdfbb) Thanks [@vrcprl](https://github.com/vrcprl)! - normalize paths in dictionaries
+
 ## 0.1.8
 
 ### Patch Changes

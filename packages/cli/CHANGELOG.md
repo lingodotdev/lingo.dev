@@ -1,5 +1,16 @@
 # lingo.dev
 
+## 0.94.0
+
+### Minor Changes
+
+- [#864](https://github.com/lingodotdev/lingo.dev/pull/864) [`3750c9c`](https://github.com/lingodotdev/lingo.dev/commit/3750c9ca25a78280b04e4a2b2e6641dd21f9f3b0) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - feat(cli): add `login` and `logout` commands to replace `auth --login` and `auth --logout`
+
+### Patch Changes
+
+- Updated dependencies [[`77461a7`](https://github.com/lingodotdev/lingo.dev/commit/77461a7872eec3ea188b3ca6c6f7ce1fd13fdfbb)]:
+  - @lingo.dev/_compiler@0.1.9
+
 ## 0.93.13
 
 ### Patch Changes
