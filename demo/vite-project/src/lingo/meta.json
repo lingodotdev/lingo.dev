@@ -1,0 +1,109 @@
+{
+  "version": 0.1,
+  "files": {
+    "App.tsx": {
+      "scopes": {
+        "7/body/1/argument/1/1/1-alt": {
+          "type": "attribute",
+          "hash": "4d15435212a4877c4226b33a8cae0488",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Vite logo"
+        },
+        "7/body/1/argument/1/3/1-alt": {
+          "type": "attribute",
+          "hash": "b162441c9d07514a1c5124f9be178248",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "React logo"
+        },
+        "7/body/1/argument/3": {
+          "type": "element",
+          "hash": "dd6ddb089b0748e6c88b28c56c643d02",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Lingo.dev loves Vite and React"
+        },
+        "7/body/1/argument/5": {
+          "type": "element",
+          "hash": "c6deea18ed327336cf526f7d5a268d18",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Welcome to your new Vite & React application! This starter template includes everything you need to get started with Vite & React and Lingo.dev for internationalization."
+        },
+        "7/body/1/argument/5/1": {
+          "type": "element",
+          "hash": "c0057f8ebaf4debdf07033f51a6fd99d",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "count is {count}"
+        },
+        "7/body/1/argument/5/3": {
+          "type": "element",
+          "hash": "d373807bd0794bcfad789f038c92d8d4",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Edit <element:code>src/App.tsx</element:code> and save to test HMR"
+        },
+        "7/body/1/argument/7": {
+          "type": "element",
+          "hash": "fee72ece6f86de4a1331fb2bbfb53919",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Click on the logos above to learn more"
+        },
+        "7/body/1/argument/7/1": {
+          "type": "element",
+          "hash": "c0057f8ebaf4debdf07033f51a6fd99d",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "count is {count}"
+        },
+        "7/body/1/argument/7/3": {
+          "type": "element",
+          "hash": "d373807bd0794bcfad789f038c92d8d4",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Edit <element:code>src/App.tsx</element:code> and save to test HMR"
+        },
+        "7/body/1/argument/9": {
+          "type": "element",
+          "hash": "fee72ece6f86de4a1331fb2bbfb53919",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Click on the logos above to learn more"
+        }
+      }
+    },
+    "components/test.tsx": {
+      "scopes": {
+        "0/declaration/0/init/body/0/argument/1": {
+          "type": "element",
+          "hash": "46316c70126692cd475cedb7a063803b",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Testing Component"
+        },
+        "0/declaration/0/init/body/0/argument/3": {
+          "type": "element",
+          "hash": "eb0c9884ca11affbe842b0a8cd68d78f",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "This is a component intended for testing purposes."
+        }
+      }
+    }
+  }
+}

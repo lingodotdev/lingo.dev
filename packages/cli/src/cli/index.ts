@@ -10,7 +10,8 @@ import authCmd from "./cmd/auth";
 import loginCmd from "./cmd/login";
 import logoutCmd from "./cmd/logout";
 import initCmd from "./cmd/init";
-import configCmd from "./cmd/show";
+import showCmd from "./cmd/show";
+import configCmd from "./cmd/config";
 import i18nCmd from "./cmd/i18n";
 import lockfileCmd from "./cmd/lockfile";
 import cleanupCmd from "./cmd/cleanup";
@@ -49,6 +50,7 @@ Star the the repo :) https://github.com/LingoDotDev/lingo.dev
   .addCommand(authCmd)
   .addCommand(loginCmd)
   .addCommand(logoutCmd)
+  .addCommand(showCmd)
   .addCommand(configCmd)
   .addCommand(lockfileCmd)
   .addCommand(cleanupCmd)

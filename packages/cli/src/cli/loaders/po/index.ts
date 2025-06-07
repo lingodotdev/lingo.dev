@@ -27,6 +27,11 @@ export function createPoDataLoader(
       const sections = input.split("\n\n").filter(Boolean);
       for (const section of sections) {
         const sectionPo = gettextParser.po.parse(section);
+        // skip section with no translations (some sections might have only obsolete entries)
+        if (Object.keys(sectionPo.translations).length === 0) {
+          continue;
+        }
+
         const contextKey = _.keys(sectionPo.translations)[0];
         const entries = sectionPo.translations[contextKey];
         Object.entries(entries).forEach(([msgid, entry]) => {
@@ -50,6 +55,11 @@ export function createPoDataLoader(
       const result = originalSections
         .map((section) => {
           const sectionPo = gettextParser.po.parse(section);
+          // skip section with no translations (some sections might have only obsolete entries)
+          if (Object.keys(sectionPo.translations).length === 0) {
+            return null;
+          }
+
           const contextKey = _.keys(sectionPo.translations)[0];
           const entries = sectionPo.translations[contextKey];
           const msgid = Object.keys(entries).find((key) => entries[key].msgid);
@@ -80,7 +90,7 @@ export function createPoDataLoader(
                 },
               },
             });
-            return gettextParser.po
+            const updatedSection = gettextParser.po
               .compile(updatedPo, { foldLength: params.multiline ? 76 : false })
               .toString()
               .replace(
@@ -88,9 +98,11 @@ export function createPoDataLoader(
                 "",
               )
               .trim();
+            return preserveCommentOrder(updatedSection, section);
           }
           return section.trim();
         })
+        .filter(Boolean)
         .join("\n\n");
       return result;
     },
@@ -147,4 +159,53 @@ export function createPoContentLoader(): ILoader<
       return result;
     },
   });
+}
+
+function preserveCommentOrder(section: string, originalSection: string) {
+  // Split both sections into lines
+  const sectionLines = section.split(/\r?\n/);
+  const originalLines = originalSection.split(/\r?\n/);
+
+  // Helper: is a comment line
+  const isComment = (line: string) => line.trim().startsWith("#");
+
+  // Extract comment lines and their indices
+  const sectionComments = sectionLines.filter(isComment);
+  const nonCommentLines = sectionLines.filter((line) => !isComment(line));
+
+  // If there are no comments in the section, return the section as is
+  if (sectionComments.length <= 1) {
+    return section;
+  }
+
+  // Extract the order of comment lines from the original section
+  const originalCommentOrder = originalLines.filter(isComment);
+
+  // Build a map from comment content (trimmed) to the actual comment line in the new section
+  const commentMap = new Map<string, string>();
+  for (const line of sectionComments) {
+    commentMap.set(line.trim(), line);
+  }
+
+  // Reorder comments to match the original order, using the new section's comment lines
+  const reorderedComments: string[] = [];
+  for (const orig of originalCommentOrder) {
+    const trimmed = orig.trim();
+    if (commentMap.has(trimmed)) {
+      reorderedComments.push(commentMap.get(trimmed)!);
+      commentMap.delete(trimmed);
+    }
+  }
+  // Add any new comments from the new section that weren't in the original, preserving their order
+  for (const line of sectionComments) {
+    if (!originalCommentOrder.some((orig) => orig.trim() === line.trim())) {
+      reorderedComments.push(line);
+    }
+  }
+
+  // Reconstruct the section: comments (in order) + non-comment lines (in order)
+  return [...reorderedComments, ...nonCommentLines]
+    .join("\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
 }

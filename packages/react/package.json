@@ -1,0 +1,63 @@
+{
+  "name": "@lingo.dev/_react",
+  "version": "0.2.1",
+  "description": "Lingo.dev React Kit",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./build/core/index.d.ts",
+      "import": "./build/core/index.js"
+    },
+    "./client": {
+      "types": "./build/client/index.d.ts",
+      "import": "./build/client/index.js"
+    },
+    "./rsc": {
+      "types": "./build/rsc/index.d.ts",
+      "import": "./build/rsc/index.js"
+    },
+    "./react-router": {
+      "types": "./build/react-router/index.d.ts",
+      "import": "./build/react-router/index.js"
+    }
+  },
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "dev": "unbuild --watch",
+    "build": "tsc --noEmit && unbuild",
+    "clean": "rm -rf build",
+    "test": "vitest --run",
+    "test:watch": "vitest -w"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@testing-library/react": "^16.3.0",
+    "@types/js-cookie": "^3.0.6",
+    "@types/lodash": "^4.17.4",
+    "@types/react": "^18.3.18",
+    "@vitejs/plugin-react": "^4.4.1",
+    "next": "15.2.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tsup": "^8.3.5",
+    "typescript": "^5.4.5",
+    "unbuild": "^3.5.0",
+    "vitest": "^3.1.1"
+  },
+  "peerDependencies": {
+    "next": "15.2.4"
+  },
+  "dependencies": {
+    "js-cookie": "^3.0.5",
+    "lodash": "^4.17.21"
+  }
+}

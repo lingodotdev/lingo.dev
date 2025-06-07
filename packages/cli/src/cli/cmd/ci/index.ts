@@ -8,6 +8,7 @@ import { InBranchFlow } from "./flows/in-branch";
 import { getPlatformKit } from "./platforms";
 
 interface CIOptions {
+  parallel?: boolean;
   apiKey?: string;
   debug?: boolean;
   pullRequest?: boolean;
@@ -21,17 +22,25 @@ export default new Command()
   .command("ci")
   .description("Run Lingo.dev CI/CD action")
   .helpOption("-h, --help", "Show help")
+  .option("--parallel [boolean]", "Run in parallel mode", parseBooleanArg)
   .option("--api-key <key>", "API key")
-  .option("--pull-request [boolean]", "Create a pull request with the changes")
+  .option(
+    "--pull-request [boolean]",
+    "Create a pull request with the changes",
+    parseBooleanArg,
+  )
   .option("--commit-message <message>", "Commit message")
   .option("--pull-request-title <title>", "Pull request title")
   .option("--working-directory <dir>", "Working directory")
   .option(
     "--process-own-commits [boolean]",
     "Process commits made by this action",
+    parseBooleanArg,
   )
   .action(async (options: CIOptions) => {
     const settings = getSettings(options.apiKey);
+
+    console.log(options);
 
     if (!settings.auth.apiKey) {
       console.error("No API key provided");
@@ -83,10 +92,20 @@ export default new Command()
       return;
     }
 
-    const hasChanges = await flow.run();
+    const hasChanges = await flow.run({
+      parallel: options.parallel,
+    });
     if (!hasChanges) {
       return;
     }
 
     await flow.postRun?.();
   });
+
+function parseBooleanArg(val: string | boolean | undefined): boolean {
+  if (val === true) return true;
+  if (typeof val === "string") {
+    return val.toLowerCase() === "true";
+  }
+  return false;
+}
