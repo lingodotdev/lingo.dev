@@ -13,6 +13,7 @@ export default function createCsvLoader(): ILoader<
       const input = parse(_input, {
         columns: true,
         skip_empty_lines: true,
+        relax_column_count_less: true,
       });
 
       const result: Record<string, string> = {};
@@ -30,6 +31,7 @@ export default function createCsvLoader(): ILoader<
       const input = parse(originalInput || "", {
         columns: true,
         skip_empty_lines: true,
+        relax_column_count_less: true,
       }) as Record<string, any>[];
 
       const columns = input.length > 0 ? Object.keys(input[0]) : ["id", locale];
