@@ -104,7 +104,25 @@ describe("bucket loaders", () => {
   });
 
   describe("csv bucket loader", () => {
-    it("should load csv data", async () => {
+    it("should load csv data ('KEY' as key, preferred, second column)", async () => {
+      setupFileMocks();
+
+      const input = `dummyKey,KEY,en\ndummyValue,button.title,Submit`;
+      const expectedOutput = { "button.title": "Submit" };
+
+      mockFileOperations(input);
+
+      const csvLoader = createBucketLoader("csv", "i18n.csv", {
+        isCacheRestore: false,
+        defaultLocale: "en",
+      });
+      csvLoader.setDefaultLocale("en");
+      const data = await csvLoader.pull("en");
+
+      expect(data).toEqual(expectedOutput);
+    });
+
+    it("should load csv data ('id' as key, inferred from first cell)", async () => {
       setupFileMocks();
 
       const input = `id,en\nbutton.title,Submit`;
