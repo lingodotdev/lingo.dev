@@ -7,6 +7,7 @@ import { createBasicTranslator } from "./basic";
 import { createOpenAI } from "@ai-sdk/openai";
 import { colors } from "../constants";
 import { createAnthropic } from "@ai-sdk/anthropic";
+import { createGoogleGenerativeAI } from "@ai-sdk/google";
 
 export default function createProcessor(
   provider: I18nConfig["provider"],
@@ -66,6 +67,15 @@ function getPureModelProvider(provider: I18nConfig["provider"]) {
       }
       return createAnthropic({
         apiKey: process.env.ANTHROPIC_API_KEY,
+      })(provider.model);
+    case "google":
+      if (!process.env.GOOGLE_API_KEY) {
+        throw new Error(
+          createMissingKeyErrorMessage("Google", "GOOGLE_API_KEY"),
+        );
+      }
+      return createGoogleGenerativeAI({
+        apiKey: process.env.GOOGLE_API_KEY,
       })(provider.model);
     default:
       throw new Error(createUnsupportedProviderErrorMessage(provider?.id));
