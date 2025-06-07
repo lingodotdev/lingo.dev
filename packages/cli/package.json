@@ -1,6 +1,6 @@
 {
   "name": "lingo.dev",
-  "version": "0.93.12",
+  "version": "0.93.13",
   "description": "Lingo.dev CLI",
   "private": false,
   "publishConfig": {
