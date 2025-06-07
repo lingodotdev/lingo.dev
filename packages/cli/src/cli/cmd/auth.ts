@@ -1,9 +1,5 @@
 import { Command } from "interactive-commander";
 import Ora from "ora";
-import express from "express";
-import cors from "cors";
-import open from "open";
-import readline from "readline/promises";
 import { getSettings, saveSettings } from "../utils/settings";
 import { createAuthenticator } from "../utils/auth";
 
@@ -11,8 +7,34 @@ export default new Command()
   .command("auth")
   .description("Show current authentication status")
   .helpOption("-h, --help", "Show help")
-  .action(async () => {
+  // Deprecated options, safe to remove after September 2025
+  .option(
+    "--login",
+    "Login to your account (deprecated: use 'lingo.dev login' instead)",
+  )
+  .option(
+    "--logout",
+    "Logout from your account (deprecated: use 'lingo.dev logout' instead)",
+  )
+  .action(async (options) => {
     try {
+      // Handle deprecated login option
+      if (options.login) {
+        Ora().warn(
+          "⚠️  DEPRECATED: '--login' is deprecated. Please use 'lingo.dev login' instead.",
+        );
+        process.exit(1);
+      }
+
+      // Handle deprecated logout option
+      if (options.logout) {
+        Ora().warn(
+          "⚠️  DEPRECATED: '--logout' is deprecated. Please use 'lingo.dev logout' instead.",
+        );
+        process.exit(1);
+      }
+
+      // Default behavior: show authentication status
       const settings = await getSettings(undefined);
       const authenticator = createAuthenticator({
         apiUrl: settings.auth.apiUrl,
@@ -29,26 +51,3 @@ export default new Command()
       process.exit(1);
     }
   });
-
-async function waitForApiKey(cb: (port: string) => void): Promise<string> {
-  // start a sever on an ephemeral port and return the port number
-  // from the function
-  const app = express();
-  app.use(express.json());
-  app.use(cors());
-
-  return new Promise((resolve) => {
-    const server = app.listen(0, async () => {
-      const port = (server.address() as any).port;
-      cb(port.toString());
-    });
-
-    app.post("/", (req, res) => {
-      const apiKey = req.body.apiKey;
-      res.end();
-      server.close(() => {
-        resolve(apiKey);
-      });
-    });
-  });
-}
