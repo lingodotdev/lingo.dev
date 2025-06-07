@@ -11,6 +11,7 @@ import {
   pauseIfDebug,
   renderSummary,
 } from "../../utils/ui";
+import chalk from "chalk";
 
 export default new Command()
   .command("run")
