@@ -7,12 +7,12 @@ import { createLoader } from "./_utils";
 /**
  * Tries to detect the key column name from a csvString.
  * 
- * Current logic: get first non-empty cell > 'KEY' fallback
+ * Current logic: get first cell > 'KEY' fallback if empty
  */
 export function detectKeyColumnName(csvString: string) {
   const row: string[] | undefined = parse(csvString)[0];
-  const firstContentfulColumn = row?.find((v: string) => v.trim() !== "");
-  return firstContentfulColumn ?? "KEY";
+  const firstColumn = row?.[0]?.trim();
+  return firstColumn || "KEY";
 }
 
 export default function createCsvLoader(): ILoader<

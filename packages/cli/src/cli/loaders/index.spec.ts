@@ -104,7 +104,7 @@ describe("bucket loaders", () => {
   });
 
   describe("csv bucket loader", () => {
-    it("should load csv data ('KEY' as key, second cell (first is empty))", async () => {
+    it("should load csv data ('KEY' as key, from automatic fallback", async () => {
       setupFileMocks();
 
       const input = ` ,KEY,en\n,button.title,Submit`;
