@@ -33,7 +33,7 @@ export default function createCsvLoader(): ILoader<
         if (detectedKeyColumnName) return detectedKeyColumnName;
 
         for (const key of ["KEY", "key"]) {
-          if (inputParsed.some((row) => row[key])) {
+          if (inputParsed[0][key]) {
             // console.debug(`Detected key column name from preferred keys: ${key}`);
             return keyColumnName = detectedKeyColumnName = key;
           }
