@@ -104,10 +104,10 @@ describe("bucket loaders", () => {
   });
 
   describe("csv bucket loader", () => {
-    it("should load csv data ('KEY' as key, preferred, second column)", async () => {
+    it("should load csv data ('KEY' as key, second cell (first is empty))", async () => {
       setupFileMocks();
 
-      const input = `dummyKey,KEY,en\ndummyValue,button.title,Submit`;
+      const input = ` ,KEY,en\n,button.title,Submit`;
       const expectedOutput = { "button.title": "Submit" };
 
       mockFileOperations(input);
@@ -122,7 +122,7 @@ describe("bucket loaders", () => {
       expect(data).toEqual(expectedOutput);
     });
 
-    it("should load csv data ('id' as key, inferred from first cell)", async () => {
+    it("should load csv data ('id' as key, first cell)", async () => {
       setupFileMocks();
 
       const input = `id,en\nbutton.title,Submit`;

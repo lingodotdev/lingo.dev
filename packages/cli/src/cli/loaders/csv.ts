@@ -4,13 +4,23 @@ import _ from "lodash";
 import { ILoader } from "./_types";
 import { createLoader } from "./_utils";
 
+/**
+ * Tries to detect the key column name from a csvString.
+ * 
+ * Current logic: get first non-empty cell > 'KEY' fallback
+ */
+export function detectKeyColumnName(csvString: string) {
+  const row: string[] | undefined = parse(csvString)[0];
+  const firstContentfulColumn = row?.find((v: string) => v.trim() !== "");
+  return firstContentfulColumn ?? "KEY";
+}
+
 export default function createCsvLoader(): ILoader<
   string,
   Record<string, string>
 > {
   let inputParsed: Record<string, any>[];
   let keyColumnName: string = "KEY";
-  let detectedKeyColumnName: string | null = null;
 
   return createLoader({
     async pull(locale, input) {
@@ -20,35 +30,12 @@ export default function createCsvLoader(): ILoader<
         relax_column_count_less: true,
       }) as Record<string, any>[];
 
+      keyColumnName = detectKeyColumnName(input.split('\n').find(l => l.length)!);
+
       const result: Record<string, string> = {};
 
-      /**
-       * Tries to detect the key column name
-       *
-       * Current detect logics and orders:
-       * + known preferred keys
-       * + first non-empty cell
-       */
-      function _detectKeyColumnName() {
-        if (detectedKeyColumnName) return detectedKeyColumnName;
-
-        for (const key of ["KEY", "key"]) {
-          if (inputParsed[0][key]) {
-            // console.debug(`Detected key column name from preferred keys: ${key}`);
-            return keyColumnName = detectedKeyColumnName = key;
-          }
-        }
-
-        const firstContentfulRow = parse(input.split('\n').find(l => l.length)!)[0];
-        const firstContentfulColumn = firstContentfulRow.find(Boolean)
-        if (firstContentfulColumn) {
-          // console.debug(`Detected key column name from first non-empty cell: ${firstContentfulColumn}`);
-          return keyColumnName = detectedKeyColumnName = firstContentfulColumn;
-        }
-      }
-
       _.forEach(inputParsed, (row) => {
-        const key = row[_detectKeyColumnName()];
+        const key = row[keyColumnName];
         if (key && row[locale] && row[locale].trim() !== "") {
           result[key] = row[locale];
         }
