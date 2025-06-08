@@ -1,5 +1,11 @@
 # @lingo.dev/\_compiler
 
+## 0.1.10
+
+### Patch Changes
+
+- [#876](https://github.com/lingodotdev/lingo.dev/pull/876) [`152e96a`](https://github.com/lingodotdev/lingo.dev/commit/152e96a46b98dd25d558ff0e7e20b18b954d375a) Thanks [@vrcprl](https://github.com/vrcprl)! - fix for triggering reload on Windows
+
 ## 0.1.9
 
 ### Patch Changes
