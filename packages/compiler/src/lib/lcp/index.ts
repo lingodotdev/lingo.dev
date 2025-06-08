@@ -3,6 +3,7 @@ import _ from "lodash";
 import { LCPFile, LCPSchema, LCPScope } from "./schema";
 import * as path from "path";
 import { LCP_DICTIONARY_FILE_NAME } from "../../_const";
+import dedent from "dedent";
 
 const LCP_FILE_NAME = "meta.json";
 
@@ -148,8 +149,22 @@ export class LCP {
     const dir = path.dirname(this.filePath);
     const filePath = path.resolve(dir, LCP_DICTIONARY_FILE_NAME);
     if (fs.existsSync(filePath)) {
-      const now = Date.now();
-      fs.utimesSync(filePath, now, now);
+      try {
+        const now = Math.floor(Date.now() / 1000); // Convert to seconds
+        fs.utimesSync(filePath, now, now);
+      } catch (error: any) {
+        // Non-critical operation - timestamp update is just for triggering reload
+        if (error?.code === "EINVAL") {
+          console.warn(
+            dedent`
+              ⚠️  Lingo: Auto-reload disabled - system blocks Node.js timestamp updates.
+                  💡 Fix: Adjust security settings to allow Node.js file modifications.
+                  ⚡  Workaround: Manually refresh browser after translation changes.
+                  💬 Need help? Join our Discord: https://lingo.dev/go/discord.
+            `,
+          );
+        }
+      }
     }
   }
 
