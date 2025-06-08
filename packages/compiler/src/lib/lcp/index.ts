@@ -3,6 +3,7 @@ import _ from "lodash";
 import { LCPFile, LCPSchema, LCPScope } from "./schema";
 import * as path from "path";
 import { LCP_DICTIONARY_FILE_NAME } from "../../_const";
+import dedent from "dedent";
 
 const LCP_FILE_NAME = "meta.json";
 
@@ -155,13 +156,12 @@ export class LCP {
         // Non-critical operation - timestamp update is just for triggering reload
         if (error?.code === "EINVAL") {
           console.warn(
-            "⚠️  Lingo: Auto-reload disabled - system blocks Node.js timestamp updates",
-          );
-          console.warn(
-            "   💡 Fix: Adjust security settings to allow Node.js file modifications",
-          );
-          console.warn(
-            "   ⚡ Workaround: Manually refresh browser after translation changes",
+            dedent`
+              ⚠️  Lingo: Auto-reload disabled - system blocks Node.js timestamp updates.
+                  💡 Fix: Adjust security settings to allow Node.js file modifications.
+                  ⚡  Workaround: Manually refresh browser after translation changes.
+                  💬 Need help? Join our Discord: https://lingo.dev/go/discord.
+            `,
           );
         }
       }
