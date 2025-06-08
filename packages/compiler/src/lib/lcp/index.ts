@@ -148,8 +148,23 @@ export class LCP {
     const dir = path.dirname(this.filePath);
     const filePath = path.resolve(dir, LCP_DICTIONARY_FILE_NAME);
     if (fs.existsSync(filePath)) {
-      const now = Date.now();
-      fs.utimesSync(filePath, now, now);
+      try {
+        const now = Math.floor(Date.now() / 1000); // Convert to seconds
+        fs.utimesSync(filePath, now, now);
+      } catch (error: any) {
+        // Non-critical operation - timestamp update is just for triggering reload
+        if (error?.code === "EINVAL") {
+          console.warn(
+            "⚠️  Lingo: Auto-reload disabled - system blocks Node.js timestamp updates",
+          );
+          console.warn(
+            "   💡 Fix: Adjust security settings to allow Node.js file modifications",
+          );
+          console.warn(
+            "   ⚡ Workaround: Manually refresh browser after translation changes",
+          );
+        }
+      }
     }
   }
 
