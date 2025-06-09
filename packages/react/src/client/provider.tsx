@@ -36,6 +36,9 @@ export function LingoProviderWrapper<D>(props: LingoProviderWrapperProps<D>) {
     (async () => {
       try {
         const locale = getLocaleFromCookies();
+        console.log(
+          `[Lingo.dev] Loading dictionary file for locale ${locale}...`
+        );
         const localeDictionary = await props.loadDictionary(locale);
         setDictionary(localeDictionary);
       } catch (error) {
@@ -46,7 +49,7 @@ export function LingoProviderWrapper<D>(props: LingoProviderWrapperProps<D>) {
 
   // TODO: handle case when the dictionary is loading (throw suspense?)
   if (!dictionary) {
-    return <div>Loading...</div>;
+    return null;
   }
 
   return (
