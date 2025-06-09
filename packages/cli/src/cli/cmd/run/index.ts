@@ -12,6 +12,7 @@ import {
   renderSummary,
 } from "../../utils/ui";
 import chalk from "chalk";
+import trackEvent from "../../utils/observability";
 
 export default new Command()
   .command("run")
@@ -78,6 +79,7 @@ export default new Command()
     (val: string) => parseInt(val),
   )
   .action(async (args) => {
+    let authId: string | null = null;
     try {
       const ctx: CmdRunContext = {
         flags: flagsSchema.parse(args),
@@ -95,6 +97,21 @@ export default new Command()
       await renderSpacer();
 
       await setup(ctx);
+
+      if (ctx.localizer?.id === "Lingo.dev") {
+        try {
+          const authStatus = await ctx.localizer.checkAuth();
+          authId = authStatus.username || null;
+        } catch {
+          authId = null;
+        }
+      }
+
+      trackEvent(authId, "cmd.run.start", {
+        config: ctx.config,
+        flags: ctx.flags,
+      });
+
       await renderSpacer();
 
       await plan(ctx);
@@ -105,7 +122,16 @@ export default new Command()
 
       await renderSummary(ctx.results);
       await renderSpacer();
+
+      trackEvent(authId, "cmd.run.success", {
+        config: ctx.config,
+        flags: ctx.flags,
+        results: Array.from(ctx.results.values()),
+      });
     } catch (error: any) {
+      trackEvent(authId || "unknown", "cmd.run.error", {
+        error,
+      });
       process.exit(1);
     }
   });
