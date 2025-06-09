@@ -184,14 +184,14 @@ export class LCPAPI {
       );
 
       return xml2obj(responseText);
-    } catch (e) {
-      console.error(`⚠️  Translation for ${targetLocale} failed:`, e);
-      // use empty dictionary if we failed to generate one
-      return {
-        version: 0.1,
-        locale: targetLocale,
-        files: {},
-      };
+    } catch (error) {
+      this._failGroqFailureLocal(
+        targetLocale,
+        error instanceof Error ? error.message : "Unknown error",
+      );
+      // This throw is unreachable because _failGroqFailureLocal exits the process,
+      // but it helps satisfy the TypeScript compiler's return type checking.
+      throw error;
     }
   }
 
@@ -312,6 +312,54 @@ export class LCPAPI {
         ✨
       `,
     );
+    process.exit(1);
+  }
+
+  private static _failGroqFailureLocal(
+    targetLocale: string,
+    errorMessage: string,
+  ): void {
+    const isInvalidApiKey = errorMessage.match("Invalid API Key");
+    if (isInvalidApiKey) {
+      console.log(dedent`
+          \n
+          ⚠️  Lingo.dev Compiler requires a valid Groq API key to translate your application.
+
+          It looks like you set Groq API key but it is not valid. Please check your API key and try again.
+
+          Error details from Groq API: ${errorMessage}
+
+          👉 You can set the API key in one of the following ways:
+          1. User-wide: Run npx lingo.dev@latest config set llm.groqApiKey <your-api-key>
+          2. Project-wide: Add GROQ_API_KEY=<your-api-key> to .env file in every project that uses Lingo.dev Localization Compiler
+          3. Session-wide: Run export GROQ_API_KEY=<your-api-key> in your terminal before running the compiler to set the API key for the current session
+
+          ⭐️ Also:
+          1. If you don't yet have a GROQ API key, get one for free at https://groq.com
+          2. If you want to use a different LLM, raise an issue in our open-source repo: https://lingo.dev/go/gh
+          3. If you have questions, feature requests, or would like to contribute, join our Discord: https://lingo.dev/go/discord
+
+          ✨
+        `);
+    } else {
+      console.log(
+        dedent`
+        \n
+        ⚠️  Lingo.dev Compiler tried to translate your application to "${targetLocale}" locale via Groq but it failed.
+
+        Error details from Groq API: ${errorMessage}
+
+        This error comes from Groq API, please check their documentation for more details: https://console.groq.com/docs/errors
+
+        ⭐️ Also:
+        1. Did you set GROQ_API_KEY environment variable?
+        2. Did you reach any limits of your Groq account?
+        3. If you have questions, feature requests, or would like to contribute, join our Discord: https://lingo.dev/go/discord
+
+        ✨
+      `,
+      );
+    }
     process.exit(1);
   }
 }
