@@ -1,5 +1,11 @@
 # @lingo.dev/\_compiler
 
+## 0.1.11
+
+### Patch Changes
+
+- [#883](https://github.com/lingodotdev/lingo.dev/pull/883) [`7191444`](https://github.com/lingodotdev/lingo.dev/commit/7191444f67864ea5b5a91a9be759b2445bf186d3) Thanks [@mathio](https://github.com/mathio)! - client-side loading state
+
 ## 0.1.10
 
 ### Patch Changes
