@@ -98,10 +98,14 @@ export default new Command()
 
       await setup(ctx);
 
-      if (ctx.localizer?.id === "Lingo.dev") {
+      const isByokMode = !!ctx.config?.provider;
+
+      if (isByokMode) {
+        authId = null;
+      } else {
         try {
-          const authStatus = await ctx.localizer.checkAuth();
-          authId = authStatus.username || null;
+          const authStatus = await ctx.localizer?.checkAuth();
+          authId = authStatus?.username || null;
         } catch {
           authId = null;
         }
@@ -126,12 +130,9 @@ export default new Command()
       trackEvent(authId, "cmd.run.success", {
         config: ctx.config,
         flags: ctx.flags,
-        results: Array.from(ctx.results.values()),
       });
     } catch (error: any) {
-      trackEvent(authId || "unknown", "cmd.run.error", {
-        error,
-      });
+      trackEvent(authId || "unknown", "cmd.run.error", {});
       process.exit(1);
     }
   });
