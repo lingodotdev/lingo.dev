@@ -1,5 +1,43 @@
 # lingo.dev
 
+## 0.94.6
+
+### Patch Changes
+
+- [#890](https://github.com/lingodotdev/lingo.dev/pull/890) [`145fb74`](https://github.com/lingodotdev/lingo.dev/commit/145fb74c09b42c8810f351be5a641b1366881ae1) Thanks [@mathio](https://github.com/mathio)! - do not parse LingoProvider component
+
+- [#889](https://github.com/lingodotdev/lingo.dev/pull/889) [`0c45acc`](https://github.com/lingodotdev/lingo.dev/commit/0c45accfc45e63f597758c47033bc58d2f6059b5) Thanks [@mathio](https://github.com/mathio)! - update Groq API error handling
+
+- Updated dependencies [[`145fb74`](https://github.com/lingodotdev/lingo.dev/commit/145fb74c09b42c8810f351be5a641b1366881ae1), [`0c45acc`](https://github.com/lingodotdev/lingo.dev/commit/0c45accfc45e63f597758c47033bc58d2f6059b5)]:
+  - @lingo.dev/_compiler@0.1.13
+
+## 0.94.5
+
+### Patch Changes
+
+- [#887](https://github.com/lingodotdev/lingo.dev/pull/887) [`511a2ec`](https://github.com/lingodotdev/lingo.dev/commit/511a2ecd68a9c5e2800035d5c6a6b5b31b2dc80f) Thanks [@mathio](https://github.com/mathio)! - handle when lingo dir is deleted
+
+- Updated dependencies [[`511a2ec`](https://github.com/lingodotdev/lingo.dev/commit/511a2ecd68a9c5e2800035d5c6a6b5b31b2dc80f)]:
+  - @lingo.dev/_compiler@0.1.12
+  - @lingo.dev/_react@0.2.4
+
+## 0.94.4
+
+### Patch Changes
+
+- [#883](https://github.com/lingodotdev/lingo.dev/pull/883) [`7191444`](https://github.com/lingodotdev/lingo.dev/commit/7191444f67864ea5b5a91a9be759b2445bf186d3) Thanks [@mathio](https://github.com/mathio)! - client-side loading state
+
+- Updated dependencies [[`7191444`](https://github.com/lingodotdev/lingo.dev/commit/7191444f67864ea5b5a91a9be759b2445bf186d3)]:
+  - @lingo.dev/_react@0.2.3
+  - @lingo.dev/_compiler@0.1.11
+
+## 0.94.3
+
+### Patch Changes
+
+- Updated dependencies [[`152e96a`](https://github.com/lingodotdev/lingo.dev/commit/152e96a46b98dd25d558ff0e7e20b18b954d375a)]:
+  - @lingo.dev/_compiler@0.1.10
+
 ## 0.94.2
 
 ### Patch Changes

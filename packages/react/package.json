@@ -1,6 +1,6 @@
 {
   "name": "@lingo.dev/_react",
-  "version": "0.2.2",
+  "version": "0.2.4",
   "description": "Lingo.dev React Kit",
   "private": false,
   "publishConfig": {
@@ -30,7 +30,7 @@
     "build"
   ],
   "scripts": {
-    "dev": "unbuild --watch",
+    "dev": "unbuild && chokidar 'src/**/*' -c 'unbuild'",
     "build": "tsc --noEmit && unbuild",
     "clean": "rm -rf build",
     "test": "vitest --run",
@@ -45,6 +45,7 @@
     "@types/lodash": "^4.17.4",
     "@types/react": "^18.3.18",
     "@vitejs/plugin-react": "^4.4.1",
+    "chokidar-cli": "^3.0.0",
     "next": "15.2.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

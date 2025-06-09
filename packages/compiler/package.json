@@ -1,6 +1,6 @@
 {
   "name": "@lingo.dev/_compiler",
-  "version": "0.1.9",
+  "version": "0.1.13",
   "description": "Lingo.dev Compiler",
   "private": false,
   "publishConfig": {

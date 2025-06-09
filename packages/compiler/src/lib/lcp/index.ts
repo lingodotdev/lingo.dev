@@ -3,6 +3,7 @@ import _ from "lodash";
 import { LCPFile, LCPSchema, LCPScope } from "./schema";
 import * as path from "path";
 import { LCP_DICTIONARY_FILE_NAME } from "../../_const";
+import dedent from "dedent";
 
 const LCP_FILE_NAME = "meta.json";
 
@@ -13,6 +14,36 @@ export class LCP {
       version: 0.1,
     },
   ) {}
+
+  public static ensureFile(params: { sourceRoot: string; lingoDir: string }) {
+    const filePath = path.resolve(
+      process.cwd(),
+      params.sourceRoot,
+      params.lingoDir,
+      LCP_FILE_NAME,
+    );
+    if (!fs.existsSync(filePath)) {
+      const dir = path.dirname(filePath);
+      if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
+      }
+      fs.writeFileSync(filePath, "{}");
+
+      console.log(dedent`
+          \n
+          ⚠️  Lingo.dev Compiler detected missing meta.json file in lingo directory. 
+          Please restart the build / watch command to regenerate all Lingo.dev Compiler files.
+        `);
+      try {
+        fs.rmdirSync(path.resolve(process.cwd(), ".next"), {
+          recursive: true,
+        });
+      } catch (error) {
+        // Ignore errors if directory doesn't exist
+      }
+      process.exit(1);
+    }
+  }
 
   public static getInstance(params: {
     sourceRoot: string;
@@ -35,7 +66,12 @@ export class LCP {
   public static async ready(params: {
     sourceRoot: string;
     lingoDir: string;
+    isDev: boolean;
   }): Promise<void> {
+    if (params.isDev) {
+      LCP.ensureFile(params);
+    }
+
     const filePath = path.resolve(
       process.cwd(),
       params.sourceRoot,
@@ -148,8 +184,22 @@ export class LCP {
     const dir = path.dirname(this.filePath);
     const filePath = path.resolve(dir, LCP_DICTIONARY_FILE_NAME);
     if (fs.existsSync(filePath)) {
-      const now = Date.now();
-      fs.utimesSync(filePath, now, now);
+      try {
+        const now = Math.floor(Date.now() / 1000); // Convert to seconds
+        fs.utimesSync(filePath, now, now);
+      } catch (error: any) {
+        // Non-critical operation - timestamp update is just for triggering reload
+        if (error?.code === "EINVAL") {
+          console.warn(
+            dedent`
+              ⚠️  Lingo: Auto-reload disabled - system blocks Node.js timestamp updates.
+                  💡 Fix: Adjust security settings to allow Node.js file modifications.
+                  ⚡  Workaround: Manually refresh browser after translation changes.
+                  💬 Need help? Join our Discord: https://lingo.dev/go/discord.
+            `,
+          );
+        }
+      }
     }
   }
 
