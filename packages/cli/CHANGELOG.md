@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.95.0
+
+### Minor Changes
+
+- [#874](https://github.com/lingodotdev/lingo.dev/pull/874) [`f140f82`](https://github.com/lingodotdev/lingo.dev/commit/f140f820d00b15f99214a7eece1a9c7f0d098e90) Thanks [@NamesMT](https://github.com/NamesMT)! - Reduce duplicated parsing and more dynamic key column naming support
+
 ## 0.94.6
 
 ### Patch Changes
