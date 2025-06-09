@@ -13,10 +13,49 @@ Here's some resources and guidance to help you get started:
 
 Here's how to get the project running locally:
 
+### Prerequisites
+
+- **Node.js**: Make sure you have Node.js version 18 or higher installed.
+- **pnpm**: You can install using this command `npm install -g pnpm` or by following [this guide](https://pnpm.io/installation)
+- **GROQ API Key**: You can get one by signing up at [Groq](https://console.groq.com/)
+
+### Setup
+
+To set up the project, clone the repository and install the dependencies:
+
 ```bash
 git clone https://github.com/lingodotdev/lingo.dev
 cd lingo.dev
-pnpm i
+pnpm install
+```
+
+Next, configure the GROQ API KEY. You can configure the key in two different ways:
+
+**Option A: User-wide (Recommended for development)**
+Run the following command in a terminal window. Replace `<your-api-key>` with your actual API key:
+
+```bash
+npx lingo.dev@latest config set llm.groqApiKey <your-api-key>
+```
+
+This will store the key in your system's user configuration, allowing you to build the project without needing to set it up in each demo directory.
+
+**Option B: Project-wide (Alternative)**
+Run the following command in a terminal window. Replace `<your-api-key>` with your actual API key:
+
+```bash
+# Create .env files in demo directories
+echo "GROQ_API_KEY=<your-api-key>" > demo/react-router-app/.env
+echo "GROQ_API_KEY=<your-api-key>" > demo/next-app/.env
+echo "GROQ_API_KEY=<your-api-key>" > demo/vite-project/.env
+```
+
+This will create `.env` files in each demo directory with your GROQ API key set as an environment variable.
+
+Next, you can run the project using the following commands:
+
+```bash
+# start the build process
 pnpm turbo build
 
 # in terminal window 1 - watch for CLI code changes
