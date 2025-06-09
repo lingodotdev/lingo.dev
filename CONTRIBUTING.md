@@ -4,10 +4,10 @@ Thank you for contributing to Lingo.dev! We're an exciting open source project a
 
 Here's some resources and guidance to help you get started:
 
-[1. Getting Started](#getting-started)
-[2. Issues](#issues)
-[3. Pull Requests](#pull-requests)
-[4. Release Process](#release-process)
+1. [Getting Started](#getting-started)
+2. [Issues](#issues)
+3. [Pull Requests](#pull-requests)
+4. [Release Process](#release-process)
 
 ## Getting Started
 
@@ -31,7 +31,8 @@ pnpm install
 
 Next, configure the GROQ API KEY. You can configure the key in two different ways:
 
-**Option A: User-wide (Recommended for development)**
+**Option A: User-wide (Recommended for development):**
+
 Run the following command in a terminal window. Replace `<your-api-key>` with your actual API key:
 
 ```bash
@@ -40,7 +41,8 @@ npx lingo.dev@latest config set llm.groqApiKey <your-api-key>
 
 This will store the key in your system's user configuration, allowing you to build the project without needing to set it up in each demo directory.
 
-**Option B: Project-wide (Alternative)**
+**Option B: Project-wide (Alternative):**
+
 Run the following command in a terminal window. Replace `<your-api-key>` with your actual API key:
 
 ```bash
