@@ -1,5 +1,11 @@
 # @lingo.dev/\_compiler
 
+## 0.1.12
+
+### Patch Changes
+
+- [#887](https://github.com/lingodotdev/lingo.dev/pull/887) [`511a2ec`](https://github.com/lingodotdev/lingo.dev/commit/511a2ecd68a9c5e2800035d5c6a6b5b31b2dc80f) Thanks [@mathio](https://github.com/mathio)! - handle when lingo dir is deleted
+
 ## 0.1.11
 
 ### Patch Changes
