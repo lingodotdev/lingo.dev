@@ -39,7 +39,7 @@ function _createCsvLoader(): ILoader<
       }) as Record<string, any>[];
 
       const items: Record<string, string> = {};
-      
+
       // Assign keys that already have translation so AI doesn't re-generate it.
       _.forEach(inputParsed, (row) => {
         const key = row[keyColumnName];
@@ -54,7 +54,7 @@ function _createCsvLoader(): ILoader<
         items
       };
     },
-    async push(locale, {inputParsed, keyColumnName, items}) {
+    async push(locale, { inputParsed, keyColumnName, items }) {
       const columns = inputParsed.length > 0 ? Object.keys(inputParsed[0]) : [keyColumnName, locale];
       if (!columns.includes(locale)) {
         columns.push(locale);
@@ -97,7 +97,7 @@ function createPullOutputCleaner(): ILoader<
       return input.items;
     },
     async push(_locale, data, _oI, _oL, pullInput) {
-      return { ...pullInput!, items:data };
+      return { ...pullInput!, items: data };
     },
   });
 }
