@@ -15,6 +15,36 @@ export class LCP {
     },
   ) {}
 
+  public static ensureFile(params: { sourceRoot: string; lingoDir: string }) {
+    const filePath = path.resolve(
+      process.cwd(),
+      params.sourceRoot,
+      params.lingoDir,
+      LCP_FILE_NAME,
+    );
+    if (!fs.existsSync(filePath)) {
+      const dir = path.dirname(filePath);
+      if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
+      }
+      fs.writeFileSync(filePath, "{}");
+
+      console.log(dedent`
+          \n
+          ⚠️  Lingo.dev Compiler detected missing meta.json file in lingo directory. 
+          Please restart the build / watch command to regenerate all Lingo.dev Compiler files.
+        `);
+      try {
+        fs.rmdirSync(path.resolve(process.cwd(), ".next"), {
+          recursive: true,
+        });
+      } catch (error) {
+        // Ignore errors if directory doesn't exist
+      }
+      process.exit(1);
+    }
+  }
+
   public static getInstance(params: {
     sourceRoot: string;
     lingoDir: string;
@@ -36,7 +66,12 @@ export class LCP {
   public static async ready(params: {
     sourceRoot: string;
     lingoDir: string;
+    isDev: boolean;
   }): Promise<void> {
+    if (params.isDev) {
+      LCP.ensureFile(params);
+    }
+
     const filePath = path.resolve(
       process.cwd(),
       params.sourceRoot,

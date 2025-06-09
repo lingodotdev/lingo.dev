@@ -71,6 +71,9 @@ const unplugin = createUnplugin<Partial<typeof defaultParams> | undefined>(
       lingoDir: params.lingoDir,
     });
 
+    const isDev: boolean =
+      "dev" in _meta ? !!_meta.dev : process.env.NODE_ENV !== "production";
+
     return {
       name: packageJson.name,
       loadInclude: (id) => !!id.match(LCP_DICTIONARY_FILE_NAME),
@@ -80,6 +83,7 @@ const unplugin = createUnplugin<Partial<typeof defaultParams> | undefined>(
         const lcpParams = {
           sourceRoot: params.sourceRoot,
           lingoDir: params.lingoDir,
+          isDev,
         };
 
         // wait for LCP file to be generated
