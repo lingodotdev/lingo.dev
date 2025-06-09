@@ -1,5 +1,15 @@
 # lingo.dev
 
+## 0.94.4
+
+### Patch Changes
+
+- [#883](https://github.com/lingodotdev/lingo.dev/pull/883) [`7191444`](https://github.com/lingodotdev/lingo.dev/commit/7191444f67864ea5b5a91a9be759b2445bf186d3) Thanks [@mathio](https://github.com/mathio)! - client-side loading state
+
+- Updated dependencies [[`7191444`](https://github.com/lingodotdev/lingo.dev/commit/7191444f67864ea5b5a91a9be759b2445bf186d3)]:
+  - @lingo.dev/_react@0.2.3
+  - @lingo.dev/_compiler@0.1.11
+
 ## 0.94.3
 
 ### Patch Changes
