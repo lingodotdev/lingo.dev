@@ -1,5 +1,14 @@
 # lingo.dev
 
+## 0.97.1
+
+### Patch Changes
+
+- [#900](https://github.com/lingodotdev/lingo.dev/pull/900) [`fead8e0`](https://github.com/lingodotdev/lingo.dev/commit/fead8e08dc2b2869a093cb25a04f6e0aa78cf6b7) Thanks [@mathio](https://github.com/mathio)! - load API key from env var and env files
+
+- Updated dependencies [[`fead8e0`](https://github.com/lingodotdev/lingo.dev/commit/fead8e08dc2b2869a093cb25a04f6e0aa78cf6b7)]:
+  - @lingo.dev/_compiler@0.2.1
+
 ## 0.97.0
 
 ### Minor Changes
