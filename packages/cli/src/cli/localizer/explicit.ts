@@ -1,4 +1,5 @@
 import { createAnthropic } from "@ai-sdk/anthropic";
+import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { createOpenAI } from "@ai-sdk/openai";
 import { I18nConfig } from "@lingo.dev/_spec";
 import chalk from "chalk";
@@ -16,11 +17,11 @@ export default function createExplicitLocalizer(
       throw new Error(
         dedent`
           You're trying to use unsupported provider: ${chalk.dim(provider.id)}.
-        
+
           To fix this issue:
           1. Switch to one of the supported providers, or
           2. Remove the ${chalk.italic("provider")} node from your i18n.json configuration to switch to ${chalk.hex(colors.green)("Lingo.dev")}
-        
+
           ${chalk.hex(colors.blue)("Docs: https://lingo.dev/go/docs")}
         `,
       );
@@ -39,6 +40,15 @@ export default function createExplicitLocalizer(
         id: provider.id,
         prompt: provider.prompt,
         apiKeyName: "ANTHROPIC_API_KEY",
+        baseUrl: provider.baseUrl,
+      });
+    case "google":
+      return createAiSdkLocalizer({
+        factory: (params) =>
+          createGoogleGenerativeAI(params).languageModel(provider.model),
+        id: provider.id,
+        prompt: provider.prompt,
+        apiKeyName: "GOOGLE_API_KEY",
         baseUrl: provider.baseUrl,
       });
   }

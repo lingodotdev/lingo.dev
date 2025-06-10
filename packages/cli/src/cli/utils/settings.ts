@@ -36,6 +36,7 @@ export function getSettings(explicitApiKey: string | undefined): CliSettings {
       openaiApiKey: env.OPENAI_API_KEY || systemFile.llm?.openaiApiKey,
       anthropicApiKey: env.ANTHROPIC_API_KEY || systemFile.llm?.anthropicApiKey,
       groqApiKey: env.GROQ_API_KEY || systemFile.llm?.groqApiKey,
+      googleApiKey: env.GOOGLE_API_KEY || systemFile.llm?.googleApiKey,
     },
   };
 }
@@ -68,6 +69,7 @@ const SettingsSchema = Z.object({
     openaiApiKey: Z.string().optional(),
     anthropicApiKey: Z.string().optional(),
     groqApiKey: Z.string().optional(),
+    googleApiKey: Z.string().optional(),
   }),
 });
 
@@ -96,6 +98,7 @@ function _loadEnv() {
     OPENAI_API_KEY: Z.string().optional(),
     ANTHROPIC_API_KEY: Z.string().optional(),
     GROQ_API_KEY: Z.string().optional(),
+    GOOGLE_API_KEY: Z.string().optional(),
   })
     .passthrough()
     .parse(process.env);
@@ -118,6 +121,7 @@ function _loadSystemFile() {
       openaiApiKey: Z.string().optional(),
       anthropicApiKey: Z.string().optional(),
       groqApiKey: Z.string().optional(),
+      googleApiKey: Z.string().optional(),
     }).optional(),
   })
     .passthrough()
@@ -180,6 +184,12 @@ function _envVarsInfo() {
     console.info(
       "\x1b[36m%s\x1b[0m",
       `ℹ️  Using GROQ_API_KEY env var instead of key from user config`,
+    );
+  }
+  if (env.GOOGLE_API_KEY && systemFile.llm?.googleApiKey) {
+    console.info(
+      "\x1b[36m%s\x1b[0m",
+      `ℹ️  Using GOOGLE_API_KEY env var instead of key from user config`,
     );
   }
   if (env.LINGODOTDEV_API_URL) {
