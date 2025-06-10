@@ -244,8 +244,8 @@ function validateLLMKeyDetails(models: Record<string, string>): void {
     const checkers = keyCheckers[providerId];
     if (!details || !checkers) continue; // Should not happen due to filter above
 
-    const foundInEnv = checkers.checkEnv() !== undefined;
-    const foundInRc = checkers.checkRc() !== undefined;
+    const foundInEnv = !!checkers.checkEnv();
+    const foundInRc = !!checkers.checkRc();
 
     keyStatuses[providerId] = { foundInEnv, foundInRc, details };
 

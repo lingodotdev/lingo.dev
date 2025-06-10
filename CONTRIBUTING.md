@@ -54,6 +54,12 @@ echo "GROQ_API_KEY=<your-api-key>" > demo/vite-project/.env
 
 This will create `.env` files in each demo directory with your GROQ API key set as an environment variable.
 
+_Note:_ When loading LLM API keys (including Groq), the Lingo.dev Compiler checks the following sources in order of priority:
+
+1. Environment variables (via `process.env`)
+2. Environment files (`.env`, `.env.local`, `.env.development`)
+3. Lingo.dev configuration
+
 Next, you can run the project using the following commands:
 
 ```bash
