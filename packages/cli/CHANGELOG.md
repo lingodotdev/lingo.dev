@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.97.2
+
+### Patch Changes
+
+- [#903](https://github.com/lingodotdev/lingo.dev/pull/903) [`cc232eb`](https://github.com/lingodotdev/lingo.dev/commit/cc232eb72d0e54b3571bbb70e88cdad24ba6372a) Thanks [@mathio](https://github.com/mathio)! - vtt parsing
+
 ## 0.97.1
 
 ### Patch Changes
