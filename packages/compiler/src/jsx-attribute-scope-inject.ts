@@ -49,7 +49,7 @@ export const lingoJsxAttributeScopeInjectMutation = createCodeMutation(
       jsxScope.node.openingElement.attributes.push(
         t.jsxAttribute(
           t.jsxIdentifier("$fileKey"),
-          t.stringLiteral(payload.fileKey),
+          t.stringLiteral(payload.relativeFilePath),
         ),
       );
 

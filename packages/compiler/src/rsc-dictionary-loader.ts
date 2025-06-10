@@ -1,9 +1,10 @@
-import generate from "@babel/generator";
+import path from "path";
 import { createCodeMutation } from "./_base";
 import { LCP_DICTIONARY_FILE_NAME, ModuleId } from "./_const";
 import { getModuleExecutionMode, getOrCreateImport } from "./utils";
 import { findInvokations } from "./utils/invokations";
 import * as t from "@babel/types";
+import { getDictionaryPath } from "./_utils";
 
 export const rscDictionaryLoaderMutation = createCodeMutation((payload) => {
   const mode = getModuleExecutionMode(payload.ast, payload.params.rsc);
@@ -31,6 +32,12 @@ export const rscDictionaryLoaderMutation = createCodeMutation((payload) => {
       invokation.callee.name = internalDictionaryLoader.importedName;
     }
 
+    const dictionaryPath = getDictionaryPath({
+      sourceRoot: payload.params.sourceRoot,
+      lingoDir: payload.params.lingoDir,
+      relativeFilePath: payload.relativeFilePath,
+    });
+
     // Create locale import map object
     const localeImportMap = t.objectExpression(
       allLocales.map((locale) =>
@@ -39,9 +46,7 @@ export const rscDictionaryLoaderMutation = createCodeMutation((payload) => {
           t.arrowFunctionExpression(
             [],
             t.callExpression(t.identifier("import"), [
-              t.stringLiteral(
-                `@/${payload.params.lingoDir}/${LCP_DICTIONARY_FILE_NAME}?locale=${locale}`,
-              ),
+              t.stringLiteral(`${dictionaryPath}?locale=${locale}`),
             ]),
           ),
         ),

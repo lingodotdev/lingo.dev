@@ -134,7 +134,7 @@ const unplugin = createUnplugin<Partial<typeof defaultParams> | undefined>(
           const result = _.chain({
             code,
             params,
-            fileKey: path
+            relativeFilePath: path
               .relative(path.resolve(process.cwd(), params.sourceRoot), id)
               .split(path.sep)
               .join("/"), // Always normalize for consistent dictionaries

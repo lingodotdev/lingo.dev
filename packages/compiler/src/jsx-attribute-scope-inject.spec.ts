@@ -1,18 +1,13 @@
 import { describe, it, expect } from "vitest";
 import { lingoJsxAttributeScopeInjectMutation } from "./jsx-attribute-scope-inject";
-import {
-  createPayload,
-  createOutput,
-  CompilerParams,
-  defaultParams,
-} from "./_base";
+import { createPayload, createOutput, defaultParams } from "./_base";
 import * as parser from "@babel/parser";
 import generate from "@babel/generator";
 
 // Helper function to run mutation and get result
 function runMutation(code: string, rsc = false) {
   const params = { ...defaultParams, rsc };
-  const input = createPayload({ code, params, fileKey: "test" });
+  const input = createPayload({ code, params, relativeFilePath: "test" });
   const mutated = lingoJsxAttributeScopeInjectMutation(input);
   if (!mutated) throw new Error("Mutation returned null");
   return createOutput(mutated).code;

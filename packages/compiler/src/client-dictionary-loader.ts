@@ -1,21 +1,11 @@
-import path from "path";
 import { createCodeMutation } from "./_base";
-import { LCP_DICTIONARY_FILE_NAME, ModuleId } from "./_const";
+import { ModuleId } from "./_const";
 import { getOrCreateImport } from "./utils";
 import { findInvokations } from "./utils/invokations";
 import * as t from "@babel/types";
+import { getDictionaryPath } from "./_utils";
 
 export const clientDictionaryLoaderMutation = createCodeMutation((payload) => {
-  const lingoDir = path.resolve(
-    process.cwd(),
-    payload.params.sourceRoot,
-    payload.params.lingoDir,
-  );
-  const currentDir = path.dirname(
-    path.resolve(process.cwd(), payload.params.sourceRoot, payload.fileKey),
-  );
-  const relativeLingoPath = path.relative(currentDir, lingoDir);
-
   const invokations = findInvokations(payload.ast, {
     moduleName: ModuleId.ReactClient,
     functionName: "loadDictionary",
@@ -36,6 +26,12 @@ export const clientDictionaryLoaderMutation = createCodeMutation((payload) => {
       invokation.callee.name = internalDictionaryLoader.importedName;
     }
 
+    const dictionaryPath = getDictionaryPath({
+      sourceRoot: payload.params.sourceRoot,
+      lingoDir: payload.params.lingoDir,
+      relativeFilePath: payload.relativeFilePath,
+    });
+
     // Create locale import map object
     const localeImportMap = t.objectExpression(
       allLocales.map((locale) =>
@@ -44,9 +40,7 @@ export const clientDictionaryLoaderMutation = createCodeMutation((payload) => {
           t.arrowFunctionExpression(
             [],
             t.callExpression(t.identifier("import"), [
-              t.stringLiteral(
-                `./${relativeLingoPath}/${LCP_DICTIONARY_FILE_NAME}?locale=${locale}`,
-              ),
+              t.stringLiteral(`${dictionaryPath}?locale=${locale}`),
             ]),
           ),
         ),

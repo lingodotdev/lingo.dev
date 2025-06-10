@@ -48,7 +48,7 @@ export const lingoJsxScopeInjectMutation = createCodeMutation((payload) => {
     originalAttributes.push(
       t.jsxAttribute(
         t.jsxIdentifier("$fileKey"),
-        t.stringLiteral(payload.fileKey),
+        t.stringLiteral(payload.relativeFilePath),
       ),
     );
     // Add $entryKey prop
