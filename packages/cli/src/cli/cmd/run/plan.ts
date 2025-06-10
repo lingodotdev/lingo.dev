@@ -113,6 +113,7 @@ export default async function plan(
                   injectLocale: bucket.injectLocale || [],
                   lockedKeys: bucket.lockedKeys || [],
                   lockedPatterns: bucket.lockedPatterns || [],
+                  onlyKeys: input.flags.key || [],
                 });
               }
             }

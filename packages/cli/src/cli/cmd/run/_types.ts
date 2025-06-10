@@ -28,6 +28,7 @@ export type CmdRunTask = {
   injectLocale: string[];
   lockedKeys: string[];
   lockedPatterns: string[];
+  onlyKeys: string[];
 };
 
 export const flagsSchema = z.object({

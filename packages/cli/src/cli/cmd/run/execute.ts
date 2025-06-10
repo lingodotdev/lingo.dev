@@ -168,6 +168,11 @@ function createWorkerTask(args: {
                   delta.updated.includes(key) ||
                   !!args.ctx.flags.force,
               )
+              .filter(
+                ([key]) =>
+                  !assignedTask.onlyKeys.length ||
+                  assignedTask.onlyKeys.includes(key),
+              )
               .fromPairs()
               .value();
 
