@@ -17,7 +17,10 @@ Here's how to get the project running locally:
 
 - **Node.js**: Make sure you have Node.js version 18 or higher installed.
 - **pnpm**: You can install using this command `npm install -g pnpm` or by following [this guide](https://pnpm.io/installation)
-- **GROQ API Key**: You can get one by signing up at [Groq](https://console.groq.com/)
+- **AI API Key**:
+  Currently, Groq and Google are supported.
+  - **GROQ API Key**: You can get one by signing up at [Groq](https://console.groq.com/)
+  - **GOOGLE API Key**: You can get one in the [Google AI Studio](https://aistudio.google.com/apikey)
 
 ### Setup
 
@@ -29,14 +32,22 @@ cd lingo.dev
 pnpm install
 ```
 
-Next, configure the GROQ API KEY. You can configure the key in two different ways:
+Next, configure an AI API key. You can configure a key in two different ways:
 
 **Option A: User-wide (Recommended for development):**
 
-Run the following command in a terminal window. Replace `<your-api-key>` with your actual API key:
+Run one of the following commands that corresponds with the AI provider you want to use in a terminal window. Replace `<your-api-key>` with your actual API key. You can configure Groq or Google.
+
+Groq:
 
 ```bash
 npx lingo.dev@latest config set llm.groqApiKey <your-api-key>
+```
+
+Google:
+
+```bash
+npx lingo.dev@latest config set llm.googleApiKey <your-api-key>
 ```
 
 This will store the key in your system's user configuration, allowing you to build the project without needing to set it up in each demo directory.
@@ -45,6 +56,8 @@ This will store the key in your system's user configuration, allowing you to bui
 
 Run the following command in a terminal window. Replace `<your-api-key>` with your actual API key:
 
+Groq:
+
 ```bash
 # Create .env files in demo directories
 echo "GROQ_API_KEY=<your-api-key>" > demo/react-router-app/.env
@@ -52,9 +65,17 @@ echo "GROQ_API_KEY=<your-api-key>" > demo/next-app/.env
 echo "GROQ_API_KEY=<your-api-key>" > demo/vite-project/.env
 ```
 
-This will create `.env` files in each demo directory with your GROQ API key set as an environment variable.
+Google:
 
-_Note:_ When loading LLM API keys (including Groq), the Lingo.dev Compiler checks the following sources in order of priority:
+```bash
+echo "GOOGLE_API_KEY=<your-api-key>" > demo/react-router-app/.env
+echo "GOOGLE_API_KEY=<your-api-key>" > demo/next-app/.env
+echo "GOOGLE_API_KEY=<your-api-key>" > demo/vite-project/.env
+```
+
+This will create `.env` files in each demo directory with your AI API key set as an environment variable.
+
+_Note:_ When loading LLM API keys (including Groq and Google), the Lingo.dev Compiler checks the following sources in order of priority:
 
 1. Environment variables (via `process.env`)
 2. Environment files (`.env`, `.env.local`, `.env.development`)
@@ -76,6 +97,42 @@ pnpm lingo.dev --help # this command will use the current cli code + demo config
 ```
 
 Feel free to ask questions on our [Discord server](https://lingo.dev/go/discord)!
+
+## Adding a New LLM Provider
+
+Want to add support for a new LLM provider to Lingo.dev? Here's a checklist to help you get started:
+
+1. **Add Your Dependency**
+
+   - Install the relevant SDK/package for your provider in the necessary `package.json` (usually `cli` and/or `compiler`). Lingo.dev uses the [AI SDK](https://ai-sdk.dev) and its [providers](https://ai-sdk.dev/providers/ai-sdk-providers), so check first to make sure the AI SDK supports your provider.
+
+2. **Update the Config Schema**
+
+   - Edit [`packages/spec/src/config.ts`](./packages/spec/src/config.ts) and update the list of allowed provider `id` values to include your new provider.
+
+3. **Provider Details**
+
+   - Add your provider to [`packages/compiler/src/lib/lcp/api/provider-details.ts`](./packages/compiler/src/lib/lcp/api/provider-details.ts) with name, env var, config key, API docs, and signup link.
+
+4. **API Key Handling**
+
+   - Update [`packages/compiler/src/utils/llm-api-key.ts`](./packages/compiler/src/utils/llm-api-key.ts) to add functions for getting the API key from environment/config.
+
+5. **CLI and Compiler Logic**
+
+   - Update the CLI (e.g., [`packages/cli/src/cli/localizer/explicit.ts`](./packages/cli/src/cli/localizer/explicit.ts), [`packages/cli/src/cli/processor/index.ts`](./packages/cli/src/cli/processor/index.ts)) to support your provider.
+   - Update the compiler's translation logic to instantiate your provider's client (see [`packages/compiler/src/lib/lcp/api/index.ts`](./packages/compiler/src/lib/lcp/api/index.ts)).
+
+6. **Error Handling**
+
+   - Ensure user-facing error messages are updated to mention your provider where relevant (API key checks, troubleshooting, etc).
+
+7. **Test and Document**
+   - Add or update tests to cover your provider.
+   - Update documentation and this contributing guide as needed.
+
+**Tip:**
+Look at how existing providers like "groq" and "google" are implemented for reference. Consistency helps us maintain quality and predictability!
 
 ## Issues
 
