@@ -1,4 +1,5 @@
 import { createGroq } from "@ai-sdk/groq";
+import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { generateText } from "ai";
 import { DictionarySchema } from "../schema";
 import _ from "lodash";
@@ -6,9 +7,16 @@ import { getLocaleModel } from "../../../utils/locales";
 import getSystemPrompt from "./prompt";
 import { obj2xml, xml2obj } from "./xml2obj";
 import shots from "./shots";
-import { getGroqKey, getGroqKeyFromEnv } from "../../../utils/groq";
+import {
+  getGroqKey,
+  getGroqKeyFromEnv,
+  getGoogleKey,
+  getGoogleKeyFromEnv,
+} from "../../../utils/llm-api-key";
 import dedent from "dedent";
 import { isRunningInCIOrDocker } from "../../../utils/env";
+import { LanguageModel } from "ai";
+import { providerDetails } from "./provider-details";
 
 export class LCPAPI {
   static async translate(
@@ -124,122 +132,164 @@ export class LCPAPI {
     sourceLocale: string,
     targetLocale: string,
   ): Promise<DictionarySchema> {
-    try {
-      return await this._translateChunkGroq(
-        models,
-        sourceDictionary,
-        sourceLocale,
-        targetLocale,
-      );
-    } catch (error) {
-      this._failGroqFailureLocal(
-        targetLocale,
-        error instanceof Error ? error.message : "Unknown error",
-      );
-    }
-
-    // error message with specific instructions for CI/CD or Docker
-    if (isRunningInCIOrDocker()) {
-      const groqFromEnv = getGroqKeyFromEnv();
-      if (!groqFromEnv) {
-        this._failMissingGroqKeyCi();
-      }
-    }
-
-    throw new Error(
-      "⚠️  No API key found. Please set GROQ_API_KEY environment variable. If you dont have one go to https://groq.com/",
-    );
-  }
-
-  private static async _translateChunkGroq(
-    models: Record<string, string>,
-    sourceDictionary: DictionarySchema,
-    sourceLocale: string,
-    targetLocale: string,
-  ): Promise<DictionarySchema> {
-    const groq = createGroq({ apiKey: getGroqKey() });
-    console.log(`Created Groq client for ${targetLocale}`);
-
     const { provider, model } = getLocaleModel(
       models,
       sourceLocale,
       targetLocale,
     );
-    if (!model) {
+
+    if (!provider || !model) {
+      // Ensure both provider and model are found
       throw new Error(
-        `⚠️  Locale ${targetLocale} is not configured. Add model for this locale to your config.`,
-      );
-    }
-    if (provider !== "groq") {
-      throw new Error(
-        `⚠️  Provider ${provider} is not supported. Only "groq" provider is supported at the moment.`,
+        `⚠️  Locale "${targetLocale}" is not configured. Add provider and model for this locale to your config, e.g., "groq:llama3-8b-8192".`,
       );
     }
 
-    console.log(
-      `✨ Using model "${model}" from "${provider}" to translate from "${sourceLocale}" to "${targetLocale}"`,
-    );
+    try {
+      const aiModel = this._createAiModel(provider, model, targetLocale);
 
-    const groqModel = groq(model);
-    console.log(`Created model ${model}`);
-    const response = await generateText({
-      model: groqModel,
-      messages: [
-        {
-          role: "system",
-          content: getSystemPrompt({ sourceLocale, targetLocale }),
-        },
-        ...shots.flatMap((shotsTuple) => [
-          {
-            role: "user" as const,
-            content: obj2xml(shotsTuple[0]),
-          },
-          {
-            role: "assistant" as const,
-            content: obj2xml(shotsTuple[1]),
-          },
-        ]),
-        {
-          role: "user",
-          content: obj2xml(sourceDictionary),
-        },
-      ],
-    });
-    // console.log("Response", response);
-    // console.log("Usage:", targetLocale, JSON.stringify(response.usage, null, 2));
-    console.log("Response", response.text);
-    let responseText = response.text;
-    responseText = responseText.substring(
-      responseText.indexOf("<"),
-      responseText.lastIndexOf(">") + 1,
-    );
+      console.log(
+        `✨ Using model "${model}" from "${provider}" to translate from "${sourceLocale}" to "${targetLocale}"`,
+      );
 
-    return xml2obj(responseText);
+      const response = await generateText({
+        model: aiModel,
+        messages: [
+          {
+            role: "system",
+            content: getSystemPrompt({ sourceLocale, targetLocale }),
+          },
+          ...shots.flatMap((shotsTuple) => [
+            {
+              role: "user" as const,
+              content: obj2xml(shotsTuple[0]),
+            },
+            {
+              role: "assistant" as const,
+              content: obj2xml(shotsTuple[1]),
+            },
+          ]),
+          {
+            role: "user",
+            content: obj2xml(sourceDictionary),
+          },
+        ],
+      });
+
+      console.log("Response text received for", targetLocale);
+      let responseText = response.text;
+      // Extract XML content
+      responseText = responseText.substring(
+        responseText.indexOf("<"),
+        responseText.lastIndexOf(">") + 1,
+      );
+
+      return xml2obj(responseText);
+    } catch (error) {
+      this._failLLMFailureLocal(
+        provider,
+        targetLocale,
+        error instanceof Error ? error.message : "Unknown error",
+      );
+      // This throw is unreachable because the failure method exits,
+      // but it helps satisfy the TypeScript compiler.
+      throw error;
+    }
+  }
+
+  /**
+   * Instantiates an AI model based on provider and model ID.
+   * Includes CI/CD API key checks.
+   * @param providerId The ID of the AI provider (e.g., "groq", "google").
+   * @param modelId The ID of the specific model (e.g., "llama3-8b-8192", "gemini-2.0-flash").
+   * @param targetLocale The target locale being translated to (for logging/error messages).
+   * @returns An instantiated AI LanguageModel.
+   * @throws Error if the provider is not supported or API key is missing in CI/CD.
+   */
+  private static _createAiModel(
+    providerId: string,
+    modelId: string,
+    targetLocale: string,
+  ): LanguageModel {
+    switch (providerId) {
+      case "groq":
+        // Specific check for CI/CD or Docker missing GROQ key
+        if (isRunningInCIOrDocker()) {
+          const groqFromEnv = getGroqKeyFromEnv();
+          if (!groqFromEnv) {
+            this._failMissingLLMKeyCi(providerId);
+          }
+        }
+        const groqKey = getGroqKey();
+        if (!groqKey) {
+          throw new Error(
+            "⚠️  GROQ API key not found. Please set GROQ_API_KEY environment variable or configure it user-wide.",
+          );
+        }
+        console.log(
+          `Creating Groq client for ${targetLocale} using model ${modelId}`,
+        );
+        return createGroq({ apiKey: groqKey })(modelId);
+
+      case "google":
+        // Specific check for CI/CD or Docker missing Google key
+        if (isRunningInCIOrDocker()) {
+          const googleFromEnv = getGoogleKeyFromEnv();
+          if (!googleFromEnv) {
+            this._failMissingLLMKeyCi(providerId);
+          }
+        }
+        const googleKey = getGoogleKey();
+        if (!googleKey) {
+          throw new Error(
+            "⚠️  Google API key not found. Please set GOOGLE_API_KEY environment variable or configure it user-wide.",
+          );
+        }
+        console.log(
+          `Creating Google Generative AI client for ${targetLocale} using model ${modelId}`,
+        );
+        return createGoogleGenerativeAI({ apiKey: googleKey })(modelId);
+
+      default:
+        throw new Error(
+          `⚠️  Provider "${providerId}" for locale "${targetLocale}" is not supported. Only "groq" and "google" providers are supported at the moment.`,
+        );
+    }
   }
 
   /**
    * Show an actionable error message and exit the process when the compiler
-   * is running in CI/CD without a GROQ API key.
+   * is running in CI/CD without a required LLM API key.
    * The message explains why this situation is unusual and how to fix it.
+   * @param providerId The ID of the LLM provider whose key is missing.
    */
-  private static _failMissingGroqKeyCi(): void {
+  private static _failMissingLLMKeyCi(providerId: string): void {
+    let details = providerDetails[providerId];
+    if (!details) {
+      // Fallback for unsupported provider in failure message logic
+      console.error(
+        `Internal Error: Missing details for provider "${providerId}" when reporting missing key in CI/CD. You might be using an unsupported provider.`,
+      );
+      process.exit(1);
+    }
+
     console.log(
       dedent`
         \n
         💡 You're using Lingo.dev Localization Compiler, and it detected unlocalized components in your app.
 
-        The compiler needs a GROQ API key to translate missing strings, but GROQ_API_KEY is not set in the environment.
+        The compiler needs a ${details.name} API key to translate missing strings, but ${details.apiKeyEnvVar} is not set in the environment.
 
         This is unexpected: typically you run a full build locally, commit the generated translation files, and push them to CI/CD.
 
         However, If you want CI/CD to translate the new strings, provide the key with:
-        • Session-wide: export GROQ_API_KEY=<your-api-key>
-        • Project-wide / CI: add GROQ_API_KEY=<your-api-key> to your pipeline environment variables
+        • Session-wide: export ${details.apiKeyEnvVar}=<your-api-key>
+        • Project-wide / CI: add ${details.apiKeyEnvVar}=<your-api-key> to your pipeline environment variables
 
         ⭐️ Also:
-        1. If you don't yet have a GROQ API key, get one for free at https://groq.com
-        2. If you want to use a different LLM, raise an issue in our open-source repo: https://lingo.dev/go/gh
-        3. If you have questions, feature requests, or would like to contribute, join our Discord: https://lingo.dev/go/discord
+        1. If you don't yet have a ${details.name} API key, get one for free at ${details.getKeyLink}
+        2. If you want to use a different LLM, update your configuration. Refer to documentation for help: https://docs.lingo.dev/
+        3. If the model you want to use isn't supported yet, raise an issue in our open-source repo: https://lingo.dev/go/gh
 
         ✨
       `,
@@ -247,45 +297,64 @@ export class LCPAPI {
     process.exit(1);
   }
 
-  private static _failGroqFailureLocal(
+  /**
+   * Show an actionable error message and exit the process when an LLM API call
+   * fails during local compilation.
+   * @param providerId The ID of the LLM provider that failed.
+   * @param targetLocale The target locale being translated to.
+   * @param errorMessage The error message received from the API.
+   */
+  private static _failLLMFailureLocal(
+    providerId: string,
     targetLocale: string,
     errorMessage: string,
   ): void {
-    const isInvalidApiKey = errorMessage.match("Invalid API Key");
+    const details = providerDetails[providerId];
+    if (!details) {
+      // Fallback
+      console.error(
+        `Internal Error: Missing details for provider "${providerId}" when reporting local failure.`,
+      );
+      console.error(`Original Error: ${errorMessage}`);
+      process.exit(1);
+    }
+
+    const isInvalidApiKey = errorMessage.match("Invalid API Key"); // TODO: This may change per-provider, so might update this later
+
     if (isInvalidApiKey) {
       console.log(dedent`
           \n
-          ⚠️  Lingo.dev Compiler requires a valid Groq API key to translate your application. 
-          
-          It looks like you set Groq API key but it is not valid. Please check your API key and try again.
+          ⚠️  Lingo.dev Compiler requires a valid ${details.name} API key to translate your application.
 
-          Error details from Groq API: ${errorMessage}
-    
+          It looks like you set ${details.name} API key but it is not valid. Please check your API key and try again.
+
+          Error details from ${details.name} API: ${errorMessage}
+
           👉 You can set the API key in one of the following ways:
-          1. User-wide: Run npx lingo.dev@latest config set llm.groqApiKey <your-api-key>
-          2. Project-wide: Add GROQ_API_KEY=<your-api-key> to .env file in every project that uses Lingo.dev Localization Compiler
-          3. Session-wide: Run export GROQ_API_KEY=<your-api-key> in your terminal before running the compiler to set the API key for the current session
-    
+          1. User-wide: Run npx lingo.dev@latest config set ${details.apiKeyConfigKey} <your-api-key>
+          2. Project-wide: Add ${details.apiKeyEnvVar}=<your-api-key> to .env file in every project that uses Lingo.dev Localization Compiler
+          3 Session-wide: Run export ${details.apiKeyEnvVar}=<your-api-key> in your terminal before running the compiler to set the API key for the current session
+
           ⭐️ Also:
-          1. If you don't yet have a GROQ API key, get one for free at https://groq.com
+          1. If you don't yet have a ${details.name} API key, get one for free at ${details.getKeyLink}
           2. If you want to use a different LLM, raise an issue in our open-source repo: https://lingo.dev/go/gh
           3. If you have questions, feature requests, or would like to contribute, join our Discord: https://lingo.dev/go/discord
-    
+
           ✨
         `);
     } else {
       console.log(
         dedent`
         \n
-        ⚠️  Lingo.dev Compiler tried to translate your application to "${targetLocale}" locale via Groq but it failed.
+        ⚠️  Lingo.dev Compiler tried to translate your application to "${targetLocale}" locale via ${details.name} but it failed.
 
-        Error details from Groq API: ${errorMessage}
+        Error details from ${details.name} API: ${errorMessage}
 
-        This error comes from Groq API, please check their documentation for more details: https://console.groq.com/docs/errors
+        This error comes from the ${details.name} API, please check their documentation for more details: ${details.docsLink}
 
         ⭐️ Also:
-        1. Did you set GROQ_API_KEY environment variable?
-        2. Did you reach any limits of your Groq account?
+        1. Did you set ${details.apiKeyEnvVar} environment variable correctly?
+        2. Did you reach any limits of your ${details.name} account?
         3. If you have questions, feature requests, or would like to contribute, join our Discord: https://lingo.dev/go/discord
 
         ✨

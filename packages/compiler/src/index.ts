@@ -32,19 +32,42 @@ import { LCP_DICTIONARY_FILE_NAME } from "./_const";
 import { LCPCache } from "./lib/lcp/cache";
 import { getInvalidLocales } from "./utils/locales";
 import { clientDictionaryLoaderMutation } from "./client-dictionary-loader";
-import { getGroqKeyFromEnv, getGroqKeyFromRc } from "./utils/groq";
+import {
+  getGroqKeyFromEnv,
+  getGroqKeyFromRc,
+  getGoogleKeyFromEnv,
+  getGoogleKeyFromRc,
+} from "./utils/llm-api-key";
 import { isRunningInCIOrDocker } from "./utils/env";
+import { providerDetails } from "./lib/lcp/api/provider-details";
+
+const keyCheckers: Record<
+  string,
+  {
+    checkEnv: () => string | undefined;
+    checkRc: () => string | undefined;
+  }
+> = {
+  groq: {
+    checkEnv: getGroqKeyFromEnv,
+    checkRc: getGroqKeyFromRc,
+  },
+  google: {
+    checkEnv: getGoogleKeyFromEnv,
+    checkRc: getGoogleKeyFromRc,
+  },
+};
 
 const unplugin = createUnplugin<Partial<typeof defaultParams> | undefined>(
   (_params, _meta) => {
     console.log("ℹ️  Starting Lingo.dev compiler...");
 
+    const params = _.defaults(_params, defaultParams);
+
     // Validate if not in CI or Docker
     if (!isRunningInCIOrDocker()) {
-      validateGroqKeyDetails();
+      validateLLMKeyDetails(params.models);
     }
-    // Continue
-    const params = _.defaults(_params, defaultParams);
 
     const invalidLocales = getInvalidLocales(
       params.models,
@@ -60,7 +83,7 @@ const unplugin = createUnplugin<Partial<typeof defaultParams> | undefined>(
         1. Refer to documentation for help: https://docs.lingo.dev/
         2. If you want to use a different LLM, raise an issue in our open-source repo: https://lingo.dev/go/gh
         3. If you have questions, feature requests, or would like to contribute, join our Discord: https://lingo.dev/go/discord
-  
+
         ✨
       `);
       process.exit(1);
@@ -183,60 +206,109 @@ export default {
 };
 
 /**
- * Print helpful information about where the GROQ API key was discovered.
- * The compiler looks for the key first in the environment (incl. .env files)
- * and then in the user-wide configuration. Environment always wins.
+ * Print helpful information about where the LLM API keys for configured providers
+ * were discovered. The compiler looks for the key first in the environment
+ * (incl. .env files) and then in the user-wide configuration. Environment always wins.
+ * @param models The locale to model mapping configuration.
  */
-function validateGroqKeyDetails(): void {
-  const groq = {
-    fromEnv: getGroqKeyFromEnv(),
-    fromRc: getGroqKeyFromRc(),
-  };
+function validateLLMKeyDetails(models: Record<string, string>): void {
+  const configuredProviders = _.chain(Object.values(models))
+    .map((modelString) => modelString.split(":")[0]) // Extract provider ID
+    .filter(Boolean) // Remove empty strings
+    .uniq() // Get unique providers
+    .filter(
+      (providerId) =>
+        providerDetails.hasOwnProperty(providerId) &&
+        keyCheckers.hasOwnProperty(providerId),
+    ) // Only check for known and implemented providers
+    .value();
 
-  if (!groq.fromEnv && !groq.fromRc) {
+  if (configuredProviders.length === 0) {
+    // No LLM providers configured that we can validate keys for.
+    return;
+  }
+
+  const keyStatuses: Record<
+    string,
+    {
+      foundInEnv: boolean;
+      foundInRc: boolean;
+      details: (typeof providerDetails)[string];
+    }
+  > = {};
+  const missingProviders: string[] = [];
+  const foundProviders: string[] = [];
+
+  for (const providerId of configuredProviders) {
+    const details = providerDetails[providerId];
+    const checkers = keyCheckers[providerId];
+    if (!details || !checkers) continue; // Should not happen due to filter above
+
+    const foundInEnv = checkers.checkEnv() !== undefined;
+    const foundInRc = checkers.checkRc() !== undefined;
+
+    keyStatuses[providerId] = { foundInEnv, foundInRc, details };
+
+    if (!foundInEnv && !foundInRc) {
+      missingProviders.push(providerId);
+    } else {
+      foundProviders.push(providerId);
+    }
+  }
+
+  if (missingProviders.length > 0) {
     console.log(dedent`
       \n
-      💡 You're using Lingo.dev Localization Compiler in your project, which requires a GROQ API key to work.
+      💡 Lingo.dev Localization Compiler is configured to use the following LLM provider(s): ${configuredProviders.join(", ")}.
 
-      👉 You can set the API key in one of the following ways:
-      1. User-wide: Run npx lingo.dev@latest config set llm.groqApiKey <your-api-key>
-      2. Project-wide: Add GROQ_API_KEY=<your-api-key> to .env file in every project that uses Lingo.dev Localization Compiler
-      3. Session-wide: Run export GROQ_API_KEY=<your-api-key> in your terminal before running the compiler to set the API key for the current session
+      The compiler requires API keys for these providers to work, but the following keys are missing:
+    `);
 
+    for (const providerId of missingProviders) {
+      const status = keyStatuses[providerId];
+      if (!status) continue;
+      console.log(dedent`
+          ⚠️  ${status.details.name} API key is missing. Set ${status.details.apiKeyEnvVar} environment variable.
+
+          👉 You can set the API key in one of the following ways:
+          1. User-wide: Run npx lingo.dev@latest config set ${status.details.apiKeyConfigKey || "<config-key-not-available>"} <your-api-key>
+          2. Project-wide: Add ${status.details.apiKeyEnvVar}=<your-api-key> to .env file in every project that uses Lingo.dev Localization Compiler
+          3. Session-wide: Run export ${status.details.apiKeyEnvVar}=<your-api-key> in your terminal before running the compiler to set the API key for the current session
+
+          ⭐️ If you don't yet have a ${status.details.name} API key, get one for free at ${status.details.getKeyLink}
+        `);
+    }
+
+    console.log(dedent`
+      \n
       ⭐️ Also:
-      1. If you don't yet have a GROQ API key, get one for free at https://groq.com
-      2. If you want to use a different LLM, raise an issue in our open-source repo: https://lingo.dev/go/gh
+      1. If you want to use a different LLM, update your configuration. Refer to documentation for help: https://docs.lingo.dev/
+      2. If the model/provider you want to use isn't supported yet, raise an issue in our open-source repo: https://lingo.dev/go/gh
       3. If you have questions, feature requests, or would like to contribute, join our Discord: https://lingo.dev/go/discord
 
       ✨
     `);
     process.exit(1);
-  } else if (groq.fromEnv && groq.fromRc) {
-    console.log(
-      dedent`
-        🔑  GROQ API key detected in both environment variables and your user-wide configuration.
-
-        👉  The compiler will use the key from the environment because it has higher priority.
-
-        • To update the user-wide key run: npx lingo.dev@latest config set llm.groqApiKey <your-api-key>
-        • To remove it run: npx lingo.dev@latest config unset llm.groqApiKey
-        • To remove the env variable from the current session run: unset GROQ_API_KEY
-      `,
-    );
-  } else if (groq.fromEnv && !groq.fromRc) {
-    console.log(
-      dedent`
-        🔑  GROQ API key loaded from environment variables.
-
-        • You can also save the key user-wide with: npx lingo.dev@latest config set llm.groqApiKey <your-api-key>
-        • Or remove the env variable from the current session with: unset GROQ_API_KEY
-      `,
-    );
-  } else if (!groq.fromEnv && groq.fromRc) {
-    console.log(
-      dedent`
-        🔑  GROQ API key loaded from your user-wide configuration.
-      `,
-    );
+  } else if (foundProviders.length > 0) {
+    console.log(dedent`
+        \n
+        🔑  LLM API keys detected for configured providers: ${foundProviders.join(", ")}.
+      `);
+    for (const providerId of foundProviders) {
+      const status = keyStatuses[providerId];
+      if (!status) continue;
+      let sourceMessage = "";
+      if (status.foundInEnv && status.foundInRc) {
+        sourceMessage = `from both environment variables (${status.details.apiKeyEnvVar}) and your user-wide configuration. The key from the environment will be used because it has higher priority.`;
+      } else if (status.foundInEnv) {
+        sourceMessage = `from environment variables (${status.details.apiKeyEnvVar}).`;
+      } else if (status.foundInRc) {
+        sourceMessage = `from your user-wide configuration${status.details.apiKeyConfigKey ? ` (${status.details.apiKeyConfigKey})` : ""}.`;
+      }
+      console.log(dedent`
+          • ${status.details.name} API key loaded ${sourceMessage}
+        `);
+    }
+    console.log("✨");
   }
 }
