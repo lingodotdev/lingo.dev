@@ -7,7 +7,7 @@ import generate from "@babel/generator";
 // Helper function to run mutation and get result
 function runMutation(code: string, rsc = false) {
   const params = { ...defaultParams, rsc };
-  const input = createPayload({ code, params, fileKey: "test" });
+  const input = createPayload({ code, params, relativeFilePath: "test" });
   const mutated = lingoJsxScopeInjectMutation(input);
   if (!mutated) throw new Error("Mutation returned null");
   return createOutput(mutated).code;
