@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.96.0
+
+### Minor Changes
+
+- [#895](https://github.com/lingodotdev/lingo.dev/pull/895) [`3bd4045`](https://github.com/lingodotdev/lingo.dev/commit/3bd40450cbb5c8aabce61d7f1f3ab9c7293323d9) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - Add PostHog tracking to run command
+
 ## 0.95.0
 
 ### Minor Changes
