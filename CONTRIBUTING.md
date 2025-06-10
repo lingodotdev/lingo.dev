@@ -17,7 +17,10 @@ Here's how to get the project running locally:
 
 - **Node.js**: Make sure you have Node.js version 18 or higher installed.
 - **pnpm**: You can install using this command `npm install -g pnpm` or by following [this guide](https://pnpm.io/installation)
-- **GROQ API Key**: You can get one by signing up at [Groq](https://console.groq.com/)
+- **AI API Key**:
+  Currently, Groq and Google are supported.
+  - **GROQ API Key**: You can get one by signing up at [Groq](https://console.groq.com/)
+  - **GOOGLE API Key**: You can get one in the [Google AI Studio](https://aistudio.google.com/apikey)
 
 ### Setup
 
@@ -29,14 +32,22 @@ cd lingo.dev
 pnpm install
 ```
 
-Next, configure the GROQ API KEY. You can configure the key in two different ways:
+Next, configure an AI API key. You can configure a key in two different ways:
 
 **Option A: User-wide (Recommended for development):**
 
-Run the following command in a terminal window. Replace `<your-api-key>` with your actual API key:
+Run one of the following commands that corresponds with the AI provider you want to use in a terminal window. Replace `<your-api-key>` with your actual API key. You can configure Groq or Google.
+
+Groq:
 
 ```bash
 npx lingo.dev@latest config set llm.groqApiKey <your-api-key>
+```
+
+Google:
+
+```bash
+npx lingo.dev@latest config set llm.googleApiKey <your-api-key>
 ```
 
 This will store the key in your system's user configuration, allowing you to build the project without needing to set it up in each demo directory.
@@ -45,6 +56,8 @@ This will store the key in your system's user configuration, allowing you to bui
 
 Run the following command in a terminal window. Replace `<your-api-key>` with your actual API key:
 
+Groq:
+
 ```bash
 # Create .env files in demo directories
 echo "GROQ_API_KEY=<your-api-key>" > demo/react-router-app/.env
@@ -52,9 +65,17 @@ echo "GROQ_API_KEY=<your-api-key>" > demo/next-app/.env
 echo "GROQ_API_KEY=<your-api-key>" > demo/vite-project/.env
 ```
 
-This will create `.env` files in each demo directory with your GROQ API key set as an environment variable.
+Google:
 
-_Note:_ When loading LLM API keys (including Groq), the Lingo.dev Compiler checks the following sources in order of priority:
+```bash
+echo "GOOGLE_API_KEY=<your-api-key>" > demo/react-router-app/.env
+echo "GOOGLE_API_KEY=<your-api-key>" > demo/next-app/.env
+echo "GOOGLE_API_KEY=<your-api-key>" > demo/vite-project/.env
+```
+
+This will create `.env` files in each demo directory with your AI API key set as an environment variable.
+
+_Note:_ When loading LLM API keys (including Groq and Google), the Lingo.dev Compiler checks the following sources in order of priority:
 
 1. Environment variables (via `process.env`)
 2. Environment files (`.env`, `.env.local`, `.env.development`)
