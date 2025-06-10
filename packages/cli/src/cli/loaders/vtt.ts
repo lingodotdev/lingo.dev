@@ -2,9 +2,15 @@ import webvtt from "node-webvtt";
 import { ILoader } from "./_types";
 import { createLoader } from "./_utils";
 
-export default function createVttLoader(): ILoader<string, Record<string, any>> {
+export default function createVttLoader(): ILoader<
+  string,
+  Record<string, any>
+> {
   return createLoader({
     async pull(locale, input) {
+      if (!input) {
+        return ""; // if VTT file does not exist yet we can not parse it - return empty string
+      }
       const vtt = webvtt.parse(input)?.cues;
       if (Object.keys(vtt).length === 0) {
         return {};
