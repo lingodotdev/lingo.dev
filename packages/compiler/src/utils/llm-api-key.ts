@@ -1,12 +1,21 @@
 import { getRc } from "./rc";
 import _ from "lodash";
 import * as dotenv from "dotenv";
+import path from "path";
 
 // Generic function to retrieve key from process.env, with .env file as fallback
-function getKeyFromEnv(envVarName: string): string | undefined {
-  const ephemeralEnv = {} as Record<string, string>;
-  dotenv.config({ processEnv: ephemeralEnv });
-  return ephemeralEnv[envVarName];
+export function getKeyFromEnv(envVarName: string): string | undefined {
+  if (process.env[envVarName]) {
+    return process.env[envVarName];
+  }
+  const result = dotenv.config({
+    path: [
+      path.resolve(process.cwd(), ".env"),
+      path.resolve(process.cwd(), ".env.local"),
+      path.resolve(process.cwd(), ".env.development"),
+    ],
+  });
+  return result?.parsed?.[envVarName];
 }
 
 // Generic function to retrieve key from .lingodotdevrc file
