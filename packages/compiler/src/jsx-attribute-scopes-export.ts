@@ -23,23 +23,27 @@ export function jsxAttributeScopesExportMutation(
     for (const attributeDefinition of attributes) {
       const [attribute, scopeKey] = attributeDefinition.split(":");
 
-      lcp.resetScope(payload.fileKey, scopeKey);
+      lcp.resetScope(payload.relativeFilePath, scopeKey);
 
       const attributeValue = getJsxAttributeValue(scope, attribute);
       if (!attributeValue) {
         continue;
       }
 
-      lcp.setScopeType(payload.fileKey, scopeKey, "attribute");
+      lcp.setScopeType(payload.relativeFilePath, scopeKey, "attribute");
 
       const hash = getJsxAttributeValueHash(String(attributeValue));
-      lcp.setScopeHash(payload.fileKey, scopeKey, hash);
+      lcp.setScopeHash(payload.relativeFilePath, scopeKey, hash);
 
-      lcp.setScopeContext(payload.fileKey, scopeKey, "");
-      lcp.setScopeSkip(payload.fileKey, scopeKey, false);
-      lcp.setScopeOverrides(payload.fileKey, scopeKey, {});
+      lcp.setScopeContext(payload.relativeFilePath, scopeKey, "");
+      lcp.setScopeSkip(payload.relativeFilePath, scopeKey, false);
+      lcp.setScopeOverrides(payload.relativeFilePath, scopeKey, {});
 
-      lcp.setScopeContent(payload.fileKey, scopeKey, String(attributeValue));
+      lcp.setScopeContent(
+        payload.relativeFilePath,
+        scopeKey,
+        String(attributeValue),
+      );
     }
   }
 

@@ -32,7 +32,7 @@ export const rscDictionaryLoaderMutation = createCodeMutation((payload) => {
     }
 
     const relativePath = path.relative(
-      payload.fileKey,
+      payload.relativeFilePath,
       path.resolve(
         payload.params.sourceRoot,
         payload.params.lingoDir,

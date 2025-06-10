@@ -25,18 +25,26 @@ export function jsxScopesExportMutation(
   for (const scope of scopes) {
     const scopeKey = getAstKey(scope);
 
-    lcp.resetScope(payload.fileKey, scopeKey);
+    lcp.resetScope(payload.relativeFilePath, scopeKey);
 
-    lcp.setScopeType(payload.fileKey, scopeKey, "element");
+    lcp.setScopeType(payload.relativeFilePath, scopeKey, "element");
 
     const hash = getJsxElementHash(scope);
-    lcp.setScopeHash(payload.fileKey, scopeKey, hash);
+    lcp.setScopeHash(payload.relativeFilePath, scopeKey, hash);
 
     const context = getJsxAttributeValue(scope, "data-lingo-context");
-    lcp.setScopeContext(payload.fileKey, scopeKey, String(context || ""));
+    lcp.setScopeContext(
+      payload.relativeFilePath,
+      scopeKey,
+      String(context || ""),
+    );
 
     const skip = getJsxAttributeValue(scope, "data-lingo-skip");
-    lcp.setScopeSkip(payload.fileKey, scopeKey, Boolean(skip || false));
+    lcp.setScopeSkip(
+      payload.relativeFilePath,
+      scopeKey,
+      Boolean(skip || false),
+    );
 
     const attributesMap = getJsxAttributesMap(scope);
     const overrides = _.chain(attributesMap)
@@ -49,10 +57,10 @@ export function jsxScopesExportMutation(
       .filter(([, v]) => !!v)
       .fromPairs()
       .value();
-    lcp.setScopeOverrides(payload.fileKey, scopeKey, overrides);
+    lcp.setScopeOverrides(payload.relativeFilePath, scopeKey, overrides);
 
     const content = extractJsxContent(scope);
-    lcp.setScopeContent(payload.fileKey, scopeKey, content);
+    lcp.setScopeContent(payload.relativeFilePath, scopeKey, content);
   }
 
   lcp.save();

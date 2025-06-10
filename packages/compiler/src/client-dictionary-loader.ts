@@ -12,7 +12,11 @@ export const clientDictionaryLoaderMutation = createCodeMutation((payload) => {
     payload.params.lingoDir,
   );
   const currentDir = path.dirname(
-    path.resolve(process.cwd(), payload.params.sourceRoot, payload.fileKey),
+    path.resolve(
+      process.cwd(),
+      payload.params.sourceRoot,
+      payload.relativeFilePath,
+    ),
   );
   const relativeLingoPath = path.relative(currentDir, lingoDir);
 

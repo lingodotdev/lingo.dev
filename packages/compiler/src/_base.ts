@@ -21,7 +21,7 @@ export type CompilerInput = {
 
 export type CompilerPayload = CompilerInput & {
   ast: t.File;
-  fileKey: string;
+  relativeFilePath: string;
 };
 export type CompilerOutput = {
   code: string;
