@@ -1,5 +1,11 @@
 # @lingo.dev/\_compiler
 
+## 0.2.2
+
+### Patch Changes
+
+- [#905](https://github.com/lingodotdev/lingo.dev/pull/905) [`1a235a1`](https://github.com/lingodotdev/lingo.dev/commit/1a235a17455fb2631f7426283aa8431209999758) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - remove @/ path mapping in compiler
+
 ## 0.2.1
 
 ### Patch Changes
