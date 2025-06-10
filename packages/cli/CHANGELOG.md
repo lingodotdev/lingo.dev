@@ -1,5 +1,21 @@
 # lingo.dev
 
+## 0.97.0
+
+### Minor Changes
+
+- [#897](https://github.com/lingodotdev/lingo.dev/pull/897) [`a5da697`](https://github.com/lingodotdev/lingo.dev/commit/a5da697f7efd46de31d17b202d06eb5f655ed9b9) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - Add support for other providers in the compiler and implement Google AI as a provider.
+
+### Patch Changes
+
+- [#899](https://github.com/lingodotdev/lingo.dev/pull/899) [`10a0139`](https://github.com/lingodotdev/lingo.dev/commit/10a0139edc9ffbc1c52ac2226f6b0f345cc19878) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - add support for --key to `lingo.dev run`
+
+- Updated dependencies [[`a5da697`](https://github.com/lingodotdev/lingo.dev/commit/a5da697f7efd46de31d17b202d06eb5f655ed9b9)]:
+  - @lingo.dev/_compiler@0.2.0
+  - @lingo.dev/_react@0.3.0
+  - @lingo.dev/_spec@0.35.0
+  - @lingo.dev/_sdk@0.8.1
+
 ## 0.96.0
 
 ### Minor Changes
