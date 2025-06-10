@@ -98,6 +98,42 @@ pnpm lingo.dev --help # this command will use the current cli code + demo config
 
 Feel free to ask questions on our [Discord server](https://lingo.dev/go/discord)!
 
+## Adding a New LLM Provider
+
+Want to add support for a new LLM provider to Lingo.dev? Here's a checklist to help you get started:
+
+1. **Add Your Dependency**
+
+   - Install the relevant SDK/package for your provider in the necessary `package.json` (usually `cli` and/or `compiler`). Lingo.dev uses the [AI SDK](https://ai-sdk.dev) and its [providers](https://ai-sdk.dev/providers/ai-sdk-providers), so check first to make sure the AI SDK supports your provider.
+
+2. **Update the Config Schema**
+
+   - Edit [`packages/spec/src/config.ts`](./packages/spec/src/config.ts) and update the list of allowed provider `id` values to include your new provider.
+
+3. **Provider Details**
+
+   - Add your provider to [`packages/compiler/src/lib/lcp/api/provider-details.ts`](./packages/compiler/src/lib/lcp/api/provider-details.ts) with name, env var, config key, API docs, and signup link.
+
+4. **API Key Handling**
+
+   - Update [`packages/compiler/src/utils/llm-api-key.ts`](./packages/compiler/src/utils/llm-api-key.ts) to add functions for getting the API key from environment/config.
+
+5. **CLI and Compiler Logic**
+
+   - Update the CLI (e.g., [`packages/cli/src/cli/localizer/explicit.ts`](./packages/cli/src/cli/localizer/explicit.ts), [`packages/cli/src/cli/processor/index.ts`](./packages/cli/src/cli/processor/index.ts)) to support your provider.
+   - Update the compiler's translation logic to instantiate your provider's client (see [`packages/compiler/src/lib/lcp/api/index.ts`](./packages/compiler/src/lib/lcp/api/index.ts)).
+
+6. **Error Handling**
+
+   - Ensure user-facing error messages are updated to mention your provider where relevant (API key checks, troubleshooting, etc).
+
+7. **Test and Document**
+   - Add or update tests to cover your provider.
+   - Update documentation and this contributing guide as needed.
+
+**Tip:**
+Look at how existing providers like "groq" and "google" are implemented for reference. Consistency helps us maintain quality and predictability!
+
 ## Issues
 
 If you find a bug, please create an Issue and we'll triage it.
