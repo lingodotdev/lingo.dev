@@ -13,6 +13,7 @@ import {
 } from "../../utils/ui";
 import chalk from "chalk";
 import trackEvent from "../../utils/observability";
+import { determineAuthId } from "./_utils";
 
 export default new Command()
   .command("run")
@@ -98,18 +99,7 @@ export default new Command()
 
       await setup(ctx);
 
-      const isByokMode = !!ctx.config?.provider;
-
-      if (isByokMode) {
-        authId = null;
-      } else {
-        try {
-          const authStatus = await ctx.localizer?.checkAuth();
-          authId = authStatus?.username || null;
-        } catch {
-          authId = null;
-        }
-      }
+      authId = await determineAuthId(ctx);
 
       trackEvent(authId, "cmd.run.start", {
         config: ctx.config,
