@@ -5,6 +5,7 @@ import { getModuleExecutionMode, getOrCreateImport } from "./utils";
 import { findInvokations } from "./utils/invokations";
 import * as t from "@babel/types";
 import { getDictionaryPath } from "./_utils";
+import { createLocaleImportMap } from "./utils/create-locale-import-map";
 
 export const rscDictionaryLoaderMutation = createCodeMutation((payload) => {
   const mode = getModuleExecutionMode(payload.ast, payload.params.rsc);
@@ -39,19 +40,7 @@ export const rscDictionaryLoaderMutation = createCodeMutation((payload) => {
     });
 
     // Create locale import map object
-    const localeImportMap = t.objectExpression(
-      allLocales.map((locale) =>
-        t.objectProperty(
-          t.identifier(locale),
-          t.arrowFunctionExpression(
-            [],
-            t.callExpression(t.identifier("import"), [
-              t.stringLiteral(`${dictionaryPath}?locale=${locale}`),
-            ]),
-          ),
-        ),
-      ),
-    );
+    const localeImportMap = createLocaleImportMap(allLocales, dictionaryPath);
 
     // Add the locale import map as the second argument
     invokation.arguments.push(localeImportMap);

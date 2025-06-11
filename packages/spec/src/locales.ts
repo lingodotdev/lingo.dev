@@ -8,7 +8,10 @@ const localeMap = {
   // Turkish (Turkey)
   tr: ["tr-TR"],
   // Tamil (India)
-  ta: ["ta-IN"],
+  ta: [
+    "ta-IN", // India
+    "ta-SG", // Singapore
+  ],
   // Serbian
   sr: [
     "sr-RS", // Serbian (Latin)
@@ -37,6 +40,7 @@ const localeMap = {
     "en-GB", // United Kingdom
     "en-AU", // Australia
     "en-CA", // Canada
+    "en-SG", // Singapore
   ],
   // Spanish
   es: [
@@ -89,6 +93,7 @@ const localeMap = {
     "zh-CN", // Simplified Chinese (China)
     "zh-TW", // Traditional Chinese (Taiwan)
     "zh-HK", // Traditional Chinese (Hong Kong)
+    "zh-SG", // Simplified Chinese (Singapore)
     "zh-Hans", // Simplified Chinese
     "zh-Hant", // Traditional Chinese
     "zh-Hant-HK", // Traditional Chinese (Hong Kong)
