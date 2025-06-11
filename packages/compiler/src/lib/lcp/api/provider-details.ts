@@ -2,7 +2,7 @@ export const providerDetails: Record<
   string,
   {
     name: string; // Display name (e.g., "Groq", "Google")
-    apiKeyEnvVar: string; // Environment variable name (e.g., "GROQ_API_KEY")
+    apiKeyEnvVar?: string; // Environment variable name (e.g., "GROQ_API_KEY")
     apiKeyConfigKey?: string; // Config key if applicable (e.g., "llm.groqApiKey")
     getKeyLink: string; // Link to get API key
     docsLink: string; // Link to API docs for troubleshooting
@@ -21,5 +21,12 @@ export const providerDetails: Record<
     apiKeyConfigKey: "llm.googleApiKey",
     getKeyLink: "https://ai.google.dev/",
     docsLink: "https://ai.google.dev/gemini-api/docs/troubleshooting",
+  },
+  ollama: {
+    name: "Ollama",
+    apiKeyEnvVar: undefined, // Ollama doesn't use env vars for keys
+    apiKeyConfigKey: undefined, // Ollama doesn't use config keys for keys
+    getKeyLink: "https://ollama.com/download",
+    docsLink: "https://github.com/ollama/ollama/tree/main/docs",
   },
 };

@@ -1,5 +1,6 @@
 import { createGroq } from "@ai-sdk/groq";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
+import { createOllama } from "ollama-ai-provider";
 import { generateText } from "ai";
 import { DictionarySchema } from "../schema";
 import _ from "lodash";
@@ -212,7 +213,7 @@ export class LCPAPI {
     targetLocale: string,
   ): LanguageModel {
     switch (providerId) {
-      case "groq":
+      case "groq": {
         // Specific check for CI/CD or Docker missing GROQ key
         if (isRunningInCIOrDocker()) {
           const groqFromEnv = getGroqKeyFromEnv();
@@ -230,8 +231,9 @@ export class LCPAPI {
           `Creating Groq client for ${targetLocale} using model ${modelId}`,
         );
         return createGroq({ apiKey: groqKey })(modelId);
+      }
 
-      case "google":
+      case "google": {
         // Specific check for CI/CD or Docker missing Google key
         if (isRunningInCIOrDocker()) {
           const googleFromEnv = getGoogleKeyFromEnv();
@@ -249,11 +251,21 @@ export class LCPAPI {
           `Creating Google Generative AI client for ${targetLocale} using model ${modelId}`,
         );
         return createGoogleGenerativeAI({ apiKey: googleKey })(modelId);
+      }
 
-      default:
+      case "ollama": {
+        // No API key check needed for Ollama
+        console.log(
+          `Creating Ollama client for ${targetLocale} using model ${modelId} at default Ollama address`,
+        );
+        return createOllama()(modelId);
+      }
+
+      default: {
         throw new Error(
           `⚠️  Provider "${providerId}" for locale "${targetLocale}" is not supported. Only "groq" and "google" providers are supported at the moment.`,
         );
+      }
     }
   }
 
