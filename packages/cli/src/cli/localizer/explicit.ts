@@ -8,6 +8,7 @@ import { ILocalizer, LocalizerData } from "./_types";
 import { LanguageModel, Message, generateText } from "ai";
 import { colors } from "../constants";
 import { jsonrepair } from "jsonrepair";
+import { createOllama } from "ollama-ai-provider";
 
 export default function createExplicitLocalizer(
   provider: NonNullable<I18nConfig["provider"]>,
@@ -51,18 +52,28 @@ export default function createExplicitLocalizer(
         apiKeyName: "GOOGLE_API_KEY",
         baseUrl: provider.baseUrl,
       });
+    case "ollama":
+      return createAiSdkLocalizer({
+        factory: (_params) => createOllama().languageModel(provider.model),
+        id: provider.id,
+        prompt: provider.prompt,
+        authRequired: false,
+      });
   }
 }
 
 function createAiSdkLocalizer(params: {
-  factory: (params: { apiKey: string; baseUrl?: string }) => LanguageModel;
+  factory: (params: { apiKey?: string; baseUrl?: string }) => LanguageModel;
   id: NonNullable<I18nConfig["provider"]>["id"];
   prompt: string;
-  apiKeyName: string;
+  apiKeyName?: string;
   baseUrl?: string;
+  authRequired?: boolean;
 }): ILocalizer {
-  const apiKey = process.env[params.apiKeyName];
-  if (!apiKey) {
+  const authRequired = params.authRequired !== false;
+
+  const apiKey = process.env[params?.apiKeyName ?? ""];
+  if ((authRequired && !apiKey) || !params.apiKeyName) {
     throw new Error(
       dedent`
         You're trying to use raw ${chalk.dim(params.id)} API for translation, however, ${chalk.dim(params.apiKeyName)} environment variable is not set.
@@ -76,10 +87,9 @@ function createAiSdkLocalizer(params: {
     );
   }
 
-  const model = params.factory({
-    apiKey,
-    baseUrl: params.baseUrl,
-  });
+  const model = params.factory(
+    authRequired ? { apiKey, baseUrl: params.baseUrl } : {},
+  );
 
   return {
     id: params.id,
