@@ -1,5 +1,11 @@
 # @lingo.dev/\_compiler
 
+## 0.2.3
+
+### Patch Changes
+
+- [#911](https://github.com/lingodotdev/lingo.dev/pull/911) [`d7e74c6`](https://github.com/lingodotdev/lingo.dev/commit/d7e74c6cc724da8ae759ba8d8fdb1a64867d505c) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - fix hyphens in locale names
+
 ## 0.2.2
 
 ### Patch Changes
