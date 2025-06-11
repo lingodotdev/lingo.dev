@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.97.4
+
+### Patch Changes
+
+- [`2dd8170`](https://github.com/lingodotdev/lingo.dev/commit/2dd8170ff0101268f2253c9248409d184da5f75c) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - relative paths + new locales
+
 ## 0.97.3
 
 ### Patch Changes
