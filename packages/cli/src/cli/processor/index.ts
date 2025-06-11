@@ -8,6 +8,7 @@ import { createOpenAI } from "@ai-sdk/openai";
 import { colors } from "../constants";
 import { createAnthropic } from "@ai-sdk/anthropic";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
+import { createOllama } from "ollama-ai-provider";
 
 export default function createProcessor(
   provider: I18nConfig["provider"],
@@ -49,7 +50,7 @@ function getPureModelProvider(provider: I18nConfig["provider"]) {
   `;
 
   switch (provider?.id) {
-    case "openai":
+    case "openai": {
       if (!process.env.OPENAI_API_KEY) {
         throw new Error(
           createMissingKeyErrorMessage("OpenAI", "OPENAI_API_KEY"),
@@ -59,7 +60,8 @@ function getPureModelProvider(provider: I18nConfig["provider"]) {
         apiKey: process.env.OPENAI_API_KEY,
         baseURL: provider.baseUrl,
       })(provider.model);
-    case "anthropic":
+    }
+    case "anthropic": {
       if (!process.env.ANTHROPIC_API_KEY) {
         throw new Error(
           createMissingKeyErrorMessage("Anthropic", "ANTHROPIC_API_KEY"),
@@ -68,7 +70,8 @@ function getPureModelProvider(provider: I18nConfig["provider"]) {
       return createAnthropic({
         apiKey: process.env.ANTHROPIC_API_KEY,
       })(provider.model);
-    case "google":
+    }
+    case "google": {
       if (!process.env.GOOGLE_API_KEY) {
         throw new Error(
           createMissingKeyErrorMessage("Google", "GOOGLE_API_KEY"),
@@ -77,7 +80,13 @@ function getPureModelProvider(provider: I18nConfig["provider"]) {
       return createGoogleGenerativeAI({
         apiKey: process.env.GOOGLE_API_KEY,
       })(provider.model);
-    default:
+    }
+    case "ollama": {
+      // No API key check needed for Ollama
+      return createOllama()(provider.model);
+    }
+    default: {
       throw new Error(createUnsupportedProviderErrorMessage(provider?.id));
+    }
   }
 }

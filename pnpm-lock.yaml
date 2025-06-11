@@ -394,6 +394,9 @@ importers:
       octokit:
         specifier: ^4.0.2
         version: 4.1.2
+      ollama-ai-provider:
+        specifier: ^1.2.0
+        version: 1.2.0(zod@3.24.1)
       open:
         specifier: ^10.1.2
         version: 10.1.2
