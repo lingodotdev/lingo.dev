@@ -88,7 +88,7 @@ function createAiSdkLocalizer(params: {
   }
 
   const model = params.factory(
-    authRequired ? { apiKey, baseUrl: params.baseUrl } : {},
+    skipAuth ? {} : { apiKey, baseUrl: params.baseUrl },
   );
 
   return {
