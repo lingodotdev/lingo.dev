@@ -70,7 +70,7 @@ function createAiSdkLocalizer(params: {
   baseUrl?: string;
   skipAuth?: boolean;
 }): ILocalizer {
-  const skipAuth = params.skipAuth == true;
+  const skipAuth = params.skipAuth === true;
 
   const apiKey = process.env[params?.apiKeyName ?? ""];
   if ((!skipAuth && !apiKey) || !params.apiKeyName) {
