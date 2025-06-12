@@ -57,7 +57,7 @@ export default function createExplicitLocalizer(
         factory: (_params) => createOllama().languageModel(provider.model),
         id: provider.id,
         prompt: provider.prompt,
-        authRequired: false,
+        skipAuth: false,
       });
   }
 }
@@ -68,9 +68,9 @@ function createAiSdkLocalizer(params: {
   prompt: string;
   apiKeyName?: string;
   baseUrl?: string;
-  authRequired?: boolean;
+  skipAuth?: boolean;
 }): ILocalizer {
-  const authRequired = params.authRequired !== false;
+  const authRequired = params.skipAuth !== false;
 
   const apiKey = process.env[params?.apiKeyName ?? ""];
   if ((authRequired && !apiKey) || !params.apiKeyName) {
