@@ -37,7 +37,7 @@ export function jsxFragmentMutation(
       if (!fragmentImportName) {
         const result = getOrCreateImport(ast, {
           exportedName: "Fragment",
-          moduleName: "react",
+          moduleName: ["react"],
         });
         fragmentImportName = result.importedName;
       }
@@ -85,7 +85,7 @@ export function transformFragmentShorthand(ast: t.Node): boolean {
       if (!fragmentImportName) {
         const result = getOrCreateImport(ast, {
           exportedName: "Fragment",
-          moduleName: "react",
+          moduleName: ["react"],
         });
         fragmentImportName = result.importedName;
       }
