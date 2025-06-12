@@ -1,5 +1,11 @@
 # @lingo.dev/\_compiler
 
+## 0.2.4
+
+### Patch Changes
+
+- [#919](https://github.com/lingodotdev/lingo.dev/pull/919) [`3b6574f`](https://github.com/lingodotdev/lingo.dev/commit/3b6574f0499f3f4d3c48f66ba2b828d2c1c0ceb0) Thanks [@mathio](https://github.com/mathio)! - update package import names
+
 ## 0.2.3
 
 ### Patch Changes
