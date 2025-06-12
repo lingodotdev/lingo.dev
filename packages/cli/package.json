@@ -169,6 +169,7 @@
     "node-webvtt": "^1.9.4",
     "object-hash": "^3.0.0",
     "octokit": "^4.0.2",
+    "ollama-ai-provider": "^1.2.0",
     "open": "^10.1.2",
     "ora": "^8.1.1",
     "p-limit": "^6.2.0",
