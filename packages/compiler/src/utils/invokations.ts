@@ -4,7 +4,7 @@ import traverse, { NodePath } from "@babel/traverse";
 export function findInvokations(
   ast: t.File,
   params: {
-    moduleName: string;
+    moduleName: string[];
     functionName: string;
   },
 ) {
@@ -12,7 +12,7 @@ export function findInvokations(
 
   traverse(ast, {
     ImportDeclaration(path) {
-      if (path.node.source.value !== params.moduleName) return;
+      if (!params.moduleName.includes(path.node.source.value)) return;
 
       const importNames = new Map<string, boolean | string>();
       const specifiers = path.node.specifiers;

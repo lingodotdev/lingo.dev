@@ -29,7 +29,7 @@ export function getOrCreateImport(
   ast: t.Node,
   params: {
     exportedName: string;
-    moduleName: string;
+    moduleName: string[];
   },
 ): { importedName: string } {
   let importedName = params.exportedName;
@@ -60,13 +60,13 @@ export function getOrCreateImport(
 function findExistingImport(
   ast: t.Node,
   exportedName: string,
-  moduleName: string,
+  moduleName: string[],
 ): string | null {
   let result: string | null = null;
 
   traverse(ast, {
     ImportDeclaration(path) {
-      if (path.node.source.value !== moduleName) {
+      if (!moduleName.includes(path.node.source.value)) {
         return;
       }
 
@@ -121,7 +121,7 @@ function createImportDeclaration(
   ast: t.Node,
   localName: string,
   exportedName: string,
-  moduleName: string,
+  moduleName: string[],
 ): void {
   traverse(ast, {
     Program(path) {
@@ -137,7 +137,7 @@ function createImportDeclaration(
         .find(
           (nodePath) =>
             t.isImportDeclaration(nodePath.node) &&
-            nodePath.node.source.value === moduleName,
+            moduleName.includes(nodePath.node.source.value),
         );
 
       if (existingImport && t.isImportDeclaration(existingImport.node)) {
@@ -147,7 +147,7 @@ function createImportDeclaration(
         // Create a new import declaration
         const importDeclaration = t.importDeclaration(
           [importSpecifier],
-          t.stringLiteral(moduleName),
+          t.stringLiteral(moduleName[0]),
         );
 
         // Add it at the top of the file, after any existing imports
