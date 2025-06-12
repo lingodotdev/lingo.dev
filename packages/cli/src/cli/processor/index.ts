@@ -12,7 +12,7 @@ import { createOllama } from "ollama-ai-provider";
 
 export default function createProcessor(
   provider: I18nConfig["provider"],
-  params: { apiKey: string; apiUrl: string },
+  params: { apiKey?: string; apiUrl: string },
 ): LocalizerFn {
   if (!provider) {
     const result = createLingoLocalizer(params);
@@ -27,7 +27,7 @@ export default function createProcessor(
 function getPureModelProvider(provider: I18nConfig["provider"]) {
   const createMissingKeyErrorMessage = (
     providerId: string,
-    envVar: string,
+    envVar?: string,
   ) => dedent`
   You're trying to use raw ${chalk.dim(providerId)} API for translation. ${envVar ? `However, ${chalk.dim(envVar)} environment variable is not set.` : "However, that provider is unavailable."}
 
