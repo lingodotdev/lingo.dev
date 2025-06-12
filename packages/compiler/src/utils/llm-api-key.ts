@@ -48,3 +48,13 @@ export function getGoogleKeyFromRc() {
 export function getGoogleKeyFromEnv() {
   return getKeyFromEnv("GOOGLE_API_KEY");
 }
+
+export function getOpenRouterKey() {
+  return getOpenRouterKeyFromEnv() || getOpenRouterKeyFromRc();
+}
+export function getOpenRouterKeyFromRc() {
+  return getKeyFromRc("llm.openrouterApiKey");
+}
+export function getOpenRouterKeyFromEnv() {
+  return getKeyFromEnv("OPENROUTER_API_KEY");
+}

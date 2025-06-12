@@ -37,6 +37,7 @@ export function getSettings(explicitApiKey: string | undefined): CliSettings {
       anthropicApiKey: env.ANTHROPIC_API_KEY || systemFile.llm?.anthropicApiKey,
       groqApiKey: env.GROQ_API_KEY || systemFile.llm?.groqApiKey,
       googleApiKey: env.GOOGLE_API_KEY || systemFile.llm?.googleApiKey,
+      openrouterApiKey:env.OPENROUTER_API_KEY || systemFile.llm?.openrouterApiKey,
     },
   };
 }
@@ -70,6 +71,7 @@ const SettingsSchema = Z.object({
     anthropicApiKey: Z.string().optional(),
     groqApiKey: Z.string().optional(),
     googleApiKey: Z.string().optional(),
+    openrouterApiKey: Z.string().optional(),
   }),
 });
 
@@ -99,6 +101,7 @@ function _loadEnv() {
     ANTHROPIC_API_KEY: Z.string().optional(),
     GROQ_API_KEY: Z.string().optional(),
     GOOGLE_API_KEY: Z.string().optional(),
+    OPENROUTER_API_KEY: Z.string().optional(),
   })
     .passthrough()
     .parse(process.env);
@@ -122,6 +125,7 @@ function _loadSystemFile() {
       anthropicApiKey: Z.string().optional(),
       groqApiKey: Z.string().optional(),
       googleApiKey: Z.string().optional(),
+      openrouterApiKey: Z.string().optional(),
     }).optional(),
   })
     .passthrough()
@@ -190,6 +194,12 @@ function _envVarsInfo() {
     console.info(
       "\x1b[36m%s\x1b[0m",
       `ℹ️  Using GOOGLE_API_KEY env var instead of key from user config`,
+    );
+  }
+  if (env.OPENROUTER_API_KEY && systemFile.llm?.openrouterApiKey) {
+    console.info(
+      "\x1b[36m%s\x1b[0m",
+      `ℹ️  Using OPENROUTER_API_KEY env var instead of key from user config`,
     );
   }
   if (env.LINGODOTDEV_API_URL) {

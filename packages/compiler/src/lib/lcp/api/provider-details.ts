@@ -1,3 +1,5 @@
+import { openrouter } from "@openrouter/ai-sdk-provider";
+
 export const providerDetails: Record<
   string,
   {
@@ -21,5 +23,12 @@ export const providerDetails: Record<
     apiKeyConfigKey: "llm.googleApiKey",
     getKeyLink: "https://ai.google.dev/",
     docsLink: "https://ai.google.dev/gemini-api/docs/troubleshooting",
+  },
+  openrouter: {
+    name: "OpenRouter",
+    apiKeyEnvVar: "OPENROUTER_API_KEY",
+    apiKeyConfigKey: "llm.openrouterApiKey",
+    getKeyLink: "https://openrouter.ai",
+    docsLink: "https://openrouter.ai/docs",
   },
 };

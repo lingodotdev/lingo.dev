@@ -1,6 +1,7 @@
 import { createAnthropic } from "@ai-sdk/anthropic";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { createOpenAI } from "@ai-sdk/openai";
+import { createOpenRouter } from '@openrouter/ai-sdk-provider';
 import { I18nConfig } from "@lingo.dev/_spec";
 import chalk from "chalk";
 import dedent from "dedent";
@@ -49,6 +50,15 @@ export default function createExplicitLocalizer(
         id: provider.id,
         prompt: provider.prompt,
         apiKeyName: "GOOGLE_API_KEY",
+        baseUrl: provider.baseUrl,
+      });
+    case "openrouter":
+      return createAiSdkLocalizer({
+        factory: (params) =>
+          createOpenRouter(params).languageModel(provider.model),
+        id: provider.id,
+        prompt: provider.prompt,
+        apiKeyName: "OPENROUTER_API_KEY",
         baseUrl: provider.baseUrl,
       });
   }

@@ -128,6 +128,7 @@
     "@lingo.dev/_sdk": "workspace:*",
     "@lingo.dev/_spec": "workspace:*",
     "@modelcontextprotocol/sdk": "^1.5.0",
+    "@openrouter/ai-sdk-provider": "^0.7.1",
     "@paralleldrive/cuid2": "^2.2.2",
     "ai": "^4.3.15",
     "bitbucket": "^2.12.0",

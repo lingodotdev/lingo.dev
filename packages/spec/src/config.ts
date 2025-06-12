@@ -254,7 +254,7 @@ export const configV1_4Definition = extendConfigDefinition(
 // v1.4 -> v1.5
 // Changes: add "provider" field to the config
 const providerSchema = Z.object({
-  id: Z.enum(["openai", "anthropic", "google"]),
+  id: Z.enum(["openai", "anthropic", "google", "openrouter"]),
   model: Z.string(),
   prompt: Z.string(),
   baseUrl: Z.string().optional(),
