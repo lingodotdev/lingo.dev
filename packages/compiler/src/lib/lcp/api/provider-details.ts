@@ -24,8 +24,8 @@ export const providerDetails: Record<
   },
   ollama: {
     name: "Ollama",
-    apiKeyEnvVar: undefined, // Ollama doesn't use env vars for keys
-    apiKeyConfigKey: undefined, // Ollama doesn't use config keys for keys
+    apiKeyEnvVar: undefined, // Ollama doesn't require an API key
+    apiKeyConfigKey: undefined, // Ollama doesn't require an API key
     getKeyLink: "https://ollama.com/download",
     docsLink: "https://github.com/ollama/ollama/tree/main/docs",
   },
