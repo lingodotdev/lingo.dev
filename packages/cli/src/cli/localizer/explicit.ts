@@ -57,7 +57,7 @@ export default function createExplicitLocalizer(
         factory: (_params) => createOllama().languageModel(provider.model),
         id: provider.id,
         prompt: provider.prompt,
-        skipAuth: false,
+        skipAuth: true,
       });
   }
 }
@@ -70,10 +70,10 @@ function createAiSdkLocalizer(params: {
   baseUrl?: string;
   skipAuth?: boolean;
 }): ILocalizer {
-  const authRequired = params.skipAuth !== false;
+  const skipAuth = params.skipAuth == true;
 
   const apiKey = process.env[params?.apiKeyName ?? ""];
-  if ((authRequired && !apiKey) || !params.apiKeyName) {
+  if ((!skipAuth && !apiKey) || !params.apiKeyName) {
     throw new Error(
       dedent`
         You're trying to use raw ${chalk.dim(params.id)} API for translation, however, ${chalk.dim(params.apiKeyName)} environment variable is not set.
