@@ -1,5 +1,11 @@
 # @lingo.dev/\_react
 
+## 0.4.0
+
+### Minor Changes
+
+- [`95c23cc`](https://github.com/lingodotdev/lingo.dev/commit/95c23ccbafd335939832dbdd0f995ebcb23082fd) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - add className support to language switcher component
+
 ## 0.3.0
 
 ### Minor Changes
