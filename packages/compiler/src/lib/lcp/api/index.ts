@@ -1,5 +1,6 @@
 import { createGroq } from "@ai-sdk/groq";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
+import { createOpenRouter } from '@openrouter/ai-sdk-provider';
 import { createOllama } from "ollama-ai-provider";
 import { generateText } from "ai";
 import { DictionarySchema } from "../schema";
@@ -13,6 +14,8 @@ import {
   getGroqKeyFromEnv,
   getGoogleKey,
   getGoogleKeyFromEnv,
+  getOpenRouterKey,
+  getOpenRouterKeyFromEnv,
 } from "../../../utils/llm-api-key";
 import dedent from "dedent";
 import { isRunningInCIOrDocker } from "../../../utils/env";
@@ -251,6 +254,27 @@ export class LCPAPI {
           `Creating Google Generative AI client for ${targetLocale} using model ${modelId}`,
         );
         return createGoogleGenerativeAI({ apiKey: googleKey })(modelId);
+      } 
+      case "openrouter": {
+        // Specific check for CI/CD or Docker missing OpenRouter key
+        if (isRunningInCIOrDocker()) {
+          const openRouterFromEnv = getOpenRouterKeyFromEnv();
+          if (!openRouterFromEnv) {
+            this._failMissingLLMKeyCi(providerId);
+          }
+        }
+        const openRouterKey = getOpenRouterKey();
+        if (!openRouterKey) {
+          throw new Error(
+            "⚠️  OpenRouter API key not found. Please set OPENROUTER_API_KEY environment variable or configure it user-wide.",
+          );
+        }
+        console.log(
+          `Creating OpenRouter client for ${targetLocale} using model ${modelId}`,
+        );
+        return createOpenRouter({
+          apiKey: openRouterKey,
+        })(modelId);
       }
 
       case "ollama": {
