@@ -1,5 +1,20 @@
 # @lingo.dev/\_compiler
 
+## 0.3.0
+
+### Minor Changes
+
+- [#913](https://github.com/lingodotdev/lingo.dev/pull/913) [`1b9b113`](https://github.com/lingodotdev/lingo.dev/commit/1b9b11301978e8caa2555832d027ff93216aa6e1) Thanks [@The-Best-Codes](https://github.com/The-Best-Codes)! - Add support for Ollama as a CLI and Compiler provider.
+
+- [#922](https://github.com/lingodotdev/lingo.dev/pull/922) [`0329a9c`](https://github.com/lingodotdev/lingo.dev/commit/0329a9cdb5e5a63fcecab4efcd7cce22f155a0e9) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - add openrouter ais support for compiler
+
+### Patch Changes
+
+- [#925](https://github.com/lingodotdev/lingo.dev/pull/925) [`215af19`](https://github.com/lingodotdev/lingo.dev/commit/215af1944667cce66e9c5966f4fb627186687b74) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - improved compiler concurrency, caching, added lingo.dev engine to the compiler, and updated demo apps
+
+- Updated dependencies []:
+  - @lingo.dev/_sdk@0.9.1
+
 ## 0.2.4
 
 ### Patch Changes
