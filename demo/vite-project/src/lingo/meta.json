@@ -35,30 +35,6 @@
           "overrides": {},
           "content": "Welcome to your new Vite & React application! This starter template includes everything you need to get started with Vite & React and Lingo.dev for internationalization."
         },
-        "7/body/1/argument/5/1": {
-          "type": "element",
-          "hash": "c0057f8ebaf4debdf07033f51a6fd99d",
-          "context": "",
-          "skip": false,
-          "overrides": {},
-          "content": "count is {count}"
-        },
-        "7/body/1/argument/5/3": {
-          "type": "element",
-          "hash": "d373807bd0794bcfad789f038c92d8d4",
-          "context": "",
-          "skip": false,
-          "overrides": {},
-          "content": "Edit <element:code>src/App.tsx</element:code> and save to test HMR"
-        },
-        "7/body/1/argument/7": {
-          "type": "element",
-          "hash": "fee72ece6f86de4a1331fb2bbfb53919",
-          "context": "",
-          "skip": false,
-          "overrides": {},
-          "content": "Click on the logos above to learn more"
-        },
         "7/body/1/argument/7/1": {
           "type": "element",
           "hash": "c0057f8ebaf4debdf07033f51a6fd99d",

@@ -596,6 +596,9 @@ importers:
       ollama-ai-provider:
         specifier: ^1.2.0
         version: 1.2.0(zod@3.24.1)
+      p-limit:
+        specifier: ^6.2.0
+        version: 6.2.0
       prettier:
         specifier: ^3.4.2
         version: 3.4.2

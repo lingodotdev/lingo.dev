@@ -14,9 +14,7 @@ export default defineConfig(() =>
   lingoCompiler.vite({
     sourceRoot: "src",
     targetLocales: ["es", "fr", "ru", "de", "ja", "zh", "ar", "ko"],
-    models: {
-      "*:*": "groq:mistral-saba-24b",
-    },
+    models: "Lingo.dev",
   })(viteConfig),
 );
 // export default defineConfig({

@@ -1,8 +1,9 @@
 import { createGroq } from "@ai-sdk/groq";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
-import { createOpenRouter } from '@openrouter/ai-sdk-provider';
+import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { createOllama } from "ollama-ai-provider";
 import { generateText } from "ai";
+import { LingoDotDevEngine } from "@lingo.dev/_sdk";
 import { DictionarySchema } from "../schema";
 import _ from "lodash";
 import { getLocaleModel } from "../../../utils/locales";
@@ -16,6 +17,8 @@ import {
   getGoogleKeyFromEnv,
   getOpenRouterKey,
   getOpenRouterKeyFromEnv,
+  getLingoDotDevKeyFromEnv,
+  getLingoDotDevKey,
 } from "../../../utils/llm-api-key";
 import dedent from "dedent";
 import { isRunningInCIOrDocker } from "../../../utils/env";
@@ -24,7 +27,7 @@ import { providerDetails } from "./provider-details";
 
 export class LCPAPI {
   static async translate(
-    models: Record<string, string>,
+    models: "lingo.dev" | Record<string, string>,
     sourceDictionary: DictionarySchema,
     sourceLocale: string,
     targetLocale: string,
@@ -130,74 +133,139 @@ export class LCPAPI {
     return dictionary;
   }
 
+  private static _createLingoDotDevEngine() {
+    // Specific check for CI/CD or Docker missing GROQ key
+    if (isRunningInCIOrDocker()) {
+      const apiKeyFromEnv = getLingoDotDevKeyFromEnv();
+      if (!apiKeyFromEnv) {
+        this._failMissingLLMKeyCi("lingo.dev");
+      }
+    }
+    const apiKey = getLingoDotDevKey();
+    if (!apiKey) {
+      throw new Error(
+        "⚠️  Lingo.dev API key not found. Please set LINGODOTDEV_API_KEY environment variable or configure it user-wide.",
+      );
+    }
+    console.log(`Creating Lingo.dev client`);
+    return new LingoDotDevEngine({
+      apiKey,
+    });
+  }
+
   private static async _translateChunk(
-    models: Record<string, string>,
+    models: "lingo.dev" | Record<string, string>,
     sourceDictionary: DictionarySchema,
     sourceLocale: string,
     targetLocale: string,
   ): Promise<DictionarySchema> {
-    const { provider, model } = getLocaleModel(
-      models,
-      sourceLocale,
-      targetLocale,
-    );
+    if (models === "lingo.dev") {
+      try {
+        const lingoDotDevEngine = this._createLingoDotDevEngine();
 
-    if (!provider || !model) {
-      // Ensure both provider and model are found
-      throw new Error(
-        `⚠️  Locale "${targetLocale}" is not configured. Add provider and model for this locale to your config, e.g., "groq:llama3-8b-8192".`,
-      );
-    }
+        console.log(
+          `✨ Using Lingo.dev Engine to localize from "${sourceLocale}" to "${targetLocale}"`,
+        );
 
-    try {
-      const aiModel = this._createAiModel(provider, model, targetLocale);
-
-      console.log(
-        `✨ Using model "${model}" from "${provider}" to translate from "${sourceLocale}" to "${targetLocale}"`,
-      );
-
-      const response = await generateText({
-        model: aiModel,
-        messages: [
+        const result = await lingoDotDevEngine.localizeObject(
+          sourceDictionary,
           {
-            role: "system",
-            content: getSystemPrompt({ sourceLocale, targetLocale }),
+            sourceLocale: sourceLocale,
+            targetLocale: targetLocale,
           },
-          ...shots.flatMap((shotsTuple) => [
-            {
-              role: "user" as const,
-              content: obj2xml(shotsTuple[0]),
-            },
-            {
-              role: "assistant" as const,
-              content: obj2xml(shotsTuple[1]),
-            },
-          ]),
-          {
-            role: "user",
-            content: obj2xml(sourceDictionary),
-          },
-        ],
-      });
+        );
 
-      console.log("Response text received for", targetLocale);
-      let responseText = response.text;
-      // Extract XML content
-      responseText = responseText.substring(
-        responseText.indexOf("<"),
-        responseText.lastIndexOf(">") + 1,
-      );
-
-      return xml2obj(responseText);
-    } catch (error) {
-      this._failLLMFailureLocal(
-        provider,
+        return result as DictionarySchema;
+      } catch (error) {
+        this._failLLMFailureLocal(
+          "lingo.dev",
+          targetLocale,
+          error instanceof Error ? error.message : "Unknown error",
+        );
+        // This throw is unreachable because the failure method exits,
+        // but it helps satisfy the TypeScript compiler.
+        throw error;
+      }
+    } else {
+      const { provider, model } = getLocaleModel(
+        models,
+        sourceLocale,
         targetLocale,
-        error instanceof Error ? error.message : "Unknown error",
       );
-      // This throw is unreachable because the failure method exits,
-      // but it helps satisfy the TypeScript compiler.
-      throw error;
+
+      if (!provider || !model) {
+        throw new Error(
+          dedent`
+            🚫  Lingo.dev Localization Engine Not Configured!
+
+            The "models" parameter is missing or incomplete in your Lingo.dev configuration.
+
+            👉 To fix this, set the "models" parameter to either:
+               • "lingo.dev" (for the default engine)
+               • a map of locale-to-model, e.g. { "models": { "en:es": "openai:gpt-3.5-turbo" } }
+
+            Example:
+              {
+                // ...
+                "models": "lingo.dev"
+              }
+
+            For more details, see: https://lingo.dev/compiler
+            To get help, join our Discord: https://lingo.dev/go/discord
+            `,
+        );
+      }
+
+      try {
+        const aiModel = this._createAiModel(provider, model, targetLocale);
+
+        console.log(
+          `ℹ️ Using raw LLM API ("${provider}":"${model}") to translate from "${sourceLocale}" to "${targetLocale}"`,
+        );
+
+        const response = await generateText({
+          model: aiModel,
+          messages: [
+            {
+              role: "system",
+              content: getSystemPrompt({ sourceLocale, targetLocale }),
+            },
+            ...shots.flatMap((shotsTuple) => [
+              {
+                role: "user" as const,
+                content: obj2xml(shotsTuple[0]),
+              },
+              {
+                role: "assistant" as const,
+                content: obj2xml(shotsTuple[1]),
+              },
+            ]),
+            {
+              role: "user",
+              content: obj2xml(sourceDictionary),
+            },
+          ],
+        });
+
+        console.log("Response text received for", targetLocale);
+        let responseText = response.text;
+        // Extract XML content
+        responseText = responseText.substring(
+          responseText.indexOf("<"),
+          responseText.lastIndexOf(">") + 1,
+        );
+
+        return xml2obj(responseText);
+      } catch (error) {
+        this._failLLMFailureLocal(
+          provider,
+          targetLocale,
+          error instanceof Error ? error.message : "Unknown error",
+        );
+        // This throw is unreachable because the failure method exits,
+        // but it helps satisfy the TypeScript compiler.
+        throw error;
+      }
     }
   }
 
@@ -254,7 +322,7 @@ export class LCPAPI {
           `Creating Google Generative AI client for ${targetLocale} using model ${modelId}`,
         );
         return createGoogleGenerativeAI({ apiKey: googleKey })(modelId);
-      } 
+      }
       case "openrouter": {
         // Specific check for CI/CD or Docker missing OpenRouter key
         if (isRunningInCIOrDocker()) {

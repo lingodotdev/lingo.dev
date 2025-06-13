@@ -15,7 +15,6 @@ import jsxRootFlagMutation from "./jsx-root-flag";
 import jsxScopeFlagMutation from "./jsx-scope-flag";
 import jsxAttributeFlagMutation from "./jsx-attribute-flag";
 import path from "path";
-import fs from "fs";
 import { parseParametrizedModuleId } from "./utils/module-params";
 import { LCP } from "./lib/lcp";
 import { LCPServer } from "./lib/lcp/server";
@@ -37,6 +36,8 @@ import {
   getGroqKeyFromRc,
   getGoogleKeyFromEnv,
   getGoogleKeyFromRc,
+  getLingoDotDevKeyFromEnv,
+  getLingoDotDevKeyFromRc,
 } from "./utils/llm-api-key";
 import { isRunningInCIOrDocker } from "./utils/env";
 import { providerDetails } from "./lib/lcp/api/provider-details";
@@ -56,6 +57,10 @@ const keyCheckers: Record<
     checkEnv: getGoogleKeyFromEnv,
     checkRc: getGoogleKeyFromRc,
   },
+  "lingo.dev": {
+    checkEnv: getLingoDotDevKeyFromEnv,
+    checkRc: getLingoDotDevKeyFromRc,
+  },
 };
 
 const unplugin = createUnplugin<Partial<typeof defaultParams> | undefined>(
@@ -66,27 +71,32 @@ const unplugin = createUnplugin<Partial<typeof defaultParams> | undefined>(
 
     // Validate if not in CI or Docker
     if (!isRunningInCIOrDocker()) {
-      validateLLMKeyDetails(params.models);
-    }
+      if (params.models === "lingo.dev") {
+        validateLLMKeyDetails(["lingo.dev"]);
+      } else {
+        const configuredProviders = getConfiguredProviders(params.models);
+        validateLLMKeyDetails(configuredProviders);
 
-    const invalidLocales = getInvalidLocales(
-      params.models,
-      params.sourceLocale,
-      params.targetLocales,
-    );
-    if (invalidLocales.length > 0) {
-      console.log(dedent`
-        \n
-        ⚠️  Lingo.dev Localization Compiler requires LLM model setup for the following locales: ${invalidLocales.join(", ")}.
-
-        ⭐️ Next steps:
-        1. Refer to documentation for help: https://docs.lingo.dev/
-        2. If you want to use a different LLM, raise an issue in our open-source repo: https://lingo.dev/go/gh
-        3. If you have questions, feature requests, or would like to contribute, join our Discord: https://lingo.dev/go/discord
-
-        ✨
-      `);
-      process.exit(1);
+        const invalidLocales = getInvalidLocales(
+          params.models,
+          params.sourceLocale,
+          params.targetLocales,
+        );
+        if (invalidLocales.length > 0) {
+          console.log(dedent`
+            \n
+            ⚠️  Lingo.dev Localization Compiler requires LLM model setup for the following locales: ${invalidLocales.join(", ")}.
+    
+            ⭐️ Next steps:
+            1. Refer to documentation for help: https://docs.lingo.dev/
+            2. If you want to use a different LLM, raise an issue in our open-source repo: https://lingo.dev/go/gh
+            3. If you have questions, feature requests, or would like to contribute, join our Discord: https://lingo.dev/go/discord
+    
+            ✨
+          `);
+          process.exit(1);
+        }
+      }
     }
 
     LCPCache.ensureDictionaryFile({
@@ -122,6 +132,8 @@ const unplugin = createUnplugin<Partial<typeof defaultParams> | undefined>(
           lingoDir: params.lingoDir,
         });
         const dictionary = dictionaries[moduleInfo.params.locale];
+
+        console.log(JSON.stringify(dictionary, null, 2));
 
         return {
           code: `export default ${JSON.stringify(dictionary, null, 2)}`,
@@ -206,13 +218,11 @@ export default {
 };
 
 /**
- * Print helpful information about where the LLM API keys for configured providers
- * were discovered. The compiler looks for the key first in the environment
- * (incl. .env files) and then in the user-wide configuration. Environment always wins.
- * @param models The locale to model mapping configuration.
+ * Extract a list of supported LLM provider IDs from the locale→model mapping.
+ * @param models Mapping from locale to "<providerId>:<modelName>" strings.
  */
-function validateLLMKeyDetails(models: Record<string, string>): void {
-  const configuredProviders = _.chain(Object.values(models))
+function getConfiguredProviders(models: Record<string, string>): string[] {
+  return _.chain(Object.values(models))
     .map((modelString) => modelString.split(":")[0]) // Extract provider ID
     .filter(Boolean) // Remove empty strings
     .uniq() // Get unique providers
@@ -222,7 +232,15 @@ function validateLLMKeyDetails(models: Record<string, string>): void {
         keyCheckers.hasOwnProperty(providerId),
     ) // Only check for known and implemented providers
     .value();
+}
 
+/**
+ * Print helpful information about where the LLM API keys for configured providers
+ * were discovered. The compiler looks for the key first in the environment
+ * (incl. .env files) and then in the user-wide configuration. Environment always wins.
+ * @param configuredProviders List of provider IDs detected in the configuration.
+ */
+function validateLLMKeyDetails(configuredProviders: string[]): void {
   if (configuredProviders.length === 0) {
     // No LLM providers configured that we can validate keys for.
     return;
