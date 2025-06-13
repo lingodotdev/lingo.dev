@@ -8,6 +8,7 @@ import { createOpenAI } from "@ai-sdk/openai";
 import { colors } from "../constants";
 import { createAnthropic } from "@ai-sdk/anthropic";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
+import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { createOllama } from "ollama-ai-provider";
 
 export default function createProcessor(
@@ -79,6 +80,17 @@ function getPureModelProvider(provider: I18nConfig["provider"]) {
       }
       return createGoogleGenerativeAI({
         apiKey: process.env.GOOGLE_API_KEY,
+      })(provider.model);
+    }
+    case "openrouter": {
+      if (!process.env.OPENROUTER_API_KEY) {
+        throw new Error(
+          createMissingKeyErrorMessage("OpenRouter", "OPENROUTER_API_KEY"),
+        );
+      }
+      return createOpenRouter({
+        apiKey: process.env.OPENROUTER_API_KEY,
+        baseURL: provider.baseUrl,
       })(provider.model);
     }
     case "ollama": {
