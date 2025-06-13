@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { getLocaleFromCookies, setLocaleInCookies } from "./utils";
 
 export type LocaleSwitcherProps = {
+  className?: string;
   locales: string[];
 };
 
@@ -23,6 +24,7 @@ export function LocaleSwitcher(props: LocaleSwitcherProps) {
   return (
     <select
       value={locale}
+      className={props.className}
       onChange={(e) => {
         handleLocaleChange(e.target.value);
       }}
