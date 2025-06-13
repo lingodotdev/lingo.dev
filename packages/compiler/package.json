@@ -36,6 +36,7 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
+    "@lingo.dev/_sdk": "workspace:*",
     "@ai-sdk/google": "^1.2.19",
     "@ai-sdk/groq": "^1.2.3",
     "@babel/generator": "^7.26.5",
