@@ -21,14 +21,14 @@ import { reactRouterDictionaryLoaderMutation } from "./react-router-dictionary-l
 import { rscDictionaryLoaderMutation } from "./rsc-dictionary-loader";
 import { parseParametrizedModuleId } from "./utils/module-params";
 
-// This single loader handles both component transformations and dictionary generation.
+// This loader handles component transformations and dictionary generation
 export default async function (this: any, source: string) {
   const callback = this.async();
   const params = this.getOptions();
   const fullResourcePath = `${this.resourcePath}${this.resourceQuery || ""}`;
 
   try {
-    // --- Dictionary Loading Logic ---
+    // Dictionary loading
     if (this.resourcePath.endsWith(LCP_DICTIONARY_FILE_NAME)) {
       const moduleInfo = parseParametrizedModuleId(fullResourcePath);
       const locale = moduleInfo.params.locale;
@@ -63,7 +63,7 @@ export default async function (this: any, source: string) {
       return callback(null, code);
     }
 
-    // --- Component Transformation Logic ---
+    // Component transformation
     const result = _.chain({
       code: source,
       params,

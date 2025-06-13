@@ -205,7 +205,7 @@ export default {
         compilerParams,
       );
 
-      // Webpack Support (unchanged)
+      // Webpack
       const originalWebpack = nextConfig.webpack;
       nextConfig.webpack = (config: any, options: any) => {
         config.plugins.unshift(unplugin.webpack(mergedParams));
@@ -215,22 +215,17 @@ export default {
         return config;
       };
 
-      // Turbopack Support
+      // Turbopack
       nextConfig.turbopack ??= {};
       nextConfig.turbopack.rules ??= {};
       const rules = nextConfig.turbopack.rules;
 
-      // A single rule to capture all relevant files for Lingo.dev
+      // Regex for all relevant files for Lingo.dev
       const lingoGlob = `**/*.{ts,tsx,js,jsx}`;
 
-      // Correctly resolve the path to the *compiled* loader in the `dist` directory.
-      // This path must be correct relative to the final package structure.
-      const lingoLoaderPath = require
-        .resolve("./lingo-turbopack-loader")
-        .replace("/src/", "/dist/");
+      const lingoLoaderPath = require.resolve("./lingo-turbopack-loader");
 
       rules[lingoGlob] = {
-        //as: "*.tsx", // Process matching files as TSX
         loaders: [
           {
             loader: lingoLoaderPath,
