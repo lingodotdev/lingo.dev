@@ -14,7 +14,7 @@ export default defineConfig(() =>
   lingoCompiler.vite({
     sourceRoot: "src",
     targetLocales: ["es", "fr", "ru", "de", "ja", "zh", "ar", "ko"],
-    models: "Lingo.dev",
+    models: "lingo.dev",
   })(viteConfig),
 );
 // export default defineConfig({

@@ -7,7 +7,6 @@ import {
 import _ from "lodash";
 import { LCPCache } from "./cache";
 import { LCPAPI } from "./api";
-import pLimit from "p-limit";
 
 export type LCPServerParams = {
   lcp: LCPSchema;
@@ -28,7 +27,6 @@ export type LCPServerParamsForLocale = {
 };
 
 export class LCPServer {
-  private static loadLimit = pLimit(1);
   private static dictionariesCache: Record<string, DictionarySchema> | null =
     null;
   private static inFlightPromise: Promise<
@@ -49,7 +47,7 @@ export class LCPServer {
     }
 
     // Otherwise start a new load restricted by the limiter
-    this.inFlightPromise = this.loadLimit(async () => {
+    this.inFlightPromise = (async () => {
       try {
         const targetLocales = _.uniq([
           ...params.targetLocales,
@@ -77,7 +75,7 @@ export class LCPServer {
         // Clear inFlightPromise regardless of success/failure
         this.inFlightPromise = null;
       }
-    });
+    })();
 
     return this.inFlightPromise;
   }
