@@ -1,6 +1,7 @@
 import { createGroq } from "@ai-sdk/groq";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { createOpenRouter } from '@openrouter/ai-sdk-provider';
+import { createOllama } from "ollama-ai-provider";
 import { generateText } from "ai";
 import { DictionarySchema } from "../schema";
 import _, { get } from "lodash";
@@ -215,7 +216,7 @@ export class LCPAPI {
     targetLocale: string,
   ): LanguageModel {
     switch (providerId) {
-      case "groq":
+      case "groq": {
         // Specific check for CI/CD or Docker missing GROQ key
         if (isRunningInCIOrDocker()) {
           const groqFromEnv = getGroqKeyFromEnv();
@@ -233,8 +234,9 @@ export class LCPAPI {
           `Creating Groq client for ${targetLocale} using model ${modelId}`,
         );
         return createGroq({ apiKey: groqKey })(modelId);
+      }
 
-      case "google":
+      case "google": {
         // Specific check for CI/CD or Docker missing Google key
         if (isRunningInCIOrDocker()) {
           const googleFromEnv = getGoogleKeyFromEnv();
@@ -252,7 +254,6 @@ export class LCPAPI {
           `Creating Google Generative AI client for ${targetLocale} using model ${modelId}`,
         );
         return createGoogleGenerativeAI({ apiKey: googleKey })(modelId);
-       
       case "openrouter":
         // Specific check for CI/CD or Docker missing OpenRouter key
         if (isRunningInCIOrDocker()) {
@@ -273,10 +274,21 @@ export class LCPAPI {
         return createOpenRouter({
           apiKey: openRouterKey,
         })(modelId);
-      default:
+      }
+
+      case "ollama": {
+        // No API key check needed for Ollama
+        console.log(
+          `Creating Ollama client for ${targetLocale} using model ${modelId} at default Ollama address`,
+        );
+        return createOllama()(modelId);
+      }
+
+      default: {
         throw new Error(
           `⚠️  Provider "${providerId}" for locale "${targetLocale}" is not supported. Only "groq" and "google" providers are supported at the moment.`,
         );
+      }
     }
   }
 
@@ -376,7 +388,7 @@ export class LCPAPI {
         This error comes from the ${details.name} API, please check their documentation for more details: ${details.docsLink}
 
         ⭐️ Also:
-        1. Did you set ${details.apiKeyEnvVar} environment variable correctly?
+        1. Did you set ${details.apiKeyEnvVar ? `${details.apiKeyEnvVar}` : "the provider API key"} environment variable correctly ${!details.apiKeyEnvVar ? "(if required)" : ""}?
         2. Did you reach any limits of your ${details.name} account?
         3. If you have questions, feature requests, or would like to contribute, join our Discord: https://lingo.dev/go/discord
 
