@@ -1,7 +1,7 @@
 import { createAnthropic } from "@ai-sdk/anthropic";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { createOpenAI } from "@ai-sdk/openai";
-import { createOpenRouter } from '@openrouter/ai-sdk-provider';
+import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { I18nConfig } from "@lingo.dev/_spec";
 import chalk from "chalk";
 import dedent from "dedent";
@@ -61,6 +61,7 @@ export default function createExplicitLocalizer(
         prompt: provider.prompt,
         apiKeyName: "OPENROUTER_API_KEY",
         baseUrl: provider.baseUrl,
+      });
     case "ollama":
       return createAiSdkLocalizer({
         factory: (_params) => createOllama().languageModel(provider.model),
