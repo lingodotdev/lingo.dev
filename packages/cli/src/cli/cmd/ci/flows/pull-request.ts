@@ -1,6 +1,7 @@
 import { execSync } from "child_process";
 import { InBranchFlow } from "./in-branch";
 import { IIntegrationFlowOptions } from "./_base";
+import { escapeShellArg } from "../../../utils/shell";
 
 export class PullRequestFlow extends InBranchFlow {
   async preRun() {
@@ -172,7 +173,7 @@ export class PullRequestFlow extends InBranchFlow {
       this.ora.start("Restoring target files");
       const targetFiles = ["i18n.lock"];
       const targetFileNames = execSync(
-        `npx lingo.dev@latest show files --target ${this.platformKit.platformConfig.baseBranchName}`,
+        `npx lingo.dev@latest show files --target ${escapeShellArg(this.platformKit.platformConfig.baseBranchName)}`,
         { encoding: "utf8" },
       )
         .split("\n")
@@ -197,7 +198,7 @@ export class PullRequestFlow extends InBranchFlow {
     if (hasChanges) {
       execSync("git add .", { stdio: "inherit" });
       execSync(
-        `git commit -m "chore: sync with ${this.platformKit.platformConfig.baseBranchName}" --no-verify`,
+        `git commit -m ${escapeShellArg(`chore: sync with ${this.platformKit.platformConfig.baseBranchName}`)} --no-verify`,
         {
           stdio: "inherit",
         },
