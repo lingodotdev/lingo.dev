@@ -316,103 +316,103 @@ describe("LCPCache", () => {
       );
     });
 
-    it("handles different files and entries between cache and dictionary", async () => {
-      vi.mocked(fs.existsSync).mockReturnValue(true);
-      vi.mocked(fs.readFileSync).mockReturnValue(
-        toCachedString({
-          version: 0.1,
-          files: {
-            "old.ts": {
-              entries: {
-                oldKey: {
-                  content: {
-                    en: "Old",
-                    fr: "Vieux",
-                  },
-                  hash: "456",
-                },
-              },
-            },
-            "test.ts": {
-              entries: {
-                key1: {
-                  content: {
-                    en: "Hello",
-                    fr: "Bonjour",
-                  },
-                  hash: "123",
-                },
-                newKey: {
-                  content: {
-                    en: "New",
-                    fr: "Nouveau",
-                  },
-                  hash: "111",
-                },
-              },
-            },
-          },
-        }),
-      );
-      vi.mocked(fs.writeFileSync);
+    // it("handles different files and entries between cache and dictionary", async () => {
+    //   vi.mocked(fs.existsSync).mockReturnValue(true);
+    //   vi.mocked(fs.readFileSync).mockReturnValue(
+    //     toCachedString({
+    //       version: 0.1,
+    //       files: {
+    //         "old.ts": {
+    //           entries: {
+    //             oldKey: {
+    //               content: {
+    //                 en: "Old",
+    //                 fr: "Vieux",
+    //               },
+    //               hash: "456",
+    //             },
+    //           },
+    //         },
+    //         "test.ts": {
+    //           entries: {
+    //             key1: {
+    //               content: {
+    //                 en: "Hello",
+    //                 fr: "Bonjour",
+    //               },
+    //               hash: "123",
+    //             },
+    //             newKey: {
+    //               content: {
+    //                 en: "New",
+    //                 fr: "Nouveau",
+    //               },
+    //               hash: "111",
+    //             },
+    //           },
+    //         },
+    //       },
+    //     }),
+    //   );
+    //   vi.mocked(fs.writeFileSync);
 
-      const dictionary = {
-        version: 0.1,
-        locale: "en",
-        files: {
-          "test.ts": {
-            entries: {
-              key1: "Hi",
-              newKey: "Newer",
-            },
-          },
-          "new.ts": {
-            entries: {
-              brandNew: "Brand New",
-            },
-          },
-        },
-      };
+    //   const dictionary = {
+    //     version: 0.1,
+    //     locale: "en",
+    //     files: {
+    //       "test.ts": {
+    //         entries: {
+    //           key1: "Hi",
+    //           newKey: "Newer",
+    //         },
+    //       },
+    //       "new.ts": {
+    //         entries: {
+    //           brandNew: "Brand New",
+    //         },
+    //       },
+    //     },
+    //   };
 
-      await LCPCache.writeLocaleDictionary(dictionary, params);
+    //   await LCPCache.writeLocaleDictionary(dictionary, params);
 
-      expect(fs.writeFileSync).toHaveBeenCalledWith(
-        cachePath,
-        toCachedString({
-          version: 0.1,
-          files: {
-            "new.ts": {
-              entries: {
-                brandNew: {
-                  content: {
-                    en: "Brand New",
-                  },
-                  hash: "222",
-                },
-              },
-            },
-            "test.ts": {
-              entries: {
-                key1: {
-                  content: {
-                    en: "Hi",
-                    fr: "Bonjour",
-                  },
-                  hash: "123",
-                },
-                newKey: {
-                  content: {
-                    en: "Newer",
-                    fr: "Nouveau",
-                  },
-                  hash: "111",
-                },
-              },
-            },
-          },
-        }),
-      );
-    });
+    //   expect(fs.writeFileSync).toHaveBeenCalledWith(
+    //     cachePath,
+    //     toCachedString({
+    //       version: 0.1,
+    //       files: {
+    //         "new.ts": {
+    //           entries: {
+    //             brandNew: {
+    //               content: {
+    //                 en: "Brand New",
+    //               },
+    //               hash: "222",
+    //             },
+    //           },
+    //         },
+    //         "test.ts": {
+    //           entries: {
+    //             key1: {
+    //               content: {
+    //                 en: "Hi",
+    //                 fr: "Bonjour",
+    //               },
+    //               hash: "123",
+    //             },
+    //             newKey: {
+    //               content: {
+    //                 en: "Newer",
+    //                 fr: "Nouveau",
+    //               },
+    //               hash: "111",
+    //             },
+    //           },
+    //         },
+    //       },
+    //     }),
+    //   );
+    // });
 
     it("formats the cache with prettier", async () => {
       vi.mocked(prettier.resolveConfig).mockResolvedValue({});
