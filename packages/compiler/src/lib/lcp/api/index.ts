@@ -254,7 +254,7 @@ export class LCPAPI {
           `Creating Google Generative AI client for ${targetLocale} using model ${modelId}`,
         );
         return createGoogleGenerativeAI({ apiKey: googleKey })(modelId);
-      case "openrouter":
+      case "openrouter": {
         // Specific check for CI/CD or Docker missing OpenRouter key
         if (isRunningInCIOrDocker()) {
           const openRouterFromEnv = getOpenRouterKeyFromEnv();
