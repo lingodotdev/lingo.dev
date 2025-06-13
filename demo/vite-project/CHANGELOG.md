@@ -1,5 +1,11 @@
 # vite-project
 
+## 0.0.3
+
+### Patch Changes
+
+- [`76cbd9b`](https://github.com/lingodotdev/lingo.dev/commit/76cbd9b2f2e1217421ad1f671bed5b3d64b43333) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - dictionary merging
+
 ## 0.0.2
 
 ### Patch Changes
