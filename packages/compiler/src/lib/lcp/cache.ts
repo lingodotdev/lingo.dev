@@ -57,53 +57,65 @@ export class LCPCache {
     dictionary: DictionarySchema,
     lcp: LCPSchema,
   ): DictionaryCacheSchema {
-    const files = _(dictionary.files)
-      .mapValues((file, fileName) => ({
-        ...file,
-        entries: _(file.entries)
-          .mapValues((entry, entryName) => {
-            // find if entry exists in current cache, it might contain some locales already
-            const cachedEntry =
-              _.get(currentCache, ["files", fileName, "entries", entryName]) ??
-              {};
-            const hash = _.get(lcp, [
-              "files",
-              fileName,
-              "scopes",
-              entryName,
-              "hash",
-            ]);
+    // Deep-clone to avoid mutating caller's object
+    const newCache: DictionaryCacheSchema = _.cloneDeep(currentCache);
 
-            // reuse existing cache entry if its hash matches LCP schema, ensures the cache is up to date
-            const cachedEntryContent =
-              cachedEntry.hash === hash ? cachedEntry.content : {};
+    for (const [fileName, fileData] of Object.entries(dictionary.files)) {
+      for (const [entryName, entryValue] of Object.entries(fileData.entries)) {
+        const hash = _.get(lcp, [
+          "files",
+          fileName,
+          "scopes",
+          entryName,
+          "hash",
+        ]);
 
-            // sorted by keys (locales) to minimize diffs
-            const content = _({
-              ...cachedEntryContent,
-              [dictionary.locale]: entry,
-            })
-              .toPairs()
-              .sortBy([0])
-              .fromPairs()
-              .value();
-            return { content, hash };
-          })
+        const existingEntry = _.get(newCache, [
+          "files",
+          fileName,
+          "entries",
+          entryName,
+        ]) || {
+          content: {},
+          hash,
+        };
+
+        // Merge locales and sort them alphabetically to stabilise diffs
+        const mergedContent = _({
+          ...existingEntry.content,
+          [dictionary.locale]: entryValue,
+        })
           .toPairs()
           .sortBy([0])
           .fromPairs()
-          .value(),
-      }))
+          .value();
+
+        _.set(newCache, ["files", fileName, "entries", entryName], {
+          content: mergedContent,
+          hash,
+        });
+      }
+    }
+
+    // Final sort of files and their entries for minimal diffs
+    const sortedFiles = _(newCache.files)
       .toPairs()
       .sortBy([0])
+      .map(([fileName, file]) => {
+        const sortedEntries = _(file.entries)
+          .toPairs()
+          .sortBy([0])
+          .fromPairs()
+          .value();
+        return [fileName, { entries: sortedEntries }];
+      })
       .fromPairs()
       .value();
 
-    const newCache = {
+    return {
       version: dictionary.version,
-      files,
+      files: sortedFiles,
     };
-    return newCache;
   }
 
   // extract dictionary from cache for given locale, validate entry hash from LCP schema

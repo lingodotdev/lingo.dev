@@ -5,15 +5,15 @@ export default {
       entries: {
         "0/declaration/body/0/argument": {
           content: {
-            ar: "قم بتعريب تطبيق React الخاص بك بجميع اللغات في دقائق.<element:br></element:br> توسع ليصل إلى الملايين منذ اليوم الأول.",
-            de: "Lokalisieren Sie Ihre React-App in jeder Sprache innerhalb von Minuten.<element:br></element:br> Skalieren Sie vom ersten Tag an auf Millionen.",
-            en: "Localiza tu aplicación React en todos los idiomas en minutos.<element:br></element:br> Escala a millones desde el primer día.",
+            ar: "قم بتوطين تطبيق React الخاص بك بكل لغة في دقائق.<element:br></element:br> قم بالتوسع إلى الملايين من اليوم الأول.",
+            de: "Lokalisieren Sie Ihre React-App in jeder Sprache in Minuten.<element:br></element:br> Skalieren Sie von Anfang an auf Millionen.",
+            en: "Localize your React app in every language in minutes.<element:br></element:br> Scale to millions from day one.",
             es: "Localiza tu aplicación React en cualquier idioma en minutos.<element:br></element:br> Escala a millones desde el primer día.",
-            fr: "Localisez votre application React dans toutes les langues en quelques minutes.<element:br></element:br> Adaptez-vous à des millions d'utilisateurs dès le premier jour.",
-            ja: "数分でReactアプリをあらゆる言語にローカライズ。<element:br></element:br> 初日から数百万規模へスケール。",
-            ko: "몇 분 안에 React 앱을 모든 언어로 현지화하세요.<element:br></element:br> 첫날부터 수백만 규모로 확장하세요.",
-            ru: "Локализуйте своё React-приложение на любой язык за считанные минуты.<element:br></element:br> Масштабируйтесь до миллионов пользователей с первого дня.",
-            zh: "在几分钟内将您的 React 应用程序本地化为每种语言。<element:br></element:br> 从第一天起就支持数百万用户的扩展。",
+            fr: "Localisez votre application React dans toutes les langues en quelques minutes.<element:br></element:br> Évoluez vers des millions dès le premier jour.",
+            ja: "数分でReactアプリをすべての言語にローカライズします。<element:br></element:br> 最初の日から数百万にスケールします。",
+            ko: "몇 분 만에 React 앱을 모든 언어로 로컬라이즈하세요.<element:br></element:br> 첫날부터 수백만 사용자에게 확장할 수 있습니다.",
+            ru: "Локализуйте ваше приложение React на любом языке за считанные минуты.<element:br></element:br> Масштабируйте до миллионов с первого дня.",
+            zh: "在几分钟内将您的React应用本地化为任何语言。<element:br></element:br> 从第一天开始扩展到数百万用户。",
           },
           hash: "2b8865d21f308426a4da45852b27004d",
         },
