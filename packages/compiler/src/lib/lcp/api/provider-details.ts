@@ -30,7 +30,7 @@ export const providerDetails: Record<
     apiKeyConfigKey: "llm.openrouterApiKey",
     getKeyLink: "https://openrouter.ai",
     docsLink: "https://openrouter.ai/docs",
-  }
+  },
   ollama: {
     name: "Ollama",
     apiKeyEnvVar: undefined, // Ollama doesn't require an API key
