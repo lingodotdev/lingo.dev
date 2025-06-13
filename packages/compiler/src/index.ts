@@ -86,12 +86,12 @@ const unplugin = createUnplugin<Partial<typeof defaultParams> | undefined>(
           console.log(dedent`
             \n
             ⚠️  Lingo.dev Localization Compiler requires LLM model setup for the following locales: ${invalidLocales.join(", ")}.
-    
+
             ⭐️ Next steps:
             1. Refer to documentation for help: https://docs.lingo.dev/
             2. If you want to use a different LLM, raise an issue in our open-source repo: https://lingo.dev/go/gh
             3. If you have questions, feature requests, or would like to contribute, join our Discord: https://lingo.dev/go/discord
-    
+
             ✨
           `);
           process.exit(1);
@@ -197,18 +197,50 @@ const unplugin = createUnplugin<Partial<typeof defaultParams> | undefined>(
 export default {
   next:
     (compilerParams?: Partial<typeof defaultParams>) =>
-    (nextConfig: any): NextConfig => ({
-      ...nextConfig,
-      // what if we already have a webpack config?
-      webpack: (config, { isServer }) => {
-        config.plugins.unshift(
-          unplugin.webpack(
-            _.merge({}, defaultParams, { rsc: true }, compilerParams),
-          ),
-        );
+    (nextConfig: any = {}): NextConfig => {
+      const mergedParams = _.merge(
+        {},
+        defaultParams,
+        { rsc: true },
+        compilerParams,
+      );
+
+      // Webpack Support (unchanged)
+      const originalWebpack = nextConfig.webpack;
+      nextConfig.webpack = (config: any, options: any) => {
+        config.plugins.unshift(unplugin.webpack(mergedParams));
+        if (typeof originalWebpack === "function") {
+          return originalWebpack(config, options);
+        }
         return config;
-      },
-    }),
+      };
+
+      // Turbopack Support
+      nextConfig.turbopack ??= {};
+      nextConfig.turbopack.rules ??= {};
+      const rules = nextConfig.turbopack.rules;
+
+      // A single rule to capture all relevant files for Lingo.dev
+      const lingoGlob = `**/*.{ts,tsx,js,jsx}`;
+
+      // Correctly resolve the path to the *compiled* loader in the `dist` directory.
+      // This path must be correct relative to the final package structure.
+      const lingoLoaderPath = require
+        .resolve("./lingo-turbopack-loader")
+        .replace("/src/", "/dist/");
+
+      rules[lingoGlob] = {
+        //as: "*.tsx", // Process matching files as TSX
+        loaders: [
+          {
+            loader: lingoLoaderPath,
+            options: mergedParams,
+          },
+        ],
+      };
+
+      return nextConfig;
+    },
   vite: (compilerParams?: Partial<typeof defaultParams>) => (config: any) => {
     config.plugins.unshift(
       unplugin.vite(_.merge({}, defaultParams, { rsc: false }, compilerParams)),
