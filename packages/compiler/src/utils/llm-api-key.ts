@@ -37,6 +37,18 @@ export function getGroqKeyFromEnv() {
   return getKeyFromEnv("GROQ_API_KEY");
 }
 
+export function getLingoDotDevKeyFromEnv() {
+  return getKeyFromEnv("LINGODOTDEV_API_KEY");
+}
+
+export function getLingoDotDevKeyFromRc() {
+  return getKeyFromRc("auth.apiKey");
+}
+
+export function getLingoDotDevKey() {
+  return getLingoDotDevKeyFromEnv() || getLingoDotDevKeyFromRc();
+}
+
 export function getGoogleKey() {
   return getGoogleKeyFromEnv() || getGoogleKeyFromRc();
 }

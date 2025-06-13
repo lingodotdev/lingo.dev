@@ -11,7 +11,7 @@ export type CompilerParams = {
   rsc: boolean;
   useDirective: boolean;
   debug: boolean;
-  models: Record<string, string>;
+  models: "lingo.dev" | Record<string, string>;
 };
 export type CompilerInput = {
   relativeFilePath: string;

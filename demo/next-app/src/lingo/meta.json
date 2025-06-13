@@ -1,14 +1,15 @@
 {
+  "version": 0.1,
   "files": {
     "components/hero-subtitle.tsx": {
       "scopes": {
         "0/declaration/body/0/argument": {
           "type": "element",
-          "hash": "e5647ab6153ee718eef168dfba2ded1c",
+          "hash": "2b8865d21f308426a4da45852b27004d",
           "context": "",
           "skip": false,
           "overrides": {},
-          "content": "Localize your React app in every language in seconds.<element:br></element:br> Scale to millions from day one."
+          "content": "Localize your React app in every language in minutes.<element:br></element:br> Scale to millions from day one."
         }
       }
     }

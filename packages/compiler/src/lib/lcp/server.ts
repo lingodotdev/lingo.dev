@@ -14,7 +14,7 @@ export type LCPServerParams = {
   targetLocales: string[];
   sourceRoot: string;
   lingoDir: string;
-  models: Record<string, string>;
+  models: "lingo.dev" | Record<string, string>;
 };
 
 export type LCPServerParamsForLocale = {
@@ -23,43 +23,61 @@ export type LCPServerParamsForLocale = {
   targetLocale: string;
   sourceRoot: string;
   lingoDir: string;
-  models: Record<string, string>;
+  models: "lingo.dev" | Record<string, string>;
 };
 
 export class LCPServer {
-  private static isLoading = false;
+  private static dictionariesCache: Record<string, DictionarySchema> | null =
+    null;
+  private static inFlightPromise: Promise<
+    Record<string, DictionarySchema>
+  > | null = null;
 
   static async loadDictionaries(
     params: LCPServerParams,
   ): Promise<Record<string, DictionarySchema>> {
-    while (this.isLoading) {
-      await new Promise(function (resolve) {
-        setTimeout(resolve, 500);
-      });
+    // Return cached dictionaries if available
+    if (this.dictionariesCache) {
+      return this.dictionariesCache;
     }
 
-    this.isLoading = true;
+    // If a load is already in progress, await it
+    if (this.inFlightPromise) {
+      return this.inFlightPromise;
+    }
 
-    const targetLocales = _.uniq([
-      ...params.targetLocales,
-      params.sourceLocale,
-    ]);
-    const dictionaries = await Promise.all(
-      targetLocales.map((targetLocale) =>
-        this.loadDictionaryForLocale({ ...params, targetLocale }),
-      ),
-    );
+    // Otherwise start a new load restricted by the limiter
+    this.inFlightPromise = (async () => {
+      try {
+        const targetLocales = _.uniq([
+          ...params.targetLocales,
+          params.sourceLocale,
+        ]);
 
-    const result = _.fromPairs(
-      targetLocales.map((targetLocale, index) => [
-        targetLocale,
-        dictionaries[index],
-      ]),
-    );
+        const dictionaries = await Promise.all(
+          targetLocales.map((targetLocale) =>
+            this.loadDictionaryForLocale({ ...params, targetLocale }),
+          ),
+        );
 
-    this.isLoading = false;
+        const result = _.fromPairs(
+          targetLocales.map((targetLocale, index) => [
+            targetLocale,
+            dictionaries[index],
+          ]),
+        );
 
-    return result;
+        // Cache for subsequent requests within the same process
+        this.dictionariesCache = result;
+
+        return result;
+      } finally {
+        // Clear inFlightPromise regardless of success/failure
+        this.inFlightPromise = null;
+      }
+    })();
+
+    return this.inFlightPromise;
   }
 
   static async loadDictionaryForLocale(
@@ -275,7 +293,7 @@ export class LCPServer {
           fileName,
           {
             ...targetFile,
-            entries: _.merge(targetFile?.entries || {}, entries),
+            entries: _.merge({}, targetFile?.entries || {}, entries),
           },
         ];
       })
