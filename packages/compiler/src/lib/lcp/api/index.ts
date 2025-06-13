@@ -4,7 +4,7 @@ import { createOpenRouter } from '@openrouter/ai-sdk-provider';
 import { createOllama } from "ollama-ai-provider";
 import { generateText } from "ai";
 import { DictionarySchema } from "../schema";
-import _, { get } from "lodash";
+import _ from "lodash";
 import { getLocaleModel } from "../../../utils/locales";
 import getSystemPrompt from "./prompt";
 import { obj2xml, xml2obj } from "./xml2obj";
