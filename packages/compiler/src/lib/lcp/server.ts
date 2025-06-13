@@ -133,6 +133,11 @@ export class LCPServer {
 
       // we merge new translations with cache, so that we can cache empty strings
       targetDictionary = this._mergeDictionaries(newTranslations, cache);
+      // ensure the locale metadata reflects the target locale
+      targetDictionary = {
+        ...targetDictionary,
+        locale: params.targetLocale,
+      };
       await LCPCache.writeLocaleDictionary(targetDictionary, cacheParams);
     }
 
