@@ -1,5 +1,14 @@
 # next-app
 
+## 0.2.8
+
+### Patch Changes
+
+- [`8e97256`](https://github.com/lingodotdev/lingo.dev/commit/8e97256ca4e78dd09a967539ca9dec359bd558ef) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - fix dictionary merging
+
+- Updated dependencies []:
+  - lingo.dev@0.99.1
+
 ## 0.2.7
 
 ### Patch Changes

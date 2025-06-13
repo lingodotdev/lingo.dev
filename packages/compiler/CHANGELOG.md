@@ -1,5 +1,11 @@
 # @lingo.dev/\_compiler
 
+## 0.3.1
+
+### Patch Changes
+
+- [`8e97256`](https://github.com/lingodotdev/lingo.dev/commit/8e97256ca4e78dd09a967539ca9dec359bd558ef) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - fix dictionary merging
+
 ## 0.3.0
 
 ### Minor Changes
