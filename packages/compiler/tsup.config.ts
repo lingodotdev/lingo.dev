@@ -3,7 +3,7 @@ import { defineConfig } from "tsup";
 export default defineConfig({
   clean: true,
   target: "esnext",
-  entry: ["src/index.ts"],
+  entry: ["src/index.ts", "src/lingo-turbopack-loader.ts"],
   outDir: "build",
   format: ["cjs", "esm"],
   dts: true,

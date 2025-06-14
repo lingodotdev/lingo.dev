@@ -86,12 +86,12 @@ const unplugin = createUnplugin<Partial<typeof defaultParams> | undefined>(
           console.log(dedent`
             \n
             ⚠️  Lingo.dev Localization Compiler requires LLM model setup for the following locales: ${invalidLocales.join(", ")}.
-    
+
             ⭐️ Next steps:
             1. Refer to documentation for help: https://docs.lingo.dev/
             2. If you want to use a different LLM, raise an issue in our open-source repo: https://lingo.dev/go/gh
             3. If you have questions, feature requests, or would like to contribute, join our Discord: https://lingo.dev/go/discord
-    
+
             ✨
           `);
           process.exit(1);
@@ -196,19 +196,84 @@ const unplugin = createUnplugin<Partial<typeof defaultParams> | undefined>(
 
 export default {
   next:
-    (compilerParams?: Partial<typeof defaultParams>) =>
-    (nextConfig: any): NextConfig => ({
-      ...nextConfig,
-      // what if we already have a webpack config?
-      webpack: (config, { isServer }) => {
-        config.plugins.unshift(
-          unplugin.webpack(
-            _.merge({}, defaultParams, { rsc: true }, compilerParams),
-          ),
-        );
-        return config;
+    (
+      compilerParams?: Partial<typeof defaultParams> & {
+        turbopack?: {
+          enabled: boolean;
+          useLegacyTurbo?: boolean;
+        };
       },
-    }),
+    ) =>
+    (nextConfig: any = {}): NextConfig => {
+      const mergedParams = _.merge(
+        {},
+        defaultParams,
+        { rsc: true },
+        compilerParams,
+      );
+
+      const turbopackEnabled: boolean =
+        mergedParams.turbopack?.enabled === true;
+      const supportLegacyTurbo: boolean =
+        mergedParams.turbopack?.useLegacyTurbo === true;
+
+      const hasWebpackConfig = typeof nextConfig.webpack === "function";
+      const hasTurbopackConfig = typeof nextConfig.turbopack === "function";
+      if (hasWebpackConfig && turbopackEnabled) {
+        console.warn(
+          "⚠️  Turbopack is enabled in the Lingo.dev compiler, but you have webpack config. Lingo.dev will still apply turbopack configuration.",
+        );
+      }
+      if (hasTurbopackConfig && !turbopackEnabled) {
+        console.warn(
+          "⚠️  Turbopack is disabled in the Lingo.dev compiler, but you have turbopack config. Lingo.dev will not apply turbopack configuration.",
+        );
+      }
+
+      // Webpack
+      const originalWebpack = nextConfig.webpack;
+      nextConfig.webpack = (config: any, options: any) => {
+        if (!turbopackEnabled) {
+          console.log("Applying Lingo.dev webpack configuration...");
+          config.plugins.unshift(unplugin.webpack(mergedParams));
+        }
+
+        if (typeof originalWebpack === "function") {
+          return originalWebpack(config, options);
+        }
+        return config;
+      };
+
+      // Turbopack
+      if (turbopackEnabled) {
+        console.log("Applying Lingo.dev Turbopack configuration...");
+
+        // Check if the legacy turbo flag is set
+        let turbopackConfigPath = (nextConfig.turbopack ??= {});
+        if (supportLegacyTurbo) {
+          turbopackConfigPath = (nextConfig.experimental ??= {}).turbo ??= {};
+        }
+
+        turbopackConfigPath.rules ??= {};
+        const rules = turbopackConfigPath.rules;
+
+        // Regex for all relevant files for Lingo.dev
+        const lingoGlob = `**/*.{ts,tsx,js,jsx}`;
+
+        const lingoLoaderPath = require.resolve("./lingo-turbopack-loader");
+
+        rules[lingoGlob] = {
+          loaders: [
+            {
+              loader: lingoLoaderPath,
+              options: mergedParams,
+            },
+          ],
+        };
+      }
+
+      return nextConfig;
+    },
   vite: (compilerParams?: Partial<typeof defaultParams>) => (config: any) => {
     config.plugins.unshift(
       unplugin.vite(_.merge({}, defaultParams, { rsc: false }, compilerParams)),
