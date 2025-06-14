@@ -197,6 +197,11 @@ const unplugin = createUnplugin<Partial<typeof defaultParams> | undefined>(
 export default {
   next:
     (
+      // TODO: Change turbopack type to a config object
+      // {
+      //   enabled: boolean,
+      //   someConfigOptionToRepresentExperimentalDotTurbo: boolean
+      // }
       compilerParams?: Partial<typeof defaultParams> & { turbopack?: boolean },
     ) =>
     (nextConfig: any = {}): NextConfig => {
