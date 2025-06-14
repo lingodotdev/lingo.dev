@@ -196,7 +196,9 @@ const unplugin = createUnplugin<Partial<typeof defaultParams> | undefined>(
 
 export default {
   next:
-    (compilerParams?: Partial<typeof defaultParams>) =>
+    (
+      compilerParams?: Partial<typeof defaultParams> & { turbopack?: boolean },
+    ) =>
     (nextConfig: any = {}): NextConfig => {
       const mergedParams = _.merge(
         {},
@@ -204,6 +206,16 @@ export default {
         { rsc: true },
         compilerParams,
       );
+
+      // TODO: Support older next.js turbopack (experimental.turbo)
+
+      const hasWebpackConfig = typeof nextConfig.webpack === "function";
+      const hasTurbopackConfig = typeof nextConfig.turbopack === "function";
+      if (hasWebpackConfig && (hasTurbopackConfig || mergedParams.turbopack)) {
+        console.warn(
+          "You set turbopack to true, but you also have webpack config. Lingo.dev will still apply turbopack configuration.",
+        );
+      }
 
       // Webpack
       const originalWebpack = nextConfig.webpack;
@@ -216,23 +228,25 @@ export default {
       };
 
       // Turbopack
-      nextConfig.turbopack ??= {};
-      nextConfig.turbopack.rules ??= {};
-      const rules = nextConfig.turbopack.rules;
+      if (mergedParams.turbopack || hasTurbopackConfig) {
+        nextConfig.turbopack ??= {};
+        nextConfig.turbopack.rules ??= {};
+        const rules = nextConfig.turbopack.rules;
 
-      // Regex for all relevant files for Lingo.dev
-      const lingoGlob = `**/*.{ts,tsx,js,jsx}`;
+        // Regex for all relevant files for Lingo.dev
+        const lingoGlob = `**/*.{ts,tsx,js,jsx}`;
 
-      const lingoLoaderPath = require.resolve("./lingo-turbopack-loader");
+        const lingoLoaderPath = require.resolve("./lingo-turbopack-loader");
 
-      rules[lingoGlob] = {
-        loaders: [
-          {
-            loader: lingoLoaderPath,
-            options: mergedParams,
-          },
-        ],
-      };
+        rules[lingoGlob] = {
+          loaders: [
+            {
+              loader: lingoLoaderPath,
+              options: mergedParams,
+            },
+          ],
+        };
+      }
 
       return nextConfig;
     },
