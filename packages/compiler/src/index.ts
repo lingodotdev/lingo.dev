@@ -197,12 +197,12 @@ const unplugin = createUnplugin<Partial<typeof defaultParams> | undefined>(
 export default {
   next:
     (
-      // TODO: Change turbopack type to a config object
-      // {
-      //   enabled: boolean,
-      //   someConfigOptionToRepresentExperimentalDotTurbo: boolean
-      // }
-      compilerParams?: Partial<typeof defaultParams> & { turbopack?: boolean },
+      compilerParams?: Partial<typeof defaultParams> & {
+        turbopack?: {
+          enabled: boolean;
+          useLegacyTurbo?: boolean;
+        };
+      },
     ) =>
     (nextConfig: any = {}): NextConfig => {
       const mergedParams = _.merge(
@@ -212,13 +212,20 @@ export default {
         compilerParams,
       );
 
-      // TODO: Support older next.js turbopack (experimental.turbo)
+      const turbopackEnabled = mergedParams.turbopack?.enabled === true;
+      const supportLegacyTurbo =
+        mergedParams.turbopack?.useLegacyTurbo === true;
 
       const hasWebpackConfig = typeof nextConfig.webpack === "function";
       const hasTurbopackConfig = typeof nextConfig.turbopack === "function";
-      if (hasWebpackConfig && (hasTurbopackConfig || mergedParams.turbopack)) {
+      if (hasWebpackConfig && turbopackEnabled) {
         console.warn(
-          "You set turbopack to true, but you also have webpack config. Lingo.dev will still apply turbopack configuration.",
+          "Turbopack is enabled in the compiler, but you have webpack config. Lingo.dev will still apply turbopack configuration.",
+        );
+      }
+      if (hasTurbopackConfig && !turbopackEnabled) {
+        console.warn(
+          "Turbopack is disabled in the compiler, but you have turbopack config. Lingo.dev will not apply turbopack configuration.",
         );
       }
 
@@ -233,11 +240,17 @@ export default {
       };
 
       // Turbopack
-      if (mergedParams.turbopack || hasTurbopackConfig) {
+      if (turbopackEnabled) {
         console.log("Applying turbopack configuration.");
-        nextConfig.turbopack ??= {};
-        nextConfig.turbopack.rules ??= {};
-        const rules = nextConfig.turbopack.rules;
+
+        // Check if the legacy turbo flag is set
+        let turbopackConfigPath = (nextConfig.turbopack ??= {});
+        if (supportLegacyTurbo) {
+          turbopackConfigPath = (nextConfig.experimental ??= {}).turbo ??= {};
+        }
+
+        turbopackConfigPath.rules ??= {};
+        const rules = turbopackConfigPath.rules;
 
         // Regex for all relevant files for Lingo.dev
         const lingoGlob = `**/*.{ts,tsx,js,jsx}`;
