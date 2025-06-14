@@ -212,27 +212,40 @@ export default {
         compilerParams,
       );
 
+      // See if the '--turbo' arg is passed
+      const isTurboCLI = process.argv.includes("--turbo");
+
       const turbopackEnabled: boolean =
         mergedParams.turbopack?.enabled === true;
       const supportLegacyTurbo: boolean =
         mergedParams.turbopack?.useLegacyTurbo === true;
 
+      if (isTurboCLI && !turbopackEnabled) {
+        console.warn(dedent`
+               \n
+               ⚠️  The '--turbo' flag was passed to the command line, but Turbopack is not explicitly enabled
+                   in the Lingo.dev compiler configuration (compilerParams.turbopack.enabled is not true).
+                   Lingo.dev will proceed without applying Turbopack config, but if you are using Turbopack, you should enable it.
+               ✨
+             `);
+      }
+
       const hasWebpackConfig = typeof nextConfig.webpack === "function";
       const hasTurbopackConfig = typeof nextConfig.turbopack === "function";
       if (hasWebpackConfig && turbopackEnabled) {
         console.warn(
-          "Turbopack is enabled in the compiler, but you have webpack config. Lingo.dev will still apply turbopack configuration.",
+          "⚠️  Turbopack is enabled in the compiler, but you have webpack config. Lingo.dev will still apply turbopack configuration.",
         );
       }
       if (hasTurbopackConfig && !turbopackEnabled) {
         console.warn(
-          "Turbopack is disabled in the compiler, but you have turbopack config. Lingo.dev will not apply turbopack configuration.",
+          "⚠️  Turbopack is disabled in the compiler, but you have turbopack config. Lingo.dev will not apply turbopack configuration.",
         );
       }
 
       // Webpack
       // TODO: Don't add anything to the webpack configuration if turbopack is enabled
-      console.log("Applying webpack configuration.");
+      console.log("Applying Lingo.dev webpack configuration.");
 
       const originalWebpack = nextConfig.webpack;
       nextConfig.webpack = (config: any, options: any) => {
@@ -245,7 +258,7 @@ export default {
 
       // Turbopack
       if (turbopackEnabled) {
-        console.log("Applying turbopack configuration.");
+        console.log("Applying Lingo.dev Turbopack configuration.");
 
         // Check if the legacy turbo flag is set
         let turbopackConfigPath = (nextConfig.turbopack ??= {});
