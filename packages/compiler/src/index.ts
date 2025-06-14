@@ -229,6 +229,7 @@ export default {
 
       // Turbopack
       if (mergedParams.turbopack || hasTurbopackConfig) {
+        console.log("Applying turbopack configuration.");
         nextConfig.turbopack ??= {};
         nextConfig.turbopack.rules ??= {};
         const rules = nextConfig.turbopack.rules;
