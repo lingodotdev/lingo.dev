@@ -199,7 +199,7 @@ export default {
     (
       compilerParams?: Partial<typeof defaultParams> & {
         turbopack?: {
-          enabled: boolean;
+          enabled: boolean; // maybe default to "auto", which checks if the --turbo arg is passed?
           useLegacyTurbo?: boolean;
         };
       },
@@ -225,7 +225,8 @@ export default {
                \n
                ⚠️  The '--turbo' flag was passed to the command line, but Turbopack is not explicitly enabled
                    in the Lingo.dev compiler configuration (compilerParams.turbopack.enabled is not true).
-                   Lingo.dev will proceed without applying Turbopack config, but if you are using Turbopack, you should enable it.
+                   Lingo.dev will proceed without applying Turbopack config.
+                   If you are using Turbopack, you should set compilerParams.turbopack.enabled to true.
                ✨
              `);
       }
@@ -244,12 +245,13 @@ export default {
       }
 
       // Webpack
-      // TODO: Don't add anything to the webpack configuration if turbopack is enabled
-      console.log("Applying Lingo.dev webpack configuration.");
-
       const originalWebpack = nextConfig.webpack;
       nextConfig.webpack = (config: any, options: any) => {
-        config.plugins.unshift(unplugin.webpack(mergedParams));
+        if (!turbopackEnabled) {
+          console.log("Applying Lingo.dev webpack configuration...");
+          config.plugins.unshift(unplugin.webpack(mergedParams));
+        }
+
         if (typeof originalWebpack === "function") {
           return originalWebpack(config, options);
         }
@@ -258,7 +260,7 @@ export default {
 
       // Turbopack
       if (turbopackEnabled) {
-        console.log("Applying Lingo.dev Turbopack configuration.");
+        console.log("Applying Lingo.dev Turbopack configuration...");
 
         // Check if the legacy turbo flag is set
         let turbopackConfigPath = (nextConfig.turbopack ??= {});
