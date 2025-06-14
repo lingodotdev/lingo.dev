@@ -199,7 +199,7 @@ export default {
     (
       compilerParams?: Partial<typeof defaultParams> & {
         turbopack?: {
-          enabled: boolean; // maybe default to "auto", which checks if the --turbo arg is passed?
+          enabled: boolean;
           useLegacyTurbo?: boolean;
         };
       },
@@ -212,35 +212,21 @@ export default {
         compilerParams,
       );
 
-      // See if the '--turbo' arg is passed
-      const isTurboCLI = process.argv.includes("--turbo");
-
       const turbopackEnabled: boolean =
         mergedParams.turbopack?.enabled === true;
       const supportLegacyTurbo: boolean =
         mergedParams.turbopack?.useLegacyTurbo === true;
 
-      if (isTurboCLI && !turbopackEnabled) {
-        console.warn(dedent`
-               \n
-               ⚠️  The '--turbo' flag was passed to the command line, but Turbopack is not explicitly enabled
-                   in the Lingo.dev compiler configuration (compilerParams.turbopack.enabled is not true).
-                   Lingo.dev will proceed without applying Turbopack config.
-                   If you are using Turbopack, you should set compilerParams.turbopack.enabled to true.
-               ✨
-             `);
-      }
-
       const hasWebpackConfig = typeof nextConfig.webpack === "function";
       const hasTurbopackConfig = typeof nextConfig.turbopack === "function";
       if (hasWebpackConfig && turbopackEnabled) {
         console.warn(
-          "⚠️  Turbopack is enabled in the compiler, but you have webpack config. Lingo.dev will still apply turbopack configuration.",
+          "⚠️  Turbopack is enabled in the Lingo.dev compiler, but you have webpack config. Lingo.dev will still apply turbopack configuration.",
         );
       }
       if (hasTurbopackConfig && !turbopackEnabled) {
         console.warn(
-          "⚠️  Turbopack is disabled in the compiler, but you have turbopack config. Lingo.dev will not apply turbopack configuration.",
+          "⚠️  Turbopack is disabled in the Lingo.dev compiler, but you have turbopack config. Lingo.dev will not apply turbopack configuration.",
         );
       }
 
