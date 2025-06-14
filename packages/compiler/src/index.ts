@@ -212,8 +212,9 @@ export default {
         compilerParams,
       );
 
-      const turbopackEnabled = mergedParams.turbopack?.enabled === true;
-      const supportLegacyTurbo =
+      const turbopackEnabled: boolean =
+        mergedParams.turbopack?.enabled === true;
+      const supportLegacyTurbo: boolean =
         mergedParams.turbopack?.useLegacyTurbo === true;
 
       const hasWebpackConfig = typeof nextConfig.webpack === "function";
@@ -230,6 +231,9 @@ export default {
       }
 
       // Webpack
+      // TODO: Don't add anything to the webpack configuration if turbopack is enabled
+      console.log("Applying webpack configuration.");
+
       const originalWebpack = nextConfig.webpack;
       nextConfig.webpack = (config: any, options: any) => {
         config.plugins.unshift(unplugin.webpack(mergedParams));
