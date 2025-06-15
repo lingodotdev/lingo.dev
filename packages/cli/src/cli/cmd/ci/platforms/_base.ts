@@ -1,4 +1,4 @@
-import { execSync } from "child_process";
+import { execSync } from "node:child_process";
 import Z from "zod";
 
 const defaultMessage = "feat: update translations via @lingodotdev";

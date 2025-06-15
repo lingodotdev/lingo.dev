@@ -27,7 +27,3 @@ export const gitConfig = {
   userName: "Lingo.dev",
   userEmail: "support@lingo.dev",
 };
-
-export function escapeShellArg(arg: string): string {
-  return `'${arg.replace(/'/g, "'\\''")}'`;
-}

@@ -3,9 +3,9 @@ import path from "path";
 import {
   gitConfig,
   IntegrationFlow,
-  escapeShellArg,
   IIntegrationFlowOptions,
 } from "./_base";
+import { removeFile, listDirectory, getCurrentDirectory, escapeShellArg } from "../../../utils/shell";
 import i18nCmd from "../../i18n";
 import runCmd from "../../run";
 
@@ -23,7 +23,7 @@ export class InBranchFlow extends IntegrationFlow {
     await this.runLingoDotDev(options.parallel);
     this.ora.succeed("Done running Lingo.dev");
 
-    execSync(`rm -f i18n.cache`, { stdio: "inherit" }); // do not commit cache file if it exists
+    removeFile("i18n.cache");
 
     this.ora.start("Checking for changes");
     const hasChanges = this.checkCommitableChanges();
@@ -89,9 +89,8 @@ export class InBranchFlow extends IntegrationFlow {
     const { processOwnCommits } = this.platformKit.config;
     const { baseBranchName } = this.platformKit.platformConfig;
 
-    this.ora.info(`Current working directory:`);
-    execSync(`pwd`, { stdio: "inherit" });
-    execSync(`ls -la`, { stdio: "inherit" });
+    this.ora.info(`Current working directory: ${getCurrentDirectory()}`);
+    this.ora.info(`Directory contents:\n${listDirectory()}`);
 
     execSync(`git config --global safe.directory ${process.cwd()}`);
 
