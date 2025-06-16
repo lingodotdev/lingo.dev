@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.99.4
+
+### Patch Changes
+
+- [#933](https://github.com/lingodotdev/lingo.dev/pull/933) [`1a3cbc1`](https://github.com/lingodotdev/lingo.dev/commit/1a3cbc1751c64e5617e91812506b3c061475f16a) Thanks [@caffeinated10xprogrammer](https://github.com/caffeinated10xprogrammer)! - fix a bug in cli status command when delimiter is used
+
 ## 0.99.3
 
 ### Patch Changes
