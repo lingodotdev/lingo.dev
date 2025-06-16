@@ -392,7 +392,7 @@ export class LCPAPI {
 
         ⭐️ Also:
         1. If you don't yet have a ${details.name} API key, get one for free at ${details.getKeyLink}
-        2. If you want to use a different LLM, update your configuration. Refer to documentation for help: https://docs.lingo.dev/
+        2. If you want to use a different LLM, update your configuration. Refer to documentation for help: https://lingo.dev/compiler
         3. If the model you want to use isn't supported yet, raise an issue in our open-source repo: https://lingo.dev/go/gh
 
         ✨

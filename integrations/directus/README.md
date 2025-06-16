@@ -152,7 +152,7 @@ This will start Directus at [http://localhost:8055](http://localhost:8055).
 
 ## More Information
 
-- [Lingo.dev Documentation](https://docs.lingo.dev)
+- [Lingo.dev Documentation](https://lingo.dev)
 - [Directus Extensions Guide](https://docs.directus.io/extensions/operations)
 - [GitHub Repository](https://github.com/lingodotdev/lingo.dev)
 

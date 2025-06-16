@@ -15,7 +15,7 @@ export default async function initCICD(spinner: Ora) {
   });
 
   if (!init) {
-    spinner.warn("CI/CD not initialized. To set it up later, see docs: https://docs.lingo.dev/ci-action/overview");
+    spinner.warn("CI/CD not initialized. To set it up later, see docs: https://lingo.dev/ci");
     return;
   }
 
