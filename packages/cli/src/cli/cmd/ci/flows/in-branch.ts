@@ -111,7 +111,7 @@ export class InBranchFlow extends IntegrationFlow {
       ).toString();
       if (authorOfLastCommit === currentAuthor) {
         this.ora.warn(
-          `The last commit was already made by ${currentAuthor}, so this run will be skipped, as running again would have no effect. See docs: https://docs.lingo.dev/ci-action/overview`,
+          `The last commit was already made by ${currentAuthor}, so this run will be skipped, as running again would have no effect. See docs: https://lingo.dev/ci`,
         );
         return false;
       }

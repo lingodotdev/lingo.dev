@@ -220,6 +220,6 @@ export default new InteractiveCommand()
     updateGitignore();
 
     if (!isInteractive) {
-      Ora().info("Please see https://docs.lingo.dev/");
+      Ora().info("Please see https://lingo.dev/cli");
     }
   });

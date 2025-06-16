@@ -524,7 +524,7 @@ export class ReplexicaEngine extends LingoDotDevEngine {
       console.warn(
         "ReplexicaEngine is deprecated and will be removed in a future release. " +
           "Please use LingoDotDevEngine instead. " +
-          "See https://docs.lingo.dev/migration for more information.",
+          "See https://lingo.dev/cli for more information.",
       );
       ReplexicaEngine.hasWarnedDeprecation = true;
     }
@@ -543,7 +543,7 @@ export class LingoEngine extends LingoDotDevEngine {
       console.warn(
         "LingoEngine is deprecated and will be removed in a future release. " +
           "Please use LingoDotDevEngine instead. " +
-          "See https://docs.lingo.dev/migration for more information.",
+          "See https://lingo.dev/cli for more information.",
       );
       LingoEngine.hasWarnedDeprecation = true;
     }

@@ -88,7 +88,7 @@ const unplugin = createUnplugin<Partial<typeof defaultParams> | undefined>(
             ⚠️  Lingo.dev Localization Compiler requires LLM model setup for the following locales: ${invalidLocales.join(", ")}.
     
             ⭐️ Next steps:
-            1. Refer to documentation for help: https://docs.lingo.dev/
+            1. Refer to documentation for help: https://lingo.dev/compiler
             2. If you want to use a different LLM, raise an issue in our open-source repo: https://lingo.dev/go/gh
             3. If you have questions, feature requests, or would like to contribute, join our Discord: https://lingo.dev/go/discord
     
@@ -300,7 +300,7 @@ function validateLLMKeyDetails(configuredProviders: string[]): void {
     console.log(dedent`
       \n
       ⭐️ Also:
-      1. If you want to use a different LLM, update your configuration. Refer to documentation for help: https://docs.lingo.dev/
+      1. If you want to use a different LLM, update your configuration. Refer to documentation for help: https://lingo.dev/compiler
       2. If the model/provider you want to use isn't supported yet, raise an issue in our open-source repo: https://lingo.dev/go/gh
       3. If you have questions, feature requests, or would like to contribute, join our Discord: https://lingo.dev/go/discord
 
