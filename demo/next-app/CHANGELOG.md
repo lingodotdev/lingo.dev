@@ -1,5 +1,12 @@
 # next-app
 
+## 0.2.11
+
+### Patch Changes
+
+- Updated dependencies [[`1a3cbc1`](https://github.com/lingodotdev/lingo.dev/commit/1a3cbc1751c64e5617e91812506b3c061475f16a)]:
+  - lingo.dev@0.99.4
+
 ## 0.2.10
 
 ### Patch Changes

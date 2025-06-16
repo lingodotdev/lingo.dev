@@ -219,11 +219,11 @@ export default new Command()
 
               if (!fileExists) {
                 // All keys are missing for this locale
-                fileStats[filePath].languageStats[targetLocale].missing = sourceKeys.length;
-                fileStats[filePath].languageStats[targetLocale].words = sourceWordCount;
-                languageStats[targetLocale].missing += sourceKeys.length;
-                languageStats[targetLocale].words += sourceWordCount;
-                totalWordCount.set(targetLocale, (totalWordCount.get(targetLocale) || 0) + sourceWordCount);
+                fileStats[filePath].languageStats[_targetLocale].missing = sourceKeys.length;
+                fileStats[filePath].languageStats[_targetLocale].words = sourceWordCount;
+                languageStats[_targetLocale].missing += sourceKeys.length;
+                languageStats[_targetLocale].words += sourceWordCount;
+                totalWordCount.set(_targetLocale, (totalWordCount.get(_targetLocale) || 0) + sourceWordCount);
 
                 bucketOra.succeed(
                   `[${sourceLocale} -> ${targetLocale}] ${chalk.red(`0% complete`)} (0/${sourceKeys.length} keys) - file not found`,
@@ -257,17 +257,17 @@ export default new Command()
               }
 
               // Update file stats
-              fileStats[filePath].languageStats[targetLocale].missing = missingKeys.length;
-              fileStats[filePath].languageStats[targetLocale].updated = updatedKeys.length;
-              fileStats[filePath].languageStats[targetLocale].complete = completeKeys.length;
-              fileStats[filePath].languageStats[targetLocale].words = wordsToTranslate;
+              fileStats[filePath].languageStats[_targetLocale].missing = missingKeys.length;
+              fileStats[filePath].languageStats[_targetLocale].updated = updatedKeys.length;
+              fileStats[filePath].languageStats[_targetLocale].complete = completeKeys.length;
+              fileStats[filePath].languageStats[_targetLocale].words = wordsToTranslate;
 
               // Update global stats
-              languageStats[targetLocale].missing += missingKeys.length;
-              languageStats[targetLocale].updated += updatedKeys.length;
-              languageStats[targetLocale].complete += completeKeys.length;
-              languageStats[targetLocale].words += wordsToTranslate;
-              totalWordCount.set(targetLocale, (totalWordCount.get(targetLocale) || 0) + wordsToTranslate);
+              languageStats[_targetLocale].missing += missingKeys.length;
+              languageStats[_targetLocale].updated += updatedKeys.length;
+              languageStats[_targetLocale].complete += completeKeys.length;
+              languageStats[_targetLocale].words += wordsToTranslate;
+              totalWordCount.set(_targetLocale, (totalWordCount.get(_targetLocale) || 0) + wordsToTranslate);
 
               // Display progress
               const totalKeysInFile = sourceKeys.length;
