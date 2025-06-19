@@ -169,10 +169,12 @@ function createWorkerTask(args: {
                   delta.updated.includes(key) ||
                   !!args.ctx.flags.force,
               )
-              .filter(([key]) =>
-                assignedTask.onlyKeys?.some((pattern) =>
-                  minimatch(key, pattern),
-                ),
+              .filter(
+                ([key]) =>
+                  !assignedTask.onlyKeys.length ||
+                  assignedTask.onlyKeys?.some((pattern) =>
+                    minimatch(key, pattern),
+                  ),
               )
               .fromPairs()
               .value();
