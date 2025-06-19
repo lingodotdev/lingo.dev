@@ -24,6 +24,14 @@ const LockSchema = z.object({
 });
 export type LockData = z.infer<typeof LockSchema>;
 
+export type Delta = {
+  added: string[];
+  removed: string[];
+  updated: string[];
+  renamed: [string, string][];
+  hasChanges: boolean;
+};
+
 export function createDeltaProcessor(fileKey: string) {
   const lockfilePath = path.join(process.cwd(), "i18n.lock");
   return {

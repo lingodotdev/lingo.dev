@@ -28,6 +28,8 @@ export default function createLingoDotDevLocalizer(
   const engine = new LingoDotDevEngine({
     apiKey: auth.apiKey,
     apiUrl: auth.apiUrl,
+    batchSize: 1,
+    idealBatchItemSize: 1,
   });
 
   return {
