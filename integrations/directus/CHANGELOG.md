@@ -1,5 +1,11 @@
 # @replexica/integration-directus
 
+## 0.1.10
+
+### Patch Changes
+
+- [#937](https://github.com/lingodotdev/lingo.dev/pull/937) [`4e5983d`](https://github.com/lingodotdev/lingo.dev/commit/4e5983d7e59ebf9eb529c4b7c1c87689432ac873) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - Update documentation URLs from docs.lingo.dev to lingo.dev/cli and lingo.dev/compiler
+
 ## 0.1.9
 
 ### Patch Changes

@@ -40,7 +40,7 @@ export default new Command()
   )
   .option(
     "--key <key>",
-    "Key to process. Process only a specific translation key, useful for updating a single entry",
+    "Key to process. Process only a specific translation key, useful for updating a single entry. Accepts glob patterns.",
     (val: string, prev: string[]) => (prev ? [...prev, val] : [val]),
   )
   .option(

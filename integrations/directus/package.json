@@ -1,6 +1,6 @@
 {
   "name": "@replexica/integration-directus",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "Lingo.dev integration for Directus",
   "private": false,
   "sideEffects": false,
