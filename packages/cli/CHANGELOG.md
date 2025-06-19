@@ -1,5 +1,23 @@
 # lingo.dev
 
+## 0.99.6
+
+### Patch Changes
+
+- [`81eff21`](https://github.com/lingodotdev/lingo.dev/commit/81eff2104a4401b1c1b6cdf4dcc7ca75b7411ba4) Thanks [@mathio](https://github.com/mathio)! - fix
+
+## 0.99.5
+
+### Patch Changes
+
+- [#948](https://github.com/lingodotdev/lingo.dev/pull/948) [`b39b04a`](https://github.com/lingodotdev/lingo.dev/commit/b39b04ad83d3c8001008c3cefe309d8e762b2adc) Thanks [@mathio](https://github.com/mathio)! - match --keys via minimatch in run
+
+- [#937](https://github.com/lingodotdev/lingo.dev/pull/937) [`4e5983d`](https://github.com/lingodotdev/lingo.dev/commit/4e5983d7e59ebf9eb529c4b7c1c87689432ac873) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - Update documentation URLs from docs.lingo.dev to lingo.dev/cli and lingo.dev/compiler
+
+- Updated dependencies [[`4e5983d`](https://github.com/lingodotdev/lingo.dev/commit/4e5983d7e59ebf9eb529c4b7c1c87689432ac873)]:
+  - @lingo.dev/_compiler@0.3.4
+  - @lingo.dev/_sdk@0.9.2
+
 ## 0.99.4
 
 ### Patch Changes

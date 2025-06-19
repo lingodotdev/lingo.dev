@@ -2,6 +2,7 @@ import chalk from "chalk";
 import { Listr, ListrTask } from "listr2";
 import pLimit, { LimitFunction } from "p-limit";
 import _ from "lodash";
+import { minimatch } from "minimatch";
 
 import { colors } from "../../constants";
 import { CmdRunContext, CmdRunTask, CmdRunTaskResult } from "./_types";
@@ -171,7 +172,9 @@ function createWorkerTask(args: {
               .filter(
                 ([key]) =>
                   !assignedTask.onlyKeys.length ||
-                  assignedTask.onlyKeys.includes(key),
+                  assignedTask.onlyKeys?.some((pattern) =>
+                    minimatch(key, pattern),
+                  ),
               )
               .fromPairs()
               .value();
