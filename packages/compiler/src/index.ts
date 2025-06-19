@@ -3,34 +3,10 @@ import type { NextConfig } from "next";
 import packageJson from "../package.json";
 import _ from "lodash";
 import dedent from "dedent";
-import {
-  composeMutations,
-  createPayload,
-  createOutput,
-  defaultParams,
-} from "./_base";
-import i18nDirectiveMutation from "./i18n-directive";
-import jsxProviderMutation from "./jsx-provider";
-import jsxRootFlagMutation from "./jsx-root-flag";
-import jsxScopeFlagMutation from "./jsx-scope-flag";
-import jsxAttributeFlagMutation from "./jsx-attribute-flag";
-import path from "path";
-import { parseParametrizedModuleId } from "./utils/module-params";
-import { LCP } from "./lib/lcp";
-import { LCPServer } from "./lib/lcp/server";
-import { rscDictionaryLoaderMutation } from "./rsc-dictionary-loader";
-import { reactRouterDictionaryLoaderMutation } from "./react-router-dictionary-loader";
-import { jsxFragmentMutation } from "./jsx-fragment";
-import { jsxHtmlLangMutation } from "./jsx-html-lang";
-import { jsxAttributeScopesExportMutation } from "./jsx-attribute-scopes-export";
-import { jsxScopesExportMutation } from "./jsx-scopes-export";
-import { lingoJsxAttributeScopeInjectMutation } from "./jsx-attribute-scope-inject";
-import { lingoJsxScopeInjectMutation } from "./jsx-scope-inject";
-import { jsxRemoveAttributesMutation } from "./jsx-remove-attributes";
+import { defaultParams } from "./_base";
 import { LCP_DICTIONARY_FILE_NAME } from "./_const";
 import { LCPCache } from "./lib/lcp/cache";
 import { getInvalidLocales } from "./utils/locales";
-import { clientDictionaryLoaderMutation } from "./client-dictionary-loader";
 import {
   getGroqKeyFromEnv,
   getGroqKeyFromRc,
@@ -41,6 +17,7 @@ import {
 } from "./utils/llm-api-key";
 import { isRunningInCIOrDocker } from "./utils/env";
 import { providerDetails } from "./lib/lcp/api/provider-details";
+import { loadDictionary, transformComponent } from "./_loader-utils";
 
 const keyCheckers: Record<
   string,
@@ -111,27 +88,23 @@ const unplugin = createUnplugin<Partial<typeof defaultParams> | undefined>(
       name: packageJson.name,
       loadInclude: (id) => !!id.match(LCP_DICTIONARY_FILE_NAME),
       async load(id) {
-        const moduleInfo = parseParametrizedModuleId(id);
-
-        const lcpParams = {
+        const dictionary = await loadDictionary({
+          resourcePath: id,
+          resourceQuery: "",
+          params: {
+            ...params,
+            models: params.models,
+            sourceLocale: params.sourceLocale,
+            targetLocales: params.targetLocales,
+          },
           sourceRoot: params.sourceRoot,
           lingoDir: params.lingoDir,
           isDev,
-        };
-
-        // wait for LCP file to be generated
-        await LCP.ready(lcpParams);
-        const lcp = LCP.getInstance(lcpParams);
-
-        const dictionaries = await LCPServer.loadDictionaries({
-          models: params.models,
-          lcp: lcp.data,
-          sourceLocale: params.sourceLocale,
-          targetLocales: params.targetLocales,
-          sourceRoot: params.sourceRoot,
-          lingoDir: params.lingoDir,
         });
-        const dictionary = dictionaries[moduleInfo.params.locale];
+
+        if (!dictionary) {
+          return null;
+        }
 
         console.log(JSON.stringify(dictionary, null, 2));
 
@@ -143,44 +116,12 @@ const unplugin = createUnplugin<Partial<typeof defaultParams> | undefined>(
       enforce: "pre",
       transform(code, id) {
         try {
-          const result = _.chain({
+          const result = transformComponent({
             code,
             params,
-            relativeFilePath: path
-              .relative(path.resolve(process.cwd(), params.sourceRoot), id)
-              .split(path.sep)
-              .join("/"), // Always normalize for consistent dictionaries
-          })
-            .thru(createPayload)
-            .thru(
-              composeMutations(
-                i18nDirectiveMutation,
-                jsxFragmentMutation,
-                jsxAttributeFlagMutation,
-
-                // log here to see transformedfiles
-                // (input) => {
-                //   console.log(`transform ${id}`);
-                //   return input;
-                // },
-
-                jsxProviderMutation,
-                jsxHtmlLangMutation,
-                jsxRootFlagMutation,
-                jsxScopeFlagMutation,
-                jsxAttributeFlagMutation,
-                jsxAttributeScopesExportMutation,
-                jsxScopesExportMutation,
-                lingoJsxAttributeScopeInjectMutation,
-                lingoJsxScopeInjectMutation,
-                rscDictionaryLoaderMutation,
-                reactRouterDictionaryLoaderMutation,
-                jsxRemoveAttributesMutation,
-                clientDictionaryLoaderMutation,
-              ),
-            )
-            .thru(createOutput)
-            .value();
+            resourcePath: id,
+            sourceRoot: params.sourceRoot,
+          });
 
           return result;
         } catch (error) {
