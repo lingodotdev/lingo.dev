@@ -1,5 +1,11 @@
 # @lingo.dev/\_compiler
 
+## 0.3.5
+
+### Patch Changes
+
+- [#947](https://github.com/lingodotdev/lingo.dev/pull/947) [`d80285a`](https://github.com/lingodotdev/lingo.dev/commit/d80285a9b12bd85425564cb00e558812fd0aee40) Thanks [@mathio](https://github.com/mathio)! - remove local variable cache
+
 ## 0.3.4
 
 ### Patch Changes
