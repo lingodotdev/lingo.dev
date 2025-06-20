@@ -1,5 +1,12 @@
 # next-app
 
+## 0.2.15
+
+### Patch Changes
+
+- Updated dependencies []:
+  - lingo.dev@0.99.8
+
 ## 0.2.14
 
 ### Patch Changes
