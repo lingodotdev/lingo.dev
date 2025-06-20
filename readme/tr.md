@@ -106,7 +106,7 @@ jobs:
           api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
 ```
 
-Deponuzu yeşil ve ürününüzü manuel adımlar olmadan çok dilli tutar.
+Deponuzu yeşil tutar ve manuel adımlar olmadan ürününüzü çok dilli hale getirir.
 
 [Belgeleri oku →](https://lingo.dev/ci)
 
