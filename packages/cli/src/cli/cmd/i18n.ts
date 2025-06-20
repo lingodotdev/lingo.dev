@@ -176,7 +176,6 @@ export default new Command()
               bucket.type,
               bucketPath.pathPattern,
               {
-                isCacheRestore: false,
                 defaultLocale: sourceLocale,
                 injectLocale: bucket.injectLocale,
               },
@@ -215,7 +214,6 @@ export default new Command()
               bucket.type,
               bucketPath.pathPattern,
               {
-                isCacheRestore: false,
                 defaultLocale: sourceLocale,
                 returnUnlocalizedKeys: true,
                 injectLocale: bucket.injectLocale,
@@ -324,7 +322,6 @@ export default new Command()
               bucket.type,
               bucketPath.pathPattern,
               {
-                isCacheRestore: false,
                 defaultLocale: sourceLocale,
                 injectLocale: bucket.injectLocale,
               },

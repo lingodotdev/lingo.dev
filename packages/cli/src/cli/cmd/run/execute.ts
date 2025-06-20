@@ -115,7 +115,6 @@ function createLoaderForTask(assignedTask: CmdRunTask) {
     assignedTask.bucketPathPattern,
     {
       defaultLocale: assignedTask.sourceLocale,
-      isCacheRestore: false,
       injectLocale: assignedTask.injectLocale,
     },
     assignedTask.lockedKeys,
