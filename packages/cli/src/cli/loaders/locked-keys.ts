@@ -4,28 +4,21 @@ import _ from "lodash";
 
 export default function createLockedKeysLoader(
   lockedKeys: string[],
-  isCacheRestore: boolean = false,
 ): ILoader<Record<string, any>, Record<string, any>> {
   return createLoader({
-    pull: async (locale, data) =>
-      _.chain(data)
-        .pickBy(
-          (value, key) =>
-            !lockedKeys.some((lockedKey) => key.startsWith(lockedKey)),
-        )
-        .value(),
+    pull: async (locale, data) => {
+      return _.pickBy(data, (value, key) => !_isLockedKey(key, lockedKeys));
+    },
     push: async (locale, data, originalInput) => {
       const lockedSubObject = _.chain(originalInput)
-        .pickBy((value, key) =>
-          lockedKeys.some((lockedKey) => key.startsWith(lockedKey)),
-        )
+        .pickBy((value, key) => _isLockedKey(key, lockedKeys))
         .value();
 
-      if (isCacheRestore) {
-        return _.merge({}, data, lockedSubObject);
-      } else {
-        return _.merge({}, originalInput, data, lockedSubObject);
-      }
+      return _.merge({}, data, lockedSubObject);
     },
   });
+}
+
+function _isLockedKey(key: string, lockedKeys: string[]) {
+  return lockedKeys.some((lockedKey) => key.startsWith(lockedKey));
 }
