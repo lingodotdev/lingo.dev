@@ -1,5 +1,9 @@
 import { describe, it, expect } from "vitest";
-import { createMdxFormatLoader } from "./mdx";
+import {
+  createMdxFormatLoader,
+  createDoubleSerializationLoader,
+  createMdxStructureLoader,
+} from "./mdx";
 
 // Helper to traverse mdast tree
 function traverse(node: any, visitor: (n: any) => void) {
@@ -37,6 +41,68 @@ describe("mdx loader", () => {
       // The serialized output must still contain the original code and inline code content
       expect(output).toContain('console.log("hello");');
       expect(output).toMatch(/`world`/);
+    });
+  });
+
+  describe("createDoubleSerializationLoader", () => {
+    it("should return the same content on pull", async () => {
+      const loader = createDoubleSerializationLoader();
+      loader.setDefaultLocale("en");
+      const input = "# Hello";
+      const output = await loader.pull("en", input);
+      expect(output).toBe(input);
+    });
+
+    it("should reformat markdown on push", async () => {
+      const loader = createDoubleSerializationLoader();
+      loader.setDefaultLocale("en");
+      const input = "#  Hello   ";
+      const expectedOutput = "# Hello\n";
+      await loader.pull("en", input);
+      const output = await loader.push("en", input);
+      expect(output).toBe(expectedOutput);
+    });
+  });
+
+  describe("createMdxStructureLoader", () => {
+    it("should extract values from keys ending with /value on pull", async () => {
+      const loader = createMdxStructureLoader();
+      loader.setDefaultLocale("en");
+      const input = {
+        "title/value": "Hello",
+        "title/type": "string",
+        "content/value": "Some content",
+        unrelated: "field",
+      };
+      const output = await loader.pull("en", input);
+      expect(output).toEqual({
+        "title/value": "Hello",
+        "content/value": "Some content",
+      });
+    });
+
+    it("should merge translated data with non-value keys on push, should not include untranslated keys from originalInput", async () => {
+      const loader = createMdxStructureLoader();
+      loader.setDefaultLocale("en");
+      const originalInput = {
+        "title/value": "Hello",
+        "title/type": "string",
+        "content/value": "Some content",
+        "untranslated/value": "untranslated",
+        unrelated: "field",
+      };
+      await loader.pull("en", originalInput);
+      const translatedData = {
+        "title/value": "Hola",
+        "content/value": "Algun contenido",
+      };
+      const output = await loader.push("es", translatedData);
+      expect(output).toEqual({
+        "title/value": "Hola",
+        "title/type": "string",
+        "content/value": "Algun contenido",
+        unrelated: "field",
+      });
     });
   });
 });
