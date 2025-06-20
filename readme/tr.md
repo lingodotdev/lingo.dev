@@ -35,7 +35,7 @@
 
 **Lingo.dev Derleyici**, mevcut React bileşenlerinde herhangi bir değişiklik gerektirmeden, derleme zamanında herhangi bir React uygulamasını çok dilli hale getirmek için tasarlanmış ücretsiz, açık kaynaklı bir derleyici ara yazılımıdır.
 
-Bir kez yükleyin:
+Bir kez kurun:
 
 ```bash
 npm install lingo.dev
@@ -62,7 +62,7 @@ Tam kılavuz için [belgeleri okuyun →](https://lingo.dev/compiler) ve kurulum
 
 ### Bu depoda neler var?
 
-| Araç         | Özet                                                                          | Belgeler                                    |
+| Alet          | Özet                                                                          | Dokümanlar                                   |
 | ------------ | ------------------------------------------------------------------------------ | --------------------------------------- |
 | **Derleyici** | Derleme zamanında React yerelleştirme                                                  | [/compiler](https://lingo.dev/compiler) |
 | **CLI**      | Web ve mobil uygulamalar, JSON, YAML, markdown ve daha fazlası için tek komutla yerelleştirme | [/cli](https://lingo.dev/cli)           |
@@ -75,7 +75,7 @@ Aşağıda her biri için hızlı bilgiler bulunmaktadır 👇
 
 ### ⚡️ Lingo.dev CLI
 
-Doğrudan terminalinizden kod ve içerik çevirin.
+Kod ve içeriği doğrudan terminalinizden çevirin.
 
 ```bash
 npx lingo.dev@latest run
@@ -83,7 +83,7 @@ npx lingo.dev@latest run
 
 Her dizeyi parmak iziyle işaretler, sonuçları önbelleğe alır ve yalnızca değişen kısımları yeniden çevirir.
 
-Nasıl kurulacağını öğrenmek için [belgeleri takip edin →](https://lingo.dev/cli).
+Nasıl kurulacağını öğrenmek için [dokümanları takip edin →](https://lingo.dev/cli).
 
 ---
 
@@ -151,7 +151,7 @@ Topluluk odaklıyız ve katkıları seviyoruz!
 - Bir şeyi düzeltmek mi istiyorsunuz? [PR gönderin](https://github.com/lingodotdev/lingo.dev/pulls)
 - Yardıma mı ihtiyacınız var? [Discord'umuza katılın](https://lingo.dev/go/discord)
 
-## ⭐ Yıldız Geçmişi
+## ⭐ Yıldız Tarihi
 
 Yaptıklarımızı beğeniyorsanız, bize bir ⭐ verin ve 3.000 yıldıza ulaşmamıza yardımcı olun! 🌟
 
@@ -161,8 +161,8 @@ Yaptıklarımızı beğeniyorsanız, bize bir ⭐ verin ve 3.000 yıldıza ulaş
 
 ](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
 
-## 🌐 Diğer dillerde benioku
+## 🌐 Diğer dillerde Readme
 
-[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)  • [Türkçe](/readme/tr.md)
 
 Dilinizi görmüyor musunuz? [`i18n.json`](./i18n.json) dosyasına ekleyin ve bir PR açın!
