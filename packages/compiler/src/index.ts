@@ -140,7 +140,7 @@ export default {
     (
       compilerParams?: Partial<typeof defaultParams> & {
         turbopack?: {
-          enabled: boolean;
+          enabled?: boolean | "auto";
           useLegacyTurbo?: boolean;
         };
       },
@@ -149,12 +149,24 @@ export default {
       const mergedParams = _.merge(
         {},
         defaultParams,
-        { rsc: true },
+        {
+          rsc: true,
+          turbopack: {
+            enabled: "auto",
+            useLegacyTurbo: false,
+          },
+        },
         compilerParams,
       );
 
-      const turbopackEnabled: boolean =
-        mergedParams.turbopack?.enabled === true;
+      let turbopackEnabled: boolean;
+      if (mergedParams.turbopack?.enabled === "auto") {
+        turbopackEnabled =
+          process.env.TURBOPACK === "1" || process.env.TURBOPACK === "true";
+      } else {
+        turbopackEnabled = mergedParams.turbopack?.enabled === true;
+      }
+
       const supportLegacyTurbo: boolean =
         mergedParams.turbopack?.useLegacyTurbo === true;
 
