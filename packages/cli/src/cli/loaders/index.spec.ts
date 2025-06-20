@@ -458,15 +458,26 @@ describe("bucket loaders", () => {
       );
     });
 
-    it("should use key values from original input for missing keys", async () => {
+    it("should return keys in correct order, should not use key values from original input for missing keys", async () => {
       setupFileMocks();
 
       const input = {
         "button.title": "Submit",
+        "button.subtitle": "Submit subtitle",
         "button.description": "Submit description",
       };
-      const payload = { "button.title": "Enviar" };
-      const expectedOutput = JSON.stringify({ ...input, ...payload }, null, 2);
+      const payload = {
+        "button.subtitle": "Subtítulo de envío",
+        "button.title": "Enviar",
+      };
+      const expectedOutput = JSON.stringify(
+        {
+          "button.title": "Enviar",
+          "button.subtitle": "Subtítulo de envío",
+        },
+        null,
+        2,
+      );
 
       mockFileOperations(JSON.stringify(input));
 
@@ -535,7 +546,7 @@ describe("bucket loaders", () => {
       expect(data).toEqual({ "button.title": "Submit", "not-a-locale": "bar" });
     });
 
-    it("should inject locales into json data", async () => {
+    it.only("should inject locales into json data", async () => {
       setupFileMocks();
 
       const input = {

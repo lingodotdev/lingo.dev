@@ -182,6 +182,8 @@ function createWorkerTask(args: {
               return { status: "skipped" } satisfies CmdRunTaskResult;
             }
 
+            let _partialData: any = {};
+
             const processedTargetData = await args.ctx.localizer!.localize(
               {
                 sourceLocale: assignedTask.sourceLocale,
@@ -193,21 +195,16 @@ function createWorkerTask(args: {
               async (progress, _sourceChunk, processedChunk) => {
                 await args.ioLimiter(async () => {
                   // write translated chunks as they are received from LLM
-                  const latestSourceData = await bucketLoader.pull(
-                    assignedTask.sourceLocale,
-                  );
+                  // const latestSourceData = await bucketLoader.pull(
+                  //   assignedTask.sourceLocale,
+                  // );
                   const latestTargetData = await bucketLoader.pull(
                     assignedTask.targetLocale,
                   );
-                  const chunkTargetData = _.merge(
-                    {},
-                    latestSourceData,
-                    latestTargetData,
-                    processedChunk,
-                  );
+                  _.merge(_partialData, processedChunk);
                   const finalChunkTargetData = processRenamedKeys(
                     delta,
-                    chunkTargetData,
+                    _partialData,
                   );
                   await bucketLoader.push(
                     assignedTask.targetLocale,
