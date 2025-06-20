@@ -16,41 +16,34 @@ describe("unlocalizable loader", () => {
     systemId: "Ab1cdefghijklmnopqrst2",
   };
 
-  describe("cache restoration", () => {
-    describe.each([true, false])("%s", (cacheRestoration) => {
-      it("should remove unlocalizable keys on pull", async () => {
-        const loader = createUnlocalizableLoader(cacheRestoration);
-        loader.setDefaultLocale("en");
-        const result = await loader.pull("en", data);
+  it("should remove unlocalizable keys on pull", async () => {
+    const loader = createUnlocalizableLoader();
+    loader.setDefaultLocale("en");
+    const result = await loader.pull("en", data);
 
-        expect(result).toEqual({
-          foo: "bar",
-          numStr: "1.0",
-          boolStr: "false",
-          bar: "foo",
-        });
-      });
-
-      it("should handle unlocalizable keys on push", async () => {
-        const pushData = { foo: "bar-es", bar: "foo-es" };
-
-        const loader = createUnlocalizableLoader(cacheRestoration);
-        loader.setDefaultLocale("en");
-        await loader.pull("en", data);
-        const result = await loader.push("es", pushData);
-
-        const expectedData = cacheRestoration
-          ? { ...pushData }
-          : { ...data, ...pushData };
-        expect(result).toEqual(expectedData);
-      });
+    expect(result).toEqual({
+      foo: "bar",
+      numStr: "1.0",
+      boolStr: "false",
+      bar: "foo",
     });
+  });
+
+  it("should handle unlocalizable keys on push", async () => {
+    const pushData = { foo: "bar-es", bar: "foo-es" };
+
+    const loader = createUnlocalizableLoader();
+    loader.setDefaultLocale("en");
+    await loader.pull("en", data);
+    const result = await loader.push("es", pushData);
+
+    expect(result).toEqual({ ...data, ...pushData });
   });
 
   describe("return unlocalizable keys", () => {
     describe.each([true, false])("%s", (returnUnlocalizedKeys) => {
       it("should return unlocalizable keys on pull", async () => {
-        const loader = createUnlocalizableLoader(false, returnUnlocalizedKeys);
+        const loader = createUnlocalizableLoader(returnUnlocalizedKeys);
         loader.setDefaultLocale("en");
         const result = await loader.pull("en", data);
 
@@ -80,7 +73,7 @@ describe("unlocalizable loader", () => {
       it("should not affect push", async () => {
         const pushData = { foo: "bar-es", bar: "foo-es" };
 
-        const loader = createUnlocalizableLoader(false, returnUnlocalizedKeys);
+        const loader = createUnlocalizableLoader(returnUnlocalizedKeys);
         loader.setDefaultLocale("en");
         await loader.pull("en", data);
         const result = await loader.push("es", pushData);

@@ -35,7 +35,6 @@ export default new Command()
             bucket.type,
             bucketConfig.pathPattern,
             {
-              isCacheRestore: false,
               defaultLocale: sourceLocale,
             },
           );

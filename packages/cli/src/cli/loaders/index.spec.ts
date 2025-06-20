@@ -28,7 +28,6 @@ describe("bucket loaders", () => {
         "android",
         "values-[locale]/strings.xml",
         {
-          isCacheRestore: false,
           defaultLocale: "en",
         },
       );
@@ -56,7 +55,6 @@ describe("bucket loaders", () => {
         "android",
         "values-[locale]/strings.xml",
         {
-          isCacheRestore: false,
           defaultLocale: "en",
         },
       );
@@ -83,7 +81,6 @@ describe("bucket loaders", () => {
         "android",
         "values-[locale]/strings.xml",
         {
-          isCacheRestore: false,
           defaultLocale: "en",
         },
       );
@@ -113,7 +110,6 @@ describe("bucket loaders", () => {
       mockFileOperations(input);
 
       const csvLoader = createBucketLoader("csv", "i18n.csv", {
-        isCacheRestore: false,
         defaultLocale: "en",
       });
       csvLoader.setDefaultLocale("en");
@@ -131,7 +127,6 @@ describe("bucket loaders", () => {
       mockFileOperations(input);
 
       const csvLoader = createBucketLoader("csv", "i18n.csv", {
-        isCacheRestore: false,
         defaultLocale: "en",
       });
       csvLoader.setDefaultLocale("en");
@@ -150,7 +145,6 @@ describe("bucket loaders", () => {
       mockFileOperations(input);
 
       const csvLoader = createBucketLoader("csv", "i18n.csv", {
-        isCacheRestore: false,
         defaultLocale: "en",
       });
       csvLoader.setDefaultLocale("en");
@@ -190,7 +184,6 @@ describe("bucket loaders", () => {
         "flutter",
         "lib/l10n/app_[locale].arb",
         {
-          isCacheRestore: false,
           defaultLocale: "en",
         },
       );
@@ -241,7 +234,6 @@ describe("bucket loaders", () => {
         "flutter",
         "lib/l10n/app_[locale].arb",
         {
-          isCacheRestore: false,
           defaultLocale: "en",
         },
       );
@@ -302,7 +294,6 @@ describe("bucket loaders", () => {
       mockFileOperations(input);
 
       const htmlLoader = createBucketLoader("html", "i18n/[locale].html", {
-        isCacheRestore: false,
         defaultLocale: "en",
       });
       htmlLoader.setDefaultLocale("en");
@@ -362,7 +353,6 @@ describe("bucket loaders", () => {
       mockFileOperations(input);
 
       const htmlLoader = createBucketLoader("html", "i18n/[locale].html", {
-        isCacheRestore: false,
         defaultLocale: "en",
       });
       htmlLoader.setDefaultLocale("en");
@@ -386,7 +376,6 @@ describe("bucket loaders", () => {
       mockFileOperations(JSON.stringify(input));
 
       const jsonLoader = createBucketLoader("json", "i18n/[locale].json", {
-        isCacheRestore: false,
         defaultLocale: "en",
       });
       jsonLoader.setDefaultLocale("en");
@@ -405,7 +394,6 @@ describe("bucket loaders", () => {
       mockFileOperations(JSON.stringify(input));
 
       const jsonLoader = createBucketLoader("json", "i18n/[locale].json", {
-        isCacheRestore: false,
         defaultLocale: "en",
       });
       jsonLoader.setDefaultLocale("en");
@@ -434,7 +422,6 @@ describe("bucket loaders", () => {
       mockFileOperations(JSON.stringify(input));
 
       const jsonLoader = createBucketLoader("json", "i18n/[locale].json", {
-        isCacheRestore: false,
         defaultLocale: "en",
       });
       jsonLoader.setDefaultLocale("en");
@@ -463,7 +450,6 @@ describe("bucket loaders", () => {
       mockFileOperations(JSON.stringify(input));
 
       const jsonLoader = createBucketLoader("json", "i18n/[locale].json", {
-        isCacheRestore: false,
         defaultLocale: "en",
       });
       jsonLoader.setDefaultLocale("en");
@@ -491,7 +477,6 @@ describe("bucket loaders", () => {
       mockFileOperations(JSON.stringify(input));
 
       const jsonLoader = createBucketLoader("json", "i18n/[locale].json", {
-        isCacheRestore: false,
         defaultLocale: "en",
       });
       jsonLoader.setDefaultLocale("en");
@@ -504,100 +489,6 @@ describe("bucket loaders", () => {
         expectedOutput,
         { encoding: "utf-8", flag: "w" },
       );
-    });
-
-    it("should not use key values from original input on cache restoration", async () => {
-      setupFileMocks();
-
-      const input = {
-        "button.title": "Submit",
-        "button.description": "Submit description",
-      };
-      const payload = { "button.title": "Enviar" };
-      const expectedOutput = JSON.stringify(payload, null, 2);
-
-      mockFileOperations(JSON.stringify(input));
-
-      const jsonLoader = createBucketLoader("json", "i18n/[locale].json", {
-        isCacheRestore: true,
-        defaultLocale: "en",
-      });
-      jsonLoader.setDefaultLocale("en");
-      await jsonLoader.pull("en");
-
-      await jsonLoader.push("es", payload);
-
-      expect(fs.writeFile).toHaveBeenCalledWith(
-        "i18n/es.json",
-        expectedOutput,
-        { encoding: "utf-8", flag: "w" },
-      );
-    });
-
-    it("should respect locked keys during cache restoration", async () => {
-      setupFileMocks();
-
-      const input = {
-        "button.title": "Submit",
-        "button.description": "Extra field not in payload",
-        "locked.key": "Should not change",
-        nested: {
-          locked: "This is locked",
-          unlocked: "This can change",
-          extra: "This should be removed in cache restore",
-        },
-      };
-      const payload = {
-        "button.title": "Enviar",
-        "locked.key": "This should not be applied",
-        "nested/locked": "This should not be applied either",
-        "nested/unlocked": "Este puede cambiar",
-      };
-
-      mockFileOperations(JSON.stringify(input));
-
-      const jsonLoader = createBucketLoader(
-        "json",
-        "i18n/[locale].json",
-        { isCacheRestore: true, defaultLocale: "en" },
-        ["locked.key", "nested/locked"],
-      );
-
-      jsonLoader.setDefaultLocale("en");
-      await jsonLoader.pull("en");
-
-      await jsonLoader.push("es", payload);
-
-      expect(fs.writeFile).toHaveBeenCalled();
-      const writeFileCall = (fs.writeFile as any).mock.calls[0];
-      const writtenContent = JSON.parse(writeFileCall[1]);
-
-      // During cache restoration, only keys in the payload should be included
-      // but locked keys should still be preserved
-      expect(Object.keys(writtenContent)).toContain("button.title");
-      expect(Object.keys(writtenContent)).toContain("locked.key");
-      expect(writtenContent["locked.key"]).toBe("Should not change");
-
-      // Fields not in the payload should be removed in cache restoration
-      expect(Object.keys(writtenContent)).not.toContain("button.description");
-
-      // Nested keys should follow the same pattern
-      expect(writtenContent.nested).toHaveProperty(
-        "unlocked",
-        "Este puede cambiar",
-      );
-      expect(writtenContent.nested).toHaveProperty("locked", "This is locked");
-      expect(writtenContent.nested).not.toHaveProperty("extra");
-
-      // Only locked keys and payload keys should be present
-      expect(Object.keys(writtenContent)).toEqual(
-        expect.arrayContaining(["button.title", "locked.key", "nested"]),
-      );
-      expect(Object.keys(writtenContent)).toHaveLength(3);
-      expect(Object.keys(writtenContent.nested)).toEqual(
-        expect.arrayContaining(["locked", "unlocked"]),
-      );
-      expect(Object.keys(writtenContent.nested)).toHaveLength(2);
     });
 
     it("should load and save json data for paths with multiple locales", async () => {
@@ -613,7 +504,6 @@ describe("bucket loaders", () => {
         "json",
         "i18n/[locale]/[locale].json",
         {
-          isCacheRestore: false,
           defaultLocale: "en",
         },
       );
@@ -642,7 +532,6 @@ describe("bucket loaders", () => {
       mockFileOperations(JSON.stringify(input));
 
       const jsonLoader = createBucketLoader("json", "i18n/[locale].json", {
-        isCacheRestore: false,
         defaultLocale: "en",
         injectLocale: ["settings.locale", "not-a-locale"],
       });
@@ -670,7 +559,6 @@ describe("bucket loaders", () => {
       mockFileOperations(JSON.stringify(input));
 
       const jsonLoader = createBucketLoader("json", "i18n/[locale].json", {
-        isCacheRestore: false,
         defaultLocale: "en",
         injectLocale: ["settings.locale", "not-a-locale"],
       });
@@ -713,7 +601,7 @@ describe("bucket loaders", () => {
       const jsonLoader = createBucketLoader(
         "json",
         "i18n/[locale].json",
-        { isCacheRestore: false, defaultLocale: "en" },
+        { defaultLocale: "en" },
         ["locked.key", "nested/locked"],
       );
 
@@ -734,51 +622,6 @@ describe("bucket loaders", () => {
       expect(writtenContent["button.title"]).toBe("Enviar");
       expect(writtenContent["button.description"]).toBe("Descripción de envío");
       expect(writtenContent.nested.unlocked).toBe("Este puede cambiar");
-    });
-
-    it("should respect locked keys during cache restoration", async () => {
-      setupFileMocks();
-
-      const input = {
-        "button.title": "Submit",
-        "locked.key": "Should not change",
-        nested: {
-          locked: "This is locked",
-          unlocked: "This can change",
-        },
-      };
-      const payload = {
-        "button.title": "Enviar",
-        "locked.key": "This should not be applied",
-        "nested/locked": "This should not be applied either",
-        "nested/unlocked": "Este puede cambiar",
-      };
-
-      mockFileOperations(JSON.stringify(input));
-
-      const jsonLoader = createBucketLoader(
-        "json",
-        "i18n/[locale].json",
-        { isCacheRestore: true, defaultLocale: "en" },
-        ["locked.key", "nested/locked"],
-      );
-
-      jsonLoader.setDefaultLocale("en");
-      await jsonLoader.pull("en");
-
-      await jsonLoader.push("es", payload);
-
-      expect(fs.writeFile).toHaveBeenCalled();
-      const writeFileCall = (fs.writeFile as any).mock.calls[0];
-      const writtenContent = JSON.parse(writeFileCall[1]);
-
-      expect(Object.keys(writtenContent)).toContain("button.title");
-      expect(writtenContent["locked.key"]).toBe("Should not change");
-      expect(writtenContent.nested).toHaveProperty(
-        "unlocked",
-        "Este puede cambiar",
-      );
-      expect(writtenContent.nested).toHaveProperty("locked", "This is locked");
     });
 
     it("should handle deeply nested locked keys", async () => {
@@ -804,7 +647,7 @@ describe("bucket loaders", () => {
       const jsonLoader = createBucketLoader(
         "json",
         "i18n/[locale].json",
-        { isCacheRestore: false, defaultLocale: "en" },
+        { defaultLocale: "en" },
         ["level1/level2/level3/locked"],
       );
 
@@ -849,7 +692,7 @@ describe("bucket loaders", () => {
       const jsonLoader = createBucketLoader(
         "json",
         "i18n/[locale].json",
-        { isCacheRestore: false, defaultLocale: "en" },
+        { defaultLocale: "en" },
         ["messages/0", "messages/1", "messages/2"],
       );
 
@@ -896,7 +739,7 @@ category: test
       const mdxLoader = createBucketLoader(
         "mdx",
         "i18n/[locale].mdx",
-        { isCacheRestore: false, defaultLocale: "en" },
+        { defaultLocale: "en" },
         ["meta/category"],
       );
 
@@ -937,7 +780,6 @@ Another paragraph with **bold** and *italic* text.`;
         "markdown",
         "i18n/[locale].md",
         {
-          isCacheRestore: false,
           defaultLocale: "en",
         },
       );
@@ -990,7 +832,6 @@ Otro párrafo con texto en **negrita** y en _cursiva_.
         "markdown",
         "i18n/[locale].md",
         {
-          isCacheRestore: false,
           defaultLocale: "en",
         },
       );
@@ -1034,7 +875,6 @@ user.password=Password
         "properties",
         "i18n/[locale].properties",
         {
-          isCacheRestore: false,
           defaultLocale: "en",
         },
       );
@@ -1080,7 +920,6 @@ user.password=Contraseña
         "properties",
         "i18n/[locale].properties",
         {
-          isCacheRestore: false,
           defaultLocale: "en",
         },
       );
@@ -1118,7 +957,6 @@ user.password=Contraseña
         "xcode-strings",
         "i18n/[locale].strings",
         {
-          isCacheRestore: false,
           defaultLocale: "en",
         },
       );
@@ -1143,7 +981,6 @@ user.password=Contraseña
         "xcode-strings",
         "i18n/[locale].strings",
         {
-          isCacheRestore: false,
           defaultLocale: "en",
         },
       );
@@ -1205,7 +1042,6 @@ user.password=Contraseña
         "xcode-stringsdict",
         "i18n/[locale].stringsdict",
         {
-          isCacheRestore: false,
           defaultLocale: "en",
         },
       );
@@ -1245,7 +1081,6 @@ user.password=Contraseña
         "xcode-stringsdict",
         "[locale].lproj/Localizable.stringsdict",
         {
-          isCacheRestore: false,
           defaultLocale: "en",
         },
       );
@@ -1340,7 +1175,6 @@ user.password=Contraseña
         "xcode-xcstrings",
         "i18n/[locale].xcstrings",
         {
-          isCacheRestore: false,
           defaultLocale: "en",
         },
       );
@@ -1404,7 +1238,6 @@ user.password=Contraseña
         "xcode-xcstrings",
         "i18n/[locale].xcstrings",
         {
-          isCacheRestore: false,
           defaultLocale: "en",
         },
       );
@@ -1448,7 +1281,6 @@ user.password=Contraseña
         "xcode-xcstrings",
         "i18n/[locale].xcstrings",
         {
-          isCacheRestore: false,
           defaultLocale: "en",
         },
       );
@@ -1545,7 +1377,6 @@ user.password=Contraseña
         "xcode-xcstrings",
         "i18n/[locale].xcstrings",
         {
-          isCacheRestore: false,
           defaultLocale: "en",
         },
       );
@@ -1676,7 +1507,6 @@ user.password=Contraseña
         "xcode-xcstrings",
         "i18n/[locale].xcstrings",
         {
-          isCacheRestore: false,
           defaultLocale: "en",
         },
       );
@@ -1747,7 +1577,6 @@ user.password=Contraseña
         "xcode-xcstrings",
         "i18n/[locale].xcstrings",
         {
-          isCacheRestore: false,
           defaultLocale: "en",
         },
       );
@@ -1785,7 +1614,6 @@ user.password=Contraseña
       mockFileOperations(input);
 
       const yamlLoader = createBucketLoader("yaml", "i18n/[locale].yaml", {
-        isCacheRestore: false,
         defaultLocale: "en",
       });
       yamlLoader.setDefaultLocale("en");
@@ -1806,7 +1634,6 @@ user.password=Contraseña
       mockFileOperations(input);
 
       const yamlLoader = createBucketLoader("yaml", "i18n/[locale].yaml", {
-        isCacheRestore: false,
         defaultLocale: "en",
       });
       yamlLoader.setDefaultLocale("en");
@@ -1838,7 +1665,6 @@ user.password=Contraseña
           mockFileOperations(input);
 
           const yamlLoader = createBucketLoader("yaml", "i18n/[locale].yaml", {
-            isCacheRestore: false,
             defaultLocale: "en",
           });
           yamlLoader.setDefaultLocale("en");
@@ -1872,7 +1698,6 @@ user.password=Contraseña
         "yaml-root-key",
         "i18n/[locale].yaml",
         {
-          isCacheRestore: false,
           defaultLocale: "en",
         },
       );
@@ -1898,7 +1723,6 @@ user.password=Contraseña
         "yaml-root-key",
         "i18n/[locale].yaml",
         {
-          isCacheRestore: false,
           defaultLocale: "en",
         },
       );
@@ -1945,7 +1769,6 @@ Bar
       mockFileOperations(input);
 
       const vttLoader = createBucketLoader("vtt", "i18n/[locale].vtt", {
-        isCacheRestore: false,
         defaultLocale: "en",
       });
       vttLoader.setDefaultLocale("en");
@@ -1997,7 +1820,6 @@ Bar`.trim();
       mockFileOperations(input);
 
       const vttLoader = createBucketLoader("vtt", "i18n/[locale].vtt", {
-        isCacheRestore: false,
         defaultLocale: "en",
       });
       vttLoader.setDefaultLocale("en");
@@ -2038,7 +1860,6 @@ Bar`.trim();
       mockFileOperations(input);
 
       const xmlLoader = createBucketLoader("xml", "i18n/[locale].xml", {
-        isCacheRestore: false,
         defaultLocale: "en",
       });
       xmlLoader.setDefaultLocale("en");
@@ -2086,7 +1907,6 @@ Bar`.trim();
         .trim();
       mockFileOperations(input);
       const xmlLoader = createBucketLoader("xml", "i18n/[locale].xml", {
-        isCacheRestore: false,
         defaultLocale: "en",
       });
       xmlLoader.setDefaultLocale("en");
@@ -2122,7 +1942,6 @@ World!
       mockFileOperations(input);
 
       const srtLoader = createBucketLoader("srt", "i18n/[locale].srt", {
-        isCacheRestore: false,
         defaultLocale: "en",
       });
       srtLoader.setDefaultLocale("en");
@@ -2160,7 +1979,6 @@ Mundo!`;
       mockFileOperations(input);
 
       const srtLoader = createBucketLoader("srt", "i18n/[locale].srt", {
-        isCacheRestore: false,
         defaultLocale: "en",
       });
       srtLoader.setDefaultLocale("en");
@@ -2220,7 +2038,6 @@ Mundo!`;
       mockFileOperations(input);
 
       const xliffLoader = createBucketLoader("xliff", "i18n/[locale].xliff", {
-        isCacheRestore: false,
         defaultLocale: "en",
       });
       xliffLoader.setDefaultLocale("en");
@@ -2301,7 +2118,6 @@ Mundo!`;
       mockFileOperations(input);
 
       const xliffLoader = createBucketLoader("xliff", "i18n/[locale].xlf", {
-        isCacheRestore: false,
         defaultLocale: "en",
       });
       xliffLoader.setDefaultLocale("en");
@@ -2430,7 +2246,6 @@ Mundo!`;
       mockFileOperations(input);
 
       const phpLoader = createBucketLoader("php", "i18n/[locale].php", {
-        isCacheRestore: false,
         defaultLocale: "en",
       });
       phpLoader.setDefaultLocale("en");
@@ -2467,7 +2282,6 @@ return array(
       mockFileOperations(input);
 
       const phpLoader = createBucketLoader("php", "i18n/[locale].php", {
-        isCacheRestore: false,
         defaultLocale: "en",
       });
       phpLoader.setDefaultLocale("en");
@@ -2496,7 +2310,6 @@ return array(
       mockFileOperations(input);
 
       const poLoader = createBucketLoader("po", "i18n/[locale].po", {
-        isCacheRestore: false,
         defaultLocale: "en",
       });
       poLoader.setDefaultLocale("en");
@@ -2514,7 +2327,6 @@ return array(
       mockFileOperations(input);
 
       const poLoader = createBucketLoader("po", "i18n/[locale].po", {
-        isCacheRestore: false,
         defaultLocale: "en",
       });
       poLoader.setDefaultLocale("en");
@@ -2543,7 +2355,6 @@ return array(
       mockFileOperations(input);
 
       const poLoader = createBucketLoader("po", "i18n/[locale].po", {
-        isCacheRestore: false,
         defaultLocale: "en",
       });
       poLoader.setDefaultLocale("en");
@@ -2612,7 +2423,6 @@ ${script}`;
       mockFileOperations(input);
 
       const vueLoader = createBucketLoader("vue-json", "i18n/[locale].vue", {
-        isCacheRestore: false,
         defaultLocale: "en",
       });
       vueLoader.setDefaultLocale("en");
@@ -2653,7 +2463,6 @@ ${script}`;
       mockFileOperations(input);
 
       const vueLoader = createBucketLoader("vue-json", "i18n/App.vue", {
-        isCacheRestore: false,
         defaultLocale: "en",
       });
       vueLoader.setDefaultLocale("en");
@@ -2683,7 +2492,6 @@ ${script}`;
       mockFileOperations(input);
 
       const vueLoader = createBucketLoader("vue-json", "i18n/App.vue", {
-        isCacheRestore: false,
         defaultLocale: "en",
       });
       vueLoader.setDefaultLocale("en");
