@@ -10,27 +10,36 @@ export default function createInjectLocaleLoader(
       if (!injectLocaleKeys) {
         return data;
       }
-      const omitKeys = injectLocaleKeys.filter((key) => {
-        return _.get(data, key) === locale;
-      });
+      const omitKeys = _getKeysWithLocales(data, injectLocaleKeys, locale);
       const result = _.omit(data, omitKeys);
       return result;
     },
     async push(locale, data, originalInput, originalLocale) {
-      if (!injectLocaleKeys) {
+      if (!injectLocaleKeys || !originalInput) {
         return data;
       }
 
-      // ensures locale keys are in correct position
-      const mergedData = _.merge({}, originalInput, data);
+      const localeKeys = _getKeysWithLocales(
+        originalInput,
+        injectLocaleKeys,
+        originalLocale,
+      );
 
-      injectLocaleKeys.forEach((key) => {
-        if (_.get(mergedData, key) === originalLocale) {
-          _.set(mergedData, key, locale);
-        }
+      localeKeys.forEach((key) => {
+        _.set(data, key, locale);
       });
 
-      return mergedData;
+      return data;
     },
+  });
+}
+
+function _getKeysWithLocales(
+  data: Record<string, any>,
+  injectLocaleKeys: string[],
+  locale: string,
+) {
+  return injectLocaleKeys.filter((key) => {
+    return _.get(data, key) === locale;
   });
 }
