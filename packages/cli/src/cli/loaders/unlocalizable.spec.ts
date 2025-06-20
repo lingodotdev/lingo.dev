@@ -30,7 +30,12 @@ describe("unlocalizable loader", () => {
   });
 
   it("should handle unlocalizable keys on push", async () => {
-    const pushData = { foo: "bar-es", bar: "foo-es" };
+    const pushData = {
+      foo: "bar-es",
+      bar: "foo-es",
+      numStr: "2.0",
+      boolStr: "true",
+    };
 
     const loader = createUnlocalizableLoader();
     loader.setDefaultLocale("en");
@@ -71,7 +76,12 @@ describe("unlocalizable loader", () => {
       });
 
       it("should not affect push", async () => {
-        const pushData = { foo: "bar-es", bar: "foo-es" };
+        const pushData = {
+          foo: "bar-es",
+          bar: "foo-es",
+          numStr: "2.0",
+          boolStr: "true",
+        };
 
         const loader = createUnlocalizableLoader(returnUnlocalizedKeys);
         loader.setDefaultLocale("en");
