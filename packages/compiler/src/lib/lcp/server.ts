@@ -27,8 +27,6 @@ export type LCPServerParamsForLocale = {
 };
 
 export class LCPServer {
-  private static dictionariesCache: Record<string, DictionarySchema> | null =
-    null;
   private static inFlightPromise: Promise<
     Record<string, DictionarySchema>
   > | null = null;
@@ -36,11 +34,6 @@ export class LCPServer {
   static async loadDictionaries(
     params: LCPServerParams,
   ): Promise<Record<string, DictionarySchema>> {
-    // Return cached dictionaries if available
-    if (this.dictionariesCache) {
-      return this.dictionariesCache;
-    }
-
     // If a load is already in progress, await it
     if (this.inFlightPromise) {
       return this.inFlightPromise;
@@ -66,9 +59,6 @@ export class LCPServer {
             dictionaries[index],
           ]),
         );
-
-        // Cache for subsequent requests within the same process
-        this.dictionariesCache = result;
 
         return result;
       } finally {
