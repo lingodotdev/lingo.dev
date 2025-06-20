@@ -3,34 +3,10 @@ import type { NextConfig } from "next";
 import packageJson from "../package.json";
 import _ from "lodash";
 import dedent from "dedent";
-import {
-  composeMutations,
-  createPayload,
-  createOutput,
-  defaultParams,
-} from "./_base";
-import i18nDirectiveMutation from "./i18n-directive";
-import jsxProviderMutation from "./jsx-provider";
-import jsxRootFlagMutation from "./jsx-root-flag";
-import jsxScopeFlagMutation from "./jsx-scope-flag";
-import jsxAttributeFlagMutation from "./jsx-attribute-flag";
-import path from "path";
-import { parseParametrizedModuleId } from "./utils/module-params";
-import { LCP } from "./lib/lcp";
-import { LCPServer } from "./lib/lcp/server";
-import { rscDictionaryLoaderMutation } from "./rsc-dictionary-loader";
-import { reactRouterDictionaryLoaderMutation } from "./react-router-dictionary-loader";
-import { jsxFragmentMutation } from "./jsx-fragment";
-import { jsxHtmlLangMutation } from "./jsx-html-lang";
-import { jsxAttributeScopesExportMutation } from "./jsx-attribute-scopes-export";
-import { jsxScopesExportMutation } from "./jsx-scopes-export";
-import { lingoJsxAttributeScopeInjectMutation } from "./jsx-attribute-scope-inject";
-import { lingoJsxScopeInjectMutation } from "./jsx-scope-inject";
-import { jsxRemoveAttributesMutation } from "./jsx-remove-attributes";
+import { defaultParams } from "./_base";
 import { LCP_DICTIONARY_FILE_NAME } from "./_const";
 import { LCPCache } from "./lib/lcp/cache";
 import { getInvalidLocales } from "./utils/locales";
-import { clientDictionaryLoaderMutation } from "./client-dictionary-loader";
 import {
   getGroqKeyFromEnv,
   getGroqKeyFromRc,
@@ -41,6 +17,7 @@ import {
 } from "./utils/llm-api-key";
 import { isRunningInCIOrDocker } from "./utils/env";
 import { providerDetails } from "./lib/lcp/api/provider-details";
+import { loadDictionary, transformComponent } from "./_loader-utils";
 
 const keyCheckers: Record<
   string,
@@ -86,12 +63,12 @@ const unplugin = createUnplugin<Partial<typeof defaultParams> | undefined>(
           console.log(dedent`
             \n
             ⚠️  Lingo.dev Localization Compiler requires LLM model setup for the following locales: ${invalidLocales.join(", ")}.
-    
+
             ⭐️ Next steps:
             1. Refer to documentation for help: https://lingo.dev/compiler
             2. If you want to use a different LLM, raise an issue in our open-source repo: https://lingo.dev/go/gh
             3. If you have questions, feature requests, or would like to contribute, join our Discord: https://lingo.dev/go/discord
-    
+
             ✨
           `);
           process.exit(1);
@@ -111,27 +88,23 @@ const unplugin = createUnplugin<Partial<typeof defaultParams> | undefined>(
       name: packageJson.name,
       loadInclude: (id) => !!id.match(LCP_DICTIONARY_FILE_NAME),
       async load(id) {
-        const moduleInfo = parseParametrizedModuleId(id);
-
-        const lcpParams = {
+        const dictionary = await loadDictionary({
+          resourcePath: id,
+          resourceQuery: "",
+          params: {
+            ...params,
+            models: params.models,
+            sourceLocale: params.sourceLocale,
+            targetLocales: params.targetLocales,
+          },
           sourceRoot: params.sourceRoot,
           lingoDir: params.lingoDir,
           isDev,
-        };
-
-        // wait for LCP file to be generated
-        await LCP.ready(lcpParams);
-        const lcp = LCP.getInstance(lcpParams);
-
-        const dictionaries = await LCPServer.loadDictionaries({
-          models: params.models,
-          lcp: lcp.data,
-          sourceLocale: params.sourceLocale,
-          targetLocales: params.targetLocales,
-          sourceRoot: params.sourceRoot,
-          lingoDir: params.lingoDir,
         });
-        const dictionary = dictionaries[moduleInfo.params.locale];
+
+        if (!dictionary) {
+          return null;
+        }
 
         console.log(JSON.stringify(dictionary, null, 2));
 
@@ -143,44 +116,12 @@ const unplugin = createUnplugin<Partial<typeof defaultParams> | undefined>(
       enforce: "pre",
       transform(code, id) {
         try {
-          const result = _.chain({
+          const result = transformComponent({
             code,
             params,
-            relativeFilePath: path
-              .relative(path.resolve(process.cwd(), params.sourceRoot), id)
-              .split(path.sep)
-              .join("/"), // Always normalize for consistent dictionaries
-          })
-            .thru(createPayload)
-            .thru(
-              composeMutations(
-                i18nDirectiveMutation,
-                jsxFragmentMutation,
-                jsxAttributeFlagMutation,
-
-                // log here to see transformedfiles
-                // (input) => {
-                //   console.log(`transform ${id}`);
-                //   return input;
-                // },
-
-                jsxProviderMutation,
-                jsxHtmlLangMutation,
-                jsxRootFlagMutation,
-                jsxScopeFlagMutation,
-                jsxAttributeFlagMutation,
-                jsxAttributeScopesExportMutation,
-                jsxScopesExportMutation,
-                lingoJsxAttributeScopeInjectMutation,
-                lingoJsxScopeInjectMutation,
-                rscDictionaryLoaderMutation,
-                reactRouterDictionaryLoaderMutation,
-                jsxRemoveAttributesMutation,
-                clientDictionaryLoaderMutation,
-              ),
-            )
-            .thru(createOutput)
-            .value();
+            resourcePath: id,
+            sourceRoot: params.sourceRoot,
+          });
 
           return result;
         } catch (error) {
@@ -196,19 +137,96 @@ const unplugin = createUnplugin<Partial<typeof defaultParams> | undefined>(
 
 export default {
   next:
-    (compilerParams?: Partial<typeof defaultParams>) =>
-    (nextConfig: any): NextConfig => ({
-      ...nextConfig,
-      // what if we already have a webpack config?
-      webpack: (config, { isServer }) => {
-        config.plugins.unshift(
-          unplugin.webpack(
-            _.merge({}, defaultParams, { rsc: true }, compilerParams),
-          ),
-        );
-        return config;
+    (
+      compilerParams?: Partial<typeof defaultParams> & {
+        turbopack?: {
+          enabled?: boolean | "auto";
+          useLegacyTurbo?: boolean;
+        };
       },
-    }),
+    ) =>
+    (nextConfig: any = {}): NextConfig => {
+      const mergedParams = _.merge(
+        {},
+        defaultParams,
+        {
+          rsc: true,
+          turbopack: {
+            enabled: "auto",
+            useLegacyTurbo: false,
+          },
+        },
+        compilerParams,
+      );
+
+      let turbopackEnabled: boolean;
+      if (mergedParams.turbopack?.enabled === "auto") {
+        turbopackEnabled =
+          process.env.TURBOPACK === "1" || process.env.TURBOPACK === "true";
+      } else {
+        turbopackEnabled = mergedParams.turbopack?.enabled === true;
+      }
+
+      const supportLegacyTurbo: boolean =
+        mergedParams.turbopack?.useLegacyTurbo === true;
+
+      const hasWebpackConfig = typeof nextConfig.webpack === "function";
+      const hasTurbopackConfig = typeof nextConfig.turbopack === "function";
+      if (hasWebpackConfig && turbopackEnabled) {
+        console.warn(
+          "⚠️  Turbopack is enabled in the Lingo.dev compiler, but you have webpack config. Lingo.dev will still apply turbopack configuration.",
+        );
+      }
+      if (hasTurbopackConfig && !turbopackEnabled) {
+        console.warn(
+          "⚠️  Turbopack is disabled in the Lingo.dev compiler, but you have turbopack config. Lingo.dev will not apply turbopack configuration.",
+        );
+      }
+
+      // Webpack
+      const originalWebpack = nextConfig.webpack;
+      nextConfig.webpack = (config: any, options: any) => {
+        if (!turbopackEnabled) {
+          console.log("Applying Lingo.dev webpack configuration...");
+          config.plugins.unshift(unplugin.webpack(mergedParams));
+        }
+
+        if (typeof originalWebpack === "function") {
+          return originalWebpack(config, options);
+        }
+        return config;
+      };
+
+      // Turbopack
+      if (turbopackEnabled) {
+        console.log("Applying Lingo.dev Turbopack configuration...");
+
+        // Check if the legacy turbo flag is set
+        let turbopackConfigPath = (nextConfig.turbopack ??= {});
+        if (supportLegacyTurbo) {
+          turbopackConfigPath = (nextConfig.experimental ??= {}).turbo ??= {};
+        }
+
+        turbopackConfigPath.rules ??= {};
+        const rules = turbopackConfigPath.rules;
+
+        // Regex for all relevant files for Lingo.dev
+        const lingoGlob = `**/*.{ts,tsx,js,jsx}`;
+
+        const lingoLoaderPath = require.resolve("./lingo-turbopack-loader");
+
+        rules[lingoGlob] = {
+          loaders: [
+            {
+              loader: lingoLoaderPath,
+              options: mergedParams,
+            },
+          ],
+        };
+      }
+
+      return nextConfig;
+    },
   vite: (compilerParams?: Partial<typeof defaultParams>) => (config: any) => {
     config.plugins.unshift(
       unplugin.vite(_.merge({}, defaultParams, { rsc: false }, compilerParams)),
