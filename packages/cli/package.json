@@ -122,7 +122,7 @@
     "@datocms/cma-client-node": "^4.0.1",
     "@gitbeaker/rest": "^39.34.3",
     "@inkjs/ui": "^2.0.0",
-    "@inquirer/prompts": "^7.4.1",
+    "@inquirer/prompts": "^7.5.3",
     "@lingo.dev/_compiler": "workspace:*",
     "@lingo.dev/_react": "workspace:*",
     "@lingo.dev/_sdk": "workspace:*",
