@@ -199,24 +199,26 @@ function createWorkerTask(args: {
                 processableData,
               },
               async (progress, _sourceChunk, processedChunk) => {
+                // write translated chunks as they are received from LLM
                 await args.ioLimiter(async () => {
-                  // write translated chunks as they are received from LLM
-                  const latestSourceData = await bucketLoader.pull(
-                    assignedTask.sourceLocale,
-                  );
+                  // pull the latest source data before pushing for buckets that store all locales in a single file
+                  await bucketLoader.pull(assignedTask.sourceLocale);
+                  // pull the latest target data to include all already processed chunks
                   const latestTargetData = await bucketLoader.pull(
                     assignedTask.targetLocale,
                   );
-                  const chunkTargetData = _.merge(
+                  // add the new chunk to target data
+                  const _partialData = _.merge(
                     {},
-                    latestSourceData,
                     latestTargetData,
                     processedChunk,
                   );
+                  // process renamed keys
                   const finalChunkTargetData = processRenamedKeys(
                     delta,
-                    chunkTargetData,
+                    _partialData,
                   );
+                  // push final chunk to the target locale
                   await bucketLoader.push(
                     assignedTask.targetLocale,
                     finalChunkTargetData,
