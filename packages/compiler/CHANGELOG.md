@@ -1,5 +1,11 @@
 # @lingo.dev/\_compiler
 
+## 0.4.0
+
+### Minor Changes
+
+- [#932](https://github.com/lingodotdev/lingo.dev/pull/932) [`1bba8ee`](https://github.com/lingodotdev/lingo.dev/commit/1bba8eed6272ae166ceb9b92963404bfe90a4aaa) Thanks [@The-Best-Codes](https://github.com/The-Best-Codes)! - Add support for Next.js Turbopack with the Lingo.dev compiler.
+
 ## 0.3.5
 
 ### Patch Changes
