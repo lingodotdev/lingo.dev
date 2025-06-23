@@ -9,17 +9,26 @@ describe("createInjectLocaleLoader", () => {
     it("should return data unchanged if injectLocaleKeys is not provided", async () => {
       const loader = createInjectLocaleLoader();
       loader.setDefaultLocale(locale);
-      const data = { a: 1, b: 2 };
+      const data = { a: 1, b: 2, locale: "en" };
       const result = await loader.pull(locale, data);
       expect(result).toEqual(data);
     });
 
     it("should omit keys where value matches locale", async () => {
-      const loader = createInjectLocaleLoader(["lang", "meta.locale"]);
+      const loader = createInjectLocaleLoader([
+        "lang",
+        "meta.locale",
+        "obj.locale",
+      ]);
       loader.setDefaultLocale(locale);
-      const data = { lang: "en", value: 42, meta: { locale: "en", other: 1 } };
+      const data = {
+        lang: "en",
+        value: 42,
+        meta: { locale: "en", other: 1 },
+        obj: { locale: "en" },
+      };
       const result = await loader.pull(locale, data);
-      expect(result).toEqual({ value: 42, meta: { other: 1 } });
+      expect(result).toEqual({ value: 42, meta: { other: 1 }, obj: {} });
     });
 
     it("should not omit keys if their value does not match locale", async () => {
@@ -68,30 +77,46 @@ describe("createInjectLocaleLoader", () => {
     });
 
     it("should not change injectLocaleKeys if they do not match originalLocale", async () => {
-      const loader = createInjectLocaleLoader(["lang", "meta.locale"]);
+      const loader = createInjectLocaleLoader([
+        "lang",
+        "meta.locale",
+        "obj.locale",
+      ]);
       loader.setDefaultLocale(originalLocale);
       const originalInput = {
         lang: "de",
         value: 42,
         meta: { locale: "es", other: 1 },
+        obj: { locale: "fr" },
       };
       await loader.pull(originalLocale, originalInput);
-      const data = { lang: "de", value: 99, meta: { locale: "es", other: 2 } };
+      const data = {
+        lang: "de",
+        value: 99,
+        meta: { locale: "es", other: 2 },
+        obj: { locale: "fr" },
+      };
       const result = await loader.push("fr", data);
       expect(result).toEqual({
         lang: "de",
         value: 99,
         meta: { locale: "es", other: 2 },
+        obj: { locale: "fr" },
       });
     });
 
-    it("should merge originalInput and data, then update injectLocaleKeys, does not add extra keys from originalInput", async () => {
-      const loader = createInjectLocaleLoader(["lang", "meta.locale"]);
+    it("should update injectLocaleKeys, does not add extra keys from originalInput", async () => {
+      const loader = createInjectLocaleLoader([
+        "lang",
+        "meta.locale",
+        "obj.locale",
+      ]);
       loader.setDefaultLocale(originalLocale);
       const originalInput = {
         lang: "en",
         value: 1,
         meta: { locale: "en", other: 1 },
+        obj: { locale: "en" },
         extra: 5,
       };
       await loader.pull(originalLocale, originalInput);
@@ -101,7 +126,16 @@ describe("createInjectLocaleLoader", () => {
         lang: "fr",
         value: 2,
         meta: { locale: "fr", other: 2 },
+        obj: { locale: "fr" },
       });
+    });
+
+    it("should not inject locale if it was not in originalInput", async () => {
+      const loader = createInjectLocaleLoader(["lang"]);
+      loader.setDefaultLocale(originalLocale);
+      const originalInput = { value: 1, meta: { other: 1 } };
+      await loader.pull(originalLocale, originalInput);
+      const data = { value: 2, meta: { other: 2 } };
     });
   });
 });
