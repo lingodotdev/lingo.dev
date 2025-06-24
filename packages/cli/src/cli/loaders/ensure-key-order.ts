@@ -40,11 +40,6 @@ function reorderKeys(
     }
   }
 
-  // should not happen unless there is LLM halucination? 👇
-  // Add keys that are in `data` but not in `original` at the end
-  // for (const key of dataKeys) {
-  //   orderedData[key] = data[key];
-  // }
 
   return orderedData;
 }

@@ -57,7 +57,7 @@ Star the the repo :) https://github.com/LingoDotDev/lingo.dev
   .addCommand(ciCmd)
   .addCommand(statusCmd)
   .addCommand(mayTheFourthCmd, { hidden: true })
-  .addCommand(run, { hidden: true })
+  .addCommand(run)
   .addCommand(purgeCmd)
   .exitOverride((err) => {
     // Exit with code 0 when help or version is displayed
