@@ -74,6 +74,7 @@ export default new Command()
           process.exit(1);
         }
       }
+      const sourceLocale = i18nConfig.locale.source;
       const targetLocales =
         options.locale && options.locale.length
           ? options.locale
@@ -96,15 +97,16 @@ export default new Command()
                 bucket.type,
                 bucketPath.pathPattern,
                 {
-                  defaultLocale: targetLocale,
+                  defaultLocale: sourceLocale,
                   injectLocale: bucket.injectLocale,
                 },
                 bucket.lockedKeys,
                 bucket.lockedPatterns,
                 bucket.ignoredKeys,
               );
-              bucketLoader.setDefaultLocale(targetLocale);
               await bucketLoader.init();
+              bucketLoader.setDefaultLocale(sourceLocale);
+              await bucketLoader.pull(sourceLocale);
               let targetData = await bucketLoader.pull(targetLocale);
               if (!targetData || Object.keys(targetData).length === 0) {
                 bucketOra.info(

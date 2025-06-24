@@ -109,8 +109,23 @@ export default function createXcodeXcstringsLoader(
         }
       }
 
-      const result = _.merge({}, originalInput, langDataToMerge);
+      const originalInputWithoutLocale = originalInput
+        ? _removeLocale(originalInput, locale)
+        : {};
+
+      const result = _.merge({}, originalInputWithoutLocale, langDataToMerge);
       return result;
     },
   });
+}
+
+export function _removeLocale(input: Record<string, any>, locale: string) {
+  const { sourceLanguage, strings } = input;
+  const newStrings = _.cloneDeep(strings);
+  for (const [key, value] of Object.entries(newStrings)) {
+    if ((value as any).localizations?.[locale]) {
+      delete (value as any).localizations[locale];
+    }
+  }
+  return { sourceLanguage, strings: newStrings };
 }
