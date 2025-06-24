@@ -2695,32 +2695,43 @@ ${script}`;
     });
   });
   describe("ejs bucket loader", () => {
-    it("should parse simple EJS files with embedded JavaScript", async () => {
+    it("should load ejs data", async () => {
       setupFileMocks();
 
-      const input = `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <title>Welcome Page</title>
-        </head>
-        <body>
-          <h1>Hello <%= user.name %>!</h1>
-          <% if (user.isLoggedIn) { %>
-            <p>Welcome back to our application.</p>
-            <p>You have <%= notifications.length %> new notifications.</p>
-          <% } else { %>
-            <p>Please log in to continue.</p>
-          <% } %>
-          <ul>
-            <% items.forEach(function(item, index) { %>
-              <li>Item <%= index + 1 %>: <%= item.title %></li>
-            <% }); %>
-          </ul>
-          <footer>© 2024 My Company. All rights reserved.</footer>
-        </body>
-        </html>
-      `.trim();
+      const input = `<!DOCTYPE html>
+<html>
+<head>
+  <title>Welcome Page</title>
+</head>
+<body>
+  <h1>Hello <%= user.name %>!</h1>
+  <% if (user.isLoggedIn) { %>
+    <p>Welcome back to our application.</p>
+    <p>You have <%= notifications.length %> new notifications.</p>
+  <% } else { %>
+    <p>Please log in to continue.</p>
+  <% } %>
+  <ul>
+    <% items.forEach(function(item, index) { %>
+      <li>Item <%= index + 1 %>: <%= item.title %></li>
+    <% }); %>
+  </ul>
+  <footer>© 2024 My Company. All rights reserved.</footer>
+</body>
+</html>`;
+
+      const expectedOutput = {
+        "text_0": "Welcome Page",
+        "text_1": "Hello",
+        "text_2": "!",
+        "text_3": "Welcome back to our application.",
+        "text_4": "You have",
+        "text_5": "new notifications.",
+        "text_6": "Please log in to continue.",
+        "text_7": "Item",
+        "text_8": ":",
+        "text_9": "© 2024 My Company. All rights reserved."
+      };
 
       mockFileOperations(input);
 
@@ -2731,67 +2742,60 @@ ${script}`;
       ejsLoader.setDefaultLocale("en");
       const data = await ejsLoader.pull("en");
 
-      // Verify we extracted translatable content
-      expect(Object.keys(data).length).toBeGreaterThan(0);
-      
-      // Check for specific translatable strings within the extracted chunks
-      const allText = Object.values(data).join(' ');
-      expect(allText).toContain("Welcome Page");
-      expect(allText).toContain("Hello");
-      expect(allText).toContain("Welcome back to our application.");
-      expect(allText).toContain("© 2024 My Company. All rights reserved.");
-      
-      // Verify that EJS variables are not extracted as translatable content
-      expect(allText).not.toContain("<%= user.name %>");
-      expect(allText).not.toContain("<%= notifications.length %>");
+      expect(data).toEqual(expectedOutput);
     });
 
-    it("should handle EJS includes and partials", async () => {
+    it("should save ejs data", async () => {
       setupFileMocks();
 
-      const input = `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <%- include('./partials/head', { title: 'Dashboard' }) %>
-        </head>
-        <body>
-          <%- include('./partials/header') %>
-          <main>
-            <h2>User Dashboard</h2>
-            <p>Welcome to your personalized dashboard.</p>
-            <% if (user.role === 'admin') { %>
-              <%- include('./partials/admin-panel') %>
-            <% } %>
-            <div class="content">
-              <p>Manage your account settings and preferences here.</p>
-            </div>
-          </main>
-          <%- include('./partials/footer') %>
-        </body>
-        </html>
-      `.trim();
+      const input = `<!DOCTYPE html>
+<html>
+<head>
+  <title>Welcome Page</title>
+</head>
+<body>
+  <h1>Hello <%= user.name %>!</h1>
+  <p>Welcome to our application.</p>
+  <footer>© 2024 My Company. All rights reserved.</footer>
+</body>
+</html>`;
+
+      const payload = {
+        "text_0": "Página de Bienvenida",
+        "text_1": "Hola",
+        "text_2": "!",
+        "text_3": "Bienvenido a nuestra aplicación.",
+        "text_4": "© 2024 Mi Empresa. Todos los derechos reservados."
+      };
+
+      const expectedOutput = `<!DOCTYPE html>
+<html>
+<head>
+  <title>Página de Bienvenida</title>
+</head>
+<body>
+  <h1>Hola <%= user.name %>!</h1>
+  <p>Bienvenido a nuestra aplicación.</p>
+  <footer>© 2024 Mi Empresa. Todos los derechos reservados.</footer>
+</body>
+</html>`;
 
       mockFileOperations(input);
 
-      const ejsLoader = createBucketLoader("ejs", "views/[locale].ejs", {
+      const ejsLoader = createBucketLoader("ejs", "templates/[locale].ejs", {
         isCacheRestore: false,
         defaultLocale: "en",
       });
       ejsLoader.setDefaultLocale("en");
-      const data = await ejsLoader.pull("en");
-      
-      // Verify translatable content is extracted
-      expect(Object.keys(data).length).toBeGreaterThan(0);
-      
-      // Check for specific translatable strings within the extracted chunks
-      const allText = Object.values(data).join(' ');
-      expect(allText).toContain("User Dashboard");
-      expect(allText).toContain("Welcome to your personalized dashboard.");
-      expect(allText).toContain("Manage your account settings and preferences here.");
+      await ejsLoader.pull("en");
 
-      // Verify push operation completes successfully
-      await expect(ejsLoader.push("en", data)).resolves.not.toThrow();
+      await ejsLoader.push("es", payload);
+
+      expect(fs.writeFile).toHaveBeenCalledWith(
+        "templates/es.ejs",
+        expectedOutput,
+        { encoding: "utf-8", flag: "w" },
+      );
     });
   });
 });

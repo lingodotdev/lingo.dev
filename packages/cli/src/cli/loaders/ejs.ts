@@ -51,15 +51,64 @@ function parseEjsForTranslation(input: string): EjsParseResult {
       // Keep EJS tags as-is
       template += part.content;
     } else {
-      // Process text content
-      const trimmedContent = part.content.trim();
-      if (trimmedContent && trimmedContent.length > 0) {
-        const key = `text_${counter++}`;
-        translatable[key] = trimmedContent;
-        template += `__LINGO_PLACEHOLDER_${key}__`;
-      } else {
-        // Keep whitespace
-        template += part.content;
+      // For text content, extract translatable parts while preserving HTML structure
+      const textContent = part.content;
+      
+      // Extract text content from HTML tags while preserving structure
+      const htmlTagRegex = /<[^>]+>/g;
+      const textParts: Array<{ type: 'html' | 'text', content: string }> = [];
+      let lastTextIndex = 0;
+      let htmlMatch;
+
+      while ((htmlMatch = htmlTagRegex.exec(textContent)) !== null) {
+        // Add text before the HTML tag
+        if (htmlMatch.index > lastTextIndex) {
+          const textBefore = textContent.slice(lastTextIndex, htmlMatch.index);
+          if (textBefore.trim()) {
+            textParts.push({ type: 'text', content: textBefore });
+          } else {
+            textParts.push({ type: 'html', content: textBefore });
+          }
+        }
+        // Add the HTML tag
+        textParts.push({ type: 'html', content: htmlMatch[0] });
+        lastTextIndex = htmlMatch.index + htmlMatch[0].length;
+      }
+
+      // Add remaining text after the last HTML tag
+      if (lastTextIndex < textContent.length) {
+        const remainingText = textContent.slice(lastTextIndex);
+        if (remainingText.trim()) {
+          textParts.push({ type: 'text', content: remainingText });
+        } else {
+          textParts.push({ type: 'html', content: remainingText });
+        }
+      }
+
+      // If no HTML tags found, treat entire content as text
+      if (textParts.length === 0) {
+        const trimmedContent = textContent.trim();
+        if (trimmedContent) {
+          textParts.push({ type: 'text', content: textContent });
+        } else {
+          textParts.push({ type: 'html', content: textContent });
+        }
+      }
+
+      // Process text parts
+      for (const textPart of textParts) {
+        if (textPart.type === 'text') {
+          const trimmedContent = textPart.content.trim();
+          if (trimmedContent) {
+            const key = `text_${counter++}`;
+            translatable[key] = trimmedContent;
+            template += textPart.content.replace(trimmedContent, `__LINGO_PLACEHOLDER_${key}__`);
+          } else {
+            template += textPart.content;
+          }
+        } else {
+          template += textPart.content;
+        }
       }
     }
   }
