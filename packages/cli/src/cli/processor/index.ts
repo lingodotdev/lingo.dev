@@ -9,6 +9,7 @@ import { colors } from "../constants";
 import { createAnthropic } from "@ai-sdk/anthropic";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
+import { createMistral } from "@ai-sdk/mistral";
 import { createOllama } from "ollama-ai-provider";
 
 export default function createProcessor(
@@ -96,6 +97,17 @@ function getPureModelProvider(provider: I18nConfig["provider"]) {
     case "ollama": {
       // No API key check needed for Ollama
       return createOllama()(provider.model);
+    }
+    case "mistral": {
+      if (!process.env.MISTRAL_API_KEY) {
+        throw new Error(
+          createMissingKeyErrorMessage("Mistral", "MISTRAL_API_KEY"),
+        );
+      }
+      return createMistral({
+        apiKey: process.env.MISTRAL_API_KEY,
+        baseURL: provider.baseUrl,
+      })(provider.model);
     }
     default: {
       throw new Error(createUnsupportedProviderErrorMessage(provider?.id));

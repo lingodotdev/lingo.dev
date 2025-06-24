@@ -38,4 +38,11 @@ export const providerDetails: Record<
     getKeyLink: "https://ollama.com/download",
     docsLink: "https://github.com/ollama/ollama/tree/main/docs",
   },
+  mistral: {
+    name: "Mistral",
+    apiKeyEnvVar: "MISTRAL_API_KEY",
+    apiKeyConfigKey: "llm.mistralApiKey",
+    getKeyLink: "https://console.mistral.ai",
+    docsLink: "https://docs.mistral.ai",
+  },
 };

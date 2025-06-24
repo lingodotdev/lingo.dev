@@ -12,6 +12,8 @@ import {
   getGroqKeyFromRc,
   getGoogleKeyFromEnv,
   getGoogleKeyFromRc,
+  getMistralKeyFromEnv,
+  getMistralKeyFromRc,
   getLingoDotDevKeyFromEnv,
   getLingoDotDevKeyFromRc,
 } from "./utils/llm-api-key";
@@ -33,6 +35,10 @@ const keyCheckers: Record<
   google: {
     checkEnv: getGoogleKeyFromEnv,
     checkRc: getGoogleKeyFromRc,
+  },
+  mistral: {
+    checkEnv: getMistralKeyFromEnv,
+    checkRc: getMistralKeyFromRc,
   },
   "lingo.dev": {
     checkEnv: getLingoDotDevKeyFromEnv,
