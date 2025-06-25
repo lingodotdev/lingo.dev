@@ -14,16 +14,16 @@ export function Welcome() {
           <span className="text-4xl">💚</span>
           <div className="p-4">
             <a href="https://reactrouter.com/">
-            <img
-              src={logoLight}
-              alt="React Router"
-              className="block w-full dark:hidden h-[38px]"
-            />
-            <img
-              src={logoDark}
-              alt="React Router"
-              className="hidden w-full dark:block h-[38px]"
-            />
+              <img
+                src={logoLight}
+                alt="React Router"
+                className="block w-full dark:hidden h-[38px]"
+              />
+              <img
+                src={logoDark}
+                alt="React Router"
+                className="hidden w-full dark:block h-[38px]"
+              />
             </a>
           </div>
         </header>
@@ -31,7 +31,9 @@ export function Welcome() {
           Open test page
         </Link>
         <p className="text-gray-700 dark:text-gray-200 text-center max-w-[500px]">
-          Welcome to your new React Router application! This starter template includes everything you need to get started with React Router and Lingo.dev for internationalization.
+          Welcome to your new React Router application! This starter template
+          includes everything you need to get started with React Router and
+          Lingo.dev for internationalization.
         </p>
         <div className="max-w-[300px] w-full space-y-6 px-4">
           <nav className="rounded-3xl border border-gray-200 p-6 dark:border-gray-700 space-y-4">

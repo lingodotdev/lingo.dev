@@ -13,20 +13,20 @@ describe("EJS Loader", () => {
       `;
 
       const result = await loader.pull("en", input);
-      
+
       // Check that we have extracted some translatable content
       expect(Object.keys(result).length).toBeGreaterThan(0);
-      
+
       // Check that the EJS variables are not included in the translatable text
-      const allValues = Object.values(result).join(' ');
-      expect(allValues).not.toContain('<%= name %>');
-      expect(allValues).not.toContain('<%= messages.length %>');
-      
+      const allValues = Object.values(result).join(" ");
+      expect(allValues).not.toContain("<%= name %>");
+      expect(allValues).not.toContain("<%= messages.length %>");
+
       // Check that we have the main content
-      expect(allValues).toContain('Welcome to our website');
-      expect(allValues).toContain('Hello');
-      expect(allValues).toContain('messages');
-      expect(allValues).toContain('© 2024 Our Company');
+      expect(allValues).toContain("Welcome to our website");
+      expect(allValues).toContain("Hello");
+      expect(allValues).toContain("messages");
+      expect(allValues).toContain("© 2024 Our Company");
     });
 
     it("should handle EJS templates with various tag types", async () => {
@@ -43,7 +43,7 @@ describe("EJS Loader", () => {
       `;
 
       const result = await loader.pull("en", input);
-      
+
       expect(result).toHaveProperty("text_0");
       expect(result).toHaveProperty("text_1");
       expect(Object.keys(result).length).toBeGreaterThan(0);
@@ -71,8 +71,12 @@ describe("EJS Loader", () => {
 
       const result = await loader.pull("en", input);
       expect(Object.keys(result).length).toBeGreaterThan(0);
-      expect(Object.values(result).some(text => text.includes("Welcome"))).toBe(true);
-      expect(Object.values(result).some(text => text.includes("Thank you"))).toBe(true);
+      expect(
+        Object.values(result).some((text) => text.includes("Welcome")),
+      ).toBe(true);
+      expect(
+        Object.values(result).some((text) => text.includes("Thank you")),
+      ).toBe(true);
     });
   });
 
@@ -82,18 +86,18 @@ describe("EJS Loader", () => {
 
       // First pull to get the structure
       const pulled = await loader.pull("en", originalInput);
-      
+
       // Static translated data object based on actual loader behavior
       const translated = {
         text_0: "Bienvenido",
-        text_1: "Hola"
+        text_1: "Hola",
       };
 
       const result = await loader.push("es", translated);
-      
+
       // Test against the expected reconstructed string
       const expectedOutput = `<h1>Bienvenido</h1><p>Hola <%= name %></p>`;
-      
+
       expect(result).toBe(expectedOutput);
     });
 
@@ -101,29 +105,29 @@ describe("EJS Loader", () => {
       const originalInput = `<h2>Dashboard</h2><% if (user) { %><p>Welcome</p><% } %>`;
 
       const pulled = await loader.pull("en", originalInput);
-      
-      // Static translated data object 
+
+      // Static translated data object
       const translated = {
         text_0: "Tablero",
-        text_1: "Bienvenido"
+        text_1: "Bienvenido",
       };
 
       const result = await loader.push("es", translated);
-      
+
       // Test against the expected reconstructed string
       const expectedOutput = `<h2>Tablero</h2><% if (user) { %><p>Bienvenido</p><% } %>`;
-      
+
       expect(result).toBe(expectedOutput);
     });
 
     it("should handle missing original input", async () => {
       const translated = {
         text_0: "Hello World",
-        text_1: "This is a test"
+        text_1: "This is a test",
       };
 
       const result = await loader.push("es", translated);
-      
+
       expect(result).toContain("Hello World");
       expect(result).toContain("This is a test");
     });
@@ -146,10 +150,10 @@ describe("EJS Loader", () => {
 
       // Pull original content
       const pulled = await loader.pull("en", originalInput);
-      
+
       // Push back without translation (should be identical)
       const reconstructed = await loader.push("en", pulled);
-      
+
       // Verify EJS tags are preserved
       expect(reconstructed).toContain("<%= title %>");
       expect(reconstructed).toContain("<% if (showMessage) { %>");

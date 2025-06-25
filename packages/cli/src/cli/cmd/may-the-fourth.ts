@@ -49,7 +49,9 @@ export default new Command()
     // This code now runs after the SSH process has finished
     await renderSpacer();
     console.log(
-      `${chalk.hex(colors.green)("We hope you enjoyed it! :)")} ${chalk.hex(colors.blue)("May the Fourth be with you! 🚀")}`,
+      `${chalk.hex(colors.green)("We hope you enjoyed it! :)")} ${chalk.hex(
+        colors.blue,
+      )("May the Fourth be with you! 🚀")}`,
     );
     await renderSpacer();
     console.log(chalk.dim(`---`));
@@ -79,7 +81,9 @@ async function renderBanner() {
 
 async function renderHero() {
   console.log(
-    `⚡️ ${chalk.hex(colors.green)("Lingo.dev")} - open-source, AI-powered i18n CLI for web & mobile localization.`,
+    `⚡️ ${chalk.hex(colors.green)(
+      "Lingo.dev",
+    )} - open-source, AI-powered i18n CLI for web & mobile localization.`,
   );
   console.log(" ");
   console.log(

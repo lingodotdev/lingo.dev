@@ -2,7 +2,10 @@ import { ILoader } from "../_types";
 import { createLoader } from "../_utils";
 import { LocalizableMdxDocument, SectionedMdx } from "./_types";
 
-export default function createLocalizableMdxDocumentLoader(): ILoader<SectionedMdx, LocalizableMdxDocument> {
+export default function createLocalizableMdxDocumentLoader(): ILoader<
+  SectionedMdx,
+  LocalizableMdxDocument
+> {
   return createLoader({
     async pull(_locale, input) {
       return {

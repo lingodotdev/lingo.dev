@@ -450,14 +450,26 @@ export class LCPAPI {
       console.log(
         dedent`
         \n
-        ⚠️  Lingo.dev Compiler tried to translate your application to "${targetLocale}" locale via ${details.name} but it failed.
+        ⚠️  Lingo.dev Compiler tried to translate your application to "${targetLocale}" locale via ${
+          details.name
+        } but it failed.
 
         Error details from ${details.name} API: ${errorMessage}
 
-        This error comes from the ${details.name} API, please check their documentation for more details: ${details.docsLink}
+        This error comes from the ${
+          details.name
+        } API, please check their documentation for more details: ${
+          details.docsLink
+        }
 
         ⭐️ Also:
-        1. Did you set ${details.apiKeyEnvVar ? `${details.apiKeyEnvVar}` : "the provider API key"} environment variable correctly ${!details.apiKeyEnvVar ? "(if required)" : ""}?
+        1. Did you set ${
+          details.apiKeyEnvVar
+            ? `${details.apiKeyEnvVar}`
+            : "the provider API key"
+        } environment variable correctly ${
+          !details.apiKeyEnvVar ? "(if required)" : ""
+        }?
         2. Did you reach any limits of your ${details.name} account?
         3. If you have questions, feature requests, or would like to contribute, join our Discord: https://lingo.dev/go/discord
 

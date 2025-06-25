@@ -35,7 +35,11 @@ describe("findLocaleFiles", () => {
   });
 
   it("should find yaml locale files", () => {
-    vi.mocked(glob.sync).mockReturnValue(["locales/en.yml", "locales/fr.yml", "translations/es.yml"]);
+    vi.mocked(glob.sync).mockReturnValue([
+      "locales/en.yml",
+      "locales/fr.yml",
+      "translations/es.yml",
+    ]);
 
     const result = findLocaleFiles("yaml");
 
@@ -46,7 +50,11 @@ describe("findLocaleFiles", () => {
   });
 
   it("should find flutter arb locale files", () => {
-    vi.mocked(glob.sync).mockReturnValue(["lib/l10n/en.arb", "lib/l10n/es.arb", "lib/translations/fr.arb"]);
+    vi.mocked(glob.sync).mockReturnValue([
+      "lib/l10n/en.arb",
+      "lib/l10n/es.arb",
+      "lib/translations/fr.arb",
+    ]);
 
     const result = findLocaleFiles("flutter");
 

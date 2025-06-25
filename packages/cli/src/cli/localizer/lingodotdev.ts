@@ -13,7 +13,9 @@ export default function createLingoDotDevLocalizer(
   if (!auth) {
     throw new Error(
       dedent`
-        You're trying to use ${chalk.hex(colors.green)("Lingo.dev")} provider, however, you are not authenticated.
+        You're trying to use ${chalk.hex(colors.green)(
+          "Lingo.dev",
+        )} provider, however, you are not authenticated.
 
         To fix this issue:
         1. Run ${chalk.dim("lingo.dev login")} to authenticate, or

@@ -1,5 +1,9 @@
 import { describe, it, expect } from "vitest";
-import { parseI18nConfig, defaultConfig, LATEST_CONFIG_DEFINITION } from "./config";
+import {
+  parseI18nConfig,
+  defaultConfig,
+  LATEST_CONFIG_DEFINITION,
+} from "./config";
 
 // Helper function to create a v0 config
 const createV0Config = () => ({
@@ -95,7 +99,9 @@ describe("I18n Config Parser", () => {
 
   it("should throw an error for invalid configurations", () => {
     const invalidConfig = { version: "invalid" };
-    expect(() => parseI18nConfig(invalidConfig)).toThrow("Failed to parse config");
+    expect(() => parseI18nConfig(invalidConfig)).toThrow(
+      "Failed to parse config",
+    );
   });
 
   it("should handle empty config and use defaults", () => {
@@ -119,7 +125,7 @@ describe("I18n Config Parser", () => {
   it("should throw an error for unsupported locales", () => {
     const invalidLocaleConfig = createInvalidLocaleConfig();
     expect(() => parseI18nConfig(invalidLocaleConfig)).toThrow(
-      `\nUnsupported locale: ${invalidLocaleConfig.locale.source}\nUnsupported locale: ${invalidLocaleConfig.locale.targets[1]}`
+      `\nUnsupported locale: ${invalidLocaleConfig.locale.source}\nUnsupported locale: ${invalidLocaleConfig.locale.targets[1]}`,
     );
   });
 });

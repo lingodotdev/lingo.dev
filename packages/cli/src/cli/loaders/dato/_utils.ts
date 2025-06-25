@@ -12,7 +12,9 @@ export type DatoClient = ReturnType<typeof createDatoClient>;
 
 export default function createDatoClient(params: DatoClientParams) {
   if (!params.apiKey) {
-    throw new Error("Missing required environment variable: DATO_API_TOKEN. Please set this variable and try again.");
+    throw new Error(
+      "Missing required environment variable: DATO_API_TOKEN. Please set this variable and try again.",
+    );
   }
   const dato = buildClient({
     apiToken: params.apiKey,
@@ -26,7 +28,10 @@ export default function createDatoClient(params: DatoClientParams) {
       const project = await dato.site.find();
       return project;
     },
-    updateField: async (fieldId: string, payload: SimpleSchemaTypes.FieldUpdateSchema): Promise<void> => {
+    updateField: async (
+      fieldId: string,
+      payload: SimpleSchemaTypes.FieldUpdateSchema,
+    ): Promise<void> => {
       try {
         await dato.fields.update(fieldId, payload);
       } catch (_error: any) {
@@ -60,11 +65,16 @@ export default function createDatoClient(params: DatoClientParams) {
     findModels: async (): Promise<SimpleSchemaTypes.ItemType[]> => {
       try {
         const models = await dato.itemTypes.list();
-        const modelsWithoutBlocks = models.filter((model) => !model.modular_block);
+        const modelsWithoutBlocks = models.filter(
+          (model) => !model.modular_block,
+        );
         return modelsWithoutBlocks;
       } catch (_error: any) {
         throw new Error(
-          [`Failed to find models in DatoCMS.`, `Error: ${JSON.stringify(_error, null, 2)}`].join("\n\n"),
+          [
+            `Failed to find models in DatoCMS.`,
+            `Error: ${JSON.stringify(_error, null, 2)}`,
+          ].join("\n\n"),
         );
       }
     },
@@ -85,7 +95,10 @@ export default function createDatoClient(params: DatoClientParams) {
         );
       }
     },
-    findRecords: async (records: string[], limit: number = 100): Promise<SimpleSchemaTypes.Item[]> => {
+    findRecords: async (
+      records: string[],
+      limit: number = 100,
+    ): Promise<SimpleSchemaTypes.Item[]> => {
       return dato.items
         .list({
           nested: true,
@@ -97,9 +110,14 @@ export default function createDatoClient(params: DatoClientParams) {
             ids: !records.length ? undefined : records.join(","),
           },
         })
-        .catch((error: any) => Promise.reject(error?.response?.body?.data?.[0] || error));
+        .catch((error: any) =>
+          Promise.reject(error?.response?.body?.data?.[0] || error),
+        );
     },
-    findRecordsForModel: async (modelId: string, records?: string[]): Promise<SimpleSchemaTypes.Item[]> => {
+    findRecordsForModel: async (
+      modelId: string,
+      records?: string[],
+    ): Promise<SimpleSchemaTypes.Item[]> => {
       try {
         const result = await dato.items
           .list({
@@ -111,7 +129,9 @@ export default function createDatoClient(params: DatoClientParams) {
               ids: !records?.length ? undefined : records.join(","),
             },
           })
-          .catch((error: any) => Promise.reject(error?.response?.body?.data?.[0] || error));
+          .catch((error: any) =>
+            Promise.reject(error?.response?.body?.data?.[0] || error),
+          );
         return result;
       } catch (_error: any) {
         throw new Error(
@@ -127,7 +147,9 @@ export default function createDatoClient(params: DatoClientParams) {
       try {
         await dato.items
           .update(id, payload)
-          .catch((error: any) => Promise.reject(error?.response?.body?.data?.[0] || error));
+          .catch((error: any) =>
+            Promise.reject(error?.response?.body?.data?.[0] || error),
+          );
       } catch (_error: any) {
         if (_error?.attributes?.details?.message) {
           throw new Error(
@@ -149,11 +171,16 @@ export default function createDatoClient(params: DatoClientParams) {
         );
       }
     },
-    enableFieldLocalization: async (args: { modelId: string; fieldId: string }): Promise<void> => {
+    enableFieldLocalization: async (args: {
+      modelId: string;
+      fieldId: string;
+    }): Promise<void> => {
       try {
         await dato.fields
           .update(`${args.modelId}::${args.fieldId}`, { localized: true })
-          .catch((error: any) => Promise.reject(error?.response?.body?.data?.[0] || error));
+          .catch((error: any) =>
+            Promise.reject(error?.response?.body?.data?.[0] || error),
+          );
       } catch (_error: any) {
         if (_error?.attributes?.code === "NOT_FOUND") {
           throw new Error(
@@ -166,7 +193,10 @@ export default function createDatoClient(params: DatoClientParams) {
 
         if (_error?.attributes?.details?.message) {
           throw new Error(
-            [`${_error.attributes.details.message}`, `Error: ${JSON.stringify(_error, null, 2)}`].join("\n\n"),
+            [
+              `${_error.attributes.details.message}`,
+              `Error: ${JSON.stringify(_error, null, 2)}`,
+            ].join("\n\n"),
           );
         }
 
@@ -184,7 +214,11 @@ export default function createDatoClient(params: DatoClientParams) {
 }
 
 type TraverseDatoCallbackMap = {
-  onValue?: (path: string[], value: DatoSimpleValue, setValue: (value: DatoSimpleValue) => void) => void;
+  onValue?: (
+    path: string[],
+    value: DatoSimpleValue,
+    setValue: (value: DatoSimpleValue) => void,
+  ) => void;
   onBlock?: (path: string[], value: DatoBlock) => void;
 };
 
@@ -215,7 +249,12 @@ export function traverseDatoValue(
     } else if ("type" in value && value.type === "item") {
       traverseDatoBlock(value, callbackMap, [...path]);
     } else {
-      throw new Error(["Unsupported dato object value type:", JSON.stringify(value, null, 2)].join("\n\n"));
+      throw new Error(
+        [
+          "Unsupported dato object value type:",
+          JSON.stringify(value, null, 2),
+        ].join("\n\n"),
+      );
     }
   } else {
     callbackMap.onValue?.(path, value, (value) => {
@@ -224,16 +263,28 @@ export function traverseDatoValue(
   }
 }
 
-export function traverseDastDocument(dast: DastDocument, callbackMap: TraverseDatoCallbackMap, path: string[] = []) {
+export function traverseDastDocument(
+  dast: DastDocument,
+  callbackMap: TraverseDatoCallbackMap,
+  path: string[] = [],
+) {
   traverseDastNode(dast.document, callbackMap, [...path, "document"]);
 }
 
-export function traverseDatoBlock(block: DatoBlock, callbackMap: TraverseDatoCallbackMap, path: string[] = []) {
+export function traverseDatoBlock(
+  block: DatoBlock,
+  callbackMap: TraverseDatoCallbackMap,
+  path: string[] = [],
+) {
   callbackMap.onBlock?.(path, block);
   traverseDatoPayload(block.attributes, callbackMap, [...path, "attributes"]);
 }
 
-export function traverseDastNode(node: DastDocumentNode, callbackMap: TraverseDatoCallbackMap, path: string[] = []) {
+export function traverseDastNode(
+  node: DastDocumentNode,
+  callbackMap: TraverseDatoCallbackMap,
+  path: string[] = [],
+) {
   if (node.value) {
     callbackMap.onValue?.(path, node.value, (value) => {
       _.set(node, "value", value);

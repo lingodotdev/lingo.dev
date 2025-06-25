@@ -62,12 +62,12 @@ Exécutez `next build` et regardez les bundles espagnols et français apparaîtr
 
 ### Que contient ce dépôt ?
 
-| Outil        | En bref                                                                       | Documentation                           |
-| ------------ | ----------------------------------------------------------------------------- | --------------------------------------- |
-| **Compiler** | Localisation React au moment de la compilation                                | [/compiler](https://lingo.dev/compiler) |
+| Outil        | En bref                                                                                     | Documentation                           |
+| ------------ | ------------------------------------------------------------------------------------------- | --------------------------------------- |
+| **Compiler** | Localisation React au moment de la compilation                                              | [/compiler](https://lingo.dev/compiler) |
 | **CLI**      | Localisation en une commande pour applications web et mobiles, JSON, YAML, markdown, + plus | [/cli](https://lingo.dev/cli)           |
-| **CI/CD**    | Auto-commit des traductions à chaque push + création de pull requests si nécessaire | [/ci](https://lingo.dev/ci)             |
-| **SDK**      | Traduction en temps réel pour le contenu généré par les utilisateurs          | [/sdk](https://lingo.dev/sdk)           |
+| **CI/CD**    | Auto-commit des traductions à chaque push + création de pull requests si nécessaire         | [/ci](https://lingo.dev/ci)             |
+| **SDK**      | Traduction en temps réel pour le contenu généré par les utilisateurs                        | [/sdk](https://lingo.dev/sdk)           |
 
 Voici un aperçu rapide de chacun 👇
 
@@ -134,7 +134,6 @@ const translated = await lingoDotDev.localizeObject(content, {
   targetLocale: "es",
 });
 // Returns: { greeting: "Hola", farewell: "Adiós", message: "Bienvenido a nuestra plataforma" }
-
 ```
 
 Parfait pour les discussions, les commentaires d'utilisateurs et autres flux en temps réel.

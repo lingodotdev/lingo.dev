@@ -23,8 +23,10 @@ Visit https://lingo.dev for more information.
 
 process.env.LINGODOTDEV_API_KEY = process.env.REPLEXICA_API_KEY;
 process.env.LINGODOTDEV_PULL_REQUEST = process.env.REPLEXICA_PULL_REQUEST;
-process.env.LINGODOTDEV_PULL_REQUEST_TITLE = process.env.REPLEXICA_PULL_REQUEST_TITLE;
+process.env.LINGODOTDEV_PULL_REQUEST_TITLE =
+  process.env.REPLEXICA_PULL_REQUEST_TITLE;
 process.env.LINGODOTDEV_COMMIT_MESSAGE = process.env.REPLEXICA_COMMIT_MESSAGE;
-process.env.LINGODOTDEV_WORKING_DIRECTORY = process.env.REPLEXICA_WORKING_DIRECTORY;
+process.env.LINGODOTDEV_WORKING_DIRECTORY =
+  process.env.REPLEXICA_WORKING_DIRECTORY;
 
 await CLI.parseAsync(process.argv);

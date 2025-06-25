@@ -2,7 +2,10 @@ import { jsonrepair } from "jsonrepair";
 import { ILoader } from "./_types";
 import { createLoader } from "./_utils";
 
-export default function createVueJsonLoader(): ILoader<string, Record<string, any>> {
+export default function createVueJsonLoader(): ILoader<
+  string,
+  Record<string, any>
+> {
   return createLoader({
     pull: async (locale, input, ctx) => {
       const parsed = parseVueFile(input);
@@ -15,7 +18,11 @@ export default function createVueJsonLoader(): ILoader<string, Record<string, an
       }
 
       parsed.i18n[locale] = data;
-      return `${parsed.before}<i18n>\n${JSON.stringify(parsed.i18n, null, 2)}\n</i18n>${parsed.after}`;
+      return `${parsed.before}<i18n>\n${JSON.stringify(
+        parsed.i18n,
+        null,
+        2,
+      )}\n</i18n>${parsed.after}`;
     },
   });
 }

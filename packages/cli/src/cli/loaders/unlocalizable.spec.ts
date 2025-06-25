@@ -39,7 +39,9 @@ describe("unlocalizable loader", () => {
         await loader.pull("en", data);
         const result = await loader.push("es", pushData);
 
-        const expectedData = cacheRestoration ? { ...pushData } : { ...data, ...pushData };
+        const expectedData = cacheRestoration
+          ? { ...pushData }
+          : { ...data, ...pushData };
         expect(result).toEqual(expectedData);
       });
     });

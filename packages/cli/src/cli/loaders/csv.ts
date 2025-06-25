@@ -6,7 +6,7 @@ import { composeLoaders, createLoader } from "./_utils";
 
 /**
  * Tries to detect the key column name from a csvString.
- * 
+ *
  * Current logic: get first cell > 'KEY' fallback if empty
  */
 export function detectKeyColumnName(csvString: string) {
@@ -16,22 +16,21 @@ export function detectKeyColumnName(csvString: string) {
 }
 
 export default function createCsvLoader() {
-  return composeLoaders(_createCsvLoader(), createPullOutputCleaner())
+  return composeLoaders(_createCsvLoader(), createPullOutputCleaner());
 }
 
 type InternalTransferState = {
   keyColumnName: string;
   inputParsed: Record<string, any>[];
   items: Record<string, string>;
-}
+};
 
-function _createCsvLoader(): ILoader<
-  string,
-  InternalTransferState
-> {
+function _createCsvLoader(): ILoader<string, InternalTransferState> {
   return createLoader({
     async pull(locale, input) {
-      const keyColumnName = detectKeyColumnName(input.split('\n').find(l => l.length)!);
+      const keyColumnName = detectKeyColumnName(
+        input.split("\n").find((l) => l.length)!,
+      );
       const inputParsed = parse(input, {
         columns: true,
         skip_empty_lines: true,
@@ -51,11 +50,14 @@ function _createCsvLoader(): ILoader<
       return {
         inputParsed,
         keyColumnName,
-        items
+        items,
       };
     },
     async push(locale, { inputParsed, keyColumnName, items }) {
-      const columns = inputParsed.length > 0 ? Object.keys(inputParsed[0]) : [keyColumnName, locale];
+      const columns =
+        inputParsed.length > 0
+          ? Object.keys(inputParsed[0])
+          : [keyColumnName, locale];
       if (!columns.includes(locale)) {
         columns.push(locale);
       }
@@ -64,7 +66,9 @@ function _createCsvLoader(): ILoader<
         ...row,
         [locale]: items[row[keyColumnName]] || row[locale] || "",
       }));
-      const existingKeys = new Set(inputParsed.map((row) => row[keyColumnName]));
+      const existingKeys = new Set(
+        inputParsed.map((row) => row[keyColumnName]),
+      );
 
       Object.entries(items).forEach(([key, value]) => {
         if (!existingKeys.has(key)) {

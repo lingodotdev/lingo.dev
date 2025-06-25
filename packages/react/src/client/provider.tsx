@@ -37,7 +37,7 @@ export function LingoProviderWrapper<D>(props: LingoProviderWrapperProps<D>) {
       try {
         const locale = getLocaleFromCookies();
         console.log(
-          `[Lingo.dev] Loading dictionary file for locale ${locale}...`
+          `[Lingo.dev] Loading dictionary file for locale ${locale}...`,
         );
         const localeDictionary = await props.loadDictionary(locale);
         setDictionary(localeDictionary);

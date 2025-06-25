@@ -3,7 +3,9 @@ import path from "path";
 import { ILoader } from "./_types";
 import { createLoader } from "./_utils";
 
-export default function createTextFileLoader(pathPattern: string): ILoader<void, string> {
+export default function createTextFileLoader(
+  pathPattern: string,
+): ILoader<void, string> {
   return createLoader({
     async pull(locale) {
       const result = await readFileForLocale(pathPattern, locale);
@@ -21,7 +23,11 @@ export default function createTextFileLoader(pathPattern: string): ILoader<void,
       const trimmedPayload = data.trim();
 
       // Add trailing new line if needed
-      const trailingNewLine = await getTrailingNewLine(pathPattern, locale, originalLocale);
+      const trailingNewLine = await getTrailingNewLine(
+        pathPattern,
+        locale,
+        originalLocale,
+      );
       let finalPayload = trimmedPayload + trailingNewLine;
 
       await fs.writeFile(finalPath, finalPayload, {
@@ -45,14 +51,22 @@ async function readFileForLocale(pathPattern: string, locale: string) {
   return fs.readFile(finalPath, "utf-8");
 }
 
-async function getTrailingNewLine(pathPattern: string, locale: string, originalLocale: string) {
+async function getTrailingNewLine(
+  pathPattern: string,
+  locale: string,
+  originalLocale: string,
+) {
   let templateData = await readFileForLocale(pathPattern, locale);
   if (!templateData) {
     templateData = await readFileForLocale(pathPattern, originalLocale);
   }
 
   if (templateData?.match(/[\r\n]$/)) {
-    const ending = templateData?.includes("\r\n") ? "\r\n" : templateData?.includes("\r") ? "\r" : "\n";
+    const ending = templateData?.includes("\r\n")
+      ? "\r\n"
+      : templateData?.includes("\r")
+        ? "\r"
+        : "\n";
     return ending;
   }
   return "";

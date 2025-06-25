@@ -37,15 +37,20 @@ function findLocaleFilesWithExtension(ext: string) {
   });
 
   const localeFilePattern = new RegExp(`\/([a-z]{2}(-[A-Z]{2})?)${ext}$`);
-  const localeDirectoryPattern = new RegExp(`\/([a-z]{2}(-[A-Z]{2})?)\/[^\/]+${ext}$`);
+  const localeDirectoryPattern = new RegExp(
+    `\/([a-z]{2}(-[A-Z]{2})?)\/[^\/]+${ext}$`,
+  );
   const potentialLocaleFiles = files.filter(
-    (file: string) => localeFilePattern.test(file) || localeDirectoryPattern.test(file),
+    (file: string) =>
+      localeFilePattern.test(file) || localeDirectoryPattern.test(file),
   );
 
   const potantialLocaleFilesAndPatterns = potentialLocaleFiles
     .map((file: string) => {
       const matchPotentialLocales = Array.from(
-        file.matchAll(new RegExp(`\/([a-z]{2}(-[A-Z]{2})?|[^\/]+)(?=\/|${ext})`, "g")),
+        file.matchAll(
+          new RegExp(`\/([a-z]{2}(-[A-Z]{2})?|[^\/]+)(?=\/|${ext})`, "g"),
+        ),
       );
       const potantialLocales = matchPotentialLocales.map((match) => match[1]);
       return { file, potantialLocales };
@@ -61,13 +66,15 @@ function findLocaleFilesWithExtension(ext: string) {
     })
     .filter(({ locale }) => locale !== null);
 
-  const localeFilesAndPatterns = potantialLocaleFilesAndPatterns.map(({ file, locale }) => {
-    const pattern = file
-      .replaceAll(new RegExp(`/${locale}${ext}`, "g"), `/[locale]${ext}`)
-      .replaceAll(new RegExp(`/${locale}/`, "g"), `/[locale]/`)
-      .replaceAll(new RegExp(`/${locale}/`, "g"), `/[locale]/`); // for when there are 2 locales one after another
-    return { pattern, file };
-  });
+  const localeFilesAndPatterns = potantialLocaleFilesAndPatterns.map(
+    ({ file, locale }) => {
+      const pattern = file
+        .replaceAll(new RegExp(`/${locale}${ext}`, "g"), `/[locale]${ext}`)
+        .replaceAll(new RegExp(`/${locale}/`, "g"), `/[locale]/`)
+        .replaceAll(new RegExp(`/${locale}/`, "g"), `/[locale]/`); // for when there are 2 locales one after another
+      return { pattern, file };
+    },
+  );
 
   const grouppedFilesAndPatterns = _.groupBy(localeFilesAndPatterns, "pattern");
   const patterns = Object.keys(grouppedFilesAndPatterns);

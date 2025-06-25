@@ -62,12 +62,12 @@ Uruchom `next build` i zobacz, jak pojawiają się pakiety w języku hiszpański
 
 ### Co zawiera to repozytorium?
 
-| Narzędzie      | TL;DR                                                                          | Dokumentacja                           |
-| -------------- | ------------------------------------------------------------------------------ | -------------------------------------- |
-| **Compiler**   | Lokalizacja React na etapie budowania                                          | [/compiler](https://lingo.dev/compiler) |
-| **CLI**        | Lokalizacja aplikacji webowych i mobilnych, JSON, YAML, markdown i więcej      | [/cli](https://lingo.dev/cli)           |
-| **CI/CD**      | Automatyczne zatwierdzanie tłumaczeń przy każdym pushu + tworzenie pull requestów, jeśli to konieczne | [/ci](https://lingo.dev/ci)             |
-| **SDK**        | Tłumaczenie w czasie rzeczywistym dla treści generowanych przez użytkowników   | [/sdk](https://lingo.dev/sdk)           |
+| Narzędzie    | TL;DR                                                                                                 | Dokumentacja                            |
+| ------------ | ----------------------------------------------------------------------------------------------------- | --------------------------------------- |
+| **Compiler** | Lokalizacja React na etapie budowania                                                                 | [/compiler](https://lingo.dev/compiler) |
+| **CLI**      | Lokalizacja aplikacji webowych i mobilnych, JSON, YAML, markdown i więcej                             | [/cli](https://lingo.dev/cli)           |
+| **CI/CD**    | Automatyczne zatwierdzanie tłumaczeń przy każdym pushu + tworzenie pull requestów, jeśli to konieczne | [/ci](https://lingo.dev/ci)             |
+| **SDK**      | Tłumaczenie w czasie rzeczywistym dla treści generowanych przez użytkowników                          | [/sdk](https://lingo.dev/sdk)           |
 
 Poniżej znajdziesz szybkie informacje o każdym z nich 👇
 
@@ -134,7 +134,6 @@ const translated = await lingoDotDev.localizeObject(content, {
   targetLocale: "es",
 });
 // Returns: { greeting: "Hola", farewell: "Adiós", message: "Bienvenido a nuestra plataforma" }
-
 ```
 
 Idealne do czatów, komentarzy użytkowników i innych procesów w czasie rzeczywistym.

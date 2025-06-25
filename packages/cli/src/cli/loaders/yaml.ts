@@ -2,7 +2,10 @@ import YAML, { ToStringOptions } from "yaml";
 import { ILoader } from "./_types";
 import { createLoader } from "./_utils";
 
-export default function createYamlLoader(): ILoader<string, Record<string, any>> {
+export default function createYamlLoader(): ILoader<
+  string,
+  Record<string, any>
+> {
   return createLoader({
     async pull(locale, input) {
       return YAML.parse(input) || {};
@@ -18,7 +21,9 @@ export default function createYamlLoader(): ILoader<string, Record<string, any>>
 }
 
 // check if the yaml keys are using double quotes or single quotes
-function getKeyType(yamlString: string | null): ToStringOptions["defaultKeyType"] {
+function getKeyType(
+  yamlString: string | null,
+): ToStringOptions["defaultKeyType"] {
   if (yamlString) {
     const lines = yamlString.split("\n");
     const hasDoubleQuotes = lines.find((line) => {
@@ -32,7 +37,9 @@ function getKeyType(yamlString: string | null): ToStringOptions["defaultKeyType"
 }
 
 // check if the yaml string values are using double quotes or single quotes
-function getStringType(yamlString: string | null): ToStringOptions["defaultStringType"] {
+function getStringType(
+  yamlString: string | null,
+): ToStringOptions["defaultStringType"] {
   if (yamlString) {
     const lines = yamlString.split("\n");
     const hasDoubleQuotes = lines.find((line) => {

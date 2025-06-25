@@ -13,7 +13,10 @@ export type DatoExtractLoaderOutput = {
   };
 };
 
-export default function createDatoExtractLoader(): ILoader<DatoFilterLoaderOutput, DatoExtractLoaderOutput> {
+export default function createDatoExtractLoader(): ILoader<
+  DatoFilterLoaderOutput,
+  DatoExtractLoaderOutput
+> {
   return createLoader({
     async pull(locale, input) {
       const result: DatoExtractLoaderOutput = {};
@@ -38,9 +41,21 @@ export default function createDatoExtractLoader(): ILoader<DatoFilterLoaderOutpu
         for (const [virtualRecordId, record] of _.entries(modelInfo)) {
           for (const [fieldName, fieldValue] of _.entries(record)) {
             const [, recordId] = virtualRecordId.split("_");
-            const originalFieldValue = _.get(originalInput, [modelId, recordId, fieldName]);
-            const rawValue = createRawDatoValue(fieldValue, originalFieldValue, true);
-            _.set(result, [modelId, recordId, fieldName], rawValue || originalFieldValue);
+            const originalFieldValue = _.get(originalInput, [
+              modelId,
+              recordId,
+              fieldName,
+            ]);
+            const rawValue = createRawDatoValue(
+              fieldValue,
+              originalFieldValue,
+              true,
+            );
+            _.set(
+              result,
+              [modelId, recordId, fieldName],
+              rawValue || originalFieldValue,
+            );
           }
         }
       }
@@ -54,17 +69,29 @@ export type DatoValueRaw = any;
 export type DatoValueParsed = any;
 
 export function detectDatoFieldType(rawDatoValue: DatoValueRaw): string | null {
-  if (_.has(rawDatoValue, "document") && _.get(rawDatoValue, "schema") === "dast") {
+  if (
+    _.has(rawDatoValue, "document") &&
+    _.get(rawDatoValue, "schema") === "dast"
+  ) {
     return "structured_text";
-  } else if (_.has(rawDatoValue, "no_index") || _.has(rawDatoValue, "twitter_card")) {
+  } else if (
+    _.has(rawDatoValue, "no_index") ||
+    _.has(rawDatoValue, "twitter_card")
+  ) {
     return "seo";
   } else if (_.get(rawDatoValue, "type") === "item") {
     return "single_block";
-  } else if (_.isArray(rawDatoValue) && _.every(rawDatoValue, (item) => _.get(item, "type") === "item")) {
+  } else if (
+    _.isArray(rawDatoValue) &&
+    _.every(rawDatoValue, (item) => _.get(item, "type") === "item")
+  ) {
     return "rich_text";
   } else if (_isFile(rawDatoValue)) {
     return "file";
-  } else if (_.isArray(rawDatoValue) && _.every(rawDatoValue, (item) => _isFile(item))) {
+  } else if (
+    _.isArray(rawDatoValue) &&
+    _.every(rawDatoValue, (item) => _isFile(item))
+  ) {
     return "gallery";
   } else if (_isJson(rawDatoValue)) {
     return "json";
@@ -72,14 +99,19 @@ export function detectDatoFieldType(rawDatoValue: DatoValueRaw): string | null {
     return "string";
   } else if (_isVideo(rawDatoValue)) {
     return "video";
-  } else if (_.isArray(rawDatoValue) && _.every(rawDatoValue, (item) => _.isString(item))) {
+  } else if (
+    _.isArray(rawDatoValue) &&
+    _.every(rawDatoValue, (item) => _.isString(item))
+  ) {
     return "ref_list";
   } else {
     return null;
   }
 }
 
-export function createParsedDatoValue(rawDatoValue: DatoValueRaw): DatoValueParsed {
+export function createParsedDatoValue(
+  rawDatoValue: DatoValueRaw,
+): DatoValueParsed {
   const fieldType = detectDatoFieldType(rawDatoValue);
   switch (fieldType) {
     default:
@@ -121,7 +153,11 @@ export function createRawDatoValue(
     case "single_block":
       return deserializeBlock(parsedDatoValue, originalRawDatoValue, isClean);
     case "rich_text":
-      return deserializeBlockList(parsedDatoValue, originalRawDatoValue, isClean);
+      return deserializeBlockList(
+        parsedDatoValue,
+        originalRawDatoValue,
+        isClean,
+      );
     case "json":
       return JSON.stringify(parsedDatoValue, null, 2);
     case "video":
@@ -138,9 +174,17 @@ export function createRawDatoValue(
 function serializeStructuredText(rawStructuredText: any) {
   return serializeStructuredTextNode(rawStructuredText);
   // Encapsulates helper function args
-  function serializeStructuredTextNode(node: any, path: string[] = [], acc: Record<string, any> = {}) {
+  function serializeStructuredTextNode(
+    node: any,
+    path: string[] = [],
+    acc: Record<string, any> = {},
+  ) {
     if ("document" in node) {
-      return serializeStructuredTextNode(node.document, [...path, "document"], acc);
+      return serializeStructuredTextNode(
+        node.document,
+        [...path, "document"],
+        acc,
+      );
     }
 
     if (!_.isNil(node.value)) {
@@ -151,7 +195,11 @@ function serializeStructuredText(rawStructuredText: any) {
 
     if (node.children) {
       for (let i = 0; i < node.children.length; i++) {
-        serializeStructuredTextNode(node.children[i], [...path, i.toString()], acc);
+        serializeStructuredTextNode(
+          node.children[i],
+          [...path, i.toString()],
+          acc,
+        );
       }
     }
 
@@ -214,7 +262,11 @@ function deserializeBlock(payload: any, rawNode: any, isClean = false) {
   const result = _.cloneDeep(rawNode);
 
   for (const [attributeName, attributeValue] of _.entries(rawNode.attributes)) {
-    const rawValue = createRawDatoValue(payload[attributeName], attributeValue, isClean);
+    const rawValue = createRawDatoValue(
+      payload[attributeName],
+      attributeValue,
+      isClean,
+    );
     _.set(result, ["attributes", attributeName], rawValue);
   }
 
@@ -226,23 +278,39 @@ function deserializeBlock(payload: any, rawNode: any, isClean = false) {
 }
 
 function deserializeSeo(parsedSeo: any, originalRawSeo: any) {
-  return _.chain(parsedSeo).pick(["title", "description"]).defaults(originalRawSeo).value();
-}
-
-function deserializeBlockList(parsedBlockList: any, originalRawBlockList: any, isClean = false) {
-  return _.chain(parsedBlockList)
-    .map((block, i) => deserializeBlock(block, originalRawBlockList[i], isClean))
+  return _.chain(parsedSeo)
+    .pick(["title", "description"])
+    .defaults(originalRawSeo)
     .value();
 }
 
-function deserializeStructuredText(parsedStructuredText: Record<string, string>, originalRawStructuredText: any) {
+function deserializeBlockList(
+  parsedBlockList: any,
+  originalRawBlockList: any,
+  isClean = false,
+) {
+  return _.chain(parsedBlockList)
+    .map((block, i) =>
+      deserializeBlock(block, originalRawBlockList[i], isClean),
+    )
+    .value();
+}
+
+function deserializeStructuredText(
+  parsedStructuredText: Record<string, string>,
+  originalRawStructuredText: any,
+) {
   const result = _.cloneDeep(originalRawStructuredText);
 
   for (const [path, value] of _.entries(parsedStructuredText)) {
     const realPath = _.chain(path.split("."))
       .flatMap((s) => (!_.isNaN(_.toNumber(s)) ? ["children", s] : s))
       .value();
-    const deserializedValue = createRawDatoValue(value, _.get(originalRawStructuredText, realPath), true);
+    const deserializedValue = createRawDatoValue(
+      value,
+      _.get(originalRawStructuredText, realPath),
+      true,
+    );
     _.set(result, realPath, deserializedValue);
   }
 
@@ -265,15 +333,23 @@ function _isJson(rawDatoValue: DatoValueRaw): boolean {
 function _isFile(rawDatoValue: DatoValueRaw): boolean {
   return (
     _.isObject(rawDatoValue) &&
-    ["alt", "title", "custom_data", "focal_point", "upload_id"].every((key) => _.has(rawDatoValue, key))
+    ["alt", "title", "custom_data", "focal_point", "upload_id"].every((key) =>
+      _.has(rawDatoValue, key),
+    )
   );
 }
 
 function _isVideo(rawDatoValue: DatoValueRaw): boolean {
   return (
     _.isObject(rawDatoValue) &&
-    ["url", "title", "width", "height", "provider", "provider_uid", "thumbnail_url"].every((key) =>
-      _.has(rawDatoValue, key),
-    )
+    [
+      "url",
+      "title",
+      "width",
+      "height",
+      "provider",
+      "provider_uid",
+      "thumbnail_url",
+    ].every((key) => _.has(rawDatoValue, key))
   );
 }

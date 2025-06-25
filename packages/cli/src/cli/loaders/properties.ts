@@ -1,7 +1,10 @@
 import { ILoader } from "./_types";
 import { createLoader } from "./_utils";
 
-export default function createPropertiesLoader(): ILoader<string, Record<string, any>> {
+export default function createPropertiesLoader(): ILoader<
+  string,
+  Record<string, any>
+> {
   return createLoader({
     async pull(locale, text) {
       const result: Record<string, string> = {};

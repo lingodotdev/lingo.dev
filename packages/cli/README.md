@@ -134,7 +134,6 @@ const translated = await lingoDotDev.localizeObject(content, {
   targetLocale: "es",
 });
 // Returns: { greeting: "Hola", farewell: "Adiós", message: "Bienvenido a nuestra plataforma" }
-
 ```
 
 Perfect for chat, user comments, and other real-time flows.

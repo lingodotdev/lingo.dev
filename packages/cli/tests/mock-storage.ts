@@ -42,7 +42,9 @@ vi.mock("fs/promises", () => ({
     }),
     mkdir: vi.fn(),
     access: vi.fn((path) => {
-      return globalThis.__mockStorage[path] ? Promise.resolve() : Promise.reject(new Error("ENOENT"));
+      return globalThis.__mockStorage[path]
+        ? Promise.resolve()
+        : Promise.reject(new Error("ENOENT"));
     }),
   },
 }));

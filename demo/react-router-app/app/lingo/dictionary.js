@@ -207,7 +207,7 @@ export default {
             es: "¡Bienvenido a tu nueva aplicación de React Router! Esta plantilla inicial incluye todo lo que necesitas para empezar con React Router y Lingo.dev para la internacionalización.",
             fr: "Bienvenue dans votre nouvelle application React Router ! Ce modèle de départ inclut tout ce dont vous avez besoin pour commencer avec React Router et Lingo.dev pour l'internationalisation.",
           },
-          hash: "3daa3c623c4820b9aa80554d2f85e9d3",
+          hash: "a90f2300128bce36346e0debd0b6092b",
         },
         "4/declaration/body/0/argument/1/5/1/1": {
           content: {

@@ -15,7 +15,7 @@ function parseEjsForTranslation(input: string): EjsParseResult {
   const ejsTagRegex = /<%[\s\S]*?%>/g;
 
   // Split content by EJS tags, preserving both text and EJS parts
-  const parts: Array<{ type: 'text' | 'ejs', content: string }> = [];
+  const parts: Array<{ type: "text" | "ejs"; content: string }> = [];
   let lastIndex = 0;
   let match;
 
@@ -23,14 +23,14 @@ function parseEjsForTranslation(input: string): EjsParseResult {
     // Add text before the tag
     if (match.index > lastIndex) {
       parts.push({
-        type: 'text',
-        content: input.slice(lastIndex, match.index)
+        type: "text",
+        content: input.slice(lastIndex, match.index),
       });
     }
     // Add the EJS tag
     parts.push({
-      type: 'ejs',
-      content: match[0]
+      type: "ejs",
+      content: match[0],
     });
     lastIndex = match.index + match[0].length;
   }
@@ -38,25 +38,25 @@ function parseEjsForTranslation(input: string): EjsParseResult {
   // Add remaining text after the last tag
   if (lastIndex < input.length) {
     parts.push({
-      type: 'text',
-      content: input.slice(lastIndex)
+      type: "text",
+      content: input.slice(lastIndex),
     });
   }
 
   // Build the template and extract translatable content
-  let template = '';
-  
+  let template = "";
+
   for (const part of parts) {
-    if (part.type === 'ejs') {
+    if (part.type === "ejs") {
       // Keep EJS tags as-is
       template += part.content;
     } else {
       // For text content, extract translatable parts while preserving HTML structure
       const textContent = part.content;
-      
+
       // Extract text content from HTML tags while preserving structure
       const htmlTagRegex = /<[^>]+>/g;
-      const textParts: Array<{ type: 'html' | 'text', content: string }> = [];
+      const textParts: Array<{ type: "html" | "text"; content: string }> = [];
       let lastTextIndex = 0;
       let htmlMatch;
 
@@ -65,13 +65,13 @@ function parseEjsForTranslation(input: string): EjsParseResult {
         if (htmlMatch.index > lastTextIndex) {
           const textBefore = textContent.slice(lastTextIndex, htmlMatch.index);
           if (textBefore.trim()) {
-            textParts.push({ type: 'text', content: textBefore });
+            textParts.push({ type: "text", content: textBefore });
           } else {
-            textParts.push({ type: 'html', content: textBefore });
+            textParts.push({ type: "html", content: textBefore });
           }
         }
         // Add the HTML tag
-        textParts.push({ type: 'html', content: htmlMatch[0] });
+        textParts.push({ type: "html", content: htmlMatch[0] });
         lastTextIndex = htmlMatch.index + htmlMatch[0].length;
       }
 
@@ -79,9 +79,9 @@ function parseEjsForTranslation(input: string): EjsParseResult {
       if (lastTextIndex < textContent.length) {
         const remainingText = textContent.slice(lastTextIndex);
         if (remainingText.trim()) {
-          textParts.push({ type: 'text', content: remainingText });
+          textParts.push({ type: "text", content: remainingText });
         } else {
-          textParts.push({ type: 'html', content: remainingText });
+          textParts.push({ type: "html", content: remainingText });
         }
       }
 
@@ -89,20 +89,23 @@ function parseEjsForTranslation(input: string): EjsParseResult {
       if (textParts.length === 0) {
         const trimmedContent = textContent.trim();
         if (trimmedContent) {
-          textParts.push({ type: 'text', content: textContent });
+          textParts.push({ type: "text", content: textContent });
         } else {
-          textParts.push({ type: 'html', content: textContent });
+          textParts.push({ type: "html", content: textContent });
         }
       }
 
       // Process text parts
       for (const textPart of textParts) {
-        if (textPart.type === 'text') {
+        if (textPart.type === "text") {
           const trimmedContent = textPart.content.trim();
           if (trimmedContent) {
             const key = `text_${counter++}`;
             translatable[key] = trimmedContent;
-            template += textPart.content.replace(trimmedContent, `__LINGO_PLACEHOLDER_${key}__`);
+            template += textPart.content.replace(
+              trimmedContent,
+              `__LINGO_PLACEHOLDER_${key}__`,
+            );
           } else {
             template += textPart.content;
           }
@@ -116,22 +119,28 @@ function parseEjsForTranslation(input: string): EjsParseResult {
   return { content: template, translatable };
 }
 
-function reconstructEjsWithTranslation(template: string, translatable: Record<string, string>): string {
+function reconstructEjsWithTranslation(
+  template: string,
+  translatable: Record<string, string>,
+): string {
   let result = template;
-  
+
   // Replace placeholders with translated content
   for (const [key, value] of Object.entries(translatable)) {
     const placeholder = `__LINGO_PLACEHOLDER_${key}__`;
-    result = result.replace(new RegExp(placeholder, 'g'), value);
+    result = result.replace(new RegExp(placeholder, "g"), value);
   }
-  
+
   return result;
 }
 
-export default function createEjsLoader(): ILoader<string, Record<string, any>> {
+export default function createEjsLoader(): ILoader<
+  string,
+  Record<string, any>
+> {
   return createLoader({
     async pull(locale, input) {
-      if (!input || input.trim() === '') {
+      if (!input || input.trim() === "") {
         return {};
       }
 
@@ -139,7 +148,9 @@ export default function createEjsLoader(): ILoader<string, Record<string, any>> 
         const parseResult = parseEjsForTranslation(input);
         return parseResult.translatable;
       } catch (error) {
-        console.warn('Warning: Could not parse EJS template, treating as plain text');
+        console.warn(
+          "Warning: Could not parse EJS template, treating as plain text",
+        );
         // Fallback: treat entire input as translatable content
         return { content: input.trim() };
       }
@@ -148,19 +159,24 @@ export default function createEjsLoader(): ILoader<string, Record<string, any>> 
     async push(locale, data, originalInput) {
       if (!originalInput) {
         // If no original input, reconstruct from data
-        return Object.values(data).join('\n');
+        return Object.values(data).join("\n");
       }
 
       try {
         const parseResult = parseEjsForTranslation(originalInput);
-        
+
         // Merge original translatable content with new translations
         const mergedTranslatable = { ...parseResult.translatable, ...data };
-        
-        return reconstructEjsWithTranslation(parseResult.content, mergedTranslatable);
+
+        return reconstructEjsWithTranslation(
+          parseResult.content,
+          mergedTranslatable,
+        );
       } catch (error) {
-        console.warn('Warning: Could not reconstruct EJS template, returning translated data');
-        return Object.values(data).join('\n');
+        console.warn(
+          "Warning: Could not reconstruct EJS template, returning translated data",
+        );
+        return Object.values(data).join("\n");
       }
     },
   });
