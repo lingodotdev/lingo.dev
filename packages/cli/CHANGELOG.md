@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.100.1
+
+### Patch Changes
+
+- [#960](https://github.com/lingodotdev/lingo.dev/pull/960) [`ce0e5cd`](https://github.com/lingodotdev/lingo.dev/commit/ce0e5cd6d1ec17f5c593d394ceb63a28666df924) Thanks [@mathio](https://github.com/mathio)! - fix compiler dictionary
+
 ## 0.100.0
 
 ### Minor Changes
