@@ -13,12 +13,19 @@ export default function createDatoLoader(configFilePath: string) {
 
     return composeLoaders(
       createDatoApiLoader(datoConfig, (updatedConfig) =>
-        fs.writeFileSync(configFilePath, JSON5.stringify(updatedConfig, null, 2)),
+        fs.writeFileSync(
+          configFilePath,
+          JSON5.stringify(updatedConfig, null, 2),
+        ),
       ),
       createDatoFilterLoader(),
       createDatoExtractLoader(),
     );
   } catch (error: any) {
-    throw new Error([`Failed to parse DatoCMS config file.`, `Error: ${error.message}`].join("\n\n"));
+    throw new Error(
+      [`Failed to parse DatoCMS config file.`, `Error: ${error.message}`].join(
+        "\n\n",
+      ),
+    );
   }
 }

@@ -32,13 +32,20 @@ export async function loadDictionary(options: {
   lingoDir: string;
   isDev: boolean;
 }) {
-  const { resourcePath, resourceQuery = "", params, sourceRoot, lingoDir, isDev } = options;
+  const {
+    resourcePath,
+    resourceQuery = "",
+    params,
+    sourceRoot,
+    lingoDir,
+    isDev,
+  } = options;
   const fullResourcePath = `${resourcePath}${resourceQuery}`;
-  
-  if (!resourcePath.endsWith(LCP_DICTIONARY_FILE_NAME)) {
+
+  if (!resourcePath.match(LCP_DICTIONARY_FILE_NAME)) {
     return null; // Not a dictionary file
   }
-  
+
   const moduleInfo = parseParametrizedModuleId(fullResourcePath);
   const locale = moduleInfo.params.locale;
 
@@ -80,7 +87,7 @@ export function transformComponent(options: {
   sourceRoot: string;
 }) {
   const { code, params, resourcePath, sourceRoot } = options;
-  
+
   return _.chain({
     code,
     params,

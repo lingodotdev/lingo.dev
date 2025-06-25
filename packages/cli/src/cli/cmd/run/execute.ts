@@ -25,11 +25,15 @@ export default async function execute(input: CmdRunContext) {
       {
         title: "Initializing localization engine",
         task: async (ctx, task) => {
-          task.title = `Localization engine ${chalk.hex(colors.green)("ready")} (${ctx.localizer!.id})`;
+          task.title = `Localization engine ${chalk.hex(colors.green)(
+            "ready",
+          )} (${ctx.localizer!.id})`;
         },
       },
       {
-        title: `Processing localization tasks ${chalk.dim(`(tasks: ${input.tasks.length}, concurrency: ${effectiveConcurrency})`)}`,
+        title: `Processing localization tasks ${chalk.dim(
+          `(tasks: ${input.tasks.length}, concurrency: ${effectiveConcurrency})`,
+        )}`,
         task: (ctx, task) => {
           if (input.tasks.length < 1) {
             task.title = `Skipping, nothing to localize.`;
@@ -85,11 +89,11 @@ function createWorkerStatusMessage(args: {
     "[locale]",
     args.assignedTask.targetLocale,
   );
-  return `[${chalk.hex(colors.yellow)(`${args.percentage}%`)}] Processing: ${chalk.dim(
-    displayPath,
-  )} (${chalk.hex(colors.yellow)(args.assignedTask.sourceLocale)} -> ${chalk.hex(
-    colors.yellow,
-  )(args.assignedTask.targetLocale)})`;
+  return `[${chalk.hex(colors.yellow)(
+    `${args.percentage}%`,
+  )}] Processing: ${chalk.dim(displayPath)} (${chalk.hex(colors.yellow)(
+    args.assignedTask.sourceLocale,
+  )} -> ${chalk.hex(colors.yellow)(args.assignedTask.targetLocale)})`;
 }
 
 function createExecutionProgressMessage(ctx: CmdRunContext) {
@@ -106,7 +110,11 @@ function createExecutionProgressMessage(ctx: CmdRunContext) {
     (_t, result) => result.status === "skipped",
   );
 
-  return `Processed ${chalk.green(succeededTasksCount)}/${ctx.tasks.length}, Failed ${chalk.red(failedTasksCount)}, Skipped ${chalk.dim(skippedTasksCount)}`;
+  return `Processed ${chalk.green(succeededTasksCount)}/${
+    ctx.tasks.length
+  }, Failed ${chalk.red(failedTasksCount)}, Skipped ${chalk.dim(
+    skippedTasksCount,
+  )}`;
 }
 
 function createLoaderForTask(assignedTask: CmdRunTask) {

@@ -1,5 +1,30 @@
 # lingo.dev
 
+## 0.100.1
+
+### Patch Changes
+
+- [#960](https://github.com/lingodotdev/lingo.dev/pull/960) [`ce0e5cd`](https://github.com/lingodotdev/lingo.dev/commit/ce0e5cd6d1ec17f5c593d394ceb63a28666df924) Thanks [@mathio](https://github.com/mathio)! - fix compiler dictionary
+
+## 0.100.0
+
+### Minor Changes
+
+- [#956](https://github.com/lingodotdev/lingo.dev/pull/956) [`ce8c75c`](https://github.com/lingodotdev/lingo.dev/commit/ce8c75c7fc1a2124d3e18444bc356c4dfce26434) Thanks [@VAIBHAVSING](https://github.com/VAIBHAVSING)! - feat: add EJS (Embedded JavaScript) templating engine support
+
+  - Added EJS loader to support parsing and translating EJS template files
+  - EJS loader extracts translatable text while preserving EJS tags and expressions
+  - Updated spec package to include "ejs" in supported bucket types
+  - Added comprehensive test suite covering various EJS scenarios including conditionals, loops, includes, and mixed content
+  - Automatically installed EJS dependency (@types/ejs) for TypeScript support
+
+### Patch Changes
+
+- Updated dependencies [[`ce8c75c`](https://github.com/lingodotdev/lingo.dev/commit/ce8c75c7fc1a2124d3e18444bc356c4dfce26434)]:
+  - @lingo.dev/_spec@0.37.0
+  - @lingo.dev/_sdk@0.9.3
+  - @lingo.dev/_compiler@0.4.1
+
 ## 0.99.8
 
 ### Patch Changes

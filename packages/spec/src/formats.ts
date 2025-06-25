@@ -3,6 +3,7 @@ import Z from "zod";
 export const bucketTypes = [
   "android",
   "csv",
+  "ejs",
   "flutter",
   "html",
   "json",

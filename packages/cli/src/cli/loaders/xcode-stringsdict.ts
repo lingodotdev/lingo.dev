@@ -11,7 +11,10 @@ const emptyData = [
   "</plist>",
 ].join("\n");
 
-export default function createXcodeStringsdictLoader(): ILoader<string, Record<string, any>> {
+export default function createXcodeStringsdictLoader(): ILoader<
+  string,
+  Record<string, any>
+> {
   return createLoader({
     async pull(locale, input) {
       try {

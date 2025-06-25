@@ -9,8 +9,14 @@ import { resolveOverriddenLocale } from "@lingo.dev/_spec";
 export default new Command()
   .command("files")
   .description("Print out the list of files managed by Lingo.dev")
-  .option("--source", "Only show source files, files containing the original translations")
-  .option("--target", "Only show target files, files containing translated content")
+  .option(
+    "--source",
+    "Only show source files, files containing the original translations",
+  )
+  .option(
+    "--target",
+    "Only show target files, files containing translated content",
+  )
   .helpOption("-h, --help", "Show help")
   .action(async (type) => {
     const ora = Ora();
@@ -20,7 +26,8 @@ export default new Command()
 
         if (!i18nConfig) {
           throw new CLIError({
-            message: "i18n.json not found. Please run `lingo.dev init` to initialize the project.",
+            message:
+              "i18n.json not found. Please run `lingo.dev init` to initialize the project.",
             docUrl: "i18nNotFound",
           });
         }
@@ -28,12 +35,26 @@ export default new Command()
         const buckets = getBuckets(i18nConfig);
         for (const bucket of buckets) {
           for (const bucketConfig of bucket.paths) {
-            const sourceLocale = resolveOverriddenLocale(i18nConfig.locale.source, bucketConfig.delimiter);
-            const sourcePath = bucketConfig.pathPattern.replace(/\[locale\]/g, sourceLocale);
-            const targetPaths = i18nConfig.locale.targets.map((_targetLocale) => {
-              const targetLocale = resolveOverriddenLocale(_targetLocale, bucketConfig.delimiter);
-              return bucketConfig.pathPattern.replace(/\[locale\]/g, targetLocale);
-            });
+            const sourceLocale = resolveOverriddenLocale(
+              i18nConfig.locale.source,
+              bucketConfig.delimiter,
+            );
+            const sourcePath = bucketConfig.pathPattern.replace(
+              /\[locale\]/g,
+              sourceLocale,
+            );
+            const targetPaths = i18nConfig.locale.targets.map(
+              (_targetLocale) => {
+                const targetLocale = resolveOverriddenLocale(
+                  _targetLocale,
+                  bucketConfig.delimiter,
+                );
+                return bucketConfig.pathPattern.replace(
+                  /\[locale\]/g,
+                  targetLocale,
+                );
+              },
+            );
 
             const result: string[] = [];
             if (!type.source && !type.target) {

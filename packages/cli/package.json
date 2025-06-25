@@ -1,6 +1,6 @@
 {
   "name": "lingo.dev",
-  "version": "0.99.8",
+  "version": "0.100.1",
   "description": "Lingo.dev CLI",
   "private": false,
   "publishConfig": {
@@ -131,6 +131,7 @@
     "@modelcontextprotocol/sdk": "^1.5.0",
     "@openrouter/ai-sdk-provider": "^0.7.1",
     "@paralleldrive/cuid2": "^2.2.2",
+    "@types/ejs": "^3.1.5",
     "ai": "^4.3.15",
     "bitbucket": "^2.12.0",
     "chalk": "^5.4.1",
@@ -143,6 +144,7 @@
     "dedent": "^1.5.3",
     "diff": "^7.0.0",
     "dotenv": "^16.4.7",
+    "ejs": "^3.1.10",
     "express": "^5.1.0",
     "external-editor": "^3.1.0",
     "figlet": "^1.8.0",

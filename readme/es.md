@@ -62,12 +62,12 @@ Ejecuta `next build` y observa cómo aparecen los paquetes en español y francé
 
 ### ¿Qué hay dentro de este repositorio?
 
-| Herramienta  | Resumen                                                                       | Documentación                           |
-| ------------ | ----------------------------------------------------------------------------- | --------------------------------------- |
-| **Compiler** | Localización de React en tiempo de compilación                                | [/compiler](https://lingo.dev/compiler) |
+| Herramienta  | Resumen                                                                                      | Documentación                           |
+| ------------ | -------------------------------------------------------------------------------------------- | --------------------------------------- |
+| **Compiler** | Localización de React en tiempo de compilación                                               | [/compiler](https://lingo.dev/compiler) |
 | **CLI**      | Localización con un solo comando para aplicaciones web y móviles, JSON, YAML, markdown y más | [/cli](https://lingo.dev/cli)           |
-| **CI/CD**    | Auto-commit de traducciones en cada push + creación de pull requests si es necesario | [/ci](https://lingo.dev/ci)             |
-| **SDK**      | Traducción en tiempo real para contenido generado por usuarios                | [/sdk](https://lingo.dev/sdk)           |
+| **CI/CD**    | Auto-commit de traducciones en cada push + creación de pull requests si es necesario         | [/ci](https://lingo.dev/ci)             |
+| **SDK**      | Traducción en tiempo real para contenido generado por usuarios                               | [/sdk](https://lingo.dev/sdk)           |
 
 A continuación, los aspectos más destacados de cada uno 👇
 
@@ -134,7 +134,6 @@ const translated = await lingoDotDev.localizeObject(content, {
   targetLocale: "es",
 });
 // Returns: { greeting: "Hola", farewell: "Adiós", message: "Bienvenido a nuestra plataforma" }
-
 ```
 
 Perfecto para chat, comentarios de usuarios y otros flujos en tiempo real.

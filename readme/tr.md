@@ -62,12 +62,12 @@ Tam kılavuz için [belgeleri okuyun →](https://lingo.dev/compiler) ve kurulum
 
 ### Bu depoda neler var?
 
-| Alet          | Özet                                                                          | Dokümanlar                                   |
-| ------------ | ------------------------------------------------------------------------------ | --------------------------------------- |
-| **Derleyici** | Derleme zamanında React yerelleştirme                                                  | [/compiler](https://lingo.dev/compiler) |
-| **CLI**      | Web ve mobil uygulamalar, JSON, YAML, markdown ve daha fazlası için tek komutla yerelleştirme | [/cli](https://lingo.dev/cli)           |
-| **CI/CD**    | Her push'ta otomatik çeviri commit'leri + gerekirse pull request oluşturma        | [/ci](https://lingo.dev/ci)             |
-| **SDK**      | Kullanıcı tarafından oluşturulan içerik için gerçek zamanlı çeviri                                | [/sdk](https://lingo.dev/sdk)           |
+| Alet          | Özet                                                                                          | Dokümanlar                              |
+| ------------- | --------------------------------------------------------------------------------------------- | --------------------------------------- |
+| **Derleyici** | Derleme zamanında React yerelleştirme                                                         | [/compiler](https://lingo.dev/compiler) |
+| **CLI**       | Web ve mobil uygulamalar, JSON, YAML, markdown ve daha fazlası için tek komutla yerelleştirme | [/cli](https://lingo.dev/cli)           |
+| **CI/CD**     | Her push'ta otomatik çeviri commit'leri + gerekirse pull request oluşturma                    | [/ci](https://lingo.dev/ci)             |
+| **SDK**       | Kullanıcı tarafından oluşturulan içerik için gerçek zamanlı çeviri                            | [/sdk](https://lingo.dev/sdk)           |
 
 Aşağıda her biri için hızlı bilgiler bulunmaktadır 👇
 
@@ -134,7 +134,6 @@ const translated = await lingoDotDev.localizeObject(content, {
   targetLocale: "es",
 });
 // Returns: { greeting: "Hola", farewell: "Adiós", message: "Bienvenido a nuestra plataforma" }
-
 ```
 
 Sohbet, kullanıcı yorumları ve diğer gerçek zamanlı akışlar için mükemmel.
@@ -163,6 +162,6 @@ Yaptıklarımızı beğeniyorsanız, bize bir ⭐ verin ve 3.000 yıldıza ulaş
 
 ## 🌐 Diğer dillerde Readme
 
-[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)  • [Türkçe](/readme/tr.md)
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Türkçe](/readme/tr.md)
 
 Dilinizi görmüyor musunuz? [`i18n.json`](./i18n.json) dosyasına ekleyin ve bir PR açın!

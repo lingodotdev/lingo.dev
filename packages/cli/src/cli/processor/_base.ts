@@ -12,4 +12,7 @@ export type LocalizerProgressFn = (
   processedChunk: Record<string, string>,
 ) => void;
 
-export type LocalizerFn = (input: LocalizerInput, onProgress: LocalizerProgressFn) => Promise<Record<string, any>>;
+export type LocalizerFn = (
+  input: LocalizerInput,
+  onProgress: LocalizerProgressFn,
+) => Promise<Record<string, any>>;

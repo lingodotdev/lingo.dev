@@ -2,7 +2,10 @@ import { ILoader } from "./_types";
 import { createLoader } from "./_utils";
 import { fromString } from "php-array-reader";
 
-export default function createPhpLoader(): ILoader<string, Record<string, any>> {
+export default function createPhpLoader(): ILoader<
+  string,
+  Record<string, any>
+> {
   return createLoader({
     pull: async (locale, input) => {
       try {
@@ -19,7 +22,10 @@ export default function createPhpLoader(): ILoader<string, Record<string, any>> 
   });
 }
 
-function toPhpString(data: Record<string, any>, originalPhpString: string | null) {
+function toPhpString(
+  data: Record<string, any>,
+  originalPhpString: string | null,
+) {
   const defaultFilePrefix = "<?php\n\n";
   if (originalPhpString) {
     const [filePrefix = defaultFilePrefix] = originalPhpString.split("return ");
@@ -49,12 +55,26 @@ function toPhpArray(data: any, shortSyntax = true, indentLevel = 1): string {
 
   if (Array.isArray(data)) {
     return `${arrayStart}\n${data
-      .map((value) => `${indent(indentLevel)}${toPhpArray(value, shortSyntax, indentLevel + 1)}`)
+      .map(
+        (value) =>
+          `${indent(indentLevel)}${toPhpArray(
+            value,
+            shortSyntax,
+            indentLevel + 1,
+          )}`,
+      )
       .join(",\n")}\n${indent(indentLevel - 1)}${arrayEnd}`;
   }
 
   const output = `${arrayStart}\n${Object.entries(data)
-    .map(([key, value]) => `${indent(indentLevel)}'${key}' => ${toPhpArray(value, shortSyntax, indentLevel + 1)}`)
+    .map(
+      ([key, value]) =>
+        `${indent(indentLevel)}'${key}' => ${toPhpArray(
+          value,
+          shortSyntax,
+          indentLevel + 1,
+        )}`,
+    )
     .join(",\n")}\n${indent(indentLevel - 1)}${arrayEnd}`;
   return output;
 }

@@ -45,12 +45,12 @@ Execute `next build` e veja os pacotes em espanhol e francês surgirem ✨
 
 ### O que há neste repositório?
 
-| Ferramenta   | Resumo                                                                        | Documentação                             |
-| ------------ | ------------------------------------------------------------------------------ | --------------------------------------- |
-| **Compiler** | Localização React em tempo de compilação                                      | [/compiler](https://lingo.dev/compiler) |
+| Ferramenta   | Resumo                                                                                      | Documentação                            |
+| ------------ | ------------------------------------------------------------------------------------------- | --------------------------------------- |
+| **Compiler** | Localização React em tempo de compilação                                                    | [/compiler](https://lingo.dev/compiler) |
 | **CLI**      | Localização com um único comando para aplicativos web e mobile, JSON, YAML, markdown e mais | [/cli](https://lingo.dev/cli)           |
-| **CI/CD**    | Auto-commit de traduções a cada push + criação de pull requests se necessário  | [/ci](https://lingo.dev/ci)             |
-| **SDK**      | Tradução em tempo real para conteúdo gerado pelo usuário                      | [/sdk](https://lingo.dev/sdk)           |
+| **CI/CD**    | Auto-commit de traduções a cada push + criação de pull requests se necessário               | [/ci](https://lingo.dev/ci)             |
+| **SDK**      | Tradução em tempo real para conteúdo gerado pelo usuário                                    | [/sdk](https://lingo.dev/sdk)           |
 
 Abaixo estão os destaques de cada um 👇
 

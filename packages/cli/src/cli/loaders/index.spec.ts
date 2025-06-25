@@ -338,16 +338,25 @@ describe("bucket loaders", () => {
         "body/2/3/0": "texto en negrita y ",
         "body/2/3/1/0": "texto en cursiva",
       };
-      const expectedOutput = dedent`
-<html lang="es"><head>
-   <title>Mi Página</title>
-   <meta name="description" content="Descripción de la página">
- </head>
- <body>texto simple sin etiqueta html<h1>¡Hola, mundo!</h1>
-   <p>Este es un párrafo con un <a href="https://example.com">enlace</a> y <b>texto en negrita y <i>texto en cursiva</i></b>
-   </p>
-
-</body></html>
+      const expectedOutput = `<html lang="es">
+  <head>
+    <title>Mi Página</title>
+    <meta name="description" content="Descripción de la página" />
+  </head>
+  <body>
+    texto simple sin etiqueta html
+    <h1>¡Hola, mundo!</h1>
+    <p>
+      Este es un párrafo con un
+      <a href="https://example.com">enlace</a>
+      y
+      <b>
+        texto en negrita y
+        <i>texto en cursiva</i>
+      </b>
+    </p>
+  </body>
+</html>
       `.trim();
 
       mockFileOperations(input);
@@ -447,10 +456,7 @@ describe("bucket loaders", () => {
       const payload = { "messages/0": "foo", "messages/1": "bar" };
       const expectedOutput = dedent`
         {
-          "messages": [
-            "foo",
-            "bar"
-          ]
+          "messages": ["foo", "bar"]
         }
       `.trim();
 
@@ -922,7 +928,7 @@ Another paragraph with **bold** and *italic* text.`;
         "md-section-0": "# Heading 1",
         "md-section-1": "This is a paragraph.",
         "md-section-2": "## Heading 2",
-        "md-section-3": "Another paragraph with **bold** and *italic* text.",
+        "md-section-3": "Another paragraph with **bold** and _italic_ text.",
       };
 
       mockFileOperations(input);
@@ -2689,6 +2695,110 @@ ${script}`;
 
       expect(fs.writeFile).toHaveBeenCalledWith(
         "i18n/App.vue",
+        expectedOutput,
+        { encoding: "utf-8", flag: "w" },
+      );
+    });
+  });
+  describe("ejs bucket loader", () => {
+    it("should load ejs data", async () => {
+      setupFileMocks();
+
+      const input = `<!DOCTYPE html>
+<html>
+<head>
+  <title>Welcome Page</title>
+</head>
+<body>
+  <h1>Hello <%= user.name %>!</h1>
+  <% if (user.isLoggedIn) { %>
+    <p>Welcome back to our application.</p>
+    <p>You have <%= notifications.length %> new notifications.</p>
+  <% } else { %>
+    <p>Please log in to continue.</p>
+  <% } %>
+  <ul>
+    <% items.forEach(function(item, index) { %>
+      <li>Item <%= index + 1 %>: <%= item.title %></li>
+    <% }); %>
+  </ul>
+  <footer>© 2024 My Company. All rights reserved.</footer>
+</body>
+</html>`;
+
+      const expectedOutput = {
+        text_0: "Welcome Page",
+        text_1: "Hello",
+        text_2: "!",
+        text_3: "Welcome back to our application.",
+        text_4: "You have",
+        text_5: "new notifications.",
+        text_6: "Please log in to continue.",
+        text_7: "Item",
+        text_8: ":",
+        text_9: "© 2024 My Company. All rights reserved.",
+      };
+
+      mockFileOperations(input);
+
+      const ejsLoader = createBucketLoader("ejs", "templates/[locale].ejs", {
+        isCacheRestore: false,
+        defaultLocale: "en",
+      });
+      ejsLoader.setDefaultLocale("en");
+      const data = await ejsLoader.pull("en");
+
+      expect(data).toEqual(expectedOutput);
+    });
+
+    it("should save ejs data", async () => {
+      setupFileMocks();
+
+      const input = `<!DOCTYPE html>
+<html>
+<head>
+  <title>Welcome Page</title>
+</head>
+<body>
+  <h1>Hello <%= user.name %>!</h1>
+  <p>Welcome to our application.</p>
+  <footer>© 2024 My Company. All rights reserved.</footer>
+</body>
+</html>`;
+
+      const payload = {
+        text_0: "Página de Bienvenida",
+        text_1: "Hola",
+        text_2: "!",
+        text_3: "Bienvenido a nuestra aplicación.",
+        text_4: "© 2024 Mi Empresa. Todos los derechos reservados.",
+      };
+
+      const expectedOutput = `<!DOCTYPE html>
+<html>
+<head>
+  <title>Página de Bienvenida</title>
+</head>
+<body>
+  <h1>Hola <%= user.name %>!</h1>
+  <p>Bienvenido a nuestra aplicación.</p>
+  <footer>© 2024 Mi Empresa. Todos los derechos reservados.</footer>
+</body>
+</html>`;
+
+      mockFileOperations(input);
+
+      const ejsLoader = createBucketLoader("ejs", "templates/[locale].ejs", {
+        isCacheRestore: false,
+        defaultLocale: "en",
+      });
+      ejsLoader.setDefaultLocale("en");
+      await ejsLoader.pull("en");
+
+      await ejsLoader.push("es", payload);
+
+      expect(fs.writeFile).toHaveBeenCalledWith(
+        "templates/es.ejs",
         expectedOutput,
         { encoding: "utf-8", flag: "w" },
       );

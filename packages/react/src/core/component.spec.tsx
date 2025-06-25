@@ -354,10 +354,12 @@ describe("LingoComponent", () => {
       files: {
         test: {
           entries: {
-            elements: "First <element:0>text</element:0> and <element:1>more</element:1>",
+            elements:
+              "First <element:0>text</element:0> and <element:1>more</element:1>",
             functions: "Call <function:fn1/> then <function:fn2/>",
             expressions: "Value <expression/> and <expression/>",
-            mixed: "Element <element:0>content</element:0> with <function:fn1/> and <expression/>",
+            mixed:
+              "Element <element:0>content</element:0> with <function:fn1/> and <expression/>",
           },
         },
       },
@@ -509,7 +511,9 @@ describe("LingoComponent", () => {
       );
 
       expect(container.textContent).toBe("First text and more");
-      expect(container.innerHTML).toBe("<div>First <span>text</span> and more</div>");
+      expect(container.innerHTML).toBe(
+        "<div>First <span>text</span> and more</div>",
+      );
     });
 
     it("handles completely empty elements array gracefully", () => {
@@ -532,7 +536,8 @@ describe("LingoComponent", () => {
         files: {
           test: {
             entries: {
-              multiCall: "First <function:fn1/>, second <function:fn1/>, third <function:fn2/>",
+              multiCall:
+                "First <function:fn1/>, second <function:fn1/>, third <function:fn2/>",
             },
           },
         },

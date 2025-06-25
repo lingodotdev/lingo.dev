@@ -18,22 +18,34 @@ export default new Command()
 
     const lockfileHelper = createLockfileHelper();
     if (lockfileHelper.isLockfileExists() && !flags.force) {
-      ora.warn(`Lockfile won't be created because it already exists. Use --force to overwrite.`);
+      ora.warn(
+        `Lockfile won't be created because it already exists. Use --force to overwrite.`,
+      );
     } else {
       const i18nConfig = getConfig();
       const buckets = getBuckets(i18nConfig!);
 
       for (const bucket of buckets) {
         for (const bucketConfig of bucket.paths) {
-          const sourceLocale = resolveOverriddenLocale(i18nConfig!.locale.source, bucketConfig.delimiter);
-          const bucketLoader = createBucketLoader(bucket.type, bucketConfig.pathPattern, {
-            isCacheRestore: false,
-            defaultLocale: sourceLocale,
-          });
+          const sourceLocale = resolveOverriddenLocale(
+            i18nConfig!.locale.source,
+            bucketConfig.delimiter,
+          );
+          const bucketLoader = createBucketLoader(
+            bucket.type,
+            bucketConfig.pathPattern,
+            {
+              isCacheRestore: false,
+              defaultLocale: sourceLocale,
+            },
+          );
           bucketLoader.setDefaultLocale(sourceLocale);
 
           const sourceData = await bucketLoader.pull(sourceLocale);
-          lockfileHelper.registerSourceData(bucketConfig.pathPattern, sourceData);
+          lockfileHelper.registerSourceData(
+            bucketConfig.pathPattern,
+            sourceData,
+          );
         }
       }
       ora.succeed("Lockfile created");

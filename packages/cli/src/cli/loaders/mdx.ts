@@ -10,11 +10,20 @@ import { Root, RootContent, RootContentMap } from "mdast";
 import { ILoader } from "./_types";
 import { createLoader } from "./_utils";
 
-const parser = unified().use(remarkParse).use(remarkFrontmatter, ["yaml"]).use(remarkGfm);
-const serializer = unified().use(remarkStringify).use(remarkFrontmatter, ["yaml"]).use(remarkGfm);
+const parser = unified()
+  .use(remarkParse)
+  .use(remarkFrontmatter, ["yaml"])
+  .use(remarkGfm);
+const serializer = unified()
+  .use(remarkStringify)
+  .use(remarkFrontmatter, ["yaml"])
+  .use(remarkGfm);
 
 export function createMdxFormatLoader(): ILoader<string, Record<string, any>> {
-  const skippedTypes: (keyof RootContentMap | "root")[] = ["code", "inlineCode"];
+  const skippedTypes: (keyof RootContentMap | "root")[] = [
+    "code",
+    "inlineCode",
+  ];
   return createLoader({
     async pull(locale, input) {
       const file = new VFile(input);
@@ -33,7 +42,14 @@ export function createMdxFormatLoader(): ILoader<string, Record<string, any>> {
       return result;
     },
 
-    async push(locale, data, originalInput, originalLocale, pullInput, pullOutput) {
+    async push(
+      locale,
+      data,
+      originalInput,
+      originalLocale,
+      pullInput,
+      pullOutput,
+    ) {
       const file = new VFile(originalInput);
       const ast = parser.parse(file);
 
@@ -42,7 +58,11 @@ export function createMdxFormatLoader(): ILoader<string, Record<string, any>> {
       traverseMdast(result, (node, indexPath) => {
         if ("value" in node) {
           const incomingValue = findNodeByIndexPath(data, indexPath);
-          if (incomingValue && "value" in incomingValue && !_.isEmpty(incomingValue.value)) {
+          if (
+            incomingValue &&
+            "value" in incomingValue &&
+            !_.isEmpty(incomingValue.value)
+          ) {
             node.value = incomingValue.value;
           }
         }
@@ -69,7 +89,10 @@ export function createDoubleSerializationLoader(): ILoader<string, string> {
   });
 }
 
-export function createMdxStructureLoader(): ILoader<Record<string, any>, Record<string, string>> {
+export function createMdxStructureLoader(): ILoader<
+  Record<string, any>,
+  Record<string, string>
+> {
   return createLoader({
     async pull(locale, input) {
       const result = _.chain(input)
@@ -100,7 +123,10 @@ function traverseMdast(
   }
 }
 
-function findNodeByIndexPath(ast: Root | RootContent, indexPath: number[]): Root | RootContent | null {
+function findNodeByIndexPath(
+  ast: Root | RootContent,
+  indexPath: number[],
+): Root | RootContent | null {
   let result: Root | RootContent | null = null;
 
   const stringifiedIndexPath = indexPath.join(".");

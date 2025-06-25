@@ -4,7 +4,8 @@ export default defineOperationApp({
   id: "replexica-integration-directus",
   name: "Replexica Integration for Directus",
   icon: "translate",
-  description: "Use Replexica Localization Engine to make content multilingual.",
+  description:
+    "Use Replexica Localization Engine to make content multilingual.",
   overview: ({ collection }) => [
     {
       label: "$t:collection",

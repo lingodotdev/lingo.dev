@@ -62,12 +62,12 @@ Esegui `next build` e guarda apparire i bundle in spagnolo e francese ✨
 
 ### Cosa contiene questo repository?
 
-| Strumento    | In breve                                                                      | Documentazione                          |
-| ------------ | ----------------------------------------------------------------------------- | --------------------------------------- |
-| **Compiler** | Localizzazione React in fase di build                                         | [/compiler](https://lingo.dev/compiler) |
+| Strumento    | In breve                                                                              | Documentazione                          |
+| ------------ | ------------------------------------------------------------------------------------- | --------------------------------------- |
+| **Compiler** | Localizzazione React in fase di build                                                 | [/compiler](https://lingo.dev/compiler) |
 | **CLI**      | Localizzazione con un solo comando per app web e mobile, JSON, YAML, markdown e altro | [/cli](https://lingo.dev/cli)           |
-| **CI/CD**    | Auto-commit delle traduzioni ad ogni push + creazione di pull request se necessario | [/ci](https://lingo.dev/ci)             |
-| **SDK**      | Traduzione in tempo reale per contenuti generati dagli utenti                 | [/sdk](https://lingo.dev/sdk)           |
+| **CI/CD**    | Auto-commit delle traduzioni ad ogni push + creazione di pull request se necessario   | [/ci](https://lingo.dev/ci)             |
+| **SDK**      | Traduzione in tempo reale per contenuti generati dagli utenti                         | [/sdk](https://lingo.dev/sdk)           |
 
 Di seguito i punti salienti per ciascuno 👇
 
@@ -134,7 +134,6 @@ const translated = await lingoDotDev.localizeObject(content, {
   targetLocale: "es",
 });
 // Returns: { greeting: "Hola", farewell: "Adiós", message: "Bienvenido a nuestra plataforma" }
-
 ```
 
 Perfetto per chat, commenti degli utenti e altri flussi in tempo reale.

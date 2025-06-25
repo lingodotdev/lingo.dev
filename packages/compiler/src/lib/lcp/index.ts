@@ -162,8 +162,9 @@ export class LCP {
   }
 
   toString() {
-    return JSON.stringify(this.toJSON(), null, 2);
+    return JSON.stringify(this.toJSON(), null, 2) + "\n";
   }
+
   save() {
     const hasChanges =
       !fs.existsSync(this.filePath) ||

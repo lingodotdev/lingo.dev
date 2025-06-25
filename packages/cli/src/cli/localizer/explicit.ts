@@ -23,7 +23,11 @@ export default function createExplicitLocalizer(
 
           To fix this issue:
           1. Switch to one of the supported providers, or
-          2. Remove the ${chalk.italic("provider")} node from your i18n.json configuration to switch to ${chalk.hex(colors.green)("Lingo.dev")}
+          2. Remove the ${chalk.italic(
+            "provider",
+          )} node from your i18n.json configuration to switch to ${chalk.hex(
+            colors.green,
+          )("Lingo.dev")}
 
           ${chalk.hex(colors.blue)("Docs: https://lingo.dev/go/docs")}
         `,
@@ -96,11 +100,27 @@ function createAiSdkLocalizer(params: {
   if ((!skipAuth && !apiKey) || !params.apiKeyName) {
     throw new Error(
       dedent`
-        You're trying to use raw ${chalk.dim(params.id)} API for translation. ${params.apiKeyName ? `However, ${chalk.dim(params.apiKeyName)} environment variable is not set.` : "However, that provider is unavailable."}
+        You're trying to use raw ${chalk.dim(params.id)} API for translation. ${
+          params.apiKeyName
+            ? `However, ${chalk.dim(
+                params.apiKeyName,
+              )} environment variable is not set.`
+            : "However, that provider is unavailable."
+        }
 
         To fix this issue:
-        1. ${params.apiKeyName ? `Set ${chalk.dim(params.apiKeyName)} in your environment variables` : "Set the environment variable for your provider (if required)"}, or
-        2. Remove the ${chalk.italic("provider")} node from your i18n.json configuration to switch to ${chalk.hex(colors.green)("Lingo.dev")}
+        1. ${
+          params.apiKeyName
+            ? `Set ${chalk.dim(
+                params.apiKeyName,
+              )} in your environment variables`
+            : "Set the environment variable for your provider (if required)"
+        }, or
+        2. Remove the ${chalk.italic(
+          "provider",
+        )} node from your i18n.json configuration to switch to ${chalk.hex(
+          colors.green,
+        )("Lingo.dev")}
 
         ${chalk.hex(colors.blue)("Docs: https://lingo.dev/go/docs")}
       `,

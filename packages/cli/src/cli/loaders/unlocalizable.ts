@@ -34,7 +34,10 @@ export default function createUnlocalizableLoader(
       const result = _.omitBy(input, (_, key) => passthroughKeys.includes(key));
 
       if (returnUnlocalizedKeys) {
-        result.unlocalizable = _.omitBy(input, (_, key) => !passthroughKeys.includes(key));
+        result.unlocalizable = _.omitBy(
+          input,
+          (_, key) => !passthroughKeys.includes(key),
+        );
       }
 
       return result;

@@ -39,6 +39,7 @@ import createLocalizableMdxDocumentLoader from "./mdx2/localizable-document";
 import createMdxSectionsSplit2Loader from "./mdx2/sections-split-2";
 import createMdxLockedPatternsLoader from "./mdx2/locked-patterns";
 import createIgnoredKeysLoader from "./ignored-keys";
+import createEjsLoader from "./ejs";
 
 type BucketLoaderOptions = {
   isCacheRestore: boolean;
@@ -85,6 +86,16 @@ export default function createBucketLoader(
         createTextFileLoader(bucketPathPattern),
         createPrettierLoader({ parser: "html", bucketPathPattern }),
         createHtmlLoader(),
+        createSyncLoader(),
+        createUnlocalizableLoader(
+          options.isCacheRestore,
+          options.returnUnlocalizedKeys,
+        ),
+      );
+    case "ejs":
+      return composeLoaders(
+        createTextFileLoader(bucketPathPattern),
+        createEjsLoader(),
         createSyncLoader(),
         createUnlocalizableLoader(
           options.isCacheRestore,
