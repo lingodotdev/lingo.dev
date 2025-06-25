@@ -1,5 +1,27 @@
 # lingo.dev
 
+## 0.101.0
+
+### Minor Changes
+
+- [#958](https://github.com/lingodotdev/lingo.dev/pull/958) [`84fd214`](https://github.com/lingodotdev/lingo.dev/commit/84fd214a21766e7683c5d645fcb8c4c0162eb0b6) Thanks [@chrissiwaffler](https://github.com/chrissiwaffler)! - feat: add Mistral AI as a supported LLM provider
+
+  - Added Mistral AI provider support across the entire lingo.dev ecosystem
+  - Users can now use Mistral models for localization by setting MISTRAL_API_KEY
+  - Supports all Mistral models available through the @ai-sdk/mistral package
+  - Configuration via environment variable or user-wide config: `npx lingo.dev@latest config set llm.mistralApiKey <key>`
+
+### Patch Changes
+
+- [#962](https://github.com/lingodotdev/lingo.dev/pull/962) [`0fc6385`](https://github.com/lingodotdev/lingo.dev/commit/0fc63856c6f49ac68a220b6e2f1c4f060e7ce78e) Thanks [@mathio](https://github.com/mathio)! - format with prettier, add prettier check for PRs
+
+- [#955](https://github.com/lingodotdev/lingo.dev/pull/955) [`cac5429`](https://github.com/lingodotdev/lingo.dev/commit/cac54296d512d436dc3861441d5d1a3f1076792b) Thanks [@mathio](https://github.com/mathio)! - progressive push as chunks are processed
+
+- Updated dependencies [[`84fd214`](https://github.com/lingodotdev/lingo.dev/commit/84fd214a21766e7683c5d645fcb8c4c0162eb0b6)]:
+  - @lingo.dev/_compiler@0.5.0
+  - @lingo.dev/_spec@0.38.0
+  - @lingo.dev/_sdk@0.9.4
+
 ## 0.100.1
 
 ### Patch Changes
