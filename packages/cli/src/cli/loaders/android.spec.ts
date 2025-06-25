@@ -594,10 +594,10 @@ Line 2
     // When pushing back, apostrophes should be escaped but not double-escaped
     const pushed = await androidLoader.push("en", {
       welcome_message: "Please don't hesitate to contact us",
-      "item_count": {
+      item_count: {
         one: "- %d user's item",
-        other: "- %d user's items"
-      }
+        other: "- %d user's items",
+      },
     });
 
     expect(pushed).toContain("Please don\\'t hesitate to contact us");

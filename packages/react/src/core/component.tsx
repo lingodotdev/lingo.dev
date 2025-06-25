@@ -62,7 +62,7 @@ export const LingoComponent = React.forwardRef(
     };
 
     return createElement($as, elementProps, ...children);
-  }
+  },
 );
 
 // testValue needs to be cloned before passing to the callback for the first time only
@@ -70,14 +70,14 @@ export const LingoComponent = React.forwardRef(
 function ifNotEmpty<T>(
   callback: (nodes: ReactNode[], value: T) => ReactNode[],
   testValue: T,
-  nodes: ReactNode[]
+  nodes: ReactNode[],
 ): ReactNode[] {
   return callback(nodes, _.clone(testValue));
 }
 
 function replaceVariables(
   nodes: ReactNode[],
-  variables: Record<string, ReactNode>
+  variables: Record<string, ReactNode>,
 ): ReactNode[] {
   if (_.isEmpty(variables)) {
     return nodes;
@@ -111,7 +111,7 @@ function replaceVariables(
       return createElement(
         node.type,
         { ...props },
-        ...replaceVariables(_.castArray(props.children || []), variables)
+        ...replaceVariables(_.castArray(props.children || []), variables),
       );
     }
     return node;
@@ -132,7 +132,7 @@ function isReactElement(node: ReactNode): node is ReactElement {
 function replaceElements(
   nodes: ReactNode[],
   elements?: Array<FunctionComponent>,
-  elementIndex: { current: number } = { current: 0 }
+  elementIndex: { current: number } = { current: 0 },
 ): ReactNode[] {
   if (_.isEmpty(elements)) {
     return nodes.map((node) => {
@@ -142,7 +142,7 @@ function replaceElements(
         /<element:(\w+)>(.*?)<\/element:\1>/gs,
         (match, elementName, content) => {
           return content;
-        }
+        },
       );
     });
   }
@@ -186,7 +186,7 @@ function replaceElements(
 
 function replaceFunctions(
   nodes: ReactNode[],
-  functions: Record<string, ReactNode[]>
+  functions: Record<string, ReactNode[]>,
 ): ReactNode[] {
   if (_.isEmpty(functions)) {
     return nodes;
@@ -227,7 +227,7 @@ function replaceFunctions(
         return createElement(
           node.type,
           { ...props },
-          ...replaceFunctions(_.castArray(props.children || []), functions)
+          ...replaceFunctions(_.castArray(props.children || []), functions),
         );
       }
       return node;
@@ -237,7 +237,7 @@ function replaceFunctions(
 
 function replaceExpressions(
   nodes: ReactNode[],
-  expressions: ReactNode[]
+  expressions: ReactNode[],
 ): ReactNode[] {
   if (_.isEmpty(expressions)) {
     return nodes;
@@ -275,7 +275,7 @@ function replaceExpressions(
           return createElement(
             node.type,
             { ...props },
-            ...processWithIndex(_.castArray(props.children || []))
+            ...processWithIndex(_.castArray(props.children || [])),
           );
         }
         return node;

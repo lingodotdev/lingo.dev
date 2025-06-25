@@ -37,7 +37,8 @@ export function getSettings(explicitApiKey: string | undefined): CliSettings {
       anthropicApiKey: env.ANTHROPIC_API_KEY || systemFile.llm?.anthropicApiKey,
       groqApiKey: env.GROQ_API_KEY || systemFile.llm?.groqApiKey,
       googleApiKey: env.GOOGLE_API_KEY || systemFile.llm?.googleApiKey,
-      openrouterApiKey:env.OPENROUTER_API_KEY || systemFile.llm?.openrouterApiKey,
+      openrouterApiKey:
+        env.OPENROUTER_API_KEY || systemFile.llm?.openrouterApiKey,
     },
   };
 }

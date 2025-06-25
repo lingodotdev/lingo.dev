@@ -1,7 +1,10 @@
 import * as fs from "fs";
 import * as path from "path";
 
-export function tryReadFile(filePath: string, defaultValue: string | null = null): string | null {
+export function tryReadFile(
+  filePath: string,
+  defaultValue: string | null = null,
+): string | null {
   try {
     const content = fs.readFileSync(filePath, "utf-8");
     return content;

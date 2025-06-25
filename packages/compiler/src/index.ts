@@ -62,7 +62,9 @@ const unplugin = createUnplugin<Partial<typeof defaultParams> | undefined>(
         if (invalidLocales.length > 0) {
           console.log(dedent`
             \n
-            ⚠️  Lingo.dev Localization Compiler requires LLM model setup for the following locales: ${invalidLocales.join(", ")}.
+            ⚠️  Lingo.dev Localization Compiler requires LLM model setup for the following locales: ${invalidLocales.join(
+              ", ",
+            )}.
 
             ⭐️ Next steps:
             1. Refer to documentation for help: https://lingo.dev/compiler
@@ -295,7 +297,9 @@ function validateLLMKeyDetails(configuredProviders: string[]): void {
   if (missingProviders.length > 0) {
     console.log(dedent`
       \n
-      💡 Lingo.dev Localization Compiler is configured to use the following LLM provider(s): ${configuredProviders.join(", ")}.
+      💡 Lingo.dev Localization Compiler is configured to use the following LLM provider(s): ${configuredProviders.join(
+        ", ",
+      )}.
 
       The compiler requires API keys for these providers to work, but the following keys are missing:
     `);
@@ -304,14 +308,24 @@ function validateLLMKeyDetails(configuredProviders: string[]): void {
       const status = keyStatuses[providerId];
       if (!status) continue;
       console.log(dedent`
-          ⚠️  ${status.details.name} API key is missing. Set ${status.details.apiKeyEnvVar} environment variable.
+          ⚠️  ${status.details.name} API key is missing. Set ${
+            status.details.apiKeyEnvVar
+          } environment variable.
 
           👉 You can set the API key in one of the following ways:
-          1. User-wide: Run npx lingo.dev@latest config set ${status.details.apiKeyConfigKey || "<config-key-not-available>"} <your-api-key>
-          2. Project-wide: Add ${status.details.apiKeyEnvVar}=<your-api-key> to .env file in every project that uses Lingo.dev Localization Compiler
-          3. Session-wide: Run export ${status.details.apiKeyEnvVar}=<your-api-key> in your terminal before running the compiler to set the API key for the current session
+          1. User-wide: Run npx lingo.dev@latest config set ${
+            status.details.apiKeyConfigKey || "<config-key-not-available>"
+          } <your-api-key>
+          2. Project-wide: Add ${
+            status.details.apiKeyEnvVar
+          }=<your-api-key> to .env file in every project that uses Lingo.dev Localization Compiler
+          3. Session-wide: Run export ${
+            status.details.apiKeyEnvVar
+          }=<your-api-key> in your terminal before running the compiler to set the API key for the current session
 
-          ⭐️ If you don't yet have a ${status.details.name} API key, get one for free at ${status.details.getKeyLink}
+          ⭐️ If you don't yet have a ${
+            status.details.name
+          } API key, get one for free at ${status.details.getKeyLink}
         `);
     }
 
@@ -328,7 +342,9 @@ function validateLLMKeyDetails(configuredProviders: string[]): void {
   } else if (foundProviders.length > 0) {
     console.log(dedent`
         \n
-        🔑  LLM API keys detected for configured providers: ${foundProviders.join(", ")}.
+        🔑  LLM API keys detected for configured providers: ${foundProviders.join(
+          ", ",
+        )}.
       `);
     for (const providerId of foundProviders) {
       const status = keyStatuses[providerId];
@@ -339,7 +355,11 @@ function validateLLMKeyDetails(configuredProviders: string[]): void {
       } else if (status.foundInEnv) {
         sourceMessage = `from environment variables (${status.details.apiKeyEnvVar}).`;
       } else if (status.foundInRc) {
-        sourceMessage = `from your user-wide configuration${status.details.apiKeyConfigKey ? ` (${status.details.apiKeyConfigKey})` : ""}.`;
+        sourceMessage = `from your user-wide configuration${
+          status.details.apiKeyConfigKey
+            ? ` (${status.details.apiKeyConfigKey})`
+            : ""
+        }.`;
       }
       console.log(dedent`
           • ${status.details.name} API key loaded ${sourceMessage}

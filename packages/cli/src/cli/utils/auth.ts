@@ -1,5 +1,8 @@
 import { CLIError } from "./errors";
-import { checkCloudflareStatus, formatCloudflareStatusMessage } from "./cloudflare-status";
+import {
+  checkCloudflareStatus,
+  formatCloudflareStatusMessage,
+} from "./cloudflare-status";
 
 export type AuthenticatorParams = {
   apiUrl: string;
@@ -37,24 +40,25 @@ export function createAuthenticator(params: AuthenticatorParams) {
 
         if (res.status >= 500 && res.status < 600) {
           const originalErrorMessage = `Server error (${res.status}): ${res.statusText}. Please try again later.`;
-          
+
           const cloudflareStatus = await checkCloudflareStatus();
-          
+
           if (!cloudflareStatus) {
             throw new CLIError({
               message: originalErrorMessage,
               docUrl: "connectionFailed",
             });
           }
-          
-          if (cloudflareStatus.status.indicator !== 'none') {
-            const cloudflareMessage = formatCloudflareStatusMessage(cloudflareStatus);
+
+          if (cloudflareStatus.status.indicator !== "none") {
+            const cloudflareMessage =
+              formatCloudflareStatusMessage(cloudflareStatus);
             throw new CLIError({
               message: cloudflareMessage,
               docUrl: "connectionFailed",
             });
           }
-          
+
           throw new CLIError({
             message: originalErrorMessage,
             docUrl: "connectionFailed",

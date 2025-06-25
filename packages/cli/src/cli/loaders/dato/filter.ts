@@ -12,7 +12,10 @@ export type DatoFilterLoaderOutput = {
   };
 };
 
-export default function createDatoFilterLoader(): ILoader<DatoApiLoaderOutput, DatoFilterLoaderOutput> {
+export default function createDatoFilterLoader(): ILoader<
+  DatoApiLoaderOutput,
+  DatoFilterLoaderOutput
+> {
   return createLoader({
     async pull(locale, input) {
       const result: DatoFilterLoaderOutput = {};
@@ -35,10 +38,16 @@ export default function createDatoFilterLoader(): ILoader<DatoApiLoaderOutput, D
       for (const [modelId, modelInfo] of _.entries(result)) {
         for (const record of modelInfo.records) {
           for (const [fieldId, fieldValue] of _.entries(record)) {
-            const fieldInfo = modelInfo.fields.find((field) => field.api_key === fieldId);
+            const fieldInfo = modelInfo.fields.find(
+              (field) => field.api_key === fieldId,
+            );
             if (fieldInfo) {
               const sourceFieldValue = _.get(fieldValue, [originalLocale]);
-              const targetFieldValue = _.get(data, [modelId, record.id, fieldId]);
+              const targetFieldValue = _.get(data, [
+                modelId,
+                record.id,
+                fieldId,
+              ]);
               if (targetFieldValue) {
                 _.set(record, [fieldId, locale], targetFieldValue);
               } else {
@@ -49,7 +58,9 @@ export default function createDatoFilterLoader(): ILoader<DatoApiLoaderOutput, D
                 .keys()
                 .reject((loc) => loc === locale || loc === originalLocale)
                 .filter((loc) => _.isEmpty(_.get(fieldValue, [loc])))
-                .forEach((loc) => _.set(record, [fieldId, loc], sourceFieldValue))
+                .forEach((loc) =>
+                  _.set(record, [fieldId, loc], sourceFieldValue),
+                )
                 .value();
             }
           }

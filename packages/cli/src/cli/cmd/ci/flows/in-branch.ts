@@ -34,7 +34,9 @@ export class InBranchFlow extends IntegrationFlow {
       execSync(`git add .`, { stdio: "inherit" });
       execSync(`git status --porcelain`, { stdio: "inherit" });
       execSync(
-        `git commit -m ${escapeShellArg(this.platformKit.config.commitMessage)} --no-verify`,
+        `git commit -m ${escapeShellArg(
+          this.platformKit.config.commitMessage,
+        )} --no-verify`,
         {
           stdio: "inherit",
         },

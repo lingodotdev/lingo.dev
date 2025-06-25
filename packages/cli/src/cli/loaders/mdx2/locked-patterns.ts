@@ -10,7 +10,7 @@ import { I18nConfig } from "@lingo.dev/_spec";
  */
 function extractLockedPatterns(
   content: string,
-  patterns: string[] = []
+  patterns: string[] = [],
 ): {
   content: string;
   lockedPlaceholders: Record<string, string>;
@@ -26,12 +26,12 @@ function extractLockedPatterns(
     try {
       const pattern = new RegExp(patternStr, "gm");
       const matches = Array.from(finalContent.matchAll(pattern));
-      
+
       for (const match of matches) {
         const matchedText = match[0];
         const matchHash = md5(matchedText);
         const placeholder = `---LOCKED-PATTERN-${matchHash}---`;
-        
+
         lockedPlaceholders[placeholder] = matchedText;
         finalContent = finalContent.replace(matchedText, placeholder);
       }
@@ -46,33 +46,44 @@ function extractLockedPatterns(
   };
 }
 
-export default function createMdxLockedPatternsLoader(defaultPatterns?: string[]): ILoader<
-  string,
-  string
-> {
+export default function createMdxLockedPatternsLoader(
+  defaultPatterns?: string[],
+): ILoader<string, string> {
   return createLoader({
     async pull(locale, input, initCtx, originalLocale) {
       const patterns = defaultPatterns || [];
-      
+
       const { content } = extractLockedPatterns(input || "", patterns);
-      
+
       return content;
     },
 
-    async push(locale, data, originalInput, originalLocale, pullInput, pullOutput) {
+    async push(
+      locale,
+      data,
+      originalInput,
+      originalLocale,
+      pullInput,
+      pullOutput,
+    ) {
       const patterns = defaultPatterns || [];
-      
+
       if (!pullInput) {
         return data;
       }
-      
-      const { lockedPlaceholders } = extractLockedPatterns(pullInput as string, patterns);
-      
+
+      const { lockedPlaceholders } = extractLockedPatterns(
+        pullInput as string,
+        patterns,
+      );
+
       let result = data;
-      for (const [placeholder, original] of Object.entries(lockedPlaceholders)) {
+      for (const [placeholder, original] of Object.entries(
+        lockedPlaceholders,
+      )) {
         result = result.replaceAll(placeholder, original);
       }
-      
+
       return result;
     },
   });

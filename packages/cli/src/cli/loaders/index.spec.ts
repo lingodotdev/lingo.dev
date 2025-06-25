@@ -338,16 +338,25 @@ describe("bucket loaders", () => {
         "body/2/3/0": "texto en negrita y ",
         "body/2/3/1/0": "texto en cursiva",
       };
-      const expectedOutput = dedent`
-<html lang="es"><head>
-   <title>Mi Página</title>
-   <meta name="description" content="Descripción de la página">
- </head>
- <body>texto simple sin etiqueta html<h1>¡Hola, mundo!</h1>
-   <p>Este es un párrafo con un <a href="https://example.com">enlace</a> y <b>texto en negrita y <i>texto en cursiva</i></b>
-   </p>
-
-</body></html>
+      const expectedOutput = `<html lang="es">
+  <head>
+    <title>Mi Página</title>
+    <meta name="description" content="Descripción de la página" />
+  </head>
+  <body>
+    texto simple sin etiqueta html
+    <h1>¡Hola, mundo!</h1>
+    <p>
+      Este es un párrafo con un
+      <a href="https://example.com">enlace</a>
+      y
+      <b>
+        texto en negrita y
+        <i>texto en cursiva</i>
+      </b>
+    </p>
+  </body>
+</html>
       `.trim();
 
       mockFileOperations(input);
@@ -447,10 +456,7 @@ describe("bucket loaders", () => {
       const payload = { "messages/0": "foo", "messages/1": "bar" };
       const expectedOutput = dedent`
         {
-          "messages": [
-            "foo",
-            "bar"
-          ]
+          "messages": ["foo", "bar"]
         }
       `.trim();
 
@@ -922,7 +928,7 @@ Another paragraph with **bold** and *italic* text.`;
         "md-section-0": "# Heading 1",
         "md-section-1": "This is a paragraph.",
         "md-section-2": "## Heading 2",
-        "md-section-3": "Another paragraph with **bold** and *italic* text.",
+        "md-section-3": "Another paragraph with **bold** and _italic_ text.",
       };
 
       mockFileOperations(input);
@@ -2721,16 +2727,16 @@ ${script}`;
 </html>`;
 
       const expectedOutput = {
-        "text_0": "Welcome Page",
-        "text_1": "Hello",
-        "text_2": "!",
-        "text_3": "Welcome back to our application.",
-        "text_4": "You have",
-        "text_5": "new notifications.",
-        "text_6": "Please log in to continue.",
-        "text_7": "Item",
-        "text_8": ":",
-        "text_9": "© 2024 My Company. All rights reserved."
+        text_0: "Welcome Page",
+        text_1: "Hello",
+        text_2: "!",
+        text_3: "Welcome back to our application.",
+        text_4: "You have",
+        text_5: "new notifications.",
+        text_6: "Please log in to continue.",
+        text_7: "Item",
+        text_8: ":",
+        text_9: "© 2024 My Company. All rights reserved.",
       };
 
       mockFileOperations(input);
@@ -2761,11 +2767,11 @@ ${script}`;
 </html>`;
 
       const payload = {
-        "text_0": "Página de Bienvenida",
-        "text_1": "Hola",
-        "text_2": "!",
-        "text_3": "Bienvenido a nuestra aplicación.",
-        "text_4": "© 2024 Mi Empresa. Todos los derechos reservados."
+        text_0: "Página de Bienvenida",
+        text_1: "Hola",
+        text_2: "!",
+        text_3: "Bienvenido a nuestra aplicación.",
+        text_4: "© 2024 Mi Empresa. Todos los derechos reservados.",
       };
 
       const expectedOutput = `<!DOCTYPE html>

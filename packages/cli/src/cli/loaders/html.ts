@@ -11,7 +11,10 @@ function normalizeTextContent(text: string, isStandalone: boolean): string {
   return trimmed;
 }
 
-export default function createHtmlLoader(): ILoader<string, Record<string, any>> {
+export default function createHtmlLoader(): ILoader<
+  string,
+  Record<string, any>
+> {
   const LOCALIZABLE_ATTRIBUTES: Record<string, string[]> = {
     meta: ["content"],
     img: ["alt"],
@@ -42,7 +45,8 @@ export default function createHtmlLoader(): ILoader<string, Record<string, any>>
 
           // Get index among significant siblings (non-empty text nodes and elements)
           const siblings = Array.from(parent.childNodes).filter(
-            (n) => n.nodeType === 1 || (n.nodeType === 3 && n.textContent?.trim()),
+            (n) =>
+              n.nodeType === 1 || (n.nodeType === 3 && n.textContent?.trim()),
           );
           const index = siblings.indexOf(current);
           if (index !== -1) {
@@ -51,7 +55,9 @@ export default function createHtmlLoader(): ILoader<string, Record<string, any>>
           current = parent;
         }
 
-        const basePath = rootParent ? `${rootParent}/${indices.join("/")}` : indices.join("/");
+        const basePath = rootParent
+          ? `${rootParent}/${indices.join("/")}`
+          : indices.join("/");
         return attribute ? `${basePath}#${attribute}` : basePath;
       };
 
@@ -88,24 +94,36 @@ export default function createHtmlLoader(): ILoader<string, Record<string, any>>
 
           // Process all child nodes
           Array.from(element.childNodes)
-            .filter((n) => n.nodeType === 1 || (n.nodeType === 3 && n.textContent?.trim()))
+            .filter(
+              (n) =>
+                n.nodeType === 1 || (n.nodeType === 3 && n.textContent?.trim()),
+            )
             .forEach(processNode);
         }
       };
 
       // Process head and body
       Array.from(document.head.childNodes)
-        .filter((n) => n.nodeType === 1 || (n.nodeType === 3 && n.textContent?.trim()))
+        .filter(
+          (n) =>
+            n.nodeType === 1 || (n.nodeType === 3 && n.textContent?.trim()),
+        )
         .forEach(processNode);
       Array.from(document.body.childNodes)
-        .filter((n) => n.nodeType === 1 || (n.nodeType === 3 && n.textContent?.trim()))
+        .filter(
+          (n) =>
+            n.nodeType === 1 || (n.nodeType === 3 && n.textContent?.trim()),
+        )
         .forEach(processNode);
 
       return result;
     },
 
     async push(locale, data, originalInput) {
-      const dom = new JSDOM(originalInput ?? "<!DOCTYPE html><html><head></head><body></body></html>");
+      const dom = new JSDOM(
+        originalInput ??
+          "<!DOCTYPE html><html><head></head><body></body></html>",
+      );
       const document = dom.window.document;
 
       // Set the HTML lang attribute to the current locale
@@ -124,14 +142,16 @@ export default function createHtmlLoader(): ILoader<string, Record<string, any>>
         const [nodePath, attribute] = path.split("#");
         const [rootTag, ...indices] = nodePath.split("/");
 
-        let parent: Element = rootTag === "head" ? document.head : document.body;
+        let parent: Element =
+          rootTag === "head" ? document.head : document.body;
         let current: Node | null = parent;
 
         // Navigate to the target node
         for (let i = 0; i < indices.length; i++) {
           const index = parseInt(indices[i]);
           const siblings = Array.from(parent.childNodes).filter(
-            (n) => n.nodeType === 1 || (n.nodeType === 3 && n.textContent?.trim()),
+            (n) =>
+              n.nodeType === 1 || (n.nodeType === 3 && n.textContent?.trim()),
           );
 
           if (index >= siblings.length) {

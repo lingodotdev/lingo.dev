@@ -10,14 +10,17 @@ export default function createXcodeXcstringsLoader(
       const resultData: Record<string, any> = {};
       const isSourceLanguage = locale === defaultLocale;
 
-      for (const [translationKey, _translationEntity] of Object.entries((input as any).strings)) {
+      for (const [translationKey, _translationEntity] of Object.entries(
+        (input as any).strings,
+      )) {
         const rootTranslationEntity = _translationEntity as any;
 
         if (rootTranslationEntity.shouldTranslate === false) {
           continue;
         }
 
-        const langTranslationEntity = rootTranslationEntity?.localizations?.[locale];
+        const langTranslationEntity =
+          rootTranslationEntity?.localizations?.[locale];
 
         if (langTranslationEntity) {
           if ("stringUnit" in langTranslationEntity) {
@@ -28,7 +31,8 @@ export default function createXcodeXcstringsLoader(
               const pluralForms = langTranslationEntity.variations.plural;
               for (const form in pluralForms) {
                 if (pluralForms[form]?.stringUnit?.value) {
-                  resultData[translationKey][form] = pluralForms[form].stringUnit.value;
+                  resultData[translationKey][form] =
+                    pluralForms[form].stringUnit.value;
                 }
               }
             }
@@ -44,7 +48,10 @@ export default function createXcodeXcstringsLoader(
       const langDataToMerge: any = {};
       langDataToMerge.strings = {};
 
-      const input = _.cloneDeep(originalInput) || { sourceLanguage: locale, strings: {} };
+      const input = _.cloneDeep(originalInput) || {
+        sourceLanguage: locale,
+        strings: {},
+      };
 
       for (const [key, value] of Object.entries(payload)) {
         if (value === null || value === undefined) {

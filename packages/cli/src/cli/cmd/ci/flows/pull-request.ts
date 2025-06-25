@@ -56,7 +56,9 @@ export class PullRequestFlow extends InBranchFlow {
     const pullRequestNumber = await this.ensureFreshPr(this.i18nBranchName);
     // await this.createLabelIfNotExists(pullRequestNumber, 'lingo.dev/i18n', false);
     this.ora.succeed(
-      `Pull request ready: ${this.platformKit.buildPullRequestUrl(pullRequestNumber)}`,
+      `Pull request ready: ${this.platformKit.buildPullRequestUrl(
+        pullRequestNumber,
+      )}`,
     );
   }
 

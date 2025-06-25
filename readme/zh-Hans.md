@@ -62,12 +62,12 @@ export default lingoCompiler.next({
 
 ### 此仓库包含什么内容？
 
-| 工具         | 简介                                                                          | 文档                                    |
-| ------------ | ------------------------------------------------------------------------------ | --------------------------------------- |
-| **Compiler** | 构建时的 React 本地化                                                         | [/compiler](https://lingo.dev/compiler) |
-| **CLI**      | 一键本地化网页和移动应用、JSON、YAML、Markdown 等                              | [/cli](https://lingo.dev/cli)           |
-| **CI/CD**    | 每次推送时自动提交翻译 + 根据需要创建拉取请求                                  | [/ci](https://lingo.dev/ci)             |
-| **SDK**      | 用户生成内容的实时翻译                                                        | [/sdk](https://lingo.dev/sdk)           |
+| 工具         | 简介                                              | 文档                                    |
+| ------------ | ------------------------------------------------- | --------------------------------------- |
+| **Compiler** | 构建时的 React 本地化                             | [/compiler](https://lingo.dev/compiler) |
+| **CLI**      | 一键本地化网页和移动应用、JSON、YAML、Markdown 等 | [/cli](https://lingo.dev/cli)           |
+| **CI/CD**    | 每次推送时自动提交翻译 + 根据需要创建拉取请求     | [/ci](https://lingo.dev/ci)             |
+| **SDK**      | 用户生成内容的实时翻译                            | [/sdk](https://lingo.dev/sdk)           |
 
 以下是每个工具的快速概览 👇
 
@@ -134,7 +134,6 @@ const translated = await lingoDotDev.localizeObject(content, {
   targetLocale: "es",
 });
 // Returns: { greeting: "Hola", farewell: "Adiós", message: "Bienvenido a nuestra plataforma" }
-
 ```
 
 非常适合聊天、用户评论和其他实时流程。

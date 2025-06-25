@@ -62,12 +62,12 @@ Führen Sie `next build` aus und beobachten Sie, wie spanische und französische
 
 ### Was beinhaltet dieses Repository?
 
-| Tool         | Kurzfassung                                                                   | Dokumentation                           |
-| ------------ | ----------------------------------------------------------------------------- | --------------------------------------- |
-| **Compiler** | Build-time React-Lokalisierung                                               | [/compiler](https://lingo.dev/compiler) |
-| **CLI**      | Ein-Befehl-Lokalisierung für Web- und Mobile-Apps, JSON, YAML, Markdown + mehr | [/cli](https://lingo.dev/cli)           |
+| Tool         | Kurzfassung                                                                            | Dokumentation                           |
+| ------------ | -------------------------------------------------------------------------------------- | --------------------------------------- |
+| **Compiler** | Build-time React-Lokalisierung                                                         | [/compiler](https://lingo.dev/compiler) |
+| **CLI**      | Ein-Befehl-Lokalisierung für Web- und Mobile-Apps, JSON, YAML, Markdown + mehr         | [/cli](https://lingo.dev/cli)           |
 | **CI/CD**    | Auto-Commit von Übersetzungen bei jedem Push + Erstellung von Pull Requests bei Bedarf | [/ci](https://lingo.dev/ci)             |
-| **SDK**      | Echtzeit-Übersetzung für nutzergenerierte Inhalte                           | [/sdk](https://lingo.dev/sdk)           |
+| **SDK**      | Echtzeit-Übersetzung für nutzergenerierte Inhalte                                      | [/sdk](https://lingo.dev/sdk)           |
 
 Hier sind die wichtigsten Punkte für jedes Tool 👇
 
@@ -134,7 +134,6 @@ const translated = await lingoDotDev.localizeObject(content, {
   targetLocale: "es",
 });
 // Returns: { greeting: "Hola", farewell: "Adiós", message: "Bienvenido a nuestra plataforma" }
-
 ```
 
 Perfekt für Chat, Benutzerkommentare und andere Echtzeit-Workflows.

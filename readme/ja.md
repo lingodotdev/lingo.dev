@@ -33,7 +33,7 @@
 
 ## コンパイラの紹介 🆕
 
-**Lingo.dev コンパイラ**は、既存のReactコンポーネントに変更を加えることなく、ビルド時にReactアプリを多言語対応にするための無料のオープンソースコンパイラミドルウェアです。
+**Lingo.dev コンパイラ**は、既存の React コンポーネントに変更を加えることなく、ビルド時に React アプリを多言語対応にするための無料のオープンソースコンパイラミドルウェアです。
 
 一度インストール:
 
@@ -56,18 +56,18 @@ export default lingoCompiler.next({
 
 `next build` を実行すると、スペイン語とフランス語のバンドルが自動的に生成されます ✨
 
-[ドキュメントを読む →](https://lingo.dev/compiler) で完全ガイドを確認し、[Discordに参加](https://lingo.dev/go/discord) してセットアップのサポートを受けましょう。
+[ドキュメントを読む →](https://lingo.dev/compiler) で完全ガイドを確認し、[Discord に参加](https://lingo.dev/go/discord) してセットアップのサポートを受けましょう。
 
 ---
 
 ### このリポジトリには何が含まれていますか？
 
-| ツール       | 要約                                                                          | ドキュメント                                |
-| ------------ | ------------------------------------------------------------------------------ | --------------------------------------- |
-| **Compiler** | ビルド時のReactローカライゼーション                                                | [/compiler](https://lingo.dev/compiler) |
+| ツール       | 要約                                                                                   | ドキュメント                            |
+| ------------ | -------------------------------------------------------------------------------------- | --------------------------------------- |
+| **Compiler** | ビルド時の React ローカライゼーション                                                  | [/compiler](https://lingo.dev/compiler) |
 | **CLI**      | ウェブ・モバイルアプリ、JSON、YAML、マークダウンなどのワンコマンドローカライゼーション | [/cli](https://lingo.dev/cli)           |
-| **CI/CD**    | プッシュごとに翻訳を自動コミット + 必要に応じてプルリクエストを作成               | [/ci](https://lingo.dev/ci)             |
-| **SDK**      | ユーザー生成コンテンツのリアルタイム翻訳                                        | [/sdk](https://lingo.dev/sdk)           |
+| **CI/CD**    | プッシュごとに翻訳を自動コミット + 必要に応じてプルリクエストを作成                    | [/ci](https://lingo.dev/ci)             |
+| **SDK**      | ユーザー生成コンテンツのリアルタイム翻訳                                               | [/sdk](https://lingo.dev/sdk)           |
 
 以下は各ツールの概要です 👇
 
@@ -134,7 +134,6 @@ const translated = await lingoDotDev.localizeObject(content, {
   targetLocale: "es",
 });
 // Returns: { greeting: "Hola", farewell: "Adiós", message: "Bienvenido a nuestra plataforma" }
-
 ```
 
 チャット、ユーザーコメント、その他のリアルタイムフローに最適です。
@@ -148,12 +147,12 @@ const translated = await lingoDotDev.localizeObject(content, {
 私たちはコミュニティ主導であり、貢献を歓迎します！
 
 - アイデアがありますか？ [イシューを開く](https://github.com/lingodotdev/lingo.dev/issues)
-- 何かを修正したいですか？ [PRを送信](https://github.com/lingodotdev/lingo.dev/pulls)
-- サポートが必要ですか？ [Discordに参加](https://lingo.dev/go/discord)
+- 何かを修正したいですか？ [PR を送信](https://github.com/lingodotdev/lingo.dev/pulls)
+- サポートが必要ですか？ [Discord に参加](https://lingo.dev/go/discord)
 
 ## ⭐ スター履歴
 
-私たちの取り組みが気に入ったら、⭐をつけて3,000スター達成を手伝ってください！🌟
+私たちの取り組みが気に入ったら、⭐ をつけて 3,000 スター達成を手伝ってください！🌟
 
 [
 
@@ -161,8 +160,8 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 ](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
 
-## 🌐 他言語のREADME
+## 🌐 他言語の README
 
 [English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
 
-あなたの言語が見つかりませんか？[`i18n.json`](./i18n.json)に追加してPRを開いてください！
+あなたの言語が見つかりませんか？[`i18n.json`](./i18n.json)に追加して PR を開いてください！

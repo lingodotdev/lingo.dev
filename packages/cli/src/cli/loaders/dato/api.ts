@@ -65,10 +65,17 @@ export default function createDatoApiLoader(
 
           const fieldInfos = await getFieldDetails(dato, fields);
           const fieldChoices = createFieldChoices(fieldInfos);
-          const selectedFields = await promptFieldSelection(modelName, fieldChoices);
+          const selectedFields = await promptFieldSelection(
+            modelName,
+            fieldChoices,
+          );
 
           for (const fieldInfo of fieldInfos) {
-            const isLocalized = await updateFieldLocalization(dato, fieldInfo, selectedFields.includes(fieldInfo.id));
+            const isLocalized = await updateFieldLocalization(
+              dato,
+              fieldInfo,
+              selectedFields.includes(fieldInfo.id),
+            );
             if (isLocalized) {
               result.models[modelId].fields.push(fieldInfo);
               updatedConfig.models[modelId].fields = _.uniq([
@@ -79,10 +86,19 @@ export default function createDatoApiLoader(
           }
 
           const records = await dato.findRecordsForModel(modelId);
-          const recordChoices = createRecordChoices(records, config.models[modelId]?.records || [], project);
-          const selectedRecords = await promptRecordSelection(modelName, recordChoices);
+          const recordChoices = createRecordChoices(
+            records,
+            config.models[modelId]?.records || [],
+            project,
+          );
+          const selectedRecords = await promptRecordSelection(
+            modelName,
+            recordChoices,
+          );
 
-          result.models[modelId].records = records.filter((record) => selectedRecords.includes(record.id));
+          result.models[modelId].records = records.filter((record) =>
+            selectedRecords.includes(record.id),
+          );
           updatedConfig.models[modelId].records = selectedRecords;
         }
       }
@@ -112,7 +128,11 @@ export default function createDatoApiLoader(
       for (const modelId of _.keys(data)) {
         for (let i = 0; i < data[modelId].records.length; i++) {
           const record = data[modelId].records[i];
-          console.log(`Updating record ${i + 1}/${data[modelId].records.length} for model ${modelId}...`);
+          console.log(
+            `Updating record ${i + 1}/${
+              data[modelId].records.length
+            } for model ${modelId}...`,
+          );
           await dato.updateRecord(record.id, record);
         }
       }
@@ -128,7 +148,10 @@ export async function getModelFields(dato: any, modelId: string) {
   };
 }
 
-export async function getFieldDetails(dato: DatoClient, fields: SimpleSchemaTypes.Field[]) {
+export async function getFieldDetails(
+  dato: DatoClient,
+  fields: SimpleSchemaTypes.Field[],
+) {
   return Promise.all(fields.map((field) => dato.findField(field.id)));
 }
 
@@ -159,7 +182,11 @@ export async function updateFieldLocalization(
   shouldBeLocalized: boolean,
 ) {
   if (shouldBeLocalized !== fieldInfo.localized) {
-    console.log(`${shouldBeLocalized ? "Enabling" : "Disabling"} localization for ${fieldInfo.label}...`);
+    console.log(
+      `${shouldBeLocalized ? "Enabling" : "Disabling"} localization for ${
+        fieldInfo.label
+      }...`,
+    );
     await dato.updateField(fieldInfo.id, { localized: shouldBeLocalized });
   }
   return shouldBeLocalized;

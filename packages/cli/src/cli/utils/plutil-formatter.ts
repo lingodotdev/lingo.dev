@@ -1,4 +1,7 @@
-export function formatPlutilStyle(jsonData: any, existingJson?: string): string {
+export function formatPlutilStyle(
+  jsonData: any,
+  existingJson?: string,
+): string {
   // Detect indentation from existing JSON if provided
   const indent = existingJson ? detectIndentation(existingJson) : "  ";
 
@@ -12,7 +15,9 @@ export function formatPlutilStyle(jsonData: any, existingJson?: string): string 
 
     if (Array.isArray(data)) {
       if (data.length === 0) return "[]";
-      const items = data.map((item) => `${nextIndent}${format(item, level + 1)}`);
+      const items = data.map(
+        (item) => `${nextIndent}${format(item, level + 1)}`,
+      );
       return `[\n${items.join(",\n")}\n${currentIndent}]`;
     }
 
@@ -34,7 +39,10 @@ export function formatPlutilStyle(jsonData: any, existingJson?: string): string 
 
     const items = sortedKeys.map((key) => {
       const value = data[key];
-      return `${nextIndent}${JSON.stringify(key)} : ${format(value, level + 1)}`;
+      return `${nextIndent}${JSON.stringify(key)} : ${format(
+        value,
+        level + 1,
+      )}`;
     });
 
     return `{\n${items.join(",\n")}\n${currentIndent}}`;

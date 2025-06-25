@@ -71,10 +71,14 @@ export default async function setup(input: CmdRunContext) {
           const authStatus = await ctx.localizer!.checkAuth();
           if (!authStatus.authenticated) {
             throw new Error(
-              `Failed to authenticate with ${chalk.hex(colors.yellow)(ctx.localizer!.id)} provider. Please check your API key and try again.`,
+              `Failed to authenticate with ${chalk.hex(colors.yellow)(
+                ctx.localizer!.id,
+              )} provider. Please check your API key and try again.`,
             );
           }
-          task.title = `Authenticated as ${chalk.hex(colors.yellow)(authStatus.username)}`;
+          task.title = `Authenticated as ${chalk.hex(colors.yellow)(
+            authStatus.username,
+          )}`;
         },
       },
       {

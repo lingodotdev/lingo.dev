@@ -53,7 +53,11 @@ describe("createDeltaProcessor", () => {
       const targetData = { key1: "value1" };
       const checksums = { key1: "checksum1" };
 
-      const result = await mockProcessor.calculateDelta({ sourceData, targetData, checksums });
+      const result = await mockProcessor.calculateDelta({
+        sourceData,
+        targetData,
+        checksums,
+      });
 
       expect(result.added).toEqual(["key2"]);
       expect(result.hasChanges).toBe(true);
@@ -64,7 +68,11 @@ describe("createDeltaProcessor", () => {
       const targetData = { key1: "value1", key2: "value2" };
       const checksums = { key1: "checksum1", key2: "checksum2" };
 
-      const result = await mockProcessor.calculateDelta({ sourceData, targetData, checksums });
+      const result = await mockProcessor.calculateDelta({
+        sourceData,
+        targetData,
+        checksums,
+      });
 
       expect(result.removed).toEqual(["key2"]);
       expect(result.hasChanges).toBe(true);
@@ -75,7 +83,11 @@ describe("createDeltaProcessor", () => {
       const targetData = { key1: "value1" };
       const checksums = { key1: "old-checksum" }; // Different from MD5(new-value1)
 
-      const result = await mockProcessor.calculateDelta({ sourceData, targetData, checksums });
+      const result = await mockProcessor.calculateDelta({
+        sourceData,
+        targetData,
+        checksums,
+      });
 
       expect(result.updated).toContain("key1");
       expect(result.hasChanges).toBe(true);
@@ -83,13 +95,19 @@ describe("createDeltaProcessor", () => {
 
     it("should correctly identify renamed keys", async () => {
       // Mock to simulate a renamed key (same hash but different key name)
-      (MD5 as any).mockImplementation((value) => (value === "value1" ? "same-hash" : "other-hash"));
+      (MD5 as any).mockImplementation((value) =>
+        value === "value1" ? "same-hash" : "other-hash",
+      );
 
       const sourceData = { newKey: "value1" };
       const targetData = { oldKey: "something" };
       const checksums = { oldKey: "same-hash" };
 
-      const result = await mockProcessor.calculateDelta({ sourceData, targetData, checksums });
+      const result = await mockProcessor.calculateDelta({
+        sourceData,
+        targetData,
+        checksums,
+      });
 
       expect(result.renamed).toEqual([["oldKey", "newKey"]]);
       expect(result.added).toEqual([]);
@@ -105,7 +123,11 @@ describe("createDeltaProcessor", () => {
       (MD5 as any).mockImplementation((value) => "matching-hash");
       const checksums = { key1: "matching-hash" };
 
-      const result = await mockProcessor.calculateDelta({ sourceData, targetData, checksums });
+      const result = await mockProcessor.calculateDelta({
+        sourceData,
+        targetData,
+        checksums,
+      });
 
       expect(result.added).toEqual([]);
       expect(result.removed).toEqual([]);
@@ -157,7 +179,10 @@ describe("createDeltaProcessor", () => {
 
       await mockProcessor.saveLock(lockData);
 
-      expect(writeFile).toHaveBeenCalledWith("/mocked/path/i18n.lock", expect.any(String));
+      expect(writeFile).toHaveBeenCalledWith(
+        "/mocked/path/i18n.lock",
+        expect.any(String),
+      );
 
       // Verify the YAML conversion is correct
       const yamlArg = (writeFile as any).mock.calls[0][1];
@@ -202,7 +227,9 @@ describe("createDeltaProcessor", () => {
         checksums: {},
       };
       vi.spyOn(mockProcessor, "loadLock").mockResolvedValue(mockLockData);
-      const saveLockSpy = vi.spyOn(mockProcessor, "saveLock").mockResolvedValue(void 0);
+      const saveLockSpy = vi
+        .spyOn(mockProcessor, "saveLock")
+        .mockResolvedValue(void 0);
 
       await mockProcessor.saveChecksums(checksums);
 

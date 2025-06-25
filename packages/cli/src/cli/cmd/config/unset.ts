@@ -20,7 +20,9 @@ export default new Command()
       console.error(
         dedent`
           ${chalk.red("✖")} Unknown configuration key: ${chalk.bold(key)}
-          Run ${chalk.dim("lingo.dev config unset --help")} to see available keys.
+          Run ${chalk.dim(
+            "lingo.dev config unset --help",
+          )} to see available keys.
         `,
       );
       process.exitCode = 1;
