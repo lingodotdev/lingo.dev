@@ -20,6 +20,7 @@
     "@types/babel__traverse": "^7.20.7",
     "commitlint": "^19.7.1",
     "husky": "^9.1.7",
+    "prettier": "^3.4.2",
     "turbo": "^2.5.0"
   },
   "dependencies": {
