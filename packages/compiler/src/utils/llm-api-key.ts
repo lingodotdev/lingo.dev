@@ -70,3 +70,15 @@ export function getOpenRouterKeyFromRc() {
 export function getOpenRouterKeyFromEnv() {
   return getKeyFromEnv("OPENROUTER_API_KEY");
 }
+
+export function getMistralKey() {
+  return getMistralKeyFromEnv() || getMistralKeyFromRc();
+}
+
+export function getMistralKeyFromRc() {
+  return getKeyFromRc("llm.mistralApiKey");
+}
+
+export function getMistralKeyFromEnv() {
+  return getKeyFromEnv("MISTRAL_API_KEY");
+}

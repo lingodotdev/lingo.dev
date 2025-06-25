@@ -2,6 +2,7 @@ import { createAnthropic } from "@ai-sdk/anthropic";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { createOpenAI } from "@ai-sdk/openai";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
+import { createMistral } from "@ai-sdk/mistral";
 import { I18nConfig } from "@lingo.dev/_spec";
 import chalk from "chalk";
 import dedent from "dedent";
@@ -72,6 +73,15 @@ export default function createExplicitLocalizer(
         id: provider.id,
         prompt: provider.prompt,
         skipAuth: true,
+      });
+    case "mistral":
+      return createAiSdkLocalizer({
+        factory: (params) =>
+          createMistral(params).languageModel(provider.model),
+        id: provider.id,
+        prompt: provider.prompt,
+        apiKeyName: "MISTRAL_API_KEY",
+        baseUrl: provider.baseUrl,
       });
   }
 }

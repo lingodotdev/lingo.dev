@@ -2,6 +2,7 @@ import { createGroq } from "@ai-sdk/groq";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { createOllama } from "ollama-ai-provider";
+import { createMistral } from "@ai-sdk/mistral";
 import { generateText } from "ai";
 import { LingoDotDevEngine } from "@lingo.dev/_sdk";
 import { DictionarySchema } from "../schema";
@@ -17,6 +18,8 @@ import {
   getGoogleKeyFromEnv,
   getOpenRouterKey,
   getOpenRouterKeyFromEnv,
+  getMistralKey,
+  getMistralKeyFromEnv,
   getLingoDotDevKeyFromEnv,
   getLingoDotDevKey,
 } from "../../../utils/llm-api-key";
@@ -353,9 +356,29 @@ export class LCPAPI {
         return createOllama()(modelId);
       }
 
+      case "mistral": {
+        // Specific check for CI/CD or Docker missing Mistral key
+        if (isRunningInCIOrDocker()) {
+          const mistralFromEnv = getMistralKeyFromEnv();
+          if (!mistralFromEnv) {
+            this._failMissingLLMKeyCi(providerId);
+          }
+        }
+        const mistralKey = getMistralKey();
+        if (!mistralKey) {
+          throw new Error(
+            "⚠️  Mistral API key not found. Please set MISTRAL_API_KEY environment variable or configure it user-wide.",
+          );
+        }
+        console.log(
+          `Creating Mistral client for ${targetLocale} using model ${modelId}`,
+        );
+        return createMistral({ apiKey: mistralKey })(modelId);
+      }
+
       default: {
         throw new Error(
-          `⚠️  Provider "${providerId}" for locale "${targetLocale}" is not supported. Only "groq" and "google" providers are supported at the moment.`,
+          `⚠️  Provider "${providerId}" for locale "${targetLocale}" is not supported. Only "groq", "google", "openrouter", "ollama", and "mistral" providers are supported at the moment.`,
         );
       }
     }

@@ -18,9 +18,10 @@ Here's how to get the project running locally:
 - **Node.js**: Make sure you have Node.js version 18 or higher installed.
 - **pnpm**: You can install using this command `npm install -g pnpm` or by following [this guide](https://pnpm.io/installation)
 - **AI API Key**:
-  Currently, Groq and Google are supported.
+  Currently, Groq, Google, and Mistral are supported.
   - **GROQ API Key**: You can get one by signing up at [Groq](https://console.groq.com/)
   - **GOOGLE API Key**: You can get one in the [Google AI Studio](https://aistudio.google.com/apikey)
+  - **MISTRAL API Key**: You can get one by signing up at [Mistral AI](https://console.mistral.ai)
 
 ### Setup
 
@@ -36,7 +37,7 @@ Next, configure an AI API key. You can configure a key in two different ways:
 
 **Option A: User-wide (Recommended for development):**
 
-Run one of the following commands that corresponds with the AI provider you want to use in a terminal window. Replace `<your-api-key>` with your actual API key. You can configure Groq or Google.
+Run one of the following commands that corresponds with the AI provider you want to use in a terminal window. Replace `<your-api-key>` with your actual API key. You can configure Groq, Google, or Mistral.
 
 Groq:
 
@@ -48,6 +49,12 @@ Google:
 
 ```bash
 npx lingo.dev@latest config set llm.googleApiKey <your-api-key>
+```
+
+Mistral:
+
+```bash
+npx lingo.dev@latest config set llm.mistralApiKey <your-api-key>
 ```
 
 This will store the key in your system's user configuration, allowing you to build the project without needing to set it up in each demo directory.
@@ -73,9 +80,17 @@ echo "GOOGLE_API_KEY=<your-api-key>" > demo/next-app/.env
 echo "GOOGLE_API_KEY=<your-api-key>" > demo/vite-project/.env
 ```
 
+Mistral:
+
+```bash
+echo "MISTRAL_API_KEY=<your-api-key>" > demo/react-router-app/.env
+echo "MISTRAL_API_KEY=<your-api-key>" > demo/next-app/.env
+echo "MISTRAL_API_KEY=<your-api-key>" > demo/vite-project/.env
+```
+
 This will create `.env` files in each demo directory with your AI API key set as an environment variable.
 
-_Note:_ When loading LLM API keys (including Groq and Google), the Lingo.dev Compiler checks the following sources in order of priority:
+_Note:_ When loading LLM API keys (including Groq, Google, and Mistral), the Lingo.dev Compiler checks the following sources in order of priority:
 
 1. Environment variables (via `process.env`)
 2. Environment files (`.env`, `.env.local`, `.env.development`)
@@ -132,7 +147,7 @@ Want to add support for a new LLM provider to Lingo.dev? Here's a checklist to h
    - Update documentation and this contributing guide as needed.
 
 **Tip:**
-Look at how existing providers like "groq" and "google" are implemented for reference. Consistency helps us maintain quality and predictability!
+Look at how existing providers like "groq", "google", and "mistral" are implemented for reference. Consistency helps us maintain quality and predictability!
 
 ## Issues
 
