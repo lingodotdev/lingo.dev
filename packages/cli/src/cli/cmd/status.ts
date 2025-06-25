@@ -185,7 +185,6 @@ export default new Command()
               bucket.type,
               bucketPath.pathPattern,
               {
-                isCacheRestore: false,
                 defaultLocale: sourceLocale,
                 injectLocale: bucket.injectLocale,
               },
@@ -351,6 +350,9 @@ export default new Command()
 
                 if (flags.verbose) {
                   if (missingKeys.length > 0) {
+                    console.log(
+                      `    ${chalk.red(`Missing:`)} ${missingKeys.length} keys, ~${wordsToTranslate} words`,
+                    );
                     console.log(
                       `    ${chalk.red(`Missing:`)} ${
                         missingKeys.length

@@ -95,18 +95,23 @@ export function createMdxStructureLoader(): ILoader<
 > {
   return createLoader({
     async pull(locale, input) {
-      const result = _.chain(input)
-        .pickBy((value, key) => key.endsWith("/value"))
-        .value();
-
+      const result = _.pickBy(input, (value, key) => _isValueKey(key));
       return result;
     },
     async push(locale, data, originalInput) {
-      const result = _.merge({}, originalInput, data);
+      const nonValueKeys = _.pickBy(
+        originalInput,
+        (value, key) => !_isValueKey(key),
+      );
+      const result = _.merge({}, nonValueKeys, data);
 
       return result;
     },
   });
+}
+
+function _isValueKey(key: string) {
+  return key.endsWith("/value");
 }
 
 function traverseMdast(

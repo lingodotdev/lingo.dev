@@ -8,7 +8,7 @@ import { colors } from "../../constants";
 import { CmdRunContext, CmdRunTask, CmdRunTaskResult } from "./_types";
 import { commonTaskRendererOptions } from "./_const";
 import createBucketLoader from "../../loaders";
-import { createDeltaProcessor } from "../../utils/delta";
+import { createDeltaProcessor, Delta } from "../../utils/delta";
 
 const MAX_WORKER_COUNT = 10;
 
@@ -123,7 +123,6 @@ function createLoaderForTask(assignedTask: CmdRunTask) {
     assignedTask.bucketPathPattern,
     {
       defaultLocale: assignedTask.sourceLocale,
-      isCacheRestore: false,
       injectLocale: assignedTask.injectLocale,
     },
     assignedTask.lockedKeys,
@@ -199,7 +198,33 @@ function createWorkerTask(args: {
                 targetData,
                 processableData,
               },
-              (progress) => {
+              async (progress, _sourceChunk, processedChunk) => {
+                // write translated chunks as they are received from LLM
+                await args.ioLimiter(async () => {
+                  // pull the latest source data before pushing for buckets that store all locales in a single file
+                  await bucketLoader.pull(assignedTask.sourceLocale);
+                  // pull the latest target data to include all already processed chunks
+                  const latestTargetData = await bucketLoader.pull(
+                    assignedTask.targetLocale,
+                  );
+                  // add the new chunk to target data
+                  const _partialData = _.merge(
+                    {},
+                    latestTargetData,
+                    processedChunk,
+                  );
+                  // process renamed keys
+                  const finalChunkTargetData = processRenamedKeys(
+                    delta,
+                    _partialData,
+                  );
+                  // push final chunk to the target locale
+                  await bucketLoader.push(
+                    assignedTask.targetLocale,
+                    finalChunkTargetData,
+                  );
+                });
+
                 subTask.title = createWorkerStatusMessage({
                   assignedTask,
                   percentage: progress,
@@ -207,32 +232,24 @@ function createWorkerTask(args: {
               },
             );
 
-            let finalTargetData = _.merge(
+            const finalTargetData = _.merge(
               {},
               sourceData,
               targetData,
               processedTargetData,
             );
-
-            finalTargetData = _.chain(finalTargetData)
-              .entries()
-              .map(([key, value]) => {
-                const renaming = delta.renamed.find(
-                  ([oldKey]) => oldKey === key,
-                );
-                if (!renaming) {
-                  return [key, value];
-                }
-                return [renaming[1], value];
-              })
-              .fromPairs()
-              .value();
+            const finalRenamedTargetData = processRenamedKeys(
+              delta,
+              finalTargetData,
+            );
 
             await args.ioLimiter(async () => {
+              // not all localizers have progress callback (eg. explicit localizer),
+              // the final target data might not be pushed yet - push now to ensure it's up to date
               await bucketLoader.pull(assignedTask.sourceLocale);
               await bucketLoader.push(
                 assignedTask.targetLocale,
-                finalTargetData,
+                finalRenamedTargetData,
               );
 
               const checksums =
@@ -264,4 +281,18 @@ function countTasks(
   return Array.from(ctx.results.entries()).filter(([task, result]) =>
     predicate(task, result),
   ).length;
+}
+
+function processRenamedKeys(delta: Delta, targetData: Record<string, string>) {
+  return _.chain(targetData)
+    .entries()
+    .map(([key, value]) => {
+      const renaming = delta.renamed.find(([oldKey]) => oldKey === key);
+      if (!renaming) {
+        return [key, value];
+      }
+      return [renaming[1], value];
+    })
+    .fromPairs()
+    .value();
 }

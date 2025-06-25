@@ -8,7 +8,11 @@ export type LocalizerData = {
   targetData: Record<string, any>;
 };
 
-export type LocalizerProgressFn = (progress: number) => void;
+export type LocalizerProgressFn = (
+  progress: number,
+  sourceChunk: Record<string, string>,
+  processedChunk: Record<string, string>,
+) => void;
 
 export interface ILocalizer {
   id: "Lingo.dev" | NonNullable<I18nConfig["provider"]>["id"];
