@@ -1,5 +1,17 @@
 # @lingo.dev/\_spec
 
+## 0.37.0
+
+### Minor Changes
+
+- [#956](https://github.com/lingodotdev/lingo.dev/pull/956) [`ce8c75c`](https://github.com/lingodotdev/lingo.dev/commit/ce8c75c7fc1a2124d3e18444bc356c4dfce26434) Thanks [@VAIBHAVSING](https://github.com/VAIBHAVSING)! - feat: add EJS (Embedded JavaScript) templating engine support
+
+  - Added EJS loader to support parsing and translating EJS template files
+  - EJS loader extracts translatable text while preserving EJS tags and expressions
+  - Updated spec package to include "ejs" in supported bucket types
+  - Added comprehensive test suite covering various EJS scenarios including conditionals, loops, includes, and mixed content
+  - Automatically installed EJS dependency (@types/ejs) for TypeScript support
+
 ## 0.36.0
 
 ### Minor Changes
