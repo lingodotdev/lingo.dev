@@ -1,6 +1,6 @@
 {
   "name": "@lingo.dev/_sdk",
-  "version": "0.9.3",
+  "version": "0.9.4",
   "description": "Lingo.dev JS SDK",
   "private": false,
   "publishConfig": {
