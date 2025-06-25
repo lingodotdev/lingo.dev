@@ -26,28 +26,33 @@ lingo.dev run --watch --file "src/locales/*.json" --debounce 1000
 ## Features
 
 ### 1. Automatic File Monitoring
+
 - Watches all source locale files based on your `i18n.json` configuration
 - Monitors file changes, additions, and deletions
 - Uses stable file watching to avoid false triggers
 
 ### 2. Debounced Processing
+
 - Implements configurable debounce mechanism to avoid excessive retranslations
 - Default: 5 seconds, customizable with `--debounce` flag
 - Groups rapid changes into single translation batches
 - Prevents resource waste from frequent file saves
 
 ### 3. Intelligent Pattern Detection
+
 - Automatically determines which files to watch based on bucket patterns
 - Replaces `[locale]` placeholders with source locale
 - Respects filtering options (`--bucket`, `--file`, etc.)
 
 ### 4. Real-time Feedback
+
 - Shows which files are being watched on startup
 - Displays file change notifications
 - Provides translation progress updates
 - Shows completion status for each batch
 
 ### 5. Graceful Error Handling
+
 - Continues watching even if individual translations fail
 - Reports errors without stopping the watch process
 - Maintains watch state across translation cycles
@@ -55,6 +60,7 @@ lingo.dev run --watch --file "src/locales/*.json" --debounce 1000
 ## Implementation Details
 
 ### File Structure
+
 - `src/cli/cmd/run/watch.ts` - Main watch implementation
 - `src/cli/cmd/run/_types.ts` - Updated to include watch flag
 - `src/cli/cmd/run/index.ts` - Integration with main run command
@@ -62,6 +68,7 @@ lingo.dev run --watch --file "src/locales/*.json" --debounce 1000
 ### Key Components
 
 #### Watch State Management
+
 ```typescript
 interface WatchState {
   isRunning: boolean;
@@ -71,13 +78,16 @@ interface WatchState {
 ```
 
 #### File Pattern Resolution
+
 The watch mode automatically determines which files to monitor by:
+
 1. Getting buckets from `i18n.json`
 2. Applying user filters (`--bucket`, `--file`)
 3. Replacing `[locale]` with source locale
 4. Creating file patterns for chokidar
 
 #### Debounce Logic
+
 - Uses configurable debounce timer (default: 5000ms)
 - Resets timer on each file change
 - Only triggers translation when timer expires
@@ -85,33 +95,38 @@ The watch mode automatically determines which files to monitor by:
 - Customizable via `--debounce <milliseconds>` flag
 
 ### Dependencies
+
 - `chokidar` - Robust file watching library
 - Existing Lingo.dev pipeline (setup, plan, execute)
 
 ## Example Workflow
 
 1. **Start Watch Mode**
+
    ```bash
    lingo.dev run --watch
    ```
 
 2. **Initial Setup**
+
    - Performs normal translation setup
    - Runs initial planning and execution
    - Shows summary of completed translations
    - Starts file watching
 
 3. **File Change Detection**
+
    ```
    📝 File changed: locales/en.json
    ⏳ Debouncing... (5000ms)
    ```
 
 4. **Automatic Retranslation**
+
    ```
    🔄 Triggering retranslation...
    Changed files: locales/en.json
-   
+
    [Planning] Found 2 translation task(s)
    [Localization] Processing tasks...
    ✅ Retranslation completed
@@ -145,6 +160,7 @@ lingo.dev run --watch
 ```
 
 Then in another terminal:
+
 ```bash
 # Add a new translation key
 echo '{"hello": "Hello", "world": "World", "welcome": "Welcome to Lingo.dev", "goodbye": "Goodbye"}' > locales/en.json

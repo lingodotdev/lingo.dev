@@ -17,7 +17,9 @@ export default async function watch(ctx: CmdRunContext) {
   const debounceDelay = ctx.flags.debounce || 5000; // Use configured debounce or 5s default
 
   console.log(chalk.hex(colors.orange)("[Watch Mode]"));
-  console.log(`👀 Watching for changes... (Press ${chalk.yellow("Ctrl+C")} to stop)`);
+  console.log(
+    `👀 Watching for changes... (Press ${chalk.yellow("Ctrl+C")} to stop)`,
+  );
   console.log(chalk.dim(`   Debounce delay: ${debounceDelay}ms`));
   console.log("");
 
@@ -28,14 +30,14 @@ export default async function watch(ctx: CmdRunContext) {
 
   // Get all source file patterns to watch
   const watchPatterns = await getWatchPatterns(ctx);
-  
+
   if (watchPatterns.length === 0) {
     console.log(chalk.yellow("⚠️  No source files found to watch"));
     return;
   }
 
   console.log(chalk.dim(`Watching ${watchPatterns.length} file pattern(s):`));
-  watchPatterns.forEach(pattern => {
+  watchPatterns.forEach((pattern) => {
     console.log(chalk.dim(`  • ${pattern}`));
   });
   console.log("");
@@ -64,7 +66,11 @@ export default async function watch(ctx: CmdRunContext) {
   });
 
   watcher.on("error", (error) => {
-    console.error(chalk.red(`Watch error: ${error instanceof Error ? error.message : String(error)}`));
+    console.error(
+      chalk.red(
+        `Watch error: ${error instanceof Error ? error.message : String(error)}`,
+      ),
+    );
   });
 
   // Handle graceful shutdown
@@ -93,15 +99,18 @@ async function getWatchPatterns(ctx: CmdRunContext): Promise<string[]> {
     for (const bucketPath of bucket.paths) {
       // Skip if specific files are filtered
       if (ctx.flags.file) {
-        if (!ctx.flags.file.some(f => bucketPath.pathPattern.includes(f))) {
+        if (!ctx.flags.file.some((f) => bucketPath.pathPattern.includes(f))) {
           continue;
         }
       }
 
       // Get the source locale pattern (replace [locale] with source locale)
       const sourceLocale = ctx.flags.sourceLocale || ctx.config.locale.source;
-      const sourcePattern = bucketPath.pathPattern.replace("[locale]", sourceLocale);
-      
+      const sourcePattern = bucketPath.pathPattern.replace(
+        "[locale]",
+        sourceLocale,
+      );
+
       patterns.push(sourcePattern);
     }
   }
@@ -109,7 +118,11 @@ async function getWatchPatterns(ctx: CmdRunContext): Promise<string[]> {
   return patterns;
 }
 
-function handleFileChange(filePath: string, state: WatchState, ctx: CmdRunContext) {
+function handleFileChange(
+  filePath: string,
+  state: WatchState,
+  ctx: CmdRunContext,
+) {
   const debounceDelay = ctx.flags.debounce || 5000; // Use configured debounce or 5s default
 
   state.pendingChanges.add(filePath);
@@ -124,7 +137,9 @@ function handleFileChange(filePath: string, state: WatchState, ctx: CmdRunContex
   // Set new debounce timer
   state.debounceTimer = setTimeout(async () => {
     if (state.isRunning) {
-      console.log(chalk.yellow("⏳ Translation already in progress, skipping..."));
+      console.log(
+        chalk.yellow("⏳ Translation already in progress, skipping..."),
+      );
       return;
     }
 
@@ -136,7 +151,7 @@ async function triggerRetranslation(state: WatchState, ctx: CmdRunContext) {
   if (state.isRunning) return;
 
   state.isRunning = true;
-  
+
   try {
     const changedFiles = Array.from(state.pendingChanges);
     state.pendingChanges.clear();
@@ -154,7 +169,7 @@ async function triggerRetranslation(state: WatchState, ctx: CmdRunContext) {
 
     // Re-run the translation pipeline
     await plan(runCtx);
-    
+
     if (runCtx.tasks.length === 0) {
       console.log(chalk.dim("✨ No translation tasks needed"));
     } else {
@@ -164,7 +179,6 @@ async function triggerRetranslation(state: WatchState, ctx: CmdRunContext) {
 
     console.log(chalk.hex(colors.green)("✅ Retranslation completed"));
     console.log(chalk.dim("👀 Continuing to watch for changes...\n"));
-
   } catch (error: any) {
     console.error(chalk.red(`❌ Retranslation failed: ${error.message}`));
     console.log(chalk.dim("👀 Continuing to watch for changes...\n"));
