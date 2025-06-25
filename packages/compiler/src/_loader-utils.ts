@@ -35,7 +35,7 @@ export async function loadDictionary(options: {
   const { resourcePath, resourceQuery = "", params, sourceRoot, lingoDir, isDev } = options;
   const fullResourcePath = `${resourcePath}${resourceQuery}`;
   
-  if (!resourcePath.endsWith(LCP_DICTIONARY_FILE_NAME)) {
+  if (!resourcePath.match(LCP_DICTIONARY_FILE_NAME)) {
     return null; // Not a dictionary file
   }
   
