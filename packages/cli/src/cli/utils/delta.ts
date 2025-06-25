@@ -42,7 +42,7 @@ export function createDeltaProcessor(fileKey: string) {
       sourceData: Record<string, any>;
       targetData: Record<string, any>;
       checksums: Record<string, string>;
-    }) {
+    }): Promise<Delta> {
       let added = _.difference(
         Object.keys(params.sourceData),
         Object.keys(params.targetData),
@@ -51,12 +51,11 @@ export function createDeltaProcessor(fileKey: string) {
         Object.keys(params.targetData),
         Object.keys(params.sourceData),
       );
-      const updated = _.filter(Object.keys(params.sourceData), (key) => {
-        return (
+      const updated = Object.keys(params.sourceData).filter(
+        (key) =>
           md5(params.sourceData[key]) !== params.checksums[key] &&
-          params.checksums[key]
-        );
-      });
+          params.checksums[key],
+      );
 
       const renamed: [string, string][] = [];
       for (const addedKey of added) {

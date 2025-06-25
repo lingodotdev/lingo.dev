@@ -90,10 +90,7 @@ export default function createBucketLoader(
         createTextFileLoader(bucketPathPattern),
         createEjsLoader(),
         createSyncLoader(),
-        createUnlocalizableLoader(
-          options.isCacheRestore,
-          options.returnUnlocalizedKeys,
-        ),
+        createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
     case "json":
       return composeLoaders(

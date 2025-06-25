@@ -2561,7 +2561,6 @@ ${script}`;
       mockFileOperations(input);
 
       const ejsLoader = createBucketLoader("ejs", "templates/[locale].ejs", {
-        isCacheRestore: false,
         defaultLocale: "en",
       });
       ejsLoader.setDefaultLocale("en");
@@ -2608,7 +2607,6 @@ ${script}`;
       mockFileOperations(input);
 
       const ejsLoader = createBucketLoader("ejs", "templates/[locale].ejs", {
-        isCacheRestore: false,
         defaultLocale: "en",
       });
       ejsLoader.setDefaultLocale("en");
