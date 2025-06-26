@@ -87,21 +87,29 @@ function extractPathPatterns(
   return result;
 }
 
+// Windows path normalization helper function
+function normalizePath(filepath: string): string {
+  const normalized = path.normalize(filepath);
+  // Ensure case consistency on Windows
+  return process.platform === "win32" ? normalized.toLowerCase() : normalized;
+}
+
 // Path expansion
 function expandPlaceholderedGlob(
   _pathPattern: string,
   sourceLocale: string,
 ): string[] {
-  // Throw if pathPattern is an absolute path
   const absolutePathPattern = path.resolve(_pathPattern);
-  const pathPattern = path.relative(process.cwd(), absolutePathPattern);
-  // Throw if pathPattern points outside the current working directory
-  if (path.relative(process.cwd(), pathPattern).startsWith("..")) {
+  const pathPattern = normalizePath(
+    path.relative(process.cwd(), absolutePathPattern),
+  );
+  if (pathPattern.startsWith("..")) {
     throw new CLIError({
       message: `Invalid path pattern: ${pathPattern}. Path pattern must be within the current working directory.`,
       docUrl: "invalidPathPattern",
     });
   }
+
   // Throw error if pathPattern contains "**" – we don't support recursive path patterns
   if (pathPattern.includes("**")) {
     throw new CLIError({
@@ -124,15 +132,27 @@ function expandPlaceholderedGlob(
   );
   // substitute [locale] in pathPattern with sourceLocale
   const sourcePathPattern = pathPattern.replaceAll(/\[locale\]/g, sourceLocale);
+  // Convert to Unix-style for Windows compatibility
+  const unixStylePattern = sourcePathPattern.replace(/\\/g, "/");
+
   // get all files that match the sourcePathPattern
   const sourcePaths = glob
-    .sync(sourcePathPattern, { follow: true, withFileTypes: true })
+    .sync(unixStylePattern, {
+      follow: true,
+      withFileTypes: true,
+      windowsPathsNoEscape: true, // Windows path support
+    })
     .filter((file) => file.isFile() || file.isSymbolicLink())
     .map((file) => file.fullpath())
-    .map((fullpath) => path.relative(process.cwd(), fullpath));
+    .map((fullpath) => normalizePath(path.relative(process.cwd(), fullpath)));
+
   // transform each source file path back to [locale] placeholder paths
   const placeholderedPaths = sourcePaths.map((sourcePath) => {
-    const sourcePathChunks = sourcePath.split(path.sep);
+    // Normalize path returned by glob for platform compatibility
+    const normalizedSourcePath = normalizePath(
+      sourcePath.replace(/\//g, path.sep),
+    );
+    const sourcePathChunks = normalizedSourcePath.split(path.sep);
     localeSegmentIndexes.forEach((localeSegmentIndex) => {
       // Find the position of the "[locale]" placeholder within the segment
       const pathPatternChunk = pathPatternChunks[localeSegmentIndex];
