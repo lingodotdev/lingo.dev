@@ -1,5 +1,45 @@
 # lingo.dev
 
+## 0.102.0
+
+### Minor Changes
+
+- [#966](https://github.com/lingodotdev/lingo.dev/pull/966) [`8b306bc`](https://github.com/lingodotdev/lingo.dev/commit/8b306bcd0a3231ffd8bde283414b6d069b7a5b99) Thanks [@VAIBHAVSING](https://github.com/VAIBHAVSING)! - Add watch mode to CLI for automatic retranslation on file changes
+
+  This release introduces a new watch mode feature that automatically triggers retranslation when changes are detected in source files:
+
+  - **New `--watch` flag**: Enables file watching mode that monitors source files for changes
+  - **New `--debounce` flag**: Configurable debounce delay (default: 5 seconds) to prevent excessive retranslations
+  - **Intelligent file pattern detection**: Automatically determines which files to watch based on i18n.json bucket configurations
+  - **Graceful error handling**: Robust error recovery and process management
+  - **Background operation**: Non-blocking watch mode with proper cleanup on exit (Ctrl+C)
+
+  **Usage:**
+
+  ```bash
+  # Enable watch mode with default 5-second debounce
+  lingo.dev run --watch
+
+  # Enable watch mode with custom debounce timing
+  lingo.dev run --watch --debounce 7000
+
+  # Combine with other flags
+  lingo.dev run --watch --target-locale es --bucket json
+  ```
+
+  **Technical Implementation:**
+
+  - Uses `chokidar` for robust cross-platform file watching
+  - Integrates seamlessly with existing CLI pipeline (setup → plan → execute)
+  - Maintains full compatibility with all existing CLI options and workflows
+  - Includes comprehensive documentation in `WATCH_MODE.md`
+
+  This feature significantly improves developer experience by eliminating the need to manually retrigger translations during development.
+
+### Patch Changes
+
+- [#968](https://github.com/lingodotdev/lingo.dev/pull/968) [`013fca0`](https://github.com/lingodotdev/lingo.dev/commit/013fca0f4252103ee3009fe3cdcfce2a87c80058) Thanks [@mathio](https://github.com/mathio)! - reorder falsy keys
+
 ## 0.101.0
 
 ### Minor Changes
