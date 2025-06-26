@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.102.1
+
+### Patch Changes
+
+- [#969](https://github.com/lingodotdev/lingo.dev/pull/969) [`da6f0c8`](https://github.com/lingodotdev/lingo.dev/commit/da6f0c85e69687615df943323d261078742ba3f2) Thanks [@mathio](https://github.com/mathio)! - run: always push to target locales
+
 ## 0.102.0
 
 ### Minor Changes
