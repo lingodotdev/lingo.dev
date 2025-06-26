@@ -19,6 +19,38 @@ describe("ensure-key-order loader", () => {
     expect(result).toEqual({ a: 11, b: 22, c: 33 });
   });
 
+  it("should reorder falsy keys to match original input order on push", async () => {
+    const originalInput = {
+      a: 1,
+      b: 0,
+      c: null,
+      d: "a",
+      e: false,
+      g: "",
+      h: undefined,
+    };
+    await loader.pull("en", originalInput);
+    const data = {
+      b: 0,
+      a: 11,
+      c: null,
+      d: "b",
+      e: false,
+      g: "",
+      h: undefined,
+    };
+    const result = await loader.push("en", data);
+    expect(result).toEqual({
+      a: 11,
+      b: 0,
+      c: null,
+      d: "b",
+      e: false,
+      g: "",
+      h: undefined,
+    });
+  });
+
   it("should handle nested objects and preserve key order", async () => {
     const originalInput = { x: { b: 2, a: 1 }, y: 3, z: { d: 9, f: 7, e: 8 } };
     await loader.pull("en", originalInput);

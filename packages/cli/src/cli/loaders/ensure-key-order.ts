@@ -33,9 +33,7 @@ function reorderKeys(
 
   for (const key of originalKeys) {
     if (dataKeys.has(key)) {
-      if (data[key]) {
-        orderedData[key] = reorderKeys(data[key], originalInput[key]);
-      }
+      orderedData[key] = reorderKeys(data[key], originalInput[key]);
       dataKeys.delete(key);
     }
   }
