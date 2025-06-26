@@ -3,8 +3,30 @@ import { NodePath } from "@babel/traverse";
 
 export function getJsxElementName(nodePath: NodePath<t.JSXElement>) {
   const openingElement = nodePath.node.openingElement;
+
+  // elements with simple (string) name
   if (t.isJSXIdentifier(openingElement.name)) {
     return openingElement.name.name;
+  }
+
+  // elements with dots in name
+  if (t.isJSXMemberExpression(openingElement.name)) {
+    const memberExpr = openingElement.name;
+    const parts: string[] = [];
+
+    // Traverse the member expression to collect all parts
+    let current: t.JSXMemberExpression | t.JSXIdentifier = memberExpr;
+    while (t.isJSXMemberExpression(current)) {
+      parts.unshift(current.property.name);
+      current = current.object;
+    }
+
+    // Add the base identifier
+    if (t.isJSXIdentifier(current)) {
+      parts.unshift(current.name);
+    }
+
+    return parts.join(".");
   }
   return null;
 }

@@ -41,6 +41,18 @@ describe("JSX Element Utils", () => {
       const path = getJSXElementPath("<MyComponent>Hello</MyComponent>");
       expect(getJsxElementName(path)).toBe("MyComponent");
     });
+
+    it("should return element name for elements with dots", () => {
+      const path = getJSXElementPath("<My.Component>Hello</My.Component>");
+      expect(getJsxElementName(path)).toBe("My.Component");
+    });
+
+    it("should return element name for elements with multiple dot", () => {
+      const path = getJSXElementPath(
+        "<My.Very.Custom.React.Component>Hello</My.Very.Custom.React.Component>",
+      );
+      expect(getJsxElementName(path)).toBe("My.Very.Custom.React.Component");
+    });
   });
 
   describe("getNestedJsxElements", () => {
