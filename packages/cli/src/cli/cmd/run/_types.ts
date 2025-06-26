@@ -45,5 +45,7 @@ export const flagsSchema = z.object({
   debug: z.boolean().default(false),
   sourceLocale: z.string().optional(),
   targetLocale: z.array(z.string()).optional(),
+  watch: z.boolean().default(false),
+  debounce: z.number().positive().default(5000), // 5 seconds default
 });
 export type CmdRunFlags = z.infer<typeof flagsSchema>;

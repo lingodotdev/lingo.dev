@@ -2,6 +2,7 @@ import { Command } from "interactive-commander";
 import setup from "./setup";
 import plan from "./plan";
 import execute from "./execute";
+import watch from "./watch";
 import { CmdRunContext, flagsSchema } from "./_types";
 import {
   renderClear,
@@ -60,6 +61,15 @@ export default new Command()
     "Number of concurrent tasks to run",
     (val: string) => parseInt(val),
   )
+  .option(
+    "--watch",
+    "Watch source files for changes and automatically retranslate",
+  )
+  .option(
+    "--debounce <milliseconds>",
+    "Debounce delay in milliseconds for watch mode (default: 5000ms)",
+    (val: string) => parseInt(val),
+  )
   .action(async (args) => {
     let authId: string | null = null;
     try {
@@ -97,6 +107,11 @@ export default new Command()
 
       await renderSummary(ctx.results);
       await renderSpacer();
+
+      // If watch mode is enabled, start watching for changes
+      if (ctx.flags.watch) {
+        await watch(ctx);
+      }
 
       trackEvent(authId, "cmd.run.success", {
         config: ctx.config,
