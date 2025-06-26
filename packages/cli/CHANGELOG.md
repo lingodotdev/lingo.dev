@@ -1,5 +1,14 @@
 # lingo.dev
 
+## 0.102.3
+
+### Patch Changes
+
+- [#972](https://github.com/lingodotdev/lingo.dev/pull/972) [`b249484`](https://github.com/lingodotdev/lingo.dev/commit/b249484d6f0060e29cd5b50b3d8ce68b857ccad5) Thanks [@mathio](https://github.com/mathio)! - support components with dot in name
+
+- Updated dependencies [[`b249484`](https://github.com/lingodotdev/lingo.dev/commit/b249484d6f0060e29cd5b50b3d8ce68b857ccad5)]:
+  - @lingo.dev/_compiler@0.5.1
+
 ## 0.102.2
 
 ### Patch Changes
