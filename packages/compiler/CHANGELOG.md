@@ -1,5 +1,11 @@
 # @lingo.dev/\_compiler
 
+## 0.5.1
+
+### Patch Changes
+
+- [#972](https://github.com/lingodotdev/lingo.dev/pull/972) [`b249484`](https://github.com/lingodotdev/lingo.dev/commit/b249484d6f0060e29cd5b50b3d8ce68b857ccad5) Thanks [@mathio](https://github.com/mathio)! - support components with dot in name
+
 ## 0.5.0
 
 ### Minor Changes
