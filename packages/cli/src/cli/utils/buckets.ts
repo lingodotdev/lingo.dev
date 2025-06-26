@@ -91,7 +91,7 @@ function extractPathPatterns(
 function normalizePath(filepath: string): string {
   const normalized = path.normalize(filepath);
   // Ensure case consistency on Windows
-  return process.platform === 'win32' ? normalized.toLowerCase() : normalized;
+  return process.platform === "win32" ? normalized.toLowerCase() : normalized;
 }
 
 // Path expansion
@@ -99,30 +99,27 @@ function expandPlaceholderedGlob(
   _pathPattern: string,
   sourceLocale: string,
 ): string[] {
-  // Throw if pathPattern is an absolute path
   const absolutePathPattern = path.resolve(_pathPattern);
-  const pathPattern = path.relative(process.cwd(), absolutePathPattern);
-  // Normalize path for platform compatibility
-  const normalizedPathPattern = path.normalize(pathPattern);
-
-  const relativePattern = path.relative(process.cwd(), normalizePath(normalizedPathPattern));
-  if (relativePattern.startsWith("..")) {
+  const pathPattern = normalizePath(
+    path.relative(process.cwd(), absolutePathPattern),
+  );
+  if (pathPattern.startsWith("..")) {
     throw new CLIError({
-      message: `Invalid path pattern: ${normalizedPathPattern}. Path pattern must be within the current working directory.`,
+      message: `Invalid path pattern: ${pathPattern}. Path pattern must be within the current working directory.`,
       docUrl: "invalidPathPattern",
     });
   }
 
   // Throw error if pathPattern contains "**" – we don't support recursive path patterns
-  if (normalizedPathPattern.includes("**")) {
+  if (pathPattern.includes("**")) {
     throw new CLIError({
-      message: `Invalid path pattern: ${normalizedPathPattern}. Recursive path patterns are not supported.`,
+      message: `Invalid path pattern: ${pathPattern}. Recursive path patterns are not supported.`,
       docUrl: "invalidPathPattern",
     });
   }
 
   // Break down path pattern into parts
-  const pathPatternChunks = normalizedPathPattern.split(path.sep);
+  const pathPatternChunks = pathPattern.split(path.sep);
   // Find the index of the segment containing "[locale]"
   const localeSegmentIndexes = pathPatternChunks.reduce(
     (indexes, segment, index) => {
@@ -134,25 +131,27 @@ function expandPlaceholderedGlob(
     [] as number[],
   );
   // substitute [locale] in pathPattern with sourceLocale
-  const sourcePathPattern = normalizedPathPattern.replaceAll(/\[locale\]/g, sourceLocale);
+  const sourcePathPattern = pathPattern.replaceAll(/\[locale\]/g, sourceLocale);
   // Convert to Unix-style for Windows compatibility
-  const unixStylePattern = sourcePathPattern.replace(/\\/g, '/');
+  const unixStylePattern = sourcePathPattern.replace(/\\/g, "/");
 
   // get all files that match the sourcePathPattern
   const sourcePaths = glob
     .sync(unixStylePattern, {
       follow: true,
       withFileTypes: true,
-      windowsPathsNoEscape: true  // Windows path support
+      windowsPathsNoEscape: true, // Windows path support
     })
     .filter((file) => file.isFile() || file.isSymbolicLink())
     .map((file) => file.fullpath())
-    .map((fullpath) => path.normalize(path.relative(process.cwd(), fullpath)));
+    .map((fullpath) => normalizePath(path.relative(process.cwd(), fullpath)));
 
   // transform each source file path back to [locale] placeholder paths
   const placeholderedPaths = sourcePaths.map((sourcePath) => {
     // Normalize path returned by glob for platform compatibility
-    const normalizedSourcePath = path.normalize(sourcePath.replace(/\//g, path.sep));
+    const normalizedSourcePath = normalizePath(
+      sourcePath.replace(/\//g, path.sep),
+    );
     const sourcePathChunks = normalizedSourcePath.split(path.sep);
     localeSegmentIndexes.forEach((localeSegmentIndex) => {
       // Find the position of the "[locale]" placeholder within the segment
@@ -160,11 +159,11 @@ function expandPlaceholderedGlob(
       const sourcePathChunk = sourcePathChunks[localeSegmentIndex];
       const regexp = new RegExp(
         "(" +
-        pathPatternChunk
-          .replaceAll(".", "\\.")
-          .replaceAll("*", ".*")
-          .replace("[locale]", `)${sourceLocale}(`) +
-        ")",
+          pathPatternChunk
+            .replaceAll(".", "\\.")
+            .replaceAll("*", ".*")
+            .replace("[locale]", `)${sourceLocale}(`) +
+          ")",
       );
       const match = sourcePathChunk.match(regexp);
       if (match) {
