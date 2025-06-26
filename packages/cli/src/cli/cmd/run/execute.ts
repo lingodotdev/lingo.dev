@@ -187,6 +187,10 @@ function createWorkerTask(args: {
               .value();
 
             if (!Object.keys(processableData).length) {
+              await args.ioLimiter(async () => {
+                // re-push in case some of the unlocalizable / meta data changed
+                await bucketLoader.push(assignedTask.targetLocale, targetData);
+              });
               return { status: "skipped" } satisfies CmdRunTaskResult;
             }
 
