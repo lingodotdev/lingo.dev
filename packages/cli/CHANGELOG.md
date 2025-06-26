@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.102.2
+
+### Patch Changes
+
+- [#946](https://github.com/lingodotdev/lingo.dev/pull/946) [`f7debef`](https://github.com/lingodotdev/lingo.dev/commit/f7debef9f004e670bb1f6a45ae17067a72a6e53f) Thanks [@scm1400](https://github.com/scm1400)! - normalize paths and improve compatibility on windows
+
 ## 0.102.1
 
 ### Patch Changes
