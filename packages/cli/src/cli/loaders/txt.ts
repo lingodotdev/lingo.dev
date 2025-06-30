@@ -8,11 +8,11 @@ export default function createTxtLoader(): ILoader<
   return createLoader({
     async pull(locale, input) {
       const result: Record<string, string> = {};
-      
+
       if (input && input.trim() !== "") {
         result.content = input.trim();
       }
-      
+
       return result;
     },
 

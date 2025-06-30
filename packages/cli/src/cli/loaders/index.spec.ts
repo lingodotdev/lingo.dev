@@ -2629,18 +2629,22 @@ ${script}`;
       const input = `Welcome to our application!
 This is a sample text file for fastlane metadata.
 It contains app description that needs to be translated.`;
-      
+
       const expectedOutput = {
         content: `Welcome to our application!
 This is a sample text file for fastlane metadata.
-It contains app description that needs to be translated.`
+It contains app description that needs to be translated.`,
       };
 
       mockFileOperations(input);
 
-      const txtLoader = createBucketLoader("txt", "fastlane/metadata/[locale]/description.txt", {
-        defaultLocale: "en",
-      });
+      const txtLoader = createBucketLoader(
+        "txt",
+        "fastlane/metadata/[locale]/description.txt",
+        {
+          defaultLocale: "en",
+        },
+      );
       txtLoader.setDefaultLocale("en");
       const data = await txtLoader.pull("en");
 
@@ -2657,7 +2661,7 @@ It contains app description that needs to be translated.`;
       const payload = {
         content: `¡Bienvenido a nuestra aplicación!
 Este es un archivo de texto de muestra para metadatos de fastlane.
-Contiene la descripción de la aplicación que necesita ser traducida.`
+Contiene la descripción de la aplicación que necesita ser traducida.`,
       };
 
       const expectedOutput = `¡Bienvenido a nuestra aplicación!
@@ -2666,9 +2670,13 @@ Contiene la descripción de la aplicación que necesita ser traducida.`;
 
       mockFileOperations(input);
 
-      const txtLoader = createBucketLoader("txt", "fastlane/metadata/[locale]/description.txt", {
-        defaultLocale: "en",
-      });
+      const txtLoader = createBucketLoader(
+        "txt",
+        "fastlane/metadata/[locale]/description.txt",
+        {
+          defaultLocale: "en",
+        },
+      );
       txtLoader.setDefaultLocale("en");
       await txtLoader.pull("en");
 
@@ -2677,7 +2685,7 @@ Contiene la descripción de la aplicación que necesita ser traducida.`;
       expect(fs.writeFile).toHaveBeenCalledWith(
         "fastlane/metadata/es/description.txt",
         expectedOutput,
-        { encoding: "utf-8", flag: "w" }
+        { encoding: "utf-8", flag: "w" },
       );
     });
 
@@ -2689,9 +2697,13 @@ Contiene la descripción de la aplicación que necesita ser traducida.`;
 
       mockFileOperations(input);
 
-      const txtLoader = createBucketLoader("txt", "fastlane/metadata/[locale]/description.txt", {
-        defaultLocale: "en",
-      });
+      const txtLoader = createBucketLoader(
+        "txt",
+        "fastlane/metadata/[locale]/description.txt",
+        {
+          defaultLocale: "en",
+        },
+      );
       txtLoader.setDefaultLocale("en");
       const data = await txtLoader.pull("en");
 
