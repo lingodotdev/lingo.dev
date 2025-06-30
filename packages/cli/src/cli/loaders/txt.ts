@@ -9,15 +9,23 @@ export default function createTxtLoader(): ILoader<
     async pull(locale, input) {
       const result: Record<string, string> = {};
 
-      if (input && input.trim() !== "") {
-        result.content = input.trim();
+      if (input !== undefined && input !== null && input !== "") {
+        const lines = input.split("\n");
+        lines.forEach((line, index) => {
+          result[String(index + 1)] = line === "" ? " " : line;
+        });
       }
 
       return result;
     },
 
     async push(locale, payload) {
-      return payload.content || "";
+      const sortedEntries = Object.entries(payload).sort(
+        ([a], [b]) => parseInt(a) - parseInt(b),
+      );
+      return sortedEntries
+        .map(([_, value]) => (value === " " ? "" : value))
+        .join("\n");
     },
   });
 }

@@ -2631,9 +2631,9 @@ This is a sample text file for fastlane metadata.
 It contains app description that needs to be translated.`;
 
       const expectedOutput = {
-        content: `Welcome to our application!
-This is a sample text file for fastlane metadata.
-It contains app description that needs to be translated.`,
+        "1": "Welcome to our application!",
+        "2": "This is a sample text file for fastlane metadata.",
+        "3": "It contains app description that needs to be translated.",
       };
 
       mockFileOperations(input);
@@ -2659,9 +2659,9 @@ This is a sample text file for fastlane metadata.
 It contains app description that needs to be translated.`;
 
       const payload = {
-        content: `¡Bienvenido a nuestra aplicación!
-Este es un archivo de texto de muestra para metadatos de fastlane.
-Contiene la descripción de la aplicación que necesita ser traducida.`,
+        "1": "¡Bienvenido a nuestra aplicación!",
+        "2": "Este es un archivo de texto de muestra para metadatos de fastlane.",
+        "3": "Contiene la descripción de la aplicación que necesita ser traducida.",
       };
 
       const expectedOutput = `¡Bienvenido a nuestra aplicación!
@@ -2708,6 +2708,71 @@ Contiene la descripción de la aplicación que necesita ser traducida.`;
       const data = await txtLoader.pull("en");
 
       expect(data).toEqual(expectedOutput);
+    });
+
+    it("should preserve empty lines with correct numbering", async () => {
+      setupFileMocks();
+
+      const input = `Line 1
+
+Line 3`;
+      const expectedOutput = {
+        "1": "Line 1",
+        "2": " ",
+        "3": "Line 3",
+      };
+
+      mockFileOperations(input);
+
+      const txtLoader = createBucketLoader(
+        "txt",
+        "fastlane/metadata/[locale]/description.txt",
+        {
+          defaultLocale: "en",
+        },
+      );
+      txtLoader.setDefaultLocale("en");
+      const data = await txtLoader.pull("en");
+
+      expect(data).toEqual(expectedOutput);
+    });
+
+    it("should reconstruct file with correct line order", async () => {
+      setupFileMocks();
+
+      const input = `Line 1
+
+Line 3`;
+
+      const payload = {
+        "1": "Línea 1",
+        "2": " ",
+        "3": "Línea 3",
+      };
+
+      const expectedOutput = `Línea 1
+
+Línea 3`;
+
+      mockFileOperations(input);
+
+      const txtLoader = createBucketLoader(
+        "txt",
+        "fastlane/metadata/[locale]/description.txt",
+        {
+          defaultLocale: "en",
+        },
+      );
+      txtLoader.setDefaultLocale("en");
+      await txtLoader.pull("en");
+
+      await txtLoader.push("es", payload);
+
+      expect(fs.writeFile).toHaveBeenCalledWith(
+        "fastlane/metadata/es/description.txt",
+        expectedOutput,
+        { encoding: "utf-8", flag: "w" },
+      );
     });
   });
 });
