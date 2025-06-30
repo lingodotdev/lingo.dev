@@ -2710,7 +2710,7 @@ Contiene la descripción de la aplicación que necesita ser traducida.`;
       expect(data).toEqual(expectedOutput);
     });
 
-    it("should preserve empty lines with correct numbering", async () => {
+    it("should filter out empty lines during pull", async () => {
       setupFileMocks();
 
       const input = `Line 1
@@ -2718,7 +2718,6 @@ Contiene la descripción de la aplicación que necesita ser traducida.`;
 Line 3`;
       const expectedOutput = {
         "1": "Line 1",
-        "2": " ",
         "3": "Line 3",
       };
 
@@ -2737,7 +2736,7 @@ Line 3`;
       expect(data).toEqual(expectedOutput);
     });
 
-    it("should reconstruct file with correct line order", async () => {
+    it("should reconstruct file with empty lines restored", async () => {
       setupFileMocks();
 
       const input = `Line 1
@@ -2746,7 +2745,6 @@ Line 3`;
 
       const payload = {
         "1": "Línea 1",
-        "2": " ",
         "3": "Línea 3",
       };
 

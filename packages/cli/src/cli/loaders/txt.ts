@@ -12,7 +12,7 @@ export default function createTxtLoader(): ILoader<
       if (input !== undefined && input !== null && input !== "") {
         const lines = input.split("\n");
         lines.forEach((line, index) => {
-          result[String(index + 1)] = line === "" ? " " : line;
+          result[String(index + 1)] = line;
         });
       }
 
@@ -23,9 +23,7 @@ export default function createTxtLoader(): ILoader<
       const sortedEntries = Object.entries(payload).sort(
         ([a], [b]) => parseInt(a) - parseInt(b),
       );
-      return sortedEntries
-        .map(([_, value]) => (value === " " ? "" : value))
-        .join("\n");
+      return sortedEntries.map(([_, value]) => value).join("\n");
     },
   });
 }
