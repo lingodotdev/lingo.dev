@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.102.4
+
+### Patch Changes
+
+- [#982](https://github.com/lingodotdev/lingo.dev/pull/982) [`29cf6a7`](https://github.com/lingodotdev/lingo.dev/commit/29cf6a7359707e0e341c11942d1ce6dedf7e66e5) Thanks [@mathio](https://github.com/mathio)! - fix xcstrings version
+
 ## 0.102.3
 
 ### Patch Changes
