@@ -87,6 +87,7 @@ describe("loaders/xcode-xcstrings", () => {
         },
       },
     },
+    version: "1.0",
   };
 
   describe("pull", () => {
@@ -159,6 +160,7 @@ describe("loaders/xcode-xcstrings", () => {
       };
       const result = await loader.push("fr", payload);
       expect(result).not.toBeNull();
+      expect(result!.version).toBe("1.0");
       expect(result!.strings["app.title"].localizations.fr).toEqual({
         stringUnit: {
           state: "translated",
