@@ -2621,6 +2621,83 @@ ${script}`;
       );
     });
   });
+
+  describe("txt bucket loader", () => {
+    it("should load txt", async () => {
+      setupFileMocks();
+
+      const input = `Welcome to our application!
+This is a sample text file for fastlane metadata.
+It contains app description that needs to be translated.`;
+      
+      const expectedOutput = {
+        content: `Welcome to our application!
+This is a sample text file for fastlane metadata.
+It contains app description that needs to be translated.`
+      };
+
+      mockFileOperations(input);
+
+      const txtLoader = createBucketLoader("txt", "fastlane/metadata/[locale]/description.txt", {
+        defaultLocale: "en",
+      });
+      txtLoader.setDefaultLocale("en");
+      const data = await txtLoader.pull("en");
+
+      expect(data).toEqual(expectedOutput);
+    });
+
+    it("should save txt", async () => {
+      setupFileMocks();
+
+      const input = `Welcome to our application!
+This is a sample text file for fastlane metadata.
+It contains app description that needs to be translated.`;
+
+      const payload = {
+        content: `¡Bienvenido a nuestra aplicación!
+Este es un archivo de texto de muestra para metadatos de fastlane.
+Contiene la descripción de la aplicación que necesita ser traducida.`
+      };
+
+      const expectedOutput = `¡Bienvenido a nuestra aplicación!
+Este es un archivo de texto de muestra para metadatos de fastlane.
+Contiene la descripción de la aplicación que necesita ser traducida.`;
+
+      mockFileOperations(input);
+
+      const txtLoader = createBucketLoader("txt", "fastlane/metadata/[locale]/description.txt", {
+        defaultLocale: "en",
+      });
+      txtLoader.setDefaultLocale("en");
+      await txtLoader.pull("en");
+
+      await txtLoader.push("es", payload);
+
+      expect(fs.writeFile).toHaveBeenCalledWith(
+        "fastlane/metadata/es/description.txt",
+        expectedOutput,
+        { encoding: "utf-8", flag: "w" }
+      );
+    });
+
+    it("should handle empty txt files", async () => {
+      setupFileMocks();
+
+      const input = "";
+      const expectedOutput = {};
+
+      mockFileOperations(input);
+
+      const txtLoader = createBucketLoader("txt", "fastlane/metadata/[locale]/description.txt", {
+        defaultLocale: "en",
+      });
+      txtLoader.setDefaultLocale("en");
+      const data = await txtLoader.pull("en");
+
+      expect(data).toEqual(expectedOutput);
+    });
+  });
 });
 
 function setupFileMocks() {
