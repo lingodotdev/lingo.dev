@@ -278,5 +278,11 @@ export default function createBucketLoader(
         createIgnoredKeysLoader(ignoredKeys || []),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
+    case "txt":
+      return composeLoaders(
+        createTextFileLoader(bucketPathPattern),
+        createSyncLoader(),
+        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+      );
   }
 }
