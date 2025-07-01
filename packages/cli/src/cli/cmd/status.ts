@@ -105,10 +105,11 @@ export default new Command()
         buckets = buckets
           .map((bucket: any) => {
             const paths = bucket.paths.filter((path: any) =>
-              flags.file!.find((file) => 
-                path.pathPattern?.includes(file) || 
-                path.pathPattern?.match(file) || 
-                minimatch(path.pathPattern, file)
+              flags.file!.find(
+                (file) =>
+                  path.pathPattern?.includes(file) ||
+                  path.pathPattern?.match(file) ||
+                  minimatch(path.pathPattern, file),
               ),
             );
             return { ...bucket, paths };
