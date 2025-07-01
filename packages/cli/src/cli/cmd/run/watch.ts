@@ -1,5 +1,6 @@
 import * as chokidar from "chokidar";
 import chalk from "chalk";
+import { minimatch } from "minimatch";
 import { colors } from "../../constants";
 import { CmdRunContext } from "./_types";
 import plan from "./plan";
@@ -99,7 +100,7 @@ async function getWatchPatterns(ctx: CmdRunContext): Promise<string[]> {
     for (const bucketPath of bucket.paths) {
       // Skip if specific files are filtered
       if (ctx.flags.file) {
-        if (!ctx.flags.file.some((f) => bucketPath.pathPattern.includes(f))) {
+        if (!ctx.flags.file.some((f) => minimatch(bucketPath.pathPattern, f))) {
           continue;
         }
       }
