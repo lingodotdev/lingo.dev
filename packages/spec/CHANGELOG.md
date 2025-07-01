@@ -1,5 +1,11 @@
 # @lingo.dev/\_spec
 
+## 0.39.0
+
+### Minor Changes
+
+- [#981](https://github.com/lingodotdev/lingo.dev/pull/981) [`f644123`](https://github.com/lingodotdev/lingo.dev/commit/f644123ddf6a6254790d08af50141e4dd78c3677) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - Add support for plain TXT files to enable translation of fastlane App Store metadata and other plain text content
+
 ## 0.38.0
 
 ### Minor Changes
