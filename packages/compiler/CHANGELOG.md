@@ -1,5 +1,12 @@
 # @lingo.dev/\_compiler
 
+## 0.5.2
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @lingo.dev/_sdk@0.9.5
+
 ## 0.5.1
 
 ### Patch Changes

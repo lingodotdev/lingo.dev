@@ -41,6 +41,7 @@ import createMdxLockedPatternsLoader from "./mdx2/locked-patterns";
 import createIgnoredKeysLoader from "./ignored-keys";
 import createEjsLoader from "./ejs";
 import createEnsureKeyOrderLoader from "./ensure-key-order";
+import createTxtLoader from "./txt";
 
 type BucketLoaderOptions = {
   returnUnlocalizedKeys?: boolean;
@@ -276,6 +277,13 @@ export default function createBucketLoader(
         createSyncLoader(),
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
+        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+      );
+    case "txt":
+      return composeLoaders(
+        createTextFileLoader(bucketPathPattern),
+        createTxtLoader(),
+        createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
   }

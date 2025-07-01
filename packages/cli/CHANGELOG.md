@@ -1,5 +1,24 @@
 # lingo.dev
 
+## 0.103.0
+
+### Minor Changes
+
+- [#981](https://github.com/lingodotdev/lingo.dev/pull/981) [`f644123`](https://github.com/lingodotdev/lingo.dev/commit/f644123ddf6a6254790d08af50141e4dd78c3677) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - Add support for plain TXT files to enable translation of fastlane App Store metadata and other plain text content
+
+### Patch Changes
+
+- Updated dependencies [[`f644123`](https://github.com/lingodotdev/lingo.dev/commit/f644123ddf6a6254790d08af50141e4dd78c3677)]:
+  - @lingo.dev/_spec@0.39.0
+  - @lingo.dev/_sdk@0.9.5
+  - @lingo.dev/_compiler@0.5.2
+
+## 0.102.4
+
+### Patch Changes
+
+- [#982](https://github.com/lingodotdev/lingo.dev/pull/982) [`29cf6a7`](https://github.com/lingodotdev/lingo.dev/commit/29cf6a7359707e0e341c11942d1ce6dedf7e66e5) Thanks [@mathio](https://github.com/mathio)! - fix xcstrings version
+
 ## 0.102.3
 
 ### Patch Changes

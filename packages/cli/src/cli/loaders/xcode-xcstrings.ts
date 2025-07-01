@@ -120,12 +120,12 @@ export default function createXcodeXcstringsLoader(
 }
 
 export function _removeLocale(input: Record<string, any>, locale: string) {
-  const { sourceLanguage, strings } = input;
+  const { strings } = input;
   const newStrings = _.cloneDeep(strings);
   for (const [key, value] of Object.entries(newStrings)) {
     if ((value as any).localizations?.[locale]) {
       delete (value as any).localizations[locale];
     }
   }
-  return { sourceLanguage, strings: newStrings };
+  return { ...input, strings: newStrings };
 }
