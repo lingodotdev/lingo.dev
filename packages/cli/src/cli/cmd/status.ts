@@ -19,6 +19,7 @@ import chalk from "chalk";
 import Table from "cli-table3";
 import { createDeltaProcessor } from "../utils/delta";
 import trackEvent from "../utils/observability";
+import { minimatch } from "minimatch";
 
 // Define types for our language stats
 interface LanguageStats {
@@ -104,7 +105,11 @@ export default new Command()
         buckets = buckets
           .map((bucket: any) => {
             const paths = bucket.paths.filter((path: any) =>
-              flags.file!.find((file) => path.pathPattern?.match(file)),
+              flags.file!.find((file) => 
+                path.pathPattern?.includes(file) || 
+                path.pathPattern?.match(file) || 
+                minimatch(path.pathPattern, file)
+              ),
             );
             return { ...bucket, paths };
           })

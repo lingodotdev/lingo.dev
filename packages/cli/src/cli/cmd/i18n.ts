@@ -26,6 +26,7 @@ import trackEvent from "../utils/observability";
 import { createDeltaProcessor } from "../utils/delta";
 import { tryReadFile, writeFile } from "../utils/fs";
 import { flatten, unflatten } from "flat";
+import { minimatch } from "minimatch";
 
 export default new Command()
   .command("i18n")
@@ -135,7 +136,11 @@ export default new Command()
         buckets = buckets
           .map((bucket: any) => {
             const paths = bucket.paths.filter((path: any) =>
-              flags.file!.find((file) => path.pathPattern?.includes(file)),
+              flags.file!.find((file) => 
+                path.pathPattern?.includes(file) || 
+                path.pathPattern?.match(file) || 
+                minimatch(path.pathPattern, file)
+              ),
             );
             return { ...bucket, paths };
           })
