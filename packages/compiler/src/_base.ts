@@ -35,7 +35,7 @@ export type CompilerParams = {
    */
   lingoDir: string;
   /**
-   * The root directory of the source code that will be translated.
+   * The directory of the source code that will be translated, relative to the current working directory.
    *
    * @default "src"
    */
