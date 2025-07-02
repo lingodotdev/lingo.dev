@@ -47,7 +47,7 @@ export type CompilerParams = {
    */
   rsc: boolean;
   /**
-   * If `true`, the compiler will only localize files that use the `use i18n;` directive.
+   * If `true`, the compiler will only localize files that use the `"use i18n";` directive.
    *
    * @default false
    */
