@@ -1,5 +1,15 @@
 # lingo.dev
 
+## 0.104.0
+
+### Minor Changes
+
+- [#986](https://github.com/lingodotdev/lingo.dev/pull/986) [`65701e5`](https://github.com/lingodotdev/lingo.dev/commit/65701e5b9694e811587ef600227251a1ff1384a0) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - Add glob pattern matching support to --file argument using minimatch library
+
+### Patch Changes
+
+- [#988](https://github.com/lingodotdev/lingo.dev/pull/988) [`4e55355`](https://github.com/lingodotdev/lingo.dev/commit/4e5535535029743b7a0edc4fdab3d4ee71374035) Thanks [@mathio](https://github.com/mathio)! - o11y
+
 ## 0.103.0
 
 ### Minor Changes
