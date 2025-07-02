@@ -45,7 +45,7 @@ export default new Command()
   )
   .option(
     "--file [files...]",
-    "File to process. Process only a specific path, may contain asterisk * to match multiple files.",
+    "File to process. Process only files that include this string in their path. Useful if you have a lot of files and want to focus on a specific one. Specify more files separated by commas or spaces.",
   )
   .option(
     "--force",
