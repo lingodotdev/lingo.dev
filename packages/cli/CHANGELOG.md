@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.105.0
+
+### Minor Changes
+
+- [#992](https://github.com/lingodotdev/lingo.dev/pull/992) [`4e9e368`](https://github.com/lingodotdev/lingo.dev/commit/4e9e36830ee4277ef9d65eee9ee92380a95a622c) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - feat: skip lockfile updates when --target-locale or --locale flags are provided explicitly
+
 ## 0.104.0
 
 ### Minor Changes
