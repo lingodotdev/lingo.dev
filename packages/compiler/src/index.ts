@@ -20,6 +20,7 @@ import {
 import { isRunningInCIOrDocker } from "./utils/env";
 import { providerDetails } from "./lib/lcp/api/provider-details";
 import { loadDictionary, transformComponent } from "./_loader-utils";
+import trackEvent from "./utils/observability";
 
 const keyCheckers: Record<
   string,
@@ -45,6 +46,18 @@ const keyCheckers: Record<
     checkRc: getLingoDotDevKeyFromRc,
   },
 };
+
+const alreadySentBuildEvent = { value: false };
+
+function sendBuildEvent(framework: string, config: any, isDev: boolean) {
+  if (alreadySentBuildEvent.value) return;
+  alreadySentBuildEvent.value = true;
+  trackEvent("compiler.build.start", {
+    framework,
+    configuration: config,
+    isDevMode: isDev,
+  });
+}
 
 const unplugin = createUnplugin<Partial<typeof defaultParams> | undefined>(
   (_params, _meta) => {
@@ -91,6 +104,7 @@ const unplugin = createUnplugin<Partial<typeof defaultParams> | undefined>(
 
     const isDev: boolean =
       "dev" in _meta ? !!_meta.dev : process.env.NODE_ENV !== "production";
+    sendBuildEvent("unplugin", params, isDev);
 
     return {
       name: packageJson.name,
@@ -113,8 +127,6 @@ const unplugin = createUnplugin<Partial<typeof defaultParams> | undefined>(
         if (!dictionary) {
           return null;
         }
-
-        console.log(JSON.stringify(dictionary, null, 2));
 
         return {
           code: `export default ${JSON.stringify(dictionary, null, 2)}`,
@@ -166,6 +178,9 @@ export default {
         },
         compilerParams,
       );
+
+      const isDev = process.env.NODE_ENV !== "production";
+      sendBuildEvent("Next.js", mergedParams, isDev);
 
       let turbopackEnabled: boolean;
       if (mergedParams.turbopack?.enabled === "auto") {
@@ -236,9 +251,20 @@ export default {
       return nextConfig;
     },
   vite: (compilerParams?: Partial<typeof defaultParams>) => (config: any) => {
-    config.plugins.unshift(
-      unplugin.vite(_.merge({}, defaultParams, { rsc: false }, compilerParams)),
+    const mergedParams = _.merge(
+      {},
+      defaultParams,
+      { rsc: false },
+      compilerParams,
     );
+
+    const isDev = process.env.NODE_ENV !== "production";
+    const isReactRouter = config.plugins
+      ?.flat()
+      ?.some((plugin: any) => plugin.name === "react-router");
+    const framework = isReactRouter ? "React Router" : "Vite";
+    sendBuildEvent(framework, mergedParams, isDev);
+    config.plugins.unshift(unplugin.vite(mergedParams));
     return config;
   },
 };
