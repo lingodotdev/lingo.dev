@@ -58,7 +58,7 @@
     "unplugin": "^2.1.2",
     "vitest": "^2.1.4",
     "zod": "^3.24.1",
-    "posthog-node": "^4.17.0",
+    "posthog-node": "^5.1.1",
     "node-machine-id": "^1.1.12"
   },
   "packageManager": "pnpm@9.12.3"
