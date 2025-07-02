@@ -67,9 +67,10 @@ export default async function plan(
             for (const bucketPath of bucket.paths) {
               if (input.flags.file) {
                 if (
-                  !input.flags.file.some((f) =>
-                    bucketPath.pathPattern.includes(f) ||
-                    minimatch(bucketPath.pathPattern, f),
+                  !input.flags.file.some(
+                    (f) =>
+                      bucketPath.pathPattern.includes(f) ||
+                      minimatch(bucketPath.pathPattern, f),
                   )
                 ) {
                   continue;
@@ -99,9 +100,10 @@ export default async function plan(
             for (const bucketPath of bucket.paths) {
               if (input.flags.file) {
                 if (
-                  !input.flags.file.some((f) =>
-                    bucketPath.pathPattern.includes(f) ||
-                    minimatch(bucketPath.pathPattern, f),
+                  !input.flags.file.some(
+                    (f) =>
+                      bucketPath.pathPattern.includes(f) ||
+                      minimatch(bucketPath.pathPattern, f),
                   )
                 ) {
                   continue;
