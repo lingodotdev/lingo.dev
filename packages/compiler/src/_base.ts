@@ -43,6 +43,10 @@ export type CompilerParams = {
   /**
    * If `true`, the compiler will generate code for React Server Components (RSC).
    *
+   * When using Vite, this value is always `false`.
+   *
+   * When using Next.js, this value is always `true`.
+   *
    * @default false
    */
   rsc: boolean;
@@ -66,31 +70,13 @@ export type CompilerParams = {
    * If set to an object, the compiler will use the model(s) specified in the object:
    *
    * - The key is a string that represents the source and target locales, separated by a colon (e.g., `"en:es"`).
-   * - The value is a string that represents the model to use for translation (e.g., `"google:gemini-2.0-flash"`).
+   * - The value is a string that represents the LLM provider and model, separated by a colon (e.g., `"google:gemini-2.0-flash"`).
    *
    * You can use `*` as a wildcard to match any locale.
    *
+   * If a model is not specified, an error will be thrown.
+   *
    * @default {}
-   *
-   * @example Use Lingo.dev Engine
-   * ```json
-   * "lingo.dev"
-   * ```
-   *
-   * @example Use a single model for all locales
-   * ```json
-   * {
-   *   "*:*": "mistral:mistral-large-latest"
-   * }
-   * ```
-   *
-   * @example Use different models for different locales
-   * ```json
-   * {
-   *   "en:es": "groq:llama3-8b-8192",
-   *   "en:fr": "google:gemini-2.0-flash",
-   * }
-   * ```
    */
   models: "lingo.dev" | Record<string, string>;
 };
