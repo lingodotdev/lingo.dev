@@ -481,7 +481,9 @@ export default new Command()
 
             const deltaProcessor = createDeltaProcessor(bucketPath.pathPattern);
             const checksums = await deltaProcessor.createChecksums(sourceData);
-            await deltaProcessor.saveChecksums(checksums);
+            if (!flags.locale?.length) {
+              await deltaProcessor.saveChecksums(checksums);
+            }
           }
         } catch (_error: any) {
           const error = new Error(
