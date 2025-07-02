@@ -100,7 +100,10 @@ async function getWatchPatterns(ctx: CmdRunContext): Promise<string[]> {
     for (const bucketPath of bucket.paths) {
       // Skip if specific files are filtered
       if (ctx.flags.file) {
-        if (!ctx.flags.file.some((f) => minimatch(bucketPath.pathPattern, f))) {
+        if (!ctx.flags.file.some((f) => 
+          bucketPath.pathPattern.includes(f) ||
+          minimatch(bucketPath.pathPattern, f)
+        )) {
           continue;
         }
       }

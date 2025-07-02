@@ -68,6 +68,7 @@ export default async function plan(
               if (input.flags.file) {
                 if (
                   !input.flags.file.some((f) =>
+                    bucketPath.pathPattern.includes(f) ||
                     minimatch(bucketPath.pathPattern, f),
                   )
                 ) {
@@ -99,6 +100,7 @@ export default async function plan(
               if (input.flags.file) {
                 if (
                   !input.flags.file.some((f) =>
+                    bucketPath.pathPattern.includes(f) ||
                     minimatch(bucketPath.pathPattern, f),
                   )
                 ) {
