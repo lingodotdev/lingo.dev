@@ -1,5 +1,11 @@
 # @lingo.dev/\_spec
 
+## 0.39.1
+
+### Patch Changes
+
+- [#995](https://github.com/lingodotdev/lingo.dev/pull/995) [`acd5356`](https://github.com/lingodotdev/lingo.dev/commit/acd5356b68d2261576240c173fea790864c3c31d) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - Add Icelandic (is) locale support with is-IS regional variant
+
 ## 0.39.0
 
 ### Minor Changes
