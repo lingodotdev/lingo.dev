@@ -287,11 +287,16 @@ export class LingoDotDevEngine {
   ) {
     const responses = await Promise.all(
       params.targetLocales.map((targetLocale) =>
-        this.localizeText(text, {
-          sourceLocale: params.sourceLocale,
-          targetLocale,
-          fast: params.fast,
-        }, undefined, signal),
+        this.localizeText(
+          text,
+          {
+            sourceLocale: params.sourceLocale,
+            targetLocale,
+            fast: params.fast,
+          },
+          undefined,
+          signal,
+        ),
       ),
     );
 
@@ -484,7 +489,10 @@ export class LingoDotDevEngine {
    * @param signal - Optional AbortSignal to cancel the operation
    * @returns Promise resolving to a locale code (e.g., 'en', 'es', 'fr')
    */
-  async recognizeLocale(text: string, signal?: AbortSignal): Promise<LocaleCode> {
+  async recognizeLocale(
+    text: string,
+    signal?: AbortSignal,
+  ): Promise<LocaleCode> {
     const response = await fetch(`${this.config.apiUrl}/recognize`, {
       method: "POST",
       headers: {
@@ -508,7 +516,9 @@ export class LingoDotDevEngine {
     return jsonResponse.locale;
   }
 
-  async whoami(signal?: AbortSignal): Promise<{ email: string; id: string } | null> {
+  async whoami(
+    signal?: AbortSignal,
+  ): Promise<{ email: string; id: string } | null> {
     try {
       const res = await fetch(`${this.config.apiUrl}/whoami`, {
         method: "POST",
