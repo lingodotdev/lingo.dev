@@ -33,21 +33,23 @@ describe("Whitespace Issue Test", () => {
         <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-yellow-400 bg-clip-text text-transparent"> From Lingo.dev Compiler</span>
       </h1>
     `);
-    
+
     const content = extractJsxContent(path);
-    console.log('Extracted content:', JSON.stringify(content));
-    
+    console.log("Extracted content:", JSON.stringify(content));
+
     // Let's also check the raw JSX structure to understand what's happening
     let jsxTexts: string[] = [];
     path.traverse({
       JSXText(textPath) {
         jsxTexts.push(JSON.stringify(textPath.node.value));
-      }
+      },
     });
-    console.log('JSXText nodes found:', jsxTexts);
-    
+    console.log("JSXText nodes found:", jsxTexts);
+
     // The span should have " From Lingo.dev Compiler" with the leading space
-    expect(content).toContain("<element:span> From Lingo.dev Compiler</element:span>");
+    expect(content).toContain(
+      "<element:span> From Lingo.dev Compiler</element:span>",
+    );
   });
 
   it("should handle explicit whitespace correctly", () => {
@@ -57,10 +59,10 @@ describe("Whitespace Issue Test", () => {
         <span> World</span>
       </div>
     `);
-    
+
     const content = extractJsxContent(path);
-    console.log('Explicit whitespace test:', JSON.stringify(content));
-    
+    console.log("Explicit whitespace test:", JSON.stringify(content));
+
     // Should preserve both the explicit space and the leading space in span
     expect(content).toContain("Hello <element:span> World</element:span>");
   });
