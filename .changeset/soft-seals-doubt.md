@@ -1,5 +1,5 @@
 ---
-"@lingo.dev/_spec": minor
+"@lingo.dev/_spec": patch
 ---
 
 Add Icelandic (is) locale support with is-IS regional variant
