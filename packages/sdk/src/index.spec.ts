@@ -74,6 +74,7 @@ describe("ReplexicaEngine", () => {
           targetLocale: "es",
         },
         undefined,
+        undefined, // AbortSignal
       );
 
       // Verify the final HTML structure
