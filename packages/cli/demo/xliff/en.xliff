@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en-US">
+  <file id="core">
+    <unit id="hello" resname="hello">
+      <segment><source>Hello</source></segment>
+    </unit>
+
+    <unit id="bye" resname="bye">
+      <segment><source>Good-bye</source><target state="translated">Adiós</target></segment>
+    </unit>
+
+    <unit id="expr" resname="expr">
+      <segment><source><![CDATA[5 < 7 & 8 > 3]]></source></segment>
+    </unit>
+
+    <unit id="dupA" resname="dup_key"><segment><source>A</source></segment></unit>
+    <unit id="dupB" resname="dup_key"><segment><source>B</source></segment></unit>
+
+    <group id="settings">
+      <group id="cta">
+        <unit id="ctaTitle" resname="CTA/Title"><segment><source>Try it now</source></segment></unit>
+        <unit id="ctaBody"  resname="CTA/Body"><segment><source>The best app ever.</source></segment></unit>
+      </group>
+    </group>
+
+    <unit id="skeleton" resname="skeleton"/>
+  </file>
+
+  <file id="marketing">
+    <unit id="heroTitle" resname="Hero/Title"><segment><source>The future of translation</source></segment></unit>
+    <unit id="heroSubtitle" resname="Hero/Subtitle">
+      <segment><source>Say it once, localise everywhere.</source><target state="new"/></segment>
+    </unit>
+  </file>
+</xliff>
