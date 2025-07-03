@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en-US">
+  <file id="core">
+    <unit id="hello" resname="hello">
+      <segment>
+        <source>Hola</source>
+      </segment>
+    </unit>
+    <unit id="bye" resname="bye">
+      <segment>
+        <source>Adiós</source>
+        <target state="translated">Adiós</target>
+      </segment>
+    </unit>
+    <unit id="expr" resname="expr">
+      <segment>
+        <source><![CDATA[5 < 7 & 8 > 3]]></source>
+      </segment>
+    </unit>
+    <unit id="dupA" resname="dup_key">
+      <segment>
+        <source>A</source>
+      </segment>
+    </unit>
+    <unit id="dupB" resname="dup_key">
+      <segment>
+        <source>B</source>
+      </segment>
+    </unit>
+    <group id="settings">
+      <group id="cta">
+        <unit id="ctaTitle" resname="CTA/Title">
+          <segment>
+            <source>Pruébalo ahora</source>
+          </segment>
+        </unit>
+        <unit id="ctaBody" resname="CTA/Body">
+          <segment>
+            <source>La mejor aplicación de todos los tiempos.</source>
+          </segment>
+        </unit>
+      </group>
+    </group>
+    <unit id="skeleton" resname="skeleton">
+      <segment xmlns="">
+        <source>esqueleto</source>
+      </segment>
+    </unit>
+  </file>
+  <file id="marketing">
+    <unit id="heroTitle" resname="Hero/Title">
+      <segment>
+        <source>El futuro de la traducción</source>
+      </segment>
+    </unit>
+    <unit id="heroSubtitle" resname="Hero/Subtitle">
+      <segment>
+        <source>Dilo una vez, localiza en todas partes.</source>
+        <target state="new"></target>
+      </segment>
+    </unit>
+  </file>
+</xliff>

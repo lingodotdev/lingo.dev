@@ -359,3 +359,15 @@ checksums:
     days_until_event/other: 8860d8b849df0fc9c05a0105686c870a
     complex_format: 412e9a53af55fd61a80550c462dfcfcb
     date_format: 53fd72141572ffcdb3ebd8e5e6c4388d
+  decd5fd51d99ea132f05fdfdb5d7eada:
+    sourceLanguage: a422f993d9220fc3488259e5e0426e80
+    resources/core/hello/source: f01e599cced8b7d7105329947b5096de
+    resources/core/bye/source: 87fa86f9031290a9c591f91cff393930
+    resources/core/expr/source: b96f42288414c31f9016040e21f7ff7f
+    resources/core/dupA/source: 59a5c5f4cf42c5d5e87fdbd711c2aab7
+    resources/core/dupB/source: f4d018cabf6eeab3f1c879c1d8eed6de
+    resources/core/settings/groupUnits/cta/groupUnits/ctaTitle/source: 5a9263f67cc7632eb0e3938304b03cb8
+    resources/core/settings/groupUnits/cta/groupUnits/ctaBody/source: ea0bce46ca0a7d95ea6be8ba24e10131
+    resources/core/skeleton/source: 787b64864ffaef3e1c4b5657b3ce71b4
+    resources/marketing/heroTitle/source: 7b843029e2f0de6821d39fd42595d9e8
+    resources/marketing/heroSubtitle/source: aa6d22f1442eea0e9724d2f560329778

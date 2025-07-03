@@ -5,6 +5,9 @@
     "targets": ["ru", "es"]
   },
   "buckets": {
+    "xliff": {
+      "include": ["demo/xliff/[locale].xliff"]
+    },
     "android": {
       "include": ["demo/android/[locale].xml"]
     },
