@@ -213,6 +213,7 @@ export default function createBucketLoader(
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
         createXliffLoader(),
+        createFlatLoader(),
         createEnsureKeyOrderLoader(),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),

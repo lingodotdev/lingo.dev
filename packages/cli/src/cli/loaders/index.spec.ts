@@ -2037,11 +2037,13 @@ Mundo!`;
   </xliff>
       `.trim();
 
+      // Keys must be encoded (e.g. / replaced with %2F)
       const expectedOutput = {
-        "resources/namespace1/group/groupUnits/groupUnit/source": "Group",
-        "resources/namespace1/key.nested/source": "XLIFF Data Manager",
-        "resources/namespace1/key1/source": "Hello",
-        "resources/namespace1/key2/source":
+        "resources%2Fnamespace1%2Fgroup%2FgroupUnits%2FgroupUnit%2Fsource":
+          "Group",
+        "resources%2Fnamespace1%2Fkey.nested%2Fsource": "XLIFF Data Manager",
+        "resources%2Fnamespace1%2Fkey1%2Fsource": "Hello",
+        "resources%2Fnamespace1%2Fkey2%2Fsource":
           "An application to manipulate and process XLIFF documents",
         sourceLanguage: "en-US",
       };
@@ -2088,12 +2090,14 @@ Mundo!`;
       </file>
     </xliff>
         `.trim();
+      // Keys must be encoded (e.g. / replaced with %2F)
       const payload = {
-        "resources/namespace1/group/groupUnits/groupUnit/source": "Grupo",
-        "resources/namespace1/key.nested/source":
+        "resources%2Fnamespace1%2Fgroup%2FgroupUnits%2FgroupUnit%2Fsource":
+          "Grupo",
+        "resources%2Fnamespace1%2Fkey.nested%2Fsource":
           "Administrador de Datos XLIFF",
-        "resources/namespace1/key1/source": "Hola",
-        "resources/namespace1/key2/source":
+        "resources%2Fnamespace1%2Fkey1%2Fsource": "Hola",
+        "resources%2Fnamespace1%2Fkey2%2Fsource":
           "Una aplicación para manipular y procesar documentos XLIFF",
         sourceLanguage: "es-ES",
       };
