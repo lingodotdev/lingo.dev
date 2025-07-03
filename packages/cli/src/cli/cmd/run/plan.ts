@@ -1,5 +1,6 @@
 import chalk from "chalk";
 import { Listr } from "listr2";
+import { minimatch } from "minimatch";
 
 import { colors } from "../../constants";
 import { resolveOverriddenLocale } from "@lingo.dev/_spec";
@@ -66,8 +67,10 @@ export default async function plan(
             for (const bucketPath of bucket.paths) {
               if (input.flags.file) {
                 if (
-                  !input.flags.file.some((f) =>
-                    bucketPath.pathPattern.includes(f),
+                  !input.flags.file.some(
+                    (f) =>
+                      bucketPath.pathPattern.includes(f) ||
+                      minimatch(bucketPath.pathPattern, f),
                   )
                 ) {
                   continue;
@@ -97,8 +100,10 @@ export default async function plan(
             for (const bucketPath of bucket.paths) {
               if (input.flags.file) {
                 if (
-                  !input.flags.file.some((f) =>
-                    bucketPath.pathPattern.includes(f),
+                  !input.flags.file.some(
+                    (f) =>
+                      bucketPath.pathPattern.includes(f) ||
+                      minimatch(bucketPath.pathPattern, f),
                   )
                 ) {
                   continue;
