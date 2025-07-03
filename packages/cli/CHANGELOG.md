@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.105.2
+
+### Patch Changes
+
+- [#1000](https://github.com/lingodotdev/lingo.dev/pull/1000) [`30faa6d`](https://github.com/lingodotdev/lingo.dev/commit/30faa6d10e851a38ced86ae403b3a1fd48440bca) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - xliff 1.2 implementation
+
 ## 0.105.1
 
 ### Patch Changes
