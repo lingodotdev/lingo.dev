@@ -258,7 +258,9 @@ function createWorkerTask(args: {
 
               const checksums =
                 await deltaProcessor.createChecksums(sourceData);
-              await deltaProcessor.saveChecksums(checksums);
+              if (!args.ctx.flags.targetLocale?.length) {
+                await deltaProcessor.saveChecksums(checksums);
+              }
             });
 
             return { status: "success" } satisfies CmdRunTaskResult;
