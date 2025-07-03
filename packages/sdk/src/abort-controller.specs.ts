@@ -1,90 +1,90 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { LingoDotDevEngine } from '../src/index.js';
+import { describe, it, expect, vi, beforeEach } from "vitest";
+import { LingoDotDevEngine } from "../src/index.js";
 
 // Mock fetch globally
 global.fetch = vi.fn();
 
-describe('AbortController Support', () => {
+describe("AbortController Support", () => {
   let engine: LingoDotDevEngine;
-  
+
   beforeEach(() => {
     engine = new LingoDotDevEngine({
-      apiKey: 'test-key',
-      apiUrl: 'https://test.api.com'
+      apiKey: "test-key",
+      apiUrl: "https://test.api.com",
     });
     vi.clearAllMocks();
   });
 
-  describe('localizeText', () => {
-    it('should pass AbortSignal to fetch', async () => {
+  describe("localizeText", () => {
+    it("should pass AbortSignal to fetch", async () => {
       const controller = new AbortController();
       const mockResponse = {
         ok: true,
-        json: vi.fn().mockResolvedValue({ data: { text: 'Hola' } })
+        json: vi.fn().mockResolvedValue({ data: { text: "Hola" } }),
       };
       (global.fetch as any).mockResolvedValue(mockResponse);
 
       await engine.localizeText(
-        'Hello',
-        { sourceLocale: 'en', targetLocale: 'es' },
+        "Hello",
+        { sourceLocale: "en", targetLocale: "es" },
         undefined,
-        controller.signal
+        controller.signal,
       );
 
       expect(global.fetch).toHaveBeenCalledWith(
-        'https://test.api.com/i18n',
+        "https://test.api.com/i18n",
         expect.objectContaining({
-          signal: controller.signal
-        })
+          signal: controller.signal,
+        }),
       );
     });
 
-    it('should throw error when operation is aborted', async () => {
+    it("should throw error when operation is aborted", async () => {
       const controller = new AbortController();
       controller.abort();
 
       await expect(
         engine.localizeText(
-          'Hello',
-          { sourceLocale: 'en', targetLocale: 'es' },
+          "Hello",
+          { sourceLocale: "en", targetLocale: "es" },
           undefined,
-          controller.signal
-        )
-      ).rejects.toThrow('Operation was aborted');
+          controller.signal,
+        ),
+      ).rejects.toThrow("Operation was aborted");
     });
   });
 
-  describe('localizeObject', () => {
-    it('should pass AbortSignal to internal method', async () => {
+  describe("localizeObject", () => {
+    it("should pass AbortSignal to internal method", async () => {
       const controller = new AbortController();
       const mockResponse = {
         ok: true,
-        json: vi.fn().mockResolvedValue({ data: { key: 'valor' } })
+        json: vi.fn().mockResolvedValue({ data: { key: "valor" } }),
       };
       (global.fetch as any).mockResolvedValue(mockResponse);
 
       await engine.localizeObject(
-        { key: 'value' },
-        { sourceLocale: 'en', targetLocale: 'es' },
+        { key: "value" },
+        { sourceLocale: "en", targetLocale: "es" },
         undefined,
-        controller.signal
+        controller.signal,
       );
 
       expect(global.fetch).toHaveBeenCalledWith(
-        'https://test.api.com/i18n',
+        "https://test.api.com/i18n",
         expect.objectContaining({
-          signal: controller.signal
-        })
+          signal: controller.signal,
+        }),
       );
     });
   });
 
-  describe('localizeHtml', () => {
-    it('should pass AbortSignal to internal method', async () => {
+  describe("localizeHtml", () => {
+    it("should pass AbortSignal to internal method", async () => {
       const controller = new AbortController();
       const mockResponse = {
         ok: true,
-        json: vi.fn().mockResolvedValue({ data: { 'body/0': 'Hola' } })
+        json: vi.fn().mockResolvedValue({ data: { "body/0": "Hola" } }),
       };
       (global.fetch as any).mockResolvedValue(mockResponse);
 
@@ -94,140 +94,144 @@ describe('AbortController Support', () => {
           window: {
             document: {
               documentElement: {
-                setAttribute: vi.fn()
+                setAttribute: vi.fn(),
               },
               head: {
-                childNodes: []
+                childNodes: [],
               },
               body: {
-                childNodes: [{
-                  nodeType: 3,
-                  textContent: 'Hello',
-                  parentElement: null
-                }]
-              }
-            }
+                childNodes: [
+                  {
+                    nodeType: 3,
+                    textContent: "Hello",
+                    parentElement: null,
+                  },
+                ],
+              },
+            },
           },
-          serialize: vi.fn().mockReturnValue('<html><body>Hola</body></html>')
-        }))
+          serialize: vi.fn().mockReturnValue("<html><body>Hola</body></html>"),
+        })),
       };
 
       // Mock dynamic import
-      vi.doMock('jsdom', () => mockJSDOM);
+      vi.doMock("jsdom", () => mockJSDOM);
 
       await engine.localizeHtml(
-        '<html><body>Hello</body></html>',
-        { sourceLocale: 'en', targetLocale: 'es' },
+        "<html><body>Hello</body></html>",
+        { sourceLocale: "en", targetLocale: "es" },
         undefined,
-        controller.signal
+        controller.signal,
       );
 
       expect(global.fetch).toHaveBeenCalledWith(
-        'https://test.api.com/i18n',
+        "https://test.api.com/i18n",
         expect.objectContaining({
-          signal: controller.signal
-        })
+          signal: controller.signal,
+        }),
       );
     });
   });
 
-  describe('localizeChat', () => {
-    it('should pass AbortSignal to internal method', async () => {
+  describe("localizeChat", () => {
+    it("should pass AbortSignal to internal method", async () => {
       const controller = new AbortController();
       const mockResponse = {
         ok: true,
-        json: vi.fn().mockResolvedValue({ data: { 'chat_0': 'Hola' } })
+        json: vi.fn().mockResolvedValue({ data: { chat_0: "Hola" } }),
       };
       (global.fetch as any).mockResolvedValue(mockResponse);
 
       await engine.localizeChat(
-        [{ name: 'User', text: 'Hello' }],
-        { sourceLocale: 'en', targetLocale: 'es' },
+        [{ name: "User", text: "Hello" }],
+        { sourceLocale: "en", targetLocale: "es" },
         undefined,
-        controller.signal
+        controller.signal,
       );
 
       expect(global.fetch).toHaveBeenCalledWith(
-        'https://test.api.com/i18n',
+        "https://test.api.com/i18n",
         expect.objectContaining({
-          signal: controller.signal
-        })
+          signal: controller.signal,
+        }),
       );
     });
   });
 
-  describe('batchLocalizeText', () => {
-    it('should pass AbortSignal to individual localizeText calls', async () => {
+  describe("batchLocalizeText", () => {
+    it("should pass AbortSignal to individual localizeText calls", async () => {
       const controller = new AbortController();
       const mockResponse = {
         ok: true,
-        json: vi.fn().mockResolvedValue({ data: { text: 'Hola' } })
+        json: vi.fn().mockResolvedValue({ data: { text: "Hola" } }),
       };
       (global.fetch as any).mockResolvedValue(mockResponse);
 
       await engine.batchLocalizeText(
-        'Hello',
+        "Hello",
         {
-          sourceLocale: 'en',
-          targetLocales: ['es', 'fr']
+          sourceLocale: "en",
+          targetLocales: ["es", "fr"],
         },
-        controller.signal
+        controller.signal,
       );
 
       expect(global.fetch).toHaveBeenCalledTimes(2);
       expect(global.fetch).toHaveBeenCalledWith(
-        'https://test.api.com/i18n',
+        "https://test.api.com/i18n",
         expect.objectContaining({
-          signal: controller.signal
-        })
+          signal: controller.signal,
+        }),
       );
     });
   });
 
-  describe('recognizeLocale', () => {
-    it('should pass AbortSignal to fetch', async () => {
+  describe("recognizeLocale", () => {
+    it("should pass AbortSignal to fetch", async () => {
       const controller = new AbortController();
       const mockResponse = {
         ok: true,
-        json: vi.fn().mockResolvedValue({ locale: 'en' })
+        json: vi.fn().mockResolvedValue({ locale: "en" }),
       };
       (global.fetch as any).mockResolvedValue(mockResponse);
 
-      await engine.recognizeLocale('Hello world', controller.signal);
+      await engine.recognizeLocale("Hello world", controller.signal);
 
       expect(global.fetch).toHaveBeenCalledWith(
-        'https://test.api.com/recognize',
+        "https://test.api.com/recognize",
         expect.objectContaining({
-          signal: controller.signal
-        })
+          signal: controller.signal,
+        }),
       );
     });
   });
 
-  describe('whoami', () => {
-    it('should pass AbortSignal to fetch', async () => {
+  describe("whoami", () => {
+    it("should pass AbortSignal to fetch", async () => {
       const controller = new AbortController();
       const mockResponse = {
         ok: true,
-        json: vi.fn().mockResolvedValue({ email: 'test@example.com', id: '123' })
+        json: vi
+          .fn()
+          .mockResolvedValue({ email: "test@example.com", id: "123" }),
       };
       (global.fetch as any).mockResolvedValue(mockResponse);
 
       await engine.whoami(controller.signal);
 
       expect(global.fetch).toHaveBeenCalledWith(
-        'https://test.api.com/whoami',
+        "https://test.api.com/whoami",
         expect.objectContaining({
-          signal: controller.signal
-        })
+          signal: controller.signal,
+        }),
       );
     });
   });
 
-  describe('Batch operations abortion', () => {
-    it('should abort between chunks in _localizeRaw', async () => {
+  describe("Batch operations abortion", () => {
+    it("should abort between chunks in _localizeRaw", async () => {
       const controller = new AbortController();
-      
+
       // Create a large payload that will be split into multiple chunks
       const largePayload: Record<string, string> = {};
       for (let i = 0; i < 100; i++) {
@@ -236,7 +240,7 @@ describe('AbortController Support', () => {
 
       const mockResponse = {
         ok: true,
-        json: vi.fn().mockResolvedValue({ data: { key0: 'processed' } })
+        json: vi.fn().mockResolvedValue({ data: { key0: "processed" } }),
       };
 
       // Mock fetch to abort the controller after the first call
@@ -253,11 +257,11 @@ describe('AbortController Support', () => {
       await expect(
         engine._localizeRaw(
           largePayload,
-          { sourceLocale: 'en', targetLocale: 'es' },
+          { sourceLocale: "en", targetLocale: "es" },
           undefined,
-          controller.signal
-        )
-      ).rejects.toThrow('Operation was aborted');
+          controller.signal,
+        ),
+      ).rejects.toThrow("Operation was aborted");
 
       // Should have made at least one call
       expect(callCount).toBeGreaterThan(0);
