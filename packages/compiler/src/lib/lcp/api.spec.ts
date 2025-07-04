@@ -25,9 +25,27 @@ describe("LCPAPI", () => {
 
       expect(chunkSpy).toHaveBeenCalledWith(0);
       expect(translateSpy).toHaveBeenCalledTimes(3);
-      expect(translateSpy).toHaveBeenCalledWith(modelsMock, 1, "en", "es");
-      expect(translateSpy).toHaveBeenCalledWith(modelsMock, 2, "en", "es");
-      expect(translateSpy).toHaveBeenCalledWith(modelsMock, 3, "en", "es");
+      expect(translateSpy).toHaveBeenCalledWith(
+        modelsMock,
+        1,
+        "en",
+        "es",
+        undefined,
+      );
+      expect(translateSpy).toHaveBeenCalledWith(
+        modelsMock,
+        2,
+        "en",
+        "es",
+        undefined,
+      );
+      expect(translateSpy).toHaveBeenCalledWith(
+        modelsMock,
+        3,
+        "en",
+        "es",
+        undefined,
+      );
       expect(mergeSpy).toHaveBeenCalledWith([10, 20, 30]);
       expect(result).toEqual(100);
     });

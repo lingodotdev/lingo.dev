@@ -34,6 +34,7 @@ export class LCPAPI {
     sourceDictionary: DictionarySchema,
     sourceLocale: string,
     targetLocale: string,
+    prompt?: string | null,
   ): Promise<DictionarySchema> {
     const timeLabel = `LCPAPI.translate: ${targetLocale}`;
     console.time(timeLabel);
@@ -45,6 +46,7 @@ export class LCPAPI {
         chunk,
         sourceLocale,
         targetLocale,
+        prompt,
       );
       translatedChunks.push(translatedChunk);
     }
@@ -161,6 +163,7 @@ export class LCPAPI {
     sourceDictionary: DictionarySchema,
     sourceLocale: string,
     targetLocale: string,
+    prompt?: string | null,
   ): Promise<DictionarySchema> {
     if (models === "lingo.dev") {
       try {
@@ -231,7 +234,11 @@ export class LCPAPI {
           messages: [
             {
               role: "system",
-              content: getSystemPrompt({ sourceLocale, targetLocale }),
+              content: getSystemPrompt({
+                sourceLocale,
+                targetLocale,
+                prompt: prompt ?? undefined,
+              }),
             },
             ...shots.flatMap((shotsTuple) => [
               {

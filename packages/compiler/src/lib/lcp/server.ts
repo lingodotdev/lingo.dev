@@ -8,22 +8,21 @@ import _ from "lodash";
 import { LCPCache } from "./cache";
 import { LCPAPI } from "./api";
 
-export type LCPServerParams = {
+type LCPServerBaseParams = {
   lcp: LCPSchema;
   sourceLocale: string;
-  targetLocales: string[];
   sourceRoot: string;
   lingoDir: string;
   models: "lingo.dev" | Record<string, string>;
+  prompt?: string | null;
 };
 
-export type LCPServerParamsForLocale = {
-  lcp: LCPSchema;
-  sourceLocale: string;
+export type LCPServerParams = LCPServerBaseParams & {
+  targetLocales: string[];
+};
+
+export type LCPServerParamsForLocale = LCPServerBaseParams & {
   targetLocale: string;
-  sourceRoot: string;
-  lingoDir: string;
-  models: "lingo.dev" | Record<string, string>;
 };
 
 export class LCPServer {
@@ -119,6 +118,7 @@ export class LCPServer {
         uncachedSourceDictionary,
         params.sourceLocale,
         params.targetLocale,
+        params.prompt,
       );
 
       // we merge new translations with cache, so that we can cache empty strings
