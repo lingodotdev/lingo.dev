@@ -79,6 +79,15 @@ export type CompilerParams = {
    * @default {}
    */
   models: "lingo.dev" | Record<string, string>;
+  /**
+   * Custom system prompt for the translation engine. If set, this prompt will override the default system prompt defined in Compiler.
+   * Only works with custom models, not with Lingo.dev Engine.
+   *
+   * Example: "You are a helpful assistant that translates {SOURCE_LOCALE} to {TARGET_LOCALE}."
+   *
+   * @default null
+   */
+  prompt?: string | null;
 };
 export type CompilerInput = {
   relativeFilePath: string;
@@ -146,4 +155,5 @@ export const defaultParams: CompilerParams = {
   useDirective: false,
   debug: false,
   models: {},
+  prompt: null,
 };
