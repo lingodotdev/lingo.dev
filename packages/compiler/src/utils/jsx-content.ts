@@ -167,15 +167,39 @@ function normalizeJsxWhitespace(input: string) {
       // For lines with placeholders, preserve the original spacing
       result += trimmedLine;
     } else if (
-      i > 0 &&
-      (trimmedLine.startsWith("<element:") ||
-        trimmedLine.startsWith("<function:") ||
-        trimmedLine.startsWith("{") ||
-        trimmedLine.startsWith("<expression/>"))
+      trimmedLine.startsWith("<element:") ||
+      trimmedLine.startsWith("<function:") ||
+      trimmedLine.startsWith("{") ||
+      trimmedLine.startsWith("<expression/>")
     ) {
+      // When we encounter an element/function/expression
+      // Add space only when:
+      // 1. We have existing content AND
+      // 2. Result doesn't already end with space or placeholder AND
+      // 3. The result ends with a word character (indicating text) AND
+      // 4. The element content starts with a space (indicating word continuation)
+      const shouldAddSpace =
+        result &&
+        !result.endsWith(" ") &&
+        !result.endsWith(WHITESPACE_PLACEHOLDER) &&
+        /\w$/.test(result) &&
+        // Check if element content starts with space by looking for "> " pattern
+        trimmedLine.includes("> ");
+
+      if (shouldAddSpace) {
+        result += " ";
+      }
       result += trimmedLine;
     } else {
-      if (result && !result.endsWith(" ")) result += " ";
+      // For regular text content, ensure proper spacing
+      // Only add space if the result doesn't already end with a space or placeholder
+      if (
+        result &&
+        !result.endsWith(" ") &&
+        !result.endsWith(WHITESPACE_PLACEHOLDER)
+      ) {
+        result += " ";
+      }
       result += trimmedLine;
     }
   }
