@@ -1,5 +1,11 @@
 # @lingo.dev/\_compiler
 
+## 0.5.4
+
+### Patch Changes
+
+- [#1002](https://github.com/lingodotdev/lingo.dev/pull/1002) [`2b297ba`](https://github.com/lingodotdev/lingo.dev/commit/2b297babe76f9799c5154d9421fecd1ebbe1bb72) Thanks [@mathio](https://github.com/mathio)! - support custom prompts in compiler
+
 ## 0.5.3
 
 ### Patch Changes
