@@ -62,11 +62,6 @@ export class LingoDotDevEngine {
 
     const workflowId = createId();
     for (let i = 0; i < chunkedPayload.length; i++) {
-      // Check if operation was aborted
-      if (signal?.aborted) {
-        throw new Error("Operation was aborted");
-      }
-
       const chunk = chunkedPayload[i];
       const percentageCompleted = Math.round(
         ((i + 1) / chunkedPayload.length) * 100,
