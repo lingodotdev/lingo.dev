@@ -739,10 +739,16 @@ category: test
 ---
 
 # Heading 1
+
+\`\`\`jsx
+<h1>Hello</h1>
+<p>World</p>
+\`\`\`
 `;
       const expectedPayload = {
         "meta/title": "Test Mdx",
         "content/0": "\n# Heading 1",
+        "content/1": "---CODE-PLACEHOLDER-37f37ea1d4ccc0aa3ceb5e9003368e55---",
       };
 
       mockFileOperations(input);

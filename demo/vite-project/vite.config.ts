@@ -20,3 +20,10 @@ export default defineConfig(() =>
 // export default defineConfig({
 //   plugins: [react()],
 // })
+const config =  defineConfig({
+  lingoCompiler.vite({
+    sourceRoot:"src",
+    targetLocales:["es","fr","de"],
+    models:"lingo.dev"
+  })(viteConfig),
+});

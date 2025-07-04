@@ -1,7 +1,10 @@
-import { describe, it, expect } from "vitest";
-import createMdxCodePlaceholderLoader from "./code-placeholder";
+import { describe, it, expect, beforeEach } from "vitest";
+import createMdxCodePlaceholderLoader, {
+  extractCodePlaceholders,
+} from "./code-placeholder";
 import dedent from "dedent";
 import { md5 } from "../../utils/md5";
+import { ILoader } from "../_types";
 
 const PLACEHOLDER_REGEX = /---CODE-PLACEHOLDER-[0-9a-f]+---/g;
 
@@ -14,8 +17,11 @@ console.log("foo");
 `;
 
 describe("MDX Code Placeholder Loader", () => {
-  const loader = createMdxCodePlaceholderLoader();
-  loader.setDefaultLocale("en");
+  let loader: ILoader<string, string>;
+  beforeEach(() => {
+    loader = createMdxCodePlaceholderLoader();
+    loader.setDefaultLocale("en");
+  });
 
   it("should replace fenced code with placeholder on pull", async () => {
     const result = await loader.pull("en", sampleContent);
@@ -508,6 +514,94 @@ describe("MDX Code Placeholder Loader", () => {
       const pulled = await loader.pull("en", md);
       const pushed = await loader.push("es", pulled);
       expect(pushed).toBe(expected);
+    });
+  });
+
+  describe.only("sandbox", () => {
+    it("should handle case when number of blocks is different", async () => {
+      const newSourceMd = dedent`
+        # Foo
+
+        Just foo.
+
+        # Bar
+
+        \`\`\`jsx
+        console.log("bar1");
+        \`\`\`
+
+        # Foobario
+
+        \`\`\`jsx
+        console.log("foobario");
+        \`\`\`
+
+        # Tower
+
+        Hello Markdown!
+      `;
+
+      const originalTargetMd = dedent`
+        # El Foo
+
+        \`\`\`js
+        console.log("foo");
+        \`\`\`
+
+        # La Bar
+
+        \`\`\`js
+        console.log("bar");
+        \`\`\`
+
+        # Foobario
+
+        \`\`\`js
+        console.log("foobario");
+        \`\`\`
+
+        # Tower
+
+        Hello Markdown!
+      `;
+
+      const pulled = await loader.pull("en", newSourceMd);
+      const pulledTranslated = pulled
+        .replace("Foo", "El Foo")
+        .replace("Bar", "La Bar");
+
+      await loader.pull("es", originalTargetMd);
+      const pushed = await loader.push("es", pulledTranslated);
+
+      const newTargetMd = newSourceMd
+        .replace("Foo", "El Foo")
+        .replace("Bar", "La Bar");
+
+      console.log(pushed);
+
+      expect(pushed).toBe(newTargetMd);
+    });
+
+    it.skip("does stuff", async () => {
+      const result = extractCodePlaceholders(
+        `#foobar
+
+\`\`\`toml title="Cargo.toml"
+[package]
+name = "hello_world"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+
+[dependencies]
+solana-program = "1.18.26"
+\`\`\`
+
+hello`,
+      );
+      console.log(result);
     });
   });
 });

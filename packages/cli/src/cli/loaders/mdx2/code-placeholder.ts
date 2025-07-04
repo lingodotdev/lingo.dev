@@ -85,7 +85,7 @@ function ensureTrailingFenceNewline(_content: string) {
 // both the transformed content and the placeholder → original mapping so it can
 // later be restored. Extracted so that we can reuse the exact same logic in both
 // `pull` and `push` phases (e.g. to recreate the mapping from `originalInput`).
-function extractCodePlaceholders(content: string): {
+export function extractCodePlaceholders(content: string): {
   content: string;
   codePlaceholders: Record<string, string>;
 } {
@@ -134,6 +134,7 @@ export default function createMdxCodePlaceholderLoader(): ILoader<
   return createLoader({
     async pull(locale, input) {
       const response = extractCodePlaceholders(input);
+      console.log(">>>", locale, response.codePlaceholders);
       return response.content;
     },
 
