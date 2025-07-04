@@ -66,4 +66,30 @@ describe("Whitespace Issue Test", () => {
     // Should preserve both the explicit space and the leading space in span
     expect(content).toContain("Hello <element:span> World</element:span>");
   });
+
+  it("should preserve space before nested bold element like in HeroSubtitle", () => {
+    const path = getJSXElementPath(`
+      <p className="text-lg sm:text-xl text-gray-600 mb-10 max-w-xl mx-auto leading-relaxed">
+        Localize your React app in every language in minutes. Scale to millions
+        <b> from day one</b>.
+      </p>
+    `);
+
+    const content = extractJsxContent(path);
+    console.log("HeroSubtitle test content:", JSON.stringify(content));
+
+    // Let's also check the raw JSX structure
+    let jsxTexts: string[] = [];
+    path.traverse({
+      JSXText(textPath) {
+        jsxTexts.push(JSON.stringify(textPath.node.value));
+      },
+    });
+    console.log("HeroSubtitle JSXText nodes found:", jsxTexts);
+
+    // The bold element should have " from day one" with the leading space
+    expect(content).toContain("<element:b> from day one</element:b>");
+    // The full content should preserve the space between "millions" and the bold element
+    expect(content).toContain("millions <element:b> from day one</element:b>");
+  });
 });
