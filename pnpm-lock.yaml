@@ -385,6 +385,9 @@ importers:
       json5:
         specifier: ^2.2.3
         version: 2.2.3
+      jsonc-parser:
+        specifier: ^3.3.1
+        version: 3.3.1
       jsonrepair:
         specifier: ^3.11.2
         version: 3.11.2
