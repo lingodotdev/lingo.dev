@@ -1,0 +1,19 @@
+{
+  "welcome": "Welcome to our innovative platform",
+  "description": "We provide cutting-edge solutions for modern businesses",
+  "features": {
+    "title": "Key Features",
+    "ai_powered": "AI-powered automation",
+    "real_time": "Real-time collaboration",
+    "secure": "Enterprise-grade security"
+  },
+  "cta": {
+    "primary": "Get started today",
+    "secondary": "Learn more about our solutions"
+  },
+  "footer": {
+    "copyright": "© 2024 Our Company. All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service"
+  }
+} 
