@@ -1,5 +1,15 @@
 # lingo.dev
 
+## 0.105.4
+
+### Patch Changes
+
+- [#1011](https://github.com/lingodotdev/lingo.dev/pull/1011) [`bfcb424`](https://github.com/lingodotdev/lingo.dev/commit/bfcb424eb4479d0d3b767e062d30f02c5bcaeb14) Thanks [@mathio](https://github.com/mathio)! - replace elements with dot in name
+
+- Updated dependencies [[`bfcb424`](https://github.com/lingodotdev/lingo.dev/commit/bfcb424eb4479d0d3b767e062d30f02c5bcaeb14)]:
+  - @lingo.dev/_compiler@0.5.5
+  - @lingo.dev/_react@0.4.1
+
 ## 0.105.3
 
 ### Patch Changes
