@@ -1,0 +1,8 @@
+
+I started using your product in my big client project  from really love the way you handled Brand-aware ai-translations , it’s solid. 
+But I noticed it’s missing a few key things like multi-agent translation review system where ai agents do the first pass and internal users / translators can quickly review and refine. 
+And uploading short videos / UX flows instead of just screenshots.
+
+That’s making it hard for me to move forward and feel confident I’ll be successful with it. 
+
+Any idea when you might be adding those features?
