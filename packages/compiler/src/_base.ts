@@ -92,14 +92,14 @@ export type CompilerParams = {
 };
 
 /**
- * A mapping between locale pairings and the model to use for that pairing.
+ * A mapping between locale pairings and the model to use to translate that pairing.
  */
 export type ModelMap = {
   [key in SourceTargetLocale]?: ModelIdentifier;
 };
 
 /**
- * A pairing of source and target locale.
+ * A pairing of a source and target locale.
  */
 export type SourceTargetLocale = AnyTargetLocale | AnySourceLocale | AnyLocale;
 
@@ -119,12 +119,12 @@ export type AnySourceLocale = `${LocaleWildcard}:${LocaleCode}`;
 export type AnyLocale = `${LocaleWildcard}:${LocaleWildcard}`;
 
 /**
- * A wildcard that matches any locale.
+ * A wildcard symbol that matches any locale.
  */
 export type LocaleWildcard = "*";
 
 /**
- * The identifier of a model.
+ * The colon-separated identifier of a model to use for translation.
  */
 export type ModelIdentifier = `${string}:${string}`;
 
