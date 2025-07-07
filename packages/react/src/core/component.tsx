@@ -134,16 +134,15 @@ function replaceElements(
   elements?: Array<FunctionComponent>,
   elementIndex: { current: number } = { current: 0 },
 ): ReactNode[] {
+  const ELEMENT_PATTERN = /<element:([\w.]+)>(.*?)<\/element:\1>/gs;
+
   if (_.isEmpty(elements)) {
     return nodes.map((node) => {
       if (typeof node !== "string") return node;
 
-      return node.replace(
-        /<element:(\w+)>(.*?)<\/element:\1>/gs,
-        (match, elementName, content) => {
-          return content;
-        },
-      );
+      return node.replace(ELEMENT_PATTERN, (match, elementName, content) => {
+        return content;
+      });
     });
   }
 
@@ -153,7 +152,7 @@ function replaceElements(
 
       const segments: ReactNode[] = [];
       let lastIndex = 0;
-      const ELEMENT_PATTERN = /<element:(\w+)>(.*?)<\/element:\1>/gs;
+
       let match;
 
       while ((match = ELEMENT_PATTERN.exec(node)) !== null) {
