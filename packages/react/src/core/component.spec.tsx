@@ -9,7 +9,7 @@ describe("LingoComponent", () => {
         entries: {
           greeting: "Hello {user.profile.name} you have {count} messages",
           welcome:
-            "Welcome <element:a>incredible <element:span>fantastic <element:em>wonderful <element:strong>amazing</element:strong></element:em></element:span> user</element:a>",
+            "Welcome <element:a>incredible <element:span>fantastic <element:em>wonderful <element:strong>amazing</element:strong></element:em></element:span> user</element:a> <element:Icons.Rocket></element:Icons.Rocket>",
           complex:
             "<element:a>Hello {user.profile.name}, welcome to <element:span>wonderful <element:strong><element:em>{placeholder}</element:em> nested</element:strong></element:span> world</element:a> of the <element:u>universe number {count}</element:u>",
         },
@@ -49,6 +49,10 @@ describe("LingoComponent", () => {
   });
 
   it("replaces element placeholders", () => {
+    const Icons = {
+      Rocket: () => <span>🚀</span>,
+    };
+
     const { container } = render(
       <LingoComponent
         $dictionary={dictionary}
@@ -60,11 +64,12 @@ describe("LingoComponent", () => {
           ({ children }: any) => <span>{children}</span>,
           ({ children }: any) => <em>{children}</em>,
           ({ children }: any) => <strong className="red">{children}</strong>,
+          ({ children }: any) => <Icons.Rocket />,
         ]}
       />,
     );
     expect(container.innerHTML).toBe(
-      '<div>Welcome <a href="#">incredible <span>fantastic <em>wonderful <strong class="red">amazing</strong></em></span> user</a></div>',
+      '<div>Welcome <a href="#">incredible <span>fantastic <em>wonderful <strong class="red">amazing</strong></em></span> user</a> <span>🚀</span></div>',
     );
   });
 
