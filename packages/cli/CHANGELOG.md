@@ -1,5 +1,17 @@
 # lingo.dev
 
+## 0.106.0
+
+### Minor Changes
+
+- [#998](https://github.com/lingodotdev/lingo.dev/pull/998) [`cb2aa0f`](https://github.com/lingodotdev/lingo.dev/commit/cb2aa0f505d6b7dbc435b526e8a6f62265d1f453) Thanks [@VAIBHAVSING](https://github.com/VAIBHAVSING)! - Added support for AbortController to all public SDK methods, enabling consumers to cancel long-running operations using the standard AbortController API. Refactored internal methods to propagate AbortSignal and check for abortion between batch chunks. Updated fetch calls to use AbortSignal for network request cancellation.
+
+### Patch Changes
+
+- Updated dependencies [[`864c305`](https://github.com/lingodotdev/lingo.dev/commit/864c30586510e6b69739c20fa42efdf45d8881ed), [`cb2aa0f`](https://github.com/lingodotdev/lingo.dev/commit/cb2aa0f505d6b7dbc435b526e8a6f62265d1f453)]:
+  - @lingo.dev/_compiler@0.6.0
+  - @lingo.dev/_sdk@0.10.0
+
 ## 0.105.4
 
 ### Patch Changes
