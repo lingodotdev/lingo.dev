@@ -544,7 +544,7 @@ describe("bucket loaders", () => {
 
       const jsonLoader = createBucketLoader("json", "i18n/[locale].json", {
         defaultLocale: "en",
-        injectLocale: ["settings.locale", "not-a-locale"],
+        injectLocale: ["settings/locale", "not-a-locale"],
       });
       jsonLoader.setDefaultLocale("en");
       const data = await jsonLoader.pull("en");
@@ -571,7 +571,7 @@ describe("bucket loaders", () => {
 
       const jsonLoader = createBucketLoader("json", "i18n/[locale].json", {
         defaultLocale: "en",
-        injectLocale: ["settings.locale", "not-a-locale"],
+        injectLocale: ["settings/locale", "not-a-locale"],
       });
       jsonLoader.setDefaultLocale("en");
       await jsonLoader.pull("en");
