@@ -9,7 +9,8 @@
     "@lingo.dev/_spec": "workspace:*",
     "zod-to-json-schema": "^3.24.5",
     "unified": "^11.0.4",
-    "remark-stringify": "^11.0.0"
+    "remark-stringify": "^11.0.0",
+    "prettier": "^3.0.0"
   },
   "devDependencies": {
     "@types/node": "^22.2.0",
