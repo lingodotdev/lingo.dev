@@ -6,8 +6,11 @@
     "generate": "tsx index.ts"
   },
   "devDependencies": {
-    "@types/node": "^20.11.0",
-    "commander": "^11.0.0",
-    "tsx": "^4.7.0"
+    "@types/node": "^24.0.10",
+    "@types/mdast": "^4.0.4",
+    "commander": "^12.0.0",
+    "remark-stringify": "^11.0.0",
+    "tsx": "^4.7.1",
+    "unified": "^11.0.4"
   }
 }
