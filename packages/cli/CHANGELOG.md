@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.107.0
+
+### Minor Changes
+
+- [#1019](https://github.com/lingodotdev/lingo.dev/pull/1019) [`925997d`](https://github.com/lingodotdev/lingo.dev/commit/925997d75a1edbb4211a3be8db2b186cb139327e) Thanks [@mathio](https://github.com/mathio)! - injectLocale uses forward slash now
+
 ## 0.106.0
 
 ### Minor Changes
