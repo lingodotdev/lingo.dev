@@ -1,5 +1,11 @@
 # @lingo.dev/\_compiler
 
+## 0.6.1
+
+### Patch Changes
+
+- [#1021](https://github.com/lingodotdev/lingo.dev/pull/1021) [`6baa1a7`](https://github.com/lingodotdev/lingo.dev/commit/6baa1a7e88dbfac3783d1d49695595077fd8d209) Thanks [@mathio](https://github.com/mathio)! - add lingo.dev provider details
+
 ## 0.6.0
 
 ### Minor Changes
