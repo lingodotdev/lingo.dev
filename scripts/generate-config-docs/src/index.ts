@@ -71,10 +71,15 @@ function appendPropertyDocsNodes(
 ) {
   const fullName = parentPath ? `${parentPath}.${name}` : name;
 
-  // Heading for the property (## `propertyName`)
+  // Heading for the property.
+  // Use a dynamic depth to visually convey the nesting level in the generated docs.
+  // Root-level properties keep depth 2 (##), each nested path segment adds +1 depth
+  // but we cap at 6 to stay within valid Markdown heading levels.
+  const headingDepth = Math.min(6, 2 + (fullName.split(".").length - 1));
+
   nodes.push({
     type: "heading",
-    depth: 2,
+    depth: headingDepth,
     children: [{ type: "inlineCode", value: fullName }],
   });
 
@@ -126,22 +131,28 @@ function appendPropertyDocsNodes(
 
   // Enum
   if (schema.enum) {
-    const enumChildren: any[] = [{ type: "text", value: "Allowed values: " }];
-    const sortedEnum = Array.from(new Set(schema.enum)).sort((a: any, b: any) =>
-      String(a).localeCompare(String(b)),
-    );
-    sortedEnum.forEach((v: any, idx: number) => {
-      enumChildren.push({ type: "inlineCode", value: String(v) });
-      if (idx < sortedEnum.length - 1) {
-        enumChildren.push({ type: "text", value: " | " });
-      }
-    });
     bulletItems.push({
       type: "listItem",
       children: [
         {
           type: "paragraph",
-          children: enumChildren,
+          children: [{ type: "text", value: "Allowed values:" }],
+        },
+        {
+          type: "list",
+          ordered: false,
+          spread: false,
+          children: Array.from(new Set(schema.enum))
+            .sort((a: any, b: any) => String(a).localeCompare(String(b)))
+            .map((v: any) => ({
+              type: "listItem",
+              children: [
+                {
+                  type: "paragraph",
+                  children: [{ type: "inlineCode", value: String(v) }],
+                },
+              ],
+            })),
         },
       ],
     });
@@ -152,22 +163,28 @@ function appendPropertyDocsNodes(
     Array.isArray(schema.propertyNames.enum) &&
     schema.propertyNames.enum.length > 0
   ) {
-    const keyEnumChildren: any[] = [{ type: "text", value: "Allowed keys: " }];
-    const sortedKeys = Array.from(new Set(schema.propertyNames.enum)).sort(
-      (a: any, b: any) => String(a).localeCompare(String(b)),
-    );
-    sortedKeys.forEach((v: any, idx: number) => {
-      keyEnumChildren.push({ type: "inlineCode", value: String(v) });
-      if (idx < sortedKeys.length - 1) {
-        keyEnumChildren.push({ type: "text", value: " | " });
-      }
-    });
     bulletItems.push({
       type: "listItem",
       children: [
         {
           type: "paragraph",
-          children: keyEnumChildren,
+          children: [{ type: "text", value: "Allowed keys:" }],
+        },
+        {
+          type: "list",
+          ordered: false,
+          spread: false,
+          children: Array.from(new Set(schema.propertyNames.enum))
+            .sort((a: any, b: any) => String(a).localeCompare(String(b)))
+            .map((v: any) => ({
+              type: "listItem",
+              children: [
+                {
+                  type: "paragraph",
+                  children: [{ type: "inlineCode", value: String(v) }],
+                },
+              ],
+            })),
         },
       ],
     });
@@ -213,7 +230,7 @@ function appendPropertyDocsNodes(
       }
     }
 
-    // Handle schemas that use `additionalProperties` (e.g., "buckets")
+    // Handle schemas that use `additionalProperties`
     if (
       schema.additionalProperties &&
       typeof schema.additionalProperties === "object"
@@ -333,6 +350,18 @@ function generateMarkdown(schema: any): string {
     ],
   });
 
+  // Add a brief overview
+  children.push({
+    type: "paragraph",
+    children: [
+      {
+        type: "text",
+        value:
+          "The configuration file supports JSON schema validation and provides type safety for all options. Each property below includes its type, requirement status, default value (if any), and description.",
+      },
+    ],
+  });
+
   const required: string[] = rootSchema.required || [];
   for (const key of Object.keys(rootSchema.properties || {})) {
     appendPropertyDocsNodes(
@@ -343,6 +372,12 @@ function generateMarkdown(schema: any): string {
       "",
       schema,
     );
+
+    // Add spacing between top-level sections
+    children.push({
+      type: "paragraph",
+      children: [{ type: "text", value: "" }],
+    });
   }
 
   const root: any = { type: "root", children };
