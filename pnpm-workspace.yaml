@@ -5,4 +5,4 @@ packages:
   - "./legacy/*"
   - "./action"
   - "./php/*"
-  - "./scripts/generate-cli-docs"
+  - "./scripts/*"
