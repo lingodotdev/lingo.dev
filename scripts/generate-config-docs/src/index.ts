@@ -16,7 +16,7 @@ import remarkStringify from "remark-stringify";
  * in the order specified. All other properties will follow
  * alphabetically (required first, then optional).
  */
-const ROOT_PROPERTY_ORDER = ["$schema", "version", "buckets"];
+const ROOT_PROPERTY_ORDER = ["$schema", "version", "locale", "buckets"];
 
 // Resolve a JSON pointer (e.g. "#/definitions/Foo/properties/bar") into the referenced schema node
 function resolveRef(ref: string, root: any): any | undefined {
@@ -35,14 +35,6 @@ function resolveRef(ref: string, root: any): any | undefined {
     }
   }
   return current;
-}
-
-/**
- * Configuration for property key sorting behavior
- */
-interface PropertySortOptions {
-  /** Custom order for specific keys (these appear first) */
-  customOrder?: string[];
 }
 
 /**
