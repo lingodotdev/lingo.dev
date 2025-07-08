@@ -614,13 +614,42 @@ function generateSchemaAndDocs() {
     name: "I18nConfig",
   } as any);
 
+  // ------------------------------------------------------------------
+  // Ensure the JSON schema written to disk contains the latest defaults
+  // for critical root-level properties (currently `version` and `$schema`).
+  // This keeps the machine-readable schema in sync with the source
+  // Zod definition and the human-readable markdown docs.
+  // ------------------------------------------------------------------
+  {
+    const rootRef = (schema as any).$ref as string | undefined;
+    const rootName = rootRef
+      ? (rootRef.split("/").pop() ?? "I18nConfig")
+      : "I18nConfig";
+    const rootSchema: any = rootRef
+      ? (schema as any).definitions[rootName]
+      : schema;
+
+    if (rootSchema?.properties?.version) {
+      rootSchema.properties.version = {
+        ...rootSchema.properties.version,
+        default: LATEST_CONFIG_DEFINITION.defaultValue.version,
+      };
+    }
+
+    if (
+      rootSchema?.properties?.$schema &&
+      (LATEST_CONFIG_DEFINITION.defaultValue as any).$schema
+    ) {
+      rootSchema.properties.$schema = {
+        ...rootSchema.properties.$schema,
+        default: (LATEST_CONFIG_DEFINITION.defaultValue as any).$schema,
+      };
+    }
+  }
+
   const __filename = fileURLToPath(import.meta.url);
   const outDir = resolve(dirname(__filename), "../../../docs");
   mkdirSync(outDir, { recursive: true });
-
-  const schemaPath = resolve(outDir, "i18n.schema.json");
-  writeFileSync(schemaPath, JSON.stringify(schema, null, 2));
-  console.log(`Generated config JSON schema at ${schemaPath}`);
 
   // Generate markdown docs
   const markdown = generateMarkdown(schema);
