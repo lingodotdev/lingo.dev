@@ -5,6 +5,7 @@ import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { unified } from "unified";
 import remarkStringify from "remark-stringify";
+import * as prettier from "prettier";
 
 // =====================================================
 // DOCUMENTATION ORDERING CONFIGURATION
@@ -609,7 +610,7 @@ function generateMarkdown(schema: any): string {
 }
 
 // Modify generateSchema to also output markdown
-function generateSchemaAndDocs() {
+async function generateSchemaAndDocs() {
   const schema = zodToJsonSchema(LATEST_CONFIG_DEFINITION.schema, {
     name: "I18nConfig",
   } as any);
@@ -653,10 +654,19 @@ function generateSchemaAndDocs() {
 
   // Generate markdown docs
   const markdown = generateMarkdown(schema);
+
+  // Format with Prettier using repo config
+  const repoRoot = resolve(dirname(__filename), "../../..");
+  const prettierConfig = await prettier.resolveConfig(repoRoot);
+  const formattedMarkdown = await prettier.format(markdown, {
+    ...prettierConfig,
+    parser: "markdown",
+  });
+
   const mdPath = resolve(outDir, "i18n.md");
-  writeFileSync(mdPath, markdown);
+  writeFileSync(mdPath, formattedMarkdown);
   console.log(`Generated config documentation at ${mdPath}`);
 }
 
 // Run
-generateSchemaAndDocs();
+await generateSchemaAndDocs();

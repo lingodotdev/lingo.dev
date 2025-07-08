@@ -804,6 +804,9 @@ importers:
       '@lingo.dev/_spec':
         specifier: workspace:*
         version: link:../../packages/spec
+      prettier:
+        specifier: ^3.0.0
+        version: 3.4.2
       remark-stringify:
         specifier: ^11.0.0
         version: 11.0.0
