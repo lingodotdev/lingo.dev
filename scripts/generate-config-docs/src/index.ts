@@ -6,6 +6,18 @@ import { fileURLToPath } from "node:url";
 import { unified } from "unified";
 import remarkStringify from "remark-stringify";
 
+// =====================================================
+// DOCUMENTATION ORDERING CONFIGURATION
+// =====================================================
+
+/**
+ * Custom order for root-level configuration properties.
+ * Properties listed here will appear first in the documentation,
+ * in the order specified. All other properties will follow
+ * alphabetically (required first, then optional).
+ */
+const ROOT_PROPERTY_ORDER = ["$schema", "version", "buckets"];
+
 // Resolve a JSON pointer (e.g. "#/definitions/Foo/properties/bar") into the referenced schema node
 function resolveRef(ref: string, root: any): any | undefined {
   if (!ref.startsWith("#/")) return undefined;
@@ -25,6 +37,60 @@ function resolveRef(ref: string, root: any): any | undefined {
   return current;
 }
 
+/**
+ * Configuration for property key sorting behavior
+ */
+interface PropertySortOptions {
+  /** Custom order for specific keys (these appear first) */
+  customOrder?: string[];
+}
+
+/**
+ * Sort property keys for consistent documentation ordering.
+ * Always prioritizes required properties over optional ones and sorts alphabetically within each group.
+ *
+ * @param keys - All property keys to sort
+ * @param requiredKeys - Keys that are marked as required
+ * @param customOrder - Optional array of keys that should appear first
+ * @returns Sorted array of keys
+ */
+function sortPropertyKeys(
+  keys: string[],
+  requiredKeys: string[] = [],
+  customOrder: string[] = [],
+): string[] {
+  const keySet = new Set(keys);
+  const requiredSet = new Set(requiredKeys);
+
+  // Start with custom ordered keys that exist in the properties
+  const orderedKeys: string[] = [];
+  for (const key of customOrder) {
+    if (keySet.has(key)) {
+      orderedKeys.push(key);
+      keySet.delete(key);
+    }
+  }
+
+  // Handle remaining keys - separate into required and optional
+  const remainingKeys = Array.from(keySet);
+  const remainingRequired: string[] = [];
+  const remainingOptional: string[] = [];
+
+  for (const key of remainingKeys) {
+    if (requiredSet.has(key)) {
+      remainingRequired.push(key);
+    } else {
+      remainingOptional.push(key);
+    }
+  }
+
+  // Sort alphabetically within each group
+  remainingRequired.sort((a, b) => a.localeCompare(b));
+  remainingOptional.sort((a, b) => a.localeCompare(b));
+
+  return [...orderedKeys, ...remainingRequired, ...remainingOptional];
+}
+
 function getType(schema: any, root: any): string {
   if (schema.type) {
     if (Array.isArray(schema.type)) {
@@ -40,6 +106,34 @@ function getType(schema: any, root: any): string {
             : schema.items.$ref.split("/").pop();
           return `array of ${itemType}`;
         }
+
+        // Handle arrays with union types (anyOf/oneOf)
+        if (schema.items.anyOf) {
+          const types = schema.items.anyOf.map((item: any) => {
+            if (item.$ref) {
+              const resolved = resolveRef(item.$ref, root);
+              return resolved
+                ? getType(resolved, root)
+                : item.$ref.split("/").pop();
+            }
+            return getType(item, root);
+          });
+          return `array of ${types.join(" | ")}`;
+        }
+
+        if (schema.items.oneOf) {
+          const types = schema.items.oneOf.map((item: any) => {
+            if (item.$ref) {
+              const resolved = resolveRef(item.$ref, root);
+              return resolved
+                ? getType(resolved, root)
+                : item.$ref.split("/").pop();
+            }
+            return getType(item, root);
+          });
+          return `array of ${types.join(" | ")}`;
+        }
+
         if (schema.items.type) {
           return `array of ${Array.isArray(schema.items.type) ? schema.items.type.join(" | ") : schema.items.type}`;
         }
@@ -48,6 +142,29 @@ function getType(schema: any, root: any): string {
     }
 
     return schema.type;
+  }
+
+  // Handle union types at the top level (anyOf/oneOf)
+  if (schema.anyOf) {
+    const types = schema.anyOf.map((item: any) => {
+      if (item.$ref) {
+        const resolved = resolveRef(item.$ref, root);
+        return resolved ? getType(resolved, root) : item.$ref.split("/").pop();
+      }
+      return getType(item, root);
+    });
+    return types.join(" | ");
+  }
+
+  if (schema.oneOf) {
+    const types = schema.oneOf.map((item: any) => {
+      if (item.$ref) {
+        const resolved = resolveRef(item.$ref, root);
+        return resolved ? getType(resolved, root) : item.$ref.split("/").pop();
+      }
+      return getType(item, root);
+    });
+    return types.join(" | ");
   }
 
   if (schema.$ref) {
@@ -218,7 +335,11 @@ function appendPropertyDocsNodes(
   if (schema.type === "object") {
     if (schema.properties) {
       const nestedRequired: string[] = schema.required || [];
-      for (const key of Object.keys(schema.properties)) {
+      const sortedKeys = sortPropertyKeys(
+        Object.keys(schema.properties),
+        nestedRequired,
+      );
+      for (const key of sortedKeys) {
         appendPropertyDocsNodes(
           nodes,
           key,
@@ -272,9 +393,112 @@ function appendPropertyDocsNodes(
       ? resolveRef(schema.items.$ref, root) || schema.items
       : schema.items;
 
-    if (itemSchema && (itemSchema.type === "object" || itemSchema.properties)) {
+    // Handle union types in array items (anyOf/oneOf)
+    if (schema.items.anyOf) {
+      schema.items.anyOf.forEach((unionItem: any, index: number) => {
+        let resolvedItem = unionItem;
+        if (unionItem.$ref) {
+          resolvedItem = resolveRef(unionItem.$ref, root) || unionItem;
+        }
+
+        if (
+          resolvedItem &&
+          (resolvedItem.type === "object" || resolvedItem.properties)
+        ) {
+          const nestedRequired: string[] = resolvedItem.required || [];
+          const sortedKeys = sortPropertyKeys(
+            Object.keys(resolvedItem.properties || {}),
+            nestedRequired,
+          );
+          for (const key of sortedKeys) {
+            appendPropertyDocsNodes(
+              nodes,
+              key,
+              resolvedItem.properties[key],
+              nestedRequired.includes(key),
+              `${fullName}.*`,
+              root,
+            );
+          }
+
+          // Handle additionalProperties inside union item if present
+          if (
+            resolvedItem.additionalProperties &&
+            typeof resolvedItem.additionalProperties === "object"
+          ) {
+            const addSchema = resolvedItem.additionalProperties;
+            const names = ["*"];
+            for (const propName of names) {
+              appendPropertyDocsNodes(
+                nodes,
+                propName,
+                addSchema,
+                false,
+                `${fullName}.*`,
+                root,
+              );
+            }
+          }
+        }
+      });
+    } else if (schema.items.oneOf) {
+      schema.items.oneOf.forEach((unionItem: any, index: number) => {
+        let resolvedItem = unionItem;
+        if (unionItem.$ref) {
+          resolvedItem = resolveRef(unionItem.$ref, root) || unionItem;
+        }
+
+        if (
+          resolvedItem &&
+          (resolvedItem.type === "object" || resolvedItem.properties)
+        ) {
+          const nestedRequired: string[] = resolvedItem.required || [];
+          const sortedKeys = sortPropertyKeys(
+            Object.keys(resolvedItem.properties || {}),
+            nestedRequired,
+          );
+          for (const key of sortedKeys) {
+            appendPropertyDocsNodes(
+              nodes,
+              key,
+              resolvedItem.properties[key],
+              nestedRequired.includes(key),
+              `${fullName}.*`,
+              root,
+            );
+          }
+
+          // Handle additionalProperties inside union item if present
+          if (
+            resolvedItem.additionalProperties &&
+            typeof resolvedItem.additionalProperties === "object"
+          ) {
+            const addSchema = resolvedItem.additionalProperties;
+            const names = ["*"];
+            for (const propName of names) {
+              appendPropertyDocsNodes(
+                nodes,
+                propName,
+                addSchema,
+                false,
+                `${fullName}.*`,
+                root,
+              );
+            }
+          }
+        }
+      });
+    } else if (
+      itemSchema &&
+      (itemSchema.type === "object" || itemSchema.properties)
+    ) {
+      // Handle regular object items (non-union)
       const nestedRequired: string[] = itemSchema.required || [];
-      for (const key of Object.keys(itemSchema.properties || {})) {
+      const sortedKeys = sortPropertyKeys(
+        Object.keys(itemSchema.properties || {}),
+        nestedRequired,
+      );
+      for (const key of sortedKeys) {
         appendPropertyDocsNodes(
           nodes,
           key,
@@ -363,7 +587,13 @@ function generateMarkdown(schema: any): string {
   });
 
   const required: string[] = rootSchema.required || [];
-  for (const key of Object.keys(rootSchema.properties || {})) {
+
+  const sortedKeys = sortPropertyKeys(
+    Object.keys(rootSchema.properties || {}),
+    required,
+    ROOT_PROPERTY_ORDER,
+  );
+  for (const key of sortedKeys) {
     appendPropertyDocsNodes(
       children,
       key,
