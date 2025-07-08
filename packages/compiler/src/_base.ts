@@ -101,7 +101,13 @@ export type ModelMap = {
 /**
  * A pairing of a source and target locale.
  */
-export type SourceTargetLocale = AnyTargetLocale | AnySourceLocale | AnyLocale;
+export type SourceTargetLocale = LocalePair | AnyTargetLocale | AnySourceLocale | AnyLocale;
+
+
+/**
+ * A translation from a specific source locale to a specific target locale.
+ */
+export type LocalePair = `${LocaleCode}:${LocaleCode}`;
 
 /**
  * A translation from a specific source locale to any target locale.
