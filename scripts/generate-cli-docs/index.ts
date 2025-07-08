@@ -66,7 +66,7 @@ function buildMarkdown(program: Command): string {
     // Code block containing the help output
     const codeBlock: Code = {
       type: "code",
-      lang: undefined,
+      lang: "bash",
       value: helper.formatHelp(cmd, helper).trimEnd(),
     };
     root.children.push(codeBlock);
