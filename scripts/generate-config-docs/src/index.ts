@@ -6,7 +6,26 @@ import { fileURLToPath } from "node:url";
 import { unified } from "unified";
 import remarkStringify from "remark-stringify";
 
-function getType(schema: any): string {
+// Resolve a JSON pointer (e.g. "#/definitions/Foo/properties/bar") into the referenced schema node
+function resolveRef(ref: string, root: any): any | undefined {
+  if (!ref.startsWith("#/")) return undefined;
+  const pathSegments = ref
+    .slice(2) // remove "#/"
+    .split("/")
+    .map((seg) => decodeURIComponent(seg));
+
+  let current: any = root;
+  for (const segment of pathSegments) {
+    if (current && typeof current === "object" && segment in current) {
+      current = current[segment];
+    } else {
+      return undefined;
+    }
+  }
+  return current;
+}
+
+function getType(schema: any, root: any): string {
   if (schema.type) {
     if (Array.isArray(schema.type)) {
       return schema.type.join(" | ");
@@ -15,7 +34,11 @@ function getType(schema: any): string {
     if (schema.type === "array") {
       if (schema.items) {
         if (schema.items.$ref) {
-          return `array of ${schema.items.$ref.split("/").pop()}`;
+          const resolved = resolveRef(schema.items.$ref, root);
+          const itemType = resolved
+            ? getType(resolved, root)
+            : schema.items.$ref.split("/").pop();
+          return `array of ${itemType}`;
         }
         if (schema.items.type) {
           return `array of ${Array.isArray(schema.items.type) ? schema.items.type.join(" | ") : schema.items.type}`;
@@ -28,6 +51,10 @@ function getType(schema: any): string {
   }
 
   if (schema.$ref) {
+    const resolved = resolveRef(schema.$ref, root);
+    if (resolved) {
+      return getType(resolved, root);
+    }
     return schema.$ref.split("/").pop();
   }
 
@@ -40,6 +67,7 @@ function appendPropertyDocsNodes(
   schema: any,
   required: boolean,
   parentPath = "",
+  root: any,
 ) {
   const fullName = parentPath ? `${parentPath}.${name}` : name;
 
@@ -60,7 +88,7 @@ function appendPropertyDocsNodes(
         type: "paragraph",
         children: [
           { type: "text", value: "Type: " },
-          { type: "inlineCode", value: getType(schema) },
+          { type: "inlineCode", value: getType(schema, root) },
         ],
       },
     ],
@@ -99,7 +127,7 @@ function appendPropertyDocsNodes(
   // Enum
   if (schema.enum) {
     const enumChildren: any[] = [{ type: "text", value: "Allowed values: " }];
-    const sortedEnum = [...schema.enum].sort((a: any, b: any) =>
+    const sortedEnum = Array.from(new Set(schema.enum)).sort((a: any, b: any) =>
       String(a).localeCompare(String(b)),
     );
     sortedEnum.forEach((v: any, idx: number) => {
@@ -125,8 +153,8 @@ function appendPropertyDocsNodes(
     schema.propertyNames.enum.length > 0
   ) {
     const keyEnumChildren: any[] = [{ type: "text", value: "Allowed keys: " }];
-    const sortedKeys = [...schema.propertyNames.enum].sort((a: any, b: any) =>
-      String(a).localeCompare(String(b)),
+    const sortedKeys = Array.from(new Set(schema.propertyNames.enum)).sort(
+      (a: any, b: any) => String(a).localeCompare(String(b)),
     );
     sortedKeys.forEach((v: any, idx: number) => {
       keyEnumChildren.push({ type: "inlineCode", value: String(v) });
@@ -180,6 +208,7 @@ function appendPropertyDocsNodes(
           schema.properties[key],
           nestedRequired.includes(key),
           fullName,
+          root,
         );
       }
     }
@@ -208,7 +237,54 @@ function appendPropertyDocsNodes(
       }
 
       for (const propName of names) {
-        appendPropertyDocsNodes(nodes, propName, addSchema, false, fullName);
+        appendPropertyDocsNodes(
+          nodes,
+          propName,
+          addSchema,
+          false,
+          fullName,
+          root,
+        );
+      }
+    }
+  }
+
+  // Recurse into items for arrays of objects
+  if (schema.type === "array" && schema.items) {
+    const itemSchema = schema.items.$ref
+      ? resolveRef(schema.items.$ref, root) || schema.items
+      : schema.items;
+
+    if (itemSchema && (itemSchema.type === "object" || itemSchema.properties)) {
+      const nestedRequired: string[] = itemSchema.required || [];
+      for (const key of Object.keys(itemSchema.properties || {})) {
+        appendPropertyDocsNodes(
+          nodes,
+          key,
+          itemSchema.properties[key],
+          nestedRequired.includes(key),
+          `${fullName}.*`,
+          root,
+        );
+      }
+
+      // Handle additionalProperties inside array items if present
+      if (
+        itemSchema.additionalProperties &&
+        typeof itemSchema.additionalProperties === "object"
+      ) {
+        const addSchema = itemSchema.additionalProperties;
+        const names = ["*"];
+        for (const propName of names) {
+          appendPropertyDocsNodes(
+            nodes,
+            propName,
+            addSchema,
+            false,
+            `${fullName}.*`,
+            root,
+          );
+        }
       }
     }
   }
@@ -264,6 +340,8 @@ function generateMarkdown(schema: any): string {
       key,
       rootSchema.properties[key],
       required.includes(key),
+      "",
+      schema,
     );
   }
 
