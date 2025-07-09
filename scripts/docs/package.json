@@ -1,9 +1,9 @@
 {
-  "name": "cli-docs-generator",
+  "name": "docs",
   "private": true,
   "type": "module",
   "scripts": {
-    "generate": "tsx index.ts"
+    "generate-cli-docs": "tsx ./src/generate-cli-docs.ts"
   },
   "devDependencies": {
     "@types/node": "^24.0.10",
