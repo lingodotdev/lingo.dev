@@ -18,6 +18,7 @@ import mcpCmd from "./cmd/mcp";
 import ciCmd from "./cmd/ci";
 import statusCmd from "./cmd/status";
 import mayTheFourthCmd from "./cmd/may-the-fourth";
+import reviewCmd from "./cmd/review";
 import packageJson from "../../package.json";
 import run from "./cmd/run";
 import purgeCmd from "./cmd/purge";
@@ -56,6 +57,7 @@ Star the the repo :) https://github.com/LingoDotDev/lingo.dev
   .addCommand(mcpCmd)
   .addCommand(ciCmd)
   .addCommand(statusCmd)
+  .addCommand(reviewCmd)
   .addCommand(mayTheFourthCmd, { hidden: true })
   .addCommand(run)
   .addCommand(purgeCmd)
