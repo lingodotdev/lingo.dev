@@ -35,6 +35,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Build internal packages
+        run: pnpm -r --filter "@lingo.dev/_*" --if-present run build
+
       - name: Generate CLI docs
         run: pnpm --filter docs run generate-cli-docs
 
