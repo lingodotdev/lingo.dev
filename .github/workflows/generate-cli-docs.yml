@@ -45,51 +45,6 @@ jobs:
 
       - name: Comment CLI docs on PR
         if: github.event_name == 'pull_request'
-        uses: actions/github-script@v7
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const fs = require('fs');
-            const path = 'docs/cli-commands.md';
-            if (!fs.existsSync(path)) {
-              console.log('CLI docs file not found.');
-              return;
-            }
-
-            const raw = fs.readFileSync(path, 'utf8');
-            const maxLen = 65000; // GitHub comment max 65536 bytes
-            const truncated = raw.length > maxLen ? raw.slice(0, maxLen) + '\n\n...truncated...' : raw;
-
-            const marker = '<!-- auto-generated-cli-docs -->';
-            const body = `${marker}\n<details>\n<summary>📖 CLI Command Reference</summary>\n\n\`\`\`markdown\n${truncated}\n\`\`\`\n\n</details>`;
-
-            const { owner, repo } = context.repo;
-            const prNumber = context.payload.pull_request.number;
-
-            // Check for existing auto-generated comment
-            const { data: comments } = await github.rest.issues.listComments({
-              owner,
-              repo,
-              issue_number: prNumber,
-              per_page: 100
-            });
-
-            const existing = comments.find(c => c.body && c.body.startsWith(marker));
-
-            if (existing) {
-              console.log(`Updating existing comment (id: ${existing.id}).`);
-              await github.rest.issues.updateComment({
-                owner,
-                repo,
-                comment_id: existing.id,
-                body,
-              });
-            } else {
-              console.log('Creating new comment.');
-              await github.rest.issues.createComment({
-                owner,
-                repo,
-                issue_number: prNumber,
-                body,
-              });
-            }
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: pnpm --filter docs run comment-cli-docs

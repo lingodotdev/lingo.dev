@@ -3,11 +3,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "generate-cli-docs": "tsx ./src/generate-cli-docs.ts"
+    "generate-cli-docs": "tsx ./src/generate-cli-docs.ts",
+    "comment-cli-docs": "tsx ./src/comment-cli-docs.ts"
   },
   "devDependencies": {
-    "@types/node": "^24.0.10",
+    "@octokit/rest": "^20.1.2",
     "@types/mdast": "^4.0.4",
+    "@types/node": "^24.0.10",
     "commander": "^12.0.0",
     "remark-stringify": "^11.0.0",
     "tsx": "^4.7.1",
