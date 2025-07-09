@@ -19,42 +19,24 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          ref: ${{ github.head_ref }}
 
-      - name: Use Node.js
-        uses: actions/setup-node@v2
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v2
         with:
-          node-version: 20.12.2
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        id: pnpm-install
-        with:
-          version: 9.12.3
+          version: 9
           run_install: false
 
-      - name: Configure pnpm cache
-        id: pnpm-cache
-        run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-      - uses: actions/cache@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+          node-version: "20"
+          cache: "pnpm"
 
-      - name: Install deps
-        run: pnpm install
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
-      - name: Setup
-        run: |
-          pnpm turbo telemetry disable
-
-      - name: Configure Turbo cache
-        uses: dtinth/setup-github-actions-caching-for-turbo@v1
-
-      - name: Build
-        run: pnpm turbo build --force
+      - name: Build internal packages
+        run: pnpm -r --filter "@lingo.dev/_*" --if-present run build
 
       - name: Generate CLI docs
         run: pnpm --filter docs run generate-cli-docs
