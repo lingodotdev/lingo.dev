@@ -1,6 +1,7 @@
 import generate, { GeneratorResult } from "@babel/generator";
 import * as t from "@babel/types";
 import * as parser from "@babel/parser";
+import { LocaleCode } from "@lingo.dev/_spec";
 
 /**
  * Options for configuring Lingo.dev Compiler.
@@ -16,7 +17,7 @@ export type CompilerParams = {
    *
    * @default "en"
    */
-  sourceLocale: string;
+  sourceLocale: LocaleCode;
   /**
    * The locale(s) to translate to.
    *
@@ -27,7 +28,7 @@ export type CompilerParams = {
    *
    * @default ["es"]
    */
-  targetLocales: string[];
+  targetLocales: LocaleCode[];
   /**
    * The name of the directory where translation files will be stored, relative to `sourceRoot`.
    *
@@ -78,7 +79,7 @@ export type CompilerParams = {
    *
    * @default {}
    */
-  models: "lingo.dev" | Record<string, string>;
+  models: "lingo.dev" | ModelMap;
   /**
    * Custom system prompt for the translation engine. If set, this prompt will override the default system prompt defined in Compiler.
    * Only works with custom models, not with Lingo.dev Engine.
@@ -89,6 +90,53 @@ export type CompilerParams = {
    */
   prompt?: string | null;
 };
+
+/**
+ * A mapping between locale pairings and the model to use to translate that pairing.
+ */
+export type ModelMap = {
+  [key in SourceTargetLocale]?: ModelIdentifier;
+};
+
+/**
+ * A pairing of a source and target locale.
+ */
+export type SourceTargetLocale =
+  | LocalePair
+  | AnyTargetLocale
+  | AnySourceLocale
+  | AnyLocale;
+
+/**
+ * A translation from a specific source locale to a specific target locale.
+ */
+export type LocalePair = `${LocaleCode}:${LocaleCode}`;
+
+/**
+ * A translation from a specific source locale to any target locale.
+ */
+export type AnyTargetLocale = `${LocaleCode}:${LocaleWildcard}`;
+
+/**
+ * A translation from any source locale to a specific target locale.
+ */
+export type AnySourceLocale = `${LocaleWildcard}:${LocaleCode}`;
+
+/**
+ * A translation from any source locale to any target locale.
+ */
+export type AnyLocale = `${LocaleWildcard}:${LocaleWildcard}`;
+
+/**
+ * A wildcard symbol that matches any locale.
+ */
+export type LocaleWildcard = "*";
+
+/**
+ * The colon-separated identifier of a model to use for translation.
+ */
+export type ModelIdentifier = `${string}:${string}`;
+
 export type CompilerInput = {
   relativeFilePath: string;
   code: string;

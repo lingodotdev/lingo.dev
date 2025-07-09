@@ -1,5 +1,22 @@
 # @lingo.dev/\_compiler
 
+## 0.6.1
+
+### Patch Changes
+
+- [#1021](https://github.com/lingodotdev/lingo.dev/pull/1021) [`6baa1a7`](https://github.com/lingodotdev/lingo.dev/commit/6baa1a7e88dbfac3783d1d49695595077fd8d209) Thanks [@mathio](https://github.com/mathio)! - add lingo.dev provider details
+
+## 0.6.0
+
+### Minor Changes
+
+- [#1010](https://github.com/lingodotdev/lingo.dev/pull/1010) [`864c305`](https://github.com/lingodotdev/lingo.dev/commit/864c30586510e6b69739c20fa42efdf45d8881ed) Thanks [@davidturnbull](https://github.com/davidturnbull)! - improve type safety of compiler params
+
+### Patch Changes
+
+- Updated dependencies [[`cb2aa0f`](https://github.com/lingodotdev/lingo.dev/commit/cb2aa0f505d6b7dbc435b526e8a6f62265d1f453)]:
+  - @lingo.dev/_sdk@0.10.0
+
 ## 0.5.5
 
 ### Patch Changes

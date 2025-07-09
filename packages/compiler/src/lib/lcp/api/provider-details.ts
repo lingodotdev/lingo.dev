@@ -45,4 +45,11 @@ export const providerDetails: Record<
     getKeyLink: "https://console.mistral.ai",
     docsLink: "https://docs.mistral.ai",
   },
+  "lingo.dev": {
+    name: "Lingo.dev",
+    apiKeyEnvVar: "LINGO_API_KEY",
+    apiKeyConfigKey: "auth.apiKey",
+    getKeyLink: "https://lingo.dev",
+    docsLink: "https://lingo.dev/docs",
+  },
 };

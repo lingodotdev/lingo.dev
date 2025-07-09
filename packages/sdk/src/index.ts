@@ -40,6 +40,7 @@ export class LingoDotDevEngine {
    * @param payload - The content to be localized
    * @param params - Localization parameters including source/target locales and fast mode option
    * @param progressCallback - Optional callback function to report progress (0-100)
+   * @param signal - Optional AbortSignal to cancel the operation
    * @returns Localized content
    * @internal
    */
@@ -51,6 +52,7 @@ export class LingoDotDevEngine {
       sourceChunk: Record<string, string>,
       processedChunk: Record<string, string>,
     ) => void,
+    signal?: AbortSignal,
   ): Promise<Record<string, string>> {
     const finalPayload = payloadSchema.parse(payload);
     const finalParams = localizationParamsSchema.parse(params);
@@ -71,6 +73,7 @@ export class LingoDotDevEngine {
         { data: chunk, reference: params.reference },
         workflowId,
         params.fast || false,
+        signal,
       );
 
       if (progressCallback) {
@@ -88,6 +91,9 @@ export class LingoDotDevEngine {
    * @param sourceLocale - Source locale
    * @param targetLocale - Target locale
    * @param payload - Payload containing the chunk to be localized
+   * @param workflowId - Workflow ID for tracking
+   * @param fast - Whether to use fast mode
+   * @param signal - Optional AbortSignal to cancel the operation
    * @returns Localized chunk
    */
   private async localizeChunk(
@@ -99,6 +105,7 @@ export class LingoDotDevEngine {
     },
     workflowId: string,
     fast: boolean,
+    signal?: AbortSignal,
   ): Promise<Record<string, string>> {
     const res = await fetch(`${this.config.apiUrl}/i18n`, {
       method: "POST",
@@ -119,6 +126,7 @@ export class LingoDotDevEngine {
         null,
         2,
       ),
+      signal,
     });
 
     if (!res.ok) {
@@ -211,6 +219,7 @@ export class LingoDotDevEngine {
    *   - targetLocale: The target language code (e.g., 'es')
    *   - fast: Optional boolean to enable fast mode (faster but potentially lower quality)
    * @param progressCallback - Optional callback function to report progress (0-100)
+   * @param signal - Optional AbortSignal to cancel the operation
    * @returns A new object with the same structure but localized string values
    */
   async localizeObject(
@@ -221,8 +230,9 @@ export class LingoDotDevEngine {
       sourceChunk: Record<string, string>,
       processedChunk: Record<string, string>,
     ) => void,
+    signal?: AbortSignal,
   ): Promise<Record<string, any>> {
-    return this._localizeRaw(obj, params, progressCallback);
+    return this._localizeRaw(obj, params, progressCallback, signal);
   }
 
   /**
@@ -233,17 +243,20 @@ export class LingoDotDevEngine {
    *   - targetLocale: The target language code (e.g., 'es')
    *   - fast: Optional boolean to enable fast mode (faster for bigger batches)
    * @param progressCallback - Optional callback function to report progress (0-100)
+   * @param signal - Optional AbortSignal to cancel the operation
    * @returns The localized text string
    */
   async localizeText(
     text: string,
     params: Z.infer<typeof localizationParamsSchema>,
     progressCallback?: (progress: number) => void,
+    signal?: AbortSignal,
   ): Promise<string> {
     const response = await this._localizeRaw(
       { text },
       params,
       progressCallback,
+      signal,
     );
     return response.text || "";
   }
@@ -255,6 +268,7 @@ export class LingoDotDevEngine {
    *   - sourceLocale: The source language code (e.g., 'en')
    *   - targetLocales: An array of target language codes (e.g., ['es', 'fr'])
    *   - fast: Optional boolean to enable fast mode (for bigger batches)
+   * @param signal - Optional AbortSignal to cancel the operation
    * @returns An array of localized text strings
    */
   async batchLocalizeText(
@@ -264,14 +278,20 @@ export class LingoDotDevEngine {
       targetLocales: LocaleCode[];
       fast?: boolean;
     },
+    signal?: AbortSignal,
   ) {
     const responses = await Promise.all(
       params.targetLocales.map((targetLocale) =>
-        this.localizeText(text, {
-          sourceLocale: params.sourceLocale,
-          targetLocale,
-          fast: params.fast,
-        }),
+        this.localizeText(
+          text,
+          {
+            sourceLocale: params.sourceLocale,
+            targetLocale,
+            fast: params.fast,
+          },
+          undefined,
+          signal,
+        ),
       ),
     );
 
@@ -286,17 +306,20 @@ export class LingoDotDevEngine {
    *   - targetLocale: The target language code (e.g., 'es')
    *   - fast: Optional boolean to enable fast mode (faster but potentially lower quality)
    * @param progressCallback - Optional callback function to report progress (0-100)
+   * @param signal - Optional AbortSignal to cancel the operation
    * @returns Array of localized chat messages with preserved structure
    */
   async localizeChat(
     chat: Array<{ name: string; text: string }>,
     params: Z.infer<typeof localizationParamsSchema>,
     progressCallback?: (progress: number) => void,
+    signal?: AbortSignal,
   ): Promise<Array<{ name: string; text: string }>> {
     const localized = await this._localizeRaw(
       { chat },
       params,
       progressCallback,
+      signal,
     );
 
     return Object.entries(localized).map(([key, value]) => ({
@@ -314,12 +337,14 @@ export class LingoDotDevEngine {
    *   - targetLocale: The target language code (e.g., 'es')
    *   - fast: Optional boolean to enable fast mode (faster but potentially lower quality)
    * @param progressCallback - Optional callback function to report progress (0-100)
+   * @param signal - Optional AbortSignal to cancel the operation
    * @returns The localized HTML document as a string, with updated lang attribute
    */
   async localizeHtml(
     html: string,
     params: Z.infer<typeof localizationParamsSchema>,
     progressCallback?: (progress: number) => void,
+    signal?: AbortSignal,
   ): Promise<string> {
     const jsdomPackage = await import("jsdom");
     const { JSDOM } = jsdomPackage;
@@ -417,6 +442,7 @@ export class LingoDotDevEngine {
       extractedContent,
       params,
       progressCallback,
+      signal,
     );
 
     // Update the DOM with localized content
@@ -455,9 +481,13 @@ export class LingoDotDevEngine {
   /**
    * Detect the language of a given text
    * @param text - The text to analyze
+   * @param signal - Optional AbortSignal to cancel the operation
    * @returns Promise resolving to a locale code (e.g., 'en', 'es', 'fr')
    */
-  async recognizeLocale(text: string): Promise<LocaleCode> {
+  async recognizeLocale(
+    text: string,
+    signal?: AbortSignal,
+  ): Promise<LocaleCode> {
     const response = await fetch(`${this.config.apiUrl}/recognize`, {
       method: "POST",
       headers: {
@@ -465,6 +495,7 @@ export class LingoDotDevEngine {
         Authorization: `Bearer ${this.config.apiKey}`,
       },
       body: JSON.stringify({ text }),
+      signal,
     });
 
     if (!response.ok) {
@@ -480,7 +511,9 @@ export class LingoDotDevEngine {
     return jsonResponse.locale;
   }
 
-  async whoami(): Promise<{ email: string; id: string } | null> {
+  async whoami(
+    signal?: AbortSignal,
+  ): Promise<{ email: string; id: string } | null> {
     try {
       const res = await fetch(`${this.config.apiUrl}/whoami`, {
         method: "POST",
@@ -488,6 +521,7 @@ export class LingoDotDevEngine {
           Authorization: `Bearer ${this.config.apiKey}`,
           ContentType: "application/json",
         },
+        signal,
       });
 
       if (res.ok) {
