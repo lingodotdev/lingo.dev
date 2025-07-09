@@ -1,0 +1,46 @@
+name: Generate CLI Docs
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - "packages/cli/**"
+      - "scripts/docs/src/generate-cli-docs.ts"
+      - "scripts/docs/package.json"
+
+jobs:
+  generate-docs:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v2
+        with:
+          version: 9
+          run_install: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Generate CLI docs
+        run: pnpm --filter docs run generate-cli-docs
+
+      - name: Commit and push changes (if any)
+        uses: EndBug/add-and-commit@v9
+        with:
+          default_author: github_actions
+          message: "docs: update CLI command reference [skip ci]"
+          add: "docs/cli-commands.md"
