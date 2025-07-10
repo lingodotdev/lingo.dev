@@ -96,7 +96,10 @@ async function main() {
       ],
     };
 
-    return unified().use(remarkStringify).stringify(mdast);
+    return unified()
+      .use([[remarkStringify, { fence: "````" }]])
+      .stringify(mdast)
+      .toString();
   }
 
   const body = buildCommentBody(truncated);
