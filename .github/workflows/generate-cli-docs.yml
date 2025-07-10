@@ -4,10 +4,10 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
     paths:
-      - "packages/cli/**"
-      - "scripts/docs/src/generate-cli-docs.ts"
-      - "scripts/docs/package.json"
       - ".github/workflows/generate-cli-docs.yml"
+      - "packages/cli/**"
+      - "scripts/docs/package.json"
+      - "scripts/docs/src/generate-cli-docs.ts"
 
 jobs:
   generate-docs:
