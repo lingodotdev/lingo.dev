@@ -1,8 +1,8 @@
 # CONTRIBUTING.md
 
-Thank you for contributing to Lingo.dev! We're an exciting open source project and we'd love to have you contribute!
+Thank you for contributing to Lingo.dev! We're an exciting open source project and we love having you contribute!
 
-Here's some resources and guidance to help you get started:
+Here are some resources and guidance to help you get started:
 
 1. [Getting Started](#getting-started)
 2. [Issues](#issues)
@@ -33,64 +33,11 @@ cd lingo.dev
 pnpm install
 ```
 
-Next, configure an AI API key. You can configure a key in two different ways:
+Next, configure an AI API key. You can use either a Lingo.dev API key or one of the supported LLM model providers.
 
-**Option A: User-wide (Recommended for development):**
+Please refer to our docs on how to set this up: https://lingo.dev/en/cli/quick-start#step-2-authentication
 
-Run one of the following commands that corresponds with the AI provider you want to use in a terminal window. Replace `<your-api-key>` with your actual API key. You can configure Groq, Google, or Mistral.
-
-Groq:
-
-```bash
-npx lingo.dev@latest config set llm.groqApiKey <your-api-key>
-```
-
-Google:
-
-```bash
-npx lingo.dev@latest config set llm.googleApiKey <your-api-key>
-```
-
-Mistral:
-
-```bash
-npx lingo.dev@latest config set llm.mistralApiKey <your-api-key>
-```
-
-This will store the key in your system's user configuration, allowing you to build the project without needing to set it up in each demo directory.
-
-**Option B: Project-wide (Alternative):**
-
-Run the following command in a terminal window. Replace `<your-api-key>` with your actual API key:
-
-Groq:
-
-```bash
-# Create .env files in demo directories
-echo "GROQ_API_KEY=<your-api-key>" > demo/react-router-app/.env
-echo "GROQ_API_KEY=<your-api-key>" > demo/next-app/.env
-echo "GROQ_API_KEY=<your-api-key>" > demo/vite-project/.env
-```
-
-Google:
-
-```bash
-echo "GOOGLE_API_KEY=<your-api-key>" > demo/react-router-app/.env
-echo "GOOGLE_API_KEY=<your-api-key>" > demo/next-app/.env
-echo "GOOGLE_API_KEY=<your-api-key>" > demo/vite-project/.env
-```
-
-Mistral:
-
-```bash
-echo "MISTRAL_API_KEY=<your-api-key>" > demo/react-router-app/.env
-echo "MISTRAL_API_KEY=<your-api-key>" > demo/next-app/.env
-echo "MISTRAL_API_KEY=<your-api-key>" > demo/vite-project/.env
-```
-
-This will create `.env` files in each demo directory with your AI API key set as an environment variable.
-
-_Note:_ When loading LLM API keys (including Groq, Google, and Mistral), the Lingo.dev Compiler checks the following sources in order of priority:
+_Note:_ When loading LLM API keys (both Lingo.dev and other LLM model providers like Groq or Mistral), the Lingo.dev Compiler checks the following sources in order of priority:
 
 1. Environment variables (via `process.env`)
 2. Environment files (`.env`, `.env.local`, `.env.development`)
@@ -108,7 +55,7 @@ pnpm run dev
 
 # in terminal window 2 - test the CLI
 cd packages/cli
-pnpm lingo.dev --help # this command will use the current cli code + demo config from ./package/i18n.json
+pnpm lingo.dev --help # this command will use the current CLI code + demo config from ./packages/cli/i18n.json
 ```
 
 Feel free to ask questions on our [Discord server](https://lingo.dev/go/discord)!
@@ -154,19 +101,64 @@ Look at how existing providers like "groq", "google", and "mistral" are implemen
 If you find a bug, please create an Issue and we'll triage it.
 
 - Please search [existing Issues](https://github.com/lingodotdev/lingo.dev/issues) before creating a new one
-- Please include a clear description of the problem along with steps to reproduce it. Exact steps with screenshots and urls really help here
+- Please include a clear description of the problem along with steps to reproduce it. Exact steps with screenshots and URLs really help here
 - Before starting work on an issue, please comment on it and wait for it to be assigned to you. This prevents multiple people from working on the same issue simultaneously
 - Let's discuss implementation details in the issue comments or Discord before starting work, to ensure alignment between contributors and the Lingo.dev team
 
 ## Pull Requests
 
-We actively welcome your Pull Requests! A couple of things to keep in mind before you submit:
+We love your Pull Requests! A couple of things to keep in mind before you submit:
 
-- If you're fixing an Issue, make sure someone else hasn't already created a PR fixing the same issue
-- Make sure to link your PR to the related Issue(s)
+### Before you open a pull request
+
+- GitHub Issue
+  - Make sure the fix or feature is sufficiently documented and discussed in advance in an existing [GitHub Issue](https://github.com/lingodotdev/lingo.dev/issues)
+  - If there are no related issues, **we strongly suggest you [create a new Issue](https://github.com/lingodotdev/lingo.dev/issues/new)** and discuss your feature or proposal with the Lingo.dev team
+  - If there is a Discord thread already, please summarize it in a GitHub Issue. This helps to keep everyone in the loop, including open-source contributors and Lingo.dev team members not part of the original conversation. It also serves as documentation for future decisions.
+- README update
+  - If applicable, please add a section with the CLI commands introduced in your PR (what their purpose is and how to use them)
+  - It is not necessary to update the README file for every change, oftentimes a comprehensive description in the Issue or PR description is enough
+- Tests
+  - Your changes should include unit tests for the main code paths, to make sure nothing breaks
+- Changeset
+  - Add a [changeset](https://github.com/changesets/changesets) for your feature or fix (run `pnpm new` from the repo root)
+- PR checks
+  - Make sure all checks pass
+  - You can run the checks locally in repo root:
+    ```sh
+    pnpm install --frozen-lockfile
+    pnpm format:check
+    pnpm turbo build --force
+    pnpm turbo test --force
+    pnpm changeset status --since origin/main
+    ```
+    ...or let GitHub run it in the PR for you.
+
+### Opening a pull request
+
+- GitHub Issue
+  - Make sure to link your PR to the existing Issue(s)
+  - We may not be able to accept new features without existing Issues
+  - This does not apply to smaller fixes with sufficient description in the PR
+- Existing PRs
+  - Make sure someone else hasn't already created a PR fixing the same issue.
+- PR title
+  - The title should be [a valid Conventional Commit title](https://github.com/amannn/action-semantic-pull-request?tab=readme-ov-file#action-semantic-pull-request)
+  - Should start with `feat:`, `fix:`, `chore:`, etc.
+- PR description
+  - Should contain sufficient description of your PR (unless the linked Issue already does)
+  - _💡 Tip:_ Oftentimes less is more. Try to write in your own words; real humans are reviewing your PR.
+- Demo video
+  - For larger features we would really appreciate a quick screen recording showing it in action
+  - It helps make the review process faster
+  - You can use [open-source Cap](https://github.com/CapSoftware/Cap), [QuickTime on Mac](https://support.apple.com/guide/quicktime-player/record-your-screen-qtp97b08e666/mac), or any other software you prefer
+
+### Review Process
+
 - We will always try to accept the first viable PR that resolves the Issue
 - Please discuss implementation approach beforehand to avoid having PRs rejected
+- Please actively discuss with the Lingo.dev team in the PR and related Issue(s)
 
-## Release Process
+---
 
-Be sure to run `pnpm new` after you're done with the changes. This will use `changesets` library to trigger a new version after the PR is merged to the main branch. Be sure to do that after requesting a review from the maintainers: the CI build will fail if you don't run `pnpm new`.
+Thank you!
