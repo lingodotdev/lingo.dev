@@ -1,24 +1,27 @@
 import { cookies, headers } from "next/headers";
 import { LOCALE_HEADER_NAME, LOCALE_COOKIE_NAME } from "../core";
 
-export async function loadLocaleFromHeaders() {
+/**
+ * Returns the locale sent via the custom header. Falls back to "en" when the
+ * header is absent.
+ */
+export async function loadLocaleFromHeaders(): Promise<string> {
   const requestHeaders = await headers();
-  const result = requestHeaders.get(LOCALE_HEADER_NAME) || "en";
-
-  return result;
+  return requestHeaders.get(LOCALE_HEADER_NAME) || "en";
 }
 
-export async function loadLocaleFromCookies() {
+/**
+ * Returns the locale stored in the incoming request cookies. Falls back to
+ * "en" when the cookie is absent.
+ */
+export async function loadLocaleFromCookies(): Promise<string> {
   const requestCookies = await cookies();
-  const result = requestCookies.get(LOCALE_COOKIE_NAME)?.value || "en";
-  return result;
+  return requestCookies.get(LOCALE_COOKIE_NAME)?.value || "en";
 }
 
-export async function setLocaleInCookies(locale: string) {
-  const requestCookies = await cookies();
-  requestCookies.set(LOCALE_COOKIE_NAME, locale);
-}
-
+/**
+ * Loads the appropriate dictionary for the current request.
+ */
 export async function loadDictionaryFromRequest(
   loader: (locale: string) => Promise<any>,
 ) {

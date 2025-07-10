@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { getLocaleFromCookies, setLocaleInCookies } from "./utils";
+import { useState } from "react";
+import { useLingo } from "./context";
+import { setLocaleInCookies } from "./utils";
 
 export type LocaleSwitcherProps = {
   className?: string;
@@ -9,37 +10,46 @@ export type LocaleSwitcherProps = {
 };
 
 export function LocaleSwitcher(props: LocaleSwitcherProps) {
+  const lingo = useLingo();
   const { locales } = props;
-  const [locale, setLocale] = useState<string>("");
 
-  useEffect(() => {
-    const currentLocale = getLocaleFromCookies();
-    setLocale(currentLocale);
-  }, [locales]);
+  const locale = lingo.locale;
+
+  const [isSwitching, setIsSwitching] = useState(false);
 
   if (!locale) {
     return null;
   }
 
+  const handleLocaleChange = async (newLocale: string) => {
+    if (newLocale === locale) return;
+    setIsSwitching(true);
+
+    try {
+      if (lingo.setLocale) {
+        await lingo.setLocale(newLocale);
+      } else {
+        // Fallback for provider without dynamic switching
+        setLocaleInCookies(newLocale);
+        window.location.reload();
+      }
+    } finally {
+      setIsSwitching(false);
+    }
+  };
+
   return (
     <select
       value={locale}
       className={props.className}
-      onChange={(e) => {
-        handleLocaleChange(e.target.value);
-      }}
+      onChange={(e) => handleLocaleChange(e.target.value)}
+      disabled={isSwitching}
     >
-      {locales.map((locale) => (
-        <option key={locale} value={locale}>
-          {locale}
+      {locales.map((l) => (
+        <option key={l} value={l}>
+          {l}
         </option>
       ))}
     </select>
   );
-
-  function handleLocaleChange(newLocale: string): Promise<void> {
-    setLocaleInCookies(newLocale);
-    window.location.reload();
-    return Promise.resolve();
-  }
 }
