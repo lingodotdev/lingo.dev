@@ -19,7 +19,7 @@ Commands:
   i18n [options]        Run Localization engine
   auth [options]        Show current authentication status
   login                 Authenticate with Lingo.dev API
-  logout                Sign out from Lingo.dev API
+  logout                Log out from Lingo.dev API
   show                  Prints out the current configuration
   config                Manage Lingo.dev CLI configuration
   lockfile [options]    Create a lockfile if it does not exist
@@ -115,7 +115,7 @@ Options:
 ```bash
 Usage: lingo.dev logout [options]
 
-Sign out from Lingo.dev API
+Log out from Lingo.dev API
 
 Options:
   -h, --help  Show help
