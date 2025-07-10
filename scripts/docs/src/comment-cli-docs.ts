@@ -17,42 +17,83 @@ function truncate(content: string, maxLength: number) {
     : content;
 }
 
-async function main() {
+function getGitHubEventName() {
   const eventName = process.env.GITHUB_EVENT_NAME;
-  if (eventName !== "pull_request") {
-    console.log(`Skipping comment step  because event name is '${eventName}'.`);
-    return;
+
+  if (!eventName) {
+    throw new Error("GITHUB_EVENT_NAME environment variable is missing.");
   }
 
+  return eventName;
+}
+
+function getGitHubToken() {
   const token = process.env.GITHUB_TOKEN;
+
   if (!token) {
     throw new Error("GITHUB_TOKEN environment variable is required.");
   }
 
+  return token;
+}
+
+function getGitHubRepo() {
   const repository = process.env.GITHUB_REPOSITORY;
+
   if (!repository) {
     throw new Error("GITHUB_REPOSITORY environment variable is missing.");
   }
-  const [owner, repo] = repository.split("/");
 
-  let prNumber: number | undefined;
-  if (process.env.PR_NUMBER) {
-    prNumber = Number(process.env.PR_NUMBER);
+  const [_, repo] = repository.split("/");
+
+  return repo;
+}
+
+function getGitHubOwner() {
+  const repository = process.env.GITHUB_REPOSITORY;
+
+  if (!repository) {
+    throw new Error("GITHUB_REPOSITORY environment variable is missing.");
+  }
+
+  const [owner] = repository.split("/");
+
+  return owner;
+}
+
+function getGitHubPRNumber() {
+  const prNumber = process.env.PR_NUMBER;
+
+  if (prNumber) {
+    return Number(prNumber);
   }
 
   const eventPath = process.env.GITHUB_EVENT_PATH;
-  if (!prNumber && eventPath && existsSync(eventPath)) {
+
+  if (eventPath && existsSync(eventPath)) {
     try {
       const eventData = JSON.parse(readFileSync(eventPath, "utf8"));
-      prNumber = eventData.pull_request?.number;
+      return Number(eventData.pull_request?.number);
     } catch (err) {
       console.warn("Failed to parse GITHUB_EVENT_PATH JSON:", err);
     }
   }
 
-  if (!prNumber) {
-    throw new Error("Could not determine pull request number.");
+  throw new Error("Could not determine pull request number.");
+}
+
+async function main() {
+  const eventName = getGitHubEventName();
+
+  if (eventName !== "pull_request") {
+    console.log(`Skipping comment step because event name is '${eventName}'.`);
+    return;
   }
+
+  const token = getGitHubToken();
+  const owner = getGitHubOwner();
+  const repo = getGitHubRepo();
+  const prNumber = getGitHubPRNumber();
 
   const repoRoot = getRepoRoot();
   const docsPath = path.resolve(repoRoot, "docs", "cli-commands.md");
@@ -91,7 +132,7 @@ async function main() {
           type: "html",
           value: "<summary>Lingo.dev CLI Commands</summary>",
         },
-        { type: "paragraph", children: [{ type: "text", value: content }] },
+        { type: "code", value: content, lang: "markdown" },
         { type: "html", value: "</details>" },
       ],
     };
