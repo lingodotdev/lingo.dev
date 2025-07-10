@@ -1,23 +1,16 @@
 #!/usr/bin/env node
 
-import { Octokit } from "@octokit/rest";
 import type { Command } from "commander";
 import { existsSync } from "fs";
 import { mkdir, writeFile } from "fs/promises";
 import type { Root } from "mdast";
-import { resolve } from "path";
+import { resolve, dirname } from "path";
 import remarkStringify from "remark-stringify";
 import { unified } from "unified";
 import { pathToFileURL } from "url";
-import {
-  getGitHubOwner,
-  getGitHubPRNumber,
-  getGitHubRepo,
-  getGitHubToken,
-  getRepoRoot,
-} from "./utils";
+import { createOrUpdateGitHubComment, getRepoRoot } from "./utils";
 
-async function getCLI(repoRoot: string): Promise<Command> {
+async function getProgram(repoRoot: string): Promise<Command> {
   const filePath = resolve(
     repoRoot,
     "packages",
@@ -39,7 +32,6 @@ async function getCLI(repoRoot: string): Promise<Command> {
 }
 
 function buildMarkdown(program: Command): string {
-  // Create a Markdown AST
   const mdast: Root = {
     type: "root",
     children: [
@@ -84,6 +76,7 @@ function buildMarkdown(program: Command): string {
     if (visited.has(cmd)) {
       return;
     }
+
     visited.add(cmd);
 
     const commandPath = [...parents, cmd.name()].join(" ").trim();
@@ -109,63 +102,15 @@ function buildMarkdown(program: Command): string {
 
   walk({ cmd: program, parents: [] });
 
-  // Stringify the AST to Markdown
   return unified().use(remarkStringify).stringify(mdast);
 }
 
-type GitHubCommentOptions = {
-  marker: string;
-  body: string;
-};
-
-async function createOrUpdateGitHubComment(
-  options: GitHubCommentOptions,
-): Promise<void> {
-  const token = getGitHubToken();
-  const owner = getGitHubOwner();
-  const repo = getGitHubRepo();
-  const prNumber = getGitHubPRNumber();
-
-  const octokit = new Octokit({ auth: token });
-
-  const { data: comments } = await octokit.rest.issues.listComments({
-    owner,
-    repo,
-    issue_number: prNumber,
-    per_page: 100,
-  });
-
-  const existing = comments.find((c) => c.body?.startsWith(options.marker));
-
-  if (existing) {
-    console.log(`Updating existing comment (id: ${existing.id}).`);
-    await octokit.rest.issues.updateComment({
-      owner,
-      repo,
-      comment_id: existing.id,
-      body: options.body,
-    });
-  } else {
-    console.log("Creating new comment.");
-    await octokit.rest.issues.createComment({
-      owner,
-      repo,
-      issue_number: prNumber,
-      body: options.body,
-    });
-  }
-}
-
 async function main(): Promise<void> {
-  console.log("🔄 Generating CLI docs...");
-
   const repoRoot = getRepoRoot();
-  const outputDir = resolve(repoRoot, "docs");
-  const outputFileName = "cli-commands.md";
-  const outputFilePath = resolve(outputDir, outputFileName);
-  const COMMENT_MARKER = "<!-- generate-cli-docs -->";
+  const commentMarker = "<!-- generate-cli-docs -->";
 
-  const cli = await getCLI(repoRoot);
+  console.log("🔄 Generating CLI docs...");
+  const cli = await getProgram(repoRoot);
   const markdown = buildMarkdown(cli);
 
   const isGitHubAction = Boolean(process.env.GITHUB_ACTIONS);
@@ -176,7 +121,7 @@ async function main(): Promise<void> {
     const mdast: Root = {
       type: "root",
       children: [
-        { type: "html", value: COMMENT_MARKER },
+        { type: "html", value: commentMarker },
         {
           type: "paragraph",
           children: [
@@ -200,15 +145,25 @@ async function main(): Promise<void> {
       .toString();
 
     await createOrUpdateGitHubComment({
-      marker: COMMENT_MARKER,
+      commentMarker,
       body,
     });
 
     return;
   }
 
+  const outputArg = process.argv[2];
+
+  if (!outputArg) {
+    throw new Error(
+      "Output file path is required. Usage: generate-cli-docs <output-path>",
+    );
+  }
+
+  const outputFilePath = resolve(process.cwd(), outputArg);
+
   console.log(`💾 Saving to ${outputFilePath}...`);
-  await mkdir(outputDir, { recursive: true });
+  await mkdir(dirname(outputFilePath), { recursive: true });
   await writeFile(outputFilePath, markdown, "utf8");
   console.log(`✅ Saved to ${outputFilePath}`);
 }

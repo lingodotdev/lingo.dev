@@ -1,4 +1,4 @@
-# scripts/docs
+# docs
 
 ## Introduction
 
@@ -19,3 +19,7 @@ pnpm --filter docs run generate-cli-docs
 1. Loads the CLI program from the `cli` package.
 2. Walks through all commands and subcommands.
 3. Generates a Markdown file with the complete command reference.
+
+```bash
+pnpm --filter docs run generate:cli
+```

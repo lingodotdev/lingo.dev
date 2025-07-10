@@ -2,6 +2,7 @@ import { existsSync } from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import { readFileSync } from "fs";
+import { Octokit } from "@octokit/rest";
 
 export function getRepoRoot(): string {
   const __filename = fileURLToPath(import.meta.url);
@@ -71,4 +72,55 @@ export function getGitHubPRNumber() {
   }
 
   throw new Error("Could not determine pull request number.");
+}
+
+export type GitHubCommentOptions = {
+  commentMarker: string;
+  body: string;
+};
+
+export async function createOrUpdateGitHubComment(
+  options: GitHubCommentOptions,
+): Promise<void> {
+  const token = getGitHubToken();
+  const owner = getGitHubOwner();
+  const repo = getGitHubRepo();
+  const prNumber = getGitHubPRNumber();
+
+  const octokit = new Octokit({ auth: token });
+
+  const commentsResponse = await octokit.rest.issues.listComments({
+    owner,
+    repo,
+    issue_number: prNumber,
+    per_page: 100,
+  });
+
+  const comments = commentsResponse.data;
+
+  const existing = comments.find((c) => {
+    if (!c.body) {
+      return false;
+    }
+    return c.body.startsWith(options.commentMarker);
+  });
+
+  if (existing) {
+    console.log(`Updating existing comment (id: ${existing.id}).`);
+    await octokit.rest.issues.updateComment({
+      owner,
+      repo,
+      comment_id: existing.id,
+      body: options.body,
+    });
+    return;
+  }
+
+  console.log("Creating new comment.");
+  await octokit.rest.issues.createComment({
+    owner,
+    repo,
+    issue_number: prNumber,
+    body: options.body,
+  });
 }
