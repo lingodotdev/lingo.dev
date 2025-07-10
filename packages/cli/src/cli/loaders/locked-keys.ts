@@ -1,6 +1,7 @@
 import { ILoader } from "./_types";
 import { createLoader } from "./_utils";
 import _ from "lodash";
+import { minimatch } from "minimatch";
 
 export default function createLockedKeysLoader(
   lockedKeys: string[],
@@ -20,5 +21,7 @@ export default function createLockedKeysLoader(
 }
 
 function _isLockedKey(key: string, lockedKeys: string[]) {
-  return lockedKeys.some((lockedKey) => key.startsWith(lockedKey));
+  return lockedKeys.some(
+    (lockedKey) => key.startsWith(lockedKey) || minimatch(key, lockedKey),
+  );
 }

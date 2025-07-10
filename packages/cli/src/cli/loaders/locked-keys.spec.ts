@@ -24,6 +24,29 @@ describe("createLockedKeysLoader", () => {
       });
     });
 
+    it("should remove locked keys with wildcard from the data", async () => {
+      const loader = createLockedKeysLoader(["settings/*/locked"]);
+      loader.setDefaultLocale(locale);
+      const data = {
+        "common.title": "Title",
+        "settings/default/locked": "Foo",
+        "settings/default/notifications": "Enabled",
+        "settings/global/locked": "Bar",
+        "settings/global/notifications": "Disabled",
+        "settings/user/locked": "Baz",
+        "settings/user/notifications": "Enabled",
+      };
+
+      const result = await loader.pull(locale, data);
+
+      expect(result).toEqual({
+        "common.title": "Title",
+        "settings/default/notifications": "Enabled",
+        "settings/global/notifications": "Disabled",
+        "settings/user/notifications": "Enabled",
+      });
+    });
+
     it("should return the same data if no keys are locked", async () => {
       const loader = createLockedKeysLoader([]);
       loader.setDefaultLocale(locale);
@@ -74,7 +97,7 @@ describe("createLockedKeysLoader", () => {
     };
 
     it("should merge new data with original, preserving locked keys from original", async () => {
-      const loader = createLockedKeysLoader(lockedKeys, false);
+      const loader = createLockedKeysLoader(lockedKeys);
       loader.setDefaultLocale(locale);
       await loader.pull(locale, originalInput);
       const data = {
@@ -95,8 +118,42 @@ describe("createLockedKeysLoader", () => {
       });
     });
 
+    it("should merge new data with original, preserving wildcard locked keys from original", async () => {
+      const loader = createLockedKeysLoader(["settings/*/locked"]);
+      loader.setDefaultLocale(locale);
+
+      const originalInputWithWildcardKeys = {
+        "common.title": "Some Title",
+        "settings/default/locked": "Foo",
+        "settings/default/notifications": "Enabled",
+        "settings/global/locked": "Bar",
+        "settings/global/notifications": "Disabled",
+        "settings/user/locked": "Baz",
+        "settings/user/notifications": "Enabled",
+      };
+      await loader.pull(locale, originalInputWithWildcardKeys);
+      const data = {
+        "common.title": "Better Title",
+        "settings/default/notifications": "Maybe",
+        "settings/global/notifications": "Perhaps",
+        "settings/user/notifications": "Unknown",
+      };
+
+      const result = await loader.push(locale, data);
+
+      expect(result).toEqual({
+        "common.title": "Better Title",
+        "settings/default/locked": "Foo",
+        "settings/default/notifications": "Maybe",
+        "settings/global/locked": "Bar",
+        "settings/global/notifications": "Perhaps",
+        "settings/user/locked": "Baz",
+        "settings/user/notifications": "Unknown",
+      });
+    });
+
     it("should handle undefined original input", async () => {
-      const loader = createLockedKeysLoader(lockedKeys, false);
+      const loader = createLockedKeysLoader(lockedKeys);
       loader.setDefaultLocale(locale);
       await loader.pull(locale, undefined as any);
       const data = {

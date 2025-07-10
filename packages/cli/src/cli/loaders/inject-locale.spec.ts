@@ -46,6 +46,35 @@ describe("createInjectLocaleLoader", () => {
       const result = await loader.pull(locale, data);
       expect(result).toEqual({});
     });
+
+    it("should omit keys matching wildcard pattern where value matches locale", async () => {
+      const loader = createInjectLocaleLoader([
+        "pages.*.locale",
+        "meta/*/lang",
+      ]);
+      loader.setDefaultLocale(locale);
+      const data = {
+        pages: {
+          foo: { locale: "en", value: 1 },
+          bar: { locale: "en", value: 2 },
+          baz: { locale: "fr", value: 3 },
+        },
+        other: 42,
+        "meta/a/lang": "en",
+        "meta/b/lang": "fr",
+        "meta/c/lang": "en",
+      };
+      const result = await loader.pull(locale, data);
+      expect(result).toEqual({
+        pages: {
+          foo: { value: 1 },
+          bar: { value: 2 },
+          baz: { locale: "fr", value: 3 },
+        },
+        other: 42,
+        "meta/b/lang": "fr",
+      });
+    });
   });
 
   describe("push", () => {
@@ -136,6 +165,44 @@ describe("createInjectLocaleLoader", () => {
       const originalInput = { value: 1, meta: { other: 1 } };
       await loader.pull(originalLocale, originalInput);
       const data = { value: 2, meta: { other: 2 } };
+    });
+
+    it("should set wildcard-matched keys to new locale if they matched originalLocale", async () => {
+      const loader = createInjectLocaleLoader([
+        "pages.*.locale",
+        "meta/*/lang",
+      ]);
+      loader.setDefaultLocale(originalLocale);
+      const originalInput = {
+        pages: {
+          foo: { locale: "en", value: 1 },
+          bar: { locale: "en", value: 2 },
+          baz: { locale: "fr", value: 3 },
+        },
+        "meta/a/lang": "en",
+        "meta/b/lang": "fr",
+        "meta/c/lang": "en",
+      };
+      await loader.pull(originalLocale, originalInput);
+      const data = {
+        pages: {
+          foo: { value: 10 },
+          bar: { value: 20 },
+          baz: { locale: "fr", value: 30 },
+        },
+        "meta/b/lang": "fr",
+      };
+      const result = await loader.push("de", data);
+      expect(result).toEqual({
+        pages: {
+          foo: { locale: "de", value: 10 },
+          bar: { locale: "de", value: 20 },
+          baz: { locale: "fr", value: 30 },
+        },
+        "meta/a/lang": "de",
+        "meta/b/lang": "fr",
+        "meta/c/lang": "de",
+      });
     });
   });
 });
