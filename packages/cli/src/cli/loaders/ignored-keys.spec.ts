@@ -138,7 +138,7 @@ describe("ignored-keys loader", () => {
     });
   });
 
-  it.only("should merge wildcard-ignored keys back when pushing a target locale", async () => {
+  it("should merge wildcard-ignored keys back when pushing a target locale", async () => {
     const loader = createLoader();
     await loader.pull(defaultLocale, {
       greeting: "hello",
