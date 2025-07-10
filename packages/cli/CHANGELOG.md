@@ -1,5 +1,18 @@
 # lingo.dev
 
+## 0.107.2
+
+### Patch Changes
+
+- [#1029](https://github.com/lingodotdev/lingo.dev/pull/1029) [`1f1e33f`](https://github.com/lingodotdev/lingo.dev/commit/1f1e33fe4d0767c2f026214a505a2aa9f3785996) Thanks [@mathio](https://github.com/mathio)! - allow wildcards when matching lockedKeys, ignoredKeys, injectLocale
+
+- [#1023](https://github.com/lingodotdev/lingo.dev/pull/1023) [`9266fd0`](https://github.com/lingodotdev/lingo.dev/commit/9266fd0bcddf4b07ca51d2609af92a9473106f9d) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - Update Zod dependency to version 3.25.76
+
+- Updated dependencies [[`9266fd0`](https://github.com/lingodotdev/lingo.dev/commit/9266fd0bcddf4b07ca51d2609af92a9473106f9d)]:
+  - @lingo.dev/_compiler@0.6.2
+  - @lingo.dev/_spec@0.39.2
+  - @lingo.dev/_sdk@0.10.1
+
 ## 0.107.1
 
 ### Patch Changes
