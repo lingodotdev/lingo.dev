@@ -77,14 +77,13 @@ jobs:
         uses: dorny/paths-filter@v2
         with:
           filters: |
-            cli-docs:
+            generated-docs:
               - '.github/workflows/pr-check.yml'
-              - 'packages/cli/**'
-              - 'scripts/docs/package.json'
-              - 'scripts/docs/src/generate-cli-docs.ts'
+              - 'packages/cli/**/*.ts'
+              - 'scripts/docs/**'
 
       - name: Generate CLI documentation
-        if: steps.check-paths.outputs.cli-docs == 'true'
+        if: steps.check-paths.outputs.generated-docs == 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: pnpm --filter docs run generate-cli-docs
