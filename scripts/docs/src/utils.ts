@@ -3,8 +3,6 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { readFileSync } from "fs";
 
-export const GITHUB_MAX_COMMENT_LENGTH = 65000;
-
 export function getRepoRoot(): string {
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
@@ -18,22 +16,6 @@ export function getRepoRoot(): string {
   }
 
   throw new Error("Could not find project root");
-}
-
-export function truncate(content: string, maxLength: number) {
-  return content.length > maxLength
-    ? `${content.slice(0, maxLength)}\n\n...truncated...`
-    : content;
-}
-
-export function getGitHubEventName() {
-  const eventName = process.env.GITHUB_EVENT_NAME;
-
-  if (!eventName) {
-    throw new Error("GITHUB_EVENT_NAME environment variable is missing.");
-  }
-
-  return eventName;
 }
 
 export function getGitHubToken() {

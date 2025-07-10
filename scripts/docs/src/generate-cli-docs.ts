@@ -1,35 +1,25 @@
 #!/usr/bin/env node
 
+import { Octokit } from "@octokit/rest";
 import type { Command } from "commander";
 import { existsSync } from "fs";
 import { mkdir, writeFile } from "fs/promises";
 import type { Root } from "mdast";
-import { dirname, relative, resolve } from "path";
+import { resolve } from "path";
 import remarkStringify from "remark-stringify";
 import { unified } from "unified";
 import { pathToFileURL } from "url";
-import { Octokit } from "@octokit/rest";
 import {
-  getRepoRoot,
-  GITHUB_MAX_COMMENT_LENGTH,
-  getGitHubEventName,
   getGitHubOwner,
   getGitHubPRNumber,
   getGitHubRepo,
   getGitHubToken,
-  truncate,
+  getRepoRoot,
 } from "./utils";
 
-const REPO_ROOT = getRepoRoot();
-const OUTPUT_DIR = resolve(REPO_ROOT, "docs");
-const OUTPUT_FILE_NAME = "cli-commands.md";
-const OUTPUT_FILE_PATH = resolve(OUTPUT_DIR, OUTPUT_FILE_NAME);
-
-const MARKER = "<!-- generate-cli-docs -->";
-
-async function getCLI(): Promise<Command> {
+async function getCLI(repoRoot: string): Promise<Command> {
   const filePath = resolve(
-    REPO_ROOT,
+    repoRoot,
     "packages",
     "cli",
     "src",
@@ -50,7 +40,7 @@ async function getCLI(): Promise<Command> {
 
 function buildMarkdown(program: Command): string {
   // Create a Markdown AST
-  const root: Root = {
+  const mdast: Root = {
     type: "root",
     children: [
       {
@@ -99,14 +89,14 @@ function buildMarkdown(program: Command): string {
     const commandPath = [...parents, cmd.name()].join(" ").trim();
 
     // Heading for this command
-    root.children.push({
+    mdast.children.push({
       type: "heading",
       depth: 2,
       children: [{ type: "inlineCode", value: commandPath || cmd.name() }],
     });
 
     // Code block containing the help output
-    root.children.push({
+    mdast.children.push({
       type: "code",
       lang: "bash",
       value: helper.formatHelp(cmd, helper).trimEnd(),
@@ -120,49 +110,21 @@ function buildMarkdown(program: Command): string {
   walk({ cmd: program, parents: [] });
 
   // Stringify the AST to Markdown
-  return unified().use(remarkStringify).stringify(root);
+  return unified().use(remarkStringify).stringify(mdast);
 }
 
-async function commentOnGitHubPR(content: string): Promise<void> {
-  const eventName = getGitHubEventName();
+type GitHubCommentOptions = {
+  marker: string;
+  body: string;
+};
 
-  if (eventName !== "pull_request") {
-    console.log(`Skipping comment step because event name is '${eventName}'.`);
-    return;
-  }
-
+async function createOrUpdateGitHubComment(
+  options: GitHubCommentOptions,
+): Promise<void> {
   const token = getGitHubToken();
   const owner = getGitHubOwner();
   const repo = getGitHubRepo();
   const prNumber = getGitHubPRNumber();
-
-  const truncated = truncate(content, GITHUB_MAX_COMMENT_LENGTH);
-
-  const mdast: Root = {
-    type: "root",
-    children: [
-      { type: "html", value: MARKER },
-      {
-        type: "paragraph",
-        children: [
-          {
-            type: "text",
-            value:
-              "Your PR affects Lingo.dev CLI and, as a result, may affect the auto-generated reference documentation that will be published to the documentation website. Please review the output below to ensure that the changes are correct.",
-          },
-        ],
-      },
-      { type: "html", value: "<details>" },
-      { type: "html", value: "<summary>Lingo.dev CLI Commands</summary>" },
-      { type: "code", lang: "markdown", value: truncated },
-      { type: "html", value: "</details>" },
-    ],
-  };
-
-  const body = unified()
-    .use([[remarkStringify, { fence: "~" }]])
-    .stringify(mdast)
-    .toString();
 
   const octokit = new Octokit({ auth: token });
 
@@ -173,7 +135,7 @@ async function commentOnGitHubPR(content: string): Promise<void> {
     per_page: 100,
   });
 
-  const existing = comments.find((c) => c.body?.startsWith(MARKER));
+  const existing = comments.find((c) => c.body?.startsWith(options.marker));
 
   if (existing) {
     console.log(`Updating existing comment (id: ${existing.id}).`);
@@ -181,7 +143,7 @@ async function commentOnGitHubPR(content: string): Promise<void> {
       owner,
       repo,
       comment_id: existing.id,
-      body,
+      body: options.body,
     });
   } else {
     console.log("Creating new comment.");
@@ -189,29 +151,66 @@ async function commentOnGitHubPR(content: string): Promise<void> {
       owner,
       repo,
       issue_number: prNumber,
-      body,
+      body: options.body,
     });
   }
 }
 
 async function main(): Promise<void> {
   console.log("🔄 Generating CLI docs...");
-  const cli = await getCLI();
+
+  const repoRoot = getRepoRoot();
+  const outputDir = resolve(repoRoot, "docs");
+  const outputFileName = "cli-commands.md";
+  const outputFilePath = resolve(outputDir, outputFileName);
+  const COMMENT_MARKER = "<!-- generate-cli-docs -->";
+
+  const cli = await getCLI(repoRoot);
   const markdown = buildMarkdown(cli);
 
   const isGitHubAction = Boolean(process.env.GITHUB_ACTIONS);
 
   if (isGitHubAction) {
     console.log("💬 Commenting on GitHub PR...");
-    await commentOnGitHubPR(markdown);
+
+    const mdast: Root = {
+      type: "root",
+      children: [
+        { type: "html", value: COMMENT_MARKER },
+        {
+          type: "paragraph",
+          children: [
+            {
+              type: "text",
+              value:
+                "Your PR affects Lingo.dev CLI and, as a result, may affect the auto-generated reference documentation that will be published to the documentation website. Please review the output below to ensure that the changes are correct.",
+            },
+          ],
+        },
+        { type: "html", value: "<details>" },
+        { type: "html", value: "<summary>Lingo.dev CLI Commands</summary>" },
+        { type: "code", lang: "markdown", value: markdown },
+        { type: "html", value: "</details>" },
+      ],
+    };
+
+    const body = unified()
+      .use([[remarkStringify, { fence: "~" }]])
+      .stringify(mdast)
+      .toString();
+
+    await createOrUpdateGitHubComment({
+      marker: COMMENT_MARKER,
+      body,
+    });
+
     return;
   }
 
-  console.log(`💾 Saving to ${OUTPUT_FILE_PATH}...`);
-  const outputDir = dirname(OUTPUT_FILE_PATH);
+  console.log(`💾 Saving to ${outputFilePath}...`);
   await mkdir(outputDir, { recursive: true });
-  await writeFile(OUTPUT_FILE_PATH, markdown, "utf8");
-  console.log(`✅ Saved to ${OUTPUT_FILE_PATH}`);
+  await writeFile(outputFilePath, markdown, "utf8");
+  console.log(`✅ Saved to ${outputFilePath}`);
 }
 
 main().catch((err) => {
