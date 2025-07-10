@@ -41,10 +41,6 @@ jobs:
         run: pnpm -r --filter "@lingo.dev/_*" --if-present run build
 
       - name: Generate CLI docs
-        run: pnpm --filter docs run generate-cli-docs
-
-      - name: Comment CLI docs on PR
-        if: github.event_name == 'pull_request'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: pnpm --filter docs run comment-cli-docs
+        run: pnpm --filter docs run generate-cli-docs

@@ -3,8 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "generate-cli-docs": "tsx ./src/generate-cli-docs.ts",
-    "comment-cli-docs": "tsx ./src/comment-cli-docs.ts"
+    "generate-cli-docs": "tsx ./src/generate-cli-docs.ts"
   },
   "devDependencies": {
     "@octokit/rest": "^20.1.2",

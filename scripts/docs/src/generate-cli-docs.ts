@@ -8,18 +8,24 @@ import { dirname, relative, resolve } from "path";
 import remarkStringify from "remark-stringify";
 import { unified } from "unified";
 import { pathToFileURL } from "url";
-import { getRepoRoot } from "./utils";
+import { Octokit } from "@octokit/rest";
+import {
+  getRepoRoot,
+  GITHUB_MAX_COMMENT_LENGTH,
+  getGitHubEventName,
+  getGitHubOwner,
+  getGitHubPRNumber,
+  getGitHubRepo,
+  getGitHubToken,
+  truncate,
+} from "./utils";
 
 const REPO_ROOT = getRepoRoot();
-const DEFAULT_OUTPUT_DIR = resolve(REPO_ROOT, "docs");
-const DEFAULT_OUTPUT_FILE_NAME = "cli-commands.md";
-const DEFAULT_OUTPUT_FILE_PATH = resolve(
-  DEFAULT_OUTPUT_DIR,
-  DEFAULT_OUTPUT_FILE_NAME,
-);
+const OUTPUT_DIR = resolve(REPO_ROOT, "docs");
+const OUTPUT_FILE_NAME = "cli-commands.md";
+const OUTPUT_FILE_PATH = resolve(OUTPUT_DIR, OUTPUT_FILE_NAME);
 
-const OUTPUT_FILE_PATH =
-  process.env.GENERATE_CLI_DOCS_OUTPUT_FILE_PATH || DEFAULT_OUTPUT_FILE_PATH;
+const MARKER = "<!-- generate-cli-docs -->";
 
 async function getCLI(): Promise<Command> {
   const filePath = resolve(
@@ -117,14 +123,95 @@ function buildMarkdown(program: Command): string {
   return unified().use(remarkStringify).stringify(root);
 }
 
+async function commentOnGitHubPR(content: string): Promise<void> {
+  const eventName = getGitHubEventName();
+
+  if (eventName !== "pull_request") {
+    console.log(`Skipping comment step because event name is '${eventName}'.`);
+    return;
+  }
+
+  const token = getGitHubToken();
+  const owner = getGitHubOwner();
+  const repo = getGitHubRepo();
+  const prNumber = getGitHubPRNumber();
+
+  const truncated = truncate(content, GITHUB_MAX_COMMENT_LENGTH);
+
+  const mdast: Root = {
+    type: "root",
+    children: [
+      { type: "html", value: MARKER },
+      {
+        type: "paragraph",
+        children: [
+          {
+            type: "text",
+            value:
+              "Your PR affects Lingo.dev CLI and, as a result, may affect the auto-generated reference documentation that will be published to the documentation website. Please review the output below to ensure that the changes are correct.",
+          },
+        ],
+      },
+      { type: "html", value: "<details>" },
+      { type: "html", value: "<summary>Lingo.dev CLI Commands</summary>" },
+      { type: "code", lang: "markdown", value: truncated },
+      { type: "html", value: "</details>" },
+    ],
+  };
+
+  const body = unified()
+    .use([[remarkStringify, { fence: "~" }]])
+    .stringify(mdast)
+    .toString();
+
+  const octokit = new Octokit({ auth: token });
+
+  const { data: comments } = await octokit.rest.issues.listComments({
+    owner,
+    repo,
+    issue_number: prNumber,
+    per_page: 100,
+  });
+
+  const existing = comments.find((c) => c.body?.startsWith(MARKER));
+
+  if (existing) {
+    console.log(`Updating existing comment (id: ${existing.id}).`);
+    await octokit.rest.issues.updateComment({
+      owner,
+      repo,
+      comment_id: existing.id,
+      body,
+    });
+  } else {
+    console.log("Creating new comment.");
+    await octokit.rest.issues.createComment({
+      owner,
+      repo,
+      issue_number: prNumber,
+      body,
+    });
+  }
+}
+
 async function main(): Promise<void> {
   console.log("🔄 Generating CLI docs...");
   const cli = await getCLI();
   const markdown = buildMarkdown(cli);
+
+  const isGitHubAction = Boolean(process.env.GITHUB_ACTIONS);
+
+  if (isGitHubAction) {
+    console.log("💬 Commenting on GitHub PR...");
+    await commentOnGitHubPR(markdown);
+    return;
+  }
+
+  console.log(`💾 Saving to ${OUTPUT_FILE_PATH}...`);
   const outputDir = dirname(OUTPUT_FILE_PATH);
   await mkdir(outputDir, { recursive: true });
   await writeFile(OUTPUT_FILE_PATH, markdown, "utf8");
-  console.log(`✅ Saved to ${relative(REPO_ROOT, OUTPUT_FILE_PATH)}`);
+  console.log(`✅ Saved to ${OUTPUT_FILE_PATH}`);
 }
 
 main().catch((err) => {
