@@ -138,7 +138,7 @@ async function main() {
     };
 
     return unified()
-      .use([[remarkStringify, { fence: "````" }]])
+      .use([[remarkStringify, { fence: "~" }]])
       .stringify(mdast)
       .toString();
   }
