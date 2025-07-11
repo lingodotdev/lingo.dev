@@ -4,8 +4,11 @@ checksums:
     title: 38e9deab2df0a2732ee220d5d102668a
     description: 15a31addcf992e4bbde8574ff71a4caa
     version: 54a9e730e88fb16291b852274d433923
+    support_email: 10627fcc465897af0f5e1bba042685f9
+    emoji: b328c432cee108a87a92f05258b6a651
     author/name: 2e9d0387c41abedc0b7099069f9e7fc5
-    author/email: 6de8441611530f19a6596c1470c44e03
+    contributors/0/name: e80d4063a32adaad7b0a82b0bcc10551
+    contributors/1/name: b2bca2fa3c890618e56d07473f26ead3
     messages/0: 34374475f680b4115d3d821069fee5a2
     messages/1: 8378096075f8b15d03ff10d600aad2d6
     config/theme/primary: 7efe1a55b3d90a66f400e664a61f0fcf

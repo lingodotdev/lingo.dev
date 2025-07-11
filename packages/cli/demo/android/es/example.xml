@@ -2,10 +2,17 @@
   <string name="app_name">Mi Aplicación</string>
   <string name="welcome_message">¡Bienvenido a nuestra aplicación!</string>
   <string name="button_text">Haz clic aquí</string>
+  <string name="html_snippet">&lt;b&gt;Negrita&lt;/b&gt;</string>
+  <string name="apostrophe_example">¡No me traduzcas!</string>
+  <string name="cdata_example">Especial &lt;tag&gt; </string>
   <string-array name="color_names">
     <item>Rojo</item>
     <item>Verde</item>
     <item>Azul</item>
+  </string-array>
+  <string-array name="mixed_items">
+    <item>Inicial y final</item>
+    <item>    </item>
   </string-array>
   <plurals name="notification_count">
     <item quantity="one">Tienes %d notificación</item>
