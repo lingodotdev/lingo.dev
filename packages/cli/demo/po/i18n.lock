@@ -1,0 +1,19 @@
+version: 1
+checksums:
+  cdba37b4ade3da08cf12eccfde49d625:
+    Welcome/singular: 3180ad6b8de344b781637750259e0f53
+    Home/singular: 104a3db3b671c04e167eafbe21e57881
+    You%20have%20%25d%20message/singular: 1691abfe2c5d017cda86e298d34f3524
+    You%20have%20%25d%20message/plural: 2d37831bf51cc2cf75e812c0e61c6861
+    Save/singular: f7a2929f33bc420195e59ac5a8bcd454
+    Cancel/singular: 2e2a849c2223911717de8caa2c71bade
+    Delete/singular: 8bcf303dd10a645b5baacb02b47d72c9
+    Name/singular: 9368b5a047572b6051f334af5aa76819
+    Email%20Address/singular: 0ee22bbbe989a0c61a18023407d12dc2
+    Message/singular: f2f72126bd244cfc534eab395e054362
+    Loading.../singular: 82b4ea7ed1439094d7c4be13aaba9a66
+    Success!%20Your%20changes%20have%20been%20saved./singular: cbeeffb24c9b36ba71657e09414deda7
+    Error%3A%20Unable%20to%20process%20your%20request./singular: c2991ff1492929a26b9296237b087e0b
+    Add%20to%20Cart/singular: c93a29ccf502ff71bf08924dcdea9179
+    Out%20of%20Stock/singular: 6673fc95c2cee3c713e0d60c8184e289
+    Price%3A%20%24%25s/singular: a860f7b395e4a9d916a48717f9f8837a

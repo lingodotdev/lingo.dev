@@ -1,8 +1,7 @@
-````mdx
 ---
-title: "MDX Localization Example"
-description: "This frontmatter description is localized"
-author: "not-localized-author" # translators may localize this if desired
+title: MDX Localization Example
+description: This frontmatter description is localized
+author: not-localized-author
 ---
 
 # This heading text is localized
@@ -15,7 +14,7 @@ All regular text content in MDX files is localized (except for **attribute value
 
 - This list item text is localized
 - **This bold text is also localized**
-- *This italic text is localized too*
+- _This italic text is localized too_
 
 ### Links and emphasis
 
@@ -31,7 +30,7 @@ const message = "This string in code block is not localized";
 function example() {
   return "Code content is preserved as-is";
 }
-````
+```
 
 ```python
 # This Python comment is not localized
@@ -57,19 +56,3 @@ This text is localized, but `this.code.snippet = "is not localized"`, while this
 | --------------------------- | ---------------------------------------- |
 | This cell text is localized | `code.value = "not localized"`           |
 | Another localized cell      | `function() { return "not localized"; }` |
-
----
-
-## Attributes that are **not** localized
-
-Below are examples of strings **not** sent for translation because they sit in element attributes (like the `alt` or `title` on an image or link) rather than in the visible body text:
-
-![Alt text NOT localized](./logo.png "title attribute NOT localized")
-
-[Link with title](https://example.com "this title attribute is NOT localized")
-
-## JSX / raw HTML example
-
-<Callout type="note">This JSX child text **is** localized</Callout>
-
-The text inside the JSX element above is localized, **but** the `type="note"` prop value stays the same because attribute values are not processed by the loader.

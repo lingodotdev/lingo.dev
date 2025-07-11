@@ -1,0 +1,8 @@
+KEY,en,es
+welcome_message,Welcome to our application,Bienvenido a nuestra aplicación
+button_save,Save,Guardar
+error_invalid_email,Please enter a valid email address,"Por favor, introduce una dirección de correo electrónico válida"
+product_name,Premium Widget,Widget Premium
+empty_row_key,,
+whitespace_only,   ,
+new_feature,This is a new feature,Esta es una nueva función

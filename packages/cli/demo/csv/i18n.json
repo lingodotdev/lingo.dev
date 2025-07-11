@@ -9,7 +9,7 @@
   "buckets": {
     "csv": {
       "include": [
-        "./[locale]/example.csv"
+        "./example.csv"
       ]
     }
   },

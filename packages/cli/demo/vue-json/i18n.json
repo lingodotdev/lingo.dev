@@ -9,7 +9,7 @@
   "buckets": {
     "vue-json": {
       "include": [
-        "./[locale]/example.vue"
+        "./example.vue"
       ]
     }
   },

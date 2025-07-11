@@ -7,11 +7,11 @@
     ]
   },
   "buckets": {
-    "xcode-xcstrings": {
+    "po": {
       "include": [
-        "./example.xcstrings"
+        "./[locale]/example.po"
       ]
     }
   },
   "$schema": "https://lingo.dev/schema/i18n.json"
-}
+} 

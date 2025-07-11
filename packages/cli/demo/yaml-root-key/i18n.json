@@ -7,11 +7,11 @@
     ]
   },
   "buckets": {
-    "xcode-xcstrings": {
+    "yaml-root-key": {
       "include": [
-        "./example.xcstrings"
+        "./example.yml"
       ]
     }
   },
   "$schema": "https://lingo.dev/schema/i18n.json"
-}
+} 
