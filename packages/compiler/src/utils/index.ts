@@ -70,9 +70,16 @@ function findExistingImport(
         return;
       }
 
+      // Skip type-only imports as they can't be used at runtime
+      if (path.node.importKind === "type") {
+        return;
+      }
+
       for (const specifier of path.node.specifiers) {
         if (
           t.isImportSpecifier(specifier) &&
+          // Skip type-only specifiers as they can't be used at runtime
+          specifier.importKind !== "type" &&
           ((t.isIdentifier(specifier.imported) &&
             specifier.imported.name === exportedName) ||
             (specifier.importKind === "value" &&
@@ -131,13 +138,14 @@ function createImportDeclaration(
         t.identifier(exportedName),
       );
 
-      // Check if we already have an import from this module
+      // Check if we already have a non-type import from this module
       const existingImport = path
         .get("body")
         .find(
           (nodePath) =>
             t.isImportDeclaration(nodePath.node) &&
-            moduleName.includes(nodePath.node.source.value),
+            moduleName.includes(nodePath.node.source.value) &&
+            nodePath.node.importKind !== "type",
         );
 
       if (existingImport && t.isImportDeclaration(existingImport.node)) {
