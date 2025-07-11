@@ -611,6 +611,16 @@ function generateMarkdown(schema: any): string {
 
 // Modify generateSchema to also output markdown
 async function generateSchemaAndDocs() {
+  const outputArg = process.argv[2];
+
+  if (!outputArg) {
+    throw new Error(
+      "Output file path is required. Usage: generate-config-docs <output-path>",
+    );
+  }
+
+  const outputFilePath = resolve(process.cwd(), outputArg);
+
   const schema = zodToJsonSchema(LATEST_CONFIG_DEFINITION.schema, {
     name: "I18nConfig",
   } as any);
@@ -648,24 +658,22 @@ async function generateSchemaAndDocs() {
     }
   }
 
-  const __filename = fileURLToPath(import.meta.url);
-  const outDir = resolve(dirname(__filename), "../../../docs");
-  mkdirSync(outDir, { recursive: true });
+  // Ensure output directory exists
+  mkdirSync(dirname(outputFilePath), { recursive: true });
 
   // Generate markdown docs
   const markdown = generateMarkdown(schema);
 
   // Format with Prettier using repo config
-  const repoRoot = resolve(dirname(__filename), "../../..");
+  const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
   const prettierConfig = await prettier.resolveConfig(repoRoot);
   const formattedMarkdown = await prettier.format(markdown, {
     ...prettierConfig,
     parser: "markdown",
   });
 
-  const mdPath = resolve(outDir, "i18n.md");
-  writeFileSync(mdPath, formattedMarkdown);
-  console.log(`Generated config documentation at ${mdPath}`);
+  writeFileSync(outputFilePath, formattedMarkdown);
+  console.log(`Generated config documentation at ${outputFilePath}`);
 }
 
 // Run
