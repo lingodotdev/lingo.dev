@@ -1,0 +1,211 @@
+{
+  "$ref": "#/definitions/I18nConfig",
+  "definitions": {
+    "I18nConfig": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "number",
+          "default": 0,
+          "description": "Internal schema version. Do not modify manually."
+        },
+        "locale": {
+          "type": "object",
+          "properties": {
+            "source": {
+              "type": "string",
+              "description": "Primary source locale code of your content (e.g. 'en', 'en-US', 'pt_BR', or 'pt-rBR'). Must be one of the supported locale codes – either a short ISO-639 language code or a full locale identifier using '-', '_' or Android '-r' notation."
+            },
+            "targets": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/I18nConfig/properties/locale/properties/source"
+              },
+              "description": "List of target locale codes to translate to."
+            },
+            "extraSource": {
+              "$ref": "#/definitions/I18nConfig/properties/locale/properties/targets/items",
+              "description": "Optional extra source locale code used as fallback during translation."
+            }
+          },
+          "required": [
+            "source",
+            "targets"
+          ],
+          "additionalProperties": false,
+          "description": "Locale configuration block."
+        },
+        "buckets": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "include": {
+                "type": "array",
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string",
+                          "description": "Path pattern containing a [locale] placeholder."
+                        },
+                        "delimiter": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "enum": [
+                            "-",
+                            "_",
+                            null
+                          ],
+                          "description": "Delimiter that replaces the [locale] placeholder in the path (default: no delimiter)."
+                        }
+                      },
+                      "required": [
+                        "path"
+                      ],
+                      "additionalProperties": false,
+                      "description": "Bucket path item. Either a string path or an object specifying path and delimiter."
+                    }
+                  ]
+                },
+                "default": [],
+                "description": "Glob patterns or bucket items to include for this bucket."
+              },
+              "exclude": {
+                "type": "array",
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "$ref": "#/definitions/I18nConfig/properties/buckets/additionalProperties/properties/include/items/anyOf/1"
+                    }
+                  ]
+                },
+                "default": [],
+                "description": "Glob patterns or bucket items to exclude from this bucket."
+              },
+              "injectLocale": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Keys within files where the current locale should be injected or removed."
+              },
+              "lockedKeys": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "default": [],
+                "description": "Keys that must remain unchanged and should never be overwritten by translations."
+              },
+              "lockedPatterns": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "default": [],
+                "description": "Regular expression patterns whose matched content should remain locked during translation."
+              },
+              "ignoredKeys": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "default": [],
+                "description": "Keys that should be completely ignored by translation processes."
+              }
+            },
+            "additionalProperties": false,
+            "description": "Configuration options for a translation bucket."
+          },
+          "propertyNames": {
+            "enum": [
+              "android",
+              "csv",
+              "ejs",
+              "flutter",
+              "html",
+              "json",
+              "markdown",
+              "mdx",
+              "xcode-strings",
+              "xcode-stringsdict",
+              "xcode-xcstrings",
+              "yaml",
+              "yaml-root-key",
+              "properties",
+              "po",
+              "xliff",
+              "xml",
+              "srt",
+              "dato",
+              "compiler",
+              "vtt",
+              "php",
+              "po",
+              "vue-json",
+              "typescript",
+              "txt"
+            ]
+          },
+          "default": {}
+        },
+        "$schema": {
+          "type": "string",
+          "default": "https://lingo.dev/schema/i18n.json"
+        },
+        "provider": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "enum": [
+                "openai",
+                "anthropic",
+                "google",
+                "ollama",
+                "openrouter",
+                "mistral"
+              ],
+              "description": "Identifier of the translation provider service."
+            },
+            "model": {
+              "type": "string",
+              "description": "Model name to use for translations."
+            },
+            "prompt": {
+              "type": "string",
+              "description": "Prompt template used when requesting translations."
+            },
+            "baseUrl": {
+              "type": "string",
+              "description": "Custom base URL for the provider API (optional)."
+            }
+          },
+          "required": [
+            "id",
+            "model",
+            "prompt"
+          ],
+          "additionalProperties": false,
+          "description": "Configuration for the machine-translation provider."
+        }
+      },
+      "required": [
+        "locale"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}
