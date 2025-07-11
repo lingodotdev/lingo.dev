@@ -1,6 +1,3 @@
-// Import the spec directly from source so that `.describe()` texts are still
-// present when we convert it to JSON-Schema. (The compiled build that gets
-// published strips the runtime `description` data.)
 import { LATEST_CONFIG_DEFINITION } from "@lingo.dev/_spec/src/config";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
@@ -166,43 +163,25 @@ function getTypeFromAnyOf(anyOfArr: unknown[], root: unknown): string {
   return types.join(" | ");
 }
 
-function appendPropertyDocsNodes(
-  nodes: RootContent[],
-  name: string,
-  schema: unknown,
-  required: boolean,
-  parentPath = "",
-  root: unknown,
-) {
-  if (!schema || typeof schema !== "object") return;
-
-  const schemaObj = schema as Record<string, unknown>;
-  const fullName = parentPath ? `${parentPath}.${name}` : name;
-
+function makeHeadingNode(fullName: string): RootContent {
   const headingDepth = Math.min(6, 2 + (fullName.split(".").length - 1));
-
-  nodes.push({
+  return {
     type: "heading",
     depth: headingDepth as 1 | 2 | 3 | 4 | 5 | 6,
     children: [{ type: "inlineCode", value: fullName }],
-  });
+  };
+}
 
-  // NEW: Place description directly after the heading as a paragraph
-  const description =
-    (schemaObj as Record<string, unknown>).description ??
-    (schemaObj as Record<string, unknown>).markdownDescription;
+function makeDescriptionNode(description: unknown): RootContent | null {
+  if (!description) return null;
+  return {
+    type: "paragraph",
+    children: [{ type: "text", value: String(description) }],
+  };
+}
 
-  if (description) {
-    nodes.push({
-      type: "paragraph",
-      children: [{ type: "text", value: String(description) }],
-    });
-  }
-
-  const bulletItems: any[] = [];
-
-  // Type
-  bulletItems.push({
+function makeTypeBulletNode(schema: unknown, root: unknown): RootContent {
+  return {
     type: "listItem",
     children: [
       {
@@ -213,10 +192,11 @@ function appendPropertyDocsNodes(
         ],
       },
     ],
-  });
+  };
+}
 
-  // Required
-  bulletItems.push({
+function makeRequiredBulletNode(required: boolean): RootContent {
+  return {
     type: "listItem",
     children: [
       {
@@ -227,101 +207,127 @@ function appendPropertyDocsNodes(
         ],
       },
     ],
-  });
+  };
+}
 
-  // Default
-  if (schemaObj.default !== undefined) {
-    bulletItems.push({
-      type: "listItem",
-      children: [
-        {
-          type: "paragraph",
-          children: [
-            { type: "text", value: "Default: " },
-            { type: "inlineCode", value: JSON.stringify(schemaObj.default) },
-          ],
-        },
-      ],
-    });
-  }
-
-  // Enum
-  if (Array.isArray(schemaObj.enum)) {
-    bulletItems.push({
-      type: "listItem",
-      children: [
-        {
-          type: "paragraph",
-          children: [{ type: "text", value: "Allowed values:" }],
-        },
-        {
-          type: "list",
-          ordered: false,
-          spread: false,
-          children: Array.from(new Set(schemaObj.enum))
-            .sort((a: unknown, b: unknown) =>
-              String(a).localeCompare(String(b)),
-            )
-            .map((v: unknown) => ({
-              type: "listItem",
-              children: [
-                {
-                  type: "paragraph",
-                  children: [{ type: "inlineCode", value: String(v) }],
-                },
-              ],
-            })),
-        },
-      ],
-    });
-  }
-
-  // Allowed keys (for objects constrained by `propertyNames`)
-  if (
-    schemaObj.propertyNames &&
-    typeof schemaObj.propertyNames === "object" &&
-    Array.isArray((schemaObj.propertyNames as Record<string, unknown>).enum)
-  ) {
-    const allowedKeys = (schemaObj.propertyNames as Record<string, unknown>)
-      .enum as string[];
-    if (allowedKeys.length > 0) {
-      bulletItems.push({
-        type: "listItem",
+function makeDefaultBulletNode(
+  schemaObj: Record<string, unknown>,
+): RootContent | null {
+  if (schemaObj.default === undefined) return null;
+  return {
+    type: "listItem",
+    children: [
+      {
+        type: "paragraph",
         children: [
-          {
-            type: "paragraph",
-            children: [{ type: "text", value: "Allowed keys:" }],
-          },
-          {
-            type: "list",
-            ordered: false,
-            spread: false,
-            children: Array.from(new Set(allowedKeys))
-              .sort((a: string, b: string) => a.localeCompare(b))
-              .map((v: string) => ({
-                type: "listItem",
-                children: [
-                  {
-                    type: "paragraph",
-                    children: [{ type: "inlineCode", value: v }],
-                  },
-                ],
-              })),
-          },
+          { type: "text", value: "Default: " },
+          { type: "inlineCode", value: JSON.stringify(schemaObj.default) },
         ],
-      });
-    }
+      },
+    ],
+  };
+}
+
+function makeEnumBulletNode(
+  schemaObj: Record<string, unknown>,
+): RootContent | null {
+  if (!Array.isArray(schemaObj.enum)) return null;
+  return {
+    type: "listItem",
+    children: [
+      {
+        type: "paragraph",
+        children: [{ type: "text", value: "Allowed values:" }],
+      },
+      {
+        type: "list",
+        ordered: false,
+        spread: false,
+        children: Array.from(new Set(schemaObj.enum))
+          .sort((a: unknown, b: unknown) => String(a).localeCompare(String(b)))
+          .map((v: unknown) => ({
+            type: "listItem",
+            children: [
+              {
+                type: "paragraph",
+                children: [{ type: "inlineCode", value: String(v) }],
+              },
+            ],
+          })),
+      },
+    ],
+  };
+}
+
+function makeAllowedKeysBulletNode(
+  schemaObj: Record<string, unknown>,
+): RootContent | null {
+  if (
+    !schemaObj.propertyNames ||
+    typeof schemaObj.propertyNames !== "object" ||
+    !Array.isArray((schemaObj.propertyNames as Record<string, unknown>).enum)
+  ) {
+    return null;
   }
+  const allowedKeys = (schemaObj.propertyNames as Record<string, unknown>)
+    .enum as string[];
+  if (allowedKeys.length === 0) return null;
+  return {
+    type: "listItem",
+    children: [
+      {
+        type: "paragraph",
+        children: [{ type: "text", value: "Allowed keys:" }],
+      },
+      {
+        type: "list",
+        ordered: false,
+        spread: false,
+        children: Array.from(new Set(allowedKeys))
+          .sort((a: string, b: string) => a.localeCompare(b))
+          .map((v: string) => ({
+            type: "listItem",
+            children: [
+              {
+                type: "paragraph",
+                children: [{ type: "inlineCode", value: v }],
+              },
+            ],
+          })),
+      },
+    ],
+  };
+}
 
-  // Description bullet removed – handled above as paragraph.
+function makeBullets(schema: unknown, required: boolean, root: unknown): any[] {
+  const schemaObj = (schema as Record<string, unknown>) || {};
+  const bullets: any[] = [
+    makeTypeBulletNode(schema, root),
+    makeRequiredBulletNode(required),
+  ];
 
-  // Add bullet list to parent
-  nodes.push({
-    type: "list",
-    ordered: false,
-    spread: false,
-    children: bulletItems,
-  });
+  const defaultNode = makeDefaultBulletNode(schemaObj);
+  if (defaultNode) bullets.push(defaultNode);
+
+  const enumNode = makeEnumBulletNode(schemaObj);
+  if (enumNode) bullets.push(enumNode);
+
+  const allowedKeysNode = makeAllowedKeysBulletNode(schemaObj);
+  if (allowedKeysNode) bullets.push(allowedKeysNode);
+
+  return bullets;
+}
+
+// Recursively collect doc nodes for nested properties (object, array, etc)
+function collectNestedPropertyDocsNodes(
+  schema: unknown,
+  fullName: string,
+  root: unknown,
+): RootContent[] {
+  if (!schema || typeof schema !== "object") return [];
+
+  const schemaObj = schema as Record<string, unknown>;
+  const nodes: RootContent[] = [];
 
   // Recurse into nested properties for objects
   if (schemaObj.type === "object") {
@@ -335,13 +341,14 @@ function appendPropertyDocsNodes(
         nestedRequired,
       );
       for (const key of sortedKeys) {
-        appendPropertyDocsNodes(
-          nodes,
-          key,
-          properties[key],
-          nestedRequired.includes(key),
-          fullName,
-          root,
+        nodes.push(
+          ...appendPropertyDocsNodes(
+            key,
+            properties[key],
+            nestedRequired.includes(key),
+            fullName,
+            root,
+          ),
         );
       }
     }
@@ -353,15 +360,15 @@ function appendPropertyDocsNodes(
     ) {
       const addSchema = schemaObj.additionalProperties;
       const names = ["*"];
-
       for (const propName of names) {
-        appendPropertyDocsNodes(
-          nodes,
-          propName,
-          addSchema,
-          false,
-          fullName,
-          root,
+        nodes.push(
+          ...appendPropertyDocsNodes(
+            propName,
+            addSchema,
+            false,
+            fullName,
+            root,
+          ),
         );
       }
     }
@@ -403,13 +410,14 @@ function appendPropertyDocsNodes(
             nestedRequired,
           );
           for (const key of sortedKeys) {
-            appendPropertyDocsNodes(
-              nodes,
-              key,
-              properties[key],
-              nestedRequired.includes(key),
-              `${fullName}.*`,
-              root,
+            nodes.push(
+              ...appendPropertyDocsNodes(
+                key,
+                properties[key],
+                nestedRequired.includes(key),
+                `${fullName}.*`,
+                root,
+              ),
             );
           }
         }
@@ -432,13 +440,14 @@ function appendPropertyDocsNodes(
         nestedRequired,
       );
       for (const key of sortedKeys) {
-        appendPropertyDocsNodes(
-          nodes,
-          key,
-          properties[key],
-          nestedRequired.includes(key),
-          `${fullName}.*`,
-          root,
+        nodes.push(
+          ...appendPropertyDocsNodes(
+            key,
+            properties[key],
+            nestedRequired.includes(key),
+            `${fullName}.*`,
+            root,
+          ),
         );
       }
 
@@ -450,18 +459,56 @@ function appendPropertyDocsNodes(
         const addSchema = itemSchemaObj.additionalProperties;
         const names = ["*"];
         for (const propName of names) {
-          appendPropertyDocsNodes(
-            nodes,
-            propName,
-            addSchema,
-            false,
-            `${fullName}.*`,
-            root,
+          nodes.push(
+            ...appendPropertyDocsNodes(
+              propName,
+              addSchema,
+              false,
+              `${fullName}.*`,
+              root,
+            ),
           );
         }
       }
     }
   }
+
+  return nodes;
+}
+
+function appendPropertyDocsNodes(
+  name: string,
+  schema: unknown,
+  required: boolean,
+  parentPath = "",
+  root: unknown,
+): RootContent[] {
+  if (!schema || typeof schema !== "object") return [];
+
+  const schemaObj = schema as Record<string, unknown>;
+  const fullName = parentPath ? `${parentPath}.${name}` : name;
+
+  // Heading node
+  const nodes: RootContent[] = [makeHeadingNode(fullName)];
+
+  // Description node
+  const description = schemaObj.description ?? schemaObj.markdownDescription;
+  const descNode = makeDescriptionNode(description);
+  if (descNode) nodes.push(descNode);
+
+  // Bullet list node (with all bullets)
+  const bulletItems = makeBullets(schema, required, root);
+  nodes.push({
+    type: "list",
+    ordered: false,
+    spread: false,
+    children: bulletItems,
+  });
+
+  // Recurse for nested properties
+  nodes.push(...collectNestedPropertyDocsNodes(schema, fullName, root));
+
+  return nodes;
 }
 
 function generateMarkdown(schema: unknown): string {
@@ -536,16 +583,6 @@ function generateMarkdown(schema: unknown): string {
     },
   ];
 
-  const rootDesc =
-    (rootSchemaObj as Record<string, unknown>).description ??
-    (rootSchemaObj as Record<string, unknown>).markdownDescription;
-  if (rootDesc) {
-    children.push({
-      type: "paragraph",
-      children: [{ type: "text", value: String(rootDesc) }],
-    });
-  }
-
   const required = Array.isArray(rootSchemaObj.required)
     ? (rootSchemaObj.required as string[])
     : [];
@@ -561,13 +598,14 @@ function generateMarkdown(schema: unknown): string {
       ROOT_PROPERTY_ORDER,
     );
     for (const key of sortedKeys) {
-      appendPropertyDocsNodes(
-        children,
-        key,
-        properties[key],
-        required.includes(key),
-        "",
-        schema,
+      children.push(
+        ...appendPropertyDocsNodes(
+          key,
+          properties[key],
+          required.includes(key),
+          "",
+          schema,
+        ),
       );
 
       // Add spacing between top-level sections
