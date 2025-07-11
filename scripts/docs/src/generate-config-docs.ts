@@ -1,11 +1,10 @@
 import { LATEST_CONFIG_DEFINITION } from "@lingo.dev/_spec";
-import { zodToJsonSchema } from "zod-to-json-schema";
-import { writeFileSync, mkdirSync } from "node:fs";
-import { resolve, dirname } from "node:path";
-import { fileURLToPath } from "node:url";
-import { unified } from "unified";
+import { mkdirSync, writeFileSync } from "node:fs";
+import { dirname, resolve } from "node:path";
 import remarkStringify from "remark-stringify";
-import * as prettier from "prettier";
+import { unified } from "unified";
+import { zodToJsonSchema } from "zod-to-json-schema";
+import { formatMarkdown } from "./utils";
 
 // =====================================================
 // DOCUMENTATION ORDERING CONFIGURATION
@@ -665,12 +664,7 @@ async function generateSchemaAndDocs() {
   const markdown = generateMarkdown(schema);
 
   // Format with Prettier using repo config
-  const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
-  const prettierConfig = await prettier.resolveConfig(repoRoot);
-  const formattedMarkdown = await prettier.format(markdown, {
-    ...prettierConfig,
-    parser: "markdown",
-  });
+  const formattedMarkdown = await formatMarkdown(markdown);
 
   writeFileSync(outputFilePath, formattedMarkdown);
   console.log(`Generated config documentation at ${outputFilePath}`);
