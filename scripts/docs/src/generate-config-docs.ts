@@ -719,58 +719,6 @@ async function generateSchemaAndDocs() {
     markdownDescription: true,
   });
 
-  // ------------------------------------------------------------------
-  // Ensure the JSON schema written to disk contains the latest defaults
-  // for critical root-level properties (currently `version` and `$schema`).
-  // This keeps the machine-readable schema in sync with the source
-  // Zod definition and the human-readable markdown docs.
-  // ------------------------------------------------------------------
-  if (schema && typeof schema === "object") {
-    const schemaObj = schema as Record<string, unknown>;
-    const rootRef = schemaObj.$ref as string | undefined;
-    const rootName = rootRef
-      ? (rootRef.split("/").pop() ?? "I18nConfig")
-      : "I18nConfig";
-
-    let rootSchema: unknown;
-    if (
-      rootRef &&
-      schemaObj.definitions &&
-      typeof schemaObj.definitions === "object"
-    ) {
-      const definitions = schemaObj.definitions as Record<string, unknown>;
-      rootSchema = definitions[rootName];
-    } else {
-      rootSchema = schema;
-    }
-
-    if (rootSchema && typeof rootSchema === "object") {
-      const rootSchemaObj = rootSchema as Record<string, unknown>;
-
-      if (
-        rootSchemaObj.properties &&
-        typeof rootSchemaObj.properties === "object"
-      ) {
-        const properties = rootSchemaObj.properties as Record<string, unknown>;
-
-        if (properties.version && typeof properties.version === "object") {
-          (properties.version as Record<string, unknown>).default =
-            LATEST_CONFIG_DEFINITION.defaultValue.version;
-        }
-
-        if (
-          properties.$schema &&
-          typeof properties.$schema === "object" &&
-          (LATEST_CONFIG_DEFINITION.defaultValue as ConfigDefaultValue).$schema
-        ) {
-          (properties.$schema as Record<string, unknown>).default = (
-            LATEST_CONFIG_DEFINITION.defaultValue as ConfigDefaultValue
-          ).$schema;
-        }
-      }
-    }
-  }
-
   // Ensure output directory exists
   mkdirSync(dirname(outputFilePath), { recursive: true });
 
