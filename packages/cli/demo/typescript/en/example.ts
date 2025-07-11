@@ -13,6 +13,10 @@ const messages = {
     emailLabel: "Email Address",
     messageLabel: "Your Message",
     submitButton: "Send Message",
-    successMessage: "Thank you for your message!"
+    successMessage: "Thank you for your message!",
+    locked_key_1: "This value is locked and should not be changed",
+    ignored_key_1: "This value is ignored and should not be processed"
   },
 };
+
+export default messages;

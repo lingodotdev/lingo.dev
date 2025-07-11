@@ -1,28 +1,28 @@
 ---
-title: MDX Localization Example
-description: This frontmatter description is localized
+title: Ejemplo de localización MDX
+description: Esta descripción del frontmatter está localizada
 author: not-localized-author
 ---
 
-# This heading text is localized
+# Este texto de encabezado está localizado
 
-This paragraph text is localized and demonstrates how regular markdown content gets processed for localization.
+Este texto de párrafo está localizado y demuestra cómo se procesa el contenido markdown regular para la localización.
 
-## Text content is localized
+## El contenido de texto está localizado
 
-All regular text content in MDX files is localized (except for **attribute values such as `alt`, `title`, or JSX props**, which stay exactly as they are), including:
+Todo el contenido de texto regular en archivos MDX está localizado, incluyendo:
 
-- This list item text is localized
-- **This bold text is also localized**
-- _This italic text is localized too_
+- Este texto de elemento de lista está localizado
+- **Este texto en negrita también está localizado**
+- _Este texto en cursiva también está localizado_
 
-### Links and emphasis
+### Enlaces y énfasis
 
-[This link text is localized](https://example.com) and contains localized content.
+[Este texto de enlace está localizado](https://example.com) y contiene contenido localizado.
 
-> This blockquote text is localized
+> Este texto de cita está localizado
 
-## Code blocks are not localized
+## Los bloques de código no están localizados
 
 ```javascript
 // This code comment is not localized
@@ -38,21 +38,27 @@ def hello():
     return "This string is not localized"
 ```
 
-## Inline code is not localized
+## El código en línea no está localizado
 
-This paragraph contains `inline code that is not localized` and shows how inline code spans are preserved.
+Este párrafo contiene `inline code that is not localized` y muestra cómo se preservan los fragmentos de código en línea.
 
-You can use `const variable = "not localized"` in your code examples without worrying about localization.
+Puedes usar `const variable = "not localized"` en tus ejemplos de código sin preocuparte por la localización.
 
-## Mixed content example
+## Ejemplo de contenido mixto
 
-Here's a paragraph that mixes localizable and non-localizable content:
+Aquí hay un párrafo que mezcla contenido localizable y no localizable:
 
-This text is localized, but `this.code.snippet = "is not localized"`, while this continuation text is localized again.
+Este texto está localizado, pero `this.code.snippet = "is not localized"`, mientras que este texto de continuación está localizado nuevamente.
 
-## Tables with mixed content
+## Tablas con contenido mixto
 
-| Column Header (localized)   | Code Column                              |
-| --------------------------- | ---------------------------------------- |
-| This cell text is localized | `code.value = "not localized"`           |
-| Another localized cell      | `function() { return "not localized"; }` |
+| Encabezado de columna (localizado)  | Columna de código                        |
+| ----------------------------------- | ---------------------------------------- |
+| Este texto de celda está localizado | `code.value = "not localized"`           |
+| Otra celda localizada               | `function() { return "not localized"; }` |
+
+## locked_key_1
+
+This heading is locked and should not be changed.
+
+pattern_1: This paragraph matches the locked pattern and should not be changed.

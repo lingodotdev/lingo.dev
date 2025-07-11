@@ -41,7 +41,7 @@
       }
     }
   },
-  "user_status": "{status, select, online {Usuario en línea} offline {Usuario desconectado} away {Usuario ausente} other {Estado desconocido}}",
+  "user_status": "{status, select, online {El usuario está en línea} offline {El usuario está desconectado} away {El usuario está ausente} other {Estado desconocido}}",
   "@user_status": {
     "description": "Message showing user's current status",
     "placeholders": {

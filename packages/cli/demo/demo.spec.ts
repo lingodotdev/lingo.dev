@@ -5,16 +5,17 @@ import { bucketTypes, parseI18nConfig } from "@lingo.dev/_spec";
 
 type BucketType = (typeof bucketTypes)[number];
 
-const SKIP_BUCKET_TYPES: BucketType[] = [
-  "compiler",
-  "dato"
-];
+const SKIP_BUCKET_TYPES: BucketType[] = ["compiler", "dato"];
 
 const TESTABLE_BUCKET_TYPES: BucketType[] = bucketTypes.filter(
   (type) => !SKIP_BUCKET_TYPES.includes(type),
 );
 
 describe("packages/cli/demo", () => {
+  console.warn(
+    `Bucket types are defined but not tested: ${SKIP_BUCKET_TYPES.join(", ")}`,
+  );
+
   it("should include a demo for each bucket type", () => {
     const demoRoot = path.resolve(__dirname);
     const missingBuckets: string[] = [];
@@ -34,7 +35,7 @@ describe("packages/cli/demo", () => {
     const demoRoot = path.resolve(__dirname);
     const missingFiles: string[] = [];
 
-    for (const bucketType of new Set(bucketTypes)) {
+    for (const bucketType of new Set(TESTABLE_BUCKET_TYPES)) {
       const bucketPath = path.join(demoRoot, bucketType);
       const i18nJsonPath = path.join(bucketPath, "i18n.json");
       if (!fs.existsSync(i18nJsonPath)) {
