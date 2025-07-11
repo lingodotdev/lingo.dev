@@ -166,6 +166,7 @@
     "jsonrepair": "^3.11.2",
     "listr2": "^8.3.2",
     "lodash": "^4.17.21",
+    "jsonc-parser": "^3.3.1",
     "marked": "^15.0.6",
     "mdast-util-from-markdown": "^2.0.2",
     "mdast-util-gfm": "^3.1.0",

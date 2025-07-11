@@ -2,6 +2,7 @@ import _ from "lodash";
 import fs from "fs";
 import path from "path";
 import { I18nConfig, parseI18nConfig } from "@lingo.dev/_spec";
+import { parse as parseJSONC } from "jsonc-parser";
 
 export function getConfig(resave = true): I18nConfig | null {
   const configFilePath = _getConfigFilePath();
@@ -12,7 +13,7 @@ export function getConfig(resave = true): I18nConfig | null {
   }
 
   const fileContents = fs.readFileSync(configFilePath, "utf8");
-  const rawConfig = JSON.parse(fileContents);
+  const rawConfig = parseJSONC(fileContents) as unknown;
 
   const result = parseI18nConfig(rawConfig);
   const didConfigChange = !_.isEqual(rawConfig, result);
