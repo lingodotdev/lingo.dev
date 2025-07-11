@@ -81,76 +81,89 @@ function getType(schema: unknown, root: unknown): string {
 
   const schemaObj = schema as Record<string, unknown>;
 
-  if (schemaObj.type) {
-    if (Array.isArray(schemaObj.type)) {
-      return schemaObj.type.join(" | ");
-    }
-
-    if (schemaObj.type === "array") {
-      const items = schemaObj.items;
-      if (items && typeof items === "object") {
-        const itemsObj = items as Record<string, unknown>;
-        if (itemsObj.$ref) {
-          const resolved = resolveRef(itemsObj.$ref as string, root);
-          const itemType = resolved
-            ? getType(resolved, root)
-            : String(itemsObj.$ref).split("/").pop() || "unknown";
-          return `array of ${itemType}`;
-        }
-
-        // Handle arrays with union types (anyOf)
-        if (Array.isArray(itemsObj.anyOf)) {
-          const types = itemsObj.anyOf.map((item: unknown) => {
-            if (item && typeof item === "object") {
-              const itemObj = item as Record<string, unknown>;
-              if (itemObj.$ref) {
-                const resolved = resolveRef(itemObj.$ref as string, root);
-                return resolved
-                  ? getType(resolved, root)
-                  : String(itemObj.$ref).split("/").pop() || "unknown";
-              }
-            }
-            return getType(item, root);
-          });
-          return `array of ${types.join(" | ")}`;
-        }
-
-        if (itemsObj.type) {
-          return `array of ${Array.isArray(itemsObj.type) ? itemsObj.type.join(" | ") : itemsObj.type}`;
-        }
-      }
-      return "array";
-    }
-
-    return String(schemaObj.type);
-  }
-
-  // Handle union types at the top level (anyOf)
-  if (Array.isArray(schemaObj.anyOf)) {
-    const types = schemaObj.anyOf.map((item: unknown) => {
-      if (item && typeof item === "object") {
-        const itemObj = item as Record<string, unknown>;
-        if (itemObj.$ref) {
-          const resolved = resolveRef(itemObj.$ref as string, root);
-          return resolved
-            ? getType(resolved, root)
-            : String(itemObj.$ref).split("/").pop() || "unknown";
-        }
-      }
-      return getType(item, root);
-    });
-    return types.join(" | ");
-  }
-
+  // Handle $ref at the root level
   if (schemaObj.$ref) {
-    const resolved = resolveRef(schemaObj.$ref as string, root);
-    if (resolved) {
-      return getType(resolved, root);
-    }
-    return String(schemaObj.$ref).split("/").pop() || "unknown";
+    return getTypeFromRef(schemaObj.$ref as string, root);
+  }
+
+  // Handle type property
+  if (schemaObj.type) {
+    return getTypeFromType(schemaObj, root);
+  }
+
+  // Handle union types (anyOf) at the top level
+  if (Array.isArray(schemaObj.anyOf)) {
+    return getTypeFromAnyOf(schemaObj.anyOf, root);
   }
 
   return "unknown";
+}
+
+// Helper to handle $ref
+function getTypeFromRef(ref: string, root: unknown): string {
+  const resolved = resolveRef(ref, root);
+  if (resolved) {
+    return getType(resolved, root);
+  }
+  return String(ref).split("/").pop() || "unknown";
+}
+
+// Helper to handle 'type' property
+function getTypeFromType(
+  schemaObj: Record<string, unknown>,
+  root: unknown,
+): string {
+  // Handle array of types
+  if (Array.isArray(schemaObj.type)) {
+    return schemaObj.type.join(" | ");
+  }
+
+  if (schemaObj.type === "array") {
+    return getTypeFromArray(schemaObj, root);
+  }
+
+  return String(schemaObj.type);
+}
+
+// Helper to handle arrays
+function getTypeFromArray(
+  schemaObj: Record<string, unknown>,
+  root: unknown,
+): string {
+  const items = schemaObj.items;
+  if (!items || typeof items !== "object") {
+    return "array";
+  }
+
+  const itemsObj = items as Record<string, unknown>;
+
+  // Array with $ref items
+  if (itemsObj.$ref) {
+    return `array of ${getTypeFromRef(itemsObj.$ref as string, root)}`;
+  }
+
+  // Array with anyOf union types
+  if (Array.isArray(itemsObj.anyOf)) {
+    const types = itemsObj.anyOf.map((item: unknown) => getType(item, root));
+    return `array of ${types.join(" | ")}`;
+  }
+
+  // Array with direct type(s)
+  if (itemsObj.type) {
+    if (Array.isArray(itemsObj.type)) {
+      return `array of ${itemsObj.type.join(" | ")}`;
+    }
+    return `array of ${itemsObj.type}`;
+  }
+
+  // Array of object or unknown
+  return `array of ${getType(items, root)}`;
+}
+
+// Helper to handle anyOf (union types)
+function getTypeFromAnyOf(anyOfArr: unknown[], root: unknown): string {
+  const types = anyOfArr.map((item: unknown) => getType(item, root));
+  return types.join(" | ");
 }
 
 function appendPropertyDocsNodes(
