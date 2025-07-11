@@ -1,11 +1,11 @@
 import { LATEST_CONFIG_DEFINITION } from "@lingo.dev/_spec/src/config";
+import type { ListItem, Root, RootContent } from "mdast";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import remarkStringify from "remark-stringify";
 import { unified } from "unified";
 import { zodToJsonSchema } from "zod-to-json-schema";
-import { formatMarkdown } from "./utils";
-import type { Root, RootContent, ListItem } from "mdast";
+import { createOrUpdateGitHubComment, formatMarkdown } from "./utils";
 
 const ROOT_PROPERTY_ORDER = ["$schema", "version", "locale", "buckets"];
 
@@ -626,9 +626,55 @@ function generateMarkdown(schema: unknown): string {
     .stringify(root);
 }
 
-// Modify generateSchema to also output markdown
-async function generateSchemaAndDocs() {
+async function main() {
+  const commentMarker = "<!-- generate-config-docs -->";
+  const isGitHubAction = Boolean(process.env.GITHUB_ACTIONS);
+
   const outputArg = process.argv[2];
+
+  const schema = zodToJsonSchema(LATEST_CONFIG_DEFINITION.schema, {
+    name: "I18nConfig",
+    markdownDescription: true,
+  });
+
+  console.log("🔄 Generating i18n.json reference docs...");
+  const markdown = generateMarkdown(schema);
+  const formattedMarkdown = await formatMarkdown(markdown);
+
+  if (isGitHubAction) {
+    const mdast: Root = {
+      type: "root",
+      children: [
+        { type: "html", value: commentMarker },
+        {
+          type: "paragraph",
+          children: [
+            {
+              type: "text",
+              value:
+                "Your PR affects the Lingo.dev i18n.json configuration schema and may affect the auto-generated reference documentation. Please review the output below to ensure that the changes are correct.",
+            },
+          ],
+        },
+        { type: "html", value: "<details>" },
+        {
+          type: "html",
+          value: "<summary>i18n.json reference docs</summary>",
+        },
+        { type: "code", lang: "markdown", value: formattedMarkdown },
+        { type: "html", value: "</details>" },
+      ],
+    };
+    const body = unified()
+      .use([[remarkStringify, { fence: "~" }]])
+      .stringify(mdast)
+      .toString();
+    await createOrUpdateGitHubComment({
+      commentMarker,
+      body,
+    });
+    return;
+  }
 
   if (!outputArg) {
     throw new Error(
@@ -637,24 +683,13 @@ async function generateSchemaAndDocs() {
   }
 
   const outputFilePath = resolve(process.cwd(), outputArg);
-
-  const schema = zodToJsonSchema(LATEST_CONFIG_DEFINITION.schema, {
-    name: "I18nConfig",
-    markdownDescription: true,
-  });
-
-  // Ensure output directory exists
+  console.log(`💾 Saving to ${outputFilePath}...`);
   mkdirSync(dirname(outputFilePath), { recursive: true });
-
-  // Generate markdown docs
-  const markdown = generateMarkdown(schema);
-
-  // Format with Prettier using repo config
-  const formattedMarkdown = await formatMarkdown(markdown);
-
   writeFileSync(outputFilePath, formattedMarkdown);
-  console.log(`Generated config documentation at ${outputFilePath}`);
+  console.log(`✅ Saved to ${outputFilePath}`);
 }
 
-// Run
-await generateSchemaAndDocs();
+main().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});
