@@ -3,9 +3,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "generate-cli-docs": "tsx ./src/generate-cli-docs.ts"
+    "generate-cli-docs": "tsx ./src/generate-cli-docs.ts",
+    "generate-config-docs": "tsx ./src/generate-config-docs.ts"
   },
   "devDependencies": {
+    "@lingo.dev/_spec": "workspace:*",
     "@octokit/rest": "^20.1.2",
     "@types/mdast": "^4.0.4",
     "@types/node": "^24.0.10",
@@ -13,5 +15,9 @@
     "remark-stringify": "^11.0.0",
     "tsx": "^4.7.1",
     "unified": "^11.0.4"
+  },
+  "dependencies": {
+    "zod-to-json-schema": "^3.24.5",
+    "zod": "^3.25.76"
   }
 }

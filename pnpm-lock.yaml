@@ -776,7 +776,14 @@ importers:
         version: 3.1.2(@types/debug@4.1.12)(@types/node@22.13.5)(jiti@2.4.2)(jsdom@25.0.1)(lightningcss@1.30.1)(terser@5.36.0)(tsx@4.20.3)(yaml@2.7.0)
 
   scripts/docs:
+    dependencies:
+      zod-to-json-schema:
+        specifier: ^3.24.5
+        version: 3.24.5(zod@3.25.76)
     devDependencies:
+      '@lingo.dev/_spec':
+        specifier: workspace:*
+        version: link:../../packages/spec
       '@octokit/rest':
         specifier: ^20.1.2
         version: 20.1.2
@@ -9070,11 +9077,6 @@ packages:
   zhead@2.2.4:
     resolution: {integrity: sha512-8F0OI5dpWIA5IGG5NHUg9staDwz/ZPxZtvGVf01j7vHqSyZ0raHY+78atOVxRqb73AotX22uV1pXt3gYSstGag==}
 
-  zod-to-json-schema@3.24.3:
-    resolution: {integrity: sha512-HIAfWdYIt1sssHfYZFCXp4rU1w2r8hVVXYIlmoa0r0gABLs5di3RCqPU5DDROogVz1pAdYBaz7HK5n9pSUNs3A==}
-    peerDependencies:
-      zod: ^3.24.1
-
   zod-to-json-schema@3.24.5:
     resolution: {integrity: sha512-/AuWwMP+YqiPbsJx5D6TfgRTc4kTLjsh5SOcd4bLsfUg2RcEXrFMJl1DGgdHy2aCfsIA/cr/1JM0xcB2GZji8g==}
     peerDependencies:
@@ -10818,8 +10820,8 @@ snapshots:
       content-type: 1.0.5
       eventsource: 3.0.5
       raw-body: 3.0.0
-      zod: 3.25.76
-      zod-to-json-schema: 3.24.3(zod@3.25.76)
+      zod: 3.24.1
+      zod-to-json-schema: 3.24.5(zod@3.24.1)
 
   '@napi-rs/wasm-runtime@0.2.10':
     dependencies:
@@ -18623,9 +18625,9 @@ snapshots:
 
   zhead@2.2.4: {}
 
-  zod-to-json-schema@3.24.3(zod@3.25.76):
+  zod-to-json-schema@3.24.5(zod@3.24.1):
     dependencies:
-      zod: 3.25.76
+      zod: 3.24.1
 
   zod-to-json-schema@3.24.5(zod@3.25.76):
     dependencies:
