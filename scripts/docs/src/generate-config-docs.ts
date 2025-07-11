@@ -1,4 +1,7 @@
-import { LATEST_CONFIG_DEFINITION } from "@lingo.dev/_spec";
+// Import the spec directly from source so that `.describe()` texts are still
+// present when we convert it to JSON-Schema. (The compiled build that gets
+// published strips the runtime `description` data.)
+import { LATEST_CONFIG_DEFINITION } from "@lingo.dev/_spec/src/config";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import remarkStringify from "remark-stringify";
@@ -323,8 +326,11 @@ function appendPropertyDocsNodes(
     }
   }
 
-  // Description
-  if (schemaObj.description) {
+  // Description (support both `description` and `markdownDescription` fields)
+  const desc =
+    (schemaObj as Record<string, unknown>).description ??
+    (schemaObj as Record<string, unknown>).markdownDescription;
+  if (desc) {
     bulletItems.push({
       type: "listItem",
       children: [
@@ -332,7 +338,7 @@ function appendPropertyDocsNodes(
           type: "paragraph",
           children: [
             { type: "text", value: "Description: " },
-            { type: "text", value: String(schemaObj.description) },
+            { type: "text", value: String(desc) },
           ],
         },
       ],
@@ -630,10 +636,13 @@ function generateMarkdown(schema: unknown): string {
     },
   ];
 
-  if (rootSchemaObj.description) {
+  const rootDesc =
+    (rootSchemaObj as Record<string, unknown>).description ??
+    (rootSchemaObj as Record<string, unknown>).markdownDescription;
+  if (rootDesc) {
     children.push({
       type: "paragraph",
-      children: [{ type: "text", value: String(rootSchemaObj.description) }],
+      children: [{ type: "text", value: String(rootDesc) }],
     });
   }
 
@@ -714,6 +723,7 @@ async function generateSchemaAndDocs() {
 
   const schema = zodToJsonSchema(LATEST_CONFIG_DEFINITION.schema, {
     name: "I18nConfig",
+    markdownDescription: true,
   });
 
   // ------------------------------------------------------------------
