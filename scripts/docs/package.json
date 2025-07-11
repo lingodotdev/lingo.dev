@@ -1,0 +1,17 @@
+{
+  "name": "docs",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate-cli-docs": "tsx ./src/generate-cli-docs.ts"
+  },
+  "devDependencies": {
+    "@octokit/rest": "^20.1.2",
+    "@types/mdast": "^4.0.4",
+    "@types/node": "^24.0.10",
+    "commander": "^12.0.0",
+    "remark-stringify": "^11.0.0",
+    "tsx": "^4.7.1",
+    "unified": "^11.0.4"
+  }
+}
