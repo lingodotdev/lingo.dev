@@ -10,7 +10,9 @@
     "mdx": {
       "include": [
         "./[locale]/example.mdx"
-      ]
+      ],
+      "lockedKeys": ["locked_key_1"],
+      "lockedPatterns": ["pattern_1"]
     }
   },
   "$schema": "https://lingo.dev/schema/i18n.json"

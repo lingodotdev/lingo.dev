@@ -13,7 +13,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>zero</key>
-        <string>Sin usuarios</string>
+        <string>Ningún usuario</string>
         <key>one</key>
         <string>Un usuario</string>
         <key>other</key>

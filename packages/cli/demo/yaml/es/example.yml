@@ -12,8 +12,8 @@ product:
   name: "El nombre del producto está localizado"
   tagline: "El eslogan del producto está localizado"
   features:
-    - "La descripción de la primera característica está localizada"
-    - "La descripción de la segunda característica está localizada"
+    - "La descripción de la característica uno está localizada"
+    - "La descripción de la característica dos está localizada"
 settings:
   max_users: 100
   enabled: true
@@ -21,4 +21,5 @@ settings:
 complex_structure:
   level_one:
     level_two:
-      message: "La cadena anidada profundamente está localizada"
+      message: "La cadena profundamente anidada está localizada"
+locked_key_1: "This value is locked and should not be changed"

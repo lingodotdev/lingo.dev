@@ -30,5 +30,6 @@
     {
       "nested_message": "This nested object string is localized"
     }
-  ]
+  ],
+  "locked_key_1": "This value is locked and should not be changed"
 }

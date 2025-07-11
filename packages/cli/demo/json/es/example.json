@@ -19,8 +19,8 @@
     }
   ],
   "messages": [
-    "Este elemento de cadena de array está localizado",
-    "Esta segunda cadena de array también está localizada"
+    "Este elemento de cadena de matriz está localizado",
+    "Esta segunda cadena de matriz también está localizada"
   ],
   "config": {
     "theme": {
@@ -28,11 +28,12 @@
     }
   },
   "mixed_array": [
-    "Esta cadena en array mixto está localizada",
+    "Esta cadena en matriz mixta está localizada",
     42,
     true,
     {
       "nested_message": "Esta cadena de objeto anidado está localizada"
     }
-  ]
+  ],
+  "locked_key_1": "This value is locked and should not be changed"
 }
