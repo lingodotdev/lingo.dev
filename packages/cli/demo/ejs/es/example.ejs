@@ -2,6 +2,10 @@
 <html lang="en">
 <head>
     <title><%= pageTitle %></title>
+    <!-- Style blocks are NOT localized -->
+    <style>
+        body { font-family: Arial, sans-serif; }
+    </style>
 </head>
 <body>
     <!-- EJS template tags are not localized -->
@@ -16,11 +20,16 @@
         <div class="notification">
             <strong>Importante:</strong> Tu cuenta expira pronto.
         </div>
+        
+        <!-- Attribute values (e.g., placeholder, alt, title, aria-label) are NOT localized -->
+        <img src="/avatar.jpg" alt="User avatar" title="Click to edit profile">
+        <button type="button" aria-label="Close notification" title="Close">×</button>
     <% } else { %>
         <!-- Text content in conditional blocks is localized -->
-        <h1>Por favor inicia sesión</h1>
+        <h1>Por favor, inicia sesión</h1>
         
         <!-- Form labels and button text are localized -->
+        <!-- But attribute values like placeholder, value are NOT localized -->
         <form action="/login" method="post">
             <label for="username">Nombre de usuario:</label>
             <input type="text" id="username" name="username" placeholder="Enter your username">
@@ -29,6 +38,7 @@
             <input type="password" id="password" name="password">
             
             <button type="submit">Iniciar sesión</button>
+            <input type="button" value="Forgot Password?" onclick="showForgotPassword()">
         </form>
     <% } %>
     
@@ -40,6 +50,9 @@
     <% }); %>
     </ul>
     
+    <!-- HTML comments like this one are NOT localized -->
+    <!-- Visible to developers only -->
+    
     <!-- Whitespace-only content is not localized -->
     
     
@@ -48,7 +61,14 @@
     
     <!-- Mixed content - text portions are localized, EJS and HTML are not -->
     <footer>
-        Copyright © <%= new Date().getFullYear() %> Company Name. Todos los derechos reservados.
+        Copyright © <%= new Date().getFullYear() %> Nombre de la empresa. Todos los derechos reservados.
     </footer>
+    
+    <!-- Script blocks are NOT localized -->
+    <script>
+        function showForgotPassword() {
+            alert("Please contact support for password reset.");
+        }
+    </script>
 </body>
 </html>

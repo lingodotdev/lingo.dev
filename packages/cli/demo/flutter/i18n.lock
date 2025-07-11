@@ -10,3 +10,6 @@ checksums:
     settings_screen_title: 8df6777277469c1fd88cc18dde2f1cc3
     cancel_action: 2e2a849c2223911717de8caa2c71bade
     confirm_action: 90930b51154032f119fa75c1bd422d8b
+    greeting_with_name: 218521f06746e82ba44d68c8a5bb210c
+    item_count: d8d083b56bc155cf0997ea6ae989b83f
+    user_status: 903b5a6edde5368dd9089accdc1b1f9d

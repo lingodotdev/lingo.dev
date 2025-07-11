@@ -4,8 +4,9 @@ description: Esta descripción de frontmatter está localizada
 author: Este autor de frontmatter está localizado
 date: 2024-01-15
 tags:
-  - tag1
-  - tag2
+  - manzanas
+  - plátanos
+  - peras
 ---
 
 # Este texto de encabezado está localizado
