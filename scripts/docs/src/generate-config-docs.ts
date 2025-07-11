@@ -5,31 +5,27 @@ import remarkStringify from "remark-stringify";
 import { unified } from "unified";
 import { zodToJsonSchema } from "zod-to-json-schema";
 import { formatMarkdown } from "./utils";
+import type { Root, RootContent } from "mdast";
 
-// =====================================================
-// DOCUMENTATION ORDERING CONFIGURATION
-// =====================================================
+interface ConfigDefaultValue {
+  $schema?: string;
+  version?: number;
+  [key: string]: unknown;
+}
 
-/**
- * Custom order for root-level configuration properties.
- * Properties listed here will appear first in the documentation,
- * in the order specified. All other properties will follow
- * alphabetically (required first, then optional).
- */
 const ROOT_PROPERTY_ORDER = ["$schema", "version", "locale", "buckets"];
 
-// Resolve a JSON pointer (e.g. "#/definitions/Foo/properties/bar") into the referenced schema node
-function resolveRef(ref: string, root: any): any | undefined {
+function resolveRef(ref: string, root: unknown): unknown {
   if (!ref.startsWith("#/")) return undefined;
   const pathSegments = ref
     .slice(2) // remove "#/"
     .split("/")
     .map((seg) => decodeURIComponent(seg));
 
-  let current: any = root;
+  let current = root;
   for (const segment of pathSegments) {
     if (current && typeof current === "object" && segment in current) {
-      current = current[segment];
+      current = (current as Record<string, unknown>)[segment];
     } else {
       return undefined;
     }
@@ -83,112 +79,133 @@ function sortPropertyKeys(
   return [...orderedKeys, ...remainingRequired, ...remainingOptional];
 }
 
-function getType(schema: any, root: any): string {
-  if (schema.type) {
-    if (Array.isArray(schema.type)) {
-      return schema.type.join(" | ");
+function getType(schema: unknown, root: unknown): string {
+  if (!schema || typeof schema !== "object") return "unknown";
+
+  const schemaObj = schema as Record<string, unknown>;
+
+  if (schemaObj.type) {
+    if (Array.isArray(schemaObj.type)) {
+      return schemaObj.type.join(" | ");
     }
 
-    if (schema.type === "array") {
-      if (schema.items) {
-        if (schema.items.$ref) {
-          const resolved = resolveRef(schema.items.$ref, root);
+    if (schemaObj.type === "array") {
+      const items = schemaObj.items;
+      if (items && typeof items === "object") {
+        const itemsObj = items as Record<string, unknown>;
+        if (itemsObj.$ref) {
+          const resolved = resolveRef(itemsObj.$ref as string, root);
           const itemType = resolved
             ? getType(resolved, root)
-            : schema.items.$ref.split("/").pop();
+            : String(itemsObj.$ref).split("/").pop() || "unknown";
           return `array of ${itemType}`;
         }
 
         // Handle arrays with union types (anyOf/oneOf)
-        if (schema.items.anyOf) {
-          const types = schema.items.anyOf.map((item: any) => {
-            if (item.$ref) {
-              const resolved = resolveRef(item.$ref, root);
-              return resolved
-                ? getType(resolved, root)
-                : item.$ref.split("/").pop();
+        if (Array.isArray(itemsObj.anyOf)) {
+          const types = itemsObj.anyOf.map((item: unknown) => {
+            if (item && typeof item === "object") {
+              const itemObj = item as Record<string, unknown>;
+              if (itemObj.$ref) {
+                const resolved = resolveRef(itemObj.$ref as string, root);
+                return resolved
+                  ? getType(resolved, root)
+                  : String(itemObj.$ref).split("/").pop() || "unknown";
+              }
             }
             return getType(item, root);
           });
           return `array of ${types.join(" | ")}`;
         }
 
-        if (schema.items.oneOf) {
-          const types = schema.items.oneOf.map((item: any) => {
-            if (item.$ref) {
-              const resolved = resolveRef(item.$ref, root);
-              return resolved
-                ? getType(resolved, root)
-                : item.$ref.split("/").pop();
+        if (Array.isArray(itemsObj.oneOf)) {
+          const types = itemsObj.oneOf.map((item: unknown) => {
+            if (item && typeof item === "object") {
+              const itemObj = item as Record<string, unknown>;
+              if (itemObj.$ref) {
+                const resolved = resolveRef(itemObj.$ref as string, root);
+                return resolved
+                  ? getType(resolved, root)
+                  : String(itemObj.$ref).split("/").pop() || "unknown";
+              }
             }
             return getType(item, root);
           });
           return `array of ${types.join(" | ")}`;
         }
 
-        if (schema.items.type) {
-          return `array of ${Array.isArray(schema.items.type) ? schema.items.type.join(" | ") : schema.items.type}`;
+        if (itemsObj.type) {
+          return `array of ${Array.isArray(itemsObj.type) ? itemsObj.type.join(" | ") : itemsObj.type}`;
         }
       }
       return "array";
     }
 
-    return schema.type;
+    return String(schemaObj.type);
   }
 
   // Handle union types at the top level (anyOf/oneOf)
-  if (schema.anyOf) {
-    const types = schema.anyOf.map((item: any) => {
-      if (item.$ref) {
-        const resolved = resolveRef(item.$ref, root);
-        return resolved ? getType(resolved, root) : item.$ref.split("/").pop();
+  if (Array.isArray(schemaObj.anyOf)) {
+    const types = schemaObj.anyOf.map((item: unknown) => {
+      if (item && typeof item === "object") {
+        const itemObj = item as Record<string, unknown>;
+        if (itemObj.$ref) {
+          const resolved = resolveRef(itemObj.$ref as string, root);
+          return resolved
+            ? getType(resolved, root)
+            : String(itemObj.$ref).split("/").pop() || "unknown";
+        }
       }
       return getType(item, root);
     });
     return types.join(" | ");
   }
 
-  if (schema.oneOf) {
-    const types = schema.oneOf.map((item: any) => {
-      if (item.$ref) {
-        const resolved = resolveRef(item.$ref, root);
-        return resolved ? getType(resolved, root) : item.$ref.split("/").pop();
+  if (Array.isArray(schemaObj.oneOf)) {
+    const types = schemaObj.oneOf.map((item: unknown) => {
+      if (item && typeof item === "object") {
+        const itemObj = item as Record<string, unknown>;
+        if (itemObj.$ref) {
+          const resolved = resolveRef(itemObj.$ref as string, root);
+          return resolved
+            ? getType(resolved, root)
+            : String(itemObj.$ref).split("/").pop() || "unknown";
+        }
       }
       return getType(item, root);
     });
     return types.join(" | ");
   }
 
-  if (schema.$ref) {
-    const resolved = resolveRef(schema.$ref, root);
+  if (schemaObj.$ref) {
+    const resolved = resolveRef(schemaObj.$ref as string, root);
     if (resolved) {
       return getType(resolved, root);
     }
-    return schema.$ref.split("/").pop();
+    return String(schemaObj.$ref).split("/").pop() || "unknown";
   }
 
   return "unknown";
 }
 
 function appendPropertyDocsNodes(
-  nodes: any[],
+  nodes: RootContent[],
   name: string,
-  schema: any,
+  schema: unknown,
   required: boolean,
   parentPath = "",
-  root: any,
+  root: unknown,
 ) {
+  if (!schema || typeof schema !== "object") return;
+
+  const schemaObj = schema as Record<string, unknown>;
   const fullName = parentPath ? `${parentPath}.${name}` : name;
 
-  // Heading for the property.
-  // Use a dynamic depth to visually convey the nesting level in the generated docs.
-  // Root-level properties keep depth 2 (##), each nested path segment adds +1 depth
-  // but we cap at 6 to stay within valid Markdown heading levels.
   const headingDepth = Math.min(6, 2 + (fullName.split(".").length - 1));
 
   nodes.push({
     type: "heading",
-    depth: headingDepth,
+    depth: headingDepth as 1 | 2 | 3 | 4 | 5 | 6,
     children: [{ type: "inlineCode", value: fullName }],
   });
 
@@ -223,7 +240,7 @@ function appendPropertyDocsNodes(
   });
 
   // Default
-  if (schema.default !== undefined) {
+  if (schemaObj.default !== undefined) {
     bulletItems.push({
       type: "listItem",
       children: [
@@ -231,7 +248,7 @@ function appendPropertyDocsNodes(
           type: "paragraph",
           children: [
             { type: "text", value: "Default: " },
-            { type: "inlineCode", value: JSON.stringify(schema.default) },
+            { type: "inlineCode", value: JSON.stringify(schemaObj.default) },
           ],
         },
       ],
@@ -239,7 +256,7 @@ function appendPropertyDocsNodes(
   }
 
   // Enum
-  if (schema.enum) {
+  if (Array.isArray(schemaObj.enum)) {
     bulletItems.push({
       type: "listItem",
       children: [
@@ -251,41 +268,11 @@ function appendPropertyDocsNodes(
           type: "list",
           ordered: false,
           spread: false,
-          children: Array.from(new Set(schema.enum))
-            .sort((a: any, b: any) => String(a).localeCompare(String(b)))
-            .map((v: any) => ({
-              type: "listItem",
-              children: [
-                {
-                  type: "paragraph",
-                  children: [{ type: "inlineCode", value: String(v) }],
-                },
-              ],
-            })),
-        },
-      ],
-    });
-  }
-  // Allowed keys (for objects constrained by `propertyNames`)
-  if (
-    schema.propertyNames &&
-    Array.isArray(schema.propertyNames.enum) &&
-    schema.propertyNames.enum.length > 0
-  ) {
-    bulletItems.push({
-      type: "listItem",
-      children: [
-        {
-          type: "paragraph",
-          children: [{ type: "text", value: "Allowed keys:" }],
-        },
-        {
-          type: "list",
-          ordered: false,
-          spread: false,
-          children: Array.from(new Set(schema.propertyNames.enum))
-            .sort((a: any, b: any) => String(a).localeCompare(String(b)))
-            .map((v: any) => ({
+          children: Array.from(new Set(schemaObj.enum))
+            .sort((a: unknown, b: unknown) =>
+              String(a).localeCompare(String(b)),
+            )
+            .map((v: unknown) => ({
               type: "listItem",
               children: [
                 {
@@ -299,8 +286,45 @@ function appendPropertyDocsNodes(
     });
   }
 
+  // Allowed keys (for objects constrained by `propertyNames`)
+  if (
+    schemaObj.propertyNames &&
+    typeof schemaObj.propertyNames === "object" &&
+    Array.isArray((schemaObj.propertyNames as Record<string, unknown>).enum)
+  ) {
+    const allowedKeys = (schemaObj.propertyNames as Record<string, unknown>)
+      .enum as string[];
+    if (allowedKeys.length > 0) {
+      bulletItems.push({
+        type: "listItem",
+        children: [
+          {
+            type: "paragraph",
+            children: [{ type: "text", value: "Allowed keys:" }],
+          },
+          {
+            type: "list",
+            ordered: false,
+            spread: false,
+            children: Array.from(new Set(allowedKeys))
+              .sort((a: string, b: string) => a.localeCompare(b))
+              .map((v: string) => ({
+                type: "listItem",
+                children: [
+                  {
+                    type: "paragraph",
+                    children: [{ type: "inlineCode", value: v }],
+                  },
+                ],
+              })),
+          },
+        ],
+      });
+    }
+  }
+
   // Description
-  if (schema.description) {
+  if (schemaObj.description) {
     bulletItems.push({
       type: "listItem",
       children: [
@@ -308,7 +332,7 @@ function appendPropertyDocsNodes(
           type: "paragraph",
           children: [
             { type: "text", value: "Description: " },
-            { type: "text", value: schema.description },
+            { type: "text", value: String(schemaObj.description) },
           ],
         },
       ],
@@ -324,18 +348,21 @@ function appendPropertyDocsNodes(
   });
 
   // Recurse into nested properties for objects
-  if (schema.type === "object") {
-    if (schema.properties) {
-      const nestedRequired: string[] = schema.required || [];
+  if (schemaObj.type === "object") {
+    if (schemaObj.properties && typeof schemaObj.properties === "object") {
+      const properties = schemaObj.properties as Record<string, unknown>;
+      const nestedRequired = Array.isArray(schemaObj.required)
+        ? (schemaObj.required as string[])
+        : [];
       const sortedKeys = sortPropertyKeys(
-        Object.keys(schema.properties),
+        Object.keys(properties),
         nestedRequired,
       );
       for (const key of sortedKeys) {
         appendPropertyDocsNodes(
           nodes,
           key,
-          schema.properties[key],
+          properties[key],
           nestedRequired.includes(key),
           fullName,
           root,
@@ -345,10 +372,10 @@ function appendPropertyDocsNodes(
 
     // Handle schemas that use `additionalProperties`
     if (
-      schema.additionalProperties &&
-      typeof schema.additionalProperties === "object"
+      schemaObj.additionalProperties &&
+      typeof schemaObj.additionalProperties === "object"
     ) {
-      const addSchema = schema.additionalProperties;
+      const addSchema = schemaObj.additionalProperties;
       let names: string[];
       if (fullName === "buckets") {
         // All bucket keys share the same value schema, so document a single
@@ -356,12 +383,13 @@ function appendPropertyDocsNodes(
         // type.
         names = ["*"];
       } else if (
-        schema.propertyNames &&
-        Array.isArray(schema.propertyNames.enum)
+        schemaObj.propertyNames &&
+        typeof schemaObj.propertyNames === "object" &&
+        Array.isArray((schemaObj.propertyNames as Record<string, unknown>).enum)
       ) {
-        names = [...schema.propertyNames.enum].sort((a: any, b: any) =>
-          String(a).localeCompare(String(b)),
-        );
+        const enumValues = (schemaObj.propertyNames as Record<string, unknown>)
+          .enum as string[];
+        names = enumValues.sort((a: string, b: string) => a.localeCompare(b));
       } else {
         names = ["*"];
       }
@@ -380,33 +408,45 @@ function appendPropertyDocsNodes(
   }
 
   // Recurse into items for arrays of objects
-  if (schema.type === "array" && schema.items) {
-    const itemSchema = schema.items.$ref
-      ? resolveRef(schema.items.$ref, root) || schema.items
-      : schema.items;
+  if (schemaObj.type === "array" && schemaObj.items) {
+    const items = schemaObj.items as Record<string, unknown>;
+    const itemSchema = items.$ref
+      ? resolveRef(items.$ref as string, root) || items
+      : items;
 
     // Handle union types in array items (anyOf/oneOf)
-    if (schema.items.anyOf) {
-      schema.items.anyOf.forEach((unionItem: any, index: number) => {
+    if (Array.isArray(items.anyOf)) {
+      items.anyOf.forEach((unionItem: unknown) => {
         let resolvedItem = unionItem;
-        if (unionItem.$ref) {
-          resolvedItem = resolveRef(unionItem.$ref, root) || unionItem;
+        if (unionItem && typeof unionItem === "object") {
+          const unionItemObj = unionItem as Record<string, unknown>;
+          if (unionItemObj.$ref) {
+            resolvedItem =
+              resolveRef(unionItemObj.$ref as string, root) || unionItem;
+          }
         }
 
         if (
           resolvedItem &&
-          (resolvedItem.type === "object" || resolvedItem.properties)
+          typeof resolvedItem === "object" &&
+          ((resolvedItem as Record<string, unknown>).type === "object" ||
+            (resolvedItem as Record<string, unknown>).properties)
         ) {
-          const nestedRequired: string[] = resolvedItem.required || [];
+          const resolvedItemObj = resolvedItem as Record<string, unknown>;
+          const nestedRequired = Array.isArray(resolvedItemObj.required)
+            ? (resolvedItemObj.required as string[])
+            : [];
+          const properties =
+            (resolvedItemObj.properties as Record<string, unknown>) || {};
           const sortedKeys = sortPropertyKeys(
-            Object.keys(resolvedItem.properties || {}),
+            Object.keys(properties),
             nestedRequired,
           );
           for (const key of sortedKeys) {
             appendPropertyDocsNodes(
               nodes,
               key,
-              resolvedItem.properties[key],
+              properties[key],
               nestedRequired.includes(key),
               `${fullName}.*`,
               root,
@@ -415,10 +455,10 @@ function appendPropertyDocsNodes(
 
           // Handle additionalProperties inside union item if present
           if (
-            resolvedItem.additionalProperties &&
-            typeof resolvedItem.additionalProperties === "object"
+            resolvedItemObj.additionalProperties &&
+            typeof resolvedItemObj.additionalProperties === "object"
           ) {
-            const addSchema = resolvedItem.additionalProperties;
+            const addSchema = resolvedItemObj.additionalProperties;
             const names = ["*"];
             for (const propName of names) {
               appendPropertyDocsNodes(
@@ -433,27 +473,38 @@ function appendPropertyDocsNodes(
           }
         }
       });
-    } else if (schema.items.oneOf) {
-      schema.items.oneOf.forEach((unionItem: any, index: number) => {
+    } else if (Array.isArray(items.oneOf)) {
+      items.oneOf.forEach((unionItem: unknown) => {
         let resolvedItem = unionItem;
-        if (unionItem.$ref) {
-          resolvedItem = resolveRef(unionItem.$ref, root) || unionItem;
+        if (unionItem && typeof unionItem === "object") {
+          const unionItemObj = unionItem as Record<string, unknown>;
+          if (unionItemObj.$ref) {
+            resolvedItem =
+              resolveRef(unionItemObj.$ref as string, root) || unionItem;
+          }
         }
 
         if (
           resolvedItem &&
-          (resolvedItem.type === "object" || resolvedItem.properties)
+          typeof resolvedItem === "object" &&
+          ((resolvedItem as Record<string, unknown>).type === "object" ||
+            (resolvedItem as Record<string, unknown>).properties)
         ) {
-          const nestedRequired: string[] = resolvedItem.required || [];
+          const resolvedItemObj = resolvedItem as Record<string, unknown>;
+          const nestedRequired = Array.isArray(resolvedItemObj.required)
+            ? (resolvedItemObj.required as string[])
+            : [];
+          const properties =
+            (resolvedItemObj.properties as Record<string, unknown>) || {};
           const sortedKeys = sortPropertyKeys(
-            Object.keys(resolvedItem.properties || {}),
+            Object.keys(properties),
             nestedRequired,
           );
           for (const key of sortedKeys) {
             appendPropertyDocsNodes(
               nodes,
               key,
-              resolvedItem.properties[key],
+              properties[key],
               nestedRequired.includes(key),
               `${fullName}.*`,
               root,
@@ -462,10 +513,10 @@ function appendPropertyDocsNodes(
 
           // Handle additionalProperties inside union item if present
           if (
-            resolvedItem.additionalProperties &&
-            typeof resolvedItem.additionalProperties === "object"
+            resolvedItemObj.additionalProperties &&
+            typeof resolvedItemObj.additionalProperties === "object"
           ) {
-            const addSchema = resolvedItem.additionalProperties;
+            const addSchema = resolvedItemObj.additionalProperties;
             const names = ["*"];
             for (const propName of names) {
               appendPropertyDocsNodes(
@@ -482,19 +533,26 @@ function appendPropertyDocsNodes(
       });
     } else if (
       itemSchema &&
-      (itemSchema.type === "object" || itemSchema.properties)
+      typeof itemSchema === "object" &&
+      ((itemSchema as Record<string, unknown>).type === "object" ||
+        (itemSchema as Record<string, unknown>).properties)
     ) {
       // Handle regular object items (non-union)
-      const nestedRequired: string[] = itemSchema.required || [];
+      const itemSchemaObj = itemSchema as Record<string, unknown>;
+      const nestedRequired = Array.isArray(itemSchemaObj.required)
+        ? (itemSchemaObj.required as string[])
+        : [];
+      const properties =
+        (itemSchemaObj.properties as Record<string, unknown>) || {};
       const sortedKeys = sortPropertyKeys(
-        Object.keys(itemSchema.properties || {}),
+        Object.keys(properties),
         nestedRequired,
       );
       for (const key of sortedKeys) {
         appendPropertyDocsNodes(
           nodes,
           key,
-          itemSchema.properties[key],
+          properties[key],
           nestedRequired.includes(key),
           `${fullName}.*`,
           root,
@@ -503,10 +561,10 @@ function appendPropertyDocsNodes(
 
       // Handle additionalProperties inside array items if present
       if (
-        itemSchema.additionalProperties &&
-        typeof itemSchema.additionalProperties === "object"
+        itemSchemaObj.additionalProperties &&
+        typeof itemSchemaObj.additionalProperties === "object"
       ) {
-        const addSchema = itemSchema.additionalProperties;
+        const addSchema = itemSchemaObj.additionalProperties;
         const names = ["*"];
         for (const propName of names) {
           appendPropertyDocsNodes(
@@ -523,22 +581,48 @@ function appendPropertyDocsNodes(
   }
 }
 
-function generateMarkdown(schema: any): string {
-  const rootRef = schema.$ref as string | undefined;
+function generateMarkdown(schema: unknown): string {
+  if (!schema || typeof schema !== "object") {
+    throw new Error("Invalid schema provided");
+  }
+
+  const schemaObj = schema as Record<string, unknown>;
+  const rootRef = schemaObj.$ref as string | undefined;
   const rootName: string = rootRef
     ? (rootRef.split("/").pop() ?? "I18nConfig")
     : "I18nConfig";
-  const rootSchema = rootRef ? (schema.definitions as any)[rootName] : schema;
 
-  // Ensure the `version` property reflects the latest schema version in docs
-  if (rootSchema?.properties?.version) {
-    rootSchema.properties.version = {
-      ...rootSchema.properties.version,
-      default: LATEST_CONFIG_DEFINITION.defaultValue.version,
-    };
+  let rootSchema: unknown;
+  if (
+    rootRef &&
+    schemaObj.definitions &&
+    typeof schemaObj.definitions === "object"
+  ) {
+    const definitions = schemaObj.definitions as Record<string, unknown>;
+    rootSchema = definitions[rootName];
+  } else {
+    rootSchema = schema;
   }
 
-  const children: any[] = [
+  if (!rootSchema || typeof rootSchema !== "object") {
+    throw new Error(`Could not find root schema: ${rootName}`);
+  }
+
+  const rootSchemaObj = rootSchema as Record<string, unknown>;
+
+  // Ensure the `version` property reflects the latest schema version in docs
+  if (
+    rootSchemaObj.properties &&
+    typeof rootSchemaObj.properties === "object"
+  ) {
+    const properties = rootSchemaObj.properties as Record<string, unknown>;
+    if (properties.version && typeof properties.version === "object") {
+      (properties.version as Record<string, unknown>).default =
+        LATEST_CONFIG_DEFINITION.defaultValue.version;
+    }
+  }
+
+  const children: RootContent[] = [
     {
       type: "heading",
       depth: 1,
@@ -546,10 +630,10 @@ function generateMarkdown(schema: any): string {
     },
   ];
 
-  if (rootSchema.description) {
+  if (rootSchemaObj.description) {
     children.push({
       type: "paragraph",
-      children: [{ type: "text", value: rootSchema.description }],
+      children: [{ type: "text", value: String(rootSchemaObj.description) }],
     });
   }
 
@@ -578,31 +662,39 @@ function generateMarkdown(schema: any): string {
     ],
   });
 
-  const required: string[] = rootSchema.required || [];
+  const required = Array.isArray(rootSchemaObj.required)
+    ? (rootSchemaObj.required as string[])
+    : [];
 
-  const sortedKeys = sortPropertyKeys(
-    Object.keys(rootSchema.properties || {}),
-    required,
-    ROOT_PROPERTY_ORDER,
-  );
-  for (const key of sortedKeys) {
-    appendPropertyDocsNodes(
-      children,
-      key,
-      rootSchema.properties[key],
-      required.includes(key),
-      "",
-      schema,
+  if (
+    rootSchemaObj.properties &&
+    typeof rootSchemaObj.properties === "object"
+  ) {
+    const properties = rootSchemaObj.properties as Record<string, unknown>;
+    const sortedKeys = sortPropertyKeys(
+      Object.keys(properties),
+      required,
+      ROOT_PROPERTY_ORDER,
     );
+    for (const key of sortedKeys) {
+      appendPropertyDocsNodes(
+        children,
+        key,
+        properties[key],
+        required.includes(key),
+        "",
+        schema,
+      );
 
-    // Add spacing between top-level sections
-    children.push({
-      type: "paragraph",
-      children: [{ type: "text", value: "" }],
-    });
+      // Add spacing between top-level sections
+      children.push({
+        type: "paragraph",
+        children: [{ type: "text", value: "" }],
+      });
+    }
   }
 
-  const root: any = { type: "root", children };
+  const root: Root = { type: "root", children };
   return unified()
     .use(remarkStringify, { fences: true, listItemIndent: "one" })
     .stringify(root);
@@ -622,7 +714,7 @@ async function generateSchemaAndDocs() {
 
   const schema = zodToJsonSchema(LATEST_CONFIG_DEFINITION.schema, {
     name: "I18nConfig",
-  } as any);
+  });
 
   // ------------------------------------------------------------------
   // Ensure the JSON schema written to disk contains the latest defaults
@@ -630,30 +722,49 @@ async function generateSchemaAndDocs() {
   // This keeps the machine-readable schema in sync with the source
   // Zod definition and the human-readable markdown docs.
   // ------------------------------------------------------------------
-  {
-    const rootRef = (schema as any).$ref as string | undefined;
+  if (schema && typeof schema === "object") {
+    const schemaObj = schema as Record<string, unknown>;
+    const rootRef = schemaObj.$ref as string | undefined;
     const rootName = rootRef
       ? (rootRef.split("/").pop() ?? "I18nConfig")
       : "I18nConfig";
-    const rootSchema: any = rootRef
-      ? (schema as any).definitions[rootName]
-      : schema;
 
-    if (rootSchema?.properties?.version) {
-      rootSchema.properties.version = {
-        ...rootSchema.properties.version,
-        default: LATEST_CONFIG_DEFINITION.defaultValue.version,
-      };
+    let rootSchema: unknown;
+    if (
+      rootRef &&
+      schemaObj.definitions &&
+      typeof schemaObj.definitions === "object"
+    ) {
+      const definitions = schemaObj.definitions as Record<string, unknown>;
+      rootSchema = definitions[rootName];
+    } else {
+      rootSchema = schema;
     }
 
-    if (
-      rootSchema?.properties?.$schema &&
-      (LATEST_CONFIG_DEFINITION.defaultValue as any).$schema
-    ) {
-      rootSchema.properties.$schema = {
-        ...rootSchema.properties.$schema,
-        default: (LATEST_CONFIG_DEFINITION.defaultValue as any).$schema,
-      };
+    if (rootSchema && typeof rootSchema === "object") {
+      const rootSchemaObj = rootSchema as Record<string, unknown>;
+
+      if (
+        rootSchemaObj.properties &&
+        typeof rootSchemaObj.properties === "object"
+      ) {
+        const properties = rootSchemaObj.properties as Record<string, unknown>;
+
+        if (properties.version && typeof properties.version === "object") {
+          (properties.version as Record<string, unknown>).default =
+            LATEST_CONFIG_DEFINITION.defaultValue.version;
+        }
+
+        if (
+          properties.$schema &&
+          typeof properties.$schema === "object" &&
+          (LATEST_CONFIG_DEFINITION.defaultValue as ConfigDefaultValue).$schema
+        ) {
+          (properties.$schema as Record<string, unknown>).default = (
+            LATEST_CONFIG_DEFINITION.defaultValue as ConfigDefaultValue
+          ).$schema;
+        }
+      }
     }
   }
 
