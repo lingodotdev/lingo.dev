@@ -3,7 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "generate-cli-docs": "tsx ./src/generate-cli-docs.ts"
+    "generate-cli-docs": "tsx ./src/generate-cli-docs.ts",
+    "generate-config-docs": "tsx ./src/generate-config-docs.ts"
   },
   "devDependencies": {
     "@lingo.dev/_spec": "workspace:*",
