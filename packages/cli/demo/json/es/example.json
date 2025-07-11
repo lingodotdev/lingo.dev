@@ -1,0 +1,26 @@
+{
+  "title": "Este valor de cadena está localizado",
+  "description": "Esta cadena de descripción también está localizada",
+  "version": "1.0.0",
+  "author": {
+    "name": "Esta cadena anidada está localizada",
+    "email": "Esta cadena de correo electrónico está localizada"
+  },
+  "messages": [
+    "Este elemento de cadena de array está localizado",
+    "Esta segunda cadena de array también está localizada"
+  ],
+  "config": {
+    "theme": {
+      "primary": "Esta cadena profundamente anidada está localizada"
+    }
+  },
+  "mixed_array": [
+    "Esta cadena en array mixto está localizada",
+    42,
+    true,
+    {
+      "nested_message": "Esta cadena de objeto anidado está localizada"
+    }
+  ]
+}

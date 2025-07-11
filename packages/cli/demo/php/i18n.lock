@@ -1,0 +1,15 @@
+version: 1
+checksums:
+  0ee8d6907f60fa2cc288cc0503ecbba1:
+    "0": 38e9deab2df0a2732ee220d5d102668a
+    "1": 2107eed2cb8bbbebfab5cc1e96496d87
+    2/welcome_message: 001da5d8c38b66b9f49b11f2fd15f1fd
+    3/error_text: 75db4baa1efce3e080e3fc75003ebc7f
+    4/navigation/home: 54d55718a43cf15a0eccedff03a89330
+    4/navigation/about: d4e66ed737557dfd8860b1f0abc6efff
+    4/navigation/contact: ec613723696479d7173e684f4132d2dd
+    5/forms/login/username_label: bfa27a6dd1ca6864d5a4b929776e19a4
+    5/forms/login/password_label: 22f447c4b20b01f15f9992426fd1ed61
+    5/forms/login/submit_button: 010f24b7d75d972a86cb8e4fe86d2269
+    6/mixed_content/title: 5f6cccf78a0709b8d6b92a567e33268c
+    6/mixed_content/description: f762877d706ee847a13babf8b9c928cb

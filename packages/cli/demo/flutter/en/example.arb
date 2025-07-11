@@ -1,0 +1,54 @@
+{
+  "@@locale": "en",
+  "@@last_modified": "2024-01-15T10:30:00Z",
+  "@@version": "1.0.0",
+  "welcome_message": "Welcome to our Flutter app",
+  "@welcome_message": {
+    "description": "The main welcome message shown on the home screen",
+    "context": "greeting"
+  },
+  "login_button": "Log In",
+  "@login_button": {
+    "description": "Text for the login button"
+  },
+  "signup_button": "Sign Up",
+  "error_network": "Network connection failed",
+  "@error_network": {
+    "description": "Error message displayed when network request fails"
+  },
+  "success_message": "Operation completed successfully",
+  "user_profile_title": "User Profile",
+  "settings_screen_title": "Settings",
+  "cancel_action": "Cancel",
+  "confirm_action": "Confirm",
+  "greeting_with_name": "Hello {name}!",
+  "@greeting_with_name": {
+    "description": "Greeting message with user's name",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "description": "The user's display name"
+      }
+    }
+  },
+  "item_count": "{count, plural, =0 {No items} one {# item} other {# items}}",
+  "@item_count": {
+    "description": "Message showing the number of items with proper pluralization",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "description": "The number of items"
+      }
+    }
+  },
+  "user_status": "{status, select, online {User is online} offline {User is offline} away {User is away} other {Unknown status}}",
+  "@user_status": {
+    "description": "Message showing user's current status",
+    "placeholders": {
+      "status": {
+        "type": "String",
+        "description": "The user's current status"
+      }
+    }
+  }
+}

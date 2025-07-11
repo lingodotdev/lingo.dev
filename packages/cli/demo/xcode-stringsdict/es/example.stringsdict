@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>welcome_message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Bienvenido %#@user_count@!</string>
+      <key>user_count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>Sin usuarios</string>
+        <key>one</key>
+        <string>Un usuario</string>
+        <key>other</key>
+        <string>%d usuarios</string>
+      </dict>
+    </dict>
+    <key>notification_count</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Tienes %#@count@ notificaciones</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>ninguna</string>
+        <key>one</key>
+        <string>una</string>
+        <key>other</key>
+        <string>%d</string>
+      </dict>
+    </dict>
+  </dict>
+</plist>

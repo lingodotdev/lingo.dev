@@ -1,0 +1,34 @@
+{
+  "title": "This string value is localized",
+  "description": "This description string is also localized",
+  "version": "1.0.0",
+  "support_email": "support@example.com",
+  "homepage": "https://lingo.dev",
+  "deprecated": null,
+  "empty": "",
+  "emoji": "🚀",
+  "author": {
+    "name": "This nested string is localized"
+  },
+  "contributors": [
+    { "name": "Alice" },
+    { "name": "Bob" }
+  ],
+  "messages": [
+    "This array string element is localized",
+    "This second array string is also localized"
+  ],
+  "config": {
+    "theme": {
+      "primary": "This deeply nested string is localized"
+    }
+  },
+  "mixed_array": [
+    "This string in mixed array is localized",
+    42,
+    true,
+    {
+      "nested_message": "This nested object string is localized"
+    }
+  ]
+}

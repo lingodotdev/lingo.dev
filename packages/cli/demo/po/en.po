@@ -1,6 +1,0 @@
-#: dashboard/users/templates/organizations/members.html:39
-#, python-format
-msgid "%(counter)s member"
-msgid_plural "%(counter)s members"
-msgstr[0] ""
-msgstr[1] ""

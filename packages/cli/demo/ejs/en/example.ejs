@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title><%= pageTitle %></title>
+    <!-- Style blocks are NOT localized -->
+    <style>
+        body { font-family: Arial, sans-serif; }
+    </style>
+</head>
+<body>
+    <!-- EJS template tags are not localized -->
+    <% if (user) { %>
+        <!-- Text content outside EJS tags is localized -->
+        <h1>Welcome back!</h1>
+        
+        <!-- Text mixed with EJS expressions - only plain text is localized -->
+        <p>Hello, <%= user.name %>! You have <%= messageCount %> new messages.</p>
+        
+        <!-- HTML tags are not localized, but text between them is -->
+        <div class="notification">
+            <strong>Important:</strong> Your account expires soon.
+        </div>
+        
+        <!-- Attribute values (e.g., placeholder, alt, title, aria-label) are NOT localized -->
+        <img src="/avatar.jpg" alt="User avatar" title="Click to edit profile">
+        <button type="button" aria-label="Close notification" title="Close">×</button>
+    <% } else { %>
+        <!-- Text content in conditional blocks is localized -->
+        <h1>Please log in</h1>
+        
+        <!-- Form labels and button text are localized -->
+        <!-- But attribute values like placeholder, value are NOT localized -->
+        <form action="/login" method="post">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" placeholder="Enter your username">
+            
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password">
+            
+            <button type="submit">Sign In</button>
+            <input type="button" value="Forgot Password?" onclick="showForgotPassword()">
+        </form>
+    <% } %>
+    
+    <!-- Loop constructs are not localized, but content inside is -->
+    <ul>
+    <% items.forEach(function(item) { %>
+        <!-- List item text is localized -->
+        <li>Product: <%= item.name %> - Price: $<%= item.price %></li>
+    <% }); %>
+    </ul>
+    
+    <!-- HTML comments like this one are NOT localized -->
+    <!-- Visible to developers only -->
+    
+    <!-- Whitespace-only content is not localized -->
+    
+    
+    <!-- Text with only HTML tags and no meaningful content is not localized -->
+    <div></div>
+    
+    <!-- Mixed content - text portions are localized, EJS and HTML are not -->
+    <footer>
+        Copyright © <%= new Date().getFullYear() %> Company Name. All rights reserved.
+    </footer>
+    
+    <!-- Script blocks are NOT localized -->
+    <script>
+        function showForgotPassword() {
+            alert("Please contact support for password reset.");
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+version: 1
+checksums:
+  455da9346f4e772000927cd2ff5bb898:
+    title: 38e9deab2df0a2732ee220d5d102668a
+    description: 15a31addcf992e4bbde8574ff71a4caa
+    version: 54a9e730e88fb16291b852274d433923
+    author/name: 2e9d0387c41abedc0b7099069f9e7fc5
+    author/email: 6de8441611530f19a6596c1470c44e03
+    messages/0: 34374475f680b4115d3d821069fee5a2
+    messages/1: 8378096075f8b15d03ff10d600aad2d6
+    config/theme/primary: 7efe1a55b3d90a66f400e664a61f0fcf
+    mixed_array/0: dabfdfcade6c742c098d5a90cd5bb7e6
+    mixed_array/3/nested_message: 1cf41f47b3eef3c75c243eba21544047

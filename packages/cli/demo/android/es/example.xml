@@ -1,0 +1,18 @@
+<resources>
+  <string name="app_name">Mi Aplicación</string>
+  <string name="welcome_message">¡Bienvenido a nuestra aplicación!</string>
+  <string name="button_text">Haz clic aquí</string>
+  <string-array name="color_names">
+    <item>Rojo</item>
+    <item>Verde</item>
+    <item>Azul</item>
+  </string-array>
+  <plurals name="notification_count">
+    <item quantity="one">Tienes %d notificación</item>
+    <item quantity="other">Tienes %d notificaciones</item>
+  </plurals>
+  <bool name="show_tutorial">true</bool>
+  <bool name="enable_animations">false</bool>
+  <integer name="max_retry_attempts">3</integer>
+  <integer name="default_timeout">30</integer>
+</resources>

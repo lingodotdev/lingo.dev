@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title><%= pageTitle %></title>
+</head>
+<body>
+    <!-- EJS template tags are not localized -->
+    <% if (user) { %>
+        <!-- Text content outside EJS tags is localized -->
+        <h1>¡Bienvenido de nuevo!</h1>
+        
+        <!-- Text mixed with EJS expressions - only plain text is localized -->
+        <p>Hola, <%= user.name %>! Tienes <%= messageCount %> nuevos mensajes.</p>
+        
+        <!-- HTML tags are not localized, but text between them is -->
+        <div class="notification">
+            <strong>Importante:</strong> Tu cuenta expira pronto.
+        </div>
+    <% } else { %>
+        <!-- Text content in conditional blocks is localized -->
+        <h1>Por favor inicia sesión</h1>
+        
+        <!-- Form labels and button text are localized -->
+        <form action="/login" method="post">
+            <label for="username">Nombre de usuario:</label>
+            <input type="text" id="username" name="username" placeholder="Enter your username">
+            
+            <label for="password">Contraseña:</label>
+            <input type="password" id="password" name="password">
+            
+            <button type="submit">Iniciar sesión</button>
+        </form>
+    <% } %>
+    
+    <!-- Loop constructs are not localized, but content inside is -->
+    <ul>
+    <% items.forEach(function(item) { %>
+        <!-- List item text is localized -->
+        <li>Producto: <%= item.name %> - Precio: $<%= item.price %></li>
+    <% }); %>
+    </ul>
+    
+    <!-- Whitespace-only content is not localized -->
+    
+    
+    <!-- Text with only HTML tags and no meaningful content is not localized -->
+    <div></div>
+    
+    <!-- Mixed content - text portions are localized, EJS and HTML are not -->
+    <footer>
+        Copyright © <%= new Date().getFullYear() %> Company Name. Todos los derechos reservados.
+    </footer>
+</body>
+</html>

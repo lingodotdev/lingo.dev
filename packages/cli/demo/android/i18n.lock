@@ -1,0 +1,11 @@
+version: 1
+checksums:
+  ec06a6ebae97ffd5f7afc99d9a8f051b:
+    app_name: c215a8d46c95f00089c5ea0d17eef742
+    welcome_message: 8d0d80fc47acbc73b742969c70eb6387
+    button_text: 26ce69aad587f70d47e7606436bf1d6d
+    color_names/0: bace0083b78cdb188523bc4abc7b55c6
+    color_names/1: 482ff383a4258357ba404f283682471d
+    color_names/2: a5cf034b2d370a976119335cd99f4217
+    notification_count/one: 0eb731c696990d154b3d4bcf1ae5db54
+    notification_count/other: 0548093047eea9a72eb70e5cebd87d80
