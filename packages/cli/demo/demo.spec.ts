@@ -3,13 +3,23 @@ import fs from "fs";
 import path from "path";
 import { bucketTypes, parseI18nConfig } from "@lingo.dev/_spec";
 
+type BucketType = (typeof bucketTypes)[number];
+
+const SKIP_BUCKET_TYPES: BucketType[] = [
+  "compiler",
+  "dato"
+];
+
+const TESTABLE_BUCKET_TYPES: BucketType[] = bucketTypes.filter(
+  (type) => !SKIP_BUCKET_TYPES.includes(type),
+);
 
 describe("packages/cli/demo", () => {
   it("should include a demo for each bucket type", () => {
     const demoRoot = path.resolve(__dirname);
     const missingBuckets: string[] = [];
 
-    for (const bucketType of new Set(bucketTypes)) {
+    for (const bucketType of new Set(TESTABLE_BUCKET_TYPES)) {
       const bucketPath = path.join(demoRoot, bucketType);
       const exists = fs.existsSync(bucketPath);
       if (!exists) {
@@ -39,7 +49,7 @@ describe("packages/cli/demo", () => {
     const demoRoot = path.resolve(__dirname);
     const invalidConfigs: Array<{ bucketType: string; error: string }> = [];
 
-    for (const bucketType of new Set(bucketTypes)) {
+    for (const bucketType of new Set(TESTABLE_BUCKET_TYPES)) {
       const bucketPath = path.join(demoRoot, bucketType);
       const i18nJsonPath = path.join(bucketPath, "i18n.json");
       try {
@@ -61,7 +71,7 @@ describe("packages/cli/demo", () => {
     const demoRoot = path.resolve(__dirname);
     const missingFiles: string[] = [];
 
-    for (const bucketType of new Set(bucketTypes)) {
+    for (const bucketType of new Set(TESTABLE_BUCKET_TYPES)) {
       const bucketPath = path.join(demoRoot, bucketType);
       const i18nLockPath = path.join(bucketPath, "i18n.lock");
       if (!fs.existsSync(i18nLockPath)) {

@@ -1,0 +1,13 @@
+en:
+  navigation:
+    home: "Home"
+    about: "About Us"
+    contact: "Contact"
+    services: "Services"
+  forms:
+    title: "Contact Form"
+    name_label: "Your Name"
+    email_label: "Email Address"
+    message_label: "Message"
+    submit_button: "Send Message"
+    success_message: "Thank you for your message!"

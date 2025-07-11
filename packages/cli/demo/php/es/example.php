@@ -14,7 +14,7 @@
 return [
   '0' => 'Esta cadena posicional está localizada',
   '1' => 'Otra cadena posicional',
-  '2' => 'Está "citado\\" y contiene una barra invertida \\ y un salto de línea\nTodo esto está localizado',
+  '2' => 'Está "citado\\" y contiene una barra invertida \\ y un salto de línea\\nTodo esto está localizado',
   '3' => [
     'welcome_message' => 'Este mensaje de bienvenida está localizado'
   ],

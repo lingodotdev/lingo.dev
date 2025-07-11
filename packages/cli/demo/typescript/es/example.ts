@@ -1,0 +1,45 @@
+const messages = {
+  navigation: {
+    home: "Home",
+    about: "About Us",
+    contact: "Contact Us",
+    services: "Our Services",
+  },
+  forms: {
+    title: "Contact Form",
+    nameLabel: "Your Name",
+    emailLabel: "Email Address",
+    messageLabel: "Your Message",
+    submitButton: "Send Message",
+    successMessage: "Thank you for your message!",
+  },
+  validation: {
+    required: "This field is required",
+    email: "Please enter a valid email address",
+    minLength: "Must be at least 6 characters long",
+    maxLength: "Must be no more than 50 characters long",
+  },
+  ui: {
+    loading: "Loading...",
+    save: "Save Changes",
+    cancel: "Cancel",
+    delete: "Delete",
+    confirm: "Are you sure?",
+    success: "Operation completed successfully",
+    error: "An error occurred. Please try again.",
+  },
+  products: {
+    featuredTitle: "Featured Products",
+    priceLabel: "Price",
+    addToCart: "Add to Cart",
+    outOfStock: "Out of Stock",
+    description: "Product Description",
+    features: "Key Features",
+  },
+  common: {
+    welcome: "Welcome to our application",
+    goodbye: "Thank you for visiting",
+    thankyou: "Thank you",
+    pleasewait: "Please wait...",
+  },
+};
