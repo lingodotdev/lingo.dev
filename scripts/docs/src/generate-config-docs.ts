@@ -10,12 +10,6 @@ import { zodToJsonSchema } from "zod-to-json-schema";
 import { formatMarkdown } from "./utils";
 import type { Root, RootContent } from "mdast";
 
-interface ConfigDefaultValue {
-  $schema?: string;
-  version?: number;
-  [key: string]: unknown;
-}
-
 const ROOT_PROPERTY_ORDER = ["$schema", "version", "locale", "buckets"];
 
 function resolveRef(ref: string, root: unknown): unknown {
@@ -104,25 +98,9 @@ function getType(schema: unknown, root: unknown): string {
           return `array of ${itemType}`;
         }
 
-        // Handle arrays with union types (anyOf/oneOf)
+        // Handle arrays with union types (anyOf)
         if (Array.isArray(itemsObj.anyOf)) {
           const types = itemsObj.anyOf.map((item: unknown) => {
-            if (item && typeof item === "object") {
-              const itemObj = item as Record<string, unknown>;
-              if (itemObj.$ref) {
-                const resolved = resolveRef(itemObj.$ref as string, root);
-                return resolved
-                  ? getType(resolved, root)
-                  : String(itemObj.$ref).split("/").pop() || "unknown";
-              }
-            }
-            return getType(item, root);
-          });
-          return `array of ${types.join(" | ")}`;
-        }
-
-        if (Array.isArray(itemsObj.oneOf)) {
-          const types = itemsObj.oneOf.map((item: unknown) => {
             if (item && typeof item === "object") {
               const itemObj = item as Record<string, unknown>;
               if (itemObj.$ref) {
@@ -147,25 +125,9 @@ function getType(schema: unknown, root: unknown): string {
     return String(schemaObj.type);
   }
 
-  // Handle union types at the top level (anyOf/oneOf)
+  // Handle union types at the top level (anyOf)
   if (Array.isArray(schemaObj.anyOf)) {
     const types = schemaObj.anyOf.map((item: unknown) => {
-      if (item && typeof item === "object") {
-        const itemObj = item as Record<string, unknown>;
-        if (itemObj.$ref) {
-          const resolved = resolveRef(itemObj.$ref as string, root);
-          return resolved
-            ? getType(resolved, root)
-            : String(itemObj.$ref).split("/").pop() || "unknown";
-        }
-      }
-      return getType(item, root);
-    });
-    return types.join(" | ");
-  }
-
-  if (Array.isArray(schemaObj.oneOf)) {
-    const types = schemaObj.oneOf.map((item: unknown) => {
       if (item && typeof item === "object") {
         const itemObj = item as Record<string, unknown>;
         if (itemObj.$ref) {
@@ -377,23 +339,7 @@ function appendPropertyDocsNodes(
       typeof schemaObj.additionalProperties === "object"
     ) {
       const addSchema = schemaObj.additionalProperties;
-      let names: string[];
-      if (fullName === "buckets") {
-        // All bucket keys share the same value schema, so document a single
-        // placeholder key instead of repeating the same docs for each bucket
-        // type.
-        names = ["*"];
-      } else if (
-        schemaObj.propertyNames &&
-        typeof schemaObj.propertyNames === "object" &&
-        Array.isArray((schemaObj.propertyNames as Record<string, unknown>).enum)
-      ) {
-        const enumValues = (schemaObj.propertyNames as Record<string, unknown>)
-          .enum as string[];
-        names = enumValues.sort((a: string, b: string) => a.localeCompare(b));
-      } else {
-        names = ["*"];
-      }
+      const names = ["*"];
 
       for (const propName of names) {
         appendPropertyDocsNodes(
@@ -415,7 +361,7 @@ function appendPropertyDocsNodes(
       ? resolveRef(items.$ref as string, root) || items
       : items;
 
-    // Handle union types in array items (anyOf/oneOf)
+    // Handle union types in array items (anyOf)
     if (Array.isArray(items.anyOf)) {
       items.anyOf.forEach((unionItem: unknown) => {
         let resolvedItem = unionItem;
@@ -452,83 +398,6 @@ function appendPropertyDocsNodes(
               `${fullName}.*`,
               root,
             );
-          }
-
-          // Handle additionalProperties inside union item if present
-          if (
-            resolvedItemObj.additionalProperties &&
-            typeof resolvedItemObj.additionalProperties === "object"
-          ) {
-            const addSchema = resolvedItemObj.additionalProperties;
-            const names = ["*"];
-            for (const propName of names) {
-              appendPropertyDocsNodes(
-                nodes,
-                propName,
-                addSchema,
-                false,
-                `${fullName}.*`,
-                root,
-              );
-            }
-          }
-        }
-      });
-    } else if (Array.isArray(items.oneOf)) {
-      items.oneOf.forEach((unionItem: unknown) => {
-        let resolvedItem = unionItem;
-        if (unionItem && typeof unionItem === "object") {
-          const unionItemObj = unionItem as Record<string, unknown>;
-          if (unionItemObj.$ref) {
-            resolvedItem =
-              resolveRef(unionItemObj.$ref as string, root) || unionItem;
-          }
-        }
-
-        if (
-          resolvedItem &&
-          typeof resolvedItem === "object" &&
-          ((resolvedItem as Record<string, unknown>).type === "object" ||
-            (resolvedItem as Record<string, unknown>).properties)
-        ) {
-          const resolvedItemObj = resolvedItem as Record<string, unknown>;
-          const nestedRequired = Array.isArray(resolvedItemObj.required)
-            ? (resolvedItemObj.required as string[])
-            : [];
-          const properties =
-            (resolvedItemObj.properties as Record<string, unknown>) || {};
-          const sortedKeys = sortPropertyKeys(
-            Object.keys(properties),
-            nestedRequired,
-          );
-          for (const key of sortedKeys) {
-            appendPropertyDocsNodes(
-              nodes,
-              key,
-              properties[key],
-              nestedRequired.includes(key),
-              `${fullName}.*`,
-              root,
-            );
-          }
-
-          // Handle additionalProperties inside union item if present
-          if (
-            resolvedItemObj.additionalProperties &&
-            typeof resolvedItemObj.additionalProperties === "object"
-          ) {
-            const addSchema = resolvedItemObj.additionalProperties;
-            const names = ["*"];
-            for (const propName of names) {
-              appendPropertyDocsNodes(
-                nodes,
-                propName,
-                addSchema,
-                false,
-                `${fullName}.*`,
-                root,
-              );
-            }
           }
         }
       });
