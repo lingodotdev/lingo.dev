@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>This title text is localized</title>
+
+    <!-- Meta content attributes are localized -->
+    <meta name="description" content="This description is localized" />
+    <meta property="og:title" content="This Open Graph title is localized" />
+
+    <!-- Meta attributes other than content are not localized -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8" />
+
+    <!-- Style tags and their contents are not localized -->
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        color: #333;
+      }
+      .highlight::before {
+        content: "This CSS content is not localized";
+      }
+    </style>
+
+    <!-- Script tags and their contents are not localized -->
+    <script>
+      const message = "This JavaScript string is not localized";
+      console.log(message);
+    </script>
+  </head>
+  <body>
+    <!-- Text nodes are localized -->
+    <h1>This heading text is localized</h1>
+
+    <!-- Text nodes within inline elements are localized -->
+    <p>
+      This paragraph text is localized and contains
+      <strong>bold text that is also localized</strong> and
+      <em>italic text that is also localized</em>.
+    </p>
+
+    <!-- Nested text nodes are localized -->
+    <div>
+      <div>
+        <span>Deeply nested text is localized</span>
+      </div>
+    </div>
+
+    <!-- Image alt attributes are localized -->
+    <img src="example.jpg" alt="This alt text is localized" />
+
+    <!-- Image attributes other than alt are not localized -->
+    <img
+      src="example.jpg"
+      alt="Alt is localized"
+      title="Title is not localized"
+    />
+
+    <!-- Input placeholder attributes are localized -->
+    <input type="text" placeholder="This placeholder is localized" />
+
+    <!-- Input attributes other than placeholder are not localized -->
+    <input
+      type="text"
+      placeholder="Placeholder is localized"
+      value="Value is not localized"
+    />
+
+    <!-- Anchor title attributes are localized -->
+    <a href="#" title="This title is localized">Link text is also localized</a>
+
+    <!-- Anchor attributes other than title are not localized -->
+    <a
+      href="not-localized.html"
+      data-info="Not localized"
+      title="Title is localized"
+    >
+      Link text is localized
+    </a>
+
+    <!-- Attributes on other elements are not localized -->
+    <div class="not-localized" data-value="Not localized">
+      This div text is localized
+    </div>
+
+    <!-- Text inside script tags is not localized -->
+    <script>
+      const inlineScript = "This inline script content is not localized";
+    </script>
+
+    <!-- Text inside style tags is not localized -->
+    <style>
+      .inline-style {
+        content: "This inline style content is not localized";
+      }
+    </style>
+  </body>
+</html>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- XML declaration and processing instructions are not localized -->
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <!-- The version attribute of the root xliff element is not localized -->
+  <!-- XML namespace declarations and attributes are not localized -->
+  
+  <file original="messages.properties" source-language="en" target-language="fr" datatype="plaintext">
+    <!-- The original attribute of file elements is not localized -->
+    <!-- The source-language attribute of file elements is not localized -->
+    <!-- The target-language attribute of file elements is not localized -->
+    <!-- The id attribute of file elements is not localized -->
+    
+    <header>
+      <!-- Content within header elements is not localized -->
+      <tool tool-id="lingo-dev" tool-name="Lingo.dev" tool-version="1.0"/>
+      <note>This header content is not localized</note>
+    </header>
+    
+    <body>
+      <trans-unit id="welcome_message" restype="string" datatype="plaintext">
+        <!-- The id attribute of trans-unit elements is not localized -->
+        <!-- The restype attribute of trans-unit elements is not localized -->
+        <!-- The datatype attribute of trans-unit elements is not localized -->
+        
+        <!-- Text content of source elements within trans-unit elements is localized -->
+        <source>Welcome to our application</source>
+        
+        <!-- Text content of target elements within trans-unit elements is localized -->
+        <!-- The state attribute of target elements is not localized -->
+        <target state="translated">Bienvenue dans notre application</target>
+      </trans-unit>
+      
+      <trans-unit id="error_message" resname="error.validation" restype="string" datatype="plaintext">
+        <!-- CDATA sections within localizable elements are localized -->
+        <source><![CDATA[Please enter a valid <email> address]]></source>
+        <target state="new"><![CDATA[Veuillez saisir une adresse <email> valide]]></target>
+      </trans-unit>
+      
+      <trans-unit id="button_text" restype="string" datatype="plaintext">
+        <source>Click here to continue</source>
+        <target state="translated">Cliquez ici pour continuer</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

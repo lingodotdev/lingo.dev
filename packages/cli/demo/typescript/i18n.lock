@@ -1,0 +1,15 @@
+version: 1
+checksums:
+  0cdc4f3ba34edc7f3ba4d996158306ad:
+    navigation/home: 104a3db3b671c04e167eafbe21e57881
+    navigation/about: 8f89131a66d4659be07cd5af2c7ea898
+    navigation/contact: 2a75337dc9603915c4ec1d1905afb7b9
+    navigation/services: 999f32026e64978cb3ec794a496b0bb8
+    forms/title: ac85dea7c7f0bf1cd7d48cc1b4da3acc
+    forms/nameLabel: 03c6ae7996d5841f743cd406b4eff72d
+    forms/emailLabel: 0ee22bbbe989a0c61a18023407d12dc2
+    forms/messageLabel: 1e460d0909502d0e94b9be562643af0d
+    forms/submitButton: 487177489aafc9c0243c57ef3850a2d9
+    forms/successMessage: a0a7aa980dffa31d4d194af718a917b3
+    forms/locked_key_1: 73fc105de1aefc3f0a97d187a80cf0a4
+    forms/ignored_key_1: d88a7aa6c5661ca901ee0f4cb51e3a0d

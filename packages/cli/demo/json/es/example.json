@@ -1,0 +1,39 @@
+{
+  "title": "Este valor de cadena está localizado",
+  "description": "Esta cadena de descripción también está localizada",
+  "version": "1.0.0",
+  "support_email": "support@example.com",
+  "homepage": "https://lingo.dev",
+  "deprecated": null,
+  "empty": "",
+  "emoji": "🚀",
+  "author": {
+    "name": "Esta cadena anidada está localizada"
+  },
+  "contributors": [
+    {
+      "name": "Alice"
+    },
+    {
+      "name": "Bob"
+    }
+  ],
+  "messages": [
+    "Este elemento de cadena de matriz está localizado",
+    "Esta segunda cadena de matriz también está localizada"
+  ],
+  "config": {
+    "theme": {
+      "primary": "Esta cadena profundamente anidada está localizada"
+    }
+  },
+  "mixed_array": [
+    "Esta cadena en matriz mixta está localizada",
+    42,
+    true,
+    {
+      "nested_message": "Esta cadena de objeto anidado está localizada"
+    }
+  ],
+  "locked_key_1": "This value is locked and should not be changed"
+}

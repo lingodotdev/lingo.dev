@@ -1,0 +1,64 @@
+---
+title: Ejemplo de localización MDX
+description: Esta descripción del frontmatter está localizada
+author: not-localized-author
+---
+
+# Este texto de encabezado está localizado
+
+Este texto de párrafo está localizado y demuestra cómo se procesa el contenido markdown regular para la localización.
+
+## El contenido de texto está localizado
+
+Todo el contenido de texto regular en archivos MDX está localizado, incluyendo:
+
+- Este texto de elemento de lista está localizado
+- **Este texto en negrita también está localizado**
+- _Este texto en cursiva también está localizado_
+
+### Enlaces y énfasis
+
+[Este texto de enlace está localizado](https://example.com) y contiene contenido localizado.
+
+> Este texto de cita está localizado
+
+## Los bloques de código no están localizados
+
+```javascript
+// This code comment is not localized
+const message = "This string in code block is not localized";
+function example() {
+  return "Code content is preserved as-is";
+}
+```
+
+```python
+# This Python comment is not localized
+def hello():
+    return "This string is not localized"
+```
+
+## El código en línea no está localizado
+
+Este párrafo contiene `inline code that is not localized` y muestra cómo se preservan los fragmentos de código en línea.
+
+Puedes usar `const variable = "not localized"` en tus ejemplos de código sin preocuparte por la localización.
+
+## Ejemplo de contenido mixto
+
+Aquí hay un párrafo que mezcla contenido localizable y no localizable:
+
+Este texto está localizado, pero `this.code.snippet = "is not localized"`, mientras que este texto de continuación está localizado nuevamente.
+
+## Tablas con contenido mixto
+
+| Encabezado de columna (localizado)  | Columna de código                        |
+| ----------------------------------- | ---------------------------------------- |
+| Este texto de celda está localizado | `code.value = "not localized"`           |
+| Otra celda localizada               | `function() { return "not localized"; }` |
+
+## locked_key_1
+
+This heading is locked and should not be changed.
+
+pattern_1: This paragraph matches the locked pattern and should not be changed.

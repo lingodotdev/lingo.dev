@@ -1,0 +1,15 @@
+{
+  "@@locale": "en",
+  "@@last_modified": "2024-01-15T10:30:00Z",
+  "@@version": "1.0.0",
+  "@@author": "Development Team",
+  "@@context": "Application metadata",
+  "@app_info": {
+    "description": "This is a metadata-only file",
+    "note": "No translatable content here"
+  },
+  "@build_config": {
+    "build_number": "123",
+    "environment": "production"
+  }
+} 
