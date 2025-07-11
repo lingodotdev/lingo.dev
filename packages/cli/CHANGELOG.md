@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.107.4
+
+### Patch Changes
+
+- [#1038](https://github.com/lingodotdev/lingo.dev/pull/1038) [`20a3737`](https://github.com/lingodotdev/lingo.dev/commit/20a3737ddb50b2a97699e57e03ea353b8912b78f) Thanks [@mathio](https://github.com/mathio)! - json-dictionary with locales on top level
+
 ## 0.107.3
 
 ### Patch Changes
