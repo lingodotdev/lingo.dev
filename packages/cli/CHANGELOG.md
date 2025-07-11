@@ -1,5 +1,16 @@
 # lingo.dev
 
+## 0.107.3
+
+### Patch Changes
+
+- [#1031](https://github.com/lingodotdev/lingo.dev/pull/1031) [`afbb978`](https://github.com/lingodotdev/lingo.dev/commit/afbb978fec83d574f2c43b7d68457e435fca9b57) Thanks [@mathio](https://github.com/mathio)! - add json-dictionary loader support
+
+- Updated dependencies [[`afbb978`](https://github.com/lingodotdev/lingo.dev/commit/afbb978fec83d574f2c43b7d68457e435fca9b57)]:
+  - @lingo.dev/_spec@0.39.3
+  - @lingo.dev/_compiler@0.6.3
+  - @lingo.dev/_sdk@0.10.2
+
 ## 0.107.2
 
 ### Patch Changes
