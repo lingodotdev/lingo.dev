@@ -5,7 +5,7 @@ import remarkStringify from "remark-stringify";
 import { unified } from "unified";
 import { zodToJsonSchema } from "zod-to-json-schema";
 import { formatMarkdown } from "./utils";
-import type { Root, RootContent } from "mdast";
+import type { Root, RootContent, ListItem } from "mdast";
 
 const ROOT_PROPERTY_ORDER = ["$schema", "version", "locale", "buckets"];
 
@@ -141,7 +141,7 @@ function getTypeFromArray(
 
   // Array with anyOf union types
   if (Array.isArray(itemsObj.anyOf)) {
-    const types = itemsObj.anyOf.map((item: unknown) => getType(item, root));
+    const types = itemsObj.anyOf.map((item) => getType(item, root));
     return `array of ${types.join(" | ")}`;
   }
 
@@ -159,7 +159,7 @@ function getTypeFromArray(
 
 // Helper to handle anyOf (union types)
 function getTypeFromAnyOf(anyOfArr: unknown[], root: unknown): string {
-  const types = anyOfArr.map((item: unknown) => getType(item, root));
+  const types = anyOfArr.map((item) => getType(item, root));
   return types.join(" | ");
 }
 
@@ -180,7 +180,7 @@ function makeDescriptionNode(description: unknown): RootContent | null {
   };
 }
 
-function makeTypeBulletNode(schema: unknown, root: unknown): RootContent {
+function makeTypeBulletNode(schema: unknown, root: unknown): ListItem {
   return {
     type: "listItem",
     children: [
@@ -195,7 +195,7 @@ function makeTypeBulletNode(schema: unknown, root: unknown): RootContent {
   };
 }
 
-function makeRequiredBulletNode(required: boolean): RootContent {
+function makeRequiredBulletNode(required: boolean): ListItem {
   return {
     type: "listItem",
     children: [
@@ -212,7 +212,7 @@ function makeRequiredBulletNode(required: boolean): RootContent {
 
 function makeDefaultBulletNode(
   schemaObj: Record<string, unknown>,
-): RootContent | null {
+): ListItem | null {
   if (schemaObj.default === undefined) return null;
   return {
     type: "listItem",
@@ -230,7 +230,7 @@ function makeDefaultBulletNode(
 
 function makeEnumBulletNode(
   schemaObj: Record<string, unknown>,
-): RootContent | null {
+): ListItem | null {
   if (!Array.isArray(schemaObj.enum)) return null;
   return {
     type: "listItem",
@@ -244,8 +244,8 @@ function makeEnumBulletNode(
         ordered: false,
         spread: false,
         children: Array.from(new Set(schemaObj.enum))
-          .sort((a: unknown, b: unknown) => String(a).localeCompare(String(b)))
-          .map((v: unknown) => ({
+          .sort((a, b) => String(a).localeCompare(String(b)))
+          .map((v) => ({
             type: "listItem",
             children: [
               {
@@ -261,7 +261,7 @@ function makeEnumBulletNode(
 
 function makeAllowedKeysBulletNode(
   schemaObj: Record<string, unknown>,
-): RootContent | null {
+): ListItem | null {
   if (
     !schemaObj.propertyNames ||
     typeof schemaObj.propertyNames !== "object" ||
@@ -284,8 +284,8 @@ function makeAllowedKeysBulletNode(
         ordered: false,
         spread: false,
         children: Array.from(new Set(allowedKeys))
-          .sort((a: string, b: string) => a.localeCompare(b))
-          .map((v: string) => ({
+          .sort((a, b) => a.localeCompare(b))
+          .map((v) => ({
             type: "listItem",
             children: [
               {
@@ -299,9 +299,13 @@ function makeAllowedKeysBulletNode(
   };
 }
 
-function makeBullets(schema: unknown, required: boolean, root: unknown): any[] {
+function makeBullets(
+  schema: unknown,
+  required: boolean,
+  root: unknown,
+): ListItem[] {
   const schemaObj = (schema as Record<string, unknown>) || {};
-  const bullets: any[] = [
+  const bullets: ListItem[] = [
     makeTypeBulletNode(schema, root),
     makeRequiredBulletNode(required),
   ];
@@ -383,7 +387,7 @@ function collectNestedPropertyDocsNodes(
 
     // Handle union types in array items (anyOf)
     if (Array.isArray(items.anyOf)) {
-      items.anyOf.forEach((unionItem: unknown) => {
+      items.anyOf.forEach((unionItem) => {
         let resolvedItem = unionItem;
         if (unionItem && typeof unionItem === "object") {
           const unionItemObj = unionItem as Record<string, unknown>;
