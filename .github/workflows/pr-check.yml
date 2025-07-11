@@ -2,7 +2,7 @@ name: Check PR
 
 on:
   workflow_dispatch:
-  pull_request_target:
+  pull_request:
     types:
       - opened
       - edited
@@ -14,8 +14,7 @@ jobs:
   check:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
-      pull-requests: write
+      contents: read
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -71,22 +70,6 @@ jobs:
 
       - name: Test
         run: pnpm turbo test --force
-
-      - name: Check if documentation should be generated
-        id: check-paths
-        uses: dorny/paths-filter@v2
-        with:
-          filters: |
-            generated-docs:
-              - '.github/workflows/pr-check.yml'
-              - 'packages/cli/**/*.ts'
-              - 'scripts/docs/**'
-
-      - name: Generate CLI documentation
-        if: steps.check-paths.outputs.generated-docs == 'true'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: pnpm --filter docs run generate-cli-docs
 
       - name: Require changeset to be present in PR
         if: github.event.pull_request.user.login != 'dependabot[bot]'
