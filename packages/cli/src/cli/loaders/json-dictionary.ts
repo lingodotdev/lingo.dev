@@ -2,19 +2,43 @@ import _ from "lodash";
 import { ILoader } from "./_types";
 import { createLoader } from "./_utils";
 
+const TOP_LEVEL_KEY = "--content--";
+
 export default function createJsonDictionaryLoader(): ILoader<
   Record<string, any>,
   Record<string, any>
 > {
   return createLoader({
     pull: async (locale, input) => {
-      return extractTranslatables(input, locale);
+      const result = extractTranslatables(input, locale);
+
+      // if locale keys are on top level, only single string is extracted and returned under special key
+      if (typeof result === "string") {
+        return { [TOP_LEVEL_KEY]: result };
+      }
+
+      return result;
     },
     push: async (locale, data, originalInput, originalLocale) => {
       if (!originalInput) {
         throw new Error("Error while parsing json-dictionary bucket");
       }
       const input = _.cloneDeep(originalInput);
+
+      // if content is under special key, locale keys are on top level
+      if (
+        Object.keys(data).length === 1 &&
+        Object.keys(data)[0] === TOP_LEVEL_KEY
+      ) {
+        setNestedLocale(
+          { [TOP_LEVEL_KEY]: input },
+          [TOP_LEVEL_KEY],
+          locale,
+          data[TOP_LEVEL_KEY],
+          originalLocale,
+        );
+        return input;
+      }
 
       // set the translation under the target locale key, use value from data (which is now a string)
       function walk(obj: any, dataNode: any, path: string[] = []) {
@@ -44,7 +68,7 @@ export default function createJsonDictionaryLoader(): ILoader<
           setNestedLocale(input, path, locale, dataNode, originalLocale);
         }
       }
-      walk(originalInput, data);
+      walk(input, data);
 
       return input;
     },

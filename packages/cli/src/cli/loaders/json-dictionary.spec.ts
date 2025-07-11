@@ -113,4 +113,22 @@ describe("json-dictionary loader", () => {
       baz: null,
     });
   });
+
+  it("should handle locale keys on top level", async () => {
+    const loader = createJsonKeysLoader();
+    loader.setDefaultLocale("en");
+    const pulled = await loader.pull("en", {
+      en: "foo1",
+      es: "foo2",
+      other: "bar",
+    });
+    expect(pulled).toEqual({ "--content--": "foo1" });
+    const output = await loader.push("fr", { "--content--": "foo3" });
+    expect(output).toEqual({
+      en: "foo1",
+      es: "foo2",
+      fr: "foo3",
+      other: "bar",
+    });
+  });
 });
