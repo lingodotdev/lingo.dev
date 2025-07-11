@@ -212,6 +212,18 @@ function appendPropertyDocsNodes(
     children: [{ type: "inlineCode", value: fullName }],
   });
 
+  // NEW: Place description directly after the heading as a paragraph
+  const description =
+    (schemaObj as Record<string, unknown>).description ??
+    (schemaObj as Record<string, unknown>).markdownDescription;
+
+  if (description) {
+    nodes.push({
+      type: "paragraph",
+      children: [{ type: "text", value: String(description) }],
+    });
+  }
+
   const bulletItems: any[] = [];
 
   // Type
@@ -326,24 +338,7 @@ function appendPropertyDocsNodes(
     }
   }
 
-  // Description (support both `description` and `markdownDescription` fields)
-  const desc =
-    (schemaObj as Record<string, unknown>).description ??
-    (schemaObj as Record<string, unknown>).markdownDescription;
-  if (desc) {
-    bulletItems.push({
-      type: "listItem",
-      children: [
-        {
-          type: "paragraph",
-          children: [
-            { type: "text", value: "Description: " },
-            { type: "text", value: String(desc) },
-          ],
-        },
-      ],
-    });
-  }
+  // Description bullet removed – handled above as paragraph.
 
   // Add bullet list to parent
   nodes.push({
@@ -632,7 +627,30 @@ function generateMarkdown(schema: unknown): string {
     {
       type: "heading",
       depth: 1,
-      children: [{ type: "text", value: rootName }],
+      children: [{ type: "text", value: "i18n.json properties" }],
+    },
+    {
+      type: "paragraph",
+      children: [
+        {
+          type: "text",
+          value:
+            "This page describes the complete list of properties that are available within the ",
+        },
+        { type: "inlineCode", value: "i18n.json" },
+        {
+          type: "text",
+          value: " configuration file. This file is used by ",
+        },
+        {
+          type: "strong",
+          children: [{ type: "text", value: "Lingo.dev CLI" }],
+        },
+        {
+          type: "text",
+          value: " to configure the behavior of the translation pipeline.",
+        },
+      ],
     },
   ];
 
@@ -645,31 +663,6 @@ function generateMarkdown(schema: unknown): string {
       children: [{ type: "text", value: String(rootDesc) }],
     });
   }
-
-  children.push({
-    type: "paragraph",
-    children: [
-      {
-        type: "text",
-        value:
-          "This document describes the configuration options available for ",
-      },
-      { type: "strong", children: [{ type: "text", value: "i18n-docs" }] },
-      { type: "text", value: "." },
-    ],
-  });
-
-  // Add a brief overview
-  children.push({
-    type: "paragraph",
-    children: [
-      {
-        type: "text",
-        value:
-          "The configuration file supports JSON schema validation and provides type safety for all options. Each property below includes its type, requirement status, default value (if any), and description.",
-      },
-    ],
-  });
 
   const required = Array.isArray(rootSchemaObj.required)
     ? (rootSchemaObj.required as string[])
