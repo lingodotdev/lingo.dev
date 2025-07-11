@@ -1,0 +1,8 @@
+KEY,en
+welcome_message,Welcome to our application
+button_save,Save
+error_invalid_email,Please enter a valid email address
+product_name,Premium Widget
+empty_row_key,
+whitespace_only,   
+new_feature,This is a new feature

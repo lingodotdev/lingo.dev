@@ -1,0 +1,24 @@
+title: "Este título está localizado"
+description: "Esta descripción sin comillas también está localizada"
+welcome_message: "Las cadenas con comillas simples también están localizadas"
+user_profile:
+  display_name: "El nombre de visualización del usuario está localizado"
+  bio: "El texto de la biografía del usuario está localizado"
+navigation_items:
+  - "El texto del enlace de la página de inicio está localizado"
+  - "El texto del enlace de la página Acerca de está localizado"
+  - "El texto del enlace de la página de Contacto está localizado"
+product:
+  name: "El nombre del producto está localizado"
+  tagline: "El eslogan del producto está localizado"
+  features:
+    - "La descripción de la primera característica está localizada"
+    - "La descripción de la segunda característica está localizada"
+settings:
+  max_users: 100
+  enabled: true
+  timeout: 30.5
+complex_structure:
+  level_one:
+    level_two:
+      message: "La cadena anidada profundamente está localizada"

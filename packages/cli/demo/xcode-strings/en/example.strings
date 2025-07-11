@@ -1,0 +1,28 @@
+// This is a comment and is not localized
+// Comments starting with // are ignored by the loader
+
+// String values in key-value pairs are localized
+"welcome_message" = "Welcome to our application";
+"login_button" = "Log In";
+"error_message" = "An error occurred while processing your request";
+
+// Keys in key-value pairs are not localized
+"user_profile_title" = "User Profile";
+
+// String values with escaped characters are localized
+"quote_example" = "She said \"Hello world!\"";
+"newline_example" = "First line\nSecond line";
+"backslash_example" = "Path: C:\\Users\\Documents";
+
+// Empty lines are not localized
+
+
+// Lines that don't match the "key" = "value"; format are not localized
+This is not a valid key-value pair
+"incomplete_pair" = 
+= "missing_key";
+"missing_semicolon" = "This line has no semicolon"
+
+// More valid localizable content
+"settings_title" = "Application Settings";
+"save_button" = "Save Changes";

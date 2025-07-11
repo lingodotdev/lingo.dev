@@ -1,0 +1,54 @@
+{
+  "@@locale": "es",
+  "@@last_modified": "2024-01-15T10:30:00Z",
+  "@@version": "1.0.0",
+  "welcome_message": "Bienvenido a nuestra aplicación Flutter",
+  "@welcome_message": {
+    "description": "The main welcome message shown on the home screen",
+    "context": "greeting"
+  },
+  "login_button": "Iniciar sesión",
+  "@login_button": {
+    "description": "Text for the login button"
+  },
+  "signup_button": "Registrarse",
+  "error_network": "Conexión de red fallida",
+  "@error_network": {
+    "description": "Error message displayed when network request fails"
+  },
+  "success_message": "Operación completada con éxito",
+  "user_profile_title": "Perfil de usuario",
+  "settings_screen_title": "Configuración",
+  "cancel_action": "Cancelar",
+  "confirm_action": "Confirmar",
+  "greeting_with_name": "¡Hola {name}!",
+  "@greeting_with_name": {
+    "description": "Greeting message with user's name",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "description": "The user's display name"
+      }
+    }
+  },
+  "item_count": "{count, plural, =0 {Sin elementos} one {# elemento} other {# elementos}}",
+  "@item_count": {
+    "description": "Message showing the number of items with proper pluralization",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "description": "The number of items"
+      }
+    }
+  },
+  "user_status": "{status, select, online {Usuario en línea} offline {Usuario desconectado} away {Usuario ausente} other {Estado desconocido}}",
+  "@user_status": {
+    "description": "Message showing user's current status",
+    "placeholders": {
+      "status": {
+        "type": "String",
+        "description": "The user's current status"
+      }
+    }
+  }
+}

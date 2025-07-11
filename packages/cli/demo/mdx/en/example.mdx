@@ -1,0 +1,58 @@
+---
+title: "MDX Localization Example"
+description: "This frontmatter description is localized"
+author: "not-localized-author"
+---
+
+# This heading text is localized
+
+This paragraph text is localized and demonstrates how regular markdown content gets processed for localization.
+
+## Text content is localized
+
+All regular text content in MDX files is localized, including:
+
+- This list item text is localized
+- **This bold text is also localized**
+- *This italic text is localized too*
+
+### Links and emphasis
+
+[This link text is localized](https://example.com) and contains localized content.
+
+> This blockquote text is localized
+
+## Code blocks are not localized
+
+```javascript
+// This code comment is not localized
+const message = "This string in code block is not localized";
+function example() {
+  return "Code content is preserved as-is";
+}
+```
+
+```python
+# This Python comment is not localized
+def hello():
+    return "This string is not localized"
+```
+
+## Inline code is not localized
+
+This paragraph contains `inline code that is not localized` and shows how inline code spans are preserved.
+
+You can use `const variable = "not localized"` in your code examples without worrying about localization.
+
+## Mixed content example
+
+Here's a paragraph that mixes localizable and non-localizable content:
+
+This text is localized, but `this.code.snippet = "is not localized"`, while this continuation text is localized again.
+
+## Tables with mixed content
+
+| Column Header (localized) | Code Column |
+|---------------------------|-------------|
+| This cell text is localized | `code.value = "not localized"` |
+| Another localized cell | `function() { return "not localized"; }` |
