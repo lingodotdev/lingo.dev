@@ -42,11 +42,13 @@ import createIgnoredKeysLoader from "./ignored-keys";
 import createEjsLoader from "./ejs";
 import createEnsureKeyOrderLoader from "./ensure-key-order";
 import createTxtLoader from "./txt";
+import createJsonKeysLoader from "./json-dictionary";
 
 type BucketLoaderOptions = {
   returnUnlocalizedKeys?: boolean;
   defaultLocale: string;
   injectLocale?: string[];
+  targetLocale?: string;
 };
 
 export default function createBucketLoader(
@@ -56,7 +58,7 @@ export default function createBucketLoader(
   lockedKeys?: string[],
   lockedPatterns?: string[],
   ignoredKeys?: string[],
-): ILoader<void, Record<string, string>> {
+): ILoader<void, Record<string, any>> {
   switch (bucketType) {
     default:
       throw new Error(`Unsupported bucket type: ${bucketType}`);
@@ -283,6 +285,19 @@ export default function createBucketLoader(
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
         createTxtLoader(),
+        createSyncLoader(),
+        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+      );
+    case "json-dictionary":
+      return composeLoaders(
+        createTextFileLoader(bucketPathPattern),
+        createPrettierLoader({ parser: "json", bucketPathPattern }),
+        createJsonLoader(),
+        createJsonKeysLoader(),
+        createEnsureKeyOrderLoader(),
+        createFlatLoader(),
+        createInjectLocaleLoader(options.injectLocale),
+        createLockedKeysLoader(lockedKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
