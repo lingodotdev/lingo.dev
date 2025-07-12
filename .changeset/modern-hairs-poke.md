@@ -1,5 +1,5 @@
 ---
-"@lingo.dev/_compiler": minor
+"@lingo.dev/_compiler": patch
 ---
 
 Fixed the compiler to handle type-only react imports.
