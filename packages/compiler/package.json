@@ -15,6 +15,7 @@
     "build"
   ],
   "scripts": {
+    "generate-types": "tsx scripts/generate-model-types.ts",
     "dev": "tsup --watch",
     "build": "tsc --noEmit && tsup",
     "clean": "rm -rf build",
@@ -33,6 +34,7 @@
     "@types/react": "^18.3.18",
     "next": "15.2.4",
     "tsup": "^8.3.5",
+    "tsx": "^4.17.0",
     "typescript": "^5.4.5"
   },
   "dependencies": {
@@ -47,20 +49,21 @@
     "@lingo.dev/_spec": "workspace:*",
     "@openrouter/ai-sdk-provider": "^0.7.1",
     "@prettier/sync": "^0.6.1",
+    "@types/node": "^24.0.13",
     "ai": "^4.2.10",
     "dedent": "^1.6.0",
     "dotenv": "^16.4.5",
     "fast-xml-parser": "^5.0.8",
     "ini": "^5.0.0",
     "lodash": "^4.17.21",
+    "node-machine-id": "^1.1.12",
     "object-hash": "^3.0.0",
     "ollama-ai-provider": "^1.2.0",
+    "posthog-node": "^4.17.0",
     "prettier": "^3.4.2",
     "unplugin": "^2.1.2",
     "vitest": "^2.1.4",
-    "zod": "^3.25.76",
-    "posthog-node": "^4.17.0",
-    "node-machine-id": "^1.1.12"
+    "zod": "^3.25.76"
   },
   "packageManager": "pnpm@9.12.3"
 }
