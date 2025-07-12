@@ -3,6 +3,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import prettier from "prettier";
 import { providerDetails } from "../src/lib/lcp/api/provider-details.js";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -162,7 +163,12 @@ function generateTypeDefinitions(
   );
 
   let content = `/**
- * Auto-generated model identifiers from models.dev
+ * Model identifier types for supported AI providers
+ * 
+ * This module provides TypeScript types for AI model identifiers,
+ * enabling auto-completion and type safety when specifying models.
+ * 
+ * Generated from models.dev API
  * Last updated: ${timestamp}
  * Total models: ${modelCount}
  * 
@@ -171,8 +177,58 @@ function generateTypeDefinitions(
 
 `;
 
-  // Generate provider-specific model types
-  for (const [provider, models] of Object.entries(groupedModels)) {
+  // Generate the main union type first (high-level)
+  const sortedProviders = Object.keys(groupedModels).sort();
+  const providerTypes = sortedProviders
+    .map((provider) => {
+      const { name } = providerDetails[provider];
+      return `  | \`${provider}:\${${name}Model}\``;
+    })
+    .join("\n");
+
+  content += `/**
+ * Model identifier that supports both known models and custom ones
+ * 
+ * Provides auto-completion for known models while allowing any
+ * valid "provider:model" format for flexibility.
+ * 
+ * @example
+ * // Known model with auto-completion
+ * const knownModel: ModelIdentifier = "anthropic:claude-3-sonnet";
+ * 
+ * // Custom model
+ * const customModel: ModelIdentifier = "custom-provider:my-model";
+ */
+export type ModelIdentifier = KnownModelIdentifier | UnknownModelIdentifier;
+
+/**
+ * All supported model identifiers with provider prefixes
+ * 
+ * Use these complete identifiers when configuring your application.
+ * Format: "provider:model-name"
+ * 
+ * @example
+ * const myModel: KnownModelIdentifier = "openai:gpt-4";
+ */
+export type KnownModelIdentifier = 
+${providerTypes};
+
+/**
+ * Generic model identifier for custom providers
+ * 
+ * Use this type when you need to specify a model from a provider
+ * not included in the known providers list.
+ * 
+ * @example
+ * const customModel: UnknownModelIdentifier = "custom-provider:my-model";
+ */
+export type UnknownModelIdentifier = \`\${string}:\${string}\` & {};
+
+`;
+
+  // Generate provider-specific model types (low-level, sorted alphabetically)
+  for (const provider of sortedProviders) {
+    const models = groupedModels[provider];
     const { name } = providerDetails[provider];
     const modelList = Array.from(models).sort();
 
@@ -180,10 +236,16 @@ function generateTypeDefinitions(
     const { docsLink } = providerDetails[provider];
 
     content += `/**
- * ${name} models available via ${name} API
- * @see ${docsLink} for API documentation
+ * ${name} model identifiers
+ * 
+ * Use these strings to specify ${name} models in your application.
+ * 
+ * @example
+ * const model: ${name}Model = "${modelList[0] || "model-name"}";
+ * 
+ * @see ${docsLink} for complete model documentation
  */
-export type ${name}Models = 
+export type ${name}Model = 
 `;
 
     // Add each model as a literal type
@@ -195,50 +257,13 @@ export type ${name}Models =
     content += "\n";
   }
 
-  // Generate the main union type
-  const providerTypes = Object.keys(groupedModels)
-    .map((provider) => {
-      const { name } = providerDetails[provider];
-      return `  | \`${provider}:\${${name}Models}\``;
-    })
-    .join("\n");
-
-  content += `/**
- * All known model identifiers from supported providers
- */
-export type KnownModelIdentifiers = 
-${providerTypes};
-
-/**
- * Enhanced ModelIdentifier type with auto-completion for known models
- * while maintaining backward compatibility with arbitrary strings
- */
-export type ModelIdentifier = KnownModelIdentifiers | \`\${string}:\${string}\`;
-
-/**
- * Type guard to check if a string is a valid model identifier format
- */
-export function isValidModelIdentifier(model: string): model is ModelIdentifier {
-  return /^[^:]+:[^:]+$/.test(model);
-}
-
-/**
- * Type guard to check if a model identifier is a known model
- */
-export function isKnownModelIdentifier(model: string): model is KnownModelIdentifiers {
-  // This would need runtime validation against the known models
-  // For now, just validate format
-  return isValidModelIdentifier(model);
-}
-`;
-
   return content;
 }
 
 /**
  * Write generated types to file
  */
-function writeGeneratedTypes(content: string): void {
+async function writeGeneratedTypes(content: string): Promise<void> {
   const outputDir = path.join(__dirname, "..", "src", "types", "generated");
   const outputFile = path.join(outputDir, "model-identifiers.ts");
 
@@ -247,7 +272,14 @@ function writeGeneratedTypes(content: string): void {
     fs.mkdirSync(outputDir, { recursive: true });
   }
 
-  fs.writeFileSync(outputFile, content);
+  // Format with Prettier
+  const prettierConfig = await prettier.resolveConfig(outputFile);
+  const formattedContent = await prettier.format(content, {
+    ...prettierConfig,
+    filepath: outputFile,
+  });
+
+  fs.writeFileSync(outputFile, formattedContent);
   console.log(`✅ Generated types written to: ${outputFile}`);
 }
 
@@ -273,7 +305,7 @@ async function main(): Promise<void> {
     const typeDefinitions = generateTypeDefinitions(groupedModels);
 
     // Write to file
-    writeGeneratedTypes(typeDefinitions);
+    await writeGeneratedTypes(typeDefinitions);
 
     console.log("✅ Model type generation completed successfully!");
   } catch (error) {

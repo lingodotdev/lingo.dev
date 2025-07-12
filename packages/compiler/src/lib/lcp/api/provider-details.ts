@@ -11,7 +11,7 @@ export const providerDetails: Record<
   }
 > = {
   groq: {
-    name: "GROQ",
+    name: "Groq",
     apiKeyEnvVar: "GROQ_API_KEY",
     apiKeyConfigKey: "llm.groqApiKey",
     getKeyLink: "https://groq.com",

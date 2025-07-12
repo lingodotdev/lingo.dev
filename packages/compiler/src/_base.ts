@@ -2,6 +2,7 @@ import generate, { GeneratorResult } from "@babel/generator";
 import * as t from "@babel/types";
 import * as parser from "@babel/parser";
 import { LocaleCode } from "@lingo.dev/_spec";
+import { ModelIdentifier } from "./types/generated/model-identifiers";
 
 /**
  * Options for configuring Lingo.dev Compiler.
@@ -131,11 +132,6 @@ export type AnyLocale = `${LocaleWildcard}:${LocaleWildcard}`;
  * A wildcard symbol that matches any locale.
  */
 export type LocaleWildcard = "*";
-
-/**
- * The colon-separated identifier of a model to use for translation.
- */
-export type ModelIdentifier = `${string}:${string}`;
 
 export type CompilerInput = {
   relativeFilePath: string;

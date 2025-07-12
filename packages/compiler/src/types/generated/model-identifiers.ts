@@ -1,16 +1,92 @@
 /**
- * Auto-generated model identifiers from models.dev
- * Last updated: 2025-07-12T12:30:13.086Z
+ * Model identifier types for supported AI providers
+ *
+ * This module provides TypeScript types for AI model identifiers,
+ * enabling auto-completion and type safety when specifying models.
+ *
+ * Generated from models.dev API
+ * Last updated: 2025-07-12T12:52:20.786Z
  * Total models: 65
- * 
+ *
  * @see https://models.dev for latest model information
  */
 
 /**
- * GROQ models available via GROQ API
- * @see https://console.groq.com/docs/errors for API documentation
+ * Model identifier that supports both known models and custom ones
+ *
+ * Provides auto-completion for known models while allowing any
+ * valid "provider:model" format for flexibility.
+ *
+ * @example
+ * // Known model with auto-completion
+ * const knownModel: ModelIdentifier = "anthropic:claude-3-sonnet";
+ *
+ * // Custom model
+ * const customModel: ModelIdentifier = "custom-provider:my-model";
  */
-export type GROQModels = 
+export type ModelIdentifier = KnownModelIdentifier | UnknownModelIdentifier;
+
+/**
+ * All supported model identifiers with provider prefixes
+ *
+ * Use these complete identifiers when configuring your application.
+ * Format: "provider:model-name"
+ *
+ * @example
+ * const myModel: KnownModelIdentifier = "openai:gpt-4";
+ */
+export type KnownModelIdentifier =
+  | `google:${GoogleModel}`
+  | `groq:${GroqModel}`
+  | `mistral:${MistralModel}`
+  | `openrouter:${OpenRouterModel}`;
+
+/**
+ * Generic model identifier for custom providers
+ *
+ * Use this type when you need to specify a model from a provider
+ * not included in the known providers list.
+ *
+ * @example
+ * const customModel: UnknownModelIdentifier = "custom-provider:my-model";
+ */
+export type UnknownModelIdentifier = `${string}:${string}` & {};
+
+/**
+ * Google model identifiers
+ *
+ * Use these strings to specify Google models in your application.
+ *
+ * @example
+ * const model: GoogleModel = "gemini-1.5-flash";
+ *
+ * @see https://ai.google.dev/gemini-api/docs/troubleshooting for complete model documentation
+ */
+export type GoogleModel =
+  | "gemini-1.5-flash"
+  | "gemini-1.5-flash-8b"
+  | "gemini-1.5-pro"
+  | "gemini-2.0-flash"
+  | "gemini-2.0-flash-lite"
+  | "gemini-2.5-flash"
+  | "gemini-2.5-flash-lite-preview-06-17"
+  | "gemini-2.5-flash-preview-04-17"
+  | "gemini-2.5-flash-preview-05-20"
+  | "gemini-2.5-pro"
+  | "gemini-2.5-pro-preview-05-06"
+  | "gemini-2.5-pro-preview-06-05";
+
+/**
+ * Groq model identifiers
+ *
+ * Use these strings to specify Groq models in your application.
+ *
+ * @example
+ * const model: GroqModel = "deepseek-r1-distill-llama-70b";
+ *
+ * @see https://console.groq.com/docs/errors for complete model documentation
+ */
+export type GroqModel =
   | "deepseek-r1-distill-llama-70b"
   | "gemma2-9b-it"
   | "llama-3.1-8b-instant"
@@ -26,10 +102,16 @@ export type GROQModels =
   | "qwen/qwen3-32b";
 
 /**
- * Mistral models available via Mistral API
- * @see https://docs.mistral.ai for API documentation
+ * Mistral model identifiers
+ *
+ * Use these strings to specify Mistral models in your application.
+ *
+ * @example
+ * const model: MistralModel = "codestral-latest";
+ *
+ * @see https://docs.mistral.ai for complete model documentation
  */
-export type MistralModels = 
+export type MistralModel =
   | "codestral-latest"
   | "devstral-medium-2507"
   | "devstral-small-2505"
@@ -49,10 +131,16 @@ export type MistralModels =
   | "pixtral-large-latest";
 
 /**
- * OpenRouter models available via OpenRouter API
- * @see https://openrouter.ai/docs for API documentation
+ * OpenRouter model identifiers
+ *
+ * Use these strings to specify OpenRouter models in your application.
+ *
+ * @example
+ * const model: OpenRouterModel = "anthropic/claude-3.7-sonnet";
+ *
+ * @see https://openrouter.ai/docs for complete model documentation
  */
-export type OpenRouterModels = 
+export type OpenRouterModel =
   | "anthropic/claude-3.7-sonnet"
   | "anthropic/claude-4-sonnet-20250522"
   | "anthropic/claude-opus-4"
@@ -76,52 +164,3 @@ export type OpenRouterModels =
   | "x-ai/grok-3-mini"
   | "x-ai/grok-3-mini-beta"
   | "x-ai/grok-4";
-
-/**
- * Google models available via Google API
- * @see https://ai.google.dev/gemini-api/docs/troubleshooting for API documentation
- */
-export type GoogleModels = 
-  | "gemini-1.5-flash"
-  | "gemini-1.5-flash-8b"
-  | "gemini-1.5-pro"
-  | "gemini-2.0-flash"
-  | "gemini-2.0-flash-lite"
-  | "gemini-2.5-flash"
-  | "gemini-2.5-flash-lite-preview-06-17"
-  | "gemini-2.5-flash-preview-04-17"
-  | "gemini-2.5-flash-preview-05-20"
-  | "gemini-2.5-pro"
-  | "gemini-2.5-pro-preview-05-06"
-  | "gemini-2.5-pro-preview-06-05";
-
-/**
- * All known model identifiers from supported providers
- */
-export type KnownModelIdentifiers = 
-  | `groq:${GROQModels}`
-  | `mistral:${MistralModels}`
-  | `openrouter:${OpenRouterModels}`
-  | `google:${GoogleModels}`;
-
-/**
- * Enhanced ModelIdentifier type with auto-completion for known models
- * while maintaining backward compatibility with arbitrary strings
- */
-export type ModelIdentifier = KnownModelIdentifiers | `${string}:${string}`;
-
-/**
- * Type guard to check if a string is a valid model identifier format
- */
-export function isValidModelIdentifier(model: string): model is ModelIdentifier {
-  return /^[^:]+:[^:]+$/.test(model);
-}
-
-/**
- * Type guard to check if a model identifier is a known model
- */
-export function isKnownModelIdentifier(model: string): model is KnownModelIdentifiers {
-  // This would need runtime validation against the known models
-  // For now, just validate format
-  return isValidModelIdentifier(model);
-}
