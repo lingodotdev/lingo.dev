@@ -1,5 +1,11 @@
 # @lingo.dev/\_compiler
 
+## 0.7.1
+
+### Patch Changes
+
+- [#1040](https://github.com/lingodotdev/lingo.dev/pull/1040) [`f897a7d`](https://github.com/lingodotdev/lingo.dev/commit/f897a7d0a3f7a236fb64f19bce9a8d00626d09ca) Thanks [@The-Best-Codes](https://github.com/The-Best-Codes)! - Fixed the compiler to handle type-only react imports.
+
 ## 0.7.0
 
 ### Minor Changes
