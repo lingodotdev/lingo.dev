@@ -1,19 +1,19 @@
-title: "Este título está localizado"
-description: "Esta descripción sin comillas también está localizada"
-welcome_message: "Las cadenas con comillas simples también están localizadas"
+title: "MyApp"
+description: "¡Hola, mundo!"
+welcome_message: "Bienvenido a MyApp"
 user_profile:
-  display_name: "El nombre de visualización del usuario está localizado"
-  bio: "El texto de la biografía del usuario está localizado"
+  display_name: "John Doe"
+  bio: "Desarrollador de software"
 navigation_items:
-  - "El texto del enlace de la página de inicio está localizado"
-  - "El texto del enlace de la página Acerca de está localizado"
-  - "El texto del enlace de la página de Contacto está localizado"
+  - "Inicio"
+  - "Acerca de"
+  - "Contacto"
 product:
-  name: "El nombre del producto está localizado"
-  tagline: "El eslogan del producto está localizado"
+  name: "MyWidget"
+  tagline: "El mejor widget de todos"
   features:
-    - "La descripción de la característica uno está localizada"
-    - "La descripción de la característica dos está localizada"
+    - "Fácil de usar"
+    - "Rápido y confiable"
 settings:
   max_users: 100
   enabled: true
@@ -21,5 +21,5 @@ settings:
 complex_structure:
   level_one:
     level_two:
-      message: "La cadena profundamente anidada está localizada"
+      message: "Texto anidado profundo"
 locked_key_1: "This value is locked and should not be changed"

@@ -1,16 +1,16 @@
 version: 1
 checksums:
   0ee8d6907f60fa2cc288cc0503ecbba1:
-    "0": 937d5fb7185eecb517bcd5e700b0badb
-    "1": 0cb69d97e478108f4231727dad53f293
-    "2": 6b41e2e607f0f66cf8651be38ee5b38a
-    3/welcome_message: e6bc4b679284b5a89c6d0fc0c95ee689
-    4/error_text: 60c3a040cb906882694ee8f8cfbd2a2c
-    5/navigation/home: ca17fe8288f5abdc3f305af808591cbb
-    5/navigation/about: 8763bc1804fb8be4edbad5d9a7808963
-    5/navigation/contact: 64cf055b956385412aea264a823d9482
-    6/forms/login/username_label: 9f5f786fd82194190df554d7b3e211e7
-    6/forms/login/password_label: 0a7803e2322665b9c1a521284ea916fc
-    6/forms/login/submit_button: b61e6f8c081c429e4cd444a09d7ed7ff
-    7/mixed_content/title: 8a011c7525408d59edf16b29ca88fe2b
-    7/mixed_content/description: 8f710426ee8136f0fd1b807ea0cf6c76
+    "0": 0468579ef2fbc83c9d520c2f2f1c5059
+    "1": d1c3a9f35e377554a4ccaa467ca26614
+    "2": 769caedbdc5246bb9fee615739534bbd
+    3/welcome_message: 8778dc41547a2778d0f9482da989fc00
+    4/error_text: a3cd2f01c073f1f5ff436d4b132d39cf
+    5/navigation/home: 104a3db3b671c04e167eafbe21e57881
+    5/navigation/about: 944521eeeed2511833d2299931273c71
+    5/navigation/contact: 9afa39bc47019ee6dec6c74b6273967c
+    6/forms/login/username_label: 2ee65bc2dd2f12cf2672f95b2a054bf8
+    6/forms/login/password_label: 223a61cf906ab9c40d22612c588dff48
+    6/forms/login/submit_button: ec7b8f314fe9bc6591006707484ede61
+    7/mixed_content/title: 8df6777277469c1fd88cc18dde2f1cc3
+    7/mixed_content/description: 063afcd2ea84a82a1acc8f5c9fd8e42f

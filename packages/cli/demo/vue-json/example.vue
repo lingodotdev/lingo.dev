@@ -48,15 +48,15 @@ h1 {
     }
   },
   "es": {
-    "welcome": "Bienvenido a nuestra aplicación",
-    "description": "Este texto de descripción está localizado",
+    "welcome": "¡Hola, mundo!",
+    "description": "Una aplicación de demostración simple",
     "button": {
-      "submit": "Enviar formulario",
-      "cancel": "Cancelar acción"
+      "submit": "Enviar",
+      "cancel": "Cancelar"
     },
     "messages": [
-      "Primer mensaje localizado",
-      "Segundo mensaje localizado"
+      "Hola desde MyApp",
+      "Mensaje de bienvenida"
     ],
     "metadata": {
       "active": true,

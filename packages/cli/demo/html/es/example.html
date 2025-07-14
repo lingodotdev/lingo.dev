@@ -1,20 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <title>Este texto de título está localizado</title>
+    <title>MyApp - Hola Mundo</title>
 
-    <!-- Meta content attributes are localized -->
-    <meta name="description" content="Esta descripción está localizada" />
-    <meta
-      property="og:title"
-      content="Este título de Open Graph está localizado"
-    />
+    <meta name="description" content="Una aplicación de demostración simple" />
+    <meta property="og:title" content="Demostración de MyApp" />
 
-    <!-- Meta attributes other than content are not localized -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="UTF-8" />
 
-    <!-- Style tags and their contents are not localized -->
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -25,80 +19,58 @@
       }
     </style>
 
-    <!-- Script tags and their contents are not localized -->
     <script>
       const message = "This JavaScript string is not localized";
       console.log(message);
     </script>
   </head>
   <body>
-    <!-- Text nodes are localized -->
-    <h1>Este texto de encabezado está localizado</h1>
+    <h1>Bienvenido a MyApp</h1>
 
-    <!-- Text nodes within inline elements are localized -->
     <p>
-      Este texto de párrafo está localizado y contiene
-      <strong>texto en negrita que también está localizado</strong>
+      ¡Hola, mundo! Esta es una demostración simple con
+      <strong>texto en negrita</strong>
       y
-      <em>texto en cursiva que también está localizado</em>
+      <em>texto en cursiva</em>
       .
     </p>
 
-    <!-- Nested text nodes are localized -->
     <div>
       <div>
-        <span>El texto profundamente anidado está localizado</span>
+        <span>Contenido anidado aquí</span>
       </div>
     </div>
 
-    <!-- Image alt attributes are localized -->
-    <img src="example.jpg" alt="Este texto alternativo está localizado" />
+    <img src="example.jpg" alt="Imagen de ejemplo" />
 
-    <!-- Image attributes other than alt are not localized -->
     <img
       src="example.jpg"
-      alt="El texto alt está localizado"
+      alt="Imagen de demostración"
       title="Title is not localized"
     />
 
-    <!-- Input placeholder attributes are localized -->
-    <input
-      type="text"
-      placeholder="Este marcador de posición está localizado"
-    />
+    <input type="text" placeholder="Introduce texto aquí" />
 
-    <!-- Input attributes other than placeholder are not localized -->
     <input
       type="text"
-      placeholder="El placeholder está localizado"
+      placeholder="Introduce valor"
       value="Value is not localized"
     />
 
-    <!-- Anchor title attributes are localized -->
-    <a href="#" title="Este título está localizado">
-      El texto del enlace también está localizado
+    <a href="#" title="Haz clic para más">Saber más</a>
+
+    <a href="not-localized.html" data-info="Not localized" title="Navegar">
+      Ir a la página
     </a>
 
-    <!-- Anchor attributes other than title are not localized -->
-    <a
-      href="not-localized.html"
-      data-info="Not localized"
-      title="El título está localizado"
-    >
-      El texto del enlace está localizado
-    </a>
-
-    <!-- Attributes on other elements are not localized -->
     <div class="not-localized" data-value="Not localized">
-      Este texto de div está localizado
+      Área de contenido
     </div>
 
-    <!-- Text inside script tags is not localized -->
     <script>
       const inlineScript = "This inline script content is not localized";
     </script>
 
-    <!-- Text inside style tags is not localized -->
     <style>
       .inline-style {
         content: "This inline style content is not localized";

@@ -46,7 +46,7 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Un elemento"
+                  "value" : "1 artículo"
                 }
               },
               "other" : {
@@ -78,7 +78,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bienvenido a nuestra aplicación"
+            "value" : "¡Hola, mundo!"
           }
         }
       }

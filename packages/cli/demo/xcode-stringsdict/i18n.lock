@@ -1,15 +1,14 @@
 version: 1
 checksums:
   a96f640d0f744d993247e36ea1b33052:
-    welcome_message/NSStringLocalizedFormatKey: 47e04284e7e3fef99f398793e17de4fa
+    welcome_message/NSStringLocalizedFormatKey: f142738692c027d95dce521e7cb29c82
     welcome_message/user_count/NSStringFormatSpecTypeKey: 8cc03ef30ad5b2d8e27f3612627d932e
     welcome_message/user_count/NSStringFormatValueTypeKey: fe9efa39a6fd9f10358f43f00e0ab82b
     welcome_message/user_count/zero: 3d4643c483a49c2f61e17aaa8620e71e
-    welcome_message/user_count/one: a1504b672e0b8622b9aad19afde0ce8c
+    welcome_message/user_count/one: 3b547431ab12f0fba84307e6a81109d8
     welcome_message/user_count/other: cb01ae522c991a2ad651b4049339c48a
-    notification_count/NSStringLocalizedFormatKey: 70b535966352790411f4e1dac098f726
+    notification_count/NSStringLocalizedFormatKey: e01fd796051132b678d7574a11e9a944
     notification_count/count/NSStringFormatSpecTypeKey: 8cc03ef30ad5b2d8e27f3612627d932e
     notification_count/count/NSStringFormatValueTypeKey: fe9efa39a6fd9f10358f43f00e0ab82b
     notification_count/count/zero: ac0137deebf6e2b972c6c714dd8658ee
-    notification_count/count/one: 0f9dd65ebf7081ac5b1de539d56407e6
     notification_count/count/other: 9b350a78e1c499b9ab69eb330162c8ee

@@ -13,22 +13,18 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-# Simple string translation
 msgid "Welcome"
 msgstr "Bienvenido"
 
-# String with context
 msgctxt "navigation"
 msgid "Home"
 msgstr "Inicio"
 
-# String with plural forms
 msgid "You have %d message"
 msgid_plural "You have %d messages"
 msgstr[0] "Tienes %d mensaje"
 msgstr[1] "Tienes %d mensajes"
 
-# Common UI elements
 msgid "Save"
 msgstr "Guardar"
 
@@ -38,7 +34,6 @@ msgstr "Cancelar"
 msgid "Delete"
 msgstr "Eliminar"
 
-# Form labels
 msgid "Name"
 msgstr "Nombre"
 
@@ -48,17 +43,15 @@ msgstr "Dirección de correo electrónico"
 msgid "Message"
 msgstr "Mensaje"
 
-# Status messages
 msgid "Loading..."
 msgstr "Cargando..."
 
-msgid "Success! Your changes have been saved."
-msgstr "¡Éxito! Tus cambios han sido guardados."
+msgid "Success! Changes saved."
+msgstr "¡Éxito! Cambios guardados."
 
-msgid "Error: Unable to process your request."
-msgstr "Error: No se puede procesar tu solicitud."
+msgid "Error: Request failed."
+msgstr "Error: La solicitud ha fallado."
 
-# Product-related strings
 msgid "Add to Cart"
 msgstr "Añadir al carrito"
 

@@ -1,9 +1,9 @@
-"welcome_message" = "Bienvenido a nuestra aplicación";
+"welcome_message" = "¡Hola, mundo!";
 "login_button" = "Iniciar sesión";
-"error_message" = "Se produjo un error al procesar su solicitud";
+"error_message" = "Algo salió mal";
 "user_profile_title" = "Perfil de usuario";
 "quote_example" = "Ella dijo \"¡Hola mundo!\"";
 "newline_example" = "Primera línea\nSegunda línea";
 "backslash_example" = "Ruta: C:\\Users\\Documents";
-"settings_title" = "Configuración de la aplicación";
-"save_button" = "Guardar cambios";
+"settings_title" = "Configuración";
+"save_button" = "Guardar";

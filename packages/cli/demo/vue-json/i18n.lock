@@ -8,9 +8,9 @@ checksums:
     messages/0: f77d23a0a4b7f8fc7f8fd458921b90dd
     messages/1: e841c4139402ded42079401299e4fa1e
   0378a0d09447bf0944e842f7e54d3ec2:
-    welcome: 1308168cca4fa5d8d7a0cf24e55e93fc
-    description: 36349ca88e416a6f2d6ac8742f0a963c
-    button/submit: dabdff794b5804b8f22ecab13f37fb7d
-    button/cancel: efdc4af6863f1e503a7f9961be721eed
-    messages/0: f77d23a0a4b7f8fc7f8fd458921b90dd
-    messages/1: e841c4139402ded42079401299e4fa1e
+    welcome: 0468579ef2fbc83c9d520c2f2f1c5059
+    description: 49f8864eb0e53903f04532bf33e1e4fa
+    button/submit: 7c91ef5f747eea9f77a9c4f23e19fb2e
+    button/cancel: 2e2a849c2223911717de8caa2c71bade
+    messages/0: 97a8db12c3955a85c4f50e3951c91a40
+    messages/1: 986a434e3895c8ee0b267df95cc40051
