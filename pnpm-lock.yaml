@@ -341,8 +341,8 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0
       figlet:
-        specifier: ^1.8.0
-        version: 1.8.0
+        specifier: ^1.8.2
+        version: 1.8.2
       flat:
         specifier: ^6.0.1
         version: 6.0.1
@@ -1011,6 +1011,10 @@ packages:
 
   '@babel/runtime@7.24.7':
     resolution: {integrity: sha512-UwgBRMjJP+xv857DCngvqXI3Iq6J4v0wXmwc6sapg+zyhbwmQX67LUEFrkK5tbyJ30jGuG3ZvWpBiB9LCy1kWw==}
+    engines: {node: '>=6.9.0'}
+
+  '@babel/runtime@7.27.6':
+    resolution: {integrity: sha512-vbavdySgbTTrmFE+EsiqUTzlOr5bzlnJtUv9PynGCAKvfQqjIXbvFdumPM/GxMDfyuGMJaJAU6TO4zc1Jf1i8Q==}
     engines: {node: '>=6.9.0'}
 
   '@babel/template@7.27.2':
@@ -5248,8 +5252,8 @@ packages:
       picomatch:
         optional: true
 
-  figlet@1.8.0:
-    resolution: {integrity: sha512-chzvGjd+Sp7KUvPHZv6EXV5Ir3Q7kYNpCr4aHrRW79qFtTefmQZNny+W1pW9kf5zeE6dikku2W50W/wAH2xWgw==}
+  figlet@1.8.2:
+    resolution: {integrity: sha512-iPCpE9B/rOcjewIzDnagP9F2eySzGeHReX8WlrZQJkqFBk2wvq8gY0c6U6Hd2y9HnX1LQcYSeP7aEHoPt6sVKQ==}
     engines: {node: '>= 0.4.0'}
     hasBin: true
 
@@ -9366,6 +9370,8 @@ snapshots:
     dependencies:
       regenerator-runtime: 0.14.1
 
+  '@babel/runtime@7.27.6': {}
+
   '@babel/template@7.27.2':
     dependencies:
       '@babel/code-frame': 7.27.1
@@ -11672,7 +11678,7 @@ snapshots:
   '@testing-library/dom@10.4.0':
     dependencies:
       '@babel/code-frame': 7.27.1
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.27.6
       '@types/aria-query': 5.0.4
       aria-query: 5.3.0
       chalk: 4.1.2
@@ -14046,7 +14052,7 @@ snapshots:
     optionalDependencies:
       picomatch: 4.0.2
 
-  figlet@1.8.0: {}
+  figlet@1.8.2: {}
 
   figures@6.1.0:
     dependencies:
