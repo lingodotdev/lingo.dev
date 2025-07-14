@@ -11,19 +11,19 @@
     <body>
       <trans-unit id="welcome_message" restype="string" datatype="plaintext">
         
-        <source>Welcome to our application</source>
+        <source>Hello, world!</source>
         
-        <target state="translated">Bienvenue dans notre application</target>
+        <target state="translated">Bonjour le monde!</target>
       </trans-unit>
       
       <trans-unit id="error_message" resname="error.validation" restype="string" datatype="plaintext">
-        <source><![CDATA[Please enter a valid <email> address]]></source>
-        <target state="new"><![CDATA[Veuillez saisir une adresse <email> valide]]></target>
+        <source><![CDATA[Enter valid <email>]]></source>
+        <target state="new"><![CDATA[Entrez <email> valide]]></target>
       </trans-unit>
       
       <trans-unit id="button_text" restype="string" datatype="plaintext">
-        <source>Click here to continue</source>
-        <target state="translated">Cliquez ici pour continuer</target>
+        <source>Continue</source>
+        <target state="translated">Continuer</target>
       </trans-unit>
     </body>
   </file>

@@ -45,11 +45,11 @@ msgstr "Message"
 msgid "Loading..."
 msgstr "Loading..."
 
-msgid "Success! Your changes have been saved."
-msgstr "Success! Your changes have been saved."
+msgid "Success! Changes saved."
+msgstr "Success! Changes saved."
 
-msgid "Error: Unable to process your request."
-msgstr "Error: Unable to process your request."
+msgid "Error: Request failed."
+msgstr "Error: Request failed."
 
 msgid "Add to Cart"
 msgstr "Add to Cart"

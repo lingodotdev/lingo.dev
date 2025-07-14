@@ -13,7 +13,7 @@
         <p>Hello, <%= user.name %>! You have <%= messageCount %> new messages.</p>
         
         <div class="notification">
-            <strong>Important:</strong> Your account expires soon.
+            <strong>Notice:</strong> Account expires in 30 days.
         </div>
         
         <img src="/avatar.jpg" alt="User avatar" title="Click to edit profile">
@@ -23,7 +23,7 @@
         
         <form action="/login" method="post">
             <label for="username">Username:</label>
-            <input type="text" id="username" name="username" placeholder="Enter your username">
+            <input type="text" id="username" name="username" placeholder="Enter username">
             
             <label for="password">Password:</label>
             <input type="password" id="password" name="password">
@@ -44,12 +44,12 @@
     <div></div>
     
     <footer>
-        Copyright © <%= new Date().getFullYear() %> Company Name. All rights reserved.
+        Copyright © <%= new Date().getFullYear() %> MyApp. All rights reserved.
     </footer>
     
     <script>
         function showForgotPassword() {
-            alert("Please contact support for password reset.");
+            alert("Contact support for help.");
         }
     </script>
 </body>

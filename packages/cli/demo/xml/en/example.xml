@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
-  <title>This title text is localized</title>
+  <title>Hello, world!</title>
   
   <description>
-    <summary>This summary text is localized</summary>
-    <details>These detail contents are also localized</details>
+    <summary>Simple demo app</summary>
+    <details>Basic example content</details>
   </description>
   
-  <image src="photo.jpg" alt="This alt attribute is localized" title="This title attribute is localized"/>
+  <image src="photo.jpg" alt="Example photo" title="Click to view"/>
   
-  <link href="example.com" label="This label attribute is localized">This link text is also localized</link>
+  <link href="example.com" label="Click here">Learn more</link>
   
-  <button type="submit" value="This value is localized" placeholder="This placeholder is localized">This button text is localized</button>
+  <button type="submit" value="Submit" placeholder="Enter text">Submit</button>
   
   <section>
     <article>
       <paragraph>
-        <sentence>This deeply nested text is localized</sentence>
+        <sentence>Nested content</sentence>
       </paragraph>
     </article>
   </section>
   
-  <meta name="description" content="This meta content is localized"/>
+  <meta name="description" content="Demo app metadata"/>
   
   <message>
-    <greeting>Hello, this greeting is localized</greeting>
-    <body>This message body is also localized</body>
-    <signature>This signature text is localized too</signature>
+    <greeting>Hello there!</greeting>
+    <body>Welcome to the app</body>
+    <signature>Thanks, MyApp Team</signature>
   </message>
 </root>

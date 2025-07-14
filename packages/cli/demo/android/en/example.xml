@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">My Application</string>
-    <string name="welcome_message">Welcome to our app!</string>
-    <string name="button_text">Click here</string>
+    <string name="app_name">MyApp</string>
+    <string name="welcome_message">Hello, world!</string>
+    <string name="button_text">Get Started</string>
     
     <string name="api_endpoint" translatable="false">https://api.example.com</string>
     <string name="debug_key" translatable="false">DEBUG_MODE_ENABLED</string>
@@ -20,8 +20,8 @@
     </string-array>
     
     <plurals name="notification_count">
-        <item quantity="one">You have %d notification</item>
-        <item quantity="other">You have %d notifications</item>
+        <item quantity="one">%d new message</item>
+        <item quantity="other">%d new messages</item>
     </plurals>
     
     <plurals name="cache_size" translatable="false">
@@ -43,12 +43,12 @@
     
     <string name="html_snippet">&lt;b&gt;Bold&lt;/b&gt;</string>
 
-    <string name="apostrophe_example">Don\'t translate me!</string>
+    <string name="apostrophe_example">Don\'t forget!</string>
 
     <string name="cdata_example"><![CDATA[Special <tag> ]]></string>
     
     <string-array name="mixed_items">
-        <item>  Leading and trailing  </item>
+        <item>  Item with spaces  </item>
         <item>    </item>
     </string-array>
     

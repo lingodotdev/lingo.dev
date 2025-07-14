@@ -13,23 +13,23 @@
 
     <unit id="welcome_message">
       <segment>
-        <source>Welcome to our application</source>
+        <source>Hello, world!</source>
 
-        <target state="translated">Bienvenue dans notre application</target>
+        <target state="translated">Bonjour le monde!</target>
       </segment>
     </unit>
 
     <unit id="error_message" type="resname">
       <segment>
-        <source><![CDATA[Please enter a valid <email> address]]></source>
-        <target state="new"><![CDATA[Veuillez saisir une adresse <email> valide]]></target>
+        <source><![CDATA[Enter valid <email>]]></source>
+        <target state="new"><![CDATA[Entrez <email> valide]]></target>
       </segment>
     </unit>
 
     <unit id="button_text">
       <segment>
-        <source>Click here to continue</source>
-        <target state="translated">Cliquez ici pour continuer</target>
+        <source>Continue</source>
+        <target state="translated">Continuer</target>
       </segment>
     </unit>
   </file>

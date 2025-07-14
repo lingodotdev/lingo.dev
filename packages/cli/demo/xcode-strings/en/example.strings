@@ -1,6 +1,6 @@
-"welcome_message" = "Welcome to our application";
+"welcome_message" = "Hello, world!";
 "login_button" = "Log In";
-"error_message" = "An error occurred while processing your request";
+"error_message" = "Something went wrong";
 
 "user_profile_title" = "User Profile";
 
@@ -14,5 +14,5 @@ This is not a valid key-value pair
 = "missing_key";
 "missing_semicolon" = "This line has no semicolon"
 
-"settings_title" = "Application Settings";
-"save_button" = "Save Changes";
+"settings_title" = "Settings";
+"save_button" = "Save";

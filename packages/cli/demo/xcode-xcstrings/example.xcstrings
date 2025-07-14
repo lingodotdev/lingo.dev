@@ -22,7 +22,7 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "One item"
+                  "value" : "1 item"
                 }
               },
               "other" : {
@@ -72,7 +72,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Welcome to our app"
+            "value" : "Hello, world!"
           }
         },
         "es" : {

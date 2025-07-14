@@ -1,33 +1,33 @@
 <?php
 
 return [
-    'This positional string is localised',
-    'Another positional string',
+    'Hello, world!',
+    'Welcome to MyApp',
 
-    "It's \"quoted\" and contains a back‑slash \\ and a line‑break\nAll of this is localised",
+    "It's \"simple\" with a backslash \\ and newline\nAll text here",
 
-    'welcome_message' => 'This welcome message is localised',
-    'error_text'      => 'This error text is localised',
+    'welcome_message' => 'Welcome!',
+    'error_text'      => 'Something went wrong',
 
     'navigation' => [
-        'home'    => 'This home label is localised',
-        'about'   => 'This about label is localised',
-        'contact' => 'This contact label is localised',
+        'home'    => 'Home',
+        'about'   => 'About',
+        'contact' => 'Contact',
     ],
 
     'forms' => [
         'login' => [
-            'username_label' => 'This username label is localised',
-            'password_label' => 'This password label is localised',
-            'submit_button'  => 'This submit button text is localised',
+            'username_label' => 'Username',
+            'password_label' => 'Password',
+            'submit_button'  => 'Sign In',
         ],
     ],
 
     'mixed_content' => [
-        'title'        => 'This title is localised',
+        'title'        => 'Settings',
         'count'        => 42,
         'enabled'      => true,
         'nothing_here' => null,
-        'description'  => 'This description is localised',
+        'description'  => 'App settings and preferences',
     ],
 ];

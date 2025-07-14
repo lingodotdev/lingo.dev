@@ -31,15 +31,15 @@ h1 {
 <i18n>
 {
   "en": {
-    "welcome": "Welcome to our application",
-    "description": "This description text is localized",
+    "welcome": "Hello, world!",
+    "description": "A simple demo app",
     "button": {
-      "submit": "Submit Form",
-      "cancel": "Cancel Action"
+      "submit": "Submit",
+      "cancel": "Cancel"
     },
     "messages": [
-      "First localized message",
-      "Second localized message"
+      "Hello from MyApp",
+      "Welcome message"
     ],
     "metadata": {
       "active": true,
