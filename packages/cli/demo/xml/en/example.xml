@@ -1,24 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
-  <!-- Text content of XML elements is localized -->
   <title>This title text is localized</title>
   
-  <!-- Text content in nested elements is localized -->
   <description>
     <summary>This summary text is localized</summary>
     <details>These detail contents are also localized</details>
   </description>
   
-  <!-- XML element attributes are localized -->
   <image src="photo.jpg" alt="This alt attribute is localized" title="This title attribute is localized"/>
   
-  <!-- Mixed content with both text and attributes is localized -->
   <link href="example.com" label="This label attribute is localized">This link text is also localized</link>
   
-  <!-- Multiple attributes on the same element are localized -->
   <button type="submit" value="This value is localized" placeholder="This placeholder is localized">This button text is localized</button>
   
-  <!-- Deeply nested elements with text content are localized -->
   <section>
     <article>
       <paragraph>
@@ -27,10 +21,8 @@
     </article>
   </section>
   
-  <!-- Empty elements with only attributes are localized -->
   <meta name="description" content="This meta content is localized"/>
   
-  <!-- Elements with multiple child text nodes are localized -->
   <message>
     <greeting>Hello, this greeting is localized</greeting>
     <body>This message body is also localized</body>

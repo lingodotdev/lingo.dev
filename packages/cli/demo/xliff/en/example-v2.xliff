@@ -1,37 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- XML declaration and processing instructions are not localized -->
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0"
        version="2.0"
        srcLang="en"
        trgLang="fr">
-  <!-- The version, srcLang and trgLang attributes of the root xliff element are not localized -->
 
   <file id="messages.properties" original="messages.properties">
-    <!-- All <file> attributes are not localized -->
 
     <notes>
-      <!-- Content within notes elements is not localized -->
       <note>This header content is not localized</note>
     </notes>
 
 
-    <!-- XLIFF 2.0 uses <unit>/<segment> instead of <trans-unit> -->
     <unit id="welcome_message">
-      <!-- The id attribute of unit elements is not localized -->
       <segment>
-        <!-- Text content of source elements within segment elements is localized -->
         <source>Welcome to our application</source>
 
-        <!-- Text content of target elements is localized -->
-        <!-- The state attribute of target elements is not localized -->
         <target state="translated">Bienvenue dans notre application</target>
       </segment>
     </unit>
 
     <unit id="error_message" type="resname">
-      <!-- The type attribute is not localized -->
       <segment>
-        <!-- CDATA sections within localizable elements are localized -->
         <source><![CDATA[Please enter a valid <email> address]]></source>
         <target state="new"><![CDATA[Veuillez saisir une adresse <email> valide]]></target>
       </segment>

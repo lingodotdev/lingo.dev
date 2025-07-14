@@ -1,41 +1,28 @@
-# YAML localization example
-
-# Comments are not localized
-# This comment explains the behavior but is not processed
-
-# String values in key-value pairs are localized
 title: "This title string is localized"
 description: This description without quotes is also localized
 welcome_message: 'Single quoted strings are localized too'
 
-# Key names are not localized
 user_profile:
-  # Nested string values are localized
   display_name: "User display name is localized"
   bio: User biography text is localized
   
-# Array string values are localized
 navigation_items:
   - "Home page link text is localized"
   - "About page link text is localized"
   - "Contact page link text is localized"
 
-# Mixed content structure
 product:
-  # String values are localized regardless of quoting style
   name: "Product name is localized"
   tagline: Product tagline is localized
   features:
     - "Feature one description is localized"
     - "Feature two description is localized"
 
-# Numeric and boolean values are not localized
 settings:
   max_users: 100
   enabled: true
   timeout: 30.5
 
-# YAML structure and formatting are preserved but not localized
 complex_structure:
   level_one:
     level_two:

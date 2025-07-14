@@ -1,7 +1,3 @@
-# PO localization example for GNU gettext
-# This demo shows how po bucket type processes gettext .po files
-
-# Translation header
 msgid ""
 msgstr ""
 "Project-Id-Version: Example Project 1.0\n"
@@ -16,22 +12,18 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-# Simple string translation
 msgid "Welcome"
 msgstr "Welcome"
 
-# String with context
 msgctxt "navigation"
 msgid "Home"
 msgstr "Home"
 
-# String with plural forms
 msgid "You have %d message"
 msgid_plural "You have %d messages"
 msgstr[0] "You have %d message"
 msgstr[1] "You have %d messages"
 
-# Common UI elements
 msgid "Save"
 msgstr "Save"
 
@@ -41,7 +33,6 @@ msgstr "Cancel"
 msgid "Delete"
 msgstr "Delete"
 
-# Form labels
 msgid "Name"
 msgstr "Name"
 
@@ -51,7 +42,6 @@ msgstr "Email Address"
 msgid "Message"
 msgstr "Message"
 
-# Status messages
 msgid "Loading..."
 msgstr "Loading..."
 
@@ -61,7 +51,6 @@ msgstr "Success! Your changes have been saved."
 msgid "Error: Unable to process your request."
 msgstr "Error: Unable to process your request."
 
-# Product-related strings
 msgid "Add to Cart"
 msgstr "Add to Cart"
 

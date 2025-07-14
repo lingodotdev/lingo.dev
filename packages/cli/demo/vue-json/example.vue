@@ -1,5 +1,4 @@
 <template>
-  <!-- Template content is not localized -->
   <div class="container">
     <h1>{{ $t('welcome') }}</h1>
     <p>{{ $t('description') }}</p>
@@ -8,7 +7,6 @@
 </template>
 
 <script>
-// Script content is not localized
 export default {
   name: 'ExampleComponent',
   methods: {
@@ -20,7 +18,6 @@ export default {
 </script>
 
 <style scoped>
-/* Style content is not localized */
 .container {
   padding: 20px;
   font-family: Arial, sans-serif;

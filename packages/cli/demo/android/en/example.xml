@@ -1,77 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- String resources are localized -->
     <string name="app_name">My Application</string>
     <string name="welcome_message">Welcome to our app!</string>
     <string name="button_text">Click here</string>
     
-    <!-- String resources with translatable="false" are not localized -->
     <string name="api_endpoint" translatable="false">https://api.example.com</string>
     <string name="debug_key" translatable="false">DEBUG_MODE_ENABLED</string>
     
-    <!-- String array resources are localized -->
     <string-array name="color_names">
         <item>Red</item>
         <item>Green</item>
         <item>Blue</item>
     </string-array>
     
-    <!-- String array resources with translatable="false" are not localized -->
     <string-array name="server_urls" translatable="false">
         <item>https://prod.example.com</item>
         <item>https://staging.example.com</item>
         <item>https://dev.example.com</item>
     </string-array>
     
-    <!-- Plural resources are localized -->
     <plurals name="notification_count">
         <item quantity="one">You have %d notification</item>
         <item quantity="other">You have %d notifications</item>
     </plurals>
     
-    <!-- Plural resources with translatable="false" are not localized -->
     <plurals name="cache_size" translatable="false">
         <item quantity="one">%d byte</item>
         <item quantity="other">%d bytes</item>
     </plurals>
     
-    <!-- Boolean resources are localized -->
     <bool name="show_tutorial">true</bool>
     <bool name="enable_animations">false</bool>
     
-    <!-- Boolean resources with translatable="false" are not localized -->
     <bool name="is_debug_build" translatable="false">false</bool>
     <bool name="enable_logging" translatable="false">true</bool>
     
-    <!-- Integer resources are localized -->
     <integer name="max_retry_attempts">3</integer>
     <integer name="default_timeout">30</integer>
     
-    <!-- Integer resources with translatable="false" are not localized -->
     <integer name="build_version" translatable="false">42</integer>
     <integer name="api_version" translatable="false">1</integer>
     
-    <!-- Handles HTML entities -->
     <string name="html_snippet">&lt;b&gt;Bold&lt;/b&gt;</string>
 
-    <!-- Handles escaped apostrophe -->
     <string name="apostrophe_example">Don\'t translate me!</string>
 
-    <!-- Shows CDATA stripping -->
     <string name="cdata_example"><![CDATA[Special <tag> ]]></string>
     
-    <!-- Array with whitespace and empty items -->
     <string-array name="mixed_items">
         <item>  Leading and trailing  </item>
-        <item>    </item>   <!-- empty but kept -->
+        <item>    </item>
     </string-array>
     
-    <!-- Non-localised array -->
     <string-array name="non_localised_array" translatable="false">
         <item>Ignored</item>
     </string-array>
 
-    <!-- Non-localised plural -->
     <plurals name="non_localised_plural" translatable="false">
         <item quantity="one">Ignored</item>
         <item quantity="other">Ignored</item>
