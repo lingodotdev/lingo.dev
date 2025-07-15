@@ -46,7 +46,12 @@ export function createDeltaProcessor(fileKey: string) {
       let added = _.difference(
         Object.keys(params.sourceData),
         Object.keys(params.targetData),
+      ).filter(
+        (key) =>
+          !params.checksums[key] ||
+          params.checksums[key] !== md5(params.sourceData[key]),
       );
+
       let removed = _.difference(
         Object.keys(params.targetData),
         Object.keys(params.sourceData),
