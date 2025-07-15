@@ -4,6 +4,7 @@
     "build": {
       "dependsOn": ["^build"]
     },
+    "typecheck": {},
     "test": {
       "dependsOn": ["^build"]
     },
