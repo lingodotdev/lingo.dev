@@ -16,7 +16,7 @@
   ],
   "scripts": {
     "dev": "tsup --watch",
-    "build": "tsc --noEmit && tsup",
+    "build": "pnpm typecheck && tsup",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest"
