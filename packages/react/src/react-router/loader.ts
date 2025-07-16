@@ -10,7 +10,7 @@ import { LOCALE_COOKIE_NAME } from "../core";
  *
  * @param requestOrExplicitLocale - Either a `Request` object (from loader functions) or an explicit locale string.
  *
- * @returns Promise that resolves to the dictionary object, or `null` if no dictionary is found.
+ * @returns Promise that resolves to the dictionary object containing localized content.
  *
  * @example Use in a React Router application
  * ```tsx

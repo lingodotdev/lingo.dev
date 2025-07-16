@@ -68,11 +68,11 @@ export async function setLocaleInCookies(locale: string) {
 /**
  * Loads the dictionary for the current locale.
  *
- * The current locale is determined based on the `"lingo-locale"` cookie.
+ * The current locale is determined by the `"lingo-locale"` cookie.
  *
  * @param loader - A callback function that loads the dictionary for the current locale.
  *
- * @returns Promise that resolves to the loaded dictionary.
+ * @returns Promise that resolves to the dictionary object containing localized content.
  *
  * @example Load dictionary from request in a server component
  * ```typescript
