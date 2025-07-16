@@ -1,10 +1,11 @@
 /**
- * Loads a dictionary containing localized content for the given locale.
+ * A placeholder function for loading dictionaries that contain localized content.
  *
  * This function:
  *
  * - Should be used in React Server Components
  * - Should be passed into the `LingoProvider` component
+ * - Is transformed into functional code by Lingo.dev Compiler
  *
  * @param locale - The locale code for which to load the dictionary.
  *
