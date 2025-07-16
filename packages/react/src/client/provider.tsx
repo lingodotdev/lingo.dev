@@ -23,9 +23,8 @@ export type LingoProviderProps<D> = {
  *
  * This component:
  *
- * - Should be placed at the top of the component tree, wrapping the `html` element
+ * - Should be placed at the top of the component tree
  * - Should be used in client-side applications that preload data from the server (e.g., React Router apps)
- * - Sets the `lang` attribute of the `html` element based on the current locale
  *
  * @template D - The type of the dictionary object.
  * @throws {Error} When no dictionary is provided.
@@ -95,9 +94,8 @@ export type LingoProviderWrapperProps<D> = {
  *
  * This component:
  *
- * - Should be placed at the top of the component tree, wrapping the `html` element
+ * - Should be placed at the top of the component tree
  * - Should be used in purely client-side rendered applications (e.g., Vite-based apps)
- * - Sets the `lang` attribute of the `html` element based on the current locale
  *
  * @template D - The type of the dictionary object containing localized content.
  *

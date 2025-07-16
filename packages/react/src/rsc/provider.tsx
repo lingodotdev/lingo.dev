@@ -24,9 +24,8 @@ export type LingoProviderProps = {
  *
  * This component:
  *
- * - Should be placed at the top of the component tree, wrapping the `html` element
+ * - Should be placed at the top of the component tree
  * - Should be used in server-side rendering scenarios with React Server Components (RSC)
- * - Sets the `lang` attribute of the `html` element based on the current locale
  *
  * @template D - The type of the dictionary object containing localized content.
  *
