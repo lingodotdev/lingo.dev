@@ -90,7 +90,7 @@ export type LingoProviderWrapperProps<D> = {
 };
 
 /**
- * A context provider that loads the dictionary for the current locale and makes it available to its descendants.
+ * A context provider that loads the dictionary for the current locale and makes localized content available to its descendants.
  *
  * This component:
  *
