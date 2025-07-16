@@ -39,7 +39,7 @@ export type LingoProviderProps = {
  *   children: React.ReactNode;
  * }>) {
  *   return (
- *     <LingoProvider loadDictionary={loadDictionary}>
+ *     <LingoProvider loadDictionary={(locale) => loadDictionary(locale)}>
  *       <html lang="en">
  *        <body>
  *           {children}

@@ -20,7 +20,7 @@
  *
  * ReactDOM.createRoot(document.getElementById("root")!).render(
  *   <React.StrictMode>
- *     <LingoProviderWrapper loadDictionary={loadDictionary}>
+ *     <LingoProviderWrapper loadDictionary={(locale) => loadDictionary(locale)}>
  *       <App />
  *     </LingoProviderWrapper>
  *   </React.StrictMode>,
