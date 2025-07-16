@@ -3,36 +3,45 @@ import { loadDictionaryFromRequest, loadLocaleFromCookies } from "./utils";
 
 export type LingoProviderProps = {
   /**
-   * Loads dictionary for the current locale.
-   * @param locale - Locale code to load dictionary for.
+   * A callback function that loads the dictionary for the current locale.
+   *
+   * @param locale - The locale code to load the dictionary for.
+   *
+   * @returns The dictionary object containing localized content.
    */
   loadDictionary: (locale: string) => Promise<any>;
   /**
-   * Child components containing localizable content.
+   * The child components containing localizable content.
    */
   children: React.ReactNode;
 };
 
 /**
- * React Server Component provider that makes localized content available to its descendants.
- * 
- * This component should be placed at the top of the component tree and is designed for
- * server-side rendering scenarios with React Server Components (RSC). It automatically
- * loads the dictionary based on the request context.
- * 
- * @example Set up localization in a Next.js root layout
- * ```tsx
+ * A context provider that loads the dictionary for the current locale and makes it available to its descendants.
+ *
+ * This component:
+ *
+ * - Should be placed at the top of the component tree, wrapping the `html` element
+ * - Should be used in server-side rendering scenarios with React Server Components (RSC)
+ * - Sets the `lang` attribute of the `html` element based on the current locale
+ *
+ * @template D - The type of the dictionary object containing localized content.
+ *
+ * @example Use in a Next.js (App Router) application
+ * ```tsx file="app/layout.tsx"
  * import { LingoProvider, loadDictionary } from "lingo.dev/react/rsc";
- * 
- * export default function RootLayout({ 
- *   children 
- * }: { 
- *   children: React.ReactNode 
- * }) {
+ *
+ * export default function RootLayout({
+ *   children,
+ * }: Readonly<{
+ *   children: React.ReactNode;
+ * }>) {
  *   return (
- *     <LingoProvider loadDictionary={(locale) => loadDictionary(locale)}>
- *       <html>
- *         <body>{children}</body>
+ *     <LingoProvider loadDictionary={loadDictionary}>
+ *       <html lang="en">
+ *        <body>
+ *           {children}
+ *         </body>
  *       </html>
  *     </LingoProvider>
  *   );

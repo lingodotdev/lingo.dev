@@ -4,45 +4,55 @@ import { useEffect, useState } from "react";
 import { LingoContext } from "./context";
 import { getLocaleFromCookies } from "./utils";
 
+/**
+ * The props for the `LingoProvider` component.
+ */
 export type LingoProviderProps<D> = {
   /**
-   * Dictionary object containing localized content.
+   * The dictionary object that contains localized content.
    */
   dictionary: D;
   /**
-   * Child components containing localizable content.
+   * The child components containing localizable content.
    */
   children: React.ReactNode;
 };
 
 /**
- * Context provider that makes localized content available to its descendants.
- * 
- * This component should be placed at the top of the component tree and is designed
- * for use in client-side applications with pre-loaded dictionaries.
- * 
- * @template D - Type of the dictionary object containing localized content.
+ * A context provider that makes localized content from a preloaded dictionary available to its descendants.
+ *
+ * This component:
+ *
+ * - Should be placed at the top of the component tree, wrapping the `html` element
+ * - Should be used in client-side applications that preload data from the server (e.g., React Router apps)
+ * - Sets the `lang` attribute of the `html` element based on the current locale
+ *
+ * @template D - The type of the dictionary object.
  * @throws {Error} When no dictionary is provided.
- * 
+ *
  * @example Use in a React Router application
  * ```tsx
  * import { LingoProvider } from "lingo.dev/react/client";
  * import { loadDictionary } from "lingo.dev/react/react-router";
  * import type { LoaderFunctionArgs } from "react-router";
  * import { useLoaderData, Outlet } from "react-router";
- * 
- * export async function loader(args: LoaderFunctionArgs) {
+ *
+ * export async function loader({ request }: LoaderFunctionArgs) {
  *   return {
- *     lingoDictionary: await loadDictionary(args.request),
+ *     lingoDictionary: await loadDictionary(request),
  *   };
  * }
- * 
+ *
  * export default function Root() {
  *   const { lingoDictionary } = useLoaderData<typeof loader>();
- * 
+ *
  *   return (
  *     <LingoProvider dictionary={lingoDictionary}>
- *       <Outlet />
+ *       <html>
+ *         <body>
+ *           <Outlet />
+ *         </body>
+ *       </html>
  *     </LingoProvider>
  *   );
  * }
@@ -62,40 +72,49 @@ export function LingoProvider<D>(props: LingoProviderProps<D>) {
   );
 }
 
+/**
+ * The props for the `LingoProviderWrapper` component.
+ */
 export type LingoProviderWrapperProps<D> = {
   /**
-   * Loads dictionary for the current locale.
-   * @param locale - Locale code to load dictionary for.
+   * A callback function that loads the dictionary for the current locale.
+   *
+   * @param locale - The locale code to load the dictionary for.
+   *
+   * @returns The dictionary object containing localized content.
    */
   loadDictionary: (locale: string) => Promise<D>;
   /**
-   * Child components containing localizable content.
+   * The child components containing localizable content.
    */
   children: React.ReactNode;
 };
 
 /**
- * Context provider that makes localized content available to its descendants for client-side applications.
- * 
- * This component automatically loads the dictionary based on the user's locale from cookies
- * and should be placed at the top of the component tree. Use this for client-side rendered
- * applications where the dictionary needs to be loaded dynamically.
- * 
- * @template D - Type of the dictionary object containing localized content.
- * 
+ * A context provider that loads the dictionary for the current locale and makes it available to its descendants.
+ *
+ * This component:
+ *
+ * - Should be placed at the top of the component tree, wrapping the `html` element
+ * - Should be used in purely client-side rendered applications (e.g., Vite-based apps)
+ * - Sets the `lang` attribute of the `html` element based on the current locale
+ *
+ * @template D - The type of the dictionary object containing localized content.
+ *
  * @example Use in a Vite application
- * ```tsx
- * import React from "react";
- * import ReactDOM from "react-dom/client";
- * import App from "./App.tsx";
+ * ```tsx file="src/main.tsx"
  * import { LingoProviderWrapper, loadDictionary } from "lingo.dev/react/client";
- * 
- * ReactDOM.createRoot(document.getElementById("root")!).render(
- *   <React.StrictMode>
- *     <LingoProviderWrapper loadDictionary={(locale) => loadDictionary(locale)}>
+ * import { StrictMode } from 'react'
+ * import { createRoot } from 'react-dom/client'
+ * import './index.css'
+ * import App from './App.tsx'
+ *
+ * createRoot(document.getElementById('root')!).render(
+ *   <StrictMode>
+ *     <LingoProviderWrapper loadDictionary={loadDictionary}>
  *       <App />
  *     </LingoProviderWrapper>
- *   </React.StrictMode>,
+ *   </StrictMode>,
  * );
  * ```
  */

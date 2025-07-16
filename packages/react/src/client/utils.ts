@@ -4,20 +4,21 @@ import { LOCALE_COOKIE_NAME, DEFAULT_LOCALE } from "../core";
 import Cookies from "js-cookie";
 
 /**
- * Retrieves the current locale from browser cookies.
- * 
- * Falls back to the default locale if running in a server environment
- * or if no locale cookie is found.
- * 
- * @returns Current locale code from cookies or default locale.
- * 
+ * Gets the current locale from the `"lingo-locale"` cookie.
+ *
+ * Defaults to `"en"` if:
+ *
+ * - Running in an environment that doesn't support cookies
+ * - No `"lingo-locale"` cookie is found
+ *
+ * @returns The current locale code, or `"en"` as a fallback.
+ *
  * @example Get the current locale
  * ```tsx
  * import { getLocaleFromCookies } from "lingo.dev/react/client";
- * 
- * export function MyComponent() {
+ *
+ * export function App() {
  *   const currentLocale = getLocaleFromCookies();
- *   
  *   return <div>Current locale: {currentLocale}</div>;
  * }
  * ```
@@ -29,23 +30,22 @@ export function getLocaleFromCookies(): string {
 }
 
 /**
- * Sets the locale in browser cookies.
- * 
- * Stores the locale with a 365-day expiration and lax SameSite policy.
- * Does nothing if running in a server environment.
- * 
- * @param locale - Locale code to store in cookies.
- * 
- * @example Set the locale to Spanish
+ * Sets the current locale in the `"lingo-locale"` cookie.
+ *
+ * Does nothing in environments that don't support cookies.
+ *
+ * @param locale - The locale code to store in the `"lingo-locale"` cookie.
+ *
+ * @example Set the current locale
  * ```tsx
  * import { setLocaleInCookies } from "lingo.dev/react/client";
- * 
+ *
  * export function LanguageButton() {
  *   const handleClick = () => {
  *     setLocaleInCookies("es");
  *     window.location.reload();
  *   };
- *   
+ *
  *   return <button onClick={handleClick}>Switch to Spanish</button>;
  * }
  * ```
