@@ -17,23 +17,47 @@ import { LOCALE_COOKIE_NAME } from "../core";
  * ```tsx
  * import { LingoProvider } from "lingo.dev/react/client";
  * import { loadDictionary } from "lingo.dev/react/react-router";
- * import type { LoaderFunctionArgs } from "react-router";
- * import { useLoaderData, Outlet } from "react-router";
+ * import {
+ *   Links,
+ *   Meta,
+ *   Outlet,
+ *   Scripts,
+ *   ScrollRestoration,
+ *   useLoaderData,
+ *   type LoaderFunctionArgs,
+ * } from "react-router";
+ * import "./app.css";
  *
- * export async function loader(args: LoaderFunctionArgs) {
+ * export const loader = async ({ request }: LoaderFunctionArgs) => {
  *   return {
- *     lingoDictionary: await loadDictionary(args.request),
+ *     lingoDictionary: await loadDictionary(request),
  *   };
- * }
+ * };
  *
- * export default function Root() {
+ * export function Layout({ children }: { children: React.ReactNode }) {
  *   const { lingoDictionary } = useLoaderData<typeof loader>();
  *
  *   return (
  *     <LingoProvider dictionary={lingoDictionary}>
- *       <Outlet />
+ *       <html lang="en">
+ *         <head>
+ *           <meta charSet="utf-8" />
+ *           <meta name="viewport" content="width=device-width, initial-scale=1" />
+ *           <Meta />
+ *           <Links />
+ *         </head>
+ *         <body>
+ *           {children}
+ *           <ScrollRestoration />
+ *           <Scripts />
+ *         </body>
+ *       </html>
  *     </LingoProvider>
  *   );
+ * }
+ *
+ * export default function App() {
+ *   return <Outlet />;
  * }
  * ```
  */
