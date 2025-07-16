@@ -1,6 +1,9 @@
 import { LingoProvider as LingoClientProvider } from "../client";
 import { loadDictionaryFromRequest, loadLocaleFromCookies } from "./utils";
 
+/**
+ * The props for the `LingoProvider` component.
+ */
 export type LingoProviderProps = {
   /**
    * A callback function that loads the dictionary for the current locale.
