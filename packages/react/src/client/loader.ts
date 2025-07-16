@@ -8,7 +8,7 @@
  *
  * @param locale - The locale to load the dictionary for.
  *
- * @returns The dictionary object containing localized content.
+ * @returns Promise that resolves to the dictionary object containing localized content.
  *
  * @example Use in a Vite application
  * ```tsx
