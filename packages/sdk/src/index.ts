@@ -289,7 +289,7 @@ export class LingoDotDevEngine {
    */
   async localizeSimpleMap(
     map: Record<string, string>,
-    params: Z.infer<typeof localizationParamsSchema>
+    params: Z.infer<typeof localizationParamsSchema>,
   ): Promise<Record<string, string>> {
     return this.localizeObject(map, params);
   }
@@ -305,13 +305,16 @@ export class LingoDotDevEngine {
    */
   async localizeStringArray(
     strings: string[],
-    params: Z.infer<typeof localizationParamsSchema>
+    params: Z.infer<typeof localizationParamsSchema>,
   ): Promise<string[]> {
-    const mapped = strings.reduce((acc, str, i) => {
-      acc[`item_${i}`] = str;
-      return acc;
-    }, {} as Record<string, string>);
-    
+    const mapped = strings.reduce(
+      (acc, str, i) => {
+        acc[`item_${i}`] = str;
+        return acc;
+      },
+      {} as Record<string, string>,
+    );
+
     const result = await this.localizeObject(mapped, params);
     return Object.values(result);
   }

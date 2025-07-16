@@ -172,10 +172,13 @@ describe("ReplexicaEngine", () => {
         targetLocale: "es",
       });
 
-      expect(mockLocalizeObject).toHaveBeenCalledWith({}, {
-        sourceLocale: "en",
-        targetLocale: "es",
-      });
+      expect(mockLocalizeObject).toHaveBeenCalledWith(
+        {},
+        {
+          sourceLocale: "en",
+          targetLocale: "es",
+        },
+      );
 
       expect(result).toEqual([]);
     });
