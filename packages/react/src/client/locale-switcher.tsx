@@ -3,33 +3,40 @@
 import { useState, useEffect } from "react";
 import { getLocaleFromCookies, setLocaleInCookies } from "./utils";
 
+/**
+ * The props for the `LocaleSwitcher` component.
+ */
 export type LocaleSwitcherProps = {
   /**
-   * Custom class name for the dropdown's select element.
-   */
-  className?: string;
-  /**
-   * Array of locale codes (should contain both source and target locales).
+   * An array of locale codes to display in the dropdown.
+   *
+   * This should contain both the source and target locales.
    */
   locales: string[];
+  /**
+   * A custom class name for the dropddown's `select` element.
+   */
+  className?: string;
 };
 
 /**
- * Dropdown component for switching between locales.
- * 
- * This component provides users with a way to change languages and triggers a full page
- * reload when the locale is changed. It only works in environments that support cookies
- * and does not need to be a child of LingoProvider or LingoProviderWrapper.
- * 
- * @example Add a language switcher to your header
+ * An unstyled dropdown for switching between locales.
+ *
+ * This component:
+ *
+ * - Only works in environments that support cookies
+ * - Gets and sets the current locale from the `"lingo-locale"` cookie
+ * - Triggers a full page reload when the locale is changed
+ *
+ * @example Creating a locale switcher
  * ```tsx
  * import { LocaleSwitcher } from "lingo.dev/react/client";
- * 
- * export function Header() {
+ *
+ * export function App() {
  *   return (
  *     <header>
  *       <nav>
- *         <LocaleSwitcher locales={["en", "es", "fr", "de"]} />
+ *         <LocaleSwitcher locales={["en", "es"]} />
  *       </nav>
  *     </header>
  *   );
