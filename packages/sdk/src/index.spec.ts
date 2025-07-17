@@ -91,41 +91,6 @@ describe("ReplexicaEngine", () => {
     });
   });
 
-  describe("localizeSimpleMap", () => {
-    it("should localize a simple key-value map", async () => {
-      const engine = new LingoDotDevEngine({ apiKey: "test" });
-      const mockLocalizeObject = vi.spyOn(engine, "localizeObject");
-      mockLocalizeObject.mockImplementation(async (obj: any) => {
-        // Simulate translation by adding 'ES:' prefix to all string values
-        return Object.fromEntries(
-          Object.entries(obj).map(([key, value]) => [key, `ES:${value}`]),
-        );
-      });
-
-      const inputMap = {
-        greeting: "Hello",
-        farewell: "Goodbye",
-        question: "How are you?",
-      };
-
-      const result = await engine.localizeSimpleMap(inputMap, {
-        sourceLocale: "en",
-        targetLocale: "es",
-      });
-
-      expect(mockLocalizeObject).toHaveBeenCalledWith(inputMap, {
-        sourceLocale: "en",
-        targetLocale: "es",
-      });
-
-      expect(result).toEqual({
-        greeting: "ES:Hello",
-        farewell: "ES:Goodbye",
-        question: "ES:How are you?",
-      });
-    });
-  });
-
   describe("localizeStringArray", () => {
     it("should localize an array of strings and maintain order", async () => {
       const engine = new LingoDotDevEngine({ apiKey: "test" });
