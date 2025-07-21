@@ -1,5 +1,34 @@
 # @lingo.dev/\_sdk
 
+## 0.10.2
+
+### Patch Changes
+
+- Updated dependencies [[`afbb978`](https://github.com/lingodotdev/lingo.dev/commit/afbb978fec83d574f2c43b7d68457e435fca9b57)]:
+  - @lingo.dev/_spec@0.39.3
+
+## 0.10.1
+
+### Patch Changes
+
+- [#1023](https://github.com/lingodotdev/lingo.dev/pull/1023) [`9266fd0`](https://github.com/lingodotdev/lingo.dev/commit/9266fd0bcddf4b07ca51d2609af92a9473106f9d) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - Update Zod dependency to version 3.25.76
+
+- Updated dependencies [[`9266fd0`](https://github.com/lingodotdev/lingo.dev/commit/9266fd0bcddf4b07ca51d2609af92a9473106f9d)]:
+  - @lingo.dev/_spec@0.39.2
+
+## 0.10.0
+
+### Minor Changes
+
+- [#998](https://github.com/lingodotdev/lingo.dev/pull/998) [`cb2aa0f`](https://github.com/lingodotdev/lingo.dev/commit/cb2aa0f505d6b7dbc435b526e8a6f62265d1f453) Thanks [@VAIBHAVSING](https://github.com/VAIBHAVSING)! - Added support for AbortController to all public SDK methods, enabling consumers to cancel long-running operations using the standard AbortController API. Refactored internal methods to propagate AbortSignal and check for abortion between batch chunks. Updated fetch calls to use AbortSignal for network request cancellation.
+
+## 0.9.6
+
+### Patch Changes
+
+- Updated dependencies [[`acd5356`](https://github.com/lingodotdev/lingo.dev/commit/acd5356b68d2261576240c173fea790864c3c31d)]:
+  - @lingo.dev/_spec@0.39.1
+
 ## 0.9.5
 
 ### Patch Changes

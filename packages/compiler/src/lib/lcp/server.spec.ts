@@ -405,6 +405,7 @@ describe("LCPServer", () => {
         },
         "en",
         "fr",
+        undefined,
       );
 
       // Verify final result combines cached and newly translated content

@@ -127,6 +127,7 @@ const localeMap = {
   pl: ["pl-PL"],
   // Indonesian (Indonesia)
   id: ["id-ID"],
+  is: ["is-IS"],
   // Malay (Malaysia)
   ms: ["ms-MY"],
   // Finnish (Finland)

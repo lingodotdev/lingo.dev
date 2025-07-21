@@ -1,18 +1,142 @@
 import generate, { GeneratorResult } from "@babel/generator";
 import * as t from "@babel/types";
 import * as parser from "@babel/parser";
-import * as path from "path";
+import { LocaleCode } from "@lingo.dev/_spec";
 
+/**
+ * Options for configuring Lingo.dev Compiler.
+ */
 export type CompilerParams = {
-  sourceLocale: string;
-  targetLocales: string[];
+  /**
+   * The locale to translate from.
+   *
+   * This must match one of the following formats:
+   *
+   * - [ISO 639-1 language code](https://en.wikipedia.org/wiki/ISO_639-1) (e.g., `"en"`)
+   * - [IETF BCP 47 language tag](https://en.wikipedia.org/wiki/IETF_language_tag) (e.g., `"en-US"`)
+   *
+   * @default "en"
+   */
+  sourceLocale: LocaleCode;
+  /**
+   * The locale(s) to translate to.
+   *
+   * Each locale must match one of the following formats:
+   *
+   * - [ISO 639-1 language code](https://en.wikipedia.org/wiki/ISO_639-1) (e.g., `"en"`)
+   * - [IETF BCP 47 language tag](https://en.wikipedia.org/wiki/IETF_language_tag) (e.g., `"en-US"`)
+   *
+   * @default ["es"]
+   */
+  targetLocales: LocaleCode[];
+  /**
+   * The name of the directory where translation files will be stored, relative to `sourceRoot`.
+   *
+   * @default "lingo"
+   */
   lingoDir: string;
+  /**
+   * The directory of the source code that will be translated, relative to the current working directory.
+   *
+   * @default "src"
+   */
   sourceRoot: string;
+  /**
+   * If `true`, the compiler will generate code for React Server Components (RSC).
+   *
+   * When using Vite, this value is always `false`.
+   *
+   * When using Next.js, this value is always `true`.
+   *
+   * @default false
+   */
   rsc: boolean;
+  /**
+   * If `true`, the compiler will only localize files that use the `"use i18n";` directive.
+   *
+   * @default false
+   */
   useDirective: boolean;
+  /**
+   * If `true`, the compiler will log additional information to the console.
+   *
+   * @default false
+   */
   debug: boolean;
-  models: "lingo.dev" | Record<string, string>;
+  /**
+   * The model(s) to use for translation.
+   *
+   * If set to `"lingo.dev"`, the compiler will use Lingo.dev Engine.
+   *
+   * If set to an object, the compiler will use the model(s) specified in the object:
+   *
+   * - The key is a string that represents the source and target locales, separated by a colon (e.g., `"en:es"`).
+   * - The value is a string that represents the LLM provider and model, separated by a colon (e.g., `"google:gemini-2.0-flash"`).
+   *
+   * You can use `*` as a wildcard to match any locale.
+   *
+   * If a model is not specified, an error will be thrown.
+   *
+   * @default {}
+   */
+  models: "lingo.dev" | ModelMap;
+  /**
+   * Custom system prompt for the translation engine. If set, this prompt will override the default system prompt defined in Compiler.
+   * Only works with custom models, not with Lingo.dev Engine.
+   *
+   * Example: "You are a helpful assistant that translates {SOURCE_LOCALE} to {TARGET_LOCALE}."
+   *
+   * @default null
+   */
+  prompt?: string | null;
 };
+
+/**
+ * A mapping between locale pairings and the model to use to translate that pairing.
+ */
+export type ModelMap = {
+  [key in SourceTargetLocale]?: ModelIdentifier;
+};
+
+/**
+ * A pairing of a source and target locale.
+ */
+export type SourceTargetLocale =
+  | LocalePair
+  | AnyTargetLocale
+  | AnySourceLocale
+  | AnyLocale;
+
+/**
+ * A translation from a specific source locale to a specific target locale.
+ */
+export type LocalePair = `${LocaleCode}:${LocaleCode}`;
+
+/**
+ * A translation from a specific source locale to any target locale.
+ */
+export type AnyTargetLocale = `${LocaleCode}:${LocaleWildcard}`;
+
+/**
+ * A translation from any source locale to a specific target locale.
+ */
+export type AnySourceLocale = `${LocaleWildcard}:${LocaleCode}`;
+
+/**
+ * A translation from any source locale to any target locale.
+ */
+export type AnyLocale = `${LocaleWildcard}:${LocaleWildcard}`;
+
+/**
+ * A wildcard symbol that matches any locale.
+ */
+export type LocaleWildcard = "*";
+
+/**
+ * The colon-separated identifier of a model to use for translation.
+ */
+export type ModelIdentifier = `${string}:${string}`;
+
 export type CompilerInput = {
   relativeFilePath: string;
   code: string;
@@ -79,4 +203,5 @@ export const defaultParams: CompilerParams = {
   useDirective: false,
   debug: false,
   models: {},
+  prompt: null,
 };

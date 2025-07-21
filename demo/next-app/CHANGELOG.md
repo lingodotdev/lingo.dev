@@ -1,5 +1,89 @@
 # next-app
 
+## 0.2.38
+
+### Patch Changes
+
+- Updated dependencies []:
+  - lingo.dev@0.107.6
+
+## 0.2.37
+
+### Patch Changes
+
+- Updated dependencies []:
+  - lingo.dev@0.107.5
+
+## 0.2.36
+
+### Patch Changes
+
+- Updated dependencies [[`20a3737`](https://github.com/lingodotdev/lingo.dev/commit/20a3737ddb50b2a97699e57e03ea353b8912b78f)]:
+  - lingo.dev@0.107.4
+
+## 0.2.35
+
+### Patch Changes
+
+- Updated dependencies [[`afbb978`](https://github.com/lingodotdev/lingo.dev/commit/afbb978fec83d574f2c43b7d68457e435fca9b57)]:
+  - lingo.dev@0.107.3
+
+## 0.2.34
+
+### Patch Changes
+
+- Updated dependencies [[`1f1e33f`](https://github.com/lingodotdev/lingo.dev/commit/1f1e33fe4d0767c2f026214a505a2aa9f3785996), [`9266fd0`](https://github.com/lingodotdev/lingo.dev/commit/9266fd0bcddf4b07ca51d2609af92a9473106f9d)]:
+  - lingo.dev@0.107.2
+
+## 0.2.33
+
+### Patch Changes
+
+- Updated dependencies [[`6baa1a7`](https://github.com/lingodotdev/lingo.dev/commit/6baa1a7e88dbfac3783d1d49695595077fd8d209)]:
+  - lingo.dev@0.107.1
+
+## 0.2.32
+
+### Patch Changes
+
+- Updated dependencies [[`925997d`](https://github.com/lingodotdev/lingo.dev/commit/925997d75a1edbb4211a3be8db2b186cb139327e)]:
+  - lingo.dev@0.107.0
+
+## 0.2.31
+
+### Patch Changes
+
+- Updated dependencies [[`cb2aa0f`](https://github.com/lingodotdev/lingo.dev/commit/cb2aa0f505d6b7dbc435b526e8a6f62265d1f453)]:
+  - lingo.dev@0.106.0
+
+## 0.2.30
+
+### Patch Changes
+
+- Updated dependencies [[`bfcb424`](https://github.com/lingodotdev/lingo.dev/commit/bfcb424eb4479d0d3b767e062d30f02c5bcaeb14)]:
+  - lingo.dev@0.105.4
+
+## 0.2.29
+
+### Patch Changes
+
+- Updated dependencies [[`2b297ba`](https://github.com/lingodotdev/lingo.dev/commit/2b297babe76f9799c5154d9421fecd1ebbe1bb72)]:
+  - lingo.dev@0.105.3
+
+## 0.2.28
+
+### Patch Changes
+
+- Updated dependencies [[`30faa6d`](https://github.com/lingodotdev/lingo.dev/commit/30faa6d10e851a38ced86ae403b3a1fd48440bca)]:
+  - lingo.dev@0.105.2
+
+## 0.2.27
+
+### Patch Changes
+
+- Updated dependencies []:
+  - lingo.dev@0.105.1
+
 ## 0.2.26
 
 ### Patch Changes

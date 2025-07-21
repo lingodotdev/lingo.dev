@@ -27,6 +27,7 @@ export const bucketTypes = [
   "vue-json",
   "typescript",
   "txt",
+  "json-dictionary",
 ] as const;
 
 export const bucketTypeSchema = Z.enum(bucketTypes);

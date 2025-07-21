@@ -1,5 +1,76 @@
 # @lingo.dev/\_compiler
 
+## 0.7.1
+
+### Patch Changes
+
+- [#1040](https://github.com/lingodotdev/lingo.dev/pull/1040) [`f897a7d`](https://github.com/lingodotdev/lingo.dev/commit/f897a7d0a3f7a236fb64f19bce9a8d00626d09ca) Thanks [@The-Best-Codes](https://github.com/The-Best-Codes)! - Fixed the compiler to handle type-only react imports.
+
+## 0.7.0
+
+### Minor Changes
+
+- [#997](https://github.com/lingodotdev/lingo.dev/pull/997) [`bd9538a`](https://github.com/lingodotdev/lingo.dev/commit/bd9538ac6eba0ffc91ffc1fef5db6366c13e9e06) Thanks [@VAIBHAVSING](https://github.com/VAIBHAVSING)! - ### Whitespace Normalization Fix
+
+  - Improved `normalizeJsxWhitespace` logic to preserve leading spaces inside JSX elements while removing unnecessary formatting whitespace and extra lines.
+  - Ensured explicit whitespace (e.g., `{" "}`) is handled correctly without introducing double spaces.
+  - Added targeted tests (`jsx-content-whitespace.spec.ts`) to verify whitespace handling.
+  - Cleaned up unnecessary debug/test files created during development.
+
+## 0.6.3
+
+### Patch Changes
+
+- Updated dependencies [[`afbb978`](https://github.com/lingodotdev/lingo.dev/commit/afbb978fec83d574f2c43b7d68457e435fca9b57)]:
+  - @lingo.dev/_spec@0.39.3
+  - @lingo.dev/_sdk@0.10.2
+
+## 0.6.2
+
+### Patch Changes
+
+- [#1023](https://github.com/lingodotdev/lingo.dev/pull/1023) [`9266fd0`](https://github.com/lingodotdev/lingo.dev/commit/9266fd0bcddf4b07ca51d2609af92a9473106f9d) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - Update Zod dependency to version 3.25.76
+
+- Updated dependencies [[`9266fd0`](https://github.com/lingodotdev/lingo.dev/commit/9266fd0bcddf4b07ca51d2609af92a9473106f9d)]:
+  - @lingo.dev/_spec@0.39.2
+  - @lingo.dev/_sdk@0.10.1
+
+## 0.6.1
+
+### Patch Changes
+
+- [#1021](https://github.com/lingodotdev/lingo.dev/pull/1021) [`6baa1a7`](https://github.com/lingodotdev/lingo.dev/commit/6baa1a7e88dbfac3783d1d49695595077fd8d209) Thanks [@mathio](https://github.com/mathio)! - add lingo.dev provider details
+
+## 0.6.0
+
+### Minor Changes
+
+- [#1010](https://github.com/lingodotdev/lingo.dev/pull/1010) [`864c305`](https://github.com/lingodotdev/lingo.dev/commit/864c30586510e6b69739c20fa42efdf45d8881ed) Thanks [@davidturnbull](https://github.com/davidturnbull)! - improve type safety of compiler params
+
+### Patch Changes
+
+- Updated dependencies [[`cb2aa0f`](https://github.com/lingodotdev/lingo.dev/commit/cb2aa0f505d6b7dbc435b526e8a6f62265d1f453)]:
+  - @lingo.dev/_sdk@0.10.0
+
+## 0.5.5
+
+### Patch Changes
+
+- [#1011](https://github.com/lingodotdev/lingo.dev/pull/1011) [`bfcb424`](https://github.com/lingodotdev/lingo.dev/commit/bfcb424eb4479d0d3b767e062d30f02c5bcaeb14) Thanks [@mathio](https://github.com/mathio)! - replace elements with dot in name
+
+## 0.5.4
+
+### Patch Changes
+
+- [#1002](https://github.com/lingodotdev/lingo.dev/pull/1002) [`2b297ba`](https://github.com/lingodotdev/lingo.dev/commit/2b297babe76f9799c5154d9421fecd1ebbe1bb72) Thanks [@mathio](https://github.com/mathio)! - support custom prompts in compiler
+
+## 0.5.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @lingo.dev/_sdk@0.9.6
+
 ## 0.5.2
 
 ### Patch Changes

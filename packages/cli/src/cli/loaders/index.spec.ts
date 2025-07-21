@@ -544,7 +544,7 @@ describe("bucket loaders", () => {
 
       const jsonLoader = createBucketLoader("json", "i18n/[locale].json", {
         defaultLocale: "en",
-        injectLocale: ["settings.locale", "not-a-locale"],
+        injectLocale: ["settings/locale", "not-a-locale"],
       });
       jsonLoader.setDefaultLocale("en");
       const data = await jsonLoader.pull("en");
@@ -571,7 +571,7 @@ describe("bucket loaders", () => {
 
       const jsonLoader = createBucketLoader("json", "i18n/[locale].json", {
         defaultLocale: "en",
-        injectLocale: ["settings.locale", "not-a-locale"],
+        injectLocale: ["settings/locale", "not-a-locale"],
       });
       jsonLoader.setDefaultLocale("en");
       await jsonLoader.pull("en");
@@ -2037,11 +2037,13 @@ Mundo!`;
   </xliff>
       `.trim();
 
+      // Keys must be encoded (e.g. / replaced with %2F)
       const expectedOutput = {
-        "resources/namespace1/group/groupUnits/groupUnit/source": "Group",
-        "resources/namespace1/key.nested/source": "XLIFF Data Manager",
-        "resources/namespace1/key1/source": "Hello",
-        "resources/namespace1/key2/source":
+        "resources%2Fnamespace1%2Fgroup%2FgroupUnits%2FgroupUnit%2Fsource":
+          "Group",
+        "resources%2Fnamespace1%2Fkey.nested%2Fsource": "XLIFF Data Manager",
+        "resources%2Fnamespace1%2Fkey1%2Fsource": "Hello",
+        "resources%2Fnamespace1%2Fkey2%2Fsource":
           "An application to manipulate and process XLIFF documents",
         sourceLanguage: "en-US",
       };
@@ -2088,12 +2090,14 @@ Mundo!`;
       </file>
     </xliff>
         `.trim();
+      // Keys must be encoded (e.g. / replaced with %2F)
       const payload = {
-        "resources/namespace1/group/groupUnits/groupUnit/source": "Grupo",
-        "resources/namespace1/key.nested/source":
+        "resources%2Fnamespace1%2Fgroup%2FgroupUnits%2FgroupUnit%2Fsource":
+          "Grupo",
+        "resources%2Fnamespace1%2Fkey.nested%2Fsource":
           "Administrador de Datos XLIFF",
-        "resources/namespace1/key1/source": "Hola",
-        "resources/namespace1/key2/source":
+        "resources%2Fnamespace1%2Fkey1%2Fsource": "Hola",
+        "resources%2Fnamespace1%2Fkey2%2Fsource":
           "Una aplicación para manipular y procesar documentos XLIFF",
         sourceLanguage: "es-ES",
       };
@@ -2768,6 +2772,71 @@ Línea 3`;
 
       expect(fs.writeFile).toHaveBeenCalledWith(
         "fastlane/metadata/es/description.txt",
+        expectedOutput,
+        { encoding: "utf-8", flag: "w" },
+      );
+    });
+  });
+
+  describe("json-dictionary bucket loader", () => {
+    it("should add target locale keys only where source locale keys exist", async () => {
+      setupFileMocks();
+      const input = {
+        title: { en: "I am a title" },
+        logoPosition: "right",
+        pages: [
+          {
+            name: "Welcome to my world",
+            elements: [
+              {
+                title: { en: "I am an element title" },
+                description: { en: "I am an element description" },
+              },
+            ],
+          },
+        ],
+      };
+      mockFileOperations(JSON.stringify(input));
+      const loader = createBucketLoader(
+        "json-dictionary",
+        "i18n/[locale].json",
+        {
+          defaultLocale: "en",
+        },
+      );
+      loader.setDefaultLocale("en");
+      await loader.pull("en");
+      await loader.push("es", {
+        title: "Yo soy un titulo",
+        "pages/0/elements/0/title": "Yo soy un elemento de titulo",
+        "pages/0/elements/0/description": "Yo soy una descripcion de elemento",
+      });
+      const expectedOutput = `{
+  "title": {
+    "en": "I am a title",
+    "es": "Yo soy un titulo"
+  },
+  "logoPosition": "right",
+  "pages": [
+    {
+      "name": "Welcome to my world",
+      "elements": [
+        {
+          "title": {
+            "en": "I am an element title",
+            "es": "Yo soy un elemento de titulo"
+          },
+          "description": {
+            "en": "I am an element description",
+            "es": "Yo soy una descripcion de elemento"
+          }
+        }
+      ]
+    }
+  ]
+}`;
+      expect(fs.writeFile).toHaveBeenCalledWith(
+        "i18n/es.json",
         expectedOutput,
         { encoding: "utf-8", flag: "w" },
       );

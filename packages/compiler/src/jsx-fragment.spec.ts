@@ -106,6 +106,26 @@ function Component() {
     expect(result).toBe(expected);
   });
 
+  it("should handle type-only React import and add Fragment import", () => {
+    const input = `
+import type React from "react";
+
+function Component() {
+  return <></>;
+}
+`.trim();
+
+    const expected = `
+import type React from "react";
+import { Fragment } from "react";
+function Component() {
+  return <Fragment></Fragment>;
+}
+`.trim();
+    const result = runMutation(input);
+    expect(result).toBe(expected);
+  });
+
   it("should return null (no changes) when no fragments found", () => {
     const input = `
 function Component() {

@@ -23,6 +23,10 @@ function reorderKeys(
   data: Record<string, any>,
   originalInput: Record<string, any>,
 ): Record<string, any> {
+  if (_.isArray(originalInput) && _.isArray(data)) {
+    // If both are arrays, recursively reorder keys in each element
+    return data.map((item, idx) => reorderKeys(item, originalInput[idx] ?? {}));
+  }
   if (!_.isObject(data) || _.isArray(data) || _.isDate(data)) {
     return data;
   }

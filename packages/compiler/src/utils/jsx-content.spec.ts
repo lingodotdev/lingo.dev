@@ -60,11 +60,11 @@ describe("JSX Content Utils", () => {
 
       it("should handle whitespaces between elements", () => {
         const path = getJSXElementPath(
-          "<div>\n  Hello <strong>crazy</strong>  world!</div>",
+          "<div>\n  Hello <strong>crazy</strong>  world! <Icons.Rocket /></div>",
         );
         const content = extractJsxContent(path);
         expect(content).toBe(
-          "Hello <element:strong>crazy</element:strong> world!",
+          "Hello <element:strong>crazy</element:strong> world! <element:Icons.Rocket></element:Icons.Rocket>",
         );
       });
 

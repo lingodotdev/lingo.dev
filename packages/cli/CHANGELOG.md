@@ -1,5 +1,110 @@
 # lingo.dev
 
+## 0.107.6
+
+### Patch Changes
+
+- Updated dependencies [[`f897a7d`](https://github.com/lingodotdev/lingo.dev/commit/f897a7d0a3f7a236fb64f19bce9a8d00626d09ca)]:
+  - @lingo.dev/_compiler@0.7.1
+
+## 0.107.5
+
+### Patch Changes
+
+- Updated dependencies [[`bd9538a`](https://github.com/lingodotdev/lingo.dev/commit/bd9538ac6eba0ffc91ffc1fef5db6366c13e9e06)]:
+  - @lingo.dev/_compiler@0.7.0
+
+## 0.107.4
+
+### Patch Changes
+
+- [#1038](https://github.com/lingodotdev/lingo.dev/pull/1038) [`20a3737`](https://github.com/lingodotdev/lingo.dev/commit/20a3737ddb50b2a97699e57e03ea353b8912b78f) Thanks [@mathio](https://github.com/mathio)! - json-dictionary with locales on top level
+
+## 0.107.3
+
+### Patch Changes
+
+- [#1031](https://github.com/lingodotdev/lingo.dev/pull/1031) [`afbb978`](https://github.com/lingodotdev/lingo.dev/commit/afbb978fec83d574f2c43b7d68457e435fca9b57) Thanks [@mathio](https://github.com/mathio)! - add json-dictionary loader support
+
+- Updated dependencies [[`afbb978`](https://github.com/lingodotdev/lingo.dev/commit/afbb978fec83d574f2c43b7d68457e435fca9b57)]:
+  - @lingo.dev/_spec@0.39.3
+  - @lingo.dev/_compiler@0.6.3
+  - @lingo.dev/_sdk@0.10.2
+
+## 0.107.2
+
+### Patch Changes
+
+- [#1029](https://github.com/lingodotdev/lingo.dev/pull/1029) [`1f1e33f`](https://github.com/lingodotdev/lingo.dev/commit/1f1e33fe4d0767c2f026214a505a2aa9f3785996) Thanks [@mathio](https://github.com/mathio)! - allow wildcards when matching lockedKeys, ignoredKeys, injectLocale
+
+- [#1023](https://github.com/lingodotdev/lingo.dev/pull/1023) [`9266fd0`](https://github.com/lingodotdev/lingo.dev/commit/9266fd0bcddf4b07ca51d2609af92a9473106f9d) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - Update Zod dependency to version 3.25.76
+
+- Updated dependencies [[`9266fd0`](https://github.com/lingodotdev/lingo.dev/commit/9266fd0bcddf4b07ca51d2609af92a9473106f9d)]:
+  - @lingo.dev/_compiler@0.6.2
+  - @lingo.dev/_spec@0.39.2
+  - @lingo.dev/_sdk@0.10.1
+
+## 0.107.1
+
+### Patch Changes
+
+- [#1021](https://github.com/lingodotdev/lingo.dev/pull/1021) [`6baa1a7`](https://github.com/lingodotdev/lingo.dev/commit/6baa1a7e88dbfac3783d1d49695595077fd8d209) Thanks [@mathio](https://github.com/mathio)! - add lingo.dev provider details
+
+- Updated dependencies [[`6baa1a7`](https://github.com/lingodotdev/lingo.dev/commit/6baa1a7e88dbfac3783d1d49695595077fd8d209)]:
+  - @lingo.dev/_compiler@0.6.1
+
+## 0.107.0
+
+### Minor Changes
+
+- [#1019](https://github.com/lingodotdev/lingo.dev/pull/1019) [`925997d`](https://github.com/lingodotdev/lingo.dev/commit/925997d75a1edbb4211a3be8db2b186cb139327e) Thanks [@mathio](https://github.com/mathio)! - injectLocale uses forward slash now
+
+## 0.106.0
+
+### Minor Changes
+
+- [#998](https://github.com/lingodotdev/lingo.dev/pull/998) [`cb2aa0f`](https://github.com/lingodotdev/lingo.dev/commit/cb2aa0f505d6b7dbc435b526e8a6f62265d1f453) Thanks [@VAIBHAVSING](https://github.com/VAIBHAVSING)! - Added support for AbortController to all public SDK methods, enabling consumers to cancel long-running operations using the standard AbortController API. Refactored internal methods to propagate AbortSignal and check for abortion between batch chunks. Updated fetch calls to use AbortSignal for network request cancellation.
+
+### Patch Changes
+
+- Updated dependencies [[`864c305`](https://github.com/lingodotdev/lingo.dev/commit/864c30586510e6b69739c20fa42efdf45d8881ed), [`cb2aa0f`](https://github.com/lingodotdev/lingo.dev/commit/cb2aa0f505d6b7dbc435b526e8a6f62265d1f453)]:
+  - @lingo.dev/_compiler@0.6.0
+  - @lingo.dev/_sdk@0.10.0
+
+## 0.105.4
+
+### Patch Changes
+
+- [#1011](https://github.com/lingodotdev/lingo.dev/pull/1011) [`bfcb424`](https://github.com/lingodotdev/lingo.dev/commit/bfcb424eb4479d0d3b767e062d30f02c5bcaeb14) Thanks [@mathio](https://github.com/mathio)! - replace elements with dot in name
+
+- Updated dependencies [[`bfcb424`](https://github.com/lingodotdev/lingo.dev/commit/bfcb424eb4479d0d3b767e062d30f02c5bcaeb14)]:
+  - @lingo.dev/_compiler@0.5.5
+  - @lingo.dev/_react@0.4.1
+
+## 0.105.3
+
+### Patch Changes
+
+- [#1002](https://github.com/lingodotdev/lingo.dev/pull/1002) [`2b297ba`](https://github.com/lingodotdev/lingo.dev/commit/2b297babe76f9799c5154d9421fecd1ebbe1bb72) Thanks [@mathio](https://github.com/mathio)! - support custom prompts in compiler
+
+- Updated dependencies [[`2b297ba`](https://github.com/lingodotdev/lingo.dev/commit/2b297babe76f9799c5154d9421fecd1ebbe1bb72)]:
+  - @lingo.dev/_compiler@0.5.4
+
+## 0.105.2
+
+### Patch Changes
+
+- [#1000](https://github.com/lingodotdev/lingo.dev/pull/1000) [`30faa6d`](https://github.com/lingodotdev/lingo.dev/commit/30faa6d10e851a38ced86ae403b3a1fd48440bca) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - xliff 1.2 implementation
+
+## 0.105.1
+
+### Patch Changes
+
+- Updated dependencies [[`acd5356`](https://github.com/lingodotdev/lingo.dev/commit/acd5356b68d2261576240c173fea790864c3c31d)]:
+  - @lingo.dev/_spec@0.39.1
+  - @lingo.dev/_sdk@0.9.6
+  - @lingo.dev/_compiler@0.5.3
+
 ## 0.105.0
 
 ### Minor Changes
