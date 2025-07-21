@@ -1,11 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { LingoContext } from "./context";
-import { getLocaleFromCookies } from "./utils";
+import { getLocaleFromCookies, setLocaleInCookies } from "./utils";
+import { DEFAULT_LOCALE } from "../core";
 
 export type LingoProviderProps<D> = {
   dictionary: D;
+  locale?: string;
+  /** Optional setter. Normally supplied by `LingoProviderWrapper`. */
+  setLocale?: (locale: string) => Promise<void> | void;
   children: React.ReactNode;
 };
 
@@ -17,9 +21,15 @@ export function LingoProvider<D>(props: LingoProviderProps<D>) {
 
   return (
     <LingoContext.Provider
-      value={{ dictionary: props.dictionary }}
-      children={props.children}
-    />
+      value={{
+        dictionary: props.dictionary,
+        locale:
+          props.locale ?? (props as any).dictionary?.locale ?? DEFAULT_LOCALE,
+        setLocale: props.setLocale,
+      }}
+    >
+      {props.children}
+    </LingoContext.Provider>
   );
 }
 
@@ -29,23 +39,45 @@ export type LingoProviderWrapperProps<D> = {
 };
 
 export function LingoProviderWrapper<D>(props: LingoProviderWrapperProps<D>) {
+  const [locale, setLocaleState] = useState<string>(getLocaleFromCookies());
   const [dictionary, setDictionary] = useState<D | null>(null);
 
-  // for client-side rendered apps, the dictionary is also loaded on the client
+  // load dictionary whenever locale changes
   useEffect(() => {
     (async () => {
       try {
-        const locale = getLocaleFromCookies();
-        console.log(
-          `[Lingo.dev] Loading dictionary file for locale ${locale}...`,
-        );
+        if (process.env.NODE_ENV !== "production") {
+          console.log(
+            `[Lingo.dev] Loading dictionary file for locale ${locale}...`,
+          );
+        }
+
         const localeDictionary = await props.loadDictionary(locale);
         setDictionary(localeDictionary);
       } catch (error) {
-        console.log("[Lingo.dev] Failed to load dictionary:", error);
+        if (process.env.NODE_ENV !== "production") {
+          console.log("[Lingo.dev] Failed to load dictionary:", error);
+        }
       }
     })();
-  }, []);
+  }, [locale, props.loadDictionary]);
+
+  const setLocale = useCallback(
+    async (nextLocale: string) => {
+      if (nextLocale === locale) return;
+      try {
+        const nextDictionary = await props.loadDictionary(nextLocale);
+        setLocaleInCookies(nextLocale);
+        setDictionary(nextDictionary);
+        setLocaleState(nextLocale);
+      } catch (error) {
+        if (process.env.NODE_ENV !== "production") {
+          console.log("[Lingo.dev] Failed to switch locale:", error);
+        }
+      }
+    },
+    [locale, props.loadDictionary],
+  );
 
   // TODO: handle case when the dictionary is loading (throw suspense?)
   if (!dictionary) {
@@ -53,6 +85,12 @@ export function LingoProviderWrapper<D>(props: LingoProviderWrapperProps<D>) {
   }
 
   return (
-    <LingoProvider dictionary={dictionary}>{props.children}</LingoProvider>
+    <LingoProvider
+      dictionary={dictionary}
+      locale={locale}
+      setLocale={setLocale}
+    >
+      {props.children}
+    </LingoProvider>
   );
 }

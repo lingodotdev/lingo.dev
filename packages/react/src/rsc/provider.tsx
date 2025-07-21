@@ -7,10 +7,12 @@ export type LingoProviderProps = {
 };
 
 export async function LingoProvider(props: LingoProviderProps) {
+  const locale = await loadLocaleFromCookies();
+
   const dictionary = await loadDictionaryFromRequest(props.loadDictionary);
 
   return (
-    <LingoClientProvider dictionary={dictionary}>
+    <LingoClientProvider dictionary={dictionary} locale={locale}>
       {props.children}
     </LingoClientProvider>
   );
