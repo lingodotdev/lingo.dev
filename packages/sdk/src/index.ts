@@ -299,6 +299,31 @@ export class LingoDotDevEngine {
   }
 
   /**
+   * Localize an array of strings
+   * @param strings - An array of strings to be localized
+   * @param params - Localization parameters:
+   *   - sourceLocale: The source language code (e.g., 'en')
+   *   - targetLocale: The target language code (e.g., 'es')
+   *   - fast: Optional boolean to enable fast mode (faster for bigger batches)
+   * @returns An array of localized strings in the same order
+   */
+  async localizeStringArray(
+    strings: string[],
+    params: Z.infer<typeof localizationParamsSchema>,
+  ): Promise<string[]> {
+    const mapped = strings.reduce(
+      (acc, str, i) => {
+        acc[`item_${i}`] = str;
+        return acc;
+      },
+      {} as Record<string, string>,
+    );
+
+    const result = await this.localizeObject(mapped, params);
+    return Object.values(result);
+  }
+
+  /**
    * Localize a chat sequence while preserving speaker names
    * @param chat - Array of chat messages, each with 'name' and 'text' properties
    * @param params - Localization parameters:
