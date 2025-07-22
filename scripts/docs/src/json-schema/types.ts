@@ -25,6 +25,7 @@ export type JSONSchemaObject = {
     enum?: string[];
   };
   additionalProperties?: unknown;
+  definitions?: Record<string, unknown>;
 };
 
 export type SchemaParsingOptions = {

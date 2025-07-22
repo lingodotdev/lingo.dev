@@ -5,8 +5,8 @@ import {
   resolveRef,
   sortPropertyKeys,
   inferType,
-} from "./json-schema-parser";
-import type { JSONSchemaObject } from "./types";
+} from "./parser";
+import type { JSONSchemaObject, PropertyInfo } from "./types";
 
 describe("resolveRef", () => {
   it("should resolve simple reference", () => {
@@ -324,7 +324,7 @@ describe("parseSchema", () => {
     };
     
     const result = parseSchema(schema, { customOrder: ["beta", "alpha"] });
-    expect(result.map(p => p.name)).toEqual(["beta", "alpha", "gamma"]);
+    expect(result.map((p: PropertyInfo) => p.name)).toEqual(["beta", "alpha", "gamma"]);
   });
 
   it("should return empty array for invalid schema", () => {

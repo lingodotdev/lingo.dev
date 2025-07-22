@@ -808,6 +808,9 @@ importers:
       tsx:
         specifier: ^4.7.1
         version: 4.20.3
+      typescript:
+        specifier: ^5.8.3
+        version: 5.8.3
       unified:
         specifier: ^11.0.4
         version: 11.0.5

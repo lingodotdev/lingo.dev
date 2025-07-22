@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "generate-cli-docs": "tsx ./src/generate-cli-docs.ts",
-    "generate-config-docs": "tsx ./src/generate-config-docs/index.ts",
+    "generate-config-docs": "tsx ./src/generate-config-docs.ts",
     "test": "vitest",
     "test:run": "vitest run",
     "test:ui": "vitest --ui",
@@ -19,6 +19,7 @@
     "commander": "^12.0.0",
     "remark-stringify": "^11.0.0",
     "tsx": "^4.7.1",
+    "typescript": "^5.8.3",
     "unified": "^11.0.4",
     "vitest": "^3.2.4"
   },

@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import type { RootContent } from "mdast";
 import {
   makeHeadingNode,
   makeDescriptionNode,
@@ -11,7 +12,7 @@ import {
   renderPropertyToMarkdown,
   renderPropertiesToMarkdown,
   renderMarkdown,
-} from "./json-schema-markdown-renderer";
+} from "./markdown-renderer";
 import type { PropertyInfo } from "./types";
 
 describe("makeHeadingNode", () => {
@@ -129,10 +130,13 @@ describe("makeDefaultBulletNode", () => {
 
   it("should handle numeric default", () => {
     const node = makeDefaultBulletNode(42);
-    expect(node?.children[0].children[1]).toEqual({
-      type: "inlineCode",
-      value: "42",
-    });
+    expect(node).toBeDefined();
+    if (node && "children" in node && node.children[0] && "children" in node.children[0]) {
+      expect(node.children[0].children[1]).toEqual({
+        type: "inlineCode",
+        value: "42",
+      });
+    }
   });
 
   it("should return null for undefined default", () => {
@@ -318,8 +322,10 @@ describe("renderPropertyToMarkdown", () => {
     
     // Find child heading node
     const childHeading = nodes.find(
-      (node) => node.type === "heading" && 
-      (node as any).children[0].value === "config.debug"
+      (node: RootContent) => node.type === "heading" && 
+      node.type === "heading" && "children" in node && 
+      node.children[0] && "value" in node.children[0] && 
+      node.children[0].value === "config.debug"
     );
     expect(childHeading).toBeDefined();
   });
@@ -364,8 +370,9 @@ describe("renderPropertiesToMarkdown", () => {
     const nodes = renderPropertiesToMarkdown(properties);
     // Should have spacing paragraphs between properties
     const spacingNodes = nodes.filter(
-      (node) => node.type === "paragraph" && 
-      (node as any).children[0]?.value === ""
+      (node: RootContent) => node.type === "paragraph" && 
+      "children" in node && node.children[0] && 
+      "value" in node.children[0] && node.children[0].value === ""
     );
     expect(spacingNodes).toHaveLength(2); // One after each property
   });
