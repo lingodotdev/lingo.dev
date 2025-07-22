@@ -1,4 +1,4 @@
-export interface PropertyInfo {
+export type PropertyInfo = {
   name: string;
   fullPath: string;
   type: string;
@@ -8,9 +8,9 @@ export interface PropertyInfo {
   allowedValues?: unknown[];
   allowedKeys?: string[];
   children?: PropertyInfo[];
-}
+};
 
-export interface JSONSchemaObject {
+export type JSONSchemaObject = {
   type?: string | string[];
   properties?: Record<string, unknown>;
   required?: string[];
@@ -25,10 +25,10 @@ export interface JSONSchemaObject {
     enum?: string[];
   };
   additionalProperties?: unknown;
-}
+};
 
-export interface SchemaParsingOptions {
+export type SchemaParsingOptions = {
   customOrder?: string[];
   parentPath?: string;
   rootSchema?: unknown;
-}
+};
