@@ -5,7 +5,7 @@ import {
   resolveRef,
   sortPropertyKeys,
   inferType,
-} from "./schema-parser";
+} from "./json-schema-parser";
 import type { JSONSchemaObject } from "./types";
 
 describe("resolveRef", () => {

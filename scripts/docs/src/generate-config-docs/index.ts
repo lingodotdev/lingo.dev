@@ -5,8 +5,8 @@ import { dirname, resolve } from "node:path";
 import remarkStringify from "remark-stringify";
 import { unified } from "unified";
 import { zodToJsonSchema } from "zod-to-json-schema";
-import { parseSchema } from "../schema-parser";
-import { renderMarkdown } from "../markdown-renderer";
+import { parseSchema } from "../json-schema-parser";
+import { renderMarkdown } from "../json-schema-markdown-renderer";
 import { createOrUpdateGitHubComment, formatMarkdown } from "../utils";
 import type { JSONSchemaObject } from "../types";
 

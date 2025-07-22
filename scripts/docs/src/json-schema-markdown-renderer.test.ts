@@ -11,7 +11,7 @@ import {
   renderPropertyToMarkdown,
   renderPropertiesToMarkdown,
   renderMarkdown,
-} from "./markdown-renderer";
+} from "./json-schema-markdown-renderer";
 import type { PropertyInfo } from "./types";
 
 describe("makeHeadingNode", () => {
