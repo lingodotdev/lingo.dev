@@ -167,11 +167,6 @@ export function renderPropertyToMarkdown(property: PropertyInfo): RootContent[] 
 export function renderPropertiesToMarkdown(properties: PropertyInfo[]): RootContent[] {
   const children: RootContent[] = [
     {
-      type: "heading",
-      depth: 1,
-      children: [{ type: "text", value: "i18n.json properties" }],
-    },
-    {
       type: "paragraph",
       children: [
         {
@@ -212,7 +207,16 @@ export function renderPropertiesToMarkdown(properties: PropertyInfo[]): RootCont
 export function renderMarkdown(properties: PropertyInfo[]): string {
   const children = renderPropertiesToMarkdown(properties);
   const root: Root = { type: "root", children };
-  return unified()
+  const markdownContent = unified()
     .use(remarkStringify, { fences: true, listItemIndent: "one" })
     .stringify(root);
+  
+  // Add YAML frontmatter
+  const frontmatter = `---
+title: i18n.json properties
+---
+
+`;
+  
+  return frontmatter + markdownContent;
 }
