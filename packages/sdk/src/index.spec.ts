@@ -91,4 +91,62 @@ describe("ReplexicaEngine", () => {
       );
     });
   });
+
+  describe("localizeStringArray", () => {
+    it("should localize an array of strings and maintain order", async () => {
+      const engine = new LingoDotDevEngine({ apiKey: "test" });
+      const mockLocalizeObject = vi.spyOn(engine, "localizeObject");
+      mockLocalizeObject.mockImplementation(async (obj: any) => {
+        // Simulate translation by adding 'ES:' prefix to all string values
+        return Object.fromEntries(
+          Object.entries(obj).map(([key, value]) => [key, `ES:${value}`]),
+        );
+      });
+
+      const inputArray = ["Hello", "Goodbye", "How are you?"];
+
+      const result = await engine.localizeStringArray(inputArray, {
+        sourceLocale: "en",
+        targetLocale: "es",
+      });
+
+      // Verify the mapped object was passed to localizeObject
+      expect(mockLocalizeObject).toHaveBeenCalledWith(
+        {
+          item_0: "Hello",
+          item_1: "Goodbye",
+          item_2: "How are you?",
+        },
+        {
+          sourceLocale: "en",
+          targetLocale: "es",
+        },
+      );
+
+      // Verify the result maintains the original order
+      expect(result).toEqual(["ES:Hello", "ES:Goodbye", "ES:How are you?"]);
+      expect(result).toHaveLength(3);
+    });
+
+    it("should handle empty array", async () => {
+      const engine = new LingoDotDevEngine({ apiKey: "test" });
+      const mockLocalizeObject = vi.spyOn(engine, "localizeObject");
+      mockLocalizeObject.mockImplementation(async () => ({}));
+
+      const result = await engine.localizeStringArray([], {
+        sourceLocale: "en",
+        targetLocale: "es",
+      });
+
+      expect(mockLocalizeObject).toHaveBeenCalledWith(
+        {},
+        {
+          sourceLocale: "en",
+          targetLocale: "es",
+        },
+      );
+
+      expect(result).toEqual([]);
+    });
+  });
 });
