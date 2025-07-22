@@ -1,5 +1,49 @@
 # lingo.dev
 
+## 0.107.6
+
+### Patch Changes
+
+- Updated dependencies [[`f897a7d`](https://github.com/lingodotdev/lingo.dev/commit/f897a7d0a3f7a236fb64f19bce9a8d00626d09ca)]:
+  - @lingo.dev/_compiler@0.7.1
+
+## 0.107.5
+
+### Patch Changes
+
+- Updated dependencies [[`bd9538a`](https://github.com/lingodotdev/lingo.dev/commit/bd9538ac6eba0ffc91ffc1fef5db6366c13e9e06)]:
+  - @lingo.dev/_compiler@0.7.0
+
+## 0.107.4
+
+### Patch Changes
+
+- [#1038](https://github.com/lingodotdev/lingo.dev/pull/1038) [`20a3737`](https://github.com/lingodotdev/lingo.dev/commit/20a3737ddb50b2a97699e57e03ea353b8912b78f) Thanks [@mathio](https://github.com/mathio)! - json-dictionary with locales on top level
+
+## 0.107.3
+
+### Patch Changes
+
+- [#1031](https://github.com/lingodotdev/lingo.dev/pull/1031) [`afbb978`](https://github.com/lingodotdev/lingo.dev/commit/afbb978fec83d574f2c43b7d68457e435fca9b57) Thanks [@mathio](https://github.com/mathio)! - add json-dictionary loader support
+
+- Updated dependencies [[`afbb978`](https://github.com/lingodotdev/lingo.dev/commit/afbb978fec83d574f2c43b7d68457e435fca9b57)]:
+  - @lingo.dev/_spec@0.39.3
+  - @lingo.dev/_compiler@0.6.3
+  - @lingo.dev/_sdk@0.10.2
+
+## 0.107.2
+
+### Patch Changes
+
+- [#1029](https://github.com/lingodotdev/lingo.dev/pull/1029) [`1f1e33f`](https://github.com/lingodotdev/lingo.dev/commit/1f1e33fe4d0767c2f026214a505a2aa9f3785996) Thanks [@mathio](https://github.com/mathio)! - allow wildcards when matching lockedKeys, ignoredKeys, injectLocale
+
+- [#1023](https://github.com/lingodotdev/lingo.dev/pull/1023) [`9266fd0`](https://github.com/lingodotdev/lingo.dev/commit/9266fd0bcddf4b07ca51d2609af92a9473106f9d) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - Update Zod dependency to version 3.25.76
+
+- Updated dependencies [[`9266fd0`](https://github.com/lingodotdev/lingo.dev/commit/9266fd0bcddf4b07ca51d2609af92a9473106f9d)]:
+  - @lingo.dev/_compiler@0.6.2
+  - @lingo.dev/_spec@0.39.2
+  - @lingo.dev/_sdk@0.10.1
+
 ## 0.107.1
 
 ### Patch Changes

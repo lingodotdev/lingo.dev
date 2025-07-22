@@ -2777,6 +2777,71 @@ Línea 3`;
       );
     });
   });
+
+  describe("json-dictionary bucket loader", () => {
+    it("should add target locale keys only where source locale keys exist", async () => {
+      setupFileMocks();
+      const input = {
+        title: { en: "I am a title" },
+        logoPosition: "right",
+        pages: [
+          {
+            name: "Welcome to my world",
+            elements: [
+              {
+                title: { en: "I am an element title" },
+                description: { en: "I am an element description" },
+              },
+            ],
+          },
+        ],
+      };
+      mockFileOperations(JSON.stringify(input));
+      const loader = createBucketLoader(
+        "json-dictionary",
+        "i18n/[locale].json",
+        {
+          defaultLocale: "en",
+        },
+      );
+      loader.setDefaultLocale("en");
+      await loader.pull("en");
+      await loader.push("es", {
+        title: "Yo soy un titulo",
+        "pages/0/elements/0/title": "Yo soy un elemento de titulo",
+        "pages/0/elements/0/description": "Yo soy una descripcion de elemento",
+      });
+      const expectedOutput = `{
+  "title": {
+    "en": "I am a title",
+    "es": "Yo soy un titulo"
+  },
+  "logoPosition": "right",
+  "pages": [
+    {
+      "name": "Welcome to my world",
+      "elements": [
+        {
+          "title": {
+            "en": "I am an element title",
+            "es": "Yo soy un elemento de titulo"
+          },
+          "description": {
+            "en": "I am an element description",
+            "es": "Yo soy una descripcion de elemento"
+          }
+        }
+      ]
+    }
+  ]
+}`;
+      expect(fs.writeFile).toHaveBeenCalledWith(
+        "i18n/es.json",
+        expectedOutput,
+        { encoding: "utf-8", flag: "w" },
+      );
+    });
+  });
 });
 
 function setupFileMocks() {

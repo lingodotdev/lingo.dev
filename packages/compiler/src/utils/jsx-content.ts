@@ -126,25 +126,85 @@ function isWhitespace(nodePath: NodePath<t.JSXExpressionContainer>) {
 }
 
 function normalizeJsxWhitespace(input: string) {
-  const lines = input.split("\n");
-  let result = "";
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i].trim();
-    if (line === "") continue;
-    if (
-      i > 0 &&
-      (line.startsWith("<element:") ||
-        line.startsWith("<function:") ||
-        line.startsWith("{") ||
-        line.startsWith("<expression/>"))
-    ) {
-      result += line;
+  // Handle single-line content
+  if (!input.includes("\n")) {
+    // For single-line content, only trim if it appears to be formatting whitespace
+    // (e.g., "   hello world   " should be trimmed to "hello world")
+    // But preserve meaningful leading/trailing spaces (e.g., " hello" should stay " hello")
+
+    // If the content is mostly whitespace with some text, it's likely formatting
+    const trimmed = input.trim();
+    if (trimmed.length === 0) return "";
+
+    // Check if we have excessive whitespace (more than 1 space on each side)
+    const leadingMatch = input.match(/^\s*/);
+    const trailingMatch = input.match(/\s*$/);
+    const leadingSpaces = leadingMatch ? leadingMatch[0].length : 0;
+    const trailingSpaces = trailingMatch ? trailingMatch[0].length : 0;
+
+    if (leadingSpaces > 1 || trailingSpaces > 1) {
+      // This looks like formatting whitespace, collapse it
+      return input.replace(/\s+/g, " ").trim();
     } else {
-      if (result && !result.endsWith(" ")) result += " ";
-      result += line;
+      // This looks like meaningful whitespace, preserve it but collapse internal spaces
+      return input.replace(/\s{2,}/g, " ");
     }
   }
-  // Collapse multiple spaces
-  result = result.replace(/\s+/g, " ");
+
+  // Handle multi-line content
+  const lines = input.split("\n");
+  let result = "";
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const trimmedLine = line.trim();
+
+    // Skip empty lines
+    if (trimmedLine === "") continue;
+
+    // Check if this line contains a placeholder (explicit whitespace)
+    if (trimmedLine.includes(WHITESPACE_PLACEHOLDER)) {
+      // For lines with placeholders, preserve the original spacing
+      result += trimmedLine;
+    } else if (
+      trimmedLine.startsWith("<element:") ||
+      trimmedLine.startsWith("<function:") ||
+      trimmedLine.startsWith("{") ||
+      trimmedLine.startsWith("<expression/>")
+    ) {
+      // When we encounter an element/function/expression
+      // Add space only when:
+      // 1. We have existing content AND
+      // 2. Result doesn't already end with space or placeholder AND
+      // 3. The result ends with a word character (indicating text) AND
+      // 4. The element content starts with a space (indicating word continuation)
+      const shouldAddSpace =
+        result &&
+        !result.endsWith(" ") &&
+        !result.endsWith(WHITESPACE_PLACEHOLDER) &&
+        /\w$/.test(result) &&
+        // Check if element content starts with space by looking for "> " pattern
+        trimmedLine.includes("> ");
+
+      if (shouldAddSpace) {
+        result += " ";
+      }
+      result += trimmedLine;
+    } else {
+      // For regular text content, ensure proper spacing
+      // Only add space if the result doesn't already end with a space or placeholder
+      if (
+        result &&
+        !result.endsWith(" ") &&
+        !result.endsWith(WHITESPACE_PLACEHOLDER)
+      ) {
+        result += " ";
+      }
+      result += trimmedLine;
+    }
+  }
+
+  // Collapse multiple spaces but preserve single spaces around placeholders
+  result = result.replace(/\s{2,}/g, " ");
   return result.trim();
 }

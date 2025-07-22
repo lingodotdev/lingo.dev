@@ -4,6 +4,7 @@
   "scripts": {
     "prepare": "husky",
     "build": "turbo build",
+    "typecheck": "turbo typecheck",
     "test": "turbo test",
     "new": "changeset",
     "new:empty": "changeset --empty",

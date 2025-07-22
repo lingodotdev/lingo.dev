@@ -1,6 +1,6 @@
 {
   "name": "lingo.dev",
-  "version": "0.107.1",
+  "version": "0.107.6",
   "description": "Lingo.dev CLI",
   "private": false,
   "publishConfig": {
@@ -103,7 +103,8 @@
   "scripts": {
     "lingo.dev": "node --inspect=9229 ./bin/cli.mjs",
     "dev": "tsup --watch",
-    "build": "tsc --noEmit && tsup",
+    "build": "pnpm typecheck && tsup",
+    "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
     "clean": "rm -rf build"

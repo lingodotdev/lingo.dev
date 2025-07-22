@@ -156,6 +156,28 @@ const unplugin = createUnplugin<Partial<typeof defaultParams> | undefined>(
 );
 
 export default {
+  /**
+   * Initializes Lingo.dev Compiler for Next.js (App Router).
+   *
+   * @param compilerParams - The compiler parameters.
+   *
+   * @returns The Next.js configuration.
+   *
+   * @example Configuration for Next.js's default template
+   * ```ts
+   * import lingoCompiler from "lingo.dev/compiler";
+   * import type { NextConfig } from "next";
+   *
+   * const nextConfig: NextConfig = {
+   *   /* config options here *\/
+   * };
+   *
+   * export default lingoCompiler.next({
+   *   sourceRoot: "app",
+   *   models: "lingo.dev",
+   * })(nextConfig);
+   * ```
+   */
   next:
     (
       compilerParams?: Partial<typeof defaultParams> & {
@@ -250,6 +272,51 @@ export default {
 
       return nextConfig;
     },
+  /**
+   * Initializes Lingo.dev Compiler for Vite.
+   *
+   * @param compilerParams - The compiler parameters.
+   *
+   * @returns The Vite configuration.
+   *
+   * @example Configuration for Vite's "react-ts" template
+   * ```ts
+   * import { defineConfig, type UserConfig } from "vite";
+   * import react from "@vitejs/plugin-react";
+   * import lingoCompiler from "lingo.dev/compiler";
+   *
+   * // https://vite.dev/config/
+   * const viteConfig: UserConfig = {
+   *   plugins: [react()],
+   * };
+   *
+   * export default defineConfig(() =>
+   *   lingoCompiler.vite({
+   *     models: "lingo.dev",
+   *   })(viteConfig)
+   * );
+   * ```
+   *
+   * @example Configuration for React Router's default template
+   * ```ts
+   * import { reactRouter } from "@react-router/dev/vite";
+   * import tailwindcss from "@tailwindcss/vite";
+   * import lingoCompiler from "lingo.dev/compiler";
+   * import { defineConfig, type UserConfig } from "vite";
+   * import tsconfigPaths from "vite-tsconfig-paths";
+   *
+   * const viteConfig: UserConfig = {
+   *   plugins: [tailwindcss(), reactRouter(), tsconfigPaths()],
+   * };
+   *
+   * export default defineConfig(() =>
+   *   lingoCompiler.vite({
+   *     sourceRoot: "app",
+   *     models: "lingo.dev",
+   *   })(viteConfig)
+   * );
+   * ```
+   */
   vite: (compilerParams?: Partial<typeof defaultParams>) => (config: any) => {
     const mergedParams = _.merge(
       {},

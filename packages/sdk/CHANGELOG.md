@@ -1,5 +1,21 @@
 # @lingo.dev/\_sdk
 
+## 0.10.2
+
+### Patch Changes
+
+- Updated dependencies [[`afbb978`](https://github.com/lingodotdev/lingo.dev/commit/afbb978fec83d574f2c43b7d68457e435fca9b57)]:
+  - @lingo.dev/_spec@0.39.3
+
+## 0.10.1
+
+### Patch Changes
+
+- [#1023](https://github.com/lingodotdev/lingo.dev/pull/1023) [`9266fd0`](https://github.com/lingodotdev/lingo.dev/commit/9266fd0bcddf4b07ca51d2609af92a9473106f9d) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - Update Zod dependency to version 3.25.76
+
+- Updated dependencies [[`9266fd0`](https://github.com/lingodotdev/lingo.dev/commit/9266fd0bcddf4b07ca51d2609af92a9473106f9d)]:
+  - @lingo.dev/_spec@0.39.2
+
 ## 0.10.0
 
 ### Minor Changes
