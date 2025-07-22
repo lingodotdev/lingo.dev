@@ -7,9 +7,9 @@
     ]
   },
   "buckets": {
-    "yaml-root-key": {
+    "json-dictionary": {
       "include": [
-        "./[locale]/example.yml"
+        "./example.json"
       ]
     }
   },

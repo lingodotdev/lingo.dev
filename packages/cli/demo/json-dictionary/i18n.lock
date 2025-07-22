@@ -1,0 +1,20 @@
+version: 1
+checksums:
+  455da9346f4e772000927cd2ff5bb898:
+    navigation: 104a3db3b671c04e167eafbe21e57881
+    buttons/submit: 7c91ef5f747eea9f77a9c4f23e19fb2e
+    buttons/cancel: 2e2a849c2223911717de8caa2c71bade
+    messages/welcome: 1308168cca4fa5d8d7a0cf24e55e93fc
+    messages/error: 53a2b5f5e7d83c737c8e02fe18fb4bdb
+    forms/login/title: f4f219abeb5a465ecb1c7efaf50246de
+    forms/login/fields/username: 2ee65bc2dd2f12cf2672f95b2a054bf8
+    forms/login/fields/password: 223a61cf906ab9c40d22612c588dff48
+  a8f80a1a4e0e0aa2750e514a8a6abacf:
+    navigation: 104a3db3b671c04e167eafbe21e57881
+    buttons/submit: 7c91ef5f747eea9f77a9c4f23e19fb2e
+    buttons/cancel: 2e2a849c2223911717de8caa2c71bade
+    messages/welcome: 1308168cca4fa5d8d7a0cf24e55e93fc
+    messages/error: 53a2b5f5e7d83c737c8e02fe18fb4bdb
+    forms/login/title: f4f219abeb5a465ecb1c7efaf50246de
+    forms/login/fields/username: 2ee65bc2dd2f12cf2672f95b2a054bf8
+    forms/login/fields/password: 223a61cf906ab9c40d22612c588dff48

@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+pnpm install
+
 pnpm --filter lingo.dev run build
 
 root_dir=$(git rev-parse --show-toplevel)
@@ -13,4 +15,4 @@ for demo in "$demo_root"/*/; do
     cd "$demo"
     node "$cli" i18n "$@"
   )
- done 
+ done
