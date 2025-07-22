@@ -3,7 +3,7 @@
 return [
   '0' => '¡Hola, mundo!',
   '1' => 'Bienvenido a MyApp',
-  '2' => 'Es "simple\\" con una barra invertida \\ y salto de línea\nTodo el texto aquí',
+  '2' => 'Es "simple\\" con una barra invertida \\ y salto de línea\\nTodo el texto aquí',
   '3' => [
     'welcome_message' => '¡Bienvenido!'
   ],

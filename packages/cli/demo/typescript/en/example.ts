@@ -1,4 +1,3 @@
-
 const messages = {
   navigation: {
     home: "Home",
@@ -6,7 +5,7 @@ const messages = {
     contact: "Contact Us",
     services: "Our Services"
   },
-  
+
   forms: {
     title: "Contact Form",
     nameLabel: "Your Name",
