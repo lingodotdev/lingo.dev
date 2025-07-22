@@ -91,4 +91,15 @@ export async function renderSummary(results: Map<any, any>) {
     (r) => r.status === "error",
   ).length;
   console.log(`• ${chalk.hex(colors.yellow)(failedTasksCount)} failed`);
+
+  if (failedTasksCount > 0) {
+    console.log(chalk.hex(colors.orange)("\n[Failed]"));
+    for (const result of Array.from(results.values()).filter(
+      (r) => r.status === "error",
+    )) {
+      console.log(
+        `❌ ${chalk.hex(colors.white)(String(result.error.message))}\n`,
+      );
+    }
+  }
 }
