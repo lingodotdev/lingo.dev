@@ -31,7 +31,8 @@
   ],
   "scripts": {
     "dev": "unbuild && chokidar 'src/**/*' -c 'unbuild'",
-    "build": "tsc --noEmit && unbuild",
+    "build": "pnpm typecheck && unbuild",
+    "typecheck": "tsc --noEmit",
     "clean": "rm -rf build",
     "test": "vitest --run",
     "test:watch": "vitest -w"
