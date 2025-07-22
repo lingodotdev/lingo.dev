@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "generate-cli-docs": "tsx ./src/generate-cli-docs.ts",
-    "generate-config-docs": "tsx ./src/generate-config-docs.ts",
+    "generate-config-docs": "tsx ./src/generate-config-docs/index.ts",
     "test": "vitest",
     "test:run": "vitest run",
     "test:ui": "vitest --ui",
