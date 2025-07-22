@@ -3,4 +3,4 @@ Esta es la segunda línea con contenido diferente
 Esta línea contiene caracteres especiales: !@#$%^&*()
 
 Esta es la línea cinco después de una línea vacía arriba
-Línea final que demuestra la localización de texto
+Gracias por elegir nuestro servicio

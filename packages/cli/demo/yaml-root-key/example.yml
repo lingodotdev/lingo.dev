@@ -1,13 +1,13 @@
-en:
+es:
   navigation:
-    home: "Home"
-    about: "About Us"
-    contact: "Contact"
-    services: "Services"
+    home: "Inicio"
+    about: "Sobre nosotros"
+    contact: "Contacto"
+    services: "Servicios"
   forms:
-    title: "Contact Form"
-    name_label: "Your Name"
-    email_label: "Email Address"
-    message_label: "Message"
-    submit_button: "Send Message"
-    success_message: "Thank you for your message!"
+    title: "Formulario de contacto"
+    name_label: "Su nombre"
+    email_label: "Dirección de correo electrónico"
+    message_label: "Mensaje"
+    submit_button: "Enviar mensaje"
+    success_message: "¡Gracias por su mensaje!"

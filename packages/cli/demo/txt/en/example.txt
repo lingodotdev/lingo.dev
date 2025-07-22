@@ -3,4 +3,4 @@ This is the second line with different content
 This line contains special characters: !@#$%^&*()
 
 This is line five after an empty line above
-Final line demonstrating text localization
+Thank you for choosing our service

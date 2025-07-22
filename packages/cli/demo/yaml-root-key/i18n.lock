@@ -35,16 +35,3 @@ checksums:
     forms/message_label: f2f72126bd244cfc534eab395e054362
     forms/submit_button: 487177489aafc9c0243c57ef3850a2d9
     forms/success_message: a0a7aa980dffa31d4d194af718a917b3
-    products/featured_title: 801478e5987430c45f1aa406a9906748
-    products/price_label: 6e3258d4cf5835177d174a5259a9cfd6
-    products/add_to_cart: c93a29ccf502ff71bf08924dcdea9179
-    products/out_of_stock: 6673fc95c2cee3c713e0d60c8184e289
-    errors/page_not_found: 97612e6230bc7a1ebd99380bf561b732
-    errors/server_error: 297a071d05522f73060503bf8a5e6d2e
-    errors/network_error: e0becd5fc88e85a97c6987b96c80fb11
-    common/welcome: 1308168cca4fa5d8d7a0cf24e55e93fc
-    common/loading: 82b4ea7ed1439094d7c4be13aaba9a66
-    common/save: f7a2929f33bc420195e59ac5a8bcd454
-    common/cancel: 2e2a849c2223911717de8caa2c71bade
-    common/delete: 8bcf303dd10a645b5baacb02b47d72c9
-    common/confirm: 6d5cd13628a7887711fd0c29f1123652
