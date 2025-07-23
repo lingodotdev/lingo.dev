@@ -1,4 +1,4 @@
-import { LOCALE_COOKIE_NAME } from "../core";
+import { DEFAULT_LOCALE, LOCALE_COOKIE_NAME } from "../core";
 
 export const loadDictionary = async (
   requestOrExplicitLocale: Request | string,
@@ -6,28 +6,50 @@ export const loadDictionary = async (
   return null;
 };
 
-async function loadLocaleFromCookies(request: Request) {
-  const cookieHeaderValue = request.headers.get("Cookie") || "";
-  const cookieValue = cookieHeaderValue
-    .split(";")
-    .find((cookie) => cookie.trim().startsWith(`${LOCALE_COOKIE_NAME}=`));
-  const locale = cookieValue ? cookieValue.split("=")[1] : null;
-  return locale;
-}
-
 export async function loadDictionary_internal(
   requestOrExplicitLocale: Request | string,
   dictionaryLoader: Record<string, () => Promise<any>>,
 ) {
-  const locale =
-    typeof requestOrExplicitLocale === "string"
-      ? requestOrExplicitLocale
-      : await loadLocaleFromCookies(requestOrExplicitLocale);
+  const locale = parseLocaleCode(requestOrExplicitLocale);
 
-  if (locale && dictionaryLoader[locale]) {
-    return dictionaryLoader[locale]().then((value) => {
-      return value.default;
-    });
+  // get dictionary loader for specific locale
+  const loader = dictionaryLoader[locale];
+
+  // locale is not available in the dictionary
+  if (!loader) {
+    // TODO: throw a clear error message
+    return null;
   }
-  return null;
+
+  return loader().then((value) => value.default);
+}
+
+function parseLocaleCode(input: Request | string): string {
+  // if it's a string, assume it's a locale code
+  if (typeof input === "string") {
+    return input;
+  }
+
+  // it's a Request, so get the Cookie header
+  const cookieHeaderValue = input.headers.get("Cookie");
+
+  // there's no Cookie header, so return default
+  if (!cookieHeaderValue) {
+    return DEFAULT_LOCALE;
+  }
+
+  // get the lingo-locale cookie
+  const cookies = cookieHeaderValue.split(";");
+  const cookie = cookies.find(isLingoLocaleCookie);
+
+  // there's no lingo-locale cookie, so return default
+  if (!cookie) {
+    return DEFAULT_LOCALE;
+  }
+
+  return cookie;
+}
+
+function isLingoLocaleCookie(cookie: string) {
+  return cookie.trim().startsWith(`${LOCALE_COOKIE_NAME}=`);
 }
