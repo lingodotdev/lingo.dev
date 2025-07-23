@@ -16,16 +16,18 @@ function loadLocaleFromCookies(request: Request) {
   }
 
   // get the lingo-locale cookie
+  const cookiePrefix = `${LOCALE_COOKIE_NAME}=`;
   const cookie = cookieHeaderValue
     .split(";")
-    .find((cookie) => cookie.trim().startsWith(`${LOCALE_COOKIE_NAME}=`));
+    .find((cookie) => cookie.trim().startsWith(cookiePrefix));
 
   // there's no lingo-locale cookie, so return default
   if (!cookie) {
     return DEFAULT_LOCALE;
   }
 
-  return cookie;
+  // extract the locale value from the cookie
+  return cookie.trim().substring(cookiePrefix.length);
 }
 
 export async function loadDictionary_internal(
