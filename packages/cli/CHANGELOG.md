@@ -1,5 +1,22 @@
 # lingo.dev
 
+## 0.108.0
+
+### Minor Changes
+
+- [#1061](https://github.com/lingodotdev/lingo.dev/pull/1061) [`55e9e68`](https://github.com/lingodotdev/lingo.dev/commit/55e9e687a3d0efa84b808818a848a276b1a42015) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - Add Discord link to CLI help text
+
+### Patch Changes
+
+- [#1062](https://github.com/lingodotdev/lingo.dev/pull/1062) [`1ff847b`](https://github.com/lingodotdev/lingo.dev/commit/1ff847b9273a3082178553e70c22524f5831ad36) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - fixed missing placeholder replacement logic in mdx
+
+- [#1028](https://github.com/lingodotdev/lingo.dev/pull/1028) [`b9e2551`](https://github.com/lingodotdev/lingo.dev/commit/b9e2551f349e33542212f941b3407e8517b5fb27) Thanks [@pushkar1713](https://github.com/pushkar1713)! - Make run cmd in CLI print a list of collected errors
+
+- Updated dependencies [[`85dfc10`](https://github.com/lingodotdev/lingo.dev/commit/85dfc10961b116e31b2bb478f42013756ca49974), [`2d67369`](https://github.com/lingodotdev/lingo.dev/commit/2d673697b9cf4d91de2f48444581f8b3fd894cd6)]:
+  - @lingo.dev/_sdk@0.11.0
+  - @lingo.dev/_react@0.4.2
+  - @lingo.dev/_compiler@0.7.2
+
 ## 0.107.6
 
 ### Patch Changes
