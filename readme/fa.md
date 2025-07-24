@@ -1,11 +1,18 @@
 <p align="center">
   <a href="https://lingo.dev">
-    <img src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.compiler.png" width="100%" alt="لینگو.دو" />
+    <img
+      src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.compiler.png"
+      width="100%"
+      alt="Lingo.dev"
+    />
   </a>
 </p>
 
 <p align="center">
-  <strong>⚡️ مجموعه ابزار i18n متن‌باز و مبتنی بر هوش مصنوعی برای بومی‌سازی آنی با LLM‌ها.</strong>
+  <strong>
+    ⚡ Lingo.dev - ابزار متن‌باز و مبتنی بر هوش مصنوعی برای بومی‌سازی فوری با
+    استفاده از مدل‌های زبانی بزرگ (LLM).
+  </strong>
 </p>
 
 <br />
@@ -19,13 +26,22 @@
 
 <p align="center">
   <a href="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml">
-    <img src="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml/badge.svg" alt="انتشار" />
+    <img
+      src="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml/badge.svg"
+      alt="انتشار"
+    />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md">
-    <img src="https://img.shields.io/github/license/lingodotdev/lingo.dev" alt="مجوز" />
+    <img
+      src="https://img.shields.io/github/license/lingodotdev/lingo.dev"
+      alt="مجوز"
+    />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/commits/main">
-    <img src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev" alt="آخرین کامیت" />
+    <img
+      src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev"
+      alt="آخرین کامیت"
+    />
   </a>
 </p>
 
@@ -103,7 +119,25 @@ jobs:
 
 [مستندات را بخوانید ←](https://lingo.dev/sdk)
 
----
+```ts
+import { LingoDotDevEngine } from "lingo.dev/sdk";
+
+const lingoDotDev = new LingoDotDevEngine({
+  apiKey: "your-api-key-here",
+});
+
+const content = {
+  greeting: "Hello",
+  farewell: "Goodbye",
+  message: "Welcome to our platform",
+};
+
+const translated = await lingoDotDev.localizeObject(content, {
+  sourceLocale: "en",
+  targetLocale: "es",
+});
+// Returns: { greeting: "Hola", farewell: "Adiós", message: "Bienvenido a nuestra plataforma" }
+```
 
 ## 🤝 انجمن
 
@@ -131,6 +165,6 @@ jobs:
 
 ## 🌐 فایل readme به زبان‌های دیگر
 
-[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
 
 زبان خود را نمی‌بینید؟ آن را به [`i18n.json`](./i18n.json) اضافه کنید و یک PR باز کنید!
