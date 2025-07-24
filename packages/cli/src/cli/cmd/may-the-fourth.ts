@@ -90,4 +90,5 @@ async function renderHero() {
     chalk.hex(colors.blue)("⭐ GitHub Repo: https://lingo.dev/go/gh"),
   );
   console.log(chalk.hex(colors.blue)("💬 24/7 Support: hi@lingo.dev"));
+  console.log(chalk.hex(colors.blue)("🎮 Discord: https://lingo.dev/go/discord"));
 }

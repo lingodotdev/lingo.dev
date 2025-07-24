@@ -35,6 +35,7 @@ export async function renderHero() {
   const label1 = "⭐ GitHub Repo:";
   const label2 = "📚 Docs:";
   const label3 = "💬 24/7 Support:";
+  const label4 = "🎮 Discord:";
   const maxLabelWidth = 17; // Approximate visual width accounting for emoji
 
   console.log(
@@ -51,6 +52,11 @@ export async function renderHero() {
     `${chalk.hex(colors.blue)(label3.padEnd(maxLabelWidth + 1))} ${chalk.hex(
       colors.blue,
     )("hi@lingo.dev")}`,
+  );
+  console.log(
+    `${chalk.hex(colors.blue)(label4.padEnd(maxLabelWidth + 1))} ${chalk.hex(
+      colors.blue,
+    )("https://lingo.dev/go/discord")}`,
   );
 }
 
