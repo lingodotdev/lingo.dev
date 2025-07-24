@@ -437,8 +437,8 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0
       posthog-node:
-        specifier: ^4.17.0
-        version: 4.17.0
+        specifier: ^5.5.1
+        version: 5.5.1
       prettier:
         specifier: ^3.4.2
         version: 3.4.2
@@ -633,8 +633,8 @@ importers:
         specifier: ^1.2.0
         version: 1.2.0(zod@3.25.76)
       posthog-node:
-        specifier: ^4.17.0
-        version: 4.17.0
+        specifier: ^5.5.1
+        version: 5.5.1
       prettier:
         specifier: ^3.4.2
         version: 3.4.2
@@ -4050,9 +4050,6 @@ packages:
 
   axios@1.7.7:
     resolution: {integrity: sha512-S4kL7XrjgBmvdGut0sN3yJxqYzrDOnivkBiN0OFs6hLiUam3UPvswUo0kqGyhqUZGEOytHyumEdXsAkgCOUf3Q==}
-
-  axios@1.9.0:
-    resolution: {integrity: sha512-re4CqKTJaURpzbLHtIi6XpDv20/CnpXOtjRY5/CU32L8gU8ek9UIivcfvSWvmKEngmVbrUtPpdDwWDWL7DNHvg==}
 
   axobject-query@4.1.0:
     resolution: {integrity: sha512-qIj0G9wZbMGNLjLmg1PT6v2mE9AH2zlnADJD/2tC6E00hgmhUOfEB6greHPAfLRSufHqROIUTkw6E+M3lH0PTQ==}
@@ -7498,9 +7495,9 @@ packages:
     resolution: {integrity: sha512-QSa9EBe+uwlGTFmHsPKokv3B/oEMQZxfqW0QqNCyhpa6mB1afzulwn8hihglqAb2pOw+BJgNlmXQ8la2VeHB7w==}
     engines: {node: ^10 || ^12 || >=14}
 
-  posthog-node@4.17.0:
-    resolution: {integrity: sha512-e3P9nutxKoSYslYzDHuf2qahKlufHlgk3MmgoCOWyEFf/T8pBk77ro+3IQdofInrpB6cHHkhdnlIUwiXlZw2AQ==}
-    engines: {node: '>=15.0.0'}
+  posthog-node@5.5.1:
+    resolution: {integrity: sha512-y2TBl6H27vEbXk7sqG8QISmYaUN/UcPOYYDAK0wtnXRG3ySb93mG//vri1zS2hZvYHbBv0Tz8sLpZRCq4/v99A==}
+    engines: {node: '>=20'}
 
   prelude-ls@1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
@@ -12542,14 +12539,6 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  axios@1.9.0:
-    dependencies:
-      follow-redirects: 1.15.9
-      form-data: 4.0.2
-      proxy-from-env: 1.1.0
-    transitivePeerDependencies:
-      - debug
-
   axobject-query@4.1.0: {}
 
   babel-dead-code-elimination@1.0.10:
@@ -16596,11 +16585,7 @@ snapshots:
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
-  posthog-node@4.17.0:
-    dependencies:
-      axios: 1.9.0
-    transitivePeerDependencies:
-      - debug
+  posthog-node@5.5.1: {}
 
   prelude-ls@1.2.1: {}
 
