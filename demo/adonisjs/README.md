@@ -2,9 +2,11 @@
 
 ## Introduction
 
-This example demonstrates how to set up **[Lingo.dev Compiler](https://lingo.dev/en/compiler/)** with [AdonisJS](https://adonisjs.com/).
+This example demonstrates how to set up [Lingo.dev Compiler](https://lingo.dev/en/compiler/) with [AdonisJS](https://adonisjs.com/).
 
 ## Running this example
+
+To run this example:
 
 1. Set the `LINGODOTDEV_API_KEY` environment variable:
 
@@ -41,4 +43,4 @@ These are the files that were changed to get **Lingo.dev Compiler** up and runni
 - [inertia/pages/home.tsx](./inertia/pages/home.tsx)
 - [vite.config.ts](./vite.config.ts)
 
-You can use these files as a reference for setting things up in your own project.
+You can use these files as a reference for setting up the compiler in your own project.
