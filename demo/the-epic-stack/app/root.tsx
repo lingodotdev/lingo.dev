@@ -1,3 +1,5 @@
+import { LingoProvider } from 'lingo.dev/react/client'
+import { loadDictionary } from 'lingo.dev/react/react-router'
 import { OpenImgContextProvider } from 'openimg/react'
 import {
 	data,
@@ -108,6 +110,8 @@ export async function loader({ request }: Route.LoaderArgs) {
 	const { toast, headers: toastHeaders } = await getToast(request)
 	const honeyProps = await honeypot.getInputProps()
 
+	const lingoDictionary = await loadDictionary(request)
+
 	return data(
 		{
 			user,
@@ -122,6 +126,7 @@ export async function loader({ request }: Route.LoaderArgs) {
 			ENV: getEnv(),
 			toast,
 			honeyProps,
+			lingoDictionary,
 		},
 		{
 			headers: combineHeaders(
@@ -179,9 +184,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
 	const nonce = useNonce()
 	const theme = useOptionalTheme()
 	return (
-		<Document nonce={nonce} theme={theme} env={data?.ENV}>
-			{children}
-		</Document>
+		<LingoProvider dictionary={data?.lingoDictionary}>
+			<Document nonce={nonce} theme={theme} env={data?.ENV}>
+				{children}
+			</Document>
+		</LingoProvider>
 	)
 }
 

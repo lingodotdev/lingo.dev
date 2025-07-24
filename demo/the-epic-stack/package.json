@@ -88,7 +88,7 @@
     "input-otp": "^1.4.2",
     "intl-parse-accept-language": "^1.0.0",
     "isbot": "^5.1.27",
-    "lingo.dev": "^0.107.6",
+    "lingo.dev": "workspace:*",
     "litefs-js": "^2.0.2",
     "lru-cache": "^11.1.0",
     "mime-types": "^3.0.1",
