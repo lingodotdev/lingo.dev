@@ -5,13 +5,6 @@
   text-align: center;
 }
 
-.logo-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-}
-
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -40,21 +33,10 @@
   }
 }
 
-.welcome-text {
-  max-width: 500px;
-  margin: 0 auto;
-}
-
 .card {
   padding: 2em;
 }
 
 .read-the-docs {
   color: #888;
-}
-
-.locale-switcher {
-  position: absolute;
-  top: 0.5rem;
-  right: 1rem;
 }
