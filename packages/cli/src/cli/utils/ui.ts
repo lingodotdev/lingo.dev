@@ -32,29 +32,23 @@ export async function renderHero() {
   );
   console.log("");
 
-  const label1 = "⭐ Star the repo:";
-  const label2 = "📚 Docs:";
-  const label3 = "💬 24/7 Support:";
-  const label4 = "🎮 Join Discord:";
+  const label1 = "📚 Docs:";
+  const label2 = "⭐ Star the repo:";
+  const label3 = "🎮 Join Discord:";
   const maxLabelWidth = 17; // Approximate visual width accounting for emoji
 
   console.log(
-    `${chalk.hex(colors.blue)(label1.padEnd(maxLabelWidth))} ${chalk.hex(
-      colors.blue,
-    )("https://lingo.dev/go/gh")}`,
-  );
-  console.log(
-    `${chalk.hex(colors.blue)(label2.padEnd(maxLabelWidth + 1))} ${chalk.hex(
+    `${chalk.hex(colors.blue)(label1.padEnd(maxLabelWidth + 1))} ${chalk.hex(
       colors.blue,
     )("https://lingo.dev/go/docs")}`,
   ); // Docs emoji seems narrower
   console.log(
-    `${chalk.hex(colors.blue)(label3.padEnd(maxLabelWidth + 1))} ${chalk.hex(
+    `${chalk.hex(colors.blue)(label2.padEnd(maxLabelWidth))} ${chalk.hex(
       colors.blue,
-    )("hi@lingo.dev")}`,
+    )("https://lingo.dev/go/gh")}`,
   );
   console.log(
-    `${chalk.hex(colors.blue)(label4.padEnd(maxLabelWidth + 1))} ${chalk.hex(
+    `${chalk.hex(colors.blue)(label3.padEnd(maxLabelWidth + 1))} ${chalk.hex(
       colors.blue,
     )("https://lingo.dev/go/discord")}`,
   );
