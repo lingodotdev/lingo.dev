@@ -3,20 +3,18 @@
  * for Docker builds.
  */
 import "./src/env.js";
+import lingoCompiler from "lingo.dev/compiler";
 
 /** @type {import("next").NextConfig} */
-const config = {
-  reactStrictMode: true,
+const config = {};
 
-  /**
-   * If you are using `appDir` then you must comment the below `i18n` config out.
-   *
-   * @see https://github.com/vercel/next.js/issues/41980
-   */
-  i18n: {
-    locales: ["en"],
-    defaultLocale: "en",
-  },
-};
-
-export default config;
+export default lingoCompiler.next({
+  sourceRoot: "src",
+  lingoDir: "lingo",
+  sourceLocale: "en",
+  targetLocales: ["es"],
+  rsc: true,
+  useDirective: false,
+  debug: false,
+  models: "lingo.dev",
+})(config);
