@@ -32,10 +32,10 @@ export async function renderHero() {
   );
   console.log("");
 
-  const label1 = "⭐ GitHub Repo:";
+  const label1 = "⭐ Star the repo:";
   const label2 = "📚 Docs:";
   const label3 = "💬 24/7 Support:";
-  const label4 = "🎮 Discord:";
+  const label4 = "🎮 Join Discord:";
   const maxLabelWidth = 17; // Approximate visual width accounting for emoji
 
   console.log(
