@@ -510,4 +510,87 @@ describe("MDX Code Placeholder Loader", () => {
       expect(pushed).toBe(expected);
     });
   });
+
+  describe("placeholder replacement bugs", () => {
+    it("should not leave placeholders when content matches", async () => {
+      const loader = createMdxCodePlaceholderLoader();
+      loader.setDefaultLocale("en");
+
+      const content = "Use the `getData()` function.";
+
+      // Pull and then push the same content - should work correctly
+      const pulled = await loader.pull("en", content);
+      const translated = pulled.replace("Use", "Utilize");
+      const pushed = await loader.push("en", translated);
+
+      // Should not contain any placeholders
+      expect(pushed).not.toMatch(/---INLINE-CODE-PLACEHOLDER-[0-9a-f]+---/);
+      expect(pushed).not.toMatch(/---CODE-PLACEHOLDER-[0-9a-f]+---/);
+      expect(pushed).toContain("`getData()`");
+      expect(pushed).toContain("Utilize");
+    });
+
+    it("should replace all placeholders including those from different sources", async () => {
+      const loader = createMdxCodePlaceholderLoader();
+      loader.setDefaultLocale("en");
+
+      // Simulate the exact scenario from the user's bug report
+      const englishContent = "Use the `getData()` function.";
+      const arabicContent = "استخدم `الحصول_على_البيانات()` الدالة.";
+
+      // First pull English (required as default locale)
+      await loader.pull("en", englishContent);
+
+      // Pull Arabic content to create placeholders
+      const arabicPulled = await loader.pull("ar", arabicContent);
+
+      // Simulate translation: translator changes text but keeps placeholder
+      const arabicTranslated = arabicPulled.replace("استخدم", "قم بتطبيق");
+
+      // Push back - this should now work correctly with the fix
+      const pushedResult = await loader.push("ar", arabicTranslated);
+
+      // The fix: ALL placeholders should be replaced, including Arabic ones
+      expect(pushedResult).not.toMatch(
+        /---INLINE-CODE-PLACEHOLDER-[0-9a-f]+---/,
+      );
+      expect(pushedResult).not.toMatch(/---CODE-PLACEHOLDER-[0-9a-f]+---/);
+
+      // The Arabic inline code should be preserved and translated text should be there
+      expect(pushedResult).toContain("`الحصول_على_البيانات()`");
+      expect(pushedResult).toContain("قم بتطبيق");
+    });
+
+    it("should replace placeholders even when pullInput state is overwritten", async () => {
+      const loader = createMdxCodePlaceholderLoader();
+      loader.setDefaultLocale("en");
+
+      const englishContent = "Use the `getData()` function.";
+      const arabicContent = "استخدم `الحصول_على_البيانات()` الدالة.";
+
+      // First pull English (required as default locale)
+      await loader.pull("en", englishContent);
+
+      // Pull Arabic content to create placeholders
+      const arabicPulled = await loader.pull("ar", arabicContent);
+
+      // Simulate translation: translator changes text but keeps placeholder
+      const arabicTranslated = arabicPulled.replace("استخدم", "قم بتطبيق");
+
+      // Now pull English again, overwriting pullInput state
+      // This simulates the real-world scenario where the loader state gets out of sync
+      await loader.pull("en", englishContent);
+
+      // Push the Arabic translation - should work despite state being overwritten
+      const pushedResult = await loader.push("ar", arabicTranslated);
+
+      // All placeholders should be replaced, even when not in current pullInput
+      expect(pushedResult).not.toMatch(
+        /---INLINE-CODE-PLACEHOLDER-[0-9a-f]+---/,
+      );
+      expect(pushedResult).not.toMatch(/---CODE-PLACEHOLDER-[0-9a-f]+---/);
+      expect(pushedResult).toContain("`الحصول_على_البيانات()`");
+      expect(pushedResult).toContain("قم بتطبيق");
+    });
+  });
 });
