@@ -1,6 +1,5 @@
 ---
 "@lingo.dev/_sdk": minor
-"@replexica/sdk": minor
 ---
 
 Added new methods to the SDK:
