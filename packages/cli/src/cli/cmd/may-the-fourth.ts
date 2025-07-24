@@ -86,9 +86,7 @@ async function renderHero() {
     )} - open-source, AI-powered i18n CLI for web & mobile localization.`,
   );
   console.log(" ");
-  console.log(
-    chalk.hex(colors.blue)("📚 Docs: https://lingo.dev/go/docs"),
-  );
+  console.log(chalk.hex(colors.blue)("📚 Docs: https://lingo.dev/go/docs"));
   console.log(
     chalk.hex(colors.blue)("⭐ Star the repo: https://lingo.dev/go/gh"),
   );
