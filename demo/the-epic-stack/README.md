@@ -1,54 +1,47 @@
-<div align="center">
-  <h1 align="center"><a href="https://www.epicweb.dev/epic-stack">The Epic Stack 🚀</a></h1>
-  <strong align="center">
-    Ditch analysis paralysis and start shipping Epic Web apps.
-  </strong>
-  <p>
-    This is an opinionated project starter and reference that allows teams to
-    ship their ideas to production faster and on a more stable foundation based
-    on the experience of <a href="https://kentcdodds.com">Kent C. Dodds</a> and
-    <a href="https://github.com/epicweb-dev/epic-stack/graphs/contributors">contributors</a>.
-  </p>
-</div>
+# Lingo.dev Compiler with The Epic Stack
 
-```sh
-npx epicli
-```
+## Introduction
 
-[![The Epic Stack](https://github-production-user-asset-6210df.s3.amazonaws.com/1500684/246885449-1b00286c-aa3d-44b2-9ef2-04f694eb3592.png)](https://www.epicweb.dev/epic-stack)
+This example demonstrates how to set up [Lingo.dev Compiler](https://lingo.dev/en/compiler/) with [The Epic Stack](https://github.com/epicweb-dev/epic-stack).
 
-[The Epic Stack](https://www.epicweb.dev/epic-stack)
+## Running this example
 
-<hr />
+To run this example:
 
-## Watch Kent's Introduction to The Epic Stack
+1. Set the `LINGODOTDEV_API_KEY` environment variable:
 
-[![Epic Stack Talk slide showing Flynn Rider with knives, the text "I've been around and I've got opinions" and Kent speaking in the corner](https://github-production-user-asset-6210df.s3.amazonaws.com/1500684/277818553-47158e68-4efc-43ae-a477-9d1670d4217d.png)](https://www.epicweb.dev/talks/the-epic-stack)
+   ```bash
+   export LINGODOTDEV_API_KEY="<your_api_key>"
+   ```
 
-["The Epic Stack" by Kent C. Dodds](https://www.epicweb.dev/talks/the-epic-stack)
+   To get an API key, sign up for a free account at [lingo.dev](https://lingo.dev).
 
-## Docs
+2. Navigate into this example's directory:
 
-[Read the docs](https://github.com/epicweb-dev/epic-stack/blob/main/docs)
-(please 🙏).
+   ```bash
+   cd demo/the-epic-stack
+   ```
 
-## Support
+3. Install the dependencies:
 
-- 🆘 Join the
-  [discussion on GitHub](https://github.com/epicweb-dev/epic-stack/discussions)
-  and the [KCD Community on Discord](https://kcd.im/discord).
-- 💡 Create an
-  [idea discussion](https://github.com/epicweb-dev/epic-stack/discussions/new?category=ideas)
-  for suggestions.
-- 🐛 Open a [GitHub issue](https://github.com/epicweb-dev/epic-stack/issues) to
-  report a bug.
+   ```bash
+   pnpm install
+   ```
 
-## Branding
+4. Run the development server:
 
-Want to talk about the Epic Stack in a blog post or talk? Great! Here are some
-assets you can use in your material:
-[EpicWeb.dev/brand](https://epicweb.dev/brand)
+   ```bash
+   pnpm run dev
+   ```
 
-## Thanks
+5. Navigate to <http://localhost:3000>.
 
-You rock 🪨
+## Changed files
+
+These are the files that were changed to get **Lingo.dev Compiler** up and running:
+
+- [app/routes/_marketing+/index.tsx](./app/routes/_marketing+/index.tsx)
+- [app/root.tsx](./app/root.tsx)
+- [vite.config.ts](./vite.config.ts)
+
+You can use these files as a reference for setting up the compiler in your own project.
