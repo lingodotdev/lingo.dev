@@ -1,11 +1,18 @@
 <p align="center">
   <a href="https://lingo.dev">
-    <img src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.compiler.png" width="100%" alt="Lingo.dev" />
+    <img
+      src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.compiler.png"
+      width="100%"
+      alt="Lingo.dev"
+    />
   </a>
 </p>
 
 <p align="center">
-  <strong>⚡️ এলএলএম দ্বারা তাৎক্ষণিক লোকালাইজেশনের জন্য এআই-চালিত, ওপেন-সোর্স i18n টুলকিট।</strong>
+  <strong>
+    ⚡ Lingo.dev - ওপেন-সোর্স, এআই-পাওয়ার্ড i18n টুলকিট যা এলএলএম ব্যবহার করে
+    তাৎক্ষণিক লোকালাইজেশন সম্ভব করে।
+  </strong>
 </p>
 
 <br />
@@ -19,13 +26,22 @@
 
 <p align="center">
   <a href="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml">
-    <img src="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml/badge.svg" alt="রিলিজ" />
+    <img
+      src="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml/badge.svg"
+      alt="রিলিজ"
+    />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md">
-    <img src="https://img.shields.io/github/license/lingodotdev/lingo.dev" alt="লাইসেন্স" />
+    <img
+      src="https://img.shields.io/github/license/lingodotdev/lingo.dev"
+      alt="লাইসেন্স"
+    />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/commits/main">
-    <img src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev" alt="সর্বশেষ কমিট" />
+    <img
+      src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev"
+      alt="সর্বশেষ কমিট"
+    />
   </a>
 </p>
 
@@ -103,7 +119,25 @@ jobs:
 
 [ডকুমেন্টেশন পড়ুন →](https://lingo.dev/sdk)
 
----
+```ts
+import { LingoDotDevEngine } from "lingo.dev/sdk";
+
+const lingoDotDev = new LingoDotDevEngine({
+  apiKey: "your-api-key-here",
+});
+
+const content = {
+  greeting: "Hello",
+  farewell: "Goodbye",
+  message: "Welcome to our platform",
+};
+
+const translated = await lingoDotDev.localizeObject(content, {
+  sourceLocale: "en",
+  targetLocale: "es",
+});
+// Returns: { greeting: "Hola", farewell: "Adiós", message: "Bienvenido a nuestra plataforma" }
+```
 
 ## 🤝 কমিউনিটি
 
@@ -131,6 +165,6 @@ jobs:
 
 ## 🌐 অন্যান্য ভাষায় রিডমি
 
-[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
 
 আপনার ভাষা দেখতে পাচ্ছেন না? এটি [`i18n.json`](./i18n.json) এ যোগ করুন এবং একটি PR খুলুন!

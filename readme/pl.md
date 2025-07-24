@@ -1,11 +1,18 @@
 <p align="center">
   <a href="https://lingo.dev">
-    <img src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.compiler.png" width="100%" alt="Lingo.dev" />
+    <img
+      src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.compiler.png"
+      width="100%"
+      alt="Lingo.dev"
+    />
   </a>
 </p>
 
 <p align="center">
-  <strong>⚡ Lingo.dev - otwartoźródłowe, wspierane przez AI narzędzie i18n do natychmiastowej lokalizacji z wykorzystaniem LLM.</strong>
+  <strong>
+    ⚡ Lingo.dev - otwartoźródłowe, wspierane przez AI narzędzie i18n do
+    natychmiastowej lokalizacji z wykorzystaniem LLM.
+  </strong>
 </p>
 
 <br />
@@ -19,13 +26,22 @@
 
 <p align="center">
   <a href="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml">
-    <img src="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml/badge.svg" alt="Release" />
+    <img
+      src="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml/badge.svg"
+      alt="Release"
+    />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md">
-    <img src="https://img.shields.io/github/license/lingodotdev/lingo.dev" alt="License" />
+    <img
+      src="https://img.shields.io/github/license/lingodotdev/lingo.dev"
+      alt="Licencja"
+    />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/commits/main">
-    <img src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev" alt="Last Commit" />
+    <img
+      src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev"
+      alt="Ostatni commit"
+    />
   </a>
 </p>
 
@@ -162,6 +178,6 @@ Jeśli podoba Ci się to, co robimy, daj nam ⭐ i pomóż nam osiągnąć 3 000
 
 ## 🌐 Readme w innych językach
 
-[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
 
 Nie widzisz swojego języka? Dodaj go do [`i18n.json`](./i18n.json) i otwórz PR!
