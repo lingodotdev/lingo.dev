@@ -1,0 +1,25 @@
+title: "MyApp"
+description: "¡Hola, mundo!"
+welcome_message: "Bienvenido a MyApp"
+user_profile:
+  display_name: "John Doe"
+  bio: "Desarrollador de software"
+navigation_items:
+  - "Inicio"
+  - "Acerca de"
+  - "Contacto"
+product:
+  name: "MyWidget"
+  tagline: "El mejor widget de todos"
+  features:
+    - "Fácil de usar"
+    - "Rápido y confiable"
+settings:
+  max_users: 100
+  enabled: true
+  timeout: 30.5
+complex_structure:
+  level_one:
+    level_two:
+      message: "Texto anidado profundo"
+locked_key_1: "This value is locked and should not be changed"

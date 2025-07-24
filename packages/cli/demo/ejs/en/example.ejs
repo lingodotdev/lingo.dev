@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title><%= pageTitle %></title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+    </style>
+</head>
+<body>
+    <% if (user) { %>
+        <h1>Welcome back!</h1>
+        
+        <p>Hello, <%= user.name %>! You have <%= messageCount %> new messages.</p>
+        
+        <div class="notification">
+            <strong>Notice:</strong> Account expires in 30 days.
+        </div>
+        
+        <img src="/avatar.jpg" alt="User avatar" title="Click to edit profile">
+        <button type="button" aria-label="Close notification" title="Close">×</button>
+    <% } else { %>
+        <h1>Please log in</h1>
+        
+        <form action="/login" method="post">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" placeholder="Enter username">
+            
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password">
+            
+            <button type="submit">Sign In</button>
+            <input type="button" value="Forgot Password?" onclick="showForgotPassword()">
+        </form>
+    <% } %>
+    
+    <ul>
+    <% items.forEach(function(item) { %>
+        <li>Product: <%= item.name %> - Price: $<%= item.price %></li>
+    <% }); %>
+    </ul>
+    
+    
+    
+    <div></div>
+    
+    <footer>
+        Copyright © <%= new Date().getFullYear() %> MyApp. All rights reserved.
+    </footer>
+    
+    <script>
+        function showForgotPassword() {
+            alert("Contact support for help.");
+        }
+    </script>
+</body>
+</html>

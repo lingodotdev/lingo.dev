@@ -1,0 +1,16 @@
+version: 1
+checksums:
+  1b0d7c9f07dcc31a978bc337763270ea:
+    title: 7dc70110429d46e3685f385bd2cc941c
+    description: 0468579ef2fbc83c9d520c2f2f1c5059
+    welcome_message: d1c3a9f35e377554a4ccaa467ca26614
+    user_profile/display_name: febee8e9ab40b2fe5106d72675228d00
+    user_profile/bio: 155ddcb7c93493ac72a37074eea0a653
+    navigation_items/0: 104a3db3b671c04e167eafbe21e57881
+    navigation_items/1: 944521eeeed2511833d2299931273c71
+    navigation_items/2: 9afa39bc47019ee6dec6c74b6273967c
+    product/name: ed21de171d538a49db999c47875f75a5
+    product/tagline: b7ac41680e82d75ae7f5774f7ceef1b4
+    product/features/0: c916ba887951a02793ff851853fd964f
+    product/features/1: 1c60a04d6890c6ec910a7f2e6ec0ae7b
+    complex_structure/level_one/level_two/message: b53034560bf657106e5aaea9160e357e

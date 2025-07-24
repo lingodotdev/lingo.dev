@@ -1,0 +1,20 @@
+1
+00:00:01,000 --> 00:00:03,500
+Bienvenido a nuestra demostración de producto
+
+2
+00:00:04,000 --> 00:00:06,500
+En este video, te mostraremos
+cómo comenzar rápidamente
+
+3
+00:00:07,000 --> 00:00:09,500
+Primero, navega a tu panel de control 📊
+
+4
+00:00:10,000 --> 00:00:12,500
+Este proceso toma aproximadamente 5 minutos
+
+5
+00:00:13,000 --> 00:00:15,500
+Haz clic en el botón <i>Crear nuevo</i> para comenzar

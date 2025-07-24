@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MyApp</string>
+    <string name="welcome_message">Hello, world!</string>
+    <string name="button_text">Get Started</string>
+    
+    <string name="api_endpoint" translatable="false">https://api.example.com</string>
+    <string name="debug_key" translatable="false">DEBUG_MODE_ENABLED</string>
+    
+    <string-array name="color_names">
+        <item>Red</item>
+        <item>Green</item>
+        <item>Blue</item>
+    </string-array>
+    
+    <string-array name="server_urls" translatable="false">
+        <item>https://prod.example.com</item>
+        <item>https://staging.example.com</item>
+        <item>https://dev.example.com</item>
+    </string-array>
+    
+    <plurals name="notification_count">
+        <item quantity="one">%d new message</item>
+        <item quantity="other">%d new messages</item>
+    </plurals>
+    
+    <plurals name="cache_size" translatable="false">
+        <item quantity="one">%d byte</item>
+        <item quantity="other">%d bytes</item>
+    </plurals>
+    
+    <bool name="show_tutorial">true</bool>
+    <bool name="enable_animations">false</bool>
+    
+    <bool name="is_debug_build" translatable="false">false</bool>
+    <bool name="enable_logging" translatable="false">true</bool>
+    
+    <integer name="max_retry_attempts">3</integer>
+    <integer name="default_timeout">30</integer>
+    
+    <integer name="build_version" translatable="false">42</integer>
+    <integer name="api_version" translatable="false">1</integer>
+    
+    <string name="html_snippet">&lt;b&gt;Bold&lt;/b&gt;</string>
+
+    <string name="apostrophe_example">Don\'t forget!</string>
+
+    <string name="cdata_example"><![CDATA[Special <tag> ]]></string>
+    
+    <string-array name="mixed_items">
+        <item>  Item with spaces  </item>
+        <item>    </item>
+    </string-array>
+    
+    <string-array name="non_localised_array" translatable="false">
+        <item>Ignored</item>
+    </string-array>
+
+    <plurals name="non_localised_plural" translatable="false">
+        <item quantity="one">Ignored</item>
+        <item quantity="other">Ignored</item>
+    </plurals>
+</resources>

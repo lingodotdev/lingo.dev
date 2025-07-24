@@ -1,0 +1,15 @@
+version: 1
+checksums:
+  88559ecadc7cff52625bd3a47e51dd78:
+    welcome_message: 9c56d00796c3c7facba6a25275de5b7b
+    login_button: 0029e5a35676c0051e761fcd046ef9ee
+    signup_button: 0dd2ae69be4618c1f9e615774a4509ca
+    error_network: e0becd5fc88e85a97c6987b96c80fb11
+    success_message: e6dcd73052dc41dbe05d86af9887d2c4
+    user_profile_title: bee775ff7216747b2111e93cefa57ddc
+    settings_screen_title: 8df6777277469c1fd88cc18dde2f1cc3
+    cancel_action: 2e2a849c2223911717de8caa2c71bade
+    confirm_action: 90930b51154032f119fa75c1bd422d8b
+    greeting_with_name: 218521f06746e82ba44d68c8a5bb210c
+    item_count: d8d083b56bc155cf0997ea6ae989b83f
+    user_status: 903b5a6edde5368dd9089accdc1b1f9d

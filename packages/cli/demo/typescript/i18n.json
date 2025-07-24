@@ -1,0 +1,19 @@
+{
+  "version": 1.8,
+  "locale": {
+    "source": "en",
+    "targets": [
+      "es"
+    ]
+  },
+  "buckets": {
+    "typescript": {
+      "include": [
+        "./[locale]/example.ts"
+      ],
+      "lockedKeys": ["locked_key_1"],
+      "ignoredKeys": ["ignored_key_1"]
+    }
+  },
+  "$schema": "https://lingo.dev/schema/i18n.json"
+} 

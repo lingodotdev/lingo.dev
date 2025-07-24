@@ -1,0 +1,18 @@
+"welcome_message" = "Hello, world!";
+"login_button" = "Log In";
+"error_message" = "Something went wrong";
+
+"user_profile_title" = "User Profile";
+
+"quote_example" = "She said \"Hello world!\"";
+"newline_example" = "First line\nSecond line";
+"backslash_example" = "Path: C:\\Users\\Documents";
+
+
+This is not a valid key-value pair
+"incomplete_pair" = 
+= "missing_key";
+"missing_semicolon" = "This line has no semicolon"
+
+"settings_title" = "Settings";
+"save_button" = "Save";

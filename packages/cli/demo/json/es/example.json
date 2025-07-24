@@ -1,0 +1,36 @@
+{
+  "title": "¡Hola, mundo!",
+  "description": "Una aplicación de demostración simple",
+  "version": "1.0.0",
+  "support_email": "support@example.com",
+  "homepage": "https://lingo.dev",
+  "deprecated": null,
+  "empty": "",
+  "emoji": "🚀",
+  "author": {
+    "name": "John Doe"
+  },
+  "contributors": [
+    {
+      "name": "Alice"
+    },
+    {
+      "name": "Bob"
+    }
+  ],
+  "messages": ["Bienvenido a MyApp", "¡Hola, mundo!"],
+  "config": {
+    "theme": {
+      "primary": "Tema azul"
+    }
+  },
+  "mixed_array": [
+    "Contenido mixto aquí",
+    42,
+    true,
+    {
+      "nested_message": "Texto anidado"
+    }
+  ],
+  "locked_key_1": "This value is locked and should not be changed"
+}

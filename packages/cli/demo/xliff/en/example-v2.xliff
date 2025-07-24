@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0"
+       version="2.0"
+       srcLang="en">
+
+  <file id="messages.properties" original="messages.properties">
+
+    <notes>
+      <note>This header content is not localized</note>
+    </notes>
+
+    <unit id="welcome_message">
+      <segment>
+        <source>Hello, world!</source>
+      </segment>
+    </unit>
+
+    <unit id="error_message" type="resname">
+      <segment>
+        <source><![CDATA[Enter valid <email>]]></source>
+      </segment>
+    </unit>
+
+    <unit id="button_text">
+      <segment>
+        <source>Continue</source>
+      </segment>
+    </unit>
+
+    <unit id="save_button">
+      <segment>
+        <source>Save Changes</source>
+      </segment>
+    </unit>
+
+    <unit id="status_message">
+      <segment>
+        <source>Processing your request...</source>
+      </segment>
+    </unit>
+  </file>
+</xliff>

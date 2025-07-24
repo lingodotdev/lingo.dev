@@ -1,0 +1,12 @@
+version: 1
+checksums:
+  c0001027bc43a90fe59344ea57847e7a:
+    welcome_message: 0468579ef2fbc83c9d520c2f2f1c5059
+    login_button: 0029e5a35676c0051e761fcd046ef9ee
+    error_message: a3cd2f01c073f1f5ff436d4b132d39cf
+    user_profile_title: bee775ff7216747b2111e93cefa57ddc
+    quote_example: c519c83fe2629c0e9a6e7a14f64b6317
+    newline_example: ae9313a2231a16f17e2367a4e5b322ee
+    backslash_example: acf69a7273edf9f932f66027f699bbbe
+    settings_title: 8df6777277469c1fd88cc18dde2f1cc3
+    save_button: f7a2929f33bc420195e59ac5a8bcd454

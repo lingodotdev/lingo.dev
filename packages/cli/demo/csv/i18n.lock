@@ -1,0 +1,14 @@
+version: 1
+checksums:
+  e8b273672f895de0944f0a2317670d7c:
+    welcome_message: 1308168cca4fa5d8d7a0cf24e55e93fc
+    button_save: f7a2929f33bc420195e59ac5a8bcd454
+    error_invalid_email: 8de4bc8832b11b380bc4cbcedc16e48b
+    product_name: d3d99b147cc363dc6db8a48e8a13d4c1
+    new_feature: 7cd986af1fe5e89abe7ecffba5413110
+  d0f33bd41270762260010c4723a564f5:
+    welcome_message: 1308168cca4fa5d8d7a0cf24e55e93fc
+    button_save: f7a2929f33bc420195e59ac5a8bcd454
+    error_invalid_email: 8de4bc8832b11b380bc4cbcedc16e48b
+    product_name: d3d99b147cc363dc6db8a48e8a13d4c1
+    new_feature: 7cd986af1fe5e89abe7ecffba5413110

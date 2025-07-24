@@ -1,0 +1,6 @@
+This is the first line of text content
+This is the second line with different content
+This line contains special characters: !@#$%^&*()
+
+This is line five after an empty line above
+Thank you for choosing our service
