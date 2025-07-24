@@ -1,4 +1,4 @@
-import { LOCALE_COOKIE_NAME } from "../core";
+import { DEFAULT_LOCALE, LOCALE_COOKIE_NAME } from "../core";
 
 /**
  * A placeholder function for loading dictionaries that contain localized content.
@@ -67,28 +67,48 @@ export const loadDictionary = async (
   return null;
 };
 
-async function loadLocaleFromCookies(request: Request) {
-  const cookieHeaderValue = request.headers.get("Cookie") || "";
-  const cookieValue = cookieHeaderValue
+function loadLocaleFromCookies(request: Request) {
+  // it's a Request, so get the Cookie header
+  const cookieHeaderValue = request.headers.get("Cookie");
+
+  // there's no Cookie header, so return default
+  if (!cookieHeaderValue) {
+    return DEFAULT_LOCALE;
+  }
+
+  // get the lingo-locale cookie
+  const cookiePrefix = `${LOCALE_COOKIE_NAME}=`;
+  const cookie = cookieHeaderValue
     .split(";")
-    .find((cookie) => cookie.trim().startsWith(`${LOCALE_COOKIE_NAME}=`));
-  const locale = cookieValue ? cookieValue.split("=")[1] : null;
-  return locale;
+    .find((cookie) => cookie.trim().startsWith(cookiePrefix));
+
+  // there's no lingo-locale cookie, so return default
+  if (!cookie) {
+    return DEFAULT_LOCALE;
+  }
+
+  // extract the locale value from the cookie
+  return cookie.trim().substring(cookiePrefix.length);
 }
 
 export async function loadDictionary_internal(
   requestOrExplicitLocale: Request | string,
   dictionaryLoader: Record<string, () => Promise<any>>,
 ) {
+  // gets the locale (falls back to "en")
   const locale =
     typeof requestOrExplicitLocale === "string"
       ? requestOrExplicitLocale
-      : await loadLocaleFromCookies(requestOrExplicitLocale);
+      : loadLocaleFromCookies(requestOrExplicitLocale);
 
-  if (locale && dictionaryLoader[locale]) {
-    return dictionaryLoader[locale]().then((value) => {
-      return value.default;
-    });
+  // get dictionary loader for the locale
+  const loader = dictionaryLoader[locale];
+
+  // locale is not available in the dictionary
+  if (!loader) {
+    // TODO: throw a clear error message
+    return null;
   }
-  return null;
+
+  return loader().then((value) => value.default);
 }
