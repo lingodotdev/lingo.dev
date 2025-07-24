@@ -1,5 +1,5 @@
 {
-  "name": "next-app-router",
+  "name": "nextjs-app-router",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -19,9 +19,6 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4",
-    "eslint": "^9",
-    "eslint-config-next": "15.4.3",
-    "@eslint/eslintrc": "^3"
+    "tailwindcss": "^4"
   }
 }
