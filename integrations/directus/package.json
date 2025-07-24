@@ -1,6 +1,6 @@
 {
   "name": "@replexica/integration-directus",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "Lingo.dev integration for Directus",
   "private": false,
   "sideEffects": false,
@@ -28,7 +28,7 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@replexica/sdk": "^0.7.7"
+    "@replexica/sdk": "^0.8.0"
   },
   "devDependencies": {
     "@directus/extensions-sdk": "12.1.4",

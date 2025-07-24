@@ -1,5 +1,12 @@
 # @replexica/integration-directus
 
+## 0.1.11
+
+### Patch Changes
+
+- Updated dependencies [[`85dfc10`](https://github.com/lingodotdev/lingo.dev/commit/85dfc10961b116e31b2bb478f42013756ca49974)]:
+  - @replexica/sdk@0.8.0
+
 ## 0.1.10
 
 ### Patch Changes

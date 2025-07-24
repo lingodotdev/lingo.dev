@@ -1,5 +1,20 @@
 # @replexica/sdk
 
+## 0.8.0
+
+### Minor Changes
+
+- [#1049](https://github.com/lingodotdev/lingo.dev/pull/1049) [`85dfc10`](https://github.com/lingodotdev/lingo.dev/commit/85dfc10961b116e31b2bb478f42013756ca49974) Thanks [@VAIBHAVSING](https://github.com/VAIBHAVSING)! - Added new methods to the SDK:
+
+  1. `localizeStringArray`: Localizes an array of strings while maintaining their order.
+
+  Also added comprehensive tests for these methods using Vitest.
+
+### Patch Changes
+
+- Updated dependencies [[`1ff847b`](https://github.com/lingodotdev/lingo.dev/commit/1ff847b9273a3082178553e70c22524f5831ad36), [`55e9e68`](https://github.com/lingodotdev/lingo.dev/commit/55e9e687a3d0efa84b808818a848a276b1a42015), [`b9e2551`](https://github.com/lingodotdev/lingo.dev/commit/b9e2551f349e33542212f941b3407e8517b5fb27)]:
+  - lingo.dev@0.108.0
+
 ## 0.7.11
 
 ### Patch Changes
