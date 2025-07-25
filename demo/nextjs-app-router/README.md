@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This example demonstrates how to set up [Lingo.dev Compiler](https://lingo.dev/en/compiler/) with [Next.js](https://adonisjs.com/).
+This example demonstrates how to set up [Lingo.dev Compiler](https://lingo.dev/en/compiler/) with [Next.js](https://nextjs.org/).
 
 ## Running this example
 
