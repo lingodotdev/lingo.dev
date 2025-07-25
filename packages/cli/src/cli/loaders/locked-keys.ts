@@ -15,7 +15,9 @@ export default function createLockedKeysLoader(
         .pickBy((value, key) => _isLockedKey(key, lockedKeys))
         .value();
 
-      return _.merge({}, data, lockedSubObject);
+      const result = _.merge({}, data, lockedSubObject);
+
+      return result;
     },
   });
 }

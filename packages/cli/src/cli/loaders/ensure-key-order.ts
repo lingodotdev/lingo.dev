@@ -10,11 +10,14 @@ export default function createEnsureKeyOrderLoader(): ILoader<
     pull: async (_locale, input) => {
       return input;
     },
-    push: async (_locale, data, originalInput) => {
+    push: async (locale, data, originalInput) => {
       if (!originalInput || !data) {
         return data;
       }
-      return reorderKeys(data, originalInput);
+
+      const result = reorderKeys(data, originalInput);
+
+      return result;
     },
   });
 }
