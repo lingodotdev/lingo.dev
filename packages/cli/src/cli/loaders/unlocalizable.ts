@@ -7,7 +7,18 @@ import { createLoader } from "./_utils";
 
 export default function createUnlocalizableLoader(
   returnUnlocalizedKeys: boolean = false,
+  ignoredKeys: string[] = [],
 ): ILoader<Record<string, any>, Record<string, any>> {
+  const _isIgnoredKey = (key: string, ignoredKeys: string[]): boolean => {
+    return ignoredKeys.some((ignoredKey) => {
+      // Handle nested keys (e.g., "field3/field4")
+      if (ignoredKey.includes("/")) {
+        return key.startsWith(ignoredKey.replace(/\//g, "."));
+      }
+      return key === ignoredKey;
+    });
+  };
+
   return createLoader({
     async pull(locale, input) {
       const unlocalizableKeys = _getUnlocalizableKeys(input);
@@ -26,15 +37,23 @@ export default function createUnlocalizableLoader(
       return result;
     },
     async push(locale, data, originalInput) {
+      if (!originalInput) {
+        return data;
+      }
+
       const unlocalizableKeys = _getUnlocalizableKeys(originalInput);
 
-      const result = _.merge(
-        {},
-        data,
-        _.omitBy(originalInput, (_, key) => !unlocalizableKeys.includes(key)),
+      // Only merge back keys that are actually unlocalizable
+      const unlocalizableData = _.pickBy(originalInput, (value, key) =>
+        unlocalizableKeys.includes(key),
       );
 
-      return result;
+      // Merge unlocalizable data back with translated data
+      // Translated data takes precedence for any overlapping keys
+      return {
+        ...unlocalizableData,
+        ...data,
+      };
     },
   });
 }

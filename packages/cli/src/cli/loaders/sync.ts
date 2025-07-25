@@ -22,9 +22,12 @@ export default function createSyncLoader(): ILoader<
         return data;
       }
 
-      return _.chain(originalInput || {})
-        .mapValues((value, key) => data[key])
-        .value();
+      // Only include keys that exist in the original input to maintain sync
+      const syncedData = _.chain(data)
+        .pickBy((value, key) => originalInput.hasOwnProperty(key))
+        .value() as Record<string, string>;
+
+      return syncedData;
     },
   });
 }
