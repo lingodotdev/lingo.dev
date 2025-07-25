@@ -37,16 +37,23 @@ export default function createUnlocalizableLoader(
       return result;
     },
     async push(locale, data, originalInput) {
+      if (!originalInput) {
+        return data;
+      }
+
       const unlocalizableKeys = _getUnlocalizableKeys(originalInput);
 
-      // Filter: Keep keys that are NOT unlocalizable AND NOT ignored
-      const finalData = _.pickBy(
-        data,
-        (value, key) =>
-          !unlocalizableKeys.includes(key) || _isIgnoredKey(key, ignoredKeys),
+      // Only merge back keys that are actually unlocalizable
+      const unlocalizableData = _.pickBy(originalInput, (value, key) =>
+        unlocalizableKeys.includes(key),
       );
 
-      return finalData;
+      // Merge unlocalizable data back with translated data
+      // Translated data takes precedence for any overlapping keys
+      return {
+        ...unlocalizableData,
+        ...data,
+      };
     },
   });
 }
