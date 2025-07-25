@@ -26,8 +26,13 @@ export default function createUnlocalizableLoader(
       return result;
     },
     async push(locale, data, originalInput) {
+      if (!originalInput) {
+        return data;
+      }
+
       const unlocalizableKeys = _getUnlocalizableKeys(originalInput);
 
+<<<<<<< HEAD
       const result = _.merge(
         {},
         data,
@@ -35,6 +40,19 @@ export default function createUnlocalizableLoader(
       );
 
       return result;
+=======
+      // Only merge back keys that are actually unlocalizable
+      const unlocalizableData = _.pickBy(originalInput, (value, key) =>
+        unlocalizableKeys.includes(key),
+      );
+
+      // Merge unlocalizable data back with translated data
+      // Translated data takes precedence for any overlapping keys
+      return {
+        ...unlocalizableData,
+        ...data,
+      };
+>>>>>>> 6ded610 (feat(cli): updated existing test cases for ignoredKeys in typescript)
     },
   });
 }
