@@ -1,87 +1,47 @@
-# Welcome to React Router!
+# Lingo.dev Compiler with React Router
 
-A modern, production-ready template for building full-stack React applications using React Router.
+## Introduction
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
+This example demonstrates how to set up [Lingo.dev Compiler](https://lingo.dev/en/compiler/) with [React Router](https://reactrouter.com/).
 
-## Features
+## Running this example
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+To run this example:
 
-## Getting Started
+1. Set the `LINGODOTDEV_API_KEY` environment variable:
 
-### Installation
+   ```bash
+   export LINGODOTDEV_API_KEY="<your_api_key>"
+   ```
 
-Install the dependencies:
+   To get an API key, sign up for a free account at [lingo.dev](https://lingo.dev).
 
-```bash
-npm install
-```
+2. Navigate into this example's directory:
 
-### Development
+   ```bash
+   cd demo/react-router
+   ```
 
-Start the development server with HMR:
+3. Install the dependencies:
 
-```bash
-npm run dev
-```
+   ```bash
+   pnpm install
+   ```
 
-Your application will be available at `http://localhost:5173`.
+4. Run the development server:
 
-## Building for Production
+   ```bash
+   pnpm run dev
+   ```
 
-Create a production build:
+5. Navigate to <http://localhost:5173>.
 
-```bash
-npm run build
-```
+## Changed files
 
-## Deployment
+These are the files that were changed to get **Lingo.dev Compiler** up and running:
 
-### Docker Deployment
+- [app/root.tsx](./app/root.tsx)
+- [app/welcome/welcome.tsx](./app/welcome/welcome.tsx)
+- [vite.config.ts](./vite.config.ts)
 
-To build and run using Docker:
-
-```bash
-docker build -t my-app .
-
-# Run the container
-docker run -p 3000:3000 my-app
-```
-
-The containerized application can be deployed to any platform that supports Docker, including:
-
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
-
-### DIY Deployment
-
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
-```
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
-
----
-
-Built with ❤️ using React Router.
+You can use these files as a reference when setting up the compiler in your own project.

@@ -12,7 +12,7 @@
     "@react-router/node": "^7.7.0",
     "@react-router/serve": "^7.7.0",
     "isbot": "^5.1.27",
-    "lingo.dev": "^0.107.6",
+    "lingo.dev": "workspace:*",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router": "^7.7.0"

@@ -6,9 +6,12 @@ import {
   Scripts,
   ScrollRestoration,
 } from "react-router";
+import { LingoProvider } from "lingo.dev/react/client";
+import { loadDictionary } from "lingo.dev/react/react-router";
 
 import type { Route } from "./+types/root";
 import "./app.css";
+import { useLoaderData } from "react-router";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -23,21 +26,33 @@ export const links: Route.LinksFunction = () => [
   },
 ];
 
+export async function loader({ request }: Route.LoaderArgs) {
+  const lingoDictionary = await loadDictionary(request);
+
+  return {
+    lingoDictionary,
+  };
+}
+
 export function Layout({ children }: { children: React.ReactNode }) {
+  const data = useLoaderData<typeof loader>();
+
   return (
-    <html lang="en">
-      <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <Meta />
-        <Links />
-      </head>
-      <body>
-        {children}
-        <ScrollRestoration />
-        <Scripts />
-      </body>
-    </html>
+    <LingoProvider dictionary={data?.lingoDictionary}>
+      <html lang="en">
+        <head>
+          <meta charSet="utf-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <Meta />
+          <Links />
+        </head>
+        <body>
+          {children}
+          <ScrollRestoration />
+          <Scripts />
+        </body>
+      </html>
+    </LingoProvider>
   );
 }
 
