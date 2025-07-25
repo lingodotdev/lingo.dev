@@ -19,7 +19,7 @@ To run this example:
 2. Navigate into this example's directory:
 
    ```bash
-   cd demo/adonisjs
+   cd demo/t3
    ```
 
 3. Install the dependencies:
