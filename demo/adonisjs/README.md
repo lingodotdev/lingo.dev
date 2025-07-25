@@ -43,4 +43,4 @@ These are the files that were changed to get **Lingo.dev Compiler** up and runni
 - [inertia/pages/home.tsx](./inertia/pages/home.tsx)
 - [vite.config.ts](./vite.config.ts)
 
-You can use these files as a reference for setting up the compiler in your own project.
+You can use these files as a reference when setting up the compiler in your own project.
