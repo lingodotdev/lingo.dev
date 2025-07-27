@@ -6,7 +6,20 @@ import _ from "lodash";
 export const OBJECT_NUMERIC_KEY_PREFIX = "__lingodotdev__obj__";
 
 export default function createFlatLoader() {
-  return composeLoaders(createDenormalizeLoader(), createNormalizeLoader());
+  const composedLoader = composeLoaders(
+    createDenormalizeLoader(),
+    createNormalizeLoader(),
+  );
+
+  return {
+    ...composedLoader,
+    pullHints: async (input: Record<string, any>) => {
+      if (!input || typeof input !== "object") {
+        return {};
+      }
+      return flattenComments(input);
+    },
+  };
 }
 
 type DenormalizeResult = {
@@ -129,4 +142,45 @@ export function normalizeObjectKeys(
   } else {
     return obj;
   }
+}
+
+function flattenComments(
+  obj: Record<string, any>,
+  parentHints: string[] = [],
+  parentPath: string = "",
+): Record<string, string[]> {
+  const result: Record<string, string[]> = {};
+
+  for (const [key, _value] of Object.entries(obj)) {
+    if (_.isObject(_value) && !_.isArray(_value)) {
+      const value = _value as Record<string, any>;
+      const currentHints = [...parentHints];
+      const currentPath = parentPath ? `${parentPath}/${key}` : key;
+
+      // Add this level's hint if it exists
+      if (value.hint && typeof value.hint === "string") {
+        currentHints.push(value.hint);
+      }
+
+      // Process nested objects (excluding the hint property)
+      const nestedObj = _.omit(value, "hint");
+
+      // If this is a leaf node (no nested objects), add to result
+      if (Object.keys(nestedObj).length === 0) {
+        if (currentHints.length > 0) {
+          result[currentPath] = currentHints;
+        }
+      } else {
+        // Recursively process nested objects
+        const nestedComments = flattenComments(
+          nestedObj,
+          currentHints,
+          currentPath,
+        );
+        Object.assign(result, nestedComments);
+      }
+    }
+  }
+
+  return result;
 }
