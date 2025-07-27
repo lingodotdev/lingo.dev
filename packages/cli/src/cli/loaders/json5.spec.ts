@@ -97,7 +97,7 @@ spans multiple lines"
     loader.setDefaultLocale("en");
     // Need to call pull first to initialize the loader state
     await loader.pull("en", "{}");
-    
+
     const data = {
       hello: "Hello",
       world: "World",
@@ -123,7 +123,7 @@ spans multiple lines"
     loader.setDefaultLocale("en");
     // Need to call pull first to initialize the loader state
     await loader.pull("en", "{}");
-    
+
     const result = await loader.push("en", {});
     expect(result).toBe("{}");
   });
@@ -133,7 +133,7 @@ spans multiple lines"
     loader.setDefaultLocale("en");
     // Need to call pull first to initialize the loader state
     await loader.pull("en", "{}");
-    
+
     const data = {
       strings: ["hello", "world"],
       numbers: [1, 2, 3],
@@ -145,7 +145,7 @@ spans multiple lines"
     };
 
     const result = await loader.push("en", data);
-    
+
     // Parse the result back to verify it's valid JSON5
     const JSON5 = await import("json5");
     const parsed = JSON5.default.parse(result);

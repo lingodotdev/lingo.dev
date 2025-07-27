@@ -124,23 +124,25 @@ export default function createXcodeXcstringsLoader(
       const hints: Record<string, any> = {};
 
       for (const [translationKey, translationEntity] of Object.entries(
-        originalInput.strings
+        originalInput.strings,
       )) {
         const entity = translationEntity as any;
-        
+
         // Extract comment field if it exists
-        if (entity.comment && typeof entity.comment === 'string') {
+        if (entity.comment && typeof entity.comment === "string") {
           hints[translationKey] = { hint: entity.comment };
         }
-        
+
         // For plural forms, we might want to include the base comment for all variants
         if (entity.localizations) {
-          for (const [locale, localization] of Object.entries(entity.localizations)) {
+          for (const [locale, localization] of Object.entries(
+            entity.localizations,
+          )) {
             if ((localization as any).variations?.plural) {
               const pluralForms = (localization as any).variations.plural;
               for (const form in pluralForms) {
                 const pluralKey = `${translationKey}/${form}`;
-                if (entity.comment && typeof entity.comment === 'string') {
+                if (entity.comment && typeof entity.comment === "string") {
                   hints[pluralKey] = { hint: entity.comment };
                 }
               }
