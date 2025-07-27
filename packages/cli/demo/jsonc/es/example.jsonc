@@ -1,44 +1,11 @@
 {
-  // JSONC allows comments like this
-  "title": "¡Hola, mundo!",
-  "description": "Una aplicación de demostración simple con características JSONC",
-  "version": "1.0.0",
-  "support_email": "soporte@example.com",
-  "homepage": "https://lingo.dev",
-  "deprecated": null,
-  "empty": "",
-  "emoji": "🚀",
-  
-  /* Block comments are also supported */
-  "author": {
-    "name": "Juan Pérez"
+  "key1": "¡Hola, mundo!",
+  "key2": "Una aplicación de demostración simple con características JSONC",
+  "key3": "1.0.0",
+  "key4": "support@example.com",
+  "key5": "🚀",
+  "key6": {
+    "key7": "Valor anidado"
   },
-  
-  "contributors": [
-    { "name": "Alicia" },
-    { "name": "Roberto" }, // Trailing comma is allowed
-  ],
-  
-  "messages": [
-    "Bienvenido a MiApp",
-    "¡Hola, mundo!",
-  ],
-  
-  "config": {
-    "theme": {
-      "primary": "Tema azul"
-    }
-  },
-  
-  "mixed_array": [
-    "Contenido mixto aquí",
-    42,
-    true,
-    {
-      "nested_message": "Texto anidado"
-    },
-  ],
-  
-  // This key is locked and should not be changed
-  "locked_key_1": "This value is locked and should not be changed",
+  "locked_key_1": "This value is locked and should not be changed"
 }

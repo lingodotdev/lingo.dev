@@ -10,8 +10,7 @@
     "jsonc": {
       "include": [
         "./[locale]/example.jsonc"
-      ],
-      "lockedKeys": ["locked_key_1"]
+      ]
     }
   },
   "$schema": "https://lingo.dev/schema/i18n.json"
