@@ -23,6 +23,9 @@
     "json": {
       "include": ["demo/json/[locale].json"]
     },
+    "jsonc": {
+      "include": ["demo/jsonc/[locale]/example.jsonc"]
+    },
     "markdown": {
       "include": ["demo/markdown/[locale]/*.md"],
       "exclude": ["demo/markdown/[locale]/ignored.md"]

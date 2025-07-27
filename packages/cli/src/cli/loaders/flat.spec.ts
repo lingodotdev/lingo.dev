@@ -160,4 +160,126 @@ describe("flat loader", () => {
       });
     });
   });
+
+  describe("pullHints", () => {
+    it("should flatten comments from nested structure", async () => {
+      const loader = createFlatLoader();
+      loader.setDefaultLocale("en");
+
+      const input = {
+        key1: { hint: "This is a comment for key1" },
+        key2: { hint: "This is a comment for key2" },
+        key3: { hint: "This is a comment for key3" },
+        key4: { hint: "This is a block comment for key4" },
+        key5: { hint: "This is a comment for key5" },
+        key6: {
+          hint: "This is a comment for key6",
+          key7: { hint: "This is a comment for key7" },
+        },
+      };
+
+      const comments = await loader.pullHints(input);
+
+      expect(comments).toEqual({
+        key1: ["This is a comment for key1"],
+        key2: ["This is a comment for key2"],
+        key3: ["This is a comment for key3"],
+        key4: ["This is a block comment for key4"],
+        key5: ["This is a comment for key5"],
+        "key6/key7": [
+          "This is a comment for key6",
+          "This is a comment for key7",
+        ],
+      });
+    });
+
+    it("should handle empty input", async () => {
+      const loader = createFlatLoader();
+      loader.setDefaultLocale("en");
+
+      const comments = await loader.pullHints({});
+      expect(comments).toEqual({});
+    });
+
+    it("should handle null/undefined input", async () => {
+      const loader = createFlatLoader();
+      loader.setDefaultLocale("en");
+
+      const comments1 = await loader.pullHints(null as any);
+      expect(comments1).toEqual({});
+
+      const comments2 = await loader.pullHints(undefined as any);
+      expect(comments2).toEqual({});
+    });
+
+    it("should handle deeply nested structure", async () => {
+      const loader = createFlatLoader();
+      loader.setDefaultLocale("en");
+
+      const input = {
+        level1: {
+          hint: "Level 1 hint",
+          level2: {
+            hint: "Level 2 hint",
+            level3: {
+              hint: "Level 3 hint",
+            },
+          },
+        },
+      };
+
+      const comments = await loader.pullHints(input);
+
+      expect(comments).toEqual({
+        "level1/level2/level3": [
+          "Level 1 hint",
+          "Level 2 hint",
+          "Level 3 hint",
+        ],
+      });
+    });
+
+    it("should handle objects without hints", async () => {
+      const loader = createFlatLoader();
+      loader.setDefaultLocale("en");
+
+      const input = {
+        key1: { hint: "Has hint" },
+        key2: {
+          key3: { hint: "Nested hint" },
+        },
+      };
+
+      const comments = await loader.pullHints(input);
+
+      expect(comments).toEqual({
+        key1: ["Has hint"],
+        "key2/key3": ["Nested hint"],
+      });
+    });
+
+    it("should handle mixed structures", async () => {
+      const loader = createFlatLoader();
+      loader.setDefaultLocale("en");
+
+      const input = {
+        simple: { hint: "Simple hint" },
+        parent: {
+          hint: "Parent hint",
+          child1: { hint: "Child 1 hint" },
+          child2: {
+            grandchild: { hint: "Grandchild hint" },
+          },
+        },
+      };
+
+      const comments = await loader.pullHints(input);
+
+      expect(comments).toEqual({
+        simple: ["Simple hint"],
+        "parent/child1": ["Parent hint", "Child 1 hint"],
+        "parent/child2/grandchild": ["Parent hint", "Grandchild hint"],
+      });
+    });
+  });
 });

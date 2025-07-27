@@ -11,12 +11,14 @@ const engineParamsSchema = Z.object({
 
 const payloadSchema = Z.record(Z.string(), Z.any());
 const referenceSchema = Z.record(localeCodeSchema, payloadSchema);
+const hintsSchema = Z.record(Z.string(), Z.array(Z.string()));
 
 const localizationParamsSchema = Z.object({
   sourceLocale: Z.union([localeCodeSchema, Z.null()]),
   targetLocale: localeCodeSchema,
   fast: Z.boolean().optional(),
   reference: referenceSchema.optional(),
+  hints: hintsSchema.optional(),
 });
 
 /**
@@ -70,7 +72,7 @@ export class LingoDotDevEngine {
       const processedPayloadChunk = await this.localizeChunk(
         finalParams.sourceLocale,
         finalParams.targetLocale,
-        { data: chunk, reference: params.reference },
+        { data: chunk, reference: params.reference, hints: params.hints },
         workflowId,
         params.fast || false,
         signal,
@@ -102,6 +104,7 @@ export class LingoDotDevEngine {
     payload: {
       data: Z.infer<typeof payloadSchema>;
       reference?: Z.infer<typeof referenceSchema>;
+      hints?: Z.infer<typeof hintsSchema>;
     },
     workflowId: string,
     fast: boolean,
@@ -122,6 +125,7 @@ export class LingoDotDevEngine {
           },
           data: payload.data,
           reference: payload.reference,
+          hints: payload.hints,
         },
         null,
         2,

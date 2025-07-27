@@ -6,6 +6,7 @@ export type LocalizerData = {
   processableData: Record<string, any>;
   targetLocale: string;
   targetData: Record<string, any>;
+  hints: Record<string, string[]>;
 };
 
 export type LocalizerProgressFn = (

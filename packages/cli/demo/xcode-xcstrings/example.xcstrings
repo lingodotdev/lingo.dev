@@ -2,6 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     "api_key" : {
+      "comment" : "API key used for authentication - should not be translated",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -14,6 +15,7 @@
       "shouldTranslate" : false
     },
     "item_count" : {
+      "comment" : "Number of items displayed in the list - supports pluralization",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -67,6 +69,7 @@
       }
     },
     "welcome_message" : {
+      "comment" : "Welcome message shown on the app's home screen",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
