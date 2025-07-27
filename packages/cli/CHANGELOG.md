@@ -1,5 +1,18 @@
 # lingo.dev
 
+## 0.109.0
+
+### Minor Changes
+
+- [#1066](https://github.com/lingodotdev/lingo.dev/pull/1066) [`6af91a0`](https://github.com/lingodotdev/lingo.dev/commit/6af91a083d16f85051fb49a4034789abe784017e) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - add hints support for xcode and jsonc buckets
+
+### Patch Changes
+
+- Updated dependencies [[`6af91a0`](https://github.com/lingodotdev/lingo.dev/commit/6af91a083d16f85051fb49a4034789abe784017e), [`6af91a0`](https://github.com/lingodotdev/lingo.dev/commit/6af91a083d16f85051fb49a4034789abe784017e)]:
+  - @lingo.dev/_spec@0.40.0
+  - @lingo.dev/_sdk@0.12.0
+  - @lingo.dev/_compiler@0.7.3
+
 ## 0.108.0
 
 ### Minor Changes
