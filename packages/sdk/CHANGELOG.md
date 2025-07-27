@@ -1,5 +1,16 @@
 # @lingo.dev/\_sdk
 
+## 0.12.0
+
+### Minor Changes
+
+- [#1066](https://github.com/lingodotdev/lingo.dev/pull/1066) [`6af91a0`](https://github.com/lingodotdev/lingo.dev/commit/6af91a083d16f85051fb49a4034789abe784017e) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - add hints support
+
+### Patch Changes
+
+- Updated dependencies [[`6af91a0`](https://github.com/lingodotdev/lingo.dev/commit/6af91a083d16f85051fb49a4034789abe784017e)]:
+  - @lingo.dev/_spec@0.40.0
+
 ## 0.11.0
 
 ### Minor Changes
