@@ -7,3 +7,7 @@
 ## Tools
 
 - Must use `pnpm` as package manager
+
+## Testing
+
+- When you add tests - make sure they pass
