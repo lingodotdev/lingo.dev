@@ -1,0 +1,44 @@
+{
+  "navigation": {
+    "en": "Home",
+    "es": "Inicio"
+  },
+  "buttons": {
+    "submit": {
+      "en": "Submit",
+      "es": "Enviar"
+    },
+    "cancel": {
+      "en": "Cancel",
+      "es": "Cancelar"
+    }
+  },
+  "messages": {
+    "welcome": {
+      "en": "Welcome to our application",
+      "es": "Bienvenido a nuestra aplicación"
+    },
+    "error": {
+      "en": "An error occurred",
+      "es": "Ha ocurrido un error"
+    }
+  },
+  "forms": {
+    "login": {
+      "title": {
+        "en": "Login",
+        "es": "Iniciar sesión"
+      },
+      "fields": {
+        "username": {
+          "en": "Username",
+          "es": "Nombre de usuario"
+        },
+        "password": {
+          "en": "Password",
+          "es": "Contraseña"
+        }
+      }
+    }
+  }
+}

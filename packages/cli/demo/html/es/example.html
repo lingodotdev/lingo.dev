@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <title>MyApp - Hola Mundo</title>
+
+    <meta name="description" content="Una aplicación de demostración simple" />
+    <meta property="og:title" content="Demostración de MyApp" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8" />
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        color: #333;
+      }
+      .highlight::before {
+        content: "★ Featured";
+      }
+    </style>
+
+    <script>
+      const message = "User session initialized";
+      console.log(message);
+    </script>
+  </head>
+  <body>
+    <h1>Bienvenido a MyApp</h1>
+
+    <p>
+      ¡Hola, mundo! Esta es una demostración simple con
+      <strong>texto en negrita</strong>
+      y
+      <em>texto en cursiva</em>
+      .
+    </p>
+
+    <div>
+      <div>
+        <span>Contenido anidado aquí</span>
+      </div>
+    </div>
+
+    <img src="example.jpg" alt="Imagen de ejemplo" />
+
+    <img
+      src="example.jpg"
+      alt="Imagen de demostración"
+      title="View product details"
+    />
+
+    <input type="text" placeholder="Introduce texto aquí" />
+
+    <input
+      type="text"
+      placeholder="Introduce valor"
+      value="Default search query"
+    />
+
+    <a href="#" title="Haz clic para más">Saber más</a>
+
+    <a href="not-localized.html" data-info="Navigation link" title="Navegar">
+      Ir a la página
+    </a>
+
+    <div class="content-area" data-value="Main content">Área de contenido</div>
+
+    <script>
+      const inlineScript = "Page analytics loaded";
+    </script>
+
+    <style>
+      .inline-style {
+        content: "Notice: ";
+      }
+    </style>
+  </body>
+</html>

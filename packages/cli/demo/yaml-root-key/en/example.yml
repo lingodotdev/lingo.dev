@@ -1,0 +1,13 @@
+es:
+  navigation:
+    home: "Inicio"
+    about: "Sobre nosotros"
+    contact: "Contacto"
+    services: "Servicios"
+  forms:
+    title: "Formulario de contacto"
+    name_label: "Su nombre"
+    email_label: "Dirección de correo electrónico"
+    message_label: "Mensaje"
+    submit_button: "Enviar mensaje"
+    success_message: "¡Gracias por su mensaje!"

@@ -1,0 +1,6 @@
+Esta es la primera línea de contenido de texto
+Esta es la segunda línea con contenido diferente
+Esta línea contiene caracteres especiales: !@#$%^&*()
+
+Esta es la línea cinco después de una línea vacía arriba
+Gracias por elegir nuestro servicio
