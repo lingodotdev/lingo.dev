@@ -1,0 +1,18 @@
+{
+  "version": 1.8,
+  "locale": {
+    "source": "en",
+    "targets": [
+      "es"
+    ]
+  },
+  "buckets": {
+    "json5": {
+      "include": [
+        "./[locale]/example.json5"
+      ],
+      "lockedKeys": ["locked_key_1"]
+    }
+  },
+  "$schema": "https://lingo.dev/schema/i18n.json"
+}
