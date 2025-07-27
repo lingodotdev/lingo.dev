@@ -83,6 +83,17 @@ const viteConfig: UserConfig = {
 	},
 }
 
+const withLingo = lingoCompiler.vite({
+	sourceRoot: 'app',
+	lingoDir: 'lingo',
+	sourceLocale: 'en',
+	targetLocales: ['es'],
+	rsc: false,
+	useDirective: false,
+	debug: false,
+	models: 'lingo.dev',
+})
+
 export default defineConfig((config) => {
 	const configWithSentry = {
 		...viteConfig,
@@ -94,14 +105,5 @@ export default defineConfig((config) => {
 		].filter(Boolean),
 	}
 
-	return lingoCompiler.vite({
-		sourceRoot: 'app',
-		lingoDir: 'lingo',
-		sourceLocale: 'en',
-		targetLocales: ['es'],
-		rsc: false,
-		useDirective: false,
-		debug: false,
-		models: 'lingo.dev',
-	})(configWithSentry)
+	return withLingo(configWithSentry)
 })
