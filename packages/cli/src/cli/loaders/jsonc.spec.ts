@@ -112,7 +112,7 @@ describe("jsonc loader", () => {
     loader.setDefaultLocale("en");
     // Need to call pull first to initialize the loader state
     await loader.pull("en", "{}");
-    
+
     const data = {
       hello: "Hello",
       world: "World",
@@ -138,7 +138,7 @@ describe("jsonc loader", () => {
     loader.setDefaultLocale("en");
     // Need to call pull first to initialize the loader state
     await loader.pull("en", "{}");
-    
+
     const result = await loader.push("en", {});
     expect(result).toBe("{}");
   });
@@ -148,7 +148,7 @@ describe("jsonc loader", () => {
     loader.setDefaultLocale("en");
     // Need to call pull first to initialize the loader state
     await loader.pull("en", "{}");
-    
+
     const data = {
       strings: ["hello", "world"],
       numbers: [1, 2, 3],
@@ -160,7 +160,7 @@ describe("jsonc loader", () => {
     };
 
     const result = await loader.push("en", data);
-    
+
     // Parse the result back to verify it's valid JSON
     const parsed = JSON.parse(result);
     expect(parsed).toEqual(data);
@@ -182,7 +182,7 @@ describe("jsonc loader", () => {
     });
   });
 
-  it("pullComments should extract comments from JSONC", async () => {
+  it("pullHints should extract comments from JSONC", async () => {
     const loader = createJsoncLoader();
     loader.setDefaultLocale("en");
     const jsoncInput = `{
@@ -203,17 +203,17 @@ describe("jsonc loader", () => {
       }
     }`;
 
-    const comments = await loader.pullComments(jsoncInput);
-    
+    const comments = await loader.pullHints(jsoncInput);
+
     expect(comments).toEqual({
-      key1: { comment: "This is a comment for key1" },
-      key2: { comment: "This is a comment for key2" },
-      key3: { comment: "This is a comment for key3" },
-      key4: { comment: "This is a block comment for key4" },
-      key5: { comment: "This is a comment for key5" },
+      key1: { hint: "This is a comment for key1" },
+      key2: { hint: "This is a comment for key2" },
+      key3: { hint: "This is a comment for key3" },
+      key4: { hint: "This is a block comment for key4" },
+      key5: { hint: "This is a comment for key5" },
       key6: {
-        comment: "This is a comment for key6",
-        key7: { comment: "This is a comment for key7" },
+        hint: "This is a comment for key6",
+        key7: { hint: "This is a comment for key7" },
       },
     });
   });

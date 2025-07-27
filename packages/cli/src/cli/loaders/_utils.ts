@@ -29,10 +29,14 @@ export function composeLoaders(
       }
       return result;
     },
-    pullComments: async (originalInput) => {
+    pullHints: async (originalInput) => {
       let result: any = originalInput;
       for (let i = 0; i < loaders.length; i++) {
-        result = await loaders[i].pullComments?.(result);
+        if (!loaders[i].pullHints) {
+          continue;
+        }
+
+        result = await loaders[i].pullHints?.(result);
       }
       return result;
     },
@@ -64,8 +68,8 @@ export function createLoader<I, O, C>(
       state.defaultLocale = locale;
       return this;
     },
-    async pullComments(originalInput) {
-      return lDefinition.pullComments?.(originalInput);
+    async pullHints(originalInput) {
+      return lDefinition.pullHints?.(originalInput);
     },
     async pull(locale, input) {
       if (!state.defaultLocale) {
