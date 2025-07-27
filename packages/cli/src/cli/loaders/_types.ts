@@ -15,6 +15,7 @@ export interface ILoaderDefinition<I, O, C> {
     pullInput: I | null,
     pullOutput: O | null,
   ): Promise<I>;
+  pullComments?(originalInput: I): Promise<O | undefined>;
 }
 
 export interface ILoader<I, O, C = void> extends ILoaderDefinition<I, O, C> {
@@ -22,4 +23,5 @@ export interface ILoader<I, O, C = void> extends ILoaderDefinition<I, O, C> {
   init(): Promise<C>;
   pull(locale: string, input: I): Promise<O>;
   push(locale: string, data: O): Promise<I>;
+  pullComments(originalInput: I): Promise<O | undefined>;
 }

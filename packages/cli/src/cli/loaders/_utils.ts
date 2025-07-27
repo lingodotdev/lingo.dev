@@ -29,6 +29,13 @@ export function composeLoaders(
       }
       return result;
     },
+    pullComments: async (originalInput) => {
+      let result: any = originalInput;
+      for (let i = 0; i < loaders.length; i++) {
+        result = await loaders[i].pullComments?.(result);
+      }
+      return result;
+    },
   };
 }
 
@@ -56,6 +63,9 @@ export function createLoader<I, O, C>(
       }
       state.defaultLocale = locale;
       return this;
+    },
+    async pullComments(originalInput) {
+      return lDefinition.pullComments?.(originalInput);
     },
     async pull(locale, input) {
       if (!state.defaultLocale) {
