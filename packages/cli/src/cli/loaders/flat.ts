@@ -17,7 +17,7 @@ export default function createFlatLoader() {
       if (!input || typeof input !== "object") {
         return {};
       }
-      return flattenComments(input);
+      return flattenHints(input);
     },
   };
 }
@@ -144,7 +144,7 @@ export function normalizeObjectKeys(
   }
 }
 
-function flattenComments(
+function flattenHints(
   obj: Record<string, any>,
   parentHints: string[] = [],
   parentPath: string = "",
@@ -172,7 +172,7 @@ function flattenComments(
         }
       } else {
         // Recursively process nested objects
-        const nestedComments = flattenComments(
+        const nestedComments = flattenHints(
           nestedObj,
           currentHints,
           currentPath,

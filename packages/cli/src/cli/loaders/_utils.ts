@@ -32,11 +32,10 @@ export function composeLoaders(
     pullHints: async (originalInput) => {
       let result: any = originalInput;
       for (let i = 0; i < loaders.length; i++) {
-        if (!loaders[i].pullHints) {
-          continue;
+        const subResult = await loaders[i].pullHints?.(result);
+        if (subResult) {
+          result = subResult;
         }
-
-        result = await loaders[i].pullHints?.(result);
       }
       return result;
     },
@@ -68,8 +67,8 @@ export function createLoader<I, O, C>(
       state.defaultLocale = locale;
       return this;
     },
-    async pullHints(originalInput) {
-      return lDefinition.pullHints?.(originalInput);
+    async pullHints() {
+      return lDefinition.pullHints?.(state.originalInput!);
     },
     async pull(locale, input) {
       if (!state.defaultLocale) {

@@ -203,6 +203,8 @@ describe("jsonc loader", () => {
       }
     }`;
 
+    // First call pull to initialize the loader state
+    await loader.pull("en", jsoncInput);
     const comments = await loader.pullHints(jsoncInput);
 
     expect(comments).toEqual({
