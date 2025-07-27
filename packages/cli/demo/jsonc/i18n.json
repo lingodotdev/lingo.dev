@@ -11,7 +11,8 @@
       "include": [
         "./[locale]/example.jsonc"
       ],
-      "lockedKeys": ["locked_key_1"]
+      "lockedKeys": ["locked_key_1"],
+      "pullComments": true
     }
   },
   "$schema": "https://lingo.dev/schema/i18n.json"
