@@ -300,10 +300,10 @@ export default function createBucketLoader(
         createTypescriptLoader(),
         createFlatLoader(),
         createEnsureKeyOrderLoader(),
-        createLockedKeysLoader(lockedKeys || []),
         createSyncLoader(),
+        createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys, ignoredKeys),
+        createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
     case "txt":
       return composeLoaders(
