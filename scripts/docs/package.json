@@ -3,7 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "generate-cli-docs": "tsx ./src/generate-cli-docs.ts"
+    "generate-cli-docs": "tsx ./src/generate-cli-docs.ts",
+    "generate-provider-docs": "tsx ./src/generate-provider-docs.ts"
   },
   "devDependencies": {
     "@octokit/rest": "^20.1.2",
@@ -13,5 +14,9 @@
     "remark-stringify": "^11.0.0",
     "tsx": "^4.7.1",
     "unified": "^11.0.4"
+  },
+  "dependencies": {
+    "@lingo.dev/_spec": "workspace:*",
+    "@lingo.dev/_compiler": "workspace:*"
   }
 }
