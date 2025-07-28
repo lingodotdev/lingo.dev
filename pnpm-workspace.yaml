@@ -1,6 +1,7 @@
 packages:
   - "./packages/*"
   - "./demo/*"
+  - "!./demo/create-t3-app"
   - "./integrations/*"
   - "./legacy/*"
   - "./action"
