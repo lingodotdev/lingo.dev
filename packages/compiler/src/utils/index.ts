@@ -90,6 +90,24 @@ function findExistingImport(
           path.stop();
           return;
         }
+
+        // Handle default imports (import React from "react")
+        if (t.isImportDefaultSpecifier(specifier)) {
+          // For default imports, we can access the exported name via the default import
+          // e.g., React.Fragment when we have "import React from 'react'"
+          result = `${specifier.local.name}.${exportedName}`;
+          path.stop();
+          return;
+        }
+
+        // Handle namespace imports (import * as React from "react")
+        if (t.isImportNamespaceSpecifier(specifier)) {
+          // For namespace imports, we can access the exported name via the namespace
+          // e.g., React.Fragment when we have "import * as React from 'react'"
+          result = `${specifier.local.name}.${exportedName}`;
+          path.stop();
+          return;
+        }
       }
     },
   });
