@@ -55,7 +55,6 @@ function createNormalizeLoader(): ILoader<
           return decodeURIComponent(String(key));
         },
       });
-
       return { denormalized, keysMap: keysMap || {} };
     },
   });
