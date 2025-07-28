@@ -1,6 +1,7 @@
 packages:
   - "./packages/*"
   - "./demo/*"
+  - "!./demo/nextjs-app-router"
   - "./integrations/*"
   - "./legacy/*"
   - "./action"
