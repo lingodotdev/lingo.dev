@@ -1,7 +1,6 @@
 packages:
   - "./packages/*"
   - "./demo/*"
-  - "!./demo/react-router"
   - "./integrations/*"
   - "./legacy/*"
   - "./action"
