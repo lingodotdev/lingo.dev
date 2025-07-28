@@ -1,9 +1,9 @@
 import { Head } from '@inertiajs/react'
-import { LingoProviderWrapper, loadDictionary, LocaleSwitcher } from 'lingo.dev/react/client'
+import { LocaleSwitcher } from 'lingo.dev/react/client'
 
 export default function Home() {
   return (
-    <LingoProviderWrapper loadDictionary={(locale) => loadDictionary(locale)}>
+    <>
       <Head title="Homepage" />
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="max-w-lg mx-auto p-8 bg-white rounded-lg shadow-sm text-center">
@@ -25,6 +25,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-    </LingoProviderWrapper>
+    </>
   )
 }

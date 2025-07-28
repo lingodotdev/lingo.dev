@@ -1,5 +1,6 @@
 import ReactDOMServer from 'react-dom/server'
 import { createInertiaApp } from '@inertiajs/react'
+import { LingoProviderWrapper, loadDictionary } from 'lingo.dev/react/client'
 
 export default function render(page: any) {
   return createInertiaApp({
@@ -9,6 +10,10 @@ export default function render(page: any) {
       const pages = import.meta.glob('../pages/**/*.tsx', { eager: true })
       return pages[`../pages/${name}.tsx`]
     },
-    setup: ({ App, props }) => <App {...props} />,
+    setup: ({ App, props }) => (
+      <LingoProviderWrapper loadDictionary={(locale) => loadDictionary(locale)}>
+        <App {...props} />
+      </LingoProviderWrapper>
+    ),
   })
 }
