@@ -34,10 +34,8 @@ export default function createTypescriptLoader(): ILoader<
       pullOutput,
     ) => {
       const ast = parseTypeScript(originalInput || "");
-      // Use only the filtered data - don't merge with pullOutput as it may contain ignored keys
-      const finalData = data;
 
-      updateStringsInDefaultExport(ast, finalData);
+      updateStringsInDefaultExport(ast, data);
 
       const { code } = generate(ast, {
         jsescOption: {
