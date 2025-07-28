@@ -23,11 +23,9 @@ export default function createSyncLoader(): ILoader<
       }
 
       // Only include keys that exist in the original input to maintain sync
-      const syncedData = _.chain(data)
+      return _.chain(data)
         .pickBy((value, key) => originalInput.hasOwnProperty(key))
         .value() as Record<string, string>;
-
-      return syncedData;
     },
   });
 }

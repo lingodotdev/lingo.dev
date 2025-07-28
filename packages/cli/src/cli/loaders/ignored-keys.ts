@@ -1,6 +1,6 @@
 import { ILoader } from "./_types";
 import { createLoader } from "./_utils";
-import _ from "lodash";
+import _, { result } from "lodash";
 import { minimatch } from "minimatch";
 
 export default function createIgnoredKeysLoader(
@@ -9,20 +9,20 @@ export default function createIgnoredKeysLoader(
   return createLoader({
     pull: async (locale, data) => {
       // Keep all keys that are NOT ignored
-      const filteredData = _.omitBy(data, (value, key) =>
+      const result = _.omitBy(data, (value, key) =>
         _isIgnoredKey(key, ignoredKeys),
       );
 
-      return filteredData;
+      return result;
     },
 
     push: async (locale, data) => {
       // Remove ignored keys from the data being pushed to target files
-      const filteredData = _.omitBy(data, (value, key) =>
+      const result = _.omitBy(data, (value, key) =>
         _isIgnoredKey(key, ignoredKeys),
       );
 
-      return filteredData;
+      return result;
     },
   });
 }
