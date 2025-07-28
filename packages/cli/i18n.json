@@ -37,8 +37,7 @@
       "include": ["demo/properties/[locale].properties"]
     },
     "typescript": {
-      "include": ["demo/typescript/[locale].ts"],
-      "ignoredKeys": ["title"]
+      "include": ["demo/typescript/[locale].ts"]
     },
     "xcode-strings": {
       "include": ["demo/xcode-strings/[locale].lproj/Localizable.strings"]
