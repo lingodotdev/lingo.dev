@@ -162,6 +162,7 @@ We love your Pull Requests! A couple of things to keep in mind before you submit
 #### Automated Code Review
 
 We use Claude Code to provide automated code reviews on all pull requests. This helps ensure:
+
 - Code quality and maintainability
 - Security best practices
 - Performance considerations

@@ -23,7 +23,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
 
       - name: Install Claude Code
         run: |
@@ -36,13 +36,13 @@ jobs:
           # Get the diff for this PR
           git fetch origin main
           git diff origin/main...HEAD > pr_diff.txt
-          
+
           # Check if diff is not empty
           if [ ! -s pr_diff.txt ]; then
             echo "No changes to review"
             exit 0
           fi
-          
+
           echo "diff_exists=true" >> $GITHUB_OUTPUT
 
       - name: Review PR with Claude Code
@@ -55,13 +55,13 @@ jobs:
           Review this PR diff. Focus on code quality, security, and potential issues. Provide specific feedback with file references.
 
           EOF
-          
+
           # Append the diff to the prompt
           cat pr_diff.txt >> review_prompt.txt
-          
+
           # Run Claude Code review
           claude -p --output-format json --max-turns 1 < review_prompt.txt > claude_review.json
-          
+
           # Extract the review content
           cat claude_review.json | jq -r '.content' > claude_review.md
 
@@ -71,7 +71,7 @@ jobs:
         with:
           script: |
             const fs = require('fs');
-            
+
             try {
               const reviewContent = fs.readFileSync('claude_review.md', 'utf8');
               
