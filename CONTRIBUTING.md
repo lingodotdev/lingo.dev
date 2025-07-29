@@ -159,6 +159,18 @@ We love your Pull Requests! A couple of things to keep in mind before you submit
 - Please discuss implementation approach beforehand to avoid having PRs rejected
 - Please actively discuss with the Lingo.dev team in the PR and related Issue(s)
 
+#### Automated Code Review
+
+We use Claude Code to provide automated code reviews on all pull requests. This helps ensure:
+
+- Code quality and maintainability
+- Security best practices
+- Performance considerations
+- Proper test coverage
+- Documentation completeness
+
+The automated review will post comments on your PR with suggestions and feedback. While these are helpful guidelines, human reviewers will make the final decisions. If Claude Code identifies critical security issues, please address them promptly.
+
 ---
 
 Thank you!
