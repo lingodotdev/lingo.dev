@@ -50,28 +50,10 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.CLAUDE_CODE_ANTHROPIC_API_KEY }}
         run: |
-          # Create a comprehensive review prompt
+          # Create a review prompt
           cat > review_prompt.txt << 'EOF'
-          Please review this pull request diff for a TypeScript/JavaScript monorepo project. Focus on:
+          Review this PR diff. Focus on code quality, security, and potential issues. Provide specific feedback with file references.
 
-          1. **Code Quality**: Check for best practices, maintainability, and adherence to existing patterns
-          2. **Security**: Look for potential security vulnerabilities or sensitive data exposure
-          3. **Performance**: Identify potential performance issues or inefficiencies
-          4. **Testing**: Ensure adequate test coverage for new functionality
-          5. **Documentation**: Check if changes need documentation updates
-          6. **Breaking Changes**: Identify any potential breaking changes
-          7. **Dependencies**: Review new dependencies and their necessity
-          8. **Monorepo Considerations**: Ensure changes respect monorepo structure and dependencies
-
-          For each issue found, provide:
-          - File and line reference
-          - Clear description of the issue
-          - Suggested fix or improvement
-          - Severity level (critical, high, medium, low)
-
-          If no significant issues are found, provide a brief positive summary.
-
-          Here's the PR diff:
           EOF
           
           # Append the diff to the prompt
