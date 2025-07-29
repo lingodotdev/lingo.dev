@@ -22,6 +22,7 @@ vi.mock("../utils/fs", () => ({
 
 // Import MD5 after mocking
 import { MD5 } from "object-hash";
+import { md5 } from "./md5";
 
 describe("createDeltaProcessor", () => {
   const mockFileKey = "test-file-key";
@@ -49,9 +50,10 @@ describe("createDeltaProcessor", () => {
 
   describe("calculateDelta", () => {
     it("should correctly identify added keys", async () => {
-      const sourceData = { key1: "value1", key2: "value2" };
+      const key3Checksum = md5("value3");
+      const sourceData = { key1: "value1", key2: "value2", key3: "value3" };
       const targetData = { key1: "value1" };
-      const checksums = { key1: "checksum1" };
+      const checksums = { key1: "invalid-checksum1", key3: key3Checksum };
 
       const result = await mockProcessor.calculateDelta({
         sourceData,
