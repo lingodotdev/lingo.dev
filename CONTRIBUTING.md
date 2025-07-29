@@ -107,7 +107,17 @@ If you find a bug, please create an Issue and we'll triage it.
 
 ## Pull Requests
 
-We love your Pull Requests! A couple of things to keep in mind before you submit:
+We love your Pull Requests! However, we maintain extremely high standards for code quality and design. We are looking for elegant, 12/10, beautiful code and deeply weighted system design decisions.
+
+### Our Standards
+
+- **Surgical PRs**: Pull requests must be surgical and extremely single-purposed. One clear objective per PR.
+- **Elegant Code**: We expect beautifully crafted, elegant code that demonstrates mastery of the language and patterns.
+- **Deep Design Thinking**: System design decisions must be deeply considered and well-reasoned.
+- **Comprehensive Testing**: Must include tests that surgically test both positive and negative paths of the code.
+- **Uncompromising Quality**: We prefer fewer, higher-quality contributions over numerous mediocre ones.
+
+A couple of things to keep in mind before you submit:
 
 ### Before you open a pull request
 

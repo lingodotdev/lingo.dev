@@ -25,4 +25,13 @@ jobs:
           anthropic_api_key: ${{ secrets.CLAUDE_CODE_ANTHROPIC_API_KEY }}
           timeout_minutes: "10"
           direct_prompt: |
-            Review this PR. Focus on code quality, security, and potential issues. Provide specific feedback with file references.
+            Review this PR with extremely high standards. We are looking for elegant, 12/10, beautiful code and deeply weighted system design decisions.
+            
+            Requirements:
+            - PRs must be surgical and extremely single-purposed
+            - Code must be elegant and beautifully crafted
+            - System design decisions must be deeply considered
+            - Must have comprehensive tests that surgically test both positive and negative paths
+            - Focus on code quality, security, and potential issues
+            
+            Provide specific feedback with file references. Be thorough and uncompromising in your standards.
