@@ -34,8 +34,8 @@ export default function createTypescriptLoader(): ILoader<
       pullOutput,
     ) => {
       const ast = parseTypeScript(originalInput || "");
-
-      updateStringsInDefaultExport(ast, data);
+      const finalData = _.merge({}, pullOutput, data);
+      updateStringsInDefaultExport(ast, finalData);
 
       const { code } = generate(ast, {
         jsescOption: {
@@ -58,7 +58,7 @@ function parseTypeScript(input: string) {
 }
 
 /**
- * Extract the localizable (string literal) content from exports
+ * Extract the localizable (string literal) content from the default export
  * and return it as a nested object that mirrors the original structure.
  */
 function extractStringsFromDefaultExport(ast: t.File): Record<string, any> {
@@ -71,14 +71,12 @@ function extractStringsFromDefaultExport(ast: t.File): Record<string, any> {
       const decl = unwrapTSAsExpression(declaration);
 
       if (t.isObjectExpression(decl)) {
-        const defaultExport = objectExpressionToObject(decl);
-        extracted = { ...extracted, ...defaultExport };
+        extracted = objectExpressionToObject(decl);
       } else if (t.isArrayExpression(decl)) {
-        const defaultExport = arrayExpressionToArray(decl) as unknown as Record<
+        extracted = arrayExpressionToArray(decl) as unknown as Record<
           string,
           any
         >;
-        extracted = { ...extracted, ...defaultExport };
       } else if (t.isIdentifier(decl)) {
         // Handle: const foo = {...}; export default foo;
         const binding = path.scope.bindings[decl.name];
@@ -90,37 +88,14 @@ function extractStringsFromDefaultExport(ast: t.File): Record<string, any> {
           const initRaw = binding.path.node.init;
           const init = initRaw ? unwrapTSAsExpression(initRaw) : initRaw;
           if (t.isObjectExpression(init)) {
-            const defaultExport = objectExpressionToObject(init);
-            extracted = { ...extracted, ...defaultExport };
+            extracted = objectExpressionToObject(init);
           } else if (t.isArrayExpression(init)) {
-            const defaultExport = arrayExpressionToArray(
-              init,
-            ) as unknown as Record<string, any>;
-            extracted = { ...extracted, ...defaultExport };
+            extracted = arrayExpressionToArray(init) as unknown as Record<
+              string,
+              any
+            >;
           }
         }
-      }
-    },
-
-    // Handle export const declarations like: export const messages = {...}
-    ExportNamedDeclaration(path: NodePath<t.ExportNamedDeclaration>) {
-      const { declaration } = path.node;
-
-      if (t.isVariableDeclaration(declaration)) {
-        declaration.declarations.forEach((declarator) => {
-          if (t.isVariableDeclarator(declarator) && declarator.init) {
-            const init = unwrapTSAsExpression(declarator.init);
-            if (t.isObjectExpression(init)) {
-              const namedExport = objectExpressionToObject(init);
-              extracted = { ...extracted, ...namedExport };
-            } else if (t.isArrayExpression(init)) {
-              const namedExport = arrayExpressionToArray(
-                init,
-              ) as unknown as Record<string, any>;
-              extracted = { ...extracted, ...namedExport };
-            }
-          }
-        });
       }
     },
   });
@@ -237,28 +212,6 @@ function updateStringsInDefaultExport(
         modified = updateStringsInExportedIdentifier(path, data) || modified;
       }
     },
-
-    // Handle export const declarations like: export const messages = {...}
-    ExportNamedDeclaration(path: NodePath<t.ExportNamedDeclaration>) {
-      const { declaration } = path.node;
-
-      if (t.isVariableDeclaration(declaration)) {
-        declaration.declarations.forEach((declarator) => {
-          if (t.isVariableDeclarator(declarator) && declarator.init) {
-            const init = unwrapTSAsExpression(declarator.init);
-            if (t.isObjectExpression(init)) {
-              modified =
-                updateStringsInObjectExpression(init, data) || modified;
-            } else if (t.isArrayExpression(init)) {
-              if (Array.isArray(data)) {
-                modified =
-                  updateStringsInArrayExpression(init, data) || modified;
-              }
-            }
-          }
-        });
-      }
-    },
   });
 
   return modified;
@@ -270,44 +223,17 @@ function updateStringsInObjectExpression(
 ): boolean {
   let modified = false;
 
-  // First pass: update existing properties or mark for removal
-  const propertiesToKeep: (
-    | t.ObjectProperty
-    | t.ObjectMethod
-    | t.SpreadElement
-  )[] = [];
-
   objectExpression.properties.forEach((prop) => {
-    if (!t.isObjectProperty(prop)) {
-      propertiesToKeep.push(prop);
-      return;
-    }
+    if (!t.isObjectProperty(prop)) return;
 
     const key = getPropertyKey(prop);
     const incomingVal = data?.[key];
 
     if (incomingVal === undefined) {
-      // Key exists in AST but not in data
-      // Only remove if it's a localizable value (string/template literal/nested object/array)
-      // Preserve non-localizable values (numbers, booleans, etc.)
-      if (
-        t.isStringLiteral(prop.value) ||
-        (t.isTemplateLiteral(prop.value) &&
-          prop.value.expressions.length === 0) ||
-        t.isObjectExpression(prop.value) ||
-        t.isArrayExpression(prop.value)
-      ) {
-        // This is localizable content, remove it
-        modified = true;
-        return;
-      } else {
-        // This is non-localizable content (number, boolean, null, etc.), keep it
-        propertiesToKeep.push(prop);
-        return;
-      }
+      // nothing to update for this key
+      return;
     }
 
-    // Key exists in both AST and data - update its value
     if (t.isStringLiteral(prop.value) && typeof incomingVal === "string") {
       if (prop.value.value !== incomingVal) {
         prop.value.value = incomingVal;
@@ -342,14 +268,7 @@ function updateStringsInObjectExpression(
       );
       modified = subModified || modified;
     }
-
-    propertiesToKeep.push(prop);
   });
-
-  // Update the properties array to only include the ones we want to keep
-  if (modified) {
-    objectExpression.properties = propertiesToKeep;
-  }
 
   return modified;
 }
