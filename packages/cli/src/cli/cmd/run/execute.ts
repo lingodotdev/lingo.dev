@@ -127,6 +127,7 @@ function createLoaderForTask(assignedTask: CmdRunTask) {
     },
     assignedTask.lockedKeys,
     assignedTask.lockedPatterns,
+    assignedTask.ignoredKeys,
   );
   bucketLoader.setDefaultLocale(assignedTask.sourceLocale);
 
