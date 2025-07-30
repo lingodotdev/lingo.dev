@@ -34,13 +34,15 @@ jobs:
         run: |
           if [[ "${{ github.event_name }}" == "workflow_dispatch" && -n "${{ github.event.inputs.issue_number }}" ]]; then
             echo "issue_number=${{ github.event.inputs.issue_number }}" >> $GITHUB_OUTPUT
-            issue_data=$(gh issue view ${{ github.event.inputs.issue_number }} --json title,body)
+            issue_data=$(gh issue view ${{ github.event.inputs.issue_number }} --json title,body,author)
             echo "issue_title=$(echo "$issue_data" | jq -r '.title')" >> $GITHUB_OUTPUT
             echo "issue_body=$(echo "$issue_data" | jq -r '.body')" >> $GITHUB_OUTPUT
+            echo "issue_author=$(echo "$issue_data" | jq -r '.author.login')" >> $GITHUB_OUTPUT
           else
             echo "issue_number=${{ github.event.issue.number }}" >> $GITHUB_OUTPUT
             echo "issue_title=${{ github.event.issue.title }}" >> $GITHUB_OUTPUT
             echo "issue_body=${{ github.event.issue.body }}" >> $GITHUB_OUTPUT
+            echo "issue_author=${{ github.event.issue.user.login }}" >> $GITHUB_OUTPUT
           fi
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -53,24 +55,80 @@ jobs:
           timeout_minutes: "5"
           allowed_tools: "Bash"
           direct_prompt: |
-            Analyze this newly created issue and apply appropriate labels using the gh CLI.
+            You are a senior engineer doing issue triage for lingo.dev. Your job is to provide exceptional developer experience through deep technical analysis and helpful guidance.
 
-            Available repository labels: ${{ steps.labels.outputs.available_labels }}
+            REPOSITORY CONTEXT:
+            - Available labels: ${{ steps.labels.outputs.available_labels }}
+            - Issue: #${{ steps.target_issue.outputs.issue_number }}
+            - Author: ${{ steps.target_issue.outputs.issue_author }}
+            - Title: ${{ steps.target_issue.outputs.issue_title }}
+            - Body: ${{ steps.target_issue.outputs.issue_body }}
 
-            Tasks:
-            1. Analyze the issue content
-            2. Use `gh issue edit ${{ steps.target_issue.outputs.issue_number }} --add-label "label-name"` to apply each relevant label
-            3. Add a comment explaining your labeling decisions
+            EXECUTION PROTOCOL - FOLLOW EVERY STEP:
 
-            Requirements:
-            - Apply ALL relevant labels that match the issue content
-            - If no labels are truly relevant, apply NO labels at all
-            - Be thorough but precise - don't force labels that don't fit
-            - Use the Bash tool to run gh commands WITHOUT asking for confirmation
-            - The GITHUB_TOKEN is already set in the environment for gh authentication
+            1. CONTRIBUTOR ANALYSIS (MANDATORY):
+               Execute: `gh search issues --repo ${{ github.repository }} --author ${{ steps.target_issue.outputs.issue_author }} --json number | jq 'length'`
+               Determine if first-time or returning contributor.
 
-            Issue Title: ${{ steps.target_issue.outputs.issue_title }}
-            Issue Body: ${{ steps.target_issue.outputs.issue_body }}
+            2. CODEBASE EXPLORATION (MANDATORY):
+               Execute these commands in sequence:
+               - `find . -name "*.ts" -o -name "*.js" -o -name "*.json" | grep -E "(src|packages|lib)" | head -20`
+               - `grep -r "keyword1\|keyword2" src/ packages/ --include="*.ts" --include="*.js" | head -10`
+               - `cat CODEOWNERS` (if exists)
+               - `find . -name "package.json" | head -5 | xargs cat`
+               - `git log --oneline -5 --grep="relevant_keyword"`
+
+            3. ISSUE INTELLIGENCE (MANDATORY):
+               Execute these searches:
+               - `gh issue list --state open --search "relevant keywords" --json number,title,state | head -3`
+               - `gh issue list --state all --search "similar terms" --json number,title,state | head -3`
+               - `gh pr list --state open --search "related keywords" --json number,title,state | head -3`
+
+            4. LABELING (MANDATORY):
+               Apply labels using: `gh issue edit ${{ steps.target_issue.outputs.issue_number }} --add-label "label-name"`
+               Must apply:
+               - Content labels: bug, enhancement, documentation, question, cli, compiler, etc.
+               - State labels: duplicate (if found), wip (if related PR exists)
+               - Difficulty labels: "good first issue" (simple, well-defined), "help wanted" (complex/community)
+
+            5. COMMENT GENERATION (MANDATORY):
+               Post separate comments using: `gh issue comment ${{ steps.target_issue.outputs.issue_number }} --body "text"`
+
+               COMMENT TYPES TO POST (only if applicable):
+
+               A. GREETING (always post):
+               First-time: "Hey there! Thanks for opening your first issue with lingo.dev. Feel free to join our Discord if you want to chat about this with the team."
+               Returning: "Hey [username]! Good to see you back. If you want to discuss this in real-time, we're always on Discord."
+
+               B. TECHNICAL ANALYSIS (post if you found relevant code):
+               "Based on the codebase, this would likely affect [specific files]. You'll want to look at [specific function/class] in [file path] around line [number if found]."
+
+               C. IMPLEMENTATION GUIDANCE (post for enhancement requests):
+               "The cleanest approach would be to [specific technical suggestion]. This would involve modifying [specific components]."
+
+               D. INFORMATION REQUEST (post if issue lacks clarity):
+               "I need exact steps to reproduce this. Can you create a minimal reproduction repo or provide detailed steps?"
+
+               E. DOCUMENTATION REFERENCE (post relevant links):
+               "For [type] issues like this, check out our docs: [lingo.dev/cli, lingo.dev/compiler, or lingo.dev/ci]"
+
+               F. SIMILAR WORK REFERENCE (post if found):
+               "This is similar to #[number] - check that for context" OR "There's already work on this in PR #[number]"
+
+               G. MAINTAINER ASSESSMENT (post for complex/breaking changes):
+               "Maintainer assessment: [technical analysis]. Suggested approach: [specific steps]. Concerns: [any issues]. Next steps: [actionable items]. Tagging [relevant maintainer if found in CODEOWNERS]."
+
+            6. FINAL STEP (MANDATORY):
+               Execute: `gh issue edit ${{ steps.target_issue.outputs.issue_number }} --add-label "autolabeled"`
+
+            ABSOLUTE REQUIREMENTS:
+            - NEVER use emojis in any comments
+            - ALWAYS run codebase exploration commands before commenting
+            - ALWAYS provide specific file paths, function names, line numbers when found
+            - ALWAYS include Discord mention in greeting
+            - ALWAYS post separate comments for different purposes
+            - NEVER ask for permission - execute all bash commands immediately
+            - ALWAYS be matter-of-fact and use simple, casual language
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

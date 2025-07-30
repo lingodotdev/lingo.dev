@@ -17,17 +17,17 @@ jobs:
 
       - name: Find and Label Unlabeled Issues
         run: |
-          echo "Finding all unlabeled issues..."
+          echo "Finding all issues without 'autolabeled' label..."
           
-          # Get all unlabeled issues
-          unlabeled_issues=$(gh issue list --limit 1000 --json number,labels --jq '.[] | select(.labels | length == 0) | .number')
+          # Get all issues without the "autolabeled" label
+          unlabeled_issues=$(gh issue list --limit 1000 --json number,labels --jq '.[] | select(.labels | map(.name) | contains(["autolabeled"]) | not) | .number')
           
           if [[ -z "$unlabeled_issues" ]]; then
-            echo "No unlabeled issues found"
+            echo "No issues found without 'autolabeled' label"
             exit 0
           fi
           
-          echo "Found unlabeled issues:"
+          echo "Found issues without 'autolabeled' label:"
           echo "$unlabeled_issues"
           echo ""
           
@@ -43,7 +43,7 @@ jobs:
             sleep 10
           done
           
-          echo "Triggered labeling workflows for all unlabeled issues"
+          echo "Triggered labeling workflows for all issues without 'autolabeled' label"
           echo "Check workflow runs: gh run list --workflow=claude-issue-autolabel.yml"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
