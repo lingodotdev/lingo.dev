@@ -24,26 +24,31 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Autolabel Issue
+        id: claude_analysis
         uses: anthropics/claude-code-action@beta
         with:
           anthropic_api_key: ${{ secrets.CLAUDE_CODE_ANTHROPIC_API_KEY }}
           timeout_minutes: "5"
+          allowed_tools: "Bash"
           direct_prompt: |
-            Analyze this newly created issue and perform two tasks:
+            Analyze this newly created issue and apply appropriate labels using the gh CLI.
 
-            1. **Apply labels** from these available repository labels:
-               ${{ steps.labels.outputs.available_labels }}
+            Available repository labels: ${{ steps.labels.outputs.available_labels }}
 
-            2. **Add a comment** with:
-               - **TLDR**: One sentence summary
-               - **Work Summary**: Brief description of what needs to be done
-               - **Label Reasoning**: Why you chose these labels (or why no labels apply)
+            Tasks:
+            1. Analyze the issue content
+            2. Use `gh issue edit ${{ github.event.issue.number }} --add-label "label-name"` to apply each relevant label
+            3. Add a comment explaining your labeling decisions
 
             Requirements:
             - Apply ALL relevant labels that match the issue content
             - If no labels are truly relevant, apply NO labels at all
             - Be thorough but precise - don't force labels that don't fit
-            - Keep comment concise and helpful
+            - Use the Bash tool to run gh commands WITHOUT asking for confirmation
+            - The GITHUB_TOKEN is already set in the environment for gh authentication
 
             Issue Title: ${{ github.event.issue.title }}
             Issue Body: ${{ github.event.issue.body }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
