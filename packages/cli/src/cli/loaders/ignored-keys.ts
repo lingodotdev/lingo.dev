@@ -17,8 +17,7 @@ export default function createIgnoredKeysLoader(
       const ignoredSubObject = _.pickBy(pullInput, (value, key) =>
         _isIgnoredKey(key, ignoredKeys),
       );
-      const result = _.merge({}, data, ignoredSubObject); 
-      
+      const result = _.merge({}, data, ignoredSubObject);
       return result;
     },
   });
