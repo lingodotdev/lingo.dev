@@ -1,0 +1,48 @@
+name: Claude Issue Autolabeling
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  autolabel:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Get Repository Labels
+        id: labels
+        run: |
+          labels=$(gh label list --limit 100 --json name,description --jq 'map("\(.name) (\(.description))") | join(", ")')
+          echo "available_labels=$labels" >> $GITHUB_OUTPUT
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Autolabel Issue
+        uses: anthropics/claude-code-action@beta
+        with:
+          anthropic_api_key: ${{ secrets.CLAUDE_CODE_ANTHROPIC_API_KEY }}
+          timeout_minutes: "5"
+          direct_prompt: |
+            Analyze this newly created issue and perform two tasks:
+
+            1. **Apply labels** from these available repository labels:
+               ${{ steps.labels.outputs.available_labels }}
+
+            2. **Add a comment** with:
+               - **TLDR**: One sentence summary
+               - **Work Summary**: Brief description of what needs to be done
+               - **Label Reasoning**: Why you chose these labels (or why no labels apply)
+
+            Requirements:
+            - Apply ALL relevant labels that match the issue content
+            - If no labels are truly relevant, apply NO labels at all
+            - Be thorough but precise - don't force labels that don't fit
+            - Keep comment concise and helpful
+
+            Issue Title: ${{ github.event.issue.title }}
+            Issue Body: ${{ github.event.issue.body }}
