@@ -35,13 +35,29 @@ jobs:
           if [[ "${{ github.event_name }}" == "workflow_dispatch" && -n "${{ github.event.inputs.issue_number }}" ]]; then
             echo "issue_number=${{ github.event.inputs.issue_number }}" >> $GITHUB_OUTPUT
             issue_data=$(gh issue view ${{ github.event.inputs.issue_number }} --json title,body,author)
-            echo "issue_title=$(echo "$issue_data" | jq -r '.title')" >> $GITHUB_OUTPUT
-            echo "issue_body=$(echo "$issue_data" | jq -r '.body')" >> $GITHUB_OUTPUT
+            {
+              echo "issue_title<<EOF"
+              echo "$issue_data" | jq -r '.title'
+              echo "EOF"
+            } >> $GITHUB_OUTPUT
+            {
+              echo "issue_body<<EOF"
+              echo "$issue_data" | jq -r '.body'
+              echo "EOF"
+            } >> $GITHUB_OUTPUT
             echo "issue_author=$(echo "$issue_data" | jq -r '.author.login')" >> $GITHUB_OUTPUT
           else
             echo "issue_number=${{ github.event.issue.number }}" >> $GITHUB_OUTPUT
-            echo "issue_title=${{ github.event.issue.title }}" >> $GITHUB_OUTPUT
-            echo "issue_body=${{ github.event.issue.body }}" >> $GITHUB_OUTPUT
+            {
+              echo "issue_title<<EOF"
+              echo "${{ github.event.issue.title }}"
+              echo "EOF"
+            } >> $GITHUB_OUTPUT
+            {
+              echo "issue_body<<EOF"
+              echo "${{ github.event.issue.body }}"
+              echo "EOF"
+            } >> $GITHUB_OUTPUT
             echo "issue_author=${{ github.event.issue.user.login }}" >> $GITHUB_OUTPUT
           fi
         env:
