@@ -32,34 +32,18 @@ jobs:
       - name: Get Target Issue
         id: target_issue
         run: |
-          if [[ "${{ github.event_name }}" == "workflow_dispatch" && -n "${{ github.event.inputs.issue_number }}" ]]; then
-            echo "issue_number=${{ github.event.inputs.issue_number }}" >> $GITHUB_OUTPUT
-            issue_data=$(gh issue view ${{ github.event.inputs.issue_number }} --json title,body,author)
-            {
-              echo "issue_title<<EOF"
-              echo "$issue_data" | jq -r '.title'
-              echo "EOF"
-            } >> $GITHUB_OUTPUT
-            {
-              echo "issue_body<<EOF"
-              echo "$issue_data" | jq -r '.body'
-              echo "EOF"
-            } >> $GITHUB_OUTPUT
-            echo "issue_author=$(echo "$issue_data" | jq -r '.author.login')" >> $GITHUB_OUTPUT
-          else
-            echo "issue_number=${{ github.event.issue.number }}" >> $GITHUB_OUTPUT
-            {
-              echo "issue_title<<EOF"
-              echo "${{ github.event.issue.title }}"
-              echo "EOF"
-            } >> $GITHUB_OUTPUT
-            {
-              echo "issue_body<<EOF"
-              echo "${{ github.event.issue.body }}"
-              echo "EOF"
-            } >> $GITHUB_OUTPUT
-            echo "issue_author=${{ github.event.issue.user.login }}" >> $GITHUB_OUTPUT
-          fi
+          echo "issue_number=${{ github.event.issue.number }}" >> $GITHUB_OUTPUT
+          {
+            echo "issue_title<<EOF"
+            echo "${{ github.event.issue.title }}"
+            echo "EOF"
+          } >> $GITHUB_OUTPUT
+          {
+            echo "issue_body<<EOF"
+            echo "${{ github.event.issue.body }}"
+            echo "EOF"
+          } >> $GITHUB_OUTPUT
+          echo "issue_author=${{ github.event.issue.user.login }}" >> $GITHUB_OUTPUT
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -113,8 +97,8 @@ jobs:
                COMMENT TYPES TO POST (only if applicable):
 
                A. GREETING (always post):
-               First-time: "Hey there! Thanks for opening your first issue with lingo.dev. Feel free to join our Discord if you want to chat about this with the team."
-               Returning: "Hey [username]! Good to see you back. If you want to discuss this in real-time, we're always on Discord."
+               First-time: "Hey there @${{ steps.target_issue.outputs.issue_author }}! Thanks for opening your first issue with lingo.dev. Feel free to join our Discord if you want to chat about this with the team."
+               Returning: "Hey @${{ steps.target_issue.outputs.issue_author }}! Good to see you back. If you want to discuss this in real-time, we're always on Discord."
 
                B. TECHNICAL ANALYSIS (post if you found relevant code):
                "Based on the codebase, this would likely affect [specific files]. You'll want to look at [specific function/class] in [file path] around line [number if found]."
