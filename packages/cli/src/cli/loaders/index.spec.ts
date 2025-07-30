@@ -4,6 +4,7 @@ import _ from "lodash";
 import fs from "fs/promises";
 import createBucketLoader from "./index";
 import createTextFileLoader from "./text-file";
+import { number } from "zod";
 
 describe("bucket loaders", () => {
   beforeEach(() => {
@@ -2144,6 +2145,426 @@ Mundo!`;
         encoding: "utf-8",
         flag: "w",
       });
+    });
+  });
+
+  describe("typescript bucket loader", () => {
+    it("should load typescript data", async () => {
+      setupFileMocks();
+
+      const input = `
+        export default {
+          greeting: "Hello, world!",
+          farewell: "Goodbye!",
+          number: 42,
+          settings: {
+            theme: "dark",
+            locale: "en"
+          }
+        };
+      `;
+      const expectedOutput = {
+        greeting: "Hello, world!",
+        farewell: "Goodbye!",
+        "settings/theme": "dark",
+        "settings/locale": "en",
+      };
+
+      mockFileOperations(input);
+
+      const typescriptLoader = createBucketLoader(
+        "typescript",
+        "i18n/[locale].ts",
+        {
+          defaultLocale: "en",
+        },
+      );
+      typescriptLoader.setDefaultLocale("en");
+      const data = await typescriptLoader.pull("en");
+
+      expect(data).toEqual(expectedOutput);
+    });
+
+    it("should save typescript data", async () => {
+      setupFileMocks();
+
+      const input = `
+        export default {
+          greeting: "Hello, world!",
+          farewell: "Goodbye!",
+          number: 42
+        };
+      `;
+      const payload = {
+        greeting: "Hola, mundo!",
+        farewell: "Adiós!",
+      };
+      const expectedOutput = `export default {
+  greeting: "Hola, mundo!",
+  farewell: "Adiós!",
+  number: 42,
+};`;
+
+      mockFileOperations(input);
+
+      const typescriptLoader = createBucketLoader(
+        "typescript",
+        "i18n/[locale].ts",
+        {
+          defaultLocale: "en",
+        },
+      );
+      typescriptLoader.setDefaultLocale("en");
+      await typescriptLoader.pull("en");
+
+      await typescriptLoader.push("es", payload);
+
+      expect(fs.writeFile).toHaveBeenCalledWith("i18n/es.ts", expectedOutput, {
+        encoding: "utf-8",
+        flag: "w",
+      });
+    });
+
+    it("should respect ignored keys", async () => {
+      setupFileMocks();
+
+      const input = `
+        export default {
+          greeting: "Hello, world!",
+          debug: "Debug information",
+          temp: "Temporary value",
+          settings: {
+            locale: "en",
+            debug: "Debug setting"
+          }
+        };
+      `;
+      const expectedOutput = {
+        greeting: "Hello, world!",
+        "settings/locale": "en",
+      };
+
+      mockFileOperations(input);
+
+      const typescriptLoader = createBucketLoader(
+        "typescript",
+        "i18n/[locale].ts",
+        {
+          defaultLocale: "en",
+        },
+        [], // lockedKeys
+        [], // lockedPatterns
+        ["debug", "temp", "settings/debug"], // ignoredKeys
+      );
+      typescriptLoader.setDefaultLocale("en");
+      const data = await typescriptLoader.pull("en");
+
+      expect(data).toEqual(expectedOutput);
+    });
+
+    it("should respect ignored keys with wildcards", async () => {
+      setupFileMocks();
+
+      const input = `
+        export default {
+          "user.name": "John",
+          "user.temp.session": "abc123",
+          "user.temp.cache": "cached_data",
+          "admin.temp.log": "log_data",
+          "pages": {
+            "home": {
+              "title": "Home Page",
+              "meta": {
+                "temp": "temporary meta"
+              }
+            },
+            "about": {
+              "title": "About Page" 
+            }
+          }
+        };
+      `;
+      const expectedOutput = {
+        "user.name": "John",
+        "pages/home/title": "Home Page",
+        "pages/about/title": "About Page",
+      };
+
+      mockFileOperations(input);
+
+      const typescriptLoader = createBucketLoader(
+        "typescript",
+        "i18n/[locale].ts",
+        {
+          defaultLocale: "en",
+        },
+        [], // lockedKeys
+        [], // lockedPatterns
+        ["*.temp.*", "pages/*/meta/temp"], // ignoredKeys with wildcards
+      );
+      typescriptLoader.setDefaultLocale("en");
+      const data = await typescriptLoader.pull("en");
+
+      expect(data).toEqual(expectedOutput);
+    });
+
+    it("should respect locked keys during push", async () => {
+      setupFileMocks();
+
+      const input = `
+        export default {
+          greeting: "Hello, world!",
+          appName: "MyApp",
+          version: "1.0.0", 
+          settings: {
+            locked: "This should not change",
+            unlocked: "This can change",
+            nested: {
+              locked: "Nested locked value"
+            }
+          }
+        };
+      `;
+      const payload = {
+        greeting: "Hola, mundo!",
+        appName: "Should not be applied",
+        version: "Should not be applied",
+        "settings/locked": "Should not be applied",
+        "settings/unlocked": "Esto puede cambiar",
+        "settings/nested/locked": "Should not be applied",
+      };
+
+      mockFileOperations(input);
+
+      const typescriptLoader = createBucketLoader(
+        "typescript",
+        "i18n/[locale].ts",
+        {
+          defaultLocale: "en",
+        },
+        ["appName", "version", "settings/locked", "settings/nested/locked"], // lockedKeys
+      );
+
+      typescriptLoader.setDefaultLocale("en");
+      await typescriptLoader.pull("en");
+
+      await typescriptLoader.push("es", payload);
+
+      expect(fs.writeFile).toHaveBeenCalled();
+      const writeFileCall = (fs.writeFile as any).mock.calls[0];
+      const writtenContent = writeFileCall[1];
+
+      // Check that locked keys retain their original values
+      expect(writtenContent).toContain('appName: "MyApp"');
+      expect(writtenContent).toContain('version: "1.0.0"');
+      expect(writtenContent).toContain('locked: "This should not change"');
+      expect(writtenContent).toContain('locked: "Nested locked value"');
+
+      // Check that unlocked keys are updated
+      expect(writtenContent).toContain('greeting: "Hola, mundo!"');
+      expect(writtenContent).toContain('unlocked: "Esto puede cambiar"');
+    });
+
+    it("should handle locked keys with wildcard patterns", async () => {
+      setupFileMocks();
+
+      const input = `
+        export default {
+          "common.title": "Common Title",
+          "feature.locked.setting": "Locked Setting",
+          "feature.locked.value": "Locked Value", 
+          "feature.unlocked.setting": "Unlocked Setting",
+          "feature.locked.nested.deep": "Deep Locked",
+          "other.value": "Other Value"
+        };
+      `;
+      const payload = {
+        "common.title": "Título Común",
+        "feature.locked.setting": "Should not change",
+        "feature.locked.value": "Should not change",
+        "feature.unlocked.setting": "Configuración Desbloqueada",
+        "feature.locked.nested.deep": "Should not change",
+        "other.value": "Otro Valor",
+      };
+
+      mockFileOperations(input);
+
+      const typescriptLoader = createBucketLoader(
+        "typescript",
+        "i18n/[locale].ts",
+        {
+          defaultLocale: "en",
+        },
+        ["feature.locked.*"], // lockedKeys with wildcard
+      );
+
+      typescriptLoader.setDefaultLocale("en");
+      await typescriptLoader.pull("en");
+
+      await typescriptLoader.push("es", payload);
+
+      expect(fs.writeFile).toHaveBeenCalled();
+      const writeFileCall = (fs.writeFile as any).mock.calls[0];
+      const writtenContent = writeFileCall[1];
+
+      // Check that locked keys with wildcards retain their original values
+      expect(writtenContent).toContain(
+        '"feature.locked.setting": "Locked Setting"',
+      );
+      expect(writtenContent).toContain(
+        '"feature.locked.value": "Locked Value"',
+      );
+      expect(writtenContent).toContain(
+        '"feature.locked.nested.deep": "Deep Locked"',
+      );
+
+      // Check that unlocked keys are updated
+      expect(writtenContent).toContain('"common.title": "Título Común"');
+      expect(writtenContent).toContain(
+        '"feature.unlocked.setting": "Configuración Desbloqueada"',
+      );
+      expect(writtenContent).toContain('"other.value": "Otro Valor"');
+    });
+
+    it("should handle nested locked keys in complex structures", async () => {
+      setupFileMocks();
+
+      const input = `
+        export default {
+          app: {
+            name: "MyApp",
+            config: {
+              locked: "Should not change",
+              unlocked: "Can change"
+            },
+            features: [
+              {
+                name: "Feature 1",
+                locked: "Locked feature"
+              },
+              {
+                name: "Feature 2", 
+                unlocked: "Unlocked feature"
+              }
+            ]
+          }
+        };
+      `;
+      const payload = {
+        "app/name": "MiApp",
+        "app/config/locked": "Should not be applied",
+        "app/config/unlocked": "Puede cambiar",
+        "app/features/0/name": "Característica 1",
+        "app/features/0/locked": "Should not be applied",
+        "app/features/1/name": "Característica 2",
+        "app/features/1/unlocked": "Característica desbloqueada",
+      };
+
+      mockFileOperations(input);
+
+      const typescriptLoader = createBucketLoader(
+        "typescript",
+        "i18n/[locale].ts",
+        {
+          defaultLocale: "en",
+        },
+        ["app/config/locked", "app/features/*/locked"], // nested locked keys
+      );
+
+      typescriptLoader.setDefaultLocale("en");
+      await typescriptLoader.pull("en");
+
+      await typescriptLoader.push("es", payload);
+
+      expect(fs.writeFile).toHaveBeenCalled();
+      const writeFileCall = (fs.writeFile as any).mock.calls[0];
+      const writtenContent = writeFileCall[1];
+
+      // Check that nested locked keys retain their original values
+      expect(writtenContent).toContain('locked: "Should not change"');
+      expect(writtenContent).toContain('locked: "Locked feature"');
+
+      // Check that unlocked keys are updated
+      expect(writtenContent).toContain('name: "MiApp"');
+      expect(writtenContent).toContain('unlocked: "Puede cambiar"');
+      expect(writtenContent).toContain('name: "Característica 1"');
+      expect(writtenContent).toContain('name: "Característica 2"');
+      expect(writtenContent).toContain(
+        'unlocked: "Característica desbloqueada"',
+      );
+    });
+
+    it("should combine ignored keys and locked keys functionality", async () => {
+      setupFileMocks();
+
+      const input = `
+        export default {
+          greeting: "Hello",
+          debug: "Debug info",
+          locked: "Locked value",
+          unlocked: "Unlocked value",
+          temp: "Temporary data",
+          settings: {
+            theme: "dark",
+            debug: "Setting debug",
+            locked: "Setting locked"
+          }
+        };
+      `;
+
+      // Expected output: ignored keys are excluded, locked keys are also excluded during pull
+      const expectedPulledOutput = {
+        greeting: "Hello",
+        unlocked: "Unlocked value",
+        "settings/theme": "dark",
+      };
+
+      mockFileOperations(input);
+
+      const typescriptLoader = createBucketLoader(
+        "typescript",
+        "i18n/[locale].ts",
+        {
+          defaultLocale: "en",
+        },
+        ["locked", "settings/locked"], // lockedKeys
+        [], // lockedPatterns
+        ["debug", "temp", "settings/debug"], // ignoredKeys
+      );
+
+      typescriptLoader.setDefaultLocale("en");
+      const pulledData = await typescriptLoader.pull("en");
+
+      // Should ignore debug/temp keys and exclude locked keys during pull
+      expect(pulledData).toEqual(expectedPulledOutput);
+
+      // Now test push with locked keys - locked keys should be restored from original
+      // Ignored keys will be filtered out completely (not included in output)
+      const payload = {
+        greeting: "Hola",
+        unlocked: "Valor desbloqueado",
+        "settings/theme": "oscuro",
+      };
+
+      await typescriptLoader.push("es", payload);
+
+      expect(fs.writeFile).toHaveBeenCalled();
+      const writeFileCall = (fs.writeFile as any).mock.calls[0];
+      const writtenContent = writeFileCall[1];
+
+      // Check that locked keys retain their original values
+      expect(writtenContent).toContain('locked: "Locked value"');
+      expect(writtenContent).toContain('locked: "Setting locked"');
+
+      // Check that unlocked keys are updated
+      expect(writtenContent).toContain('greeting: "Hola"');
+      expect(writtenContent).toContain('unlocked: "Valor desbloqueado"');
+      expect(writtenContent).toContain('theme: "oscuro"');
+
+      // Check that ignored keys are NOT in the output (they are completely removed)
+      expect(writtenContent).not.toContain('debug: "Debug info"');
+      expect(writtenContent).not.toContain('temp: "Temporary data"');
+      expect(writtenContent).not.toContain('debug: "Setting debug"');
     });
   });
 
