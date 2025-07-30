@@ -1,5 +1,11 @@
 # @lingo.dev/\_compiler
 
+## 0.7.4
+
+### Patch Changes
+
+- [#1072](https://github.com/lingodotdev/lingo.dev/pull/1072) [`3cb1ebe`](https://github.com/lingodotdev/lingo.dev/commit/3cb1ebec5441882678ab30a7d1b532bc2fc397b6) Thanks [@The-Best-Codes](https://github.com/The-Best-Codes)! - Fixed compiler handling of namespace imports (import \* as React from "react") and default imports.
+
 ## 0.7.3
 
 ### Patch Changes
