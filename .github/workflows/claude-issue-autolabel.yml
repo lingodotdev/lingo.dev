@@ -3,6 +3,12 @@ name: Claude Issue Autolabeling
 on:
   issues:
     types: [opened]
+  workflow_dispatch:
+    inputs:
+      issue_number:
+        description: 'Issue number to label'
+        required: false
+        type: string
 
 jobs:
   autolabel:
@@ -23,6 +29,22 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Get Target Issue
+        id: target_issue
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" && -n "${{ github.event.inputs.issue_number }}" ]]; then
+            echo "issue_number=${{ github.event.inputs.issue_number }}" >> $GITHUB_OUTPUT
+            issue_data=$(gh issue view ${{ github.event.inputs.issue_number }} --json title,body)
+            echo "issue_title=$(echo "$issue_data" | jq -r '.title')" >> $GITHUB_OUTPUT
+            echo "issue_body=$(echo "$issue_data" | jq -r '.body')" >> $GITHUB_OUTPUT
+          else
+            echo "issue_number=${{ github.event.issue.number }}" >> $GITHUB_OUTPUT
+            echo "issue_title=${{ github.event.issue.title }}" >> $GITHUB_OUTPUT
+            echo "issue_body=${{ github.event.issue.body }}" >> $GITHUB_OUTPUT
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Autolabel Issue
         id: claude_analysis
         uses: anthropics/claude-code-action@beta
@@ -37,7 +59,7 @@ jobs:
 
             Tasks:
             1. Analyze the issue content
-            2. Use `gh issue edit ${{ github.event.issue.number }} --add-label "label-name"` to apply each relevant label
+            2. Use `gh issue edit ${{ steps.target_issue.outputs.issue_number }} --add-label "label-name"` to apply each relevant label
             3. Add a comment explaining your labeling decisions
 
             Requirements:
@@ -47,8 +69,8 @@ jobs:
             - Use the Bash tool to run gh commands WITHOUT asking for confirmation
             - The GITHUB_TOKEN is already set in the environment for gh authentication
 
-            Issue Title: ${{ github.event.issue.title }}
-            Issue Body: ${{ github.event.issue.body }}
+            Issue Title: ${{ steps.target_issue.outputs.issue_title }}
+            Issue Body: ${{ steps.target_issue.outputs.issue_body }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
