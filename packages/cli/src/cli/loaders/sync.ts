@@ -22,10 +22,9 @@ export default function createSyncLoader(): ILoader<
         return data;
       }
 
-      // Only include keys that exist in the original input to maintain sync
-      return _.chain(data)
-        .pickBy((value, key) => originalInput.hasOwnProperty(key))
-        .value() as Record<string, string>;
+      return _.chain(originalInput || {})
+        .mapValues((value, key) => data[key])
+        .value();
     },
   });
 }
