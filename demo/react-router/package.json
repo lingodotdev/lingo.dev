@@ -1,5 +1,5 @@
 {
-  "name": "react-router-app",
+  "name": "react-router",
   "private": true,
   "type": "module",
   "scripts": {
@@ -9,16 +9,16 @@
     "typecheck": "react-router typegen && tsc"
   },
   "dependencies": {
-    "lingo.dev": "workspace:*",
-    "@react-router/node": "^7.5.3",
-    "@react-router/serve": "^7.5.3",
+    "@react-router/node": "^7.7.0",
+    "@react-router/serve": "^7.7.0",
     "isbot": "^5.1.27",
+    "lingo.dev": "workspace:*",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "react-router": "^7.5.3"
+    "react-router": "^7.7.0"
   },
   "devDependencies": {
-    "@react-router/dev": "^7.5.3",
+    "@react-router/dev": "^7.7.0",
     "@tailwindcss/vite": "^4.1.4",
     "@types/node": "^20",
     "@types/react": "^19.1.2",

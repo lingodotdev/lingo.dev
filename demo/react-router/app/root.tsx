@@ -6,15 +6,12 @@ import {
   Scripts,
   ScrollRestoration,
 } from "react-router";
-import type { LoaderFunctionArgs } from "react-router";
-import { useLoaderData } from "react-router";
+import { LingoProvider } from "lingo.dev/react/client";
+import { loadDictionary } from "lingo.dev/react/react-router";
 
 import type { Route } from "./+types/root";
 import "./app.css";
-
-// Compiler: imports
-import { LingoProvider, LocaleSwitcher } from "lingo.dev/react/client";
-import { loadDictionary } from "lingo.dev/react/react-router";
+import { useLoaderData } from "react-router";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -29,14 +26,19 @@ export const links: Route.LinksFunction = () => [
   },
 ];
 
-export async function loader(args: LoaderFunctionArgs) {
-  return { lingoDictionary: await loadDictionary(args.request) };
+export async function loader({ request }: Route.LoaderArgs) {
+  const lingoDictionary = await loadDictionary(request);
+
+  return {
+    lingoDictionary,
+  };
 }
 
-export function Layout(props: { children: React.ReactNode }) {
-  const loaderData = useLoaderData<typeof loader>();
+export function Layout({ children }: { children: React.ReactNode }) {
+  const data = useLoaderData<typeof loader>();
+
   return (
-    <LingoProvider dictionary={loaderData.lingoDictionary}>
+    <LingoProvider dictionary={data?.lingoDictionary}>
       <html lang="en">
         <head>
           <meta charSet="utf-8" />
@@ -45,12 +47,9 @@ export function Layout(props: { children: React.ReactNode }) {
           <Links />
         </head>
         <body>
-          {props.children}
+          {children}
           <ScrollRestoration />
           <Scripts />
-          <div className="absolute top-2 right-3">
-            <LocaleSwitcher locales={["en", "es", "fr", "de"]} />
-          </div>
         </body>
       </html>
     </LingoProvider>
