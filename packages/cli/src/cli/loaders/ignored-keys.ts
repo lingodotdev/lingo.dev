@@ -14,10 +14,11 @@ export default function createIgnoredKeysLoader(
       return result;
     },
     push: async (locale, data, originalInput, originalLocale, pullInput) => {
-      const ignoredSubObject = _.pickBy(pullInput, (value, key) =>
+      // Ignored keys loader should remove ignored keys from push data too
+      const result = _.omitBy(data, (value, key) =>
         _isIgnoredKey(key, ignoredKeys),
       );
-      const result = _.merge({}, data, ignoredSubObject);
+
       return result;
     },
   });
