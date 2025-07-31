@@ -55,6 +55,85 @@ importers:
         specifier: ^2.5.0
         version: 2.5.0
 
+  demo/create-t3-app:
+    dependencies:
+      '@t3-oss/env-nextjs':
+        specifier: ^0.12.0
+        version: 0.12.0(typescript@5.8.3)(zod@3.25.76)
+      '@tanstack/react-query':
+        specifier: ^5.69.0
+        version: 5.83.1(react@19.1.0)
+      '@trpc/client':
+        specifier: ^11.0.0
+        version: 11.4.3(@trpc/server@11.4.3(typescript@5.8.3))(typescript@5.8.3)
+      '@trpc/react-query':
+        specifier: ^11.0.0
+        version: 11.4.3(@tanstack/react-query@5.83.1(react@19.1.0))(@trpc/client@11.4.3(@trpc/server@11.4.3(typescript@5.8.3))(typescript@5.8.3))(@trpc/server@11.4.3(typescript@5.8.3))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.8.3)
+      '@trpc/server':
+        specifier: ^11.0.0
+        version: 11.4.3(typescript@5.8.3)
+      lingo.dev:
+        specifier: workspace:*
+        version: link:../../packages/cli
+      next:
+        specifier: ^15.2.3
+        version: 15.3.1(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      react:
+        specifier: ^19.0.0
+        version: 19.1.0
+      react-dom:
+        specifier: ^19.0.0
+        version: 19.1.0(react@19.1.0)
+      server-only:
+        specifier: ^0.0.1
+        version: 0.0.1
+      superjson:
+        specifier: ^2.2.1
+        version: 2.2.2
+      zod:
+        specifier: ^3.24.2
+        version: 3.25.76
+    devDependencies:
+      '@eslint/eslintrc':
+        specifier: ^3.3.1
+        version: 3.3.1
+      '@tailwindcss/postcss':
+        specifier: ^4.0.15
+        version: 4.1.8
+      '@types/node':
+        specifier: ^20.14.10
+        version: 20.17.57
+      '@types/react':
+        specifier: ^19.0.0
+        version: 19.1.6
+      '@types/react-dom':
+        specifier: ^19.0.0
+        version: 19.1.5(@types/react@19.1.6)
+      eslint:
+        specifier: ^9.23.0
+        version: 9.28.0(jiti@2.4.2)
+      eslint-config-next:
+        specifier: ^15.2.3
+        version: 15.3.1(eslint@9.28.0(jiti@2.4.2))(typescript@5.8.3)
+      postcss:
+        specifier: ^8.5.3
+        version: 8.5.4
+      prettier:
+        specifier: ^3.5.3
+        version: 3.6.2
+      prettier-plugin-tailwindcss:
+        specifier: ^0.6.11
+        version: 0.6.14(prettier@3.6.2)
+      tailwindcss:
+        specifier: ^4.0.15
+        version: 4.1.8
+      typescript:
+        specifier: ^5.8.2
+        version: 5.8.3
+      typescript-eslint:
+        specifier: ^8.27.0
+        version: 8.33.1(eslint@9.28.0(jiti@2.4.2))(typescript@5.8.3)
+
   demo/next-app:
     dependencies:
       lingo.dev:
@@ -149,85 +228,6 @@ importers:
       vite-tsconfig-paths:
         specifier: ^5.1.4
         version: 5.1.4(typescript@5.8.3)(vite@6.3.5(@types/node@20.17.57)(jiti@2.4.2)(lightningcss@1.30.1)(terser@5.36.0)(tsx@4.20.3)(yaml@2.7.0))
-
-  demo/t3:
-    dependencies:
-      '@t3-oss/env-nextjs':
-        specifier: ^0.12.0
-        version: 0.12.0(typescript@5.8.3)(zod@3.25.76)
-      '@tanstack/react-query':
-        specifier: ^5.69.0
-        version: 5.83.1(react@19.1.0)
-      '@trpc/client':
-        specifier: ^11.0.0
-        version: 11.4.3(@trpc/server@11.4.3(typescript@5.8.3))(typescript@5.8.3)
-      '@trpc/react-query':
-        specifier: ^11.0.0
-        version: 11.4.3(@tanstack/react-query@5.83.1(react@19.1.0))(@trpc/client@11.4.3(@trpc/server@11.4.3(typescript@5.8.3))(typescript@5.8.3))(@trpc/server@11.4.3(typescript@5.8.3))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.8.3)
-      '@trpc/server':
-        specifier: ^11.0.0
-        version: 11.4.3(typescript@5.8.3)
-      lingo.dev:
-        specifier: workspace:*
-        version: link:../../packages/cli
-      next:
-        specifier: ^15.2.3
-        version: 15.3.1(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      react:
-        specifier: ^19.0.0
-        version: 19.1.0
-      react-dom:
-        specifier: ^19.0.0
-        version: 19.1.0(react@19.1.0)
-      server-only:
-        specifier: ^0.0.1
-        version: 0.0.1
-      superjson:
-        specifier: ^2.2.1
-        version: 2.2.2
-      zod:
-        specifier: ^3.24.2
-        version: 3.25.76
-    devDependencies:
-      '@eslint/eslintrc':
-        specifier: ^3.3.1
-        version: 3.3.1
-      '@tailwindcss/postcss':
-        specifier: ^4.0.15
-        version: 4.1.8
-      '@types/node':
-        specifier: ^20.14.10
-        version: 20.17.57
-      '@types/react':
-        specifier: ^19.0.0
-        version: 19.1.6
-      '@types/react-dom':
-        specifier: ^19.0.0
-        version: 19.1.5(@types/react@19.1.6)
-      eslint:
-        specifier: ^9.23.0
-        version: 9.28.0(jiti@2.4.2)
-      eslint-config-next:
-        specifier: ^15.2.3
-        version: 15.3.1(eslint@9.28.0(jiti@2.4.2))(typescript@5.8.3)
-      postcss:
-        specifier: ^8.5.3
-        version: 8.5.4
-      prettier:
-        specifier: ^3.5.3
-        version: 3.6.2
-      prettier-plugin-tailwindcss:
-        specifier: ^0.6.11
-        version: 0.6.14(prettier@3.6.2)
-      tailwindcss:
-        specifier: ^4.0.15
-        version: 4.1.8
-      typescript:
-        specifier: ^5.8.2
-        version: 5.8.3
-      typescript-eslint:
-        specifier: ^8.27.0
-        version: 8.33.1(eslint@9.28.0(jiti@2.4.2))(typescript@5.8.3)
 
   demo/vite-project:
     dependencies:
@@ -7720,10 +7720,6 @@ packages:
     resolution: {integrity: sha512-PS08Iboia9mts/2ygV3eLpY5ghnUcfLV/EXTOW1E2qYxJKGGBUtNjN76FYHnMs36RmARn41bC0AZmn+rR0OVpQ==}
     engines: {node: ^10 || ^12 || >=14}
 
-  postcss@8.5.1:
-    resolution: {integrity: sha512-6oz2beyjc5VMn/KV1pPw8fliQkhBXrVn1Z3TVyqZxU8kZpzEKhBdmCFqI6ZbmGtamQvQGuU1sgPTk8ZrXDD7jQ==}
-    engines: {node: ^10 || ^12 || >=14}
-
   postcss@8.5.4:
     resolution: {integrity: sha512-QSa9EBe+uwlGTFmHsPKokv3B/oEMQZxfqW0QqNCyhpa6mB1afzulwn8hihglqAb2pOw+BJgNlmXQ8la2VeHB7w==}
     engines: {node: ^10 || ^12 || >=14}
@@ -12055,7 +12051,7 @@ snapshots:
       '@alloc/quick-lru': 5.2.0
       '@tailwindcss/node': 4.1.8
       '@tailwindcss/oxide': 4.1.8
-      postcss: 8.5.1
+      postcss: 8.5.4
       tailwindcss: 4.1.8
 
   '@tailwindcss/vite@4.1.8(vite@6.3.5(@types/node@20.17.57)(jiti@2.4.2)(lightningcss@1.30.1)(terser@5.36.0)(tsx@4.20.3)(yaml@2.7.0))':
@@ -16985,12 +16981,6 @@ snapshots:
   postcss-value-parser@4.2.0: {}
 
   postcss@8.4.31:
-    dependencies:
-      nanoid: 3.3.11
-      picocolors: 1.1.1
-      source-map-js: 1.2.1
-
-  postcss@8.5.1:
     dependencies:
       nanoid: 3.3.11
       picocolors: 1.1.1
