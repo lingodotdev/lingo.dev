@@ -1,0 +1,1562 @@
+{
+  "version": 0.1,
+  "files": {
+    "components/search-bar.tsx": {
+      "scopes": {
+        "7/declaration/body/5/argument/1/1": {
+          "type": "element",
+          "hash": "7014b73a15c9786ad4ff985597c6744a",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Search"
+        },
+        "7/declaration/body/5/argument/1/3-placeholder": {
+          "type": "attribute",
+          "hash": "49dd6c21604b5e8d4153ff1aff2177e1",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Search"
+        },
+        "7/declaration/body/5/argument/3/1/3": {
+          "type": "element",
+          "hash": "49dd6c21604b5e8d4153ff1aff2177e1",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Search"
+        }
+      }
+    },
+    "components/ui/dropdown-menu.tsx": {
+      "scopes": {
+        "10/0/init/body/3": {
+          "type": "element",
+          "hash": "c2a500292fcf6c139154d0a44ecf39da",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "▶️"
+        },
+        "14/0/init/body/1/1/1": {
+          "type": "element",
+          "hash": "c8e3c1d52d44de53e72b98716ff5b00b",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "⚪"
+        }
+      }
+    },
+    "components/ui/status-button.tsx": {
+      "scopes": {
+        "5/declaration/0/init/body/1/0/init/object/0/value/consequent/1-title": {
+          "type": "attribute",
+          "hash": "b9b9d2cef59fb5839c321534a12e22af",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "loading"
+        },
+        "5/declaration/0/init/body/1/0/init/object/1/value/1-title": {
+          "type": "attribute",
+          "hash": "9d7df1cafe76767a40208d47041a8597",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "success"
+        },
+        "5/declaration/0/init/body/1/0/init/object/2/value/1-title": {
+          "type": "attribute",
+          "hash": "c8dbe12b265d193210314d91b9bd1969",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "error"
+        }
+      }
+    },
+    "components/user-dropdown.tsx": {
+      "scopes": {
+        "8/declaration/body/2/argument/3/1/1/1/1": {
+          "type": "element",
+          "hash": "bf14865f5c71d76faf3b9ce2cb7606ab",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Profile"
+        },
+        "8/declaration/body/2/argument/3/1/3/1/1": {
+          "type": "element",
+          "hash": "e0eba89e209c13bb07db107d298d628c",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Notes"
+        },
+        "8/declaration/body/2/argument/3/1/5/1/1/1": {
+          "type": "element",
+          "hash": "43312fc1b38f1b9fe8ef8d4860133bf9",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Logout"
+        }
+      }
+    },
+    "root.tsx": {
+      "scopes": {
+        "32/body/1/argument/1/7-content": {
+          "type": "attribute",
+          "hash": "56fcbf3d9deab78f650cd18117290833",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "width=device-width,initial-scale=1"
+        },
+        "32/body/1/argument/1/9/expression/alternate-content": {
+          "type": "attribute",
+          "hash": "d71cd2c0a11d21c6236b84df29a37bff",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "noindex, nofollow"
+        },
+        "34/body/1/argument/1/7-content": {
+          "type": "attribute",
+          "hash": "56fcbf3d9deab78f650cd18117290833",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "width=device-width,initial-scale=1"
+        },
+        "34/body/1/argument/1/9/expression/alternate-content": {
+          "type": "attribute",
+          "hash": "d71cd2c0a11d21c6236b84df29a37bff",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "noindex, nofollow"
+        },
+        "35/body/7/argument/1/1/1/5/1/expression/alternate/1": {
+          "type": "element",
+          "hash": "0029e5a35676c0051e761fcd046ef9ee",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Log In"
+        },
+        "36/body/0/argument/1": {
+          "type": "element",
+          "hash": "5852ee468f60dedd656cbdc02d43c706",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "epic"
+        },
+        "36/body/0/argument/3": {
+          "type": "element",
+          "hash": "b6dc2ac21018a9ca6a01177e3e168434",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "notes"
+        },
+        "36/body/7/argument/1/1/1/5/1/expression/alternate/1": {
+          "type": "element",
+          "hash": "0029e5a35676c0051e761fcd046ef9ee",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Log In"
+        },
+        "37/body/0/argument/1": {
+          "type": "element",
+          "hash": "5852ee468f60dedd656cbdc02d43c706",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "epic"
+        },
+        "37/body/0/argument/3": {
+          "type": "element",
+          "hash": "b6dc2ac21018a9ca6a01177e3e168434",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "notes"
+        }
+      }
+    },
+    "routes/$.tsx": {
+      "scopes": {
+        "6/declaration/body/1/argument/openingElement/0/value/expression/0/value/body/1/1": {
+          "type": "element",
+          "hash": "4710f4d8cd42914a07c29d045d290142",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "We can't find this page:"
+        },
+        "6/declaration/body/1/argument/openingElement/0/value/expression/0/value/body/3/1": {
+          "type": "element",
+          "hash": "649df9d4b9efe3f5ea06c76600fa5848",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Back to home"
+        }
+      }
+    },
+    "routes/_auth+/forgot-password.tsx": {
+      "scopes": {
+        "19/body/0/argument/1/1/1": {
+          "type": "element",
+          "hash": "3a053ebffbe1b5832e8671d09ca6a280",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Epic Notes Password Reset"
+        },
+        "19/body/0/argument/1/3/1": {
+          "type": "element",
+          "hash": "f2be1399ff8725a2715af6b9b9278535",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Here's your verification code: <element:strong>{otp}</element:strong>"
+        },
+        "19/body/0/argument/1/5/1": {
+          "type": "element",
+          "hash": "a9b63fddf3e91c7c0297acdba7dae06f",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Or click the link:"
+        },
+        "21/declaration/body/2/argument/1/1/1": {
+          "type": "element",
+          "hash": "582bbe27bacf16dd5823a028197138c9",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Forgot Password"
+        },
+        "21/declaration/body/2/argument/1/1/3": {
+          "type": "element",
+          "hash": "5bb34d02395e61694490e59eaef8adf6",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "No worries, we'll send you reset instructions."
+        },
+        "21/declaration/body/2/argument/1/3/1/7/1": {
+          "type": "element",
+          "hash": "65787a782fbe998821538916fe8a6203",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Recover password"
+        },
+        "21/declaration/body/2/argument/1/3/3": {
+          "type": "element",
+          "hash": "09929cb7c47af6816fdbdc2f219a5ec3",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Back to Login"
+        }
+      }
+    },
+    "routes/_auth+/login.tsx": {
+      "scopes": {
+        "25/declaration/body/4/argument/1/1/1": {
+          "type": "element",
+          "hash": "69eb28c44f7168b1df0455ad2a62588c",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Welcome back!"
+        },
+        "25/declaration/body/4/argument/1/1/3": {
+          "type": "element",
+          "hash": "8b6f0722c8a8ba5dc5242747e4fe2746",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Please enter your details."
+        },
+        "25/declaration/body/4/argument/1/5/1/1/13/1": {
+          "type": "element",
+          "hash": "d625c902295eb3e7579dcd168e1ff6e0",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Log in"
+        },
+        "25/declaration/body/4/argument/1/5/1/1/7/3/1": {
+          "type": "element",
+          "hash": "43c1a970fa7b391158423e6620f0c45b",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Forgot password?"
+        },
+        "25/declaration/body/4/argument/1/5/1/11/1": {
+          "type": "element",
+          "hash": "0e08580bc1d229d764d0769b0462ce1c",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "New here?"
+        },
+        "25/declaration/body/4/argument/1/5/1/11/3": {
+          "type": "element",
+          "hash": "dacd86941339b5997d02f8c37f80676e",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Create an account"
+        }
+      }
+    },
+    "routes/_auth+/onboarding.tsx": {
+      "scopes": {
+        "24/declaration/body/4/argument/1/1/1": {
+          "type": "element",
+          "hash": "a7a91d4e04477436ac58e5ff6d4ef0d1",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Welcome aboard {loaderData.email}!"
+        },
+        "24/declaration/body/4/argument/1/1/3": {
+          "type": "element",
+          "hash": "8b6f0722c8a8ba5dc5242747e4fe2746",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Please enter your details."
+        },
+        "24/declaration/body/4/argument/1/5/19/1": {
+          "type": "element",
+          "hash": "f7595a38eee7a6fbd35e34d18a396dde",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Create an account"
+        }
+      }
+    },
+    "routes/_auth+/onboarding_.$provider.tsx": {
+      "scopes": {
+        "25/declaration/body/4/argument/1/1/1": {
+          "type": "element",
+          "hash": "a7a91d4e04477436ac58e5ff6d4ef0d1",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Welcome aboard {loaderData.email}!"
+        },
+        "25/declaration/body/4/argument/1/1/3": {
+          "type": "element",
+          "hash": "8b6f0722c8a8ba5dc5242747e4fe2746",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Please enter your details."
+        },
+        "25/declaration/body/4/argument/1/5/1/expression/consequent/1-alt": {
+          "type": "attribute",
+          "hash": "d7878693f91303a438852d617f6d35df",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Profile"
+        },
+        "25/declaration/body/4/argument/1/5/1/expression/consequent/3": {
+          "type": "element",
+          "hash": "3f7da7970fd0493399a2df6d9714de13",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "You can change your photo later"
+        },
+        "25/declaration/body/4/argument/1/5/15/1": {
+          "type": "element",
+          "hash": "f7595a38eee7a6fbd35e34d18a396dde",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Create an account"
+        }
+      }
+    },
+    "routes/_auth+/reset-password.tsx": {
+      "scopes": {
+        "19/declaration/body/2/argument/1/1": {
+          "type": "element",
+          "hash": "7a77490b43e3f89acb7bfd35f0dedcad",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Password Reset"
+        },
+        "19/declaration/body/2/argument/1/3": {
+          "type": "element",
+          "hash": "6bbc681b61ddfee5fb1f5ff008add74e",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Hi, {loaderData.resetPasswordUsername}. No worries. It happens all the time."
+        },
+        "19/declaration/body/2/argument/3/1/7": {
+          "type": "element",
+          "hash": "2164b513761617d02def63d251b8c454",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Reset password"
+        }
+      }
+    },
+    "routes/_auth+/signup.tsx": {
+      "scopes": {
+        "24/declaration/body/0/argument/1/1/1": {
+          "type": "element",
+          "hash": "43063df6ac05f4a0b7b379b107ad975b",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Welcome to Epic Notes!"
+        },
+        "24/declaration/body/0/argument/1/3/1": {
+          "type": "element",
+          "hash": "f2be1399ff8725a2715af6b9b9278535",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Here's your verification code: <element:strong>{otp}</element:strong>"
+        },
+        "24/declaration/body/0/argument/1/5/1": {
+          "type": "element",
+          "hash": "67440de2d065d5802a4d563c6b72ce69",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Or click the link to get started:"
+        },
+        "26/declaration/body/4/argument/1/1": {
+          "type": "element",
+          "hash": "51107a4232278d83dbe47cb6c544e416",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Let's start your journey!"
+        },
+        "26/declaration/body/4/argument/1/3": {
+          "type": "element",
+          "hash": "078d010bd43abf2ed64b39e76354bc5d",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Please enter your email."
+        },
+        "26/declaration/body/4/argument/3/1/7": {
+          "type": "element",
+          "hash": "2e707e6b3587ab5d688a44b38e0c6468",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Submit"
+        }
+      }
+    },
+    "routes/_auth+/verify.tsx": {
+      "scopes": {
+        "25/declaration/body/4/0/init/1": {
+          "type": "element",
+          "hash": "c51aa8640fe15af146f3e2dd4602e0c1",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Check your email"
+        },
+        "25/declaration/body/4/0/init/3": {
+          "type": "element",
+          "hash": "fb38e7a727c774afc4d4f5b4397af0e1",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "We've sent you a code to verify your email address."
+        },
+        "25/declaration/body/5/0/init/3/value/1": {
+          "type": "element",
+          "hash": "8e49c23949eecc069363025d94ce50bc",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Check your 2FA app"
+        },
+        "25/declaration/body/5/0/init/3/value/3": {
+          "type": "element",
+          "hash": "26e62df5a94365655f284a6b137764ee",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Please enter your 2FA code to verify your identity."
+        },
+        "25/declaration/body/7/argument/5/3/1/11": {
+          "type": "element",
+          "hash": "333c0de83bf6d6225534438ac4243839",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Submit"
+        }
+      }
+    },
+    "routes/_marketing+/about.tsx": {
+      "scopes": {
+        "0/declaration/body/0/argument": {
+          "type": "element",
+          "hash": "2f784e145329f94e29a7fc7df01de7be",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "About page"
+        }
+      }
+    },
+    "routes/_marketing+/index.tsx": {
+      "scopes": {
+        "2/declaration/body/0/argument/1/1": {
+          "type": "element",
+          "hash": "0468579ef2fbc83c9d520c2f2f1c5059",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Hello, world!"
+        },
+        "2/declaration/body/0/argument/1/3": {
+          "type": "element",
+          "hash": "27fadd9f9026e6a5852d522c2a7a9787",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "This is an example app that demonstrates how <element:strong>Lingo.dev Compiler</element:strong> can be used to localize apps built with <element:a>create-t3-app</element:a> ."
+        },
+        "2/declaration/body/0/argument/1/5": {
+          "type": "element",
+          "hash": "7973f1d2c6e5dde390e84ce8b96943f6",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "To switch between locales, use the following dropdown:"
+        },
+        "3/declaration/body/0/argument/1/1": {
+          "type": "element",
+          "hash": "0468579ef2fbc83c9d520c2f2f1c5059",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Hello, world!"
+        },
+        "3/declaration/body/0/argument/1/3": {
+          "type": "element",
+          "hash": "27fadd9f9026e6a5852d522c2a7a9787",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "This is an example app that demonstrates how <element:strong>Lingo.dev Compiler</element:strong> can be used to localize apps built with <element:a>The Epic Stack</element:a> ."
+        },
+        "3/declaration/body/0/argument/1/5": {
+          "type": "element",
+          "hash": "7973f1d2c6e5dde390e84ce8b96943f6",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "To switch between locales, use the following dropdown:"
+        },
+        "7/declaration/body/0/argument/1/1": {
+          "type": "element",
+          "hash": "0468579ef2fbc83c9d520c2f2f1c5059",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Hello, world!"
+        },
+        "7/declaration/body/0/argument/1/1/3/1": {
+          "type": "element",
+          "hash": "84278e49b134e61568e781d0cb4029c9",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "The Epic Stack"
+        },
+        "7/declaration/body/0/argument/1/1/5": {
+          "type": "element",
+          "hash": "b72dd4c5c4f659ffce9a3a599e8bfd0a",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Check the <element:a>Getting Started guide</element:a> file for how to get your project off the ground!"
+        },
+        "7/declaration/body/0/argument/1/3": {
+          "type": "element",
+          "hash": "27fadd9f9026e6a5852d522c2a7a9787",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "This is an example app that demonstrates how <element:strong>Lingo.dev Compiler</element:strong> can be used to localize apps built with <element:a>create-t3-app</element:a> ."
+        },
+        "7/declaration/body/0/argument/1/3/1/1/expression/0/body/1/1/1/1-alt": {},
+        "7/declaration/body/0/argument/1/5": {
+          "type": "element",
+          "hash": "7973f1d2c6e5dde390e84ce8b96943f6",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "To switch between locales, use the following dropdown:"
+        }
+      }
+    },
+    "routes/_marketing+/privacy.tsx": {
+      "scopes": {
+        "0/declaration/body/0/argument": {
+          "type": "element",
+          "hash": "6007d5d5f6591c027b15bd49ab7a8c47",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Privacy"
+        }
+      }
+    },
+    "routes/_marketing+/support.tsx": {
+      "scopes": {
+        "0/declaration/body/0/argument": {
+          "type": "element",
+          "hash": "55aab5fd0f31a9cb055a2edeeedfaf63",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Support"
+        }
+      }
+    },
+    "routes/_marketing+/tos.tsx": {
+      "scopes": {
+        "0/declaration/body/0/argument": {
+          "type": "element",
+          "hash": "0b8a8b23aff021a6cde79613fdb39c28",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Terms of service"
+        }
+      }
+    },
+    "routes/admin+/cache.tsx": {
+      "scopes": {
+        "15/declaration/body/6/argument/1": {
+          "type": "element",
+          "hash": "5f7b29ae2465addfe0797ce9fffb5de5",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Cache Admin"
+        },
+        "15/declaration/body/6/argument/13/1": {
+          "type": "element",
+          "hash": "3e869a110a8bf7a7277470004d3c2a3f",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "SQLite Cache:"
+        },
+        "15/declaration/body/6/argument/5/1/1/1": {
+          "type": "element",
+          "hash": "6106bdd856d1f54a7ad08d0a4a6c7171",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "🔎"
+        },
+        "15/declaration/body/6/argument/5/1/1/5/1-title": {
+          "type": "attribute",
+          "hash": "ca8e8deeec195e2a8bec5e2510fe40fc",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Total results shown"
+        },
+        "15/declaration/body/6/argument/9/1": {
+          "type": "element",
+          "hash": "a4d0b4f819e65d2f58cc6bdcb851c5a3",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "LRU Cache:"
+        },
+        "17/declaration/body/0/argument/openingElement/0/value/expression/0/value/body": {
+          "type": "element",
+          "hash": "550b6a67f72f22a4587b76b39160bfb8",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "You are not allowed to do that: <expression/>"
+        }
+      }
+    },
+    "routes/resources+/theme-switch.tsx": {
+      "scopes": {
+        "13/declaration/body/6/0/init/0/value/1": {
+          "type": "element",
+          "hash": "bb78ea2c6edd8662676c81a8a13ecb93",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Light"
+        },
+        "13/declaration/body/6/0/init/1/value/1": {
+          "type": "element",
+          "hash": "73e6e208ba628b26e90fcf6dce15e1b2",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Dark"
+        },
+        "13/declaration/body/6/0/init/2/value/1": {
+          "type": "element",
+          "hash": "803281c327a02a2feba182f4a2b38311",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "System"
+        }
+      }
+    },
+    "routes/settings+/profile.change-email.server.tsx": {
+      "scopes": {
+        "10/declaration/body/0/argument/1/1/1": {
+          "type": "element",
+          "hash": "aaf617b8629a603e34bbef15dcaada01",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Epic Notes Email Change"
+        },
+        "10/declaration/body/0/argument/1/3/1": {
+          "type": "element",
+          "hash": "f2be1399ff8725a2715af6b9b9278535",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Here's your verification code: <element:strong>{otp}</element:strong>"
+        },
+        "10/declaration/body/0/argument/1/5/1": {
+          "type": "element",
+          "hash": "a9b63fddf3e91c7c0297acdba7dae06f",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Or click the link:"
+        },
+        "11/body/0/argument/1/1/1": {
+          "type": "element",
+          "hash": "7ec65ab5982b75b70bafcb12c8a5c4e9",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Your Epic Notes email has been changed"
+        },
+        "11/body/0/argument/1/3/1": {
+          "type": "element",
+          "hash": "009f63f6aab59f9dc77ac5e8678bb9fa",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "We're writing to let you know that your Epic Notes email has been changed."
+        },
+        "11/body/0/argument/1/5/1": {
+          "type": "element",
+          "hash": "a022f43cd861799f7de1f1e22cea611c",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "If you changed your email address, then you can safely ignore this. But if you did not change your email address, then please contact support immediately."
+        },
+        "11/body/0/argument/1/7/1": {
+          "type": "element",
+          "hash": "af31469d5675b666dbc63c390ad1f6c3",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Your Account ID: {userId}"
+        }
+      }
+    },
+    "routes/settings+/profile.change-email.tsx": {
+      "scopes": {
+        "18/declaration/0/init/0/value": {
+          "type": "element",
+          "hash": "1a0122ae807c4b0c2ea7aac592cd609f",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Change Email"
+        },
+        "23/declaration/body/2/argument/1": {
+          "type": "element",
+          "hash": "1a0122ae807c4b0c2ea7aac592cd609f",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Change Email"
+        },
+        "23/declaration/body/2/argument/3": {
+          "type": "element",
+          "hash": "a10b4484c97be079d85782bf27e4eb8f",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "You will receive an email at the new email address to confirm."
+        },
+        "23/declaration/body/2/argument/5": {
+          "type": "element",
+          "hash": "b46635e67416866de5e4d14f2261731a",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "An email notice will also be sent to your old address {loaderData.user.email}."
+        },
+        "23/declaration/body/2/argument/7/1/5/1": {
+          "type": "element",
+          "hash": "f137caa0568dbd0beb7f9ab5899d6205",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Send Confirmation"
+        }
+      }
+    },
+    "routes/settings+/profile.connections.tsx": {
+      "scopes": {
+        "16/declaration/0/init/0/value": {
+          "type": "element",
+          "hash": "e03a59f742f7b798488a69760bf8a603",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Connections"
+        },
+        "21/declaration/body/0/argument/1/expression/alternate": {
+          "type": "element",
+          "hash": "ca0bf849f603ae2536987d3df2006595",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "You don't have any connections yet."
+        },
+        "21/declaration/body/0/argument/1/expression/consequent/1": {
+          "type": "element",
+          "hash": "1a081b926753fc41fed39bb23c77a525",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Here are your current connections:"
+        },
+        "22/body/3/argument/1/3": {
+          "type": "element",
+          "hash": "e27c624cb567ea24b65257cdc0760caf",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<expression/> ({connection.createdAtFormatted})"
+        },
+        "22/body/3/argument/3/expression/alternate/1/3": {
+          "type": "element",
+          "hash": "1ea7cc62a989b38950308df8f69b06d3",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "You cannot delete your last connection unless you have a password."
+        },
+        "22/body/3/argument/3/expression/consequent/3/1/3": {
+          "type": "element",
+          "hash": "b6ed9a48baf5ebca8ae87cc8cee6e81c",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Disconnect this account"
+        }
+      }
+    },
+    "routes/settings+/profile.index.tsx": {
+      "scopes": {
+        "27/declaration/body/0/argument/1/1/3/1-aria-label": {
+          "type": "attribute",
+          "hash": "80e1c6077edd021e30d7ae3d8e181fc6",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Change profile photo"
+        },
+        "27/declaration/body/0/argument/1/1/3/1-title": {
+          "type": "attribute",
+          "hash": "80e1c6077edd021e30d7ae3d8e181fc6",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Change profile photo"
+        },
+        "27/declaration/body/0/argument/7/1/1/1": {
+          "type": "element",
+          "hash": "a0ab1d9ae5979c306f1a22b292477881",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Change email from {loaderData.user.email}"
+        },
+        "27/declaration/body/0/argument/7/11/1/1": {
+          "type": "element",
+          "hash": "bc2838849ce589b3a0142ed1de396e7c",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Download your data"
+        },
+        "27/declaration/body/0/argument/7/3/1/1/expression/alternate": {
+          "type": "element",
+          "hash": "681685f434e6cf21e7fa095bf7dcc0bb",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Enable 2FA"
+        },
+        "27/declaration/body/0/argument/7/3/1/1/expression/consequent": {
+          "type": "element",
+          "hash": "e4ad2c9d9db9f3395cfcb64e32c2b886",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "2FA is enabled"
+        },
+        "27/declaration/body/0/argument/7/7/1/1": {
+          "type": "element",
+          "hash": "78957b8094ae0a17b342be1c493cfa92",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Manage connections"
+        },
+        "27/declaration/body/0/argument/7/9/1/1": {
+          "type": "element",
+          "hash": "d843234de4891365e2ab773207c5b3b4",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Manage passkeys"
+        },
+        "29/body/2/argument/5/1": {
+          "type": "element",
+          "hash": "3811e911d5eb4bd1d225a5de716e74ad",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Save changes"
+        },
+        "31/body/3/argument/1/expression/alternate": {
+          "type": "element",
+          "hash": "8ca50e230727ba257afa97514c29c089",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "This is your only session"
+        }
+      }
+    },
+    "routes/settings+/profile.passkeys.tsx": {
+      "scopes": {
+        "10/declaration/0/init/0/value": {
+          "type": "element",
+          "hash": "c4f8a6a03df5e2efea77d623f2333409",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Passkeys"
+        },
+        "14/declaration/body/3/argument/1/1": {
+          "type": "element",
+          "hash": "c4f8a6a03df5e2efea77d623f2333409",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Passkeys"
+        },
+        "14/declaration/body/3/argument/1/3/1/1": {
+          "type": "element",
+          "hash": "53fc3d3500deddedd96a599f3ad24cb7",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Register new passkey"
+        },
+        "14/declaration/body/3/argument/5/expression/alternate": {
+          "type": "element",
+          "hash": "78f1b93b4490fd6a2a71a41a81bccc04",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "No passkeys registered yet"
+        },
+        "14/declaration/body/3/argument/5/expression/consequent-title": {
+          "type": "attribute",
+          "hash": "f64abc1d7549c10f786ff8c92e0cc4fc",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "passkeys"
+        },
+        "14/declaration/body/3/argument/5/expression/consequent/1/expression/0/body/1/3": {
+          "type": "element",
+          "hash": "1776f7f49d8a32eb9e643b1de130bcce",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Registered <function:formatDistanceToNow/> ago"
+        },
+        "14/declaration/body/3/argument/5/expression/consequent/1/expression/0/body/3/3/1": {
+          "type": "element",
+          "hash": "8bcf303dd10a645b5baacb02b47d72c9",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Delete"
+        }
+      }
+    },
+    "routes/settings+/profile.password.tsx": {
+      "scopes": {
+        "16/declaration/0/init/0/value": {
+          "type": "element",
+          "hash": "223a61cf906ab9c40d22612c588dff48",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Password"
+        },
+        "21/declaration/body/2/argument/9/1/1": {
+          "type": "element",
+          "hash": "2e2a849c2223911717de8caa2c71bade",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Cancel"
+        },
+        "21/declaration/body/2/argument/9/3": {
+          "type": "element",
+          "hash": "45ee1e280ab1fcb4301daee8e1241cb6",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Change Password"
+        }
+      }
+    },
+    "routes/settings+/profile.password_.create.tsx": {
+      "scopes": {
+        "14/declaration/0/init/0/value": {
+          "type": "element",
+          "hash": "223a61cf906ab9c40d22612c588dff48",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Password"
+        },
+        "19/declaration/body/2/argument/7/1/1": {
+          "type": "element",
+          "hash": "2e2a849c2223911717de8caa2c71bade",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Cancel"
+        },
+        "19/declaration/body/2/argument/7/3": {
+          "type": "element",
+          "hash": "946d33fbb25a1594da38e8e6db43f5a6",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Create Password"
+        }
+      }
+    },
+    "routes/settings+/profile.photo.tsx": {
+      "scopes": {
+        "18/declaration/0/init/0/value": {
+          "type": "element",
+          "hash": "ca2fb1919818af32ddea8972024f5acb",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Photo"
+        },
+        "25/declaration/body/7/argument/1/5/5/1/1": {
+          "type": "element",
+          "hash": "1f9ca3fc28e932784fb96f97c9f95dc9",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Change"
+        },
+        "25/declaration/body/7/argument/1/5/7": {
+          "type": "element",
+          "hash": "5ed7f906e944d31425ba07dbbb52fb6c",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Save Photo"
+        },
+        "25/declaration/body/7/argument/1/5/9/1": {
+          "type": "element",
+          "hash": "c19c53a05e21c7f3b395247809a14b51",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Reset"
+        }
+      }
+    },
+    "routes/settings+/profile.tsx": {
+      "scopes": {
+        "13/declaration/0/init/0/value": {
+          "type": "element",
+          "hash": "1f2ee90ad54231d161226b0d9c3b6d76",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Edit Profile"
+        },
+        "16/declaration/body/3/argument/1/1/1/1": {
+          "type": "element",
+          "hash": "374ec3143354ae32f864424de4a1d1c4",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Profile"
+        }
+      }
+    },
+    "routes/settings+/profile.two-factor.disable.tsx": {
+      "scopes": {
+        "12/declaration/0/init/0/value": {
+          "type": "element",
+          "hash": "81b754fd7962e0bd9b6ba87f3972e7fc",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Disable"
+        },
+        "15/declaration/body/2/argument/1/1": {
+          "type": "element",
+          "hash": "65d0e61f6db88c8baaeed9584a6982ab",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Disabling two factor authentication is not recommended. However, if you would like to do so, click here:"
+        }
+      }
+    },
+    "routes/settings+/profile.two-factor.index.tsx": {
+      "scopes": {
+        "14/declaration/body/1/argument/1/expression/alternate/1/1": {
+          "type": "element",
+          "hash": "5399dddd6d0d7f6c302e254dad14eab0",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "You have not enabled two-factor authentication yet."
+        },
+        "14/declaration/body/1/argument/1/expression/alternate/3": {
+          "type": "element",
+          "hash": "e9a57cd1d9ef992f3445743118c1a9b6",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Two factor authentication adds an extra layer of security to your account. You will need to enter a code from an authenticator applike <element:a>1Password</element:a> to log in."
+        },
+        "14/declaration/body/1/argument/1/expression/alternate/5/1": {
+          "type": "element",
+          "hash": "80a2beb4efd8eef08836bb4b2b294d8e",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Enable 2FA"
+        },
+        "14/declaration/body/1/argument/1/expression/consequent/1/1": {
+          "type": "element",
+          "hash": "973396533a5693e219a448b5d9f07384",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "You have enabled two-factor authentication."
+        },
+        "14/declaration/body/1/argument/1/expression/consequent/3/1": {
+          "type": "element",
+          "hash": "475bed4ebb95a11fb5748e1f03903d6e",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Disable 2FA"
+        }
+      }
+    },
+    "routes/settings+/profile.two-factor.tsx": {
+      "scopes": {
+        "5/declaration/0/init/0/value": {
+          "type": "element",
+          "hash": "63d68e16d3d1783870c9881afef158bd",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "2FA"
+        }
+      }
+    },
+    "routes/settings+/profile.two-factor.verify.tsx": {
+      "scopes": {
+        "18/declaration/0/init/0/value": {
+          "type": "element",
+          "hash": "6ad4aad279b2411ee9bf24a43e37ae03",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Verify"
+        },
+        "25/declaration/body/5/argument/1/1-alt": {
+          "type": "attribute",
+          "hash": "7eefc079de47f1431f0d7e8b24e3b27f",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "qr code"
+        },
+        "25/declaration/body/5/argument/1/11/1/5/1": {
+          "type": "element",
+          "hash": "b3407d4ff05d33b7ac4e1d380bb18c30",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Submit"
+        },
+        "25/declaration/body/5/argument/1/11/1/5/3": {
+          "type": "element",
+          "hash": "6d41299a189b3969d62f6e6994326423",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Cancel"
+        },
+        "25/declaration/body/5/argument/1/3": {
+          "type": "element",
+          "hash": "c86c5b6dc3825bc577061e4495ee4a00",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Scan this QR code with your authenticator app."
+        },
+        "25/declaration/body/5/argument/1/5": {
+          "type": "element",
+          "hash": "83925cfd65a610755ea66cb6eb7d5d23",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "If you cannot scan the QR code, you can manually add this account to your authenticator app using this code:"
+        },
+        "25/declaration/body/5/argument/1/7/1-aria-label": {
+          "type": "attribute",
+          "hash": "27a6d27500c230cda60add53b7cf4195",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "One-time Password URI"
+        },
+        "25/declaration/body/5/argument/1/9": {
+          "type": "element",
+          "hash": "1ad4f2f91f0033ce4257f1f90cfb784f",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Once you've added the account, enter the code from your authenticator app below. Once you enable 2FA, you will need to enter a code from your authenticator app every time you log in or perform important actions. Do not lose access to your authenticator app, or you will lose access to your account."
+        }
+      }
+    },
+    "routes/users+/$username.tsx": {
+      "scopes": {
+        "13/declaration/body/5/argument/3/5/3": {
+          "type": "element",
+          "hash": "edb7673a5d09b9a48c4a9a76780eba90",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Joined {data.userJoinedDisplay}"
+        },
+        "13/declaration/body/5/argument/3/5/5/expression/consequent/1/1": {
+          "type": "element",
+          "hash": "43312fc1b38f1b9fe8ef8d4860133bf9",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Logout"
+        },
+        "13/declaration/body/5/argument/3/5/7/1/expression/alternate/1": {
+          "type": "element",
+          "hash": "762f959559b1eec970674d378bd40213",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "{userDisplayName}'s notes"
+        },
+        "13/declaration/body/5/argument/3/5/7/1/expression/consequent/1/1": {
+          "type": "element",
+          "hash": "f569819a33e3837cb743c34e75fbf418",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "My notes"
+        },
+        "13/declaration/body/5/argument/3/5/7/1/expression/consequent/3/1": {
+          "type": "element",
+          "hash": "74e7d0abbe9fd03c22e89812811d59a3",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Edit profile"
+        },
+        "15/declaration/body/0/argument/openingElement/0/value/expression/0/value/body": {
+          "type": "element",
+          "hash": "e967c10371b65f7d155904e9f48dca18",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "No user with the username \"{params.username}\" exists"
+        }
+      }
+    },
+    "routes/users+/$username_+/__note-editor.tsx": {
+      "scopes": {
+        "24/declaration/body/3/argument/1/1/7/5/1": {
+          "type": "element",
+          "hash": "9305827c28694866f49db42b4c51831f",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Images"
+        },
+        "24/declaration/body/3/argument/1/1/7/5/3/1/expression/0/body/2/argument/1/4": {
+          "type": "element",
+          "hash": "f7f3b654dad5e9f51cc2e24e23cddae1",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Remove image <expression/>"
+        },
+        "24/declaration/body/3/argument/1/1/7/7/1/1": {
+          "type": "element",
+          "hash": "048ba7a239de0fbd883ade8558415830",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Image"
+        },
+        "24/declaration/body/3/argument/1/1/7/7/4": {
+          "type": "element",
+          "hash": "95b61401d8d71c0805fc1bbb90e1048d",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Add image"
+        },
+        "24/declaration/body/3/argument/1/3/1": {
+          "type": "element",
+          "hash": "e358198d561523cbc2d7891979688498",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Reset"
+        },
+        "24/declaration/body/3/argument/1/3/3": {
+          "type": "element",
+          "hash": "2e707e6b3587ab5d688a44b38e0c6468",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Submit"
+        },
+        "25/body/4/argument/1/1/1/1/1/expression/consequent/3/expression/alternate": {
+          "type": "element",
+          "hash": "a246bf8adb773b04955f8366db8e152d",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "new"
+        },
+        "25/body/4/argument/1/1/1/1/5-aria-label": {
+          "type": "attribute",
+          "hash": "048ba7a239de0fbd883ade8558415830",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Image"
+        },
+        "25/body/4/argument/1/3/1": {
+          "type": "element",
+          "hash": "911ee833be426439ab983a44f85ec298",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Alt Text"
+        },
+        "26/declaration/body/0/argument/openingElement/0/value/expression/0/value/body": {
+          "type": "element",
+          "hash": "076cadba5e7ee9751bc3bd5109b66200",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "No note with the id \"{params.noteId}\" exists"
+        }
+      }
+    },
+    "routes/users+/$username_+/notes.$noteId.tsx": {
+      "scopes": {
+        "25/declaration/body/6/argument/5/expression/consequent/1/1": {
+          "type": "element",
+          "hash": "20d34027094b8e42535a3790cacaf3b2",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "{loaderData.timeAgo} ago"
+        },
+        "25/declaration/body/6/argument/5/expression/consequent/3/3/1/1/1": {
+          "type": "element",
+          "hash": "eee7f39ff90b18852afc1671f21fbaa9",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Edit"
+        },
+        "26/declaration/body/2/argument/3/1/1": {
+          "type": "element",
+          "hash": "8bcf303dd10a645b5baacb02b47d72c9",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Delete"
+        },
+        "28/declaration/body/0/argument/openingElement/0/value/expression/0/value/body": {
+          "type": "element",
+          "hash": "8d371dfd81cc7334d81e33cc9a2a9937",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "You are not allowed to do that"
+        },
+        "28/declaration/body/0/argument/openingElement/0/value/expression/1/value/body": {
+          "type": "element",
+          "hash": "076cadba5e7ee9751bc3bd5109b66200",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "No note with the id \"{params.noteId}\" exists"
+        }
+      }
+    },
+    "routes/users+/$username_+/notes.$noteId_.edit.tsx": {
+      "scopes": {
+        "9/declaration/body/0/argument/openingElement/0/value/expression/0/value/body": {
+          "type": "element",
+          "hash": "076cadba5e7ee9751bc3bd5109b66200",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "No note with the id \"{params.noteId}\" exists"
+        }
+      }
+    },
+    "routes/users+/$username_+/notes.index.tsx": {
+      "scopes": {
+        "2/declaration/body/0/argument/1": {
+          "type": "element",
+          "hash": "5bc36e46571e8c386557e90edb95c296",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Select a note"
+        }
+      }
+    },
+    "routes/users+/$username_+/notes.tsx": {
+      "scopes": {
+        "10/declaration/body/4/argument/1/1/1/1/3": {
+          "type": "element",
+          "hash": "d492eb54cefc183019b9c822147bddac",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "{ownerDisplayName}'s Notes"
+        },
+        "10/declaration/body/4/argument/1/1/1/3/1/expression/consequent/1/1": {
+          "type": "element",
+          "hash": "7b27ad55a7364b783a8421546be7a80c",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "New Note"
+        },
+        "11/declaration/body/0/argument/openingElement/0/value/expression/0/value/body": {
+          "type": "element",
+          "hash": "e967c10371b65f7d155904e9f48dca18",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "No user with the username \"{params.username}\" exists"
+        }
+      }
+    },
+    "routes/users+/index.tsx": {
+      "scopes": {
+        "10/declaration/body/1/argument/1": {
+          "type": "element",
+          "hash": "07b6167fa08f84b3d3861cfa9dbafe35",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Epic Notes Users"
+        },
+        "10/declaration/body/1/argument/5/1/expression/consequent/alternate": {
+          "type": "element",
+          "hash": "de77574a8013306768e759f5897a59e5",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "No users found"
+        }
+      }
+    },
+    "utils/connections.tsx": {
+      "scopes": {
+        "11/declaration/body/3/argument/3/1/3": {
+          "type": "element",
+          "hash": "66402e60ab17a0836780aaa54997b2bf",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "{type} with {label}"
+        }
+      }
+    }
+  }
+}

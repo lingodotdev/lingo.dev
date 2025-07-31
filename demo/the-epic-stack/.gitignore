@@ -1,0 +1,28 @@
+node_modules
+.DS_store
+
+/build
+/server-build
+.env
+.cache
+
+/prisma/data.db
+/prisma/data.db-journal
+/tests/prisma
+
+/test-results/
+/playwright-report/
+/playwright/.cache/
+/tests/fixtures/email/
+/tests/fixtures/uploaded/
+/tests/fixtures/openimg/
+/coverage
+
+/other/cache.db
+
+# Easy way to create temporary files/folders that won't accidentally be added to git
+*.local.*
+
+# generated files
+/app/components/ui/icons
+.react-router/

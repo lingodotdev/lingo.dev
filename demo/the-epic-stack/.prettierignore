@@ -1,0 +1,15 @@
+node_modules
+
+/build
+/public/build
+/server-build
+.env
+
+/test-results/
+/playwright-report/
+/playwright/.cache/
+/tests/fixtures/email/*.json
+/coverage
+/prisma/migrations
+
+package-lock.json

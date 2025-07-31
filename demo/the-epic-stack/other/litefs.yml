@@ -1,0 +1,46 @@
+# Documented example: https://github.com/superfly/litefs/blob/dec5a7353292068b830001bd2df4830e646f6a2f/cmd/litefs/etc/litefs.yml
+fuse:
+  # Required. This is the mount directory that applications will
+  # use to access their SQLite databases.
+  dir: '${LITEFS_DIR}'
+
+data:
+  # Path to internal data storage.
+  dir: '/data/litefs'
+
+proxy:
+  # matches the internal_port in fly.toml
+  addr: ':${INTERNAL_PORT}'
+  target: 'localhost:${PORT}'
+  db: '${DATABASE_FILENAME}'
+
+# The lease section specifies how the cluster will be managed. We're using the
+# "consul" lease type so that our application can dynamically change the primary.
+#
+# These environment variables will be available in your Fly.io application.
+lease:
+  type: 'consul'
+  candidate: ${FLY_REGION == PRIMARY_REGION}
+  promote: true
+  advertise-url: 'http://${HOSTNAME}.vm.${FLY_APP_NAME}.internal:20202'
+
+  consul:
+    url: '${FLY_CONSUL_URL}'
+    key: 'epic-stack-litefs_20250222/${FLY_APP_NAME}'
+
+exec:
+  - cmd: npx prisma migrate deploy
+    if-candidate: true
+
+  # Set the journal mode for the database to WAL. This reduces concurrency deadlock issues
+  - cmd: sqlite3 $DATABASE_PATH "PRAGMA journal_mode = WAL;"
+    if-candidate: true
+
+  # Set the journal mode for the cache to WAL. This reduces concurrency deadlock issues
+  - cmd: sqlite3 $CACHE_DATABASE_PATH "PRAGMA journal_mode = WAL;"
+    if-candidate: true
+
+  # Generate Typed SQL files
+  - cmd: npx prisma generate --sql
+
+  - cmd: npm start
