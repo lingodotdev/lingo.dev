@@ -1,10 +1,7 @@
+import { LingoProvider, loadDictionary } from "lingo.dev/react/rsc";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-
-// Compiler: add imports
-import { LocaleSwitcher } from "lingo.dev/react/client";
-import { LingoProvider, loadDictionary } from "lingo.dev/react/rsc";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,18 +23,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Compiler: wrap with LingoProvider and render LocaleSwitcher
   return (
     <LingoProvider loadDictionary={(locale) => loadDictionary(locale)}>
       <html lang="en">
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          <div className="absolute top-2 right-3">
-            <LocaleSwitcher
-              locales={["en", "es", "zh", "ja", "fr", "de", "ru", "ar", "ko"]}
-            />
-          </div>
           {children}
         </body>
       </html>
