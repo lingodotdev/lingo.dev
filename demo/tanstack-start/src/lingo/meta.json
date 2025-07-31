@@ -1,0 +1,429 @@
+{
+  "version": 0.1,
+  "files": {
+    "components/DefaultCatchBoundary.tsx": {
+      "scopes": {
+        "2/declaration/body/3/argument/3/1": {
+          "type": "element",
+          "hash": "d96986d263161ea9eba02fcc72ee249f",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Try Again"
+        },
+        "2/declaration/body/3/argument/3/3/expression/alternate": {
+          "type": "element",
+          "hash": "e325a954bf8920172ef9a0e33749bc6c",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Go Back"
+        },
+        "2/declaration/body/3/argument/3/3/expression/consequent": {
+          "type": "element",
+          "hash": "6e592a07b0ea45b3c32726c8d6dfa1cf",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Home"
+        }
+      }
+    },
+    "components/NotFound.tsx": {
+      "scopes": {
+        "1/declaration/body/0/argument/1/1/expression/right": {
+          "type": "element",
+          "hash": "20dcf220278733e21998bb6fe3da0623",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "The page you are looking for does not exist."
+        },
+        "1/declaration/body/0/argument/3/1": {
+          "type": "element",
+          "hash": "1e8a758d8b9288ae42234f21f85ebecd",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Go back"
+        },
+        "1/declaration/body/0/argument/3/3": {
+          "type": "element",
+          "hash": "adc8ab985847c5884aa558d6b5a16f66",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Start Over"
+        }
+      }
+    },
+    "routes/__root.tsx": {
+      "scopes": {
+        "9/body/0/argument/1": {
+          "type": "element",
+          "hash": "0468579ef2fbc83c9d520c2f2f1c5059",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Hello, world!"
+        },
+        "9/body/0/argument/1/3/1/1": {
+          "type": "element",
+          "hash": "137758680d0d6cf4d0dfc3b23be5cad3",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Home"
+        },
+        "9/body/0/argument/1/3/1/10": {
+          "type": "element",
+          "hash": "e37d43e953714ac3bb491d2f39e453fa",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Pathless Layout"
+        },
+        "9/body/0/argument/1/3/1/13": {
+          "type": "element",
+          "hash": "682ea85ffc2e0234f2e0d4459c8b4c66",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Deferred"
+        },
+        "9/body/0/argument/1/3/1/16": {
+          "type": "element",
+          "hash": "54a32d7ef568fab0d9715129248c1195",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "This Route Does Not Exist"
+        },
+        "9/body/0/argument/1/3/1/4": {
+          "type": "element",
+          "hash": "2985053214a85a53c50fe152d8680913",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Posts"
+        },
+        "9/body/0/argument/1/3/1/7": {
+          "type": "element",
+          "hash": "8ff1dee09b49b48b272cfe0db787e367",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Users"
+        },
+        "9/body/0/argument/3/1/1": {
+          "type": "element",
+          "hash": "6e592a07b0ea45b3c32726c8d6dfa1cf",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Home"
+        },
+        "9/body/0/argument/3/1/1/1": {
+          "type": "element",
+          "hash": "137758680d0d6cf4d0dfc3b23be5cad3",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Home"
+        },
+        "9/body/0/argument/3/1/1/10": {
+          "type": "element",
+          "hash": "e37d43e953714ac3bb491d2f39e453fa",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Pathless Layout"
+        },
+        "9/body/0/argument/3/1/1/13": {
+          "type": "element",
+          "hash": "682ea85ffc2e0234f2e0d4459c8b4c66",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Deferred"
+        },
+        "9/body/0/argument/3/1/1/16": {
+          "type": "element",
+          "hash": "54a32d7ef568fab0d9715129248c1195",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "This Route Does Not Exist"
+        },
+        "9/body/0/argument/3/1/1/4": {
+          "type": "element",
+          "hash": "2985053214a85a53c50fe152d8680913",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Posts"
+        },
+        "9/body/0/argument/3/1/1/7": {
+          "type": "element",
+          "hash": "8ff1dee09b49b48b272cfe0db787e367",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Users"
+        },
+        "9/body/0/argument/3/1/10": {
+          "type": "element",
+          "hash": "1f8a48cf43055dc9a31db9654fcf7ff7",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Pathless Layout"
+        },
+        "9/body/0/argument/3/1/13": {
+          "type": "element",
+          "hash": "b66177f3ee786d6b158fa31eb8259759",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Deferred"
+        },
+        "9/body/0/argument/3/1/16": {
+          "type": "element",
+          "hash": "07f708348aa56ea90670ec83709650f8",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "This Route Does Not Exist"
+        },
+        "9/body/0/argument/3/1/4": {
+          "type": "element",
+          "hash": "70cdd65b82d01a6676faaedef0ca2cc0",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Posts"
+        },
+        "9/body/0/argument/3/1/7": {
+          "type": "element",
+          "hash": "ce459b62d52c939ea8af0ff1b818dcc4",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Users"
+        },
+        "9/body/0/argument/3/5/1": {
+          "type": "element",
+          "hash": "1f8a48cf43055dc9a31db9654fcf7ff7",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Pathless Layout"
+        }
+      }
+    },
+    "routes/_pathlessLayout.tsx": {
+      "scopes": {
+        "2/body/0/argument/1": {
+          "type": "element",
+          "hash": "159bb10b582aff5b7e2ca92008a248b6",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "I'm a layout"
+        }
+      }
+    },
+    "routes/_pathlessLayout/_nested-layout.tsx": {
+      "scopes": {
+        "2/body/0/argument/1": {
+          "type": "element",
+          "hash": "7109c1bbcf36cc0a26d5bc4da4f7a956",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "I'm a nested layout"
+        },
+        "2/body/0/argument/3/1": {
+          "type": "element",
+          "hash": "3dc25c3def5b8e6989fd7bdaca8a1f57",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Go to route A"
+        },
+        "2/body/0/argument/3/3": {
+          "type": "element",
+          "hash": "c47586fabc65a192688ce7a526efdbf2",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Go to route B"
+        }
+      }
+    },
+    "routes/_pathlessLayout/_nested-layout/route-a.tsx": {
+      "scopes": {
+        "2/body/0/argument": {
+          "type": "element",
+          "hash": "f629ba00c17c4df5850d9ad445dea63a",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "I'm A!"
+        }
+      }
+    },
+    "routes/_pathlessLayout/_nested-layout/route-b.tsx": {
+      "scopes": {
+        "2/body/0/argument": {
+          "type": "element",
+          "hash": "040e0b7198a0b60a6f144c04e3f3bfc4",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "I'm B!"
+        }
+      }
+    },
+    "routes/deferred.tsx": {
+      "scopes": {
+        "6/body/2/argument/1": {
+          "type": "element",
+          "hash": "b3e526099c5b1cba8b9e261c5d75e123",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "{person.name} - {person.randomNumber}"
+        },
+        "6/body/2/argument/3/1/openingElement/1/value/expression/body": {
+          "type": "element",
+          "hash": "a1120a21ea83dc6ac0d54a9cc21f3e08",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "{data.name} - {data.randomNumber}"
+        },
+        "6/body/2/argument/3/openingElement/0/value/expression": {
+          "type": "element",
+          "hash": "9477d3f66c7aabb1b98de12091601a50",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Loading person..."
+        },
+        "6/body/2/argument/5/openingElement/0/value/expression": {
+          "type": "element",
+          "hash": "a32378760f4e181ea1ecb12105f4e4d1",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Loading stuff..."
+        },
+        "6/body/2/argument/7": {
+          "type": "element",
+          "hash": "6bafa1d19125d9900c3c66a38c5765fa",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Count: {count}"
+        },
+        "6/body/2/argument/9/1": {
+          "type": "element",
+          "hash": "c1b2e1cc80d777b29e61e51815d8db2d",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Increment"
+        }
+      }
+    },
+    "routes/index.tsx": {
+      "scopes": {
+        "2/body/0/argument/1": {
+          "type": "element",
+          "hash": "99ceec6f54ff6e6a439abba4c9b611de",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Welcome Home!!!"
+        }
+      }
+    },
+    "routes/posts.$postId.tsx": {
+      "scopes": {
+        "4/declaration/0/init/0/3/value/body/0/argument": {
+          "type": "element",
+          "hash": "0d7d81ad19130994e703503fb328b561",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Post not found"
+        },
+        "5/body/1/argument/5": {
+          "type": "element",
+          "hash": "89cfe1478bdf407bba97fa4133af8753",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Deep View"
+        }
+      }
+    },
+    "routes/posts.index.tsx": {
+      "scopes": {
+        "2/body/0/argument": {
+          "type": "element",
+          "hash": "fb3234663ef9929ea2fbce92249330de",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Select a post."
+        }
+      }
+    },
+    "routes/posts_.$postId.deep.tsx": {
+      "scopes": {
+        "4/body/1/argument/1": {
+          "type": "element",
+          "hash": "c08a7bce1c682fb8b8fc9d1e4f5b4349",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "← All Posts"
+        }
+      }
+    },
+    "routes/users.$userId.tsx": {
+      "scopes": {
+        "3/declaration/0/init/0/3/value/body/0/argument": {
+          "type": "element",
+          "hash": "5903581136ac6c1c1351a482a6d8fdf7",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "User not found"
+        },
+        "4/body/1/argument/5/1": {
+          "type": "element",
+          "hash": "294fd1cf7a68c9015d870001ef1a0cd9",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "View as JSON"
+        }
+      }
+    },
+    "routes/users.index.tsx": {
+      "scopes": {
+        "2/body/0/argument": {
+          "type": "element",
+          "hash": "2077496b6b4cb6a59d6931882e1adbc4",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Select a user or <element:a>view as JSON</element:a>"
+        }
+      }
+    }
+  }
+}
