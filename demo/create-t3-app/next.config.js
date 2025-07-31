@@ -8,7 +8,7 @@ import lingoCompiler from "lingo.dev/compiler";
 /** @type {import("next").NextConfig} */
 const config = {};
 
-export default lingoCompiler.next({
+const withLingo = lingoCompiler.next({
   sourceRoot: "src",
   lingoDir: "lingo",
   sourceLocale: "en",
@@ -17,4 +17,6 @@ export default lingoCompiler.next({
   useDirective: false,
   debug: false,
   models: "lingo.dev",
-})(config);
+});
+
+export default withLingo(config);
