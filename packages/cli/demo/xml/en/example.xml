@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <title>Hello, world!</title>
+  
+  <description>
+    <summary>Simple demo app</summary>
+    <details>Basic example content</details>
+  </description>
+  
+  <image src="photo.jpg" alt="Example photo" title="Click to view"/>
+  
+  <link href="example.com" label="Click here">Learn more</link>
+  
+  <button type="submit" value="Submit" placeholder="Enter text">Submit</button>
+  
+  <section>
+    <article>
+      <paragraph>
+        <sentence>Nested content</sentence>
+      </paragraph>
+    </article>
+  </section>
+  
+  <meta name="description" content="Demo app metadata"/>
+  
+  <message>
+    <greeting>Hello there!</greeting>
+    <body>Welcome to the app</body>
+    <signature>Thanks, MyApp Team</signature>
+  </message>
+</root>

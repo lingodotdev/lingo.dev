@@ -1,0 +1,61 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Example Project 1.0\n"
+"Report-Msgid-Bugs-To: support@example.com\n"
+"POT-Creation-Date: 2024-01-01 12:00+0000\n"
+"PO-Revision-Date: 2024-01-01 12:00+0000\n"
+"Last-Translator: Example Translator <translator@example.com>\n"
+"Language-Team: English <en@example.com>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Welcome"
+msgstr "Welcome"
+
+msgctxt "navigation"
+msgid "Home"
+msgstr "Home"
+
+msgid "You have %d message"
+msgid_plural "You have %d messages"
+msgstr[0] "You have %d message"
+msgstr[1] "You have %d messages"
+
+msgid "Save"
+msgstr "Save"
+
+msgid "Cancel"
+msgstr "Cancel"
+
+msgid "Delete"
+msgstr "Delete"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "Email Address"
+msgstr "Email Address"
+
+msgid "Message"
+msgstr "Message"
+
+msgid "Loading..."
+msgstr "Loading..."
+
+msgid "Success! Changes saved."
+msgstr "Success! Changes saved."
+
+msgid "Error: Request failed."
+msgstr "Error: Request failed."
+
+msgid "Add to Cart"
+msgstr "Add to Cart"
+
+msgid "Out of Stock"
+msgstr "Out of Stock"
+
+msgid "Price: $%s"
+msgstr "Price: $%s" 

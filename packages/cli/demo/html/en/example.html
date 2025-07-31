@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>MyApp - Hello World</title>
+
+    <meta name="description" content="A simple demo app" />
+    <meta property="og:title" content="MyApp Demo" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8" />
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        color: #333;
+      }
+      .highlight::before {
+        content: "★ Featured";
+      }
+    </style>
+
+    <script>
+      const message = "User session initialized";
+      console.log(message);
+    </script>
+  </head>
+  <body>
+    <h1>Welcome to MyApp</h1>
+
+    <p>
+      Hello, world! This is a simple demo with
+      <strong>bold text</strong> and
+      <em>italic text</em>.
+    </p>
+
+    <div>
+      <div>
+        <span>Nested content here</span>
+      </div>
+    </div>
+
+    <img src="example.jpg" alt="Example image" />
+
+    <img
+      src="example.jpg"
+      alt="Demo image"
+      title="View product details"
+    />
+
+    <input type="text" placeholder="Enter text here" />
+
+    <input
+      type="text"
+      placeholder="Enter value"
+      value="Default search query"
+    />
+
+    <a href="#" title="Click for more">Learn more</a>
+
+    <a
+      href="not-localized.html"
+      data-info="Navigation link"
+      title="Navigate"
+    >
+      Go to page
+    </a>
+
+    <div class="content-area" data-value="Main content">
+      Content area
+    </div>
+
+    <script>
+      const inlineScript = "Page analytics loaded";
+    </script>
+
+    <style>
+      .inline-style {
+        content: "Notice: ";
+      }
+    </style>
+  </body>
+</html>

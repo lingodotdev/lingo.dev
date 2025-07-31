@@ -1,0 +1,47 @@
+{
+  // JSON5 allows comments!
+  title: "Hello, world!",
+  description: "A simple demo app with JSON5 features",
+  version: "1.0.0",
+  support_email: "support@example.com",
+  homepage: "https://lingo.dev",
+  deprecated: null,
+  empty: "",
+  emoji: "🚀",
+  
+  // Unquoted keys are allowed
+  author: {
+    name: "John Doe"
+  },
+  
+  contributors: [
+    { name: "Alice" },
+    { name: "Bob" }
+  ],
+  
+  messages: [
+    "Welcome to MyApp",
+    "Hello, world!"
+  ],
+  
+  config: {
+    theme: {
+      primary: "Blue theme"
+    }
+  },
+  
+  mixed_array: [
+    "Mixed content here",
+    42,
+    true,
+    {
+      nested_message: "Nested text"
+    }
+  ],
+  
+  // Hexadecimal numbers work in JSON5
+  hex_value: 0xDEADBEEF,
+  
+  // Trailing commas are allowed
+  locked_key_1: "This value is locked and should not be changed",
+}

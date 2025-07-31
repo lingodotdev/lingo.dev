@@ -58,6 +58,7 @@ export default function createLingoDotDevLocalizer(
             [input.sourceLocale]: input.sourceData,
             [input.targetLocale]: input.targetData,
           },
+          hints: input.hints,
         },
         onProgress,
       );

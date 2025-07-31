@@ -1,0 +1,11 @@
+{
+  "key1": "¡Hola, mundo!",
+  "key2": "Una aplicación de demostración simple con características JSONC",
+  "key3": "1.0.0",
+  "key4": "support@example.com",
+  "key5": "🚀",
+  "key6": {
+    "key7": "Valor anidado"
+  },
+  "locked_key_1": "This value is locked and should not be changed"
+}

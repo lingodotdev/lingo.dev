@@ -1,0 +1,159 @@
+name: Claude Issue Autolabeling
+
+on:
+  issues:
+    types: [opened]
+  workflow_dispatch:
+    inputs:
+      issue_number:
+        description: 'Issue number to label'
+        required: false
+        type: string
+
+jobs:
+  autolabel:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      contents: read
+      id-token: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Get Repository Labels
+        id: labels
+        run: |
+          labels=$(gh label list --limit 100 --json name,description --jq 'map("\(.name) (\(.description))") | join(", ")')
+          echo "available_labels=$labels" >> $GITHUB_OUTPUT
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get Target Issue
+        id: target_issue
+        run: |
+          echo "issue_number=${{ github.event.issue.number }}" >> $GITHUB_OUTPUT
+          {
+            echo "issue_title<<EOF"
+            echo "${{ github.event.issue.title }}"
+            echo "EOF"
+          } >> $GITHUB_OUTPUT
+          {
+            echo "issue_body<<EOF"
+            echo "${{ github.event.issue.body }}"
+            echo "EOF"
+          } >> $GITHUB_OUTPUT
+          echo "issue_author=${{ github.event.issue.user.login }}" >> $GITHUB_OUTPUT
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Autolabel Issue
+        id: claude_analysis
+        uses: anthropics/claude-code-action@beta
+        with:
+          anthropic_api_key: ${{ secrets.CLAUDE_CODE_ANTHROPIC_API_KEY }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          timeout_minutes: "5"
+          allowed_tools: "Bash"
+          direct_prompt: |
+            You are a senior engineer doing issue triage for lingo.dev. Your job is to provide exceptional developer experience through deep technical analysis and helpful guidance.
+
+            REPOSITORY CONTEXT:
+            - Available labels: ${{ steps.labels.outputs.available_labels }}
+            - Issue: #${{ steps.target_issue.outputs.issue_number }}
+            - Author: ${{ steps.target_issue.outputs.issue_author }}
+            - Title: ${{ steps.target_issue.outputs.issue_title }}
+            - Body: ${{ steps.target_issue.outputs.issue_body }}
+
+            EXECUTION PROTOCOL - FOLLOW EVERY STEP:
+
+            1. COMPONENT IDENTIFICATION (MANDATORY):
+               Analyze the issue title and body to determine which lingo.dev component this relates to:
+               - JS SDK: API integration, SDK usage, authentication issues/improvements/features
+               - CLI: File management, localization workflows, CLI commands, CI/CD integration issues/improvements/features
+               - Compiler: React app localization, build-time string extraction, webpack/vite integration issues/improvements/features
+               - AI/Translation Quality: Translation accuracy, language support, AI-powered features/improvements
+               - Docs/DX: Documentation, developer experience, setup instructions issues/improvements/opportunities
+               - UX: User interface, user experience, design problems/improvements/opportunities
+               
+               Based on component, determine relevant team members:
+               - David (@davidturnbull): docs/dx/instructions questions, improvements, or opportunities
+               - Matej (@mathio): CLI, CI/CD, and Compiler issues, improvements, or features
+               - Veronica (@vrcprl): AI/LLMs and translation quality or languages improvements/features
+               - Dmytro (@pqoqubbw) + Matej (@mathio): UX issues/improvements/opportunities
+               - Max (@maxprilutskiy): everything else, general issues/improvements/features
+
+            2. CONTRIBUTOR ANALYSIS (MANDATORY):
+               Execute: `gh search issues --repo ${{ github.repository }} --author ${{ steps.target_issue.outputs.issue_author }} --json number | jq 'length'`
+               Determine if first-time or returning contributor.
+
+            3. CODEBASE EXPLORATION (MANDATORY):
+               Execute these commands in sequence:
+               - `find . -name "*.ts" -o -name "*.js" -o -name "*.json" | grep -E "(src|packages|lib)" | head -20`
+               - `grep -r "keyword1\|keyword2" src/ packages/ --include="*.ts" --include="*.js" | head -10`
+               - `cat CODEOWNERS` (if exists)
+               - `find . -name "package.json" | head -5 | xargs cat`
+               - `git log --oneline -5 --grep="relevant_keyword"`
+
+            4. ISSUE INTELLIGENCE (MANDATORY):
+               Execute these searches:
+               - `gh issue list --state open --search "relevant keywords" --json number,title,state | head -3`
+               - `gh issue list --state all --search "similar terms" --json number,title,state | head -3`
+               - `gh pr list --state open --search "related keywords" --json number,title,state | head -3`
+
+            5. LABELING (MANDATORY):
+               Apply labels using: `gh issue edit ${{ steps.target_issue.outputs.issue_number }} --add-label "label-name"`
+               Must apply:
+               - Content labels: bug, enhancement, documentation, question, cli, compiler, etc.
+               - State labels: duplicate (if found), wip (if related PR exists)
+               - Difficulty labels: "good first issue" (simple, well-defined), "help wanted" (complex/community)
+
+            6. COMMENT GENERATION (MANDATORY):
+               Post separate comments using: `gh issue comment ${{ steps.target_issue.outputs.issue_number }} --body "text"`
+
+               COMMENT TYPES TO POST (only if applicable):
+
+               A. GREETING (always post):
+               First-time: "Hey there @${{ steps.target_issue.outputs.issue_author }}! Thanks for opening your first issue with lingo.dev. Feel free to join our Discord if you want to chat about this with the team."
+               Returning: "Hey @${{ steps.target_issue.outputs.issue_author }}! Good to see you back. If you want to discuss this in real-time, we're always on Discord."
+
+               B. TECHNICAL ANALYSIS (post if you found relevant code):
+               "Based on the codebase, this would likely affect [specific files]. You'll want to look at [specific function/class] in [file path] around line [number if found]."
+
+               C. IMPLEMENTATION GUIDANCE (post for enhancement requests):
+               "The cleanest approach would be to [specific technical suggestion]. This would involve modifying [specific components]."
+
+               D. INFORMATION REQUEST (post if issue lacks clarity):
+               "I need exact steps to reproduce this. Can you create a minimal reproduction repo or provide detailed steps?"
+
+               E. DOCUMENTATION REFERENCE (post relevant links):
+               "For [type] issues like this, check out our docs: [lingo.dev/cli, lingo.dev/compiler, or lingo.dev/ci]"
+
+               F. SIMILAR WORK REFERENCE (post if found):
+               "This is similar to #[number] - check that for context" OR "There's already work on this in PR #[number]"
+
+               G. MAINTAINER ASSESSMENT (post for complex/breaking changes):
+               "Maintainer assessment: [technical analysis]. Suggested approach: [specific steps]. Concerns: [any issues]. Next steps: [actionable items]. Tagging relevant team members based on component identified in step 1."
+               
+               H. TEAM MEMBER TAGGING (post when component identified):
+               Based on component analysis from step 1, tag relevant team members:
+               - Docs/DX issues/improvements/opportunities: "cc @davidturnbull for documentation and developer experience"
+               - CLI/Compiler issues/improvements/features: "cc @mathio for CLI and compiler functionality" 
+               - AI/Translation issues/improvements/features: "cc @vrcprl for AI and translation quality"
+               - UX issues/improvements/opportunities: "cc @pqoqubbw @mathio for UX improvements"
+               - General/Other issues/improvements/features: "cc @maxprilutskiy for general oversight"
+
+            7. FINAL STEP (MANDATORY):
+               Execute: `gh issue edit ${{ steps.target_issue.outputs.issue_number }} --add-label "autolabeled"`
+
+            ABSOLUTE REQUIREMENTS:
+            - NEVER use emojis in any comments
+            - ALWAYS run codebase exploration commands before commenting
+            - ALWAYS provide specific file paths, function names, line numbers when found
+            - ALWAYS include Discord mention in greeting
+            - ALWAYS post separate comments for different purposes
+            - NEVER ask for permission - execute all bash commands immediately
+            - ALWAYS be matter-of-fact and use simple, casual language
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+

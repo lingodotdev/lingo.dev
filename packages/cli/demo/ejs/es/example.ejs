@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title><%= pageTitle %></title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+    </style>
+</head>
+<body>
+    <% if (user) { %>
+        <h1>¡Bienvenido de nuevo!</h1>
+        
+        <p>Hola, <%= user.name %>! Tienes <%= messageCount %> nuevos mensajes.</p>
+        
+        <div class="notification">
+            <strong>Aviso:</strong> La cuenta expira en 30 días.
+        </div>
+        
+        <img src="/avatar.jpg" alt="User avatar" title="Click to edit profile">
+        <button type="button" aria-label="Close notification" title="Close">×</button>
+    <% } else { %>
+        <h1>Por favor, inicia sesión</h1>
+        
+        <form action="/login" method="post">
+            <label for="username">Nombre de usuario:</label>
+            <input type="text" id="username" name="username" placeholder="Enter username">
+            
+            <label for="password">Contraseña:</label>
+            <input type="password" id="password" name="password">
+            
+            <button type="submit">Iniciar sesión</button>
+            <input type="button" value="Forgot Password?" onclick="showForgotPassword()">
+        </form>
+    <% } %>
+    
+    <ul>
+    <% items.forEach(function(item) { %>
+        <li>Producto: <%= item.name %> - Precio: $<%= item.price %></li>
+    <% }); %>
+    </ul>
+    
+    
+    
+    <div></div>
+    
+    <footer>
+        Copyright © <%= new Date().getFullYear() %> MyApp. Todos los derechos reservados.
+    </footer>
+    
+    <script>
+        function showForgotPassword() {
+            alert("Contact support for help.");
+        }
+    </script>
+</body>
+</html>

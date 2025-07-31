@@ -3,6 +3,8 @@ import jsdom from "jsdom";
 import { bucketTypeSchema } from "@lingo.dev/_spec";
 import { composeLoaders } from "./_utils";
 import createJsonLoader from "./json";
+import createJson5Loader from "./json5";
+import createJsoncLoader from "./jsonc";
 import createFlatLoader from "./flat";
 import createTextFileLoader from "./text-file";
 import createYamlLoader from "./yaml";
@@ -100,6 +102,28 @@ export default function createBucketLoader(
         createTextFileLoader(bucketPathPattern),
         createPrettierLoader({ parser: "json", bucketPathPattern }),
         createJsonLoader(),
+        createEnsureKeyOrderLoader(),
+        createFlatLoader(),
+        createInjectLocaleLoader(options.injectLocale),
+        createLockedKeysLoader(lockedKeys || []),
+        createSyncLoader(),
+        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+      );
+    case "json5":
+      return composeLoaders(
+        createTextFileLoader(bucketPathPattern),
+        createJson5Loader(),
+        createEnsureKeyOrderLoader(),
+        createFlatLoader(),
+        createInjectLocaleLoader(options.injectLocale),
+        createLockedKeysLoader(lockedKeys || []),
+        createSyncLoader(),
+        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+      );
+    case "jsonc":
+      return composeLoaders(
+        createTextFileLoader(bucketPathPattern),
+        createJsoncLoader(),
         createEnsureKeyOrderLoader(),
         createFlatLoader(),
         createInjectLocaleLoader(options.injectLocale),
