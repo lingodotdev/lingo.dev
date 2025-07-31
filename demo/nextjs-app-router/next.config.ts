@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
   /* config options here */
 };
 
-export default lingoCompiler.next({
+const withLingo = lingoCompiler.next({
   sourceRoot: "app",
   lingoDir: "lingo",
   sourceLocale: "en",
@@ -14,4 +14,6 @@ export default lingoCompiler.next({
   useDirective: false,
   debug: false,
   models: "lingo.dev",
-})(nextConfig);
+});
+
+export default withLingo(nextConfig);
