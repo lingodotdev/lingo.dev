@@ -99,6 +99,40 @@ describe("bucket loaders", () => {
         },
       );
     });
+
+    it("should respect ignored keys for android data", async () => {
+      setupFileMocks();
+
+      const input = `
+        <resources>
+          <string name="button.title">Submit</string>
+          <string name="ignored.key">Should be ignored</string>
+          <string name="another.ignored">Also ignored</string>
+          <string name="normal.key">Normal value</string>
+        </resources>
+      `.trim();
+      const expectedOutput = { 
+        "button.title": "Submit",
+        "normal.key": "Normal value"
+      };
+
+      mockFileOperations(input);
+
+      const androidLoader = createBucketLoader(
+        "android",
+        "values-[locale]/strings.xml",
+        {
+          defaultLocale: "en",
+        },
+        [], // lockedKeys
+        [], // lockedPatterns
+        ["ignored.key", "another.ignored"], // ignoredKeys
+      );
+      androidLoader.setDefaultLocale("en");
+      const data = await androidLoader.pull("en");
+
+      expect(data).toEqual(expectedOutput);
+    });
   });
 
   describe("csv bucket loader", () => {
@@ -157,6 +191,33 @@ describe("bucket loaders", () => {
         encoding: "utf-8",
         flag: "w",
       });
+    });
+
+    it("should respect ignored keys for csv data", async () => {
+      setupFileMocks();
+
+      const input = `id,en,es\nbutton.title,Submit,\nignored.key,Should be ignored,\nnormal.key,Normal value,`;
+      const expectedOutput = {
+        "button.title": "Submit",
+        "normal.key": "Normal value"
+      };
+
+      mockFileOperations(input);
+
+      const csvLoader = createBucketLoader(
+        "csv", 
+        "i18n.csv", 
+        {
+          defaultLocale: "en",
+        },
+        [], // lockedKeys
+        [], // lockedPatterns
+        ["ignored.key"], // ignoredKeys
+      );
+      csvLoader.setDefaultLocale("en");
+      const data = await csvLoader.pull("en");
+
+      expect(data).toEqual(expectedOutput);
     });
   });
 
@@ -251,6 +312,48 @@ describe("bucket loaders", () => {
           flag: "w",
         },
       );
+    });
+
+    it("should respect ignored keys for flutter data", async () => {
+      setupFileMocks();
+
+      const input = `{
+        "@@locale": "en",
+        "greeting": "Hello, {name}!",
+        "@greeting": {
+          "description": "A greeting with a name placeholder",
+          "placeholders": {
+            "name": {
+              "type": "String",
+              "example": "John"
+            }
+          }
+        },
+        "ignored_key": "Should be ignored",
+        "another_ignored": "Also ignored",
+        "normal_key": "Normal value"
+      }`;
+      const expectedOutput = { 
+        greeting: "Hello, {name}!",
+        normal_key: "Normal value"
+      };
+
+      mockFileOperations(input);
+
+      const flutterLoader = createBucketLoader(
+        "flutter",
+        "lib/l10n/app_[locale].arb",
+        {
+          defaultLocale: "en",
+        },
+        [], // lockedKeys
+        [], // lockedPatterns
+        ["ignored_key", "another_ignored"], // ignoredKeys
+      );
+      flutterLoader.setDefaultLocale("en");
+      const data = await flutterLoader.pull("en");
+
+      expect(data).toEqual(expectedOutput);
     });
   });
 
@@ -737,6 +840,41 @@ describe("bucket loaders", () => {
         expectedOutput,
         { encoding: "utf-8", flag: "w" },
       );
+    });
+
+    it("should respect ignored keys for json data", async () => {
+      setupFileMocks();
+
+      const input = {
+        "button.title": "Submit",
+        "button.description": "Submit description",
+        "ignored.key": "Should be ignored",
+        "another.ignored": "Also ignored",
+        nested: {
+          normal: "Normal value",
+          ignored: "Should be ignored"
+        }
+      };
+      const expectedOutput = {
+        "button.title": "Submit",
+        "button.description": "Submit description",
+        "nested/normal": "Normal value"
+      };
+
+      mockFileOperations(JSON.stringify(input));
+
+      const jsonLoader = createBucketLoader(
+        "json",
+        "i18n/[locale].json",
+        { defaultLocale: "en" },
+        [], // lockedKeys
+        [], // lockedPatterns
+        ["ignored.key", "another.ignored", "nested/ignored"], // ignoredKeys
+      );
+      jsonLoader.setDefaultLocale("en");
+      const data = await jsonLoader.pull("en");
+
+      expect(data).toEqual(expectedOutput);
     });
   });
 
@@ -1262,6 +1400,71 @@ user.password=Contraseña
           flag: "w",
         },
       );
+    });
+
+    it("should respect ignored keys for xcode-stringsdict data", async () => {
+      setupFileMocks();
+
+      const input = dedent`
+        <?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+        <plist version="1.0">
+        <dict>
+          <key>greeting</key>
+          <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>Hello %#@people@!</string>
+            <key>people</key>
+            <dict>
+              <key>NSStringFormatSpecTypeKey</key>
+              <string>NSStringPluralRuleType</string>
+              <key>NSStringFormatValueTypeKey</key>
+              <string>d</string>
+              <key>zero</key>
+              <string>no people</string>
+              <key>one</key>
+              <string>one person</string>
+              <key>other</key>
+              <string>%d people</string>
+            </dict>
+          </dict>
+          <key>ignored_key</key>
+          <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>Should be ignored</string>
+          </dict>
+          <key>normal_key</key>
+          <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>Normal value</string>
+          </dict>
+        </dict>
+        </plist>
+      `;
+      const expectedOutput = {
+        "greeting/NSStringLocalizedFormatKey": "Hello %#@people@!",
+        "greeting/people/zero": "no people",
+        "greeting/people/one": "one person",
+        "greeting/people/other": "%d people",
+        "normal_key/NSStringLocalizedFormatKey": "Normal value"
+      };
+
+      mockFileOperations(input);
+
+      const xcodeStringsdictLoader = createBucketLoader(
+        "xcode-stringsdict",
+        "[locale].lproj/Localizable.stringsdict",
+        {
+          defaultLocale: "en",
+        },
+        [], // lockedKeys
+        [], // lockedPatterns
+        ["greeting/people/NSStringFormatSpecTypeKey",  "ignored_key/NSStringLocalizedFormatKey","greeting/people/NSStringFormatValueTypeKey"], // ignoredKeys
+      );
+      xcodeStringsdictLoader.setDefaultLocale("en");
+      const data = await xcodeStringsdictLoader.pull("en");
+
+      expect(data).toEqual(expectedOutput);
     });
   });
 
@@ -1881,6 +2084,71 @@ user.password=Contraseña
 
       expect(hints).toEqual({});
     });
+
+    it("should respect ignored keys for xcode-xcstrings data", async () => {
+      setupFileMocks();
+
+      const input = JSON.stringify({
+        sourceLanguage: "en",
+        strings: {
+          greeting: {
+            extractionState: "manual",
+            localizations: {
+              en: {
+                stringUnit: {
+                  state: "translated",
+                  value: "Hello!",
+                },
+              },
+            },
+          },
+          ignored_key: {
+            extractionState: "manual",
+            localizations: {
+              en: {
+                stringUnit: {
+                  state: "translated",
+                  value: "Should be ignored",
+                },
+              },
+            },
+          },
+          normal_key: {
+            extractionState: "manual",
+            localizations: {
+              en: {
+                stringUnit: {
+                  state: "translated",
+                  value: "Normal value",
+                },
+              },
+            },
+          },
+        },
+        version: "1.0",
+      });
+      const expectedOutput = {
+        greeting: "Hello!",
+        normal_key: "Normal value"
+      };
+
+      mockFileOperations(input);
+
+      const xcodeXcstringsLoader = createBucketLoader(
+        "xcode-xcstrings",
+        "[locale].lproj/Localizable.xcstrings",
+        {
+          defaultLocale: "en",
+        },
+        [], // lockedKeys
+        [], // lockedPatterns
+        ["ignored_key"], // ignoredKeys
+      );
+      xcodeXcstringsLoader.setDefaultLocale("en");
+      const data = await xcodeXcstringsLoader.pull("en");
+
+      expect(data).toEqual(expectedOutput);
+    });
   });
 
   describe("yaml bucket loader", () => {
@@ -1960,6 +2228,40 @@ user.password=Contraseña
           );
         },
       );
+    });
+
+    it("should respect ignored keys for yaml data", async () => {
+      setupFileMocks();
+
+      const input = `
+greeting: Hello!
+ignored_key: Should be ignored
+another_ignored: Also ignored
+nested:
+  normal: Normal value
+  ignored: Should be ignored
+      `.trim();
+      const expectedOutput = {
+        greeting: "Hello!",
+        "nested/normal": "Normal value"
+      };
+
+      mockFileOperations(input);
+
+      const yamlLoader = createBucketLoader(
+        "yaml",
+        "i18n/[locale].yaml",
+        {
+          defaultLocale: "en",
+        },
+        [], // lockedKeys
+        [], // lockedPatterns
+        ["ignored_key", "another_ignored", "nested/ignored"], // ignoredKeys
+      );
+      yamlLoader.setDefaultLocale("en");
+      const data = await yamlLoader.pull("en");
+
+      expect(data).toEqual(expectedOutput);
     });
   });
 
@@ -2415,6 +2717,51 @@ Mundo!`;
         flag: "w",
       });
     });
+
+    it("should respect ignored keys for xliff data", async () => {
+      setupFileMocks();
+
+      const input = `<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en" target-language="en" datatype="plaintext">
+    <body>
+      <trans-unit id="greeting">
+        <source>Hello, world!</source>
+        <target>Hello, world!</target>
+      </trans-unit>
+      <trans-unit id="ignored_key">
+        <source>Should be ignored</source>
+        <target>Should be ignored</target>
+      </trans-unit>
+      <trans-unit id="normal_key">
+        <source>Normal value</source>
+        <target>Normal value</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>`;
+      const expectedOutput = {
+        greeting: "Hello, world!",
+        normal_key: "Normal value"
+      };
+
+      mockFileOperations(input);
+
+      const xliffLoader = createBucketLoader(
+        "xliff",
+        "i18n/[locale].xlf",
+        {
+          defaultLocale: "en",
+        },
+        [], // lockedKeys
+        [], // lockedPatterns
+        ["ignored_key"], // ignoredKeys
+      );
+      xliffLoader.setDefaultLocale("en");
+      const data = await xliffLoader.pull("en");
+
+      expect(data).toEqual(expectedOutput);
+    });
   });
 
   describe("typescript bucket loader", () => {
@@ -2835,6 +3182,43 @@ Mundo!`;
       expect(writtenContent).not.toContain('temp: "Temporary data"');
       expect(writtenContent).not.toContain('debug: "Setting debug"');
     });
+
+    it("should respect ignored keys for typescript data", async () => {
+      setupFileMocks();
+
+      const input = `
+        export default {
+          greeting: "Hello, world!",
+          ignored_key: "Should be ignored",
+          another_ignored: "Also ignored",
+          settings: {
+            normal: "Normal value",
+            ignored: "Should be ignored"
+          }
+        };
+      `.trim();
+      const expectedOutput = {
+        greeting: "Hello, world!",
+        "settings/normal": "Normal value"
+      };
+
+      mockFileOperations(input);
+
+      const typescriptLoader = createBucketLoader(
+        "typescript",
+        "i18n/[locale].ts",
+        {
+          defaultLocale: "en",
+        },
+        [], // lockedKeys
+        [], // lockedPatterns
+        ["ignored_key", "another_ignored", "settings/ignored"], // ignoredKeys
+      );
+      typescriptLoader.setDefaultLocale("en");
+      const data = await typescriptLoader.pull("en");
+
+      expect(data).toEqual(expectedOutput);
+    });
   });
 
   describe("text-file", () => {
@@ -3003,6 +3387,38 @@ return array(
         flag: "w",
       });
     });
+
+    it("should respect ignored keys for php data", async () => {
+      setupFileMocks();
+
+      const input = `<?php return [
+        'button.title' => 'Submit',
+        'ignored_key' => 'Should be ignored',
+        'another_ignored' => 'Also ignored',
+        'normal_key' => 'Normal value'
+      ];`;
+      const expectedOutput = { 
+        "button.title": "Submit",
+        "normal_key": "Normal value"
+      };
+
+      mockFileOperations(input);
+
+      const phpLoader = createBucketLoader(
+        "php",
+        "i18n/[locale].php",
+        {
+          defaultLocale: "en",
+        },
+        [], // lockedKeys
+        [], // lockedPatterns
+        ["ignored_key", "another_ignored"], // ignoredKeys
+      );
+      phpLoader.setDefaultLocale("en");
+      const data = await phpLoader.pull("en");
+
+      expect(data).toEqual(expectedOutput);
+    });
   });
 
   describe("po bucket loader", () => {
@@ -3080,6 +3496,40 @@ return array(
         `msgid "You have %(count)d items"\nmsgstr "Sie haben %(count)d Elemente"`,
         { encoding: "utf-8", flag: "w" },
       );
+    });
+
+    it("should respect ignored keys for po data", async () => {
+      setupFileMocks();
+
+      const input = `msgid "greeting"
+msgstr "Hello!"
+
+msgid "ignored_key"
+msgstr "Should be ignored"
+
+msgid "normal_key" 
+msgstr "Normal value"`;
+      const expectedOutput = {
+  "greeting/singular": "Hello!",
+  "normal_key/singular": "Normal value",
+};
+
+      mockFileOperations(input);
+
+      const poLoader = createBucketLoader(
+        "po",
+        "i18n/[locale].po",
+        {
+          defaultLocale: "en",
+        },
+        [], // lockedKeys
+        [], // lockedPatterns
+        ["ignored_key"], // ignoredKeys
+      );
+      poLoader.setDefaultLocale("en");
+      const data = await poLoader.pull("en");
+
+      expect(data).toEqual(expectedOutput);
     });
   });
 
@@ -3211,6 +3661,52 @@ ${script}`;
         expectedOutput,
         { encoding: "utf-8", flag: "w" },
       );
+    });
+
+    it("should respect ignored keys for vue-json data", async () => {
+      setupFileMocks();
+
+      const input = `<template>
+  <div>Template content</div>
+</template>
+
+<i18n>
+{
+  "en": {
+    "hello": "hello world!",
+    "ignored_key": "Should be ignored",
+    "another_ignored": "Also ignored",
+    "normal_key": "Normal value"
+  }
+}
+</i18n>
+
+<script>
+export default {
+  name: 'app'
+}
+</script>`;
+      const expectedOutput = {
+        hello: 'hello world!',
+        normal_key: 'Normal value'
+      };
+
+      mockFileOperations(input);
+
+      const vueLoader = createBucketLoader(
+        "vue-json",
+        "i18n/[locale].vue",
+        {
+          defaultLocale: "en",
+        },
+        [], // lockedKeys
+        [], // lockedPatterns
+        ["ignored_key", "another_ignored"], // ignoredKeys
+      );
+      vueLoader.setDefaultLocale("en");
+      const data = await vueLoader.pull("en");
+
+      expect(data).toEqual(expectedOutput);
     });
   });
   describe("ejs bucket loader", () => {
