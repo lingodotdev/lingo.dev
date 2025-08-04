@@ -1,6 +1,6 @@
 import { ILoader } from "./_types";
 import { createLoader } from "./_utils";
-import _, { result } from "lodash";
+import _ from "lodash";
 import { minimatch } from "minimatch";
 
 export default function createIgnoredKeysLoader(
@@ -8,7 +8,6 @@ export default function createIgnoredKeysLoader(
 ): ILoader<Record<string, any>, Record<string, any>> {
   return createLoader({
     pull: async (locale, data) => {
-<<<<<<< HEAD
       const result = _.omitBy(data, (value, key) =>
         _isIgnoredKey(key, ignoredKeys),
       );
@@ -16,18 +15,6 @@ export default function createIgnoredKeysLoader(
     },
     push: async (locale, data, originalInput, originalLocale, pullInput) => {
       // Ignored keys loader should remove ignored keys from push data too
-=======
-      // Keep all keys that are NOT ignored
-      const result = _.omitBy(data, (value, key) =>
-        _isIgnoredKey(key, ignoredKeys),
-      );
-
-      return result;
-    },
-
-    push: async (locale, data) => {
-      // Remove ignored keys from the data being pushed to target files
->>>>>>> be7e3bf (feat(cli): added ignorekeys support for run)
       const result = _.omitBy(data, (value, key) =>
         _isIgnoredKey(key, ignoredKeys),
       );
