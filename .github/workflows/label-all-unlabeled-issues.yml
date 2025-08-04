@@ -10,7 +10,7 @@ jobs:
       issues: write
       contents: read
       actions: write
-      
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -18,19 +18,19 @@ jobs:
       - name: Find and Label Unlabeled Issues
         run: |
           echo "Finding all issues without 'autolabeled' label..."
-          
+
           # Get all issues without the "autolabeled" label
           unlabeled_issues=$(gh issue list --limit 1000 --json number,labels --jq '.[] | select(.labels | map(.name) | contains(["autolabeled"]) | not) | .number')
-          
+
           if [[ -z "$unlabeled_issues" ]]; then
             echo "No issues found without 'autolabeled' label"
             exit 0
           fi
-          
+
           echo "Found issues without 'autolabeled' label:"
           echo "$unlabeled_issues"
           echo ""
-          
+
           # Process each issue by triggering the labeling workflow
           for issue_number in $unlabeled_issues; do
             echo "Triggering labeling workflow for issue #$issue_number..."
@@ -42,7 +42,7 @@ jobs:
             # Wait a bit to avoid overwhelming the system
             sleep 10
           done
-          
+
           echo "Triggered labeling workflows for all issues without 'autolabeled' label"
           echo "Check workflow runs: gh run list --workflow=claude-issue-autolabel.yml"
         env:
