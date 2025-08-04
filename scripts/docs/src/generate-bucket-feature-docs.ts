@@ -95,7 +95,11 @@ async function main() {
   console.table(matrix);
 }
 
-main().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+export { main };
+
+if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+  main().catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
+}

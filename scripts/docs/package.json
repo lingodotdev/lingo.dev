@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "generate-cli-docs": "tsx ./src/generate-cli-docs.ts",
-    "generate-bucket-feature-docs": "tsx ./src/generate-bucket-feature-docs.ts"
+    "generate-bucket-feature-docs": "tsx ./src/generate-bucket-feature-docs.ts",
+    "test": "vitest"
   },
   "devDependencies": {
     "@octokit/rest": "^20.1.2",
@@ -14,6 +15,7 @@
     "remark-stringify": "^11.0.0",
     "tsx": "^4.7.1",
     "typescript": "^5.0.0",
-    "unified": "^11.0.4"
+    "unified": "^11.0.4",
+    "vitest": "^1.0.0"
   }
 }
