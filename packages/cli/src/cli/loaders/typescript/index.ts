@@ -34,9 +34,8 @@ export default function createTypescriptLoader(): ILoader<
       pullOutput,
     ) => {
       const ast = parseTypeScript(originalInput || "");
-      // Use only the filtered data - don't merge with pullOutput as it may contain ignored keys
-
-      updateStringsInDefaultExport(ast, data);
+      const finalData = _.merge({}, pullOutput, data);
+      updateStringsInDefaultExport(ast, finalData);
 
       const { code } = generate(ast, {
         jsescOption: {
@@ -224,44 +223,17 @@ function updateStringsInObjectExpression(
 ): boolean {
   let modified = false;
 
-  // First pass: update existing properties or mark for removal
-  const propertiesToKeep: (
-    | t.ObjectProperty
-    | t.ObjectMethod
-    | t.SpreadElement
-  )[] = [];
-
   objectExpression.properties.forEach((prop) => {
-    if (!t.isObjectProperty(prop)) {
-      propertiesToKeep.push(prop);
-      return;
-    }
+    if (!t.isObjectProperty(prop)) return;
 
     const key = getPropertyKey(prop);
     const incomingVal = data?.[key];
 
     if (incomingVal === undefined) {
-      // Key exists in AST but not in data
-      // Only remove if it's a localizable value (string/template literal/nested object/array)
-      // Preserve non-localizable values (numbers, booleans, etc.)
-      if (
-        t.isStringLiteral(prop.value) ||
-        (t.isTemplateLiteral(prop.value) &&
-          prop.value.expressions.length === 0) ||
-        t.isObjectExpression(prop.value) ||
-        t.isArrayExpression(prop.value)
-      ) {
-        // This is localizable content, remove it
-        modified = true;
-        return;
-      } else {
-        // This is non-localizable content (number, boolean, null, etc.), keep it
-        propertiesToKeep.push(prop);
-        return;
-      }
+      // nothing to update for this key
+      return;
     }
 
-    // Key exists in both AST and data - update its value
     if (t.isStringLiteral(prop.value) && typeof incomingVal === "string") {
       if (prop.value.value !== incomingVal) {
         prop.value.value = incomingVal;
@@ -296,14 +268,7 @@ function updateStringsInObjectExpression(
       );
       modified = subModified || modified;
     }
-
-    propertiesToKeep.push(prop);
   });
-
-  // Update the properties array to only include the ones we want to keep
-  if (modified) {
-    objectExpression.properties = propertiesToKeep;
-  }
 
   return modified;
 }

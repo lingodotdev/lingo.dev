@@ -79,6 +79,8 @@ describe("ignored-keys loader", () => {
     // The loader should have re-inserted the ignored keys from the pull input.
     expect(pushResult).toEqual({
       greeting: "hola",
+      meta: "meta es",
+      todo: "todo es",
     });
   });
 
@@ -168,15 +170,13 @@ describe("ignored-keys loader", () => {
     const pushResult = await loader.push(targetLocale, dataToPush);
     expect(pushResult).toEqual({
       greeting: "hola",
+      meta: "meta es",
+      "pages/0/title": "Título 0",
       "pages/0/content": "Contenido Nuveo",
+      "pages/foo/title": "Título Foo",
       "pages/foo/content": "Contenido Nuevo Foo",
       "pages/bar/notitle": "No Título",
       "pages/bar/content": "Contenido Nuevo Bar",
-    });
-    expect(pushResult).not.toEqual({
-      meta: "meta es",
-      "pages/0/title": "Título 0",
-      "pages/foo/title": "Título Foo",
     });
   });
 });
