@@ -234,7 +234,7 @@ export default new InteractiveCommand()
         }
       } else {
         Ora().warn(
-          "You are not logged in. Run `npx lingo.dev@latest auth --login` to login.",
+          "You are not logged in. Run `npx lingo.dev@latest login` to login.",
         );
       }
     } else {
