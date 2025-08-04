@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.109.2
+
+### Patch Changes
+
+- [#1108](https://github.com/lingodotdev/lingo.dev/pull/1108) [`99aae2d`](https://github.com/lingodotdev/lingo.dev/commit/99aae2d09a26060c810913f740893a4a5874d9d4) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - Update deprecated 'lingo.dev auth --login' command references to 'lingo.dev login' in CLI error messages
+
 ## 0.109.1
 
 ### Patch Changes
