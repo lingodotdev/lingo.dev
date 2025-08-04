@@ -554,8 +554,7 @@ export async function validateAuth(settings: ReturnType<typeof getSettings>) {
   const user = await authenticator.whoami();
   if (!user) {
     throw new CLIError({
-      message:
-        "Invalid API key. Please run `lingo.dev login` to authenticate.",
+      message: "Invalid API key. Please run `lingo.dev login` to authenticate.",
       docUrl: "authError",
     });
   }
