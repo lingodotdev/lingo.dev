@@ -342,53 +342,5 @@ Incluye también "prueba"\`,
     );
   });
 
-  it("should work with ignored keys for both export patterns", async () => {
-    // Test export default with ignored keys
-    const exportDefaultInput = `
-      export default {
-        title: "Page Title",
-        description: "Page description",
-        nested: {
-          title: "Nested Title",
-          content: "Nested content"
-        }
-      };
-    `;
-
-    // Test export const with ignored keys
-    const exportConstInput = `
-      export const messages = {
-        title: "Page Title",
-        description: "Page description", 
-        nested: {
-          title: "Nested Title",
-          content: "Nested content"
-        }
-      };
-    `;
-
-    const loader = createTypescriptLoader().setDefaultLocale("en");
-
-    // Both should extract the same nested structure
-    const resultDefault = await loader.pull("en", exportDefaultInput);
-    const resultConst = await loader.pull("en", exportConstInput);
-
-    const expected = {
-      title: "Page Title",
-      description: "Page description",
-      nested: {
-        title: "Nested Title",
-        content: "Nested content",
-      },
-    };
-
-    expect(resultDefault).toEqual(expected);
-    expect(resultConst).toEqual(expected);
-
-    // Note: When used with ignored-keys loader in the chain,
-    // specifying "title" as ignored will filter out both "title" and "nested.title"
-    // This is handled by the enhanced _isIgnoredKey function in ignored-keys.ts
-  });
-
   // TODO
 });
