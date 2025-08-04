@@ -1,5 +1,13 @@
 # lingo.dev
 
+## 0.110.0
+
+### Minor Changes
+
+- [#1065](https://github.com/lingodotdev/lingo.dev/pull/1065) [`c0486ca`](https://github.com/lingodotdev/lingo.dev/commit/c0486ca9b0451ea75d070e199f502507ba418e5e) Thanks [@VAIBHAVSING](https://github.com/VAIBHAVSING)! - Add support for `ignoredKeys` in TypeScript loader
+
+  The TypeScript loader now fully supports the `ignoredKeys` option, allowing you to exclude specific keys (including nested keys) from localization when using both `export default` and `export const` patterns. This works seamlessly with the `run` method and the CLI, and is compatible with flattened key structures. All related tests now pass.
+
 ## 0.109.2
 
 ### Patch Changes
