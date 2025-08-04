@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.110.1
+
+### Patch Changes
+
+- [`555384d`](https://github.com/lingodotdev/lingo.dev/commit/555384dacf79167e1bb8b9e6871e153fea763471) Thanks [@mathio](https://github.com/mathio)! - revert
+
 ## 0.110.0
 
 ### Minor Changes
