@@ -1,6 +1,6 @@
 "use client";
 
-import { LOCALE_COOKIE_NAME, DEFAULT_LOCALE } from "../core";
+import { LOCALE_COOKIE_NAME } from "../core";
 import Cookies from "js-cookie";
 
 /**
@@ -23,10 +23,10 @@ import Cookies from "js-cookie";
  * }
  * ```
  */
-export function getLocaleFromCookies(): string {
-  if (typeof document === "undefined") return DEFAULT_LOCALE;
+export function getLocaleFromCookies(): string | null {
+  if (typeof document === "undefined") return null;
 
-  return Cookies.get(LOCALE_COOKIE_NAME) || DEFAULT_LOCALE;
+  return Cookies.get(LOCALE_COOKIE_NAME) ?? null;
 }
 
 /**

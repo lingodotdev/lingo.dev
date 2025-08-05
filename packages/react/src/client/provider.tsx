@@ -102,7 +102,7 @@ export type LingoProviderWrapperProps<D> = {
    *
    * @returns The dictionary object containing localized content.
    */
-  loadDictionary: (locale: string) => Promise<D>;
+  loadDictionary: (locale: string | null) => Promise<D>;
   /**
    * The child components containing localizable content.
    */

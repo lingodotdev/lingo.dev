@@ -1,4 +1,4 @@
-import { DEFAULT_LOCALE, LOCALE_COOKIE_NAME } from "../core";
+import { LOCALE_COOKIE_NAME, getDictionary } from "../core";
 
 /**
  * A placeholder function for loading dictionaries that contain localized content.
@@ -71,9 +71,9 @@ function loadLocaleFromCookies(request: Request) {
   // it's a Request, so get the Cookie header
   const cookieHeaderValue = request.headers.get("Cookie");
 
-  // there's no Cookie header, so return default
+  // there's no Cookie header, so return null
   if (!cookieHeaderValue) {
-    return DEFAULT_LOCALE;
+    return null;
   }
 
   // get the lingo-locale cookie
@@ -82,9 +82,9 @@ function loadLocaleFromCookies(request: Request) {
     .split(";")
     .find((cookie) => cookie.trim().startsWith(cookiePrefix));
 
-  // there's no lingo-locale cookie, so return default
+  // there's no lingo-locale cookie, so return null
   if (!cookie) {
-    return DEFAULT_LOCALE;
+    return null;
   }
 
   // extract the locale value from the cookie
@@ -93,7 +93,7 @@ function loadLocaleFromCookies(request: Request) {
 
 export async function loadDictionary_internal(
   requestOrExplicitLocale: Request | string,
-  dictionaryLoader: Record<string, () => Promise<any>>,
+  dictionaryLoaders: Record<string, () => Promise<any>>,
 ) {
   // gets the locale (falls back to "en")
   const locale =
@@ -101,14 +101,5 @@ export async function loadDictionary_internal(
       ? requestOrExplicitLocale
       : loadLocaleFromCookies(requestOrExplicitLocale);
 
-  // get dictionary loader for the locale
-  const loader = dictionaryLoader[locale];
-
-  // locale is not available in the dictionary
-  if (!loader) {
-    // TODO: throw a clear error message
-    return null;
-  }
-
-  return loader().then((value) => value.default);
+  return getDictionary(locale, dictionaryLoaders);
 }
