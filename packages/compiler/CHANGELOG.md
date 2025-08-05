@@ -1,5 +1,13 @@
 # @lingo.dev/\_compiler
 
+## 0.7.5
+
+### Patch Changes
+
+- [#1118](https://github.com/lingodotdev/lingo.dev/pull/1118) [`410825c`](https://github.com/lingodotdev/lingo.dev/commit/410825c8bf0029d8ee458514d6f203a7397c8f22) Thanks [@mathio](https://github.com/mathio)! - support Turbopack in Next.js v14 by Compiler
+
+- [#1116](https://github.com/lingodotdev/lingo.dev/pull/1116) [`bc419ae`](https://github.com/lingodotdev/lingo.dev/commit/bc419aeeb4211d80d3c0ddd65deeab62ad68fea8) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - fix: move vitest from dependencies to devDependencies
+
 ## 0.7.4
 
 ### Patch Changes
