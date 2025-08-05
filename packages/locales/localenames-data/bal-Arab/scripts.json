@@ -1,0 +1,15 @@
+{
+  "main": {
+    "bal-Arab": {
+      "identity": {
+        "language": "bal",
+        "script": "Arab"
+      },
+      "localeDisplayNames": {
+        "scripts": {
+          "Latn": "لاتینی"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "main": {
+    "lij": {
+      "identity": {
+        "language": "lij"
+      },
+      "localeDisplayNames": {
+        "territories": {
+          "FR": "Fransa",
+          "IT": "Italia",
+          "MC": "Monego"
+        }
+      }
+    }
+  }
+}

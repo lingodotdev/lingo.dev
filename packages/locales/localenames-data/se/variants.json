@@ -1,0 +1,19 @@
+{
+  "main": {
+    "se": {
+      "identity": {
+        "language": "se"
+      },
+      "localeDisplayNames": {
+        "variants": {
+          "FONIPA": "IPA",
+          "FONUPA": "UPA",
+          "FONXSAMP": "X-SAMPA",
+          "HEPBURN": "Hepburn",
+          "PINYIN": "pinyin",
+          "WADEGILE": "Wade-Giles"
+        }
+      }
+    }
+  }
+}

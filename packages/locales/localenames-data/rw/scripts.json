@@ -1,0 +1,14 @@
+{
+  "main": {
+    "rw": {
+      "identity": {
+        "language": "rw"
+      },
+      "localeDisplayNames": {
+        "scripts": {
+          "Latn": "Latin"
+        }
+      }
+    }
+  }
+}

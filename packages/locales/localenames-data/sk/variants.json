@@ -1,0 +1,14 @@
+{
+  "main": {
+    "sk": {
+      "identity": {
+        "language": "sk"
+      },
+      "localeDisplayNames": {
+        "variants": {
+          "SCOTLAND": "škótska štandardná angličtina"
+        }
+      }
+    }
+  }
+}

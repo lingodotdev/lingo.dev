@@ -1,0 +1,22 @@
+{
+  "main": {
+    "kok-Latn": {
+      "identity": {
+        "language": "kok",
+        "script": "Latn"
+      },
+      "localeDisplayNames": {
+        "localeDisplayPattern": {
+          "localePattern": "{0} ({1})",
+          "localeSeparator": "{0}, {1}",
+          "localeKeyTypePattern": "{0}: {1}"
+        },
+        "codePatterns": {
+          "language": "Bhas: {0}",
+          "script": "Lipi: {0}",
+          "territory": "Prant: {0}"
+        }
+      }
+    }
+  }
+}

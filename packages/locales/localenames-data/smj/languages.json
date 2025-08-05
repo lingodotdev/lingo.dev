@@ -1,0 +1,14 @@
+{
+  "main": {
+    "smj": {
+      "identity": {
+        "language": "smj"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "smj": "julevsámegiella"
+        }
+      }
+    }
+  }
+}

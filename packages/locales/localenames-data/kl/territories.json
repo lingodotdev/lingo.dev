@@ -1,0 +1,14 @@
+{
+  "main": {
+    "kl": {
+      "identity": {
+        "language": "kl"
+      },
+      "localeDisplayNames": {
+        "territories": {
+          "GL": "Kalaallit Nunaat"
+        }
+      }
+    }
+  }
+}

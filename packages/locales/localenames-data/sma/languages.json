@@ -1,0 +1,14 @@
+{
+  "main": {
+    "sma": {
+      "identity": {
+        "language": "sma"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "sma": "Åarjelsaemien gïele"
+        }
+      }
+    }
+  }
+}

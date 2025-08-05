@@ -1,0 +1,14 @@
+{
+  "main": {
+    "za": {
+      "identity": {
+        "language": "za"
+      },
+      "localeDisplayNames": {
+        "territories": {
+          "CN": "Cunghgoz"
+        }
+      }
+    }
+  }
+}

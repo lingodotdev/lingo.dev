@@ -1,0 +1,14 @@
+{
+  "main": {
+    "trw": {
+      "identity": {
+        "language": "trw"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "trw": "توروالی"
+        }
+      }
+    }
+  }
+}

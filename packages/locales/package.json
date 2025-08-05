@@ -1,15 +1,28 @@
 {
-  "name": "locales",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "@lingo.dev/locales",
+  "version": "0.0.1",
+  "description": "Lingo.dev locales",
+  "main": "build/index.cjs",
+  "module": "build/index.mjs",
+  "types": "build/index.d.ts",
+  "files": [
+    "build",
+    "data"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest run",
+    "build": "tsup",
+    "dev": "tsup --watch"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "typescript": "^5.8.3"
+    "iso-15924": "^3.2.0"
+  },
+  "devDependencies": {
+    "tsup": "^8.3.5",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
   }
 }

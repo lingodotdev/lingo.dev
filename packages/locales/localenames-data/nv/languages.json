@@ -1,0 +1,14 @@
+{
+  "main": {
+    "nv": {
+      "identity": {
+        "language": "nv"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "nv": "Diné Bizaad"
+        }
+      }
+    }
+  }
+}

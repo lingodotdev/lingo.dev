@@ -1,0 +1,14 @@
+{
+  "main": {
+    "ann": {
+      "identity": {
+        "language": "ann"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "ann": "Obolo"
+        }
+      }
+    }
+  }
+}

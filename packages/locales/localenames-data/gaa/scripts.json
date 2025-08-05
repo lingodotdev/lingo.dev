@@ -1,0 +1,14 @@
+{
+  "main": {
+    "gaa": {
+      "identity": {
+        "language": "gaa"
+      },
+      "localeDisplayNames": {
+        "scripts": {
+          "Latn": "Niŋmaa Ni Asharaa Yiteŋ"
+        }
+      }
+    }
+  }
+}

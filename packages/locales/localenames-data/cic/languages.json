@@ -1,0 +1,14 @@
+{
+  "main": {
+    "cic": {
+      "identity": {
+        "language": "cic"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "cic": "Chikashshanompaʼ"
+        }
+      }
+    }
+  }
+}

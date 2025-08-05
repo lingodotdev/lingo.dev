@@ -1,0 +1,14 @@
+{
+  "main": {
+    "raj": {
+      "identity": {
+        "language": "raj"
+      },
+      "localeDisplayNames": {
+        "scripts": {
+          "Deva": "देवनागरी"
+        }
+      }
+    }
+  }
+}

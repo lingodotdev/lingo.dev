@@ -1,0 +1,16 @@
+{
+  "main": {
+    "sat-Deva": {
+      "identity": {
+        "language": "sat",
+        "script": "Deva"
+      },
+      "localeDisplayNames": {
+        "scripts": {
+          "Deva": "देवानागारी",
+          "Olck": "अल चीकी"
+        }
+      }
+    }
+  }
+}

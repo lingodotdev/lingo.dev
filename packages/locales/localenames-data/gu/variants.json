@@ -1,0 +1,15 @@
+{
+  "main": {
+    "gu": {
+      "identity": {
+        "language": "gu"
+      },
+      "localeDisplayNames": {
+        "variants": {
+          "PINYIN": "પિનયિન રોમનાઇઝેશન",
+          "WADEGILE": "વેડ-ગિલ્સ રોમનાઇઝેશન"
+        }
+      }
+    }
+  }
+}

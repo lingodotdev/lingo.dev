@@ -1,0 +1,22 @@
+{
+  "main": {
+    "az-Cyrl": {
+      "identity": {
+        "language": "az",
+        "script": "Cyrl"
+      },
+      "localeDisplayNames": {
+        "localeDisplayPattern": {
+          "localePattern": "{0} ({1})",
+          "localeSeparator": "{0}, {1}",
+          "localeKeyTypePattern": "{0}: {1}"
+        },
+        "codePatterns": {
+          "language": "Дил: {0}",
+          "script": "Скрипт: {0}",
+          "territory": "Реҝион: {0}"
+        }
+      }
+    }
+  }
+}

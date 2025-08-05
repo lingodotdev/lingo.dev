@@ -1,0 +1,16 @@
+{
+  "main": {
+    "tok": {
+      "identity": {
+        "language": "tok"
+      },
+      "localeDisplayNames": {
+        "territories": {
+          "001": "ma ale",
+          "SZ": "ma Sawasi",
+          "UZ": "ma Opekisan"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "main": {
+    "lld": {
+      "identity": {
+        "language": "lld"
+      },
+      "localeDisplayNames": {
+        "localeDisplayPattern": {
+          "localePattern": "{0} ({1})",
+          "localeSeparator": "{0}, {1}",
+          "localeKeyTypePattern": "{0}: {1}"
+        },
+        "types": {
+          "calendar": {
+            "gregorian": "Calënder gregorian",
+            "iso8601": "Calënder ISO-8601"
+          },
+          "collation": {
+            "standard": "Ordinamënt standard"
+          },
+          "numbers": {
+            "latn": "Zifres ozidentales"
+          }
+        },
+        "codePatterns": {
+          "language": "Lingaz: {0}",
+          "script": "Scritöra: {0}",
+          "territory": "Area geografica: {0}"
+        }
+      }
+    }
+  }
+}

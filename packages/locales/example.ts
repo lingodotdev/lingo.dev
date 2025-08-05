@@ -3,7 +3,10 @@ import {
   getLanguageCode,
   getScriptCode,
   getRegionCode,
-} from "./src/index";
+  getCountryName,
+  getLanguageName,
+  getScriptName,
+} from "./build/index.mjs";
 
 // Example usage of parseLocale function
 console.log("=== Locale Parsing Examples ===");
@@ -64,3 +67,80 @@ try {
 } catch (error) {
   console.log("Error for null:", (error as Error).message);
 }
+
+// Async examples function
+async function runAsyncExamples() {
+  console.log("\n=== Async Name Resolution Examples ===");
+
+  // Country names
+  console.log("=== Country Names ===");
+  console.log('await getCountryName("US"):', await getCountryName("US"));
+  console.log(
+    'await getCountryName("US", "es"):',
+    await getCountryName("US", "es"),
+  );
+  console.log('await getCountryName("CN"):', await getCountryName("CN"));
+  console.log(
+    'await getCountryName("DE", "es"):',
+    await getCountryName("DE", "es"),
+  );
+  console.log('await getCountryName("us"):', await getCountryName("us")); // Case normalization
+
+  // Language names
+  console.log("\n=== Language Names ===");
+  console.log('await getLanguageName("en"):', await getLanguageName("en"));
+  console.log(
+    'await getLanguageName("en", "es"):',
+    await getLanguageName("en", "es"),
+  );
+  console.log('await getLanguageName("zh"):', await getLanguageName("zh"));
+  console.log(
+    'await getLanguageName("fr", "es"):',
+    await getLanguageName("fr", "es"),
+  );
+  console.log('await getLanguageName("EN"):', await getLanguageName("EN")); // Case normalization
+
+  // Script names
+  console.log("\n=== Script Names ===");
+  console.log('await getScriptName("Latn"):', await getScriptName("Latn"));
+  console.log(
+    'await getScriptName("Hans", "es"):',
+    await getScriptName("Hans", "es"),
+  );
+  console.log('await getScriptName("Cyrl"):', await getScriptName("Cyrl"));
+  console.log(
+    'await getScriptName("Arab", "es"):',
+    await getScriptName("Arab", "es"),
+  );
+  console.log('await getScriptName("latn"):', await getScriptName("latn")); // Case normalization
+
+  console.log("\n=== Async Error Handling Examples ===");
+
+  // Error cases for async functions
+  try {
+    await getCountryName("");
+  } catch (error) {
+    console.log("Error for empty country code:", (error as Error).message);
+  }
+
+  try {
+    await getLanguageName(null as any);
+  } catch (error) {
+    console.log("Error for null language code:", (error as Error).message);
+  }
+
+  try {
+    await getScriptName("XX");
+  } catch (error) {
+    console.log("Error for invalid script code:", (error as Error).message);
+  }
+
+  try {
+    await getCountryName("XX");
+  } catch (error) {
+    console.log("Error for invalid country code:", (error as Error).message);
+  }
+}
+
+// Run the async examples
+runAsyncExamples().catch(console.error);

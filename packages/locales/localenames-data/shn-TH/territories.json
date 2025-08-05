@@ -1,0 +1,16 @@
+{
+  "main": {
+    "shn-TH": {
+      "identity": {
+        "language": "shn",
+        "territory": "TH"
+      },
+      "localeDisplayNames": {
+        "territories": {
+          "MM": "မျၢၼ်ႇမႃႇ (မိူင်းမၢၼ်ႈ)",
+          "TH": "မိူင်းထႆး"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "main": {
+    "kaj": {
+      "identity": {
+        "language": "kaj"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "kaj": "Kaje"
+        }
+      }
+    }
+  }
+}

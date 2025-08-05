@@ -1,0 +1,32 @@
+{
+  "main": {
+    "kaa": {
+      "identity": {
+        "language": "kaa"
+      },
+      "localeDisplayNames": {
+        "localeDisplayPattern": {
+          "localePattern": "{0} ({1})",
+          "localeSeparator": "{0}, {1}",
+          "localeKeyTypePattern": "{0}: {1}"
+        },
+        "types": {
+          "calendar": {
+            "gregorian": "григориан календарь",
+            "islamic-civil": "кестели ҳижрий календарь",
+            "islamic-tbla": "кестели ҳижрий календарь (астрономиялық дәўир)",
+            "iso8601": "ISO-8601 календары"
+          },
+          "collation": {
+            "standard": "стандарт саралаў"
+          }
+        },
+        "codePatterns": {
+          "language": "Тил: {0}",
+          "script": "Жазыў: {0}",
+          "territory": "Аймақ: {0}"
+        }
+      }
+    }
+  }
+}

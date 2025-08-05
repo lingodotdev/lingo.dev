@@ -1,0 +1,14 @@
+{
+  "main": {
+    "sd": {
+      "identity": {
+        "language": "sd"
+      },
+      "localeDisplayNames": {
+        "variants": {
+          "POSIX": "ڪمپيوٽر"
+        }
+      }
+    }
+  }
+}

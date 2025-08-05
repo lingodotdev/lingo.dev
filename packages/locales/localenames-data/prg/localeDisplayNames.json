@@ -1,0 +1,21 @@
+{
+  "main": {
+    "prg": {
+      "identity": {
+        "language": "prg"
+      },
+      "localeDisplayNames": {
+        "localeDisplayPattern": {
+          "localePattern": "{0} ({1})",
+          "localeSeparator": "{0}, {1}",
+          "localeKeyTypePattern": "{0}: {1}"
+        },
+        "codePatterns": {
+          "language": "Bilā: {0}",
+          "script": "Skriptan: {0}",
+          "territory": "Regiōni: {0}"
+        }
+      }
+    }
+  }
+}

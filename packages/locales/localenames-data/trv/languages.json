@@ -1,0 +1,14 @@
+{
+  "main": {
+    "trv": {
+      "identity": {
+        "language": "trv"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "trv": "patas Taroko"
+        }
+      }
+    }
+  }
+}

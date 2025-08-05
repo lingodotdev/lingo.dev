@@ -1,0 +1,15 @@
+{
+  "main": {
+    "bho": {
+      "identity": {
+        "language": "bho"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "bho": "भोजपुरी",
+          "en": "अंगरेजी"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "main": {
+    "oc-ES": {
+      "identity": {
+        "language": "oc",
+        "territory": "ES"
+      },
+      "localeDisplayNames": {
+        "scripts": {
+          "Latn": "latin"
+        }
+      }
+    }
+  }
+}

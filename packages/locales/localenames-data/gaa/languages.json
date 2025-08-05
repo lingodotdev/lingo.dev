@@ -1,0 +1,15 @@
+{
+  "main": {
+    "gaa": {
+      "identity": {
+        "language": "gaa"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "en": "Blɔfo",
+          "gaa": "Gã"
+        }
+      }
+    }
+  }
+}

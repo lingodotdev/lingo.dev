@@ -1,0 +1,50 @@
+{
+  "main": {
+    "haw": {
+      "identity": {
+        "language": "haw"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "ar": "ʻAlapia",
+          "cy": "Wale",
+          "da": "Kenemaka",
+          "de": "Kelemānia",
+          "el": "Helene",
+          "en": "Pelekānia",
+          "en-AU": "Pelekāne Nū Hōlani",
+          "en-CA": "Pelekāne Kanakā",
+          "en-GB": "Pelekānia Pekekāne",
+          "en-US": "Pelekānia ʻAmelika",
+          "es": "Paniolo",
+          "fj": "Pīkī",
+          "fr": "Palani",
+          "fr-CA": "Palani Kanakā",
+          "fr-CH": "Kuikilani",
+          "ga": "ʻAiliki",
+          "gsw": "Kuikilani Kelemānia",
+          "haw": "ʻŌlelo Hawaiʻi",
+          "he": "Hebera",
+          "it": "ʻĪkālia",
+          "ja": "Kepanī",
+          "ko": "Kōlea",
+          "la": "Lākina",
+          "mi": "Māori",
+          "nl": "Hōlani",
+          "pt": "Pukikī",
+          "pt-BR": "Pukikī Palakila",
+          "ru": "Lūkia",
+          "sm": "Kāmoa",
+          "sv": "Kuekene",
+          "to": "Tonga",
+          "ty": "Polapola",
+          "und": "ʻIke ʻole ‘ia a kūpono ʻole paha ka ʻōlelo",
+          "vi": "Wiekanama",
+          "zh": "Pākē",
+          "zh-Hans": "Pākē Hoʻomaʻalahi ʻia",
+          "zh-Hant": "Pākē Kuʻuna"
+        }
+      }
+    }
+  }
+}

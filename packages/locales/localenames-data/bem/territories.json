@@ -1,0 +1,14 @@
+{
+  "main": {
+    "bem": {
+      "identity": {
+        "language": "bem"
+      },
+      "localeDisplayNames": {
+        "territories": {
+          "ZM": "Zambia"
+        }
+      }
+    }
+  }
+}

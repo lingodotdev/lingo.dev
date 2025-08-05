@@ -1,0 +1,15 @@
+{
+  "main": {
+    "bgc": {
+      "identity": {
+        "language": "bgc"
+      },
+      "localeDisplayNames": {
+        "territories": {
+          "IN": "भारत",
+          "ZZ": "अणजाण जगह"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "main": {
+    "nds": {
+      "identity": {
+        "language": "nds"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "en": "Engelsch",
+          "nds": "Neddersass’sch"
+        }
+      }
+    }
+  }
+}

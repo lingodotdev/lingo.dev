@@ -1,0 +1,15 @@
+{
+  "main": {
+    "hy": {
+      "identity": {
+        "language": "hy"
+      },
+      "localeDisplayNames": {
+        "variants": {
+          "AREVELA": "արևելահայերեն",
+          "AREVMDA": "արեւմտահայերէն"
+        }
+      }
+    }
+  }
+}

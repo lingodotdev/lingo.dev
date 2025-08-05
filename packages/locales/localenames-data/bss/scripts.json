@@ -1,0 +1,14 @@
+{
+  "main": {
+    "bss": {
+      "identity": {
+        "language": "bss"
+      },
+      "localeDisplayNames": {
+        "scripts": {
+          "Latn": "Akoose"
+        }
+      }
+    }
+  }
+}

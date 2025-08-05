@@ -1,0 +1,15 @@
+{
+  "main": {
+    "ti-ER": {
+      "identity": {
+        "language": "ti",
+        "territory": "ER"
+      },
+      "localeDisplayNames": {
+        "variants": {
+          "1959ACAD": "ኣካዳምያዊ"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "main": {
+    "tpi": {
+      "identity": {
+        "language": "tpi"
+      },
+      "localeDisplayNames": {
+        "scripts": {
+          "Arab": "Arabik",
+          "Cyrl": "Syrilik",
+          "Hans": "Han (isipela)",
+          "Hant": "Han (tredisinol)",
+          "Latn": "Latin",
+          "Zxxx": "Tok i no raitim yet",
+          "Zzzz": "Tok i no gat kod yet"
+        }
+      }
+    }
+  }
+}

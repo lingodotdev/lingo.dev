@@ -1,0 +1,16 @@
+{
+  "main": {
+    "oc": {
+      "identity": {
+        "language": "oc"
+      },
+      "localeDisplayNames": {
+        "territories": {
+          "ES": "Espanha",
+          "FR": "França",
+          "HK": "Hong Kong"
+        }
+      }
+    }
+  }
+}

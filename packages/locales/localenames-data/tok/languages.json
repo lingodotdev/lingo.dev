@@ -1,0 +1,16 @@
+{
+  "main": {
+    "tok": {
+      "identity": {
+        "language": "tok"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "en": "toki Inli",
+          "tok": "toki pona",
+          "uz": "toki Opeki"
+        }
+      }
+    }
+  }
+}

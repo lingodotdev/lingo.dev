@@ -1,0 +1,14 @@
+{
+  "main": {
+    "cho": {
+      "identity": {
+        "language": "cho"
+      },
+      "localeDisplayNames": {
+        "territories": {
+          "US": "United States"
+        }
+      }
+    }
+  }
+}

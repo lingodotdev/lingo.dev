@@ -1,0 +1,15 @@
+{
+  "main": {
+    "wbp": {
+      "identity": {
+        "language": "wbp"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "en": "Yinkirliji",
+          "wbp": "Warlpiri"
+        }
+      }
+    }
+  }
+}

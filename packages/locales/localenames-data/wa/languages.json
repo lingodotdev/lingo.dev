@@ -1,0 +1,14 @@
+{
+  "main": {
+    "wa": {
+      "identity": {
+        "language": "wa"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "wa": "walon"
+        }
+      }
+    }
+  }
+}

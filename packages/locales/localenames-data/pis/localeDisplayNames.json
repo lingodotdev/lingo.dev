@@ -1,0 +1,21 @@
+{
+  "main": {
+    "pis": {
+      "identity": {
+        "language": "pis"
+      },
+      "localeDisplayNames": {
+        "localeDisplayPattern": {
+          "localePattern": "{0} ({1})",
+          "localeSeparator": "{0}, {1}",
+          "localeKeyTypePattern": "{0}: {1}"
+        },
+        "codePatterns": {
+          "language": "Langguis: {0}",
+          "script": "Raeting kaen: {0}",
+          "territory": "Rijin: {0}"
+        }
+      }
+    }
+  }
+}

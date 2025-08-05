@@ -1,0 +1,15 @@
+{
+  "main": {
+    "kk-Arab": {
+      "identity": {
+        "language": "kk",
+        "script": "Arab"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "kk-Arab": "قازاق ءتىلى (توتە)"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "main": {
+    "kw": {
+      "identity": {
+        "language": "kw"
+      },
+      "localeDisplayNames": {
+        "territories": {
+          "GB": "Rywvaneth Unys"
+        }
+      }
+    }
+  }
+}

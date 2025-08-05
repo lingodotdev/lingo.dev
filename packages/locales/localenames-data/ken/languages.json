@@ -1,0 +1,14 @@
+{
+  "main": {
+    "ken": {
+      "identity": {
+        "language": "ken"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "ken": "Kɛnyaŋ"
+        }
+      }
+    }
+  }
+}

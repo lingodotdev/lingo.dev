@@ -1,0 +1,15 @@
+{
+  "main": {
+    "pa-Arab": {
+      "identity": {
+        "language": "pa",
+        "script": "Arab"
+      },
+      "localeDisplayNames": {
+        "territories": {
+          "PK": "پاکستان"
+        }
+      }
+    }
+  }
+}

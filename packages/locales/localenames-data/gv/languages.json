@@ -1,0 +1,14 @@
+{
+  "main": {
+    "gv": {
+      "identity": {
+        "language": "gv"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "gv": "Gaelg"
+        }
+      }
+    }
+  }
+}

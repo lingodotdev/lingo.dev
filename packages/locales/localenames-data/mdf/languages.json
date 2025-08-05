@@ -1,0 +1,14 @@
+{
+  "main": {
+    "mdf": {
+      "identity": {
+        "language": "mdf"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "mdf": "мокшень кяль"
+        }
+      }
+    }
+  }
+}

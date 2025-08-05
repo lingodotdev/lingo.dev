@@ -1,0 +1,14 @@
+{
+  "main": {
+    "tn": {
+      "identity": {
+        "language": "tn"
+      },
+      "localeDisplayNames": {
+        "scripts": {
+          "Latn": "Selatine"
+        }
+      }
+    }
+  }
+}

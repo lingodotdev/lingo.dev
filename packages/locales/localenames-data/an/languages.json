@@ -1,0 +1,14 @@
+{
+  "main": {
+    "an": {
+      "identity": {
+        "language": "an"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "an": "aragonés"
+        }
+      }
+    }
+  }
+}

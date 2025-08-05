@@ -1,0 +1,14 @@
+{
+  "main": {
+    "pis": {
+      "identity": {
+        "language": "pis"
+      },
+      "localeDisplayNames": {
+        "scripts": {
+          "Latn": "Latin"
+        }
+      }
+    }
+  }
+}

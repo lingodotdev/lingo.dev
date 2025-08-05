@@ -1,0 +1,14 @@
+{
+  "main": {
+    "ny": {
+      "identity": {
+        "language": "ny"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "ny": "Nyanja"
+        }
+      }
+    }
+  }
+}

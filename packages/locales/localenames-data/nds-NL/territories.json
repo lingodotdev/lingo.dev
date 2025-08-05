@@ -1,0 +1,16 @@
+{
+  "main": {
+    "nds-NL": {
+      "identity": {
+        "language": "nds",
+        "territory": "NL"
+      },
+      "localeDisplayNames": {
+        "territories": {
+          "DE": "Düütschland",
+          "NL": "Nedderlannen"
+        }
+      }
+    }
+  }
+}

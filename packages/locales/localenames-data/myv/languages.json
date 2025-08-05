@@ -1,0 +1,14 @@
+{
+  "main": {
+    "myv": {
+      "identity": {
+        "language": "myv"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "myv": "эрзянь кель"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "main": {
+    "za": {
+      "identity": {
+        "language": "za"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "en": "Yinghyij",
+          "za": "Vahcuengh"
+        }
+      }
+    }
+  }
+}

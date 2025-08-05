@@ -1,0 +1,16 @@
+{
+  "main": {
+    "rhg-Rohg-BD": {
+      "identity": {
+        "language": "rhg",
+        "script": "Rohg",
+        "territory": "BD"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "rhg": "𐴌𐴗𐴥𐴝𐴙𐴚𐴒𐴙𐴝"
+        }
+      }
+    }
+  }
+}

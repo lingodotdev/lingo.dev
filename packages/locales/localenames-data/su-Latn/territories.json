@@ -1,0 +1,26 @@
+{
+  "main": {
+    "su-Latn": {
+      "identity": {
+        "language": "su",
+        "script": "Latn"
+      },
+      "localeDisplayNames": {
+        "territories": {
+          "BR": "Brasil",
+          "CN": "Tiongkok",
+          "DE": "Jérman",
+          "FR": "Prancis",
+          "GB": "Britania Raya",
+          "ID": "Indonesia",
+          "IN": "India",
+          "IT": "Italia",
+          "JP": "Jepang",
+          "RU": "Rusia",
+          "US": "Amérika Sarikat",
+          "ZZ": "Wilayah Teu Dikenal"
+        }
+      }
+    }
+  }
+}

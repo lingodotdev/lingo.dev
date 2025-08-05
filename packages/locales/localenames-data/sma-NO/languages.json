@@ -1,0 +1,15 @@
+{
+  "main": {
+    "sma-NO": {
+      "identity": {
+        "language": "sma",
+        "territory": "NO"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "sma": "Åarjelsaemien gïele"
+        }
+      }
+    }
+  }
+}

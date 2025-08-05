@@ -1,0 +1,15 @@
+{
+  "main": {
+    "tn-BW": {
+      "identity": {
+        "language": "tn",
+        "territory": "BW"
+      },
+      "localeDisplayNames": {
+        "scripts": {
+          "Latn": "Selatine"
+        }
+      }
+    }
+  }
+}

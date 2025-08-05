@@ -1,0 +1,14 @@
+{
+  "main": {
+    "nso": {
+      "identity": {
+        "language": "nso"
+      },
+      "localeDisplayNames": {
+        "territories": {
+          "ZA": "Afrika Borwa"
+        }
+      }
+    }
+  }
+}

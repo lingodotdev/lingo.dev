@@ -1,0 +1,26 @@
+{
+  "main": {
+    "kok-Latn": {
+      "identity": {
+        "language": "kok",
+        "script": "Latn"
+      },
+      "localeDisplayNames": {
+        "territories": {
+          "CN": "Chin",
+          "CY": "Siprus",
+          "DE": "Jermon",
+          "EG": "Ejipt",
+          "ES": "Ispania",
+          "FR": "Frans",
+          "GR": "Gres",
+          "IN": "Bharot",
+          "IT": "Italia",
+          "LY": "Libia",
+          "MK": "Ut’tor Masedonia",
+          "RU": "Roxya"
+        }
+      }
+    }
+  }
+}

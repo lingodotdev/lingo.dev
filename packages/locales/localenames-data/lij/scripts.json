@@ -1,0 +1,14 @@
+{
+  "main": {
+    "lij": {
+      "identity": {
+        "language": "lij"
+      },
+      "localeDisplayNames": {
+        "scripts": {
+          "Latn": "latin"
+        }
+      }
+    }
+  }
+}

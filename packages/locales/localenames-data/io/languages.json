@@ -1,0 +1,14 @@
+{
+  "main": {
+    "io": {
+      "identity": {
+        "language": "io"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "io": "Ido"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "main": {
+    "pis": {
+      "identity": {
+        "language": "pis"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "en": "Ingglis",
+          "pis": "Pijin"
+        }
+      }
+    }
+  }
+}

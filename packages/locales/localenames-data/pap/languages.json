@@ -1,0 +1,14 @@
+{
+  "main": {
+    "pap": {
+      "identity": {
+        "language": "pap"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "pap": "Papiamentu"
+        }
+      }
+    }
+  }
+}

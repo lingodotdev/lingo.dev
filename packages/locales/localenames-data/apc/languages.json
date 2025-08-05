@@ -1,0 +1,14 @@
+{
+  "main": {
+    "apc": {
+      "identity": {
+        "language": "apc"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "apc": "العامية"
+        }
+      }
+    }
+  }
+}

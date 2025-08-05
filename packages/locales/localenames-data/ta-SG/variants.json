@@ -1,0 +1,16 @@
+{
+  "main": {
+    "ta-SG": {
+      "identity": {
+        "language": "ta",
+        "territory": "SG"
+      },
+      "localeDisplayNames": {
+        "variants": {
+          "PINYIN": "பின்யின் ரோமானைசெஷன்",
+          "WADEGILE": "வேட்-கைல்ஸ் ரோமனைஷேசன்"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,172 @@
+{
+  "main": {
+    "ig": {
+      "identity": {
+        "language": "ig"
+      },
+      "localeDisplayNames": {
+        "localeDisplayPattern": {
+          "localePattern": "{0} ({1})",
+          "localeSeparator": "{0}, {1}",
+          "localeKeyTypePattern": "{0}: {1}"
+        },
+        "keys": {
+          "calendar": "Kalenda",
+          "cf": "Ụsọrọ egọ",
+          "collation": "Ụsọrọ Nhazị",
+          "currency": "Egọ",
+          "hc": "Okịrịkịrị Awa (12 vs 24)",
+          "lb": "Akara akanka nkwụsị",
+          "ms": "Ụsọrọ Mmeshọ",
+          "numbers": "Nọmba"
+        },
+        "types": {
+          "calendar": {
+            "buddhist": "Kalenda Bụddịst",
+            "chinese": "Kalenda Chinese",
+            "coptic": "Kalenda Koptic",
+            "dangi": "Kalenda Dang",
+            "ethiopic": "Kalenda Etopịa",
+            "ethiopic-amete-alem": "Etiopic Amete Alem Kalenda",
+            "gregorian": "Kalenda Gregory",
+            "hebrew": "Kalenda Hebrew",
+            "indian": "Kalenda India",
+            "islamic": "Kalenda Hijri",
+            "islamic-civil": "Kalenda Hijri",
+            "islamic-rgsa": "Kalenda Hijri (Saudi Arabia, sighting)",
+            "islamic-tbla": "Kalenda Hijri (tabular, astronomical epoch)",
+            "islamic-umalqura": "Kalenda Hijri (Umm al-Qura)",
+            "iso8601": "Kalenda ISO-8601",
+            "japanese": "Kalenda Japanese",
+            "persian": "Kalenda Persian",
+            "roc": "Kalenda repụblic nke China"
+          },
+          "cf": {
+            "account": "Ụsọrọ akantụ egọ",
+            "standard": "Ụsọrọ egọ nzụgbe"
+          },
+          "collation": {
+            "ducet": "Default Unicode ụsọrọ nhazị",
+            "phonebook": "Nhazị akwụkwọ ebe a na-ede nọmba fon",
+            "pinyin": "Pinyin ụsọrọ nhazị",
+            "search": "Ọchụchụ nịle",
+            "standard": "Usoro Nhazi"
+          },
+          "hc": {
+            "h11": "Ụsọrọ Okịrịkịrị awa iri na abụọ (0–11)",
+            "h12": "Ụsọrọ Okịrịkịrị awa iri na abụọ (0–12)",
+            "h23": "Ụsọrọ Okịrịkịrị (0–23)",
+            "h24": "Ụsọrọ Okịrịkịrị (1–24)"
+          },
+          "lb": {
+            "loose": "Akara akanka nkwụsị esịghị ịke",
+            "normal": "Akara akanka nkwụsị kwesịrị",
+            "strict": "Akara akanka nkwụsị sịrị ịke"
+          },
+          "ms": {
+            "metric": "Ụsọrọ Metric",
+            "uksystem": "Ụsọrọ Mmeshọ ịmperịa",
+            "ussystem": "Ụsọrọ Mmeshọ US"
+          },
+          "numbers": {
+            "ahom": "Ọnụ ọgụgụ Ahom",
+            "arab": "Ọnụ ọgụgụ Arab na Indị",
+            "arabext": "Ọnụ ọgụgụ Arab na Indị agbatịrị",
+            "armn": "Ọnụ ọgụgụ Armenịa",
+            "armnlow": "ọbere ọnụ ọgụgụ Armenịa",
+            "bali": "Balinese Digits",
+            "beng": "Ọnụ ọgụgụ Bangla",
+            "brah": "Brahmi Digits",
+            "cakm": "Ọnụ ọgụgụ Chakma",
+            "cham": "Cham Digits",
+            "cyrl": "Ọnụ ọgụgụ Cyrillic",
+            "deva": "Ọnụ ọgụgụ Devanagarị",
+            "diak": "Ọnụ ọgụgụ Dives Akuru",
+            "ethi": "Ọnụ ọgụgụ Etọpịa",
+            "fullwide": "Ọnụ ọgụgụ ọbọsara",
+            "gara": "Ọnụ ọgụgụ Garay",
+            "geor": "Ọnụ ọgụgụ Georgian",
+            "gong": "Ọnụ ọgụgụ Gunjala Gondi",
+            "gonm": "Ọnụ ọgụgụ Masaram Gondi",
+            "grek": "Ọnụ ọgụgụ Grik",
+            "greklow": "Ọbere ọnụ ọgụgụ Grik",
+            "gujr": "Ọnụ ọgụgụ Gụjaratị",
+            "gukh": "Ọnụ ọgụgụ Gurung Khema",
+            "guru": "Onụ ọgụgụ Gụmụkh",
+            "hanidec": "Ọnụ ọgụgụ ntụpọ Chịnese",
+            "hans": "Ọnụ ọgụgụ mfe Chịnese",
+            "hansfin": "Ọnụ ọgụgụ akantụ mfe nke Chinese",
+            "hant": "Ọnụ ọgụgụ ọdinala chinese",
+            "hantfin": "Ọnụ ọgụgụ akantụ ọdịnala Chinese",
+            "hebr": "Ọnụ ọgụgụ Hebrew",
+            "hmng": "Ọnụ ọgụgụ Pahawh Hmong",
+            "hmnp": "Ọnụ ọgụgụ Nyiakeng Puachue Hmong",
+            "java": "Ọnụ ọgụgụ Javanịsị",
+            "jpan": "Ọnụ ọgụgụ Japanese",
+            "jpanfin": "Ọnụ ọgụgụ akantụ Japanese",
+            "kali": "Ọnụ ọgụgụ Kayah Li",
+            "kawi": "Ọnụ ọgụgụ Kawi",
+            "khmr": "Ọnụ ọgụgụ Khmer",
+            "knda": "Ọnụ ọgụgụ Kannada",
+            "krai": "Ọnụ ọgụgụ Kirat Rai",
+            "lana": "Ọnụ ọgụgụ Tai Tham Hora",
+            "lanatham": "Ọnụ ọgụgụ Tai Tham Tham",
+            "laoo": "Ọnụ ọgụgụ Lao",
+            "latn": "Ọnụ Ọgụgụ Mpaghara Ọdịda Anyanwụ",
+            "lepc": "Ọnụ ọgụgụ Lepcha",
+            "limb": "Ọnụ ọgụgụ Limbu",
+            "mathbold": "Ọnụ ọgụgụ Mathematical Bold",
+            "mathdbl": "Ọnụ ọgụgụ Mathematical Double-Struck",
+            "mathmono": "Ọnụ ọgụgụ Mathematical Monospace",
+            "mathsanb": "Ọnụ ọgụgụ Mathematical Sans-Serif Bold",
+            "mathsans": "Ọnụ ọgụgụ Mathematical Sans-Serif",
+            "mlym": "Ọnụ ọgụgụ Malayala",
+            "modi": "Ọnụ ọgụgụ Modi",
+            "mong": "Ọnụ ọgụgụ Mongolian",
+            "mroo": "Ọnụ ọgụgụ Mro",
+            "mtei": "Ọnụ ọgụgụ Meetei Mayek",
+            "mymr": "Ọnụ ọgụgụ Myamar",
+            "mymrepka": "Ọnụ ọgụgụ Myanmar Eastern Pwo Karen",
+            "mymrpao": "Ọnụ ọgụgụ Myanmar Pao",
+            "mymrshan": "Ọnụ ọgụgụ Myanmar Shan",
+            "mymrtlng": "Ọnụ ọgụgụ Myanmar Tai Laing",
+            "nagm": "Ọnụ ọgụgụ Nag Mundari",
+            "nkoo": "Ọnụ ọgụgụ N’Ko",
+            "olck": "Ọnụ ọgụgụ Ochiki",
+            "onao": "Ọnụ ọgụgụ Ol Onal",
+            "orya": "Ọnụ ọgụgụ Ọdịa",
+            "osma": "Ọnụ ọgụgụ Osmanya",
+            "outlined": "Ọnụ ọgụgụ Outlined",
+            "rohg": "Ọnụ ọgụgụ Hanifi Rohingya",
+            "roman": "Ọnụ ọgụgụ Roman",
+            "romanlow": "Ọbere Ọnụ ọgụgụ Roman",
+            "saur": "Ọnụ ọgụgụ Saurashtra",
+            "shrd": "Ọnụ ọgụgụ Sharada",
+            "sind": "Ọnụ ọgụgụ Khudawadi",
+            "sinh": "Ọnụ ọgụgụ Sinhala Lith",
+            "sora": "Ọnụ ọgụgụ Sora Sompeng",
+            "sund": "Ọnụ ọgụgụ Sundanese",
+            "sunu": "Ọnụ ọgụgụ Sunuwar",
+            "takr": "Ọnụ ọgụgụ Takri",
+            "talu": "Ọnụ ọgụgụ New Tai Lue",
+            "taml": "Ọnụ ọgụgụ ọdịnala Tamịl",
+            "tamldec": "Ọnụ ọgụgụ Tamị",
+            "telu": "Ọnụ ọgụgụ Telụgụ",
+            "thai": "Ọnụ ọgụgụ Taị",
+            "tibt": "Ọnụ ọgụgụ Tịbeta",
+            "tirh": "Ọnụ ọgụgụ Tirhuta",
+            "tnsa": "Ọnụ ọgụgụ Tangsa",
+            "vaii": "Ọnụ ọgụgụ Vai",
+            "wara": "Ọnụ ọgụgụ Warang Citi",
+            "wcho": "Ọnụ ọgụgụ Wancho"
+          }
+        },
+        "codePatterns": {
+          "language": "Asụsụ: {0}",
+          "script": "Mkpụrụ Okwu: {0}",
+          "territory": "Mpaghara: {0}"
+        }
+      }
+    }
+  }
+}

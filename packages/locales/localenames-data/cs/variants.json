@@ -1,0 +1,15 @@
+{
+  "main": {
+    "cs": {
+      "identity": {
+        "language": "cs"
+      },
+      "localeDisplayNames": {
+        "variants": {
+          "SCOTLAND": "angličtina (Skotsko)",
+          "WADEGILE": "Wade-Giles"
+        }
+      }
+    }
+  }
+}

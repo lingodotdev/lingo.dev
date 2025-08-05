@@ -1,0 +1,14 @@
+{
+  "main": {
+    "hnj": {
+      "identity": {
+        "language": "hnj"
+      },
+      "localeDisplayNames": {
+        "territories": {
+          "US": "𞄒𞄫𞄱𞄔𞄩𞄴"
+        }
+      }
+    }
+  }
+}

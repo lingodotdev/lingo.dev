@@ -1,0 +1,15 @@
+{
+  "main": {
+    "prg": {
+      "identity": {
+        "language": "prg"
+      },
+      "localeDisplayNames": {
+        "territories": {
+          "001": "swītai",
+          "PL": "Pōli"
+        }
+      }
+    }
+  }
+}

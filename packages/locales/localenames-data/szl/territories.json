@@ -1,0 +1,14 @@
+{
+  "main": {
+    "szl": {
+      "identity": {
+        "language": "szl"
+      },
+      "localeDisplayNames": {
+        "territories": {
+          "PL": "Polska"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "main": {
+    "mgo": {
+      "identity": {
+        "language": "mgo"
+      },
+      "localeDisplayNames": {
+        "scripts": {
+          "Latn": "ngam ŋwaʼri",
+          "Zxxx": "ngam choʼ",
+          "Zzzz": "abo ŋwaʼri tisɔʼ"
+        }
+      }
+    }
+  }
+}

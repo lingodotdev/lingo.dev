@@ -1,0 +1,15 @@
+{
+  "main": {
+    "raj": {
+      "identity": {
+        "language": "raj"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "en": "अंग्रेजी",
+          "raj": "राजस्थानी"
+        }
+      }
+    }
+  }
+}

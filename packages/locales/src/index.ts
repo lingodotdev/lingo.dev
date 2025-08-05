@@ -9,3 +9,6 @@ export {
   getScriptCode,
   getRegionCode,
 } from "./parser";
+
+// Export async name resolution functions
+export { getCountryName, getLanguageName, getScriptName } from "./names";

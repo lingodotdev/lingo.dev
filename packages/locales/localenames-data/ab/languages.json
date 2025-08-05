@@ -1,0 +1,14 @@
+{
+  "main": {
+    "ab": {
+      "identity": {
+        "language": "ab"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "ab": "Аԥсшәа"
+        }
+      }
+    }
+  }
+}

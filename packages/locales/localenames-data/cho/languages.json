@@ -1,0 +1,15 @@
+{
+  "main": {
+    "cho": {
+      "identity": {
+        "language": "cho"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "cho": "Chahta",
+          "en": "English"
+        }
+      }
+    }
+  }
+}

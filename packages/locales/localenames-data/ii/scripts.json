@@ -1,0 +1,22 @@
+{
+  "main": {
+    "ii": {
+      "identity": {
+        "language": "ii"
+      },
+      "localeDisplayNames": {
+        "scripts": {
+          "Arab": "ꀊꇁꀨꁱꂷ",
+          "Cyrl": "ꀊꆨꌦꇁꃚꁱꂷ",
+          "Hans": "ꈝꐮꁱꂷ",
+          "Hans-alt-stand-alone": "ꈝꐮꉌꈲꁱꂷ",
+          "Hant": "ꀎꋏꁱꂷ",
+          "Latn": "ꇁꄂꁱꂷ",
+          "Yiii": "ꆈꌠꁱꂷ",
+          "Zxxx": "ꁱꀋꉆꌠ",
+          "Zzzz": "ꅉꀋꐚꌠꁱꂷ"
+        }
+      }
+    }
+  }
+}

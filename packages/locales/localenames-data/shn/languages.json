@@ -1,0 +1,14 @@
+{
+  "main": {
+    "shn": {
+      "identity": {
+        "language": "shn"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "shn": "တႆး"
+        }
+      }
+    }
+  }
+}

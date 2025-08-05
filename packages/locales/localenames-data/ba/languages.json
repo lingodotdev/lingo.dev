@@ -1,0 +1,14 @@
+{
+  "main": {
+    "ba": {
+      "identity": {
+        "language": "ba"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "ba": "башҡорт теле"
+        }
+      }
+    }
+  }
+}

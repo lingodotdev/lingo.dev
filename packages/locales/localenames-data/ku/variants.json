@@ -1,0 +1,14 @@
+{
+  "main": {
+    "ku": {
+      "identity": {
+        "language": "ku"
+      },
+      "localeDisplayNames": {
+        "variants": {
+          "1959ACAD": "Akademîk"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "main": {
+    "cho": {
+      "identity": {
+        "language": "cho"
+      },
+      "localeDisplayNames": {
+        "scripts": {
+          "Latn": "Latin"
+        }
+      }
+    }
+  }
+}

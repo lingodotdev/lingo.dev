@@ -1,0 +1,35 @@
+{
+  "main": {
+    "kxv-Deva": {
+      "identity": {
+        "language": "kxv",
+        "script": "Deva"
+      },
+      "localeDisplayNames": {
+        "scripts": {
+          "Arab": "अरबी",
+          "Beng": "बंगाली",
+          "Brah": "ब्राह्मि",
+          "Cher": "चेरोकी",
+          "Cyrl": "सिरिलिक",
+          "Deva": "देवनागरी",
+          "Gujr": "गुजराती",
+          "Guru": "गुरमुकी",
+          "Hans": "साॅहाॅजाॅ",
+          "Hans-alt-stand-alone": "साॅहाॅजाॅ हान",
+          "Hant": "हिरूदोल्लु",
+          "Hant-alt-stand-alone": "हिरूदोल्लु हान",
+          "Knda": "कन्नड़",
+          "Latn": "लातिन",
+          "Mlym": "मलयालम",
+          "Orya": "ऑड़िया",
+          "Saur": "सॉउराष्ट्र",
+          "Taml": "तमिल",
+          "Telu": "तेलुगू",
+          "Zxxx": "राचा-आ-आत्ति",
+          "Zzzz": "पुण्-आँऽति ऑकाॅराॅ"
+        }
+      }
+    }
+  }
+}

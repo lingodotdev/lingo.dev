@@ -1,0 +1,15 @@
+{
+  "main": {
+    "uz-Arab": {
+      "identity": {
+        "language": "uz",
+        "script": "Arab"
+      },
+      "localeDisplayNames": {
+        "territories": {
+          "AF": "افغانستان"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "main": {
+    "lij": {
+      "identity": {
+        "language": "lij"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "en": "ingleise",
+          "lij": "ligure"
+        }
+      }
+    }
+  }
+}

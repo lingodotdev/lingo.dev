@@ -1,0 +1,14 @@
+{
+  "main": {
+    "moh": {
+      "identity": {
+        "language": "moh"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "moh": "Kanienʼkéha"
+        }
+      }
+    }
+  }
+}

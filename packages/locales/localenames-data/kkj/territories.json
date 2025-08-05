@@ -1,0 +1,14 @@
+{
+  "main": {
+    "kkj": {
+      "identity": {
+        "language": "kkj"
+      },
+      "localeDisplayNames": {
+        "territories": {
+          "CM": "Kamɛrun"
+        }
+      }
+    }
+  }
+}

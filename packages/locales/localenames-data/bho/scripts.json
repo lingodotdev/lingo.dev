@@ -1,0 +1,14 @@
+{
+  "main": {
+    "bho": {
+      "identity": {
+        "language": "bho"
+      },
+      "localeDisplayNames": {
+        "scripts": {
+          "Deva": "देवानागारी"
+        }
+      }
+    }
+  }
+}

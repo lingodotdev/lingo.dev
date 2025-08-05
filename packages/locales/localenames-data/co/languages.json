@@ -1,0 +1,14 @@
+{
+  "main": {
+    "co": {
+      "identity": {
+        "language": "co"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "co": "corsu"
+        }
+      }
+    }
+  }
+}

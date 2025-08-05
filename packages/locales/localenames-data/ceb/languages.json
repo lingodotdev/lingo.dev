@@ -1,0 +1,47 @@
+{
+  "main": {
+    "ceb": {
+      "identity": {
+        "language": "ceb"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "ar": "Arabic",
+          "ar-001": "Modernong Standard nga Arabic",
+          "bn": "Bangla",
+          "ceb": "Cebuano",
+          "de": "German",
+          "de-CH": "Swiss High German",
+          "en": "English",
+          "en-GB": "Britanikong English",
+          "en-GB-alt-short": "English (UK)",
+          "en-US": "English (America)",
+          "en-US-alt-short": "English (US)",
+          "es": "Espanyol",
+          "es-ES": "Espanyol (Europa)",
+          "fr": "Pranses",
+          "hi": "Hindi",
+          "hi-Latn-alt-variant": "Hinglish",
+          "id": "Indonesian",
+          "it": "Italyano",
+          "ja": "Hinapon",
+          "ko": "Korean",
+          "nl": "Dutch",
+          "nl-BE": "Flemish",
+          "pl": "Polish",
+          "pt": "Portuguese",
+          "ru": "Russian",
+          "th": "Thai",
+          "tr": "Turkish",
+          "und": "Wala Mailhing Pinulongan",
+          "zh": "Inintsik",
+          "zh-alt-menu": "Chinese, Mandarin",
+          "zh-Hans": "Pinasimple nga Chinese",
+          "zh-Hans-alt-long": "Pinasimple nga Mandarin Chinese",
+          "zh-Hant": "Tradisyonal nga Chinese",
+          "zh-Hant-alt-long": "Tradisyonal nga Mandarin Chinese"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "main": {
+    "tt": {
+      "identity": {
+        "language": "tt"
+      },
+      "localeDisplayNames": {
+        "scripts": {
+          "Arab": "гарәп",
+          "Cyrl": "кирилл",
+          "Hans": "гадиләштерелгән",
+          "Hans-alt-stand-alone": "гадиләштерелгән кытай",
+          "Hant": "традицион",
+          "Hant-alt-stand-alone": "традицион кытай",
+          "Jpan": "япон",
+          "Kore": "корея",
+          "Latn": "латин",
+          "Zxxx": "язусыз",
+          "Zzzz": "билгесез язу"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "main": {
+    "ss": {
+      "identity": {
+        "language": "ss"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "ss": "siSwati"
+        }
+      }
+    }
+  }
+}

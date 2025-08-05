@@ -1,0 +1,22 @@
+{
+  "main": {
+    "su-Latn": {
+      "identity": {
+        "language": "su",
+        "script": "Latn"
+      },
+      "localeDisplayNames": {
+        "scripts": {
+          "Cyrl": "Sirilik",
+          "Hans": "Sederhana",
+          "Hans-alt-stand-alone": "Han Sederhana",
+          "Hant": "Tradisional",
+          "Hant-alt-stand-alone": "Han Tradisional",
+          "Latn": "Latin",
+          "Zxxx": "Non-tulisan",
+          "Zzzz": "Tulisan Teu Dikenal"
+        }
+      }
+    }
+  }
+}

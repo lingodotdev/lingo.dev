@@ -1,0 +1,14 @@
+{
+  "main": {
+    "eo": {
+      "identity": {
+        "language": "eo"
+      },
+      "localeDisplayNames": {
+        "scripts": {
+          "Latn": "latina"
+        }
+      }
+    }
+  }
+}

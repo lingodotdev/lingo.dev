@@ -1,0 +1,15 @@
+{
+  "main": {
+    "vmw": {
+      "identity": {
+        "language": "vmw"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "en": "ingles",
+          "vmw": "emakhuwa"
+        }
+      }
+    }
+  }
+}

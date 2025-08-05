@@ -1,0 +1,15 @@
+{
+  "main": {
+    "mgo": {
+      "identity": {
+        "language": "mgo"
+      },
+      "localeDisplayNames": {
+        "territories": {
+          "CM": "Kamalun",
+          "ZZ": "aba aben tisɔ̀"
+        }
+      }
+    }
+  }
+}

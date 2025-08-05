@@ -1,0 +1,16 @@
+{
+  "main": {
+    "kok-Latn": {
+      "identity": {
+        "language": "kok",
+        "script": "Latn"
+      },
+      "localeDisplayNames": {
+        "scripts": {
+          "Deva": "Devanagari",
+          "Latn": "Romi"
+        }
+      }
+    }
+  }
+}

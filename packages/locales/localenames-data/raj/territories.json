@@ -1,0 +1,15 @@
+{
+  "main": {
+    "raj": {
+      "identity": {
+        "language": "raj"
+      },
+      "localeDisplayNames": {
+        "territories": {
+          "IN": "भारत",
+          "ZZ": "अज्ञात"
+        }
+      }
+    }
+  }
+}

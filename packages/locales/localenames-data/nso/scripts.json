@@ -1,0 +1,14 @@
+{
+  "main": {
+    "nso": {
+      "identity": {
+        "language": "nso"
+      },
+      "localeDisplayNames": {
+        "scripts": {
+          "Latn": "SeLatina"
+        }
+      }
+    }
+  }
+}

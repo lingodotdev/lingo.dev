@@ -1,0 +1,16 @@
+{
+  "main": {
+    "csw": {
+      "identity": {
+        "language": "csw"
+      },
+      "localeDisplayNames": {
+        "scripts": {
+          "Cans": "ᓀᐦᐃᔭᐘᓯᓇᐦᐃᑳᑌᐤ",
+          "Cher": "ᒉᕑᐅᑫᕀ",
+          "Latn": "ᐋᑲᓈᓰᒨᐏᐣ"
+        }
+      }
+    }
+  }
+}

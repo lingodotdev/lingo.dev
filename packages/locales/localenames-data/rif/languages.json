@@ -1,0 +1,14 @@
+{
+  "main": {
+    "rif": {
+      "identity": {
+        "language": "rif"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "rif": "Tarifit"
+        }
+      }
+    }
+  }
+}

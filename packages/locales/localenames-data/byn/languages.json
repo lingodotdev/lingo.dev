@@ -1,0 +1,14 @@
+{
+  "main": {
+    "byn": {
+      "identity": {
+        "language": "byn"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "ro-MD": "ሞልዳቫዊና"
+        }
+      }
+    }
+  }
+}

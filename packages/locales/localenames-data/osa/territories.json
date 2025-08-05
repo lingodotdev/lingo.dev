@@ -1,0 +1,14 @@
+{
+  "main": {
+    "osa": {
+      "identity": {
+        "language": "osa"
+      },
+      "localeDisplayNames": {
+        "territories": {
+          "US": "United States"
+        }
+      }
+    }
+  }
+}

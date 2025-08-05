@@ -1,0 +1,16 @@
+{
+  "main": {
+    "az-Arab-IQ": {
+      "identity": {
+        "language": "az",
+        "script": "Arab",
+        "territory": "IQ"
+      },
+      "localeDisplayNames": {
+        "territories": {
+          "001": "دۆنیا"
+        }
+      }
+    }
+  }
+}

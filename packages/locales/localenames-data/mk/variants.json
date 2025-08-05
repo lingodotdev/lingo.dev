@@ -1,0 +1,15 @@
+{
+  "main": {
+    "mk": {
+      "identity": {
+        "language": "mk"
+      },
+      "localeDisplayNames": {
+        "variants": {
+          "PINYIN": "Пинјин романизација",
+          "WADEGILE": "Вејд-Џајлс романизација"
+        }
+      }
+    }
+  }
+}

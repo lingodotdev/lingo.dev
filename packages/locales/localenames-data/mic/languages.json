@@ -1,0 +1,14 @@
+{
+  "main": {
+    "mic": {
+      "identity": {
+        "language": "mic"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "mic": "Lʼnuiʼsuti"
+        }
+      }
+    }
+  }
+}

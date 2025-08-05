@@ -1,0 +1,14 @@
+{
+  "main": {
+    "lmo": {
+      "identity": {
+        "language": "lmo"
+      },
+      "localeDisplayNames": {
+        "scripts": {
+          "Latn": "Latin"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "main": {
+    "vmw": {
+      "identity": {
+        "language": "vmw"
+      },
+      "localeDisplayNames": {
+        "scripts": {
+          "Latn": "latim"
+        }
+      }
+    }
+  }
+}

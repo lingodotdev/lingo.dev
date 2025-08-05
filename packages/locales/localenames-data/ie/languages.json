@@ -1,0 +1,54 @@
+{
+  "main": {
+    "ie": {
+      "identity": {
+        "language": "ie"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "ar": "arabic",
+          "cs": "tchec",
+          "da": "danesi",
+          "de": "german",
+          "de-AT": "austrian german",
+          "de-CH": "sviss alt-german",
+          "el": "grec",
+          "en": "anglesi",
+          "es": "hispan",
+          "es-419": "hispan del latin America",
+          "es-ES": "europan hispan",
+          "es-MX": "mexican hispan",
+          "et": "estonian",
+          "fa": "persian",
+          "fr": "francesi",
+          "fr-CH": "sviss francesi",
+          "hu": "hungarian",
+          "id": "indonesian",
+          "ie": "Interlingue",
+          "it": "italian",
+          "ja": "japanesi",
+          "ko": "korean",
+          "lij": "ligurian",
+          "lv": "lettonian",
+          "mt": "maltesi",
+          "nl": "hollandesi",
+          "nl-BE": "flandrian",
+          "pl": "polonesi",
+          "prg": "prussian",
+          "pt": "portugalesi",
+          "pt-BR": "brasilian portugalesi",
+          "pt-PT": "europan portugalesi",
+          "ru": "russ",
+          "sk": "slovac",
+          "sl": "slovenian",
+          "sv": "sved",
+          "sw": "swahili",
+          "tr": "turc",
+          "und": "ínconosset lingue",
+          "zh": "chinesi",
+          "zh-alt-menu": "chinesi, mandarin"
+        }
+      }
+    }
+  }
+}

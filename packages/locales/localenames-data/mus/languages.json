@@ -1,0 +1,14 @@
+{
+  "main": {
+    "mus": {
+      "identity": {
+        "language": "mus"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "mus": "Mvskoke"
+        }
+      }
+    }
+  }
+}

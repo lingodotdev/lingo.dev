@@ -1,0 +1,14 @@
+{
+  "main": {
+    "kcg": {
+      "identity": {
+        "language": "kcg"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "kcg": "Katab"
+        }
+      }
+    }
+  }
+}

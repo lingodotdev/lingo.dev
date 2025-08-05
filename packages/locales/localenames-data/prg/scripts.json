@@ -1,0 +1,14 @@
+{
+  "main": {
+    "prg": {
+      "identity": {
+        "language": "prg"
+      },
+      "localeDisplayNames": {
+        "scripts": {
+          "Zzzz": "niwaīstan skriptan"
+        }
+      }
+    }
+  }
+}

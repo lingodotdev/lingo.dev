@@ -1,0 +1,23 @@
+{
+  "main": {
+    "az-Arab-IQ": {
+      "identity": {
+        "language": "az",
+        "script": "Arab",
+        "territory": "IQ"
+      },
+      "localeDisplayNames": {
+        "localeDisplayPattern": {
+          "localePattern": "{0} ({1})",
+          "localeSeparator": "{0}, {1}",
+          "localeKeyTypePattern": "{0}: {1}"
+        },
+        "codePatterns": {
+          "language": "دیل: {0}",
+          "script": "یازی: {0}",
+          "territory": "بؤلگه: {0}"
+        }
+      }
+    }
+  }
+}

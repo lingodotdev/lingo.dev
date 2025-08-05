@@ -1,0 +1,14 @@
+{
+  "main": {
+    "nnh": {
+      "identity": {
+        "language": "nnh"
+      },
+      "localeDisplayNames": {
+        "territories": {
+          "CM": "Kàmalûm"
+        }
+      }
+    }
+  }
+}

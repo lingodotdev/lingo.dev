@@ -1,0 +1,15 @@
+{
+  "main": {
+    "rhg-Rohg": {
+      "identity": {
+        "language": "rhg",
+        "script": "Rohg"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "rhg": "𐴌𐴗𐴥𐴝𐴙𐴚𐴒𐴙𐴝"
+        }
+      }
+    }
+  }
+}

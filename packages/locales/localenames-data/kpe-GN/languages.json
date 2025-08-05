@@ -1,0 +1,15 @@
+{
+  "main": {
+    "kpe-GN": {
+      "identity": {
+        "language": "kpe",
+        "territory": "GN"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "kpe": "Kpɛlɛɛ"
+        }
+      }
+    }
+  }
+}

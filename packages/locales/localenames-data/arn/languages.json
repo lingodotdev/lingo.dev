@@ -1,0 +1,14 @@
+{
+  "main": {
+    "arn": {
+      "identity": {
+        "language": "arn"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "arn": "Mapudungun"
+        }
+      }
+    }
+  }
+}

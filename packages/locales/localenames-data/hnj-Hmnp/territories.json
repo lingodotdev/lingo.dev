@@ -1,0 +1,15 @@
+{
+  "main": {
+    "hnj-Hmnp": {
+      "identity": {
+        "language": "hnj",
+        "script": "Hmnp"
+      },
+      "localeDisplayNames": {
+        "territories": {
+          "US": "𞄒𞄫𞄱𞄔𞄩𞄴"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "main": {
+    "kxv-Orya": {
+      "identity": {
+        "language": "kxv",
+        "script": "Orya"
+      },
+      "localeDisplayNames": {
+        "scripts": {
+          "Arab": "ଆରବିକ୍",
+          "Beng": "ବଙ୍ଗାଲୀ",
+          "Brah": "ବ୍ରାହ୍ମି",
+          "Cher": "ଚେରକୀ",
+          "Cyrl": "ସିରିଲିକ୍",
+          "Deva": "ଦେୱନାଗରୀ",
+          "Gujr": "ଗୁଜୁରାଟୀ",
+          "Guru": "ଗୁରମୁକୀ",
+          "Hans": "ସହଜ",
+          "Hans-alt-stand-alone": "ସହଜ ହାନ",
+          "Hant": "ହିରୁଦଲୁ",
+          "Hant-alt-stand-alone": "ହିରୁ ଦଲୁ ହାନ୍‌",
+          "Knda": "କନ୍ନଡ଼",
+          "Latn": "ଲାଟିନ୍",
+          "Mlym": "ମାଲାୟଲମ୍",
+          "Orya": "ଅଡ଼ିଆ",
+          "Saur": "ସଉରାଷ୍ଟ୍ର",
+          "Taml": "ତାମିଲ୍",
+          "Telu": "ତେଲୁଗୁ"
+        }
+      }
+    }
+  }
+}

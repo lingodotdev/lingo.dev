@@ -1,0 +1,14 @@
+{
+  "main": {
+    "gaa": {
+      "identity": {
+        "language": "gaa"
+      },
+      "localeDisplayNames": {
+        "territories": {
+          "GH": "Ghana"
+        }
+      }
+    }
+  }
+}

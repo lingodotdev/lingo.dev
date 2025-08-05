@@ -1,0 +1,34 @@
+{
+  "main": {
+    "lrc-IQ": {
+      "identity": {
+        "language": "lrc",
+        "territory": "IQ"
+      },
+      "localeDisplayNames": {
+        "localeDisplayPattern": {
+          "localePattern": "{0} ({1})",
+          "localeSeparator": "{0}, {1}",
+          "localeKeyTypePattern": "{0}: {1}"
+        },
+        "types": {
+          "calendar": {
+            "gregorian": "تأقڤیم گأرئگوٙری"
+          },
+          "collation": {
+            "standard": "کوٙلاتی ئستاندارد"
+          },
+          "numbers": {
+            "arab": "أدأدیا عأرأڤی",
+            "latn": "عأدأدیا لاتین"
+          }
+        },
+        "codePatterns": {
+          "language": "{0}",
+          "script": "{0}",
+          "territory": "{0}"
+        }
+      }
+    }
+  }
+}

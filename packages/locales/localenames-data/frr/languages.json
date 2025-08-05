@@ -1,0 +1,14 @@
+{
+  "main": {
+    "frr": {
+      "identity": {
+        "language": "frr"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "frr": "Nordfriisk"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "main": {
+    "rw": {
+      "identity": {
+        "language": "rw"
+      },
+      "localeDisplayNames": {
+        "territories": {
+          "MK": "Masedoniya y’Amajyaruguru",
+          "RW": "U Rwanda",
+          "TO": "Tonga"
+        }
+      }
+    }
+  }
+}

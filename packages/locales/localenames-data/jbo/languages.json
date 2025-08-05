@@ -1,0 +1,14 @@
+{
+  "main": {
+    "jbo": {
+      "identity": {
+        "language": "jbo"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "jbo": "la .lojban."
+        }
+      }
+    }
+  }
+}

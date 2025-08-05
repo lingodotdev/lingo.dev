@@ -1,0 +1,14 @@
+{
+  "main": {
+    "blt": {
+      "identity": {
+        "language": "blt"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "blt": "ꪼꪕꪒꪾ"
+        }
+      }
+    }
+  }
+}

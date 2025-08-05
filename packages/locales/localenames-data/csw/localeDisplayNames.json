@@ -1,0 +1,24 @@
+{
+  "main": {
+    "csw": {
+      "identity": {
+        "language": "csw"
+      },
+      "localeDisplayNames": {
+        "localeDisplayPattern": {
+          "localePattern": "{0} ({1})",
+          "localeSeparator": "{0}, {1}",
+          "localeKeyTypePattern": "{0}: {1}"
+        },
+        "keys": {
+          "calendar": "ᐲᓯᒧᐊᓯᓇᐦᐃᑲᐣ"
+        },
+        "codePatterns": {
+          "language": "ᐊᔭᒥᐏᐣ: {0}",
+          "script": "ᒪᓯᓇᐦᐃᑫᐏᐣ: {0}",
+          "territory": "ᓀᐦᐃᔭᐘᐣᑭᕀ: {0}"
+        }
+      }
+    }
+  }
+}

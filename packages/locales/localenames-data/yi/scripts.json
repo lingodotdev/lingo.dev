@@ -1,0 +1,19 @@
+{
+  "main": {
+    "yi": {
+      "identity": {
+        "language": "yi"
+      },
+      "localeDisplayNames": {
+        "scripts": {
+          "Arab": "אַראַביש",
+          "Cyrl": "ציריליש",
+          "Deva": "דעוואַנאַגאַרי",
+          "Grek": "גריכיש",
+          "Hebr": "העברעיש",
+          "Latn": "גַלחיש"
+        }
+      }
+    }
+  }
+}

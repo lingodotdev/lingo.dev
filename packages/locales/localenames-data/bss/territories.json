@@ -1,0 +1,14 @@
+{
+  "main": {
+    "bss": {
+      "identity": {
+        "language": "bss"
+      },
+      "localeDisplayNames": {
+        "territories": {
+          "CM": "Kamerûn"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "main": {
+    "prg": {
+      "identity": {
+        "language": "prg"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "en": "ēngliskan",
+          "prg": "prūsiskan"
+        }
+      }
+    }
+  }
+}

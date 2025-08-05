@@ -1,0 +1,14 @@
+{
+  "main": {
+    "mt": {
+      "identity": {
+        "language": "mt"
+      },
+      "localeDisplayNames": {
+        "variants": {
+          "REVISED": "Ortografija Irriveda"
+        }
+      }
+    }
+  }
+}

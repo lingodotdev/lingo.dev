@@ -1,0 +1,24 @@
+{
+  "main": {
+    "ceb": {
+      "identity": {
+        "language": "ceb"
+      },
+      "localeDisplayNames": {
+        "scripts": {
+          "Arab": "Arabiko",
+          "Cyrl": "Cyrillic",
+          "Hans": "Pinasimple",
+          "Hans-alt-stand-alone": "Pinasimple nga Han",
+          "Hant": "Tradisyonal",
+          "Hant-alt-stand-alone": "Tradisyonal nga Han",
+          "Jpan": "Japanese",
+          "Kore": "Korean",
+          "Latn": "Latin",
+          "Zxxx": "Dili Sinulat",
+          "Zzzz": "Wala Mailhing Script"
+        }
+      }
+    }
+  }
+}

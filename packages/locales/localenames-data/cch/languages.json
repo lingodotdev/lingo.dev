@@ -1,0 +1,14 @@
+{
+  "main": {
+    "cch": {
+      "identity": {
+        "language": "cch"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "cch": "Atsam"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "main": {
+    "bss": {
+      "identity": {
+        "language": "bss"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "bss": "Akoose",
+          "en": "Akáálé",
+          "fr": "Frɛnsé"
+        }
+      }
+    }
+  }
+}

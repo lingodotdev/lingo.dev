@@ -1,0 +1,14 @@
+{
+  "main": {
+    "ssy": {
+      "identity": {
+        "language": "ssy"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "ssy": "Saho"
+        }
+      }
+    }
+  }
+}

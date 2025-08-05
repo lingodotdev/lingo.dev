@@ -1,0 +1,15 @@
+{
+  "main": {
+    "fil": {
+      "identity": {
+        "language": "fil"
+      },
+      "localeDisplayNames": {
+        "variants": {
+          "PINYIN": "Pinyin Romanization",
+          "WADEGILE": "Wade-Giles Romanization"
+        }
+      }
+    }
+  }
+}

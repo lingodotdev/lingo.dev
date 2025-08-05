@@ -1,0 +1,16 @@
+{
+  "main": {
+    "oc-ES": {
+      "identity": {
+        "language": "oc",
+        "territory": "ES"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "en": "anglés",
+          "oc": "occitan"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "main": {
+    "oc": {
+      "identity": {
+        "language": "oc"
+      },
+      "localeDisplayNames": {
+        "scripts": {
+          "Latn": "latin"
+        }
+      }
+    }
+  }
+}

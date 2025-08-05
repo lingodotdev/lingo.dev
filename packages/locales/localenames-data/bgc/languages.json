@@ -1,0 +1,15 @@
+{
+  "main": {
+    "bgc": {
+      "identity": {
+        "language": "bgc"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "bgc": "हरियाणवी",
+          "en": "अंग्रेजी"
+        }
+      }
+    }
+  }
+}

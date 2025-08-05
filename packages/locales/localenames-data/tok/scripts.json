@@ -1,0 +1,18 @@
+{
+  "main": {
+    "tok": {
+      "identity": {
+        "language": "tok"
+      },
+      "localeDisplayNames": {
+        "scripts": {
+          "Arab": "sitelen Alapi",
+          "Jpan": "sitelen Nijon",
+          "Latn": "sitelen Lasina",
+          "Zxxx": "sitelen ala",
+          "Zzzz": "sitelen ante"
+        }
+      }
+    }
+  }
+}

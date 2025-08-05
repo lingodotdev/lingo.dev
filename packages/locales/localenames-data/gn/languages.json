@@ -1,0 +1,14 @@
+{
+  "main": {
+    "gn": {
+      "identity": {
+        "language": "gn"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "gn": "avañe’ẽ"
+        }
+      }
+    }
+  }
+}

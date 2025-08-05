@@ -1,0 +1,15 @@
+{
+  "main": {
+    "bho": {
+      "identity": {
+        "language": "bho"
+      },
+      "localeDisplayNames": {
+        "territories": {
+          "IN": "भारत",
+          "ZZ": "अनजान इलाका"
+        }
+      }
+    }
+  }
+}

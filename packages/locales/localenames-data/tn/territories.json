@@ -1,0 +1,15 @@
+{
+  "main": {
+    "tn": {
+      "identity": {
+        "language": "tn"
+      },
+      "localeDisplayNames": {
+        "territories": {
+          "BW": "Botswana",
+          "ZA": "Aforika Borwa"
+        }
+      }
+    }
+  }
+}

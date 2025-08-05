@@ -1,0 +1,15 @@
+{
+  "main": {
+    "pap-AW": {
+      "identity": {
+        "language": "pap",
+        "territory": "AW"
+      },
+      "localeDisplayNames": {
+        "territories": {
+          "CW": "Kòrsou"
+        }
+      }
+    }
+  }
+}

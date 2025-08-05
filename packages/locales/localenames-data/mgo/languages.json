@@ -1,0 +1,15 @@
+{
+  "main": {
+    "mgo": {
+      "identity": {
+        "language": "mgo"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "mgo": "metaʼ",
+          "und": "ngam tisɔʼ"
+        }
+      }
+    }
+  }
+}

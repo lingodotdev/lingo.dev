@@ -1,0 +1,14 @@
+{
+  "main": {
+    "st": {
+      "identity": {
+        "language": "st"
+      },
+      "localeDisplayNames": {
+        "scripts": {
+          "Latn": "Selatine"
+        }
+      }
+    }
+  }
+}

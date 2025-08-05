@@ -1,0 +1,15 @@
+{
+  "main": {
+    "st": {
+      "identity": {
+        "language": "st"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "en": "Senyesemane",
+          "st": "Sesotho"
+        }
+      }
+    }
+  }
+}

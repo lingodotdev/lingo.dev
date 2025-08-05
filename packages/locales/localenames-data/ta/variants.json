@@ -1,0 +1,15 @@
+{
+  "main": {
+    "ta": {
+      "identity": {
+        "language": "ta"
+      },
+      "localeDisplayNames": {
+        "variants": {
+          "PINYIN": "பின்யின் ரோமானைசெஷன்",
+          "WADEGILE": "வேட்-கைல்ஸ் ரோமனைஷேசன்"
+        }
+      }
+    }
+  }
+}

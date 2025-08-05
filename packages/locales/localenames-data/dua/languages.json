@@ -1,0 +1,14 @@
+{
+  "main": {
+    "dua": {
+      "identity": {
+        "language": "dua"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "dua": "duálá"
+        }
+      }
+    }
+  }
+}

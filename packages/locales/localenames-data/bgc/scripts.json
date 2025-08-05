@@ -1,0 +1,14 @@
+{
+  "main": {
+    "bgc": {
+      "identity": {
+        "language": "bgc"
+      },
+      "localeDisplayNames": {
+        "scripts": {
+          "Deva": "देवानागारी"
+        }
+      }
+    }
+  }
+}

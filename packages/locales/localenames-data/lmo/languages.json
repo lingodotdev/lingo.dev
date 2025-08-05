@@ -1,0 +1,15 @@
+{
+  "main": {
+    "lmo": {
+      "identity": {
+        "language": "lmo"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "en": "ingles",
+          "lmo": "Lombard"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "main": {
+    "sms": {
+      "identity": {
+        "language": "sms"
+      },
+      "localeDisplayNames": {
+        "languages": {
+          "sms": "sääʹmǩiõll"
+        }
+      }
+    }
+  }
+}

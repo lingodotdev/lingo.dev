@@ -1,0 +1,15 @@
+{
+  "main": {
+    "gv": {
+      "identity": {
+        "language": "gv"
+      },
+      "localeDisplayNames": {
+        "territories": {
+          "GB": "Rywvaneth Unys",
+          "IM": "Ellan Vannin"
+        }
+      }
+    }
+  }
+}
