@@ -1,7 +1,10 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import fs from "fs";
 import path from "path";
-import { getFeaturesForBucket, getBucketsForFeature } from "./generate-bucket-feature-docs";
+import {
+  getFeaturesForBucket,
+  getBucketsForFeature,
+} from "./generate-bucket-feature-docs";
 
 vi.mock("fs");
 vi.mock("path");
@@ -43,15 +46,22 @@ describe("generate-bucket-feature-docs", () => {
       const codeWithoutFeature = "return baseLoader;";
 
       expect(codeWithFeature.includes("createIgnoredKeysLoader")).toBe(true);
-      expect(codeWithoutFeature.includes("createIgnoredKeysLoader")).toBe(false);
+      expect(codeWithoutFeature.includes("createIgnoredKeysLoader")).toBe(
+        false,
+      );
     });
 
     it("should detect createMdxLockedPatternsLoader usage", () => {
-      const codeWithFeature = "return createMdxLockedPatternsLoader(baseLoader);";
+      const codeWithFeature =
+        "return createMdxLockedPatternsLoader(baseLoader);";
       const codeWithoutFeature = "return baseLoader;";
 
-      expect(codeWithFeature.includes("createMdxLockedPatternsLoader")).toBe(true);
-      expect(codeWithoutFeature.includes("createMdxLockedPatternsLoader")).toBe(false);
+      expect(codeWithFeature.includes("createMdxLockedPatternsLoader")).toBe(
+        true,
+      );
+      expect(codeWithoutFeature.includes("createMdxLockedPatternsLoader")).toBe(
+        false,
+      );
     });
 
     it("should detect createInjectLocaleLoader usage", () => {
@@ -59,11 +69,14 @@ describe("generate-bucket-feature-docs", () => {
       const codeWithoutFeature = "return baseLoader;";
 
       expect(codeWithFeature.includes("createInjectLocaleLoader")).toBe(true);
-      expect(codeWithoutFeature.includes("createInjectLocaleLoader")).toBe(false);
+      expect(codeWithoutFeature.includes("createInjectLocaleLoader")).toBe(
+        false,
+      );
     });
 
     it("should detect multiple features in complex code", () => {
-      const complexCode = "return createLockedKeysLoader(createIgnoredKeysLoader(baseLoader));";
+      const complexCode =
+        "return createLockedKeysLoader(createIgnoredKeysLoader(baseLoader));";
 
       expect(complexCode.includes("createLockedKeysLoader")).toBe(true);
       expect(complexCode.includes("createIgnoredKeysLoader")).toBe(true);
@@ -75,18 +88,18 @@ describe("generate-bucket-feature-docs", () => {
   describe("file operations", () => {
     it("should handle file existence checks", () => {
       vi.mocked(fs.existsSync).mockReturnValue(true);
-      
+
       const result = fs.existsSync("/some/path");
-      
+
       expect(result).toBe(true);
       expect(fs.existsSync).toHaveBeenCalledWith("/some/path");
     });
 
     it("should handle file reading", () => {
       vi.mocked(fs.readFileSync).mockReturnValue("file content");
-      
+
       const content = fs.readFileSync("/some/path", "utf8");
-      
+
       expect(content).toBe("file content");
       expect(fs.readFileSync).toHaveBeenCalledWith("/some/path", "utf8");
     });
@@ -94,10 +107,10 @@ describe("generate-bucket-feature-docs", () => {
     it("should handle path operations", () => {
       vi.mocked(path.join).mockReturnValue("/joined/path");
       vi.mocked(path.resolve).mockReturnValue("/resolved/path");
-      
+
       const joined = path.join("a", "b");
       const resolved = path.resolve("relative");
-      
+
       expect(joined).toBe("/joined/path");
       expect(resolved).toBe("/resolved/path");
     });
@@ -106,9 +119,9 @@ describe("generate-bucket-feature-docs", () => {
   describe("error scenarios", () => {
     it("should handle missing files gracefully", () => {
       vi.mocked(fs.existsSync).mockReturnValue(false);
-      
+
       const exists = fs.existsSync("/nonexistent/file");
-      
+
       expect(exists).toBe(false);
     });
 
@@ -126,7 +139,9 @@ describe("generate-bucket-feature-docs", () => {
     });
 
     it("should handle console operations", () => {
-      const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+      const consoleSpy = vi
+        .spyOn(console, "error")
+        .mockImplementation(() => {});
       const tablespy = vi.spyOn(console, "table").mockImplementation(() => {});
 
       console.error("test error");
@@ -146,9 +161,11 @@ describe("generate-bucket-feature-docs", () => {
       vi.mocked(path.dirname).mockReturnValue("/mock/dir");
       vi.mocked(path.resolve).mockReturnValue("/mock/repo/root");
       vi.mocked(path.join)
-        .mockReturnValueOnce("/mock/repo/root/packages/cli/src/cli/loaders/index.ts")
+        .mockReturnValueOnce(
+          "/mock/repo/root/packages/cli/src/cli/loaders/index.ts",
+        )
         .mockReturnValueOnce("/mock/repo/root/packages/spec/src/formats.ts");
-      
+
       vi.mocked(fs.readFileSync).mockReturnValue(`
         export default function createBucketLoader(bucketType: string) {
           switch (bucketType) {
@@ -170,37 +187,43 @@ describe("generate-bucket-feature-docs", () => {
     describe("getFeaturesForBucket", () => {
       it("should return correct features for json bucket", async () => {
         vi.doMock("/mock/repo/root/packages/spec/src/formats.ts", () => ({
-          bucketTypes: ["json", "mdx", "typescript", "yaml", "android"]
+          bucketTypes: ["json", "mdx", "typescript", "yaml", "android"],
         }));
 
         const features = await getFeaturesForBucket("json");
-        expect(features).toEqual(expect.arrayContaining(["lockedKeys", "injectLocale"]));
+        expect(features).toEqual(
+          expect.arrayContaining(["lockedKeys", "injectLocale"]),
+        );
         expect(features).toHaveLength(2);
       });
 
       it("should return correct features for mdx bucket", async () => {
         vi.doMock("/mock/repo/root/packages/spec/src/formats.ts", () => ({
-          bucketTypes: ["json", "mdx", "typescript", "yaml", "android"]
+          bucketTypes: ["json", "mdx", "typescript", "yaml", "android"],
         }));
 
         const features = await getFeaturesForBucket("mdx");
-        expect(features).toEqual(expect.arrayContaining(["lockedKeys", "lockedPatterns"]));
+        expect(features).toEqual(
+          expect.arrayContaining(["lockedKeys", "lockedPatterns"]),
+        );
         expect(features).toHaveLength(2);
       });
 
       it("should return correct features for typescript bucket", async () => {
         vi.doMock("/mock/repo/root/packages/spec/src/formats.ts", () => ({
-          bucketTypes: ["json", "mdx", "typescript", "yaml", "android"]
+          bucketTypes: ["json", "mdx", "typescript", "yaml", "android"],
         }));
 
         const features = await getFeaturesForBucket("typescript");
-        expect(features).toEqual(expect.arrayContaining(["lockedKeys", "ignoredKeys"]));
+        expect(features).toEqual(
+          expect.arrayContaining(["lockedKeys", "ignoredKeys"]),
+        );
         expect(features).toHaveLength(2);
       });
 
       it("should return empty array for bucket with no features", async () => {
         vi.doMock("/mock/repo/root/packages/spec/src/formats.ts", () => ({
-          bucketTypes: ["json", "mdx", "typescript", "yaml", "android"]
+          bucketTypes: ["json", "mdx", "typescript", "yaml", "android"],
         }));
 
         const features = await getFeaturesForBucket("android");
@@ -209,27 +232,31 @@ describe("generate-bucket-feature-docs", () => {
 
       it("should throw error for unknown bucket type", async () => {
         vi.doMock("/mock/repo/root/packages/spec/src/formats.ts", () => ({
-          bucketTypes: ["json", "mdx", "typescript", "yaml"]
+          bucketTypes: ["json", "mdx", "typescript", "yaml"],
         }));
 
-        await expect(getFeaturesForBucket("unknown")).rejects.toThrow("Unknown bucket type: unknown");
+        await expect(getFeaturesForBucket("unknown")).rejects.toThrow(
+          "Unknown bucket type: unknown",
+        );
       });
     });
 
     describe("getBucketsForFeature", () => {
       it("should return correct buckets for lockedKeys feature", async () => {
         vi.doMock("/mock/repo/root/packages/spec/src/formats.ts", () => ({
-          bucketTypes: ["json", "mdx", "typescript", "yaml", "android"]
+          bucketTypes: ["json", "mdx", "typescript", "yaml", "android"],
         }));
 
         const buckets = await getBucketsForFeature("lockedKeys");
-        expect(buckets).toEqual(expect.arrayContaining(["json", "mdx", "typescript", "yaml"]));
+        expect(buckets).toEqual(
+          expect.arrayContaining(["json", "mdx", "typescript", "yaml"]),
+        );
         expect(buckets).toHaveLength(4);
       });
 
       it("should return correct buckets for lockedPatterns feature", async () => {
         vi.doMock("/mock/repo/root/packages/spec/src/formats.ts", () => ({
-          bucketTypes: ["json", "mdx", "typescript", "yaml", "android"]
+          bucketTypes: ["json", "mdx", "typescript", "yaml", "android"],
         }));
 
         const buckets = await getBucketsForFeature("lockedPatterns");
@@ -238,7 +265,7 @@ describe("generate-bucket-feature-docs", () => {
 
       it("should return correct buckets for injectLocale feature", async () => {
         vi.doMock("/mock/repo/root/packages/spec/src/formats.ts", () => ({
-          bucketTypes: ["json", "mdx", "typescript", "yaml", "android"]
+          bucketTypes: ["json", "mdx", "typescript", "yaml", "android"],
         }));
 
         const buckets = await getBucketsForFeature("injectLocale");
@@ -247,7 +274,7 @@ describe("generate-bucket-feature-docs", () => {
 
       it("should return correct buckets for ignoredKeys feature", async () => {
         vi.doMock("/mock/repo/root/packages/spec/src/formats.ts", () => ({
-          bucketTypes: ["json", "mdx", "typescript", "yaml", "android"]
+          bucketTypes: ["json", "mdx", "typescript", "yaml", "android"],
         }));
 
         const buckets = await getBucketsForFeature("ignoredKeys");
@@ -267,7 +294,7 @@ describe("generate-bucket-feature-docs", () => {
         `);
 
         vi.doMock("/mock/repo/root/packages/spec/src/formats.ts", () => ({
-          bucketTypes: ["json"]
+          bucketTypes: ["json"],
         }));
 
         const buckets = await getBucketsForFeature("lockedKeys");

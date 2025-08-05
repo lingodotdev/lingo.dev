@@ -13,7 +13,11 @@ import { pathToFileURL } from "url";
  */
 
 type FeatureMatrix = Record<string, Record<string, boolean>>;
-type FeatureName = "lockedKeys" | "lockedPatterns" | "ignoredKeys" | "injectLocale";
+type FeatureName =
+  | "lockedKeys"
+  | "lockedPatterns"
+  | "ignoredKeys"
+  | "injectLocale";
 
 async function buildMatrix(): Promise<FeatureMatrix> {
   const currentDir = path.dirname(new URL(import.meta.url).pathname);
@@ -101,10 +105,12 @@ async function buildMatrix(): Promise<FeatureMatrix> {
  * @param bucketType - The bucket type to check (e.g., "json", "yaml", "android")
  * @returns Array of feature names that the bucket supports
  */
-async function getFeaturesForBucket(bucketType: string): Promise<FeatureName[]> {
+async function getFeaturesForBucket(
+  bucketType: string,
+): Promise<FeatureName[]> {
   const matrix = await buildMatrix();
   const bucketFeatures = matrix[bucketType];
-  
+
   if (!bucketFeatures) {
     throw new Error(`Unknown bucket type: ${bucketType}`);
   }
@@ -119,9 +125,11 @@ async function getFeaturesForBucket(bucketType: string): Promise<FeatureName[]> 
  * @param featureName - The feature to check (e.g., "lockedKeys", "injectLocale")
  * @returns Array of bucket type names that support the feature
  */
-async function getBucketsForFeature(featureName: FeatureName): Promise<string[]> {
+async function getBucketsForFeature(
+  featureName: FeatureName,
+): Promise<string[]> {
   const matrix = await buildMatrix();
-  
+
   return Object.entries(matrix)
     .filter(([, features]) => features[featureName])
     .map(([bucketType]) => bucketType);
