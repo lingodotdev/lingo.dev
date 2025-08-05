@@ -7,7 +7,7 @@
   "types": "build/index.d.ts",
   "files": [
     "build",
-    "data"
+    "localenames-data"
   ],
   "scripts": {
     "test": "vitest run",

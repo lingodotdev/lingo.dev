@@ -77,7 +77,7 @@ async function runAsyncExamples() {
   console.log('await getCountryName("US"):', await getCountryName("US"));
   console.log(
     'await getCountryName("US", "es"):',
-    await getCountryName("US", "es"),
+    await getCountryName("IN", "es"),
   );
   console.log('await getCountryName("CN"):', await getCountryName("CN"));
   console.log(
