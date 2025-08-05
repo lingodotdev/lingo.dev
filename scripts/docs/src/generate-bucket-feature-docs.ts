@@ -12,7 +12,10 @@ import { pathToFileURL } from "url";
  *   npx tsx src/generate-bucket-feature-docs.ts
  */
 
-async function main() {
+type FeatureMatrix = Record<string, Record<string, boolean>>;
+type FeatureName = "lockedKeys" | "lockedPatterns" | "ignoredKeys" | "injectLocale";
+
+async function buildMatrix(): Promise<FeatureMatrix> {
   const currentDir = path.dirname(new URL(import.meta.url).pathname);
   const repoRoot = path.resolve(currentDir, "../../..");
   const sourcePath = path.join(
@@ -22,13 +25,11 @@ async function main() {
   const specPath = path.join(repoRoot, "packages/spec/src/formats.ts");
 
   if (!fs.existsSync(sourcePath)) {
-    console.error(`Error: Could not find loader file at ${sourcePath}`);
-    process.exit(1);
+    throw new Error(`Could not find loader file at ${sourcePath}`);
   }
 
   if (!fs.existsSync(specPath)) {
-    console.error(`Error: Could not find spec file at ${specPath}`);
-    process.exit(1);
+    throw new Error(`Could not find spec file at ${specPath}`);
   }
 
   const specModule = (await import(pathToFileURL(specPath).href)) as {
@@ -47,7 +48,7 @@ async function main() {
   );
 
   // Matrix keyed by bucket type, each holding a record of option -> boolean.
-  const matrix: Record<string, Record<string, boolean>> = {};
+  const matrix: FeatureMatrix = {};
 
   function has(code: string, snippet: string) {
     return code.includes(snippet);
@@ -92,10 +93,46 @@ async function main() {
     }
   });
 
+  return matrix;
+}
+
+/**
+ * Get all features supported by a specific bucket type
+ * @param bucketType - The bucket type to check (e.g., "json", "yaml", "android")
+ * @returns Array of feature names that the bucket supports
+ */
+async function getFeaturesForBucket(bucketType: string): Promise<FeatureName[]> {
+  const matrix = await buildMatrix();
+  const bucketFeatures = matrix[bucketType];
+  
+  if (!bucketFeatures) {
+    throw new Error(`Unknown bucket type: ${bucketType}`);
+  }
+
+  return (Object.entries(bucketFeatures) as [FeatureName, boolean][])
+    .filter(([, supported]) => supported)
+    .map(([feature]) => feature);
+}
+
+/**
+ * Get all bucket types that support a specific feature
+ * @param featureName - The feature to check (e.g., "lockedKeys", "injectLocale")
+ * @returns Array of bucket type names that support the feature
+ */
+async function getBucketsForFeature(featureName: FeatureName): Promise<string[]> {
+  const matrix = await buildMatrix();
+  
+  return Object.entries(matrix)
+    .filter(([, features]) => features[featureName])
+    .map(([bucketType]) => bucketType);
+}
+
+async function main() {
+  const matrix = await buildMatrix();
   console.table(matrix);
 }
 
-export { main };
+export { main, getFeaturesForBucket, getBucketsForFeature };
 
 if (import.meta.url === pathToFileURL(process.argv[1]).href) {
   main().catch((err) => {
