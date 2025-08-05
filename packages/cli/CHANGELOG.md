@@ -1,5 +1,25 @@
 # lingo.dev
 
+## 0.110.1
+
+### Patch Changes
+
+- [`555384d`](https://github.com/lingodotdev/lingo.dev/commit/555384dacf79167e1bb8b9e6871e153fea763471) Thanks [@mathio](https://github.com/mathio)! - revert
+
+## 0.110.0
+
+### Minor Changes
+
+- [#1065](https://github.com/lingodotdev/lingo.dev/pull/1065) [`c0486ca`](https://github.com/lingodotdev/lingo.dev/commit/c0486ca9b0451ea75d070e199f502507ba418e5e) Thanks [@VAIBHAVSING](https://github.com/VAIBHAVSING)! - Add support for `ignoredKeys` in TypeScript loader
+
+  The TypeScript loader now fully supports the `ignoredKeys` option, allowing you to exclude specific keys (including nested keys) from localization when using both `export default` and `export const` patterns. This works seamlessly with the `run` method and the CLI, and is compatible with flattened key structures. All related tests now pass.
+
+## 0.109.2
+
+### Patch Changes
+
+- [#1108](https://github.com/lingodotdev/lingo.dev/pull/1108) [`99aae2d`](https://github.com/lingodotdev/lingo.dev/commit/99aae2d09a26060c810913f740893a4a5874d9d4) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - Update deprecated 'lingo.dev auth --login' command references to 'lingo.dev login' in CLI error messages
+
 ## 0.109.1
 
 ### Patch Changes

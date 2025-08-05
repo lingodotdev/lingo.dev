@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       issue_number:
-        description: 'Issue number to label'
+        description: "Issue number to label"
         required: false
         type: string
 
@@ -156,4 +156,3 @@ jobs:
             - ALWAYS be matter-of-fact and use simple, casual language
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-

@@ -76,7 +76,7 @@ export default new Command()
           ora.succeed(`Authenticated as ${auth.email}`);
         } else {
           ora.info(
-            "Not authenticated. Continuing without authentication. (Run `lingo.dev auth --login` to authenticate)",
+            "Not authenticated. Continuing without authentication. (Run `lingo.dev login` to authenticate)",
           );
         }
       } catch (error) {
