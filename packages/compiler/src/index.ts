@@ -258,7 +258,8 @@ export default {
         // Regex for all relevant files for Lingo.dev
         const lingoGlob = `**/*.{ts,tsx,js,jsx}`;
 
-        const lingoLoaderPath = require.resolve("./lingo-turbopack-loader");
+        // The .cjs extension is required for Next.js v14
+        const lingoLoaderPath = require.resolve("./lingo-turbopack-loader.cjs");
 
         rules[lingoGlob] = {
           loaders: [
