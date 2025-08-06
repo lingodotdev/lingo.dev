@@ -1,5 +1,14 @@
 # lingo.dev
 
+## 0.110.3
+
+### Patch Changes
+
+- [#1119](https://github.com/lingodotdev/lingo.dev/pull/1119) [`e898c1e`](https://github.com/lingodotdev/lingo.dev/commit/e898c1eeb34e4dd3e74df26465802b520018acf9) Thanks [@mathio](https://github.com/mathio)! - compiler fallback to source locale
+
+- Updated dependencies [[`e898c1e`](https://github.com/lingodotdev/lingo.dev/commit/e898c1eeb34e4dd3e74df26465802b520018acf9)]:
+  - @lingo.dev/_react@0.4.3
+
 ## 0.110.2
 
 ### Patch Changes
