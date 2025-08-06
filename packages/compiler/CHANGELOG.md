@@ -1,5 +1,11 @@
 # @lingo.dev/\_compiler
 
+## 0.7.6
+
+### Patch Changes
+
+- [#1121](https://github.com/lingodotdev/lingo.dev/pull/1121) [`b6071e4`](https://github.com/lingodotdev/lingo.dev/commit/b6071e4f19dd1823f4f2ce54ba5495538a94d4fd) Thanks [@mathio](https://github.com/mathio)! - compiler: prevent duplicate props
+
 ## 0.7.5
 
 ### Patch Changes
