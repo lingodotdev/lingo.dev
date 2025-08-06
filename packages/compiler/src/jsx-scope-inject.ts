@@ -12,6 +12,7 @@ import { getJsxVariables } from "./utils/jsx-variables";
 import { getJsxFunctions } from "./utils/jsx-functions";
 import { getJsxExpressions } from "./utils/jsx-expressions";
 import { collectJsxScopes, getJsxScopeAttribute } from "./utils/jsx-scope";
+import { setJsxAttributeValue } from "./utils/jsx-attribute";
 
 export const lingoJsxScopeInjectMutation = createCodeMutation((payload) => {
   const mode = getModuleExecutionMode(payload.ast, payload.params.rsc);
@@ -36,102 +37,80 @@ export const lingoJsxScopeInjectMutation = createCodeMutation((payload) => {
       continue;
     }
 
-    // Build new attributes array, preserving all original attributes
-    const originalAttributes = jsxScope.node.openingElement.attributes.slice();
-
-    // Add $as prop
-    const as = /^[A-Z]/.test(originalJsxElementName)
-      ? t.jsxExpressionContainer(t.identifier(originalJsxElementName))
-      : t.stringLiteral(originalJsxElementName);
-    originalAttributes.push(t.jsxAttribute(t.jsxIdentifier("$as"), as));
-    // Add $fileKey prop
-    originalAttributes.push(
-      t.jsxAttribute(
-        t.jsxIdentifier("$fileKey"),
-        t.stringLiteral(payload.relativeFilePath),
-      ),
-    );
-    // Add $entryKey prop
-    originalAttributes.push(
-      t.jsxAttribute(
-        t.jsxIdentifier("$entryKey"),
-        t.stringLiteral(getJsxScopeAttribute(jsxScope)!),
-      ),
-    );
-
-    // Extract $variables from original JSX scope before lingo component was inserted
-    const $variables = getJsxVariables(jsxScope);
-    if ($variables.properties.length > 0) {
-      originalAttributes.push(
-        t.jsxAttribute(
-          t.jsxIdentifier("$variables"),
-          t.jsxExpressionContainer($variables),
-        ),
-      );
-    }
-    // Extract nested JSX elements
-    const $elements = getNestedJsxElements(jsxScope);
-    if ($elements.elements.length > 0) {
-      originalAttributes.push(
-        t.jsxAttribute(
-          t.jsxIdentifier("$elements"),
-          t.jsxExpressionContainer($elements),
-        ),
-      );
-    }
-    // Extract nested functions
-    const $functions = getJsxFunctions(jsxScope);
-    if ($functions.properties.length > 0) {
-      originalAttributes.push(
-        t.jsxAttribute(
-          t.jsxIdentifier("$functions"),
-          t.jsxExpressionContainer($functions),
-        ),
-      );
-    }
-    // Extract expressions
-    const $expressions = getJsxExpressions(jsxScope);
-    if ($expressions.elements.length > 0) {
-      originalAttributes.push(
-        t.jsxAttribute(
-          t.jsxIdentifier("$expressions"),
-          t.jsxExpressionContainer($expressions),
-        ),
-      );
-    }
-    if (mode === "server") {
-      // Add $loadDictionary prop
-      const loadDictionaryImport = getOrCreateImport(payload.ast, {
-        exportedName: "loadDictionary",
-        moduleName: ModuleId.ReactRSC,
-      });
-      originalAttributes.push(
-        t.jsxAttribute(
-          t.jsxIdentifier("$loadDictionary"),
-          t.jsxExpressionContainer(
-            t.arrowFunctionExpression(
-              [t.identifier("locale")],
-              t.callExpression(
-                t.identifier(loadDictionaryImport.importedName),
-                [t.identifier("locale")],
-              ),
-            ),
-          ),
-        ),
-      );
-    }
-
-    // Create new JSXElement (self-closing)
+    // Create new JSXElement with original attributes
     const newNode = t.jsxElement(
       t.jsxOpeningElement(
         t.jsxIdentifier(lingoComponentImport.importedName),
-        originalAttributes,
+        jsxScope.node.openingElement.attributes.slice(), // original attributes
         true, // selfClosing
       ),
       null, // no closing element
       [], // no children
       true, // selfClosing
     );
+
+    // Create a NodePath wrapper for the new node to use setJsxAttributeValue
+    const newNodePath = {
+      node: newNode,
+    } as any;
+
+    // Add $as prop
+    const as = /^[A-Z]/.test(originalJsxElementName)
+      ? t.identifier(originalJsxElementName)
+      : originalJsxElementName;
+    setJsxAttributeValue(newNodePath, "$as", as);
+
+    // Add $fileKey prop
+    setJsxAttributeValue(newNodePath, "$fileKey", payload.relativeFilePath);
+
+    // Add $entryKey prop
+    setJsxAttributeValue(
+      newNodePath,
+      "$entryKey",
+      getJsxScopeAttribute(jsxScope)!,
+    );
+
+    // Extract $variables from original JSX scope before lingo component was inserted
+    const $variables = getJsxVariables(jsxScope);
+    if ($variables.properties.length > 0) {
+      setJsxAttributeValue(newNodePath, "$variables", $variables);
+    }
+
+    // Extract nested JSX elements
+    const $elements = getNestedJsxElements(jsxScope);
+    if ($elements.elements.length > 0) {
+      setJsxAttributeValue(newNodePath, "$elements", $elements);
+    }
+
+    // Extract nested functions
+    const $functions = getJsxFunctions(jsxScope);
+    if ($functions.properties.length > 0) {
+      setJsxAttributeValue(newNodePath, "$functions", $functions);
+    }
+
+    // Extract expressions
+    const $expressions = getJsxExpressions(jsxScope);
+    if ($expressions.elements.length > 0) {
+      setJsxAttributeValue(newNodePath, "$expressions", $expressions);
+    }
+
+    if (mode === "server") {
+      // Add $loadDictionary prop
+      const loadDictionaryImport = getOrCreateImport(payload.ast, {
+        exportedName: "loadDictionary",
+        moduleName: ModuleId.ReactRSC,
+      });
+      setJsxAttributeValue(
+        newNodePath,
+        "$loadDictionary",
+        t.arrowFunctionExpression(
+          [t.identifier("locale")],
+          t.callExpression(t.identifier(loadDictionaryImport.importedName), [
+            t.identifier("locale"),
+          ]),
+        ),
+      );
+    }
 
     jsxScope.replaceWith(newNode);
   }
