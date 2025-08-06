@@ -12,7 +12,7 @@ export type LingoProviderProps = {
    *
    * @returns The dictionary object containing localized content.
    */
-  loadDictionary: (locale: string) => Promise<any>;
+  loadDictionary: (locale: string | null) => Promise<any>;
   /**
    * The child components containing localizable content.
    */

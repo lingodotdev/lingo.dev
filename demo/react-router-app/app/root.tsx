@@ -36,7 +36,7 @@ export async function loader(args: LoaderFunctionArgs) {
 export function Layout(props: { children: React.ReactNode }) {
   const loaderData = useLoaderData<typeof loader>();
   return (
-    <LingoProvider dictionary={loaderData.lingoDictionary}>
+    <LingoProvider dictionary={loaderData?.lingoDictionary}>
       <html lang="en">
         <head>
           <meta charSet="utf-8" />

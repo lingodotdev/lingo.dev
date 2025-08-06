@@ -8,7 +8,7 @@ export type LingoComponentProps = Omit<
   LingoCoreComponentProps,
   "$dictionary"
 > & {
-  $loadDictionary: (locale: string) => Promise<any>;
+  $loadDictionary: (locale: string | null) => Promise<any>;
 };
 
 export async function LingoComponent(props: LingoComponentProps) {
