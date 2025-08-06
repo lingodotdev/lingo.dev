@@ -5,6 +5,7 @@ import _ from "lodash";
 import { ModuleId } from "./_const";
 import { getJsxElementName, getNestedJsxElements } from "./utils/jsx-element";
 import { collectJsxAttributeScopes } from "./utils/jsx-attribute-scope";
+import { setJsxAttributeValue } from "./utils/jsx-attribute";
 
 export const lingoJsxAttributeScopeInjectMutation = createCodeMutation(
   (payload) => {
@@ -46,51 +47,33 @@ export const lingoJsxAttributeScopeInjectMutation = createCodeMutation(
       );
 
       // Add $fileKey prop
-      jsxScope.node.openingElement.attributes.push(
-        t.jsxAttribute(
-          t.jsxIdentifier("$fileKey"),
-          t.stringLiteral(payload.relativeFilePath),
-        ),
-      );
+      setJsxAttributeValue(jsxScope, "$fileKey", payload.relativeFilePath);
 
       // Add $attributes prop
-      jsxScope.node.openingElement.attributes.push(
-        t.jsxAttribute(
-          t.jsxIdentifier("$attributes"),
-          t.jsxExpressionContainer(
-            t.objectExpression(
-              attributes.map((attributeDefinition) => {
-                const [attribute, key = ""] = attributeDefinition.split(":");
-                return t.objectProperty(
-                  t.stringLiteral(attribute),
-                  t.stringLiteral(key),
-                );
-              }),
-            ),
-          ),
+      setJsxAttributeValue(
+        jsxScope,
+        "$attributes",
+        t.objectExpression(
+          attributes.map((attributeDefinition) => {
+            const [attribute, key = ""] = attributeDefinition.split(":");
+            return t.objectProperty(
+              t.stringLiteral(attribute),
+              t.stringLiteral(key),
+            );
+          }),
         ),
       );
 
       // // Extract $variables from original JSX scope
       // const $variables = getJsxVariables(originalJsxScope);
       // if ($variables.properties.length > 0) {
-      //   jsxScope.node.openingElement.attributes.push(
-      //     t.jsxAttribute(
-      //       t.jsxIdentifier("$variables"),
-      //       t.jsxExpressionContainer($variables),
-      //     ),
-      //   );
+      //   setJsxAttributeValue(jsxScope, "$variables", $variables);
       // }
 
       // // Extract nested JSX elements
       // const $elements = getNestedJsxElements(originalJsxScope);
       // if ($elements.elements.length > 0) {
-      //   jsxScope.node.openingElement.attributes.push(
-      //     t.jsxAttribute(
-      //       t.jsxIdentifier("$elements"),
-      //       t.jsxExpressionContainer($elements),
-      //     ),
-      //   );
+      //   setJsxAttributeValue(jsxScope, "$elements", $elements);
       // }
 
       if (mode === "server") {
@@ -99,18 +82,14 @@ export const lingoJsxAttributeScopeInjectMutation = createCodeMutation(
           exportedName: "loadDictionary",
           moduleName: ModuleId.ReactRSC,
         });
-        jsxScope.node.openingElement.attributes.push(
-          t.jsxAttribute(
-            t.jsxIdentifier("$loadDictionary"),
-            t.jsxExpressionContainer(
-              t.arrowFunctionExpression(
-                [t.identifier("locale")],
-                t.callExpression(
-                  t.identifier(loadDictionaryImport.importedName),
-                  [t.identifier("locale")],
-                ),
-              ),
-            ),
+        setJsxAttributeValue(
+          jsxScope,
+          "$loadDictionary",
+          t.arrowFunctionExpression(
+            [t.identifier("locale")],
+            t.callExpression(t.identifier(loadDictionaryImport.importedName), [
+              t.identifier("locale"),
+            ]),
           ),
         );
       }
