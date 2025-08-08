@@ -14,15 +14,9 @@ import {
   loadScriptNames,
 } from "./loader";
 
-const mockLoadTerritoryNames = loadTerritoryNames as vi.MockedFunction<
-  typeof loadTerritoryNames
->;
-const mockLoadLanguageNames = loadLanguageNames as vi.MockedFunction<
-  typeof loadLanguageNames
->;
-const mockLoadScriptNames = loadScriptNames as vi.MockedFunction<
-  typeof loadScriptNames
->;
+const mockLoadTerritoryNames = loadTerritoryNames as ReturnType<typeof vi.fn>;
+const mockLoadLanguageNames = loadLanguageNames as ReturnType<typeof vi.fn>;
+const mockLoadScriptNames = loadScriptNames as ReturnType<typeof vi.fn>;
 
 describe("getCountryName", () => {
   beforeEach(() => {

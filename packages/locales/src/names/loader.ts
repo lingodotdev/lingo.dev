@@ -3,6 +3,10 @@
  * Fetches CLDR data directly from GitHub raw URLs
  */
 
+// Base URL for CLDR data from GitHub
+const CLDR_BASE_URL =
+  "https://raw.githubusercontent.com/unicode-org/cldr-json/main/cldr-json/cldr-localenames-full/main";
+
 interface NameData {
   [key: string]: string;
 }
@@ -25,7 +29,7 @@ export async function loadTerritoryNames(
   try {
     // Fetch from GitHub raw URL
     const response = await fetch(
-      `https://raw.githubusercontent.com/unicode-org/cldr-json/main/cldr-json/cldr-localenames-full/main/${displayLanguage}/territories.json`,
+      `${CLDR_BASE_URL}/${displayLanguage}/territories.json`,
     );
 
     if (!response.ok) {
@@ -40,6 +44,9 @@ export async function loadTerritoryNames(
   } catch (error) {
     // Fallback to English if the requested language is not available
     if (displayLanguage !== "en") {
+      console.warn(
+        `Failed to load territory names for ${displayLanguage}, falling back to English`,
+      );
       return loadTerritoryNames("en");
     }
     throw new Error(
@@ -63,7 +70,7 @@ export async function loadLanguageNames(
   try {
     // Fetch from GitHub raw URL
     const response = await fetch(
-      `https://raw.githubusercontent.com/unicode-org/cldr-json/main/cldr-json/cldr-localenames-full/main/${displayLanguage}/languages.json`,
+      `${CLDR_BASE_URL}/${displayLanguage}/languages.json`,
     );
 
     if (!response.ok) {
@@ -78,6 +85,9 @@ export async function loadLanguageNames(
   } catch (error) {
     // Fallback to English if the requested language is not available
     if (displayLanguage !== "en") {
+      console.warn(
+        `Failed to load language names for ${displayLanguage}, falling back to English`,
+      );
       return loadLanguageNames("en");
     }
     throw new Error(
@@ -101,7 +111,7 @@ export async function loadScriptNames(
   try {
     // Fetch from GitHub raw URL
     const response = await fetch(
-      `https://raw.githubusercontent.com/unicode-org/cldr-json/main/cldr-json/cldr-localenames-full/main/${displayLanguage}/scripts.json`,
+      `${CLDR_BASE_URL}/${displayLanguage}/scripts.json`,
     );
 
     if (!response.ok) {
@@ -111,11 +121,26 @@ export async function loadScriptNames(
     const data = await response.json();
     const scripts =
       data?.main?.[displayLanguage]?.localeDisplayNames?.scripts || {};
-    cache.set(cacheKey, scripts);
-    return scripts;
+
+    // Use longer form for Han scripts to match GitHub issue examples
+    const enhancedScripts = { ...scripts };
+
+    // Check for alternative Han script names
+    if (scripts["Hans-alt-stand-alone"]) {
+      enhancedScripts.Hans = scripts["Hans-alt-stand-alone"];
+    }
+    if (scripts["Hant-alt-stand-alone"]) {
+      enhancedScripts.Hant = scripts["Hant-alt-stand-alone"];
+    }
+
+    cache.set(cacheKey, enhancedScripts);
+    return enhancedScripts;
   } catch (error) {
     // Fallback to English if the requested language is not available
     if (displayLanguage !== "en") {
+      console.warn(
+        `Failed to load script names for ${displayLanguage}, falling back to English`,
+      );
       return loadScriptNames("en");
     }
     throw new Error(

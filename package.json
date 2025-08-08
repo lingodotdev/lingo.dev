@@ -1,6 +1,13 @@
 {
   "name": "@lingo.dev",
   "type": "module",
+  "exports": {
+    "./locales": {
+      "types": "./packages/locales/build/index.d.ts",
+      "import": "./packages/locales/build/index.mjs",
+      "require": "./packages/locales/build/index.cjs"
+    }
+  },
   "scripts": {
     "prepare": "husky",
     "build": "turbo build",

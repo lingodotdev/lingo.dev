@@ -92,24 +92,33 @@ describe("Integration Tests", () => {
   describe("getScriptName", () => {
     it("should get script names in different languages", async () => {
       mockLoadScriptNames
-        .mockResolvedValueOnce({ Hans: "Simplified", Hant: "Traditional" }) // en
-        .mockResolvedValueOnce({ Hans: "simplificado", Hant: "tradicional" }) // es
-        .mockResolvedValueOnce({ Hans: "simplifié", Hant: "traditionnel" }); // fr
+        .mockResolvedValueOnce({
+          Hans: "Simplified Han",
+          Hant: "Traditional Han",
+        }) // en
+        .mockResolvedValueOnce({
+          Hans: "han simplificado",
+          Hant: "han tradicional",
+        }) // es
+        .mockResolvedValueOnce({
+          Hans: "han simplifié",
+          Hant: "han traditionnel",
+        }); // fr
 
       const result1 = await getScriptName("Hans", "en");
       const result2 = await getScriptName("Hans", "es");
       const result3 = await getScriptName("Hans", "fr");
 
-      expect(result1).toBe("Simplified");
-      expect(result2).toBe("simplificado");
-      expect(result3).toBe("simplifié");
+      expect(result1).toBe("Simplified Han");
+      expect(result2).toBe("han simplificado");
+      expect(result3).toBe("han simplifié");
     });
 
     it("should preserve script code case", async () => {
       mockLoadScriptNames.mockResolvedValue({
         Latn: "Latin",
         CYRL: "Cyrillic",
-        hans: "Simplified",
+        hans: "Simplified Han",
       });
 
       const result1 = await getScriptName("Latn");
@@ -118,7 +127,7 @@ describe("Integration Tests", () => {
 
       expect(result1).toBe("Latin");
       expect(result2).toBe("Cyrillic");
-      expect(result3).toBe("Simplified");
+      expect(result3).toBe("Simplified Han");
     });
   });
 
