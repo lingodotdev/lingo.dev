@@ -18,8 +18,7 @@ import { LOCALE_HEADER_NAME, LOCALE_COOKIE_NAME } from "../core";
  */
 export async function loadLocaleFromHeaders() {
   const requestHeaders = await headers();
-  const result = requestHeaders.get(LOCALE_HEADER_NAME) || "en";
-
+  const result = requestHeaders.get(LOCALE_HEADER_NAME);
   return result;
 }
 
