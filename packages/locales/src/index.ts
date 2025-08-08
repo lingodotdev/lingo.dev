@@ -10,5 +10,13 @@ export {
   getRegionCode,
 } from "./parser";
 
+// Export validation functions
+export {
+  isValidLocale,
+  isValidLanguageCode,
+  isValidScriptCode,
+  isValidRegionCode,
+} from "./validation";
+
 // Export async name resolution functions
 export { getCountryName, getLanguageName, getScriptName } from "./names";
