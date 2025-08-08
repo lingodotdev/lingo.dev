@@ -1,5 +1,5 @@
 {
-  "name": "@lingo.dev/locales",
+  "name": "@lingo.dev/_locales",
   "version": "0.0.1",
   "description": "Lingo.dev locales",
   "main": "build/index.cjs",
