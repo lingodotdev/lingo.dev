@@ -15,6 +15,7 @@
     "build"
   ],
   "scripts": {
+    "generate-model-identifiers": "tsx scripts/generate-model-identifiers.ts",
     "dev": "tsup --watch",
     "build": "pnpm typecheck && tsup",
     "typecheck": "tsc --noEmit",
@@ -30,10 +31,12 @@
     "@types/babel__traverse": "^7.20.6",
     "@types/ini": "^4.1.1",
     "@types/lodash": "^4.17.4",
+    "@types/node": "^24.0.13",
     "@types/object-hash": "^3.0.6",
     "@types/react": "^18.3.18",
     "next": "15.2.4",
     "tsup": "^8.3.5",
+    "tsx": "^4.17.0",
     "typescript": "^5.4.5",
     "vitest": "^2.1.4"
   },
