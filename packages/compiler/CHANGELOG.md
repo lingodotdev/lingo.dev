@@ -1,5 +1,11 @@
 # @lingo.dev/\_compiler
 
+## 0.7.7
+
+### Patch Changes
+
+- [#1130](https://github.com/lingodotdev/lingo.dev/pull/1130) [`bc7b08e`](https://github.com/lingodotdev/lingo.dev/commit/bc7b08ef1245d1af0c68813cb18193d4f14bc7e0) Thanks [@mathio](https://github.com/mathio)! - dictionary path calculation
+
 ## 0.7.6
 
 ### Patch Changes
