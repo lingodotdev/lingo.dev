@@ -5,8 +5,8 @@
   "scripts": {
     "generate-cli-docs": "tsx ./src/generate-cli-docs.ts",
     "generate-config-docs": "tsx ./src/generate-config-docs.ts",
-    "test": "vitest",
-    "test:run": "vitest run",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest run --coverage"
   },
