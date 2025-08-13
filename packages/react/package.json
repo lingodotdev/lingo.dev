@@ -45,6 +45,7 @@
     "@types/js-cookie": "^3.0.6",
     "@types/lodash": "^4.17.4",
     "@types/react": "^18.3.18",
+    "@types/react-dom": "^19.1.7",
     "@vitejs/plugin-react": "^4.4.1",
     "chokidar-cli": "^3.0.0",
     "next": "15.2.4",
