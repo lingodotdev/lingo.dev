@@ -7,10 +7,18 @@ import { getDictionaryPath } from "./_utils";
 import { createLocaleImportMap } from "./utils/create-locale-import-map";
 
 export const clientDictionaryLoaderMutation = createCodeMutation((payload) => {
+  if (payload.params.rsc === true) {
+    return payload;
+  }
+
   const invokations = findInvokations(payload.ast, {
     moduleName: ModuleId.ReactClient,
     functionName: "loadDictionary",
   });
+
+  if (invokations.length === 0) {
+    return payload;
+  }
 
   const allLocales = Array.from(
     new Set([payload.params.sourceLocale, ...payload.params.targetLocales]),
@@ -22,7 +30,6 @@ export const clientDictionaryLoaderMutation = createCodeMutation((payload) => {
       exportedName: "loadDictionary_internal",
     });
 
-    // Replace the function identifier with internal version
     if (t.isIdentifier(invokation.callee)) {
       invokation.callee.name = internalDictionaryLoader.importedName;
     }
@@ -33,10 +40,8 @@ export const clientDictionaryLoaderMutation = createCodeMutation((payload) => {
       relativeFilePath: payload.relativeFilePath,
     });
 
-    // Create locale import map object
     const localeImportMap = createLocaleImportMap(allLocales, dictionaryPath);
 
-    // Add the locale import map as the second argument
     invokation.arguments.push(localeImportMap);
   }
 
