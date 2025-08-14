@@ -222,4 +222,4 @@ interface ParseResult {
 
 ## License
 
-ISC
+Apache 2.0
