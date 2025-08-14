@@ -1,23 +1,44 @@
 import type { LocaleComponents, LocaleDelimiter, ParseResult } from "./types";
+import { LOCALE_REGEX } from "./constants";
 
 /**
- * Regular expression to parse locale strings
+ * Normalizes the case of locale components before parsing
  *
- * Matches patterns like:
- * - "en-US" -> language: "en", region: "US"
- * - "en_US" -> language: "en", region: "US"
- * - "zh-Hans-CN" -> language: "zh", script: "Hans", region: "CN"
- * - "zh_Hans_CN" -> language: "zh", script: "Hans", region: "CN"
- * - "sr-Cyrl-RS" -> language: "sr", script: "Cyrl", region: "RS"
- * - "es" -> language: "es"
+ * @param locale - The locale string to normalize
+ * @returns The normalized locale string
  *
- * Groups:
- * 1. Language code (2-3 lowercase letters)
- * 2. Script code (4 letters, optional)
- * 3. Region code (2-3 letters or digits, optional)
+ * @example
+ * normalizeLocaleCase("EN-US")     // "en-US"
+ * normalizeLocaleCase("en-us")     // "en-US"
+ * normalizeLocaleCase("zh-hans-cn") // "zh-Hans-CN"
  */
-const LOCALE_REGEX =
-  /^([a-z]{2,3})(?:[-_]([A-Za-z]{4}))?(?:[-_]([A-Z]{2}|[0-9]{3}))?$/i;
+function normalizeLocaleCase(locale: string): string {
+  // Split by either hyphen or underscore
+  const parts = locale.split(/[-_]/);
+
+  if (parts.length === 1) {
+    // Language only: normalize to lowercase
+    return parts[0].toLowerCase();
+  }
+
+  if (parts.length === 2) {
+    // Language-region: normalize language to lowercase, region to uppercase
+    const language = parts[0].toLowerCase();
+    const region = parts[1].toUpperCase();
+    return `${language}-${region}`;
+  }
+
+  if (parts.length === 3) {
+    // Language-script-region: normalize language to lowercase, preserve script case, region to uppercase
+    const language = parts[0].toLowerCase();
+    const script = parts[1]; // Preserve original case as-is
+    const region = parts[2].toUpperCase();
+    return `${language}-${script}-${region}`;
+  }
+
+  // For any other number of parts, return as-is
+  return locale;
+}
 
 /**
  * Breaks apart a locale string into its components
@@ -44,7 +65,13 @@ export function parseLocale(locale: string): LocaleComponents {
     throw new Error("Locale cannot be empty");
   }
 
-  const match = locale.match(LOCALE_REGEX);
+  // Normalize case before parsing:
+  // - Language: convert to lowercase (e.g., "EN" -> "en")
+  // - Script: preserve case (e.g., "Hans", "hans" -> "Hans")
+  // - Region: convert to uppercase (e.g., "us" -> "US")
+  const normalizedLocale = normalizeLocaleCase(locale);
+
+  const match = normalizedLocale.match(LOCALE_REGEX);
 
   if (!match) {
     throw new Error(`Invalid locale format: ${locale}`);

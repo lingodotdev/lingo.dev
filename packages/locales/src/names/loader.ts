@@ -5,6 +5,7 @@
 
 // Base URL for CLDR data from GitHub
 const CLDR_BASE_URL =
+  process.env.CLDR_BASE_URL ||
   "https://raw.githubusercontent.com/unicode-org/cldr-json/main/cldr-json/cldr-localenames-full/main";
 
 interface NameData {

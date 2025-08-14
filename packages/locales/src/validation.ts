@@ -1,3 +1,5 @@
+import { LOCALE_REGEX } from "./constants";
+
 /**
  * Validation functions for locale codes and components
  */
@@ -756,9 +758,7 @@ export function isValidLocale(locale: string): boolean {
   }
 
   try {
-    const match = locale.match(
-      /^([a-z]{2,3})(?:[-_]([A-Za-z]{4}))?(?:[-_]([A-Z]{2}|[0-9]{3}))?$/i,
-    );
+    const match = locale.match(LOCALE_REGEX);
     if (!match) {
       return false;
     }

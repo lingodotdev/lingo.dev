@@ -1,6 +1,9 @@
 // Export types
 export type { LocaleComponents, LocaleDelimiter, ParseResult } from "./types";
 
+// Export constants
+export { LOCALE_REGEX } from "./constants";
+
 // Export parsing functions
 export {
   parseLocale,
