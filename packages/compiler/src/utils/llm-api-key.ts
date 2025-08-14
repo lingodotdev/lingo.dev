@@ -19,7 +19,7 @@ export function getKeyFromEnv(envVarName: string): string | undefined {
 }
 
 // Generic function to retrieve key from .lingodotdevrc file
-function getKeyFromRc(rcPath: string): string | undefined {
+export function getKeyFromRc(rcPath: string): string | undefined {
   const rc = getRc();
   const result = _.get(rc, rcPath);
   return typeof result === "string" ? result : undefined;

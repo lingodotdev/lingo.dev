@@ -1,0 +1,16 @@
+{
+  "name": "mock-engine",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "pnpm build && node dist/index.js",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.13.7",
+    "hono": "^4.6.15"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.2"
+  }
+}

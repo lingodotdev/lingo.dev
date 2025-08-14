@@ -20,7 +20,8 @@ export async function LingoAttributeComponent(
     $loadDictionary,
     ...rest
   } = props;
-  const dictionary = await loadDictionaryFromRequest($loadDictionary);
+  const tmp = async (locale: string) => ({});
+  const dictionary = await loadDictionaryFromRequest($loadDictionary ?? tmp);
   return (
     <LingoCoreAttributeComponent
       $dictionary={dictionary}

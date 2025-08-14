@@ -22,6 +22,8 @@ import {
   getMistralKeyFromEnv,
   getLingoDotDevKeyFromEnv,
   getLingoDotDevKey,
+  getKeyFromEnv,
+  getKeyFromRc,
 } from "../../../utils/llm-api-key";
 import dedent from "dedent";
 import { isRunningInCIOrDocker } from "../../../utils/env";
@@ -152,9 +154,16 @@ export class LCPAPI {
         "⚠️  Lingo.dev API key not found. Please set LINGODOTDEV_API_KEY environment variable or configure it user-wide.",
       );
     }
+
+    const apiUrl =
+      getKeyFromEnv("LINGODOTDEV_API_URL") ??
+      getKeyFromRc("apiUrl") ??
+      undefined; // fallback to default value set in the SDK (https://engine.lingo.dev)
+
     console.log(`Creating Lingo.dev client`);
     return new LingoDotDevEngine({
       apiKey,
+      apiUrl,
     });
   }
 

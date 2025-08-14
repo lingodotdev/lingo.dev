@@ -20,7 +20,8 @@
     "typecheck": "tsc --noEmit",
     "clean": "rm -rf build",
     "test": "vitest --run",
-    "test:watch": "vitest -w"
+    "test:watch": "vitest -w",
+    "test:e2e:next": "playwright test -c ./playwright.config.ts"
   },
   "keywords": [],
   "author": "",
@@ -32,7 +33,12 @@
     "@types/lodash": "^4.17.4",
     "@types/object-hash": "^3.0.6",
     "@types/react": "^18.3.18",
+    "@hono/node-server": "^1.13.7",
+    "@playwright/test": "^1.46.0",
+    "get-port": "^7.1.0",
+    "hono": "^4.6.15",
     "next": "15.2.4",
+    "wait-on": "^8.0.2",
     "tsup": "^8.3.5",
     "typescript": "^5.4.5",
     "vitest": "^2.1.4"

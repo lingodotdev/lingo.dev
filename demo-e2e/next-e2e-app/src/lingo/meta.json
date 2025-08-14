@@ -1,0 +1,41 @@
+{
+  "version": 0.1,
+  "files": {
+    "app/page.tsx": {
+      "scopes": {
+        "0/declaration/body/0/argument/1": {
+          "type": "element",
+          "hash": "18b89a4c985977256f3f4aca14834f58",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Hello World"
+        },
+        "0/declaration/body/0/argument/3": {
+          "type": "element",
+          "hash": "ebcc4ae65d9c30c3b57f3b97db88812a",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "This is a localized paragraph."
+        },
+        "0/declaration/body/0/argument/5": {
+          "type": "element",
+          "hash": "5a200c3671a19619019dc54fe6ee7bc9",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Docs"
+        },
+        "0/declaration/body/0/argument/5-title": {
+          "type": "attribute",
+          "hash": "eff5f7b682b37d139b44e588722969af",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Docs link"
+        }
+      }
+    }
+  }
+}
