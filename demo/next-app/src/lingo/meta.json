@@ -5,11 +5,19 @@
       "scopes": {
         "0/declaration/body/0/argument": {
           "type": "element",
-          "hash": "2b8865d21f308426a4da45852b27004d",
+          "hash": "75cc719ebad12413e5fa788174d4d4ec",
           "context": "",
           "skip": false,
           "overrides": {},
-          "content": "Localize your React app in every language in minutes.<element:br></element:br> Scale to millions from day one."
+          "content": "Localize your React app in every language in minutes.<element:br></element:br> Scale to millions from day one<element:sup>*</element:sup>."
+        },
+        "0/declaration/body/0/argument/3-title": {
+          "type": "attribute",
+          "hash": "ce9b34049534ad201aef501f2a224a9d",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "supports many popular frameworks"
         }
       }
     }

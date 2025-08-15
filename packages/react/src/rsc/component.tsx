@@ -15,6 +15,10 @@ export async function LingoComponent(props: LingoComponentProps) {
   const { $as, $fileKey, $entryKey, $loadDictionary, ...rest } = props;
   const dictionary = await loadDictionaryFromRequest($loadDictionary);
 
+  if ($as.name === "LingoAttributeComponent") {
+    rest.$loadDictionary = $loadDictionary;
+  }
+
   return (
     <LingoCoreComponent
       {...rest}
