@@ -131,7 +131,12 @@ describe("makeDefaultBulletNode", () => {
   it("should handle numeric default", () => {
     const node = makeDefaultBulletNode(42);
     expect(node).toBeDefined();
-    if (node && "children" in node && node.children[0] && "children" in node.children[0]) {
+    if (
+      node &&
+      "children" in node &&
+      node.children[0] &&
+      "children" in node.children[0]
+    ) {
       expect(node.children[0].children[1]).toEqual({
         type: "inlineCode",
         value: "42",
@@ -319,13 +324,16 @@ describe("renderPropertyToMarkdown", () => {
 
     const nodes = renderPropertyToMarkdown(property);
     expect(nodes.length).toBeGreaterThan(2); // includes child nodes
-    
+
     // Find child heading node
     const childHeading = nodes.find(
-      (node: RootContent) => node.type === "heading" && 
-      node.type === "heading" && "children" in node && 
-      node.children[0] && "value" in node.children[0] && 
-      node.children[0].value === "config.debug"
+      (node: RootContent) =>
+        node.type === "heading" &&
+        node.type === "heading" &&
+        "children" in node &&
+        node.children[0] &&
+        "value" in node.children[0] &&
+        node.children[0].value === "config.debug",
     );
     expect(childHeading).toBeDefined();
   });
@@ -370,9 +378,12 @@ describe("renderPropertiesToMarkdown", () => {
     const nodes = renderPropertiesToMarkdown(properties);
     // Should have spacing paragraphs between properties
     const spacingNodes = nodes.filter(
-      (node: RootContent) => node.type === "paragraph" && 
-      "children" in node && node.children[0] && 
-      "value" in node.children[0] && node.children[0].value === ""
+      (node: RootContent) =>
+        node.type === "paragraph" &&
+        "children" in node &&
+        node.children[0] &&
+        "value" in node.children[0] &&
+        node.children[0].value === "",
     );
     expect(spacingNodes).toHaveLength(2); // One after each property
   });

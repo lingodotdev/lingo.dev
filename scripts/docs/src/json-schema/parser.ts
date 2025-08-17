@@ -1,4 +1,8 @@
-import type { JSONSchemaObject, PropertyInfo, SchemaParsingOptions } from "./types";
+import type {
+  JSONSchemaObject,
+  PropertyInfo,
+  SchemaParsingOptions,
+} from "./types";
 
 export function resolveRef(ref: string, root: unknown): unknown {
   if (!ref.startsWith("#/")) return undefined;
@@ -86,10 +90,7 @@ function inferTypeFromRef(ref: string, root: unknown): string {
   return String(ref).split("/").pop() || "unknown";
 }
 
-function inferTypeFromType(
-  schemaObj: JSONSchemaObject,
-  root: unknown,
-): string {
+function inferTypeFromType(schemaObj: JSONSchemaObject, root: unknown): string {
   // Handle array of types
   if (Array.isArray(schemaObj.type)) {
     return schemaObj.type.join(" | ");
@@ -144,7 +145,7 @@ function inferTypeFromAnyOf(anyOfArr: unknown[], root: unknown): string {
 function extractAllowedValues(schema: JSONSchemaObject): unknown[] | undefined {
   if (!Array.isArray(schema.enum)) return undefined;
   return Array.from(new Set(schema.enum)).sort((a, b) =>
-    String(a).localeCompare(String(b))
+    String(a).localeCompare(String(b)),
   );
 }
 
@@ -165,7 +166,7 @@ export function parseProperty(
   name: string,
   schema: unknown,
   required: boolean,
-  options: SchemaParsingOptions = {}
+  options: SchemaParsingOptions = {},
 ): PropertyInfo[] {
   if (!schema || typeof schema !== "object") return [];
 
@@ -174,7 +175,7 @@ export function parseProperty(
   const fullPath = parentPath ? `${parentPath}.${name}` : name;
 
   const description = schemaObj.markdownDescription ?? schemaObj.description;
-  
+
   const property: PropertyInfo = {
     name,
     fullPath,
@@ -187,7 +188,7 @@ export function parseProperty(
   };
 
   const result: PropertyInfo[] = [property];
-  
+
   // Add children for nested properties
   const children = parseNestedProperties(schema, fullPath, rootSchema);
   if (children.length > 0) {
@@ -200,7 +201,7 @@ export function parseProperty(
 function parseNestedProperties(
   schema: unknown,
   fullPath: string,
-  rootSchema: unknown
+  rootSchema: unknown,
 ): PropertyInfo[] {
   if (!schema || typeof schema !== "object") return [];
 
@@ -216,14 +217,14 @@ function parseNestedProperties(
         : [];
       const sortedKeys = sortPropertyKeys(
         Object.keys(properties),
-        nestedRequired
+        nestedRequired,
       );
       for (const key of sortedKeys) {
         children.push(
           ...parseProperty(key, properties[key], nestedRequired.includes(key), {
             parentPath: fullPath,
             rootSchema,
-          })
+          }),
         );
       }
     }
@@ -237,7 +238,7 @@ function parseNestedProperties(
         ...parseProperty("*", schemaObj.additionalProperties, false, {
           parentPath: fullPath,
           rootSchema,
-        })
+        }),
       );
     }
   }
@@ -274,14 +275,19 @@ function parseNestedProperties(
           const properties = resolvedItemObj.properties || {};
           const sortedKeys = sortPropertyKeys(
             Object.keys(properties),
-            nestedRequired
+            nestedRequired,
           );
           for (const key of sortedKeys) {
             children.push(
-              ...parseProperty(key, properties[key], nestedRequired.includes(key), {
-                parentPath: `${fullPath}.*`,
-                rootSchema,
-              })
+              ...parseProperty(
+                key,
+                properties[key],
+                nestedRequired.includes(key),
+                {
+                  parentPath: `${fullPath}.*`,
+                  rootSchema,
+                },
+              ),
             );
           }
         }
@@ -298,13 +304,16 @@ function parseNestedProperties(
         ? itemSchemaObj.required
         : [];
       const properties = itemSchemaObj.properties || {};
-      const sortedKeys = sortPropertyKeys(Object.keys(properties), nestedRequired);
+      const sortedKeys = sortPropertyKeys(
+        Object.keys(properties),
+        nestedRequired,
+      );
       for (const key of sortedKeys) {
         children.push(
           ...parseProperty(key, properties[key], nestedRequired.includes(key), {
             parentPath: `${fullPath}.*`,
             rootSchema,
-          })
+          }),
         );
       }
 
@@ -317,7 +326,7 @@ function parseNestedProperties(
           ...parseProperty("*", itemSchemaObj.additionalProperties, false, {
             parentPath: `${fullPath}.*`,
             rootSchema,
-          })
+          }),
         );
       }
     }
@@ -328,7 +337,7 @@ function parseNestedProperties(
 
 export function parseSchema(
   schema: unknown,
-  options: SchemaParsingOptions = {}
+  options: SchemaParsingOptions = {},
 ): PropertyInfo[] {
   if (!schema || typeof schema !== "object") {
     return [];
@@ -363,19 +372,26 @@ export function parseSchema(
     ? rootSchemaObj.required
     : [];
 
-  if (!rootSchemaObj.properties || typeof rootSchemaObj.properties !== "object") {
+  if (
+    !rootSchemaObj.properties ||
+    typeof rootSchemaObj.properties !== "object"
+  ) {
     return [];
   }
 
   const properties = rootSchemaObj.properties;
-  const sortedKeys = sortPropertyKeys(Object.keys(properties), required, customOrder);
+  const sortedKeys = sortPropertyKeys(
+    Object.keys(properties),
+    required,
+    customOrder,
+  );
   const result: PropertyInfo[] = [];
 
   for (const key of sortedKeys) {
     result.push(
       ...parseProperty(key, properties[key], required.includes(key), {
         rootSchema: schema,
-      })
+      }),
     );
   }
 

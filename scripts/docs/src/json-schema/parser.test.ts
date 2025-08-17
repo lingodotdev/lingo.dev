@@ -55,7 +55,12 @@ describe("sortPropertyKeys", () => {
     const keys = ["optional1", "required1", "optional2", "required2"];
     const required = ["required1", "required2"];
     const result = sortPropertyKeys(keys, required);
-    expect(result).toEqual(["required1", "required2", "optional1", "optional2"]);
+    expect(result).toEqual([
+      "required1",
+      "required2",
+      "optional1",
+      "optional2",
+    ]);
   });
 
   it("should combine custom order with required sorting", () => {
@@ -84,7 +89,7 @@ describe("inferType", () => {
   it("should handle array types", () => {
     expect(inferType({ type: "array" }, root)).toBe("array");
     expect(inferType({ type: "array", items: { type: "string" } }, root)).toBe(
-      "array of string"
+      "array of string",
     );
   });
 
@@ -137,7 +142,7 @@ describe("parseProperty", () => {
       default: "default value",
     };
     const result = parseProperty("name", schema, true);
-    
+
     expect(result).toHaveLength(1);
     expect(result[0]).toEqual({
       name: "name",
@@ -157,7 +162,7 @@ describe("parseProperty", () => {
       enum: ["red", "green", "blue"],
     };
     const result = parseProperty("color", schema, false);
-    
+
     expect(result[0].allowedValues).toEqual(["blue", "green", "red"]);
   });
 
@@ -169,14 +174,16 @@ describe("parseProperty", () => {
       },
     };
     const result = parseProperty("config", schema, false);
-    
+
     expect(result[0].allowedKeys).toEqual(["key1", "key2", "key3"]);
   });
 
   it("should handle parent path correctly", () => {
     const schema = { type: "string" };
-    const result = parseProperty("child", schema, false, { parentPath: "parent" });
-    
+    const result = parseProperty("child", schema, false, {
+      parentPath: "parent",
+    });
+
     expect(result[0].fullPath).toBe("parent.child");
   });
 
@@ -190,7 +197,7 @@ describe("parseProperty", () => {
       required: ["name"],
     };
     const result = parseProperty("person", schema, true);
-    
+
     expect(result).toHaveLength(1);
     expect(result[0].children).toHaveLength(2);
     expect(result[0].children?.[0]).toEqual({
@@ -228,7 +235,7 @@ describe("parseProperty", () => {
       },
     };
     const result = parseProperty("items", schema, false);
-    
+
     expect(result[0].children).toHaveLength(2);
     expect(result[0].children?.[0].fullPath).toBe("items.*.id");
     expect(result[0].children?.[0].required).toBe(true);
@@ -245,7 +252,7 @@ describe("parseProperty", () => {
       },
     };
     const result = parseProperty("config", schema, false);
-    
+
     expect(result[0].children).toHaveLength(1);
     expect(result[0].children?.[0].name).toBe("*");
     expect(result[0].children?.[0].fullPath).toBe("config.*");
@@ -259,7 +266,7 @@ describe("parseProperty", () => {
       markdownDescription: "**Markdown** description",
     };
     const result = parseProperty("field", schema, false);
-    
+
     expect(result[0].description).toBe("**Markdown** description");
   });
 
@@ -284,7 +291,7 @@ describe("parseSchema", () => {
       },
       required: ["version"],
     };
-    
+
     const result = parseSchema(schema);
     expect(result).toHaveLength(2);
     expect(result[0].name).toBe("version");
@@ -306,7 +313,7 @@ describe("parseSchema", () => {
         },
       },
     };
-    
+
     const result = parseSchema(schema);
     expect(result).toHaveLength(1);
     expect(result[0].name).toBe("name");
@@ -322,9 +329,13 @@ describe("parseSchema", () => {
         beta: { type: "string" },
       },
     };
-    
+
     const result = parseSchema(schema, { customOrder: ["beta", "alpha"] });
-    expect(result.map((p: PropertyInfo) => p.name)).toEqual(["beta", "alpha", "gamma"]);
+    expect(result.map((p: PropertyInfo) => p.name)).toEqual([
+      "beta",
+      "alpha",
+      "gamma",
+    ]);
   });
 
   it("should return empty array for invalid schema", () => {
@@ -338,7 +349,7 @@ describe("parseSchema", () => {
       $ref: "#/definitions/NonExistent",
       definitions: {},
     };
-    
+
     const result = parseSchema(schema);
     expect(result).toEqual([]);
   });

@@ -93,7 +93,9 @@ export function makeEnumBulletNode(allowedValues?: unknown[]): ListItem | null {
   };
 }
 
-export function makeAllowedKeysBulletNode(allowedKeys?: string[]): ListItem | null {
+export function makeAllowedKeysBulletNode(
+  allowedKeys?: string[],
+): ListItem | null {
   if (!allowedKeys || allowedKeys.length === 0) return null;
   return {
     type: "listItem",
@@ -138,7 +140,9 @@ export function makeBullets(property: PropertyInfo): ListItem[] {
   return bullets;
 }
 
-export function renderPropertyToMarkdown(property: PropertyInfo): RootContent[] {
+export function renderPropertyToMarkdown(
+  property: PropertyInfo,
+): RootContent[] {
   const nodes: RootContent[] = [makeHeadingNode(property.fullPath)];
 
   // Description node
@@ -164,7 +168,9 @@ export function renderPropertyToMarkdown(property: PropertyInfo): RootContent[] 
   return nodes;
 }
 
-export function renderPropertiesToMarkdown(properties: PropertyInfo[]): RootContent[] {
+export function renderPropertiesToMarkdown(
+  properties: PropertyInfo[],
+): RootContent[] {
   const children: RootContent[] = [
     {
       type: "paragraph",
@@ -210,13 +216,13 @@ export function renderMarkdown(properties: PropertyInfo[]): string {
   const markdownContent = unified()
     .use(remarkStringify, { fences: true, listItemIndent: "one" })
     .stringify(root);
-  
+
   // Add YAML frontmatter
   const frontmatter = `---
 title: i18n.json properties
 ---
 
 `;
-  
+
   return frontmatter + markdownContent;
 }
