@@ -10,12 +10,14 @@ Using the bucket analysis output provided at the end of this prompt, create docu
 ````markdown
 ---
 title: "[BUCKET_TYPE in title case]"
-subtitle: "[Brief description of what this bucket type is for]"
+subtitle: "Translate [BUCKET_TYPE] files with Lingo.dev CLI"
 ---
+
+## Introduction
 
 [BUCKET_TYPE in title case] files are [BRIEF DESCRIPTION OF THE FILE FORMAT, ITS PURPOSE AND PRIMARY USE CASE]. [ONE SENTENCE ABOUT STRUCTURE OR KEY CHARACTERISTICS].
 
-**Lingo.dev CLI** uses LLMs to translate your [BUCKET_TYPE] files across multiple locales. This guide shows you how to set up and run translations for [TYPICAL USE CASE].
+**Lingo.dev CLI** uses LLMs to translate your [BUCKET_TYPE] files across multiple locales. This guide shows you how to set up and run translations for [BUCKET_TYPE] files.
 
 ## Quickstart
 
@@ -176,9 +178,11 @@ These keys will automatically have their values replaced with the current locale
 
 ## Translator Notes
 
-The [BUCKET_TYPE] bucket supports providing context hints to improve translation quality:
+The [BUCKET_TYPE] bucket supports providing context hints to improve translation quality. [Describe how translator notes/hints work for this specific bucket type]
 
-[Show bucket-specific format for translator notes]
+```[format]
+[Show example of how to add translator notes in this format]
+```
 
 ## Example
 
