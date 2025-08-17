@@ -30,6 +30,10 @@ Given the bucket type ID "$ARGUMENTS" (e.g., "json", "mdx", "typescript"), analy
    - Does the path pattern contain locale placeholders that would create separate files?
    - What file operations are performed (read, write, create, delete)?
    - Are files overwritten or are new files created?
+   - **IMPORTANT**: Note that "overwrites existing files completely" and "[locale] placeholder support" are mutually exclusive in practice:
+     - If a bucket type stores all locales in a single file (like CSV with columns per locale), it overwrites that single file and does NOT support `[locale]` placeholders
+     - If a bucket type creates separate files per locale using `[locale]` placeholders, each locale file is overwritten individually
+     - Clarify which pattern the bucket type follows
 
 5. **Examine data transformation logic**:
 
