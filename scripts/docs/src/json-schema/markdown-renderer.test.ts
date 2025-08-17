@@ -356,7 +356,8 @@ describe("renderPropertiesToMarkdown", () => {
       children: [
         {
           type: "text",
-          value: "This page describes the complete list of properties that are available within the ",
+          value:
+            "This page describes the complete list of properties that are available within the ",
         },
         { type: "inlineCode", value: "i18n.json" },
         {
@@ -421,7 +422,9 @@ describe("renderMarkdown", () => {
     const markdown = renderMarkdown(properties);
     expect(typeof markdown).toBe("string");
     expect(markdown).toContain("---\ntitle: i18n.json properties\n---");
-    expect(markdown).toContain("This page describes the complete list of properties");
+    expect(markdown).toContain(
+      "This page describes the complete list of properties",
+    );
     expect(markdown).toContain("## `version`");
     expect(markdown).toContain("The version");
     expect(markdown).toContain("* Type: `string`");
