@@ -352,11 +352,28 @@ describe("renderPropertiesToMarkdown", () => {
 
     const nodes = renderPropertiesToMarkdown(properties);
     expect(nodes[0]).toEqual({
-      type: "heading",
-      depth: 1,
-      children: [{ type: "text", value: "i18n.json properties" }],
+      type: "paragraph",
+      children: [
+        {
+          type: "text",
+          value: "This page describes the complete list of properties that are available within the ",
+        },
+        { type: "inlineCode", value: "i18n.json" },
+        {
+          type: "text",
+          value: " configuration file. This file is used by ",
+        },
+        {
+          type: "strong",
+          children: [{ type: "text", value: "Lingo.dev CLI" }],
+        },
+        {
+          type: "text",
+          value: " to configure the behavior of the translation pipeline.",
+        },
+      ],
     });
-    expect(nodes[1].type).toBe("paragraph"); // intro paragraph
+    expect(nodes[1].type).toBe("heading"); // version heading
   });
 
   it("should add spacing between top-level properties", () => {
@@ -403,7 +420,8 @@ describe("renderMarkdown", () => {
 
     const markdown = renderMarkdown(properties);
     expect(typeof markdown).toBe("string");
-    expect(markdown).toContain("# i18n.json properties");
+    expect(markdown).toContain("---\ntitle: i18n.json properties\n---");
+    expect(markdown).toContain("This page describes the complete list of properties");
     expect(markdown).toContain("## `version`");
     expect(markdown).toContain("The version");
     expect(markdown).toContain("* Type: `string`");
@@ -412,7 +430,7 @@ describe("renderMarkdown", () => {
 
   it("should handle empty properties array", () => {
     const markdown = renderMarkdown([]);
-    expect(markdown).toContain("# i18n.json properties");
+    expect(markdown).toContain("---\ntitle: i18n.json properties\n---");
     expect(markdown).toContain("This page describes the complete list");
   });
 });
