@@ -1,0 +1,12 @@
+version: 1
+checksums:
+  2250baa513dddb2c691cb62115d5e257:
+    app.title: 7dc70110429d46e3685f385bd2cc941c
+    app.description: e13baa1e885129d9328e216ff534761b
+    user.greeting: 0468579ef2fbc83c9d520c2f2f1c5059
+    user.farewell: 118794a2b84f7bfb4b4ce602ed463b0f
+    error.message: a3cd2f01c073f1f5ff436d4b132d39cf
+    error.notFound: 97612e6230bc7a1ebd99380bf561b732
+    database.host: da86e4fc0c04d82c87006dc71cea7e97
+    notification.success: 3b7a8b0aa23977592d4270ea136a390c
+    notification.warning: c38895f731311cefacee9e8d7d10fc49

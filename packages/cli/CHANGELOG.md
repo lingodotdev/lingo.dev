@@ -1,5 +1,98 @@
 # lingo.dev
 
+## 0.110.5
+
+### Patch Changes
+
+- [#1130](https://github.com/lingodotdev/lingo.dev/pull/1130) [`bc7b08e`](https://github.com/lingodotdev/lingo.dev/commit/bc7b08ef1245d1af0c68813cb18193d4f14bc7e0) Thanks [@mathio](https://github.com/mathio)! - dictionary path calculation
+
+- Updated dependencies [[`bc7b08e`](https://github.com/lingodotdev/lingo.dev/commit/bc7b08ef1245d1af0c68813cb18193d4f14bc7e0)]:
+  - @lingo.dev/_compiler@0.7.7
+
+## 0.110.4
+
+### Patch Changes
+
+- [#1121](https://github.com/lingodotdev/lingo.dev/pull/1121) [`b6071e4`](https://github.com/lingodotdev/lingo.dev/commit/b6071e4f19dd1823f4f2ce54ba5495538a94d4fd) Thanks [@mathio](https://github.com/mathio)! - compiler: prevent duplicate props
+
+- Updated dependencies [[`b6071e4`](https://github.com/lingodotdev/lingo.dev/commit/b6071e4f19dd1823f4f2ce54ba5495538a94d4fd)]:
+  - @lingo.dev/_compiler@0.7.6
+
+## 0.110.3
+
+### Patch Changes
+
+- [#1119](https://github.com/lingodotdev/lingo.dev/pull/1119) [`e898c1e`](https://github.com/lingodotdev/lingo.dev/commit/e898c1eeb34e4dd3e74df26465802b520018acf9) Thanks [@mathio](https://github.com/mathio)! - compiler fallback to source locale
+
+- Updated dependencies [[`e898c1e`](https://github.com/lingodotdev/lingo.dev/commit/e898c1eeb34e4dd3e74df26465802b520018acf9)]:
+  - @lingo.dev/_react@0.4.3
+
+## 0.110.2
+
+### Patch Changes
+
+- [#1118](https://github.com/lingodotdev/lingo.dev/pull/1118) [`410825c`](https://github.com/lingodotdev/lingo.dev/commit/410825c8bf0029d8ee458514d6f203a7397c8f22) Thanks [@mathio](https://github.com/mathio)! - support Turbopack in Next.js v14 by Compiler
+
+- Updated dependencies [[`410825c`](https://github.com/lingodotdev/lingo.dev/commit/410825c8bf0029d8ee458514d6f203a7397c8f22), [`bc419ae`](https://github.com/lingodotdev/lingo.dev/commit/bc419aeeb4211d80d3c0ddd65deeab62ad68fea8)]:
+  - @lingo.dev/_compiler@0.7.5
+
+## 0.110.1
+
+### Patch Changes
+
+- [`555384d`](https://github.com/lingodotdev/lingo.dev/commit/555384dacf79167e1bb8b9e6871e153fea763471) Thanks [@mathio](https://github.com/mathio)! - revert
+
+## 0.110.0
+
+### Minor Changes
+
+- [#1065](https://github.com/lingodotdev/lingo.dev/pull/1065) [`c0486ca`](https://github.com/lingodotdev/lingo.dev/commit/c0486ca9b0451ea75d070e199f502507ba418e5e) Thanks [@VAIBHAVSING](https://github.com/VAIBHAVSING)! - Add support for `ignoredKeys` in TypeScript loader
+
+  The TypeScript loader now fully supports the `ignoredKeys` option, allowing you to exclude specific keys (including nested keys) from localization when using both `export default` and `export const` patterns. This works seamlessly with the `run` method and the CLI, and is compatible with flattened key structures. All related tests now pass.
+
+## 0.109.2
+
+### Patch Changes
+
+- [#1108](https://github.com/lingodotdev/lingo.dev/pull/1108) [`99aae2d`](https://github.com/lingodotdev/lingo.dev/commit/99aae2d09a26060c810913f740893a4a5874d9d4) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - Update deprecated 'lingo.dev auth --login' command references to 'lingo.dev login' in CLI error messages
+
+## 0.109.1
+
+### Patch Changes
+
+- Updated dependencies [[`3cb1ebe`](https://github.com/lingodotdev/lingo.dev/commit/3cb1ebec5441882678ab30a7d1b532bc2fc397b6)]:
+  - @lingo.dev/_compiler@0.7.4
+
+## 0.109.0
+
+### Minor Changes
+
+- [#1066](https://github.com/lingodotdev/lingo.dev/pull/1066) [`6af91a0`](https://github.com/lingodotdev/lingo.dev/commit/6af91a083d16f85051fb49a4034789abe784017e) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - add hints support for xcode and jsonc buckets
+
+### Patch Changes
+
+- Updated dependencies [[`6af91a0`](https://github.com/lingodotdev/lingo.dev/commit/6af91a083d16f85051fb49a4034789abe784017e), [`6af91a0`](https://github.com/lingodotdev/lingo.dev/commit/6af91a083d16f85051fb49a4034789abe784017e)]:
+  - @lingo.dev/_spec@0.40.0
+  - @lingo.dev/_sdk@0.12.0
+  - @lingo.dev/_compiler@0.7.3
+
+## 0.108.0
+
+### Minor Changes
+
+- [#1061](https://github.com/lingodotdev/lingo.dev/pull/1061) [`55e9e68`](https://github.com/lingodotdev/lingo.dev/commit/55e9e687a3d0efa84b808818a848a276b1a42015) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - Add Discord link to CLI help text
+
+### Patch Changes
+
+- [#1062](https://github.com/lingodotdev/lingo.dev/pull/1062) [`1ff847b`](https://github.com/lingodotdev/lingo.dev/commit/1ff847b9273a3082178553e70c22524f5831ad36) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - fixed missing placeholder replacement logic in mdx
+
+- [#1028](https://github.com/lingodotdev/lingo.dev/pull/1028) [`b9e2551`](https://github.com/lingodotdev/lingo.dev/commit/b9e2551f349e33542212f941b3407e8517b5fb27) Thanks [@pushkar1713](https://github.com/pushkar1713)! - Make run cmd in CLI print a list of collected errors
+
+- Updated dependencies [[`85dfc10`](https://github.com/lingodotdev/lingo.dev/commit/85dfc10961b116e31b2bb478f42013756ca49974), [`2d67369`](https://github.com/lingodotdev/lingo.dev/commit/2d673697b9cf4d91de2f48444581f8b3fd894cd6)]:
+  - @lingo.dev/_sdk@0.11.0
+  - @lingo.dev/_react@0.4.2
+  - @lingo.dev/_compiler@0.7.2
+
 ## 0.107.6
 
 ### Patch Changes

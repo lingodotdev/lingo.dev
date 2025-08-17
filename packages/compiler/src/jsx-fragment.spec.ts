@@ -136,4 +136,101 @@ function Component() {
     const result = runMutation(input);
     expect(result).toBe(input);
   });
+
+  it("should handle default import React and use React.Fragment", () => {
+    const input = `
+import React from "react";
+
+function Component() {
+  return <></>;
+}
+`.trim();
+
+    const expected = `
+import React from "react";
+function Component() {
+  return <React.Fragment></React.Fragment>;
+}
+`.trim();
+    const result = runMutation(input);
+    expect(result).toBe(expected);
+  });
+
+  it("should handle import * as React and use React.Fragment", () => {
+    const input = `
+import * as React from "react";
+
+function Component() {
+  return <></>;
+}
+`.trim();
+
+    const expected = `
+import * as React from "react";
+function Component() {
+  return <React.Fragment></React.Fragment>;
+}
+`.trim();
+    const result = runMutation(input);
+    expect(result).toBe(expected);
+  });
+
+  it("should handle mixed default and named imports", () => {
+    const input = `
+import React, { useState } from "react";
+
+function Component() {
+  return <></>;
+}
+`.trim();
+
+    const expected = `
+import React, { useState } from "react";
+function Component() {
+  return <React.Fragment></React.Fragment>;
+}
+`.trim();
+    const result = runMutation(input);
+    expect(result).toBe(expected);
+  });
+
+  it("should handle separate namespace and named imports", () => {
+    const input = `
+import * as React from "react";
+import { Fragment } from "react";
+
+function Component() {
+  return <></>;
+}
+`.trim();
+
+    const expected = `
+import * as React from "react";
+import { Fragment } from "react";
+function Component() {
+  return <Fragment></Fragment>;
+}
+`.trim();
+    const result = runMutation(input);
+    expect(result).toBe(expected);
+  });
+
+  it("should handle import * as SomeOtherName from react", () => {
+    const input = `
+import * as SomeOtherName from "react";
+
+function Component() {
+  return <></>;
+}
+`.trim();
+
+    const expected = `
+import * as SomeOtherName from "react";
+function Component() {
+  return <SomeOtherName.Fragment></SomeOtherName.Fragment>;
+}
+`.trim();
+    const result = runMutation(input);
+    expect(result).toBe(expected);
+  });
 });

@@ -8,15 +8,15 @@ export type GetDictionaryPathParams = {
   relativeFilePath: string;
 };
 export const getDictionaryPath = (params: GetDictionaryPathParams) => {
-  const absolute = path.resolve(
+  const toFile = path.resolve(
     params.sourceRoot,
     params.lingoDir,
     LCP_DICTIONARY_FILE_NAME,
   );
-
-  // let Node figure the relative path first
-  const rel = path.relative(params.relativeFilePath, absolute);
-
-  // then normalise the separator once
-  return rel.split(path.sep).join(path.posix.sep);
+  const fromDir = path.dirname(
+    path.resolve(params.sourceRoot, params.relativeFilePath),
+  );
+  const relativePath = path.relative(fromDir, toFile);
+  const normalizedPath = relativePath.split(path.sep).join(path.posix.sep);
+  return `./${normalizedPath}`;
 };

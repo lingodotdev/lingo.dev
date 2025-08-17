@@ -1,5 +1,17 @@
 # @lingo.dev/\_react
 
+## 0.4.3
+
+### Patch Changes
+
+- [#1119](https://github.com/lingodotdev/lingo.dev/pull/1119) [`e898c1e`](https://github.com/lingodotdev/lingo.dev/commit/e898c1eeb34e4dd3e74df26465802b520018acf9) Thanks [@mathio](https://github.com/mathio)! - compiler fallback to source locale
+
+## 0.4.2
+
+### Patch Changes
+
+- [#1054](https://github.com/lingodotdev/lingo.dev/pull/1054) [`2d67369`](https://github.com/lingodotdev/lingo.dev/commit/2d673697b9cf4d91de2f48444581f8b3fd894cd6) Thanks [@davidturnbull](https://github.com/davidturnbull)! - Fix loadLocaleFromCookies to return default locale instead of null when no cookie is found
+
 ## 0.4.1
 
 ### Patch Changes

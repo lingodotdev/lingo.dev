@@ -1,0 +1,30 @@
+title: "MyApp"
+description: Hello, world!
+welcome_message: 'Welcome to MyApp'
+
+user_profile:
+  display_name: "John Doe"
+  bio: Software developer
+  
+navigation_items:
+  - "Home"
+  - "About"
+  - "Contact"
+
+product:
+  name: "MyWidget"
+  tagline: The best widget ever
+  features:
+    - "Easy to use"
+    - "Fast and reliable"
+
+settings:
+  max_users: 100
+  enabled: true
+  timeout: 30.5
+
+complex_structure:
+  level_one:
+    level_two:
+      message: "Deep nested text"
+locked_key_1: "This value is locked and should not be changed"

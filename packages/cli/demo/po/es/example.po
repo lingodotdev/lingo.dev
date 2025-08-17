@@ -1,0 +1,62 @@
+# Translation header
+msgid ""
+msgstr ""
+"Project-Id-Version: Example Project 1.0\n"
+"Report-Msgid-Bugs-To: support@example.com\n"
+"POT-Creation-Date: 2024-01-01 12:00+0000\n"
+"PO-Revision-Date: 2024-01-01 12:00+0000\n"
+"Last-Translator: Example Translator <translator@example.com>\n"
+"Language-Team: English <en@example.com>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Welcome"
+msgstr "Bienvenido"
+
+msgctxt "navigation"
+msgid "Home"
+msgstr "Inicio"
+
+msgid "You have %d message"
+msgid_plural "You have %d messages"
+msgstr[0] "Tienes %d mensaje"
+msgstr[1] "Tienes %d mensajes"
+
+msgid "Save"
+msgstr "Guardar"
+
+msgid "Cancel"
+msgstr "Cancelar"
+
+msgid "Delete"
+msgstr "Eliminar"
+
+msgid "Name"
+msgstr "Nombre"
+
+msgid "Email Address"
+msgstr "Dirección de correo electrónico"
+
+msgid "Message"
+msgstr "Mensaje"
+
+msgid "Loading..."
+msgstr "Cargando..."
+
+msgid "Success! Changes saved."
+msgstr "¡Éxito! Cambios guardados."
+
+msgid "Error: Request failed."
+msgstr "Error: La solicitud ha fallado."
+
+msgid "Add to Cart"
+msgstr "Añadir al carrito"
+
+msgid "Out of Stock"
+msgstr "Agotado"
+
+msgid "Price: $%s"
+msgstr "Precio: $%s"

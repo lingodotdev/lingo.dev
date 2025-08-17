@@ -1,0 +1,22 @@
+version: 1
+checksums:
+  ec06a6ebae97ffd5f7afc99d9a8f051b:
+    root/title: 0468579ef2fbc83c9d520c2f2f1c5059
+    root/description/summary: f2c85bf6eeebeea33609e04598201bb6
+    root/description/details: 2ee85b8f2f0f1bc008d9cf1f916cb09c
+    root/image/%24/src: 3ce26f0a5486adf10e1b7eee1b866a70
+    root/image/%24/alt: 94058fbed56fffaef2e9bbea59ba4a54
+    root/image/%24/title: 60487c71b570d9dedca6fddd4a75d16a
+    root/link/_: e598091d132f890c37a6d4ed94f6d794
+    root/link/%24/href: 285d79d2783cf0769ab9e767362c1499
+    root/link/%24/label: 26ce69aad587f70d47e7606436bf1d6d
+    root/button/_: 7c91ef5f747eea9f77a9c4f23e19fb2e
+    root/button/%24/type: fa8748b22d5bac98fdcd57e3d6594cf3
+    root/button/%24/value: 7c91ef5f747eea9f77a9c4f23e19fb2e
+    root/button/%24/placeholder: 7b5d59cee6952db66043a4b289b51884
+    root/section/article/paragraph/sentence: 28ca53c71a2e3e3de79c892a9b193b1a
+    root/meta/%24/name: d097029e873a4b19132e2603bd2c9fe4
+    root/meta/%24/content: 0811ae3ab84aa87205383c3d8ac42bf3
+    root/message/greeting: 85559fc839c5181b7958654e62c987d5
+    root/message/body: ed0d4b1cde20d045f9f8c5007c784b0b
+    root/message/signature: 181c8c304980949e101865098f548705

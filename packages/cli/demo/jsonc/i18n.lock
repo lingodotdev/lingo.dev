@@ -1,0 +1,16 @@
+version: 1
+checksums:
+  455da9346f4e772000927cd2ff5bb898:
+    title: 0468579ef2fbc83c9d520c2f2f1c5059
+    description: 6f4922f45568161a8cdf4ad2299f6d23
+    version: 54a9e730e88fb16291b852274d433923
+    support_email: 10627fcc465897af0f5e1bba042685f9
+    emoji: b328c432cee108a87a92f05258b6a651
+    author/name: febee8e9ab40b2fe5106d72675228d00
+    contributors/0/name: e80d4063a32adaad7b0a82b0bcc10551
+    contributors/1/name: b2bca2fa3c890618e56d07473f26ead3
+    messages/0: d1c3a9f35e377554a4ccaa467ca26614
+    messages/1: 0468579ef2fbc83c9d520c2f2f1c5059
+    config/theme/primary: 7535a3779d6934ea8ecf18f5cb5b93fd
+    mixed_array/0: 001b5b003d96c133534f5907abffdf77
+    mixed_array/3/nested_message: 5f0782dfc5993e99890c0475bc295a30

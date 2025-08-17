@@ -1,6 +1,6 @@
 {
   "name": "@lingo.dev/_sdk",
-  "version": "0.10.2",
+  "version": "0.12.0",
   "description": "Lingo.dev JS SDK",
   "private": false,
   "publishConfig": {
@@ -16,7 +16,8 @@
   ],
   "scripts": {
     "dev": "tsup --watch",
-    "build": "tsc --noEmit && tsup",
+    "build": "pnpm typecheck && tsup",
+    "typecheck": "tsc --noEmit",
     "test": "vitest run"
   },
   "keywords": [],

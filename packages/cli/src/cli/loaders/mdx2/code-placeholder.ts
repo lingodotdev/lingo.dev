@@ -131,9 +131,17 @@ export default function createMdxCodePlaceholderLoader(): ILoader<
   string,
   string
 > {
+  // Keep a global registry of all placeholders we've ever created
+  // This solves the state synchronization issue
+  const globalPlaceholderRegistry: Record<string, string> = {};
+
   return createLoader({
     async pull(locale, input) {
       const response = extractCodePlaceholders(input);
+
+      // Register all placeholders we create so we can use them later
+      Object.assign(globalPlaceholderRegistry, response.codePlaceholders);
+
       return response.content;
     },
 
@@ -141,9 +149,12 @@ export default function createMdxCodePlaceholderLoader(): ILoader<
       const sourceInfo = extractCodePlaceholders(originalInput ?? "");
       const currentInfo = extractCodePlaceholders(pullInput ?? "");
 
+      // Use the global registry to ensure all placeholders can be replaced,
+      // including those from previous pulls that are no longer in current state
       const codePlaceholders = _.merge(
         sourceInfo.codePlaceholders,
         currentInfo.codePlaceholders,
+        globalPlaceholderRegistry, // Include ALL placeholders ever created
       );
 
       let result = data;

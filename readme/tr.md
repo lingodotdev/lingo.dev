@@ -1,11 +1,18 @@
 <p align="center">
   <a href="https://lingo.dev">
-    <img src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.compiler.png" width="100%" alt="Lingo.dev" />
+    <img
+      src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.compiler.png"
+      width="100%"
+      alt="Lingo.dev"
+    />
   </a>
 </p>
 
 <p align="center">
-  <strong>⚡ Lingo.dev - açık kaynaklı, yapay zeka destekli, LLM'ler ile anında yerelleştirme için i18n araç seti.</strong>
+  <strong>
+    ⚡ Lingo.dev - LLM'ler ile anında yerelleştirme için açık kaynaklı, yapay
+    zeka destekli i18n araç seti.
+  </strong>
 </p>
 
 <br />
@@ -19,13 +26,22 @@
 
 <p align="center">
   <a href="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml">
-    <img src="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml/badge.svg" alt="Sürüm" />
+    <img
+      src="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml/badge.svg"
+      alt="Sürüm"
+    />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md">
-    <img src="https://img.shields.io/github/license/lingodotdev/lingo.dev" alt="Lisans" />
+    <img
+      src="https://img.shields.io/github/license/lingodotdev/lingo.dev"
+      alt="Lisans"
+    />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/commits/main">
-    <img src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev" alt="Son Commit" />
+    <img
+      src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev"
+      alt="Son Değişiklik"
+    />
   </a>
 </p>
 
@@ -162,6 +178,6 @@ Yaptıklarımızı beğeniyorsanız, bize bir ⭐ verin ve 3.000 yıldıza ulaş
 
 ## 🌐 Diğer dillerde Readme
 
-[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Türkçe](/readme/tr.md)
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
 
 Dilinizi görmüyor musunuz? [`i18n.json`](./i18n.json) dosyasına ekleyin ve bir PR açın!

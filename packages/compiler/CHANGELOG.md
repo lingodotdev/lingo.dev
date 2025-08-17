@@ -1,5 +1,46 @@
 # @lingo.dev/\_compiler
 
+## 0.7.7
+
+### Patch Changes
+
+- [#1130](https://github.com/lingodotdev/lingo.dev/pull/1130) [`bc7b08e`](https://github.com/lingodotdev/lingo.dev/commit/bc7b08ef1245d1af0c68813cb18193d4f14bc7e0) Thanks [@mathio](https://github.com/mathio)! - dictionary path calculation
+
+## 0.7.6
+
+### Patch Changes
+
+- [#1121](https://github.com/lingodotdev/lingo.dev/pull/1121) [`b6071e4`](https://github.com/lingodotdev/lingo.dev/commit/b6071e4f19dd1823f4f2ce54ba5495538a94d4fd) Thanks [@mathio](https://github.com/mathio)! - compiler: prevent duplicate props
+
+## 0.7.5
+
+### Patch Changes
+
+- [#1118](https://github.com/lingodotdev/lingo.dev/pull/1118) [`410825c`](https://github.com/lingodotdev/lingo.dev/commit/410825c8bf0029d8ee458514d6f203a7397c8f22) Thanks [@mathio](https://github.com/mathio)! - support Turbopack in Next.js v14 by Compiler
+
+- [#1116](https://github.com/lingodotdev/lingo.dev/pull/1116) [`bc419ae`](https://github.com/lingodotdev/lingo.dev/commit/bc419aeeb4211d80d3c0ddd65deeab62ad68fea8) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - fix: move vitest from dependencies to devDependencies
+
+## 0.7.4
+
+### Patch Changes
+
+- [#1072](https://github.com/lingodotdev/lingo.dev/pull/1072) [`3cb1ebe`](https://github.com/lingodotdev/lingo.dev/commit/3cb1ebec5441882678ab30a7d1b532bc2fc397b6) Thanks [@The-Best-Codes](https://github.com/The-Best-Codes)! - Fixed compiler handling of namespace imports (import \* as React from "react") and default imports.
+
+## 0.7.3
+
+### Patch Changes
+
+- Updated dependencies [[`6af91a0`](https://github.com/lingodotdev/lingo.dev/commit/6af91a083d16f85051fb49a4034789abe784017e), [`6af91a0`](https://github.com/lingodotdev/lingo.dev/commit/6af91a083d16f85051fb49a4034789abe784017e)]:
+  - @lingo.dev/_spec@0.40.0
+  - @lingo.dev/_sdk@0.12.0
+
+## 0.7.2
+
+### Patch Changes
+
+- Updated dependencies [[`85dfc10`](https://github.com/lingodotdev/lingo.dev/commit/85dfc10961b116e31b2bb478f42013756ca49974)]:
+  - @lingo.dev/_sdk@0.11.0
+
 ## 0.7.1
 
 ### Patch Changes

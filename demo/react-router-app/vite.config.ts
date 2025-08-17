@@ -11,9 +11,7 @@ export default defineConfig(({ isSsrBuild }) =>
     sourceRoot: "app",
     targetLocales: ["es", "fr", "de"],
     useDirective: false,
-    models: {
-      "*:*": "groq:mistral-saba-24b",
-    },
+    models: "lingo.dev",
   })({
     plugins: [tailwindcss(), reactRouter(), tsconfigPaths()],
   }),

@@ -433,4 +433,191 @@ describe("loaders/xcode-xcstrings", () => {
       });
     });
   });
+
+  describe("pullHints", () => {
+    it("should extract comments from xcstrings format", async () => {
+      const inputWithComments = {
+        sourceLanguage: "en",
+        strings: {
+          welcome_message: {
+            comment: "Greeting shown on the main screen",
+            extractionState: "manual",
+            localizations: {
+              en: {
+                stringUnit: {
+                  state: "translated",
+                  value: "Welcome!",
+                },
+              },
+            },
+          },
+          user_count: {
+            comment: "Number of active users",
+            extractionState: "manual",
+            localizations: {
+              en: {
+                variations: {
+                  plural: {
+                    one: {
+                      stringUnit: {
+                        state: "translated",
+                        value: "1 user",
+                      },
+                    },
+                    other: {
+                      stringUnit: {
+                        state: "translated",
+                        value: "%d users",
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          no_comment_key: {
+            extractionState: "manual",
+            localizations: {
+              en: {
+                stringUnit: {
+                  state: "translated",
+                  value: "No comment",
+                },
+              },
+            },
+          },
+        },
+      };
+
+      const loader = createXcodeXcstringsLoader(defaultLocale);
+      loader.setDefaultLocale(defaultLocale);
+      await loader.pull(defaultLocale, inputWithComments);
+
+      const hints = await loader.pullHints(inputWithComments);
+
+      expect(hints).toEqual({
+        welcome_message: { hint: "Greeting shown on the main screen" },
+        user_count: { hint: "Number of active users" },
+        "user_count/one": { hint: "Number of active users" },
+        "user_count/other": { hint: "Number of active users" },
+      });
+    });
+
+    it("should handle empty input", async () => {
+      const loader = createXcodeXcstringsLoader(defaultLocale);
+      loader.setDefaultLocale(defaultLocale);
+
+      const hints1 = await loader.pullHints({});
+      expect(hints1).toEqual({});
+
+      const hints2 = await loader.pullHints(null as any);
+      expect(hints2).toEqual({});
+
+      const hints3 = await loader.pullHints(undefined as any);
+      expect(hints3).toEqual({});
+    });
+
+    it("should handle xcstrings without comments", async () => {
+      const loader = createXcodeXcstringsLoader(defaultLocale);
+      loader.setDefaultLocale(defaultLocale);
+      await loader.pull(defaultLocale, mockInput);
+
+      const hints = await loader.pullHints(mockInput);
+      expect(hints).toEqual({});
+    });
+
+    it("should handle strings with only some having comments", async () => {
+      const inputWithMixedComments = {
+        sourceLanguage: "en",
+        strings: {
+          with_comment: {
+            comment: "This has a comment",
+            localizations: {
+              en: {
+                stringUnit: {
+                  state: "translated",
+                  value: "Value with comment",
+                },
+              },
+            },
+          },
+          without_comment: {
+            localizations: {
+              en: {
+                stringUnit: {
+                  state: "translated",
+                  value: "Value without comment",
+                },
+              },
+            },
+          },
+        },
+      };
+
+      const loader = createXcodeXcstringsLoader(defaultLocale);
+      loader.setDefaultLocale(defaultLocale);
+      await loader.pull(defaultLocale, inputWithMixedComments);
+
+      const hints = await loader.pullHints(inputWithMixedComments);
+
+      expect(hints).toEqual({
+        with_comment: { hint: "This has a comment" },
+      });
+    });
+
+    it("should handle multiple locales with same comment", async () => {
+      const inputWithMultipleLocales = {
+        sourceLanguage: "en",
+        strings: {
+          multi_locale: {
+            comment: "Available in multiple languages",
+            localizations: {
+              en: {
+                stringUnit: {
+                  state: "translated",
+                  value: "English",
+                },
+              },
+              es: {
+                stringUnit: {
+                  state: "translated",
+                  value: "Español",
+                },
+              },
+              fr: {
+                variations: {
+                  plural: {
+                    one: {
+                      stringUnit: {
+                        state: "translated",
+                        value: "1 français",
+                      },
+                    },
+                    other: {
+                      stringUnit: {
+                        state: "translated",
+                        value: "%d français",
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      };
+
+      const loader = createXcodeXcstringsLoader(defaultLocale);
+      loader.setDefaultLocale(defaultLocale);
+      await loader.pull(defaultLocale, inputWithMultipleLocales);
+
+      const hints = await loader.pullHints(inputWithMultipleLocales);
+
+      expect(hints).toEqual({
+        multi_locale: { hint: "Available in multiple languages" },
+        "multi_locale/one": { hint: "Available in multiple languages" },
+        "multi_locale/other": { hint: "Available in multiple languages" },
+      });
+    });
+  });
 });

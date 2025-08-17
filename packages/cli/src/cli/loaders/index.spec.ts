@@ -368,6 +368,159 @@ describe("bucket loaders", () => {
     });
   });
 
+  describe("jsonc bucket loader", () => {
+    it("should load jsonc data with comments", async () => {
+      setupFileMocks();
+
+      const input = `{
+        // This is a comment for title
+        "title": "Submit",
+        /* This is a block comment for description */
+        "description": "Button description",
+        "nested": {
+          // Nested comment
+          "key": "value"
+        }
+      }`;
+      const expectedOutput = {
+        title: "Submit",
+        description: "Button description",
+        "nested/key": "value",
+      };
+
+      mockFileOperations(input);
+
+      const jsoncLoader = createBucketLoader("jsonc", "i18n/[locale].jsonc", {
+        defaultLocale: "en",
+      });
+      jsoncLoader.setDefaultLocale("en");
+      const data = await jsoncLoader.pull("en");
+
+      expect(data).toEqual(expectedOutput);
+    });
+
+    it("should save jsonc data", async () => {
+      setupFileMocks();
+
+      const input = `{
+        // This is a comment
+        "title": "Submit"
+      }`;
+      const payload = { title: "Enviar" };
+      const expectedOutput = JSON.stringify(payload, null, 2);
+
+      mockFileOperations(input);
+
+      const jsoncLoader = createBucketLoader("jsonc", "i18n/[locale].jsonc", {
+        defaultLocale: "en",
+      });
+      jsoncLoader.setDefaultLocale("en");
+      await jsoncLoader.pull("en");
+
+      await jsoncLoader.push("es", payload);
+
+      expect(fs.writeFile).toHaveBeenCalledWith(
+        "i18n/es.jsonc",
+        expectedOutput,
+        { encoding: "utf-8", flag: "w" },
+      );
+    });
+
+    it("should extract hints from jsonc comments", async () => {
+      setupFileMocks();
+
+      const input = `{
+        "key1": "value1", // This is a comment for key1
+        "key2": "value2" /* This is a comment for key2 */,
+        // This is a comment for key3
+        "key3": "value3",
+        /* This is a block comment for key4 */
+        "key4": "value4",
+        /*
+         This is a comment for key5
+        */
+        "key5": "value5",
+        // This is a comment for key6
+        "key6": {
+          // This is a comment for key7
+          "key7": "value7"
+        }
+      }`;
+
+      mockFileOperations(input);
+
+      const jsoncLoader = createBucketLoader("jsonc", "i18n/[locale].jsonc", {
+        defaultLocale: "en",
+      });
+      jsoncLoader.setDefaultLocale("en");
+      await jsoncLoader.pull("en");
+
+      const hints = await jsoncLoader.pullHints();
+
+      expect(hints).toEqual({
+        key1: ["This is a comment for key1"],
+        key2: ["This is a comment for key2"],
+        key3: ["This is a comment for key3"],
+        key4: ["This is a block comment for key4"],
+        key5: ["This is a comment for key5"],
+        "key6/key7": [
+          "This is a comment for key6",
+          "This is a comment for key7",
+        ],
+      });
+    });
+
+    it("should handle jsonc with trailing commas", async () => {
+      setupFileMocks();
+
+      const input = `{
+        "hello": "Hello",
+        "world": "World",
+        "array": [
+          "item1",
+          "item2",
+        ],
+      }`;
+      const expectedOutput = {
+        hello: "Hello",
+        world: "World",
+        "array/0": "item1",
+        "array/1": "item2",
+      };
+
+      mockFileOperations(input);
+
+      const jsoncLoader = createBucketLoader("jsonc", "i18n/[locale].jsonc", {
+        defaultLocale: "en",
+      });
+      jsoncLoader.setDefaultLocale("en");
+      const data = await jsoncLoader.pull("en");
+
+      expect(data).toEqual(expectedOutput);
+    });
+
+    it("should handle invalid jsonc gracefully", async () => {
+      setupFileMocks();
+
+      const input = `{
+        "hello": "Hello"
+        "world": "World" // missing comma
+        invalid: syntax
+      }`;
+
+      mockFileOperations(input);
+
+      const jsoncLoader = createBucketLoader("jsonc", "i18n/[locale].jsonc", {
+        defaultLocale: "en",
+      });
+      jsoncLoader.setDefaultLocale("en");
+
+      await expect(jsoncLoader.pull("en")).rejects.toThrow(
+        "Failed to parse JSONC",
+      );
+    });
+  });
+
   describe("json bucket loader", () => {
     it("should load json data", async () => {
       setupFileMocks();
@@ -1610,6 +1763,122 @@ user.password=Contraseña
       expect(
         writtenContent.strings.message.localizations.fr.stringUnit.value,
       ).toBe("Valeur: %d éléments");
+    });
+
+    it("should extract hints from xcstrings comments", async () => {
+      setupFileMocks();
+
+      const input = JSON.stringify({
+        sourceLanguage: "en",
+        strings: {
+          welcome_message: {
+            comment: "Greeting displayed on the main screen",
+            extractionState: "manual",
+            localizations: {
+              en: {
+                stringUnit: {
+                  state: "translated",
+                  value: "Welcome!",
+                },
+              },
+            },
+          },
+          user_count: {
+            comment: "Number of active users - supports pluralization",
+            extractionState: "manual",
+            localizations: {
+              en: {
+                variations: {
+                  plural: {
+                    one: {
+                      stringUnit: {
+                        state: "translated",
+                        value: "1 user",
+                      },
+                    },
+                    other: {
+                      stringUnit: {
+                        state: "translated",
+                        value: "%d users",
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          no_comment: {
+            extractionState: "manual",
+            localizations: {
+              en: {
+                stringUnit: {
+                  state: "translated",
+                  value: "No comment here",
+                },
+              },
+            },
+          },
+        },
+      });
+
+      mockFileOperations(input);
+
+      const xcodeXcstringsLoader = createBucketLoader(
+        "xcode-xcstrings",
+        "i18n/[locale].xcstrings",
+        {
+          defaultLocale: "en",
+        },
+      );
+      xcodeXcstringsLoader.setDefaultLocale("en");
+      await xcodeXcstringsLoader.pull("en");
+
+      const hints = await xcodeXcstringsLoader.pullHints();
+
+      // Note: The output is flattened because xcode-xcstrings bucket loader goes through the flat loader
+      expect(hints).toEqual({
+        welcome_message: ["Greeting displayed on the main screen"],
+        user_count: ["Number of active users - supports pluralization"],
+        "user_count/one": ["Number of active users - supports pluralization"],
+        "user_count/other": ["Number of active users - supports pluralization"],
+      });
+    });
+
+    it("should handle xcstrings without comments in full-stack loader", async () => {
+      setupFileMocks();
+
+      const input = JSON.stringify({
+        sourceLanguage: "en",
+        strings: {
+          simple_key: {
+            extractionState: "manual",
+            localizations: {
+              en: {
+                stringUnit: {
+                  state: "translated",
+                  value: "Simple value",
+                },
+              },
+            },
+          },
+        },
+      });
+
+      mockFileOperations(input);
+
+      const xcodeXcstringsLoader = createBucketLoader(
+        "xcode-xcstrings",
+        "i18n/[locale].xcstrings",
+        {
+          defaultLocale: "en",
+        },
+      );
+      xcodeXcstringsLoader.setDefaultLocale("en");
+      await xcodeXcstringsLoader.pull("en");
+
+      const hints = await xcodeXcstringsLoader.pullHints();
+
+      expect(hints).toEqual({});
     });
   });
 
