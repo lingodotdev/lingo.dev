@@ -1,5 +1,11 @@
 # @lingo.dev/\_react
 
+## 0.5.0
+
+### Minor Changes
+
+- [#1134](https://github.com/lingodotdev/lingo.dev/pull/1134) [`3a642f3`](https://github.com/lingodotdev/lingo.dev/commit/3a642f33c04378706a8382aa0fde36e747fd6af5) Thanks [@mathio](https://github.com/mathio)! - useLingoLocale, setLingoLocale
+
 ## 0.4.3
 
 ### Patch Changes

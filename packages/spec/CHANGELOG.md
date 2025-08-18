@@ -1,5 +1,11 @@
 # @lingo.dev/\_spec
 
+## 0.40.1
+
+### Patch Changes
+
+- [#1016](https://github.com/lingodotdev/lingo.dev/pull/1016) [`a35032e`](https://github.com/lingodotdev/lingo.dev/commit/a35032e7e7a188d1f5e774576352068124526e24) Thanks [@davidturnbull](https://github.com/davidturnbull)! - feat: add automated config documentation generator for i18n.json schema
+
 ## 0.40.0
 
 ### Minor Changes
