@@ -1,5 +1,19 @@
 # lingo.dev
 
+## 0.111.0
+
+### Minor Changes
+
+- [#1134](https://github.com/lingodotdev/lingo.dev/pull/1134) [`3a642f3`](https://github.com/lingodotdev/lingo.dev/commit/3a642f33c04378706a8382aa0fde36e747fd6af5) Thanks [@mathio](https://github.com/mathio)! - useLingoLocale, setLingoLocale
+
+### Patch Changes
+
+- Updated dependencies [[`a35032e`](https://github.com/lingodotdev/lingo.dev/commit/a35032e7e7a188d1f5e774576352068124526e24), [`3a642f3`](https://github.com/lingodotdev/lingo.dev/commit/3a642f33c04378706a8382aa0fde36e747fd6af5)]:
+  - @lingo.dev/_spec@0.40.1
+  - @lingo.dev/_react@0.5.0
+  - @lingo.dev/_compiler@0.7.8
+  - @lingo.dev/_sdk@0.12.1
+
 ## 0.110.5
 
 ### Patch Changes
