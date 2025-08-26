@@ -24,8 +24,7 @@ import createProcessor from "../processor";
 import { withExponentialBackoff } from "../utils/exp-backoff";
 import trackEvent from "../utils/observability";
 import { createDeltaProcessor } from "../utils/delta";
-import { tryReadFile, writeFile } from "../utils/fs";
-import { flatten, unflatten } from "flat";
+import { exitGracefully } from "../utils/exit-gracefully";
 
 export default new Command()
   .command("i18n")
@@ -510,6 +509,7 @@ export default new Command()
           flags,
         });
       }
+      exitGracefully();
     } catch (error: any) {
       ora.fail(error.message);
 
