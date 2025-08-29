@@ -12,9 +12,9 @@ import {
   pauseIfDebug,
   renderSummary,
 } from "../../utils/ui";
-import chalk from "chalk";
 import trackEvent from "../../utils/observability";
 import { determineAuthId } from "./_utils";
+import { exitGracefully } from "../../utils/exit-gracefully";
 
 export default new Command()
   .command("run")
@@ -117,6 +117,7 @@ export default new Command()
         config: ctx.config,
         flags: ctx.flags,
       });
+      exitGracefully();
     } catch (error: any) {
       trackEvent(authId || "unknown", "cmd.run.error", {});
       process.exit(1);

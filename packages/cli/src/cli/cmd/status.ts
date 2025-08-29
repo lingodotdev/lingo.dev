@@ -20,6 +20,7 @@ import Table from "cli-table3";
 import { createDeltaProcessor } from "../utils/delta";
 import trackEvent from "../utils/observability";
 import { minimatch } from "minimatch";
+import { exitGracefully } from "../utils/exit-gracefully";
 
 // Define types for our language stats
 interface LanguageStats {
@@ -626,6 +627,7 @@ export default new Command()
         totalWordsToTranslate,
         authenticated: !!authId,
       });
+      exitGracefully();
     } catch (error: any) {
       ora.fail(error.message);
       trackEvent(authId || "status", "cmd.status.error", {
