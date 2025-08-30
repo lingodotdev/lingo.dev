@@ -20,6 +20,7 @@ import statusCmd from "./cmd/status";
 import mayTheFourthCmd from "./cmd/may-the-fourth";
 import packageJson from "../../package.json";
 import run from "./cmd/run";
+import checkCmd from "./cmd/check";
 import purgeCmd from "./cmd/purge";
 
 export default new InteractiveCommand()
@@ -58,6 +59,7 @@ Star the the repo :) https://github.com/LingoDotDev/lingo.dev
   .addCommand(statusCmd)
   .addCommand(mayTheFourthCmd, { hidden: true })
   .addCommand(run)
+  .addCommand(checkCmd)
   .addCommand(purgeCmd)
   .exitOverride((err) => {
     // Exit with code 0 when help or version is displayed
