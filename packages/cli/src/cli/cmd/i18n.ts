@@ -142,7 +142,9 @@ export default new Command()
           ora.fail(
             "No buckets found. All buckets were filtered out by --file option.",
           );
-          throw new Error("No buckets found. All buckets were filtered out by --file option.");
+          throw new Error(
+            "No buckets found. All buckets were filtered out by --file option.",
+          );
         } else {
           ora.info(`\x1b[36mProcessing only filtered buckets:\x1b[0m`);
           buckets.map((bucket: any) => {
@@ -295,7 +297,9 @@ export default new Command()
             `Localization data has changed; please update i18n.lock or run without --frozen.`,
           );
           ora.fail(`  Details: ${message}`);
-          throw new Error(`Localization data has changed; please update i18n.lock or run without --frozen. Details: ${message}`);
+          throw new Error(
+            `Localization data has changed; please update i18n.lock or run without --frozen. Details: ${message}`,
+          );
         } else {
           ora.succeed("No lockfile updates required.");
         }
