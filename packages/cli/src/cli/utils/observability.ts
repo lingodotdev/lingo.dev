@@ -1,6 +1,20 @@
 import pkg from "node-machine-id";
 const { machineIdSync } = pkg;
 
+export async function createPosthogClient() {
+  const { PostHog } = await import("posthog-node");
+  const posthog = new PostHog(
+    "phc_eR0iSoQufBxNY36k0f0T15UvHJdTfHlh8rJcxsfhfXk",
+    {
+      host: "https://eu.i.posthog.com",
+      flushAt: 1,
+      flushInterval: 0,
+    },
+  );
+
+  return posthog;
+}
+
 export default async function trackEvent(
   distinctId: string | null | undefined,
   event: string,
@@ -13,15 +27,7 @@ export default async function trackEvent(
   try {
     const actualId = distinctId || `device-${machineIdSync()}`;
 
-    const { PostHog } = await import("posthog-node");
-    const posthog = new PostHog(
-      "phc_eR0iSoQufBxNY36k0f0T15UvHJdTfHlh8rJcxsfhfXk",
-      {
-        host: "https://eu.i.posthog.com",
-        flushAt: 1,
-        flushInterval: 0,
-      },
-    );
+    const posthog = await createPosthogClient();
 
     await posthog.capture({
       distinctId: actualId,
@@ -34,8 +40,6 @@ export default async function trackEvent(
         },
       },
     });
-
-    await posthog.shutdown();
   } catch (error) {
     if (process.env.DEBUG) {
       console.error(error);
