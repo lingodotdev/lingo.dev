@@ -160,7 +160,7 @@
     "ink-progress-bar": "^3.0.0",
     "ink-spinner": "^5.0.0",
     "inquirer": "^12.6.0",
-    "interactive-commander": "^0.5.194",
+    "interactive-commander": "^0.6.0",
     "is-url": "^1.2.4",
     "jsdom": "^25.0.1",
     "json5": "^2.2.3",
