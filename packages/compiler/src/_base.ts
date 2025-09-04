@@ -89,6 +89,15 @@ export type CompilerParams = {
    * @default null
    */
   prompt?: string | null;
+  /**
+   * The router mode to use for routing features.
+   *
+   * - `"app"`: Next.js App Router (RSC enabled, sourceRoot defaults to "src")
+   * - `"pages"`: Next.js Pages Router (RSC disabled, sourceRoot defaults to "./")
+   *
+   * @default "app"
+   */
+  router?: "app" | "pages";
 };
 
 /**
@@ -195,6 +204,7 @@ export function composeMutations(...mutations: CodeMutation[]) {
 }
 
 export const defaultParams: CompilerParams = {
+  router: "app",
   sourceRoot: "src",
   lingoDir: "lingo",
   sourceLocale: "en",
