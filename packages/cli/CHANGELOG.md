@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.111.3
+
+### Patch Changes
+
+- [`8741a20`](https://github.com/lingodotdev/lingo.dev/commit/8741a20dcaa3983131a1919f875dd2c264cb29fb) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - fix observability tracking
+
 ## 0.111.2
 
 ### Patch Changes
