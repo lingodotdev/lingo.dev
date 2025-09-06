@@ -1,5 +1,22 @@
 # lingo.dev
 
+## 0.111.3
+
+### Patch Changes
+
+- [`8741a20`](https://github.com/lingodotdev/lingo.dev/commit/8741a20dcaa3983131a1919f875dd2c264cb29fb) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - fix observability tracking
+
+## 0.111.2
+
+### Patch Changes
+
+- [#1149](https://github.com/lingodotdev/lingo.dev/pull/1149) [`bd3f69d`](https://github.com/lingodotdev/lingo.dev/commit/bd3f69dde76814146f775bc87241fa2fad012ab0) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - Fix CI command hanging due to process.exit calls
+
+  - Remove PostHog shutdown() call that was causing process to hang
+  - Replace process.exit() with proper exception throwing in i18n and run commands
+  - Upgrade posthog-node from 5.5.1 to 5.8.1 for better stability
+  - This fixes the CI command integration where process.exit() was terminating the parent process instead of returning control
+
 ## 0.111.1
 
 ### Patch Changes
