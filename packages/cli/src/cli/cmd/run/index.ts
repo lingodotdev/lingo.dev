@@ -21,27 +21,35 @@ import { determineAuthId } from "./_utils";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-function playSound(type: 'success' | 'failure') {
+function playSound(type: "success" | "failure") {
   const platform = os.platform();
-  
+
   return new Promise<void>((resolve) => {
     const assetDir = path.join(__dirname, "../assets");
-    const soundFiles = [
-      path.join(assetDir, `${type}.mp3`),
-    ];
+    const soundFiles = [path.join(assetDir, `${type}.mp3`)];
 
-    let command = '';
-    
-    if (platform === 'linux') {
-      command = soundFiles.map(file => `mpg123 -q "${file}" 2>/dev/null || aplay "${file}" 2>/dev/null`).join(' || ');
-    } else if (platform === 'darwin') {
-      command = soundFiles.map(file => `afplay "${file}"`).join(' || ');
-    } else if (platform === 'win32') {
+    let command = "";
+
+    if (platform === "linux") {
+      command = soundFiles
+        .map(
+          (file) =>
+            `mpg123 -q "${file}" 2>/dev/null || aplay "${file}" 2>/dev/null`,
+        )
+        .join(" || ");
+    } else if (platform === "darwin") {
+      command = soundFiles.map((file) => `afplay "${file}"`).join(" || ");
+    } else if (platform === "win32") {
       command = `powershell -c "try { (New-Object Media.SoundPlayer '${soundFiles[1]}').PlaySync() } catch { Start-Process -FilePath '${soundFiles[0]}' -WindowStyle Hidden -Wait }"`;
     } else {
-      command = soundFiles.map(file => `aplay "${file}" 2>/dev/null || afplay "${file}" 2>/dev/null`).join(' || ');
+      command = soundFiles
+        .map(
+          (file) =>
+            `aplay "${file}" 2>/dev/null || afplay "${file}" 2>/dev/null`,
+        )
+        .join(" || ");
     }
-    
+
     exec(command, () => {
       resolve();
     });
@@ -105,7 +113,7 @@ export default new Command()
   )
   .option(
     "--sound",
-    "Play sound on completion, partially completion and failed of the task"
+    "Play sound on completion, partially completion and failed of the task",
   )
   .action(async (args) => {
     let authId: string | null = null;
@@ -147,7 +155,7 @@ export default new Command()
 
       // Play sound after main tasks complete if sound flag is enabled
       if (ctx.flags.sound) {
-        await playSound('success');
+        await playSound("success");
       }
 
       // If watch mode is enabled, start watching for changes
@@ -163,7 +171,7 @@ export default new Command()
       await trackEvent(authId || "unknown", "cmd.run.error", {});
       // Play sad sound if sound flag is enabled
       if (args.sound) {
-        await playSound('failure');
+        await playSound("failure");
       }
       throw error;
     }
