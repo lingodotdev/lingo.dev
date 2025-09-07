@@ -18,7 +18,6 @@ import {
 } from "../../utils/ui";
 import trackEvent from "../../utils/observability";
 import { determineAuthId } from "./_utils";
-import { exitGracefully } from "../../utils/exit-gracefully";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -130,7 +129,7 @@ export default new Command()
 
       authId = await determineAuthId(ctx);
 
-      trackEvent(authId, "cmd.run.start", {
+      await trackEvent(authId, "cmd.run.start", {
         config: ctx.config,
         flags: ctx.flags,
       });
@@ -156,16 +155,16 @@ export default new Command()
         await watch(ctx);
       }
 
-      trackEvent(authId, "cmd.run.success", {
+      await trackEvent(authId, "cmd.run.success", {
         config: ctx.config,
         flags: ctx.flags,
       });
-      exitGracefully();
     } catch (error: any) {
-      trackEvent(authId || "unknown", "cmd.run.error", {});
+      await trackEvent(authId || "unknown", "cmd.run.error", {});
+      // Play sad sound if sound flag is enabled
       if (args.sound) {
         await playSound('failure');
       }
-      process.exit(1);
+      throw error;
     }
   });

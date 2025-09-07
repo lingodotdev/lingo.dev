@@ -43,6 +43,18 @@
       alt="Ultimo commit"
     />
   </a>
+  <a href="https://lingo.dev/en">
+    <img
+      src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
+      alt="Prodotto del giorno #1 su Product Hunt"
+    />
+  </a>
+  <a href="https://lingo.dev/en">
+    <img
+      src="https://img.shields.io/badge/GitHub-Trending-blue?logo=github&style=flat-square"
+      alt="Trending su Github"
+    />
+  </a>
 </p>
 
 ---
