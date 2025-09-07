@@ -109,9 +109,6 @@ export default new Command()
     "Play sound on completion, partially completion and failed of the task"
   )
   .action(async (args) => {
-    // log the args in terminal
-    console.log("CLI args:", args);
-
     let authId: string | null = null;
     try {
       const ctx: CmdRunContext = {
