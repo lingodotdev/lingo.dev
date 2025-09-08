@@ -64,7 +64,7 @@
     "@inertiajs/react": "^2.0.17",
     "@vinejs/vine": "^3.0.1",
     "edge.js": "^6.2.1",
-    "lingo.dev": "^0.107.6",
+    "lingo.dev": "workspace:*",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "reflect-metadata": "^0.2.2"
