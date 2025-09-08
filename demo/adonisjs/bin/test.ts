@@ -10,6 +10,7 @@
 |
 */
 
+// @ts-expect-error 2540
 process.env.NODE_ENV = 'test'
 
 import 'reflect-metadata'
