@@ -3,7 +3,7 @@ import inertia from '@adonisjs/inertia/client'
 import adonisjs from '@adonisjs/vite/client'
 import react from '@vitejs/plugin-react'
 import lingoCompiler from 'lingo.dev/compiler'
-import { type UserConfig } from 'vite'
+import { type UserConfig, type PluginOption } from 'vite'
 
 const viteConfig: UserConfig = {
   plugins: [
@@ -17,7 +17,7 @@ const viteConfig: UserConfig = {
     adonisjs({
       entrypoints: ['inertia/app/app.tsx'],
       reload: ['resources/views/**/*.edge'],
-    }),
+    }) as unknown as PluginOption,
   ],
   resolve: {
     alias: {
