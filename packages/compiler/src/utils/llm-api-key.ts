@@ -71,6 +71,18 @@ export function getOpenRouterKeyFromEnv() {
   return getKeyFromEnv("OPENROUTER_API_KEY");
 }
 
+export function getAimlApiKey() {
+  return getAimlApiKeyFromEnv() || getAimlApiKeyFromRc();
+}
+
+export function getAimlApiKeyFromRc() {
+  return getKeyFromRc("llm.aimlApiKey");
+}
+
+export function getAimlApiKeyFromEnv() {
+  return getKeyFromEnv("AIMLAPI_API_KEY");
+}
+
 export function getMistralKey() {
   return getMistralKeyFromEnv() || getMistralKeyFromRc();
 }

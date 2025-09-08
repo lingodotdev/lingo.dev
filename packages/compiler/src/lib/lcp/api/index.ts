@@ -18,6 +18,8 @@ import {
   getGoogleKeyFromEnv,
   getOpenRouterKey,
   getOpenRouterKeyFromEnv,
+  getAimlApiKey,
+  getAimlApiKeyFromEnv,
   getMistralKey,
   getMistralKeyFromEnv,
   getLingoDotDevKeyFromEnv,
@@ -333,6 +335,31 @@ export class LCPAPI {
         );
         return createGoogleGenerativeAI({ apiKey: googleKey })(modelId);
       }
+      case "aimlapi": {
+        // Specific check for CI/CD or Docker missing AI/ML API key
+        if (isRunningInCIOrDocker()) {
+          const aimlFromEnv = getAimlApiKeyFromEnv();
+          if (!aimlFromEnv) {
+            this._failMissingLLMKeyCi(providerId);
+          }
+        }
+        const aimlApiKey = getAimlApiKey();
+        if (!aimlApiKey) {
+          throw new Error(
+            "⚠️  AI/ML API key not found. Please set AIMLAPI_API_KEY environment variable or configure it user-wide.",
+          );
+        }
+        console.log(
+          `Creating AI/ML API client for ${targetLocale} using model ${modelId}`,
+        );
+        // Import lazily to avoid requiring the package when not used in tests
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
+        const { createOpenAI } = require("@ai-sdk/openai");
+        return createOpenAI({
+          apiKey: aimlApiKey,
+          baseURL: "https://api.aimlapi.com/v1",
+        })(modelId);
+      }
       case "openrouter": {
         // Specific check for CI/CD or Docker missing OpenRouter key
         if (isRunningInCIOrDocker()) {
@@ -385,7 +412,7 @@ export class LCPAPI {
 
       default: {
         throw new Error(
-          `⚠️  Provider "${providerId}" for locale "${targetLocale}" is not supported. Only "groq", "google", "openrouter", "ollama", and "mistral" providers are supported at the moment.`,
+          `⚠️  Provider "${providerId}" for locale "${targetLocale}" is not supported. Only "groq", "google", "aimlapi", "openrouter", "ollama", and "mistral" providers are supported at the moment.`,
         );
       }
     }

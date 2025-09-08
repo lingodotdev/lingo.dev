@@ -24,6 +24,13 @@ export const providerDetails: Record<
     getKeyLink: "https://ai.google.dev/",
     docsLink: "https://ai.google.dev/gemini-api/docs/troubleshooting",
   },
+  aimlapi: {
+    name: "AI/ML API",
+    apiKeyEnvVar: "AIMLAPI_API_KEY",
+    apiKeyConfigKey: "llm.aimlApiKey",
+    getKeyLink: "https://aimlapi.com",
+    docsLink: "https://docs.aimlapi.com/",
+  },
   openrouter: {
     name: "OpenRouter",
     apiKeyEnvVar: "OPENROUTER_API_KEY",
