@@ -1,0 +1,104 @@
+{
+  "files": {
+    "pages/errors/not_found.tsx": {
+      "scopes": {
+        "1/declaration/body/0/argument/1/1": {
+          "type": "element",
+          "hash": "97612e6230bc7a1ebd99380bf561b732",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Page not found"
+        },
+        "1/declaration/body/0/argument/1/3": {
+          "type": "element",
+          "hash": "7b6bcd0a4f23e42eeb0c972c2004efad",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "This page does not exist."
+        }
+      }
+    },
+    "pages/errors/server_error.tsx": {
+      "scopes": {
+        "1/declaration/body/0/argument/1/1": {
+          "type": "element",
+          "hash": "d574aa7e2d84d112dc79ac0e59d794cf",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Server Error"
+        }
+      }
+    },
+    "pages/home.tsx": {
+      "scopes": {
+        "2/declaration/body/0/argument/1-title": {
+          "type": "attribute",
+          "hash": "7c2d68be7446e6de191c11d53f1e07b4",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Homepage"
+        },
+        "2/declaration/body/0/argument/3/1/1": {
+          "type": "element",
+          "hash": "0468579ef2fbc83c9d520c2f2f1c5059",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Hello, world!"
+        },
+        "2/declaration/body/0/argument/3/1/3": {
+          "type": "element",
+          "hash": "82b29979a52b215b94b2e811e8c03005",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "This is an example app that demonstrates how <element:strong>Lingo.dev Compiler</element:strong> can be used to localize apps built with <element:a>AdonisJS</element:a> ."
+        },
+        "2/declaration/body/0/argument/3/1/5": {
+          "type": "element",
+          "hash": "9ffb5f98cf11c88f3903e060f4028b46",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "To switch between locales, use the following dropdown:"
+        },
+        "3/declaration/body/0/argument/1-title": {
+          "type": "attribute",
+          "hash": "7c2d68be7446e6de191c11d53f1e07b4",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Homepage"
+        },
+        "3/declaration/body/0/argument/3/1/1": {
+          "type": "element",
+          "hash": "0468579ef2fbc83c9d520c2f2f1c5059",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Hello, world!"
+        },
+        "3/declaration/body/0/argument/3/1/3": {
+          "type": "element",
+          "hash": "82b29979a52b215b94b2e811e8c03005",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "This is an example app that demonstrates how <element:strong>Lingo.dev Compiler</element:strong> can be used to localize apps built with <element:a>AdonisJS</element:a> ."
+        },
+        "3/declaration/body/0/argument/3/1/5": {
+          "type": "element",
+          "hash": "9ffb5f98cf11c88f3903e060f4028b46",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "To switch between locales, use the following dropdown:"
+        }
+      }
+    }
+  }
+}
