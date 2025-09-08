@@ -24,8 +24,6 @@ import createProcessor from "../processor";
 import { withExponentialBackoff } from "../utils/exp-backoff";
 import trackEvent from "../utils/observability";
 import { createDeltaProcessor } from "../utils/delta";
-import { tryReadFile, writeFile } from "../utils/fs";
-import { flatten, unflatten } from "flat";
 
 export default new Command()
   .command("i18n")
@@ -118,7 +116,7 @@ export default new Command()
         ora.succeed(`Authenticated as ${auth.email}`);
       }
 
-      trackEvent(authId, "cmd.i18n.start", {
+      await trackEvent(authId, "cmd.i18n.start", {
         i18nConfig,
         flags,
       });
@@ -144,7 +142,9 @@ export default new Command()
           ora.fail(
             "No buckets found. All buckets were filtered out by --file option.",
           );
-          process.exit(1);
+          throw new Error(
+            "No buckets found. All buckets were filtered out by --file option.",
+          );
         } else {
           ora.info(`\x1b[36mProcessing only filtered buckets:\x1b[0m`);
           buckets.map((bucket: any) => {
@@ -297,7 +297,9 @@ export default new Command()
             `Localization data has changed; please update i18n.lock or run without --frozen.`,
           );
           ora.fail(`  Details: ${message}`);
-          process.exit(1);
+          throw new Error(
+            `Localization data has changed; please update i18n.lock or run without --frozen. Details: ${message}`,
+          );
         } else {
           ora.succeed("No lockfile updates required.");
         }
@@ -500,24 +502,23 @@ export default new Command()
       console.log();
       if (!hasErrors) {
         ora.succeed("Localization completed.");
-        trackEvent(authId, "cmd.i18n.success", {
+        await trackEvent(authId, "cmd.i18n.success", {
           i18nConfig,
           flags,
         });
       } else {
         ora.warn("Localization completed with errors.");
-        trackEvent(authId || "unknown", "cmd.i18n.error", {
+        await trackEvent(authId || "unknown", "cmd.i18n.error", {
           flags,
         });
       }
     } catch (error: any) {
       ora.fail(error.message);
 
-      trackEvent(authId || "unknown", "cmd.i18n.error", {
+      await trackEvent(authId || "unknown", "cmd.i18n.error", {
         flags,
         error,
       });
-      process.exit(1);
     }
   });
 

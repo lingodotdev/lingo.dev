@@ -1,5 +1,42 @@
 # lingo.dev
 
+## 0.111.3
+
+### Patch Changes
+
+- [`8741a20`](https://github.com/lingodotdev/lingo.dev/commit/8741a20dcaa3983131a1919f875dd2c264cb29fb) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - fix observability tracking
+
+## 0.111.2
+
+### Patch Changes
+
+- [#1149](https://github.com/lingodotdev/lingo.dev/pull/1149) [`bd3f69d`](https://github.com/lingodotdev/lingo.dev/commit/bd3f69dde76814146f775bc87241fa2fad012ab0) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - Fix CI command hanging due to process.exit calls
+
+  - Remove PostHog shutdown() call that was causing process to hang
+  - Replace process.exit() with proper exception throwing in i18n and run commands
+  - Upgrade posthog-node from 5.5.1 to 5.8.1 for better stability
+  - This fixes the CI command integration where process.exit() was terminating the parent process instead of returning control
+
+## 0.111.1
+
+### Patch Changes
+
+- [#1144](https://github.com/lingodotdev/lingo.dev/pull/1144) [`6c174c3`](https://github.com/lingodotdev/lingo.dev/commit/6c174c38f3cf28c2af24ead18503658c3c641026) Thanks [@mathio](https://github.com/mathio)! - exit cli gracefully
+
+## 0.111.0
+
+### Minor Changes
+
+- [#1134](https://github.com/lingodotdev/lingo.dev/pull/1134) [`3a642f3`](https://github.com/lingodotdev/lingo.dev/commit/3a642f33c04378706a8382aa0fde36e747fd6af5) Thanks [@mathio](https://github.com/mathio)! - useLingoLocale, setLingoLocale
+
+### Patch Changes
+
+- Updated dependencies [[`a35032e`](https://github.com/lingodotdev/lingo.dev/commit/a35032e7e7a188d1f5e774576352068124526e24), [`3a642f3`](https://github.com/lingodotdev/lingo.dev/commit/3a642f33c04378706a8382aa0fde36e747fd6af5)]:
+  - @lingo.dev/_spec@0.40.1
+  - @lingo.dev/_react@0.5.0
+  - @lingo.dev/_compiler@0.7.8
+  - @lingo.dev/_sdk@0.12.1
+
 ## 0.110.5
 
 ### Patch Changes

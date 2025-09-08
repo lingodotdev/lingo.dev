@@ -12,7 +12,6 @@ import {
   pauseIfDebug,
   renderSummary,
 } from "../../utils/ui";
-import chalk from "chalk";
 import trackEvent from "../../utils/observability";
 import { determineAuthId } from "./_utils";
 
@@ -92,7 +91,7 @@ export default new Command()
 
       authId = await determineAuthId(ctx);
 
-      trackEvent(authId, "cmd.run.start", {
+      await trackEvent(authId, "cmd.run.start", {
         config: ctx.config,
         flags: ctx.flags,
       });
@@ -113,12 +112,12 @@ export default new Command()
         await watch(ctx);
       }
 
-      trackEvent(authId, "cmd.run.success", {
+      await trackEvent(authId, "cmd.run.success", {
         config: ctx.config,
         flags: ctx.flags,
       });
     } catch (error: any) {
-      trackEvent(authId || "unknown", "cmd.run.error", {});
-      process.exit(1);
+      await trackEvent(authId || "unknown", "cmd.run.error", {});
+      throw error;
     }
   });
