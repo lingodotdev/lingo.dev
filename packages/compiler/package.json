@@ -50,7 +50,7 @@
     "@openrouter/ai-sdk-provider": "^0.7.1",
     "@prettier/sync": "^0.6.1",
     "ai": "^4.2.10",
-    "dedent": "^1.6.0",
+    "dedent": "^1.7.0",
     "dotenv": "^16.4.5",
     "fast-xml-parser": "^5.0.8",
     "ini": "^5.0.0",
