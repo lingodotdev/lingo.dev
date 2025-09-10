@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.111.4
+
+### Patch Changes
+
+- [#1157](https://github.com/lingodotdev/lingo.dev/pull/1157) [`100b141`](https://github.com/lingodotdev/lingo.dev/commit/100b141d2143e33b603830475ba55089dc421e3d) Thanks [@ankur0904](https://github.com/ankur0904)! - add --sound flag for task completion
+
 ## 0.111.3
 
 ### Patch Changes
