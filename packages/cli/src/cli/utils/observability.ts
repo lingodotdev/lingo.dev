@@ -4,7 +4,7 @@ import https from "https";
 
 const POSTHOG_API_KEY = "phc_eR0iSoQufBxNY36k0f0T15UvHJdTfHlh8rJcxsfhfXk";
 const POSTHOG_HOST = "eu.i.posthog.com";
-const POSTHOG_PATH = "/i/v0/e/";  // Correct PostHog capture endpoint
+const POSTHOG_PATH = "/i/v0/e/"; // Correct PostHog capture endpoint
 const REQUEST_TIMEOUT_MS = 1000;
 
 /**
