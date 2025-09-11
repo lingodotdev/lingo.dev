@@ -2,68 +2,66 @@
   "version": 1.7,
   "locale": {
     "source": "en",
-    "targets": ["ru", "es"]
+    "targets": ["es"]
   },
   "buckets": {
     "xliff": {
-      "include": ["demo/xliff/[locale].xliff"]
+      "include": ["demo/xliff/[locale]/*.xliff"]
     },
     "android": {
-      "include": ["demo/android/[locale].xml"]
+      "include": ["demo/android/[locale]/*.xml"]
     },
     "csv": {
-      "include": ["demo/csv/file.csv"]
+      "include": ["demo/csv/example.csv"]
     },
     "flutter": {
-      "include": ["demo/flutter/[locale].arb"]
+      "include": ["demo/flutter/[locale]/*.arb"]
     },
     "html": {
-      "include": ["demo/html/[locale].html"]
+      "include": ["demo/html/[locale]/*.html"]
     },
     "json": {
-      "include": ["demo/json/[locale].json"]
+      "include": ["demo/json/[locale]/*.json"]
     },
     "jsonc": {
-      "include": ["demo/jsonc/[locale]/example.jsonc"]
+      "include": ["demo/jsonc/[locale]/*.jsonc"]
     },
     "markdown": {
       "include": ["demo/markdown/[locale]/*.md"],
       "exclude": ["demo/markdown/[locale]/ignored.md"]
     },
     "mdx": {
-      "include": ["demo/mdx/[locale].mdx"]
+      "include": ["demo/mdx/[locale]/*.mdx"]
     },
     "po": {
-      "include": ["demo/po/[locale].po"]
+      "include": ["demo/po/[locale]/*.po"]
     },
     "properties": {
-      "include": ["demo/properties/[locale].properties"]
+      "include": ["demo/properties/[locale]/*.properties"]
     },
     "typescript": {
-      "include": ["demo/typescript/[locale].ts"]
+      "include": ["demo/typescript/[locale]/*.ts"]
     },
     "xcode-strings": {
-      "include": ["demo/xcode-strings/[locale].lproj/Localizable.strings"]
+      "include": ["demo/xcode-strings/[locale]/*.strings"]
     },
     "xcode-stringsdict": {
-      "include": [
-        "demo/xcode-stringsdict/[locale].lproj/Localizable.stringsdict"
-      ]
+      "include": ["demo/xcode-stringsdict/[locale]/*.stringsdict"]
     },
     "xcode-xcstrings": {
-      "include": ["demo/xcode-xcstrings/Localizable.xcstrings"]
+      "include": ["demo/xcode-xcstrings/*.xcstrings"]
     },
     "yaml": {
-      "include": ["demo/yaml/[locale].yml"]
+      "include": ["demo/yaml/[locale]/*.yml"]
     },
     "yaml-root-key": {
-      "include": ["demo/yaml-root-key/[locale].yml"]
+      "include": ["demo/yaml-root-key/[locale]/*.yml"]
     },
     "php": {
-      "include": ["demo/php/[locale]/messages.php"]
+      "include": ["demo/php/[locale]/*.php"]
     },
     "vue-json": {
-      "include": ["demo/vue/template.vue"]
+      "include": ["demo/vue-json/*.vue"]
     }
   },
   "$schema": "https://lingo.dev/schema/i18n.json"

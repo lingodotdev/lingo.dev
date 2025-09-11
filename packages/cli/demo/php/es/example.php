@@ -28,11 +28,11 @@ return [
   ],
   '7' => [
     'mixed_content' => [
-      'title' => 'Configuración',
+      'title' => 'Ajustes',
       'count' => 42,
       'enabled' => true,
       'nothing_here' => null,
-      'description' => 'Configuración y preferencias de la aplicación'
+      'description' => 'Ajustes y preferencias de la aplicación'
     ]
   ]
 ];
