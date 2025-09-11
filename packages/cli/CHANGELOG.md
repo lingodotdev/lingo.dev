@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.111.5
+
+### Patch Changes
+
+- [#1166](https://github.com/lingodotdev/lingo.dev/pull/1166) [`d9294c0`](https://github.com/lingodotdev/lingo.dev/commit/d9294c0bbb993454ad3654f77dd48d82211e0465) Thanks [@vrcprl](https://github.com/vrcprl)! - enhance cli errors debugging
+
 ## 0.111.4
 
 ### Patch Changes

@@ -39,6 +39,10 @@ export default function trackEvent(
           ...properties,
           $lib: "lingo.dev-cli",
           $lib_version: process.env.npm_package_version || "unknown",
+          // Essential debugging context only
+          node_version: process.version,
+          is_ci: !!process.env.CI,
+          debug_enabled: process.env.DEBUG === "true",
         },
         timestamp: new Date().toISOString(),
       };
