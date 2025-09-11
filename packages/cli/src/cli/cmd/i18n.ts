@@ -10,7 +10,19 @@ import _ from "lodash";
 import * as path from "path";
 import { getConfig } from "../utils/config";
 import { getSettings } from "../utils/settings";
-import { CLIError } from "../utils/errors";
+import {
+  ConfigError,
+  AuthenticationError,
+  ValidationError,
+  LocalizationError,
+  BucketProcessingError,
+  getCLIErrorType,
+  isLocalizationError,
+  isBucketProcessingError,
+  ErrorDetail,
+  aggregateErrorAnalytics,
+  createPreviousErrorContext,
+} from "../utils/errors";
 import Ora from "ora";
 import createBucketLoader from "../loaders";
 import { createAuthenticator } from "../utils/auth";
@@ -79,7 +91,23 @@ export default new Command()
     updateGitignore();
 
     const ora = Ora();
-    const flags = parseFlags(options);
+    let flags: ReturnType<typeof parseFlags>;
+
+    try {
+      flags = parseFlags(options);
+    } catch (parseError: any) {
+      // Handle flag validation errors (like invalid locale codes)
+      await trackEvent("unknown", "cmd.i18n.error", {
+        errorType: "validation_error",
+        errorName: parseError.name || "ValidationError",
+        errorMessage: parseError.message || "Invalid command line options",
+        errorStack: parseError.stack,
+        fatal: true,
+        errorCount: 1,
+        stage: "flag_validation",
+      });
+      throw parseError;
+    }
 
     if (flags.debug) {
       // wait for user input, use inquirer
@@ -94,6 +122,7 @@ export default new Command()
 
     let hasErrors = false;
     let authId: string | null = null;
+    const errorDetails: ErrorDetail[] = [];
     try {
       ora.start("Loading configuration...");
       const i18nConfig = getConfig();
@@ -469,9 +498,23 @@ export default new Command()
                   );
                 }
               } catch (_error: any) {
-                const error = new Error(
+                const error = new LocalizationError(
                   `[${sourceLocale} -> ${targetLocale}] Localization failed: ${_error.message}`,
+                  {
+                    bucket: bucket.type,
+                    sourceLocale,
+                    targetLocale,
+                    pathPattern: bucketPath.pathPattern,
+                  },
                 );
+                errorDetails.push({
+                  type: "locale_error",
+                  bucket: bucket.type,
+                  locale: `${sourceLocale} -> ${targetLocale}`,
+                  pathPattern: bucketPath.pathPattern,
+                  message: _error.message,
+                  stack: _error.stack,
+                });
                 if (flags.strict) {
                   throw error;
                 } else {
@@ -488,9 +531,16 @@ export default new Command()
             }
           }
         } catch (_error: any) {
-          const error = new Error(
+          const error = new BucketProcessingError(
             `Failed to process bucket ${bucket.type}: ${_error.message}`,
+            bucket.type,
           );
+          errorDetails.push({
+            type: "bucket_error",
+            bucket: bucket.type,
+            message: _error.message,
+            stack: _error.stack,
+          });
           if (flags.strict) {
             throw error;
           } else {
@@ -503,21 +553,59 @@ export default new Command()
       if (!hasErrors) {
         ora.succeed("Localization completed.");
         await trackEvent(authId, "cmd.i18n.success", {
-          i18nConfig,
+          i18nConfig: {
+            sourceLocale: i18nConfig!.locale.source,
+            targetLocales: i18nConfig!.locale.targets,
+            bucketTypes: Object.keys(i18nConfig!.buckets),
+          },
           flags,
+          bucketCount: buckets.length,
+          localeCount: targetLocales.length,
+          processedSuccessfully: true,
         });
       } else {
         ora.warn("Localization completed with errors.");
         await trackEvent(authId || "unknown", "cmd.i18n.error", {
           flags,
+          ...aggregateErrorAnalytics(
+            errorDetails,
+            buckets,
+            targetLocales,
+            i18nConfig!,
+          ),
         });
       }
     } catch (error: any) {
       ora.fail(error.message);
 
+      // Use robust error type detection
+      const errorType = getCLIErrorType(error);
+
+      // Extract additional context from typed errors
+      let errorContext: any = {};
+      if (isLocalizationError(error)) {
+        errorContext = {
+          bucket: error.bucket,
+          sourceLocale: error.sourceLocale,
+          targetLocale: error.targetLocale,
+          pathPattern: error.pathPattern,
+        };
+      } else if (isBucketProcessingError(error)) {
+        errorContext = {
+          bucket: error.bucket,
+        };
+      }
+
       await trackEvent(authId || "unknown", "cmd.i18n.error", {
         flags,
-        error,
+        errorType,
+        errorName: error.name || "Error",
+        errorMessage: error.message,
+        errorStack: error.stack,
+        errorContext,
+        fatal: true,
+        errorCount: errorDetails.length + 1,
+        previousErrors: createPreviousErrorContext(errorDetails),
       });
     }
   });
@@ -541,7 +629,7 @@ function parseFlags(options: any) {
 // Export validateAuth for use in other commands
 export async function validateAuth(settings: ReturnType<typeof getSettings>) {
   if (!settings.auth.apiKey) {
-    throw new CLIError({
+    throw new AuthenticationError({
       message:
         "Not authenticated. Please run `lingo.dev login` to authenticate.",
       docUrl: "authError",
@@ -554,7 +642,7 @@ export async function validateAuth(settings: ReturnType<typeof getSettings>) {
   });
   const user = await authenticator.whoami();
   if (!user) {
-    throw new CLIError({
+    throw new AuthenticationError({
       message: "Invalid API key. Please run `lingo.dev login` to authenticate.",
       docUrl: "authError",
     });
@@ -568,13 +656,13 @@ function validateParams(
   flags: ReturnType<typeof parseFlags>,
 ) {
   if (!i18nConfig) {
-    throw new CLIError({
+    throw new ConfigError({
       message:
         "i18n.json not found. Please run `lingo.dev init` to initialize the project.",
       docUrl: "i18nNotFound",
     });
   } else if (!i18nConfig.buckets || !Object.keys(i18nConfig.buckets).length) {
-    throw new CLIError({
+    throw new ConfigError({
       message:
         "No buckets found in i18n.json. Please add at least one bucket containing i18n content.",
       docUrl: "bucketNotFound",
@@ -582,7 +670,7 @@ function validateParams(
   } else if (
     flags.locale?.some((locale) => !i18nConfig.locale.targets.includes(locale))
   ) {
-    throw new CLIError({
+    throw new ValidationError({
       message: `One or more specified locales do not exist in i18n.json locale.targets. Please add them to the list and try again.`,
       docUrl: "localeTargetNotFound",
     });
@@ -592,7 +680,7 @@ function validateParams(
         !i18nConfig.buckets[bucket as keyof typeof i18nConfig.buckets],
     )
   ) {
-    throw new CLIError({
+    throw new ValidationError({
       message: `One or more specified buckets do not exist in i18n.json. Please add them to the list and try again.`,
       docUrl: "bucketNotFound",
     });
