@@ -2,7 +2,7 @@ title: "MyApp"
 description: "¡Hola, mundo!"
 welcome_message: "Bienvenido a MyApp"
 user_profile:
-  display_name: "John Doe"
+  display_name: "Juan Pérez"
   bio: "Desarrollador de software"
 navigation_items:
   - "Inicio"

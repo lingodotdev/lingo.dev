@@ -1,4 +1,3 @@
-# Translation header
 msgid ""
 msgstr ""
 "Project-Id-Version: Example Project 1.0\n"

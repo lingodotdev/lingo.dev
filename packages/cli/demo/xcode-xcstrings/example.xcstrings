@@ -54,13 +54,13 @@
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%d elementos"
+                  "value" : "%d artículos"
                 }
               },
               "zero" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Sin elementos"
+                  "value" : "Sin artículos"
                 }
               }
             }
