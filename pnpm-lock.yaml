@@ -483,8 +483,8 @@ importers:
         specifier: ^12.6.0
         version: 12.6.0(@types/node@22.10.2)
       interactive-commander:
-        specifier: ^0.5.194
-        version: 0.5.194(@types/node@22.10.2)
+        specifier: ^0.6.0
+        version: 0.6.0(@types/node@22.10.2)
       is-url:
         specifier: ^1.2.4
         version: 1.2.4
@@ -5303,6 +5303,10 @@ packages:
     resolution: {integrity: sha512-Vw8qHK3bZM9y/P10u3Vib8o/DdkvA2OtPtZvD871QKjy74Wj1WSKFILMPRPSdUSx5RFK1arlJzEtA4PkFgnbuA==}
     engines: {node: '>=18'}
 
+  commander@13.1.0:
+    resolution: {integrity: sha512-/rFeCpNJQbhSZjGVwO9RFV3xPqbnERS8MmIQzCtD/zl6gpJuV/bMLuN92oG3F7d8oDEHHRrujSXNUr8fpjntKw==}
+    engines: {node: '>=18'}
+
   commander@2.20.3:
     resolution: {integrity: sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==}
 
@@ -6836,6 +6840,10 @@ packages:
     resolution: {integrity: sha512-zg3dNIZrnjWzP9unNDbVBEJvjuc3QuVe16xz46Rt+IZXqGYpwiuA/MURblaL4X+HY7FOD2zbI8Lx3uVbOLDfqw==}
     engines: {node: '>=18'}
 
+  interactive-commander@0.6.0:
+    resolution: {integrity: sha512-Kklepuo0kv5TigIwh/f7R7QZ7saaKmsXReXZEXMXUF1aJzEHyeO9QUeXgmiBxm74Prg7Vj+d3kXrQ59ZcdIWrg==}
+    engines: {node: '>=18'}
+
   internal-slot@1.1.0:
     resolution: {integrity: sha512-4gd7VpWNQNB4UKKCFFVcp1AVv+FMOgs9NKzjHKusc8jTMhd5eL1NqQqOpE0KzMds804/yHlglp3uxgluOqAPLw==}
     engines: {node: '>= 0.4'}
@@ -8249,6 +8257,10 @@ packages:
 
   parse-my-command@0.3.31:
     resolution: {integrity: sha512-B8voraH5aWFpEveAFoLGH055sLtoSs8/kJ03Zi8zvDxYHGsAJHvz7QEqtiMNbCN7fvC8i9erGfoquDzWP9Dvng==}
+    engines: {node: '>=18'}
+
+  parse-my-command@0.4.0:
+    resolution: {integrity: sha512-jlsYUQIPCH18y0wWJ3o7fb7JXoq+9vM6T/7eWvSCaVxp9MhuIPWFploCuGCEo1wfEQD1opf5xKProiSJTmUh0g==}
     engines: {node: '>=18'}
 
   parse5@7.2.1:
@@ -15470,6 +15482,8 @@ snapshots:
 
   commander@12.1.0: {}
 
+  commander@13.1.0: {}
+
   commander@2.20.3: {}
 
   commander@4.1.1: {}
@@ -17330,7 +17344,7 @@ snapshots:
   inquirer@12.3.0(@types/node@24.2.0):
     dependencies:
       '@inquirer/core': 10.1.10(@types/node@24.2.0)
-      '@inquirer/prompts': 7.8.0(@types/node@24.2.0)
+      '@inquirer/prompts': 7.2.3(@types/node@24.2.0)
       '@inquirer/type': 3.0.6(@types/node@24.2.0)
       '@types/node': 24.2.0
       ansi-escapes: 4.3.2
@@ -17350,19 +17364,19 @@ snapshots:
     optionalDependencies:
       '@types/node': 22.10.2
 
-  interactive-commander@0.5.194(@types/node@22.10.2):
+  interactive-commander@0.5.194(@types/node@24.2.0):
     dependencies:
-      '@inquirer/prompts': 7.8.0(@types/node@22.10.2)
+      '@inquirer/prompts': 7.2.3(@types/node@24.2.0)
       commander: 12.1.0
       parse-my-command: 0.3.31
     transitivePeerDependencies:
       - '@types/node'
 
-  interactive-commander@0.5.194(@types/node@24.2.0):
+  interactive-commander@0.6.0(@types/node@22.10.2):
     dependencies:
-      '@inquirer/prompts': 7.8.0(@types/node@24.2.0)
-      commander: 12.1.0
-      parse-my-command: 0.3.31
+      '@inquirer/prompts': 7.8.0(@types/node@22.10.2)
+      commander: 13.1.0
+      parse-my-command: 0.4.0
     transitivePeerDependencies:
       - '@types/node'
 
@@ -19040,6 +19054,11 @@ snapshots:
     dependencies:
       camelcase: 8.0.0
       commander: 12.1.0
+
+  parse-my-command@0.4.0:
+    dependencies:
+      camelcase: 8.0.0
+      commander: 13.1.0
 
   parse5@7.2.1:
     dependencies:
