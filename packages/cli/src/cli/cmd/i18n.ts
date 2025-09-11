@@ -10,18 +10,18 @@ import _ from "lodash";
 import * as path from "path";
 import { getConfig } from "../utils/config";
 import { getSettings } from "../utils/settings";
-import { 
-  ConfigError, 
-  AuthenticationError, 
-  ValidationError, 
-  LocalizationError, 
+import {
+  ConfigError,
+  AuthenticationError,
+  ValidationError,
+  LocalizationError,
   BucketProcessingError,
   getCLIErrorType,
   isLocalizationError,
   isBucketProcessingError,
   ErrorDetail,
   aggregateErrorAnalytics,
-  createPreviousErrorContext
+  createPreviousErrorContext,
 } from "../utils/errors";
 import Ora from "ora";
 import createBucketLoader from "../loaders";
@@ -92,19 +92,19 @@ export default new Command()
 
     const ora = Ora();
     let flags: ReturnType<typeof parseFlags>;
-    
+
     try {
       flags = parseFlags(options);
     } catch (parseError: any) {
       // Handle flag validation errors (like invalid locale codes)
       await trackEvent("unknown", "cmd.i18n.error", {
-        errorType: 'validation_error',
-        errorName: parseError.name || 'ValidationError',
-        errorMessage: parseError.message || 'Invalid command line options',
+        errorType: "validation_error",
+        errorName: parseError.name || "ValidationError",
+        errorMessage: parseError.message || "Invalid command line options",
         errorStack: parseError.stack,
         fatal: true,
         errorCount: 1,
-        stage: 'flag_validation'
+        stage: "flag_validation",
       });
       throw parseError;
     }
@@ -504,16 +504,16 @@ export default new Command()
                     bucket: bucket.type,
                     sourceLocale,
                     targetLocale,
-                    pathPattern: bucketPath.pathPattern
-                  }
+                    pathPattern: bucketPath.pathPattern,
+                  },
                 );
                 errorDetails.push({
-                  type: 'locale_error',
+                  type: "locale_error",
                   bucket: bucket.type,
                   locale: `${sourceLocale} -> ${targetLocale}`,
                   pathPattern: bucketPath.pathPattern,
                   message: _error.message,
-                  stack: _error.stack
+                  stack: _error.stack,
                 });
                 if (flags.strict) {
                   throw error;
@@ -533,13 +533,13 @@ export default new Command()
         } catch (_error: any) {
           const error = new BucketProcessingError(
             `Failed to process bucket ${bucket.type}: ${_error.message}`,
-            bucket.type
+            bucket.type,
           );
           errorDetails.push({
-            type: 'bucket_error',
+            type: "bucket_error",
             bucket: bucket.type,
             message: _error.message,
-            stack: _error.stack
+            stack: _error.stack,
           });
           if (flags.strict) {
             throw error;
@@ -556,18 +556,23 @@ export default new Command()
           i18nConfig: {
             sourceLocale: i18nConfig!.locale.source,
             targetLocales: i18nConfig!.locale.targets,
-            bucketTypes: Object.keys(i18nConfig!.buckets)
+            bucketTypes: Object.keys(i18nConfig!.buckets),
           },
           flags,
           bucketCount: buckets.length,
           localeCount: targetLocales.length,
-          processedSuccessfully: true
+          processedSuccessfully: true,
         });
       } else {
         ora.warn("Localization completed with errors.");
         await trackEvent(authId || "unknown", "cmd.i18n.error", {
           flags,
-          ...aggregateErrorAnalytics(errorDetails, buckets, targetLocales, i18nConfig!)
+          ...aggregateErrorAnalytics(
+            errorDetails,
+            buckets,
+            targetLocales,
+            i18nConfig!,
+          ),
         });
       }
     } catch (error: any) {
@@ -575,7 +580,7 @@ export default new Command()
 
       // Use robust error type detection
       const errorType = getCLIErrorType(error);
-      
+
       // Extract additional context from typed errors
       let errorContext: any = {};
       if (isLocalizationError(error)) {
@@ -583,24 +588,24 @@ export default new Command()
           bucket: error.bucket,
           sourceLocale: error.sourceLocale,
           targetLocale: error.targetLocale,
-          pathPattern: error.pathPattern
+          pathPattern: error.pathPattern,
         };
       } else if (isBucketProcessingError(error)) {
         errorContext = {
-          bucket: error.bucket
+          bucket: error.bucket,
         };
       }
 
       await trackEvent(authId || "unknown", "cmd.i18n.error", {
         flags,
         errorType,
-        errorName: error.name || 'Error',
+        errorName: error.name || "Error",
         errorMessage: error.message,
         errorStack: error.stack,
         errorContext,
         fatal: true,
         errorCount: errorDetails.length + 1,
-        previousErrors: createPreviousErrorContext(errorDetails)
+        previousErrors: createPreviousErrorContext(errorDetails),
       });
     }
   });
