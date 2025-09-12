@@ -39,6 +39,7 @@ export function getSettings(explicitApiKey: string | undefined): CliSettings {
       googleApiKey: env.GOOGLE_API_KEY || systemFile.llm?.googleApiKey,
       openrouterApiKey:
         env.OPENROUTER_API_KEY || systemFile.llm?.openrouterApiKey,
+      aimlApiKey: env.AIMLAPI_API_KEY || systemFile.llm?.aimlApiKey,
       mistralApiKey: env.MISTRAL_API_KEY || systemFile.llm?.mistralApiKey,
     },
   };
@@ -74,6 +75,7 @@ const SettingsSchema = Z.object({
     groqApiKey: Z.string().optional(),
     googleApiKey: Z.string().optional(),
     openrouterApiKey: Z.string().optional(),
+    aimlApiKey: Z.string().optional(),
     mistralApiKey: Z.string().optional(),
   }),
 });
@@ -105,6 +107,7 @@ function _loadEnv() {
     GROQ_API_KEY: Z.string().optional(),
     GOOGLE_API_KEY: Z.string().optional(),
     OPENROUTER_API_KEY: Z.string().optional(),
+    AIMLAPI_API_KEY: Z.string().optional(),
     MISTRAL_API_KEY: Z.string().optional(),
   })
     .passthrough()
@@ -130,6 +133,7 @@ function _loadSystemFile() {
       groqApiKey: Z.string().optional(),
       googleApiKey: Z.string().optional(),
       openrouterApiKey: Z.string().optional(),
+      aimlApiKey: Z.string().optional(),
       mistralApiKey: Z.string().optional(),
     }).optional(),
   })
@@ -205,6 +209,12 @@ function _envVarsInfo() {
     console.info(
       "\x1b[36m%s\x1b[0m",
       `ℹ️  Using OPENROUTER_API_KEY env var instead of key from user config`,
+    );
+  }
+  if (env.AIMLAPI_API_KEY && systemFile.llm?.aimlApiKey) {
+    console.info(
+      "\x1b[36m%s\x1b[0m",
+      `ℹ️  Using AIMLAPI_API_KEY env var instead of key from user config`,
     );
   }
   if (env.MISTRAL_API_KEY && systemFile.llm?.mistralApiKey) {
