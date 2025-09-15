@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.111.8
+
+### Patch Changes
+
+- [#1174](https://github.com/lingodotdev/lingo.dev/pull/1174) [`64225d0`](https://github.com/lingodotdev/lingo.dev/commit/64225d073999d599ba86f65fee8e08e3e5f2800b) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - locale-codes reexport
+
 ## 0.111.7
 
 ### Patch Changes
