@@ -63,6 +63,11 @@
       "types": "./build/react/react-router.d.ts",
       "import": "./build/react/react-router.mjs",
       "require": "./build/react/react-router.cjs"
+    },
+    "./locale-codes": {
+      "types": "./build/locale-codes.d.ts",
+      "import": "./build/locale-codes.mjs",
+      "require": "./build/locale-codes.cjs"
     }
   },
   "typesVersions": {
@@ -90,6 +95,9 @@
       ],
       "react/react-router": [
         "./build/react/react-router.d.ts"
+      ],
+      "locale-codes": [
+        "./build/locale-codes.d.ts"
       ]
     }
   },
@@ -127,6 +135,7 @@
     "@inkjs/ui": "^2.0.0",
     "@inquirer/prompts": "^7.8.0",
     "@lingo.dev/_compiler": "workspace:*",
+    "@lingo.dev/_locales": "workspace:*",
     "@lingo.dev/_react": "workspace:*",
     "@lingo.dev/_sdk": "workspace:*",
     "@lingo.dev/_spec": "workspace:*",
