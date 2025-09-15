@@ -1,5 +1,11 @@
 # @lingo.dev/\_spec
 
+## 0.40.2
+
+### Patch Changes
+
+- [#1171](https://github.com/lingodotdev/lingo.dev/pull/1171) [`6579d70`](https://github.com/lingodotdev/lingo.dev/commit/6579d70bc670c2fdc06c09842d931b07e134151c) Thanks [@vrcprl](https://github.com/vrcprl)! - add el-CY en-IE fr-LU locales
+
 ## 0.40.1
 
 ### Patch Changes
