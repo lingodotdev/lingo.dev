@@ -380,6 +380,9 @@ importers:
       '@lingo.dev/_compiler':
         specifier: workspace:*
         version: link:../compiler
+      '@lingo.dev/_locales':
+        specifier: workspace:*
+        version: link:../locales
       '@lingo.dev/_react':
         specifier: workspace:*
         version: link:../react

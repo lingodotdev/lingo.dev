@@ -11,6 +11,7 @@ export default defineConfig({
     "react/rsc": "src/react/rsc.ts",
     "react/react-router": "src/react/react-router.ts",
     compiler: "src/compiler/index.ts",
+    "locale-codes": "src/locale-codes/index.ts",
   },
   outDir: "build",
   format: ["cjs", "esm"],
