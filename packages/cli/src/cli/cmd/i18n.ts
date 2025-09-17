@@ -39,53 +39,55 @@ import { createDeltaProcessor } from "../utils/delta";
 
 export default new Command()
   .command("i18n")
-  .description("Run Localization engine")
+  .description(
+    "Run the classic localization pipeline: diff translations, call the AI engine, and write updates back to disk",
+  )
   .helpOption("-h, --help", "Show help")
   .option(
     "--locale <locale>",
-    "Locale to process",
+    "Limit processing to specific target locale codes from i18n.json (defaults to all configured targets). Repeat to include multiple locales",
     (val: string, prev: string[]) => (prev ? [...prev, val] : [val]),
   )
   .option(
     "--bucket <bucket>",
-    "Bucket to process",
+    "Restrict execution to the listed bucket types from i18n.json (defaults to all buckets)",
     (val: string, prev: string[]) => (prev ? [...prev, val] : [val]),
   )
   .option(
     "--key <key>",
-    "Key to process. Process only a specific translation key, useful for debugging or updating a single entry",
+    "Process only the exact translation key you provide (for example auth.login.title). Useful when validating a single entry",
   )
   .option(
     "--file [files...]",
-    "File to process. Process only a specific path, may contain asterisk * to match multiple files. Useful if you have a lot of files and want to focus on a specific one. Specify more files separated by commas or spaces.",
+    "Match bucket pathPattern strings that contain these literal substrings; glob-style tokens like ** are not expanded and files on disk are not scanned",
   )
   .option(
     "--frozen",
-    `Run in read-only mode - fails if any translations need updating, useful for CI/CD pipelines to detect missing translations`,
+    "Fail instead of writing files when generated translations differ from what is on disk (CI guard)",
   )
   .option(
     "--force",
-    "Ignore lockfile and process all keys, useful for full re-translation",
+    "Re-translate every key even if the lockfile shows the target up to date",
   )
   .option(
     "--verbose",
-    "Show detailed output including intermediate processing data and API communication details",
+    "Print detailed request and response data for each bucket and locale",
   )
   .option(
     "--interactive",
-    "Enable interactive mode for reviewing and editing translations before they are applied",
+    "Review each diff in a terminal UI before writing the updated file",
   )
   .option(
     "--api-key <api-key>",
-    "Explicitly set the API key to use, override the default API key from settings",
+    "Use this API key for the run instead of the one stored in settings or env",
   )
   .option(
     "--debug",
-    "Pause execution at start for debugging purposes, waits for user confirmation before proceeding",
+    "Pause before starting work so you can attach a debugger",
   )
   .option(
     "--strict",
-    "Stop processing on first error instead of continuing with other locales/buckets",
+    "Abort as soon as a bucket/locale pair fails instead of continuing with others",
   )
   .action(async function (options) {
     updateGitignore();

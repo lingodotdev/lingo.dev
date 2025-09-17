@@ -19,30 +19,30 @@ interface PurgeOptions {
 export default new Command()
   .command("purge")
   .description(
-    "Remove translations for given --bucket, --file, --key, --locale",
+    "Delete translation entries from the bucket path patterns defined in i18n.json. Without filters every managed key is removed from every target locale.",
   )
   .helpOption("-h, --help", "Show help")
   .option(
     "--bucket <bucket>",
-    "Bucket to process",
+    "Limit the purge to specific bucket types defined under `buckets` in i18n.json. Repeat the flag to target multiple types; omit it to touch every bucket",
     (val: string, prev: string[]) => (prev ? [...prev, val] : [val]),
   )
   .option(
     "--file [files...]",
-    "File(s) to process. Only process files that match the given glob pattern(s).",
+    "Restrict to pathPattern strings that contain these values. Matching is done on the literal `[locale]` pattern text; the CLI does not expand globs or scan the filesystem",
   )
   .option(
     "--key <key>",
-    "Key to remove. Remove all translation keys matching the given glob pattern.",
+    "Only delete keys whose slash-separated path matches this glob-style pattern (for example auth/login/**). Leave it empty to erase every key. Keys marked as locked or ignored in i18n.json are skipped automatically",
   )
   .option(
     "--locale <locale>",
-    "Locale to process",
+    "Locale codes to rewrite, using the values from i18n.json. Repeat for multiple locales. Leave unset to purge every configured target locale. (Passing the source locale will delete from it too; delimiters are adjusted per bucket.)",
     (val: string, prev: string[]) => (prev ? [...prev, val] : [val]),
   )
   .option(
     "--yes-really",
-    "Skip interactive confirmation and delete without asking.",
+    "Skip the per-path confirmation preview. Required for scripted or CI purges.",
   )
   .action(async function (options: PurgeOptions) {
     const ora = Ora();

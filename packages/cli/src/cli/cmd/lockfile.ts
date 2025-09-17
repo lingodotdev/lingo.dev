@@ -9,9 +9,14 @@ import { getBuckets } from "../utils/buckets";
 
 export default new Command()
   .command("lockfile")
-  .description("Create a lockfile if it does not exist")
+  .description(
+    "Generate or refresh i18n.lock based on the current source locale content",
+  )
   .helpOption("-h, --help", "Show help")
-  .option("-f, --force", "Force create a lockfile")
+  .option(
+    "-f, --force",
+    "Rebuild the lockfile even if one already exists",
+  )
   .action(async (options) => {
     const flags = flagsSchema.parse(options);
     const ora = Ora();

@@ -36,15 +36,23 @@ const throwHelpError = (option: string, value: string) => {
 
 export default new InteractiveCommand()
   .command("init")
-  .description("Initialize Lingo.dev project")
+  .description(
+    "Bootstrap i18n.json from scratch: pick source and target locales, detect existing translation files, wire up CI helpers, and optionally sign in",
+  )
   .helpOption("-h, --help", "Show help")
   .addOption(
-    new InteractiveOption("-f --force", "Overwrite existing config")
+    new InteractiveOption(
+      "-f --force",
+      "Replace an existing i18n.json when one is discovered instead of exiting early",
+    )
       .prompt(undefined)
       .default(false),
   )
   .addOption(
-    new InteractiveOption("-s --source <locale>", "Source locale")
+    new InteractiveOption(
+      "-s --source <locale>",
+      "Source locale code to save in the config. Validated against supported locale formats and defaults to en",
+    )
       .argParser((value) => {
         try {
           resolveLocaleCode(value as LocaleCode);
@@ -56,7 +64,10 @@ export default new InteractiveCommand()
       .default("en"),
   )
   .addOption(
-    new InteractiveOption("-t --targets <locale...>", "List of target locales")
+    new InteractiveOption(
+      "-t --targets <locale...>",
+      "Comma or space separated list of target locale codes. Each entry is validated and the set defaults to es",
+    )
       .argParser((value) => {
         const values = (
           value.includes(",") ? value.split(",") : value.split(" ")
@@ -73,7 +84,10 @@ export default new InteractiveCommand()
       .default("es"),
   )
   .addOption(
-    new InteractiveOption("-b, --bucket <type>", "Type of bucket")
+    new InteractiveOption(
+      "-b, --bucket <type>",
+      "Bucket type whose include patterns will be configured. Must match a supported loader identifier such as json or yaml",
+    )
       .argParser((value) => {
         if (!bucketTypes.includes(value as (typeof bucketTypes)[number])) {
           throwHelpError("bucket format", value);
@@ -85,7 +99,7 @@ export default new InteractiveCommand()
   .addOption(
     new InteractiveOption(
       "-p, --paths [path...]",
-      "List of paths for the bucket",
+      "Explicit `[locale]` include patterns for the chosen bucket when `--no-interactive` is used. Parents must already exist and values can be comma or space separated",
     )
       .argParser((value) => {
         if (!value || value.length === 0) return [];

@@ -20,21 +20,39 @@ interface CIOptions {
 
 export default new Command()
   .command("ci")
-  .description("Run Lingo.dev CI/CD action")
+  .description(
+    "Execute the opinionated CI pipeline: run localization, commit changes, and optionally open a pull request",
+  )
   .helpOption("-h, --help", "Show help")
-  .option("--parallel [boolean]", "Run in parallel mode", parseBooleanArg)
-  .option("--api-key <key>", "API key")
   .option(
-    "--pull-request [boolean]",
-    "Create a pull request with the changes",
+    "--parallel [boolean]",
+    "Run translations in parallel mode so multiple locale files are processed at once. Leave unset to translate sequentially",
     parseBooleanArg,
   )
-  .option("--commit-message <message>", "Commit message")
-  .option("--pull-request-title <title>", "Pull request title")
-  .option("--working-directory <dir>", "Working directory")
+  .option(
+    "--api-key <key>",
+    "API key to authenticate the run (overrides settings and env)",
+  )
+  .option(
+    "--pull-request [boolean]",
+    "Enable pull-request mode so the action works on a temporary branch and opens/updates a PR",
+    parseBooleanArg,
+  )
+  .option(
+    "--commit-message <message>",
+    "Commit message to use when the action pushes changes",
+  )
+  .option(
+    "--pull-request-title <title>",
+    "Title to use when a pull request is opened or updated",
+  )
+  .option(
+    "--working-directory <dir>",
+    "Subdirectory to `cd` into before running localization",
+  )
   .option(
     "--process-own-commits [boolean]",
-    "Process commits made by this action",
+    "Allow the workflow to run even if the latest commit was authored by the automation user",
     parseBooleanArg,
   )
   .action(async (options: CIOptions) => {

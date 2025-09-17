@@ -5,16 +5,18 @@ import { createAuthenticator } from "../utils/auth";
 
 export default new Command()
   .command("auth")
-  .description("Show current authentication status")
+  .description(
+    "Display the email for the API key currently in use (env overrides or saved config) or warn when the CLI is not logged in",
+  )
   .helpOption("-h, --help", "Show help")
   // Deprecated options, safe to remove after September 2025
   .option(
     "--login",
-    "Login to your account (deprecated: use 'lingo.dev login' instead)",
+    "Legacy flag that only prints a deprecation warning. Use `lingo.dev login` instead",
   )
   .option(
     "--logout",
-    "Logout from your account (deprecated: use 'lingo.dev logout' instead)",
+    "Legacy flag that only prints a deprecation warning. Use `lingo.dev logout` instead",
   )
   .action(async (options) => {
     try {

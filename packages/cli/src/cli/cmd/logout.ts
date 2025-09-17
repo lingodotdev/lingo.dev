@@ -10,7 +10,9 @@ import {
 
 export default new Command()
   .command("logout")
-  .description("Log out from Lingo.dev API")
+  .description(
+    "Remove the API key stored in ~/.lingodotdevrc; environment variables still take precedence",
+  )
   .helpOption("-h, --help", "Show help")
   .action(async () => {
     try {

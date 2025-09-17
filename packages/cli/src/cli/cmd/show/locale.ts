@@ -7,10 +7,15 @@ import { CLIError } from "../../utils/errors";
 
 export default new Command()
   .command("locale")
-  .description("Print out the list of locales")
+  .description(
+    "List locale codes supported by the CLI (short and region-specific forms)",
+  )
   .helpOption("-h, --help", "Show help")
   // argument can be equal either "sources" or "targets"
-  .argument("<type>", 'Type of locales to show, either "sources" or "targets"')
+  .argument(
+    "<type>",
+    'Keyword `sources` or `targets` (both print the full supported locale list)',
+  )
   .action(async (type) => {
     const ora = Ora();
     try {

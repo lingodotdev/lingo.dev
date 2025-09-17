@@ -8,14 +8,16 @@ import { resolveOverriddenLocale } from "@lingo.dev/_spec";
 
 export default new Command()
   .command("files")
-  .description("Print out the list of files managed by Lingo.dev")
+  .description(
+    "Expand each bucket's pathPattern into concrete source and target file paths",
+  )
   .option(
     "--source",
-    "Only show source files, files containing the original translations",
+    "Only list the source locale variant for each pathPattern",
   )
   .option(
     "--target",
-    "Only show target files, files containing translated content",
+    "Only list the target locale variants for each configured locale",
   )
   .helpOption("-h, --help", "Show help")
   .action(async (type) => {

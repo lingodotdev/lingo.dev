@@ -8,7 +8,9 @@ import { createAuthenticator } from "../utils/auth";
 
 export default new Command()
   .command("mcp")
-  .description("Use Lingo.dev model context provider with your AI agent")
+  .description(
+    "Start a Model Context Protocol server that authenticates and exposes Lingo.dev's translation tool over stdio",
+  )
   .helpOption("-h, --help", "Show help")
   .action(async (_, program) => {
     const apiKey = program.args[0];

@@ -32,30 +32,35 @@ interface LanguageStats {
 
 export default new Command()
   .command("status")
-  .description("Show the status of the localization process")
+  .description(
+    "Report localization progress with completion percentages, missing keys, and word estimates per locale",
+  )
   .helpOption("-h, --help", "Show help")
   .option(
     "--locale <locale>",
-    "Locale to process",
+    "Limit the report to target locales defined in i18n.json. Repeat the flag to include more than one locale. Defaults to every target locale",
     (val: string, prev: string[]) => (prev ? [...prev, val] : [val]),
   )
   .option(
     "--bucket <bucket>",
-    "Bucket to process",
+    "Limit the report to bucket types declared under `buckets` in i18n.json. Repeat the flag to include multiple bucket types. Defaults to all buckets",
     (val: string, prev: string[]) => (prev ? [...prev, val] : [val]),
   )
   .option(
     "--file [files...]",
-    "File to process. Process only files that include this string in their path. Useful if you have a lot of files and want to focus on a specific one. Specify more files separated by commas or spaces.",
+    "Report only on buckets whose pathPattern text matches these values. Each value may be a substring or a glob such as **/messages.json",
   )
   .option(
     "--force",
-    "Ignore lockfile and process all keys, useful for estimating full re-translation",
+    "Treat every source key as needing translation so word estimates reflect a full retranslation even when the lockfile marks keys as up to date",
   )
-  .option("--verbose", "Show detailed output including key-level word counts")
+  .option(
+    "--verbose",
+    "Print detailed per locale summaries including missing key counts and example keys",
+  )
   .option(
     "--api-key <api-key>",
-    "Explicitly set the API key to use, override the default API key from settings",
+    "Override the API key loaded from settings for this run",
   )
   .action(async function (options) {
     const ora = Ora();

@@ -10,9 +10,14 @@ import {
 
 export default new Command()
   .name("unset")
-  .description("Remove a configuration key")
+  .description(
+    "Delete a saved CLI setting from ~/.lingodotdevrc",
+  )
   .addHelpText("afterAll", `\nAvailable keys:\n  ${SETTINGS_KEYS.join("\n  ")}`)
-  .argument("<key>", "Configuration key to remove")
+  .argument(
+    "<key>",
+    "Setting key to remove (choose from the listed dot-paths)",
+  )
   .helpOption("-h, --help", "Show help")
   .action(async (key: string) => {
     // Validate key first (defensive; choices() should already restrict but keep for safety).
