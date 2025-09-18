@@ -37,13 +37,13 @@ const throwHelpError = (option: string, value: string) => {
 export default new InteractiveCommand()
   .command("init")
   .description(
-    "Bootstrap i18n.json from scratch: pick source and target locales, detect existing translation files, wire up CI helpers, and optionally sign in",
+    "Create a new Lingo.dev project by setting up your i18n.json configuration file",
   )
   .helpOption("-h, --help", "Show help")
   .addOption(
     new InteractiveOption(
       "-f --force",
-      "Replace an existing i18n.json when one is discovered instead of exiting early",
+      "Overwrite existing Lingo.dev configuration instead of aborting initialization (destructive operation)",
     )
       .prompt(undefined)
       .default(false),
@@ -51,7 +51,7 @@ export default new InteractiveCommand()
   .addOption(
     new InteractiveOption(
       "-s --source <locale>",
-      "Source locale code to save in the config. Validated against supported locale formats and defaults to en",
+      "Primary language of your application that content will be translated from (defaults to 'en')",
     )
       .argParser((value) => {
         try {
@@ -66,7 +66,7 @@ export default new InteractiveCommand()
   .addOption(
     new InteractiveOption(
       "-t --targets <locale...>",
-      "Comma or space separated list of target locale codes. Each entry is validated and the set defaults to es",
+      "Target languages to translate to. Accepts locale codes (like 'es', 'fr', 'de-AT') separated by commas or spaces. Defaults to 'es'",
     )
       .argParser((value) => {
         const values = (
@@ -86,7 +86,7 @@ export default new InteractiveCommand()
   .addOption(
     new InteractiveOption(
       "-b, --bucket <type>",
-      "Bucket type whose include patterns will be configured. Must match a supported loader identifier such as json or yaml",
+      "File format for your translation files. Must match a supported type such as json, yaml, or android",
     )
       .argParser((value) => {
         if (!bucketTypes.includes(value as (typeof bucketTypes)[number])) {
@@ -99,7 +99,7 @@ export default new InteractiveCommand()
   .addOption(
     new InteractiveOption(
       "-p, --paths [path...]",
-      "Explicit `[locale]` include patterns for the chosen bucket when `--no-interactive` is used. Parents must already exist and values can be comma or space separated",
+      "File paths containing translations when using --no-interactive mode. Specify paths with [locale] placeholder, separated by commas or spaces",
     )
       .argParser((value) => {
         if (!value || value.length === 0) return [];

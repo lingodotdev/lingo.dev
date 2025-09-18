@@ -19,30 +19,30 @@ interface PurgeOptions {
 export default new Command()
   .command("purge")
   .description(
-    "Delete translation entries from the bucket path patterns defined in i18n.json. Without filters every managed key is removed from every target locale.",
+    "WARNING: Permanently delete translation entries from bucket path patterns defined in i18n.json. This is a destructive operation that cannot be undone. Without any filters, ALL managed keys will be removed from EVERY target locale.",
   )
   .helpOption("-h, --help", "Show help")
   .option(
     "--bucket <bucket>",
-    "Limit the purge to specific bucket types defined under `buckets` in i18n.json. Repeat the flag to target multiple types; omit it to touch every bucket",
+    "Limit the purge to specific bucket types defined under `buckets` in i18n.json. Repeat the flag to include multiple bucket types. Defaults to all buckets",
     (val: string, prev: string[]) => (prev ? [...prev, val] : [val]),
   )
   .option(
     "--file [files...]",
-    "Restrict to pathPattern strings that contain these values. Matching is done on the literal `[locale]` pattern text; the CLI does not expand globs or scan the filesystem",
+    "Filter which file paths to purge by matching against path patterns. Only paths containing any of these values will be processed. Example: --file messages.json --file admin/",
   )
   .option(
     "--key <key>",
-    "Only delete keys whose slash-separated path matches this glob-style pattern (for example auth/login/**). Leave it empty to erase every key. Keys marked as locked or ignored in i18n.json are skipped automatically",
+    "Filter which keys to delete using a glob pattern that matches against slash-separated key paths (e.g., 'auth/login/**' matches all keys under auth/login). Omit this option to delete ALL keys. Keys marked as locked or ignored in i18n.json are automatically skipped.",
   )
   .option(
     "--locale <locale>",
-    "Locale codes to rewrite, using the values from i18n.json. Repeat for multiple locales. Leave unset to purge every configured target locale. (Passing the source locale will delete from it too; delimiters are adjusted per bucket.)",
+    "Limit purging to specific target locale codes from i18n.json. Repeat the flag to include multiple locales. Defaults to all configured target locales. Warning: Including the source locale will delete content from it as well.",
     (val: string, prev: string[]) => (prev ? [...prev, val] : [val]),
   )
   .option(
     "--yes-really",
-    "Skip the per-path confirmation preview. Required for scripted or CI purges.",
+    "Bypass safety confirmations for destructive operations. Use with extreme caution - this will delete translation keys without asking for confirmation. Intended for automated scripts and CI environments only.",
   )
   .action(async function (options: PurgeOptions) {
     const ora = Ora();

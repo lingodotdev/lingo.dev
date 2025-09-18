@@ -40,54 +40,54 @@ import { createDeltaProcessor } from "../utils/delta";
 export default new Command()
   .command("i18n")
   .description(
-    "Run the classic localization pipeline: diff translations, call the AI engine, and write updates back to disk",
+    "Translate your configured content using AI - the core localization command",
   )
   .helpOption("-h, --help", "Show help")
   .option(
     "--locale <locale>",
-    "Limit processing to specific target locale codes from i18n.json (defaults to all configured targets). Repeat to include multiple locales",
+    "Limit processing to the listed target locale codes from i18n.json. Repeat the flag to include multiple locales. Defaults to all configured target locales",
     (val: string, prev: string[]) => (prev ? [...prev, val] : [val]),
   )
   .option(
     "--bucket <bucket>",
-    "Restrict execution to the listed bucket types from i18n.json (defaults to all buckets)",
+    "Limit processing to specific bucket types defined in i18n.json (e.g., json, yaml, android). Repeat the flag to include multiple bucket types. Defaults to all buckets",
     (val: string, prev: string[]) => (prev ? [...prev, val] : [val]),
   )
   .option(
     "--key <key>",
-    "Process only the exact translation key you provide (for example auth.login.title). Useful when validating a single entry",
+    "Limit processing to a single translation key by exact match (e.g., auth.login.title). Filters all buckets and locales to process only this key, useful for testing or debugging specific translations",
   )
   .option(
     "--file [files...]",
-    "Match bucket pathPattern strings that contain these literal substrings; glob-style tokens like ** are not expanded and files on disk are not scanned",
+    "Filter processing to only buckets whose file paths contain these substrings (e.g., 'components' to process only files in components directories)",
   )
   .option(
     "--frozen",
-    "Fail instead of writing files when generated translations differ from what is on disk (CI guard)",
+    "Validate translations are up-to-date without making changes - fails if source files, target files, or lockfile are out of sync. Ideal for CI/CD to ensure translation consistency before deployment",
   )
   .option(
     "--force",
-    "Re-translate every key even if the lockfile shows the target up to date",
+    "Force re-translation of all keys, bypassing change detection. Useful when you want to regenerate translations with updated AI models or translation settings",
   )
   .option(
     "--verbose",
-    "Print detailed request and response data for each bucket and locale",
+    "Print the translation data being processed as formatted JSON for each bucket and locale",
   )
   .option(
     "--interactive",
-    "Review each diff in a terminal UI before writing the updated file",
+    "Review and edit AI-generated translations interactively before applying changes to files",
   )
   .option(
     "--api-key <api-key>",
-    "Use this API key for the run instead of the one stored in settings or env",
+    "Override API key from settings or environment variables",
   )
   .option(
     "--debug",
-    "Pause before starting work so you can attach a debugger",
+    "Pause before processing localization so you can attach a debugger",
   )
   .option(
     "--strict",
-    "Abort as soon as a bucket/locale pair fails instead of continuing with others",
+    "Stop immediately on first error instead of continuing to process remaining buckets and locales (fail-fast mode)",
   )
   .action(async function (options) {
     updateGitignore();

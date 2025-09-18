@@ -15,7 +15,7 @@ export default new Command()
   .helpOption("-h, --help", "Show help")
   .option(
     "-f, --force",
-    "Rebuild the lockfile even if one already exists",
+    "Overwrite existing lockfile to reset translation tracking",
   )
   .action(async (options) => {
     const flags = flagsSchema.parse(options);

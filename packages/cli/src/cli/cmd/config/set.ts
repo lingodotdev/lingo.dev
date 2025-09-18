@@ -10,17 +10,15 @@ import {
 
 export default new Command()
   .name("set")
-  .description(
-    "Persist a CLI setting to ~/.lingodotdevrc, overwriting any existing value",
-  )
+  .description("Set or update a CLI setting in ~/.lingodotdevrc")
   .addHelpText("afterAll", `\nAvailable keys:\n  ${SETTINGS_KEYS.join("\n  ")}`)
   .argument(
     "<key>",
-    "Setting key to update (dot-path as listed below)",
+    "Configuration key to set (dot notation, e.g., auth.apiKey)",
   )
   .argument(
     "<value>",
-    "String value to write into the config file",
+    "The configuration value to set",
   )
   .helpOption("-h, --help", "Show help")
   .action(async (key: string, value: string) => {

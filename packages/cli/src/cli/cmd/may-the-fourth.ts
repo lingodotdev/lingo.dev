@@ -17,7 +17,7 @@ export const colors = {
 export default new Command()
   .command("may-the-fourth")
   .description(
-    "Hidden easter egg: stream the Star Wars ASCII rendition over SSH",
+    "Hidden easter egg: stream the Star Wars ASCII rendition over telnet",
   )
   .helpOption("-h, --help", "Show help")
   .action(async () => {

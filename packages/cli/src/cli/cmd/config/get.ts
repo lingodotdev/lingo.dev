@@ -6,13 +6,11 @@ import dedent from "dedent";
 
 export default new Command()
   .name("get")
-  .description(
-    "Print the value currently stored for a CLI setting in ~/.lingodotdevrc",
-  )
+  .description("Display the value of a CLI setting from ~/.lingodotdevrc")
   .addHelpText("afterAll", `\nAvailable keys:\n  ${SETTINGS_KEYS.join("\n  ")}`)
   .argument(
     "<key>",
-    "Setting key to read (must match one of the listed dot-paths)",
+    "Configuration key to read (choose from the available keys listed below)",
   )
   .helpOption("-h, --help", "Show help")
   .action(async (key: string) => {

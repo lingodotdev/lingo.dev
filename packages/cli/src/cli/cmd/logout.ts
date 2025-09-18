@@ -10,9 +10,7 @@ import {
 
 export default new Command()
   .command("logout")
-  .description(
-    "Remove the API key stored in ~/.lingodotdevrc; environment variables still take precedence",
-  )
+  .description("Log out by removing saved authentication credentials")
   .helpOption("-h, --help", "Show help")
   .action(async () => {
     try {

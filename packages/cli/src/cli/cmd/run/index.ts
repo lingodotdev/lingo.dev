@@ -60,7 +60,7 @@ function playSound(type: "success" | "failure") {
 export default new Command()
   .command("run")
   .description(
-    "Translate the configured buckets with optional concurrency, watch mode, and detailed progress output",
+    "Advanced translation command with concurrency, watch mode, and enhanced progress - an alternative to i18n with more features",
   )
   .helpOption("-h, --help", "Show help")
   .option(
@@ -69,53 +69,53 @@ export default new Command()
   )
   .option(
     "--target-locale <target-locale>",
-    "Limit processing to the listed target locale codes. Repeat the flag to queue multiple locales",
+    "Limit processing to the listed target locale codes from i18n.json. Repeat the flag to include multiple locales. Defaults to all configured target locales",
     (val: string, prev: string[]) => (prev ? [...prev, val] : [val]),
   )
   .option(
     "--bucket <bucket>",
-    "Restrict work to the named bucket type(s) from i18n.json",
+    "Limit processing to specific bucket types defined in i18n.json (e.g., json, yaml, android). Repeat the flag to include multiple bucket types. Defaults to all configured buckets",
     (val: string, prev: string[]) => (prev ? [...prev, val] : [val]),
   )
   .option(
     "--file <file>",
-    "Filter pathPattern entries by substring or glob (for example **/messages.json). Repeat to add more filters",
+    "Filter bucket pathPattern values by substring or glob pattern (e.g., **/messages.json or locale/). Repeat to add multiple filters",
     (val: string, prev: string[]) => (prev ? [...prev, val] : [val]),
   )
   .option(
     "--key <key>",
-    "Only translate keys that match this glob-style pattern (repeat for multiple patterns)",
+    "Filter keys by glob patterns on slash-separated paths (e.g., auth/login/**). Repeat for multiple patterns",
     (val: string, prev: string[]) => (prev ? [...prev, val] : [val]),
   )
   .option(
     "--force",
-    "Ignore lockfile diffs and retranslate every key",
+    "Force re-translation of all keys, bypassing change detection. Useful when you want to regenerate translations with updated AI models or translation settings",
   )
   .option(
     "--api-key <api-key>",
-    "Use this API key instead of the one sourced from settings or env",
+    "Override API key from settings and environment variables",
   )
   .option(
     "--debug",
-    "Pause before planning tasks so you can attach a debugger",
+    "Pause before processing to allow attaching a debugger",
   )
   .option(
     "--concurrency <concurrency>",
-    "Maximum number of translation tasks to run in parallel (capped at 10)",
+    "Number of translation jobs to run concurrently (default: 10, max: 10). Higher values can speed up large translation batches but may increase memory usage",
     (val: string) => parseInt(val),
   )
   .option(
     "--watch",
-    "Watch the source locale files and rerun the pipeline when they change",
+    "Watch source locale files continuously and retranslate automatically when files change",
   )
   .option(
     "--debounce <milliseconds>",
-    "Custom debounce window in milliseconds for watch mode (default 5000)",
+    "Delay in milliseconds after file changes before retranslating in watch mode (default 5000)",
     (val: string) => parseInt(val),
   )
   .option(
     "--sound",
-    "Play success or failure sounds when a run finishes",
+    "Play audio feedback when translations complete (success or failure sounds)",
   )
   .action(async (args) => {
     let authId: string | null = null;

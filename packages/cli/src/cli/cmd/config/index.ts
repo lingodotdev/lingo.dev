@@ -7,7 +7,7 @@ import getCmd from "./get";
 export default new Command()
   .command("config")
   .description(
-    "Inspect and modify the CLI settings saved in ~/.lingodotdevrc",
+    "Manage CLI settings (authentication, API keys) stored in ~/.lingodotdevrc",
   )
   .helpOption("-h, --help", "Show help")
   .addCommand(setCmd)

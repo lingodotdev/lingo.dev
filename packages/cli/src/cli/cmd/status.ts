@@ -33,34 +33,34 @@ interface LanguageStats {
 export default new Command()
   .command("status")
   .description(
-    "Report localization progress with completion percentages, missing keys, and word estimates per locale",
+    "Analyze localization progress showing completion rates, missing translations, and word estimates for each target locale",
   )
   .helpOption("-h, --help", "Show help")
   .option(
     "--locale <locale>",
-    "Limit the report to target locales defined in i18n.json. Repeat the flag to include more than one locale. Defaults to every target locale",
+    "Limit the report to specific target locales from i18n.json. Repeat the flag to include multiple locales. Defaults to all configured target locales",
     (val: string, prev: string[]) => (prev ? [...prev, val] : [val]),
   )
   .option(
     "--bucket <bucket>",
-    "Limit the report to bucket types declared under `buckets` in i18n.json. Repeat the flag to include multiple bucket types. Defaults to all buckets",
+    "Limit the report to specific bucket types defined in i18n.json (e.g., json, yaml, android). Repeat the flag to include multiple bucket types. Defaults to all buckets",
     (val: string, prev: string[]) => (prev ? [...prev, val] : [val]),
   )
   .option(
     "--file [files...]",
-    "Report only on buckets whose pathPattern text matches these values. Each value may be a substring or a glob such as **/messages.json",
+    "Filter the status report to only include files whose paths match these patterns. Values can be substrings (e.g., 'components') or glob patterns (e.g., '**/messages.json')",
   )
   .option(
     "--force",
-    "Treat every source key as needing translation so word estimates reflect a full retranslation even when the lockfile marks keys as up to date",
+    "Force all keys to be counted as needing translation, bypassing change detection. Shows word estimates for a complete retranslation regardless of current translation status",
   )
   .option(
     "--verbose",
-    "Print detailed per locale summaries including missing key counts and example keys",
+    "Print detailed output showing missing and updated key counts with example key names for each file and locale",
   )
   .option(
     "--api-key <api-key>",
-    "Override the API key loaded from settings for this run",
+    "Override the API key from settings or environment variables for this run",
   )
   .action(async function (options) {
     const ora = Ora();

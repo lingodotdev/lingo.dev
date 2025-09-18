@@ -9,7 +9,7 @@ import { createAuthenticator } from "../utils/auth";
 export default new Command()
   .command("mcp")
   .description(
-    "Start a Model Context Protocol server that authenticates and exposes Lingo.dev's translation tool over stdio",
+    "Enable AI assistants to use Lingo.dev translation features by starting a compatible server",
   )
   .helpOption("-h, --help", "Show help")
   .action(async (_, program) => {

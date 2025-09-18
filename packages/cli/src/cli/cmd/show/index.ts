@@ -7,7 +7,7 @@ import filesCmd from "./files";
 export default new Command()
   .command("show")
   .description(
-    "Inspect project metadata such as the merged config, supported locales, and tracked files",
+    "Display project information including configuration settings, supported locales, and file paths",
   )
   .helpOption("-h, --help", "Show help")
   .addCommand(configCmd)

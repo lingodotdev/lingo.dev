@@ -25,7 +25,7 @@ import purgeCmd from "./cmd/purge";
 export default new InteractiveCommand()
   .name("lingo.dev")
   .description(
-    "Toolkit for initializing projects, running the localization engine, managing configuration, and automating CI tasks",
+    "AI-powered open-source toolkit for web and mobile localization - initialize projects, translate content with LLMs, manage configurations, and automate i18n workflows",
   )
   .helpOption("-h, --help", "Show help")
   .addHelpText(

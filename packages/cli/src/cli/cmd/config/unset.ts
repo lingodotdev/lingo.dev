@@ -10,13 +10,11 @@ import {
 
 export default new Command()
   .name("unset")
-  .description(
-    "Delete a saved CLI setting from ~/.lingodotdevrc",
-  )
+  .description("Remove a CLI setting from ~/.lingodotdevrc")
   .addHelpText("afterAll", `\nAvailable keys:\n  ${SETTINGS_KEYS.join("\n  ")}`)
   .argument(
     "<key>",
-    "Setting key to remove (choose from the listed dot-paths)",
+    "Configuration key to remove (must match one of the available keys listed below)",
   )
   .helpOption("-h, --help", "Show help")
   .action(async (key: string) => {
