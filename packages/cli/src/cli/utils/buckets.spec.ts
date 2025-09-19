@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import { getBuckets } from "./buckets";
 import { glob, Path } from "glob";
 
@@ -21,6 +21,10 @@ describe("getBuckets", () => {
         include,
       },
     },
+  });
+
+  beforeEach(() => {
+    vi.mocked(glob.sync).mockReset();
   });
 
   it("should return correct buckets", () => {
@@ -161,6 +165,98 @@ describe("getBuckets", () => {
           { pathPattern: "src/i18n/[locale]/[locale].json", delimiter: null },
           {
             pathPattern: "src/[locale]/translations/[locale]/messages.json",
+            delimiter: null,
+          },
+        ],
+      },
+    ]);
+  });
+
+  it("should expand recursive glob patterns", () => {
+    mockGlobSync([
+      "src/translations/en.json",
+      "src/translations/app/en.json",
+      "src/translations/app/nested/en.json",
+    ]);
+
+    const i18nConfig = makeI18nConfig(["src/translations/**/[locale].json"]);
+    const buckets = getBuckets(i18nConfig);
+
+    expect(buckets).toEqual([
+      {
+        type: "json",
+        paths: [
+          { pathPattern: "src/translations/[locale].json", delimiter: null },
+          { pathPattern: "src/translations/app/[locale].json", delimiter: null },
+          {
+            pathPattern: "src/translations/app/nested/[locale].json",
+            delimiter: null,
+          },
+        ],
+      },
+    ]);
+  });
+
+  it("should restore placeholders inside segments for recursive globs", () => {
+    mockGlobSync([
+      "src/i18n/en/messages-en.json",
+      "src/i18n/features/auth/messages-en.json",
+      "src/i18n/features/payments/messages-en.json",
+    ]);
+
+    const i18nConfig = makeI18nConfig([
+      "src/i18n/**/messages-[locale].json",
+    ]);
+    const buckets = getBuckets(i18nConfig);
+
+    expect(buckets).toEqual([
+      {
+        type: "json",
+        paths: [
+          {
+            pathPattern: "src/i18n/en/messages-[locale].json",
+            delimiter: null,
+          },
+          {
+            pathPattern: "src/i18n/features/auth/messages-[locale].json",
+            delimiter: null,
+          },
+          {
+            pathPattern: "src/i18n/features/payments/messages-[locale].json",
+            delimiter: null,
+          },
+        ],
+      },
+    ]);
+  });
+
+  it("should handle multiple recursive segments", () => {
+    mockGlobSync([
+      "src/features/onboarding/locales/forms/en.json",
+      "src/features/onboarding/locales/en.json",
+      "src/features/shared/locales/components/buttons/en.json",
+    ]);
+
+    const i18nConfig = makeI18nConfig([
+      "src/features/**/locales/**/[locale].json",
+    ]);
+    const buckets = getBuckets(i18nConfig);
+
+    expect(buckets).toEqual([
+      {
+        type: "json",
+        paths: [
+          {
+            pathPattern: "src/features/onboarding/locales/forms/[locale].json",
+            delimiter: null,
+          },
+          {
+            pathPattern: "src/features/onboarding/locales/[locale].json",
+            delimiter: null,
+          },
+          {
+            pathPattern:
+              "src/features/shared/locales/components/buttons/[locale].json",
             delimiter: null,
           },
         ],
