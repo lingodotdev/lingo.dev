@@ -1,8 +1,8 @@
 import _ from "lodash";
 import path from "path";
-import { glob } from "glob";
 import micromatch from "micromatch";
 import picomatch from "picomatch";
+import fg from "fast-glob";
 import { CLIError } from "./errors";
 import {
   I18nConfig,
@@ -12,6 +12,8 @@ import {
 } from "@lingo.dev/_spec";
 import { bucketTypeSchema } from "@lingo.dev/_spec";
 import Z from "zod";
+
+const PLACEHOLDER_TOKEN = "__lingo_locale__";
 
 type BucketConfig = {
   type: Z.infer<typeof bucketTypeSchema>;
@@ -114,41 +116,38 @@ function expandPlaceholderedGlob(
 
   const sourcePathPattern = pathPattern.replaceAll(/\[locale\]/g, sourceLocale);
 
-  const unixStylePattern = sourcePathPattern.replace(/\\/g, "/");
+  const unixStylePattern = sourcePathPattern.split(path.sep).join("/");
+  const restore = createPlaceholderRestorer(pathPattern, sourceLocale);
 
-  const sourcePaths = glob
-    .sync(unixStylePattern, {
-      follow: true,
-      withFileTypes: true,
-      windowsPathsNoEscape: true,
-    })
-    .filter((file) => file.isFile() || file.isSymbolicLink())
-    .map((file) => file.fullpath())
-    .map((fullpath) => normalizePath(path.relative(process.cwd(), fullpath)));
+  const sourcePaths = fg.sync(unixStylePattern, {
+    cwd: process.cwd(),
+    dot: true,
+    followSymbolicLinks: true,
+    onlyFiles: true,
+    unique: true,
+    suppressErrors: true,
+    caseSensitiveMatch: process.platform !== "win32",
+  });
 
   return sourcePaths.map((sourcePath) => {
     const normalizedSourcePath = normalizePath(
-      sourcePath.replace(/\//g, path.sep),
+      sourcePath.split("/").join(path.sep),
     );
-    return restorePlaceholderPath(
-      pathPattern,
-      normalizedSourcePath,
-      sourceLocale,
-    );
+    return restore(normalizedSourcePath);
   });
 }
 
-function restorePlaceholderPath(
-  pattern: string,
-  actualPath: string,
-  sourceLocale: string,
-): string {
-  const placeholderToken = "__lingo_locale__";
+type PlaceholderOperation =
+  | { kind: "literal"; literal: string; output: string }
+  | { kind: "capture" }
+  | { kind: "single" }
+  | { kind: "slash" };
+
+function createPlaceholderRestorer(pattern: string, sourceLocale: string) {
   const patternPosix = pattern.split(path.sep).join("/");
-  const actualPosix = actualPath.split(path.sep).join("/");
-  const sanitizedPattern = patternPosix.replaceAll("[locale]", placeholderToken);
+  const sanitizedPattern = patternPosix.replaceAll("[locale]", PLACEHOLDER_TOKEN);
   const sourcePattern = sanitizedPattern.replaceAll(
-    placeholderToken,
+    PLACEHOLDER_TOKEN,
     sourceLocale,
   );
 
@@ -156,88 +155,119 @@ function restorePlaceholderPath(
     dot: true,
     nocase: process.platform === "win32",
     matchBase: false,
+    windows: process.platform === "win32",
   } as const;
 
-  const captures = micromatch.capture(sourcePattern, actualPosix, mmOptions);
-  if (captures === undefined) {
-    return actualPath;
-  }
+  const captureRegex = micromatch.makeRe(sourcePattern, {
+    ...mmOptions,
+    capture: true,
+  });
 
   const tokens = picomatch.parse(sanitizedPattern, {
     capture: true,
     windows: process.platform === "win32",
   }).tokens;
 
-  let captureIndex = 0;
-  let position = 0;
-  let resultPosix = "";
+  const operations: PlaceholderOperation[] = [];
 
   for (const token of tokens) {
     switch (token.type) {
       case "bos":
       case "eos":
-        continue;
-      case "slash": {
-        if (actualPosix[position] === "/") {
-          resultPosix += "/";
-          position += 1;
-        }
         break;
-      }
+      case "slash":
+        operations.push({ kind: "slash" });
+        break;
       case "text": {
         const value = token.value ?? "";
-        const literal = value.replaceAll(placeholderToken, sourceLocale);
-        if (
-          literal &&
-          actualPosix.slice(position, position + literal.length) !== literal
-        ) {
-          return actualPath;
-        }
-        resultPosix += value.replaceAll(placeholderToken, "[locale]");
-        position += literal.length;
+        operations.push({
+          kind: "literal",
+          literal: value.replaceAll(PLACEHOLDER_TOKEN, sourceLocale),
+          output: value.replaceAll(PLACEHOLDER_TOKEN, "[locale]"),
+        });
         break;
       }
       case "star":
       case "globstar":
       case "plus":
-      case "paren": {
-        const captured = captures[captureIndex++] ?? "";
-        resultPosix += captured;
-        position += captured.length;
+      case "paren":
+        operations.push({ kind: "capture" });
         break;
-      }
       case "qmark":
       case "range":
-      case "bracket": {
-        const char = actualPosix[position];
-        if (char === undefined) {
-          return actualPath;
-        }
-        resultPosix += char;
-        position += 1;
+      case "bracket":
+        operations.push({ kind: "single" });
         break;
-      }
       default: {
         const value = token.value ?? "";
-        const literal = value.replaceAll(placeholderToken, sourceLocale);
-        if (
-          literal &&
-          actualPosix.slice(position, position + literal.length) !== literal
-        ) {
-          return actualPath;
-        }
-        resultPosix += value.replaceAll(placeholderToken, "[locale]");
-        position += literal.length;
+        operations.push({
+          kind: "literal",
+          literal: value.replaceAll(PLACEHOLDER_TOKEN, sourceLocale),
+          output: value.replaceAll(PLACEHOLDER_TOKEN, "[locale]"),
+        });
       }
     }
   }
 
-  if (position < actualPosix.length) {
-    resultPosix += actualPosix.slice(position);
-  }
+  return (actualPath: string) => {
+    const actualPosix = actualPath.split(path.sep).join("/");
+    captureRegex.lastIndex = 0;
+    const match = captureRegex.exec(actualPosix);
+    if (!match) {
+      return actualPath;
+    }
 
-  const systemPath = resultPosix.split("/").join(path.sep);
-  return normalizePath(systemPath);
+    const captures = match.slice(1);
+    let captureIndex = 0;
+    let position = 0;
+    let resultPosix = "";
+
+    for (const operation of operations) {
+      switch (operation.kind) {
+        case "literal": {
+          const { literal, output } = operation;
+          if (
+            literal &&
+            actualPosix.slice(position, position + literal.length) !== literal
+          ) {
+            return actualPath;
+          }
+          resultPosix += output;
+          position += literal.length;
+          break;
+        }
+        case "capture": {
+          const captured = captures[captureIndex++] ?? "";
+          resultPosix += captured;
+          position += captured.length;
+          break;
+        }
+        case "single": {
+          const char = actualPosix[position];
+          if (char === undefined) {
+            return actualPath;
+          }
+          resultPosix += char;
+          position += 1;
+          break;
+        }
+        case "slash": {
+          if (actualPosix[position] === "/") {
+            resultPosix += "/";
+            position += 1;
+          }
+          break;
+        }
+      }
+    }
+
+    if (position < actualPosix.length) {
+      resultPosix += actualPosix.slice(position);
+    }
+
+    const systemPath = resultPosix.split("/").join(path.sep);
+    return normalizePath(systemPath);
+  };
 }
 
 function resolveBucketItem(bucketItem: string | BucketItem): BucketItem {

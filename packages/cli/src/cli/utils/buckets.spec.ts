@@ -1,12 +1,18 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { getBuckets } from "./buckets";
-import { glob, Path } from "glob";
 
-vi.mock("glob", () => ({
-  glob: {
-    sync: vi.fn(),
-  },
+const fgMocks = vi.hoisted(() => ({
+  fn: vi.fn(),
+  sync: vi.fn(),
 }));
+
+vi.mock("fast-glob", () => {
+  const mockFn = Object.assign(fgMocks.fn, { sync: fgMocks.sync });
+  return {
+    __esModule: true,
+    default: mockFn,
+  };
+});
 
 describe("getBuckets", () => {
   const makeI18nConfig = (include: any[]) => ({
@@ -24,7 +30,7 @@ describe("getBuckets", () => {
   });
 
   beforeEach(() => {
-    vi.mocked(glob.sync).mockReset();
+    fgMocks.sync.mockReset();
   });
 
   it("should return correct buckets", () => {
@@ -267,10 +273,6 @@ describe("getBuckets", () => {
 
 function mockGlobSync(...args: string[][]) {
   args.forEach((files) => {
-    vi.mocked(glob.sync).mockReturnValueOnce(
-      files.map(
-        (file) => ({ isFile: () => true, fullpath: () => file }) as Path,
-      ),
-    );
+    fgMocks.sync.mockReturnValueOnce(files);
   });
 }

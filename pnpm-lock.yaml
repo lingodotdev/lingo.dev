@@ -452,6 +452,9 @@ importers:
       external-editor:
         specifier: ^3.1.0
         version: 3.1.0
+      fast-glob:
+        specifier: ^3.3.3
+        version: 3.3.3
       figlet:
         specifier: ^1.8.2
         version: 1.8.2
@@ -6275,10 +6278,6 @@ packages:
     resolution: {integrity: sha512-kNFPyjhh5cKjrUltxs+wFx+ZkbRaxxmZ+X0ZU31SOsxCEtP9VPgtq2teZw1DebupL5GmDaNQ6yKMMVcM41iqDg==}
     engines: {node: '>=8.6.0'}
 
-  fast-glob@3.3.2:
-    resolution: {integrity: sha512-oX2ruAFQwf/Orj8m737Y5adxDQO0LAB7/S5MnxCdTNDd4p6BsyIVsv9JQsATbTSq8KHRpLwIHbVlUNatxd+1Ow==}
-    engines: {node: '>=8.6.0'}
-
   fast-glob@3.3.3:
     resolution: {integrity: sha512-7MptL8U0cqcFdzIzwOTHoilX9x5BrNqye7Z/LuC7kCMRio1EMSyqRK3BEAUD7sXRq4iT4AzTVuZdhgQ2TCvYLg==}
     engines: {node: '>=8.6.0'}
@@ -10740,7 +10739,7 @@ snapshots:
       cpy: 11.1.0
       dedent: 1.6.0
       execa: 9.6.0
-      fast-glob: 3.3.2
+      fast-glob: 3.3.3
       get-port: 7.1.0
       junk: 4.0.1
       picomatch: 4.0.3
@@ -14033,7 +14032,7 @@ snapshots:
 
   '@ts-morph/common@0.24.0':
     dependencies:
-      fast-glob: 3.3.2
+      fast-glob: 3.3.3
       minimatch: 9.0.5
       mkdirp: 3.0.1
       path-browserify: 1.0.1
@@ -14403,7 +14402,7 @@ snapshots:
       '@typescript-eslint/types': 8.42.0
       '@typescript-eslint/visitor-keys': 8.42.0
       debug: 4.4.1
-      fast-glob: 3.3.2
+      fast-glob: 3.3.3
       is-glob: 4.0.3
       minimatch: 9.0.5
       semver: 7.7.2
@@ -16731,14 +16730,6 @@ snapshots:
       merge2: 1.4.1
       micromatch: 4.0.8
 
-  fast-glob@3.3.2:
-    dependencies:
-      '@nodelib/fs.stat': 2.0.5
-      '@nodelib/fs.walk': 1.2.8
-      glob-parent: 5.1.2
-      merge2: 1.4.1
-      micromatch: 4.0.8
-
   fast-glob@3.3.3:
     dependencies:
       '@nodelib/fs.stat': 2.0.5
@@ -17072,7 +17063,7 @@ snapshots:
     dependencies:
       array-union: 2.1.0
       dir-glob: 3.0.1
-      fast-glob: 3.3.2
+      fast-glob: 3.3.3
       ignore: 5.3.1
       merge2: 1.4.1
       slash: 3.0.0
@@ -17179,7 +17170,7 @@ snapshots:
   hot-hook@0.4.0:
     dependencies:
       chokidar: 4.0.3
-      fast-glob: 3.3.2
+      fast-glob: 3.3.3
       parse-imports: 2.2.1
       picomatch: 4.0.3
       read-package-up: 11.0.0
