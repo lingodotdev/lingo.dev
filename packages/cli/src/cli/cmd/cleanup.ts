@@ -10,7 +10,7 @@ import { getBuckets } from "../utils/buckets";
 export default new Command()
   .command("cleanup")
   .description(
-    "Remove translation keys from target locales that no longer exist in the source locale, keeping translation files synchronized and clean",
+    "Remove translation keys from target locales that no longer exist in the source locale",
   )
   .helpOption("-h, --help", "Show help")
   .option(

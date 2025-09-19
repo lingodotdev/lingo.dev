@@ -35,7 +35,7 @@ export default new Command()
   )
   .option(
     "--pull-request [boolean]",
-    "Create or update translations on a dedicated branch and manage pull requests automatically. Defaults to committing directly to current branch",
+    "Create or update translations on a dedicated branch and manage pull requests automatically. When false, commits directly to current branch. Defaults to false",
     parseBooleanArg,
   )
   .option(

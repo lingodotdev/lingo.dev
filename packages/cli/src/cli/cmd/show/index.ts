@@ -7,7 +7,7 @@ import filesCmd from "./files";
 export default new Command()
   .command("show")
   .description(
-    "Display project information including configuration settings, supported locales, and file paths",
+    "Display configuration, locales, and file paths",
   )
   .helpOption("-h, --help", "Show help")
   .addCommand(configCmd)

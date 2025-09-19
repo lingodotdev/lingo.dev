@@ -8,7 +8,7 @@ import { CLIError } from "../../utils/errors";
 export default new Command()
   .command("locale")
   .description(
-    "List locale codes supported by the CLI (short and region-specific forms)",
+    "List supported locale codes",
   )
   .helpOption("-h, --help", "Show help")
   // argument can be equal either "sources" or "targets"

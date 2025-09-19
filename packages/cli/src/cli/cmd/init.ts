@@ -37,7 +37,7 @@ const throwHelpError = (option: string, value: string) => {
 export default new InteractiveCommand()
   .command("init")
   .description(
-    "Create a new Lingo.dev project by setting up your i18n.json configuration file",
+    "Create i18n.json configuration file for a new project",
   )
   .helpOption("-h, --help", "Show help")
   .addOption(

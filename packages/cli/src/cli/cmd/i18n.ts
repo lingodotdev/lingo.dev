@@ -40,7 +40,7 @@ import { createDeltaProcessor } from "../utils/delta";
 export default new Command()
   .command("i18n")
   .description(
-    "Translate your configured content using AI - the core localization command",
+    "Translate content to target locales using AI based on i18n.json configuration",
   )
   .helpOption("-h, --help", "Show help")
   .option(

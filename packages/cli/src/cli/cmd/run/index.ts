@@ -60,7 +60,7 @@ function playSound(type: "success" | "failure") {
 export default new Command()
   .command("run")
   .description(
-    "Advanced translation command with concurrency, watch mode, and enhanced progress - an alternative to i18n with more features",
+    "Run localization with concurrency control, watch mode, and detailed progress tracking",
   )
   .helpOption("-h, --help", "Show help")
   .option(
@@ -79,12 +79,12 @@ export default new Command()
   )
   .option(
     "--file <file>",
-    "Filter bucket pathPattern values by substring or glob pattern. Examples: **/messages.json or locale/. Repeat to add multiple filters",
+    "Filter bucket pathPattern values by substring match. Examples: messages.json or locale/. Repeat to add multiple filters",
     (val: string, prev: string[]) => (prev ? [...prev, val] : [val]),
   )
   .option(
     "--key <key>",
-    "Filter keys by glob patterns on slash-separated paths. Example: auth/login/**. Repeat for multiple patterns",
+    "Filter keys by prefix matching on dot-separated paths. Example: auth.login to match all keys starting with auth.login. Repeat for multiple patterns",
     (val: string, prev: string[]) => (prev ? [...prev, val] : [val]),
   )
   .option(

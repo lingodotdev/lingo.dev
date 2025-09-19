@@ -48,7 +48,7 @@ export default new Command()
   )
   .option(
     "--file [files...]",
-    "Filter the status report to only include files whose paths match these patterns. Values can be substrings (e.g., 'components') or glob patterns (e.g., '**/messages.json')",
+    "Filter the status report to only include files whose paths contain these substrings. Example: 'components' to match any file path containing 'components'",
   )
   .option(
     "--force",

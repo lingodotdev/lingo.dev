@@ -7,7 +7,7 @@ import { defaultConfig } from "@lingo.dev/_spec";
 export default new Command()
   .command("config")
   .description(
-    "Print the effective i18n.json after merging defaults with the file in the current directory",
+    "Print effective i18n.json after merging with defaults",
   )
   .helpOption("-h, --help", "Show help")
   .action(async (options) => {
