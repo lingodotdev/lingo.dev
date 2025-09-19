@@ -20,21 +20,39 @@ interface CIOptions {
 
 export default new Command()
   .command("ci")
-  .description("Run Lingo.dev CI/CD action")
+  .description(
+    "Automate localization workflow: translate content, commit changes, and create/update pull requests",
+  )
   .helpOption("-h, --help", "Show help")
-  .option("--parallel [boolean]", "Run in parallel mode", parseBooleanArg)
-  .option("--api-key <key>", "API key")
   .option(
-    "--pull-request [boolean]",
-    "Create a pull request with the changes",
+    "--parallel [boolean]",
+    "Process translations concurrently for faster execution. When enabled, multiple locales are translated simultaneously. Defaults to false",
     parseBooleanArg,
   )
-  .option("--commit-message <message>", "Commit message")
-  .option("--pull-request-title <title>", "Pull request title")
-  .option("--working-directory <dir>", "Working directory")
+  .option(
+    "--api-key <key>",
+    "Override API key from settings or environment variables",
+  )
+  .option(
+    "--pull-request [boolean]",
+    "Create or update translations on a dedicated branch and manage pull requests automatically. When false, commits directly to current branch. Defaults to false",
+    parseBooleanArg,
+  )
+  .option(
+    "--commit-message <message>",
+    "Commit message for localization changes. Defaults to 'feat: update translations via @lingodotdev'",
+  )
+  .option(
+    "--pull-request-title <title>",
+    "Title for the pull request when using --pull-request mode. Defaults to 'feat: update translations via @lingodotdev'",
+  )
+  .option(
+    "--working-directory <dir>",
+    "Directory to run localization from (useful for monorepos where localization files are in a subdirectory)",
+  )
   .option(
     "--process-own-commits [boolean]",
-    "Process commits made by this action",
+    "Allow processing commits made by this CI user (bypasses infinite loop prevention)",
     parseBooleanArg,
   )
   .action(async (options: CIOptions) => {

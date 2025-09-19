@@ -24,7 +24,9 @@ import purgeCmd from "./cmd/purge";
 
 export default new InteractiveCommand()
   .name("lingo.dev")
-  .description("Lingo.dev CLI")
+  .description(
+    "Translate and manage localization files using AI",
+  )
   .helpOption("-h, --help", "Show help")
   .addHelpText(
     "beforeAll",
@@ -44,7 +46,10 @@ Star the the repo :) https://github.com/LingoDotDev/lingo.dev
   )
   .version(`v${packageJson.version}`, "-v, --version", "Show version")
   .addCommand(initCmd)
-  .interactive("-y, --no-interactive", "Disable interactive mode") // all interactive commands above
+  .interactive(
+    "-y, --no-interactive",
+    "Run every command in non-interactive mode (no prompts); required when scripting",
+  ) // all interactive commands above
   .addCommand(i18nCmd)
   .addCommand(authCmd)
   .addCommand(loginCmd)

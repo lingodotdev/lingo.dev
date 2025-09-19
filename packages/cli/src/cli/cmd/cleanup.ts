@@ -10,17 +10,24 @@ import { getBuckets } from "../utils/buckets";
 export default new Command()
   .command("cleanup")
   .description(
-    "Remove keys from target files that do not exist in the source file",
+    "Remove translation keys from target locales that no longer exist in the source locale",
   )
   .helpOption("-h, --help", "Show help")
-  .option("--locale <locale>", "Specific locale to cleanup")
-  .option("--bucket <bucket>", "Specific bucket to cleanup")
-  .option("--dry-run", "Show what would be removed without making changes")
+  .option(
+    "--locale <locale>",
+    "Limit cleanup to a specific target locale from i18n.json. Defaults to all configured target locales",
+  )
+  .option(
+    "--bucket <bucket>",
+    "Limit cleanup to a specific bucket type defined under `buckets` in i18n.json",
+  )
+  .option(
+    "--dry-run",
+    "Preview which keys would be deleted without making any changes",
+  )
   .option(
     "--verbose",
-    "Show detailed output including:\n" +
-      "  - List of keys that would be removed.\n" +
-      "  - Processing steps.",
+    "Print detailed output showing the specific keys to be removed for each locale",
   )
   .action(async function (options) {
     const ora = Ora();
