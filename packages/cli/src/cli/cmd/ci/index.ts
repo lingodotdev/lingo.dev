@@ -26,7 +26,7 @@ export default new Command()
   .helpOption("-h, --help", "Show help")
   .option(
     "--parallel [boolean]",
-    "Process translations concurrently for faster execution (default: false). When enabled, multiple locales are translated simultaneously",
+    "Process translations concurrently for faster execution. When enabled, multiple locales are translated simultaneously (default: false)",
     parseBooleanArg,
   )
   .option(
@@ -35,16 +35,16 @@ export default new Command()
   )
   .option(
     "--pull-request [boolean]",
-    "Create or update translations on a dedicated branch and manage pull requests automatically (default: commit directly to current branch)",
+    "Create or update translations on a dedicated branch and manage pull requests automatically. Defaults to committing directly to current branch",
     parseBooleanArg,
   )
   .option(
     "--commit-message <message>",
-    "Commit message for localization changes (default: 'feat: update translations via @lingodotdev')",
+    "Commit message for localization changes. Defaults to 'feat: update translations via @lingodotdev'",
   )
   .option(
     "--pull-request-title <title>",
-    "Title for the pull request when using --pull-request mode (defaults to 'feat: update translations via @lingodotdev')",
+    "Title for the pull request when using --pull-request mode. Defaults to 'feat: update translations via @lingodotdev'",
   )
   .option(
     "--working-directory <dir>",

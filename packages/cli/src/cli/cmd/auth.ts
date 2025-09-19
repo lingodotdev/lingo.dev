@@ -14,7 +14,7 @@ export default new Command()
   )
   .option(
     "--logout",
-    "Legacy flag that only prints a deprecation warning. Use `lingo.dev logout` instead",
+    "DEPRECATED: Shows deprecation warning and exits. Use `lingo.dev logout` instead",
   )
   .action(async (options) => {
     try {

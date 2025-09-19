@@ -15,11 +15,11 @@ export default new Command()
   .helpOption("-h, --help", "Show help")
   .option(
     "--locale <locale>",
-    "Limit cleanup to a specific target locale from i18n.json (defaults to all configured target locales)",
+    "Limit cleanup to a specific target locale from i18n.json. Defaults to all configured target locales",
   )
   .option(
     "--bucket <bucket>",
-    "Limit cleanup to the specified bucket type defined under `buckets` in i18n.json",
+    "Limit cleanup to a specific bucket type defined under `buckets` in i18n.json",
   )
   .option(
     "--dry-run",

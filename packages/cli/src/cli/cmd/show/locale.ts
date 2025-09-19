@@ -14,7 +14,7 @@ export default new Command()
   // argument can be equal either "sources" or "targets"
   .argument(
     "<type>",
-    'Keyword `sources` or `targets` (both print the full supported locale list)',
+    'Type of locales to show: "sources" or "targets" - both show the full supported locale list',
   )
   .action(async (type) => {
     const ora = Ora();

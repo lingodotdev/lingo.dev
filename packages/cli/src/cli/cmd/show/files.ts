@@ -13,11 +13,11 @@ export default new Command()
   )
   .option(
     "--source",
-    "Only list the source locale variant for each pathPattern.",
+    "Only list the source locale variant for each pathPattern",
   )
   .option(
     "--target",
-    "Only list the target locale variants for each configured locale.",
+    "Only list the target locale variants for each configured locale",
   )
   .helpOption("-h, --help", "Show help")
   .action(async (type) => {

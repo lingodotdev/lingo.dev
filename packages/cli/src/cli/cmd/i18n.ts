@@ -55,11 +55,11 @@ export default new Command()
   )
   .option(
     "--key <key>",
-    "Limit processing to a single translation key by exact match (e.g., auth.login.title). Filters all buckets and locales to process only this key, useful for testing or debugging specific translations",
+    "Limit processing to a single translation key by exact match. Example: auth.login.title. Filters all buckets and locales to process only this key, useful for testing or debugging specific translations",
   )
   .option(
     "--file [files...]",
-    "Filter processing to only buckets whose file paths contain these substrings (e.g., 'components' to process only files in components directories)",
+    "Filter processing to only buckets whose file paths contain these substrings. Example: 'components' to process only files in components directories",
   )
   .option(
     "--frozen",

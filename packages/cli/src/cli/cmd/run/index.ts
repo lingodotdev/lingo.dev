@@ -79,12 +79,12 @@ export default new Command()
   )
   .option(
     "--file <file>",
-    "Filter bucket pathPattern values by substring or glob pattern (e.g., **/messages.json or locale/). Repeat to add multiple filters",
+    "Filter bucket pathPattern values by substring or glob pattern. Examples: **/messages.json or locale/. Repeat to add multiple filters",
     (val: string, prev: string[]) => (prev ? [...prev, val] : [val]),
   )
   .option(
     "--key <key>",
-    "Filter keys by glob patterns on slash-separated paths (e.g., auth/login/**). Repeat for multiple patterns",
+    "Filter keys by glob patterns on slash-separated paths. Example: auth/login/**. Repeat for multiple patterns",
     (val: string, prev: string[]) => (prev ? [...prev, val] : [val]),
   )
   .option(
@@ -101,7 +101,7 @@ export default new Command()
   )
   .option(
     "--concurrency <concurrency>",
-    "Number of translation jobs to run concurrently (default: 10, max: 10). Higher values can speed up large translation batches but may increase memory usage",
+    "Number of translation jobs to run concurrently. Higher values can speed up large translation batches but may increase memory usage. Defaults to 10, max 10",
     (val: string) => parseInt(val),
   )
   .option(
@@ -110,7 +110,7 @@ export default new Command()
   )
   .option(
     "--debounce <milliseconds>",
-    "Delay in milliseconds after file changes before retranslating in watch mode (default 5000)",
+    "Delay in milliseconds after file changes before retranslating in watch mode. Defaults to 5000",
     (val: string) => parseInt(val),
   )
   .option(

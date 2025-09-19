@@ -51,7 +51,7 @@ export default new InteractiveCommand()
   .addOption(
     new InteractiveOption(
       "-s --source <locale>",
-      "Primary language of your application that content will be translated from (defaults to 'en')",
+      "Primary language of your application that content will be translated from. Defaults to 'en'",
     )
       .argParser((value) => {
         try {
@@ -66,7 +66,7 @@ export default new InteractiveCommand()
   .addOption(
     new InteractiveOption(
       "-t --targets <locale...>",
-      "Target languages to translate to. Accepts locale codes (like 'es', 'fr', 'de-AT') separated by commas or spaces. Defaults to 'es'",
+      "Target languages to translate to. Accepts locale codes like 'es', 'fr', 'de-AT' separated by commas or spaces. Defaults to 'es'",
     )
       .argParser((value) => {
         const values = (

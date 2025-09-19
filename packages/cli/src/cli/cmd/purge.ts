@@ -29,11 +29,11 @@ export default new Command()
   )
   .option(
     "--file [files...]",
-    "Filter which file paths to purge by matching against path patterns. Only paths containing any of these values will be processed. Example: --file messages.json --file admin/",
+    "Filter which file paths to purge by matching against path patterns. Only paths containing any of these values will be processed. Examples: --file messages.json --file admin/",
   )
   .option(
     "--key <key>",
-    "Filter which keys to delete using a glob pattern that matches against slash-separated key paths (e.g., 'auth/login/**' matches all keys under auth/login). Omit this option to delete ALL keys. Keys marked as locked or ignored in i18n.json are automatically skipped.",
+    "Filter which keys to delete using a glob pattern that matches against slash-separated key paths. Example: 'auth/login/**' matches all keys under auth/login. Omit this option to delete ALL keys. Keys marked as locked or ignored in i18n.json are automatically skipped",
   )
   .option(
     "--locale <locale>",
