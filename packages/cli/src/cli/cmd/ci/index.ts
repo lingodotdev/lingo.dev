@@ -26,7 +26,7 @@ export default new Command()
   .helpOption("-h, --help", "Show help")
   .option(
     "--parallel [boolean]",
-    "Process translations concurrently for faster execution. When enabled, multiple locales are translated simultaneously (default: false)",
+    "Process translations concurrently for faster execution. When enabled, multiple locales are translated simultaneously. Defaults to false",
     parseBooleanArg,
   )
   .option(

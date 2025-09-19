@@ -101,7 +101,7 @@ export default new Command()
   )
   .option(
     "--concurrency <concurrency>",
-    "Number of translation jobs to run concurrently. Higher values can speed up large translation batches but may increase memory usage. Defaults to 10, max 10",
+    "Number of translation jobs to run concurrently. Higher values can speed up large translation batches but may increase memory usage. Defaults to 10 (maximum 10)",
     (val: string) => parseInt(val),
   )
   .option(
