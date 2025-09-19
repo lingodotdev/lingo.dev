@@ -93,11 +93,11 @@ export default new Command()
   )
   .option(
     "--api-key <api-key>",
-    "Override API key from settings and environment variables",
+    "Override API key from settings or environment variables",
   )
   .option(
     "--debug",
-    "Pause before processing to allow attaching a debugger",
+    "Pause before processing to allow attaching a debugger.",
   )
   .option(
     "--concurrency <concurrency>",

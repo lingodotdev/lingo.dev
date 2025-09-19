@@ -31,7 +31,7 @@ export default new Command()
   )
   .option(
     "--api-key <key>",
-    "Override the API key from settings or environment variables for this run",
+    "Override API key from settings or environment variables",
   )
   .option(
     "--pull-request [boolean]",
