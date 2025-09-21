@@ -32,9 +32,7 @@ interface LanguageStats {
 
 export default new Command()
   .command("status")
-  .description(
-    "Analyze localization progress showing completion rates, missing translations, and word estimates for each target locale",
-  )
+  .description("Show the status of the localization process")
   .helpOption("-h, --help", "Show help")
   .option(
     "--locale <locale>",
