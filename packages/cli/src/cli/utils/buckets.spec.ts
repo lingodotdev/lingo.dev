@@ -174,10 +174,7 @@ describe("getBuckets", () => {
   });
 
   it("expands single globstar in the middle of the path", () => {
-    mockGlobSync([
-      "src/a/i18n/en.json",
-      "src/a/b/i18n/en.json",
-    ]);
+    mockGlobSync(["src/a/i18n/en.json", "src/a/b/i18n/en.json"]);
 
     const i18nConfig = makeI18nConfig(["src/**/i18n/[locale].json"]);
     const buckets = getBuckets(i18nConfig);
@@ -220,14 +217,9 @@ describe("getBuckets", () => {
   });
 
   it("aligns multiple globstars separated by fixed segments", () => {
-    mockGlobSync([
-      "src/a/i18n/en.json",
-      "src/a/b/i18n/x/en.json",
-    ]);
+    mockGlobSync(["src/a/i18n/en.json", "src/a/b/i18n/x/en.json"]);
 
-    const i18nConfig = makeI18nConfig([
-      "src/**/i18n/**/[locale].json",
-    ]);
+    const i18nConfig = makeI18nConfig(["src/**/i18n/**/[locale].json"]);
     const buckets = getBuckets(i18nConfig);
     expect(buckets).toEqual([
       {
@@ -246,9 +238,7 @@ describe("getBuckets", () => {
   it("supports mixed single and double wildcards", () => {
     mockGlobSync(["src/app/x/y/data-en-core.json"]);
 
-    const i18nConfig = makeI18nConfig([
-      "src/*/**/data-[locale]-*.json",
-    ]);
+    const i18nConfig = makeI18nConfig(["src/*/**/data-[locale]-*.json"]);
     const buckets = getBuckets(i18nConfig);
     expect(buckets).toEqual([
       {
@@ -266,16 +256,12 @@ describe("getBuckets", () => {
   it("collapses adjacent globstars", () => {
     mockGlobSync(["src/a/i18n/en.json"]);
 
-    const i18nConfig = makeI18nConfig([
-      "src/**/**/i18n/[locale].json",
-    ]);
+    const i18nConfig = makeI18nConfig(["src/**/**/i18n/[locale].json"]);
     const buckets = getBuckets(i18nConfig);
     expect(buckets).toEqual([
       {
         type: "json",
-        paths: [
-          { pathPattern: "src/a/i18n/[locale].json", delimiter: null },
-        ],
+        paths: [{ pathPattern: "src/a/i18n/[locale].json", delimiter: null }],
       },
     ]);
   });
@@ -294,27 +280,20 @@ describe("getBuckets", () => {
     expect(buckets).toEqual([
       {
         type: "json",
-        paths: [
-          { pathPattern: "src/a/i18n/[locale].json", delimiter: null },
-        ],
+        paths: [{ pathPattern: "src/a/i18n/[locale].json", delimiter: null }],
       },
     ]);
   });
 
   it("skips paths that cannot be re-projected", () => {
-    mockGlobSync([
-      "src/a/i18n/en.json",
-      "src/invalid/en.json",
-    ]);
+    mockGlobSync(["src/a/i18n/en.json", "src/invalid/en.json"]);
 
     const i18nConfig = makeI18nConfig(["src/**/i18n/[locale].json"]);
     const buckets = getBuckets(i18nConfig);
     expect(buckets).toEqual([
       {
         type: "json",
-        paths: [
-          { pathPattern: "src/a/i18n/[locale].json", delimiter: null },
-        ],
+        paths: [{ pathPattern: "src/a/i18n/[locale].json", delimiter: null }],
       },
     ]);
   });

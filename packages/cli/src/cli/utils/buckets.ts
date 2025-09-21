@@ -124,16 +124,22 @@ function expandPlaceholderedGlob(
     patternSegments.push(segment);
   }
 
-  const localeSegmentIndexes = patternSegments.reduce((indexes, segment, idx) => {
-    if (segment.includes("[locale]")) {
-      indexes.push(idx);
-    }
-    return indexes;
-  }, [] as number[]);
+  const localeSegmentIndexes = patternSegments.reduce(
+    (indexes, segment, idx) => {
+      if (segment.includes("[locale]")) {
+        indexes.push(idx);
+      }
+      return indexes;
+    },
+    [] as number[],
+  );
 
   const collapsedPattern =
     patternSegments.length > 0 ? patternSegments.join(path.sep) : pathPattern;
-  const sourcePathPattern = collapsedPattern.replaceAll(/\[locale\]/g, sourceLocale);
+  const sourcePathPattern = collapsedPattern.replaceAll(
+    /\[locale\]/g,
+    sourceLocale,
+  );
   const unixStylePattern = sourcePathPattern.replace(/\\/g, "/");
 
   const sourcePaths = glob
@@ -152,8 +158,14 @@ function expandPlaceholderedGlob(
     const normalizedSourcePath = normalizePath(
       sourcePath.replace(/\//g, path.sep),
     );
-    const sourceSegments = normalizedSourcePath.split(path.sep).filter((segment) => segment);
-    const segmentMap = alignPatternToPath(patternSegments, sourceSegments, sourceLocale);
+    const sourceSegments = normalizedSourcePath
+      .split(path.sep)
+      .filter((segment) => segment);
+    const segmentMap = alignPatternToPath(
+      patternSegments,
+      sourceSegments,
+      sourceLocale,
+    );
     if (!segmentMap) {
       return;
     }
@@ -208,7 +220,11 @@ function alignPatternToPath(
   ) {
     if (
       sourceIdx >= sourceSegments.length ||
-      !segmentMatches(patternSegments[patternIdx], sourceSegments[sourceIdx], sourceLocale)
+      !segmentMatches(
+        patternSegments[patternIdx],
+        sourceSegments[sourceIdx],
+        sourceLocale,
+      )
     ) {
       return null;
     }
@@ -224,7 +240,11 @@ function alignPatternToPath(
   while (patternIdx >= 0 && patternSegments[patternIdx] !== "**") {
     if (
       sourceIdx < 0 ||
-      !segmentMatches(patternSegments[patternIdx], sourceSegments[sourceIdx], sourceLocale)
+      !segmentMatches(
+        patternSegments[patternIdx],
+        sourceSegments[sourceIdx],
+        sourceLocale,
+      )
     ) {
       return null;
     }
