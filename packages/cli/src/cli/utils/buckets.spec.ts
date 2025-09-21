@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import { getBuckets } from "./buckets";
 import { glob, Path } from "glob";
 
@@ -9,7 +9,7 @@ vi.mock("glob", () => ({
 }));
 
 describe("getBuckets", () => {
-  const makeI18nConfig = (include: any[]) => ({
+  const makeI18nConfig = (include: any[], exclude?: any[]) => ({
     $schema: "https://lingo.dev/schema/i18n.json",
     version: 0,
     locale: {
@@ -19,8 +19,13 @@ describe("getBuckets", () => {
     buckets: {
       json: {
         include,
+        ...(exclude ? { exclude } : {}),
       },
     },
+  });
+
+  beforeEach(() => {
+    vi.mocked(glob.sync).mockReset();
   });
 
   it("should return correct buckets", () => {
@@ -163,6 +168,152 @@ describe("getBuckets", () => {
             pathPattern: "src/[locale]/translations/[locale]/messages.json",
             delimiter: null,
           },
+        ],
+      },
+    ]);
+  });
+
+  it("expands single globstar in the middle of the path", () => {
+    mockGlobSync([
+      "src/a/i18n/en.json",
+      "src/a/b/i18n/en.json",
+    ]);
+
+    const i18nConfig = makeI18nConfig(["src/**/i18n/[locale].json"]);
+    const buckets = getBuckets(i18nConfig);
+    expect(buckets).toEqual([
+      {
+        type: "json",
+        paths: [
+          { pathPattern: "src/a/i18n/[locale].json", delimiter: null },
+          { pathPattern: "src/a/b/i18n/[locale].json", delimiter: null },
+        ],
+      },
+    ]);
+  });
+
+  it("handles leading and trailing globstars", () => {
+    mockGlobSync([
+      "apps/web/en/i18n/messages.en.json",
+      "packages/ui/en/locales/messages.en.json",
+    ]);
+
+    const i18nConfig = makeI18nConfig([
+      "**/[locale]/**/messages.[locale].json",
+    ]);
+    const buckets = getBuckets(i18nConfig);
+    expect(buckets).toEqual([
+      {
+        type: "json",
+        paths: [
+          {
+            pathPattern: "apps/web/[locale]/i18n/messages.[locale].json",
+            delimiter: null,
+          },
+          {
+            pathPattern: "packages/ui/[locale]/locales/messages.[locale].json",
+            delimiter: null,
+          },
+        ],
+      },
+    ]);
+  });
+
+  it("aligns multiple globstars separated by fixed segments", () => {
+    mockGlobSync([
+      "src/a/i18n/en.json",
+      "src/a/b/i18n/x/en.json",
+    ]);
+
+    const i18nConfig = makeI18nConfig([
+      "src/**/i18n/**/[locale].json",
+    ]);
+    const buckets = getBuckets(i18nConfig);
+    expect(buckets).toEqual([
+      {
+        type: "json",
+        paths: [
+          { pathPattern: "src/a/i18n/[locale].json", delimiter: null },
+          {
+            pathPattern: "src/a/b/i18n/x/[locale].json",
+            delimiter: null,
+          },
+        ],
+      },
+    ]);
+  });
+
+  it("supports mixed single and double wildcards", () => {
+    mockGlobSync(["src/app/x/y/data-en-core.json"]);
+
+    const i18nConfig = makeI18nConfig([
+      "src/*/**/data-[locale]-*.json",
+    ]);
+    const buckets = getBuckets(i18nConfig);
+    expect(buckets).toEqual([
+      {
+        type: "json",
+        paths: [
+          {
+            pathPattern: "src/app/x/y/data-[locale]-core.json",
+            delimiter: null,
+          },
+        ],
+      },
+    ]);
+  });
+
+  it("collapses adjacent globstars", () => {
+    mockGlobSync(["src/a/i18n/en.json"]);
+
+    const i18nConfig = makeI18nConfig([
+      "src/**/**/i18n/[locale].json",
+    ]);
+    const buckets = getBuckets(i18nConfig);
+    expect(buckets).toEqual([
+      {
+        type: "json",
+        paths: [
+          { pathPattern: "src/a/i18n/[locale].json", delimiter: null },
+        ],
+      },
+    ]);
+  });
+
+  it("applies globstar excludes", () => {
+    mockGlobSync(
+      ["src/a/i18n/en.json", "src/a/legacy/i18n/en.json"],
+      ["src/a/legacy/i18n/en.json"],
+    );
+
+    const i18nConfig = makeI18nConfig(
+      ["src/**/i18n/**/[locale].json"],
+      ["src/**/legacy/**/[locale].json"],
+    );
+    const buckets = getBuckets(i18nConfig);
+    expect(buckets).toEqual([
+      {
+        type: "json",
+        paths: [
+          { pathPattern: "src/a/i18n/[locale].json", delimiter: null },
+        ],
+      },
+    ]);
+  });
+
+  it("skips paths that cannot be re-projected", () => {
+    mockGlobSync([
+      "src/a/i18n/en.json",
+      "src/invalid/en.json",
+    ]);
+
+    const i18nConfig = makeI18nConfig(["src/**/i18n/[locale].json"]);
+    const buckets = getBuckets(i18nConfig);
+    expect(buckets).toEqual([
+      {
+        type: "json",
+        paths: [
+          { pathPattern: "src/a/i18n/[locale].json", delimiter: null },
         ],
       },
     ]);

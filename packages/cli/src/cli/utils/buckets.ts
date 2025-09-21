@@ -94,6 +94,10 @@ function normalizePath(filepath: string): string {
   return process.platform === "win32" ? normalized.toLowerCase() : normalized;
 }
 
+const REGEX_PATH_SEP = path.sep === "\\" ? "\\\\" : path.sep;
+const NO_PATH_SEP_CLASS = `[^${REGEX_PATH_SEP}]`;
+const ESCAPED_GLOB_STAR = /\\\*/g;
+
 // Path expansion
 function expandPlaceholderedGlob(
   _pathPattern: string,
@@ -110,72 +114,75 @@ function expandPlaceholderedGlob(
     });
   }
 
-  // Throw error if pathPattern contains "**" – we don't support recursive path patterns
-  if (pathPattern.includes("**")) {
-    throw new CLIError({
-      message: `Invalid path pattern: ${pathPattern}. Recursive path patterns are not supported.`,
-      docUrl: "invalidPathPattern",
-    });
+  const rawSegments = pathPattern.split(path.sep).filter((segment) => segment);
+  const patternSegments: string[] = [];
+  for (const segment of rawSegments) {
+    const prev = patternSegments[patternSegments.length - 1];
+    if (segment === "**" && prev === "**") {
+      continue;
+    }
+    patternSegments.push(segment);
   }
 
-  // Break down path pattern into parts
-  const pathPatternChunks = pathPattern.split(path.sep);
-  // Find the index of the segment containing "[locale]"
-  const localeSegmentIndexes = pathPatternChunks.reduce(
-    (indexes, segment, index) => {
-      if (segment.includes("[locale]")) {
-        indexes.push(index);
-      }
-      return indexes;
-    },
-    [] as number[],
-  );
-  // substitute [locale] in pathPattern with sourceLocale
-  const sourcePathPattern = pathPattern.replaceAll(/\[locale\]/g, sourceLocale);
-  // Convert to Unix-style for Windows compatibility
+  const localeSegmentIndexes = patternSegments.reduce((indexes, segment, idx) => {
+    if (segment.includes("[locale]")) {
+      indexes.push(idx);
+    }
+    return indexes;
+  }, [] as number[]);
+
+  const collapsedPattern =
+    patternSegments.length > 0 ? patternSegments.join(path.sep) : pathPattern;
+  const sourcePathPattern = collapsedPattern.replaceAll(/\[locale\]/g, sourceLocale);
   const unixStylePattern = sourcePathPattern.replace(/\\/g, "/");
 
-  // get all files that match the sourcePathPattern
   const sourcePaths = glob
     .sync(unixStylePattern, {
       follow: true,
       withFileTypes: true,
-      windowsPathsNoEscape: true, // Windows path support
+      windowsPathsNoEscape: true,
     })
     .filter((file) => file.isFile() || file.isSymbolicLink())
     .map((file) => file.fullpath())
     .map((fullpath) => normalizePath(path.relative(process.cwd(), fullpath)));
 
-  // transform each source file path back to [locale] placeholder paths
-  const placeholderedPaths = sourcePaths.map((sourcePath) => {
-    // Normalize path returned by glob for platform compatibility
+  const placeholderedPaths: string[] = [];
+
+  sourcePaths.forEach((sourcePath) => {
     const normalizedSourcePath = normalizePath(
       sourcePath.replace(/\//g, path.sep),
     );
-    const sourcePathChunks = normalizedSourcePath.split(path.sep);
-    localeSegmentIndexes.forEach((localeSegmentIndex) => {
-      // Find the position of the "[locale]" placeholder within the segment
-      const pathPatternChunk = pathPatternChunks[localeSegmentIndex];
-      const sourcePathChunk = sourcePathChunks[localeSegmentIndex];
-      const regexp = new RegExp(
-        "(" +
-          pathPatternChunk
-            .replaceAll(".", "\\.")
-            .replaceAll("*", ".*")
-            .replace("[locale]", `)${sourceLocale}(`) +
-          ")",
-      );
-      const match = sourcePathChunk.match(regexp);
-      if (match) {
-        const [, prefix, suffix] = match;
-        const placeholderedSegment = prefix + "[locale]" + suffix;
-        sourcePathChunks[localeSegmentIndex] = placeholderedSegment;
+    const sourceSegments = normalizedSourcePath.split(path.sep).filter((segment) => segment);
+    const segmentMap = alignPatternToPath(patternSegments, sourceSegments, sourceLocale);
+    if (!segmentMap) {
+      return;
+    }
+
+    const placeholderSegments = sourceSegments.slice();
+    localeSegmentIndexes.forEach((patternIdx) => {
+      const mappedIdx = segmentMap[patternIdx];
+      if (mappedIdx === undefined) {
+        return;
       }
+      const projectionRegex = segmentRegexForLocale(
+        patternSegments[patternIdx],
+        sourceLocale,
+      );
+      if (!projectionRegex) {
+        return;
+      }
+      const match = placeholderSegments[mappedIdx]?.match(projectionRegex);
+      if (!match) {
+        return;
+      }
+      const prefix = match[1] ?? "";
+      const suffix = match[2] ?? "";
+      placeholderSegments[mappedIdx] = `${prefix}[locale]${suffix}`;
     });
-    const placeholderedPath = sourcePathChunks.join(path.sep);
-    return placeholderedPath;
+
+    placeholderedPaths.push(placeholderSegments.join(path.sep));
   });
-  // return the placeholdered paths
+
   return placeholderedPaths;
 }
 
@@ -184,4 +191,143 @@ function resolveBucketItem(bucketItem: string | BucketItem): BucketItem {
     return { path: bucketItem, delimiter: null };
   }
   return bucketItem;
+}
+
+function alignPatternToPath(
+  patternSegments: string[],
+  sourceSegments: string[],
+  sourceLocale: string,
+): Record<number, number> | null {
+  const segmentMap: Record<number, number> = {};
+
+  let patternIdx = 0;
+  let sourceIdx = 0;
+  while (
+    patternIdx < patternSegments.length &&
+    patternSegments[patternIdx] !== "**"
+  ) {
+    if (
+      sourceIdx >= sourceSegments.length ||
+      !segmentMatches(patternSegments[patternIdx], sourceSegments[sourceIdx], sourceLocale)
+    ) {
+      return null;
+    }
+    segmentMap[patternIdx] = sourceIdx;
+    patternIdx += 1;
+    sourceIdx += 1;
+  }
+
+  let leftSourceIndex = sourceIdx;
+
+  patternIdx = patternSegments.length - 1;
+  sourceIdx = sourceSegments.length - 1;
+  while (patternIdx >= 0 && patternSegments[patternIdx] !== "**") {
+    if (
+      sourceIdx < 0 ||
+      !segmentMatches(patternSegments[patternIdx], sourceSegments[sourceIdx], sourceLocale)
+    ) {
+      return null;
+    }
+    segmentMap[patternIdx] = sourceIdx;
+    patternIdx -= 1;
+    sourceIdx -= 1;
+  }
+
+  let rightSourceIndex = sourceIdx;
+
+  const globstarIndexes: number[] = [];
+  for (let idx = 0; idx < patternSegments.length; idx += 1) {
+    if (patternSegments[idx] === "**") {
+      globstarIndexes.push(idx);
+    }
+  }
+
+  for (let idx = 0; idx < globstarIndexes.length - 1; idx += 1) {
+    const start = globstarIndexes[idx];
+    const end = globstarIndexes[idx + 1];
+    const blockLength = end - start - 1;
+    if (blockLength <= 0) {
+      continue;
+    }
+    const block = patternSegments.slice(start + 1, end);
+    let found = false;
+    for (
+      let candidate = leftSourceIndex;
+      candidate + blockLength <= rightSourceIndex + 1;
+      candidate += 1
+    ) {
+      let matches = true;
+      for (let offset = 0; offset < blockLength; offset += 1) {
+        if (
+          candidate + offset >= sourceSegments.length ||
+          !segmentMatches(
+            block[offset],
+            sourceSegments[candidate + offset],
+            sourceLocale,
+          )
+        ) {
+          matches = false;
+          break;
+        }
+      }
+      if (matches) {
+        for (let offset = 0; offset < blockLength; offset += 1) {
+          segmentMap[start + 1 + offset] = candidate + offset;
+        }
+        leftSourceIndex = candidate + blockLength;
+        found = true;
+        break;
+      }
+    }
+    if (!found) {
+      return null;
+    }
+  }
+
+  return segmentMap;
+}
+
+function segmentMatches(
+  patternSegment: string,
+  sourceSegment: string,
+  locale: string,
+): boolean {
+  if (patternSegment === "**") {
+    return true;
+  }
+  const sentinel = "__LOCALE_PLACEHOLDER__";
+  const withSentinel = patternSegment.replace(/\[locale\]/g, sentinel);
+  const escaped = escapeRegex(withSentinel).replace(
+    ESCAPED_GLOB_STAR,
+    `${NO_PATH_SEP_CLASS}*`,
+  );
+  const regexSource = escaped.split(sentinel).join(escapeRegex(locale));
+  const matcher = new RegExp(`^${regexSource}$`);
+  return matcher.test(sourceSegment);
+}
+
+function segmentRegexForLocale(
+  patternSegment: string,
+  locale: string,
+): RegExp | null {
+  if (!patternSegment.includes("[locale]")) {
+    return null;
+  }
+  const parts = patternSegment.split("[locale]");
+  if (parts.length !== 2) {
+    return null;
+  }
+  const prefix = escapeRegex(parts[0]).replace(
+    ESCAPED_GLOB_STAR,
+    `${NO_PATH_SEP_CLASS}*`,
+  );
+  const suffix = escapeRegex(parts[1]).replace(
+    ESCAPED_GLOB_STAR,
+    `${NO_PATH_SEP_CLASS}*`,
+  );
+  return new RegExp(`^(${prefix})${escapeRegex(locale)}(${suffix})$`);
+}
+
+function escapeRegex(value: string): string {
+  return value.replace(/[|\\{}()[\]^$+*?.-]/g, "\\$&");
 }
