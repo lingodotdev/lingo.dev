@@ -20,9 +20,7 @@ interface CIOptions {
 
 export default new Command()
   .command("ci")
-  .description(
-    "Run localization pipeline in CI/CD environment",
-  )
+  .description("Run localization pipeline in CI/CD environment")
   .helpOption("-h, --help", "Show help")
   .option(
     "--parallel [boolean]",

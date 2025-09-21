@@ -16,10 +16,7 @@ export default new Command()
     "<key>",
     "Configuration key to set (dot notation, e.g., auth.apiKey)",
   )
-  .argument(
-    "<value>",
-    "The configuration value to set",
-  )
+  .argument("<value>", "The configuration value to set")
   .helpOption("-h, --help", "Show help")
   .action(async (key: string, value: string) => {
     if (!SETTINGS_KEYS.includes(key)) {

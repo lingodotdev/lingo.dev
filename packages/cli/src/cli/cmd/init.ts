@@ -36,9 +36,7 @@ const throwHelpError = (option: string, value: string) => {
 
 export default new InteractiveCommand()
   .command("init")
-  .description(
-    "Create i18n.json configuration file for a new project",
-  )
+  .description("Create i18n.json configuration file for a new project")
   .helpOption("-h, --help", "Show help")
   .addOption(
     new InteractiveOption(

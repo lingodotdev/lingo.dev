@@ -7,9 +7,7 @@ import { CLIError } from "../../utils/errors";
 
 export default new Command()
   .command("locale")
-  .description(
-    "List supported locale codes",
-  )
+  .description("List supported locale codes")
   .helpOption("-h, --help", "Show help")
   // argument can be equal either "sources" or "targets"
   .argument(

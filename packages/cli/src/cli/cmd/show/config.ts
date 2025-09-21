@@ -6,9 +6,7 @@ import { defaultConfig } from "@lingo.dev/_spec";
 
 export default new Command()
   .command("config")
-  .description(
-    "Print effective i18n.json after merging with defaults",
-  )
+  .description("Print effective i18n.json after merging with defaults")
   .helpOption("-h, --help", "Show help")
   .action(async (options) => {
     const fileConfig = loadReplexicaFileConfig();

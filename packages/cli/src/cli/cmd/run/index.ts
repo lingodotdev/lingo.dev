@@ -59,9 +59,7 @@ function playSound(type: "success" | "failure") {
 
 export default new Command()
   .command("run")
-  .description(
-    "Run localization pipeline",
-  )
+  .description("Run localization pipeline")
   .helpOption("-h, --help", "Show help")
   .option(
     "--source-locale <source-locale>",
@@ -95,10 +93,7 @@ export default new Command()
     "--api-key <api-key>",
     "Override API key from settings or environment variables",
   )
-  .option(
-    "--debug",
-    "Pause before processing to allow attaching a debugger.",
-  )
+  .option("--debug", "Pause before processing to allow attaching a debugger.")
   .option(
     "--concurrency <concurrency>",
     "Number of translation jobs to run concurrently. Higher values can speed up large translation batches but may increase memory usage. Defaults to 10 (maximum 10)",

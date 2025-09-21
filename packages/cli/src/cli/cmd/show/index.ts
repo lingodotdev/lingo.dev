@@ -6,9 +6,7 @@ import filesCmd from "./files";
 
 export default new Command()
   .command("show")
-  .description(
-    "Display configuration, locales, and file paths",
-  )
+  .description("Display configuration, locales, and file paths")
   .helpOption("-h, --help", "Show help")
   .addCommand(configCmd)
   .addCommand(localeCmd)
