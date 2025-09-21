@@ -24,9 +24,7 @@ import purgeCmd from "./cmd/purge";
 
 export default new InteractiveCommand()
   .name("lingo.dev")
-  .description(
-    "Translate and manage localization files using AI",
-  )
+  .description("Lingo.dev CLI")
   .helpOption("-h, --help", "Show help")
   .addHelpText(
     "beforeAll",
