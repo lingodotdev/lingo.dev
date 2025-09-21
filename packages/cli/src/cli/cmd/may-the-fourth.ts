@@ -16,9 +16,7 @@ export const colors = {
 
 export default new Command()
   .command("may-the-fourth")
-  .description(
-    "Hidden easter egg: stream the Star Wars ASCII rendition over telnet",
-  )
+  .description("May the Fourth be with you")
   .helpOption("-h, --help", "Show help")
   .action(async () => {
     await renderClear();
