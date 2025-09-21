@@ -21,7 +21,7 @@ interface CIOptions {
 export default new Command()
   .command("ci")
   .description(
-    "Automate localization workflow: translate content, commit changes, and create/update pull requests",
+    "Run localization pipeline in CI/CD environment",
   )
   .helpOption("-h, --help", "Show help")
   .option(
