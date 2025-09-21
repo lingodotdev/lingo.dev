@@ -60,7 +60,7 @@ function playSound(type: "success" | "failure") {
 export default new Command()
   .command("run")
   .description(
-    "Run localization with concurrency control, watch mode, and detailed progress tracking",
+    "Run localization pipeline",
   )
   .helpOption("-h, --help", "Show help")
   .option(
