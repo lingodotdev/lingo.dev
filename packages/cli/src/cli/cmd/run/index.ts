@@ -79,7 +79,7 @@ export default new Command()
   )
   .option(
     "--file <file>",
-    "Filter bucket pathPattern values by substring match. Examples: messages.json or locale/. Repeat to add multiple filters",
+    "Filter bucket path pattern values by substring match. Examples: messages.json or locale/. Repeat to add multiple filters",
     (val: string, prev: string[]) => (prev ? [...prev, val] : [val]),
   )
   .option(

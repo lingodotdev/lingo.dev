@@ -9,11 +9,11 @@ import { resolveOverriddenLocale } from "@lingo.dev/_spec";
 export default new Command()
   .command("files")
   .description(
-    "Expand each bucket's pathPattern into concrete source and target file paths",
+    "Expand each bucket's path pattern into concrete source and target file paths",
   )
   .option(
     "--source",
-    "Only list the source locale variant for each pathPattern",
+    "Only list the source locale variant for each path pattern",
   )
   .option(
     "--target",
