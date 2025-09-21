@@ -9,7 +9,7 @@ import { createAuthenticator } from "../utils/auth";
 export default new Command()
   .command("mcp")
   .description(
-    "Start MCP server for AI assistant integration",
+    "Start a Model Context Protocol (MCP) server for AI assistant integration",
   )
   .helpOption("-h, --help", "Show help")
   .action(async (_, program) => {
