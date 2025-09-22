@@ -192,7 +192,8 @@ describe("getBuckets", () => {
             delimiter: null,
           },
           {
-            pathPattern: "src/modules/marketing/[locale]/strings/dashboard.json",
+            pathPattern:
+              "src/modules/marketing/[locale]/strings/dashboard.json",
             delimiter: null,
           },
         ],
@@ -201,10 +202,7 @@ describe("getBuckets", () => {
   });
 
   it("restores placeholder when extglob wraps the locale segment", () => {
-    mockGlobSync([
-      "src/modules/core-en.json",
-      "src/modules/marketing-en.json",
-    ]);
+    mockGlobSync(["src/modules/core-en.json", "src/modules/marketing-en.json"]);
 
     const i18nConfig = makeI18nConfig([
       "src/modules/@(core|marketing)-[locale].json",
@@ -245,7 +243,8 @@ describe("getBuckets", () => {
             delimiter: null,
           },
           {
-            pathPattern: "src/modules/marketing/[locale]/strings/dashboard.json",
+            pathPattern:
+              "src/modules/marketing/[locale]/strings/dashboard.json",
             delimiter: null,
           },
         ],
@@ -256,9 +255,7 @@ describe("getBuckets", () => {
   it("preserves glob character classes around locale placeholder", () => {
     mockGlobSync(["src/files/id-en.json"]);
 
-    const i18nConfig = makeI18nConfig([
-      "src/files/??-[locale].json",
-    ]);
+    const i18nConfig = makeI18nConfig(["src/files/??-[locale].json"]);
     const buckets = getBuckets(i18nConfig);
 
     expect(buckets).toEqual([
@@ -306,9 +303,7 @@ describe("getBuckets", () => {
       "src/modules/marketing/en/email/templates/messages.json",
     ]);
 
-    const i18nConfig = makeI18nConfig([
-      "src/**/[locale]/**/messages.json",
-    ]);
+    const i18nConfig = makeI18nConfig(["src/**/[locale]/**/messages.json"]);
     const buckets = getBuckets(i18nConfig);
 
     expect(buckets).toEqual([
@@ -316,8 +311,7 @@ describe("getBuckets", () => {
         type: "json",
         paths: [
           {
-            pathPattern:
-              "src/modules/core/services/[locale]/api/messages.json",
+            pathPattern: "src/modules/core/services/[locale]/api/messages.json",
             delimiter: null,
           },
           {
@@ -331,13 +325,9 @@ describe("getBuckets", () => {
   });
 
   it("supports globstar segments after the locale placeholder", () => {
-    mockGlobSync([
-      "src/i18n/en/deep/messages.json",
-    ]);
+    mockGlobSync(["src/i18n/en/deep/messages.json"]);
 
-    const i18nConfig = makeI18nConfig([
-      "src/i18n/[locale]/**/messages.json",
-    ]);
+    const i18nConfig = makeI18nConfig(["src/i18n/[locale]/**/messages.json"]);
     const buckets = getBuckets(i18nConfig);
 
     expect(buckets).toEqual([
@@ -354,14 +344,9 @@ describe("getBuckets", () => {
   });
 
   it("supports globstar leading directly into the locale file name", () => {
-    mockGlobSync([
-      "src/en.json",
-      "src/translations/en.json",
-    ]);
+    mockGlobSync(["src/en.json", "src/translations/en.json"]);
 
-    const i18nConfig = makeI18nConfig([
-      "**/[locale].json",
-    ]);
+    const i18nConfig = makeI18nConfig(["**/[locale].json"]);
     const buckets = getBuckets(i18nConfig);
 
     expect(buckets).toEqual([
@@ -379,14 +364,9 @@ describe("getBuckets", () => {
   });
 
   it("supports trailing globstar before the file extension", () => {
-    mockGlobSync([
-      "src/files/en/report.json",
-      "src/files/en/app.json",
-    ]);
+    mockGlobSync(["src/files/en/report.json", "src/files/en/app.json"]);
 
-    const i18nConfig = makeI18nConfig([
-      "src/files/[locale]/**.json",
-    ]);
+    const i18nConfig = makeI18nConfig(["src/files/[locale]/**.json"]);
     const buckets = getBuckets(i18nConfig);
 
     expect(buckets).toEqual([
@@ -407,14 +387,9 @@ describe("getBuckets", () => {
   });
 
   it("handles consecutive globstars before the locale segment", () => {
-    mockGlobSync([
-      "src/a/b/en/messages.json",
-      "src/en/messages.json",
-    ]);
+    mockGlobSync(["src/a/b/en/messages.json", "src/en/messages.json"]);
 
-    const i18nConfig = makeI18nConfig([
-      "src/**/**/[locale]/messages.json",
-    ]);
+    const i18nConfig = makeI18nConfig(["src/**/**/[locale]/messages.json"]);
     const buckets = getBuckets(i18nConfig);
 
     expect(buckets).toEqual([
@@ -435,12 +410,8 @@ describe("getBuckets", () => {
   });
 
   it("deduplicates overlapping include patterns", () => {
-    mockGlobSync([
-      "src/i18n/en.json",
-    ]);
-    mockGlobSync([
-      "src/i18n/en.json",
-    ]);
+    mockGlobSync(["src/i18n/en.json"]);
+    mockGlobSync(["src/i18n/en.json"]);
 
     const i18nConfig = makeI18nConfig([
       "src/i18n/**/[locale].json",
@@ -451,20 +422,14 @@ describe("getBuckets", () => {
     expect(buckets).toEqual([
       {
         type: "json",
-        paths: [
-          { pathPattern: "src/i18n/[locale].json", delimiter: null },
-        ],
+        paths: [{ pathPattern: "src/i18n/[locale].json", delimiter: null }],
       },
     ]);
   });
 
   it("keeps distinct entries for matching paths with different delimiters", () => {
-    mockGlobSync([
-      "src/i18n/en.json",
-    ]);
-    mockGlobSync([
-      "src/i18n/en.json",
-    ]);
+    mockGlobSync(["src/i18n/en.json"]);
+    mockGlobSync(["src/i18n/en.json"]);
 
     const i18nConfig = makeI18nConfig([
       { path: "src/i18n/[locale].json", delimiter: "-" },
@@ -484,13 +449,9 @@ describe("getBuckets", () => {
   });
 
   it("restores placeholder when locale appears multiple times in a segment", () => {
-    mockGlobSync([
-      "src/files/en-en.json",
-    ]);
+    mockGlobSync(["src/files/en-en.json"]);
 
-    const i18nConfig = makeI18nConfig([
-      "src/files/[locale]-[locale].json",
-    ]);
+    const i18nConfig = makeI18nConfig(["src/files/[locale]-[locale].json"]);
     const buckets = getBuckets(i18nConfig);
 
     expect(buckets).toEqual([

@@ -71,8 +71,10 @@ function extractPathPatterns(
       delimiter: pattern.delimiter,
     })),
   );
-  const getUniqKey = (item: { pathPattern: string; delimiter?: LocaleDelimiter }) =>
-    `${item.pathPattern}::${item.delimiter ?? ""}`;
+  const getUniqKey = (item: {
+    pathPattern: string;
+    delimiter?: LocaleDelimiter;
+  }) => `${item.pathPattern}::${item.delimiter ?? ""}`;
   const uniqueIncludedPatterns = _.uniqBy(includedPatterns, getUniqKey);
   const excludedPatterns = exclude?.flatMap((pattern) =>
     expandPlaceholderedGlob(
@@ -132,7 +134,10 @@ function expandPlaceholderedGlob(
   const normalizedLocale =
     process.platform === "win32" ? sourceLocale.toLowerCase() : sourceLocale;
   // substitute [locale] in pathPattern with normalized locale
-  const sourcePathPattern = pathPattern.replaceAll(/\[locale\]/g, normalizedLocale);
+  const sourcePathPattern = pathPattern.replaceAll(
+    /\[locale\]/g,
+    normalizedLocale,
+  );
   // Convert to Unix-style for Windows compatibility
   const unixStylePattern = sourcePathPattern.replace(/\\/g, "/");
 
