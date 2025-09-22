@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import { getBuckets } from "./buckets";
 import { glob, Path } from "glob";
 
@@ -9,6 +9,10 @@ vi.mock("glob", () => ({
 }));
 
 describe("getBuckets", () => {
+  beforeEach(() => {
+    vi.mocked(glob.sync).mockReset();
+  });
+
   const makeI18nConfig = (include: any[]) => ({
     $schema: "https://lingo.dev/schema/i18n.json",
     version: 0,
@@ -380,6 +384,83 @@ describe("getBuckets", () => {
         ],
       },
     ]);
+  });
+
+  it("deduplicates overlapping include patterns", () => {
+    mockGlobSync([
+      "src/i18n/en.json",
+    ]);
+    mockGlobSync([
+      "src/i18n/en.json",
+    ]);
+
+    const i18nConfig = makeI18nConfig([
+      "src/i18n/**/[locale].json",
+      "src/i18n/[locale].json",
+    ]);
+    const buckets = getBuckets(i18nConfig);
+
+    expect(buckets).toEqual([
+      {
+        type: "json",
+        paths: [
+          { pathPattern: "src/i18n/[locale].json", delimiter: null },
+        ],
+      },
+    ]);
+  });
+
+  it("keeps distinct entries for matching paths with different delimiters", () => {
+    mockGlobSync([
+      "src/i18n/en.json",
+    ]);
+    mockGlobSync([
+      "src/i18n/en.json",
+    ]);
+
+    const i18nConfig = makeI18nConfig([
+      { path: "src/i18n/[locale].json", delimiter: "-" },
+      { path: "src/i18n/[locale].json", delimiter: "_" },
+    ]);
+    const buckets = getBuckets(i18nConfig);
+
+    expect(buckets).toEqual([
+      {
+        type: "json",
+        paths: [
+          { pathPattern: "src/i18n/[locale].json", delimiter: "-" },
+          { pathPattern: "src/i18n/[locale].json", delimiter: "_" },
+        ],
+      },
+    ]);
+  });
+
+  it("restores placeholder when locale appears multiple times in a segment", () => {
+    mockGlobSync([
+      "src/files/en-en.json",
+    ]);
+
+    const i18nConfig = makeI18nConfig([
+      "src/files/[locale]-[locale].json",
+    ]);
+    const buckets = getBuckets(i18nConfig);
+
+    expect(buckets).toEqual([
+      {
+        type: "json",
+        paths: [
+          { pathPattern: "src/files/[locale]-[locale].json", delimiter: null },
+        ],
+      },
+    ]);
+  });
+
+  it("throws when pattern resolves outside of the current working directory", () => {
+    const i18nConfig = makeI18nConfig(["../outside/[locale].json"]);
+
+    expect(() => getBuckets(i18nConfig)).toThrowError(
+      /Invalid path pattern: \.{2}\//,
+    );
   });
 });
 
