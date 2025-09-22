@@ -71,6 +71,9 @@ function extractPathPatterns(
       delimiter: pattern.delimiter,
     })),
   );
+  const getUniqKey = (item: { pathPattern: string; delimiter?: LocaleDelimiter }) =>
+    `${item.pathPattern}::${item.delimiter ?? ""}`;
+  const uniqueIncludedPatterns = _.uniqBy(includedPatterns, getUniqKey);
   const excludedPatterns = exclude?.flatMap((pattern) =>
     expandPlaceholderedGlob(
       pattern.path,
@@ -80,9 +83,12 @@ function extractPathPatterns(
       delimiter: pattern.delimiter,
     })),
   );
+  const uniqueExcludedPatterns = excludedPatterns
+    ? _.uniqBy(excludedPatterns, getUniqKey)
+    : [];
   const result = _.differenceBy(
-    includedPatterns,
-    excludedPatterns ?? [],
+    uniqueIncludedPatterns,
+    uniqueExcludedPatterns,
     (item) => item.pathPattern,
   );
   return result;
