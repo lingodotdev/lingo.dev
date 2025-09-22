@@ -466,9 +466,7 @@ describe("getBuckets", () => {
     expect(buckets).toEqual([
       {
         type: "json",
-        paths: [
-          { pathPattern: "src/i18n/[locale].json", delimiter: "_" },
-        ],
+        paths: [{ pathPattern: "src/i18n/[locale].json", delimiter: "_" }],
       },
     ]);
   });
