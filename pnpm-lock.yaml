@@ -404,9 +404,6 @@ importers:
       '@types/ejs':
         specifier: ^3.1.5
         version: 3.1.5
-      '@types/picomatch':
-        specifier: ^4.0.2
-        version: 4.0.2
       ai:
         specifier: ^4.3.15
         version: 4.3.15(react@18.3.1)(zod@3.25.76)
@@ -551,9 +548,6 @@ importers:
       php-array-reader:
         specifier: ^2.1.2
         version: 2.1.2
-      picomatch:
-        specifier: ^4.0.3
-        version: 4.0.3
       plist:
         specifier: ^3.1.0
         version: 3.1.0
@@ -4303,9 +4297,6 @@ packages:
 
   '@types/parse-json@4.0.2':
     resolution: {integrity: sha512-dISoDXWWQwUquiKsyZ4Ng+HX2KsPL7LyHKHQwgGFEA3IaKac4Obd+h2a/a6waisAoepJlBcx9paWqjA8/HVjCw==}
-
-  '@types/picomatch@4.0.2':
-    resolution: {integrity: sha512-qHHxQ+P9PysNEGbALT8f8YOSHW0KJu6l2xU8DYY0fu/EmGxXdVnuTLvFUvBgPJMSqXq29SYHveejeAha+4AYgA==}
 
   '@types/plist@3.0.5':
     resolution: {integrity: sha512-E6OCaRmAe4WDmWNsL/9RMqdkkzDCY1etutkflWk4c+AcjDU07Pcz1fQwTX0TQz+Pxqn9i4L1TU3UFpjnrcDgxA==}
@@ -14269,8 +14260,6 @@ snapshots:
   '@types/object-hash@3.0.6': {}
 
   '@types/parse-json@4.0.2': {}
-
-  '@types/picomatch@4.0.2': {}
 
   '@types/plist@3.0.5':
     dependencies:
