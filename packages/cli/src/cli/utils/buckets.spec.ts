@@ -448,6 +448,31 @@ describe("getBuckets", () => {
     ]);
   });
 
+  it("excludes entries matching both path pattern and delimiter", () => {
+    mockGlobSync(["src/i18n/en.json"]);
+    mockGlobSync(["src/i18n/en.json"]);
+    mockGlobSync(["src/i18n/en.json"]);
+
+    const i18nConfig = makeI18nConfig([
+      { path: "src/i18n/[locale].json", delimiter: "-" },
+      { path: "src/i18n/[locale].json", delimiter: "_" },
+    ]);
+    i18nConfig.buckets.json.exclude = [
+      { path: "src/i18n/[locale].json", delimiter: "-" },
+    ];
+
+    const buckets = getBuckets(i18nConfig);
+
+    expect(buckets).toEqual([
+      {
+        type: "json",
+        paths: [
+          { pathPattern: "src/i18n/[locale].json", delimiter: "_" },
+        ],
+      },
+    ]);
+  });
+
   it("restores placeholder when locale appears multiple times in a segment", () => {
     mockGlobSync(["src/files/en-en.json"]);
 

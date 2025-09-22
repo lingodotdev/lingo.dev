@@ -91,7 +91,7 @@ function extractPathPatterns(
   const result = _.differenceBy(
     uniqueIncludedPatterns,
     uniqueExcludedPatterns,
-    (item) => item.pathPattern,
+    getUniqKey,
   );
   return result;
 }
