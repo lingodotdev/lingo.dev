@@ -330,6 +330,54 @@ describe("getBuckets", () => {
     ]);
   });
 
+  it("supports globstar segments after the locale placeholder", () => {
+    mockGlobSync([
+      "src/i18n/en/deep/messages.json",
+    ]);
+
+    const i18nConfig = makeI18nConfig([
+      "src/i18n/[locale]/**/messages.json",
+    ]);
+    const buckets = getBuckets(i18nConfig);
+
+    expect(buckets).toEqual([
+      {
+        type: "json",
+        paths: [
+          {
+            pathPattern: "src/i18n/[locale]/deep/messages.json",
+            delimiter: null,
+          },
+        ],
+      },
+    ]);
+  });
+
+  it("supports globstar leading directly into the locale file name", () => {
+    mockGlobSync([
+      "src/en.json",
+      "src/translations/en.json",
+    ]);
+
+    const i18nConfig = makeI18nConfig([
+      "**/[locale].json",
+    ]);
+    const buckets = getBuckets(i18nConfig);
+
+    expect(buckets).toEqual([
+      {
+        type: "json",
+        paths: [
+          { pathPattern: "src/[locale].json", delimiter: null },
+          {
+            pathPattern: "src/translations/[locale].json",
+            delimiter: null,
+          },
+        ],
+      },
+    ]);
+  });
+
   it("supports trailing globstar before the file extension", () => {
     mockGlobSync([
       "src/files/en/report.json",
