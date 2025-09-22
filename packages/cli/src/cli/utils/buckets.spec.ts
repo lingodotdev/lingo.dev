@@ -167,6 +167,220 @@ describe("getBuckets", () => {
       },
     ]);
   });
+
+  it("restores locale placeholder when using recursive globstar patterns", () => {
+    mockGlobSync([
+      "src/modules/core/auth/en/strings/messages.json",
+      "src/modules/marketing/en/strings/dashboard.json",
+    ]);
+
+    const i18nConfig = makeI18nConfig([
+      "src/modules/**/[locale]/strings/*.json",
+    ]);
+    const buckets = getBuckets(i18nConfig);
+
+    expect(buckets).toEqual([
+      {
+        type: "json",
+        paths: [
+          {
+            pathPattern: "src/modules/core/auth/[locale]/strings/messages.json",
+            delimiter: null,
+          },
+          {
+            pathPattern: "src/modules/marketing/[locale]/strings/dashboard.json",
+            delimiter: null,
+          },
+        ],
+      },
+    ]);
+  });
+
+  it("restores placeholder when extglob wraps the locale segment", () => {
+    mockGlobSync([
+      "src/modules/core-en.json",
+      "src/modules/marketing-en.json",
+    ]);
+
+    const i18nConfig = makeI18nConfig([
+      "src/modules/@(core|marketing)-[locale].json",
+    ]);
+    const buckets = getBuckets(i18nConfig);
+
+    expect(buckets).toEqual([
+      {
+        type: "json",
+        paths: [
+          { pathPattern: "src/modules/core-[locale].json", delimiter: null },
+          {
+            pathPattern: "src/modules/marketing-[locale].json",
+            delimiter: null,
+          },
+        ],
+      },
+    ]);
+  });
+
+  it("restores placeholder when brace expansion surrounds locale segment", () => {
+    mockGlobSync([
+      "src/modules/core/en/strings/messages.json",
+      "src/modules/marketing/en/strings/dashboard.json",
+    ]);
+
+    const i18nConfig = makeI18nConfig([
+      "src/modules/{core,marketing}/[locale]/strings/*.json",
+    ]);
+    const buckets = getBuckets(i18nConfig);
+
+    expect(buckets).toEqual([
+      {
+        type: "json",
+        paths: [
+          {
+            pathPattern: "src/modules/core/[locale]/strings/messages.json",
+            delimiter: null,
+          },
+          {
+            pathPattern: "src/modules/marketing/[locale]/strings/dashboard.json",
+            delimiter: null,
+          },
+        ],
+      },
+    ]);
+  });
+
+  it("preserves glob character classes around locale placeholder", () => {
+    mockGlobSync(["src/files/id-en.json"]);
+
+    const i18nConfig = makeI18nConfig([
+      "src/files/??-[locale].json",
+    ]);
+    const buckets = getBuckets(i18nConfig);
+
+    expect(buckets).toEqual([
+      {
+        type: "json",
+        paths: [
+          {
+            pathPattern: "src/files/id-[locale].json",
+            delimiter: null,
+          },
+        ],
+      },
+    ]);
+  });
+
+  it("supports globstar at the beginning of the pattern", () => {
+    mockGlobSync([
+      "src/modules/core/en/messages.json",
+      "src/modules/marketing/en/dashboard.json",
+    ]);
+
+    const i18nConfig = makeI18nConfig(["**/[locale]/*.json"]);
+    const buckets = getBuckets(i18nConfig);
+
+    expect(buckets).toEqual([
+      {
+        type: "json",
+        paths: [
+          {
+            pathPattern: "src/modules/core/[locale]/messages.json",
+            delimiter: null,
+          },
+          {
+            pathPattern: "src/modules/marketing/[locale]/dashboard.json",
+            delimiter: null,
+          },
+        ],
+      },
+    ]);
+  });
+
+  it("supports multiple globstars surrounding the locale segment", () => {
+    mockGlobSync([
+      "src/modules/core/services/en/api/messages.json",
+      "src/modules/marketing/en/email/templates/messages.json",
+    ]);
+
+    const i18nConfig = makeI18nConfig([
+      "src/**/[locale]/**/messages.json",
+    ]);
+    const buckets = getBuckets(i18nConfig);
+
+    expect(buckets).toEqual([
+      {
+        type: "json",
+        paths: [
+          {
+            pathPattern:
+              "src/modules/core/services/[locale]/api/messages.json",
+            delimiter: null,
+          },
+          {
+            pathPattern:
+              "src/modules/marketing/[locale]/email/templates/messages.json",
+            delimiter: null,
+          },
+        ],
+      },
+    ]);
+  });
+
+  it("supports trailing globstar before the file extension", () => {
+    mockGlobSync([
+      "src/files/en/report.json",
+      "src/files/en/app.json",
+    ]);
+
+    const i18nConfig = makeI18nConfig([
+      "src/files/[locale]/**.json",
+    ]);
+    const buckets = getBuckets(i18nConfig);
+
+    expect(buckets).toEqual([
+      {
+        type: "json",
+        paths: [
+          {
+            pathPattern: "src/files/[locale]/report.json",
+            delimiter: null,
+          },
+          {
+            pathPattern: "src/files/[locale]/app.json",
+            delimiter: null,
+          },
+        ],
+      },
+    ]);
+  });
+
+  it("handles consecutive globstars before the locale segment", () => {
+    mockGlobSync([
+      "src/a/b/en/messages.json",
+      "src/en/messages.json",
+    ]);
+
+    const i18nConfig = makeI18nConfig([
+      "src/**/**/[locale]/messages.json",
+    ]);
+    const buckets = getBuckets(i18nConfig);
+
+    expect(buckets).toEqual([
+      {
+        type: "json",
+        paths: [
+          {
+            pathPattern: "src/a/b/[locale]/messages.json",
+            delimiter: null,
+          },
+          {
+            pathPattern: "src/[locale]/messages.json",
+            delimiter: null,
+          },
+        ],
+      },
+    ]);
+  });
 });
 
 function mockGlobSync(...args: string[][]) {
