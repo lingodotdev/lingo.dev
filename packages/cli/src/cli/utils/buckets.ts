@@ -1,7 +1,7 @@
 import _ from "lodash";
 import path from "path";
 import { glob } from "glob";
-import { makeRe } from "picomatch";
+import { minimatch } from "minimatch";
 import { CLIError } from "./errors";
 import {
   I18nConfig,
@@ -188,7 +188,7 @@ function mapPatternToSource(
   const isDoubleStar = (segment: string) => segment === "**";
   const segmentMatches = (patternSegment: string, sourceSegment: string) => {
     const concrete = patternSegment.replaceAll("[locale]", locale);
-    return makeRe(concrete, { dot: true }).test(sourceSegment);
+    return minimatch(sourceSegment, concrete, { dot: true });
   };
   const key = (i: number, j: number) => `${i}|${j}`;
   const dfs = (i: number, j: number): boolean => {
@@ -257,20 +257,16 @@ function buildLocalePlaceholderSegment(
 
   const leftGlob = patternChunk.slice(0, placeholderIndex);
   const rightGlob = patternChunk.slice(placeholderIndex + placeholder.length);
-  const leftRegexp = leftGlob
-    ? makeRe(leftGlob, { dot: true })
-    : null;
-  const rightRegexp = rightGlob
-    ? makeRe(rightGlob, { dot: true })
-    : null;
+  const leftMatches = (value: string) =>
+    leftGlob ? minimatch(value, leftGlob, { dot: true }) : value.length === 0;
+  const rightMatches = (value: string) =>
+    rightGlob ? minimatch(value, rightGlob, { dot: true }) : value.length === 0;
 
   let position = -1;
   while ((position = sourceChunk.indexOf(locale, position + 1)) !== -1) {
     const prefix = sourceChunk.slice(0, position);
     const suffix = sourceChunk.slice(position + locale.length);
-    const leftMatches = leftRegexp ? leftRegexp.test(prefix) : prefix.length === 0;
-    const rightMatches = rightRegexp ? rightRegexp.test(suffix) : suffix.length === 0;
-    if (leftMatches && rightMatches) {
+    if (leftMatches(prefix) && rightMatches(suffix)) {
       return `${prefix}${placeholder}${suffix}`;
     }
   }
