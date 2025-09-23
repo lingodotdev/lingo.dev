@@ -409,6 +409,25 @@ describe("getBuckets", () => {
     ]);
   });
 
+  it("restores placeholder for the deepest matching locale segment when duplicates exist", () => {
+    mockGlobSync(["src/en/module/en/messages.json"]);
+
+    const i18nConfig = makeI18nConfig(["src/**/[locale]/**/messages.json"]);
+    const buckets = getBuckets(i18nConfig);
+
+    expect(buckets).toEqual([
+      {
+        type: "json",
+        paths: [
+          {
+            pathPattern: "src/en/module/[locale]/messages.json",
+            delimiter: null,
+          },
+        ],
+      },
+    ]);
+  });
+
   it("deduplicates overlapping include patterns", () => {
     mockGlobSync(["src/i18n/en.json"]);
     mockGlobSync(["src/i18n/en.json"]);

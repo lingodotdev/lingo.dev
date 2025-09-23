@@ -194,65 +194,83 @@ function mapPatternToSource(
 ): { patToSrc: number[] } {
   const patternLength = pattern.length;
   const sourceLength = source.length;
-  const memo = new Map<string, boolean>();
-  const parent = new Map<string, { i2: number; j2: number }>();
   const isDoubleStar = (segment: string) => segment === "**";
   const segmentMatches = (patternSegment: string, sourceSegment: string) => {
     const concrete = patternSegment.replaceAll("[locale]", locale);
     return minimatch(sourceSegment, concrete, { dot: true });
   };
+
+  const placeholderIndexes = pattern.reduce<number[]>((acc, segment, index) => {
+    if (segment.includes("[locale]")) {
+      acc.push(index);
+    }
+    return acc;
+  }, []);
+
+  const compareMappings = (a: number[], b: number[]) => {
+    for (const idx of placeholderIndexes) {
+      const diff = (a[idx] ?? -1) - (b[idx] ?? -1);
+      if (diff !== 0) {
+        return diff;
+      }
+    }
+    for (let idx = 0; idx < patternLength; idx += 1) {
+      const diff = (a[idx] ?? -1) - (b[idx] ?? -1);
+      if (diff !== 0) {
+        return diff;
+      }
+    }
+    return 0;
+  };
+
+  const memo = new Map<string, number[] | null>();
   const key = (i: number, j: number) => `${i}|${j}`;
-  const dfs = (i: number, j: number): boolean => {
+
+  const dfs = (i: number, j: number): number[] | null => {
     const memoKey = key(i, j);
     if (memo.has(memoKey)) {
       return memo.get(memoKey)!;
     }
     if (i === patternLength) {
-      const done = j === sourceLength;
-      memo.set(memoKey, done);
-      return done;
+      const result = j === sourceLength ? Array(patternLength).fill(-1) : null;
+      memo.set(memoKey, result);
+      return result;
     }
-    let matched = false;
+
+    let best: number[] | null = null;
+
     if (isDoubleStar(pattern[i])) {
       for (let k = j; k <= sourceLength; k += 1) {
-        if (dfs(i + 1, k)) {
-          parent.set(memoKey, { i2: i + 1, j2: k });
-          matched = true;
-          break;
+        const candidate = dfs(i + 1, k);
+        if (!candidate) {
+          continue;
+        }
+        const candidateMapping = candidate.slice();
+        if (!best || compareMappings(candidateMapping, best) > 0) {
+          best = candidateMapping;
         }
       }
     } else if (j < sourceLength && segmentMatches(pattern[i], source[j])) {
-      if (dfs(i + 1, j + 1)) {
-        parent.set(memoKey, { i2: i + 1, j2: j + 1 });
-        matched = true;
+      const candidate = dfs(i + 1, j + 1);
+      if (candidate) {
+        const mapping = candidate.slice();
+        mapping[i] = j;
+        best = mapping;
       }
     }
-    memo.set(memoKey, matched);
-    return matched;
+
+    memo.set(memoKey, best);
+    return best;
   };
 
-  if (!dfs(0, 0)) {
+  const mapping = dfs(0, 0);
+  if (!mapping) {
     return {
       patToSrc: pattern.map((_, index) => (index < source.length ? index : -1)),
     };
   }
 
-  const patToSrc = Array(patternLength).fill(-1) as number[];
-  let i = 0;
-  let j = 0;
-  while (i < patternLength) {
-    const step = parent.get(key(i, j));
-    if (!step) {
-      break;
-    }
-    if (!isDoubleStar(pattern[i])) {
-      patToSrc[i] = j;
-    }
-    i = step.i2;
-    j = step.j2;
-  }
-
-  return { patToSrc };
+  return { patToSrc: mapping };
 }
 
 function buildLocalePlaceholderSegment(
