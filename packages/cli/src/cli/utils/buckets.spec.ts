@@ -409,7 +409,7 @@ describe("getBuckets", () => {
     ]);
   });
 
-  it("restores placeholder for the deepest matching locale segment when duplicates exist", () => {
+  it("prioritizes the earliest matching locale segment when duplicates exist", () => {
     mockGlobSync(["src/en/module/en/messages.json"]);
 
     const i18nConfig = makeI18nConfig(["src/**/[locale]/**/messages.json"]);
@@ -420,7 +420,7 @@ describe("getBuckets", () => {
         type: "json",
         paths: [
           {
-            pathPattern: "src/en/module/[locale]/messages.json",
+            pathPattern: "src/[locale]/module/en/messages.json",
             delimiter: null,
           },
         ],
@@ -512,6 +512,110 @@ describe("getBuckets", () => {
     expect(() => getBuckets(i18nConfig)).toThrowError(
       /Invalid path pattern: \.{2}\//,
     );
+  });
+
+  describe("placeholder restoration matrix", () => {
+    const cases: Array<{
+      name: string;
+      include: any[];
+      globResults: string[][];
+    }> = [
+      {
+        name: "basic segment placeholder",
+        include: ["src/[locale]/messages.json"],
+        globResults: [["src/en/messages.json"]],
+      },
+      {
+        name: "placeholder inside file extension",
+        include: ["src/messages.[locale].json"],
+        globResults: [["src/messages.en.json"]],
+      },
+      {
+        name: "placeholder with prefix and suffix in same segment",
+        include: ["src/files/pre[locale]post.json"],
+        globResults: [["src/files/preenpost.json"]],
+      },
+      {
+        name: "duplicated placeholder within a single segment",
+        include: ["src/files/[locale]-[locale].json"],
+        globResults: [["src/files/en-en.json"]],
+      },
+      {
+        name: "multiple placeholder segments",
+        include: ["src/[locale]/module/[locale]/messages.json"],
+        globResults: [["src/en/module/en/messages.json"]],
+      },
+      {
+        name: "static locale directory before placeholder",
+        include: ["src/en/module/[locale]/messages.json"],
+        globResults: [["src/en/module/en/messages.json"]],
+      },
+      {
+        name: "static locale directory after placeholder",
+        include: ["src/[locale]/module/en/messages.json"],
+        globResults: [["src/en/module/en/messages.json"]],
+      },
+      {
+        name: "globstar before placeholder with extra segments",
+        include: ["src/**/[locale]/messages.json"],
+        globResults: [["src/features/en/messages.json"]],
+      },
+      {
+        name: "globstar before placeholder with zero extra segments",
+        include: ["src/**/[locale]/messages.json"],
+        globResults: [["src/en/messages.json"]],
+      },
+      {
+        name: "globstar after placeholder",
+        include: ["src/i18n/[locale]/**/messages.json"],
+        globResults: [["src/i18n/en/deep/messages.json"]],
+      },
+      {
+        name: "globstar surrounding placeholder with duplicate locale segment",
+        include: ["src/**/[locale]/**/messages.json"],
+        globResults: [["src/en/module/en/messages.json"]],
+      },
+      {
+        name: "multiple placeholders separated by globstars",
+        include: ["src/**/[locale]/**/[locale].json"],
+        globResults: [["src/en/foo/en/en.json"]],
+      },
+      {
+        name: "extglob wrapping locale placeholder",
+        include: ["src/modules/@(core|marketing)-[locale].json"],
+        globResults: [["src/modules/core-en.json"]],
+      },
+      {
+        name: "brace expansion containing locale segment",
+        include: ["src/modules/{core,marketing}/[locale]/strings/*.json"],
+        globResults: [["src/modules/core/en/strings/messages.json"]],
+      },
+      {
+        name: "character class adjacent to locale placeholder",
+        include: ["src/files/??-[locale].json"],
+        globResults: [["src/files/id-en.json"]],
+      },
+      {
+        name: "placeholder between single-segment wildcards",
+        include: ["src/*/[locale]/file.json"],
+        globResults: [["src/app/en/file.json"]],
+      },
+      {
+        name: "deep translations path with static locale duplication",
+        include: ["src/**/[locale]/**/translations/[locale].json"],
+        globResults: [["src/en/module/en/translations/en.json"]],
+      },
+    ];
+
+    cases.forEach(({ name, include, globResults }) => {
+      it(name, () => {
+        mockGlobSync(...globResults);
+        const i18nConfig = makeI18nConfig(include);
+        const buckets = getBuckets(i18nConfig);
+
+        expect(buckets).toMatchSnapshot();
+      });
+    });
   });
 });
 

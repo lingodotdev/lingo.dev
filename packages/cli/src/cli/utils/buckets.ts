@@ -207,55 +207,155 @@ function mapPatternToSource(
     return acc;
   }, []);
 
-  const compareMappings = (a: number[], b: number[]) => {
-    for (const idx of placeholderIndexes) {
-      const diff = (a[idx] ?? -1) - (b[idx] ?? -1);
-      if (diff !== 0) {
-        return diff;
-      }
-    }
-    for (let idx = 0; idx < patternLength; idx += 1) {
-      const diff = (a[idx] ?? -1) - (b[idx] ?? -1);
-      if (diff !== 0) {
-        return diff;
-      }
-    }
-    return 0;
+  type MappingResult = {
+    mapping: number[];
+    score: {
+      matchedPlaceholders: number;
+      placeholderSum: number;
+      placeholderValues: number[];
+      mappedCount: number;
+      totalSum: number;
+      mappingValues: number[];
+    };
   };
 
-  const memo = new Map<string, number[] | null>();
+  const placeholderPenalty = patternLength + sourceLength;
+
+  const evaluateMapping = (mapping: number[]): MappingResult["score"] => {
+    const mappingValues = mapping.map((value) =>
+      typeof value === "number" ? value : -1,
+    );
+    const placeholderValues = placeholderIndexes.map((idx) => mappingValues[idx]);
+
+    let matchedPlaceholders = 0;
+    let placeholderSum = 0;
+    placeholderValues.forEach((value) => {
+      if (value >= 0) {
+        matchedPlaceholders += 1;
+        placeholderSum += value;
+      } else {
+        placeholderSum += placeholderPenalty;
+      }
+    });
+
+    let mappedCount = 0;
+    let totalSum = 0;
+    mappingValues.forEach((value) => {
+      if (value >= 0) {
+        mappedCount += 1;
+        totalSum += value;
+      } else {
+        totalSum += placeholderPenalty;
+      }
+    });
+
+    return {
+      matchedPlaceholders,
+      placeholderSum,
+      placeholderValues,
+      mappedCount,
+      totalSum,
+      mappingValues,
+    };
+  };
+
+  const isBetterMapping = (
+    candidate: MappingResult | null,
+    current: MappingResult | null,
+  ) => {
+    if (!candidate) {
+      return false;
+    }
+    if (!current) {
+      return true;
+    }
+
+    if (
+      candidate.score.matchedPlaceholders !== current.score.matchedPlaceholders
+    ) {
+      return (
+        candidate.score.matchedPlaceholders > current.score.matchedPlaceholders
+      );
+    }
+
+    if (candidate.score.placeholderSum !== current.score.placeholderSum) {
+      return candidate.score.placeholderSum < current.score.placeholderSum;
+    }
+
+    for (let idx = 0; idx < candidate.score.placeholderValues.length; idx += 1) {
+      const aVal = candidate.score.placeholderValues[idx];
+      const bVal = current.score.placeholderValues[idx];
+      if (aVal !== bVal) {
+        if (aVal < 0) {
+          return false;
+        }
+        if (bVal < 0) {
+          return true;
+        }
+        return aVal < bVal;
+      }
+    }
+
+    if (candidate.score.mappedCount !== current.score.mappedCount) {
+      return candidate.score.mappedCount > current.score.mappedCount;
+    }
+
+    if (candidate.score.totalSum !== current.score.totalSum) {
+      return candidate.score.totalSum < current.score.totalSum;
+    }
+
+    for (let idx = 0; idx < patternLength; idx += 1) {
+      const aVal = candidate.score.mappingValues[idx];
+      const bVal = current.score.mappingValues[idx];
+      if (aVal !== bVal) {
+        if (aVal < 0) {
+          return false;
+        }
+        if (bVal < 0) {
+          return true;
+        }
+        return aVal < bVal;
+      }
+    }
+
+    return false;
+  };
+
+  const memo = new Map<string, MappingResult | null>();
   const key = (i: number, j: number) => `${i}|${j}`;
 
-  const dfs = (i: number, j: number): number[] | null => {
+  const dfs = (i: number, j: number): MappingResult | null => {
     const memoKey = key(i, j);
     if (memo.has(memoKey)) {
       return memo.get(memoKey)!;
     }
     if (i === patternLength) {
-      const result = j === sourceLength ? Array(patternLength).fill(-1) : null;
+      const mapping = j === sourceLength ? Array(patternLength).fill(-1) : null;
+      const result = mapping
+        ? { mapping, score: evaluateMapping(mapping) }
+        : null;
       memo.set(memoKey, result);
       return result;
     }
 
-    let best: number[] | null = null;
+    let best: MappingResult | null = null;
 
     if (isDoubleStar(pattern[i])) {
       for (let k = j; k <= sourceLength; k += 1) {
         const candidate = dfs(i + 1, k);
-        if (!candidate) {
-          continue;
-        }
-        const candidateMapping = candidate.slice();
-        if (!best || compareMappings(candidateMapping, best) > 0) {
-          best = candidateMapping;
+        if (isBetterMapping(candidate, best)) {
+          best = candidate;
         }
       }
     } else if (j < sourceLength && segmentMatches(pattern[i], source[j])) {
       const candidate = dfs(i + 1, j + 1);
       if (candidate) {
-        const mapping = candidate.slice();
+        const mapping = candidate.mapping.slice();
         mapping[i] = j;
-        best = mapping;
+        const result = { mapping, score: evaluateMapping(mapping) };
+        if (isBetterMapping(result, best)) {
+          best = result;
+        }
       }
     }
 
@@ -270,7 +370,7 @@ function mapPatternToSource(
     };
   }
 
-  return { patToSrc: mapping };
+  return { patToSrc: mapping.mapping };
 }
 
 function buildLocalePlaceholderSegment(
