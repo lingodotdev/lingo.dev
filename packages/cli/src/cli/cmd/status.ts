@@ -36,26 +36,29 @@ export default new Command()
   .helpOption("-h, --help", "Show help")
   .option(
     "--locale <locale>",
-    "Locale to process",
+    "Limit the report to specific target locales from i18n.json. Repeat the flag to include multiple locales. Defaults to all configured target locales",
     (val: string, prev: string[]) => (prev ? [...prev, val] : [val]),
   )
   .option(
     "--bucket <bucket>",
-    "Bucket to process",
+    "Limit the report to specific bucket types defined in i18n.json (e.g., json, yaml, android). Repeat the flag to include multiple bucket types. Defaults to all buckets",
     (val: string, prev: string[]) => (prev ? [...prev, val] : [val]),
   )
   .option(
     "--file [files...]",
-    "File to process. Process only files that include this string in their path. Useful if you have a lot of files and want to focus on a specific one. Specify more files separated by commas or spaces.",
+    "Filter the status report to only include files whose paths contain these substrings. Example: 'components' to match any file path containing 'components'",
   )
   .option(
     "--force",
-    "Ignore lockfile and process all keys, useful for estimating full re-translation",
+    "Force all keys to be counted as needing translation, bypassing change detection. Shows word estimates for a complete retranslation regardless of current translation status",
   )
-  .option("--verbose", "Show detailed output including key-level word counts")
+  .option(
+    "--verbose",
+    "Print detailed output showing missing and updated key counts with example key names for each file and locale",
+  )
   .option(
     "--api-key <api-key>",
-    "Explicitly set the API key to use, override the default API key from settings",
+    "Override the API key from settings or environment variables for this run",
   )
   .action(async function (options) {
     const ora = Ora();

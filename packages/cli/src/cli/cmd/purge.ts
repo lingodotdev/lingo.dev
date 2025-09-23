@@ -19,30 +19,30 @@ interface PurgeOptions {
 export default new Command()
   .command("purge")
   .description(
-    "Remove translations for given --bucket, --file, --key, --locale",
+    "WARNING: Permanently delete translation entries from bucket path patterns defined in i18n.json. This is a destructive operation that cannot be undone. Without any filters, ALL managed keys will be removed from EVERY target locale.",
   )
   .helpOption("-h, --help", "Show help")
   .option(
     "--bucket <bucket>",
-    "Bucket to process",
+    "Limit the purge to specific bucket types defined under `buckets` in i18n.json. Repeat the flag to include multiple bucket types. Defaults to all buckets",
     (val: string, prev: string[]) => (prev ? [...prev, val] : [val]),
   )
   .option(
     "--file [files...]",
-    "File(s) to process. Only process files that match the given glob pattern(s).",
+    "Filter which file paths to purge by matching against path patterns. Only paths containing any of these values will be processed. Examples: --file messages.json --file admin/",
   )
   .option(
     "--key <key>",
-    "Key to remove. Remove all translation keys matching the given glob pattern.",
+    "Filter which keys to delete using prefix matching on dot-separated key paths. Example: 'auth.login' matches all keys starting with auth.login. Omit this option to delete ALL keys. Keys marked as locked or ignored in i18n.json are automatically skipped",
   )
   .option(
     "--locale <locale>",
-    "Locale to process",
+    "Limit purging to specific target locale codes from i18n.json. Repeat the flag to include multiple locales. Defaults to all configured target locales. Warning: Including the source locale will delete content from it as well.",
     (val: string, prev: string[]) => (prev ? [...prev, val] : [val]),
   )
   .option(
     "--yes-really",
-    "Skip interactive confirmation and delete without asking.",
+    "Bypass safety confirmations for destructive operations. Use with extreme caution - this will delete translation keys without asking for confirmation. Intended for automated scripts and CI environments only.",
   )
   .action(async function (options: PurgeOptions) {
     const ora = Ora();

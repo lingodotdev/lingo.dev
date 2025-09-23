@@ -6,7 +6,9 @@ import getCmd from "./get";
 
 export default new Command()
   .command("config")
-  .description("Manage Lingo.dev CLI configuration")
+  .description(
+    "Manage CLI settings (authentication, API keys) stored in ~/.lingodotdevrc",
+  )
   .helpOption("-h, --help", "Show help")
   .addCommand(setCmd)
   .addCommand(unsetCmd)

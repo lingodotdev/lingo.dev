@@ -10,10 +10,13 @@ import {
 
 export default new Command()
   .name("set")
-  .description("Set a configuration key to a value")
+  .description("Set or update a CLI setting in ~/.lingodotdevrc")
   .addHelpText("afterAll", `\nAvailable keys:\n  ${SETTINGS_KEYS.join("\n  ")}`)
-  .argument("<key>", "Configuration key to set")
-  .argument("<value>", "New value")
+  .argument(
+    "<key>",
+    "Configuration key to set (dot notation, e.g., auth.apiKey)",
+  )
+  .argument("<value>", "The configuration value to set")
   .helpOption("-h, --help", "Show help")
   .action(async (key: string, value: string) => {
     if (!SETTINGS_KEYS.includes(key)) {

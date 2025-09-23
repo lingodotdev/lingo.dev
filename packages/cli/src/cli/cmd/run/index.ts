@@ -59,61 +59,58 @@ function playSound(type: "success" | "failure") {
 
 export default new Command()
   .command("run")
-  .description("Run Lingo.dev localization engine")
+  .description("Run localization pipeline")
   .helpOption("-h, --help", "Show help")
   .option(
     "--source-locale <source-locale>",
-    "Locale to use as source locale. Defaults to i18n.json locale.source",
+    "Override the source locale from i18n.json for this run",
   )
   .option(
     "--target-locale <target-locale>",
-    "Locale to use as target locale. Defaults to i18n.json locale.targets",
+    "Limit processing to the listed target locale codes from i18n.json. Repeat the flag to include multiple locales. Defaults to all configured target locales",
     (val: string, prev: string[]) => (prev ? [...prev, val] : [val]),
   )
   .option(
     "--bucket <bucket>",
-    "Bucket to process",
+    "Limit processing to specific bucket types defined in i18n.json (e.g., json, yaml, android). Repeat the flag to include multiple bucket types. Defaults to all configured buckets",
     (val: string, prev: string[]) => (prev ? [...prev, val] : [val]),
   )
   .option(
     "--file <file>",
-    "File to process. Process only files that match this glob pattern in their path. Use quotes around patterns to prevent shell expansion (e.g., --file '**/*.json'). Useful if you have a lot of files and want to focus on a specific one. Specify more files separated by commas or spaces. Accepts glob patterns.",
+    "Filter bucket path pattern values by substring match. Examples: messages.json or locale/. Repeat to add multiple filters",
     (val: string, prev: string[]) => (prev ? [...prev, val] : [val]),
   )
   .option(
     "--key <key>",
-    "Key to process. Process only a specific translation key, useful for updating a single entry. Accepts glob patterns.",
+    "Filter keys by prefix matching on dot-separated paths. Example: auth.login to match all keys starting with auth.login. Repeat for multiple patterns",
     (val: string, prev: string[]) => (prev ? [...prev, val] : [val]),
   )
   .option(
     "--force",
-    "Ignore lockfile and process all keys, useful for full re-translation",
+    "Force re-translation of all keys, bypassing change detection. Useful when you want to regenerate translations with updated AI models or translation settings",
   )
   .option(
     "--api-key <api-key>",
-    "Explicitly set the API key to use, override the default API key from settings",
+    "Override API key from settings or environment variables",
   )
-  .option(
-    "--debug",
-    "Pause execution at start for debugging purposes, waits for user confirmation before proceeding",
-  )
+  .option("--debug", "Pause before processing to allow attaching a debugger.")
   .option(
     "--concurrency <concurrency>",
-    "Number of concurrent tasks to run",
+    "Number of translation jobs to run concurrently. Higher values can speed up large translation batches but may increase memory usage. Defaults to 10 (maximum 10)",
     (val: string) => parseInt(val),
   )
   .option(
     "--watch",
-    "Watch source files for changes and automatically retranslate",
+    "Watch source locale files continuously and retranslate automatically when files change",
   )
   .option(
     "--debounce <milliseconds>",
-    "Debounce delay in milliseconds for watch mode (default: 5000ms)",
+    "Delay in milliseconds after file changes before retranslating in watch mode. Defaults to 5000",
     (val: string) => parseInt(val),
   )
   .option(
     "--sound",
-    "Play sound on completion, partially completion and failed of the task",
+    "Play audio feedback when translations complete (success or failure sounds)",
   )
   .action(async (args) => {
     let authId: string | null = null;

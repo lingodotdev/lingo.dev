@@ -10,7 +10,7 @@ import {
 
 export default new Command()
   .command("logout")
-  .description("Log out from Lingo.dev API")
+  .description("Log out by removing saved authentication credentials")
   .helpOption("-h, --help", "Show help")
   .action(async () => {
     try {
