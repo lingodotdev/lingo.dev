@@ -12,6 +12,245 @@ import {
 import { bucketTypeSchema } from "@lingo.dev/_spec";
 import Z from "zod";
 
+export type TemplateSegmentPart =
+  | { kind: "literal"; value: string }
+  | { kind: "glob"; value: string }
+  | { kind: "placeholder"; name: string };
+
+export type TemplateSegment =
+  | { kind: "globstar"; original: "**" }
+  | {
+      kind: "segment";
+      original: string;
+      parts: TemplateSegmentPart[];
+      hasPlaceholder: boolean;
+      hasGlob: boolean;
+    };
+
+const LOCALE_PLACEHOLDER = "[locale]";
+const GLOB_CHARS_REGEX = /[\*\?\[\]\{\}\(\)!+@,]/;
+
+function isGlobPattern(value: string) {
+  return GLOB_CHARS_REGEX.test(value);
+}
+
+function flushBuffer(
+  parts: TemplateSegmentPart[],
+  buffer: string,
+): string {
+  if (!buffer) {
+    return "";
+  }
+  if (isGlobPattern(buffer)) {
+    parts.push({ kind: "glob", value: buffer });
+  } else {
+    parts.push({ kind: "literal", value: buffer });
+  }
+  return "";
+}
+
+export function parsePatternTemplate(pattern: string): TemplateSegment[] {
+  const normalized = pattern.replace(/\\/g, "/");
+  const rawSegments = normalized.split("/");
+
+  return rawSegments.map<TemplateSegment>((segment) => {
+    if (segment === "**") {
+      return { kind: "globstar", original: "**" };
+    }
+
+    const parts: TemplateSegmentPart[] = [];
+    let buffer = "";
+    let index = 0;
+    while (index < segment.length) {
+      if (segment.startsWith(LOCALE_PLACEHOLDER, index)) {
+        buffer = flushBuffer(parts, buffer);
+        parts.push({ kind: "placeholder", name: "locale" });
+        index += LOCALE_PLACEHOLDER.length;
+        continue;
+      }
+      buffer += segment[index];
+      index += 1;
+    }
+    flushBuffer(parts, buffer);
+
+    const hasPlaceholder = parts.some((part) => part.kind === "placeholder");
+    const hasGlob = parts.some((part) => part.kind === "glob");
+
+    return {
+      kind: "segment",
+      original: segment,
+      parts,
+      hasPlaceholder,
+      hasGlob,
+    };
+  });
+}
+
+function segmentToConcretePattern(
+  segment: Extract<TemplateSegment, { kind: "segment" }>,
+  locale: string,
+): string {
+  if (!segment.hasPlaceholder) {
+    return segment.original;
+  }
+  return segment.original.split(LOCALE_PLACEHOLDER).join(locale);
+}
+
+function segmentMatchesSource(
+  segment: Extract<TemplateSegment, { kind: "segment" }>,
+  source: string,
+  locale: string,
+): boolean {
+  if (!segment.hasPlaceholder && !segment.hasGlob) {
+    return source === segment.original;
+  }
+  const concrete = segmentToConcretePattern(segment, locale);
+  return minimatch(source, concrete, { dot: true });
+}
+
+function renderSegment(
+  segment: Extract<TemplateSegment, { kind: "segment" }>,
+  source: string,
+  locale: string,
+): string | null {
+  const memo = new Map<string, string | null>();
+
+  const dfs = (partIndex: number, position: number): string | null => {
+    const memoKey = `${partIndex}|${position}`;
+    if (memo.has(memoKey)) {
+      return memo.get(memoKey)!;
+    }
+    if (partIndex === segment.parts.length) {
+      const result = position === source.length ? "" : null;
+      memo.set(memoKey, result);
+      return result;
+    }
+
+    const part = segment.parts[partIndex];
+
+    if (part.kind === "literal") {
+      if (source.startsWith(part.value, position)) {
+        const rest = dfs(partIndex + 1, position + part.value.length);
+        if (rest !== null) {
+          const result = part.value + rest;
+          memo.set(memoKey, result);
+          return result;
+        }
+      }
+      memo.set(memoKey, null);
+      return null;
+    }
+
+    if (part.kind === "placeholder") {
+      if (source.startsWith(locale, position)) {
+        const rest = dfs(partIndex + 1, position + locale.length);
+        if (rest !== null) {
+          const result = `${LOCALE_PLACEHOLDER}${rest}`;
+          memo.set(memoKey, result);
+          return result;
+        }
+      }
+      memo.set(memoKey, null);
+      return null;
+    }
+
+    for (let length = 0; position + length <= source.length; length += 1) {
+      const fragment = source.slice(position, position + length);
+      if (!minimatch(fragment, part.value, { dot: true })) {
+        continue;
+      }
+      const rest = dfs(partIndex + 1, position + length);
+      if (rest !== null) {
+        const result = fragment + rest;
+        memo.set(memoKey, result);
+        return result;
+      }
+    }
+
+    memo.set(memoKey, null);
+    return null;
+  };
+
+  return dfs(0, 0);
+}
+
+function buildOutputSegment(
+  segment: Extract<TemplateSegment, { kind: "segment" }>,
+  source: string,
+  locale: string,
+): string {
+  if (segment.hasPlaceholder) {
+    return renderSegment(segment, source, locale) ?? segment.original;
+  }
+  if (segment.hasGlob) {
+    return source;
+  }
+  return segment.original;
+}
+
+function matchTemplateToSource(
+  template: TemplateSegment[],
+  sourceSegments: string[],
+  locale: string,
+): string[] | null {
+  const memo = new Map<string, string[] | null>();
+
+  const dfs = (templateIndex: number, sourceIndex: number): string[] | null => {
+    const memoKey = `${templateIndex}|${sourceIndex}`;
+    if (memo.has(memoKey)) {
+      return memo.get(memoKey)!;
+    }
+    if (templateIndex === template.length) {
+      const result = sourceIndex === sourceSegments.length ? [] : null;
+      memo.set(memoKey, result);
+      return result;
+    }
+
+    const segment = template[templateIndex];
+
+    if (segment.kind === "globstar") {
+      for (let consume = 0; consume <= sourceSegments.length - sourceIndex; consume += 1) {
+        const rest = dfs(templateIndex + 1, sourceIndex + consume);
+        if (rest) {
+          const consumed = sourceSegments.slice(sourceIndex, sourceIndex + consume);
+          const combined = [...consumed, ...rest];
+          memo.set(memoKey, combined);
+          return combined;
+        }
+      }
+      memo.set(memoKey, null);
+      return null;
+    }
+
+    if (sourceIndex >= sourceSegments.length) {
+      memo.set(memoKey, null);
+      return null;
+    }
+
+    if (!segmentMatchesSource(segment, sourceSegments[sourceIndex], locale)) {
+      memo.set(memoKey, null);
+      return null;
+    }
+
+    const rest = dfs(templateIndex + 1, sourceIndex + 1);
+    if (!rest) {
+      memo.set(memoKey, null);
+      return null;
+    }
+
+    const current = buildOutputSegment(
+      segment,
+      sourceSegments[sourceIndex],
+      locale,
+    );
+    const combined = [current, ...rest];
+    memo.set(memoKey, combined);
+    return combined;
+  };
+
+  return dfs(0, 0);
+}
+
 type BucketConfig = {
   type: Z.infer<typeof bucketTypeSchema>;
   paths: Array<{ pathPattern: string; delimiter?: LocaleDelimiter }>;
@@ -119,18 +358,7 @@ function expandPlaceholderedGlob(
     });
   }
 
-  // Break down path pattern into parts
-  const pathPatternChunks = pathPattern.split(path.sep);
-  // Find the index of the segment containing "[locale]"
-  const localeSegmentIndexes = pathPatternChunks.reduce(
-    (indexes, segment, index) => {
-      if (segment.includes("[locale]")) {
-        indexes.push(index);
-      }
-      return indexes;
-    },
-    [] as number[],
-  );
+  const template = parsePatternTemplate(pathPattern.split(path.sep).join("/"));
   const normalizedLocale =
     process.platform === "win32" ? sourceLocale.toLowerCase() : sourceLocale;
   // substitute [locale] in pathPattern with normalized locale
@@ -159,22 +387,18 @@ function expandPlaceholderedGlob(
       sourcePath.replace(/\//g, path.sep),
     );
     const sourcePathChunks = normalizedSourcePath.split(path.sep);
-    const mapping = mapPatternToSource(
-      pathPatternChunks,
+    const matchedSegments = matchTemplateToSource(
+      template,
       sourcePathChunks,
       normalizedLocale,
     );
-    localeSegmentIndexes.forEach((localeSegmentIndex) => {
-      const sourceIndex = mapping.patToSrc[localeSegmentIndex];
-      if (sourceIndex >= 0) {
-        sourcePathChunks[sourceIndex] = buildLocalePlaceholderSegment(
-          pathPatternChunks[localeSegmentIndex],
-          sourcePathChunks[sourceIndex],
-          normalizedLocale,
-        );
-      }
-    });
-    return sourcePathChunks.join(path.sep);
+    if (!matchedSegments) {
+      throw new CLIError({
+        message: `Pattern "${_pathPattern}" does not map cleanly to matched path "${sourcePath}". Adjust the glob so the placeholder segments can be restored without ambiguity.`,
+        docUrl: "invalidPlaceholderMapping",
+      });
+    }
+    return matchedSegments.join(path.sep);
   });
   // return the placeholdered paths
   return placeholderedPaths;
@@ -185,220 +409,4 @@ function resolveBucketItem(bucketItem: string | BucketItem): BucketItem {
     return { path: bucketItem, delimiter: null };
   }
   return bucketItem;
-}
-
-function mapPatternToSource(
-  pattern: string[],
-  source: string[],
-  locale: string,
-): { patToSrc: number[] } {
-  const patternLength = pattern.length;
-  const sourceLength = source.length;
-  const isDoubleStar = (segment: string) => segment === "**";
-  const segmentMatches = (patternSegment: string, sourceSegment: string) => {
-    const concrete = patternSegment.replaceAll("[locale]", locale);
-    return minimatch(sourceSegment, concrete, { dot: true });
-  };
-
-  const placeholderIndexes = pattern.reduce<number[]>((acc, segment, index) => {
-    if (segment.includes("[locale]")) {
-      acc.push(index);
-    }
-    return acc;
-  }, []);
-
-  type MappingResult = {
-    mapping: number[];
-    score: {
-      matchedPlaceholders: number;
-      placeholderSum: number;
-      placeholderValues: number[];
-      mappedCount: number;
-      totalSum: number;
-      mappingValues: number[];
-    };
-  };
-
-  const placeholderPenalty = patternLength + sourceLength;
-
-  const evaluateMapping = (mapping: number[]): MappingResult["score"] => {
-    const mappingValues = mapping.map((value) =>
-      typeof value === "number" ? value : -1,
-    );
-    const placeholderValues = placeholderIndexes.map((idx) => mappingValues[idx]);
-
-    let matchedPlaceholders = 0;
-    let placeholderSum = 0;
-    placeholderValues.forEach((value) => {
-      if (value >= 0) {
-        matchedPlaceholders += 1;
-        placeholderSum += value;
-      } else {
-        placeholderSum += placeholderPenalty;
-      }
-    });
-
-    let mappedCount = 0;
-    let totalSum = 0;
-    mappingValues.forEach((value) => {
-      if (value >= 0) {
-        mappedCount += 1;
-        totalSum += value;
-      } else {
-        totalSum += placeholderPenalty;
-      }
-    });
-
-    return {
-      matchedPlaceholders,
-      placeholderSum,
-      placeholderValues,
-      mappedCount,
-      totalSum,
-      mappingValues,
-    };
-  };
-
-  const isBetterMapping = (
-    candidate: MappingResult | null,
-    current: MappingResult | null,
-  ) => {
-    if (!candidate) {
-      return false;
-    }
-    if (!current) {
-      return true;
-    }
-
-    if (
-      candidate.score.matchedPlaceholders !== current.score.matchedPlaceholders
-    ) {
-      return (
-        candidate.score.matchedPlaceholders > current.score.matchedPlaceholders
-      );
-    }
-
-    if (candidate.score.placeholderSum !== current.score.placeholderSum) {
-      return candidate.score.placeholderSum < current.score.placeholderSum;
-    }
-
-    for (let idx = 0; idx < candidate.score.placeholderValues.length; idx += 1) {
-      const aVal = candidate.score.placeholderValues[idx];
-      const bVal = current.score.placeholderValues[idx];
-      if (aVal !== bVal) {
-        if (aVal < 0) {
-          return false;
-        }
-        if (bVal < 0) {
-          return true;
-        }
-        return aVal < bVal;
-      }
-    }
-
-    if (candidate.score.mappedCount !== current.score.mappedCount) {
-      return candidate.score.mappedCount > current.score.mappedCount;
-    }
-
-    if (candidate.score.totalSum !== current.score.totalSum) {
-      return candidate.score.totalSum < current.score.totalSum;
-    }
-
-    for (let idx = 0; idx < patternLength; idx += 1) {
-      const aVal = candidate.score.mappingValues[idx];
-      const bVal = current.score.mappingValues[idx];
-      if (aVal !== bVal) {
-        if (aVal < 0) {
-          return false;
-        }
-        if (bVal < 0) {
-          return true;
-        }
-        return aVal < bVal;
-      }
-    }
-
-    return false;
-  };
-
-  const memo = new Map<string, MappingResult | null>();
-  const key = (i: number, j: number) => `${i}|${j}`;
-
-  const dfs = (i: number, j: number): MappingResult | null => {
-    const memoKey = key(i, j);
-    if (memo.has(memoKey)) {
-      return memo.get(memoKey)!;
-    }
-    if (i === patternLength) {
-      const mapping = j === sourceLength ? Array(patternLength).fill(-1) : null;
-      const result = mapping
-        ? { mapping, score: evaluateMapping(mapping) }
-        : null;
-      memo.set(memoKey, result);
-      return result;
-    }
-
-    let best: MappingResult | null = null;
-
-    if (isDoubleStar(pattern[i])) {
-      for (let k = j; k <= sourceLength; k += 1) {
-        const candidate = dfs(i + 1, k);
-        if (isBetterMapping(candidate, best)) {
-          best = candidate;
-        }
-      }
-    } else if (j < sourceLength && segmentMatches(pattern[i], source[j])) {
-      const candidate = dfs(i + 1, j + 1);
-      if (candidate) {
-        const mapping = candidate.mapping.slice();
-        mapping[i] = j;
-        const result = { mapping, score: evaluateMapping(mapping) };
-        if (isBetterMapping(result, best)) {
-          best = result;
-        }
-      }
-    }
-
-    memo.set(memoKey, best);
-    return best;
-  };
-
-  const mapping = dfs(0, 0);
-  if (!mapping) {
-    return {
-      patToSrc: pattern.map((_, index) => (index < source.length ? index : -1)),
-    };
-  }
-
-  return { patToSrc: mapping.mapping };
-}
-
-function buildLocalePlaceholderSegment(
-  patternChunk: string,
-  sourceChunk: string,
-  locale: string,
-): string {
-  const placeholder = "[locale]";
-  const placeholderIndex = patternChunk.indexOf(placeholder);
-  if (placeholderIndex === -1) {
-    return sourceChunk;
-  }
-
-  const leftGlob = patternChunk.slice(0, placeholderIndex);
-  const rightGlob = patternChunk.slice(placeholderIndex + placeholder.length);
-  const leftMatches = (value: string) =>
-    leftGlob ? minimatch(value, leftGlob, { dot: true }) : value.length === 0;
-  const rightMatches = (value: string) =>
-    rightGlob ? minimatch(value, rightGlob, { dot: true }) : value.length === 0;
-
-  let position = -1;
-  while ((position = sourceChunk.indexOf(locale, position + 1)) !== -1) {
-    const prefix = sourceChunk.slice(0, position);
-    const suffix = sourceChunk.slice(position + locale.length);
-    if (leftMatches(prefix) && rightMatches(suffix)) {
-      return `${prefix}${placeholder}${suffix}`;
-    }
-  }
-
-  return patternChunk;
 }

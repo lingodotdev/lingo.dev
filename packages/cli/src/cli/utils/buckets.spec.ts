@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { getBuckets } from "./buckets";
+import { getBuckets, parsePatternTemplate } from "./buckets";
 import { glob, Path } from "glob";
 
 vi.mock("glob", () => ({
@@ -7,6 +7,91 @@ vi.mock("glob", () => ({
     sync: vi.fn(),
   },
 }));
+
+describe("parsePatternTemplate", () => {
+  it("captures globstars and placeholder segments", () => {
+    expect(parsePatternTemplate("src/**/[locale]/**/messages.json")).toEqual([
+      {
+        kind: "segment",
+        original: "src",
+        parts: [{ kind: "literal", value: "src" }],
+        hasPlaceholder: false,
+        hasGlob: false,
+      },
+      { kind: "globstar", original: "**" },
+      {
+        kind: "segment",
+        original: "[locale]",
+        parts: [{ kind: "placeholder", name: "locale" }],
+        hasPlaceholder: true,
+        hasGlob: false,
+      },
+      { kind: "globstar", original: "**" },
+      {
+        kind: "segment",
+        original: "messages.json",
+        parts: [{ kind: "literal", value: "messages.json" }],
+        hasPlaceholder: false,
+        hasGlob: false,
+      },
+    ]);
+  });
+
+  it("identifies placeholders embedded within segments", () => {
+    expect(parsePatternTemplate("src/messages.[locale].json")).toEqual([
+      {
+        kind: "segment",
+        original: "src",
+        parts: [{ kind: "literal", value: "src" }],
+        hasPlaceholder: false,
+        hasGlob: false,
+      },
+      {
+        kind: "segment",
+        original: "messages.[locale].json",
+        parts: [
+          { kind: "literal", value: "messages." },
+          { kind: "placeholder", name: "locale" },
+          { kind: "literal", value: ".json" },
+        ],
+        hasPlaceholder: true,
+        hasGlob: false,
+      },
+    ]);
+  });
+
+  it("marks glob syntax distinct from placeholders", () => {
+    expect(
+      parsePatternTemplate("src/modules/@(core|marketing)-[locale].json"),
+    ).toEqual([
+      {
+        kind: "segment",
+        original: "src",
+        parts: [{ kind: "literal", value: "src" }],
+        hasPlaceholder: false,
+        hasGlob: false,
+      },
+      {
+        kind: "segment",
+        original: "modules",
+        parts: [{ kind: "literal", value: "modules" }],
+        hasPlaceholder: false,
+        hasGlob: false,
+      },
+      {
+        kind: "segment",
+        original: "@(core|marketing)-[locale].json",
+        parts: [
+          { kind: "glob", value: "@(core|marketing)-" },
+          { kind: "placeholder", name: "locale" },
+          { kind: "literal", value: ".json" },
+        ],
+        hasPlaceholder: true,
+        hasGlob: true,
+      },
+    ]);
+  });
+});
 
 describe("getBuckets", () => {
   beforeEach(() => {
