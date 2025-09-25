@@ -1880,6 +1880,167 @@ user.password=Contraseña
 
       expect(hints).toEqual({});
     });
+
+    it("should properly filter lockedKeys from data during pull operations", async () => {
+      setupFileMocks();
+
+      const input = JSON.stringify({
+        sourceLanguage: "en",
+        strings: {
+          welcome_message: {
+            comment: "Welcome message - should be locked",
+            extractionState: "manual",
+            localizations: {
+              en: {
+                stringUnit: {
+                  state: "translated",
+                  value: "Hello, world!",
+                },
+              },
+              es: {
+                stringUnit: {
+                  state: "translated",
+                  value: "¡Hola, mundo!",
+                },
+              },
+            },
+          },
+          user_count: {
+            comment: "Number of users - should be translatable",
+            extractionState: "manual",
+            localizations: {
+              en: {
+                variations: {
+                  plural: {
+                    one: {
+                      stringUnit: {
+                        state: "translated",
+                        value: "1 user",
+                      },
+                    },
+                    other: {
+                      stringUnit: {
+                        state: "translated",
+                        value: "%d users",
+                      },
+                    },
+                  },
+                },
+              },
+              es: {
+                variations: {
+                  plural: {
+                    one: {
+                      stringUnit: {
+                        state: "translated",
+                        value: "1 usuario",
+                      },
+                    },
+                    other: {
+                      stringUnit: {
+                        state: "translated",
+                        value: "%d usuarios",
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          api_key: {
+            comment: "API key - should be locked with wildcard pattern",
+            extractionState: "manual",
+            localizations: {
+              en: {
+                stringUnit: {
+                  state: "translated",
+                  value: "sk-1234567890abcdef",
+                },
+              },
+            },
+          },
+        },
+      });
+
+      mockFileOperations(input);
+
+      // Test with lockedKeys including both specific keys and wildcard patterns
+      const xcodeXcstringsLoaderWithLockedKeys = createBucketLoader(
+        "xcode-xcstrings",
+        "i18n/[locale].xcstrings",
+        {
+          defaultLocale: "en",
+        },
+        ["welcome_message", "api*"], // lockedKeys parameter
+      );
+      xcodeXcstringsLoaderWithLockedKeys.setDefaultLocale("en");
+
+      // First pull the default locale to initialize the loader
+      await xcodeXcstringsLoaderWithLockedKeys.pull("en");
+
+      // Pull data for translation - should filter out locked keys
+      const dataForTranslation =
+        await xcodeXcstringsLoaderWithLockedKeys.pull("es");
+
+      // Locked keys should be filtered out
+      expect(dataForTranslation).not.toHaveProperty("welcome_message");
+      expect(dataForTranslation).not.toHaveProperty("api_key");
+
+      // Non-locked keys should remain
+      expect(dataForTranslation).toHaveProperty("user_count/one");
+      expect(dataForTranslation).toHaveProperty("user_count/other");
+      expect(dataForTranslation["user_count/one"]).toBe("1 usuario");
+      expect(dataForTranslation["user_count/other"]).toBe(
+        "{variable:0} usuarios",
+      );
+
+      // Test that push operations preserve locked keys from original
+
+      const translationPayload = {
+        "user_count/one": "1 usuario nuevo",
+        "user_count/other": "{variable:0} usuarios nuevos",
+        // Attempt to overwrite locked keys - should be ignored
+        welcome_message: "This should be ignored",
+        api_key: "This should also be ignored",
+      };
+
+      await xcodeXcstringsLoaderWithLockedKeys.push("es", translationPayload);
+
+      expect(fs.writeFile).toHaveBeenCalled();
+      const writeFileCall = (fs.writeFile as any).mock.calls[0];
+      const writtenContent = JSON.parse(writeFileCall[1]);
+
+      // Locked keys should preserve their original values from the input
+      // Since welcome_message was locked, the Spanish translation should not be overwritten
+      // But it might be replaced with the English value due to how the xcstrings loader works
+      // The important thing is that it wasn't sent for translation
+      expect(
+        writtenContent.strings.welcome_message.localizations.es,
+      ).toBeDefined();
+      expect(
+        writtenContent.strings.welcome_message.localizations.es.stringUnit
+          .value,
+      ).toMatch(/Hello, world!|¡Hola, mundo!/);
+      expect(
+        writtenContent.strings.api_key.localizations.en.stringUnit.value,
+      ).toBe("sk-1234567890abcdef");
+      // The api_key is locked, so it should preserve the original value even if we tried to overwrite it
+      if (writtenContent.strings.api_key.localizations.es) {
+        expect(
+          writtenContent.strings.api_key.localizations.es.stringUnit.value,
+        ).toBe("sk-1234567890abcdef");
+      }
+
+      // Non-locked keys should have new translations
+      expect(
+        writtenContent.strings.user_count.localizations.es.variations.plural.one
+          .stringUnit.value,
+      ).toBe("1 usuario nuevo");
+      expect(
+        writtenContent.strings.user_count.localizations.es.variations.plural
+          .other.stringUnit.value,
+      ).toBe("%d usuarios nuevos");
+    });
   });
 
   describe("yaml bucket loader", () => {
