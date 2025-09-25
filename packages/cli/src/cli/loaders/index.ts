@@ -198,6 +198,7 @@ export default function createBucketLoader(
         createXcodeXcstringsLoader(options.defaultLocale),
         createFlatLoader(),
         createEnsureKeyOrderLoader(),
+        createLockedKeysLoader(lockedKeys || []),
         createSyncLoader(),
         createVariableLoader({ type: "ieee" }),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
