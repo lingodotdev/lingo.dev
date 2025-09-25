@@ -1,5 +1,13 @@
 # lingo.dev
 
+## 0.111.9
+
+### Patch Changes
+
+- [#1177](https://github.com/lingodotdev/lingo.dev/pull/1177) [`03138da`](https://github.com/lingodotdev/lingo.dev/commit/03138dac37e869e2e99702ffd3c76532f1c58aa6) Thanks [@davidturnbull](https://github.com/davidturnbull)! - Improve CLI command descriptions
+
+- [#1183](https://github.com/lingodotdev/lingo.dev/pull/1183) [`9557fe5`](https://github.com/lingodotdev/lingo.dev/commit/9557fe572d3e4a1a4d8c1e35417fe3b7531c3d52) Thanks [@vrcprl](https://github.com/vrcprl)! - fix lockedKeys in xcstrings
+
 ## 0.111.8
 
 ### Patch Changes
