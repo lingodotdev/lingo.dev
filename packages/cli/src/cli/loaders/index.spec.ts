@@ -1979,7 +1979,8 @@ user.password=Contraseña
       await xcodeXcstringsLoaderWithLockedKeys.pull("en");
 
       // Pull data for translation - should filter out locked keys
-      const dataForTranslation = await xcodeXcstringsLoaderWithLockedKeys.pull("es");
+      const dataForTranslation =
+        await xcodeXcstringsLoaderWithLockedKeys.pull("es");
 
       // Locked keys should be filtered out
       expect(dataForTranslation).not.toHaveProperty("welcome_message");
@@ -1989,7 +1990,9 @@ user.password=Contraseña
       expect(dataForTranslation).toHaveProperty("user_count/one");
       expect(dataForTranslation).toHaveProperty("user_count/other");
       expect(dataForTranslation["user_count/one"]).toBe("1 usuario");
-      expect(dataForTranslation["user_count/other"]).toBe("{variable:0} usuarios");
+      expect(dataForTranslation["user_count/other"]).toBe(
+        "{variable:0} usuarios",
+      );
 
       // Test that push operations preserve locked keys from original
 
@@ -2011,17 +2014,32 @@ user.password=Contraseña
       // Since welcome_message was locked, the Spanish translation should not be overwritten
       // But it might be replaced with the English value due to how the xcstrings loader works
       // The important thing is that it wasn't sent for translation
-      expect(writtenContent.strings.welcome_message.localizations.es).toBeDefined();
-      expect(writtenContent.strings.welcome_message.localizations.es.stringUnit.value).toMatch(/Hello, world!|¡Hola, mundo!/);
-      expect(writtenContent.strings.api_key.localizations.en.stringUnit.value).toBe("sk-1234567890abcdef");
+      expect(
+        writtenContent.strings.welcome_message.localizations.es,
+      ).toBeDefined();
+      expect(
+        writtenContent.strings.welcome_message.localizations.es.stringUnit
+          .value,
+      ).toMatch(/Hello, world!|¡Hola, mundo!/);
+      expect(
+        writtenContent.strings.api_key.localizations.en.stringUnit.value,
+      ).toBe("sk-1234567890abcdef");
       // The api_key is locked, so it should preserve the original value even if we tried to overwrite it
       if (writtenContent.strings.api_key.localizations.es) {
-        expect(writtenContent.strings.api_key.localizations.es.stringUnit.value).toBe("sk-1234567890abcdef");
+        expect(
+          writtenContent.strings.api_key.localizations.es.stringUnit.value,
+        ).toBe("sk-1234567890abcdef");
       }
 
       // Non-locked keys should have new translations
-      expect(writtenContent.strings.user_count.localizations.es.variations.plural.one.stringUnit.value).toBe("1 usuario nuevo");
-      expect(writtenContent.strings.user_count.localizations.es.variations.plural.other.stringUnit.value).toBe("%d usuarios nuevos");
+      expect(
+        writtenContent.strings.user_count.localizations.es.variations.plural.one
+          .stringUnit.value,
+      ).toBe("1 usuario nuevo");
+      expect(
+        writtenContent.strings.user_count.localizations.es.variations.plural
+          .other.stringUnit.value,
+      ).toBe("%d usuarios nuevos");
     });
   });
 
