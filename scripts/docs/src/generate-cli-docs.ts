@@ -77,15 +77,66 @@ function createHeading(
   };
 }
 
+function createInlineCode(value: string): PhrasingContent {
+  return { type: "inlineCode", value };
+}
+
 function createParagraph(text: string): Paragraph {
   return {
     type: "paragraph",
-    children: [{ type: "text", value: text }],
+    children: createTextNodes(text),
   };
 }
 
-function createInlineCode(value: string): PhrasingContent {
-  return { type: "inlineCode", value };
+function createTextNodes(text: string): PhrasingContent[] {
+  if (!text) {
+    return [];
+  }
+
+  const nodes: PhrasingContent[] = [];
+  const parts = text.split(/(`[^`]*`)/g);
+
+  parts.forEach((part) => {
+    if (!part) {
+      return;
+    }
+
+    if (part.startsWith("`") && part.endsWith("`")) {
+      nodes.push(createInlineCode(part.slice(1, -1)));
+    } else {
+      nodes.push(...createBracketAwareTextNodes(part));
+    }
+  });
+
+  return nodes;
+}
+
+function createBracketAwareTextNodes(text: string): PhrasingContent[] {
+  const nodes: PhrasingContent[] = [];
+  const bracketPattern = /\[[^\]]+\]/g;
+  let lastIndex = 0;
+
+  for (const match of text.matchAll(bracketPattern)) {
+    const [value] = match;
+    const start = match.index ?? 0;
+
+    if (start > lastIndex) {
+      nodes.push({ type: "text", value: text.slice(lastIndex, start) });
+    }
+
+    nodes.push(createInlineCode(value));
+    lastIndex = start + value.length;
+  }
+
+  if (lastIndex < text.length) {
+    nodes.push({ type: "text", value: text.slice(lastIndex) });
+  }
+
+  if (nodes.length === 0) {
+    nodes.push({ type: "text", value: text });
+  }
+
+  return nodes;
 }
 
 function createList(items: ListItem[]): List {
