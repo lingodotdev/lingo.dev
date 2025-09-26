@@ -266,33 +266,31 @@ function buildOptionDetails(option: Option): string[] {
   const details: string[] = [];
 
   if (option.mandatory) {
-    details.push("Required");
+    details.push("Must be specified.");
   }
 
-  if (option.required && !option.mandatory) {
-    details.push("Takes value");
-  }
-
-  if (option.optional) {
-    details.push("Optional value");
+  if (option.required) {
+    details.push("Requires a value.");
+  } else if (option.optional) {
+    details.push("Accepts an optional value.");
   }
 
   if (option.defaultValueDescription) {
-    details.push(`Default: ${option.defaultValueDescription}`);
+    details.push(`Default: ${option.defaultValueDescription}.`);
   } else if (option.defaultValue !== undefined) {
-    details.push(`Default: ${formatValue(option.defaultValue)}`);
+    details.push(`Default: ${formatValue(option.defaultValue)}.`);
   }
 
   if (option.argChoices && option.argChoices.length > 0) {
-    details.push(`Choices: ${option.argChoices.join(", ")}`);
+    details.push(`Allowed values: ${option.argChoices.join(", ")}.`);
   }
 
   if (option.envVar) {
-    details.push(`Env: ${option.envVar}`);
+    details.push(`Environment variable: ${option.envVar}.`);
   }
 
   if (option.presetArg !== undefined) {
-    details.push(`Preset: ${formatValue(option.presetArg)}`);
+    details.push(`Preset value: ${formatValue(option.presetArg)}.`);
   }
 
   return details;
@@ -328,7 +326,7 @@ function buildOptionEntries({
 
     const details = buildOptionDetails(option);
     if (details.length > 0) {
-      nodes.push(createParagraph(details.join(" · ")));
+      nodes.push(createParagraph(details.join(" ")));
     }
   });
 
@@ -377,6 +375,7 @@ type BuildCommandSectionOptions = {
   rootName: string;
   ancestors: string[];
   depth: number;
+  useRootIntro: boolean;
 };
 
 function buildCommandSection({
@@ -384,11 +383,13 @@ function buildCommandSection({
   rootName,
   ancestors,
   depth,
+  useRootIntro,
 }: BuildCommandSectionOptions): Content[] {
   const nodes: Content[] = [];
   const commandPath = getCommandPath(rootName, ancestors, command);
   const isRootCommand = ancestors.length === 0;
-  const headingContent = isRootCommand
+  const shouldUseIntro = isRootCommand && useRootIntro;
+  const headingContent = shouldUseIntro
     ? "Introduction"
     : [createInlineCode(commandPath)];
 
@@ -401,7 +402,7 @@ function buildCommandSection({
 
   const usage = buildUsage(command);
   if (usage) {
-    const sectionDepth = isRootCommand ? depth : Math.min(depth + 1, 6);
+    const sectionDepth = shouldUseIntro ? depth : Math.min(depth + 1, 6);
     nodes.push(createHeading(sectionDepth, "Usage"));
     nodes.push({
       type: "paragraph",
@@ -411,7 +412,7 @@ function buildCommandSection({
 
   const aliases = command.aliases();
   if (aliases.length > 0) {
-    const sectionDepth = isRootCommand ? depth : Math.min(depth + 1, 6);
+    const sectionDepth = shouldUseIntro ? depth : Math.min(depth + 1, 6);
     nodes.push(createHeading(sectionDepth, "Aliases"));
     nodes.push(
       createList(
@@ -422,7 +423,7 @@ function buildCommandSection({
 
   const args = command.registeredArguments ?? [];
   if (args.length > 0) {
-    const sectionDepth = isRootCommand ? depth : Math.min(depth + 1, 6);
+    const sectionDepth = shouldUseIntro ? depth : Math.min(depth + 1, 6);
     nodes.push(createHeading(sectionDepth, "Arguments"));
     nodes.push(createList(buildArgumentListItems(args)));
   }
@@ -430,7 +431,7 @@ function buildCommandSection({
   const visibleOptions = command.options.filter((option) => !option.hidden);
   if (visibleOptions.length > 0) {
     const { flags, valueOptions } = partitionOptions(visibleOptions);
-    const sectionDepth = isRootCommand ? depth : Math.min(depth + 1, 6);
+    const sectionDepth = shouldUseIntro ? depth : Math.min(depth + 1, 6);
 
     if (valueOptions.length > 0) {
       nodes.push(createHeading(sectionDepth, "Options"));
@@ -463,7 +464,7 @@ function buildCommandSection({
   );
 
   if (subcommands.length > 0) {
-    const sectionDepth = isRootCommand ? depth : Math.min(depth + 1, 6);
+    const sectionDepth = shouldUseIntro ? depth : Math.min(depth + 1, 6);
     nodes.push(createHeading(sectionDepth, "Subcommands"));
 
     subcommands.forEach((sub) => {
@@ -473,6 +474,7 @@ function buildCommandSection({
           rootName,
           ancestors: [...ancestors, command.name()],
           depth: Math.min(sectionDepth + 1, 6),
+          useRootIntro,
         }),
       );
     });
@@ -503,10 +505,16 @@ type CommandDoc = {
   commandPath: string;
 };
 
+type BuildCommandDocOptions = {
+  useRootIntro?: boolean;
+};
+
 function buildCommandDoc(
   command: Command,
   rootName: string,
+  options?: BuildCommandDocOptions,
 ): CommandDoc {
+  const useRootIntro = options?.useRootIntro ?? true;
   const commandPath = getCommandPath(rootName, [], command);
   const title = commandPath;
   const subtitle = `CLI reference docs for ${command.name()} command`;
@@ -517,6 +525,7 @@ function buildCommandDoc(
       rootName,
       ancestors: [],
       depth: 2,
+      useRootIntro,
     }),
   };
 
@@ -533,6 +542,52 @@ function buildCommandDoc(
   const fileName = `${slugifyCommandName(command.name())}.mdx`;
 
   return { fileName, markdown, mdx, commandPath };
+}
+
+function buildIndexDoc(
+  commands: Command[],
+  rootName: string,
+): CommandDoc {
+  const root: Root = {
+    type: "root",
+    children: [
+      createHeading(2, "Introduction"),
+      createParagraph(
+        `This page aggregates CLI reference docs for ${rootName} commands.`,
+      ),
+    ],
+  };
+
+  commands.forEach((command) => {
+    root.children.push(
+      ...buildCommandSection({
+        command,
+        rootName,
+        ancestors: [],
+        depth: 2,
+        useRootIntro: false,
+      }),
+    );
+  });
+
+  const markdown = toMarkdown(root);
+  const frontmatter = [
+    FRONTMATTER_DELIMITER,
+    `title: ${formatYamlValue(`${rootName} CLI reference`)}`,
+    "seo:",
+    "  noindex: true",
+    FRONTMATTER_DELIMITER,
+    "",
+  ].join("\n");
+
+  const mdx = `${frontmatter}${markdown}\n`;
+
+  return {
+    fileName: "index.mdx",
+    markdown,
+    mdx,
+    commandPath: `${rootName} (index)`,
+  };
 }
 
 async function main(): Promise<void> {
@@ -562,8 +617,9 @@ async function main(): Promise<void> {
   const docs = topLevelCommands.map((command) =>
     buildCommandDoc(command, cli.name()),
   );
+  const indexDoc = buildIndexDoc(topLevelCommands, cli.name());
 
-  for (const doc of docs) {
+  for (const doc of [...docs, indexDoc]) {
     const filePath = join(outputDir, doc.fileName);
     await mkdir(dirname(filePath), { recursive: true });
     const formatted = await formatWithPrettier(doc.mdx, filePath);
