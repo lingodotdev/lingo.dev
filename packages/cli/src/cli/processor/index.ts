@@ -99,6 +99,17 @@ function getPureModelProvider(provider: I18nConfig["provider"]) {
         apiKey: process.env.GOOGLE_API_KEY,
       })(provider.model);
     }
+    case "aimlapi": {
+      if (!process.env.AIMLAPI_API_KEY) {
+        throw new Error(
+          createMissingKeyErrorMessage("AI/ML API", "AIMLAPI_API_KEY"),
+        );
+      }
+      return createOpenAI({
+        apiKey: process.env.AIMLAPI_API_KEY,
+        baseURL: provider.baseUrl ?? "https://api.aimlapi.com/v1",
+      })(provider.model);
+    }
     case "openrouter": {
       if (!process.env.OPENROUTER_API_KEY) {
         throw new Error(
