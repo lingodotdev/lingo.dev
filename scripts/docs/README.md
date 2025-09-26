@@ -11,19 +11,19 @@ This script generates reference documentation for **Lingo.dev CLI**.
 ### Usage
 
 ```bash
-pnpm --filter docs run generate-cli-docs [output_file_path]
+pnpm --filter docs run generate-cli-docs [output_directory]
 ```
 
 ### How it works
 
 1. Loads the CLI program from the `cli` package.
-2. Walks through all commands and subcommands.
-3. Generates a Markdown file with the complete command reference.
+2. Walks through top-level commands and their subcommands.
+3. Generates an `.mdx` file for each top-level command with structured reference content.
 
 ### Notes
 
 - When running inside a GitHub Action, this script comments on the PR with the Markdown content.
-- When running outside of a GitHub action, the script writes the Markdown file to disk.
+- When running outside of a GitHub action, the script writes one `.mdx` file per top-level command to the provided directory.
 
 ## generate-config-docs
 
