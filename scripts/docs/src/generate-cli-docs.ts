@@ -251,7 +251,8 @@ function extractOptionPlaceholder(option: Option): string {
 }
 
 function buildOptionUsage(commandPath: string, option: Option): string {
-  const preferred = option.long || option.short || formatOptionSignature(option);
+  const preferred =
+    option.long || option.short || formatOptionSignature(option);
   const placeholder = extractOptionPlaceholder(option);
   const usage = [commandPath, preferred, placeholder]
     .filter(Boolean)
@@ -544,10 +545,7 @@ function buildCommandDoc(
   return { fileName, markdown, mdx, commandPath };
 }
 
-function buildIndexDoc(
-  commands: Command[],
-  rootName: string,
-): CommandDoc {
+function buildIndexDoc(commands: Command[], rootName: string): CommandDoc {
   const root: Root = {
     type: "root",
     children: [
