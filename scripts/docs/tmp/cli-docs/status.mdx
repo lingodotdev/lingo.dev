@@ -1,0 +1,72 @@
+---
+title: "lingo.dev status"
+subtitle: "CLI reference docs for status command"
+---
+
+## Introduction
+
+Show the status of the localization process
+
+## Usage
+
+`lingo.dev status [options]`
+
+## Options
+
+### `--locale <locale>`
+
+```bash
+lingo.dev status --locale <locale>
+```
+
+Limit the report to specific target locales from i18n.json. Repeat the flag to include multiple locales. Defaults to all configured target locales
+
+Takes value
+
+### `--bucket <bucket>`
+
+```bash
+lingo.dev status --bucket <bucket>
+```
+
+Limit the report to specific bucket types defined in i18n.json (e.g., json, yaml, android). Repeat the flag to include multiple bucket types. Defaults to all buckets
+
+Takes value
+
+### `--file [files...]`
+
+```bash
+lingo.dev status --file [files...]
+```
+
+Filter the status report to only include files whose paths contain these substrings. Example: 'components' to match any file path containing 'components'
+
+Optional value
+
+### `--api-key <api-key>`
+
+```bash
+lingo.dev status --api-key <api-key>
+```
+
+Override the API key from settings or environment variables for this run
+
+Takes value
+
+## Flags
+
+### `--force`
+
+```bash
+lingo.dev status --force
+```
+
+Force all keys to be counted as needing translation, bypassing change detection. Shows word estimates for a complete retranslation regardless of current translation status
+
+### `--verbose`
+
+```bash
+lingo.dev status --verbose
+```
+
+Print detailed output showing missing and updated key counts with example key names for each file and locale

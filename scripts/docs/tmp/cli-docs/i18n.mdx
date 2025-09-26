@@ -1,0 +1,114 @@
+---
+title: "lingo.dev i18n"
+subtitle: "CLI reference docs for i18n command"
+---
+
+## Introduction
+
+DEPRECATED: Run localization pipeline (prefer \`run\` command instead)
+
+## Usage
+
+`lingo.dev i18n [options]`
+
+## Options
+
+### `--locale <locale>`
+
+```bash
+lingo.dev i18n --locale <locale>
+```
+
+Limit processing to the listed target locale codes from i18n.json. Repeat the flag to include multiple locales. Defaults to all configured target locales
+
+Takes value
+
+### `--bucket <bucket>`
+
+```bash
+lingo.dev i18n --bucket <bucket>
+```
+
+Limit processing to specific bucket types defined in i18n.json (e.g., json, yaml, android). Repeat the flag to include multiple bucket types. Defaults to all buckets
+
+Takes value
+
+### `--key <key>`
+
+```bash
+lingo.dev i18n --key <key>
+```
+
+Limit processing to a single translation key by exact match. Filters all buckets and locales to process only this key, useful for testing or debugging specific translations. Example: auth.login.title
+
+Takes value
+
+### `--file [files...]`
+
+```bash
+lingo.dev i18n --file [files...]
+```
+
+Filter processing to only buckets whose file paths contain these substrings. Example: 'components' to process only files in components directories
+
+Optional value
+
+### `--api-key <api-key>`
+
+```bash
+lingo.dev i18n --api-key <api-key>
+```
+
+Override API key from settings or environment variables
+
+Takes value
+
+## Flags
+
+### `--frozen`
+
+```bash
+lingo.dev i18n --frozen
+```
+
+Validate translations are up-to-date without making changes - fails if source files, target files, or lockfile are out of sync. Ideal for CI/CD to ensure translation consistency before deployment
+
+### `--force`
+
+```bash
+lingo.dev i18n --force
+```
+
+Force re-translation of all keys, bypassing change detection. Useful when you want to regenerate translations with updated AI models or translation settings
+
+### `--verbose`
+
+```bash
+lingo.dev i18n --verbose
+```
+
+Print the translation data being processed as formatted JSON for each bucket and locale
+
+### `--interactive`
+
+```bash
+lingo.dev i18n --interactive
+```
+
+Review and edit AI-generated translations interactively before applying changes to files
+
+### `--debug`
+
+```bash
+lingo.dev i18n --debug
+```
+
+Pause before processing localization so you can attach a debugger
+
+### `--strict`
+
+```bash
+lingo.dev i18n --strict
+```
+
+Stop immediately on first error instead of continuing to process remaining buckets and locales (fail-fast mode)

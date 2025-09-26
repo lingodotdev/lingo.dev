@@ -17,6 +17,7 @@ import remarkStringify from "remark-stringify";
 import { unified } from "unified";
 import { pathToFileURL } from "url";
 import { createOrUpdateGitHubComment, getRepoRoot } from "./utils";
+import { format as prettierFormat, resolveConfig } from "prettier";
 
 type CommandWithInternals = Command & {
   _hidden?: boolean;
@@ -433,6 +434,17 @@ function toMarkdown(root: Root): string {
   return unified().use(remarkStringify).stringify(root).trimEnd();
 }
 
+async function formatWithPrettier(
+  content: string,
+  filePath: string,
+): Promise<string> {
+  const config = await resolveConfig(filePath);
+  return prettierFormat(content, {
+    ...(config ?? {}),
+    filepath: filePath,
+  });
+}
+
 type CommandDoc = {
   fileName: string;
   markdown: string;
@@ -503,7 +515,8 @@ async function main(): Promise<void> {
   for (const doc of docs) {
     const filePath = join(outputDir, doc.fileName);
     await mkdir(dirname(filePath), { recursive: true });
-    await writeFile(filePath, doc.mdx, "utf8");
+    const formatted = await formatWithPrettier(doc.mdx, filePath);
+    await writeFile(filePath, formatted, "utf8");
     console.log(`✅ Saved ${doc.commandPath} docs to ${filePath}`);
   }
 

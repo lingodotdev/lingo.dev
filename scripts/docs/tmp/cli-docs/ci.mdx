@@ -1,0 +1,84 @@
+---
+title: "lingo.dev ci"
+subtitle: "CLI reference docs for ci command"
+---
+
+## Introduction
+
+Run localization pipeline in CI/CD environment
+
+## Usage
+
+`lingo.dev ci [options]`
+
+## Options
+
+### `--parallel [boolean]`
+
+```bash
+lingo.dev ci --parallel [boolean]
+```
+
+Process translations concurrently for faster execution. Defaults to false
+
+Optional value
+
+### `--api-key <key>`
+
+```bash
+lingo.dev ci --api-key <key>
+```
+
+Override API key from settings or environment variables
+
+Takes value
+
+### `--pull-request [boolean]`
+
+```bash
+lingo.dev ci --pull-request [boolean]
+```
+
+Create or update translations on a dedicated branch and manage pull requests automatically. When false, commits directly to current branch. Defaults to false
+
+Optional value
+
+### `--commit-message <message>`
+
+```bash
+lingo.dev ci --commit-message <message>
+```
+
+Commit message for localization changes. Defaults to 'feat: update translations via @lingodotdev'
+
+Takes value
+
+### `--pull-request-title <title>`
+
+```bash
+lingo.dev ci --pull-request-title <title>
+```
+
+Title for the pull request when using --pull-request mode. Defaults to 'feat: update translations via @lingodotdev'
+
+Takes value
+
+### `--working-directory <dir>`
+
+```bash
+lingo.dev ci --working-directory <dir>
+```
+
+Directory to run localization from (useful for monorepos where localization files are in a subdirectory)
+
+Takes value
+
+### `--process-own-commits [boolean]`
+
+```bash
+lingo.dev ci --process-own-commits [boolean]
+```
+
+Allow processing commits made by this CI user (bypasses infinite loop prevention)
+
+Optional value

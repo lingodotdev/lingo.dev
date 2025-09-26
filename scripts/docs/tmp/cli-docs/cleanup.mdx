@@ -1,0 +1,52 @@
+---
+title: "lingo.dev cleanup"
+subtitle: "CLI reference docs for cleanup command"
+---
+
+## Introduction
+
+Remove translation keys from target locales that no longer exist in the source locale
+
+## Usage
+
+`lingo.dev cleanup [options]`
+
+## Options
+
+### `--locale <locale>`
+
+```bash
+lingo.dev cleanup --locale <locale>
+```
+
+Limit cleanup to a specific target locale from i18n.json. Defaults to all configured target locales
+
+Takes value
+
+### `--bucket <bucket>`
+
+```bash
+lingo.dev cleanup --bucket <bucket>
+```
+
+Limit cleanup to a specific bucket type defined under \`buckets\` in i18n.json
+
+Takes value
+
+## Flags
+
+### `--dry-run`
+
+```bash
+lingo.dev cleanup --dry-run
+```
+
+Preview which keys would be deleted without making any changes
+
+### `--verbose`
+
+```bash
+lingo.dev cleanup --verbose
+```
+
+Print detailed output showing the specific keys to be removed for each locale

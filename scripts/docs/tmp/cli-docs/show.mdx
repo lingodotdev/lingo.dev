@@ -1,0 +1,60 @@
+---
+title: "lingo.dev show"
+subtitle: "CLI reference docs for show command"
+---
+
+## Introduction
+
+Display configuration, locales, and file paths
+
+## Usage
+
+`lingo.dev show [options] [command]`
+
+## Subcommands
+
+### `lingo.dev show config`
+
+Print effective i18n.json after merging with defaults
+
+#### Usage
+
+`lingo.dev show config [options]`
+
+### `lingo.dev show locale`
+
+List supported locale codes
+
+#### Usage
+
+`lingo.dev show locale [options] <type>`
+
+#### Arguments
+
+- `<type>` — Type of locales to show: "sources" or "targets" - both show the full supported locale list
+
+### `lingo.dev show files`
+
+Expand each bucket's path pattern into concrete source and target file paths
+
+#### Usage
+
+`lingo.dev show files [options]`
+
+#### Flags
+
+##### `--source`
+
+```bash
+lingo.dev show files --source
+```
+
+Only list the source locale variant for each path pattern
+
+##### `--target`
+
+```bash
+lingo.dev show files --target
+```
+
+Only list the target locale variants for each configured locale

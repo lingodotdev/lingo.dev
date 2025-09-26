@@ -1,0 +1,128 @@
+---
+title: "lingo.dev run"
+subtitle: "CLI reference docs for run command"
+---
+
+## Introduction
+
+Run localization pipeline
+
+## Usage
+
+`lingo.dev run [options]`
+
+## Options
+
+### `--source-locale <source-locale>`
+
+```bash
+lingo.dev run --source-locale <source-locale>
+```
+
+Override the source locale from i18n.json for this run
+
+Takes value
+
+### `--target-locale <target-locale>`
+
+```bash
+lingo.dev run --target-locale <target-locale>
+```
+
+Limit processing to the listed target locale codes from i18n.json. Repeat the flag to include multiple locales. Defaults to all configured target locales
+
+Takes value
+
+### `--bucket <bucket>`
+
+```bash
+lingo.dev run --bucket <bucket>
+```
+
+Limit processing to specific bucket types defined in i18n.json (e.g., json, yaml, android). Repeat the flag to include multiple bucket types. Defaults to all configured buckets
+
+Takes value
+
+### `--file <file>`
+
+```bash
+lingo.dev run --file <file>
+```
+
+Filter bucket path pattern values by substring match. Examples: messages.json or locale/. Repeat to add multiple filters
+
+Takes value
+
+### `--key <key>`
+
+```bash
+lingo.dev run --key <key>
+```
+
+Filter keys by prefix matching on dot-separated paths. Example: auth.login to match all keys starting with auth.login. Repeat for multiple patterns
+
+Takes value
+
+### `--api-key <api-key>`
+
+```bash
+lingo.dev run --api-key <api-key>
+```
+
+Override API key from settings or environment variables
+
+Takes value
+
+### `--concurrency <concurrency>`
+
+```bash
+lingo.dev run --concurrency <concurrency>
+```
+
+Number of translation jobs to run concurrently. Higher values can speed up large translation batches but may increase memory usage. Defaults to 10 (maximum 10)
+
+Takes value
+
+### `--debounce <milliseconds>`
+
+```bash
+lingo.dev run --debounce <milliseconds>
+```
+
+Delay in milliseconds after file changes before retranslating in watch mode. Defaults to 5000
+
+Takes value
+
+## Flags
+
+### `--force`
+
+```bash
+lingo.dev run --force
+```
+
+Force re-translation of all keys, bypassing change detection. Useful when you want to regenerate translations with updated AI models or translation settings
+
+### `--debug`
+
+```bash
+lingo.dev run --debug
+```
+
+Pause before processing to allow attaching a debugger.
+
+### `--watch`
+
+```bash
+lingo.dev run --watch
+```
+
+Watch source locale files continuously and retranslate automatically when files change
+
+### `--sound`
+
+```bash
+lingo.dev run --sound
+```
+
+Play audio feedback when translations complete (success or failure sounds)

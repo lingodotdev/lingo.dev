@@ -1,0 +1,51 @@
+---
+title: "lingo.dev config"
+subtitle: "CLI reference docs for config command"
+---
+
+## Introduction
+
+Manage CLI settings (authentication, API keys) stored in ~/.lingodotdevrc
+
+## Usage
+
+`lingo.dev config [options] [command]`
+
+## Subcommands
+
+### `lingo.dev config set`
+
+Set or update a CLI setting in ~/.lingodotdevrc
+
+#### Usage
+
+`lingo.dev config set [options] <key> <value>`
+
+#### Arguments
+
+- `<key>` — Configuration key to set (dot notation, e.g., auth.apiKey)
+- `<value>` — The configuration value to set
+
+### `lingo.dev config unset`
+
+Remove a CLI setting from ~/.lingodotdevrc
+
+#### Usage
+
+`lingo.dev config unset [options] <key>`
+
+#### Arguments
+
+- `<key>` — Configuration key to remove (must match one of the available keys listed below)
+
+### `lingo.dev config get`
+
+Display the value of a CLI setting from ~/.lingodotdevrc
+
+#### Usage
+
+`lingo.dev config get [options] <key>`
+
+#### Arguments
+
+- `<key>` — Configuration key to read (choose from the available keys listed below)
