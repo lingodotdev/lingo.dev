@@ -323,4 +323,174 @@ The value is {% $value %} today.
       expect(pushed).toContain("{% /callout %}");
     });
   });
+
+  describe("annotations", () => {
+    it("should preserve annotations with shorthand class attribute", async () => {
+      const loader = createMarkdocLoader();
+      loader.setDefaultLocale("en");
+
+      const input = `# Heading {% .example %}`;
+
+      const output = await loader.pull("en", input);
+      const pushed = await loader.push("en", output);
+
+      expect(pushed).toContain("# Heading");
+      expect(pushed).toContain("{% .example %}");
+    });
+
+    it("should preserve annotations with shorthand id attribute", async () => {
+      const loader = createMarkdocLoader();
+      loader.setDefaultLocale("en");
+
+      const input = `# Heading {% #main-title %}`;
+
+      const output = await loader.pull("en", input);
+      const pushed = await loader.push("en", output);
+
+      expect(pushed).toContain("# Heading");
+      expect(pushed).toContain("{% #main-title %}");
+    });
+
+    it("should preserve annotations with multiple shorthand attributes", async () => {
+      const loader = createMarkdocLoader();
+      loader.setDefaultLocale("en");
+
+      const input = `# Heading {% #foo .bar .baz %}`;
+
+      const output = await loader.pull("en", input);
+      const pushed = await loader.push("en", output);
+
+      expect(pushed).toContain("# Heading");
+      expect(pushed).toContain("{% #foo .bar .baz %}");
+    });
+
+    it("should translate heading text with annotations", async () => {
+      const loader = createMarkdocLoader();
+      loader.setDefaultLocale("en");
+
+      const input = `# Welcome {% .hero-title %}`;
+
+      const output = await loader.pull("en", input);
+
+      // Find and translate the heading text (note: has trailing space)
+      const translated = { ...output };
+      Object.keys(translated).forEach((key) => {
+        if (translated[key] === "Welcome ") {
+          translated[key] = "Bienvenido ";
+        }
+      });
+
+      const pushed = await loader.push("es", translated);
+
+      expect(pushed).toContain("Bienvenido");
+      expect(pushed).toContain("{% .hero-title %}");
+    });
+  });
+
+  describe("tag attributes", () => {
+    it("should preserve tags with full attributes", async () => {
+      const loader = createMarkdocLoader();
+      loader.setDefaultLocale("en");
+
+      const input = `{% callout type="note" %}
+This is important information.
+{% /callout %}`;
+
+      const output = await loader.pull("en", input);
+      const pushed = await loader.push("en", output);
+
+      expect(pushed).toContain('{% callout type="note" %}');
+      expect(pushed).toContain("{% /callout %}");
+    });
+
+    it("should preserve tags with multiple attributes", async () => {
+      const loader = createMarkdocLoader();
+      loader.setDefaultLocale("en");
+
+      const input = `{% image src="logo.png" alt="Company Logo" width="200" /%}`;
+
+      const output = await loader.pull("en", input);
+      const pushed = await loader.push("en", output);
+
+      expect(pushed.trim()).toBe(input.trim());
+    });
+
+    it("should preserve tags with array attributes", async () => {
+      const loader = createMarkdocLoader();
+      loader.setDefaultLocale("en");
+
+      const input = `{% chart data=[1, 2, 3] /%}`;
+
+      const output = await loader.pull("en", input);
+      const pushed = await loader.push("en", output);
+
+      expect(pushed.trim()).toBe(input.trim());
+    });
+
+    it("should translate content in tags with attributes", async () => {
+      const loader = createMarkdocLoader();
+      loader.setDefaultLocale("en");
+
+      const input = `{% callout type="warning" %}
+Please read carefully.
+{% /callout %}`;
+
+      const output = await loader.pull("en", input);
+
+      // Translate the content
+      const translated = { ...output };
+      Object.keys(translated).forEach((key) => {
+        if (translated[key] === "Please read carefully.") {
+          translated[key] = "Por favor lea con atención.";
+        }
+      });
+
+      const pushed = await loader.push("es", translated);
+
+      expect(pushed).toContain("Por favor lea con atención.");
+      expect(pushed).toContain('{% callout type="warning" %}');
+      expect(pushed).toContain("{% /callout %}");
+    });
+  });
+
+  describe("primary attributes", () => {
+    it("should preserve tags with primary attribute", async () => {
+      const loader = createMarkdocLoader();
+      loader.setDefaultLocale("en");
+
+      const input = `{% if $showContent %}
+Content is visible.
+{% /if %}`;
+
+      const output = await loader.pull("en", input);
+      const pushed = await loader.push("en", output);
+
+      expect(pushed).toContain("{% if $showContent %}");
+      expect(pushed).toContain("{% /if %}");
+    });
+
+    it("should translate content in tags with primary attribute", async () => {
+      const loader = createMarkdocLoader();
+      loader.setDefaultLocale("en");
+
+      const input = `{% if $showContent %}
+Content is visible.
+{% /if %}`;
+
+      const output = await loader.pull("en", input);
+
+      // Translate the content
+      const translated = { ...output };
+      Object.keys(translated).forEach((key) => {
+        if (translated[key] === "Content is visible.") {
+          translated[key] = "El contenido es visible.";
+        }
+      });
+
+      const pushed = await loader.push("es", translated);
+
+      expect(pushed).toContain("El contenido es visible.");
+      expect(pushed).toContain("{% if $showContent %}");
+    });
+  });
 });
