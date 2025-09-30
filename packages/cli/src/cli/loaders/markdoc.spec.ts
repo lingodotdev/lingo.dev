@@ -15,7 +15,7 @@ This is content inside of a block-level tag
 
       // Should extract the text content
       const contentKeys = Object.keys(output).filter((k) =>
-        k.includes("attributes/content")
+        k.includes("attributes/content"),
       );
       const contents = contentKeys.map((k) => output[k]);
 
@@ -48,16 +48,19 @@ This paragraph is nested within a Markdoc tag.
 
       // Modify the content
       const translated = { ...pulled };
-      const contentKey = Object.keys(translated).find(
-        (k) => k.includes("attributes/content")
+      const contentKey = Object.keys(translated).find((k) =>
+        k.includes("attributes/content"),
       );
       if (contentKey) {
-        translated[contentKey] = "Este párrafo está anidado dentro de una etiqueta Markdoc.";
+        translated[contentKey] =
+          "Este párrafo está anidado dentro de una etiqueta Markdoc.";
       }
 
       const pushed = await loader.push("es", translated);
 
-      expect(pushed).toContain("Este párrafo está anidado dentro de una etiqueta Markdoc.");
+      expect(pushed).toContain(
+        "Este párrafo está anidado dentro de una etiqueta Markdoc.",
+      );
       expect(pushed).toContain("{% example %}");
       expect(pushed).toContain("{% /example %}");
     });
@@ -100,7 +103,7 @@ This paragraph is nested within a Markdoc tag.
 
       // Should extract both text segments
       const contentKeys = Object.keys(output).filter((k) =>
-        k.includes("attributes/content")
+        k.includes("attributes/content"),
       );
       const contents = contentKeys.map((k) => output[k]);
 
@@ -159,7 +162,7 @@ This paragraph is nested within a Markdoc tag.
       const output = await loader.pull("en", input);
 
       const contentKeys = Object.keys(output).filter((k) =>
-        k.includes("attributes/content")
+        k.includes("attributes/content"),
       );
       const contents = contentKeys.map((k) => output[k]);
 
@@ -279,7 +282,7 @@ More outer content
 
       // Should extract text segments but not interpolation
       const contentKeys = Object.keys(output).filter((k) =>
-        k.includes("attributes/content")
+        k.includes("attributes/content"),
       );
       const textContents = contentKeys
         .map((k) => output[k])

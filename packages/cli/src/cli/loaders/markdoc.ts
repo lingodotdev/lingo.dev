@@ -45,7 +45,7 @@ export default function createMarkdocLoader(): ILoader<
 function traverseAndExtract(
   node: MarkdocNode,
   path: string,
-  result: Record<string, string>
+  result: Record<string, string>,
 ) {
   if (!node || typeof node !== "object") {
     return;
@@ -58,7 +58,9 @@ function traverseAndExtract(
 
     // Only extract if content is a string (not interpolation)
     if (typeof content === "string") {
-      const contentPath = path ? `${path}/attributes/content` : "attributes/content";
+      const contentPath = path
+        ? `${path}/attributes/content`
+        : "attributes/content";
       result[contentPath] = content;
     }
   }
@@ -66,7 +68,9 @@ function traverseAndExtract(
   // If the node has children, traverse them
   if (Array.isArray(node.children)) {
     node.children.forEach((child, index) => {
-      const childPath = path ? `${path}/children/${index}` : `children/${index}`;
+      const childPath = path
+        ? `${path}/children/${index}`
+        : `children/${index}`;
       traverseAndExtract(child, childPath, result);
     });
   }
@@ -75,7 +79,7 @@ function traverseAndExtract(
 function applyTranslations(
   node: MarkdocNode,
   path: string,
-  data: Record<string, string>
+  data: Record<string, string>,
 ) {
   if (!node || typeof node !== "object") {
     return;
@@ -88,7 +92,9 @@ function applyTranslations(
 
     // Only apply translation if content is currently a string
     if (typeof content === "string") {
-      const contentPath = path ? `${path}/attributes/content` : "attributes/content";
+      const contentPath = path
+        ? `${path}/attributes/content`
+        : "attributes/content";
       if (data[contentPath] !== undefined) {
         node.attributes.content = data[contentPath];
       }
@@ -99,7 +105,9 @@ function applyTranslations(
   // Recursively apply translations to children
   if (Array.isArray(node.children)) {
     node.children.forEach((child, index) => {
-      const childPath = path ? `${path}/children/${index}` : `children/${index}`;
+      const childPath = path
+        ? `${path}/children/${index}`
+        : `children/${index}`;
       applyTranslations(child, childPath, data);
     });
   }
