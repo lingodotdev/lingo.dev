@@ -51,10 +51,16 @@ function traverseAndExtract(
     return;
   }
 
-  // If this is a text node, extract its content
+  // If this is a text node, extract its content only if it's a string
+  // Skip interpolation nodes (where content is a Variable or Function object)
   if (node.type === "text" && node.attributes?.content) {
-    const contentPath = path ? `${path}/attributes/content` : "attributes/content";
-    result[contentPath] = node.attributes.content;
+    const content = node.attributes.content;
+
+    // Only extract if content is a string (not interpolation)
+    if (typeof content === "string") {
+      const contentPath = path ? `${path}/attributes/content` : "attributes/content";
+      result[contentPath] = content;
+    }
   }
 
   // If the node has children, traverse them
@@ -76,11 +82,18 @@ function applyTranslations(
   }
 
   // Check if we have a translation for this node's text content
+  // Only apply translations to string content (not interpolation)
   if (node.type === "text" && node.attributes?.content) {
-    const contentPath = path ? `${path}/attributes/content` : "attributes/content";
-    if (data[contentPath] !== undefined) {
-      node.attributes.content = data[contentPath];
+    const content = node.attributes.content;
+
+    // Only apply translation if content is currently a string
+    if (typeof content === "string") {
+      const contentPath = path ? `${path}/attributes/content` : "attributes/content";
+      if (data[contentPath] !== undefined) {
+        node.attributes.content = data[contentPath];
+      }
     }
+    // If content is an object (Variable/Function), leave it unchanged
   }
 
   // Recursively apply translations to children

@@ -231,4 +231,96 @@ More outer content
       expect(pushed).toContain("{% /outer %}");
     });
   });
+
+  describe("interpolation", () => {
+    it("should preserve variable interpolation", async () => {
+      const loader = createMarkdocLoader();
+      loader.setDefaultLocale("en");
+
+      const input = `Hello {% $username %}`;
+
+      const output = await loader.pull("en", input);
+      const pushed = await loader.push("en", output);
+
+      expect(pushed.trim()).toBe(input.trim());
+    });
+
+    it("should preserve function interpolation", async () => {
+      const loader = createMarkdocLoader();
+      loader.setDefaultLocale("en");
+
+      const input = `Result: {% calculateValue() %}`;
+
+      const output = await loader.pull("en", input);
+      const pushed = await loader.push("en", output);
+
+      expect(pushed.trim()).toBe(input.trim());
+    });
+
+    it("should preserve interpolation in middle of text", async () => {
+      const loader = createMarkdocLoader();
+      loader.setDefaultLocale("en");
+
+      const input = `This is {% $var %} some text.`;
+
+      const output = await loader.pull("en", input);
+      const pushed = await loader.push("en", output);
+
+      expect(pushed.trim()).toBe(input.trim());
+    });
+
+    it("should translate text around interpolation", async () => {
+      const loader = createMarkdocLoader();
+      loader.setDefaultLocale("en");
+
+      const input = `Hello {% $username %}, welcome!`;
+
+      const output = await loader.pull("en", input);
+
+      // Should extract text segments but not interpolation
+      const contentKeys = Object.keys(output).filter((k) =>
+        k.includes("attributes/content")
+      );
+      const textContents = contentKeys
+        .map((k) => output[k])
+        .filter((v) => typeof v === "string");
+
+      expect(textContents).toContain("Hello ");
+      expect(textContents).toContain(", welcome!");
+
+      // Translate the text segments
+      const translated = { ...output };
+      Object.keys(translated).forEach((key) => {
+        if (key.includes("attributes/content")) {
+          if (translated[key] === "Hello ") {
+            translated[key] = "Hola ";
+          } else if (translated[key] === ", welcome!") {
+            translated[key] = ", ¡bienvenido!";
+          }
+        }
+      });
+
+      const pushed = await loader.push("es", translated);
+
+      expect(pushed).toContain("Hola");
+      expect(pushed).toContain("¡bienvenido!");
+      expect(pushed).toContain("{% $username %}");
+    });
+
+    it("should handle interpolation in tags", async () => {
+      const loader = createMarkdocLoader();
+      loader.setDefaultLocale("en");
+
+      const input = `{% callout %}
+The value is {% $value %} today.
+{% /callout %}`;
+
+      const output = await loader.pull("en", input);
+      const pushed = await loader.push("en", output);
+
+      expect(pushed).toContain("{% callout %}");
+      expect(pushed).toContain("{% $value %}");
+      expect(pushed).toContain("{% /callout %}");
+    });
+  });
 });
