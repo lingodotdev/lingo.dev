@@ -1,6 +1,7 @@
 import { Command } from "interactive-commander";
 import { exec } from "child_process";
 import path from "path";
+import fs from "fs";
 import { fileURLToPath } from "url";
 import os from "os";
 import setup from "./setup";
@@ -21,38 +22,94 @@ import { determineAuthId } from "./_utils";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+function resolveAssetsDir() {
+  // Works in src and in built output:
+  // src:   packages/cli/src/cli/cmd/run -> ../../../../assets
+  // build: packages/cli/build/cli/cmd/run -> ../../../../assets
+  return path.join(__dirname, "../../../../assets");
+}
+
+function clamp(n: number, min: number, max: number) {
+  return Math.max(min, Math.min(max, n));
+}
+
+function generateToneWav(filePath: string, freqHz: number, durationMs: number) {
+  const sampleRate = 44100;
+  const numChannels = 1;
+  const bitsPerSample = 16;
+  const volume = 0.2; // 0..1
+
+  const samples = Math.floor((durationMs / 1000) * sampleRate);
+  const data = Buffer.alloc(samples * 2); // 16-bit mono
+
+  for (let i = 0; i < samples; i++) {
+    const t = i / sampleRate;
+    const sample = Math.sin(2 * Math.PI * freqHz * t);
+    const val = Math.floor(clamp(sample * volume, -1, 1) * 0x7fff);
+    data.writeInt16LE(val, i * 2);
+  }
+
+  const byteRate = (sampleRate * numChannels * bitsPerSample) / 8;
+  const blockAlign = (numChannels * bitsPerSample) / 8;
+  const dataSize = data.length;
+  const riffSize = 36 + dataSize;
+
+  const header = Buffer.alloc(44);
+  header.write("RIFF", 0, 4, "ascii");
+  header.writeUInt32LE(riffSize, 4);
+  header.write("WAVE", 8, 4, "ascii");
+  header.write("fmt ", 12, 4, "ascii");
+  header.writeUInt32LE(16, 16); // PCM header size
+  header.writeUInt16LE(1, 20); // PCM format
+  header.writeUInt16LE(numChannels, 22);
+  header.writeUInt32LE(sampleRate, 24);
+  header.writeUInt32LE(byteRate, 28);
+  header.writeUInt16LE(blockAlign, 32);
+  header.writeUInt16LE(bitsPerSample, 34);
+  header.write("data", 36, 4, "ascii");
+  header.writeUInt32LE(dataSize, 40);
+
+  fs.mkdirSync(path.dirname(filePath), { recursive: true });
+  fs.writeFileSync(filePath, Buffer.concat([header, data]));
+}
+
+function ensureCachedWav(kind: "success" | "failure"): string {
+  const dir = path.join(os.tmpdir(), "lingo.dev", "sounds");
+  const file = path.join(dir, `${kind}.wav`);
+  if (!fs.existsSync(file)) {
+    const freq = kind === "success" ? 880 : 330;
+    const duration = kind === "success" ? 180 : 280;
+    generateToneWav(file, freq, duration);
+  }
+  return file;
+}
+
 function playSound(type: "success" | "failure") {
   const platform = os.platform();
 
   return new Promise<void>((resolve) => {
-    const assetDir = path.join(__dirname, "../assets");
-    const soundFiles = [path.join(assetDir, `${type}.mp3`)];
-
     let command = "";
 
     if (platform === "linux") {
-      command = soundFiles
-        .map(
-          (file) =>
-            `mpg123 -q "${file}" 2>/dev/null || aplay "${file}" 2>/dev/null`,
-        )
-        .join(" || ");
+      const assetDir = resolveAssetsDir();
+      const file = path.join(assetDir, `${type}.mp3`);
+      command = `mpg123 -q "${file}" 2>/dev/null || aplay "${file}" 2>/dev/null`;
     } else if (platform === "darwin") {
-      command = soundFiles.map((file) => `afplay "${file}"`).join(" || ");
+      const assetDir = resolveAssetsDir();
+      const file = path.join(assetDir, `${type}.mp3`);
+      command = `afplay "${file}"`;
     } else if (platform === "win32") {
-      command = `powershell -c "try { (New-Object Media.SoundPlayer '${soundFiles[1]}').PlaySync() } catch { Start-Process -FilePath '${soundFiles[0]}' -WindowStyle Hidden -Wait }"`;
+      const wavPath = ensureCachedWav(type).replace(/`/g, "``");
+      command = `powershell -NoProfile -Command "$p='${wavPath.replace(/'/g, "''")}'; try { [System.Media.SoundPlayer]::new($p).PlaySync() } catch { [console]::beep(${type === "success" ? 800 : 300}, ${type === "success" ? 180 : 280}) }"`;
     } else {
-      command = soundFiles
-        .map(
-          (file) =>
-            `aplay "${file}" 2>/dev/null || afplay "${file}" 2>/dev/null`,
-        )
-        .join(" || ");
+      const assetDir = resolveAssetsDir();
+      const file = path.join(assetDir, `${type}.mp3`);
+      command = `aplay "${file}" 2>/dev/null || afplay "${file}" 2>/dev/null`;
     }
 
-    exec(command, () => {
-      resolve();
-    });
+    if (!command) return resolve();
+
+    exec(command, () => resolve());
     setTimeout(resolve, 3000);
   });
 }
