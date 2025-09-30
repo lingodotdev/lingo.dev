@@ -1,0 +1,143 @@
+# Getting Started with Lingo.dev
+
+Welcome to **Lingo.dev**, the AI-powered localization platform for modern web applications!
+
+{% callout type="note" %}
+This guide will help you get started in just a few minutes.
+{% /callout %}
+
+## Quick Start
+
+Getting started is easy! Just follow these simple steps:
+
+1. Install the Lingo.dev CLI
+2. Initialize your project
+3. Start translating your content
+
+### Installation
+
+Run the following command to install:
+
+```bash
+npm install -g lingo.dev
+```
+
+{% callout type="warning" %}
+Make sure you have Node.js version 18 or higher installed.
+{% /callout %}
+
+## Core Features {% #features .section-highlight %}
+
+Lingo.dev offers several *powerful capabilities*:
+
+{% table %}
+* Feature
+* Description
+---
+* AI Translation
+* High-quality translations powered by {% $modelName %}
+---
+* Format Support
+* Works with JSON, YAML, Markdown, and more
+---
+* Translation Memory
+* Reuses previous translations for consistency
+{% /table %}
+
+### Supported File Formats
+
+You can localize these file types:
+
+- `json` - JSON files
+- `yaml` - YAML configuration files
+- `markdoc` - Markdoc documents with {% icon name="tag" /%} tags
+
+## Example Usage
+
+Here's a simple example to get you started:
+
+```javascript
+import { createI18n } from 'lingo.dev';
+
+const i18n = createI18n({
+  defaultLocale: 'en',
+  locales: ['en', 'es', 'fr', 'de']
+});
+```
+
+{% if $showAdvanced %}
+The advanced configuration options allow you to customize the behavior.
+{% /if %}
+
+### Configuration Example {% .code-section %}
+
+Create an `i18n.json` file in your project root:
+
+```json
+{
+  "version": 1.8,
+  "locale": {
+    "source": "en",
+    "targets": ["es", "fr"]
+  }
+}
+```
+
+## Best Practices
+
+Follow these guidelines for optimal results:
+
+{% list %}
+1. **Organize by domain**: Group translations by feature
+2. **Use descriptive keys**: Make translation keys self-explanatory
+3. **Leverage context**: Provide context in your source content
+4. **Review translations**: Always review AI-generated translations
+{% /list %}
+
+## Advanced Features
+
+{% tabs %}
+{% tab title="Translation Memory" %}
+Lingo.dev automatically remembers your translations and reuses them across your project.
+{% /tab %}
+
+{% tab title="Brand Voice" %}
+Configure your brand's tone and style to ensure translations match your identity.
+{% /tab %}
+
+{% tab title="Quality Assurance" %}
+Built-in QA checks ensure placeholder preservation and format consistency.
+{% /tab %}
+{% /tabs %}
+
+## Troubleshooting
+
+{% accordion %}
+{% item title="Translation fails with authentication error" %}
+Make sure you're logged in with `lingo.dev login` or set your API key.
+{% /item %}
+
+{% item title="Files not detected" %}
+Check your glob patterns in `i18n.json` and ensure files match the `[locale]` placeholder.
+{% /item %}
+
+{% item title="Translations cached incorrectly" %}
+Use the `--force` flag to bypass cache and regenerate translations.
+{% /item %}
+{% /accordion %}
+
+## Community Stats
+
+{% stats %}
+- **{% $totalUsers %}** developers using Lingo.dev
+- **{% $totalProjects %}** projects localized
+- **{% $totalTranslations %}** translations generated
+{% /stats %}
+
+---
+
+*Ready to go global?* Start localizing your application {% link href="/docs" %}with Lingo.dev{% /link %} today!
+
+**Questions?** Join our community or email us at support@lingo.dev
+
+{% badge color="blue" %}New{% /badge %} Pro tip: Use the `--watch` flag during development to automatically translate content as you write!

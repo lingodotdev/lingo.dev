@@ -1,0 +1,17 @@
+{
+  "version": 1.8,
+  "locale": {
+    "source": "en",
+    "targets": [
+      "es"
+    ]
+  },
+  "buckets": {
+    "markdoc": {
+      "include": [
+        "./[locale]/example.markdoc"
+      ]
+    }
+  },
+  "$schema": "https://lingo.dev/schema/i18n.json"
+}
