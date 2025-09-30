@@ -15,6 +15,7 @@ import createAndroidLoader from "./android";
 import createCsvLoader from "./csv";
 import createHtmlLoader from "./html";
 import createMarkdownLoader from "./markdown";
+import createMarkdocLoader from "./markdoc";
 import createPropertiesLoader from "./properties";
 import createXcodeStringsLoader from "./xcode-strings";
 import createXcodeStringsdictLoader from "./xcode-stringsdict";
@@ -136,6 +137,15 @@ export default function createBucketLoader(
         createTextFileLoader(bucketPathPattern),
         createPrettierLoader({ parser: "markdown", bucketPathPattern }),
         createMarkdownLoader(),
+        createSyncLoader(),
+        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+      );
+    case "markdoc":
+      return composeLoaders(
+        createTextFileLoader(bucketPathPattern),
+        createMarkdocLoader(),
+        createFlatLoader(),
+        createEnsureKeyOrderLoader(),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
