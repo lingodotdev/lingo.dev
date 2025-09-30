@@ -1,12 +1,16 @@
 import { Command } from "interactive-commander";
 import chalk from "chalk";
 import _ from "lodash";
-import { SETTINGS_KEYS, loadSystemSettings } from "../../utils/settings";
+import {
+  SETTINGS_KEYS,
+  loadSystemSettings,
+  getSettingsDisplayPath,
+} from "../../utils/settings";
 import dedent from "dedent";
 
 export default new Command()
   .name("get")
-  .description("Display the value of a CLI setting from ~/.lingodotdevrc")
+  .description(`Display the value of a CLI setting from ${getSettingsDisplayPath()}`)
   .addHelpText("afterAll", `\nAvailable keys:\n  ${SETTINGS_KEYS.join("\n  ")}`)
   .argument(
     "<key>",

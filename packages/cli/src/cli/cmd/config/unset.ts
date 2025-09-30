@@ -6,11 +6,12 @@ import {
   SETTINGS_KEYS,
   loadSystemSettings,
   saveSettings,
+  getSettingsDisplayPath,
 } from "../../utils/settings";
 
 export default new Command()
   .name("unset")
-  .description("Remove a CLI setting from ~/.lingodotdevrc")
+  .description(`Remove a CLI setting from ${getSettingsDisplayPath()}`)
   .addHelpText("afterAll", `\nAvailable keys:\n  ${SETTINGS_KEYS.join("\n  ")}`)
   .argument(
     "<key>",
