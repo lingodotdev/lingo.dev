@@ -180,7 +180,7 @@ Wir sind community-orientiert und schätzen Beiträge!
 
 ## ⭐ Star-Verlauf
 
-Wenn Ihnen gefällt, was wir tun, geben Sie uns einen ⭐ und helfen Sie uns, 3.000 Stars zu erreichen! 🌟
+Wenn Ihnen gefällt, was wir tun, geben Sie uns einen ⭐ und helfen Sie uns, 4.000 Sterne zu erreichen! 🌟
 
 [
 

@@ -180,7 +180,7 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 ## ⭐ 스타 히스토리
 
-저희가 하는 일이 마음에 드신다면, ⭐을 주시고 3,000개 스타 달성을 도와주세요! 🌟
+저희가 하는 일이 마음에 드신다면, ⭐을 주시고 4,000개의 별을 달성할 수 있도록 도와주세요! 🌟
 
 [
 

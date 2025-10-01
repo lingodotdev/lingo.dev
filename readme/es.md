@@ -180,7 +180,7 @@ Somos impulsados por la comunidad y nos encantan las contribuciones!
 
 ## ⭐ Historial de estrellas
 
-Si te gusta lo que estamos haciendo, danos una ⭐ y ayúdanos a alcanzar 3,000 estrellas! 🌟
+Si te gusta lo que estamos haciendo, danos una ⭐ y ayúdanos a alcanzar las 4,000 estrellas! 🌟
 
 [
 

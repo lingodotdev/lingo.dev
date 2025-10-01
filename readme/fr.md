@@ -180,7 +180,7 @@ Nous sommes orientés communauté et adorons les contributions !
 
 ## ⭐ Historique des étoiles
 
-Si vous appréciez notre travail, donnez-nous une ⭐ et aidez-nous à atteindre 3 000 étoiles ! 🌟
+Si vous appréciez ce que nous faisons, donnez-nous une ⭐ et aidez-nous à atteindre 4 000 étoiles ! 🌟
 
 [
 
