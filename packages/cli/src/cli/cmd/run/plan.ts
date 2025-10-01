@@ -133,6 +133,7 @@ export default async function plan(
                   lockedKeys: bucket.lockedKeys || [],
                   lockedPatterns: bucket.lockedPatterns || [],
                   onlyKeys: input.flags.key || [],
+                  formatter: input.config!.formatter,
                 });
               }
             }

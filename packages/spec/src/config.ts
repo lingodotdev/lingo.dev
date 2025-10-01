@@ -13,16 +13,19 @@ export const localeSchema = Z.object({
 }).describe("Locale configuration block.");
 
 // factories
-type ConfigDefinition<T extends Z.ZodRawShape, P extends Z.ZodRawShape> = {
+type ConfigDefinition<
+  T extends Z.ZodRawShape,
+  _P extends Z.ZodRawShape = any,
+> = {
   schema: Z.ZodObject<T>;
   defaultValue: Z.infer<Z.ZodObject<T>>;
   parse: (rawConfig: unknown) => Z.infer<Z.ZodObject<T>>;
 };
 const createConfigDefinition = <
   T extends Z.ZodRawShape,
-  P extends Z.ZodRawShape,
+  _P extends Z.ZodRawShape = any,
 >(
-  definition: ConfigDefinition<T, P>,
+  definition: ConfigDefinition<T, _P>,
 ) => definition;
 
 type ConfigDefinitionExtensionParams<
@@ -405,8 +408,32 @@ export const configV1_8Definition = extendConfigDefinition(
   },
 );
 
+// v1.8 -> v1.9
+// Changes: Add "formatter" field to top-level config
+export const configV1_9Definition = extendConfigDefinition(
+  configV1_8Definition,
+  {
+    createSchema: (baseSchema) =>
+      baseSchema.extend({
+        formatter: Z.enum(["prettier", "biome"])
+          .optional()
+          .describe(
+            "Code formatter to use for all buckets. Defaults to 'prettier' if not specified and a prettier config is found.",
+          ),
+      }),
+    createDefaultValue: (baseDefaultValue) => ({
+      ...baseDefaultValue,
+      version: 1.9,
+    }),
+    createUpgrader: (oldConfig) => ({
+      ...oldConfig,
+      version: 1.9,
+    }),
+  },
+);
+
 // exports
-export const LATEST_CONFIG_DEFINITION = configV1_8Definition;
+export const LATEST_CONFIG_DEFINITION = configV1_9Definition;
 
 export type I18nConfig = Z.infer<(typeof LATEST_CONFIG_DEFINITION)["schema"]>;
 

@@ -124,6 +124,7 @@ function createLoaderForTask(assignedTask: CmdRunTask) {
     {
       defaultLocale: assignedTask.sourceLocale,
       injectLocale: assignedTask.injectLocale,
+      formatter: assignedTask.formatter,
     },
     assignedTask.lockedKeys,
     assignedTask.lockedPatterns,
