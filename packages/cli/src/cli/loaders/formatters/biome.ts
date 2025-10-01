@@ -71,9 +71,6 @@ async function formatDataWithBiome(
     if (error instanceof Error) {
       console.log();
       console.log("⚠️  Biome formatting failed:", error.message);
-      console.log(
-        "⚠️  To use Biome formatter, ensure @biomejs/js-api is installed.",
-      );
     }
     return data; // Fallback to unformatted
   }
