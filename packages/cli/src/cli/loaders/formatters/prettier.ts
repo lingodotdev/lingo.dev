@@ -1,7 +1,6 @@
-import path from "path";
 import prettier, { Options } from "prettier";
-import { ILoader } from "./_types";
-import { createLoader } from "./_utils";
+import { ILoader } from "../_types";
+import { createBaseFormatterLoader } from "./_base";
 
 export type PrettierLoaderOptions = {
   parser: Options["parser"];
@@ -13,34 +12,8 @@ export type PrettierLoaderOptions = {
 export default function createPrettierLoader(
   options: PrettierLoaderOptions,
 ): ILoader<string, string> {
-  const stage = options.stage || "both";
-  return createLoader({
-    async pull(locale, data) {
-      if (!["pull", "both"].includes(stage)) {
-        return data;
-      }
-
-      const draftPath = options.bucketPathPattern.replaceAll(
-        "[locale]",
-        locale,
-      );
-      const finalPath = path.resolve(draftPath);
-
-      return await formatDataWithPrettier(data, finalPath, options);
-    },
-    async push(locale, data) {
-      if (!["push", "both"].includes(stage)) {
-        return data;
-      }
-
-      const draftPath = options.bucketPathPattern.replaceAll(
-        "[locale]",
-        locale,
-      );
-      const finalPath = path.resolve(draftPath);
-
-      return await formatDataWithPrettier(data, finalPath, options);
-    },
+  return createBaseFormatterLoader(options, async (data, filePath) => {
+    return await formatDataWithPrettier(data, filePath, options);
   });
 }
 

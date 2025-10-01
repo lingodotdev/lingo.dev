@@ -41,6 +41,7 @@ export default new Command()
             bucketConfig.pathPattern,
             {
               defaultLocale: sourceLocale,
+              formatter: i18nConfig!.formatter,
             },
           );
           bucketLoader.setDefaultLocale(sourceLocale);

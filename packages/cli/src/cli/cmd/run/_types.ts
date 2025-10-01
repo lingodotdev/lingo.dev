@@ -29,6 +29,7 @@ export type CmdRunTask = {
   lockedKeys: string[];
   lockedPatterns: string[];
   onlyKeys: string[];
+  formatter?: "prettier" | "biome";
 };
 
 export const flagsSchema = z.object({
