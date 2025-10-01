@@ -1,5 +1,11 @@
 # @lingo.dev/\_spec
 
+## 0.40.3
+
+### Patch Changes
+
+- [#1192](https://github.com/lingodotdev/lingo.dev/pull/1192) [`bbc71b9`](https://github.com/lingodotdev/lingo.dev/commit/bbc71b9948ccc289c9669d8b0c276c9596f6a5e7) Thanks [@vrcprl](https://github.com/vrcprl)! - Add biome support
+
 ## 0.40.2
 
 ### Patch Changes
