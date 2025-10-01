@@ -295,7 +295,11 @@ export default function createBucketLoader(
     case "typescript":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
-        createFormatterLoader(options.formatter, "typescript", bucketPathPattern),
+        createFormatterLoader(
+          options.formatter,
+          "typescript",
+          bucketPathPattern,
+        ),
         createTypescriptLoader(),
         createFlatLoader(),
         createEnsureKeyOrderLoader(),

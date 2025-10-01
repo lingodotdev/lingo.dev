@@ -13,7 +13,10 @@ export const localeSchema = Z.object({
 }).describe("Locale configuration block.");
 
 // factories
-type ConfigDefinition<T extends Z.ZodRawShape, _P extends Z.ZodRawShape = any> = {
+type ConfigDefinition<
+  T extends Z.ZodRawShape,
+  _P extends Z.ZodRawShape = any,
+> = {
   schema: Z.ZodObject<T>;
   defaultValue: Z.infer<Z.ZodObject<T>>;
   parse: (rawConfig: unknown) => Z.infer<Z.ZodObject<T>>;
