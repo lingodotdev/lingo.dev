@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.111.12
+
+### Patch Changes
+
+- [#1195](https://github.com/lingodotdev/lingo.dev/pull/1195) [`468a59b`](https://github.com/lingodotdev/lingo.dev/commit/468a59b89736c72253b1f32abbf30a950e5434ec) Thanks [@vrcprl](https://github.com/vrcprl)! - Fix Biome formatting
+
 ## 0.111.11
 
 ### Patch Changes
