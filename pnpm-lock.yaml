@@ -366,11 +366,11 @@ importers:
         specifier: ^7.27.1
         version: 7.27.1
       '@biomejs/js-api':
-        specifier: ^0.6.2
-        version: 0.6.2(@biomejs/wasm-nodejs@1.8.3)
+        specifier: ^3.0.0
+        version: 3.0.0(@biomejs/wasm-nodejs@2.2.5)
       '@biomejs/wasm-nodejs':
-        specifier: ^1.8.3
-        version: 1.8.3
+        specifier: ^2.2.4
+        version: 2.2.5
       '@datocms/cma-client-node':
         specifier: ^4.0.1
         version: 4.0.1
@@ -1481,12 +1481,12 @@ packages:
     resolution: {integrity: sha512-bkFqkLhh3pMBUQQkpVgWDWq/lqzc2678eUyDlTBhRqhCHFguYYGM0Efga7tYk4TogG/3x0EEl66/OQ+WGbWB/Q==}
     engines: {node: '>=6.9.0'}
 
-  '@biomejs/js-api@0.6.2':
-    resolution: {integrity: sha512-4IhoDIL/O6ifUT2i/lDqXBGTuQpwurQ2i81440L5N4B90bYo9boHdtcK4ZjliZmN31ST0TDh6s9aiZEAGi+0og==}
+  '@biomejs/js-api@3.0.0':
+    resolution: {integrity: sha512-5QcGJFj9IO+yXl76ICjvkdE38uxRcTDsBzcCZHEZ+ma+Te/nbvJg4A3KtAds9HCrEF0JKLWiyjMhAbqazuJvYA==}
     peerDependencies:
-      '@biomejs/wasm-bundler': ^1.8.2
-      '@biomejs/wasm-nodejs': ^1.8.2
-      '@biomejs/wasm-web': ^1.8.2
+      '@biomejs/wasm-bundler': ^2.2.0
+      '@biomejs/wasm-nodejs': ^2.2.0
+      '@biomejs/wasm-web': ^2.2.0
     peerDependenciesMeta:
       '@biomejs/wasm-bundler':
         optional: true
@@ -1495,8 +1495,8 @@ packages:
       '@biomejs/wasm-web':
         optional: true
 
-  '@biomejs/wasm-nodejs@1.8.3':
-    resolution: {integrity: sha512-4E7qOBjbQDHKG2MwEXM6DzacQqibGhPQSCSgzziP7enpmJYsZbvW1mYUTlOHio1/OgadyixQpZ/gZjj2IEeISg==}
+  '@biomejs/wasm-nodejs@2.2.5':
+    resolution: {integrity: sha512-p9BhDKyjyemt9aBOaqINrsTJSWiCYZu1asM5AxfMFxF9Fi3L3ZcIbzxe5OYa294oNllmmqJ+68GlZG/2fqF0dQ==}
 
   '@borewit/text-codec@0.1.1':
     resolution: {integrity: sha512-5L/uBxmjaCIX5h8Z+uu+kA9BQLkc/Wl06UGR5ajNRxu+/XjonB5i8JpgFMrPj3LXTCPA0pv8yxUvbUi+QthGGA==}
@@ -11430,11 +11430,11 @@ snapshots:
       '@babel/helper-string-parser': 7.27.1
       '@babel/helper-validator-identifier': 7.27.1
 
-  '@biomejs/js-api@0.6.2(@biomejs/wasm-nodejs@1.8.3)':
+  '@biomejs/js-api@3.0.0(@biomejs/wasm-nodejs@2.2.5)':
     optionalDependencies:
-      '@biomejs/wasm-nodejs': 1.8.3
+      '@biomejs/wasm-nodejs': 2.2.5
 
-  '@biomejs/wasm-nodejs@1.8.3': {}
+  '@biomejs/wasm-nodejs@2.2.5': {}
 
   '@borewit/text-codec@0.1.1': {}
 
