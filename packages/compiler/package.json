@@ -44,7 +44,7 @@
     "@babel/generator": "^7.26.5",
     "@babel/parser": "^7.26.7",
     "@babel/traverse": "^7.27.4",
-    "@babel/types": "^7.26.7",
+    "@babel/types": "^7.28.4",
     "@lingo.dev/_sdk": "workspace:*",
     "@lingo.dev/_spec": "workspace:*",
     "@openrouter/ai-sdk-provider": "^0.7.1",
