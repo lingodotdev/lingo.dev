@@ -1,5 +1,11 @@
 # @lingo.dev/\_spec
 
+## 0.40.4
+
+### Patch Changes
+
+- [#1201](https://github.com/lingodotdev/lingo.dev/pull/1201) [`1fa218c`](https://github.com/lingodotdev/lingo.dev/commit/1fa218c13bf90df6d175fb18264f59c1a10b967c) Thanks [@vrcprl](https://github.com/vrcprl)! - add new languages Malayalam (India), Armenian (Armenia), Macedonian (Macedonia)
+
 ## 0.40.3
 
 ### Patch Changes
