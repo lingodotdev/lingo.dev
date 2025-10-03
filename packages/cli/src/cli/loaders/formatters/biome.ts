@@ -1,6 +1,7 @@
 import path from "path";
 import fs from "fs/promises";
 import { Biome, Distribution } from "@biomejs/js-api";
+import { parse as parseJsonc } from "jsonc-parser";
 import { ILoader } from "../_types";
 import { createBaseFormatterLoader } from "./_base";
 
@@ -70,8 +71,15 @@ async function formatDataWithBiome(
     if (configPath) {
       const configContent = await fs.readFile(configPath, "utf-8");
       try {
-        const config = JSON.parse(configContent);
-        biome.applyConfiguration(projectKey, config);
+        // Parse JSONC (JSON with comments) properly using jsonc-parser
+        const config = parseJsonc(configContent);
+
+        // WORKAROUND: Biome JS API v3 has a bug where applying the full config
+        // causes formatter settings to be ignored. Apply only relevant sections.
+        // Specifically, exclude $schema, vcs, and files from the config.
+        const { $schema, vcs, files, ...relevantConfig } = config;
+
+        biome.applyConfiguration(projectKey, relevantConfig);
       } catch (parseError) {
         throw new Error(
           `Invalid Biome configuration in ${configPath}: ${parseError instanceof Error ? parseError.message : "JSON parse error"}`,
