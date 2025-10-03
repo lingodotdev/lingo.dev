@@ -213,6 +213,12 @@ const localeMap = {
   rw: ["rw-RW"],
   // Georgian (Georgia)
   ka: ["ka-GE"],
+  // Malayalam (India)
+  ml: ["ml-IN"],
+  // Armenian (Armenia)
+  hy: ["hy-AM"],
+  // Macedonian (Macedonia)
+  mk: ["mk-MK"],
 } as const;
 
 export type LocaleCodeShort = keyof typeof localeMap;
