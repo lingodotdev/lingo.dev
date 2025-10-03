@@ -72,6 +72,7 @@ export default function createBucketLoader(
         createEnsureKeyOrderLoader(),
         createFlatLoader(),
         createSyncLoader(),
+        createIgnoredKeysLoader(ignoredKeys || []),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
     case "csv":
@@ -81,6 +82,7 @@ export default function createBucketLoader(
         createEnsureKeyOrderLoader(),
         createFlatLoader(),
         createSyncLoader(),
+        createIgnoredKeysLoader(ignoredKeys || []),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
     case "html":
@@ -108,6 +110,7 @@ export default function createBucketLoader(
         createInjectLocaleLoader(options.injectLocale),
         createLockedKeysLoader(lockedKeys || []),
         createSyncLoader(),
+        createIgnoredKeysLoader(ignoredKeys || []),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
     case "json5":
@@ -163,6 +166,7 @@ export default function createBucketLoader(
         createEnsureKeyOrderLoader(),
         createSyncLoader(),
         createVariableLoader({ type: "python" }),
+        createIgnoredKeysLoader(ignoredKeys || []),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
     case "properties":
@@ -186,6 +190,7 @@ export default function createBucketLoader(
         createFlatLoader(),
         createEnsureKeyOrderLoader(),
         createSyncLoader(),
+        createIgnoredKeysLoader(ignoredKeys || []),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
     case "xcode-xcstrings":
@@ -199,6 +204,7 @@ export default function createBucketLoader(
         createLockedKeysLoader(lockedKeys || []),
         createSyncLoader(),
         createVariableLoader({ type: "ieee" }),
+        createIgnoredKeysLoader(ignoredKeys || []),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
     case "yaml":
@@ -210,6 +216,7 @@ export default function createBucketLoader(
         createEnsureKeyOrderLoader(),
         createLockedKeysLoader(lockedKeys || []),
         createSyncLoader(),
+        createIgnoredKeysLoader(ignoredKeys || []),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
     case "yaml-root-key":
@@ -232,6 +239,7 @@ export default function createBucketLoader(
         createFlutterLoader(),
         createFlatLoader(),
         createSyncLoader(),
+        createIgnoredKeysLoader(ignoredKeys || []),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
     case "xliff":
@@ -241,6 +249,7 @@ export default function createBucketLoader(
         createFlatLoader(),
         createEnsureKeyOrderLoader(),
         createSyncLoader(),
+        createIgnoredKeysLoader(ignoredKeys || []),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
     case "xml":
@@ -250,6 +259,7 @@ export default function createBucketLoader(
         createFlatLoader(),
         createEnsureKeyOrderLoader(),
         createSyncLoader(),
+        createIgnoredKeysLoader(ignoredKeys || []),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
     case "srt":
@@ -281,6 +291,7 @@ export default function createBucketLoader(
         createSyncLoader(),
         createFlatLoader(),
         createEnsureKeyOrderLoader(),
+        createIgnoredKeysLoader(ignoredKeys || []),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
     case "vue-json":
@@ -290,6 +301,7 @@ export default function createBucketLoader(
         createSyncLoader(),
         createFlatLoader(),
         createEnsureKeyOrderLoader(),
+        createIgnoredKeysLoader(ignoredKeys || []),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
     case "typescript":
