@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.111.14
+
+### Patch Changes
+
+- [#1200](https://github.com/lingodotdev/lingo.dev/pull/1200) [`dd0663f`](https://github.com/lingodotdev/lingo.dev/commit/dd0663fdcdd0ff4fd5748386758a8c20f9e52a4b) Thanks [@vrcprl](https://github.com/vrcprl)! - fix Biome JS API v3 bug
+
 ## 0.111.13
 
 ### Patch Changes
