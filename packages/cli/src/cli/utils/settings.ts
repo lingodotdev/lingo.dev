@@ -52,6 +52,20 @@ export function loadSystemSettings() {
   return _loadSystemFile();
 }
 
+export function getSettingsFilePath(): string {
+  const settingsFile = ".lingodotdevrc";
+  const homedir = os.homedir();
+  const settingsFilePath = path.join(homedir, settingsFile);
+  return settingsFilePath;
+}
+
+export function getSettingsDisplayPath(): string {
+  if (process.platform === "win32") {
+    return getSettingsFilePath();
+  }
+  return "~/.lingodotdevrc";
+}
+
 const flattenZodObject = (schema: Z.ZodObject<any>, prefix = ""): string[] => {
   return Object.entries(schema.shape).flatMap(([key, value]) => {
     const newPrefix = prefix ? `${prefix}.${key}` : key;
@@ -112,7 +126,7 @@ function _loadEnv() {
 }
 
 function _loadSystemFile() {
-  const settingsFilePath = _getSettingsFilePath();
+  const settingsFilePath = getSettingsFilePath();
   const content = fs.existsSync(settingsFilePath)
     ? fs.readFileSync(settingsFilePath, "utf-8")
     : "";
@@ -138,16 +152,9 @@ function _loadSystemFile() {
 }
 
 function _saveSystemFile(settings: CliSettings) {
-  const settingsFilePath = _getSettingsFilePath();
+  const settingsFilePath = getSettingsFilePath();
   const content = Ini.stringify(settings);
   fs.writeFileSync(settingsFilePath, content);
-}
-
-function _getSettingsFilePath(): string {
-  const settingsFile = ".lingodotdevrc";
-  const homedir = os.homedir();
-  const settingsFilePath = path.join(homedir, settingsFile);
-  return settingsFilePath;
 }
 
 function _legacyEnvVarWarning() {
