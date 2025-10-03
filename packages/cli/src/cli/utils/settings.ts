@@ -73,6 +73,12 @@ function _providerConfigKeys(): string[] {
     .filter((v): v is string => Boolean(v));
 }
 
+function _providerEnvVarKeys(): string[] {
+  return Object.values(PROVIDER_METADATA)
+    .map((m) => m.apiKeyEnvVar)
+    .filter((v): v is string => Boolean(v));
+}
+
 export const SETTINGS_KEYS = [
   "auth.apiKey",
   "auth.apiUrl",
@@ -94,19 +100,15 @@ function _loadDefaults(): CliSettings {
 }
 
 function _loadEnv() {
-  return Z.object({
+  const shape: Record<string, Z.ZodTypeAny> = {
     LINGODOTDEV_API_KEY: Z.string().optional(),
     LINGODOTDEV_API_URL: Z.string().optional(),
     LINGODOTDEV_WEB_URL: Z.string().optional(),
-    OPENAI_API_KEY: Z.string().optional(),
-    ANTHROPIC_API_KEY: Z.string().optional(),
-    GROQ_API_KEY: Z.string().optional(),
-    GOOGLE_API_KEY: Z.string().optional(),
-    OPENROUTER_API_KEY: Z.string().optional(),
-    MISTRAL_API_KEY: Z.string().optional(),
-  })
-    .passthrough()
-    .parse(process.env);
+  };
+  for (const envVar of _providerEnvVarKeys()) {
+    shape[envVar] = Z.string().optional();
+  }
+  return Z.object(shape).passthrough().parse(process.env);
 }
 
 function _loadSystemFile() {
