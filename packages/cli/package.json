@@ -122,6 +122,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
+    "@lingo.dev/providers": "workspace:*",
     "@ai-sdk/anthropic": "^1.2.11",
     "@ai-sdk/google": "^1.2.19",
     "@ai-sdk/mistral": "^1.2.8",

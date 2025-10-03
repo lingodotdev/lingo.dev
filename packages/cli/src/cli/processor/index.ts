@@ -4,13 +4,14 @@ import dedent from "dedent";
 import { LocalizerFn } from "./_base";
 import { createLingoLocalizer } from "./lingo";
 import { createBasicTranslator } from "./basic";
-import { createOpenAI } from "@ai-sdk/openai";
 import { colors } from "../constants";
-import { createAnthropic } from "@ai-sdk/anthropic";
-import { createGoogleGenerativeAI } from "@ai-sdk/google";
-import { createOpenRouter } from "@openrouter/ai-sdk-provider";
-import { createMistral } from "@ai-sdk/mistral";
-import { createOllama } from "ollama-ai-provider";
+import {
+  createProviderClient,
+  ProviderKeyMissingError,
+  PROVIDER_METADATA,
+  SUPPORTED_PROVIDERS,
+  type ProviderId,
+} from "@lingo.dev/providers";
 
 export default function createProcessor(
   provider: I18nConfig["provider"],
@@ -68,66 +69,25 @@ function getPureModelProvider(provider: I18nConfig["provider"]) {
   ${chalk.hex(colors.blue)("Docs: https://lingo.dev/go/docs")}
   `;
 
-  switch (provider?.id) {
-    case "openai": {
-      if (!process.env.OPENAI_API_KEY) {
-        throw new Error(
-          createMissingKeyErrorMessage("OpenAI", "OPENAI_API_KEY"),
-        );
-      }
-      return createOpenAI({
-        apiKey: process.env.OPENAI_API_KEY,
-        baseURL: provider.baseUrl,
-      })(provider.model);
+  const supported = new Set(SUPPORTED_PROVIDERS as readonly string[]);
+
+  if (!supported.has(provider?.id as any)) {
+    throw new Error(createUnsupportedProviderErrorMessage(provider?.id));
+  }
+
+  const skipAuth = provider?.id === "ollama";
+  try {
+    return createProviderClient(provider!.id as ProviderId, provider!.model, {
+      baseUrl: provider!.baseUrl,
+      skipAuth,
+    });
+  } catch (error: unknown) {
+    if (error instanceof ProviderKeyMissingError) {
+      const meta = PROVIDER_METADATA[error.providerId];
+      throw new Error(
+        createMissingKeyErrorMessage(meta?.name ?? error.providerId, meta?.apiKeyEnvVar),
+      );
     }
-    case "anthropic": {
-      if (!process.env.ANTHROPIC_API_KEY) {
-        throw new Error(
-          createMissingKeyErrorMessage("Anthropic", "ANTHROPIC_API_KEY"),
-        );
-      }
-      return createAnthropic({
-        apiKey: process.env.ANTHROPIC_API_KEY,
-      })(provider.model);
-    }
-    case "google": {
-      if (!process.env.GOOGLE_API_KEY) {
-        throw new Error(
-          createMissingKeyErrorMessage("Google", "GOOGLE_API_KEY"),
-        );
-      }
-      return createGoogleGenerativeAI({
-        apiKey: process.env.GOOGLE_API_KEY,
-      })(provider.model);
-    }
-    case "openrouter": {
-      if (!process.env.OPENROUTER_API_KEY) {
-        throw new Error(
-          createMissingKeyErrorMessage("OpenRouter", "OPENROUTER_API_KEY"),
-        );
-      }
-      return createOpenRouter({
-        apiKey: process.env.OPENROUTER_API_KEY,
-        baseURL: provider.baseUrl,
-      })(provider.model);
-    }
-    case "ollama": {
-      // No API key check needed for Ollama
-      return createOllama()(provider.model);
-    }
-    case "mistral": {
-      if (!process.env.MISTRAL_API_KEY) {
-        throw new Error(
-          createMissingKeyErrorMessage("Mistral", "MISTRAL_API_KEY"),
-        );
-      }
-      return createMistral({
-        apiKey: process.env.MISTRAL_API_KEY,
-        baseURL: provider.baseUrl,
-      })(provider.model);
-    }
-    default: {
-      throw new Error(createUnsupportedProviderErrorMessage(provider?.id));
-    }
+    throw error as Error;
   }
 }

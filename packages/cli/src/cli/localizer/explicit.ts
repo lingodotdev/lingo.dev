@@ -1,8 +1,3 @@
-import { createAnthropic } from "@ai-sdk/anthropic";
-import { createGoogleGenerativeAI } from "@ai-sdk/google";
-import { createOpenAI } from "@ai-sdk/openai";
-import { createOpenRouter } from "@openrouter/ai-sdk-provider";
-import { createMistral } from "@ai-sdk/mistral";
 import { I18nConfig } from "@lingo.dev/_spec";
 import chalk from "chalk";
 import dedent from "dedent";
@@ -10,124 +5,27 @@ import { ILocalizer, LocalizerData } from "./_types";
 import { LanguageModel, Message, generateText } from "ai";
 import { colors } from "../constants";
 import { jsonrepair } from "jsonrepair";
-import { createOllama } from "ollama-ai-provider";
+import {
+  createProviderClient,
+  ProviderKeyMissingError,
+  PROVIDER_METADATA,
+  SUPPORTED_PROVIDERS,
+  type ProviderId,
+} from "@lingo.dev/providers";
 
 export default function createExplicitLocalizer(
   provider: NonNullable<I18nConfig["provider"]>,
 ): ILocalizer {
-  const settings = provider.settings || {};
+  const supported = new Set(SUPPORTED_PROVIDERS as readonly string[]);
 
-  switch (provider.id) {
-    default:
-      throw new Error(
-        dedent`
-          You're trying to use unsupported provider: ${chalk.dim(provider.id)}.
-
-          To fix this issue:
-          1. Switch to one of the supported providers, or
-          2. Remove the ${chalk.italic(
-            "provider",
-          )} node from your i18n.json configuration to switch to ${chalk.hex(
-            colors.green,
-          )("Lingo.dev")}
-
-          ${chalk.hex(colors.blue)("Docs: https://lingo.dev/go/docs")}
-        `,
-      );
-    case "openai":
-      return createAiSdkLocalizer({
-        factory: (params) => createOpenAI(params).languageModel(provider.model),
-        id: provider.id,
-        prompt: provider.prompt,
-        apiKeyName: "OPENAI_API_KEY",
-        baseUrl: provider.baseUrl,
-        settings,
-      });
-    case "anthropic":
-      return createAiSdkLocalizer({
-        factory: (params) =>
-          createAnthropic(params).languageModel(provider.model),
-        id: provider.id,
-        prompt: provider.prompt,
-        apiKeyName: "ANTHROPIC_API_KEY",
-        baseUrl: provider.baseUrl,
-        settings,
-      });
-    case "google":
-      return createAiSdkLocalizer({
-        factory: (params) =>
-          createGoogleGenerativeAI(params).languageModel(provider.model),
-        id: provider.id,
-        prompt: provider.prompt,
-        apiKeyName: "GOOGLE_API_KEY",
-        baseUrl: provider.baseUrl,
-        settings,
-      });
-    case "openrouter":
-      return createAiSdkLocalizer({
-        factory: (params) =>
-          createOpenRouter(params).languageModel(provider.model),
-        id: provider.id,
-        prompt: provider.prompt,
-        apiKeyName: "OPENROUTER_API_KEY",
-        baseUrl: provider.baseUrl,
-        settings,
-      });
-    case "ollama":
-      return createAiSdkLocalizer({
-        factory: (_params) => createOllama().languageModel(provider.model),
-        id: provider.id,
-        prompt: provider.prompt,
-        skipAuth: true,
-        settings,
-      });
-    case "mistral":
-      return createAiSdkLocalizer({
-        factory: (params) =>
-          createMistral(params).languageModel(provider.model),
-        id: provider.id,
-        prompt: provider.prompt,
-        apiKeyName: "MISTRAL_API_KEY",
-        baseUrl: provider.baseUrl,
-        settings,
-      });
-  }
-}
-
-function createAiSdkLocalizer(params: {
-  factory: (params: { apiKey?: string; baseUrl?: string }) => LanguageModel;
-  id: NonNullable<I18nConfig["provider"]>["id"];
-  prompt: string;
-  apiKeyName?: string;
-  baseUrl?: string;
-  skipAuth?: boolean;
-  settings?: { temperature?: number };
-}): ILocalizer {
-  const skipAuth = params.skipAuth === true;
-
-  const apiKey = process.env[params?.apiKeyName ?? ""];
-  if ((!skipAuth && !apiKey) || !params.apiKeyName) {
+  if (!supported.has(provider.id as any)) {
     throw new Error(
       dedent`
-        You're trying to use raw ${chalk.dim(params.id)} API for translation. ${
-          params.apiKeyName
-            ? `However, ${chalk.dim(
-                params.apiKeyName,
-              )} environment variable is not set.`
-            : "However, that provider is unavailable."
-        }
+        You're trying to use unsupported provider: ${chalk.dim(provider.id)}.
 
         To fix this issue:
-        1. ${
-          params.apiKeyName
-            ? `Set ${chalk.dim(
-                params.apiKeyName,
-              )} in your environment variables`
-            : "Set the environment variable for your provider (if required)"
-        }, or
-        2. Remove the ${chalk.italic(
-          "provider",
-        )} node from your i18n.json configuration to switch to ${chalk.hex(
+        1. Switch to one of the supported providers, or
+        2. Remove the ${chalk.italic("provider")} node from your i18n.json configuration to switch to ${chalk.hex(
           colors.green,
         )("Lingo.dev")}
 
@@ -136,9 +34,55 @@ function createAiSdkLocalizer(params: {
     );
   }
 
-  const model = params.factory(
-    skipAuth ? {} : { apiKey, baseUrl: params.baseUrl },
-  );
+  const skipAuth = provider.id === "ollama";
+  try {
+    const model = createProviderClient(provider.id as ProviderId, provider.model, {
+      baseUrl: provider.baseUrl,
+      skipAuth,
+    });
+    return createLocalizerFromModel({
+      model,
+      id: provider.id,
+      prompt: provider.prompt,
+      skipAuth,
+    });
+  } catch (error: unknown) {
+    if (error instanceof ProviderKeyMissingError) {
+      const meta = PROVIDER_METADATA[error.providerId];
+      const envVar = meta?.apiKeyEnvVar;
+      throw new Error(
+        dedent`
+          You're trying to use raw ${chalk.dim(provider.id)} API for translation. ${
+            envVar
+              ? `However, ${chalk.dim(envVar)} environment variable is not set.`
+              : "However, that provider is unavailable."
+          }
+
+          To fix this issue:
+          1. ${
+            envVar
+              ? `Set ${chalk.dim(envVar)} in your environment variables`
+              : "Set the environment variable for your provider (if required)"
+          }, or
+          2. Remove the ${chalk.italic("provider")} node from your i18n.json configuration to switch to ${chalk.hex(
+            colors.green,
+          )("Lingo.dev")}
+
+          ${chalk.hex(colors.blue)("Docs: https://lingo.dev/go/docs")}
+        `,
+      );
+    }
+    throw error as Error;
+  }
+}
+
+function createLocalizerFromModel(params: {
+  model: LanguageModel;
+  id: NonNullable<I18nConfig["provider"]>["id"];
+  prompt: string;
+  skipAuth?: boolean;
+}): ILocalizer {
+  const { model } = params;
 
   return {
     id: params.id,
