@@ -11,7 +11,7 @@ import { isRunningInCIOrDocker } from "./utils/env";
 import { loadDictionary, transformComponent } from "./_loader-utils";
 import trackEvent from "./utils/observability";
 import { PROVIDER_METADATA, resolveProviderApiKey } from "@lingo.dev/providers";
-import { getRc } from "./utils/rc";
+import { getRcConfig } from "@lingo.dev/config";
 
 function getProviderDetails(providerId: string) {
   const meta = (PROVIDER_METADATA as any)[providerId];
@@ -373,7 +373,7 @@ function validateLLMKeyDetails(configuredProviders: string[]): void {
     })();
 
     const foundInRc = (() => {
-      const rc = getRc();
+      const rc = getRcConfig();
       if (providerId === "lingo.dev") {
         return typeof _.get(rc, "auth.apiKey") === "string";
       }
