@@ -7,45 +7,26 @@ import { defaultParams } from "./_base";
 import { LCP_DICTIONARY_FILE_NAME } from "./_const";
 import { LCPCache } from "./lib/lcp/cache";
 import { getInvalidLocales } from "./utils/locales";
-import {
-  getGroqKeyFromEnv,
-  getGroqKeyFromRc,
-  getGoogleKeyFromEnv,
-  getGoogleKeyFromRc,
-  getMistralKeyFromEnv,
-  getMistralKeyFromRc,
-  getLingoDotDevKeyFromEnv,
-  getLingoDotDevKeyFromRc,
-} from "./utils/llm-api-key";
 import { isRunningInCIOrDocker } from "./utils/env";
-import { providerDetails } from "./lib/lcp/api/provider-details";
 import { loadDictionary, transformComponent } from "./_loader-utils";
 import trackEvent from "./utils/observability";
+import { PROVIDER_METADATA, resolveProviderApiKey } from "@lingo.dev/providers";
+import { getRc } from "./utils/rc";
 
-const keyCheckers: Record<
-  string,
-  {
-    checkEnv: () => string | undefined;
-    checkRc: () => string | undefined;
+function getProviderDetails(providerId: string) {
+  const meta = (PROVIDER_METADATA as any)[providerId];
+  if (meta) return meta;
+  if (providerId === "lingo.dev") {
+    return {
+      name: "Lingo.dev",
+      apiKeyEnvVar: "LINGODOTDEV_API_KEY",
+      apiKeyConfigKey: "auth.apiKey",
+      getKeyLink: "https://lingo.dev",
+      docsLink: "https://lingo.dev/docs",
+    };
   }
-> = {
-  groq: {
-    checkEnv: getGroqKeyFromEnv,
-    checkRc: getGroqKeyFromRc,
-  },
-  google: {
-    checkEnv: getGoogleKeyFromEnv,
-    checkRc: getGoogleKeyFromRc,
-  },
-  mistral: {
-    checkEnv: getMistralKeyFromEnv,
-    checkRc: getMistralKeyFromRc,
-  },
-  "lingo.dev": {
-    checkEnv: getLingoDotDevKeyFromEnv,
-    checkRc: getLingoDotDevKeyFromRc,
-  },
-};
+  return undefined;
+}
 
 const alreadySentBuildEvent = { value: false };
 
@@ -347,9 +328,7 @@ function getConfiguredProviders(models: Record<string, string>): string[] {
     .filter(Boolean) // Remove empty strings
     .uniq() // Get unique providers
     .filter(
-      (providerId) =>
-        providerDetails.hasOwnProperty(providerId) &&
-        keyCheckers.hasOwnProperty(providerId),
+      (providerId) => !!(PROVIDER_METADATA as any)[providerId],
     ) // Only check for known and implemented providers
     .value();
 }
@@ -371,19 +350,37 @@ function validateLLMKeyDetails(configuredProviders: string[]): void {
     {
       foundInEnv: boolean;
       foundInRc: boolean;
-      details: (typeof providerDetails)[string];
+      details: ReturnType<typeof getProviderDetails>;
     }
   > = {};
   const missingProviders: string[] = [];
   const foundProviders: string[] = [];
 
   for (const providerId of configuredProviders) {
-    const details = providerDetails[providerId];
-    const checkers = keyCheckers[providerId];
-    if (!details || !checkers) continue; // Should not happen due to filter above
+    const details = getProviderDetails(providerId);
+    if (!details) continue;
 
-    const foundInEnv = !!checkers.checkEnv();
-    const foundInRc = !!checkers.checkRc();
+    const foundInEnv = (() => {
+      if (providerId === "lingo.dev") {
+        return !!process.env["LINGODOTDEV_API_KEY"];
+      }
+      const envVar = details.apiKeyEnvVar;
+      if (!envVar) return false;
+      // Isolate env-only resolution
+      return !!resolveProviderApiKey(providerId as any, {
+        sources: { env: { [envVar]: process.env[envVar] }, rc: {} as any },
+      });
+    })();
+
+    const foundInRc = (() => {
+      const rc = getRc();
+      if (providerId === "lingo.dev") {
+        return typeof _.get(rc, "auth.apiKey") === "string";
+      }
+      return !!resolveProviderApiKey(providerId as any, {
+        sources: { env: {}, rc: rc as any },
+      });
+    })();
 
     keyStatuses[providerId] = { foundInEnv, foundInRc, details };
 

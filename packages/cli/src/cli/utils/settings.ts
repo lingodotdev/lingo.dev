@@ -3,7 +3,8 @@ import path from "path";
 import _ from "lodash";
 import Z from "zod";
 import fs from "fs";
-import Ini from "ini";
+import { getRcConfig } from "@lingo.dev/config";
+import { PROVIDER_METADATA } from "@lingo.dev/providers";
 
 export type CliSettings = Z.infer<typeof SettingsSchema>;
 
@@ -112,12 +113,7 @@ function _loadEnv() {
 }
 
 function _loadSystemFile() {
-  const settingsFilePath = _getSettingsFilePath();
-  const content = fs.existsSync(settingsFilePath)
-    ? fs.readFileSync(settingsFilePath, "utf-8")
-    : "";
-  const data = Ini.parse(content);
-
+  const data = getRcConfig();
   return Z.object({
     auth: Z.object({
       apiKey: Z.string().optional(),
@@ -139,7 +135,27 @@ function _loadSystemFile() {
 
 function _saveSystemFile(settings: CliSettings) {
   const settingsFilePath = _getSettingsFilePath();
-  const content = Ini.stringify(settings);
+  const content = [
+    `[auth]`,
+    `apiKey=${settings.auth.apiKey}`,
+    `apiUrl=${settings.auth.apiUrl}`,
+    `webUrl=${settings.auth.webUrl}`,
+    ``,
+    `[llm]`,
+    settings.llm.openaiApiKey ? `openaiApiKey=${settings.llm.openaiApiKey}` : ``,
+    settings.llm.anthropicApiKey
+      ? `anthropicApiKey=${settings.llm.anthropicApiKey}`
+      : ``,
+    settings.llm.groqApiKey ? `groqApiKey=${settings.llm.groqApiKey}` : ``,
+    settings.llm.googleApiKey ? `googleApiKey=${settings.llm.googleApiKey}` : ``,
+    settings.llm.openrouterApiKey
+      ? `openrouterApiKey=${settings.llm.openrouterApiKey}`
+      : ``,
+    settings.llm.mistralApiKey ? `mistralApiKey=${settings.llm.mistralApiKey}` : ``,
+    ``,
+  ]
+    .filter(Boolean)
+    .join("\n");
   fs.writeFileSync(settingsFilePath, content);
 }
 
@@ -177,41 +193,20 @@ function _envVarsInfo() {
       `ℹ️  Using LINGODOTDEV_API_KEY env var instead of credentials from user config`,
     );
   }
-  if (env.OPENAI_API_KEY && systemFile.llm?.openaiApiKey) {
-    console.info(
-      "\x1b[36m%s\x1b[0m",
-      `ℹ️  Using OPENAI_API_KEY env var instead of key from user config.`,
-    );
-  }
-  if (env.ANTHROPIC_API_KEY && systemFile.llm?.anthropicApiKey) {
-    console.info(
-      "\x1b[36m%s\x1b[0m",
-      `ℹ️  Using ANTHROPIC_API_KEY env var instead of key from user config`,
-    );
-  }
-  if (env.GROQ_API_KEY && systemFile.llm?.groqApiKey) {
-    console.info(
-      "\x1b[36m%s\x1b[0m",
-      `ℹ️  Using GROQ_API_KEY env var instead of key from user config`,
-    );
-  }
-  if (env.GOOGLE_API_KEY && systemFile.llm?.googleApiKey) {
-    console.info(
-      "\x1b[36m%s\x1b[0m",
-      `ℹ️  Using GOOGLE_API_KEY env var instead of key from user config`,
-    );
-  }
-  if (env.OPENROUTER_API_KEY && systemFile.llm?.openrouterApiKey) {
-    console.info(
-      "\x1b[36m%s\x1b[0m",
-      `ℹ️  Using OPENROUTER_API_KEY env var instead of key from user config`,
-    );
-  }
-  if (env.MISTRAL_API_KEY && systemFile.llm?.mistralApiKey) {
-    console.info(
-      "\x1b[36m%s\x1b[0m",
-      `ℹ️  Using MISTRAL_API_KEY env var instead of key from user config`,
-    );
+  // Provider-specific env vs rc info using shared metadata
+  for (const meta of Object.values(PROVIDER_METADATA)) {
+    const envVar = meta.apiKeyEnvVar;
+    const cfgKey = meta.apiKeyConfigKey;
+    if (!envVar || !cfgKey) continue;
+    const cfgSuffix = cfgKey.startsWith("llm.") ? cfgKey.slice(4) : undefined;
+    const envVal = (env as any)[envVar];
+    const rcVal = cfgSuffix ? (systemFile.llm as any)?.[cfgSuffix] : undefined;
+    if (envVal && rcVal) {
+      console.info(
+        "\x1b[36m%s\x1b[0m",
+        `ℹ️  Using ${envVar} env var instead of key from user config`,
+      );
+    }
   }
   if (env.LINGODOTDEV_API_URL) {
     console.info(
