@@ -122,6 +122,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
+    "@lingo.dev/config": "workspace:*",
     "@lingo.dev/providers": "workspace:*",
     "@ai-sdk/anthropic": "^1.2.11",
     "@ai-sdk/google": "^1.2.19",
@@ -169,7 +170,6 @@
     "glob": "<11.0.0",
     "gradient-string": "^3.0.0",
     "gray-matter": "^4.0.3",
-    "ini": "^5.0.0",
     "ink": "^4.2.0",
     "ink-progress-bar": "^3.0.0",
     "ink-spinner": "^5.0.0",

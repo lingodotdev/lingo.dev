@@ -2,8 +2,9 @@ import os from "os";
 import path from "path";
 import fs from "fs";
 import Ini from "ini";
+import Z from "zod";
 
-export interface RcData {
+export interface RcConfig {
   auth?: {
     apiKey?: string;
     apiUrl?: string;
@@ -20,7 +21,25 @@ export interface RcData {
   [key: string]: any;
 }
 
-export function readRc(): RcData {
+export const rcConfigSchema = Z.object({
+  auth: Z.object({
+    apiKey: Z.string().optional(),
+    apiUrl: Z.string().optional(),
+    webUrl: Z.string().optional(),
+  }).optional(),
+  llm: Z.object({
+    groqApiKey: Z.string().optional(),
+    openaiApiKey: Z.string().optional(),
+    anthropicApiKey: Z.string().optional(),
+    googleApiKey: Z.string().optional(),
+    openrouterApiKey: Z.string().optional(),
+    mistralApiKey: Z.string().optional(),
+  }).optional(),
+})
+  .passthrough()
+  .transform((v) => v as RcConfig);
+
+export function getRcConfig(): RcConfig {
   const settingsFile = ".lingodotdevrc";
   const homedir = os.homedir();
   const settingsFilePath = path.join(homedir, settingsFile);
@@ -28,5 +47,5 @@ export function readRc(): RcData {
     ? fs.readFileSync(settingsFilePath, "utf-8")
     : "";
   const data = Ini.parse(content);
-  return data as RcData;
+  return rcConfigSchema.parse(data);
 }
