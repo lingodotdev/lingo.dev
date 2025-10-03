@@ -1,4 +1,5 @@
 import Z from "zod";
+import { SUPPORTED_PROVIDERS } from "@lingo.dev/providers";
 import { localeCodeSchema } from "./locales";
 import { bucketTypeSchema } from "./formats";
 
@@ -289,15 +290,16 @@ export const configV1_4Definition = extendConfigDefinition(
 
 // v1.4 -> v1.5
 // Changes: add "provider" field to the config
+const providerIdEnumValues =
+  SUPPORTED_PROVIDERS as unknown as [
+    (typeof SUPPORTED_PROVIDERS)[number],
+    ...((typeof SUPPORTED_PROVIDERS)[number])[],
+  ];
+
 const providerSchema = Z.object({
-  id: Z.enum([
-    "openai",
-    "anthropic",
-    "google",
-    "ollama",
-    "openrouter",
-    "mistral",
-  ]).describe("Identifier of the translation provider service."),
+  id: Z.enum(providerIdEnumValues).describe(
+    "Identifier of the translation provider service.",
+  ),
   model: Z.string().describe("Model name to use for translations."),
   prompt: Z.string().describe(
     "Prompt template used when requesting translations.",
@@ -486,7 +488,24 @@ export const configV1_10Definition = extendConfigDefinition(
 );
 
 // exports
-export const LATEST_CONFIG_DEFINITION = configV1_10Definition;
+// v1.10 -> v2.0
+// Changes: Use SUPPORTED_PROVIDERS from providers package for provider enum
+export const configV2_0Definition = extendConfigDefinition(
+  configV1_10Definition,
+  {
+    createSchema: (baseSchema) => baseSchema,
+    createDefaultValue: (baseDefaultValue) => ({
+      ...baseDefaultValue,
+      version: 2.0,
+    }),
+    createUpgrader: (oldConfig) => ({
+      ...oldConfig,
+      version: 2.0,
+    }),
+  },
+);
+
+export const LATEST_CONFIG_DEFINITION = configV2_0Definition;
 
 export type I18nConfig = Z.infer<(typeof LATEST_CONFIG_DEFINITION)["schema"]>;
 

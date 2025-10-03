@@ -949,6 +949,9 @@ importers:
 
   packages/spec:
     dependencies:
+      '@lingo.dev/providers':
+        specifier: workspace:*
+        version: link:../providers
       zod:
         specifier: ^3.25.76
         version: 3.25.76
