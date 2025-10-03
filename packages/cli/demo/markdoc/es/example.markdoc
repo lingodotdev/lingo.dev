@@ -1,0 +1,143 @@
+# Primeros pasos con Lingo.dev
+
+Bienvenido a **Lingo.dev**, la plataforma de localización impulsada por IA para aplicaciones web modernas!
+
+{% callout type="note" %}
+Esta guía te ayudará a comenzar en solo unos minutos.
+{% /callout %}
+
+## Inicio rápido
+
+¡Comenzar es fácil! Solo sigue estos sencillos pasos:
+
+1. Instalar el CLI de Lingo.dev
+1. Inicializar tu proyecto
+1. Comenzar a traducir tu contenido
+
+### Instalación
+
+Ejecuta el siguiente comando para instalar:
+
+```bash
+npm install -g lingo.dev
+```
+
+{% callout type="warning" %}
+Asegúrate de tener instalada la versión 18 o superior de Node.js.
+{% /callout %}
+
+## Características principales {% #features .section-highlight %}
+
+Lingo.dev ofrece varias *capacidades potentes*:
+
+{% table %}
+- Característica
+- Descripción
+---
+- Traducción por IA
+- Traducciones de alta calidad impulsadas por {% $modelName %}
+---
+- Soporte de formatos
+- Funciona con JSON, YAML, Markdown y más
+---
+- Memoria de traducción
+- Reutiliza traducciones previas para mantener consistencia
+{% /table %}
+
+### Formatos de archivo compatibles
+
+Puedes localizar estos tipos de archivos:
+
+- `json` - Archivos JSON
+- `yaml` - Archivos de configuración YAML
+- `markdoc` - Documentos Markdoc con {% icon name="tag" /%} etiquetas
+
+## Ejemplo de uso
+
+Aquí tienes un ejemplo sencillo para comenzar:
+
+```javascript
+import { createI18n } from 'lingo.dev';
+
+const i18n = createI18n({
+  defaultLocale: 'en',
+  locales: ['en', 'es', 'fr', 'de']
+});
+```
+
+{% if $showAdvanced %}
+Las opciones de configuración avanzada te permiten personalizar el comportamiento.
+{% /if %}
+
+### Ejemplo de configuración {% .code-section %}
+
+Crea un archivo `i18n.json` en la raíz de tu proyecto:
+
+```json
+{
+  "version": 1.8,
+  "locale": {
+    "source": "en",
+    "targets": ["es", "fr"]
+  }
+}
+```
+
+## Mejores prácticas
+
+Sigue estas directrices para obtener resultados óptimos:
+
+{% list %}
+1. **Organiza por dominio**: Agrupa las traducciones por funcionalidad
+1. **Usa claves descriptivas**: Haz que las claves de traducción sean autoexplicativas
+1. **Aprovecha el contexto**: Proporciona contexto en tu contenido fuente
+1. **Revisa las traducciones**: Siempre revisa las traducciones generadas por IA
+{% /list %}
+
+## Funcionalidades avanzadas
+
+{% tabs %}
+{% tab title="Translation Memory" %}
+Lingo.dev memoriza automáticamente tus traducciones y las reutiliza en todo tu proyecto.
+{% /tab %}
+
+{% tab title="Brand Voice" %}
+Configura el tono y estilo de tu marca para garantizar que las traducciones coincidan con tu identidad.
+{% /tab %}
+
+{% tab title="Quality Assurance" %}
+Las verificaciones de control de calidad integradas aseguran la preservación de marcadores y la consistencia del formato.
+{% /tab %}
+{% /tabs %}
+
+## Solución de problemas
+
+{% accordion %}
+{% item title="Translation fails with authentication error" %}
+Asegúrate de haber iniciado sesión con `lingo.dev login` o configura tu clave API.
+{% /item %}
+
+{% item title="Files not detected" %}
+Verifica tus patrones glob en `i18n.json` y asegúrate de que los archivos coincidan con el marcador `[locale]`.
+{% /item %}
+
+{% item title="Translations cached incorrectly" %}
+Utiliza la bandera `--force` para omitir la caché y regenerar las traducciones.
+{% /item %}
+{% /accordion %}
+
+## Estadísticas de la comunidad
+
+{% stats %}
+- **{% $totalUsers %}** desarrolladores usando Lingo.dev
+- **{% $totalProjects %}** proyectos localizados
+- **{% $totalTranslations %}** traducciones generadas
+{% /stats %}
+
+---
+
+*¿Listo para globalizarte?* Comienza a localizar tu aplicación {% link href="/docs" %}con Lingo.dev{% /link %} ¡hoy mismo!
+
+**¿Preguntas?** Únete a nuestra comunidad o escríbenos a support@lingo.dev
+
+{% badge color="blue" %}Nuevo{% /badge %} Consejo profesional: Utiliza la bandera `--watch` durante el desarrollo para traducir automáticamente el contenido mientras escribes!

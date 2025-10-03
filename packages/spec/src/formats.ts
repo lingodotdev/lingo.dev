@@ -10,6 +10,7 @@ export const bucketTypes = [
   "json5",
   "jsonc",
   "markdown",
+  "markdoc",
   "mdx",
   "xcode-strings",
   "xcode-stringsdict",
