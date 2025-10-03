@@ -10,9 +10,6 @@ export type BiomeLoaderOptions = {
   alwaysFormat?: boolean;
 };
 
-// Track warnings shown per file extension to avoid spam
-const shownWarnings = new Set<string>();
-
 export default function createBiomeLoader(
   options: BiomeLoaderOptions,
 ): ILoader<string, string> {
@@ -63,7 +60,11 @@ async function formatDataWithBiome(
     // Load config from biome.json/biome.jsonc if exists
     configPath = await findBiomeConfig(filePath);
     if (!configPath && !options.alwaysFormat) {
-      return data; // Skip if no config and not forced
+      console.log();
+      console.log(
+        `⚠️  Biome config not found for ${path.basename(filePath)} - skipping formatting`,
+      );
+      return data;
     }
 
     if (configPath) {
@@ -84,19 +85,18 @@ async function formatDataWithBiome(
 
     return formatted.content;
   } catch (error) {
-    const ext = path.extname(filePath);
+    // Extract error message from Biome
+    const errorMessage =
+      error instanceof Error
+        ? error.message || (error as any).stackTrace?.toString().split("\n")[0]
+        : "";
 
-    // Only show warning once per file extension
-    if (!shownWarnings.has(ext)) {
-      shownWarnings.add(ext);
-
-      console.log();
-      console.log(
-        `⚠️  Biome does not support ${ext} files - skipping formatting`,
-      );
-
-      if (error instanceof Error && error.message) {
-        console.log(`   ${error.message}`);
+    if (errorMessage?.includes("does not exist in the workspace")) {
+      // Biome says "file does not exist in workspace" for unsupported formats - skip
+    } else {
+      console.log(`⚠️  Biome skipped ${path.basename(filePath)}`);
+      if (errorMessage) {
+        console.log(`   ${errorMessage}`);
       }
     }
 
