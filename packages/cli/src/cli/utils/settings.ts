@@ -17,6 +17,18 @@ export function getSettings(explicitApiKey: string | undefined): CliSettings {
 
   _envVarsInfo();
 
+  const llm: Record<string, string | undefined> = {};
+  for (const meta of Object.values(PROVIDER_METADATA)) {
+    const envVar = meta.apiKeyEnvVar;
+    const cfgKey = meta.apiKeyConfigKey;
+    if (!envVar || !cfgKey) continue;
+    const suffix = cfgKey.startsWith("llm.") ? cfgKey.slice(4) : undefined;
+    if (!suffix) continue;
+    const envVal = (env as any)[envVar] as string | undefined;
+    const rcVal = (systemFile.llm as any)?.[suffix] as string | undefined;
+    llm[suffix] = envVal || rcVal;
+  }
+
   return {
     auth: {
       apiKey:
@@ -33,15 +45,7 @@ export function getSettings(explicitApiKey: string | undefined): CliSettings {
         systemFile.auth?.webUrl ||
         defaults.auth.webUrl,
     },
-    llm: {
-      openaiApiKey: env.OPENAI_API_KEY || systemFile.llm?.openaiApiKey,
-      anthropicApiKey: env.ANTHROPIC_API_KEY || systemFile.llm?.anthropicApiKey,
-      groqApiKey: env.GROQ_API_KEY || systemFile.llm?.groqApiKey,
-      googleApiKey: env.GOOGLE_API_KEY || systemFile.llm?.googleApiKey,
-      openrouterApiKey:
-        env.OPENROUTER_API_KEY || systemFile.llm?.openrouterApiKey,
-      mistralApiKey: env.MISTRAL_API_KEY || systemFile.llm?.mistralApiKey,
-    },
+    llm,
   };
 }
 
@@ -53,35 +57,28 @@ export function loadSystemSettings() {
   return _loadSystemFile();
 }
 
-const flattenZodObject = (schema: Z.ZodObject<any>, prefix = ""): string[] => {
-  return Object.entries(schema.shape).flatMap(([key, value]) => {
-    const newPrefix = prefix ? `${prefix}.${key}` : key;
-    if (value instanceof Z.ZodObject) {
-      return flattenZodObject(value, newPrefix);
-    }
-    return [newPrefix];
-  });
-};
-
 const SettingsSchema = Z.object({
   auth: Z.object({
     apiKey: Z.string(),
     apiUrl: Z.string(),
     webUrl: Z.string(),
   }),
-  llm: Z.object({
-    openaiApiKey: Z.string().optional(),
-    anthropicApiKey: Z.string().optional(),
-    groqApiKey: Z.string().optional(),
-    googleApiKey: Z.string().optional(),
-    openrouterApiKey: Z.string().optional(),
-    mistralApiKey: Z.string().optional(),
-  }),
+  // Allow dynamic llm provider keys
+  llm: Z.record(Z.string().optional()),
 });
 
-export const SETTINGS_KEYS = flattenZodObject(
-  SettingsSchema,
-) as readonly string[];
+function _providerConfigKeys(): string[] {
+  return Object.values(PROVIDER_METADATA)
+    .map((m) => m.apiKeyConfigKey)
+    .filter((v): v is string => Boolean(v));
+}
+
+export const SETTINGS_KEYS = [
+  "auth.apiKey",
+  "auth.apiUrl",
+  "auth.webUrl",
+  ..._providerConfigKeys(),
+] as string[];
 
 // Private
 
@@ -120,14 +117,8 @@ function _loadSystemFile() {
       apiUrl: Z.string().optional(),
       webUrl: Z.string().optional(),
     }).optional(),
-    llm: Z.object({
-      openaiApiKey: Z.string().optional(),
-      anthropicApiKey: Z.string().optional(),
-      groqApiKey: Z.string().optional(),
-      googleApiKey: Z.string().optional(),
-      openrouterApiKey: Z.string().optional(),
-      mistralApiKey: Z.string().optional(),
-    }).optional(),
+    // Accept any llm provider key from rc file
+    llm: Z.record(Z.string().optional()).optional(),
   })
     .passthrough()
     .parse(data);
@@ -135,6 +126,16 @@ function _loadSystemFile() {
 
 function _saveSystemFile(settings: CliSettings) {
   const settingsFilePath = _getSettingsFilePath();
+  const llmEntries: string[] = [];
+  for (const meta of Object.values(PROVIDER_METADATA)) {
+    const cfgKey = meta.apiKeyConfigKey;
+    if (!cfgKey) continue;
+    const suffix = cfgKey.startsWith("llm.") ? cfgKey.slice(4) : undefined;
+    if (!suffix) continue;
+    const value = (settings.llm as any)?.[suffix];
+    if (value) llmEntries.push(`${suffix}=${value}`);
+  }
+
   const content = [
     `[auth]`,
     `apiKey=${settings.auth.apiKey}`,
@@ -142,16 +143,7 @@ function _saveSystemFile(settings: CliSettings) {
     `webUrl=${settings.auth.webUrl}`,
     ``,
     `[llm]`,
-    settings.llm.openaiApiKey ? `openaiApiKey=${settings.llm.openaiApiKey}` : ``,
-    settings.llm.anthropicApiKey
-      ? `anthropicApiKey=${settings.llm.anthropicApiKey}`
-      : ``,
-    settings.llm.groqApiKey ? `groqApiKey=${settings.llm.groqApiKey}` : ``,
-    settings.llm.googleApiKey ? `googleApiKey=${settings.llm.googleApiKey}` : ``,
-    settings.llm.openrouterApiKey
-      ? `openrouterApiKey=${settings.llm.openrouterApiKey}`
-      : ``,
-    settings.llm.mistralApiKey ? `mistralApiKey=${settings.llm.mistralApiKey}` : ``,
+    ...llmEntries,
     ``,
   ]
     .filter(Boolean)

@@ -10,14 +10,7 @@ export interface RcConfig {
     apiUrl?: string;
     webUrl?: string;
   };
-  llm?: {
-    groqApiKey?: string;
-    openaiApiKey?: string;
-    anthropicApiKey?: string;
-    googleApiKey?: string;
-    openrouterApiKey?: string;
-    mistralApiKey?: string;
-  };
+  llm?: Record<string, string | undefined>;
   [key: string]: any;
 }
 
@@ -27,14 +20,8 @@ export const rcConfigSchema = Z.object({
     apiUrl: Z.string().optional(),
     webUrl: Z.string().optional(),
   }).optional(),
-  llm: Z.object({
-    groqApiKey: Z.string().optional(),
-    openaiApiKey: Z.string().optional(),
-    anthropicApiKey: Z.string().optional(),
-    googleApiKey: Z.string().optional(),
-    openrouterApiKey: Z.string().optional(),
-    mistralApiKey: Z.string().optional(),
-  }).optional(),
+  // Allow any llm provider keys and preserve them
+  llm: Z.record(Z.string().optional()).optional(),
 })
   .passthrough()
   .transform((v) => v as RcConfig);
