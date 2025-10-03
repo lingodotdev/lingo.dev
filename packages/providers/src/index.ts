@@ -17,4 +17,4 @@ export {
   createProviderClient,
   type ClientOptions,
 } from "./factory";
-export { getProvider } from "./highlevel";
+export { getProvider } from "./get-provider";
