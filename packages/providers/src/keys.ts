@@ -3,7 +3,7 @@ import fs from "fs";
 import dotenv from "dotenv";
 import { ProviderId } from "./constants";
 import { PROVIDER_METADATA } from "./metadata";
-import { readRc, RcData } from "./rc";
+import { getRcConfig, type RcConfig } from "@lingo.dev/config";
 import { ProviderKeyMissingError } from "./errors";
 
 let dotenvLoaded = false;
@@ -29,7 +29,7 @@ function getByPath(obj: any, keyPath?: string): any {
 
 export interface KeySources {
   env?: Record<string, string | undefined>;
-  rc?: RcData;
+  rc?: RcConfig;
 }
 
 export function getProviderApiKey(providerId: ProviderId): string | undefined {
@@ -53,7 +53,7 @@ export function resolveProviderApiKey(
     envVal = meta.apiKeyEnvVar ? process.env[meta.apiKeyEnvVar] : undefined;
   }
 
-  const rc = sources.rc ?? readRc();
+  const rc = sources.rc ?? getRcConfig();
   const rcVal = getByPath(rc, meta.apiKeyConfigKey);
 
   const key = envVal || rcVal;

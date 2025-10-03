@@ -3,7 +3,7 @@ import path from "path";
 import _ from "lodash";
 import Z from "zod";
 import fs from "fs";
-import Ini from "ini";
+import { getRcConfig } from "@lingo.dev/config";
 import { PROVIDER_METADATA } from "@lingo.dev/providers";
 
 export type CliSettings = Z.infer<typeof SettingsSchema>;
@@ -113,12 +113,7 @@ function _loadEnv() {
 }
 
 function _loadSystemFile() {
-  const settingsFilePath = _getSettingsFilePath();
-  const content = fs.existsSync(settingsFilePath)
-    ? fs.readFileSync(settingsFilePath, "utf-8")
-    : "";
-  const data = Ini.parse(content);
-
+  const data = getRcConfig();
   return Z.object({
     auth: Z.object({
       apiKey: Z.string().optional(),
@@ -140,7 +135,27 @@ function _loadSystemFile() {
 
 function _saveSystemFile(settings: CliSettings) {
   const settingsFilePath = _getSettingsFilePath();
-  const content = Ini.stringify(settings);
+  const content = [
+    `[auth]`,
+    `apiKey=${settings.auth.apiKey}`,
+    `apiUrl=${settings.auth.apiUrl}`,
+    `webUrl=${settings.auth.webUrl}`,
+    ``,
+    `[llm]`,
+    settings.llm.openaiApiKey ? `openaiApiKey=${settings.llm.openaiApiKey}` : ``,
+    settings.llm.anthropicApiKey
+      ? `anthropicApiKey=${settings.llm.anthropicApiKey}`
+      : ``,
+    settings.llm.groqApiKey ? `groqApiKey=${settings.llm.groqApiKey}` : ``,
+    settings.llm.googleApiKey ? `googleApiKey=${settings.llm.googleApiKey}` : ``,
+    settings.llm.openrouterApiKey
+      ? `openrouterApiKey=${settings.llm.openrouterApiKey}`
+      : ``,
+    settings.llm.mistralApiKey ? `mistralApiKey=${settings.llm.mistralApiKey}` : ``,
+    ``,
+  ]
+    .filter(Boolean)
+    .join("\n");
   fs.writeFileSync(settingsFilePath, content);
 }
 
