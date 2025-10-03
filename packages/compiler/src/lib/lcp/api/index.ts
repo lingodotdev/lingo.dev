@@ -17,7 +17,7 @@ import {
 } from "@lingo.dev/providers";
 import * as dotenv from "dotenv";
 import path from "path";
-import { getRc } from "../../../utils/rc";
+import { getRcConfig } from "@lingo.dev/config";
 
 export class LCPAPI {
   static async translate(
@@ -150,8 +150,8 @@ export class LCPAPI {
     }
     const apiKey =
       getEnvWithDotenv("LINGODOTDEV_API_KEY") ||
-      ((): string | undefined => {
-        const rc = getRc();
+      (() => {
+        const rc = getRcConfig();
         const val = _.get(rc, "auth.apiKey");
         return typeof val === "string" ? val : undefined;
       })();

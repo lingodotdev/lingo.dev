@@ -1,5 +1,5 @@
 import { machineId } from "node-machine-id";
-import { getRc } from "./rc";
+import { getRcConfig } from "@lingo.dev/config";
 
 export default async function trackEvent(
   event: string,
@@ -44,7 +44,7 @@ export default async function trackEvent(
 }
 
 async function getActualId() {
-  const rc = getRc();
+  const rc = getRcConfig();
   const apiKey = process.env.LINGODOTDEV_API_KEY || rc?.auth?.apiKey;
   const apiUrl =
     process.env.LINGODOTDEV_API_URL ||
