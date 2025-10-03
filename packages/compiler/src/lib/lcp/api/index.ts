@@ -1,8 +1,3 @@
-import { createGroq } from "@ai-sdk/groq";
-import { createGoogleGenerativeAI } from "@ai-sdk/google";
-import { createOpenRouter } from "@openrouter/ai-sdk-provider";
-import { createOllama } from "ollama-ai-provider";
-import { createMistral } from "@ai-sdk/mistral";
 import { generateText } from "ai";
 import { LingoDotDevEngine } from "@lingo.dev/_sdk";
 import { DictionarySchema } from "../schema";
@@ -11,22 +6,18 @@ import { getLocaleModel } from "../../../utils/locales";
 import getSystemPrompt from "./prompt";
 import { obj2xml, xml2obj } from "./xml2obj";
 import shots from "./shots";
-import {
-  getGroqKey,
-  getGroqKeyFromEnv,
-  getGoogleKey,
-  getGoogleKeyFromEnv,
-  getOpenRouterKey,
-  getOpenRouterKeyFromEnv,
-  getMistralKey,
-  getMistralKeyFromEnv,
-  getLingoDotDevKeyFromEnv,
-  getLingoDotDevKey,
-} from "../../../utils/llm-api-key";
 import dedent from "dedent";
 import { isRunningInCIOrDocker } from "../../../utils/env";
 import { LanguageModel } from "ai";
-import { providerDetails } from "./provider-details";
+import {
+  createProviderClient,
+  ProviderKeyMissingError,
+  PROVIDER_METADATA,
+  type ProviderId,
+} from "@lingo.dev/providers";
+import * as dotenv from "dotenv";
+import path from "path";
+import { getRc } from "../../../utils/rc";
 
 export class LCPAPI {
   static async translate(
@@ -139,14 +130,31 @@ export class LCPAPI {
   }
 
   private static _createLingoDotDevEngine() {
-    // Specific check for CI/CD or Docker missing GROQ key
+    const getEnvWithDotenv = (name: string): string | undefined => {
+      if (process.env[name]) return process.env[name];
+      const result = dotenv.config({
+        path: [
+          path.resolve(process.cwd(), ".env"),
+          path.resolve(process.cwd(), ".env.local"),
+          path.resolve(process.cwd(), ".env.development"),
+        ],
+      });
+      return result?.parsed?.[name];
+    };
+
     if (isRunningInCIOrDocker()) {
-      const apiKeyFromEnv = getLingoDotDevKeyFromEnv();
+      const apiKeyFromEnv = getEnvWithDotenv("LINGODOTDEV_API_KEY");
       if (!apiKeyFromEnv) {
         this._failMissingLLMKeyCi("lingo.dev");
       }
     }
-    const apiKey = getLingoDotDevKey();
+    const apiKey =
+      getEnvWithDotenv("LINGODOTDEV_API_KEY") ||
+      ((): string | undefined => {
+        const rc = getRc();
+        const val = _.get(rc, "auth.apiKey");
+        return typeof val === "string" ? val : undefined;
+      })();
     if (!apiKey) {
       throw new Error(
         "⚠️  Lingo.dev API key not found. Please set LINGODOTDEV_API_KEY environment variable or configure it user-wide.",
@@ -223,7 +231,24 @@ export class LCPAPI {
       }
 
       try {
-        const aiModel = this._createAiModel(provider, model, targetLocale);
+        const aiModel = ((): LanguageModel => {
+          try {
+            return createProviderClient(provider as ProviderId, model);
+          } catch (error: unknown) {
+            if (error instanceof ProviderKeyMissingError) {
+              if (isRunningInCIOrDocker()) {
+                this._failMissingLLMKeyCi(error.providerId);
+              } else {
+                this._failLLMFailureLocal(
+                  provider,
+                  targetLocale,
+                  error.message,
+                );
+              }
+            }
+            throw error as Error;
+          }
+        })();
 
         console.log(
           `ℹ️ Using raw LLM API ("${provider}":"${model}") to translate from "${sourceLocale}" to "${targetLocale}"`,
@@ -279,116 +304,21 @@ export class LCPAPI {
     }
   }
 
-  /**
-   * Instantiates an AI model based on provider and model ID.
-   * Includes CI/CD API key checks.
-   * @param providerId The ID of the AI provider (e.g., "groq", "google").
-   * @param modelId The ID of the specific model (e.g., "llama3-8b-8192", "gemini-2.0-flash").
-   * @param targetLocale The target locale being translated to (for logging/error messages).
-   * @returns An instantiated AI LanguageModel.
-   * @throws Error if the provider is not supported or API key is missing in CI/CD.
-   */
-  private static _createAiModel(
-    providerId: string,
-    modelId: string,
-    targetLocale: string,
-  ): LanguageModel {
-    switch (providerId) {
-      case "groq": {
-        // Specific check for CI/CD or Docker missing GROQ key
-        if (isRunningInCIOrDocker()) {
-          const groqFromEnv = getGroqKeyFromEnv();
-          if (!groqFromEnv) {
-            this._failMissingLLMKeyCi(providerId);
-          }
-        }
-        const groqKey = getGroqKey();
-        if (!groqKey) {
-          throw new Error(
-            "⚠️  GROQ API key not found. Please set GROQ_API_KEY environment variable or configure it user-wide.",
-          );
-        }
-        console.log(
-          `Creating Groq client for ${targetLocale} using model ${modelId}`,
-        );
-        return createGroq({ apiKey: groqKey })(modelId);
-      }
-
-      case "google": {
-        // Specific check for CI/CD or Docker missing Google key
-        if (isRunningInCIOrDocker()) {
-          const googleFromEnv = getGoogleKeyFromEnv();
-          if (!googleFromEnv) {
-            this._failMissingLLMKeyCi(providerId);
-          }
-        }
-        const googleKey = getGoogleKey();
-        if (!googleKey) {
-          throw new Error(
-            "⚠️  Google API key not found. Please set GOOGLE_API_KEY environment variable or configure it user-wide.",
-          );
-        }
-        console.log(
-          `Creating Google Generative AI client for ${targetLocale} using model ${modelId}`,
-        );
-        return createGoogleGenerativeAI({ apiKey: googleKey })(modelId);
-      }
-      case "openrouter": {
-        // Specific check for CI/CD or Docker missing OpenRouter key
-        if (isRunningInCIOrDocker()) {
-          const openRouterFromEnv = getOpenRouterKeyFromEnv();
-          if (!openRouterFromEnv) {
-            this._failMissingLLMKeyCi(providerId);
-          }
-        }
-        const openRouterKey = getOpenRouterKey();
-        if (!openRouterKey) {
-          throw new Error(
-            "⚠️  OpenRouter API key not found. Please set OPENROUTER_API_KEY environment variable or configure it user-wide.",
-          );
-        }
-        console.log(
-          `Creating OpenRouter client for ${targetLocale} using model ${modelId}`,
-        );
-        return createOpenRouter({
-          apiKey: openRouterKey,
-        })(modelId);
-      }
-
-      case "ollama": {
-        // No API key check needed for Ollama
-        console.log(
-          `Creating Ollama client for ${targetLocale} using model ${modelId} at default Ollama address`,
-        );
-        return createOllama()(modelId);
-      }
-
-      case "mistral": {
-        // Specific check for CI/CD or Docker missing Mistral key
-        if (isRunningInCIOrDocker()) {
-          const mistralFromEnv = getMistralKeyFromEnv();
-          if (!mistralFromEnv) {
-            this._failMissingLLMKeyCi(providerId);
-          }
-        }
-        const mistralKey = getMistralKey();
-        if (!mistralKey) {
-          throw new Error(
-            "⚠️  Mistral API key not found. Please set MISTRAL_API_KEY environment variable or configure it user-wide.",
-          );
-        }
-        console.log(
-          `Creating Mistral client for ${targetLocale} using model ${modelId}`,
-        );
-        return createMistral({ apiKey: mistralKey })(modelId);
-      }
-
-      default: {
-        throw new Error(
-          `⚠️  Provider "${providerId}" for locale "${targetLocale}" is not supported. Only "groq", "google", "openrouter", "ollama", and "mistral" providers are supported at the moment.`,
-        );
-      }
+  // details lookup compatible with providers metadata + lingo.dev special-case
+  private static _getProviderDetails(providerId: string) {
+    if ((PROVIDER_METADATA as any)[providerId]) {
+      return (PROVIDER_METADATA as any)[providerId];
     }
+    if (providerId === "lingo.dev") {
+      return {
+        name: "Lingo.dev",
+        apiKeyEnvVar: "LINGODOTDEV_API_KEY",
+        apiKeyConfigKey: "auth.apiKey",
+        getKeyLink: "https://lingo.dev",
+        docsLink: "https://lingo.dev/docs",
+      };
+    }
+    return undefined;
   }
 
   /**
@@ -398,7 +328,7 @@ export class LCPAPI {
    * @param providerId The ID of the LLM provider whose key is missing.
    */
   private static _failMissingLLMKeyCi(providerId: string): void {
-    let details = providerDetails[providerId];
+    let details = this._getProviderDetails(providerId);
     if (!details) {
       // Fallback for unsupported provider in failure message logic
       console.error(
@@ -443,7 +373,7 @@ export class LCPAPI {
     targetLocale: string,
     errorMessage: string,
   ): void {
-    const details = providerDetails[providerId];
+    const details = this._getProviderDetails(providerId);
     if (!details) {
       // Fallback
       console.error(
