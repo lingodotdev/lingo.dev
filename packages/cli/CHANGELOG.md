@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.111.13
+
+### Patch Changes
+
+- [#1197](https://github.com/lingodotdev/lingo.dev/pull/1197) [`762396b`](https://github.com/lingodotdev/lingo.dev/commit/762396bb37110dbe3e4e000edb27892b318aa3ef) Thanks [@vrcprl](https://github.com/vrcprl)! - biome error logging
+
 ## 0.111.12
 
 ### Patch Changes
