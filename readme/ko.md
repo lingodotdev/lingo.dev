@@ -45,14 +45,26 @@
   </a>
   <a href="https://lingo.dev/en">
     <img
-      src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt 오늘의 제품 1위"
+      src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square"
+      alt="프로덕트 헌트 이달의 개발 도구 1위"
+    />
+  </a>
+  <a href="https://lingo.dev/en">
+    <img
+      src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Week-orange?logo=producthunt&style=flat-square"
+      alt="프로덕트 헌트 이주의 제품 1위"
+    />
+  </a>
+  <a href="https://lingo.dev/en">
+    <img
+      src="https://img.shields.io/badge/Product%20Hunt-%232%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
+      alt="프로덕트 헌트 오늘의 제품 2위"
     />
   </a>
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/GitHub-Trending-blue?logo=github&style=flat-square"
-      alt="GitHub 트렌딩"
+      alt="깃허브 트렌딩"
     />
   </a>
 </p>
