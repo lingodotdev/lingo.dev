@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.111.16
+
+### Patch Changes
+
+- [#1185](https://github.com/lingodotdev/lingo.dev/pull/1185) [`f3d4987`](https://github.com/lingodotdev/lingo.dev/commit/f3d4987ddc393c28d488f030c087f3e99a667975) Thanks [@sumitsaurabh927](https://github.com/sumitsaurabh927)! - updated product hunt badges
+
 ## 0.111.15
 
 ### Patch Changes
