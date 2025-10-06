@@ -52,7 +52,7 @@
     "ai": "^4.2.10",
     "dedent": "^1.6.0",
     "dotenv": "^16.4.5",
-    "fast-xml-parser": "^5.0.8",
+    "fast-xml-parser": "^5.3.0",
     "ini": "^5.0.0",
     "lodash": "^4.17.21",
     "object-hash": "^3.0.0",
