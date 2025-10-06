@@ -1,6 +1,7 @@
 import _ from "lodash";
 import path from "path";
 import { glob } from "glob";
+import { minimatch } from "minimatch";
 import { CLIError } from "./errors";
 import {
   I18nConfig,
@@ -70,6 +71,11 @@ function extractPathPatterns(
       delimiter: pattern.delimiter,
     })),
   );
+  const getUniqKey = (item: {
+    pathPattern: string;
+    delimiter?: LocaleDelimiter;
+  }) => `${item.pathPattern}::${item.delimiter ?? ""}`;
+  const uniqueIncludedPatterns = _.uniqBy(includedPatterns, getUniqKey);
   const excludedPatterns = exclude?.flatMap((pattern) =>
     expandPlaceholderedGlob(
       pattern.path,
@@ -79,10 +85,13 @@ function extractPathPatterns(
       delimiter: pattern.delimiter,
     })),
   );
+  const uniqueExcludedPatterns = excludedPatterns
+    ? _.uniqBy(excludedPatterns, getUniqKey)
+    : [];
   const result = _.differenceBy(
-    includedPatterns,
-    excludedPatterns ?? [],
-    (item) => item.pathPattern,
+    uniqueIncludedPatterns,
+    uniqueExcludedPatterns,
+    getUniqKey,
   );
   return result;
 }
@@ -110,14 +119,6 @@ function expandPlaceholderedGlob(
     });
   }
 
-  // Throw error if pathPattern contains "**" – we don't support recursive path patterns
-  if (pathPattern.includes("**")) {
-    throw new CLIError({
-      message: `Invalid path pattern: ${pathPattern}. Recursive path patterns are not supported.`,
-      docUrl: "invalidPathPattern",
-    });
-  }
-
   // Break down path pattern into parts
   const pathPatternChunks = pathPattern.split(path.sep);
   // Find the index of the segment containing "[locale]"
@@ -130,8 +131,13 @@ function expandPlaceholderedGlob(
     },
     [] as number[],
   );
-  // substitute [locale] in pathPattern with sourceLocale
-  const sourcePathPattern = pathPattern.replaceAll(/\[locale\]/g, sourceLocale);
+  const normalizedLocale =
+    process.platform === "win32" ? sourceLocale.toLowerCase() : sourceLocale;
+  // substitute [locale] in pathPattern with normalized locale
+  const sourcePathPattern = pathPattern.replaceAll(
+    /\[locale\]/g,
+    normalizedLocale,
+  );
   // Convert to Unix-style for Windows compatibility
   const unixStylePattern = sourcePathPattern.replace(/\\/g, "/");
 
@@ -153,27 +159,22 @@ function expandPlaceholderedGlob(
       sourcePath.replace(/\//g, path.sep),
     );
     const sourcePathChunks = normalizedSourcePath.split(path.sep);
+    const mapping = mapPatternToSource(
+      pathPatternChunks,
+      sourcePathChunks,
+      normalizedLocale,
+    );
     localeSegmentIndexes.forEach((localeSegmentIndex) => {
-      // Find the position of the "[locale]" placeholder within the segment
-      const pathPatternChunk = pathPatternChunks[localeSegmentIndex];
-      const sourcePathChunk = sourcePathChunks[localeSegmentIndex];
-      const regexp = new RegExp(
-        "(" +
-          pathPatternChunk
-            .replaceAll(".", "\\.")
-            .replaceAll("*", ".*")
-            .replace("[locale]", `)${sourceLocale}(`) +
-          ")",
-      );
-      const match = sourcePathChunk.match(regexp);
-      if (match) {
-        const [, prefix, suffix] = match;
-        const placeholderedSegment = prefix + "[locale]" + suffix;
-        sourcePathChunks[localeSegmentIndex] = placeholderedSegment;
+      const sourceIndex = mapping.patToSrc[localeSegmentIndex];
+      if (sourceIndex >= 0) {
+        sourcePathChunks[sourceIndex] = buildLocalePlaceholderSegment(
+          pathPatternChunks[localeSegmentIndex],
+          sourcePathChunks[sourceIndex],
+          normalizedLocale,
+        );
       }
     });
-    const placeholderedPath = sourcePathChunks.join(path.sep);
-    return placeholderedPath;
+    return sourcePathChunks.join(path.sep);
   });
   // return the placeholdered paths
   return placeholderedPaths;
@@ -184,4 +185,102 @@ function resolveBucketItem(bucketItem: string | BucketItem): BucketItem {
     return { path: bucketItem, delimiter: null };
   }
   return bucketItem;
+}
+
+function mapPatternToSource(
+  pattern: string[],
+  source: string[],
+  locale: string,
+): { patToSrc: number[] } {
+  const patternLength = pattern.length;
+  const sourceLength = source.length;
+  const memo = new Map<string, boolean>();
+  const parent = new Map<string, { i2: number; j2: number }>();
+  const isDoubleStar = (segment: string) => segment === "**";
+  const segmentMatches = (patternSegment: string, sourceSegment: string) => {
+    const concrete = patternSegment.replaceAll("[locale]", locale);
+    return minimatch(sourceSegment, concrete, { dot: true });
+  };
+  const key = (i: number, j: number) => `${i}|${j}`;
+  const dfs = (i: number, j: number): boolean => {
+    const memoKey = key(i, j);
+    if (memo.has(memoKey)) {
+      return memo.get(memoKey)!;
+    }
+    if (i === patternLength) {
+      const done = j === sourceLength;
+      memo.set(memoKey, done);
+      return done;
+    }
+    let matched = false;
+    if (isDoubleStar(pattern[i])) {
+      for (let k = j; k <= sourceLength; k += 1) {
+        if (dfs(i + 1, k)) {
+          parent.set(memoKey, { i2: i + 1, j2: k });
+          matched = true;
+          break;
+        }
+      }
+    } else if (j < sourceLength && segmentMatches(pattern[i], source[j])) {
+      if (dfs(i + 1, j + 1)) {
+        parent.set(memoKey, { i2: i + 1, j2: j + 1 });
+        matched = true;
+      }
+    }
+    memo.set(memoKey, matched);
+    return matched;
+  };
+
+  if (!dfs(0, 0)) {
+    return {
+      patToSrc: pattern.map((_, index) => (index < source.length ? index : -1)),
+    };
+  }
+
+  const patToSrc = Array(patternLength).fill(-1) as number[];
+  let i = 0;
+  let j = 0;
+  while (i < patternLength) {
+    const step = parent.get(key(i, j));
+    if (!step) {
+      break;
+    }
+    if (!isDoubleStar(pattern[i])) {
+      patToSrc[i] = j;
+    }
+    i = step.i2;
+    j = step.j2;
+  }
+
+  return { patToSrc };
+}
+
+function buildLocalePlaceholderSegment(
+  patternChunk: string,
+  sourceChunk: string,
+  locale: string,
+): string {
+  const placeholder = "[locale]";
+  const placeholderIndex = patternChunk.indexOf(placeholder);
+  if (placeholderIndex === -1) {
+    return sourceChunk;
+  }
+
+  const leftGlob = patternChunk.slice(0, placeholderIndex);
+  const rightGlob = patternChunk.slice(placeholderIndex + placeholder.length);
+  const leftMatches = (value: string) =>
+    leftGlob ? minimatch(value, leftGlob, { dot: true }) : value.length === 0;
+  const rightMatches = (value: string) =>
+    rightGlob ? minimatch(value, rightGlob, { dot: true }) : value.length === 0;
+
+  let position = -1;
+  while ((position = sourceChunk.indexOf(locale, position + 1)) !== -1) {
+    const prefix = sourceChunk.slice(0, position);
+    const suffix = sourceChunk.slice(position + locale.length);
+    if (leftMatches(prefix) && rightMatches(suffix)) {
+      return `${prefix}${placeholder}${suffix}`;
+    }
+  }
+
+  return patternChunk;
 }
