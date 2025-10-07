@@ -87,15 +87,21 @@ export async function renderSummary(results: Map<any, any>) {
     (r) => r.status === "error",
   );
 
-  console.log(`• ${chalk.hex(colors.yellow)(skippedResults.length)} from cache`);
-  console.log(`• ${chalk.hex(colors.yellow)(succeededResults.length)} processed`);
+  console.log(
+    `• ${chalk.hex(colors.yellow)(skippedResults.length)} from cache`,
+  );
+  console.log(
+    `• ${chalk.hex(colors.yellow)(succeededResults.length)} processed`,
+  );
   console.log(`• ${chalk.hex(colors.yellow)(failedResults.length)} failed`);
 
   // Show processed files
   if (succeededResults.length > 0) {
     console.log(chalk.hex(colors.green)("\n[Processed Files]"));
     for (const result of succeededResults) {
-      const displayPath = result.pathPattern?.replace("[locale]", result.targetLocale) || "unknown";
+      const displayPath =
+        result.pathPattern?.replace("[locale]", result.targetLocale) ||
+        "unknown";
       console.log(
         `  ✓ ${chalk.dim(displayPath)} ${chalk.hex(colors.yellow)(`(${result.sourceLocale} → ${result.targetLocale})`)}`,
       );
@@ -106,7 +112,9 @@ export async function renderSummary(results: Map<any, any>) {
   if (skippedResults.length > 0) {
     console.log(chalk.hex(colors.blue)("\n[Cached Files]"));
     for (const result of skippedResults) {
-      const displayPath = result.pathPattern?.replace("[locale]", result.targetLocale) || "unknown";
+      const displayPath =
+        result.pathPattern?.replace("[locale]", result.targetLocale) ||
+        "unknown";
       console.log(
         `  ⚡ ${chalk.dim(displayPath)} ${chalk.hex(colors.yellow)(`(${result.sourceLocale} → ${result.targetLocale})`)}`,
       );
@@ -117,7 +125,9 @@ export async function renderSummary(results: Map<any, any>) {
   if (failedResults.length > 0) {
     console.log(chalk.hex(colors.orange)("\n[Failed Files]"));
     for (const result of failedResults) {
-      const displayPath = result.pathPattern?.replace("[locale]", result.targetLocale) || "unknown";
+      const displayPath =
+        result.pathPattern?.replace("[locale]", result.targetLocale) ||
+        "unknown";
       console.log(
         `  ❌ ${chalk.dim(displayPath)} ${chalk.hex(colors.yellow)(`(${result.sourceLocale} → ${result.targetLocale})`)}`,
       );

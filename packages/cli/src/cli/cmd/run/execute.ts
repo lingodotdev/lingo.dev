@@ -43,7 +43,9 @@ export default async function execute(input: CmdRunContext) {
 
           // Preload checksums for all unique bucket path patterns before starting any workers
           const initialChecksumsMap = new Map<string, Record<string, string>>();
-          const uniqueBucketPatterns = _.uniq(ctx.tasks.map(t => t.bucketPathPattern));
+          const uniqueBucketPatterns = _.uniq(
+            ctx.tasks.map((t) => t.bucketPathPattern),
+          );
           for (const bucketPathPattern of uniqueBucketPatterns) {
             const deltaProcessor = createDeltaProcessor(bucketPathPattern);
             const checksums = await deltaProcessor.loadChecksums();
@@ -166,7 +168,8 @@ function createWorkerTask(args: {
         );
 
         // Get initial checksums from the preloaded map
-        const initialChecksums = args.initialChecksumsMap.get(assignedTask.bucketPathPattern) || {};
+        const initialChecksums =
+          args.initialChecksumsMap.get(assignedTask.bucketPathPattern) || {};
 
         const taskResult = await args.i18nLimiter(async () => {
           try {
