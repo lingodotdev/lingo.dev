@@ -1,5 +1,12 @@
 # adonis
 
+## 0.0.13
+
+### Patch Changes
+
+- Updated dependencies [[`f3d4987`](https://github.com/lingodotdev/lingo.dev/commit/f3d4987ddc393c28d488f030c087f3e99a667975), [`a933b81`](https://github.com/lingodotdev/lingo.dev/commit/a933b8102763e0481f088c847da53e0eee3f0617)]:
+  - lingo.dev@0.111.16
+
 ## 0.0.12
 
 ### Patch Changes
