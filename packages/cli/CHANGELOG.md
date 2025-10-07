@@ -1,5 +1,13 @@
 # lingo.dev
 
+## 0.111.16
+
+### Patch Changes
+
+- [#1185](https://github.com/lingodotdev/lingo.dev/pull/1185) [`f3d4987`](https://github.com/lingodotdev/lingo.dev/commit/f3d4987ddc393c28d488f030c087f3e99a667975) Thanks [@sumitsaurabh927](https://github.com/sumitsaurabh927)! - updated product hunt badges
+
+- [#1208](https://github.com/lingodotdev/lingo.dev/pull/1208) [`a933b81`](https://github.com/lingodotdev/lingo.dev/commit/a933b8102763e0481f088c847da53e0eee3f0617) Thanks [@vrcprl](https://github.com/vrcprl)! - Fix run retranslation with run command
+
 ## 0.111.15
 
 ### Patch Changes
