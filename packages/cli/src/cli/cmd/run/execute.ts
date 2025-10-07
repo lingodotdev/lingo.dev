@@ -34,11 +34,20 @@ export default async function execute(input: CmdRunContext) {
         title: `Processing localization tasks ${chalk.dim(
           `(tasks: ${input.tasks.length}, concurrency: ${effectiveConcurrency})`,
         )}`,
-        task: (ctx, task) => {
+        task: async (ctx, task) => {
           if (input.tasks.length < 1) {
             task.title = `Skipping, nothing to localize.`;
             task.skip();
             return;
+          }
+
+          // Preload checksums for all unique bucket path patterns before starting any workers
+          const initialChecksumsMap = new Map<string, Record<string, string>>();
+          const uniqueBucketPatterns = _.uniq(ctx.tasks.map(t => t.bucketPathPattern));
+          for (const bucketPathPattern of uniqueBucketPatterns) {
+            const deltaProcessor = createDeltaProcessor(bucketPathPattern);
+            const checksums = await deltaProcessor.loadChecksums();
+            initialChecksumsMap.set(bucketPathPattern, checksums);
           }
 
           const i18nLimiter = pLimit(effectiveConcurrency);
@@ -56,6 +65,7 @@ export default async function execute(input: CmdRunContext) {
                 assignedTasks,
                 ioLimiter,
                 i18nLimiter,
+                initialChecksumsMap,
                 onDone() {
                   task.title = createExecutionProgressMessage(ctx);
                 },
@@ -140,6 +150,7 @@ function createWorkerTask(args: {
   ioLimiter: LimitFunction;
   i18nLimiter: LimitFunction;
   onDone: () => void;
+  initialChecksumsMap: Map<string, Record<string, string>>;
 }): ListrTask {
   return {
     title: "Initializing...",
@@ -154,6 +165,9 @@ function createWorkerTask(args: {
           assignedTask.bucketPathPattern,
         );
 
+        // Get initial checksums from the preloaded map
+        const initialChecksums = args.initialChecksumsMap.get(assignedTask.bucketPathPattern) || {};
+
         const taskResult = await args.i18nLimiter(async () => {
           try {
             const sourceData = await bucketLoader.pull(
@@ -163,11 +177,10 @@ function createWorkerTask(args: {
             const targetData = await bucketLoader.pull(
               assignedTask.targetLocale,
             );
-            const checksums = await deltaProcessor.loadChecksums();
             const delta = await deltaProcessor.calculateDelta({
               sourceData,
               targetData,
-              checksums,
+              checksums: initialChecksums,
             });
 
             const processableData = _.chain(sourceData)
@@ -193,7 +206,12 @@ function createWorkerTask(args: {
                 // re-push in case some of the unlocalizable / meta data changed
                 await bucketLoader.push(assignedTask.targetLocale, targetData);
               });
-              return { status: "skipped" } satisfies CmdRunTaskResult;
+              return {
+                status: "skipped",
+                pathPattern: assignedTask.bucketPathPattern,
+                sourceLocale: assignedTask.sourceLocale,
+                targetLocale: assignedTask.targetLocale,
+              } satisfies CmdRunTaskResult;
             }
 
             const relevantHints = _.pick(hints, Object.keys(processableData));
@@ -268,11 +286,19 @@ function createWorkerTask(args: {
               }
             });
 
-            return { status: "success" } satisfies CmdRunTaskResult;
+            return {
+              status: "success",
+              pathPattern: assignedTask.bucketPathPattern,
+              sourceLocale: assignedTask.sourceLocale,
+              targetLocale: assignedTask.targetLocale,
+            } satisfies CmdRunTaskResult;
           } catch (error) {
             return {
               status: "error",
               error: error as Error,
+              pathPattern: assignedTask.bucketPathPattern,
+              sourceLocale: assignedTask.sourceLocale,
+              targetLocale: assignedTask.targetLocale,
             } satisfies CmdRunTaskResult;
           }
         });

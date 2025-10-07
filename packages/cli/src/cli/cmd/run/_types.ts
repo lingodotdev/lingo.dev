@@ -18,6 +18,9 @@ export type CmdRunContext = {
 export type CmdRunTaskResult = {
   status: "success" | "error" | "skipped";
   error?: Error;
+  pathPattern?: string;
+  sourceLocale?: string;
+  targetLocale?: string;
 };
 
 export type CmdRunTask = {
