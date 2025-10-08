@@ -3,7 +3,8 @@ import path from "path";
 import _ from "lodash";
 import Z from "zod";
 import fs from "fs";
-import Ini from "ini";
+import { getRcConfig } from "@lingo.dev/config";
+import { PROVIDER_METADATA } from "@lingo.dev/providers";
 
 export type CliSettings = Z.infer<typeof SettingsSchema>;
 
@@ -15,6 +16,18 @@ export function getSettings(explicitApiKey: string | undefined): CliSettings {
   _legacyEnvVarWarning();
 
   _envVarsInfo();
+
+  const llm: Record<string, string | undefined> = {};
+  for (const meta of Object.values(PROVIDER_METADATA)) {
+    const envVar = meta.apiKeyEnvVar;
+    const cfgKey = meta.apiKeyConfigKey;
+    if (!envVar || !cfgKey) continue;
+    const suffix = cfgKey.startsWith("llm.") ? cfgKey.slice(4) : undefined;
+    if (!suffix) continue;
+    const envVal = (env as any)[envVar] as string | undefined;
+    const rcVal = (systemFile.llm as any)?.[suffix] as string | undefined;
+    llm[suffix] = envVal || rcVal;
+  }
 
   return {
     auth: {
@@ -32,15 +45,7 @@ export function getSettings(explicitApiKey: string | undefined): CliSettings {
         systemFile.auth?.webUrl ||
         defaults.auth.webUrl,
     },
-    llm: {
-      openaiApiKey: env.OPENAI_API_KEY || systemFile.llm?.openaiApiKey,
-      anthropicApiKey: env.ANTHROPIC_API_KEY || systemFile.llm?.anthropicApiKey,
-      groqApiKey: env.GROQ_API_KEY || systemFile.llm?.groqApiKey,
-      googleApiKey: env.GOOGLE_API_KEY || systemFile.llm?.googleApiKey,
-      openrouterApiKey:
-        env.OPENROUTER_API_KEY || systemFile.llm?.openrouterApiKey,
-      mistralApiKey: env.MISTRAL_API_KEY || systemFile.llm?.mistralApiKey,
-    },
+    llm,
   };
 }
 
@@ -52,35 +57,38 @@ export function loadSystemSettings() {
   return _loadSystemFile();
 }
 
-const flattenZodObject = (schema: Z.ZodObject<any>, prefix = ""): string[] => {
-  return Object.entries(schema.shape).flatMap(([key, value]) => {
-    const newPrefix = prefix ? `${prefix}.${key}` : key;
-    if (value instanceof Z.ZodObject) {
-      return flattenZodObject(value, newPrefix);
-    }
-    return [newPrefix];
-  });
-};
-
 const SettingsSchema = Z.object({
   auth: Z.object({
     apiKey: Z.string(),
     apiUrl: Z.string(),
     webUrl: Z.string(),
   }),
-  llm: Z.object({
-    openaiApiKey: Z.string().optional(),
-    anthropicApiKey: Z.string().optional(),
-    groqApiKey: Z.string().optional(),
-    googleApiKey: Z.string().optional(),
-    openrouterApiKey: Z.string().optional(),
-    mistralApiKey: Z.string().optional(),
-  }),
+  // Allow dynamic llm provider keys
+  llm: Z.record(Z.string().optional()),
 });
 
-export const SETTINGS_KEYS = flattenZodObject(
-  SettingsSchema,
-) as readonly string[];
+function _providerConfigKeys(): string[] {
+  const keys: string[] = [];
+  for (const m of Object.values(PROVIDER_METADATA)) {
+    if (m.apiKeyConfigKey) keys.push(m.apiKeyConfigKey);
+  }
+  return keys;
+}
+
+function _providerEnvVarKeys(): string[] {
+  const keys: string[] = [];
+  for (const m of Object.values(PROVIDER_METADATA)) {
+    if (m.apiKeyEnvVar) keys.push(m.apiKeyEnvVar);
+  }
+  return keys;
+}
+
+export const SETTINGS_KEYS = [
+  "auth.apiKey",
+  "auth.apiUrl",
+  "auth.webUrl",
+  ..._providerConfigKeys(),
+] as string[];
 
 // Private
 
@@ -96,42 +104,27 @@ function _loadDefaults(): CliSettings {
 }
 
 function _loadEnv() {
-  return Z.object({
+  const shape: Record<string, Z.ZodTypeAny> = {
     LINGODOTDEV_API_KEY: Z.string().optional(),
     LINGODOTDEV_API_URL: Z.string().optional(),
     LINGODOTDEV_WEB_URL: Z.string().optional(),
-    OPENAI_API_KEY: Z.string().optional(),
-    ANTHROPIC_API_KEY: Z.string().optional(),
-    GROQ_API_KEY: Z.string().optional(),
-    GOOGLE_API_KEY: Z.string().optional(),
-    OPENROUTER_API_KEY: Z.string().optional(),
-    MISTRAL_API_KEY: Z.string().optional(),
-  })
-    .passthrough()
-    .parse(process.env);
+  };
+  for (const envVar of _providerEnvVarKeys()) {
+    shape[envVar] = Z.string().optional();
+  }
+  return Z.object(shape).passthrough().parse(process.env);
 }
 
 function _loadSystemFile() {
-  const settingsFilePath = _getSettingsFilePath();
-  const content = fs.existsSync(settingsFilePath)
-    ? fs.readFileSync(settingsFilePath, "utf-8")
-    : "";
-  const data = Ini.parse(content);
-
+  const data = getRcConfig();
   return Z.object({
     auth: Z.object({
       apiKey: Z.string().optional(),
       apiUrl: Z.string().optional(),
       webUrl: Z.string().optional(),
     }).optional(),
-    llm: Z.object({
-      openaiApiKey: Z.string().optional(),
-      anthropicApiKey: Z.string().optional(),
-      groqApiKey: Z.string().optional(),
-      googleApiKey: Z.string().optional(),
-      openrouterApiKey: Z.string().optional(),
-      mistralApiKey: Z.string().optional(),
-    }).optional(),
+    // Accept any llm provider key from rc file
+    llm: Z.record(Z.string().optional()).optional(),
   })
     .passthrough()
     .parse(data);
@@ -139,7 +132,28 @@ function _loadSystemFile() {
 
 function _saveSystemFile(settings: CliSettings) {
   const settingsFilePath = _getSettingsFilePath();
-  const content = Ini.stringify(settings);
+  const llmEntries: string[] = [];
+  for (const meta of Object.values(PROVIDER_METADATA)) {
+    const cfgKey = meta.apiKeyConfigKey;
+    if (!cfgKey) continue;
+    const suffix = cfgKey.startsWith("llm.") ? cfgKey.slice(4) : undefined;
+    if (!suffix) continue;
+    const value = (settings.llm as any)?.[suffix];
+    if (value) llmEntries.push(`${suffix}=${value}`);
+  }
+
+  const content = [
+    `[auth]`,
+    `apiKey=${settings.auth.apiKey}`,
+    `apiUrl=${settings.auth.apiUrl}`,
+    `webUrl=${settings.auth.webUrl}`,
+    ``,
+    `[llm]`,
+    ...llmEntries,
+    ``,
+  ]
+    .filter(Boolean)
+    .join("\n");
   fs.writeFileSync(settingsFilePath, content);
 }
 
@@ -177,41 +191,20 @@ function _envVarsInfo() {
       `ℹ️  Using LINGODOTDEV_API_KEY env var instead of credentials from user config`,
     );
   }
-  if (env.OPENAI_API_KEY && systemFile.llm?.openaiApiKey) {
-    console.info(
-      "\x1b[36m%s\x1b[0m",
-      `ℹ️  Using OPENAI_API_KEY env var instead of key from user config.`,
-    );
-  }
-  if (env.ANTHROPIC_API_KEY && systemFile.llm?.anthropicApiKey) {
-    console.info(
-      "\x1b[36m%s\x1b[0m",
-      `ℹ️  Using ANTHROPIC_API_KEY env var instead of key from user config`,
-    );
-  }
-  if (env.GROQ_API_KEY && systemFile.llm?.groqApiKey) {
-    console.info(
-      "\x1b[36m%s\x1b[0m",
-      `ℹ️  Using GROQ_API_KEY env var instead of key from user config`,
-    );
-  }
-  if (env.GOOGLE_API_KEY && systemFile.llm?.googleApiKey) {
-    console.info(
-      "\x1b[36m%s\x1b[0m",
-      `ℹ️  Using GOOGLE_API_KEY env var instead of key from user config`,
-    );
-  }
-  if (env.OPENROUTER_API_KEY && systemFile.llm?.openrouterApiKey) {
-    console.info(
-      "\x1b[36m%s\x1b[0m",
-      `ℹ️  Using OPENROUTER_API_KEY env var instead of key from user config`,
-    );
-  }
-  if (env.MISTRAL_API_KEY && systemFile.llm?.mistralApiKey) {
-    console.info(
-      "\x1b[36m%s\x1b[0m",
-      `ℹ️  Using MISTRAL_API_KEY env var instead of key from user config`,
-    );
+  // Provider-specific env vs rc info using shared metadata
+  for (const meta of Object.values(PROVIDER_METADATA)) {
+    const envVar = meta.apiKeyEnvVar;
+    const cfgKey = meta.apiKeyConfigKey;
+    if (!envVar || !cfgKey) continue;
+    const cfgSuffix = cfgKey.startsWith("llm.") ? cfgKey.slice(4) : undefined;
+    const envVal = (env as any)[envVar];
+    const rcVal = cfgSuffix ? (systemFile.llm as any)?.[cfgSuffix] : undefined;
+    if (envVal && rcVal) {
+      console.info(
+        "\x1b[36m%s\x1b[0m",
+        `ℹ️  Using ${envVar} env var instead of key from user config`,
+      );
+    }
   }
   if (env.LINGODOTDEV_API_URL) {
     console.info(
