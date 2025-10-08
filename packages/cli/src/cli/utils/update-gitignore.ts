@@ -12,19 +12,22 @@ export default function updateGitignore() {
     return;
   }
 
-  const gitignore = fs.readFileSync(gitignorePath, "utf8").split("\n");
-  const cacheIsIgnored = gitignore.includes(cacheFile);
+  const gitignoreContent = fs.readFileSync(gitignorePath, "utf8");
+  const gitignoreEntries = gitignoreContent
+    .split(/\r?\n/)
+    .map((entry) => entry.replace(/\r$/, ""));
+  const cacheIsIgnored = gitignoreEntries.includes(cacheFile);
 
   if (!cacheIsIgnored) {
-    let content = "";
+    let content = gitignoreContent;
+    const newline = gitignoreContent.includes("\r\n") ? "\r\n" : "\n";
 
     // Ensure there's a trailing newline
-    content = fs.readFileSync(gitignorePath, "utf8");
     if (content !== "" && !content.endsWith("\n")) {
-      content += "\n";
+      content += newline;
     }
 
-    content += `${cacheFile}\n`;
+    content += `${cacheFile}${newline}`;
     fs.writeFileSync(gitignorePath, content);
   }
 }
