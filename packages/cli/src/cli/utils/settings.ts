@@ -68,15 +68,19 @@ const SettingsSchema = Z.object({
 });
 
 function _providerConfigKeys(): string[] {
-  return Object.values(PROVIDER_METADATA)
-    .map((m) => m.apiKeyConfigKey)
-    .filter((v): v is string => Boolean(v));
+  const keys: string[] = [];
+  for (const m of Object.values(PROVIDER_METADATA)) {
+    if (m.apiKeyConfigKey) keys.push(m.apiKeyConfigKey);
+  }
+  return keys;
 }
 
 function _providerEnvVarKeys(): string[] {
-  return Object.values(PROVIDER_METADATA)
-    .map((m) => m.apiKeyEnvVar)
-    .filter((v): v is string => Boolean(v));
+  const keys: string[] = [];
+  for (const m of Object.values(PROVIDER_METADATA)) {
+    if (m.apiKeyEnvVar) keys.push(m.apiKeyEnvVar);
+  }
+  return keys;
 }
 
 export const SETTINGS_KEYS = [

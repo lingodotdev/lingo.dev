@@ -17,6 +17,7 @@ import {
 } from "@lingo.dev/providers";
 import * as dotenv from "dotenv";
 import path from "path";
+import fs from "fs";
 import { getRcConfig } from "@lingo.dev/config";
 
 export class LCPAPI {
@@ -132,14 +133,18 @@ export class LCPAPI {
   private static _createLingoDotDevEngine() {
     const getEnvWithDotenv = (name: string): string | undefined => {
       if (process.env[name]) return process.env[name];
-      const result = dotenv.config({
-        path: [
-          path.resolve(process.cwd(), ".env"),
-          path.resolve(process.cwd(), ".env.local"),
-          path.resolve(process.cwd(), ".env.development"),
-        ],
-      });
-      return result?.parsed?.[name];
+      const candidates = [
+        path.resolve(process.cwd(), ".env"),
+        path.resolve(process.cwd(), ".env.local"),
+        path.resolve(process.cwd(), ".env.development"),
+      ];
+      for (const file of candidates) {
+        if (!fs.existsSync(file)) continue;
+        const result = dotenv.config({ path: file });
+        if (process.env[name]) return process.env[name];
+        if (result?.parsed?.[name]) return result.parsed[name];
+      }
+      return undefined;
     };
 
     if (isRunningInCIOrDocker()) {
