@@ -1,5 +1,3 @@
-import { ProviderId } from "./constants";
-
 export interface ProviderMetadata {
   name: string;
   apiKeyEnvVar?: string;
@@ -8,7 +6,7 @@ export interface ProviderMetadata {
   docsLink: string;
 }
 
-export const PROVIDER_METADATA: Record<ProviderId, ProviderMetadata> = {
+export const PROVIDER_METADATA = {
   groq: {
     name: "Groq",
     apiKeyEnvVar: "GROQ_API_KEY",
@@ -58,4 +56,6 @@ export const PROVIDER_METADATA: Record<ProviderId, ProviderMetadata> = {
     getKeyLink: "https://console.mistral.ai",
     docsLink: "https://docs.mistral.ai",
   },
-};
+} as const satisfies Record<string, ProviderMetadata>;
+
+export type ProviderId = keyof typeof PROVIDER_METADATA;
