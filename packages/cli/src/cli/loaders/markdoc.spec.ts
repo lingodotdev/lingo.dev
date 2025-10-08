@@ -13,11 +13,8 @@ This is content inside of a block-level tag
 
       const output = await loader.pull("en", input);
 
-      // Should extract the text content
-      const contentKeys = Object.keys(output).filter((k) =>
-        k.includes("attributes/content"),
-      );
-      const contents = contentKeys.map((k) => output[k]);
+      // Should extract the text content with semantic keys
+      const contents = Object.values(output);
 
       expect(contents).toContain("This is content inside of a block-level tag");
     });

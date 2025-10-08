@@ -1,6 +1,6 @@
 # Introducción a Markdoc
 
-Bienvenido a esta **demostración de Markdoc** documento. Este archivo muestra varias características y sintaxis de Markdoc.
+Bienvenido a este **documento de demostración de Markdoc** . Este archivo muestra varias características y sintaxis de Markdoc.
 
 {% callout type="note" %}
 Este es un documento de muestra que demuestra las capacidades de Markdoc.
@@ -8,7 +8,7 @@ Este es un documento de muestra que demuestra las capacidades de Markdoc.
 
 ## Formato básico
 
-Markdoc soporta características estándar de Markdown:
+Markdoc admite funciones estándar de Markdown:
 
 1. Listas ordenadas
 1. Listas no ordenadas
@@ -80,25 +80,25 @@ Archivo de configuración de ejemplo:
 La buena documentación sigue una organización clara:
 
 {% list %}
-1. **Encabezados claros**: Utilizar estructura jerárquica
-1. **Títulos descriptivos**: Hacer que las secciones sean fáciles de encontrar
-1. **Ejemplos**: Incluir demostraciones prácticas
-1. **Consistencia**: Mantener un formato uniforme
+1. **Encabezados claros**: Utiliza estructura jerárquica
+1. **Títulos descriptivos**: Facilita la búsqueda de secciones
+1. **Ejemplos**: Incluye demostraciones prácticas
+1. **Consistencia**: Mantiene formato uniforme
 {% /list %}
 
 ## Sintaxis avanzada
 
 {% tabs %}
 {% tab title="Variables" %}
-Markdoc admite variables para contenido dinámico utilizando la sintaxis {% $variableName %}.
+Markdoc admite variables para contenido dinámico usando la sintaxis {% $variableName %}.
 {% /tab %}
 
 {% tab title="Conditionals" %}
-Utilice etiquetas condicionales para mostrar u ocultar contenido basado en variables.
+Utiliza etiquetas condicionales para mostrar u ocultar contenido basado en variables.
 {% /tab %}
 
 {% tab title="Attributes" %}
-Añada IDs y clases a los elementos para estilización y anclaje.
+Añade IDs y clases a los elementos para estilizar y anclar.
 {% /tab %}
 {% /tabs %}
 
@@ -106,7 +106,7 @@ Añada IDs y clases a los elementos para estilización y anclaje.
 
 {% accordion %}
 {% item title="How do I use variables?" %}
-Las variables se insertan utilizando la sintaxis {% $variableName %} y pueden definirse en tu configuración.
+Las variables se insertan usando la {% $variableName %} sintaxis y pueden definirse en tu configuración.
 {% /item %}
 
 {% item title="What are custom tags?" %}
@@ -132,4 +132,4 @@ Sí, las etiquetas pueden anidarse dentro de otras etiquetas para crear diseños
 
 **¿Necesitas ayuda?** Consulta la documentación oficial para información detallada.
 
-{% badge color="blue" %}Ejemplo{% /badge %} Este documento demuestra patrones típicos de uso de Markdoc.
+{% badge color="blue" %}Ejemplo{% /badge %} Este documento demuestra patrones de uso típicos de Markdoc.
