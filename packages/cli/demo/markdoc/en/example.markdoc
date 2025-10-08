@@ -1,143 +1,135 @@
-# Getting Started with Lingo.dev
+# Introduction to Markdoc
 
-Welcome to **Lingo.dev**, the AI-powered localization platform for modern web applications!
+Welcome to this **Markdoc demonstration** document. This file showcases various Markdoc features and syntax.
 
 {% callout type="note" %}
-This guide will help you get started in just a few minutes.
+This is a sample document demonstrating Markdoc capabilities.
 {% /callout %}
 
-## Quick Start
+## Basic Formatting
 
-Getting started is easy! Just follow these simple steps:
+Markdoc supports standard Markdown features:
 
-1. Install the Lingo.dev CLI
-2. Initialize your project
-3. Start translating your content
+1. Ordered lists
+2. Unordered lists
+3. Text formatting like *italics* and **bold**
 
-### Installation
+### Emphasis and Inline Code
 
-Run the following command to install:
+You can emphasize text with various styles:
 
-```bash
-npm install -g lingo.dev
-```
+- Regular text
+- *Italic text*
+- **Bold text**
+- `inline code`
 
 {% callout type="warning" %}
-Make sure you have Node.js version 18 or higher installed.
+Remember to test your documents before publishing.
 {% /callout %}
 
-## Core Features {% #features .section-highlight %}
+## Custom Tags {% #tags .section-highlight %}
 
-Lingo.dev offers several *powerful capabilities*:
+Markdoc extends Markdown with custom tags:
 
 {% table %}
 * Feature
 * Description
 ---
-* AI Translation
-* High-quality translations powered by {% $modelName %}
+* Tags
+* Custom components using {% icon name="tag" /%} syntax
 ---
-* Format Support
-* Works with JSON, YAML, Markdown, and more
+* Variables
+* Dynamic content with {% $variableName %}
 ---
-* Translation Memory
-* Reuses previous translations for consistency
+* Attributes
+* IDs and classes for styling
 {% /table %}
 
-### Supported File Formats
+### Code Examples
 
-You can localize these file types:
-
-- `json` - JSON files
-- `yaml` - YAML configuration files
-- `markdoc` - Markdoc documents with {% icon name="tag" /%} tags
-
-## Example Usage
-
-Here's a simple example to get you started:
+Here's a sample code block:
 
 ```javascript
-import { createI18n } from 'lingo.dev';
+function greet(name) {
+  return `Hello, ${name}!`;
+}
 
-const i18n = createI18n({
-  defaultLocale: 'en',
-  locales: ['en', 'es', 'fr', 'de']
-});
+console.log(greet('World'));
 ```
 
-{% if $showAdvanced %}
-The advanced configuration options allow you to customize the behavior.
+{% if $showExample %}
+This conditional content only appears when the variable is set.
 {% /if %}
 
-### Configuration Example {% .code-section %}
+### Configuration {% .code-section %}
 
-Create an `i18n.json` file in your project root:
+Example configuration file:
 
 ```json
 {
-  "version": 1.8,
-  "locale": {
-    "source": "en",
-    "targets": ["es", "fr"]
+  "version": 1.0,
+  "settings": {
+    "enabled": true,
+    "options": ["option1", "option2"]
   }
 }
 ```
 
-## Best Practices
+## Document Structure
 
-Follow these guidelines for optimal results:
+Good documentation follows clear organization:
 
 {% list %}
-1. **Organize by domain**: Group translations by feature
-2. **Use descriptive keys**: Make translation keys self-explanatory
-3. **Leverage context**: Provide context in your source content
-4. **Review translations**: Always review AI-generated translations
+1. **Clear headings**: Use hierarchical structure
+2. **Descriptive titles**: Make sections easy to find
+3. **Examples**: Include practical demonstrations
+4. **Consistency**: Maintain uniform formatting
 {% /list %}
 
-## Advanced Features
+## Advanced Syntax
 
 {% tabs %}
-{% tab title="Translation Memory" %}
-Lingo.dev automatically remembers your translations and reuses them across your project.
+{% tab title="Variables" %}
+Markdoc supports variables for dynamic content using the syntax {% $variableName %}.
 {% /tab %}
 
-{% tab title="Brand Voice" %}
-Configure your brand's tone and style to ensure translations match your identity.
+{% tab title="Conditionals" %}
+Use conditional tags to show or hide content based on variables.
 {% /tab %}
 
-{% tab title="Quality Assurance" %}
-Built-in QA checks ensure placeholder preservation and format consistency.
+{% tab title="Attributes" %}
+Add IDs and classes to elements for styling and anchoring.
 {% /tab %}
 {% /tabs %}
 
-## Troubleshooting
+## Common Patterns
 
 {% accordion %}
-{% item title="Translation fails with authentication error" %}
-Make sure you're logged in with `lingo.dev login` or set your API key.
+{% item title="How do I use variables?" %}
+Variables are inserted using the {% $variableName %} syntax and can be defined in your configuration.
 {% /item %}
 
-{% item title="Files not detected" %}
-Check your glob patterns in `i18n.json` and ensure files match the `[locale]` placeholder.
+{% item title="What are custom tags?" %}
+Custom tags extend Markdoc with component functionality using {% tagName /%} or {% tagName %}...{% /tagName %} syntax.
 {% /item %}
 
-{% item title="Translations cached incorrectly" %}
-Use the `--force` flag to bypass cache and regenerate translations.
+{% item title="Can I nest tags?" %}
+Yes, tags can be nested within other tags to create complex layouts.
 {% /item %}
 {% /accordion %}
 
-## Community Stats
+## Sample Data
 
 {% stats %}
-- **{% $totalUsers %}** developers using Lingo.dev
-- **{% $totalProjects %}** projects localized
-- **{% $totalTranslations %}** translations generated
+- **{% $itemCount %}** items in collection
+- **{% $pageCount %}** pages of documentation
+- **{% $updateTime %}** last updated
 {% /stats %}
 
 ---
 
-*Ready to go global?* Start localizing your application {% link href="/docs" %}with Lingo.dev{% /link %} today!
+*This is a demonstration document* showing various {% link href="/docs" %}Markdoc features{% /link %} in action.
 
-**Questions?** Join our community or email us at support@lingo.dev
+**Need help?** Refer to the official documentation for detailed information.
 
-{% badge color="blue" %}New{% /badge %} Pro tip: Use the `--watch` flag during development to automatically translate content as you write!
+{% badge color="blue" %}Example{% /badge %} This document demonstrates typical Markdoc usage patterns.
