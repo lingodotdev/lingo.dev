@@ -11,6 +11,23 @@
   "main": "build/index.cjs",
   "types": "build/index.d.ts",
   "module": "build/index.mjs",
+  "exports": {
+    ".": {
+      "types": "./build/index.d.ts",
+      "import": "./build/index.mjs",
+      "require": "./build/index.cjs"
+    },
+    "./vite": {
+      "types": "./build/vite.d.ts",
+      "import": "./build/vite.mjs",
+      "require": "./build/vite.cjs"
+    },
+    "./next": {
+      "types": "./build/next.d.ts",
+      "import": "./build/next.mjs",
+      "require": "./build/next.cjs"
+    }
+  },
   "files": [
     "build"
   ],

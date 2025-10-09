@@ -3,16 +3,20 @@ import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
-// Compiler: import
-import lingoCompiler from "lingo.dev/compiler";
+// Compiler: public export path
+import { lingo } from "lingo.dev/compiler/vite";
 
-export default defineConfig(({ isSsrBuild }) =>
-  lingoCompiler.vite({
-    sourceRoot: "app",
-    targetLocales: ["es", "fr", "de"],
-    useDirective: false,
-    models: "lingo.dev",
-  })({
-    plugins: [tailwindcss(), reactRouter(), tsconfigPaths()],
-  }),
-);
+export default defineConfig(({ isSsrBuild }) => ({
+  plugins: [
+    // Place Lingo.dev first so it runs before other transforms
+    lingo({
+      sourceRoot: "app",
+      targetLocales: ["es", "fr", "de"],
+      useDirective: false,
+      models: "lingo.dev",
+    }),
+    tailwindcss(),
+    reactRouter(),
+    tsconfigPaths(),
+  ],
+}));
