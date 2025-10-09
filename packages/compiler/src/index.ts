@@ -12,9 +12,7 @@ const lingoCompiler = {
    * @deprecated Use `import { lingo } from "lingo.dev/compiler/next"`.
    */
   next:
-    (
-      compilerParams?: Parameters<typeof nextLingo>[0],
-    ) =>
+    (compilerParams?: Parameters<typeof nextLingo>[0]) =>
     (nextConfig: any = {}): NextConfig => {
       return nextLingo(compilerParams)(nextConfig);
     },
@@ -24,14 +22,12 @@ const lingoCompiler = {
    *
    * @deprecated Use `import { lingo } from "lingo.dev/compiler/vite"`.
    */
-  vite:
-    (compilerParams?: Parameters<typeof viteLingo>[0]) =>
-    (config: any) => {
-      const plugin = viteLingo(compilerParams);
-      config.plugins = config.plugins || [];
-      config.plugins.unshift(plugin);
-      return config;
-    },
+  vite: (compilerParams?: Parameters<typeof viteLingo>[0]) => (config: any) => {
+    const plugin = viteLingo(compilerParams);
+    config.plugins = config.plugins || [];
+    config.plugins.unshift(plugin);
+    return config;
+  },
 };
 
 export default lingoCompiler;

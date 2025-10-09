@@ -17,7 +17,12 @@ type VitePlugin = {
 export function lingo(
   compilerParams?: Partial<typeof defaultParams>,
 ): VitePlugin {
-  const mergedParams = _.merge({}, defaultParams, { rsc: false }, compilerParams);
+  const mergedParams = _.merge(
+    {},
+    defaultParams,
+    { rsc: false },
+    compilerParams,
+  );
 
   const plugin = unplugin.vite(mergedParams) as VitePlugin;
 

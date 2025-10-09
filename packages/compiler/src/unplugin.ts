@@ -45,27 +45,28 @@ const keyCheckers: Record<
   },
 };
 
-export const unplugin = createUnplugin<Partial<typeof defaultParams> | undefined>(
-  (_params, _meta) => {
-    console.log("ℹ️  Starting Lingo.dev compiler...");
+export const unplugin = createUnplugin<
+  Partial<typeof defaultParams> | undefined
+>((_params, _meta) => {
+  console.log("ℹ️  Starting Lingo.dev compiler...");
 
-    const params = _.defaults(_params, defaultParams);
+  const params = _.defaults(_params, defaultParams);
 
-    // Validate if not in CI or Docker
-    if (!isRunningInCIOrDocker()) {
-      if (params.models === "lingo.dev") {
-        validateLLMKeyDetails(["lingo.dev"]);
-      } else {
-        const configuredProviders = getConfiguredProviders(params.models);
-        validateLLMKeyDetails(configuredProviders);
+  // Validate if not in CI or Docker
+  if (!isRunningInCIOrDocker()) {
+    if (params.models === "lingo.dev") {
+      validateLLMKeyDetails(["lingo.dev"]);
+    } else {
+      const configuredProviders = getConfiguredProviders(params.models);
+      validateLLMKeyDetails(configuredProviders);
 
-        const invalidLocales = getInvalidLocales(
-          params.models,
-          params.sourceLocale,
-          params.targetLocales,
-        );
-        if (invalidLocales.length > 0) {
-          console.log(dedent`
+      const invalidLocales = getInvalidLocales(
+        params.models,
+        params.sourceLocale,
+        params.targetLocales,
+      );
+      if (invalidLocales.length > 0) {
+        console.log(dedent`
             \n
             ⚠️  Lingo.dev Localization Compiler requires LLM model setup for the following locales: ${invalidLocales.join(
               ", ",
@@ -78,65 +79,64 @@ export const unplugin = createUnplugin<Partial<typeof defaultParams> | undefined
 
             ✨
           `);
-          process.exit(1);
-        }
+        process.exit(1);
       }
     }
+  }
 
-    LCPCache.ensureDictionaryFile({
-      sourceRoot: params.sourceRoot,
-      lingoDir: params.lingoDir,
-    });
+  LCPCache.ensureDictionaryFile({
+    sourceRoot: params.sourceRoot,
+    lingoDir: params.lingoDir,
+  });
 
-    return {
-      name: packageJson.name,
-      loadInclude: (id) => !!id.match(LCP_DICTIONARY_FILE_NAME),
-      async load(id) {
-        const dictionary = await loadDictionary({
+  return {
+    name: packageJson.name,
+    loadInclude: (id) => !!id.match(LCP_DICTIONARY_FILE_NAME),
+    async load(id) {
+      const dictionary = await loadDictionary({
+        resourcePath: id,
+        resourceQuery: "",
+        params: {
+          ...params,
+          models: params.models,
+          sourceLocale: params.sourceLocale,
+          targetLocales: params.targetLocales,
+        },
+        sourceRoot: params.sourceRoot,
+        lingoDir: params.lingoDir,
+        isDev:
+          "dev" in _meta ? !!_meta.dev : process.env.NODE_ENV !== "production",
+      });
+
+      if (!dictionary) {
+        return null;
+      }
+
+      return {
+        code: `export default ${JSON.stringify(dictionary, null, 2)}`,
+      };
+    },
+    transformInclude: (id) => id.endsWith(".tsx") || id.endsWith(".jsx"),
+    enforce: "pre",
+    transform(code, id) {
+      try {
+        const result = transformComponent({
+          code,
+          params,
           resourcePath: id,
-          resourceQuery: "",
-          params: {
-            ...params,
-            models: params.models,
-            sourceLocale: params.sourceLocale,
-            targetLocales: params.targetLocales,
-          },
           sourceRoot: params.sourceRoot,
-          lingoDir: params.lingoDir,
-          isDev:
-            "dev" in _meta ? !!_meta.dev : process.env.NODE_ENV !== "production",
         });
 
-        if (!dictionary) {
-          return null;
-        }
+        return result;
+      } catch (error) {
+        console.error("⚠️  Lingo.dev compiler failed to localize your app");
+        console.error("⚠️  Details:", error);
 
-        return {
-          code: `export default ${JSON.stringify(dictionary, null, 2)}`,
-        };
-      },
-      transformInclude: (id) => id.endsWith(".tsx") || id.endsWith(".jsx"),
-      enforce: "pre",
-      transform(code, id) {
-        try {
-          const result = transformComponent({
-            code,
-            params,
-            resourcePath: id,
-            sourceRoot: params.sourceRoot,
-          });
-
-          return result;
-        } catch (error) {
-          console.error("⚠️  Lingo.dev compiler failed to localize your app");
-          console.error("⚠️  Details:", error);
-
-          return code;
-        }
-      },
-    };
-  },
-);
+        return code;
+      }
+    },
+  };
+});
 
 /**
  * Extract a list of supported LLM provider IDs from the locale→model mapping.
