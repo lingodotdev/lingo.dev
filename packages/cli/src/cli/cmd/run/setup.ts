@@ -114,12 +114,14 @@ export default async function setup(input: CmdRunContext) {
         title: "Setting up localization cache",
         async task(ctx, task) {
           const checkLockfileProcessor = createDeltaProcessor("");
-          const lockfileExists = await checkLockfileProcessor.checkIfLockExists();
+          const lockfileExists =
+            await checkLockfileProcessor.checkIfLockExists();
 
           if (!lockfileExists) {
             task.title = "Creating i18n.lock";
             const buckets = getBuckets(ctx.config!);
-            const sourceLocale = ctx.flags.sourceLocale || ctx.config!.locale.source;
+            const sourceLocale =
+              ctx.flags.sourceLocale || ctx.config!.locale.source;
 
             for (const bucket of buckets) {
               for (const bucketPath of bucket.paths) {
@@ -143,8 +145,11 @@ export default async function setup(input: CmdRunContext) {
                 await bucketLoader.init?.();
 
                 const sourceData = await bucketLoader.pull(sourceLocale);
-                const deltaProcessor = createDeltaProcessor(bucketPath.pathPattern);
-                const checksums = await deltaProcessor.createChecksums(sourceData);
+                const deltaProcessor = createDeltaProcessor(
+                  bucketPath.pathPattern,
+                );
+                const checksums =
+                  await deltaProcessor.createChecksums(sourceData);
                 await deltaProcessor.saveChecksums(checksums);
               }
             }
