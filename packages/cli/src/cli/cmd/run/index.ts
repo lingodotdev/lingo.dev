@@ -90,6 +90,10 @@ export default new Command()
     "Force re-translation of all keys, bypassing change detection. Useful when you want to regenerate translations with updated AI models or translation settings",
   )
   .option(
+    "--strict",
+    "Stop immediately on first error instead of continuing with remaining tasks (fail-fast mode)",
+  )
+  .option(
     "--api-key <api-key>",
     "Override API key from settings or environment variables",
   )
