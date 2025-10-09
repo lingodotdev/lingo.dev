@@ -1,4 +1,5 @@
 import Markdoc from "@markdoc/markdoc";
+import YAML from "yaml";
 import { ILoader } from "./_types";
 import { createLoader } from "./_utils";
 
@@ -19,6 +20,8 @@ type NodePathMap = {
   [semanticKey: string]: string; // maps semantic key to AST path
 };
 
+const FM_ATTR_PREFIX = "fm-attr-";
+
 export default function createMarkdocLoader(): ILoader<
   string,
   Record<string, string>
@@ -31,6 +34,16 @@ export default function createMarkdocLoader(): ILoader<
 
       // Traverse the AST and extract text content with semantic keys
       traverseAndExtract(ast, "", result, counters);
+
+      // Extract frontmatter if present
+      if (ast.attributes?.frontmatter) {
+        const frontmatter = YAML.parse(ast.attributes.frontmatter);
+        Object.entries(frontmatter).forEach(([key, value]) => {
+          if (typeof value === "string") {
+            result[`${FM_ATTR_PREFIX}${key}`] = value;
+          }
+        });
+      }
 
       return result;
     },
@@ -47,8 +60,26 @@ export default function createMarkdocLoader(): ILoader<
       // Build path map from semantic keys to AST paths
       buildPathMap(ast, "", counters, pathMap);
 
+      // Extract frontmatter from data
+      const frontmatterEntries = Object.entries(data)
+        .filter(([key]) => key.startsWith(FM_ATTR_PREFIX))
+        .map(([key, value]) => [key.replace(FM_ATTR_PREFIX, ""), value]);
+
+      // Update frontmatter in AST if present
+      if (frontmatterEntries.length > 0 && ast.attributes) {
+        const frontmatter = Object.fromEntries(frontmatterEntries);
+        ast.attributes.frontmatter = YAML.stringify(frontmatter, {
+          defaultStringType: "PLAIN"
+        }).trim();
+      }
+
+      // Filter out frontmatter keys from translation data
+      const contentData = Object.fromEntries(
+        Object.entries(data).filter(([key]) => !key.startsWith(FM_ATTR_PREFIX)),
+      );
+
       // Apply translations using the path map
-      applyTranslations(ast, "", data, pathMap);
+      applyTranslations(ast, "", contentData, pathMap);
 
       // Format back to string
       return Markdoc.format(ast);

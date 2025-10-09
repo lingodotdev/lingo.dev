@@ -43,10 +43,10 @@ This paragraph is nested within a Markdoc tag.
 
       const pulled = await loader.pull("en", input);
 
-      // Modify the content
+      // Modify the content using semantic keys
       const translated = { ...pulled };
       const contentKey = Object.keys(translated).find((k) =>
-        k.includes("attributes/content"),
+        translated[k] === "This paragraph is nested within a Markdoc tag."
       );
       if (contentKey) {
         translated[contentKey] =
@@ -99,10 +99,7 @@ This paragraph is nested within a Markdoc tag.
       const output = await loader.pull("en", input);
 
       // Should extract both text segments
-      const contentKeys = Object.keys(output).filter((k) =>
-        k.includes("attributes/content"),
-      );
-      const contents = contentKeys.map((k) => output[k]);
+      const contents = Object.values(output);
 
       expect(contents).toContain("This is a paragraph ");
       expect(contents).toContain("that contains a tag");
@@ -131,12 +128,10 @@ This paragraph is nested within a Markdoc tag.
       // Translate both text segments
       const translated = { ...pulled };
       Object.keys(translated).forEach((key) => {
-        if (key.includes("attributes/content")) {
-          if (translated[key] === "This is a paragraph ") {
-            translated[key] = "Este es un párrafo ";
-          } else if (translated[key] === "that contains a tag") {
-            translated[key] = "que contiene una etiqueta";
-          }
+        if (translated[key] === "This is a paragraph ") {
+          translated[key] = "Este es un párrafo ";
+        } else if (translated[key] === "that contains a tag") {
+          translated[key] = "que contiene una etiqueta";
         }
       });
 
@@ -158,10 +153,7 @@ This paragraph is nested within a Markdoc tag.
 
       const output = await loader.pull("en", input);
 
-      const contentKeys = Object.keys(output).filter((k) =>
-        k.includes("attributes/content"),
-      );
-      const contents = contentKeys.map((k) => output[k]);
+      const contents = Object.values(output);
 
       expect(contents).toContain("This is content inside of an inline tag");
     });
@@ -278,12 +270,7 @@ More outer content
       const output = await loader.pull("en", input);
 
       // Should extract text segments but not interpolation
-      const contentKeys = Object.keys(output).filter((k) =>
-        k.includes("attributes/content"),
-      );
-      const textContents = contentKeys
-        .map((k) => output[k])
-        .filter((v) => typeof v === "string");
+      const textContents = Object.values(output).filter((v) => typeof v === "string");
 
       expect(textContents).toContain("Hello ");
       expect(textContents).toContain(", welcome!");
@@ -291,12 +278,10 @@ More outer content
       // Translate the text segments
       const translated = { ...output };
       Object.keys(translated).forEach((key) => {
-        if (key.includes("attributes/content")) {
-          if (translated[key] === "Hello ") {
-            translated[key] = "Hola ";
-          } else if (translated[key] === ", welcome!") {
-            translated[key] = ", ¡bienvenido!";
-          }
+        if (translated[key] === "Hello ") {
+          translated[key] = "Hola ";
+        } else if (translated[key] === ", welcome!") {
+          translated[key] = ", ¡bienvenido!";
         }
       });
 
@@ -491,6 +476,93 @@ Content is visible.
 
       expect(pushed).toContain("El contenido es visible.");
       expect(pushed).toContain("{% if $showContent %}");
+    });
+  });
+
+  describe("frontmatter", () => {
+    it("should extract frontmatter attributes", async () => {
+      const loader = createMarkdocLoader();
+      loader.setDefaultLocale("en");
+
+      const input = `---
+title: My Document
+description: A sample document
+author: John Doe
+---
+
+# Heading
+
+Content here.`;
+
+      const output = await loader.pull("en", input);
+
+      expect(output["fm-attr-title"]).toBe("My Document");
+      expect(output["fm-attr-description"]).toBe("A sample document");
+      expect(output["fm-attr-author"]).toBe("John Doe");
+    });
+
+    it("should preserve frontmatter on push", async () => {
+      const loader = createMarkdocLoader();
+      loader.setDefaultLocale("en");
+
+      const input = `---
+title: My Document
+description: A sample document
+---
+
+# Heading
+
+Content here.`;
+
+      const pulled = await loader.pull("en", input);
+      const pushed = await loader.push("en", pulled);
+
+      expect(pushed).toContain("title: My Document");
+      expect(pushed).toContain("description: A sample document");
+      expect(pushed).toContain("# Heading");
+      expect(pushed).toContain("Content here.");
+    });
+
+    it("should translate frontmatter attributes", async () => {
+      const loader = createMarkdocLoader();
+      loader.setDefaultLocale("en");
+
+      const input = `---
+title: Welcome
+description: This is a guide
+---
+
+# Content
+
+Some text.`;
+
+      const pulled = await loader.pull("en", input);
+
+      // Translate frontmatter
+      const translated = { ...pulled };
+      translated["fm-attr-title"] = "Bienvenido";
+      translated["fm-attr-description"] = "Esta es una guía";
+
+      const pushed = await loader.push("es", translated);
+
+      expect(pushed).toContain("title: Bienvenido");
+      expect(pushed).toContain("description: Esta es una guía");
+    });
+
+    it("should handle documents without frontmatter", async () => {
+      const loader = createMarkdocLoader();
+      loader.setDefaultLocale("en");
+
+      const input = `# Heading
+
+Content without frontmatter.`;
+
+      const output = await loader.pull("en", input);
+      const pushed = await loader.push("en", output);
+
+      expect(pushed).not.toContain("---");
+      expect(pushed).toContain("# Heading");
+      expect(pushed).toContain("Content without frontmatter.");
     });
   });
 });

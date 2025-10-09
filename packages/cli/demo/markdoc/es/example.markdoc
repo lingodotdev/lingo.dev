@@ -1,3 +1,9 @@
+---
+title: Introducción a Markdoc
+description: Una demostración completa de las características y sintaxis de Markdoc
+author: Equipo de Documentación
+---
+
 # Introducción a Markdoc
 
 Bienvenido a este **documento de demostración de Markdoc** . Este archivo muestra varias características y sintaxis de Markdoc.
@@ -83,7 +89,7 @@ La buena documentación sigue una organización clara:
 1. **Encabezados claros**: Utiliza estructura jerárquica
 1. **Títulos descriptivos**: Facilita la búsqueda de secciones
 1. **Ejemplos**: Incluye demostraciones prácticas
-1. **Consistencia**: Mantiene formato uniforme
+1. **Consistencia**: Mantiene un formato uniforme
 {% /list %}
 
 ## Sintaxis avanzada
@@ -106,11 +112,11 @@ Añade IDs y clases a los elementos para estilizar y anclar.
 
 {% accordion %}
 {% item title="How do I use variables?" %}
-Las variables se insertan usando la {% $variableName %} sintaxis y pueden definirse en tu configuración.
+Las variables se insertan usando la sintaxis {% $variableName %} y pueden definirse en tu configuración.
 {% /item %}
 
 {% item title="What are custom tags?" %}
-Las etiquetas personalizadas extienden Markdoc con funcionalidad de componentes usando {% tagName /%} o {% tagName %}...{% /tagName %} sintaxis.
+Las etiquetas personalizadas extienden Markdoc con funcionalidad de componentes usando la sintaxis {% tagName /%} o {% tagName %}...{% /tagName %}.
 {% /item %}
 
 {% item title="Can I nest tags?" %}
