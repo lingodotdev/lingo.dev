@@ -108,6 +108,7 @@ export default async function setup(input: CmdRunContext) {
       },
     ],
     {
+      exitOnError: input.flags.strict,
       rendererOptions: commonTaskRendererOptions,
     },
   ).run(input);

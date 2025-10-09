@@ -146,6 +146,7 @@ export default async function plan(
       },
     ],
     {
+      exitOnError: input.flags.strict,
       rendererOptions: commonTaskRendererOptions,
     },
   ).run(input);
