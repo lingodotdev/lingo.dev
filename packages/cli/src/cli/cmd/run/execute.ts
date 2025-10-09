@@ -204,6 +204,10 @@ function createWorkerTask(args: {
               .fromPairs()
               .value();
 
+            if (args.ctx.flags.verbose) {
+              subTask.output = `Processable data (${Object.keys(processableData).length} keys):\n${JSON.stringify(processableData, null, 2)}`;
+            }
+
             if (!Object.keys(processableData).length) {
               await args.ioLimiter(async () => {
                 // re-push in case some of the unlocalizable / meta data changed
@@ -255,6 +259,13 @@ function createWorkerTask(args: {
                   );
                 });
 
+                if (
+                  args.ctx.flags.verbose &&
+                  Object.keys(processedChunk).length > 0
+                ) {
+                  subTask.output = `Processed chunk:\n${JSON.stringify(processedChunk, null, 2)}`;
+                }
+
                 subTask.title = createWorkerStatusMessage({
                   assignedTask,
                   percentage: progress,
@@ -272,6 +283,13 @@ function createWorkerTask(args: {
               delta,
               finalTargetData,
             );
+
+            if (args.ctx.flags.verbose) {
+              const changedKeys = Object.keys(
+                _.omitBy(finalRenamedTargetData, (v, k) => v === targetData[k]),
+              );
+              subTask.output = `Changed keys: ${changedKeys.length}\n${JSON.stringify(changedKeys, null, 2)}`;
+            }
 
             await args.ioLimiter(async () => {
               // not all localizers have progress callback (eg. explicit localizer),
