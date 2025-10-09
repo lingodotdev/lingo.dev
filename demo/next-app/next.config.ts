@@ -1,11 +1,11 @@
 import type { NextConfig } from "next";
-import { lingo } from "lingo.dev/compiler/next";
+import { withLingo } from "lingo.dev/compiler/next";
 
 const nextConfig: NextConfig = {
   /* config options here */
 };
 
-export default lingo({
+export default withLingo({
   sourceLocale: "en",
   targetLocales: ["es", "ja", "fr", "ru", "de", "zh", "ar", "ko"],
   models: "lingo.dev",

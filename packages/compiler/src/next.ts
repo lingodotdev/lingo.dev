@@ -4,7 +4,15 @@ import { defaultParams } from "./_base";
 import { unplugin } from "./unplugin";
 import { sendBuildEvent } from "./utils/build-event";
 
-export function lingo(
+/**
+ * Initializes Lingo.dev Compiler for Next.js (App Router).
+ *
+ * Curried wrapper matching the typical Next.js plugin shape.
+ * Usage:
+ *   import { withLingo } from "lingo.dev/compiler/next";
+ *   export default withLingo(options)(nextConfig);
+ */
+export function withLingo(
   compilerParams?: Partial<typeof defaultParams> & {
     turbopack?: {
       enabled?: boolean | "auto";
@@ -101,4 +109,4 @@ export function lingo(
   };
 }
 
-export default lingo;
+export default withLingo;

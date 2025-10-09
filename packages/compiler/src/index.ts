@@ -1,6 +1,6 @@
 import type { NextConfig } from "next";
 import { lingo as viteLingo } from "./vite";
-import { lingo as nextLingo } from "./next";
+import { withLingo as nextLingo } from "./next";
 
 /**
  * Backward-compatible API surface for existing users.
