@@ -69,7 +69,7 @@ export default function createMarkdocLoader(): ILoader<
       if (frontmatterEntries.length > 0 && ast.attributes) {
         const frontmatter = Object.fromEntries(frontmatterEntries);
         ast.attributes.frontmatter = YAML.stringify(frontmatter, {
-          defaultStringType: "PLAIN"
+          defaultStringType: "PLAIN",
         }).trim();
       }
 
@@ -109,7 +109,10 @@ function traverseAndExtract(
   const nodeSemanticType = getSemanticNodeType(node);
 
   // Use node's own semantic type for structural elements
-  if (nodeSemanticType && !["text", "strong", "em", "inline", "link"].includes(nodeSemanticType)) {
+  if (
+    nodeSemanticType &&
+    !["text", "strong", "em", "inline", "link"].includes(nodeSemanticType)
+  ) {
     semanticType = nodeSemanticType;
   }
 
@@ -156,7 +159,10 @@ function buildPathMap(
   const nodeSemanticType = getSemanticNodeType(node);
 
   // Use node's own semantic type for structural elements
-  if (nodeSemanticType && !["text", "strong", "em", "inline", "link"].includes(nodeSemanticType)) {
+  if (
+    nodeSemanticType &&
+    !["text", "strong", "em", "inline", "link"].includes(nodeSemanticType)
+  ) {
     semanticType = nodeSemanticType;
   }
 
@@ -211,7 +217,7 @@ function applyTranslations(
 
       // Find the semantic key for this path
       const semanticKey = Object.keys(pathMap).find(
-        (key) => pathMap[key] === contentPath
+        (key) => pathMap[key] === contentPath,
       );
 
       if (semanticKey && data[semanticKey] !== undefined) {

@@ -45,8 +45,9 @@ This paragraph is nested within a Markdoc tag.
 
       // Modify the content using semantic keys
       const translated = { ...pulled };
-      const contentKey = Object.keys(translated).find((k) =>
-        translated[k] === "This paragraph is nested within a Markdoc tag."
+      const contentKey = Object.keys(translated).find(
+        (k) =>
+          translated[k] === "This paragraph is nested within a Markdoc tag.",
       );
       if (contentKey) {
         translated[contentKey] =
@@ -270,7 +271,9 @@ More outer content
       const output = await loader.pull("en", input);
 
       // Should extract text segments but not interpolation
-      const textContents = Object.values(output).filter((v) => typeof v === "string");
+      const textContents = Object.values(output).filter(
+        (v) => typeof v === "string",
+      );
 
       expect(textContents).toContain("Hello ");
       expect(textContents).toContain(", welcome!");
