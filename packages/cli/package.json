@@ -29,6 +29,16 @@
       "import": "./build/compiler.mjs",
       "require": "./build/compiler.cjs"
     },
+    "./compiler/vite": {
+      "types": "./build/compiler/vite.d.ts",
+      "import": "./build/compiler/vite.mjs",
+      "require": "./build/compiler/vite.cjs"
+    },
+    "./compiler/next": {
+      "types": "./build/compiler/next.d.ts",
+      "import": "./build/compiler/next.mjs",
+      "require": "./build/compiler/next.cjs"
+    },
     "./react": {
       "types": "./build/react.d.ts",
       "import": "./build/react.mjs",
@@ -83,6 +93,12 @@
       ],
       "compiler": [
         "./build/compiler.d.ts"
+      ],
+      "compiler/vite": [
+        "./build/compiler/vite.d.ts"
+      ],
+      "compiler/next": [
+        "./build/compiler/next.d.ts"
       ],
       "react": [
         "./build/react.d.ts"

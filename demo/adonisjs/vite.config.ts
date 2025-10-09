@@ -2,11 +2,22 @@ import { getDirname } from '@adonisjs/core/helpers'
 import inertia from '@adonisjs/inertia/client'
 import adonisjs from '@adonisjs/vite/client'
 import react from '@vitejs/plugin-react'
-import lingoCompiler from 'lingo.dev/compiler'
+import { lingo } from 'lingo.dev/compiler/vite'
 import { type UserConfig, type PluginOption } from 'vite'
 
 const viteConfig: UserConfig = {
   plugins: [
+    // Place Lingo.dev first so it runs before other transforms
+    lingo({
+      sourceRoot: 'inertia',
+      lingoDir: 'lingo',
+      sourceLocale: 'en',
+      targetLocales: ['es'],
+      rsc: false,
+      useDirective: false,
+      debug: false,
+      models: 'lingo.dev',
+    }) as unknown as PluginOption,
     inertia({
       ssr: {
         enabled: true,
@@ -26,15 +37,4 @@ const viteConfig: UserConfig = {
   },
 }
 
-const withLingo = lingoCompiler.vite({
-  sourceRoot: 'inertia',
-  lingoDir: 'lingo',
-  sourceLocale: 'en',
-  targetLocales: ['es'],
-  rsc: false,
-  useDirective: false,
-  debug: false,
-  models: 'lingo.dev',
-})
-
-export default withLingo(viteConfig)
+export default viteConfig
