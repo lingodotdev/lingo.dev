@@ -288,10 +288,7 @@ function createWorkerTask(args: {
 
             if (args.ctx.flags.verbose) {
               const changedKeys = Object.keys(
-                _.omitBy(
-                  finalRenamedTargetData,
-                  (v, k) => v === targetData[k],
-                ),
+                _.omitBy(finalRenamedTargetData, (v, k) => v === targetData[k]),
               );
               subTask.output = `Changed keys: ${changedKeys.length}\n${JSON.stringify(changedKeys, null, 2)}`;
             }

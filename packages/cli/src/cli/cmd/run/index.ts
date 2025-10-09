@@ -187,8 +187,7 @@ export default new Command()
         flags: ctx.flags,
       });
     } catch (error: any) {
-      const isFrozenError =
-        args.frozen && error.message?.includes("i18n.lock");
+      const isFrozenError = args.frozen && error.message?.includes("i18n.lock");
       await trackEvent(authId || "unknown", "cmd.run.error", {
         errorType: isFrozenError ? "frozen_mismatch" : undefined,
       });
