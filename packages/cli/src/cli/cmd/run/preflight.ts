@@ -22,7 +22,8 @@ export default async function preflightFrozen(input: CmdRunContext) {
             buckets = buckets.filter((b) => ctx.flags.bucket!.includes(b.type));
           }
 
-          const sourceLocale = ctx.flags.sourceLocale || ctx.config!.locale.source;
+          const sourceLocale =
+            ctx.flags.sourceLocale || ctx.config!.locale.source;
           const targetLocales =
             ctx.flags.targetLocale || ctx.config!.locale.targets;
 
@@ -32,8 +33,8 @@ export default async function preflightFrozen(input: CmdRunContext) {
             for (const bucketPath of bucket.paths) {
               // Apply file filter if specified
               if (ctx.flags.file) {
-                const matchesFilter = ctx.flags.file.some(
-                  (f) => bucketPath.pathPattern.includes(f),
+                const matchesFilter = ctx.flags.file.some((f) =>
+                  bucketPath.pathPattern.includes(f),
                 );
                 if (!matchesFilter) {
                   continue;
@@ -63,7 +64,9 @@ export default async function preflightFrozen(input: CmdRunContext) {
 
               const { unlocalizable: sourceUnlocalizable, ...sourceData } =
                 await bucketLoader.pull(sourceLocale);
-              const deltaProcessor = createDeltaProcessor(bucketPath.pathPattern);
+              const deltaProcessor = createDeltaProcessor(
+                bucketPath.pathPattern,
+              );
               const sourceChecksums =
                 await deltaProcessor.createChecksums(sourceData);
               const savedChecksums = await deltaProcessor.loadChecksums();
