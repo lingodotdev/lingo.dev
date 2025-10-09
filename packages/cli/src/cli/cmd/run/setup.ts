@@ -5,6 +5,10 @@ import { CmdRunContext, flagsSchema } from "./_types";
 import { commonTaskRendererOptions } from "./_const";
 import { getConfig } from "../../utils/config";
 import createLocalizer from "../../localizer";
+import { createDeltaProcessor } from "../../utils/delta";
+import { getBuckets } from "../../utils/buckets";
+import createBucketLoader from "../../loaders";
+import { resolveOverriddenLocale } from "@lingo.dev/_spec";
 
 export default async function setup(input: CmdRunContext) {
   console.log(chalk.hex(colors.orange)("[Setup]"));
@@ -104,6 +108,50 @@ export default async function setup(input: CmdRunContext) {
             concurrent: true,
             rendererOptions: { collapseSubtasks: false },
           });
+        },
+      },
+      {
+        title: "Setting up localization cache",
+        async task(ctx, task) {
+          const checkLockfileProcessor = createDeltaProcessor("");
+          const lockfileExists = await checkLockfileProcessor.checkIfLockExists();
+
+          if (!lockfileExists) {
+            task.title = "Creating i18n.lock";
+            const buckets = getBuckets(ctx.config!);
+            const sourceLocale = ctx.flags.sourceLocale || ctx.config!.locale.source;
+
+            for (const bucket of buckets) {
+              for (const bucketPath of bucket.paths) {
+                const resolvedSourceLocale = resolveOverriddenLocale(
+                  sourceLocale,
+                  bucketPath.delimiter,
+                );
+                const bucketLoader = createBucketLoader(
+                  bucket.type,
+                  bucketPath.pathPattern,
+                  {
+                    defaultLocale: resolvedSourceLocale,
+                    injectLocale: bucket.injectLocale,
+                    formatter: ctx.config!.formatter,
+                  },
+                  bucket.lockedKeys,
+                  bucket.lockedPatterns,
+                  bucket.ignoredKeys,
+                );
+                bucketLoader.setDefaultLocale(resolvedSourceLocale);
+                await bucketLoader.init?.();
+
+                const sourceData = await bucketLoader.pull(sourceLocale);
+                const deltaProcessor = createDeltaProcessor(bucketPath.pathPattern);
+                const checksums = await deltaProcessor.createChecksums(sourceData);
+                await deltaProcessor.saveChecksums(checksums);
+              }
+            }
+            task.title = "Localization cache initialized";
+          } else {
+            task.title = "Localization cache loaded";
+          }
         },
       },
     ],

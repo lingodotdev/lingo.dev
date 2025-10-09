@@ -7,6 +7,7 @@ import setup from "./setup";
 import plan from "./plan";
 import execute from "./execute";
 import watch from "./watch";
+import preflightFrozen from "./preflight";
 import { CmdRunContext, flagsSchema } from "./_types";
 import {
   renderClear,
@@ -86,6 +87,10 @@ export default new Command()
     (val: string, prev: string[]) => (prev ? [...prev, val] : [val]),
   )
   .option(
+    "--frozen",
+    "Validate translations are up-to-date without making changes - fails if source files, target files, or lockfile are out of sync. Ideal for CI/CD to ensure translation consistency",
+  )
+  .option(
     "--force",
     "Force re-translation of all keys, bypassing change detection. Useful when you want to regenerate translations with updated AI models or translation settings",
   )
@@ -144,11 +149,16 @@ export default new Command()
       await plan(ctx);
       await renderSpacer();
 
-      await execute(ctx);
-      await renderSpacer();
+      if (ctx.flags.frozen) {
+        await preflightFrozen(ctx);
+        await renderSpacer();
+      } else {
+        await execute(ctx);
+        await renderSpacer();
 
-      await renderSummary(ctx.results);
-      await renderSpacer();
+        await renderSummary(ctx.results);
+        await renderSpacer();
+      }
 
       // Play sound after main tasks complete if sound flag is enabled
       if (ctx.flags.sound) {
@@ -165,7 +175,11 @@ export default new Command()
         flags: ctx.flags,
       });
     } catch (error: any) {
-      await trackEvent(authId || "unknown", "cmd.run.error", {});
+      const isFrozenError =
+        args.frozen && error.message?.includes("i18n.lock");
+      await trackEvent(authId || "unknown", "cmd.run.error", {
+        errorType: isFrozenError ? "frozen_mismatch" : undefined,
+      });
       // Play sad sound if sound flag is enabled
       if (args.sound) {
         await playSound("failure");
