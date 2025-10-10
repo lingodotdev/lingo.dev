@@ -84,7 +84,9 @@ export default async function setup(input: CmdRunContext) {
         task: async (ctx, task) => {
           const validationStatus = await ctx.localizer!.validateSettings!();
           if (!validationStatus.valid) {
-            throw new Error(validationStatus.error || "Configuration validation failed");
+            throw new Error(
+              validationStatus.error || "Configuration validation failed",
+            );
           }
           task.title = `Configuration validated`;
         },

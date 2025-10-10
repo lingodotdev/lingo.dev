@@ -96,7 +96,9 @@ const extendConfigDefinition = <
 
 // any -> v0
 const configV0Schema = Z.object({
-  version: Z.union([Z.number(), Z.string()]).default(0).describe("The version number of the schema."),
+  version: Z.union([Z.number(), Z.string()])
+    .default(0)
+    .describe("The version number of the schema."),
 });
 export const configV0Definition = createConfigDefinition({
   schema: configV0Schema,

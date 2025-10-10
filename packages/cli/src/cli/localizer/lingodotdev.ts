@@ -40,7 +40,8 @@ export default function createLingoDotDevLocalizer(
           username: response?.email,
         };
       } catch (error) {
-        const errorMessage = error instanceof Error ? error.message : String(error);
+        const errorMessage =
+          error instanceof Error ? error.message : String(error);
         return { authenticated: false, error: errorMessage };
       }
     },
