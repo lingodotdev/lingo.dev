@@ -1,5 +1,5 @@
 {
-  "version": 1.7,
+  "version": "1.10",
   "locale": {
     "source": "en",
     "targets": ["es"]
