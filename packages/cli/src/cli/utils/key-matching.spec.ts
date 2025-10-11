@@ -60,7 +60,10 @@ describe("filterEntriesByPattern", () => {
   });
 
   it("should return empty array when no matches", () => {
-    const entries: [string, any][] = [["key1", "value1"], ["key2", "value2"]];
+    const entries: [string, any][] = [
+      ["key1", "value1"],
+      ["key2", "value2"],
+    ];
     const patterns = ["nonexistent"];
 
     const result = filterEntriesByPattern(entries, patterns);

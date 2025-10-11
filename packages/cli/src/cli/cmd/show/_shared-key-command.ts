@@ -102,9 +102,7 @@ export async function executeKeyCommand(
         `No ${config.displayName} keys configured for bucket: ${options.bucket}`,
       );
     } else {
-      console.log(
-        `No ${config.displayName} keys configured in any bucket.`,
-      );
+      console.log(`No ${config.displayName} keys configured in any bucket.`);
     }
   }
 }

@@ -8,7 +8,10 @@ export default function createLockedKeysLoader(
 ): ILoader<Record<string, any>, Record<string, any>> {
   return createLoader({
     pull: async (locale, data) => {
-      return _.pickBy(data, (value, key) => !matchesKeyPattern(key, lockedKeys));
+      return _.pickBy(
+        data,
+        (value, key) => !matchesKeyPattern(key, lockedKeys),
+      );
     },
     push: async (locale, data, originalInput) => {
       const lockedSubObject = _.chain(originalInput)
