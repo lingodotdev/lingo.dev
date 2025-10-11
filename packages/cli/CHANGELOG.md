@@ -1,5 +1,20 @@
 # lingo.dev
 
+## 0.112.0
+
+### Minor Changes
+
+- [#1186](https://github.com/lingodotdev/lingo.dev/pull/1186) [`82f5e7c`](https://github.com/lingodotdev/lingo.dev/commit/82f5e7cdde9a2a15b4c2a7fcb8c67ed64eab596b) Thanks [@davidturnbull](https://github.com/davidturnbull)! - Add Markdoc support
+
+### Patch Changes
+
+- [#1215](https://github.com/lingodotdev/lingo.dev/pull/1215) [`e858174`](https://github.com/lingodotdev/lingo.dev/commit/e858174fd5165e0ea3e3f25fa1fc3edb292bc58f) Thanks [@vrcprl](https://github.com/vrcprl)! - add provider settings
+
+- Updated dependencies [[`82f5e7c`](https://github.com/lingodotdev/lingo.dev/commit/82f5e7cdde9a2a15b4c2a7fcb8c67ed64eab596b), [`e858174`](https://github.com/lingodotdev/lingo.dev/commit/e858174fd5165e0ea3e3f25fa1fc3edb292bc58f)]:
+  - @lingo.dev/_spec@0.41.0
+  - @lingo.dev/_compiler@0.7.12
+  - @lingo.dev/_sdk@0.12.5
+
 ## 0.111.16
 
 ### Patch Changes
