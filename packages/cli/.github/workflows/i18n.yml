@@ -1,0 +1,20 @@
+name: Translation Validation
+
+on:
+  pull_request:
+  push:
+    branches: [main, master]
+
+jobs:
+  validate-translations:
+    runs-on: ubuntu-latest
+    name: Validate translations
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Validate translations with Lingo.dev
+        uses: lingo-dev/action@v1
+        with:
+          api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
