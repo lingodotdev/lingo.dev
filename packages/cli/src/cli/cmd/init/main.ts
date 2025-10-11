@@ -1,6 +1,6 @@
 import { InteractiveCommand, InteractiveOption } from "interactive-commander";
 import Ora from "ora";
-import { getConfig, saveConfig } from "../utils/config";
+import { getConfig, saveConfig } from "../../utils/config";
 import {
   defaultConfig,
   LocaleCode,
@@ -11,13 +11,13 @@ import fs from "fs";
 import path from "path";
 import _ from "lodash";
 import { checkbox, confirm, input } from "@inquirer/prompts";
-import { login } from "./login";
-import { getSettings, saveSettings } from "../utils/settings";
-import { createAuthenticator } from "../utils/auth";
-import findLocaleFiles from "../utils/find-locale-paths";
-import { ensurePatterns } from "../utils/ensure-patterns";
-import updateGitignore from "../utils/update-gitignore";
-import initCICD from "../utils/init-ci-cd";
+import { login } from "../login";
+import { getSettings, saveSettings } from "../../utils/settings";
+import { createAuthenticator } from "../../utils/auth";
+import findLocaleFiles from "../../utils/find-locale-paths";
+import { ensurePatterns } from "../../utils/ensure-patterns";
+import updateGitignore from "../../utils/update-gitignore";
+import initCICD from "../../utils/init-ci-cd";
 import open from "open";
 
 const openUrl = (path: string) => {
@@ -25,82 +25,17 @@ const openUrl = (path: string) => {
   open(`${settings.auth.webUrl}${path}`, { wait: false });
 };
 
-const throwHelpError = (optionType: string, value: any) => {
+const throwHelpError = (option: string, value: string) => {
+  if (value === "help") {
+    openUrl("/go/call");
+  }
   throw new Error(
-    `Invalid ${optionType}: ${value}. Run "lingo.dev init --help" to see available options.`,
+    `Invalid ${option}: ${value}\n\nDo you need support for ${value} ${option}? Type "help" and we will.`,
   );
 };
 
-// GitHub Actions workflow template
-const createWorkflowTemplate = () => {
-  return `name: Translation Validation
-
-on:
-  pull_request:
-  push:
-    branches: [main, master]
-
-jobs:
-  validate-translations:
-    runs-on: ubuntu-latest
-    name: Validate translations
-    
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        
-      - name: Validate translations with Lingo.dev
-        uses: lingo-dev/action@v1
-        with:
-          api-key: \${{ secrets.LINGODOTDEV_API_KEY }}`;
-};
-
-// GitHub Actions setup function
-const setupGithubActions = async (force: boolean = false) => {
-  const spinner = Ora("Setting up GitHub Actions workflow...").start();
-  
-  try {
-    const workflowDir = ".github/workflows";
-    const workflowFile = path.join(workflowDir, "i18n.yml");
-    
-    // Create .github/workflows directory if it doesn't exist
-    if (!fs.existsSync(workflowDir)) {
-      fs.mkdirSync(workflowDir, { recursive: true });
-    }
-    
-    // Check if workflow file already exists
-    if (fs.existsSync(workflowFile) && !force) {
-      spinner.stop();
-      const overwrite = await confirm({
-        message: `Workflow file ${workflowFile} already exists. Overwrite?`,
-        default: false,
-      });
-      
-      if (!overwrite) {
-        console.log("GitHub Actions setup cancelled.");
-        return;
-      }
-      
-      spinner.start("Setting up GitHub Actions workflow...");
-    }
-    
-    // Write the workflow file
-    fs.writeFileSync(workflowFile, createWorkflowTemplate());
-    
-    spinner.succeed(`Created ${workflowFile}`);
-    
-    console.log("\n⚠️  Remember to add your LINGODOTDEV_API_KEY to your GitHub repository secrets:");
-    console.log("   1. Get your API key from: https://lingo.dev");
-    console.log("   2. Add it to your repo: Settings → Secrets → Actions → New repository secret");
-    
-  } catch (error) {
-    spinner.fail("Failed to set up GitHub Actions workflow");
-    console.error("Error:", error);
-  }
-};
-
 export default new InteractiveCommand()
-  .command("init")
+  .command("main")
   .description("Create i18n.json configuration file for a new project")
   .helpOption("-h, --help", "Show help")
   .addOption(
@@ -188,12 +123,6 @@ export default new InteractiveCommand()
       .default([]),
   )
   .action(async (options) => {
-    // Handle GitHub subcommand
-    if (process.argv.includes("github")) {
-      await setupGithubActions(options.force);
-      return;
-    }
-    
     const settings = getSettings(undefined);
     const isInteractive = options.interactive;
 
@@ -237,7 +166,7 @@ export default new InteractiveCommand()
 
           selectedPatterns = await checkbox({
             message: "Select the paths to use",
-            choices: patterns.map((value: string) => ({
+            choices: patterns.map((value) => ({
               value,
             })),
           });
