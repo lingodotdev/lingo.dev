@@ -25,9 +25,9 @@ const openUrl = (path: string) => {
   open(`${settings.auth.webUrl}${path}`, { wait: false });
 };
 
-const throwHelpError = (optionType: string, value: any) => {
+const throwHelpError = (option: string, value: any) => {
   throw new Error(
-    `Invalid ${optionType}: ${value}. Run "lingo.dev init --help" to see available options.`,
+    `Invalid ${option}: ${value}\n\nDo you need support for ${value} ${option}? Type "help" and we will.`,
   );
 };
 
@@ -237,7 +237,7 @@ export default new InteractiveCommand()
 
           selectedPatterns = await checkbox({
             message: "Select the paths to use",
-            choices: patterns.map((value: string) => ({
+            choices: patterns.map((value) => ({
               value,
             })),
           });
