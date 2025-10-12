@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.112.1
+
+### Patch Changes
+
+- [#1218](https://github.com/lingodotdev/lingo.dev/pull/1218) [`26d2ec1`](https://github.com/lingodotdev/lingo.dev/commit/26d2ec155c5868a5bdce1027cd76a5a2d4f8f2b1) Thanks [@vrcprl](https://github.com/vrcprl)! - add 'show ignored-keys' and 'show locked-keys' commands
+
 ## 0.112.0
 
 ### Minor Changes

@@ -1,6 +1,6 @@
 {
   "name": "next-app",
-  "version": "0.2.66",
+  "version": "0.2.67",
   "private": true,
   "scripts": {
     "dev": "next dev",
