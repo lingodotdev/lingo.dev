@@ -112,6 +112,10 @@ export default new Command()
     "--sound",
     "Play audio feedback when translations complete (success or failure sounds)",
   )
+  .option(
+    "--interactive",
+    "Review and edit AI-generated translations interactively before applying changes to files",
+  )
   .action(async (args) => {
     let authId: string | null = null;
     try {
