@@ -34,7 +34,8 @@ export default async function frozen(input: CmdRunContext) {
   }
 
   const _sourceLocale = input.flags.sourceLocale || input.config!.locale.source;
-  const _targetLocales = input.flags.targetLocale || input.config!.locale.targets;
+  const _targetLocales =
+    input.flags.targetLocale || input.config!.locale.targets;
 
   return new Listr<CmdRunContext>(
     [
@@ -42,7 +43,8 @@ export default async function frozen(input: CmdRunContext) {
         title: "Setting up localization cache",
         task: async (_ctx, task) => {
           const checkLockfileProcessor = createDeltaProcessor("");
-          const lockfileExists = await checkLockfileProcessor.checkIfLockExists();
+          const lockfileExists =
+            await checkLockfileProcessor.checkIfLockExists();
           if (!lockfileExists) {
             for (const bucket of buckets) {
               for (const bucketPath of bucket.paths) {

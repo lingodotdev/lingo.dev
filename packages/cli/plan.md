@@ -2,10 +2,12 @@ Goal: Add an equivalent `--frozen` flag to the `run` command with behavior match
 
 Implementation Plan
 
-1) Add CLI flag
+1. Add CLI flag
+
 - Update `src/cli/cmd/run/index.ts` to define `--frozen` with this description: `Validate translations are up-to-date without making changes - fails if source files, target files, or lockfile are out of sync. Ideal for CI/CD to ensure translation consistency before deployment`.
 
-2) Add frozen validation step
+2. Add frozen validation step
+
 - Create `src/cli/cmd/run/frozen.ts` exporting `async function frozen(ctx: CmdRunContext): Promise<void>` that runs a `Listr` pipeline with two tasks:
   - Ensure lockfile exists:
     - Compute buckets with `getBuckets(ctx.config!)`, apply `ctx.flags.bucket` and `ctx.flags.file` filtering consistent with `plan.ts` (substring or `minimatch` on `bucketPath.pathPattern`).
@@ -26,11 +28,12 @@ Implementation Plan
       - If `!_.isEqual(srcUnlocalizable, tgtUnlocalizable)`, throw with details `Unlocalizable data (such as booleans, dates, URLs, etc.) do not match.`
     - If no mismatches are found, complete successfully.
 
-3) Wire the step into run
+3. Wire the step into run
+
 - In `src/cli/cmd/run/index.ts`, call `await frozen(ctx);` immediately after `await plan(ctx);` and before `await execute(ctx);`.
 
 Notes
+
 - Use `resolveOverriddenLocale` exactly as in `plan.ts` for both source and target locales per bucket path delimiter.
 - Use `returnUnlocalizableKeys: true` only for the validation loader.
 - Do not change any other behaviors, including lockfile saving semantics in `execute.ts` and existing task planning, concurrency, or summary output.
-
