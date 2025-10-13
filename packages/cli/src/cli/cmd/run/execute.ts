@@ -291,7 +291,8 @@ function createWorkerTask(args: {
               await bucketLoader.pull(assignedTask.sourceLocale);
               await bucketLoader.push(assignedTask.targetLocale, dataToPush);
 
-              const checksums = await deltaProcessor.createChecksums(sourceData);
+              const checksums =
+                await deltaProcessor.createChecksums(sourceData);
               if (!args.ctx.flags.targetLocale?.length) {
                 await deltaProcessor.saveChecksums(checksums);
               }
