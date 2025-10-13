@@ -112,6 +112,10 @@ export default new Command()
     "--sound",
     "Play audio feedback when translations complete (success or failure sounds)",
   )
+  .option(
+    "--strict",
+    "Stop immediately on first error instead of continuing to process remaining buckets and locales (fail-fast mode)",
+  )
   .action(async (args) => {
     let authId: string | null = null;
     try {
