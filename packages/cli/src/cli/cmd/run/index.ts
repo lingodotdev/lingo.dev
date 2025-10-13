@@ -112,6 +112,10 @@ export default new Command()
     "--sound",
     "Play audio feedback when translations complete (success or failure sounds)",
   )
+  .option(
+    "--verbose",
+    "Print the translation data being processed as formatted JSON for each bucket and locale",
+  )
   .action(async (args) => {
     let authId: string | null = null;
     try {
