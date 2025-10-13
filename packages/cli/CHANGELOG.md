@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.113.0
+
+### Minor Changes
+
+- [#1211](https://github.com/lingodotdev/lingo.dev/pull/1211) [`3413dad`](https://github.com/lingodotdev/lingo.dev/commit/3413dad22af688a6d26649c4f25e18304b3caee6) Thanks [@davidturnbull](https://github.com/davidturnbull)! - Add `--frozen` mode to validate translations without writing changes.
+
 ## 0.112.1
 
 ### Patch Changes
