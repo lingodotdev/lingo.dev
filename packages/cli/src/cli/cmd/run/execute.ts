@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import { Listr, ListrTask } from "listr2";
+import { Listr, ListrTask, ListrTaskWrapper } from "listr2";
 import pLimit, { LimitFunction } from "p-limit";
 import _ from "lodash";
 import { minimatch } from "minimatch";
@@ -19,77 +19,84 @@ export default async function execute(input: CmdRunContext) {
     : Math.min(input.flags.concurrency, input.tasks.length, MAX_WORKER_COUNT);
   console.log(chalk.hex(colors.orange)(`[Localization]`));
 
-  return new Listr<CmdRunContext>(
-    [
-      {
-        title: "Initializing localization engine",
-        task: async (ctx, task) => {
-          task.title = `Localization engine ${chalk.hex(colors.green)(
-            "ready",
-          )} (${ctx.localizer!.id})`;
-        },
-      },
-      {
-        title: `Processing localization tasks ${chalk.dim(
-          `(tasks: ${input.tasks.length}, concurrency: ${effectiveConcurrency})`,
-        )}`,
-        task: async (ctx, task) => {
-          if (input.tasks.length < 1) {
-            task.title = `Skipping, nothing to localize.`;
-            task.skip();
-            return;
-          }
-
-          // Preload checksums for all unique bucket path patterns before starting any workers
-          const initialChecksumsMap = new Map<string, Record<string, string>>();
-          const uniqueBucketPatterns = _.uniq(
-            ctx.tasks.map((t) => t.bucketPathPattern),
-          );
-          for (const bucketPathPattern of uniqueBucketPatterns) {
-            const deltaProcessor = createDeltaProcessor(bucketPathPattern);
-            const checksums = await deltaProcessor.loadChecksums();
-            initialChecksumsMap.set(bucketPathPattern, checksums);
-          }
-
-          const i18nLimiter = pLimit(effectiveConcurrency);
-          const ioLimiter = pLimit(1);
-          const workersCount = effectiveConcurrency;
-
-          const workerTasks: ListrTask[] = [];
-          for (let i = 0; i < workersCount; i++) {
-            const assignedTasks = ctx.tasks.filter(
-              (_, idx) => idx % workersCount === i,
-            );
-            workerTasks.push(
-              createWorkerTask({
-                ctx,
-                assignedTasks,
-                ioLimiter,
-                i18nLimiter,
-                initialChecksumsMap,
-                onDone() {
-                  task.title = createExecutionProgressMessage(ctx);
-                },
-              }),
-            );
-          }
-
-          return task.newListr(workerTasks, {
-            concurrent: true,
-            exitOnError: false,
-            rendererOptions: {
-              ...commonTaskRendererOptions,
-              collapseSubtasks: true,
-            },
-          });
-        },
-      },
-    ],
+  const tasks: ListrTask<CmdRunContext>[] = [
     {
-      exitOnError: false,
-      rendererOptions: commonTaskRendererOptions,
+      title: "Initializing localization engine",
+      task: async (ctx, task) => {
+        task.title = `Localization engine ${chalk.hex(colors.green)(
+          "ready",
+        )} (${ctx.localizer!.id})`;
+      },
     },
-  ).run(input);
+    {
+      title: `Processing localization tasks ${chalk.dim(
+        `(tasks: ${input.tasks.length}, concurrency: ${effectiveConcurrency})`,
+      )}`,
+      task: async (ctx, task) => {
+        if (input.tasks.length < 1) {
+          task.title = `Skipping, nothing to localize.`;
+          task.skip();
+          return;
+        }
+
+        // Preload checksums for all unique bucket path patterns before starting any workers
+        const initialChecksumsMap = new Map<string, Record<string, string>>();
+        const uniqueBucketPatterns = _.uniq(
+          ctx.tasks.map((t) => t.bucketPathPattern),
+        );
+        for (const bucketPathPattern of uniqueBucketPatterns) {
+          const deltaProcessor = createDeltaProcessor(bucketPathPattern);
+          const checksums = await deltaProcessor.loadChecksums();
+          initialChecksumsMap.set(bucketPathPattern, checksums);
+        }
+
+        const i18nLimiter = pLimit(effectiveConcurrency);
+        const ioLimiter = pLimit(1);
+        const workersCount = effectiveConcurrency;
+
+        const workerTasks: ListrTask[] = [];
+        for (let i = 0; i < workersCount; i++) {
+          const assignedTasks = ctx.tasks.filter(
+            (_, idx) => idx % workersCount === i,
+          );
+          workerTasks.push(
+            createWorkerTask({
+              ctx,
+              assignedTasks,
+              ioLimiter,
+              i18nLimiter,
+              initialChecksumsMap,
+              onDone() {
+                task.title = createExecutionProgressMessage(ctx);
+              },
+            }),
+          );
+        }
+
+        return task.newListr(workerTasks, {
+          concurrent: true,
+          exitOnError: false,
+          rendererOptions: {
+            ...commonTaskRendererOptions,
+            collapseSubtasks: true,
+          },
+        });
+      },
+    },
+  ];
+
+  if (input.flags.interactive) {
+    return new Listr<CmdRunContext, "verbose", "simple">(tasks, {
+      exitOnError: false,
+      renderer: "verbose",
+      rendererOptions: commonTaskRendererOptions,
+    }).run(input);
+  }
+
+  return new Listr<CmdRunContext>(tasks, {
+    exitOnError: false,
+    rendererOptions: commonTaskRendererOptions,
+  }).run(input);
 }
 
 function createWorkerStatusMessage(args: {
@@ -155,7 +162,7 @@ function createWorkerTask(args: {
 }): ListrTask {
   return {
     title: "Initializing...",
-    task: async (_subCtx: any, subTask: any) => {
+    task: async (_subCtx, subTask) => {
       for (const assignedTask of args.assignedTasks) {
         subTask.title = createWorkerStatusMessage({
           assignedTask,
