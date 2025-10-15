@@ -1,5 +1,14 @@
 # lingo.dev
 
+## 0.113.1
+
+### Patch Changes
+
+- [#1222](https://github.com/lingodotdev/lingo.dev/pull/1222) [`38139c8`](https://github.com/lingodotdev/lingo.dev/commit/38139c81a85001739cece60873c0c6ad711327a4) Thanks [@vrcprl](https://github.com/vrcprl)! - fix regex replacement
+
+- Updated dependencies [[`38139c8`](https://github.com/lingodotdev/lingo.dev/commit/38139c81a85001739cece60873c0c6ad711327a4)]:
+  - @lingo.dev/_compiler@0.7.13
+
 ## 0.113.0
 
 ### Minor Changes
