@@ -47,7 +47,7 @@ export const providerDetails: Record<
   },
   "lingo.dev": {
     name: "Lingo.dev",
-    apiKeyEnvVar: "LINGO_API_KEY",
+    apiKeyEnvVar: "LINGODOTDEV_API_KEY",
     apiKeyConfigKey: "auth.apiKey",
     getKeyLink: "https://lingo.dev",
     docsLink: "https://lingo.dev/docs",

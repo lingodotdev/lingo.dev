@@ -162,7 +162,10 @@ export default function createMdxCodePlaceholderLoader(): ILoader<
         const replacement = original.startsWith(">")
           ? _.trimStart(original, "> ")
           : original;
-        result = result.replaceAll(placeholder, replacement);
+
+        // Use function replacer to avoid special $ character handling
+        // When using a string, $ has special meaning (e.g., $` inserts text before match)
+        result = result.replaceAll(placeholder, () => replacement);
       }
 
       return result;

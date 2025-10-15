@@ -512,6 +512,59 @@ describe("MDX Code Placeholder Loader", () => {
   });
 
   describe("placeholder replacement bugs", () => {
+    it("should handle special $ characters in code content correctly", async () => {
+      const loader = createMdxCodePlaceholderLoader();
+      loader.setDefaultLocale("en");
+
+      // Code containing special $ characters that have special meaning in replaceAll
+      const content = dedent`
+        Text before.
+
+        \`\`\`js
+        const price = "$100";
+        const template = "$\`text\`";
+        const special = "$&$'$\`";
+        \`\`\`
+
+        Text after.
+      `;
+
+      // Pull and then push the same content
+      const pulled = await loader.pull("en", content);
+      const translated = pulled.replace("Text before", "Texto antes");
+      const pushed = await loader.push("en", translated);
+
+      // Should not contain any placeholders
+      expect(pushed).not.toMatch(/---CODE-PLACEHOLDER-[0-9a-f]+---/);
+
+      // Should preserve all special $ characters exactly as they were
+      expect(pushed).toContain('const price = "$100";');
+      expect(pushed).toContain('const template = "$`text`";');
+      expect(pushed).toContain('const special = "$&$\'$`";');
+      expect(pushed).toContain("Texto antes");
+    });
+
+    it("should handle inline code with $ characters correctly", async () => {
+      const loader = createMdxCodePlaceholderLoader();
+      loader.setDefaultLocale("en");
+
+      const content = "Use `$price` and `$&` and `$\`` in your code.";
+
+      // Pull and then push the same content
+      const pulled = await loader.pull("en", content);
+      const translated = pulled.replace("Use", "Utilize");
+      const pushed = await loader.push("en", translated);
+
+      // Should not contain any placeholders
+      expect(pushed).not.toMatch(/---INLINE-CODE-PLACEHOLDER-[0-9a-f]+---/);
+
+      // Should preserve all special $ characters
+      expect(pushed).toContain("`$price`");
+      expect(pushed).toContain("`$&`");
+      expect(pushed).toContain("`$\``");
+      expect(pushed).toContain("Utilize");
+    });
+
     it("should not leave placeholders when content matches", async () => {
       const loader = createMdxCodePlaceholderLoader();
       loader.setDefaultLocale("en");
