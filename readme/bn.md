@@ -43,6 +43,30 @@
       alt="সর্বশেষ কমিট"
     />
   </a>
+  <a href="https://lingo.dev/en">
+    <img
+      src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square"
+      alt="প্রোডাক্ট হান্ট #১ মাসের ডেভটুল"
+    />
+  </a>
+  <a href="https://lingo.dev/en">
+    <img
+      src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Week-orange?logo=producthunt&style=flat-square"
+      alt="প্রোডাক্ট হান্ট #১ সপ্তাহের প্রোডাক্ট"
+    />
+  </a>
+  <a href="https://lingo.dev/en">
+    <img
+      src="https://img.shields.io/badge/Product%20Hunt-%232%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
+      alt="প্রোডাক্ট হান্ট #২ দিনের প্রোডাক্ট"
+    />
+  </a>
+  <a href="https://lingo.dev/en">
+    <img
+      src="https://img.shields.io/badge/GitHub-Trending-blue?logo=github&style=flat-square"
+      alt="গিটহাব ট্রেন্ডিং"
+    />
+  </a>
 </p>
 
 ---
