@@ -1,4 +1,3 @@
-import { mkdirSync, accessSync, constants as fsConstants } from "node:fs";
 import pino from "pino";
 import type { Logger } from "pino";
 import type { LoggerCacheEntry, LoggerConfig } from "./types.js";
@@ -23,8 +22,6 @@ export function initLogger(slug: string): Logger {
     return cached.logger;
   }
 
-  ensureDirectoryExists(LOG_DIR);
-
   const logFilePath = `${LOG_DIR}/${slug}.log`;
 
   const config: LoggerConfig = {
@@ -38,15 +35,6 @@ export function initLogger(slug: string): Logger {
   loggerCache.set(slug, { logger, config });
 
   return logger;
-}
-
-/**
- * Ensure a directory exists and is writable.
- * Throws if the directory cannot be created or accessed.
- */
-function ensureDirectoryExists(dirPath: string): void {
-  mkdirSync(dirPath, { recursive: true });
-  accessSync(dirPath, fsConstants.W_OK);
 }
 
 /**
