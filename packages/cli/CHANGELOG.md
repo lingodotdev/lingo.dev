@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.113.2
+
+### Patch Changes
+
+- [#1224](https://github.com/lingodotdev/lingo.dev/pull/1224) [`3d3c3d7`](https://github.com/lingodotdev/lingo.dev/commit/3d3c3d783a61443da50a5d182391db33a0d29c84) Thanks [@vrcprl](https://github.com/vrcprl)! - fix code replacement in mdx
+
 ## 0.113.1
 
 ### Patch Changes
