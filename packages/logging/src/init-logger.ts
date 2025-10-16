@@ -77,11 +77,6 @@ function createLogger(config: LoggerConfig): Logger {
     compress: false, // Don't compress rotated files
   });
 
-  // Handle stream errors
-  stream.on("error", (err) => {
-    console.error(`[Logging] Stream error for ${config.slug}:`, err);
-  });
-
   // Create Pino logger with the rotating stream
   const logger = pino(
     {
