@@ -41,14 +41,7 @@ export function detectProjectPath(): string | null {
     }
 
     // Move up one directory
-    const parentDir = dirname(currentDir);
-
-    // If we can't go up anymore (shouldn't happen, but safety check)
-    if (parentDir === currentDir) {
-      break;
-    }
-
-    currentDir = parentDir;
+    currentDir = dirname(currentDir);
   }
 
   // No config file found
