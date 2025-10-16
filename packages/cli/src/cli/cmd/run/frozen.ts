@@ -101,6 +101,8 @@ export default async function frozen(input: CmdRunContext) {
                   injectLocale: bucket.injectLocale,
                 },
                 bucket.lockedKeys,
+                bucket.lockedPatterns,
+                bucket.ignoredKeys,
               );
               loader.setDefaultLocale(resolvedSourceLocale);
               await loader.init();

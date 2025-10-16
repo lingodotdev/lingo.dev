@@ -21,17 +21,23 @@
       "include": ["demo/html/[locale]/*.html"]
     },
     "json": {
-      "include": ["demo/json/[locale]/*.json"]
+      "include": ["demo/json/[locale]/*.json"],
+      "lockedKeys": ["locked_key_1"],
+      "ignoredKeys": ["ignored_key_1"]
     },
     "jsonc": {
-      "include": ["demo/jsonc/[locale]/*.jsonc"]
+      "include": ["demo/jsonc/[locale]/*.jsonc"],
+      "lockedKeys": ["locked_key_1"],
+      "ignoredKeys": ["ignored_key_1"]
     },
     "markdown": {
       "include": ["demo/markdown/[locale]/*.md"],
       "exclude": ["demo/markdown/[locale]/ignored.md"]
     },
     "mdx": {
-      "include": ["demo/mdx/[locale]/*.mdx"]
+      "include": ["demo/mdx/[locale]/*.mdx"],
+      "lockedKeys": ["meta/locked_key_1"],
+      "ignoredKeys": ["meta/ignored_key_1"]
     },
     "po": {
       "include": ["demo/po/[locale]/*.po"]
@@ -40,7 +46,9 @@
       "include": ["demo/properties/[locale]/*.properties"]
     },
     "typescript": {
-      "include": ["demo/typescript/[locale]/*.ts"]
+      "include": ["demo/typescript/[locale]/*.ts"],
+      "lockedKeys": ["forms/locked_key_1"],
+      "ignoredKeys": ["forms/ignored_key_1"]
     },
     "xcode-strings": {
       "include": ["demo/xcode-strings/[locale]/*.strings"]
@@ -49,10 +57,14 @@
       "include": ["demo/xcode-stringsdict/[locale]/*.stringsdict"]
     },
     "xcode-xcstrings": {
-      "include": ["demo/xcode-xcstrings/*.xcstrings"]
+      "include": ["demo/xcode-xcstrings/*.xcstrings"],
+      "lockedKeys": ["api_key"],
+      "ignoredKeys": ["item_count"]
     },
     "yaml": {
-      "include": ["demo/yaml/[locale]/*.yml"]
+      "include": ["demo/yaml/[locale]/*.yml"],
+      "lockedKeys": ["locked_key_1"],
+      "ignoredKeys": ["ignored_key_1"]
     },
     "yaml-root-key": {
       "include": ["demo/yaml-root-key/[locale]/*.yml"]
