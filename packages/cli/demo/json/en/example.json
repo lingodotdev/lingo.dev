@@ -31,5 +31,7 @@
       "nested_message": "Nested text"
     }
   ],
-  "locked_key_1": "This value is locked and should not be changed"
+  "locked_key_1": "This value is locked and should not be changed",
+  "ignored_key_1": "This value is ignored and should not appear in target locales"
+
 }

@@ -108,6 +108,7 @@ export default function createBucketLoader(
         createFlatLoader(),
         createInjectLocaleLoader(options.injectLocale),
         createLockedKeysLoader(lockedKeys || []),
+        createIgnoredKeysLoader(ignoredKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -119,6 +120,7 @@ export default function createBucketLoader(
         createFlatLoader(),
         createInjectLocaleLoader(options.injectLocale),
         createLockedKeysLoader(lockedKeys || []),
+        createIgnoredKeysLoader(ignoredKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -130,6 +132,7 @@ export default function createBucketLoader(
         createFlatLoader(),
         createInjectLocaleLoader(options.injectLocale),
         createLockedKeysLoader(lockedKeys || []),
+        createIgnoredKeysLoader(ignoredKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -162,6 +165,7 @@ export default function createBucketLoader(
         createFlatLoader(),
         createEnsureKeyOrderLoader(),
         createLockedKeysLoader(lockedKeys || []),
+        createIgnoredKeysLoader(ignoredKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -207,6 +211,7 @@ export default function createBucketLoader(
         createFlatLoader(),
         createEnsureKeyOrderLoader(),
         createLockedKeysLoader(lockedKeys || []),
+        createIgnoredKeysLoader(ignoredKeys || []),
         createSyncLoader(),
         createVariableLoader({ type: "ieee" }),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
@@ -219,6 +224,7 @@ export default function createBucketLoader(
         createFlatLoader(),
         createEnsureKeyOrderLoader(),
         createLockedKeysLoader(lockedKeys || []),
+        createIgnoredKeysLoader(ignoredKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -335,6 +341,7 @@ export default function createBucketLoader(
         createFlatLoader(),
         createInjectLocaleLoader(options.injectLocale),
         createLockedKeysLoader(lockedKeys || []),
+        createIgnoredKeysLoader(ignoredKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
