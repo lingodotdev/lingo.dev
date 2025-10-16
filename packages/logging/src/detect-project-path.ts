@@ -15,9 +15,6 @@ const CONFIG_FILES = [
   "vite.config.ts",
 ] as const;
 
-// Cache the detected project path to avoid repeated filesystem operations
-let cachedProjectPath: string | null = null;
-
 /**
  * Detect the project root directory by searching for config files.
  * Searches upward from the current working directory until a config file is found.
@@ -25,11 +22,6 @@ let cachedProjectPath: string | null = null;
  * @returns The detected project root path, or the current working directory if no config is found
  */
 export function detectProjectPath(): string {
-  // Return cached result if available
-  if (cachedProjectPath !== null) {
-    return cachedProjectPath;
-  }
-
   let currentDir = cwd();
   const root = resolve("/");
 
@@ -39,7 +31,6 @@ export function detectProjectPath(): string {
     for (const configFile of CONFIG_FILES) {
       const configPath = resolve(currentDir, configFile);
       if (existsSync(configPath)) {
-        cachedProjectPath = currentDir;
         return currentDir;
       }
     }
@@ -61,6 +52,5 @@ export function detectProjectPath(): string {
   }
 
   // No config file found, return current working directory
-  cachedProjectPath = cwd();
-  return cachedProjectPath;
+  return cwd();
 }
