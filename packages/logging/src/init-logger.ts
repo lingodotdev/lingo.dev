@@ -12,6 +12,7 @@ import {
   ROTATION_CONFIG,
   DEFAULT_REDACT_PATHS,
 } from "./constants.js";
+import { registerExitHandler } from "./exit-handler.js";
 
 // Singleton cache for logger instances, keyed by slug
 const loggerCache = new Map<string, LoggerCacheEntry>();
@@ -44,6 +45,9 @@ export function initLogger(slug: string): Logger {
 
   // Create logger instance
   const logger = createLogger(config);
+
+  // Register exit handler for graceful shutdown
+  registerExitHandler(logger);
 
   // Cache the logger
   loggerCache.set(slug, { logger, config });
