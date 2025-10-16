@@ -3,15 +3,12 @@
 import { mkdirSync, accessSync, constants as fsConstants } from "node:fs";
 import pino from "pino";
 import type { Logger } from "pino";
-import { createStream } from "rotating-file-stream";
 import type { LoggerCacheEntry, LoggerConfig } from "./types.js";
 import {
   LOG_DIR,
   DEFAULT_LOG_LEVEL,
-  ROTATION_CONFIG,
   DEFAULT_REDACT_PATHS,
 } from "./constants.js";
-import { registerExitHandler } from "./exit-handler.js";
 
 // Singleton cache for logger instances, keyed by slug
 const loggerCache = new Map<string, LoggerCacheEntry>();
@@ -45,9 +42,6 @@ export function initLogger(slug: string): Logger {
   // Create logger instance
   const logger = createLogger(config);
 
-  // Register exit handler for graceful shutdown
-  registerExitHandler(logger);
-
   // Cache the logger
   loggerCache.set(slug, { logger, config });
 
@@ -64,20 +58,19 @@ function ensureDirectoryExists(dirPath: string): void {
 }
 
 /**
- * Create a Pino logger instance with rotation and redaction.
+ * Create a Pino logger instance with file destination and redaction.
+ * Uses pino.destination() which is optimal for CLI applications.
  */
 function createLogger(config: LoggerConfig): Logger {
-  // Create rotating file stream
-  const stream = createStream(config.slug + ".log", {
-    path: config.logDir,
-    size: ROTATION_CONFIG.size,
-    interval: ROTATION_CONFIG.interval,
-    intervalBoundary: ROTATION_CONFIG.intervalBoundary,
-    maxFiles: ROTATION_CONFIG.maxFiles,
-    compress: false, // Don't compress rotated files
+  // Use pino.destination for reliable file writes with immediate flushing
+  // This is the recommended approach for CLI tools as of October 2025
+  const destination = pino.destination({
+    dest: config.logFilePath,
+    sync: true, // Synchronous writes ensure immediate persistence for CLI apps
+    mkdir: true, // Auto-create directory
   });
 
-  // Create Pino logger with the rotating stream
+  // Create Pino logger with the destination
   const logger = pino(
     {
       level: DEFAULT_LOG_LEVEL,
@@ -87,7 +80,7 @@ function createLogger(config: LoggerConfig): Logger {
         censor: "[REDACTED]",
       },
     },
-    stream
+    destination
   );
 
   return logger;
