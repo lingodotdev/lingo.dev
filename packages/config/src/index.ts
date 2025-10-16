@@ -31,3 +31,20 @@ export function getRcConfig(): RcConfig {
   const data = Ini.parse(content);
   return rcConfigSchema.parse(data);
 }
+
+function removeUndefined<T>(obj: T): T {
+  if (obj === null || typeof obj !== "object") return obj;
+  if (Array.isArray(obj)) return obj.map(removeUndefined) as T;
+  return Object.fromEntries(
+    Object.entries(obj)
+      .filter(([_, v]) => v !== undefined)
+      .map(([k, v]) => [k, removeUndefined(v)])
+  ) as T;
+}
+
+export function saveRcConfig(config: RcConfig): void {
+  const settingsFilePath = getSettingsFilePath();
+  // Ini.stringify writes literal "undefined" strings, so filter them out first
+  const content = Ini.stringify(removeUndefined(config));
+  fs.writeFileSync(settingsFilePath, content);
+}

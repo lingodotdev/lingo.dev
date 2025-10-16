@@ -3,7 +3,7 @@ import path from "path";
 import _ from "lodash";
 import Z from "zod";
 import fs from "fs";
-import { getRcConfig } from "@lingo.dev/config";
+import { getRcConfig, saveRcConfig } from "@lingo.dev/config";
 import { PROVIDER_METADATA } from "@lingo.dev/providers";
 
 export type CliSettings = Z.infer<typeof SettingsSchema>;
@@ -131,30 +131,7 @@ function _loadSystemFile() {
 }
 
 function _saveSystemFile(settings: CliSettings) {
-  const settingsFilePath = _getSettingsFilePath();
-  const llmEntries: string[] = [];
-  for (const meta of Object.values(PROVIDER_METADATA)) {
-    const cfgKey = meta.apiKeyConfigKey;
-    if (!cfgKey) continue;
-    const suffix = cfgKey.startsWith("llm.") ? cfgKey.slice(4) : undefined;
-    if (!suffix) continue;
-    const value = (settings.llm as any)?.[suffix];
-    if (value) llmEntries.push(`${suffix}=${value}`);
-  }
-
-  const content = [
-    `[auth]`,
-    `apiKey=${settings.auth.apiKey}`,
-    `apiUrl=${settings.auth.apiUrl}`,
-    `webUrl=${settings.auth.webUrl}`,
-    ``,
-    `[llm]`,
-    ...llmEntries,
-    ``,
-  ]
-    .filter(Boolean)
-    .join("\n");
-  fs.writeFileSync(settingsFilePath, content);
+  saveRcConfig(settings);
 }
 
 function _getSettingsFilePath(): string {
