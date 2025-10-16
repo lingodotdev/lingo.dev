@@ -942,9 +942,9 @@ describe("bucket loaders", () => {
 
       const input = {
         "button.title": "Submit",
-        "wildcard_a": "Value A",
-        "wildcard_b": "Value B",
-        "other": "Other value",
+        wildcard_a: "Value A",
+        wildcard_b: "Value B",
+        other: "Other value",
       };
       const payload = {
         "button.title": "Enviar",
