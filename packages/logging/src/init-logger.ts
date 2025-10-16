@@ -59,35 +59,8 @@ export function initLogger(slug: string): Logger {
  * Throws an error if the directory cannot be created or accessed.
  */
 function ensureDirectoryExists(dirPath: string): void {
-  try {
-    // Try to create the directory (recursive: true will create parent dirs)
-    mkdirSync(dirPath, { recursive: true });
-
-    // Verify we can write to the directory
-    accessSync(dirPath, fsConstants.W_OK);
-  } catch (error) {
-    // Handle specific error cases
-    if (error && typeof error === "object" && "code" in error) {
-      const code = (error as { code: string }).code;
-
-      if (code === "EACCES" || code === "EPERM") {
-        throw new Error(`Permission denied: cannot write to ${dirPath}`);
-      }
-
-      if (code === "EROFS") {
-        throw new Error(`Read-only filesystem: cannot write to ${dirPath}`);
-      }
-
-      if (code === "ENOSPC") {
-        throw new Error(`No space left on device: ${dirPath}`);
-      }
-    }
-
-    // Re-throw with more context
-    throw new Error(
-      `Failed to create or access directory ${dirPath}: ${error instanceof Error ? error.message : String(error)}`
-    );
-  }
+  mkdirSync(dirPath, { recursive: true });
+  accessSync(dirPath, fsConstants.W_OK);
 }
 
 /**
