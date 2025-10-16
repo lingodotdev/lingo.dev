@@ -105,4 +105,20 @@ describe("initLogger", () => {
       logger.info(`Test message from ${slugs[index]}`);
     });
   });
+
+  it("should not throw errors even if logger operations fail", () => {
+    // This test verifies that logging operations don't crash the application.
+    // The implementation wraps logger initialization in try-catch and handles
+    // runtime errors on the destination stream.
+    const logger = initLogger("resilient-logger");
+
+    // Should not throw even if there are issues
+    expect(() => {
+      logger.info("Test message");
+      logger.error("Test error");
+      logger.warn({ data: "complex" }, "Warning with object");
+    }).not.toThrow();
+
+    expect(logger).toBeDefined();
+  });
 });
