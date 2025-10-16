@@ -1,7 +1,9 @@
 // Logger initialization logic
 
 import { mkdirSync, accessSync, constants as fsConstants } from "node:fs";
+import pino from "pino";
 import type { Logger } from "pino";
+import { createStream } from "rotating-file-stream";
 import type { LoggerCacheEntry, LoggerConfig } from "./types.js";
 import {
   PRIMARY_LOG_DIR,
@@ -110,6 +112,45 @@ function ensureDirectoryExists(dirPath: string): string {
  * Create a Pino logger instance with rotation and redaction.
  */
 function createLogger(config: LoggerConfig): Logger {
-  // TODO: Implement in tasks 3.0 and 4.0
-  throw new Error("Not yet implemented");
+  // Create rotating file stream
+  const stream = createStream(config.slug + ".log", {
+    path: config.logDir,
+    size: ROTATION_CONFIG.size,
+    interval: ROTATION_CONFIG.interval,
+    intervalBoundary: ROTATION_CONFIG.intervalBoundary,
+    maxFiles: ROTATION_CONFIG.maxFiles,
+    compress: false, // Don't compress rotated files
+  });
+
+  // Handle stream errors
+  stream.on("error", (err) => {
+    console.error(`[Logging] Stream error for ${config.slug}:`, err);
+  });
+
+  // Create Pino logger with the rotating stream
+  const logger = pino(
+    {
+      level: DEFAULT_LOG_LEVEL,
+      // Redact sensitive data
+      redact: {
+        paths: [...DEFAULT_REDACT_PATHS],
+        censor: "[REDACTED]",
+      },
+      // Use pretty printing in development
+      transport:
+        process.env.NODE_ENV === "development"
+          ? {
+              target: "pino-pretty",
+              options: {
+                colorize: true,
+                translateTime: "SYS:standard",
+                ignore: "pid,hostname",
+              },
+            }
+          : undefined,
+    },
+    stream
+  );
+
+  return logger;
 }
