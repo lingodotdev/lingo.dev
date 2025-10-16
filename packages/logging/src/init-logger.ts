@@ -6,8 +6,7 @@ import type { Logger } from "pino";
 import { createStream } from "rotating-file-stream";
 import type { LoggerCacheEntry, LoggerConfig } from "./types.js";
 import {
-  PRIMARY_LOG_DIR,
-  FALLBACK_LOG_DIR,
+  LOG_DIR,
   DEFAULT_LOG_LEVEL,
   ROTATION_CONFIG,
   DEFAULT_REDACT_PATHS,
@@ -30,16 +29,16 @@ export function initLogger(slug: string): Logger {
     return cached.logger;
   }
 
-  // Resolve log directory (primary or fallback)
-  const logDir = resolveLogDirectory();
+  // Ensure log directory exists
+  ensureDirectoryExists(LOG_DIR);
 
   // Construct log file path
-  const logFilePath = `${logDir}/${slug}.log`;
+  const logFilePath = `${LOG_DIR}/${slug}.log`;
 
   // Create logger configuration
   const config: LoggerConfig = {
     slug,
-    logDir,
+    logDir: LOG_DIR,
     logFilePath,
   };
 
@@ -56,37 +55,16 @@ export function initLogger(slug: string): Logger {
 }
 
 /**
- * Resolve the log directory, trying primary first, then fallback.
- */
-function resolveLogDirectory(): string {
-  try {
-    // Try to use the primary directory
-    return ensureDirectoryExists(PRIMARY_LOG_DIR);
-  } catch (primaryError) {
-    // If primary fails, try fallback directory
-    try {
-      return ensureDirectoryExists(FALLBACK_LOG_DIR);
-    } catch (fallbackError) {
-      throw new Error(
-        `Failed to create log directory. Primary: ${primaryError instanceof Error ? primaryError.message : String(primaryError)}. Fallback: ${fallbackError instanceof Error ? fallbackError.message : String(fallbackError)}`
-      );
-    }
-  }
-}
-
-/**
  * Ensure a directory exists, creating it if necessary.
  * Throws an error if the directory cannot be created or accessed.
  */
-function ensureDirectoryExists(dirPath: string): string {
+function ensureDirectoryExists(dirPath: string): void {
   try {
     // Try to create the directory (recursive: true will create parent dirs)
     mkdirSync(dirPath, { recursive: true });
 
     // Verify we can write to the directory
     accessSync(dirPath, fsConstants.W_OK);
-
-    return dirPath;
   } catch (error) {
     // Handle specific error cases
     if (error && typeof error === "object" && "code" in error) {
