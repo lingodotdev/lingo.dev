@@ -1,23 +1,20 @@
 // Constants for the logging package
 
-import { homedir } from "node:os";
+import envPaths from "env-paths";
 import { join } from "node:path";
+import { tmpdir } from "node:os";
+
+const paths = envPaths("lingo.dev");
 
 /**
- * Primary log directory (user's local state directory)
+ * Primary log directory (user's state/log directory)
  */
-export const PRIMARY_LOG_DIR = join(
-  homedir(),
-  ".local",
-  "state",
-  "lingo.dev",
-  "logs"
-);
+export const PRIMARY_LOG_DIR = paths.log;
 
 /**
  * Fallback log directory (temporary directory)
  */
-export const FALLBACK_LOG_DIR = "/tmp/lingo.dev/logs";
+export const FALLBACK_LOG_DIR = join(tmpdir(), "lingo.dev", "logs");
 
 /**
  * Default log level
