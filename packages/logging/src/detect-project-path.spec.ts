@@ -1,7 +1,13 @@
 // Unit tests for project path detection
 
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
-import { mkdirSync, writeFileSync, rmSync, existsSync, realpathSync } from "node:fs";
+import {
+  mkdirSync,
+  writeFileSync,
+  rmSync,
+  existsSync,
+  realpathSync,
+} from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { detectProjectPath } from "./detect-project-path.js";
@@ -100,7 +106,6 @@ describe("detectProjectPath", () => {
 
     expect(detectedPath).toBeNull();
   });
-
 
   it("should detect next.config.mjs", () => {
     const projectDir = join(testRoot, "project-with-next-mjs");

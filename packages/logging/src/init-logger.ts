@@ -56,7 +56,7 @@ function createLogger(config: LoggerConfig): Logger {
         censor: "[REDACTED]",
       },
     },
-    destination
+    destination,
   );
 
   return logger;
