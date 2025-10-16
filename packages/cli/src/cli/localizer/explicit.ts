@@ -34,17 +34,14 @@ export default function createExplicitLocalizer(
     );
   }
 
-  const skipAuth = provider.id === "ollama";
   try {
     const model = createProviderClient(provider.id as ProviderId, provider.model, {
       baseUrl: provider.baseUrl,
-      skipAuth,
     });
     return createLocalizerFromModel({
       model,
       id: provider.id,
       prompt: provider.prompt,
-      skipAuth,
     });
   } catch (error: unknown) {
     if (error instanceof ProviderKeyMissingError) {
@@ -80,7 +77,6 @@ function createLocalizerFromModel(params: {
   model: LanguageModel;
   id: NonNullable<I18nConfig["provider"]>["id"];
   prompt: string;
-  skipAuth?: boolean;
 }): ILocalizer {
   const { model } = params;
 

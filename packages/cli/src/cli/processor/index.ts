@@ -75,11 +75,9 @@ function getPureModelProvider(provider: I18nConfig["provider"]) {
     throw new Error(createUnsupportedProviderErrorMessage(provider?.id));
   }
 
-  const skipAuth = provider?.id === "ollama";
   try {
     return createProviderClient(provider!.id as ProviderId, provider!.model, {
       baseUrl: provider!.baseUrl,
-      skipAuth,
     });
   } catch (error: unknown) {
     if (error instanceof ProviderKeyMissingError) {

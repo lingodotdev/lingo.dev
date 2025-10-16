@@ -1,6 +1,7 @@
 import { LanguageModel } from "ai";
 import { ProviderId } from "./constants";
 import { resolveProviderApiKey } from "./keys";
+import { PROVIDER_METADATA } from "./metadata";
 import { UnsupportedProviderError } from "./errors";
 import { createOpenAI } from "@ai-sdk/openai";
 import { createAnthropic } from "@ai-sdk/anthropic";
@@ -21,7 +22,8 @@ export function createProviderClient(
   modelId: string,
   options?: ClientOptions,
 ): LanguageModel {
-  const skipAuth = options?.skipAuth === true || providerId === "ollama";
+  const skipAuth =
+    options?.skipAuth === true || !PROVIDER_METADATA[providerId]?.apiKeyEnvVar;
   const apiKey = options?.apiKey ?? resolveProviderApiKey(providerId, { required: !skipAuth });
 
   switch (providerId) {
