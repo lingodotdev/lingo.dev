@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.113.3
+
+### Patch Changes
+
+- [#1227](https://github.com/lingodotdev/lingo.dev/pull/1227) [`74d8efe`](https://github.com/lingodotdev/lingo.dev/commit/74d8efef8d4789f9baa5b7837e053c2571df0308) Thanks [@vrcprl](https://github.com/vrcprl)! - Add ignoredKeys support
+
 ## 0.113.2
 
 ### Patch Changes
