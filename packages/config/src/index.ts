@@ -4,16 +4,6 @@ import fs from "fs";
 import Ini from "ini";
 import Z from "zod";
 
-export interface RcConfig {
-  auth?: {
-    apiKey?: string;
-    apiUrl?: string;
-    webUrl?: string;
-  };
-  llm?: Record<string, string | undefined>;
-  [key: string]: any;
-}
-
 export const rcConfigSchema = Z.object({
   auth: Z.object({
     apiKey: Z.string().optional(),
@@ -23,13 +13,18 @@ export const rcConfigSchema = Z.object({
   // Allow any llm provider keys and preserve them
   llm: Z.record(Z.string().optional()).optional(),
 })
-  .passthrough()
-  .transform((v) => v as RcConfig);
+  .passthrough();
+
+export type RcConfig = Z.infer<typeof rcConfigSchema>;
+
+const SETTINGS_FILE = ".lingodotdevrc";
+
+function getSettingsFilePath(): string {
+  return path.join(os.homedir(), SETTINGS_FILE);
+}
 
 export function getRcConfig(): RcConfig {
-  const settingsFile = ".lingodotdevrc";
-  const homedir = os.homedir();
-  const settingsFilePath = path.join(homedir, settingsFile);
+  const settingsFilePath = getSettingsFilePath();
   const content = fs.existsSync(settingsFilePath)
     ? fs.readFileSync(settingsFilePath, "utf-8")
     : "";
