@@ -91,14 +91,14 @@ describe("detectProjectPath", () => {
     expect(detectedPath).toBe(projectRoot);
   });
 
-  it("should return cwd when no config files found", () => {
+  it("should return null when no config files found", () => {
     const emptyDir = join(testRoot, "empty-project");
     mkdirSync(emptyDir, { recursive: true });
 
     process.chdir(emptyDir);
     const detectedPath = detectProjectPath();
 
-    expect(detectedPath).toBe(emptyDir);
+    expect(detectedPath).toBeNull();
   });
 
 

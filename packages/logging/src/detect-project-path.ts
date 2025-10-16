@@ -19,9 +19,9 @@ const CONFIG_FILES = [
  * Detect the project root directory by searching for config files.
  * Searches upward from the current working directory until a config file is found.
  *
- * @returns The detected project root path, or the current working directory if no config is found
+ * @returns The detected project root path, or null if no config is found
  */
-export function detectProjectPath(): string {
+export function detectProjectPath(): string | null {
   let currentDir = cwd();
   const root = resolve("/");
 
@@ -51,6 +51,6 @@ export function detectProjectPath(): string {
     currentDir = parentDir;
   }
 
-  // No config file found, return current working directory
-  return cwd();
+  // No config file found
+  return null;
 }
