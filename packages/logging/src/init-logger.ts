@@ -86,18 +86,6 @@ function createLogger(config: LoggerConfig): Logger {
         paths: [...DEFAULT_REDACT_PATHS],
         censor: "[REDACTED]",
       },
-      // Use pretty printing in development
-      transport:
-        process.env.NODE_ENV === "development"
-          ? {
-              target: "pino-pretty",
-              options: {
-                colorize: true,
-                translateTime: "SYS:standard",
-                ignore: "pid,hostname",
-              },
-            }
-          : undefined,
     },
     stream
   );
