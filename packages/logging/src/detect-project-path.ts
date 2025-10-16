@@ -1,10 +1,7 @@
-// Project path detection utility
-
 import { existsSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { cwd } from "node:process";
 
-// Config files to search for, in order of precedence
 const CONFIG_FILES = [
   "i18n.json",
   "next.config.js",
@@ -16,18 +13,15 @@ const CONFIG_FILES = [
 ] as const;
 
 /**
- * Detect the project root directory by searching for config files.
- * Searches upward from the current working directory until a config file is found.
+ * Detect the project root by searching upward for known config files.
  *
- * @returns The detected project root path, or null if no config is found
+ * @returns The project root path, or null if no config file is found
  */
 export function detectProjectPath(): string | null {
   let currentDir = cwd();
   const root = resolve("/");
 
-  // Traverse upward until we find a config file or reach the root
   while (true) {
-    // Check if any config file exists in the current directory
     for (const configFile of CONFIG_FILES) {
       const configPath = resolve(currentDir, configFile);
       if (existsSync(configPath)) {
@@ -35,15 +29,12 @@ export function detectProjectPath(): string | null {
       }
     }
 
-    // If we've reached the filesystem root, stop
     if (currentDir === root) {
       break;
     }
 
-    // Move up one directory
     currentDir = dirname(currentDir);
   }
 
-  // No config file found
   return null;
 }
