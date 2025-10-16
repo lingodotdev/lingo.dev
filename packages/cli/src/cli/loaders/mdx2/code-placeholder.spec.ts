@@ -646,4 +646,225 @@ describe("MDX Code Placeholder Loader", () => {
       expect(pushedResult).toContain("قم بتطبيق");
     });
   });
+
+  describe("raw code outside fences", () => {
+    it("should handle raw JavaScript code outside fences", async () => {
+      const loader = createMdxCodePlaceholderLoader();
+      loader.setDefaultLocale("en");
+
+      // Test case matching user's file structure - raw JS between JSX components
+      const md = dedent`
+        </Tabs>
+
+        // Attach to button click
+        document.getElementById('executeBtn')?.addEventListener('click', executeClientSideWorkflow);
+
+        <Callout type="warning">
+          Content here
+        </Callout>
+      `;
+
+      const pulled = await loader.pull("en", md);
+      const pushed = await loader.push("en", pulled);
+
+      // Should round-trip correctly
+      expect(pushed).toBe(md);
+    });
+
+    it("should handle mixed code blocks and raw code", async () => {
+      const loader = createMdxCodePlaceholderLoader();
+      loader.setDefaultLocale("en");
+
+      const md = dedent`
+        Here's a code block:
+
+        \`\`\`typescript
+        const x = 1;
+        \`\`\`
+
+        Now some raw code outside:
+        // This is outside
+        const y = 2;
+
+        And another block:
+
+        \`\`\`javascript
+        const z = 3;
+        \`\`\`
+      `;
+
+      const pulled = await loader.pull("en", md);
+      const pushed = await loader.push("en", pulled);
+
+      // Should preserve raw code outside fences
+      expect(pushed).toContain("// This is outside");
+      expect(pushed).toContain("const y = 2;");
+    });
+
+    it("should handle code blocks with extra blank lines added by translation", async () => {
+      const loader = createMdxCodePlaceholderLoader();
+      loader.setDefaultLocale("en");
+
+      // English source - no extra blank lines
+      const enMd = dedent`
+        <Tab value="npm">
+          \`\`\`bash
+          npm install
+          \`\`\`
+        </Tab>
+      `;
+
+      // Pull English to establish placeholders
+      const enPulled = await loader.pull("en", enMd);
+
+      // German translation with extra blank lines (simulating AI translation behavior)
+      const deMd = dedent`
+        <Tab value="npm">
+
+          \`\`\`bash
+          npm install
+          \`\`\`
+
+        </Tab>
+      `;
+
+      // Pull German version
+      const dePulled = await loader.pull("de", deMd);
+
+      // Push back - should restore code blocks correctly
+      const dePushed = await loader.push("de", dePulled);
+
+      // The code block should be present and not replaced with placeholder
+      expect(dePushed).toContain("```bash");
+      expect(dePushed).toContain("npm install");
+      expect(dePushed).not.toMatch(/---CODE-PLACEHOLDER-/);
+    });
+
+    it("should preserve double newlines around placeholders for section splitting", async () => {
+      const loader = createMdxCodePlaceholderLoader();
+      loader.setDefaultLocale("en");
+
+      // Test that placeholders maintain double newlines so section-split works correctly
+      const md = dedent`
+        Text before.
+
+        \`\`\`typescript
+        code1
+        \`\`\`
+
+        Text between.
+
+        \`\`\`javascript
+        code2
+        \`\`\`
+
+        Text after.
+      `;
+
+      const pulled = await loader.pull("en", md);
+
+      // Verify placeholders are surrounded by double newlines for proper section splitting
+      const placeholders = pulled.match(/---CODE-PLACEHOLDER-[a-f0-9]+---/g);
+      expect(placeholders).toHaveLength(2);
+
+      // Check that each placeholder has double newlines around it
+      for (const placeholder of placeholders!) {
+        // Should have \n\n before (except at start) and \n\n after (except at end)
+        const placeholderIndex = pulled.indexOf(placeholder);
+
+        // Check for double newline after (unless at end)
+        const afterPlaceholder = pulled.substring(
+          placeholderIndex + placeholder.length,
+          placeholderIndex + placeholder.length + 2,
+        );
+        if (placeholderIndex + placeholder.length < pulled.length - 2) {
+          expect(afterPlaceholder).toBe("\n\n");
+        }
+      }
+
+      // Ensure we can split on \n\n and get separate sections
+      const sections = pulled.split("\n\n").filter(Boolean);
+      expect(sections.length).toBeGreaterThanOrEqual(5); // Text + placeholder + text + placeholder + text
+    });
+  });
+});
+
+describe("adjacent code blocks bug", () => {
+  it("should handle closing fence followed immediately by opening fence", async () => {
+    const loader = createMdxCodePlaceholderLoader();
+    loader.setDefaultLocale("en");
+
+    // This reproduces the actual bug from the user's file
+    const md = dedent`
+      \`\`\`typescript
+      function example() {
+        return true;
+      }
+      \`\`\`
+
+      \`\`\`typescript
+      import { Something } from 'somewhere';
+      \`\`\`
+    `;
+
+    const pulled = await loader.pull("en", md);
+
+    console.log("PULLED CONTENT:");
+    console.log(pulled);
+    console.log("---");
+
+    // The bug: placeholder is concatenated with "typescript" from next block
+    const bugPattern = /---CODE-PLACEHOLDER-[a-f0-9]+---typescript/;
+    expect(pulled).not.toMatch(bugPattern);
+
+    // Should have proper separation
+    expect(pulled).toMatch(
+      /---CODE-PLACEHOLDER-[a-f0-9]+---\n\n---CODE-PLACEHOLDER-[a-f0-9]+---/,
+    );
+  });
+});
+
+describe("$ special character handling in replacement functions", () => {
+  it("should preserve $ characters in ensureTrailingFenceNewline", async () => {
+    const loader = createMdxCodePlaceholderLoader();
+    loader.setDefaultLocale("en");
+
+    // Tests fix for lines 38, 68: replaceAll(match, () => replacement)
+    // Code block with $ that would trigger special replacement behavior if not using function replacer
+    const content = dedent`
+      Some text
+      \`\`\`js
+      console.log('Current period cost: $' + amount);
+      const template = \`Price: $\${price}\`;
+      \`\`\`
+      More text
+    `;
+
+    const pulled = await loader.pull("en", content);
+    const pushed = await loader.push("en", pulled);
+
+    // All $ characters should be preserved exactly
+    expect(pushed).toContain("console.log('Current period cost: $' + amount);");
+    expect(pushed).toContain("const template = `Price: $");
+  });
+
+  it("should preserve $ characters in ensureSurroundingImageNewlines", async () => {
+    const loader = createMdxCodePlaceholderLoader();
+    loader.setDefaultLocale("en");
+
+    // Tests fix for line 38: replaceAll(match, () => replacement) in image handling
+    // Image with $ in URL and alt text that would break with string replacer
+    const content = dedent`
+      Here is an image:
+      ![Price: $100](https://api.example.com/chart?price=$500&currency=$USD)
+      End of text
+    `;
+
+    const pulled = await loader.pull("en", content);
+    const pushed = await loader.push("en", pulled);
+
+    // All $ characters in URL and alt text should be preserved
+    expect(pushed).toContain("![Price: $100]");
+    expect(pushed).toContain("price=$500&currency=$USD");
+  });
 });
