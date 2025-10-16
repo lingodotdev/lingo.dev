@@ -1,4 +1,4 @@
-import { ProviderId } from "./constants";
+import { ProviderId } from "./metadata";
 
 export class ProviderKeyMissingError extends Error {
   constructor(

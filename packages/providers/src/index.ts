@@ -1,5 +1,6 @@
-export { SUPPORTED_PROVIDERS, type ProviderId } from "./constants";
 export {
+  SUPPORTED_PROVIDERS,
+  type ProviderId,
   type ProviderMetadata,
   PROVIDER_METADATA,
 } from "./metadata";
@@ -16,4 +17,3 @@ export {
   createProviderClient,
   type ClientOptions,
 } from "./factory";
-export { getProvider } from "./get-provider";

@@ -1,5 +1,5 @@
 import { LanguageModel } from "ai";
-import { ProviderId } from "./constants";
+import { ProviderId } from "./metadata";
 import { resolveProviderApiKey } from "./keys";
 import { PROVIDER_METADATA } from "./metadata";
 import { UnsupportedProviderError } from "./errors";

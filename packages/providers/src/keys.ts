@@ -1,7 +1,7 @@
 import path from "path";
 import fs from "fs";
 import dotenv from "dotenv";
-import { ProviderId } from "./constants";
+import { ProviderId } from "./metadata";
 import { PROVIDER_METADATA } from "./metadata";
 import { getRcConfig, type RcConfig } from "@lingo.dev/config";
 import { ProviderKeyMissingError } from "./errors";

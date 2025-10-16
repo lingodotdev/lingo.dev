@@ -59,3 +59,8 @@ export const PROVIDER_METADATA = {
 } as const satisfies Record<string, ProviderMetadata>;
 
 export type ProviderId = keyof typeof PROVIDER_METADATA;
+
+// Derive supported providers from metadata keys to prevent drift
+export const SUPPORTED_PROVIDERS = Object.freeze(
+  Object.keys(PROVIDER_METADATA),
+) as readonly string[] as readonly ProviderId[];
