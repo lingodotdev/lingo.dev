@@ -4,7 +4,6 @@ export {
   PROVIDER_METADATA,
 } from "./metadata";
 export {
-  getProviderApiKey,
   resolveProviderApiKey,
   type KeySources,
 } from "./keys";

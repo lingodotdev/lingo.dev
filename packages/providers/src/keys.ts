@@ -32,10 +32,6 @@ export interface KeySources {
   rc?: RcConfig;
 }
 
-export function getProviderApiKey(providerId: ProviderId): string | undefined {
-  return resolveProviderApiKey(providerId, { required: false });
-}
-
 export function resolveProviderApiKey(
   providerId: ProviderId,
   options?: { sources?: KeySources; required?: boolean },
