@@ -773,7 +773,10 @@ describe("MDX Code Placeholder Loader", () => {
         const placeholderIndex = pulled.indexOf(placeholder);
 
         // Check for double newline after (unless at end)
-        const afterPlaceholder = pulled.substring(placeholderIndex + placeholder.length, placeholderIndex + placeholder.length + 2);
+        const afterPlaceholder = pulled.substring(
+          placeholderIndex + placeholder.length,
+          placeholderIndex + placeholder.length + 2,
+        );
         if (placeholderIndex + placeholder.length < pulled.length - 2) {
           expect(afterPlaceholder).toBe("\n\n");
         }
@@ -815,7 +818,9 @@ describe("adjacent code blocks bug", () => {
     expect(pulled).not.toMatch(bugPattern);
 
     // Should have proper separation
-    expect(pulled).toMatch(/---CODE-PLACEHOLDER-[a-f0-9]+---\n\n---CODE-PLACEHOLDER-[a-f0-9]+---/);
+    expect(pulled).toMatch(
+      /---CODE-PLACEHOLDER-[a-f0-9]+---\n\n---CODE-PLACEHOLDER-[a-f0-9]+---/,
+    );
   });
 });
 
