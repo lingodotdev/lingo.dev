@@ -290,16 +290,15 @@ export const configV1_4Definition = extendConfigDefinition(
 
 // v1.4 -> v1.5
 // Changes: add "provider" field to the config
-const providerIdEnumValues =
-  SUPPORTED_PROVIDERS as unknown as [
-    (typeof SUPPORTED_PROVIDERS)[number],
-    ...((typeof SUPPORTED_PROVIDERS)[number])[],
-  ];
-
 const providerSchema = Z.object({
-  id: Z.enum(providerIdEnumValues).describe(
-    "Identifier of the translation provider service.",
-  ),
+  id: Z.enum([
+    "openai",
+    "anthropic",
+    "google",
+    "ollama",
+    "openrouter",
+    "mistral",
+  ]).describe("Identifier of the translation provider service."),
   model: Z.string().describe("Model name to use for translations."),
   prompt: Z.string().describe(
     "Prompt template used when requesting translations.",
@@ -487,25 +486,47 @@ export const configV1_10Definition = extendConfigDefinition(
   },
 );
 
-// exports
-// v1.10 -> v2.0
-// Changes: Use SUPPORTED_PROVIDERS from providers package for provider enum
-export const configV2_0Definition = extendConfigDefinition(
+// v1.10 -> v1.11
+// Changes: Add "groq" to provider enum
+const providerSchemaV1_11 = Z.object({
+  id: Z.enum([
+    "openai",
+    "anthropic",
+    "google",
+    "ollama",
+    "openrouter",
+    "mistral",
+    "groq",
+  ]).describe("Identifier of the translation provider service."),
+  model: Z.string().describe("Model name to use for translations."),
+  prompt: Z.string().describe(
+    "Prompt template used when requesting translations.",
+  ),
+  baseUrl: Z.string()
+    .optional()
+    .describe("Custom base URL for the provider API (optional)."),
+  settings: modelSettingsSchema,
+}).describe("Configuration for the machine-translation provider.");
+
+export const configV1_11Definition = extendConfigDefinition(
   configV1_10Definition,
   {
-    createSchema: (baseSchema) => baseSchema,
+    createSchema: (baseSchema) =>
+      baseSchema.extend({
+        provider: providerSchemaV1_11.optional(),
+      }),
     createDefaultValue: (baseDefaultValue) => ({
       ...baseDefaultValue,
-      version: 2.0,
+      version: "1.11",
     }),
     createUpgrader: (oldConfig) => ({
       ...oldConfig,
-      version: 2.0,
+      version: "1.11",
     }),
   },
 );
 
-export const LATEST_CONFIG_DEFINITION = configV2_0Definition;
+export const LATEST_CONFIG_DEFINITION = configV1_11Definition;
 
 export type I18nConfig = Z.infer<(typeof LATEST_CONFIG_DEFINITION)["schema"]>;
 
