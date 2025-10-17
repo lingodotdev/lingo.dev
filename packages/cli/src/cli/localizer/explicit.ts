@@ -63,6 +63,18 @@ export default function createExplicitLocalizer(
         baseUrl: provider.baseUrl,
         settings,
       });
+    case "aimlapi":
+      return createAiSdkLocalizer({
+        factory: (params) =>
+          createOpenAI({
+            apiKey: params.apiKey,
+            baseURL: params.baseUrl,
+          }).languageModel(provider.model),
+        id: provider.id,
+        prompt: provider.prompt,
+        apiKeyName: "AIMLAPI_API_KEY",
+        baseUrl: provider.baseUrl ?? "https://api.aimlapi.com/v1",
+      });
     case "openrouter":
       return createAiSdkLocalizer({
         factory: (params) =>
