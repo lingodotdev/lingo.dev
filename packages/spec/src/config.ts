@@ -1,4 +1,5 @@
 import Z from "zod";
+import { SUPPORTED_PROVIDERS } from "@lingo.dev/providers";
 import { localeCodeSchema } from "./locales";
 import { bucketTypeSchema } from "./formats";
 
@@ -485,8 +486,47 @@ export const configV1_10Definition = extendConfigDefinition(
   },
 );
 
-// exports
-export const LATEST_CONFIG_DEFINITION = configV1_10Definition;
+// v1.10 -> v1.11
+// Changes: Add "groq" to provider enum
+const providerSchemaV1_11 = Z.object({
+  id: Z.enum([
+    "openai",
+    "anthropic",
+    "google",
+    "ollama",
+    "openrouter",
+    "mistral",
+    "groq",
+  ]).describe("Identifier of the translation provider service."),
+  model: Z.string().describe("Model name to use for translations."),
+  prompt: Z.string().describe(
+    "Prompt template used when requesting translations.",
+  ),
+  baseUrl: Z.string()
+    .optional()
+    .describe("Custom base URL for the provider API (optional)."),
+  settings: modelSettingsSchema,
+}).describe("Configuration for the machine-translation provider.");
+
+export const configV1_11Definition = extendConfigDefinition(
+  configV1_10Definition,
+  {
+    createSchema: (baseSchema) =>
+      baseSchema.extend({
+        provider: providerSchemaV1_11.optional(),
+      }),
+    createDefaultValue: (baseDefaultValue) => ({
+      ...baseDefaultValue,
+      version: "1.11",
+    }),
+    createUpgrader: (oldConfig) => ({
+      ...oldConfig,
+      version: "1.11",
+    }),
+  },
+);
+
+export const LATEST_CONFIG_DEFINITION = configV1_11Definition;
 
 export type I18nConfig = Z.infer<(typeof LATEST_CONFIG_DEFINITION)["schema"]>;
 

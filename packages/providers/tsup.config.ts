@@ -1,5 +1,4 @@
 import { defineConfig } from "tsup";
-import buildJsonSchema from "./src/json-schema";
 
 export default defineConfig({
   clean: true,
@@ -10,11 +9,7 @@ export default defineConfig({
   dts: true,
   cjsInterop: true,
   splitting: true,
-  external: ["@lingo.dev/providers"],
   outExtension: (ctx) => ({
     js: ctx.format === "cjs" ? ".cjs" : ".mjs",
   }),
-  onSuccess: async () => {
-    buildJsonSchema();
-  },
 });
