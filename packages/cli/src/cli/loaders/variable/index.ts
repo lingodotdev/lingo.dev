@@ -80,7 +80,8 @@ function variableExtractLoader(
           if (isICUPluralObject(originalValue) && originalValue._meta) {
             // Restore the _meta and type marker from original input
             (resultValue as any)._meta = originalValue._meta;
-            (resultValue as any)[Symbol.for("@lingo.dev/icu-plural-object")] = true;
+            (resultValue as any)[Symbol.for("@lingo.dev/icu-plural-object")] =
+              true;
           }
         }
 

@@ -19,17 +19,17 @@ describe("xcode-xcstrings ICU lock file format", () => {
   it("should compute checksums on ICU format objects", async () => {
     // This is what xcstrings-icu loader produces
     const sourceData = {
-      "welcome_message": "Hello!",
-      "item_count": {
+      welcome_message: "Hello!",
+      item_count: {
         icu: "{count, plural, =0 {No items} one {# item} other {# items}}",
         _meta: {
           variables: {
             count: {
               format: "%d",
-              role: "plural"
-            }
-          }
-        }
+              role: "plural",
+            },
+          },
+        },
       },
     };
 
@@ -56,10 +56,10 @@ describe("xcode-xcstrings ICU lock file format", () => {
         variables: {
           count: {
             format: "%d",
-            role: "plural"
-          }
-        }
-      }
+            role: "plural",
+          },
+        },
+      },
     };
 
     const checksum1 = MD5(icuObject);
@@ -74,12 +74,12 @@ describe("xcode-xcstrings ICU lock file format", () => {
   it("should change checksum when ICU string changes", () => {
     const icuObject1 = {
       icu: "{count, plural, one {1 item} other {# items}}",
-      _meta: { variables: { count: { format: "%d", role: "plural" } } }
+      _meta: { variables: { count: { format: "%d", role: "plural" } } },
     };
 
     const icuObject2 = {
-      icu: "{count, plural, one {1 elemento} other {# elementos}}",  // Spanish translation
-      _meta: { variables: { count: { format: "%d", role: "plural" } } }
+      icu: "{count, plural, one {1 elemento} other {# elementos}}", // Spanish translation
+      _meta: { variables: { count: { format: "%d", role: "plural" } } },
     };
 
     const checksum1 = MD5(icuObject1);
@@ -108,12 +108,12 @@ describe("xcode-xcstrings ICU lock file format", () => {
 
   it("should handle mixed content (plurals and regular strings)", () => {
     const sourceData = {
-      "simple_string": "Hello!",
-      "plural_key": {
+      simple_string: "Hello!",
+      plural_key: {
         icu: "{count, plural, one {1 item} other {# items}}",
-        _meta: { variables: { count: { format: "%d", role: "plural" } } }
+        _meta: { variables: { count: { format: "%d", role: "plural" } } },
       },
-      "another_string": "Welcome!",
+      another_string: "Welcome!",
     };
 
     const checksums: Record<string, string> = {};

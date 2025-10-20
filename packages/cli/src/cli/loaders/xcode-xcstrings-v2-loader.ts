@@ -33,7 +33,7 @@ export default function createXcodeXcstringsV2Loader(
             console.error(
               `\n[xcode-xcstrings-icu] Failed to convert plural forms for key "${key}":`,
               `\nError: ${error instanceof Error ? error.message : String(error)}`,
-              `\nLocale: ${locale}\n`
+              `\nLocale: ${locale}\n`,
             );
             // Pass through original value on error
             result[key] = value;
@@ -62,7 +62,7 @@ export default function createXcodeXcstringsV2Loader(
               `\nICU string: ${value.icu}`,
               `\nMetadata: ${JSON.stringify(value._meta, null, 2)}`,
               `\nError: ${error instanceof Error ? error.message : String(error)}`,
-              `\nLocale: ${locale}\n`
+              `\nLocale: ${locale}\n`,
             );
             // Pass through original value on error
             result[key] = value;

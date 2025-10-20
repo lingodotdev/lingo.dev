@@ -51,7 +51,7 @@ describe("ICU type guards - Safety for other bucket types", () => {
             one: "1 item",
             other: "%d items",
           },
-        })
+        }),
       ).toBe(false);
     });
 
@@ -61,7 +61,7 @@ describe("ICU type guards - Safety for other bucket types", () => {
         isICUPluralObject({
           NSStringFormatSpecTypeKey: "NSStringPluralRuleType",
           NSStringFormatValueTypeKey: "d",
-        })
+        }),
       ).toBe(false);
     });
 
@@ -78,14 +78,14 @@ describe("ICU type guards - Safety for other bucket types", () => {
               },
             },
           },
-        })
+        }),
       ).toBe(true);
 
       // Valid ICU object without metadata
       expect(
         isICUPluralObject({
           icu: "{count, plural, one {1 item} other {# items}}",
-        })
+        }),
       ).toBe(true);
     });
   });
@@ -133,7 +133,7 @@ describe("ICU type guards - Safety for other bucket types", () => {
       // 'other' is required in all locales per CLDR
       expect(isPluralFormsObject({ one: "1 item" })).toBe(false);
       expect(isPluralFormsObject({ zero: "0 items", one: "1 item" })).toBe(
-        false
+        false,
       );
     });
 
@@ -143,7 +143,7 @@ describe("ICU type guards - Safety for other bucket types", () => {
         isPluralFormsObject({
           one: "1 item",
           other: "# items",
-        })
+        }),
       ).toBe(true);
 
       // Valid with multiple CLDR forms
@@ -154,7 +154,7 @@ describe("ICU type guards - Safety for other bucket types", () => {
           few: "A few items",
           many: "Many items",
           other: "# items",
-        })
+        }),
       ).toBe(true);
     });
   });
@@ -196,9 +196,9 @@ describe("ICU type guards - Safety for other bucket types", () => {
 
     it("Android bucket - should not match ICU guards", () => {
       const androidData = {
-        "app_name": "MyApp",
-        "welcome_message": "Welcome %s!",
-        "item_count": {
+        app_name: "MyApp",
+        welcome_message: "Welcome %s!",
+        item_count: {
           // Android format, not CLDR
           "@quantity": "plural",
           one: "1 item",

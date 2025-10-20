@@ -79,7 +79,8 @@ export function isICUPluralObject(value: any): value is PluralWithMetadata {
         !varMeta ||
         typeof varMeta !== "object" ||
         typeof (varMeta as any).format !== "string" ||
-        ((varMeta as any).role !== "plural" && (varMeta as any).role !== "other")
+        ((varMeta as any).role !== "plural" &&
+          (varMeta as any).role !== "other")
       ) {
         return false;
       }
@@ -93,7 +94,9 @@ export function isICUPluralObject(value: any): value is PluralWithMetadata {
  * Type guard to check if an object is a valid plural forms object
  * Ensures ALL keys are CLDR categories to avoid false positives
  */
-export function isPluralFormsObject(value: any): value is Record<string, string> {
+export function isPluralFormsObject(
+  value: any,
+): value is Record<string, string> {
   if (!value || typeof value !== "object" || Array.isArray(value)) {
     return false;
   }
@@ -113,7 +116,9 @@ export function isPluralFormsObject(value: any): value is Record<string, string>
   }
 
   // Check if all values are strings
-  const allValuesAreStrings = keys.every((key) => typeof value[key] === "string");
+  const allValuesAreStrings = keys.every(
+    (key) => typeof value[key] === "string",
+  );
 
   if (!allValuesAreStrings) {
     return false;
@@ -146,7 +151,7 @@ function getRequiredPluralCategories(locale: string): string[] {
     // Log warning but use safe fallback
     console.warn(
       `[xcode-xcstrings-icu] Failed to resolve plural categories for locale "${locale}". ` +
-      `Using fallback ["one", "other"]. Error: ${error instanceof Error ? error.message : String(error)}`
+        `Using fallback ["one", "other"]. Error: ${error instanceof Error ? error.message : String(error)}`,
     );
     return ["one", "other"];
   }
@@ -221,7 +226,10 @@ export function xcstringsToPluralWithMeta(
   for (const [form, text] of Object.entries(pluralForms)) {
     // Skip if text is not a string
     if (typeof text !== "string") {
-      console.warn(`Warning: Plural form "${form}" has non-string value:`, text);
+      console.warn(
+        `Warning: Plural form "${form}" has non-string value:`,
+        text,
+      );
       continue;
     }
     const matches = [...text.matchAll(formatRegex)];
@@ -297,9 +305,10 @@ export function xcstringsToPluralWithMeta(
 
       // Determine if this form is required or optional
       const isRequired = requiredCategories.includes(form);
-      const formKey = !isRequired && form in CLDR_CATEGORY_TO_NUMBER
-        ? `=${CLDR_CATEGORY_TO_NUMBER[form]}` // Convert optional forms to exact matches
-        : form; // Keep required forms as CLDR keywords
+      const formKey =
+        !isRequired && form in CLDR_CATEGORY_TO_NUMBER
+          ? `=${CLDR_CATEGORY_TO_NUMBER[form]}` // Convert optional forms to exact matches
+          : form; // Keep required forms as CLDR keywords
 
       return `${formKey} {${processed}}`;
     })
@@ -479,12 +488,15 @@ function parseICU(icu: string): any[] {
 
     if (braceCount !== 0) {
       // Provide detailed error with context
-      const preview = formsText.substring(Math.max(0, i - 50), Math.min(formsText.length, i + 50));
+      const preview = formsText.substring(
+        Math.max(0, i - 50),
+        Math.min(formsText.length, i + 50),
+      );
       throw new Error(
         `Unclosed brace for form '${formName}' in ICU MessageFormat.\n` +
-        `Expected ${braceCount} more closing brace(s).\n` +
-        `Context: ...${preview}...\n` +
-        `Full ICU: {${varName}, plural, ${formsText}}`
+          `Expected ${braceCount} more closing brace(s).\n` +
+          `Context: ...${preview}...\n` +
+          `Full ICU: {${varName}, plural, ${formsText}}`,
       );
     }
 

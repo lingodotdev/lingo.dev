@@ -44,10 +44,9 @@ type DenormalizeResult = {
   keysMap: Record<string, string>;
 };
 
-function createDenormalizeLoader(options?: FlatLoaderOptions): ILoader<
-  Record<string, any>,
-  DenormalizeResult
-> {
+function createDenormalizeLoader(
+  options?: FlatLoaderOptions,
+): ILoader<Record<string, any>, DenormalizeResult> {
   return createLoader({
     pull: async (locale, input) => {
       const inputDenormalized = denormalizeObjectKeys(input || {});
