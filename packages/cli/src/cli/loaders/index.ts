@@ -224,9 +224,7 @@ export default function createBucketLoader(
         createPlutilJsonTextLoader(),
         createJsonLoader(),
         createXcodeXcstringsLoader(options.defaultLocale),
-        // Convert plural forms to ICU MessageFormat for better translation
         createXcodeXcstringsV2Loader(options.defaultLocale),
-        // Preserve ICU objects from being flattened (they're already flat strings)
         createFlatLoader({ shouldPreserveObject: isICUPluralObject }),
         createEnsureKeyOrderLoader(),
         createLockedKeysLoader(lockedKeys || []),

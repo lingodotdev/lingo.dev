@@ -27,7 +27,6 @@ export default function createXcodeXcstringsV2Loader(
       for (const [key, value] of Object.entries(input)) {
         if (isPluralFormsObject(value)) {
           try {
-            // Convert plural object to ICU format with metadata
             result[key] = xcstringsToPluralWithMeta(value, locale);
           } catch (error) {
             console.error(
@@ -35,11 +34,9 @@ export default function createXcodeXcstringsV2Loader(
               `\nError: ${error instanceof Error ? error.message : String(error)}`,
               `\nLocale: ${locale}\n`,
             );
-            // Pass through original value on error
             result[key] = value;
           }
         } else {
-          // Pass through non-plural values
           result[key] = value;
         }
       }
@@ -53,22 +50,15 @@ export default function createXcodeXcstringsV2Loader(
       for (const [key, value] of Object.entries(payload)) {
         if (isICUPluralObject(value)) {
           try {
-            // Convert ICU back to plural object format
             const pluralForms = pluralWithMetaToXcstrings(value);
             result[key] = pluralForms;
           } catch (error) {
-            console.error(
-              `\n[xcode-xcstrings-icu] Failed to convert ICU back to plural forms for key "${key}"`,
-              `\nICU string: ${value.icu}`,
-              `\nMetadata: ${JSON.stringify(value._meta, null, 2)}`,
-              `\nError: ${error instanceof Error ? error.message : String(error)}`,
-              `\nLocale: ${locale}\n`,
+            throw new Error(
+              `Failed to write plural translation for key "${key}" (locale: ${locale}).\n` +
+              `${error instanceof Error ? error.message : String(error)}`
             );
-            // Pass through original value on error
-            result[key] = value;
           }
         } else {
-          // Pass through non-ICU values
           result[key] = value;
         }
       }
