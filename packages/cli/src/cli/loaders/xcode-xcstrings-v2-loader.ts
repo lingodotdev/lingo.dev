@@ -55,7 +55,7 @@ export default function createXcodeXcstringsV2Loader(
           } catch (error) {
             throw new Error(
               `Failed to write plural translation for key "${key}" (locale: ${locale}).\n` +
-              `${error instanceof Error ? error.message : String(error)}`
+                `${error instanceof Error ? error.message : String(error)}`,
             );
           }
         } else {
