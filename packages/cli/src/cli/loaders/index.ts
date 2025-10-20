@@ -19,6 +19,8 @@ import createPropertiesLoader from "./properties";
 import createXcodeStringsLoader from "./xcode-strings";
 import createXcodeStringsdictLoader from "./xcode-stringsdict";
 import createXcodeXcstringsLoader from "./xcode-xcstrings";
+import createXcodeXcstringsV2Loader from "./xcode-xcstrings-v2-loader";
+import { isICUPluralObject } from "./xcode-xcstrings-icu";
 import createUnlocalizableLoader from "./unlocalizable";
 import { createFormatterLoader, FormatterType } from "./formatters";
 import createPoLoader from "./po";
@@ -195,6 +197,22 @@ export default function createBucketLoader(
         createJsonLoader(),
         createXcodeXcstringsLoader(options.defaultLocale),
         createFlatLoader(),
+        createEnsureKeyOrderLoader(),
+        createLockedKeysLoader(lockedKeys || []),
+        createSyncLoader(),
+        createVariableLoader({ type: "ieee" }),
+        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+      );
+    case "xcode-xcstrings-v2":
+      return composeLoaders(
+        createTextFileLoader(bucketPathPattern),
+        createPlutilJsonTextLoader(),
+        createJsonLoader(),
+        createXcodeXcstringsLoader(options.defaultLocale),
+        // Convert plural forms to ICU MessageFormat for better translation
+        createXcodeXcstringsV2Loader(options.defaultLocale),
+        // Preserve ICU objects from being flattened (they're already flat strings)
+        createFlatLoader({ shouldPreserveObject: isICUPluralObject }),
         createEnsureKeyOrderLoader(),
         createLockedKeysLoader(lockedKeys || []),
         createSyncLoader(),

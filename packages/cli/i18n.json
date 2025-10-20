@@ -51,6 +51,9 @@
     "xcode-xcstrings": {
       "include": ["demo/xcode-xcstrings/*.xcstrings"]
     },
+    "xcode-xcstrings-v2": {
+      "include": ["demo/xcode-xcstrings-v2/*.xcstrings"]
+    },
     "yaml": {
       "include": ["demo/yaml/[locale]/*.yml"]
     },

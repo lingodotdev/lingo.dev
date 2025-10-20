@@ -169,7 +169,7 @@ describe("loaders/xcode-xcstrings", () => {
       });
     });
 
-    it("should push plural translations", async () => {
+    it("should push plural translations in plain object format", async () => {
       const loader = createXcodeXcstringsLoader(defaultLocale);
       loader.setDefaultLocale(defaultLocale);
       await loader.pull(defaultLocale, mockInput);
