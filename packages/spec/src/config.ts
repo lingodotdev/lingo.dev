@@ -96,7 +96,9 @@ const extendConfigDefinition = <
 
 // any -> v0
 const configV0Schema = Z.object({
-  version: Z.number().default(0).describe("The version number of the schema."),
+  version: Z.union([Z.number(), Z.string()])
+    .default(0)
+    .describe("The version number of the schema."),
 });
 export const configV0Definition = createConfigDefinition({
   schema: configV0Schema,
@@ -432,8 +434,59 @@ export const configV1_9Definition = extendConfigDefinition(
   },
 );
 
+// v1.9 -> v1.10
+// Changes: Add "settings" field to provider config for model-specific parameters
+const modelSettingsSchema = Z.object({
+  temperature: Z.number()
+    .min(0)
+    .max(2)
+    .optional()
+    .describe(
+      "Controls randomness in model outputs (0=deterministic, 2=very random). Some models like GPT-5 require temperature=1.",
+    ),
+})
+  .optional()
+  .describe("Model-specific settings for translation requests.");
+
+const providerSchemaV1_10 = Z.object({
+  id: Z.enum([
+    "openai",
+    "anthropic",
+    "google",
+    "ollama",
+    "openrouter",
+    "mistral",
+  ]).describe("Identifier of the translation provider service."),
+  model: Z.string().describe("Model name to use for translations."),
+  prompt: Z.string().describe(
+    "Prompt template used when requesting translations.",
+  ),
+  baseUrl: Z.string()
+    .optional()
+    .describe("Custom base URL for the provider API (optional)."),
+  settings: modelSettingsSchema,
+}).describe("Configuration for the machine-translation provider.");
+
+export const configV1_10Definition = extendConfigDefinition(
+  configV1_9Definition,
+  {
+    createSchema: (baseSchema) =>
+      baseSchema.extend({
+        provider: providerSchemaV1_10.optional(),
+      }),
+    createDefaultValue: (baseDefaultValue) => ({
+      ...baseDefaultValue,
+      version: "1.10",
+    }),
+    createUpgrader: (oldConfig) => ({
+      ...oldConfig,
+      version: "1.10",
+    }),
+  },
+);
+
 // exports
-export const LATEST_CONFIG_DEFINITION = configV1_9Definition;
+export const LATEST_CONFIG_DEFINITION = configV1_10Definition;
 
 export type I18nConfig = Z.infer<(typeof LATEST_CONFIG_DEFINITION)["schema"]>;
 

@@ -15,6 +15,7 @@ import createAndroidLoader from "./android";
 import createCsvLoader from "./csv";
 import createHtmlLoader from "./html";
 import createMarkdownLoader from "./markdown";
+import createMarkdocLoader from "./markdoc";
 import createPropertiesLoader from "./properties";
 import createXcodeStringsLoader from "./xcode-strings";
 import createXcodeStringsdictLoader from "./xcode-stringsdict";
@@ -109,6 +110,7 @@ export default function createBucketLoader(
         createFlatLoader(),
         createInjectLocaleLoader(options.injectLocale),
         createLockedKeysLoader(lockedKeys || []),
+        createIgnoredKeysLoader(ignoredKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -120,6 +122,7 @@ export default function createBucketLoader(
         createFlatLoader(),
         createInjectLocaleLoader(options.injectLocale),
         createLockedKeysLoader(lockedKeys || []),
+        createIgnoredKeysLoader(ignoredKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -131,6 +134,7 @@ export default function createBucketLoader(
         createFlatLoader(),
         createInjectLocaleLoader(options.injectLocale),
         createLockedKeysLoader(lockedKeys || []),
+        createIgnoredKeysLoader(ignoredKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -139,6 +143,15 @@ export default function createBucketLoader(
         createTextFileLoader(bucketPathPattern),
         createFormatterLoader(options.formatter, "markdown", bucketPathPattern),
         createMarkdownLoader(),
+        createSyncLoader(),
+        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+      );
+    case "markdoc":
+      return composeLoaders(
+        createTextFileLoader(bucketPathPattern),
+        createMarkdocLoader(),
+        createFlatLoader(),
+        createEnsureKeyOrderLoader(),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -154,6 +167,7 @@ export default function createBucketLoader(
         createFlatLoader(),
         createEnsureKeyOrderLoader(),
         createLockedKeysLoader(lockedKeys || []),
+        createIgnoredKeysLoader(ignoredKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -199,6 +213,7 @@ export default function createBucketLoader(
         createFlatLoader(),
         createEnsureKeyOrderLoader(),
         createLockedKeysLoader(lockedKeys || []),
+        createIgnoredKeysLoader(ignoredKeys || []),
         createSyncLoader(),
         createVariableLoader({ type: "ieee" }),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
@@ -227,6 +242,7 @@ export default function createBucketLoader(
         createFlatLoader(),
         createEnsureKeyOrderLoader(),
         createLockedKeysLoader(lockedKeys || []),
+        createIgnoredKeysLoader(ignoredKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -343,6 +359,7 @@ export default function createBucketLoader(
         createFlatLoader(),
         createInjectLocaleLoader(options.injectLocale),
         createLockedKeysLoader(lockedKeys || []),
+        createIgnoredKeysLoader(ignoredKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );

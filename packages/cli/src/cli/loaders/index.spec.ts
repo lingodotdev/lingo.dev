@@ -881,7 +881,7 @@ describe("bucket loaders", () => {
     });
   });
 
-  describe.skip("ignored keys functionality", () => {
+  describe("ignored keys functionality", () => {
     it("should omit ignored keys for JSON format", async () => {
       setupFileMocks();
 

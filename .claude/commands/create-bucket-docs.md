@@ -58,7 +58,7 @@ Update your `i18n.json` to add [BUCKET_TYPE] support:
 ```json
 {
   "$schema": "https://lingo.dev/schema/i18n.json",
-  "version": 1.8,
+  "version": "1.10",
   "locale": {
     "source": "en",
     "targets": ["es"]
@@ -191,7 +191,7 @@ The [BUCKET_TYPE] bucket supports providing context hints to improve translation
 ```json
 {
   "$schema": "https://lingo.dev/schema/i18n.json",
-  "version": 1.8,
+  "version": "1.10",
   "locale": {
     "source": "en",
     "targets": ["es"]
