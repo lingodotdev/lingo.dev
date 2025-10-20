@@ -15,6 +15,7 @@ export const bucketTypes = [
   "xcode-strings",
   "xcode-stringsdict",
   "xcode-xcstrings",
+  "xcode-xcstrings-v2",
   "yaml",
   "yaml-root-key",
   "properties",

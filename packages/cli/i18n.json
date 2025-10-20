@@ -61,6 +61,9 @@
       "lockedKeys": ["api_key"],
       "ignoredKeys": ["item_count"]
     },
+    "xcode-xcstrings-v2": {
+      "include": ["demo/xcode-xcstrings-v2/*.xcstrings"]
+    },
     "yaml": {
       "include": ["demo/yaml/[locale]/*.yml"],
       "lockedKeys": ["locked_key_1"],

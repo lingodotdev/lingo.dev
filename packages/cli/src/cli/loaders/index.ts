@@ -20,6 +20,8 @@ import createPropertiesLoader from "./properties";
 import createXcodeStringsLoader from "./xcode-strings";
 import createXcodeStringsdictLoader from "./xcode-stringsdict";
 import createXcodeXcstringsLoader from "./xcode-xcstrings";
+import createXcodeXcstringsV2Loader from "./xcode-xcstrings-v2-loader";
+import { isICUPluralObject } from "./xcode-xcstrings-icu";
 import createUnlocalizableLoader from "./unlocalizable";
 import { createFormatterLoader, FormatterType } from "./formatters";
 import createPoLoader from "./po";
@@ -212,6 +214,20 @@ export default function createBucketLoader(
         createEnsureKeyOrderLoader(),
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
+        createSyncLoader(),
+        createVariableLoader({ type: "ieee" }),
+        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+      );
+    case "xcode-xcstrings-v2":
+      return composeLoaders(
+        createTextFileLoader(bucketPathPattern),
+        createPlutilJsonTextLoader(),
+        createJsonLoader(),
+        createXcodeXcstringsLoader(options.defaultLocale),
+        createXcodeXcstringsV2Loader(options.defaultLocale),
+        createFlatLoader({ shouldPreserveObject: isICUPluralObject }),
+        createEnsureKeyOrderLoader(),
+        createLockedKeysLoader(lockedKeys || []),
         createSyncLoader(),
         createVariableLoader({ type: "ieee" }),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),

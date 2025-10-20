@@ -1,0 +1,12 @@
+{
+  "locale": {
+    "source": "en",
+    "targets": ["es", "ja", "ru"]
+  },
+  "buckets": [
+    {
+      "type": "xcode-xcstrings-v2",
+      "pathPattern": "example.xcstrings"
+    }
+  ]
+}
