@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.113.5
+
+### Patch Changes
+
+- [#1233](https://github.com/lingodotdev/lingo.dev/pull/1233) [`79c4c00`](https://github.com/lingodotdev/lingo.dev/commit/79c4c00108b9c102cf53e1c090b286070a43e3d5) Thanks [@vrcprl](https://github.com/vrcprl)! - i18n xcode-scstring-v2 log fix
+
 ## 0.113.4
 
 ### Patch Changes
