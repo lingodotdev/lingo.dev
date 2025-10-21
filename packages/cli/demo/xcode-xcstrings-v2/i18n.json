@@ -1,12 +1,17 @@
 {
+  "version": "1.10",
   "locale": {
     "source": "en",
-    "targets": ["es", "ja", "ru"]
+    "targets": [
+      "es"
+    ]
   },
-  "buckets": [
-    {
-      "type": "xcode-xcstrings-v2",
-      "pathPattern": "example.xcstrings"
+  "buckets": {
+    "xcode-xcstrings-v2": {
+      "include": [
+        "./example.xcstrings"
+      ]
     }
-  ]
+  },
+  "$schema": "https://lingo.dev/schema/i18n.json"
 }
