@@ -496,7 +496,7 @@ export default new Command()
                     ) {
                       return _.isEqual(
                         { icu: value.icu, _meta: value._meta },
-                        { icu: targetValue.icu, _meta: targetValue._meta }
+                        { icu: targetValue.icu, _meta: targetValue._meta },
                       );
                     }
 
