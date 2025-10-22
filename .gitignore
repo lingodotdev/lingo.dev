@@ -38,3 +38,4 @@ yarn-error.log*
 .DS_Store
 *.pem
 i18n.cache
+packages/compiler/src/lingo/dictionary.js
