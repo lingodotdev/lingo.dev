@@ -881,6 +881,112 @@ describe("bucket loaders", () => {
     });
   });
 
+  describe("ignored keys functionality", () => {
+    it("should omit ignored keys for JSON format", async () => {
+      setupFileMocks();
+
+      const input = {
+        "button.title": "Submit",
+        "button.description": "Submit description",
+        "ignored.key": "Should be ignored",
+        nested: {
+          ignored: "This is ignored",
+          kept: "This is kept",
+        },
+      };
+      const payload = {
+        "button.title": "Enviar",
+        "button.description": "Descripción de envío",
+        "nested/kept": "Esto se mantiene",
+      };
+
+      mockFileOperations(JSON.stringify(input));
+
+      const jsonLoader = createBucketLoader(
+        "json",
+        "i18n/[locale].json",
+        { defaultLocale: "en" },
+        undefined, // lockedKeys
+        undefined, // lockedPatterns
+        ["ignored.key", "nested/ignored"], // ignoredKeys
+      );
+
+      jsonLoader.setDefaultLocale("en");
+      const pulledData = await jsonLoader.pull("en");
+
+      // Verify ignored keys are not in pulled data
+      expect(pulledData).toEqual({
+        "button.title": "Submit",
+        "button.description": "Submit description",
+        "nested/kept": "This is kept",
+      });
+
+      await jsonLoader.push("es", payload);
+
+      expect(fs.writeFile).toHaveBeenCalled();
+      const writeFileCall = (fs.writeFile as any).mock.calls[0];
+      const writtenContent = JSON.parse(writeFileCall[1]);
+
+      // Check that ignored keys are completely removed from output
+      expect(writtenContent["ignored.key"]).toBeUndefined();
+      expect(writtenContent.nested?.ignored).toBeUndefined();
+
+      // Check that non-ignored keys are updated
+      expect(writtenContent["button.title"]).toBe("Enviar");
+      expect(writtenContent["button.description"]).toBe("Descripción de envío");
+      expect(writtenContent.nested.kept).toBe("Esto se mantiene");
+    });
+
+    it("should handle wildcard patterns in ignored keys", async () => {
+      setupFileMocks();
+
+      const input = {
+        "button.title": "Submit",
+        wildcard_a: "Value A",
+        wildcard_b: "Value B",
+        other: "Other value",
+      };
+      const payload = {
+        "button.title": "Enviar",
+        other: "Otro valor",
+      };
+
+      mockFileOperations(JSON.stringify(input));
+
+      const jsonLoader = createBucketLoader(
+        "json",
+        "i18n/[locale].json",
+        { defaultLocale: "en" },
+        undefined, // lockedKeys
+        undefined, // lockedPatterns
+        ["wildcard_*"], // ignoredKeys with wildcard
+      );
+
+      jsonLoader.setDefaultLocale("en");
+      const pulledData = await jsonLoader.pull("en");
+
+      // Verify wildcard ignored keys are not in pulled data
+      expect(pulledData).toEqual({
+        "button.title": "Submit",
+        other: "Other value",
+      });
+
+      await jsonLoader.push("es", payload);
+
+      expect(fs.writeFile).toHaveBeenCalled();
+      const writeFileCall = (fs.writeFile as any).mock.calls[0];
+      const writtenContent = JSON.parse(writeFileCall[1]);
+
+      // Check that wildcard ignored keys are completely removed from output
+      expect(writtenContent["wildcard_a"]).toBeUndefined();
+      expect(writtenContent["wildcard_b"]).toBeUndefined();
+
+      // Check that non-ignored keys are updated
+      expect(writtenContent["button.title"]).toBe("Enviar");
+      expect(writtenContent.other).toBe("Otro valor");
+    });
+  });
+
   describe("mdx bucket loader", () => {
     it("should skip locked keys", async () => {
       setupFileMocks();

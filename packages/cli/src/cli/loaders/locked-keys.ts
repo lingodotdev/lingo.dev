@@ -1,27 +1,24 @@
 import { ILoader } from "./_types";
 import { createLoader } from "./_utils";
 import _ from "lodash";
-import { minimatch } from "minimatch";
+import { matchesKeyPattern } from "../utils/key-matching";
 
 export default function createLockedKeysLoader(
   lockedKeys: string[],
 ): ILoader<Record<string, any>, Record<string, any>> {
   return createLoader({
     pull: async (locale, data) => {
-      return _.pickBy(data, (value, key) => !_isLockedKey(key, lockedKeys));
+      return _.pickBy(
+        data,
+        (value, key) => !matchesKeyPattern(key, lockedKeys),
+      );
     },
     push: async (locale, data, originalInput) => {
       const lockedSubObject = _.chain(originalInput)
-        .pickBy((value, key) => _isLockedKey(key, lockedKeys))
+        .pickBy((value, key) => matchesKeyPattern(key, lockedKeys))
         .value();
 
       return _.merge({}, data, lockedSubObject);
     },
   });
-}
-
-function _isLockedKey(key: string, lockedKeys: string[]) {
-  return lockedKeys.some(
-    (lockedKey) => key.startsWith(lockedKey) || minimatch(key, lockedKey),
-  );
 }

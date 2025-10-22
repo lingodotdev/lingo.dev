@@ -67,18 +67,28 @@ export default async function setup(input: CmdRunContext) {
       },
       {
         title: "Checking authentication",
+        enabled: (ctx) => ctx.localizer?.id === "Lingo.dev",
         task: async (ctx, task) => {
           const authStatus = await ctx.localizer!.checkAuth();
           if (!authStatus.authenticated) {
-            throw new Error(
-              `Failed to authenticate with ${chalk.hex(colors.yellow)(
-                ctx.localizer!.id,
-              )} provider. Please check your API key and try again.`,
-            );
+            throw new Error(authStatus.error || "Authentication failed");
           }
           task.title = `Authenticated as ${chalk.hex(colors.yellow)(
             authStatus.username,
           )}`;
+        },
+      },
+      {
+        title: "Validating configuration",
+        enabled: (ctx) => ctx.localizer?.id !== "Lingo.dev",
+        task: async (ctx, task) => {
+          const validationStatus = await ctx.localizer!.validateSettings!();
+          if (!validationStatus.valid) {
+            throw new Error(
+              validationStatus.error || "Configuration validation failed",
+            );
+          }
+          task.title = `Configuration validated`;
         },
       },
       {

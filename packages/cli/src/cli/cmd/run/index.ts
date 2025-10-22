@@ -8,6 +8,7 @@ import plan from "./plan";
 import execute from "./execute";
 import watch from "./watch";
 import { CmdRunContext, flagsSchema } from "./_types";
+import frozen from "./frozen";
 import {
   renderClear,
   renderSpacer,
@@ -90,6 +91,10 @@ export default new Command()
     "Force re-translation of all keys, bypassing change detection. Useful when you want to regenerate translations with updated AI models or translation settings",
   )
   .option(
+    "--frozen",
+    "Validate translations are up-to-date without making changes - fails if source files, target files, or lockfile are out of sync. Ideal for CI/CD to ensure translation consistency before deployment",
+  )
+  .option(
     "--api-key <api-key>",
     "Override API key from settings or environment variables",
   )
@@ -142,6 +147,9 @@ export default new Command()
       await renderSpacer();
 
       await plan(ctx);
+      await renderSpacer();
+
+      await frozen(ctx);
       await renderSpacer();
 
       await execute(ctx);

@@ -39,8 +39,10 @@ export default function createLingoDotDevLocalizer(
           authenticated: !!response,
           username: response?.email,
         };
-      } catch {
-        return { authenticated: false };
+      } catch (error) {
+        const errorMessage =
+          error instanceof Error ? error.message : String(error);
+        return { authenticated: false, error: errorMessage };
       }
     },
     localize: async (input: LocalizerData, onProgress) => {

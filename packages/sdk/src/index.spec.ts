@@ -149,4 +149,94 @@ describe("ReplexicaEngine", () => {
       expect(result).toEqual([]);
     });
   });
+
+  describe("hints support", () => {
+    it("should send hints to the backend API", async () => {
+      // Mock global fetch
+      const mockFetch = vi.fn();
+      global.fetch = mockFetch as any;
+
+      mockFetch.mockResolvedValue({
+        ok: true,
+        json: async () => ({
+          data: {
+            "brand-name": "Optimum",
+            "team-label": "Equipo de la NHL",
+          },
+        }),
+      });
+
+      const engine = new LingoDotDevEngine({
+        apiKey: "test-api-key",
+        apiUrl: "https://test.api.url",
+      });
+
+      const hints = {
+        "brand-name": ["This is a brand name and should not be translated"],
+        "team-label": ["NHL stands for National Hockey League"],
+      };
+
+      await engine.localizeObject(
+        {
+          "brand-name": "Optimum",
+          "team-label": "NHL Team",
+        },
+        {
+          sourceLocale: "en",
+          targetLocale: "es",
+          hints,
+        },
+      );
+
+      // Verify fetch was called with correct parameters
+      expect(mockFetch).toHaveBeenCalledTimes(1);
+      const fetchCall = mockFetch.mock.calls[0];
+      expect(fetchCall[0]).toBe("https://test.api.url/i18n");
+
+      // Parse the request body to verify hints are included
+      const requestBody = JSON.parse(fetchCall[1].body);
+      expect(requestBody.hints).toEqual(hints);
+      expect(requestBody.data).toEqual({
+        "brand-name": "Optimum",
+        "team-label": "NHL Team",
+      });
+      expect(requestBody.locale).toEqual({
+        source: "en",
+        target: "es",
+      });
+    });
+
+    it("should handle localizeObject without hints", async () => {
+      const mockFetch = vi.fn();
+      global.fetch = mockFetch as any;
+
+      mockFetch.mockResolvedValue({
+        ok: true,
+        json: async () => ({
+          data: {
+            greeting: "Hola",
+          },
+        }),
+      });
+
+      const engine = new LingoDotDevEngine({
+        apiKey: "test-api-key",
+        apiUrl: "https://test.api.url",
+      });
+
+      await engine.localizeObject(
+        {
+          greeting: "Hello",
+        },
+        {
+          sourceLocale: "en",
+          targetLocale: "es",
+        },
+      );
+
+      expect(mockFetch).toHaveBeenCalledTimes(1);
+      const requestBody = JSON.parse(mockFetch.mock.calls[0][1].body);
+      expect(requestBody.hints).toBeUndefined();
+    });
+  });
 });

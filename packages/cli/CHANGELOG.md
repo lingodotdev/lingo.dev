@@ -1,5 +1,70 @@
 # lingo.dev
 
+## 0.113.5
+
+### Patch Changes
+
+- [#1233](https://github.com/lingodotdev/lingo.dev/pull/1233) [`79c4c00`](https://github.com/lingodotdev/lingo.dev/commit/79c4c00108b9c102cf53e1c090b286070a43e3d5) Thanks [@vrcprl](https://github.com/vrcprl)! - i18n xcode-scstring-v2 log fix
+
+## 0.113.4
+
+### Patch Changes
+
+- [#1230](https://github.com/lingodotdev/lingo.dev/pull/1230) [`b45347c`](https://github.com/lingodotdev/lingo.dev/commit/b45347c38572ee371b2bc494261b7e3e90c4aed1) Thanks [@vrcprl](https://github.com/vrcprl)! - add an xcode-xcstrings-v2 bucket type that supports cldr pluralization rules
+
+- Updated dependencies [[`b45347c`](https://github.com/lingodotdev/lingo.dev/commit/b45347c38572ee371b2bc494261b7e3e90c4aed1)]:
+  - @lingo.dev/_spec@0.41.1
+  - @lingo.dev/_sdk@0.12.6
+  - @lingo.dev/_compiler@0.7.14
+
+## 0.113.3
+
+### Patch Changes
+
+- [#1227](https://github.com/lingodotdev/lingo.dev/pull/1227) [`74d8efe`](https://github.com/lingodotdev/lingo.dev/commit/74d8efef8d4789f9baa5b7837e053c2571df0308) Thanks [@vrcprl](https://github.com/vrcprl)! - Add ignoredKeys support
+
+## 0.113.2
+
+### Patch Changes
+
+- [#1224](https://github.com/lingodotdev/lingo.dev/pull/1224) [`3d3c3d7`](https://github.com/lingodotdev/lingo.dev/commit/3d3c3d783a61443da50a5d182391db33a0d29c84) Thanks [@vrcprl](https://github.com/vrcprl)! - fix code replacement in mdx
+
+## 0.113.1
+
+### Patch Changes
+
+- [#1222](https://github.com/lingodotdev/lingo.dev/pull/1222) [`38139c8`](https://github.com/lingodotdev/lingo.dev/commit/38139c81a85001739cece60873c0c6ad711327a4) Thanks [@vrcprl](https://github.com/vrcprl)! - fix regex replacement
+
+- Updated dependencies [[`38139c8`](https://github.com/lingodotdev/lingo.dev/commit/38139c81a85001739cece60873c0c6ad711327a4)]:
+  - @lingo.dev/_compiler@0.7.13
+
+## 0.113.0
+
+### Minor Changes
+
+- [#1211](https://github.com/lingodotdev/lingo.dev/pull/1211) [`3413dad`](https://github.com/lingodotdev/lingo.dev/commit/3413dad22af688a6d26649c4f25e18304b3caee6) Thanks [@davidturnbull](https://github.com/davidturnbull)! - Add `--frozen` mode to validate translations without writing changes.
+
+## 0.112.1
+
+### Patch Changes
+
+- [#1218](https://github.com/lingodotdev/lingo.dev/pull/1218) [`26d2ec1`](https://github.com/lingodotdev/lingo.dev/commit/26d2ec155c5868a5bdce1027cd76a5a2d4f8f2b1) Thanks [@vrcprl](https://github.com/vrcprl)! - add 'show ignored-keys' and 'show locked-keys' commands
+
+## 0.112.0
+
+### Minor Changes
+
+- [#1186](https://github.com/lingodotdev/lingo.dev/pull/1186) [`82f5e7c`](https://github.com/lingodotdev/lingo.dev/commit/82f5e7cdde9a2a15b4c2a7fcb8c67ed64eab596b) Thanks [@davidturnbull](https://github.com/davidturnbull)! - Add Markdoc support
+
+### Patch Changes
+
+- [#1215](https://github.com/lingodotdev/lingo.dev/pull/1215) [`e858174`](https://github.com/lingodotdev/lingo.dev/commit/e858174fd5165e0ea3e3f25fa1fc3edb292bc58f) Thanks [@vrcprl](https://github.com/vrcprl)! - add provider settings
+
+- Updated dependencies [[`82f5e7c`](https://github.com/lingodotdev/lingo.dev/commit/82f5e7cdde9a2a15b4c2a7fcb8c67ed64eab596b), [`e858174`](https://github.com/lingodotdev/lingo.dev/commit/e858174fd5165e0ea3e3f25fa1fc3edb292bc58f)]:
+  - @lingo.dev/_spec@0.41.0
+  - @lingo.dev/_compiler@0.7.12
+  - @lingo.dev/_sdk@0.12.5
+
 ## 0.111.16
 
 ### Patch Changes
