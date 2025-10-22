@@ -1,12 +1,13 @@
-name: Reproducible Build
+name: CI - Changeset
 
 on:
   workflow_dispatch:
   pull_request:
+    types: [opened, edited, synchronize]
     branches: [main]
 
 jobs:
-  reproducible:
+  changeset:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -30,14 +31,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
-      - name: Run hermetic build
-        env:
-          GIT_COMMIT: ${{ github.sha }}
-        run: |
-          REPRO_PNPM_STORE="${{ env.REPRO_PNPM_STORE }}" pnpm build:canonical
+      - name: Mark repo as safe for git inside container
+        run: REPRO_PNPM_STORE="${{ env.REPRO_PNPM_STORE }}" bash scripts/repro/exec.sh git config --global --add safe.directory /workspace
 
-      - name: Upload canonical artifact and checksums
-        uses: actions/upload-artifact@v4
-        with:
-          name: reproducible-artifacts-${{ github.sha }}
-          path: out/*
+      - name: Install deps (container)
+        run: REPRO_PNPM_STORE="${{ env.REPRO_PNPM_STORE }}" bash scripts/repro/exec.sh pnpm install --frozen-lockfile
+
+      - name: Require changeset to be present in PR (container)
+        if: github.event.pull_request.user.login != 'dependabot[bot]'
+        run: REPRO_PNPM_STORE="${{ env.REPRO_PNPM_STORE }}" bash scripts/repro/exec.sh pnpm changeset status --since origin/main
