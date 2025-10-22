@@ -2,11 +2,21 @@ import { getDirname } from '@adonisjs/core/helpers'
 import inertia from '@adonisjs/inertia/client'
 import adonisjs from '@adonisjs/vite/client'
 import react from '@vitejs/plugin-react'
-import lingoCompiler from 'lingo.dev/compiler'
-import { type UserConfig, type PluginOption } from 'vite'
+import { lingo } from 'lingo.dev/compiler/vite'
+import { type UserConfig } from 'vite'
 
 const viteConfig: UserConfig = {
   plugins: [
+    lingo({
+      sourceRoot: 'inertia',
+      lingoDir: 'lingo',
+      sourceLocale: 'en',
+      targetLocales: ['es'],
+      rsc: false,
+      useDirective: false,
+      debug: false,
+      models: 'lingo.dev',
+    }),
     inertia({
       ssr: {
         enabled: true,
@@ -17,7 +27,7 @@ const viteConfig: UserConfig = {
     adonisjs({
       entrypoints: ['inertia/app/app.tsx'],
       reload: ['resources/views/**/*.edge'],
-    }) as unknown as PluginOption,
+    }),
   ],
   resolve: {
     alias: {
@@ -26,15 +36,4 @@ const viteConfig: UserConfig = {
   },
 }
 
-const withLingo = lingoCompiler.vite({
-  sourceRoot: 'inertia',
-  lingoDir: 'lingo',
-  sourceLocale: 'en',
-  targetLocales: ['es'],
-  rsc: false,
-  useDirective: false,
-  debug: false,
-  models: 'lingo.dev',
-})
-
-export default withLingo(viteConfig)
+export default viteConfig
