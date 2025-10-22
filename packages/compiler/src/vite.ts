@@ -1,18 +1,8 @@
+import type { Plugin as VitePlugin } from "vite";
 import _ from "lodash";
 import { defaultParams } from "./_base";
 import { unplugin } from "./unplugin";
 import { sendBuildEvent } from "./utils/build-event";
-
-// Minimal Vite plugin interface to avoid depending on Vite types here
-type VitePlugin = {
-  name: string;
-  enforce?: "pre" | "post";
-  configResolved?: (resolvedConfig: any) => void;
-  transformInclude: (id: string) => boolean;
-  transform: (code: string, id: string) => any;
-  loadInclude?: (id: string) => boolean;
-  load?: (id: string) => any;
-};
 
 export function lingo(
   compilerParams?: Partial<typeof defaultParams>,
@@ -25,26 +15,29 @@ export function lingo(
   );
 
   const plugin = unplugin.vite(mergedParams) as VitePlugin;
+  const originalConfigResolved = plugin.configResolved;
 
   // Wrap to emit build event once Vite config is resolved so we can detect framework
-  const wrapped: VitePlugin = {
+  return {
     ...plugin,
-    name: plugin.name,
-    enforce: plugin.enforce,
-    configResolved(resolvedConfig: any) {
+    configResolved(resolvedConfig) {
       const isReactRouter = (resolvedConfig.plugins || []).some(
-        (p: any) => p && p.name === "react-router",
+        (p) => p && p.name === "react-router",
       );
       const framework = isReactRouter ? "React Router" : "Vite";
       const isDev = resolvedConfig.command === "serve";
       sendBuildEvent(framework, mergedParams, isDev);
-      if (typeof (plugin as any).configResolved === "function") {
-        (plugin as any).configResolved(resolvedConfig);
+
+      // Call original hook if it exists
+      if (originalConfigResolved) {
+        if (typeof originalConfigResolved === "function") {
+          return originalConfigResolved.call(this, resolvedConfig);
+        } else {
+          return originalConfigResolved.handler.call(this, resolvedConfig);
+        }
       }
     },
   };
-
-  return wrapped;
 }
 
 export default lingo;
