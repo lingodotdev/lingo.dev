@@ -45,23 +45,23 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Mark repo as safe for git inside container
-        run: REPRO_PNPM_STORE="${{ env.REPRO_PNPM_STORE }}" pnpm shell git config --global --add safe.directory /workspace
+        run: REPRO_PNPM_STORE="${{ env.REPRO_PNPM_STORE }}" bash scripts/repro/exec.sh git config --global --add safe.directory /workspace
 
       - name: Install deps (container)
-        run: REPRO_PNPM_STORE="${{ env.REPRO_PNPM_STORE }}" pnpm ci:install
+        run: REPRO_PNPM_STORE="${{ env.REPRO_PNPM_STORE }}" bash scripts/repro/exec.sh pnpm install --frozen-lockfile
 
       - name: Disable turbo telemetry (container)
-        run: REPRO_PNPM_STORE="${{ env.REPRO_PNPM_STORE }}" pnpm turbo:telemetry:disable
+        run: REPRO_PNPM_STORE="${{ env.REPRO_PNPM_STORE }}" bash scripts/repro/exec.sh pnpm turbo telemetry disable
 
       - name: Check formatting (container)
-        run: REPRO_PNPM_STORE="${{ env.REPRO_PNPM_STORE }}" pnpm format:check
+        run: REPRO_PNPM_STORE="${{ env.REPRO_PNPM_STORE }}" bash scripts/repro/exec.sh pnpm prettier . --check
 
       - name: Build (container)
-        run: REPRO_PNPM_STORE="${{ env.REPRO_PNPM_STORE }}" pnpm build -- --force
+        run: REPRO_PNPM_STORE="${{ env.REPRO_PNPM_STORE }}" bash scripts/repro/exec.sh pnpm turbo build --force
 
       - name: Test (container)
-        run: REPRO_PNPM_STORE="${{ env.REPRO_PNPM_STORE }}" pnpm test
+        run: REPRO_PNPM_STORE="${{ env.REPRO_PNPM_STORE }}" bash scripts/repro/exec.sh pnpm turbo test
 
       - name: Require changeset to be present in PR (container)
         if: github.event.pull_request.user.login != 'dependabot[bot]'
-        run: REPRO_PNPM_STORE="${{ env.REPRO_PNPM_STORE }}" pnpm shell pnpm changeset status --since origin/main
+        run: REPRO_PNPM_STORE="${{ env.REPRO_PNPM_STORE }}" bash scripts/repro/exec.sh pnpm changeset status --since origin/main

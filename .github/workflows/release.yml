@@ -50,7 +50,7 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Install deps (container)
-        run: REPRO_PNPM_STORE="${{ env.REPRO_PNPM_STORE }}" pnpm ci:install
+        run: REPRO_PNPM_STORE="${{ env.REPRO_PNPM_STORE }}" bash scripts/repro/exec.sh pnpm install --frozen-lockfile
 
       - name: Lingo.dev (container)
         if: ${{ !inputs.skip_lingo }}
@@ -69,13 +69,13 @@ jobs:
               --parallel true
 
       - name: Disable turbo telemetry (container)
-        run: REPRO_PNPM_STORE="${{ env.REPRO_PNPM_STORE }}" pnpm turbo:telemetry:disable
+        run: REPRO_PNPM_STORE="${{ env.REPRO_PNPM_STORE }}" bash scripts/repro/exec.sh pnpm turbo telemetry disable
 
       - name: Build (container)
-        run: REPRO_PNPM_STORE="${{ env.REPRO_PNPM_STORE }}" pnpm build -- --force
+        run: REPRO_PNPM_STORE="${{ env.REPRO_PNPM_STORE }}" bash scripts/repro/exec.sh pnpm turbo build --force
 
       - name: Test (container)
-        run: REPRO_PNPM_STORE="${{ env.REPRO_PNPM_STORE }}" pnpm test
+        run: REPRO_PNPM_STORE="${{ env.REPRO_PNPM_STORE }}" bash scripts/repro/exec.sh pnpm turbo test
 
       - name: Create Release Pull Request or Publish to npm
         id: changesets
