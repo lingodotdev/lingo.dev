@@ -35,61 +35,55 @@ jobs:
             exit 0
           fi
 
-      - name: Use Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: 20.12.2
+      - name: Build hermetic image
+        run: docker build -f Dockerfile.repro -t lingo-repro:20.12.2 .
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        id: pnpm-install
-        with:
-          version: 9.12.3
-          run_install: false
+      - name: Prepare pnpm store path
+        run: echo "REPRO_PNPM_STORE=${{ runner.temp }}/pnpm-store" >> $GITHUB_ENV
 
-      - name: Configure pnpm cache
-        id: pnpm-cache
-        run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-      - uses: actions/cache@v3
+      - name: Cache pnpm store
+        uses: actions/cache@v3
         with:
-          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          path: ${{ env.REPRO_PNPM_STORE }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
-      - name: Install deps
-        run: pnpm install
+      - name: Install deps (container)
+        run: REPRO_PNPM_STORE="${{ env.REPRO_PNPM_STORE }}" bash scripts/repro/exec.sh pnpm install --frozen-lockfile
 
-      - name: Lingo.dev
+      - name: Lingo.dev (container)
         if: ${{ !inputs.skip_lingo }}
-        uses: ./
-        with:
-          api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
-          pull-request: true
-          parallel: true
         env:
           GH_TOKEN: ${{ github.token }}
-
-      - name: Setup
+          LINGODOTDEV_API_KEY: ${{ secrets.LINGODOTDEV_API_KEY }}
         run: |
-          pnpm turbo telemetry disable
+          REPRO_PNPM_STORE="${{ env.REPRO_PNPM_STORE }}" bash scripts/repro/exec.sh \
+            npx lingo.dev@latest ci \
+              --api-key "$LINGODOTDEV_API_KEY" \
+              --pull-request "true" \
+              --commit-message "feat: update translations via @LingoDotDev" \
+              --pull-request-title "feat: update translations via @LingoDotDev" \
+              --working-directory "." \
+              --process-own-commits "false" \
+              --parallel true
 
-      - name: Configure Turbo cache
-        uses: dtinth/setup-github-actions-caching-for-turbo@v1
+      - name: Disable turbo telemetry (container)
+        run: REPRO_PNPM_STORE="${{ env.REPRO_PNPM_STORE }}" bash scripts/repro/exec.sh pnpm turbo telemetry disable
 
-      - name: Build
-        run: pnpm turbo build --force
+      - name: Build (container)
+        run: REPRO_PNPM_STORE="${{ env.REPRO_PNPM_STORE }}" bash scripts/repro/exec.sh pnpm turbo build --force
 
-      - name: Test
-        run: pnpm turbo test --force
+      - name: Test (container)
+        run: REPRO_PNPM_STORE="${{ env.REPRO_PNPM_STORE }}" bash scripts/repro/exec.sh pnpm turbo test --force
 
       - name: Create Release Pull Request or Publish to npm
         id: changesets
         uses: changesets/action@v1
         with:
           title: "chore: bump package versions"
-          version: pnpm changeset version
-          publish: pnpm changeset publish
+          version: REPRO_PNPM_STORE="${{ env.REPRO_PNPM_STORE }}" bash scripts/repro/exec.sh pnpm changeset version
+          publish: REPRO_PNPM_STORE="${{ env.REPRO_PNPM_STORE }}" bash scripts/repro/exec.sh pnpm changeset publish
           commit: "chore: bump package version"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

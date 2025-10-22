@@ -9,7 +9,12 @@
     "new": "changeset",
     "new:empty": "changeset --empty",
     "format": "prettier . --write",
-    "format:check": "prettier . --check"
+    "format:check": "prettier . --check",
+    "repro:build": "bash scripts/repro/local.sh",
+    "repro:exec": "bash scripts/repro/exec.sh",
+    "repro:typecheck": "bash scripts/repro/exec.sh pnpm typecheck",
+    "repro:test": "bash scripts/repro/exec.sh pnpm test",
+    "repro:format:check": "bash scripts/repro/exec.sh pnpm format:check"
   },
   "devDependencies": {
     "@babel/generator": "^7.27.1",

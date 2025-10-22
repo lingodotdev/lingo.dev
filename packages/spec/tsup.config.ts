@@ -10,6 +10,10 @@ export default defineConfig({
   dts: true,
   cjsInterop: true,
   splitting: true,
+  esbuildOptions(options) {
+    options.legalComments = "none";
+    options.absWorkingDir = process.cwd();
+  },
   outExtension: (ctx) => ({
     js: ctx.format === "cjs" ? ".cjs" : ".mjs",
   }),
