@@ -3,11 +3,10 @@ import inertia from '@adonisjs/inertia/client'
 import adonisjs from '@adonisjs/vite/client'
 import react from '@vitejs/plugin-react'
 import { lingo } from 'lingo.dev/compiler/vite'
-import { type UserConfig, type PluginOption } from 'vite'
+import { type UserConfig } from 'vite'
 
 const viteConfig: UserConfig = {
   plugins: [
-    // Place Lingo.dev first so it runs before other transforms
     lingo({
       sourceRoot: 'inertia',
       lingoDir: 'lingo',
@@ -17,7 +16,7 @@ const viteConfig: UserConfig = {
       useDirective: false,
       debug: false,
       models: 'lingo.dev',
-    }) as unknown as PluginOption,
+    }),
     inertia({
       ssr: {
         enabled: true,
@@ -28,7 +27,7 @@ const viteConfig: UserConfig = {
     adonisjs({
       entrypoints: ['inertia/app/app.tsx'],
       reload: ['resources/views/**/*.edge'],
-    }) as unknown as PluginOption,
+    }),
   ],
   resolve: {
     alias: {
