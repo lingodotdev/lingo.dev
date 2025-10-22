@@ -1,5 +1,7 @@
-import { describe, it, expect } from "vitest";
-import { lingo } from "./next";
+import { describe, it, expect, vi } from "vitest";
+// Treat tests as running in CI to avoid unplugin validation exits
+vi.mock("./utils/env", () => ({ isRunningInCIOrDocker: () => true }));
+import { withLingo as lingo } from "./next";
 
 describe("next lingo enhancer", () => {
   it("returns a function that augments Next.js config (webpack path)", () => {

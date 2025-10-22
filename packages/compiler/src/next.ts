@@ -110,3 +110,5 @@ export function withLingo(
 }
 
 export default withLingo;
+// Back-compat alias for tests or accidental imports
+export { withLingo as lingo };

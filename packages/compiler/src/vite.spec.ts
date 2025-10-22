@@ -1,4 +1,6 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
+// Treat tests as running in CI to avoid unplugin validation exits
+vi.mock("./utils/env", () => ({ isRunningInCIOrDocker: () => true }));
 import { lingo } from "./vite";
 
 describe("vite lingo plugin", () => {
