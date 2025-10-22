@@ -16,7 +16,7 @@ const viteConfig: UserConfig = {
       useDirective: false,
       debug: false,
       models: 'lingo.dev',
-    }) as any,
+    }),
     inertia({
       ssr: {
         enabled: true,
