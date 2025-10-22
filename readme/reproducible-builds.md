@@ -14,27 +14,27 @@ This guide explains how to run all dev and CI tasks inside the same pinned conta
 
 ---
 
-## Local: run everything inside the container
+## Local: run everything inside the container (default)
 
 - Open a shell in the container at the repo root:
 
 ```bash
-pnpm repro:exec
+pnpm run shell
 ```
 
 - Common tasks (all run inside the container):
 
 ```bash
-pnpm repro:typecheck       # pnpm typecheck in container
-pnpm repro:test            # pnpm test in container
-pnpm repro:format:check    # pnpm format:check in container
-pnpm repro:exec -- pnpm turbo build --force
+pnpm typecheck         # containerized typecheck
+pnpm test              # containerized tests
+pnpm format:check      # containerized formatting check
+pnpm build -- --force  # force rebuild inside container
 ```
 
 - Hermetic build that creates canonical artifacts:
 
 ```bash
-pnpm repro:build
+pnpm build:canonical
 ```
 
 Outputs:
@@ -56,7 +56,7 @@ Optional: speed up pnpm by caching the store locally across runs:
 
 ```bash
 export REPRO_PNPM_STORE="$HOME/.pnpm-store-lingo"
-pnpm repro:exec -- pnpm install --frozen-lockfile
+pnpm ci:install
 ```
 
 Common tokens are passed through automatically if set in your shell: `GH_TOKEN`, `GITHUB_TOKEN`, `NPM_TOKEN`, `LINGODOTDEV_API_KEY`.
@@ -105,7 +105,7 @@ The checksums must match for the same commit.
 
 1. Edit `Dockerfile.repro` (Node image or pnpm version via corepack)
 2. Update image tag references if needed
-3. Run `pnpm repro:build` locally; verify checksum stability for the same commit
+3. Run `pnpm build:canonical` locally; verify checksum stability for the same commit
 4. Open a PR; CI will rebuild and upload artifacts for verification
 
 ---

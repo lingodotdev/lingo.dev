@@ -34,7 +34,7 @@ jobs:
         env:
           GIT_COMMIT: ${{ github.sha }}
         run: |
-          REPRO_PNPM_STORE="${{ env.REPRO_PNPM_STORE }}" bash scripts/repro/exec.sh bash scripts/repro/build.sh
+          REPRO_PNPM_STORE="${{ env.REPRO_PNPM_STORE }}" pnpm build:canonical
 
       - name: Upload canonical artifact and checksums
         uses: actions/upload-artifact@v4
