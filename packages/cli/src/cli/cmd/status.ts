@@ -8,7 +8,7 @@ import { Command } from "interactive-commander";
 import Z from "zod";
 import _ from "lodash";
 import * as path from "path";
-import { getConfig } from "../utils/config";
+import { getConfigOrThrow } from "../utils/config";
 import { getSettings } from "../utils/settings";
 import { CLIError } from "../utils/errors";
 import Ora from "ora";
@@ -67,7 +67,7 @@ export default new Command()
 
     try {
       ora.start("Loading configuration...");
-      const i18nConfig = getConfig();
+      const i18nConfig = getConfigOrThrow();
       const settings = getSettings(flags.apiKey);
       ora.succeed("Configuration loaded");
 
@@ -673,16 +673,10 @@ async function tryAuthenticate(settings: ReturnType<typeof getSettings>) {
 }
 
 function validateParams(
-  i18nConfig: I18nConfig | null,
+  i18nConfig: I18nConfig,
   flags: ReturnType<typeof parseFlags>,
 ) {
-  if (!i18nConfig) {
-    throw new CLIError({
-      message:
-        "i18n.json not found. Please run `lingo.dev init` to initialize the project.",
-      docUrl: "i18nNotFound",
-    });
-  } else if (!i18nConfig.buckets || !Object.keys(i18nConfig.buckets).length) {
+  if (!i18nConfig.buckets || !Object.keys(i18nConfig.buckets).length) {
     throw new CLIError({
       message:
         "No buckets found in i18n.json. Please add at least one bucket containing i18n content.",
