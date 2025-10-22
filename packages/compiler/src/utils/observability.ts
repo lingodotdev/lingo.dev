@@ -1,4 +1,3 @@
-import { machineId } from "node-machine-id";
 import { getRc } from "./rc";
 
 export default async function trackEvent(
@@ -70,6 +69,8 @@ async function getActualId() {
       // ignore, fallback to device id
     }
   }
+
+  const { machineId } = await import("node-machine-id");
   const id = await machineId();
   return `device-${id}`;
 }
