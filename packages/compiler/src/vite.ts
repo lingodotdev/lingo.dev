@@ -1,4 +1,4 @@
-import type { Plugin as VitePlugin } from "vite";
+import type { Plugin as VitePlugin, ResolvedConfig } from "vite";
 import _ from "lodash";
 import { defaultParams } from "./_base";
 import { unplugin } from "./unplugin";
@@ -6,7 +6,7 @@ import { sendBuildEvent } from "./utils/build-event";
 
 export function lingo(
   compilerParams?: Partial<typeof defaultParams>,
-): VitePlugin {
+): any {
   const mergedParams = _.merge(
     {},
     defaultParams,
@@ -20,9 +20,9 @@ export function lingo(
   // Wrap to emit build event once Vite config is resolved so we can detect framework
   return {
     ...plugin,
-    configResolved(resolvedConfig) {
+    configResolved(resolvedConfig: ResolvedConfig) {
       const isReactRouter = (resolvedConfig.plugins || []).some(
-        (p) => p && p.name === "react-router",
+        (p: any) => p && p.name === "react-router",
       );
       const framework = isReactRouter ? "React Router" : "Vite";
       const isDev = resolvedConfig.command === "serve";

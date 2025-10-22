@@ -13,8 +13,7 @@
   },
   "pnpm": {
     "overrides": {
-      "vite": "^6.0.0",
-      "@types/node": "^22.0.0"
+      "vite": "^6.0.0"
     }
   },
   "devDependencies": {
