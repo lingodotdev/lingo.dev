@@ -1,0 +1,26 @@
+FROM node:20.12.2-bookworm-slim
+
+# Pinned, hermetic build environment for reproducible builds
+ENV DEBIAN_FRONTEND=noninteractive \
+    TZ=UTC \
+    LC_ALL=C \
+    LANG=C \
+    PNPM_HOME=/usr/local/pnpm
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+      bash git ca-certificates tzdata coreutils findutils gawk curl xz-utils \
+      tar gzip bzip2 \
+    && rm -rf /var/lib/apt/lists/*
+
+ENV PATH=$PNPM_HOME:$PATH
+
+# Pin pnpm via corepack
+RUN corepack enable \
+    && corepack prepare pnpm@9.12.3 --activate
+
+WORKDIR /workspace
+
+# Intentionally no COPY; repository will be bind-mounted at runtime
+
+ENTRYPOINT ["bash", "-lc"]
