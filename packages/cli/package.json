@@ -207,6 +207,7 @@
     "remark-parse": "^11.0.0",
     "remark-rehype": "^11.1.2",
     "remark-stringify": "^11.0.0",
+    "sax": "^1.4.1",
     "srt-parser-2": "^1.2.3",
     "unified": "^11.0.5",
     "unist-util-visit": "^5.0.0",
