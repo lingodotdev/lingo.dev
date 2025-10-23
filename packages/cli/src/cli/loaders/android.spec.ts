@@ -671,7 +671,9 @@ Line 2
     const pushed = await androidLoader.push("en", roundTrip);
 
     const order = Array.from(
-      pushed.matchAll(/<(string|string-array|plurals|bool|integer)\s+name="([^"]+)"/g),
+      pushed.matchAll(
+        /<(string|string-array|plurals|bool|integer)\s+name="([^"]+)"/g,
+      ),
     ).map(([, , name]) => name);
 
     expect(order).toEqual([
@@ -697,7 +699,7 @@ Line 2
     expect(result).toMatch(/^<\?xml version="1\.0" encoding="utf-8"\?>/);
   });
 
-  it("should preserve translatable=\"false\" items in target locale", async () => {
+  it('should preserve translatable="false" items in target locale', async () => {
     const input = `
       <resources>
         <string name="app_name">My App</string>

@@ -1,14 +1,14 @@
 import { createRequire } from "node:module";
-import {
-  parseStringPromise,
-  type XmlDeclarationAttributes,
-} from "xml2js";
+import { parseStringPromise, type XmlDeclarationAttributes } from "xml2js";
 import { ILoader } from "./_types";
 import { CLIError } from "../utils/errors";
 import { createLoader } from "./_utils";
 
 interface SaxParser {
-  onopentag: (node: { name: string; attributes: Record<string, string> }) => void;
+  onopentag: (node: {
+    name: string;
+    attributes: Record<string, string>;
+  }) => void;
   onclosetag: (name: string) => void;
   ontext: (text: string) => void;
   oncdata: (cdata: string) => void;
@@ -265,7 +265,8 @@ async function parseAndroidDocument(
       continue;
     }
 
-    const translatable = (child?.$?.translatable ?? "").toLowerCase() !== "false";
+    const translatable =
+      (child?.$?.translatable ?? "").toLowerCase() !== "false";
 
     switch (meta.type) {
       case "string": {
@@ -283,9 +284,14 @@ async function parseAndroidDocument(
         const items: StringArrayItemNode[] = [];
         const templateItems = meta.items;
 
-        for (let i = 0; i < Math.max(itemNodes.length, templateItems.length); i++) {
+        for (
+          let i = 0;
+          i < Math.max(itemNodes.length, templateItems.length);
+          i++
+        ) {
           const nodeItem = itemNodes[i];
-          const templateItem = templateItems[i] ?? templateItems[templateItems.length - 1];
+          const templateItem =
+            templateItems[i] ?? templateItems[templateItems.length - 1];
           if (!nodeItem) {
             continue;
           }
@@ -444,9 +450,7 @@ function buildTranslatedDocument(
         existingMap.get(resource.name)!,
       );
     } else {
-      translationValue = extractValueFromResource(
-        templateResource ?? resource,
-      );
+      translationValue = extractValueFromResource(templateResource ?? resource);
     }
 
     updateResourceNode(resource, translationValue, templateResource);
@@ -519,9 +523,7 @@ function updateResourceNode(
     case "string": {
       const value = asString(rawValue, target.name);
       const templateMeta =
-        template && template.type === "string"
-          ? template.meta
-          : target.meta;
+        template && template.type === "string" ? template.meta : target.meta;
       const useCdata = templateMeta.hasCdata;
       setTextualNodeContent(target.node, value, useCdata);
       target.meta = makeTextMeta([
@@ -560,9 +562,7 @@ function updateResourceNode(
     case "plurals": {
       const pluralValues = asPluralMap(rawValue, target.name);
       const templateItems =
-        template && template.type === "plurals"
-          ? template.items
-          : target.items;
+        template && template.type === "plurals" ? template.items : target.items;
       const templateMap = new Map(
         templateItems.map((item) => [item.quantity, item]),
       );
@@ -664,9 +664,7 @@ function createResourceMap(
   return buildResourceNameMap(document);
 }
 
-function cloneResourceNode(
-  resource: AndroidResourceNode,
-): AndroidResourceNode {
+function cloneResourceNode(resource: AndroidResourceNode): AndroidResourceNode {
   switch (resource.type) {
     case "string": {
       const nodeClone = deepClone(resource.node);
@@ -963,9 +961,7 @@ function createResourceNodeFromValue(
   }
 }
 
-function cloneDocumentStructure(
-  document: AndroidDocument,
-): AndroidDocument {
+function cloneDocumentStructure(document: AndroidDocument): AndroidDocument {
   const resourcesClone = deepClone(document.resources);
   const lookup = buildResourceLookup(resourcesClone);
   const resourceNodes: AndroidResourceNode[] = [];
@@ -1026,21 +1022,19 @@ function cloneResourceNodeFromLookup(
       if (childItems.length < resource.items.length) {
         return cloneResourceNode(resource);
       }
-      const items: StringArrayItemNode[] = resource.items.map(
-        (item, index) => {
-          const nodeItem = childItems[index];
-          if (!nodeItem) {
-            return {
-              node: deepClone(item.node),
-              meta: cloneTextMeta(item.meta),
-            };
-          }
+      const items: StringArrayItemNode[] = resource.items.map((item, index) => {
+        const nodeItem = childItems[index];
+        if (!nodeItem) {
           return {
-            node: nodeItem,
+            node: deepClone(item.node),
             meta: cloneTextMeta(item.meta),
           };
-        },
-      );
+        }
+        return {
+          node: nodeItem,
+          meta: cloneTextMeta(item.meta),
+        };
+      });
       return {
         type: "string-array",
         name: resource.name,
@@ -1118,9 +1112,7 @@ function resourceLookupKey(type: string, name: string): string {
   return `${type}:${name}`;
 }
 
-function extractValueFromResource(
-  resource: AndroidResourceNode,
-): any {
+function extractValueFromResource(resource: AndroidResourceNode): any {
   switch (resource.type) {
     case "string":
       return decodeAndroidText(segmentsToString(resource.meta.segments));
@@ -1254,8 +1246,7 @@ function extractResourceMetadata(xml: string) {
     ) {
       const attrString = Object.entries(node.attributes ?? {})
         .map(
-          ([key, value]) =>
-            ` ${key}="${escapeAttributeValue(String(value))}"`,
+          ([key, value]) => ` ${key}="${escapeAttributeValue(String(value))}"`,
         )
         .join("");
       appendSegmentToNearestResource(stack, {
