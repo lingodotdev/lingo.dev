@@ -1,8 +1,6 @@
-import { ILoader } from "../_types";
-import { createLoader } from "../_utils";
-import { md5 } from "../../utils/md5";
-import _ from "lodash";
-import { I18nConfig } from "@lingo.dev/_spec";
+import { ILoader } from "./_types";
+import { createLoader } from "./_utils";
+import { md5 } from "../utils/md5";
 
 /**
  * Extracts content matching regex patterns and replaces it with placeholders.
@@ -46,7 +44,24 @@ function extractLockedPatterns(
   };
 }
 
-export default function createMdxLockedPatternsLoader(
+/**
+ * Creates a loader that preserves content matching regex patterns during translation.
+ *
+ * This loader extracts content matching the provided regex patterns and replaces it
+ * with placeholders before translation. After translation, the placeholders are
+ * restored with the original content.
+ *
+ * This is useful for preserving technical terms, code snippets, URLs, template
+ * variables, and other non-translatable content within translatable files.
+ *
+ * Works with any string-based format (JSON, YAML, XML, Markdown, HTML, etc.).
+ * Note: For structured formats (JSON, XML, YAML), ensure patterns only match
+ * content within values, not structural syntax, to avoid breaking parsing.
+ *
+ * @param defaultPatterns - Array of regex pattern strings to match and preserve
+ * @returns A loader that handles pattern locking/unlocking
+ */
+export default function createLockedPatternsLoader(
   defaultPatterns?: string[],
 ): ILoader<string, string> {
   return createLoader({

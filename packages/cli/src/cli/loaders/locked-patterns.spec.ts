@@ -1,11 +1,11 @@
 import { describe, it, expect } from "vitest";
-import createMdxLockedPatternsLoader from "./locked-patterns";
+import createLockedPatternsLoader from "./locked-patterns";
 import dedent from "dedent";
 
-describe("MDX Locked Patterns Loader", () => {
+describe("Locked Patterns Loader", () => {
   describe("Basic functionality", () => {
     it("should do nothing when no patterns are provided", async () => {
-      const loader = createMdxLockedPatternsLoader();
+      const loader = createLockedPatternsLoader();
       loader.setDefaultLocale("en");
 
       const md = dedent`
@@ -33,7 +33,7 @@ describe("MDX Locked Patterns Loader", () => {
     });
 
     it("should preserve content matching patterns", async () => {
-      const loader = createMdxLockedPatternsLoader([
+      const loader = createLockedPatternsLoader([
         "!params",
         "!! [\\w_]+",
         "!type [\\w<>\\[\\]\"',]+",
@@ -101,7 +101,7 @@ describe("MDX Locked Patterns Loader", () => {
 
   describe("Real-world patterns", () => {
     it("should handle !hover syntax in code blocks", async () => {
-      const loader = createMdxLockedPatternsLoader([
+      const loader = createLockedPatternsLoader([
         "// !hover[\\s\\S]*?(?=\\n|$)",
         "// !hover\\([\\d:]+\\)[\\s\\S]*?(?=\\n|$)",
       ]);
@@ -126,7 +126,7 @@ describe("MDX Locked Patterns Loader", () => {
     });
 
     it("should handle !! parameter headings", async () => {
-      const loader = createMdxLockedPatternsLoader(["!! [\\w_]+"]);
+      const loader = createLockedPatternsLoader(["!! [\\w_]+"]);
       loader.setDefaultLocale("en");
 
       const md = dedent`
@@ -195,7 +195,7 @@ describe("MDX Locked Patterns Loader", () => {
     });
 
     it("should handle !type, !required, and !values declarations", async () => {
-      const loader = createMdxLockedPatternsLoader([
+      const loader = createLockedPatternsLoader([
         "!! [\\w_]+",
         "!type [\\w<>\\[\\]\"',]+",
         "!required",
