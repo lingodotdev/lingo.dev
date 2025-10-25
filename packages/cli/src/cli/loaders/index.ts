@@ -74,6 +74,7 @@ export default function createBucketLoader(
         createAndroidLoader(),
         createEnsureKeyOrderLoader(),
         createFlatLoader(),
+        createLockedKeysLoader(lockedKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -83,6 +84,7 @@ export default function createBucketLoader(
         createCsvLoader(),
         createEnsureKeyOrderLoader(),
         createFlatLoader(),
+        createLockedKeysLoader(lockedKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -91,6 +93,7 @@ export default function createBucketLoader(
         createTextFileLoader(bucketPathPattern),
         createFormatterLoader(options.formatter, "html", bucketPathPattern),
         createHtmlLoader(),
+        createLockedKeysLoader(lockedKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -98,6 +101,7 @@ export default function createBucketLoader(
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
         createEjsLoader(),
+        createLockedKeysLoader(lockedKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -143,6 +147,7 @@ export default function createBucketLoader(
         createTextFileLoader(bucketPathPattern),
         createFormatterLoader(options.formatter, "markdown", bucketPathPattern),
         createMarkdownLoader(),
+        createLockedKeysLoader(lockedKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -152,6 +157,7 @@ export default function createBucketLoader(
         createMarkdocLoader(),
         createFlatLoader(),
         createEnsureKeyOrderLoader(),
+        createLockedKeysLoader(lockedKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -177,6 +183,7 @@ export default function createBucketLoader(
         createPoLoader(),
         createFlatLoader(),
         createEnsureKeyOrderLoader(),
+        createLockedKeysLoader(lockedKeys || []),
         createSyncLoader(),
         createVariableLoader({ type: "python" }),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
@@ -185,6 +192,7 @@ export default function createBucketLoader(
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
         createPropertiesLoader(),
+        createLockedKeysLoader(lockedKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -192,6 +200,7 @@ export default function createBucketLoader(
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
         createXcodeStringsLoader(),
+        createLockedKeysLoader(lockedKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -201,6 +210,7 @@ export default function createBucketLoader(
         createXcodeStringsdictLoader(),
         createFlatLoader(),
         createEnsureKeyOrderLoader(),
+        createLockedKeysLoader(lockedKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -252,6 +262,7 @@ export default function createBucketLoader(
         createRootKeyLoader(true),
         createFlatLoader(),
         createEnsureKeyOrderLoader(),
+        createLockedKeysLoader(lockedKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -263,6 +274,7 @@ export default function createBucketLoader(
         createEnsureKeyOrderLoader(),
         createFlutterLoader(),
         createFlatLoader(),
+        createLockedKeysLoader(lockedKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -272,6 +284,7 @@ export default function createBucketLoader(
         createXliffLoader(),
         createFlatLoader(),
         createEnsureKeyOrderLoader(),
+        createLockedKeysLoader(lockedKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -281,6 +294,7 @@ export default function createBucketLoader(
         createXmlLoader(),
         createFlatLoader(),
         createEnsureKeyOrderLoader(),
+        createLockedKeysLoader(lockedKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -288,6 +302,7 @@ export default function createBucketLoader(
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
         createSrtLoader(),
+        createLockedKeysLoader(lockedKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -297,12 +312,14 @@ export default function createBucketLoader(
         createSyncLoader(),
         createFlatLoader(),
         createEnsureKeyOrderLoader(),
+        createLockedKeysLoader(lockedKeys || []),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
     case "vtt":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
         createVttLoader(),
+        createLockedKeysLoader(lockedKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -313,6 +330,7 @@ export default function createBucketLoader(
         createSyncLoader(),
         createFlatLoader(),
         createEnsureKeyOrderLoader(),
+        createLockedKeysLoader(lockedKeys || []),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
     case "vue-json":
@@ -322,6 +340,7 @@ export default function createBucketLoader(
         createSyncLoader(),
         createFlatLoader(),
         createEnsureKeyOrderLoader(),
+        createLockedKeysLoader(lockedKeys || []),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
     case "typescript":
@@ -344,6 +363,7 @@ export default function createBucketLoader(
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
         createTxtLoader(),
+        createLockedKeysLoader(lockedKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
