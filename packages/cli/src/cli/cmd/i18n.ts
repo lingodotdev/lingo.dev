@@ -252,6 +252,8 @@ export default new Command()
                 injectLocale: bucket.injectLocale,
               },
               bucket.lockedKeys,
+              bucket.lockedPatterns,
+              bucket.ignoredKeys,
             );
             bucketLoader.setDefaultLocale(sourceLocale);
             await bucketLoader.init();

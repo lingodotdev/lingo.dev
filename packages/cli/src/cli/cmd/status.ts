@@ -200,6 +200,8 @@ export default new Command()
                 formatter: i18nConfig!.formatter,
               },
               bucket.lockedKeys,
+              bucket.lockedPatterns,
+              bucket.ignoredKeys,
             );
 
             bucketLoader.setDefaultLocale(sourceLocale);
