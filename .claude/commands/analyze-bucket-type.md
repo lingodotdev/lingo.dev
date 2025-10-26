@@ -10,6 +10,7 @@ Given the bucket type ID "$ARGUMENTS" (e.g., "json", "mdx", "typescript"), analy
 1. **Locate where this bucket type is processed** in the codebase by searching for the bucket type string. Start with the main loader composition/pipeline code.
 
 2. **Trace the complete execution pipeline** for this bucket:
+
    - List every function/loader in the processing chain, in order
    - For each function/loader, read its implementation to understand:
      - Input parameters it receives
@@ -18,11 +19,13 @@ Given the bucket type ID "$ARGUMENTS" (e.g., "json", "mdx", "typescript"), analy
      - Any side effects or file operations
 
 3. **Identify configuration parameters** by:
+
    - Finding which variables are passed into the loaders (e.g., lockedKeys, ignoredKeys)
    - Tracing these variables back to their source (configuration parsing)
    - Determining if they're bucket-specific or universal
 
 4. **Analyze file I/O behavior**:
+
    - How are file paths constructed?
    - Does the path pattern contain locale placeholders that would create separate files?
    - What file operations are performed (read, write, create, delete)?
@@ -33,18 +36,21 @@ Given the bucket type ID "$ARGUMENTS" (e.g., "json", "mdx", "typescript"), analy
      - Clarify which pattern the bucket type follows
 
 5. **Examine data transformation logic**:
+
    - How is the file content parsed?
    - What internal data structures are used?
    - How is the data serialized back to file format?
    - Are there any format-preserving mechanisms?
 
 6. **Identify special behaviors** by examining:
+
    - Conditional logic specific to this bucket
    - Error handling unique to this format
    - Any validation or normalization steps
    - Interactions between multiple loaders in the pipeline
 
 7. **Determine constraints and capabilities**:
+
    - What data types/structures are supported?
    - Are there any size or complexity limitations?
    - What happens with edge cases (empty files, malformed content)?

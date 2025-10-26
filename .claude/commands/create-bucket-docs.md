@@ -281,12 +281,14 @@ Choose realistic paths for the bucket type:
 ## Instructions
 
 1. Parse the bucket analysis output provided in the arguments to determine:
+
    - Bucket type name
    - File organization (separate-files if uses [locale] placeholder, in-place if not)
    - Supported features (lockedKeys, ignoredKeys, injectLocale, hints/notes)
    - Typical file extension and paths
 
 2. Based on the analysis, fill in the template with appropriate:
+
    - Description of the file format
    - Realistic path patterns
    - Only the features that are actually supported

@@ -93,11 +93,11 @@ function replaceHtmlComponent(
     (attr) => attr.type === "JSXAttribute" && attr.name.name === "lang",
   );
   if (!t.isJSXAttribute(langAttribute)) {
-    ((langAttribute = t.jsxAttribute(
+    (langAttribute = t.jsxAttribute(
       t.jsxIdentifier("lang"),
       t.stringLiteral(""),
     )),
-      path.node.openingElement.attributes.push(langAttribute));
+      path.node.openingElement.attributes.push(langAttribute);
   }
   langAttribute.value = t.jsxExpressionContainer(
     t.awaitExpression(

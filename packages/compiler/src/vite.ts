@@ -4,7 +4,9 @@ import { defaultParams } from "./_base";
 import { unplugin } from "./unplugin";
 import { sendBuildEvent } from "./utils/build-event";
 
-export function lingo(compilerParams?: Partial<typeof defaultParams>): any {
+export function lingo(
+  compilerParams?: Partial<typeof defaultParams>,
+): any {
   const mergedParams = _.merge(
     {},
     defaultParams,

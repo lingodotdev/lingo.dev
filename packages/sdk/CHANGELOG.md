@@ -60,6 +60,7 @@
 ### Minor Changes
 
 - [#1049](https://github.com/lingodotdev/lingo.dev/pull/1049) [`85dfc10`](https://github.com/lingodotdev/lingo.dev/commit/85dfc10961b116e31b2bb478f42013756ca49974) Thanks [@VAIBHAVSING](https://github.com/VAIBHAVSING)! - Added new methods to the SDK:
+
   1. `localizeStringArray`: Localizes an array of strings while maintaining their order.
 
   Also added comprehensive tests for these methods using Vitest.
