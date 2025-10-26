@@ -45,10 +45,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Use Node.js
-        uses: actions/setup-node@v2
+      - name: Use Node.js 22.12
+        uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: 22.12.0
+
+      - name: Enable Corepack
+        run: corepack enable
 
       - name: Lingo.dev
         uses: ./
