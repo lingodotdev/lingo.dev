@@ -1,5 +1,14 @@
 # lingo.dev
 
+## 0.113.6
+
+### Patch Changes
+
+- [#1238](https://github.com/lingodotdev/lingo.dev/pull/1238) [`be8de32`](https://github.com/lingodotdev/lingo.dev/commit/be8de3280bb5dc5f409fc7680c0e5ff6a53e2fe5) Thanks [@vrcprl](https://github.com/vrcprl)! - enchance Android bucket loader
+
+- Updated dependencies [[`44a928b`](https://github.com/lingodotdev/lingo.dev/commit/44a928b473802cd07bec64f94a273ee1b845a0d0)]:
+  - @lingo.dev/_compiler@0.7.15
+
 ## 0.113.5
 
 ### Patch Changes

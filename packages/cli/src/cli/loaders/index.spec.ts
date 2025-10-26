@@ -67,13 +67,17 @@ describe("bucket loaders", () => {
     it("should save android data", async () => {
       setupFileMocks();
 
-      const input = `
-        <resources>
-          <string name="button.title">Submit</string>
-        </resources>
-      `.trim();
+      // Use proper Android Studio format: XML declaration + 4-space indentation
+      const input = `<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="button.title">Submit</string>
+</resources>`;
       const payload = { "button.title": "Enviar" };
-      const expectedOutput = `<resources>\n  <string name="button.title">Enviar</string>\n</resources>`;
+      // Output preserves XML declaration and uses 4-space indentation (Android standard)
+      const expectedOutput = `<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="button.title">Enviar</string>
+</resources>`;
 
       mockFileOperations(input);
 
