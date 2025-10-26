@@ -21,7 +21,8 @@ export default function createProcessor(
     return result;
   } else {
     const model = getPureModelProvider(provider);
-    const result = createBasicTranslator(model, provider.prompt);
+    const settings = provider.settings || {};
+    const result = createBasicTranslator(model, provider.prompt, settings);
     return result;
   }
 }

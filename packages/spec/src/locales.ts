@@ -24,8 +24,11 @@ const localeMap = {
   he: ["he-IL"],
   // Estonian (Estonia)
   et: ["et-EE"],
-  // Greek (Greece)
-  el: ["el-GR"],
+  // Greek
+  el: [
+    "el-GR", // Greece
+    "el-CY", // Cyprus
+  ],
   // Danish (Denmark)
   da: ["da-DK"],
   // Azerbaijani (Azerbaijan)
@@ -41,6 +44,7 @@ const localeMap = {
     "en-AU", // Australia
     "en-CA", // Canada
     "en-SG", // Singapore
+    "en-IE", // Ireland
   ],
   // Spanish
   es: [
@@ -54,6 +58,7 @@ const localeMap = {
     "fr-FR", // France
     "fr-CA", // Canada
     "fr-BE", // Belgium
+    "fr-LU", // Luxembourg
   ],
   // Catalan (Spain)
   ca: ["ca-ES"],
@@ -208,6 +213,12 @@ const localeMap = {
   rw: ["rw-RW"],
   // Georgian (Georgia)
   ka: ["ka-GE"],
+  // Malayalam (India)
+  ml: ["ml-IN"],
+  // Armenian (Armenia)
+  hy: ["hy-AM"],
+  // Macedonian (Macedonia)
+  mk: ["mk-MK"],
 } as const;
 
 export type LocaleCodeShort = keyof typeof localeMap;

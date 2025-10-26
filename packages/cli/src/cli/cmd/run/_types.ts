@@ -18,6 +18,9 @@ export type CmdRunContext = {
 export type CmdRunTaskResult = {
   status: "success" | "error" | "skipped";
   error?: Error;
+  pathPattern?: string;
+  sourceLocale?: string;
+  targetLocale?: string;
 };
 
 export type CmdRunTask = {
@@ -28,7 +31,9 @@ export type CmdRunTask = {
   injectLocale: string[];
   lockedKeys: string[];
   lockedPatterns: string[];
+  ignoredKeys: string[];
   onlyKeys: string[];
+  formatter?: "prettier" | "biome";
 };
 
 export const flagsSchema = z.object({
@@ -47,5 +52,6 @@ export const flagsSchema = z.object({
   targetLocale: z.array(z.string()).optional(),
   watch: z.boolean().default(false),
   debounce: z.number().positive().default(5000), // 5 seconds default
+  sound: z.boolean().optional(),
 });
 export type CmdRunFlags = z.infer<typeof flagsSchema>;

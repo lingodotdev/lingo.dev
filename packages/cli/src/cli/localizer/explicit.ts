@@ -15,6 +15,8 @@ import { createOllama } from "ollama-ai-provider";
 export default function createExplicitLocalizer(
   provider: NonNullable<I18nConfig["provider"]>,
 ): ILocalizer {
+  const settings = provider.settings || {};
+
   switch (provider.id) {
     default:
       throw new Error(
@@ -39,6 +41,7 @@ export default function createExplicitLocalizer(
         prompt: provider.prompt,
         apiKeyName: "OPENAI_API_KEY",
         baseUrl: provider.baseUrl,
+        settings,
       });
     case "anthropic":
       return createAiSdkLocalizer({
@@ -48,6 +51,7 @@ export default function createExplicitLocalizer(
         prompt: provider.prompt,
         apiKeyName: "ANTHROPIC_API_KEY",
         baseUrl: provider.baseUrl,
+        settings,
       });
     case "google":
       return createAiSdkLocalizer({
@@ -57,6 +61,7 @@ export default function createExplicitLocalizer(
         prompt: provider.prompt,
         apiKeyName: "GOOGLE_API_KEY",
         baseUrl: provider.baseUrl,
+        settings,
       });
     case "openrouter":
       return createAiSdkLocalizer({
@@ -66,6 +71,7 @@ export default function createExplicitLocalizer(
         prompt: provider.prompt,
         apiKeyName: "OPENROUTER_API_KEY",
         baseUrl: provider.baseUrl,
+        settings,
       });
     case "ollama":
       return createAiSdkLocalizer({
@@ -73,6 +79,7 @@ export default function createExplicitLocalizer(
         id: provider.id,
         prompt: provider.prompt,
         skipAuth: true,
+        settings,
       });
     case "mistral":
       return createAiSdkLocalizer({
@@ -82,6 +89,7 @@ export default function createExplicitLocalizer(
         prompt: provider.prompt,
         apiKeyName: "MISTRAL_API_KEY",
         baseUrl: provider.baseUrl,
+        settings,
       });
   }
 }
@@ -93,6 +101,7 @@ function createAiSdkLocalizer(params: {
   apiKeyName?: string;
   baseUrl?: string;
   skipAuth?: boolean;
+  settings?: { temperature?: number };
 }): ILocalizer {
   const skipAuth = params.skipAuth === true;
 
@@ -134,9 +143,15 @@ function createAiSdkLocalizer(params: {
   return {
     id: params.id,
     checkAuth: async () => {
+      // For BYOK providers, auth check is not meaningful
+      // Configuration validation happens in validateSettings
+      return { authenticated: true, username: "anonymous" };
+    },
+    validateSettings: async () => {
       try {
         await generateText({
           model,
+          ...params.settings,
           messages: [
             { role: "system", content: "You are an echo server" },
             { role: "user", content: "OK" },
@@ -145,9 +160,11 @@ function createAiSdkLocalizer(params: {
           ],
         });
 
-        return { authenticated: true, username: "anonymous" };
+        return { valid: true };
       } catch (error) {
-        return { authenticated: false };
+        const errorMessage =
+          error instanceof Error ? error.message : String(error);
+        return { valid: false, error: errorMessage };
       }
     },
     localize: async (input: LocalizerData) => {
@@ -181,6 +198,7 @@ function createAiSdkLocalizer(params: {
 
       const response = await generateText({
         model,
+        ...params.settings,
         messages: [
           { role: "system", content: systemPrompt },
           { role: "user", content: "OK" },
@@ -196,6 +214,13 @@ function createAiSdkLocalizer(params: {
       });
 
       const result = JSON.parse(response.text);
+
+      // Handle both object and string responses
+      if (typeof result.data === "object" && result.data !== null) {
+        return result.data;
+      }
+
+      // Handle string responses - extract and repair JSON
       const index = result.data.indexOf("{");
       const lastIndex = result.data.lastIndexOf("}");
       const trimmed = result.data.slice(index, lastIndex + 1);

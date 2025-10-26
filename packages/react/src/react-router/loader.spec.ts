@@ -17,7 +17,7 @@ describe("loadDictionary_internal", () => {
     fr: vi.fn().mockResolvedValue({ default: { hello: "Bonjour" } }),
   };
 
-  it("should return null when no Cookie header is present", async () => {
+  it("should return first dictionary when no Cookie header is present", async () => {
     const request = createMockRequest();
     const result = await loadDictionary_internal(request, mockDictionaryLoader);
 
@@ -25,7 +25,7 @@ describe("loadDictionary_internal", () => {
     expect(result).toEqual({ hello: "Hello" });
   });
 
-  it("should return null when Cookie header exists but no lingo-locale cookie", async () => {
+  it("should return  first dictionary when Cookie header exists but no lingo-locale cookie", async () => {
     const request = createMockRequest("session=abc123; other-cookie=value");
     const result = await loadDictionary_internal(request, mockDictionaryLoader);
 
@@ -68,24 +68,24 @@ describe("loadDictionary_internal", () => {
     expect(result).toEqual({ hello: "Bonjour" });
   });
 
-  it("should return null when locale is not available in dictionary", async () => {
+  it("should return first dictionary when locale is not available in dictionary loaders", async () => {
     const request = createMockRequest(`${LOCALE_COOKIE_NAME}=de`);
     const result = await loadDictionary_internal(request, mockDictionaryLoader);
 
-    expect(result).toBeNull();
+    expect(result).toEqual({ hello: "Hello" });
   });
 
-  it("should return null when explicit locale is not available", async () => {
+  it("should return first dictionary when explicit locale is not available", async () => {
     const result = await loadDictionary_internal("de", mockDictionaryLoader);
 
-    expect(result).toBeNull();
+    expect(result).toEqual({ hello: "Hello" });
   });
 
   it("should handle malformed cookie values gracefully", async () => {
     const request = createMockRequest(`${LOCALE_COOKIE_NAME}=`);
     const result = await loadDictionary_internal(request, mockDictionaryLoader);
 
-    expect(result).toBeNull();
+    expect(result).toEqual({ hello: "Hello" });
   });
 
   it("should handle cookie with equals sign in value", async () => {
@@ -102,7 +102,7 @@ describe("loadDictionary_internal", () => {
   it("should handle empty string locale", async () => {
     const result = await loadDictionary_internal("", mockDictionaryLoader);
 
-    expect(result).toBeNull();
+    expect(result).toEqual({ hello: "Hello" });
   });
 
   it("should extract default export from loader result", async () => {

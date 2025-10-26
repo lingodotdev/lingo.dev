@@ -3,6 +3,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { readFileSync } from "fs";
 import { Octokit } from "@octokit/rest";
+import * as prettier from "prettier";
 
 export function getRepoRoot(): string {
   const __filename = fileURLToPath(import.meta.url);
@@ -122,5 +123,14 @@ export async function createOrUpdateGitHubComment(
     repo,
     issue_number: prNumber,
     body: options.body,
+  });
+}
+
+export async function formatMarkdown(markdown: string): Promise<string> {
+  const repoRoot = getRepoRoot();
+  const prettierConfig = await prettier.resolveConfig(repoRoot);
+  return await prettier.format(markdown, {
+    ...prettierConfig,
+    parser: "markdown",
   });
 }

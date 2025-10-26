@@ -5,9 +5,26 @@ import _ from "lodash";
 
 export const OBJECT_NUMERIC_KEY_PREFIX = "__lingodotdev__obj__";
 
-export default function createFlatLoader() {
+/**
+ * Options for configuring the flat loader behavior
+ */
+export interface FlatLoaderOptions {
+  /**
+   * Optional predicate to determine if an object should be preserved (not flattened)
+   * Use this to prevent flattening of special objects like ICU plurals
+   */
+  shouldPreserveObject?: (value: any) => boolean;
+}
+
+/**
+ * Creates a flat loader that flattens nested objects into dot-notation keys
+ *
+ * @param options - Configuration options for the loader
+ * @param options.shouldPreserveObject - Predicate to identify objects that should not be flattened
+ */
+export default function createFlatLoader(options?: FlatLoaderOptions) {
   const composedLoader = composeLoaders(
-    createDenormalizeLoader(),
+    createDenormalizeLoader(options),
     createNormalizeLoader(),
   );
 
@@ -27,19 +44,39 @@ type DenormalizeResult = {
   keysMap: Record<string, string>;
 };
 
-function createDenormalizeLoader(): ILoader<
-  Record<string, any>,
-  DenormalizeResult
-> {
+function createDenormalizeLoader(
+  options?: FlatLoaderOptions,
+): ILoader<Record<string, any>, DenormalizeResult> {
   return createLoader({
     pull: async (locale, input) => {
       const inputDenormalized = denormalizeObjectKeys(input || {});
-      const denormalized: Record<string, string> = flatten(inputDenormalized, {
+
+      // First pass: extract preserved objects before flattening (if predicate provided)
+      const preservedObjects: Record<string, any> = {};
+      const nonPreservedInput: Record<string, any> = {};
+
+      for (const [key, value] of Object.entries(inputDenormalized)) {
+        if (options?.shouldPreserveObject?.(value)) {
+          preservedObjects[key] = value;
+        } else {
+          nonPreservedInput[key] = value;
+        }
+      }
+
+      // Flatten only non-preserved objects
+      const flattened: Record<string, string> = flatten(nonPreservedInput, {
         delimiter: "/",
         transformKey(key) {
           return encodeURIComponent(String(key));
         },
       });
+
+      // Merge preserved objects back (they stay as objects, not flattened)
+      const denormalized: Record<string, any> = {
+        ...flattened,
+        ...preservedObjects,
+      };
+
       const keysMap = buildDenormalizedKeysMap(denormalized);
       return { denormalized, keysMap };
     },

@@ -15,12 +15,15 @@ import createAndroidLoader from "./android";
 import createCsvLoader from "./csv";
 import createHtmlLoader from "./html";
 import createMarkdownLoader from "./markdown";
+import createMarkdocLoader from "./markdoc";
 import createPropertiesLoader from "./properties";
 import createXcodeStringsLoader from "./xcode-strings";
 import createXcodeStringsdictLoader from "./xcode-stringsdict";
 import createXcodeXcstringsLoader from "./xcode-xcstrings";
-import createPrettierLoader from "./prettier";
+import createXcodeXcstringsV2Loader from "./xcode-xcstrings-v2-loader";
+import { isICUPluralObject } from "./xcode-xcstrings-icu";
 import createUnlocalizableLoader from "./unlocalizable";
+import { createFormatterLoader, FormatterType } from "./formatters";
 import createPoLoader from "./po";
 import createXliffLoader from "./xliff";
 import createXmlLoader from "./xml";
@@ -51,6 +54,7 @@ type BucketLoaderOptions = {
   defaultLocale: string;
   injectLocale?: string[];
   targetLocale?: string;
+  formatter?: FormatterType;
 };
 
 export default function createBucketLoader(
@@ -85,7 +89,7 @@ export default function createBucketLoader(
     case "html":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
-        createPrettierLoader({ parser: "html", bucketPathPattern }),
+        createFormatterLoader(options.formatter, "html", bucketPathPattern),
         createHtmlLoader(),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
@@ -100,12 +104,13 @@ export default function createBucketLoader(
     case "json":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
-        createPrettierLoader({ parser: "json", bucketPathPattern }),
+        createFormatterLoader(options.formatter, "json", bucketPathPattern),
         createJsonLoader(),
         createEnsureKeyOrderLoader(),
         createFlatLoader(),
         createInjectLocaleLoader(options.injectLocale),
         createLockedKeysLoader(lockedKeys || []),
+        createIgnoredKeysLoader(ignoredKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -117,6 +122,7 @@ export default function createBucketLoader(
         createFlatLoader(),
         createInjectLocaleLoader(options.injectLocale),
         createLockedKeysLoader(lockedKeys || []),
+        createIgnoredKeysLoader(ignoredKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -128,24 +134,31 @@ export default function createBucketLoader(
         createFlatLoader(),
         createInjectLocaleLoader(options.injectLocale),
         createLockedKeysLoader(lockedKeys || []),
+        createIgnoredKeysLoader(ignoredKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
     case "markdown":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
-        createPrettierLoader({ parser: "markdown", bucketPathPattern }),
+        createFormatterLoader(options.formatter, "markdown", bucketPathPattern),
         createMarkdownLoader(),
+        createSyncLoader(),
+        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+      );
+    case "markdoc":
+      return composeLoaders(
+        createTextFileLoader(bucketPathPattern),
+        createMarkdocLoader(),
+        createFlatLoader(),
+        createEnsureKeyOrderLoader(),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
     case "mdx":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
-        createPrettierLoader({
-          parser: "mdx",
-          bucketPathPattern,
-        }),
+        createFormatterLoader(options.formatter, "mdx", bucketPathPattern),
         createMdxCodePlaceholderLoader(),
         createMdxLockedPatternsLoader(lockedPatterns),
         createMdxFrontmatterSplitLoader(),
@@ -154,6 +167,7 @@ export default function createBucketLoader(
         createFlatLoader(),
         createEnsureKeyOrderLoader(),
         createLockedKeysLoader(lockedKeys || []),
+        createIgnoredKeysLoader(ignoredKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -198,6 +212,22 @@ export default function createBucketLoader(
         createXcodeXcstringsLoader(options.defaultLocale),
         createFlatLoader(),
         createEnsureKeyOrderLoader(),
+        createLockedKeysLoader(lockedKeys || []),
+        createIgnoredKeysLoader(ignoredKeys || []),
+        createSyncLoader(),
+        createVariableLoader({ type: "ieee" }),
+        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+      );
+    case "xcode-xcstrings-v2":
+      return composeLoaders(
+        createTextFileLoader(bucketPathPattern),
+        createPlutilJsonTextLoader(),
+        createJsonLoader(),
+        createXcodeXcstringsLoader(options.defaultLocale),
+        createXcodeXcstringsV2Loader(options.defaultLocale),
+        createFlatLoader({ shouldPreserveObject: isICUPluralObject }),
+        createEnsureKeyOrderLoader(),
+        createLockedKeysLoader(lockedKeys || []),
         createSyncLoader(),
         createVariableLoader({ type: "ieee" }),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
@@ -205,18 +235,19 @@ export default function createBucketLoader(
     case "yaml":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
-        createPrettierLoader({ parser: "yaml", bucketPathPattern }),
+        createFormatterLoader(options.formatter, "yaml", bucketPathPattern),
         createYamlLoader(),
         createFlatLoader(),
         createEnsureKeyOrderLoader(),
         createLockedKeysLoader(lockedKeys || []),
+        createIgnoredKeysLoader(ignoredKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
     case "yaml-root-key":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
-        createPrettierLoader({ parser: "yaml", bucketPathPattern }),
+        createFormatterLoader(options.formatter, "yaml", bucketPathPattern),
         createYamlLoader(),
         createRootKeyLoader(true),
         createFlatLoader(),
@@ -227,7 +258,7 @@ export default function createBucketLoader(
     case "flutter":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
-        createPrettierLoader({ parser: "json", bucketPathPattern }),
+        createFormatterLoader(options.formatter, "json", bucketPathPattern),
         createJsonLoader(),
         createEnsureKeyOrderLoader(),
         createFlutterLoader(),
@@ -296,7 +327,11 @@ export default function createBucketLoader(
     case "typescript":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
-        createPrettierLoader({ parser: "typescript", bucketPathPattern }),
+        createFormatterLoader(
+          options.formatter,
+          "typescript",
+          bucketPathPattern,
+        ),
         createTypescriptLoader(),
         createFlatLoader(),
         createEnsureKeyOrderLoader(),
@@ -315,13 +350,14 @@ export default function createBucketLoader(
     case "json-dictionary":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
-        createPrettierLoader({ parser: "json", bucketPathPattern }),
+        createFormatterLoader(options.formatter, "json", bucketPathPattern),
         createJsonLoader(),
         createJsonKeysLoader(),
         createEnsureKeyOrderLoader(),
         createFlatLoader(),
         createInjectLocaleLoader(options.injectLocale),
         createLockedKeysLoader(lockedKeys || []),
+        createIgnoredKeysLoader(ignoredKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );

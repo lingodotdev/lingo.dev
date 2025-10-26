@@ -1,8 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-// Helper to build expected relative path
-const EXPECTED_RELATIVE_PATH = "../../lingo/dictionary.js";
-
 afterEach(() => {
   // Reset module registry and any mocks so each test gets a fresh copy
   vi.resetModules();
@@ -11,6 +8,33 @@ afterEach(() => {
 });
 
 describe("getDictionaryPath", () => {
+  it.each([
+    {
+      sourceRoot: "src",
+      lingoDir: "lingo",
+      relativeFilePath: "./components/Button.tsx",
+      expected: "./../lingo/dictionary.js",
+    },
+    {
+      sourceRoot: "src/app/content",
+      lingoDir: "i18n",
+      relativeFilePath: "../../components/Button.tsx",
+      expected: "./../app/content/i18n/dictionary.js",
+    },
+  ])(
+    "returns correct path for file $relativeFilePath in $sourceRoot",
+    async ({ sourceRoot, lingoDir, relativeFilePath, expected }) => {
+      const { getDictionaryPath } = await import("./_utils");
+
+      const result = getDictionaryPath({
+        sourceRoot,
+        lingoDir,
+        relativeFilePath,
+      });
+      expect(result).toBe(expected);
+    },
+  );
+
   it("returns POSIX-style relative path on POSIX", async () => {
     // Import fresh copy with the real Node "path" module (POSIX on *nix, win32 on Windows)
     const { getDictionaryPath } = await import("./_utils");
@@ -21,7 +45,7 @@ describe("getDictionaryPath", () => {
       relativeFilePath: "/project/src/components/Button.tsx",
     });
 
-    expect(result).toBe(EXPECTED_RELATIVE_PATH);
+    expect(result).toBe("./../lingo/dictionary.js");
     // Ensure no back-slashes slip through
     expect(result).not.toMatch(/\\/);
   });
@@ -41,7 +65,7 @@ describe("getDictionaryPath", () => {
       relativeFilePath: "C:\\project\\src\\components\\Button.tsx",
     });
 
-    expect(result).toBe(EXPECTED_RELATIVE_PATH);
+    expect(result).toBe("./../lingo/dictionary.js");
     expect(result).not.toMatch(/\\/);
   });
 });

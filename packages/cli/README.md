@@ -27,6 +27,18 @@
   <a href="https://github.com/lingodotdev/lingo.dev/commits/main">
     <img src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev" alt="Last Commit" />
   </a>
+  <a href="https://lingo.dev/en">
+    <img src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square" alt="Product Hunt #1 DevTool of the Month" />
+  </a>
+  <a href="https://lingo.dev/en">
+    <img src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Week-orange?logo=producthunt&style=flat-square" alt="Product Hunt #1 DevTool of the Week" />
+  </a>
+  <a href="https://lingo.dev/en">
+    <img src="https://img.shields.io/badge/Product%20Hunt-%232%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square" alt="Product Hunt #2 Product of the Day" />
+  </a>
+  <a href="https://lingo.dev/en">
+    <img src="https://img.shields.io/badge/GitHub-Trending-blue?logo=github&style=flat-square" alt="Github trending" />
+  </a>
 </p>
 
 ---
@@ -152,7 +164,7 @@ We're community-driven and love contributions!
 
 ## ⭐ Star History
 
-If you like what we're doing, give us a ⭐ and help us reach 3,000 stars! 🌟
+If you like what we're doing, give us a ⭐ and help us reach 4,000 stars! 🌟
 
 [![Star History Chart](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
 

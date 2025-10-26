@@ -10,7 +10,19 @@ import _ from "lodash";
 import * as path from "path";
 import { getConfig } from "../utils/config";
 import { getSettings } from "../utils/settings";
-import { CLIError } from "../utils/errors";
+import {
+  ConfigError,
+  AuthenticationError,
+  ValidationError,
+  LocalizationError,
+  BucketProcessingError,
+  getCLIErrorType,
+  isLocalizationError,
+  isBucketProcessingError,
+  ErrorDetail,
+  aggregateErrorAnalytics,
+  createPreviousErrorContext,
+} from "../utils/errors";
 import Ora from "ora";
 import createBucketLoader from "../loaders";
 import { createAuthenticator } from "../utils/auth";
@@ -24,64 +36,81 @@ import createProcessor from "../processor";
 import { withExponentialBackoff } from "../utils/exp-backoff";
 import trackEvent from "../utils/observability";
 import { createDeltaProcessor } from "../utils/delta";
-import { tryReadFile, writeFile } from "../utils/fs";
-import { flatten, unflatten } from "flat";
+import { isICUPluralObject } from "../loaders/xcode-xcstrings-icu";
 
 export default new Command()
   .command("i18n")
-  .description("Run Localization engine")
+  .description(
+    "DEPRECATED: Run localization pipeline (prefer `run` command instead)",
+  )
   .helpOption("-h, --help", "Show help")
   .option(
     "--locale <locale>",
-    "Locale to process",
+    "Limit processing to the listed target locale codes from i18n.json. Repeat the flag to include multiple locales. Defaults to all configured target locales",
     (val: string, prev: string[]) => (prev ? [...prev, val] : [val]),
   )
   .option(
     "--bucket <bucket>",
-    "Bucket to process",
+    "Limit processing to specific bucket types defined in i18n.json (e.g., json, yaml, android). Repeat the flag to include multiple bucket types. Defaults to all buckets",
     (val: string, prev: string[]) => (prev ? [...prev, val] : [val]),
   )
   .option(
     "--key <key>",
-    "Key to process. Process only a specific translation key, useful for debugging or updating a single entry",
+    "Limit processing to a single translation key by exact match. Filters all buckets and locales to process only this key, useful for testing or debugging specific translations. Example: auth.login.title",
   )
   .option(
     "--file [files...]",
-    "File to process. Process only a specific path, may contain asterisk * to match multiple files. Useful if you have a lot of files and want to focus on a specific one. Specify more files separated by commas or spaces.",
+    "Filter processing to only buckets whose file paths contain these substrings. Example: 'components' to process only files in components directories",
   )
   .option(
     "--frozen",
-    `Run in read-only mode - fails if any translations need updating, useful for CI/CD pipelines to detect missing translations`,
+    "Validate translations are up-to-date without making changes - fails if source files, target files, or lockfile are out of sync. Ideal for CI/CD to ensure translation consistency before deployment",
   )
   .option(
     "--force",
-    "Ignore lockfile and process all keys, useful for full re-translation",
+    "Force re-translation of all keys, bypassing change detection. Useful when you want to regenerate translations with updated AI models or translation settings",
   )
   .option(
     "--verbose",
-    "Show detailed output including intermediate processing data and API communication details",
+    "Print the translation data being processed as formatted JSON for each bucket and locale",
   )
   .option(
     "--interactive",
-    "Enable interactive mode for reviewing and editing translations before they are applied",
+    "Review and edit AI-generated translations interactively before applying changes to files",
   )
   .option(
     "--api-key <api-key>",
-    "Explicitly set the API key to use, override the default API key from settings",
+    "Override API key from settings or environment variables",
   )
   .option(
     "--debug",
-    "Pause execution at start for debugging purposes, waits for user confirmation before proceeding",
+    "Pause before processing localization so you can attach a debugger",
   )
   .option(
     "--strict",
-    "Stop processing on first error instead of continuing with other locales/buckets",
+    "Stop immediately on first error instead of continuing to process remaining buckets and locales (fail-fast mode)",
   )
   .action(async function (options) {
     updateGitignore();
 
     const ora = Ora();
-    const flags = parseFlags(options);
+    let flags: ReturnType<typeof parseFlags>;
+
+    try {
+      flags = parseFlags(options);
+    } catch (parseError: any) {
+      // Handle flag validation errors (like invalid locale codes)
+      await trackEvent("unknown", "cmd.i18n.error", {
+        errorType: "validation_error",
+        errorName: parseError.name || "ValidationError",
+        errorMessage: parseError.message || "Invalid command line options",
+        errorStack: parseError.stack,
+        fatal: true,
+        errorCount: 1,
+        stage: "flag_validation",
+      });
+      throw parseError;
+    }
 
     if (flags.debug) {
       // wait for user input, use inquirer
@@ -96,6 +125,7 @@ export default new Command()
 
     let hasErrors = false;
     let authId: string | null = null;
+    const errorDetails: ErrorDetail[] = [];
     try {
       ora.start("Loading configuration...");
       const i18nConfig = getConfig();
@@ -118,7 +148,7 @@ export default new Command()
         ora.succeed(`Authenticated as ${auth.email}`);
       }
 
-      trackEvent(authId, "cmd.i18n.start", {
+      await trackEvent(authId, "cmd.i18n.start", {
         i18nConfig,
         flags,
       });
@@ -144,7 +174,9 @@ export default new Command()
           ora.fail(
             "No buckets found. All buckets were filtered out by --file option.",
           );
-          process.exit(1);
+          throw new Error(
+            "No buckets found. All buckets were filtered out by --file option.",
+          );
         } else {
           ora.info(`\x1b[36mProcessing only filtered buckets:\x1b[0m`);
           buckets.map((bucket: any) => {
@@ -178,6 +210,7 @@ export default new Command()
               {
                 defaultLocale: sourceLocale,
                 injectLocale: bucket.injectLocale,
+                formatter: i18nConfig!.formatter,
               },
               bucket.lockedKeys,
               bucket.lockedPatterns,
@@ -297,7 +330,9 @@ export default new Command()
             `Localization data has changed; please update i18n.lock or run without --frozen.`,
           );
           ora.fail(`  Details: ${message}`);
-          process.exit(1);
+          throw new Error(
+            `Localization data has changed; please update i18n.lock or run without --frozen. Details: ${message}`,
+          );
         } else {
           ora.succeed("No lockfile updates required.");
         }
@@ -324,6 +359,7 @@ export default new Command()
               {
                 defaultLocale: sourceLocale,
                 injectLocale: bucket.injectLocale,
+                formatter: i18nConfig!.formatter,
               },
               bucket.lockedKeys,
               bucket.lockedPatterns,
@@ -450,7 +486,23 @@ export default new Command()
                 }
 
                 const finalDiffSize = _.chain(finalTargetData)
-                  .omitBy((value, key) => value === targetData[key])
+                  .omitBy((value, key) => {
+                    const targetValue = targetData[key];
+
+                    // For ICU plural objects, use deep equality (excluding Symbol)
+                    if (
+                      isICUPluralObject(value) &&
+                      isICUPluralObject(targetValue)
+                    ) {
+                      return _.isEqual(
+                        { icu: value.icu, _meta: value._meta },
+                        { icu: targetValue.icu, _meta: targetValue._meta },
+                      );
+                    }
+
+                    // Default strict equality for other values
+                    return value === targetValue;
+                  })
                   .size()
                   .value();
 
@@ -467,9 +519,23 @@ export default new Command()
                   );
                 }
               } catch (_error: any) {
-                const error = new Error(
+                const error = new LocalizationError(
                   `[${sourceLocale} -> ${targetLocale}] Localization failed: ${_error.message}`,
+                  {
+                    bucket: bucket.type,
+                    sourceLocale,
+                    targetLocale,
+                    pathPattern: bucketPath.pathPattern,
+                  },
                 );
+                errorDetails.push({
+                  type: "locale_error",
+                  bucket: bucket.type,
+                  locale: `${sourceLocale} -> ${targetLocale}`,
+                  pathPattern: bucketPath.pathPattern,
+                  message: _error.message,
+                  stack: _error.stack,
+                });
                 if (flags.strict) {
                   throw error;
                 } else {
@@ -486,9 +552,16 @@ export default new Command()
             }
           }
         } catch (_error: any) {
-          const error = new Error(
+          const error = new BucketProcessingError(
             `Failed to process bucket ${bucket.type}: ${_error.message}`,
+            bucket.type,
           );
+          errorDetails.push({
+            type: "bucket_error",
+            bucket: bucket.type,
+            message: _error.message,
+            stack: _error.stack,
+          });
           if (flags.strict) {
             throw error;
           } else {
@@ -500,24 +573,61 @@ export default new Command()
       console.log();
       if (!hasErrors) {
         ora.succeed("Localization completed.");
-        trackEvent(authId, "cmd.i18n.success", {
-          i18nConfig,
+        await trackEvent(authId, "cmd.i18n.success", {
+          i18nConfig: {
+            sourceLocale: i18nConfig!.locale.source,
+            targetLocales: i18nConfig!.locale.targets,
+            bucketTypes: Object.keys(i18nConfig!.buckets),
+          },
           flags,
+          bucketCount: buckets.length,
+          localeCount: targetLocales.length,
+          processedSuccessfully: true,
         });
       } else {
         ora.warn("Localization completed with errors.");
-        trackEvent(authId || "unknown", "cmd.i18n.error", {
+        await trackEvent(authId || "unknown", "cmd.i18n.error", {
           flags,
+          ...aggregateErrorAnalytics(
+            errorDetails,
+            buckets,
+            targetLocales,
+            i18nConfig!,
+          ),
         });
       }
     } catch (error: any) {
       ora.fail(error.message);
 
-      trackEvent(authId || "unknown", "cmd.i18n.error", {
+      // Use robust error type detection
+      const errorType = getCLIErrorType(error);
+
+      // Extract additional context from typed errors
+      let errorContext: any = {};
+      if (isLocalizationError(error)) {
+        errorContext = {
+          bucket: error.bucket,
+          sourceLocale: error.sourceLocale,
+          targetLocale: error.targetLocale,
+          pathPattern: error.pathPattern,
+        };
+      } else if (isBucketProcessingError(error)) {
+        errorContext = {
+          bucket: error.bucket,
+        };
+      }
+
+      await trackEvent(authId || "unknown", "cmd.i18n.error", {
         flags,
-        error,
+        errorType,
+        errorName: error.name || "Error",
+        errorMessage: error.message,
+        errorStack: error.stack,
+        errorContext,
+        fatal: true,
+        errorCount: errorDetails.length + 1,
+        previousErrors: createPreviousErrorContext(errorDetails),
       });
-      process.exit(1);
     }
   });
 
@@ -540,9 +650,9 @@ function parseFlags(options: any) {
 // Export validateAuth for use in other commands
 export async function validateAuth(settings: ReturnType<typeof getSettings>) {
   if (!settings.auth.apiKey) {
-    throw new CLIError({
+    throw new AuthenticationError({
       message:
-        "Not authenticated. Please run `lingo.dev auth --login` to authenticate.",
+        "Not authenticated. Please run `lingo.dev login` to authenticate.",
       docUrl: "authError",
     });
   }
@@ -553,9 +663,8 @@ export async function validateAuth(settings: ReturnType<typeof getSettings>) {
   });
   const user = await authenticator.whoami();
   if (!user) {
-    throw new CLIError({
-      message:
-        "Invalid API key. Please run `lingo.dev auth --login` to authenticate.",
+    throw new AuthenticationError({
+      message: "Invalid API key. Please run `lingo.dev login` to authenticate.",
       docUrl: "authError",
     });
   }
@@ -568,13 +677,13 @@ function validateParams(
   flags: ReturnType<typeof parseFlags>,
 ) {
   if (!i18nConfig) {
-    throw new CLIError({
+    throw new ConfigError({
       message:
         "i18n.json not found. Please run `lingo.dev init` to initialize the project.",
       docUrl: "i18nNotFound",
     });
   } else if (!i18nConfig.buckets || !Object.keys(i18nConfig.buckets).length) {
-    throw new CLIError({
+    throw new ConfigError({
       message:
         "No buckets found in i18n.json. Please add at least one bucket containing i18n content.",
       docUrl: "bucketNotFound",
@@ -582,7 +691,7 @@ function validateParams(
   } else if (
     flags.locale?.some((locale) => !i18nConfig.locale.targets.includes(locale))
   ) {
-    throw new CLIError({
+    throw new ValidationError({
       message: `One or more specified locales do not exist in i18n.json locale.targets. Please add them to the list and try again.`,
       docUrl: "localeTargetNotFound",
     });
@@ -592,7 +701,7 @@ function validateParams(
         !i18nConfig.buckets[bucket as keyof typeof i18nConfig.buckets],
     )
   ) {
-    throw new CLIError({
+    throw new ValidationError({
       message: `One or more specified buckets do not exist in i18n.json. Please add them to the list and try again.`,
       docUrl: "bucketNotFound",
     });

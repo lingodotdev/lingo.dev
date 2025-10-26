@@ -1,0 +1,142 @@
+---
+title: Introduction to Markdoc
+description: A comprehensive demonstration of Markdoc features and syntax
+author: Documentation Team
+version: 1.0
+---
+
+# Introduction to Markdoc
+
+Welcome to this **Markdoc demonstration** document. This file showcases various Markdoc features and syntax.
+
+{% callout type="note" %}
+This is a sample document demonstrating Markdoc capabilities.
+{% /callout %}
+
+## Basic Formatting
+
+Markdoc supports standard Markdown features:
+
+1. Ordered lists
+2. Unordered lists
+3. Text formatting like *italics* and **bold**
+
+### Emphasis and Inline Code
+
+You can emphasize text with various styles:
+
+- Regular text
+- *Italic text*
+- **Bold text**
+- `inline code`
+
+{% callout type="warning" %}
+Remember to test your documents before publishing.
+{% /callout %}
+
+## Custom Tags {% #tags .section-highlight %}
+
+Markdoc extends Markdown with custom tags:
+
+{% table %}
+* Feature
+* Description
+---
+* Tags
+* Custom components using {% icon name="tag" /%} syntax
+---
+* Variables
+* Dynamic content with {% $variableName %}
+---
+* Attributes
+* IDs and classes for styling
+{% /table %}
+
+### Code Examples
+
+Here's a sample code block:
+
+```javascript
+function greet(name) {
+  return `Hello, ${name}!`;
+}
+
+console.log(greet('World'));
+```
+
+{% if $showExample %}
+This conditional content only appears when the variable is set.
+{% /if %}
+
+### Configuration {% .code-section %}
+
+Example configuration file:
+
+```json
+{
+  "version": 1.0,
+  "settings": {
+    "enabled": true,
+    "options": ["option1", "option2"]
+  }
+}
+```
+
+## Document Structure
+
+Good documentation follows clear organization:
+
+{% list %}
+1. **Clear headings**: Use hierarchical structure
+2. **Descriptive titles**: Make sections easy to find
+3. **Examples**: Include practical demonstrations
+4. **Consistency**: Maintain uniform formatting
+{% /list %}
+
+## Advanced Syntax
+
+{% tabs %}
+{% tab title="Variables" %}
+Markdoc supports variables for dynamic content using the syntax {% $variableName %}.
+{% /tab %}
+
+{% tab title="Conditionals" %}
+Use conditional tags to show or hide content based on variables.
+{% /tab %}
+
+{% tab title="Attributes" %}
+Add IDs and classes to elements for styling and anchoring.
+{% /tab %}
+{% /tabs %}
+
+## Common Patterns
+
+{% accordion %}
+{% item title="How do I use variables?" %}
+Variables are inserted using the {% $variableName %} syntax and can be defined in your configuration.
+{% /item %}
+
+{% item title="What are custom tags?" %}
+Custom tags extend Markdoc with component functionality using {% tagName /%} or {% tagName %}...{% /tagName %} syntax.
+{% /item %}
+
+{% item title="Can I nest tags?" %}
+Yes, tags can be nested within other tags to create complex layouts.
+{% /item %}
+{% /accordion %}
+
+## Sample Data
+
+{% stats %}
+- **{% $itemCount %}** items in collection
+- **{% $pageCount %}** pages of documentation
+- **{% $updateTime %}** last updated
+{% /stats %}
+
+---
+
+*This is a demonstration document* showing various {% link href="/docs" %}Markdoc features{% /link %} in action.
+
+**Need help?** Refer to the official documentation for detailed information.
+
+{% badge color="blue" %}Example{% /badge %} This document demonstrates typical Markdoc usage patterns.

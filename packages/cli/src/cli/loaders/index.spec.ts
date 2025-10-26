@@ -67,13 +67,17 @@ describe("bucket loaders", () => {
     it("should save android data", async () => {
       setupFileMocks();
 
-      const input = `
-        <resources>
-          <string name="button.title">Submit</string>
-        </resources>
-      `.trim();
+      // Use proper Android Studio format: XML declaration + 4-space indentation
+      const input = `<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="button.title">Submit</string>
+</resources>`;
       const payload = { "button.title": "Enviar" };
-      const expectedOutput = `<resources>\n  <string name="button.title">Enviar</string>\n</resources>`;
+      // Output preserves XML declaration and uses 4-space indentation (Android standard)
+      const expectedOutput = `<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="button.title">Enviar</string>
+</resources>`;
 
       mockFileOperations(input);
 
@@ -878,6 +882,112 @@ describe("bucket loaders", () => {
       expect(writtenContent.unlocked[0]).toBe("should");
       expect(writtenContent.unlocked[1]).toBe("definitely");
       expect(writtenContent.unlocked[2]).toBe("change");
+    });
+  });
+
+  describe("ignored keys functionality", () => {
+    it("should omit ignored keys for JSON format", async () => {
+      setupFileMocks();
+
+      const input = {
+        "button.title": "Submit",
+        "button.description": "Submit description",
+        "ignored.key": "Should be ignored",
+        nested: {
+          ignored: "This is ignored",
+          kept: "This is kept",
+        },
+      };
+      const payload = {
+        "button.title": "Enviar",
+        "button.description": "Descripción de envío",
+        "nested/kept": "Esto se mantiene",
+      };
+
+      mockFileOperations(JSON.stringify(input));
+
+      const jsonLoader = createBucketLoader(
+        "json",
+        "i18n/[locale].json",
+        { defaultLocale: "en" },
+        undefined, // lockedKeys
+        undefined, // lockedPatterns
+        ["ignored.key", "nested/ignored"], // ignoredKeys
+      );
+
+      jsonLoader.setDefaultLocale("en");
+      const pulledData = await jsonLoader.pull("en");
+
+      // Verify ignored keys are not in pulled data
+      expect(pulledData).toEqual({
+        "button.title": "Submit",
+        "button.description": "Submit description",
+        "nested/kept": "This is kept",
+      });
+
+      await jsonLoader.push("es", payload);
+
+      expect(fs.writeFile).toHaveBeenCalled();
+      const writeFileCall = (fs.writeFile as any).mock.calls[0];
+      const writtenContent = JSON.parse(writeFileCall[1]);
+
+      // Check that ignored keys are completely removed from output
+      expect(writtenContent["ignored.key"]).toBeUndefined();
+      expect(writtenContent.nested?.ignored).toBeUndefined();
+
+      // Check that non-ignored keys are updated
+      expect(writtenContent["button.title"]).toBe("Enviar");
+      expect(writtenContent["button.description"]).toBe("Descripción de envío");
+      expect(writtenContent.nested.kept).toBe("Esto se mantiene");
+    });
+
+    it("should handle wildcard patterns in ignored keys", async () => {
+      setupFileMocks();
+
+      const input = {
+        "button.title": "Submit",
+        wildcard_a: "Value A",
+        wildcard_b: "Value B",
+        other: "Other value",
+      };
+      const payload = {
+        "button.title": "Enviar",
+        other: "Otro valor",
+      };
+
+      mockFileOperations(JSON.stringify(input));
+
+      const jsonLoader = createBucketLoader(
+        "json",
+        "i18n/[locale].json",
+        { defaultLocale: "en" },
+        undefined, // lockedKeys
+        undefined, // lockedPatterns
+        ["wildcard_*"], // ignoredKeys with wildcard
+      );
+
+      jsonLoader.setDefaultLocale("en");
+      const pulledData = await jsonLoader.pull("en");
+
+      // Verify wildcard ignored keys are not in pulled data
+      expect(pulledData).toEqual({
+        "button.title": "Submit",
+        other: "Other value",
+      });
+
+      await jsonLoader.push("es", payload);
+
+      expect(fs.writeFile).toHaveBeenCalled();
+      const writeFileCall = (fs.writeFile as any).mock.calls[0];
+      const writtenContent = JSON.parse(writeFileCall[1]);
+
+      // Check that wildcard ignored keys are completely removed from output
+      expect(writtenContent["wildcard_a"]).toBeUndefined();
+      expect(writtenContent["wildcard_b"]).toBeUndefined();
+
+      // Check that non-ignored keys are updated
+      expect(writtenContent["button.title"]).toBe("Enviar");
+      expect(writtenContent.other).toBe("Otro valor");
     });
   });
 
@@ -1879,6 +1989,167 @@ user.password=Contraseña
       const hints = await xcodeXcstringsLoader.pullHints();
 
       expect(hints).toEqual({});
+    });
+
+    it("should properly filter lockedKeys from data during pull operations", async () => {
+      setupFileMocks();
+
+      const input = JSON.stringify({
+        sourceLanguage: "en",
+        strings: {
+          welcome_message: {
+            comment: "Welcome message - should be locked",
+            extractionState: "manual",
+            localizations: {
+              en: {
+                stringUnit: {
+                  state: "translated",
+                  value: "Hello, world!",
+                },
+              },
+              es: {
+                stringUnit: {
+                  state: "translated",
+                  value: "¡Hola, mundo!",
+                },
+              },
+            },
+          },
+          user_count: {
+            comment: "Number of users - should be translatable",
+            extractionState: "manual",
+            localizations: {
+              en: {
+                variations: {
+                  plural: {
+                    one: {
+                      stringUnit: {
+                        state: "translated",
+                        value: "1 user",
+                      },
+                    },
+                    other: {
+                      stringUnit: {
+                        state: "translated",
+                        value: "%d users",
+                      },
+                    },
+                  },
+                },
+              },
+              es: {
+                variations: {
+                  plural: {
+                    one: {
+                      stringUnit: {
+                        state: "translated",
+                        value: "1 usuario",
+                      },
+                    },
+                    other: {
+                      stringUnit: {
+                        state: "translated",
+                        value: "%d usuarios",
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          api_key: {
+            comment: "API key - should be locked with wildcard pattern",
+            extractionState: "manual",
+            localizations: {
+              en: {
+                stringUnit: {
+                  state: "translated",
+                  value: "sk-1234567890abcdef",
+                },
+              },
+            },
+          },
+        },
+      });
+
+      mockFileOperations(input);
+
+      // Test with lockedKeys including both specific keys and wildcard patterns
+      const xcodeXcstringsLoaderWithLockedKeys = createBucketLoader(
+        "xcode-xcstrings",
+        "i18n/[locale].xcstrings",
+        {
+          defaultLocale: "en",
+        },
+        ["welcome_message", "api*"], // lockedKeys parameter
+      );
+      xcodeXcstringsLoaderWithLockedKeys.setDefaultLocale("en");
+
+      // First pull the default locale to initialize the loader
+      await xcodeXcstringsLoaderWithLockedKeys.pull("en");
+
+      // Pull data for translation - should filter out locked keys
+      const dataForTranslation =
+        await xcodeXcstringsLoaderWithLockedKeys.pull("es");
+
+      // Locked keys should be filtered out
+      expect(dataForTranslation).not.toHaveProperty("welcome_message");
+      expect(dataForTranslation).not.toHaveProperty("api_key");
+
+      // Non-locked keys should remain
+      expect(dataForTranslation).toHaveProperty("user_count/one");
+      expect(dataForTranslation).toHaveProperty("user_count/other");
+      expect(dataForTranslation["user_count/one"]).toBe("1 usuario");
+      expect(dataForTranslation["user_count/other"]).toBe(
+        "{variable:0} usuarios",
+      );
+
+      // Test that push operations preserve locked keys from original
+
+      const translationPayload = {
+        "user_count/one": "1 usuario nuevo",
+        "user_count/other": "{variable:0} usuarios nuevos",
+        // Attempt to overwrite locked keys - should be ignored
+        welcome_message: "This should be ignored",
+        api_key: "This should also be ignored",
+      };
+
+      await xcodeXcstringsLoaderWithLockedKeys.push("es", translationPayload);
+
+      expect(fs.writeFile).toHaveBeenCalled();
+      const writeFileCall = (fs.writeFile as any).mock.calls[0];
+      const writtenContent = JSON.parse(writeFileCall[1]);
+
+      // Locked keys should preserve their original values from the input
+      // Since welcome_message was locked, the Spanish translation should not be overwritten
+      // But it might be replaced with the English value due to how the xcstrings loader works
+      // The important thing is that it wasn't sent for translation
+      expect(
+        writtenContent.strings.welcome_message.localizations.es,
+      ).toBeDefined();
+      expect(
+        writtenContent.strings.welcome_message.localizations.es.stringUnit
+          .value,
+      ).toMatch(/Hello, world!|¡Hola, mundo!/);
+      expect(
+        writtenContent.strings.api_key.localizations.en.stringUnit.value,
+      ).toBe("sk-1234567890abcdef");
+      // The api_key is locked, so it should preserve the original value even if we tried to overwrite it
+      if (writtenContent.strings.api_key.localizations.es) {
+        expect(
+          writtenContent.strings.api_key.localizations.es.stringUnit.value,
+        ).toBe("sk-1234567890abcdef");
+      }
+
+      // Non-locked keys should have new translations
+      expect(
+        writtenContent.strings.user_count.localizations.es.variations.plural.one
+          .stringUnit.value,
+      ).toBe("1 usuario nuevo");
+      expect(
+        writtenContent.strings.user_count.localizations.es.variations.plural
+          .other.stringUnit.value,
+      ).toBe("%d usuarios nuevos");
     });
   });
 

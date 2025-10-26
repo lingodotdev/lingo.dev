@@ -1,69 +1,82 @@
 {
-  "version": 1.7,
+  "version": "1.10",
   "locale": {
     "source": "en",
-    "targets": ["ru", "es"]
+    "targets": ["es"]
   },
   "buckets": {
     "xliff": {
-      "include": ["demo/xliff/[locale].xliff"]
+      "include": ["demo/xliff/[locale]/*.xliff"]
     },
     "android": {
-      "include": ["demo/android/[locale].xml"]
+      "include": ["demo/android/[locale]/*.xml"]
     },
     "csv": {
-      "include": ["demo/csv/file.csv"]
+      "include": ["demo/csv/example.csv"]
     },
     "flutter": {
-      "include": ["demo/flutter/[locale].arb"]
+      "include": ["demo/flutter/[locale]/*.arb"]
     },
     "html": {
-      "include": ["demo/html/[locale].html"]
+      "include": ["demo/html/[locale]/*.html"]
     },
     "json": {
-      "include": ["demo/json/[locale].json"]
+      "include": ["demo/json/[locale]/*.json"],
+      "lockedKeys": ["locked_key_1"],
+      "ignoredKeys": ["ignored_key_1"]
     },
     "jsonc": {
-      "include": ["demo/jsonc/[locale]/example.jsonc"]
+      "include": ["demo/jsonc/[locale]/*.jsonc"],
+      "lockedKeys": ["locked_key_1"],
+      "ignoredKeys": ["ignored_key_1"]
     },
     "markdown": {
       "include": ["demo/markdown/[locale]/*.md"],
       "exclude": ["demo/markdown/[locale]/ignored.md"]
     },
     "mdx": {
-      "include": ["demo/mdx/[locale].mdx"]
+      "include": ["demo/mdx/[locale]/*.mdx"],
+      "lockedKeys": ["meta/locked_key_1"],
+      "ignoredKeys": ["meta/ignored_key_1"]
     },
     "po": {
-      "include": ["demo/po/[locale].po"]
+      "include": ["demo/po/[locale]/*.po"]
     },
     "properties": {
-      "include": ["demo/properties/[locale].properties"]
+      "include": ["demo/properties/[locale]/*.properties"]
     },
     "typescript": {
-      "include": ["demo/typescript/[locale].ts"]
+      "include": ["demo/typescript/[locale]/*.ts"],
+      "lockedKeys": ["forms/locked_key_1"],
+      "ignoredKeys": ["forms/ignored_key_1"]
     },
     "xcode-strings": {
-      "include": ["demo/xcode-strings/[locale].lproj/Localizable.strings"]
+      "include": ["demo/xcode-strings/[locale]/*.strings"]
     },
     "xcode-stringsdict": {
-      "include": [
-        "demo/xcode-stringsdict/[locale].lproj/Localizable.stringsdict"
-      ]
+      "include": ["demo/xcode-stringsdict/[locale]/*.stringsdict"]
     },
     "xcode-xcstrings": {
-      "include": ["demo/xcode-xcstrings/Localizable.xcstrings"]
+      "include": ["demo/xcode-xcstrings/*.xcstrings"],
+      "lockedKeys": ["api_key"],
+      "ignoredKeys": ["item_count"]
+    },
+    "xcode-xcstrings-v2": {
+      "include": ["demo/xcode-xcstrings-v2/*.xcstrings"]
     },
     "yaml": {
-      "include": ["demo/yaml/[locale].yml"]
+      "include": ["demo/yaml/[locale]/*.yml"],
+      "lockedKeys": ["locked_key_1"],
+      "ignoredKeys": ["ignored_key_1"]
     },
     "yaml-root-key": {
-      "include": ["demo/yaml-root-key/[locale].yml"]
+      "include": ["demo/yaml-root-key/[locale]/*.yml"]
     },
     "php": {
-      "include": ["demo/php/[locale]/messages.php"]
+      "include": ["demo/php/[locale]/*.php"]
     },
     "vue-json": {
-      "include": ["demo/vue/template.vue"]
+      "include": ["demo/vue-json/*.vue"]
     }
   },
   "$schema": "https://lingo.dev/schema/i18n.json"

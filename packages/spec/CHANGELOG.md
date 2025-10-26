@@ -1,5 +1,45 @@
 # @lingo.dev/\_spec
 
+## 0.41.1
+
+### Patch Changes
+
+- [#1230](https://github.com/lingodotdev/lingo.dev/pull/1230) [`b45347c`](https://github.com/lingodotdev/lingo.dev/commit/b45347c38572ee371b2bc494261b7e3e90c4aed1) Thanks [@vrcprl](https://github.com/vrcprl)! - add an xcode-xcstrings-v2 bucket type that supports cldr pluralization rules
+
+## 0.41.0
+
+### Minor Changes
+
+- [#1186](https://github.com/lingodotdev/lingo.dev/pull/1186) [`82f5e7c`](https://github.com/lingodotdev/lingo.dev/commit/82f5e7cdde9a2a15b4c2a7fcb8c67ed64eab596b) Thanks [@davidturnbull](https://github.com/davidturnbull)! - Add Markdoc support
+
+### Patch Changes
+
+- [#1215](https://github.com/lingodotdev/lingo.dev/pull/1215) [`e858174`](https://github.com/lingodotdev/lingo.dev/commit/e858174fd5165e0ea3e3f25fa1fc3edb292bc58f) Thanks [@vrcprl](https://github.com/vrcprl)! - add provider settings
+
+## 0.40.4
+
+### Patch Changes
+
+- [#1201](https://github.com/lingodotdev/lingo.dev/pull/1201) [`1fa218c`](https://github.com/lingodotdev/lingo.dev/commit/1fa218c13bf90df6d175fb18264f59c1a10b967c) Thanks [@vrcprl](https://github.com/vrcprl)! - add new languages Malayalam (India), Armenian (Armenia), Macedonian (Macedonia)
+
+## 0.40.3
+
+### Patch Changes
+
+- [#1192](https://github.com/lingodotdev/lingo.dev/pull/1192) [`bbc71b9`](https://github.com/lingodotdev/lingo.dev/commit/bbc71b9948ccc289c9669d8b0c276c9596f6a5e7) Thanks [@vrcprl](https://github.com/vrcprl)! - Add biome support
+
+## 0.40.2
+
+### Patch Changes
+
+- [#1171](https://github.com/lingodotdev/lingo.dev/pull/1171) [`6579d70`](https://github.com/lingodotdev/lingo.dev/commit/6579d70bc670c2fdc06c09842d931b07e134151c) Thanks [@vrcprl](https://github.com/vrcprl)! - add el-CY en-IE fr-LU locales
+
+## 0.40.1
+
+### Patch Changes
+
+- [#1016](https://github.com/lingodotdev/lingo.dev/pull/1016) [`a35032e`](https://github.com/lingodotdev/lingo.dev/commit/a35032e7e7a188d1f5e774576352068124526e24) Thanks [@davidturnbull](https://github.com/davidturnbull)! - feat: add automated config documentation generator for i18n.json schema
+
 ## 0.40.0
 
 ### Minor Changes

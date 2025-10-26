@@ -4,21 +4,28 @@ import { bucketTypeSchema } from "./formats";
 
 // common
 export const localeSchema = Z.object({
-  source: localeCodeSchema,
-  targets: Z.array(localeCodeSchema),
-});
+  source: localeCodeSchema.describe(
+    "Primary source locale code of your content (e.g. 'en', 'en-US', 'pt_BR', or 'pt-rBR'). Must be one of the supported locale codes – either a short ISO-639 language code or a full locale identifier using '-', '_' or Android '-r' notation.",
+  ),
+  targets: Z.array(localeCodeSchema).describe(
+    "List of target locale codes to translate to.",
+  ),
+}).describe("Locale configuration block.");
 
 // factories
-type ConfigDefinition<T extends Z.ZodRawShape, P extends Z.ZodRawShape> = {
+type ConfigDefinition<
+  T extends Z.ZodRawShape,
+  _P extends Z.ZodRawShape = any,
+> = {
   schema: Z.ZodObject<T>;
   defaultValue: Z.infer<Z.ZodObject<T>>;
   parse: (rawConfig: unknown) => Z.infer<Z.ZodObject<T>>;
 };
 const createConfigDefinition = <
   T extends Z.ZodRawShape,
-  P extends Z.ZodRawShape,
+  _P extends Z.ZodRawShape = any,
 >(
-  definition: ConfigDefinition<T, P>,
+  definition: ConfigDefinition<T, _P>,
 ) => definition;
 
 type ConfigDefinitionExtensionParams<
@@ -89,7 +96,9 @@ const extendConfigDefinition = <
 
 // any -> v0
 const configV0Schema = Z.object({
-  version: Z.number().default(0),
+  version: Z.union([Z.number(), Z.string()])
+    .default(0)
+    .describe("The version number of the schema."),
 });
 export const configV0Definition = createConfigDefinition({
   schema: configV0Schema,
@@ -104,7 +113,12 @@ export const configV1Definition = extendConfigDefinition(configV0Definition, {
   createSchema: (baseSchema) =>
     baseSchema.extend({
       locale: localeSchema,
-      buckets: Z.record(Z.string(), bucketTypeSchema).default({}).optional(),
+      buckets: Z.record(Z.string(), bucketTypeSchema)
+        .default({})
+        .describe(
+          "Mapping of source file paths (glob patterns) to bucket types.",
+        )
+        .optional(),
     }),
   createDefaultValue: () => ({
     version: 1,
@@ -131,8 +145,17 @@ export const configV1_1Definition = extendConfigDefinition(configV1Definition, {
       buckets: Z.record(
         bucketTypeSchema,
         Z.object({
-          include: Z.array(Z.string()).default([]),
-          exclude: Z.array(Z.string()).default([]).optional(),
+          include: Z.array(Z.string())
+            .default([])
+            .describe(
+              "File paths or glob patterns to include for this bucket.",
+            ),
+          exclude: Z.array(Z.string())
+            .default([])
+            .optional()
+            .describe(
+              "File paths or glob patterns to exclude from this bucket.",
+            ),
         }),
       ).default({}),
     }),
@@ -174,7 +197,11 @@ export const configV1_2Definition = extendConfigDefinition(
     createSchema: (baseSchema) =>
       baseSchema.extend({
         locale: localeSchema.extend({
-          extraSource: localeCodeSchema.optional(),
+          extraSource: localeCodeSchema
+            .optional()
+            .describe(
+              "Optional extra source locale code used as fallback during translation.",
+            ),
         }),
       }),
     createDefaultValue: (baseDefaultValue) => ({
@@ -191,23 +218,32 @@ export const configV1_2Definition = extendConfigDefinition(
 // v1.2 -> v1.3
 // Changes: Support both string paths and {path, delimiter} objects in bucket include/exclude arrays
 export const bucketItemSchema = Z.object({
-  path: Z.string(),
-  delimiter: Z.union([
-    Z.literal("-"),
-    Z.literal("_"),
-    Z.literal(null),
-  ]).optional(),
-});
+  path: Z.string().describe("Path pattern containing a [locale] placeholder."),
+  delimiter: Z.union([Z.literal("-"), Z.literal("_"), Z.literal(null)])
+    .optional()
+    .describe(
+      "Delimiter that replaces the [locale] placeholder in the path (default: no delimiter).",
+    ),
+}).describe(
+  "Bucket path item. Either a string path or an object specifying path and delimiter.",
+);
 export type BucketItem = Z.infer<typeof bucketItemSchema>;
 
 // Define a base bucket value schema that can be reused and extended
 export const bucketValueSchemaV1_3 = Z.object({
-  include: Z.array(Z.union([Z.string(), bucketItemSchema])).default([]),
+  include: Z.array(Z.union([Z.string(), bucketItemSchema]))
+    .default([])
+    .describe("Glob patterns or bucket items to include for this bucket."),
   exclude: Z.array(Z.union([Z.string(), bucketItemSchema]))
     .default([])
-    .optional(),
-  injectLocale: Z.array(Z.string()).optional(),
-});
+    .optional()
+    .describe("Glob patterns or bucket items to exclude from this bucket."),
+  injectLocale: Z.array(Z.string())
+    .optional()
+    .describe(
+      "Keys within files where the current locale should be injected or removed.",
+    ),
+}).describe("Configuration options for a translation bucket.");
 
 export const configV1_3Definition = extendConfigDefinition(
   configV1_2Definition,
@@ -261,11 +297,15 @@ const providerSchema = Z.object({
     "ollama",
     "openrouter",
     "mistral",
-  ]),
-  model: Z.string(),
-  prompt: Z.string(),
-  baseUrl: Z.string().optional(),
-});
+  ]).describe("Identifier of the translation provider service."),
+  model: Z.string().describe("Model name to use for translations."),
+  prompt: Z.string().describe(
+    "Prompt template used when requesting translations.",
+  ),
+  baseUrl: Z.string()
+    .optional()
+    .describe("Custom base URL for the provider API (optional)."),
+}).describe("Configuration for the machine-translation provider.");
 export const configV1_5Definition = extendConfigDefinition(
   configV1_4Definition,
   {
@@ -287,7 +327,12 @@ export const configV1_5Definition = extendConfigDefinition(
 // v1.5 -> v1.6
 // Changes: Add "lockedKeys" string array to bucket config
 export const bucketValueSchemaV1_6 = bucketValueSchemaV1_3.extend({
-  lockedKeys: Z.array(Z.string()).default([]).optional(),
+  lockedKeys: Z.array(Z.string())
+    .default([])
+    .optional()
+    .describe(
+      "Keys that must remain unchanged and should never be overwritten by translations.",
+    ),
 });
 
 export const configV1_6Definition = extendConfigDefinition(
@@ -310,7 +355,12 @@ export const configV1_6Definition = extendConfigDefinition(
 
 // Changes: Add "lockedPatterns" string array of regex patterns to bucket config
 export const bucketValueSchemaV1_7 = bucketValueSchemaV1_6.extend({
-  lockedPatterns: Z.array(Z.string()).default([]).optional(),
+  lockedPatterns: Z.array(Z.string())
+    .default([])
+    .optional()
+    .describe(
+      "Regular expression patterns whose matched content should remain locked during translation.",
+    ),
 });
 
 export const configV1_7Definition = extendConfigDefinition(
@@ -334,7 +384,12 @@ export const configV1_7Definition = extendConfigDefinition(
 // v1.7 -> v1.8
 // Changes: Add "ignoredKeys" string array to bucket config
 export const bucketValueSchemaV1_8 = bucketValueSchemaV1_7.extend({
-  ignoredKeys: Z.array(Z.string()).default([]).optional(),
+  ignoredKeys: Z.array(Z.string())
+    .default([])
+    .optional()
+    .describe(
+      "Keys that should be completely ignored by translation processes.",
+    ),
 });
 
 export const configV1_8Definition = extendConfigDefinition(
@@ -355,8 +410,83 @@ export const configV1_8Definition = extendConfigDefinition(
   },
 );
 
+// v1.8 -> v1.9
+// Changes: Add "formatter" field to top-level config
+export const configV1_9Definition = extendConfigDefinition(
+  configV1_8Definition,
+  {
+    createSchema: (baseSchema) =>
+      baseSchema.extend({
+        formatter: Z.enum(["prettier", "biome"])
+          .optional()
+          .describe(
+            "Code formatter to use for all buckets. Defaults to 'prettier' if not specified and a prettier config is found.",
+          ),
+      }),
+    createDefaultValue: (baseDefaultValue) => ({
+      ...baseDefaultValue,
+      version: 1.9,
+    }),
+    createUpgrader: (oldConfig) => ({
+      ...oldConfig,
+      version: 1.9,
+    }),
+  },
+);
+
+// v1.9 -> v1.10
+// Changes: Add "settings" field to provider config for model-specific parameters
+const modelSettingsSchema = Z.object({
+  temperature: Z.number()
+    .min(0)
+    .max(2)
+    .optional()
+    .describe(
+      "Controls randomness in model outputs (0=deterministic, 2=very random). Some models like GPT-5 require temperature=1.",
+    ),
+})
+  .optional()
+  .describe("Model-specific settings for translation requests.");
+
+const providerSchemaV1_10 = Z.object({
+  id: Z.enum([
+    "openai",
+    "anthropic",
+    "google",
+    "ollama",
+    "openrouter",
+    "mistral",
+  ]).describe("Identifier of the translation provider service."),
+  model: Z.string().describe("Model name to use for translations."),
+  prompt: Z.string().describe(
+    "Prompt template used when requesting translations.",
+  ),
+  baseUrl: Z.string()
+    .optional()
+    .describe("Custom base URL for the provider API (optional)."),
+  settings: modelSettingsSchema,
+}).describe("Configuration for the machine-translation provider.");
+
+export const configV1_10Definition = extendConfigDefinition(
+  configV1_9Definition,
+  {
+    createSchema: (baseSchema) =>
+      baseSchema.extend({
+        provider: providerSchemaV1_10.optional(),
+      }),
+    createDefaultValue: (baseDefaultValue) => ({
+      ...baseDefaultValue,
+      version: "1.10",
+    }),
+    createUpgrader: (oldConfig) => ({
+      ...oldConfig,
+      version: "1.10",
+    }),
+  },
+);
+
 // exports
-export const LATEST_CONFIG_DEFINITION = configV1_8Definition;
+export const LATEST_CONFIG_DEFINITION = configV1_10Definition;
 
 export type I18nConfig = Z.infer<(typeof LATEST_CONFIG_DEFINITION)["schema"]>;
 

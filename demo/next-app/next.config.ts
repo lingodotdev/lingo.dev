@@ -8,8 +8,6 @@ const nextConfig: NextConfig = {
 export default lingoCompiler.next({
   sourceLocale: "en",
   targetLocales: ["es", "ja", "fr", "ru", "de", "zh", "ar", "ko"],
-  models: {
-    "*:*": "groq:mistral-saba-24b",
-  },
+  models: "lingo.dev",
   useDirective: true,
 })(nextConfig);

@@ -43,6 +43,18 @@
       alt="קומיט אחרון"
     />
   </a>
+  <a href="https://lingo.dev/en">
+    <img
+      src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
+      alt="מוצר מספר 1 של היום ב-Product Hunt"
+    />
+  </a>
+  <a href="https://lingo.dev/en">
+    <img
+      src="https://img.shields.io/badge/GitHub-Trending-blue?logo=github&style=flat-square"
+      alt="מגמות ב-Github"
+    />
+  </a>
 </p>
 
 ---
@@ -168,7 +180,7 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 ## ⭐ היסטוריית כוכבים
 
-אם אתה אוהב את מה שאנחנו עושים, תן לנו ⭐ ועזור לנו להגיע ל-3,000 כוכבים! 🌟
+אם אתם אוהבים את מה שאנחנו עושים, תנו לנו ⭐ ועזרו לנו להגיע ל-4,000 כוכבים! 🌟
 
 [
 

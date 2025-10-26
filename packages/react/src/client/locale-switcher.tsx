@@ -45,14 +45,15 @@ export type LocaleSwitcherProps = {
  */
 export function LocaleSwitcher(props: LocaleSwitcherProps) {
   const { locales } = props;
-  const [locale, setLocale] = useState<string>("");
+  const [locale, setLocale] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     const currentLocale = getLocaleFromCookies();
-    setLocale(currentLocale);
+    const isValidLocale = currentLocale && locales.includes(currentLocale);
+    setLocale(isValidLocale ? currentLocale : locales[0]);
   }, [locales]);
 
-  if (!locale) {
+  if (locale === undefined) {
     return null;
   }
 

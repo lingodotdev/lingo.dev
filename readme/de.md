@@ -43,6 +43,18 @@
       alt="Letzter Commit"
     />
   </a>
+  <a href="https://lingo.dev/en">
+    <img
+      src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
+      alt="Product Hunt #1 Produkt des Tages"
+    />
+  </a>
+  <a href="https://lingo.dev/en">
+    <img
+      src="https://img.shields.io/badge/GitHub-Trending-blue?logo=github&style=flat-square"
+      alt="Github trending"
+    />
+  </a>
 </p>
 
 ---
@@ -168,7 +180,7 @@ Wir sind community-orientiert und schätzen Beiträge!
 
 ## ⭐ Star-Verlauf
 
-Wenn Ihnen gefällt, was wir tun, geben Sie uns einen ⭐ und helfen Sie uns, 3.000 Stars zu erreichen! 🌟
+Wenn Ihnen gefällt, was wir tun, geben Sie uns einen ⭐ und helfen Sie uns, 4.000 Sterne zu erreichen! 🌟
 
 [
 

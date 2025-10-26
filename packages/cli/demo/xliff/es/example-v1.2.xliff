@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file original="messages.properties" source-language="en" datatype="plaintext" target-language="es">
+    <header>
+      <tool tool-id="lingo-dev" tool-name="Lingo.dev" tool-version="1.0"></tool>
+      <note>This header content is not localized</note>
+    </header>
+    <body>
+      <trans-unit id="welcome_message" restype="string" datatype="plaintext">
+        <source>Hello, world!</source>
+        <target xmlns="" state="translated">¡Hola, mundo!</target>
+      </trans-unit>
+      <trans-unit id="error_message" resname="error.validation" restype="string" datatype="plaintext">
+        <source><![CDATA[Enter valid <email>]]></source>
+        <target xmlns="" state="translated"><![CDATA[Introduce un <email> válido]]></target>
+      </trans-unit>
+      <trans-unit id="button_text" restype="string" datatype="plaintext">
+        <source>Continue</source>
+        <target xmlns="" state="translated">Continuar</target>
+      </trans-unit>
+      <trans-unit id="save_button" restype="string" datatype="plaintext">
+        <source>Save Changes</source>
+        <target xmlns="" state="translated">Guardar cambios</target>
+      </trans-unit>
+      <trans-unit id="status_message" restype="string" datatype="plaintext">
+        <source>Processing your request...</source>
+        <target xmlns="" state="translated">Procesando tu solicitud...</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
