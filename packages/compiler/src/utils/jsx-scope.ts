@@ -1,6 +1,6 @@
-import { NodePath } from "@babel/traverse";
+import type { NodePath } from "./babel-traverse";
 import * as t from "@babel/types";
-import traverse from "@babel/traverse";
+import traverse from "./babel-traverse";
 import { getJsxElementName } from "./jsx-element";
 
 export function collectJsxScopes(ast: t.Node) {

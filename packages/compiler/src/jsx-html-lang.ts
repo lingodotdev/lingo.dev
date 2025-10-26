@@ -1,4 +1,4 @@
-import traverse from "@babel/traverse";
+import traverse from "./utils/babel-traverse";
 import * as t from "@babel/types";
 import { createCodeMutation } from "./_base";
 import { getJsxElementName } from "./utils/jsx-element";

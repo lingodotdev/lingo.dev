@@ -1,5 +1,5 @@
 import { createCodeMutation } from "./_base";
-import traverse from "@babel/traverse";
+import traverse from "./utils/babel-traverse";
 import * as t from "@babel/types";
 import { getOrCreateImport } from "./utils";
 import { CompilerPayload } from "./_base";
