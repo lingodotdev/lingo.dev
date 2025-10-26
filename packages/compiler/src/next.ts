@@ -110,3 +110,5 @@ export function withLingo(
 }
 
 export default withLingo;
+// Back-compat alias: some integrations imported { lingo } from compiler/next
+export { withLingo as lingo };
