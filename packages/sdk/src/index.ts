@@ -1,6 +1,24 @@
 import Z from "zod";
 import { LocaleCode, localeCodeSchema } from "@lingo.dev/_spec";
-import { createId } from "@paralleldrive/cuid2";
+function generateId(): string {
+  // Prefer Web Crypto API if available (Node 20+ and modern browsers)
+  try {
+    // @ts-ignore - crypto may be available globally
+    if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+      // @ts-ignore
+      return crypto.randomUUID();
+    }
+  } catch {}
+
+  // Very small, non-crypto fallback sufficient for workflow correlation IDs
+  // e.g., "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx"
+  const tpl = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx";
+  return tpl.replace(/[xy]/g, (c) => {
+    const r = (Math.random() * 16) | 0;
+    const v = c === "x" ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+}
 
 const engineParamsSchema = Z.object({
   apiKey: Z.string(),
@@ -62,7 +80,7 @@ export class LingoDotDevEngine {
     const chunkedPayload = this.extractPayloadChunks(finalPayload);
     const processedPayloadChunks: Record<string, string>[] = [];
 
-    const workflowId = createId();
+    const workflowId = generateId();
     for (let i = 0; i < chunkedPayload.length; i++) {
       const chunk = chunkedPayload[i];
       const percentageCompleted = Math.round(

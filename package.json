@@ -11,13 +11,6 @@
     "format": "prettier . --write",
     "format:check": "prettier . --check"
   },
-  "pnpm": {
-    "overrides": {
-      "vite": "^6.0.0",
-      "@noble/hashes": "1.3.3",
-      "@paralleldrive/cuid2": "2.2.2"
-    }
-  },
   "devDependencies": {
     "@babel/generator": "^7.27.1",
     "@babel/parser": "^7.27.1",
