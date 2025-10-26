@@ -108,7 +108,6 @@ The watch mode automatically determines which files to monitor by:
    ```
 
 2. **Initial Setup**
-
    - Performs normal translation setup
    - Runs initial planning and execution
    - Shows summary of completed translations

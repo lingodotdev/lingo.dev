@@ -40,7 +40,7 @@ To run this example:
 
 These are the files that were changed to get **Lingo.dev Compiler** up and running:
 
-- [src/routes/__root.tsx](./src/routes/__root.tsx)
+- [src/routes/\_\_root.tsx](./src/routes/__root.tsx)
 - [vite.config.ts](./vite.config.ts)
 
 You can use these files as a reference when setting up the compiler in your own project.
