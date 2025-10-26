@@ -593,6 +593,9 @@ importers:
       remark-stringify:
         specifier: ^11.0.0
         version: 11.0.0
+      sax:
+        specifier: ^1.4.1
+        version: 1.4.1
       srt-parser-2:
         specifier: ^1.2.3
         version: 1.2.3
