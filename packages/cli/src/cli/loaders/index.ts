@@ -57,24 +57,24 @@ type BucketLoaderOptions = {
   formatter?: FormatterType;
 };
 
-export interface BucketLoaderContext {
+export type BucketLoaderContext = {
   bucketPathPattern: string;
   options: BucketLoaderOptions;
   lockedKeys?: string[];
   lockedPatterns?: string[];
   ignoredKeys?: string[];
-}
+};
 
-export interface BucketMetadata {
+export type Bucket = {
   supportsFormatter: boolean;
   supportsInjectLocale: boolean;
   supportsLockedKeys: boolean;
   supportsIgnoredKeys: boolean;
   supportsLockedPatterns: boolean;
   createLoader: (ctx: BucketLoaderContext) => ILoader<void, Record<string, any>>;
-}
+};
 
-export const BUCKET_METADATA: Record<string, BucketMetadata> = {
+export const BUCKETS: Record<string, Bucket> = {
   android: {
     supportsFormatter: false,
     supportsInjectLocale: false,
@@ -641,10 +641,8 @@ export const BUCKET_METADATA: Record<string, BucketMetadata> = {
   },
 };
 
-export function getBucketMetadata(
-  bucketType: string,
-): BucketMetadata | undefined {
-  return BUCKET_METADATA[bucketType];
+export function getBucket(bucketType: string): Bucket | undefined {
+  return BUCKETS[bucketType];
 }
 
 export default function createBucketLoader(
@@ -655,11 +653,11 @@ export default function createBucketLoader(
   lockedPatterns?: string[],
   ignoredKeys?: string[],
 ): ILoader<void, Record<string, any>> {
-  const metadata = BUCKET_METADATA[bucketType];
-  if (!metadata) {
+  const bucket = BUCKETS[bucketType];
+  if (!bucket) {
     throw new Error(`Unsupported bucket type: ${bucketType}`);
   }
-  return metadata.createLoader({
+  return bucket.createLoader({
     bucketPathPattern,
     options,
     lockedKeys,
