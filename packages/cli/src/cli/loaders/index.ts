@@ -66,17 +66,21 @@ export type BucketLoaderContext = {
 };
 
 export type Bucket = {
+  displayName: string;
   supportsFormatter: boolean;
   supportsInjectLocale: boolean;
   supportsLockedKeys: boolean;
   supportsIgnoredKeys: boolean;
   supportsLockedPatterns: boolean;
   supportsLocalePlaceholder: boolean;
-  createLoader: (ctx: BucketLoaderContext) => ILoader<void, Record<string, any>>;
+  createLoader: (
+    ctx: BucketLoaderContext,
+  ) => ILoader<void, Record<string, any>>;
 };
 
 export const BUCKETS: Record<string, Bucket> = {
   android: {
+    displayName: "Android XML",
     supportsFormatter: false,
     supportsInjectLocale: false,
     supportsLockedKeys: true,
@@ -97,6 +101,7 @@ export const BUCKETS: Record<string, Bucket> = {
       ),
   },
   csv: {
+    displayName: "CSV",
     supportsFormatter: false,
     supportsInjectLocale: false,
     supportsLockedKeys: true,
@@ -117,6 +122,7 @@ export const BUCKETS: Record<string, Bucket> = {
       ),
   },
   html: {
+    displayName: "HTML",
     supportsFormatter: true,
     supportsInjectLocale: false,
     supportsLockedKeys: true,
@@ -126,7 +132,11 @@ export const BUCKETS: Record<string, Bucket> = {
     createLoader: (ctx) =>
       composeLoaders(
         createTextFileLoader(ctx.bucketPathPattern),
-        createFormatterLoader(ctx.options.formatter, "html", ctx.bucketPathPattern),
+        createFormatterLoader(
+          ctx.options.formatter,
+          "html",
+          ctx.bucketPathPattern,
+        ),
         createLockedPatternsLoader(ctx.lockedPatterns),
         createHtmlLoader(),
         createLockedKeysLoader(ctx.lockedKeys || []),
@@ -136,6 +146,7 @@ export const BUCKETS: Record<string, Bucket> = {
       ),
   },
   ejs: {
+    displayName: "EJS",
     supportsFormatter: false,
     supportsInjectLocale: false,
     supportsLockedKeys: true,
@@ -154,6 +165,7 @@ export const BUCKETS: Record<string, Bucket> = {
       ),
   },
   json: {
+    displayName: "JSON",
     supportsFormatter: true,
     supportsInjectLocale: true,
     supportsLockedKeys: true,
@@ -163,7 +175,11 @@ export const BUCKETS: Record<string, Bucket> = {
     createLoader: (ctx) =>
       composeLoaders(
         createTextFileLoader(ctx.bucketPathPattern),
-        createFormatterLoader(ctx.options.formatter, "json", ctx.bucketPathPattern),
+        createFormatterLoader(
+          ctx.options.formatter,
+          "json",
+          ctx.bucketPathPattern,
+        ),
         createLockedPatternsLoader(ctx.lockedPatterns),
         createJsonLoader(),
         createEnsureKeyOrderLoader(),
@@ -176,6 +192,7 @@ export const BUCKETS: Record<string, Bucket> = {
       ),
   },
   json5: {
+    displayName: "JSON5",
     supportsFormatter: false,
     supportsInjectLocale: true,
     supportsLockedKeys: true,
@@ -197,6 +214,7 @@ export const BUCKETS: Record<string, Bucket> = {
       ),
   },
   jsonc: {
+    displayName: "JSONC",
     supportsFormatter: false,
     supportsInjectLocale: true,
     supportsLockedKeys: true,
@@ -218,6 +236,7 @@ export const BUCKETS: Record<string, Bucket> = {
       ),
   },
   markdown: {
+    displayName: "Markdown",
     supportsFormatter: true,
     supportsInjectLocale: false,
     supportsLockedKeys: true,
@@ -227,7 +246,11 @@ export const BUCKETS: Record<string, Bucket> = {
     createLoader: (ctx) =>
       composeLoaders(
         createTextFileLoader(ctx.bucketPathPattern),
-        createFormatterLoader(ctx.options.formatter, "markdown", ctx.bucketPathPattern),
+        createFormatterLoader(
+          ctx.options.formatter,
+          "markdown",
+          ctx.bucketPathPattern,
+        ),
         createLockedPatternsLoader(ctx.lockedPatterns),
         createMarkdownLoader(),
         createLockedKeysLoader(ctx.lockedKeys || []),
@@ -237,6 +260,7 @@ export const BUCKETS: Record<string, Bucket> = {
       ),
   },
   markdoc: {
+    displayName: "Markdoc",
     supportsFormatter: false,
     supportsInjectLocale: false,
     supportsLockedKeys: true,
@@ -257,6 +281,7 @@ export const BUCKETS: Record<string, Bucket> = {
       ),
   },
   mdx: {
+    displayName: "MDX",
     supportsFormatter: true,
     supportsInjectLocale: false,
     supportsLockedKeys: true,
@@ -266,7 +291,11 @@ export const BUCKETS: Record<string, Bucket> = {
     createLoader: (ctx) =>
       composeLoaders(
         createTextFileLoader(ctx.bucketPathPattern),
-        createFormatterLoader(ctx.options.formatter, "mdx", ctx.bucketPathPattern),
+        createFormatterLoader(
+          ctx.options.formatter,
+          "mdx",
+          ctx.bucketPathPattern,
+        ),
         createMdxCodePlaceholderLoader(),
         createLockedPatternsLoader(ctx.lockedPatterns),
         createMdxFrontmatterSplitLoader(),
@@ -281,6 +310,7 @@ export const BUCKETS: Record<string, Bucket> = {
       ),
   },
   po: {
+    displayName: "PO",
     supportsFormatter: false,
     supportsInjectLocale: false,
     supportsLockedKeys: true,
@@ -302,6 +332,7 @@ export const BUCKETS: Record<string, Bucket> = {
       ),
   },
   properties: {
+    displayName: "Properties",
     supportsFormatter: false,
     supportsInjectLocale: false,
     supportsLockedKeys: true,
@@ -320,6 +351,7 @@ export const BUCKETS: Record<string, Bucket> = {
       ),
   },
   "xcode-strings": {
+    displayName: "Xcode Strings",
     supportsFormatter: false,
     supportsInjectLocale: false,
     supportsLockedKeys: true,
@@ -338,6 +370,7 @@ export const BUCKETS: Record<string, Bucket> = {
       ),
   },
   "xcode-stringsdict": {
+    displayName: "Xcode Stringsdict",
     supportsFormatter: false,
     supportsInjectLocale: false,
     supportsLockedKeys: true,
@@ -358,6 +391,7 @@ export const BUCKETS: Record<string, Bucket> = {
       ),
   },
   "xcode-xcstrings": {
+    displayName: "Xcode XCStrings",
     supportsFormatter: false,
     supportsInjectLocale: false,
     supportsLockedKeys: true,
@@ -381,6 +415,7 @@ export const BUCKETS: Record<string, Bucket> = {
       ),
   },
   "xcode-xcstrings-v2": {
+    displayName: "Xcode XCStrings (v2)",
     supportsFormatter: false,
     supportsInjectLocale: false,
     supportsLockedKeys: true,
@@ -405,6 +440,7 @@ export const BUCKETS: Record<string, Bucket> = {
       ),
   },
   yaml: {
+    displayName: "YAML",
     supportsFormatter: true,
     supportsInjectLocale: false,
     supportsLockedKeys: true,
@@ -414,7 +450,11 @@ export const BUCKETS: Record<string, Bucket> = {
     createLoader: (ctx) =>
       composeLoaders(
         createTextFileLoader(ctx.bucketPathPattern),
-        createFormatterLoader(ctx.options.formatter, "yaml", ctx.bucketPathPattern),
+        createFormatterLoader(
+          ctx.options.formatter,
+          "yaml",
+          ctx.bucketPathPattern,
+        ),
         createLockedPatternsLoader(ctx.lockedPatterns),
         createYamlLoader(),
         createFlatLoader(),
@@ -426,6 +466,7 @@ export const BUCKETS: Record<string, Bucket> = {
       ),
   },
   "yaml-root-key": {
+    displayName: "YAML Root Key",
     supportsFormatter: true,
     supportsInjectLocale: false,
     supportsLockedKeys: true,
@@ -435,7 +476,11 @@ export const BUCKETS: Record<string, Bucket> = {
     createLoader: (ctx) =>
       composeLoaders(
         createTextFileLoader(ctx.bucketPathPattern),
-        createFormatterLoader(ctx.options.formatter, "yaml", ctx.bucketPathPattern),
+        createFormatterLoader(
+          ctx.options.formatter,
+          "yaml",
+          ctx.bucketPathPattern,
+        ),
         createLockedPatternsLoader(ctx.lockedPatterns),
         createYamlLoader(),
         createRootKeyLoader(true),
@@ -448,6 +493,7 @@ export const BUCKETS: Record<string, Bucket> = {
       ),
   },
   flutter: {
+    displayName: "Flutter ARB",
     supportsFormatter: true,
     supportsInjectLocale: false,
     supportsLockedKeys: true,
@@ -457,7 +503,11 @@ export const BUCKETS: Record<string, Bucket> = {
     createLoader: (ctx) =>
       composeLoaders(
         createTextFileLoader(ctx.bucketPathPattern),
-        createFormatterLoader(ctx.options.formatter, "json", ctx.bucketPathPattern),
+        createFormatterLoader(
+          ctx.options.formatter,
+          "json",
+          ctx.bucketPathPattern,
+        ),
         createLockedPatternsLoader(ctx.lockedPatterns),
         createJsonLoader(),
         createEnsureKeyOrderLoader(),
@@ -470,6 +520,7 @@ export const BUCKETS: Record<string, Bucket> = {
       ),
   },
   xliff: {
+    displayName: "XLIFF",
     supportsFormatter: false,
     supportsInjectLocale: false,
     supportsLockedKeys: true,
@@ -490,6 +541,7 @@ export const BUCKETS: Record<string, Bucket> = {
       ),
   },
   xml: {
+    displayName: "XML",
     supportsFormatter: false,
     supportsInjectLocale: false,
     supportsLockedKeys: true,
@@ -510,6 +562,7 @@ export const BUCKETS: Record<string, Bucket> = {
       ),
   },
   srt: {
+    displayName: "SRT",
     supportsFormatter: false,
     supportsInjectLocale: false,
     supportsLockedKeys: true,
@@ -528,6 +581,7 @@ export const BUCKETS: Record<string, Bucket> = {
       ),
   },
   dato: {
+    displayName: "DatoCMS",
     supportsFormatter: false,
     supportsInjectLocale: false,
     supportsLockedKeys: true,
@@ -546,6 +600,7 @@ export const BUCKETS: Record<string, Bucket> = {
       ),
   },
   vtt: {
+    displayName: "WebVTT",
     supportsFormatter: false,
     supportsInjectLocale: false,
     supportsLockedKeys: true,
@@ -564,6 +619,7 @@ export const BUCKETS: Record<string, Bucket> = {
       ),
   },
   php: {
+    displayName: "PHP",
     supportsFormatter: false,
     supportsInjectLocale: false,
     supportsLockedKeys: true,
@@ -584,6 +640,7 @@ export const BUCKETS: Record<string, Bucket> = {
       ),
   },
   "vue-json": {
+    displayName: "Vue I18n",
     supportsFormatter: false,
     supportsInjectLocale: false,
     supportsLockedKeys: true,
@@ -604,6 +661,7 @@ export const BUCKETS: Record<string, Bucket> = {
       ),
   },
   typescript: {
+    displayName: "TypeScript",
     supportsFormatter: true,
     supportsInjectLocale: false,
     supportsLockedKeys: true,
@@ -629,6 +687,7 @@ export const BUCKETS: Record<string, Bucket> = {
       ),
   },
   txt: {
+    displayName: "Plain text",
     supportsFormatter: false,
     supportsInjectLocale: false,
     supportsLockedKeys: true,
@@ -647,6 +706,7 @@ export const BUCKETS: Record<string, Bucket> = {
       ),
   },
   "json-dictionary": {
+    displayName: "JSON Dictionary",
     supportsFormatter: true,
     supportsInjectLocale: true,
     supportsLockedKeys: true,
@@ -656,7 +716,11 @@ export const BUCKETS: Record<string, Bucket> = {
     createLoader: (ctx) =>
       composeLoaders(
         createTextFileLoader(ctx.bucketPathPattern),
-        createFormatterLoader(ctx.options.formatter, "json", ctx.bucketPathPattern),
+        createFormatterLoader(
+          ctx.options.formatter,
+          "json",
+          ctx.bucketPathPattern,
+        ),
         createLockedPatternsLoader(ctx.lockedPatterns),
         createJsonLoader(),
         createJsonKeysLoader(),
