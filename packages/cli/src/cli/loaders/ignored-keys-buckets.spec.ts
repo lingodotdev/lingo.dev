@@ -36,9 +36,14 @@ describe("ignored keys support across buckets", () => {
     const input = `id,en\nbutton.title,Submit\nbutton.description,Description`;
     mockFileOperations(input);
 
-    const loader = createBucketLoader("csv", "i18n.csv", { defaultLocale: "en" }, [], [], [
-      "button.description",
-    ]);
+    const loader = createBucketLoader(
+      "csv",
+      "i18n.csv",
+      { defaultLocale: "en" },
+      [],
+      [],
+      ["button.description"],
+    );
     loader.setDefaultLocale("en");
     const data = await loader.pull("en");
     expect(data).toEqual({ "button.title": "Submit" });
@@ -196,9 +201,7 @@ describe("ignored keys support across buckets", () => {
     );
     loader.setDefaultLocale("en");
     const data = await loader.pull("en");
-    expect(Object.keys(data).some((k) => k.startsWith("heading"))).toBe(
-      false,
-    );
+    expect(Object.keys(data).some((k) => k.startsWith("heading"))).toBe(false);
   });
 
   it("mdx: should omit ignored section keys on pull", async () => {
@@ -664,10 +667,10 @@ describe("ignored keys support across buckets", () => {
           {
             elements: [
               { title: { en: "E1" }, description: { en: "D1" } },
-              { title: { en: "E2" }, description: { en: "D2" } }
-            ]
-          }
-        ]
+              { title: { en: "E2" }, description: { en: "D2" } },
+            ],
+          },
+        ],
       },
       null,
       2,
