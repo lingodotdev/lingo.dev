@@ -5,5 +5,16 @@
 "quote_example" = "Ella dijo \"¡Hola mundo!\"";
 "newline_example" = "Primera línea\nSegunda línea";
 "backslash_example" = "Ruta: C:\\Users\\Documents";
+"mixed_escapes" = "Comilla: \" Nueva línea: \\\n Barra invertida: \\\\";
+"tab_example" = "Columna1\\tColumna2\\tColumna3";
+"after_comment" = "Valor después del comentario";
+"after_multiline_comment" = "Valor después del comentario multilínea";
+"long_value" = "Esta es una cadena muy larga que contiene mucho texto para probar cómo el analizador maneja contenido más extenso sin caracteres especiales ni escapes, solo texto simple que continúa y continúa";
+"unicode_example" = "Hola 世界 🌍";
+"emoji" = "👋 ¡Hola! 🎉";
+"accents" = "Café, ingenuo, currículum";
+"spaces_only" = "   ";
+"many_quotes" = "\"\"\"Múltiples comillas\"\"\"";
+"url_example" = "https://example.com/path?key=value&other=123";
 "settings_title" = "Configuración";
 "save_button" = "Guardar";
