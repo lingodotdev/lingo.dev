@@ -42,7 +42,7 @@ import createMdxFrontmatterSplitLoader from "./mdx2/frontmatter-split";
 import createMdxCodePlaceholderLoader from "./mdx2/code-placeholder";
 import createLocalizableMdxDocumentLoader from "./mdx2/localizable-document";
 import createMdxSectionsSplit2Loader from "./mdx2/sections-split-2";
-import createMdxLockedPatternsLoader from "./mdx2/locked-patterns";
+import createLockedPatternsLoader from "./locked-patterns";
 import createIgnoredKeysLoader from "./ignored-keys";
 import createEjsLoader from "./ejs";
 import createEnsureKeyOrderLoader from "./ensure-key-order";
@@ -71,6 +71,7 @@ export default function createBucketLoader(
     case "android":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
+        createLockedPatternsLoader(lockedPatterns),
         createAndroidLoader(),
         createEnsureKeyOrderLoader(),
         createFlatLoader(),
@@ -82,6 +83,7 @@ export default function createBucketLoader(
     case "csv":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
+        createLockedPatternsLoader(lockedPatterns),
         createCsvLoader(),
         createEnsureKeyOrderLoader(),
         createFlatLoader(),
@@ -94,6 +96,7 @@ export default function createBucketLoader(
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
         createFormatterLoader(options.formatter, "html", bucketPathPattern),
+        createLockedPatternsLoader(lockedPatterns),
         createHtmlLoader(),
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
@@ -103,6 +106,7 @@ export default function createBucketLoader(
     case "ejs":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
+        createLockedPatternsLoader(lockedPatterns),
         createEjsLoader(),
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
@@ -113,6 +117,7 @@ export default function createBucketLoader(
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
         createFormatterLoader(options.formatter, "json", bucketPathPattern),
+        createLockedPatternsLoader(lockedPatterns),
         createJsonLoader(),
         createEnsureKeyOrderLoader(),
         createFlatLoader(),
@@ -125,6 +130,7 @@ export default function createBucketLoader(
     case "json5":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
+        createLockedPatternsLoader(lockedPatterns),
         createJson5Loader(),
         createEnsureKeyOrderLoader(),
         createFlatLoader(),
@@ -137,6 +143,7 @@ export default function createBucketLoader(
     case "jsonc":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
+        createLockedPatternsLoader(lockedPatterns),
         createJsoncLoader(),
         createEnsureKeyOrderLoader(),
         createFlatLoader(),
@@ -150,6 +157,7 @@ export default function createBucketLoader(
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
         createFormatterLoader(options.formatter, "markdown", bucketPathPattern),
+        createLockedPatternsLoader(lockedPatterns),
         createMarkdownLoader(),
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
@@ -159,6 +167,7 @@ export default function createBucketLoader(
     case "markdoc":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
+        createLockedPatternsLoader(lockedPatterns),
         createMarkdocLoader(),
         createFlatLoader(),
         createEnsureKeyOrderLoader(),
@@ -172,7 +181,7 @@ export default function createBucketLoader(
         createTextFileLoader(bucketPathPattern),
         createFormatterLoader(options.formatter, "mdx", bucketPathPattern),
         createMdxCodePlaceholderLoader(),
-        createMdxLockedPatternsLoader(lockedPatterns),
+        createLockedPatternsLoader(lockedPatterns),
         createMdxFrontmatterSplitLoader(),
         createMdxSectionsSplit2Loader(),
         createLocalizableMdxDocumentLoader(),
@@ -186,6 +195,7 @@ export default function createBucketLoader(
     case "po":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
+        createLockedPatternsLoader(lockedPatterns),
         createPoLoader(),
         createFlatLoader(),
         createEnsureKeyOrderLoader(),
@@ -198,6 +208,7 @@ export default function createBucketLoader(
     case "properties":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
+        createLockedPatternsLoader(lockedPatterns),
         createPropertiesLoader(),
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
@@ -207,6 +218,7 @@ export default function createBucketLoader(
     case "xcode-strings":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
+        createLockedPatternsLoader(lockedPatterns),
         createXcodeStringsLoader(),
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
@@ -216,6 +228,7 @@ export default function createBucketLoader(
     case "xcode-stringsdict":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
+        createLockedPatternsLoader(lockedPatterns),
         createXcodeStringsdictLoader(),
         createFlatLoader(),
         createEnsureKeyOrderLoader(),
@@ -228,6 +241,7 @@ export default function createBucketLoader(
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
         createPlutilJsonTextLoader(),
+        createLockedPatternsLoader(lockedPatterns),
         createJsonLoader(),
         createXcodeXcstringsLoader(options.defaultLocale),
         createFlatLoader(),
@@ -242,6 +256,7 @@ export default function createBucketLoader(
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
         createPlutilJsonTextLoader(),
+        createLockedPatternsLoader(lockedPatterns),
         createJsonLoader(),
         createXcodeXcstringsLoader(options.defaultLocale),
         createXcodeXcstringsV2Loader(options.defaultLocale),
@@ -257,6 +272,7 @@ export default function createBucketLoader(
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
         createFormatterLoader(options.formatter, "yaml", bucketPathPattern),
+        createLockedPatternsLoader(lockedPatterns),
         createYamlLoader(),
         createFlatLoader(),
         createEnsureKeyOrderLoader(),
@@ -269,6 +285,7 @@ export default function createBucketLoader(
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
         createFormatterLoader(options.formatter, "yaml", bucketPathPattern),
+        createLockedPatternsLoader(lockedPatterns),
         createYamlLoader(),
         createRootKeyLoader(true),
         createFlatLoader(),
@@ -282,6 +299,7 @@ export default function createBucketLoader(
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
         createFormatterLoader(options.formatter, "json", bucketPathPattern),
+        createLockedPatternsLoader(lockedPatterns),
         createJsonLoader(),
         createEnsureKeyOrderLoader(),
         createFlutterLoader(),
@@ -294,6 +312,7 @@ export default function createBucketLoader(
     case "xliff":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
+        createLockedPatternsLoader(lockedPatterns),
         createXliffLoader(),
         createFlatLoader(),
         createEnsureKeyOrderLoader(),
@@ -305,6 +324,7 @@ export default function createBucketLoader(
     case "xml":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
+        createLockedPatternsLoader(lockedPatterns),
         createXmlLoader(),
         createFlatLoader(),
         createEnsureKeyOrderLoader(),
@@ -316,6 +336,7 @@ export default function createBucketLoader(
     case "srt":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
+        createLockedPatternsLoader(lockedPatterns),
         createSrtLoader(),
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
@@ -335,6 +356,7 @@ export default function createBucketLoader(
     case "vtt":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
+        createLockedPatternsLoader(lockedPatterns),
         createVttLoader(),
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
@@ -344,6 +366,7 @@ export default function createBucketLoader(
     case "php":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
+        createLockedPatternsLoader(lockedPatterns),
         createPhpLoader(),
         createSyncLoader(),
         createFlatLoader(),
@@ -355,6 +378,7 @@ export default function createBucketLoader(
     case "vue-json":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
+        createLockedPatternsLoader(lockedPatterns),
         createVueJsonLoader(),
         createSyncLoader(),
         createFlatLoader(),
@@ -371,6 +395,7 @@ export default function createBucketLoader(
           "typescript",
           bucketPathPattern,
         ),
+        createLockedPatternsLoader(lockedPatterns),
         createTypescriptLoader(),
         createFlatLoader(),
         createEnsureKeyOrderLoader(),
@@ -382,6 +407,7 @@ export default function createBucketLoader(
     case "txt":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
+        createLockedPatternsLoader(lockedPatterns),
         createTxtLoader(),
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
@@ -392,6 +418,7 @@ export default function createBucketLoader(
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
         createFormatterLoader(options.formatter, "json", bucketPathPattern),
+        createLockedPatternsLoader(lockedPatterns),
         createJsonLoader(),
         createJsonKeysLoader(),
         createEnsureKeyOrderLoader(),
