@@ -57,6 +57,226 @@ type BucketLoaderOptions = {
   formatter?: FormatterType;
 };
 
+export interface BucketMetadata {
+  supportsFormatter: boolean;
+  supportsInjectLocale: boolean;
+  supportsLockedKeys: boolean;
+  supportsIgnoredKeys: boolean;
+  supportsLockedPatterns: boolean;
+}
+
+export const BUCKET_METADATA: Record<string, BucketMetadata> = {
+  android: {
+    supportsFormatter: false,
+    supportsInjectLocale: false,
+    supportsLockedKeys: false,
+    supportsIgnoredKeys: false,
+    supportsLockedPatterns: false,
+  },
+  csv: {
+    supportsFormatter: false,
+    supportsInjectLocale: false,
+    supportsLockedKeys: false,
+    supportsIgnoredKeys: false,
+    supportsLockedPatterns: false,
+  },
+  html: {
+    supportsFormatter: true,
+    supportsInjectLocale: false,
+    supportsLockedKeys: false,
+    supportsIgnoredKeys: false,
+    supportsLockedPatterns: false,
+  },
+  ejs: {
+    supportsFormatter: false,
+    supportsInjectLocale: false,
+    supportsLockedKeys: false,
+    supportsIgnoredKeys: false,
+    supportsLockedPatterns: false,
+  },
+  json: {
+    supportsFormatter: true,
+    supportsInjectLocale: true,
+    supportsLockedKeys: true,
+    supportsIgnoredKeys: true,
+    supportsLockedPatterns: false,
+  },
+  json5: {
+    supportsFormatter: false,
+    supportsInjectLocale: true,
+    supportsLockedKeys: true,
+    supportsIgnoredKeys: true,
+    supportsLockedPatterns: false,
+  },
+  jsonc: {
+    supportsFormatter: false,
+    supportsInjectLocale: true,
+    supportsLockedKeys: true,
+    supportsIgnoredKeys: true,
+    supportsLockedPatterns: false,
+  },
+  markdown: {
+    supportsFormatter: true,
+    supportsInjectLocale: false,
+    supportsLockedKeys: false,
+    supportsIgnoredKeys: false,
+    supportsLockedPatterns: false,
+  },
+  markdoc: {
+    supportsFormatter: false,
+    supportsInjectLocale: false,
+    supportsLockedKeys: false,
+    supportsIgnoredKeys: false,
+    supportsLockedPatterns: false,
+  },
+  mdx: {
+    supportsFormatter: true,
+    supportsInjectLocale: false,
+    supportsLockedKeys: true,
+    supportsIgnoredKeys: true,
+    supportsLockedPatterns: true,
+  },
+  po: {
+    supportsFormatter: false,
+    supportsInjectLocale: false,
+    supportsLockedKeys: false,
+    supportsIgnoredKeys: false,
+    supportsLockedPatterns: false,
+  },
+  properties: {
+    supportsFormatter: false,
+    supportsInjectLocale: false,
+    supportsLockedKeys: false,
+    supportsIgnoredKeys: false,
+    supportsLockedPatterns: false,
+  },
+  "xcode-strings": {
+    supportsFormatter: false,
+    supportsInjectLocale: false,
+    supportsLockedKeys: false,
+    supportsIgnoredKeys: false,
+    supportsLockedPatterns: false,
+  },
+  "xcode-stringsdict": {
+    supportsFormatter: false,
+    supportsInjectLocale: false,
+    supportsLockedKeys: false,
+    supportsIgnoredKeys: false,
+    supportsLockedPatterns: false,
+  },
+  "xcode-xcstrings": {
+    supportsFormatter: false,
+    supportsInjectLocale: false,
+    supportsLockedKeys: true,
+    supportsIgnoredKeys: true,
+    supportsLockedPatterns: false,
+  },
+  "xcode-xcstrings-v2": {
+    supportsFormatter: false,
+    supportsInjectLocale: false,
+    supportsLockedKeys: true,
+    supportsIgnoredKeys: false,
+    supportsLockedPatterns: false,
+  },
+  yaml: {
+    supportsFormatter: true,
+    supportsInjectLocale: false,
+    supportsLockedKeys: true,
+    supportsIgnoredKeys: true,
+    supportsLockedPatterns: false,
+  },
+  "yaml-root-key": {
+    supportsFormatter: true,
+    supportsInjectLocale: false,
+    supportsLockedKeys: false,
+    supportsIgnoredKeys: false,
+    supportsLockedPatterns: false,
+  },
+  flutter: {
+    supportsFormatter: true,
+    supportsInjectLocale: false,
+    supportsLockedKeys: false,
+    supportsIgnoredKeys: false,
+    supportsLockedPatterns: false,
+  },
+  xliff: {
+    supportsFormatter: false,
+    supportsInjectLocale: false,
+    supportsLockedKeys: false,
+    supportsIgnoredKeys: false,
+    supportsLockedPatterns: false,
+  },
+  xml: {
+    supportsFormatter: false,
+    supportsInjectLocale: false,
+    supportsLockedKeys: false,
+    supportsIgnoredKeys: false,
+    supportsLockedPatterns: false,
+  },
+  srt: {
+    supportsFormatter: false,
+    supportsInjectLocale: false,
+    supportsLockedKeys: false,
+    supportsIgnoredKeys: false,
+    supportsLockedPatterns: false,
+  },
+  dato: {
+    supportsFormatter: false,
+    supportsInjectLocale: false,
+    supportsLockedKeys: false,
+    supportsIgnoredKeys: false,
+    supportsLockedPatterns: false,
+  },
+  vtt: {
+    supportsFormatter: false,
+    supportsInjectLocale: false,
+    supportsLockedKeys: false,
+    supportsIgnoredKeys: false,
+    supportsLockedPatterns: false,
+  },
+  php: {
+    supportsFormatter: false,
+    supportsInjectLocale: false,
+    supportsLockedKeys: false,
+    supportsIgnoredKeys: false,
+    supportsLockedPatterns: false,
+  },
+  "vue-json": {
+    supportsFormatter: false,
+    supportsInjectLocale: false,
+    supportsLockedKeys: false,
+    supportsIgnoredKeys: false,
+    supportsLockedPatterns: false,
+  },
+  typescript: {
+    supportsFormatter: true,
+    supportsInjectLocale: false,
+    supportsLockedKeys: true,
+    supportsIgnoredKeys: true,
+    supportsLockedPatterns: false,
+  },
+  txt: {
+    supportsFormatter: false,
+    supportsInjectLocale: false,
+    supportsLockedKeys: false,
+    supportsIgnoredKeys: false,
+    supportsLockedPatterns: false,
+  },
+  "json-dictionary": {
+    supportsFormatter: true,
+    supportsInjectLocale: true,
+    supportsLockedKeys: true,
+    supportsIgnoredKeys: true,
+    supportsLockedPatterns: false,
+  },
+};
+
+export function getBucketMetadata(
+  bucketType: string,
+): BucketMetadata | undefined {
+  return BUCKET_METADATA[bucketType];
+}
+
 export default function createBucketLoader(
   bucketType: Z.infer<typeof bucketTypeSchema>,
   bucketPathPattern: string,
