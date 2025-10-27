@@ -192,9 +192,14 @@ describe("bucket loaders", () => {
 
       mockFileOperations(input);
 
-      const csvLoader = createBucketLoader("csv", "i18n.csv", {
-        defaultLocale: "en",
-      }, ["locked_key"]);
+      const csvLoader = createBucketLoader(
+        "csv",
+        "i18n.csv",
+        {
+          defaultLocale: "en",
+        },
+        ["locked_key"],
+      );
       csvLoader.setDefaultLocale("en");
       const data = await csvLoader.pull("en");
 
@@ -625,9 +630,14 @@ describe("bucket loaders", () => {
 
       mockFileOperations(input);
 
-      const jsoncLoader = createBucketLoader("jsonc", "i18n/[locale].jsonc", {
-        defaultLocale: "en",
-      }, ["locked_key"]);
+      const jsoncLoader = createBucketLoader(
+        "jsonc",
+        "i18n/[locale].jsonc",
+        {
+          defaultLocale: "en",
+        },
+        ["locked_key"],
+      );
       jsoncLoader.setDefaultLocale("en");
       const data = await jsoncLoader.pull("en");
 
@@ -2385,9 +2395,14 @@ user.password=Contraseña
 
       mockFileOperations(input);
 
-      const yamlLoader = createBucketLoader("yaml", "i18n/[locale].yaml", {
-        defaultLocale: "en",
-      }, ["locked"]);
+      const yamlLoader = createBucketLoader(
+        "yaml",
+        "i18n/[locale].yaml",
+        {
+          defaultLocale: "en",
+        },
+        ["locked"],
+      );
       yamlLoader.setDefaultLocale("en");
       const data = await yamlLoader.pull("en");
 
@@ -2420,7 +2435,7 @@ user.password=Contraseña
       );
     });
 
-  describe("yaml with quoted keys and values", async () => {
+    describe("yaml with quoted keys and values", async () => {
       it.each([
         ["double quoted values", `greeting: "Hello!"`, `greeting: "¡Hola!"`],
         ["double quoted keys", `"greeting": Hello!`, `"greeting": ¡Hola!`],
@@ -2619,9 +2634,14 @@ Another cue
 
       mockFileOperations(input);
 
-      const vttLoader = createBucketLoader("vtt", "i18n/[locale].vtt", {
-        defaultLocale: "en",
-      }, ["0#*"]);
+      const vttLoader = createBucketLoader(
+        "vtt",
+        "i18n/[locale].vtt",
+        {
+          defaultLocale: "en",
+        },
+        ["0#*"],
+      );
       vttLoader.setDefaultLocale("en");
       const data = await vttLoader.pull("en");
 
@@ -2722,9 +2742,14 @@ Another cue
       const input = `<root><locked>Original</locked><hello>Hello!</hello></root>`;
       mockFileOperations(input);
 
-      const xmlLoader = createBucketLoader("xml", "i18n/[locale].xml", {
-        defaultLocale: "en",
-      }, ["root/locked"]);
+      const xmlLoader = createBucketLoader(
+        "xml",
+        "i18n/[locale].xml",
+        {
+          defaultLocale: "en",
+        },
+        ["root/locked"],
+      );
       xmlLoader.setDefaultLocale("en");
       const data = await xmlLoader.pull("en");
 
@@ -2817,9 +2842,14 @@ World!
 
       mockFileOperations(input);
 
-      const srtLoader = createBucketLoader("srt", "i18n/[locale].srt", {
-        defaultLocale: "en",
-      }, ["1#00:00:00,000-00:00:01,000"]);
+      const srtLoader = createBucketLoader(
+        "srt",
+        "i18n/[locale].srt",
+        {
+          defaultLocale: "en",
+        },
+        ["1#00:00:00,000-00:00:01,000"],
+      );
       srtLoader.setDefaultLocale("en");
       const data = await srtLoader.pull("en");
 
@@ -2991,9 +3021,14 @@ World!
 
       mockFileOperations(input);
 
-      const xliffLoader = createBucketLoader("xliff", "i18n/[locale].xliff", {
-        defaultLocale: "en",
-      }, ["resources%2Fnamespace1%2Flocked%2Fsource"]);
+      const xliffLoader = createBucketLoader(
+        "xliff",
+        "i18n/[locale].xliff",
+        {
+          defaultLocale: "en",
+        },
+        ["resources%2Fnamespace1%2Flocked%2Fsource"],
+      );
       xliffLoader.setDefaultLocale("en");
       const data = await xliffLoader.pull("en");
 
@@ -3178,9 +3213,14 @@ return array(
 
       mockFileOperations(input);
 
-      const phpLoader = createBucketLoader("php", "i18n/[locale].php", {
-        defaultLocale: "en",
-      }, ["locked"]);
+      const phpLoader = createBucketLoader(
+        "php",
+        "i18n/[locale].php",
+        {
+          defaultLocale: "en",
+        },
+        ["locked"],
+      );
       phpLoader.setDefaultLocale("en");
       const data = await phpLoader.pull("en");
 
@@ -3272,9 +3312,14 @@ return array(
 
       mockFileOperations(payload);
 
-      const poLoader = createBucketLoader("po", "i18n/[locale].po", {
-        defaultLocale: "en",
-      }, ["greeting/singular"]);
+      const poLoader = createBucketLoader(
+        "po",
+        "i18n/[locale].po",
+        {
+          defaultLocale: "en",
+        },
+        ["greeting/singular"],
+      );
       poLoader.setDefaultLocale("en");
       const data = await poLoader.pull("en");
 
@@ -3432,9 +3477,14 @@ ${script}`;
 
       mockFileOperations(input);
 
-      const vueLoader = createBucketLoader("vue-json", "i18n/[locale].vue", {
-        defaultLocale: "en",
-      }, ["locked"]);
+      const vueLoader = createBucketLoader(
+        "vue-json",
+        "i18n/[locale].vue",
+        {
+          defaultLocale: "en",
+        },
+        ["locked"],
+      );
       vueLoader.setDefaultLocale("en");
       const data = await vueLoader.pull("en");
 
@@ -3559,9 +3609,14 @@ ${script}`;
 
       mockFileOperations(input);
 
-      const ejsLoader = createBucketLoader("ejs", "templates/[locale].ejs", {
-        defaultLocale: "en",
-      }, ["text_0"]);
+      const ejsLoader = createBucketLoader(
+        "ejs",
+        "templates/[locale].ejs",
+        {
+          defaultLocale: "en",
+        },
+        ["text_0"],
+      );
       ejsLoader.setDefaultLocale("en");
       const data = await ejsLoader.pull("en");
 
@@ -3809,7 +3864,7 @@ Línea 3`;
       setupFileMocks();
       const input = {
         title: { en: "I am a title" },
-        subtitle: { en: "Sub" }
+        subtitle: { en: "Sub" },
       };
       mockFileOperations(JSON.stringify(input));
       const loader = createBucketLoader(
