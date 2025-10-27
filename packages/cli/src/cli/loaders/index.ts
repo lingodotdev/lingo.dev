@@ -71,6 +71,7 @@ export type Bucket = {
   supportsLockedKeys: boolean;
   supportsIgnoredKeys: boolean;
   supportsLockedPatterns: boolean;
+  supportsLocalePlaceholder: boolean;
   createLoader: (ctx: BucketLoaderContext) => ILoader<void, Record<string, any>>;
 };
 
@@ -81,6 +82,7 @@ export const BUCKETS: Record<string, Bucket> = {
     supportsLockedKeys: true,
     supportsIgnoredKeys: true,
     supportsLockedPatterns: true,
+    supportsLocalePlaceholder: true,
     createLoader: (ctx) =>
       composeLoaders(
         createTextFileLoader(ctx.bucketPathPattern),
@@ -100,6 +102,7 @@ export const BUCKETS: Record<string, Bucket> = {
     supportsLockedKeys: true,
     supportsIgnoredKeys: true,
     supportsLockedPatterns: true,
+    supportsLocalePlaceholder: false,
     createLoader: (ctx) =>
       composeLoaders(
         createTextFileLoader(ctx.bucketPathPattern),
@@ -119,6 +122,7 @@ export const BUCKETS: Record<string, Bucket> = {
     supportsLockedKeys: true,
     supportsIgnoredKeys: true,
     supportsLockedPatterns: true,
+    supportsLocalePlaceholder: true,
     createLoader: (ctx) =>
       composeLoaders(
         createTextFileLoader(ctx.bucketPathPattern),
@@ -137,6 +141,7 @@ export const BUCKETS: Record<string, Bucket> = {
     supportsLockedKeys: true,
     supportsIgnoredKeys: true,
     supportsLockedPatterns: true,
+    supportsLocalePlaceholder: true,
     createLoader: (ctx) =>
       composeLoaders(
         createTextFileLoader(ctx.bucketPathPattern),
@@ -154,6 +159,7 @@ export const BUCKETS: Record<string, Bucket> = {
     supportsLockedKeys: true,
     supportsIgnoredKeys: true,
     supportsLockedPatterns: true,
+    supportsLocalePlaceholder: true,
     createLoader: (ctx) =>
       composeLoaders(
         createTextFileLoader(ctx.bucketPathPattern),
@@ -175,6 +181,7 @@ export const BUCKETS: Record<string, Bucket> = {
     supportsLockedKeys: true,
     supportsIgnoredKeys: true,
     supportsLockedPatterns: true,
+    supportsLocalePlaceholder: true,
     createLoader: (ctx) =>
       composeLoaders(
         createTextFileLoader(ctx.bucketPathPattern),
@@ -195,6 +202,7 @@ export const BUCKETS: Record<string, Bucket> = {
     supportsLockedKeys: true,
     supportsIgnoredKeys: true,
     supportsLockedPatterns: true,
+    supportsLocalePlaceholder: true,
     createLoader: (ctx) =>
       composeLoaders(
         createTextFileLoader(ctx.bucketPathPattern),
@@ -215,6 +223,7 @@ export const BUCKETS: Record<string, Bucket> = {
     supportsLockedKeys: true,
     supportsIgnoredKeys: true,
     supportsLockedPatterns: true,
+    supportsLocalePlaceholder: true,
     createLoader: (ctx) =>
       composeLoaders(
         createTextFileLoader(ctx.bucketPathPattern),
@@ -233,6 +242,7 @@ export const BUCKETS: Record<string, Bucket> = {
     supportsLockedKeys: true,
     supportsIgnoredKeys: true,
     supportsLockedPatterns: true,
+    supportsLocalePlaceholder: true,
     createLoader: (ctx) =>
       composeLoaders(
         createTextFileLoader(ctx.bucketPathPattern),
@@ -252,6 +262,7 @@ export const BUCKETS: Record<string, Bucket> = {
     supportsLockedKeys: true,
     supportsIgnoredKeys: true,
     supportsLockedPatterns: true,
+    supportsLocalePlaceholder: true,
     createLoader: (ctx) =>
       composeLoaders(
         createTextFileLoader(ctx.bucketPathPattern),
@@ -275,6 +286,7 @@ export const BUCKETS: Record<string, Bucket> = {
     supportsLockedKeys: true,
     supportsIgnoredKeys: true,
     supportsLockedPatterns: true,
+    supportsLocalePlaceholder: true,
     createLoader: (ctx) =>
       composeLoaders(
         createTextFileLoader(ctx.bucketPathPattern),
@@ -295,6 +307,7 @@ export const BUCKETS: Record<string, Bucket> = {
     supportsLockedKeys: true,
     supportsIgnoredKeys: true,
     supportsLockedPatterns: true,
+    supportsLocalePlaceholder: true,
     createLoader: (ctx) =>
       composeLoaders(
         createTextFileLoader(ctx.bucketPathPattern),
@@ -312,6 +325,7 @@ export const BUCKETS: Record<string, Bucket> = {
     supportsLockedKeys: true,
     supportsIgnoredKeys: true,
     supportsLockedPatterns: true,
+    supportsLocalePlaceholder: true,
     createLoader: (ctx) =>
       composeLoaders(
         createTextFileLoader(ctx.bucketPathPattern),
@@ -329,6 +343,7 @@ export const BUCKETS: Record<string, Bucket> = {
     supportsLockedKeys: true,
     supportsIgnoredKeys: true,
     supportsLockedPatterns: true,
+    supportsLocalePlaceholder: true,
     createLoader: (ctx) =>
       composeLoaders(
         createTextFileLoader(ctx.bucketPathPattern),
@@ -348,6 +363,7 @@ export const BUCKETS: Record<string, Bucket> = {
     supportsLockedKeys: true,
     supportsIgnoredKeys: true,
     supportsLockedPatterns: true,
+    supportsLocalePlaceholder: false,
     createLoader: (ctx) =>
       composeLoaders(
         createTextFileLoader(ctx.bucketPathPattern),
@@ -370,6 +386,7 @@ export const BUCKETS: Record<string, Bucket> = {
     supportsLockedKeys: true,
     supportsIgnoredKeys: true,
     supportsLockedPatterns: true,
+    supportsLocalePlaceholder: false,
     createLoader: (ctx) =>
       composeLoaders(
         createTextFileLoader(ctx.bucketPathPattern),
@@ -393,6 +410,7 @@ export const BUCKETS: Record<string, Bucket> = {
     supportsLockedKeys: true,
     supportsIgnoredKeys: true,
     supportsLockedPatterns: true,
+    supportsLocalePlaceholder: true,
     createLoader: (ctx) =>
       composeLoaders(
         createTextFileLoader(ctx.bucketPathPattern),
@@ -413,6 +431,7 @@ export const BUCKETS: Record<string, Bucket> = {
     supportsLockedKeys: true,
     supportsIgnoredKeys: true,
     supportsLockedPatterns: true,
+    supportsLocalePlaceholder: false,
     createLoader: (ctx) =>
       composeLoaders(
         createTextFileLoader(ctx.bucketPathPattern),
@@ -434,6 +453,7 @@ export const BUCKETS: Record<string, Bucket> = {
     supportsLockedKeys: true,
     supportsIgnoredKeys: true,
     supportsLockedPatterns: true,
+    supportsLocalePlaceholder: true,
     createLoader: (ctx) =>
       composeLoaders(
         createTextFileLoader(ctx.bucketPathPattern),
@@ -455,6 +475,7 @@ export const BUCKETS: Record<string, Bucket> = {
     supportsLockedKeys: true,
     supportsIgnoredKeys: true,
     supportsLockedPatterns: true,
+    supportsLocalePlaceholder: true,
     createLoader: (ctx) =>
       composeLoaders(
         createTextFileLoader(ctx.bucketPathPattern),
@@ -474,6 +495,7 @@ export const BUCKETS: Record<string, Bucket> = {
     supportsLockedKeys: true,
     supportsIgnoredKeys: true,
     supportsLockedPatterns: true,
+    supportsLocalePlaceholder: true,
     createLoader: (ctx) =>
       composeLoaders(
         createTextFileLoader(ctx.bucketPathPattern),
@@ -493,6 +515,7 @@ export const BUCKETS: Record<string, Bucket> = {
     supportsLockedKeys: true,
     supportsIgnoredKeys: true,
     supportsLockedPatterns: true,
+    supportsLocalePlaceholder: true,
     createLoader: (ctx) =>
       composeLoaders(
         createTextFileLoader(ctx.bucketPathPattern),
@@ -510,6 +533,7 @@ export const BUCKETS: Record<string, Bucket> = {
     supportsLockedKeys: true,
     supportsIgnoredKeys: true,
     supportsLockedPatterns: false,
+    supportsLocalePlaceholder: false,
     createLoader: (ctx) =>
       composeLoaders(
         createDatoLoader(ctx.bucketPathPattern),
@@ -527,6 +551,7 @@ export const BUCKETS: Record<string, Bucket> = {
     supportsLockedKeys: true,
     supportsIgnoredKeys: true,
     supportsLockedPatterns: true,
+    supportsLocalePlaceholder: true,
     createLoader: (ctx) =>
       composeLoaders(
         createTextFileLoader(ctx.bucketPathPattern),
@@ -544,6 +569,7 @@ export const BUCKETS: Record<string, Bucket> = {
     supportsLockedKeys: true,
     supportsIgnoredKeys: true,
     supportsLockedPatterns: true,
+    supportsLocalePlaceholder: true,
     createLoader: (ctx) =>
       composeLoaders(
         createTextFileLoader(ctx.bucketPathPattern),
@@ -563,6 +589,7 @@ export const BUCKETS: Record<string, Bucket> = {
     supportsLockedKeys: true,
     supportsIgnoredKeys: true,
     supportsLockedPatterns: true,
+    supportsLocalePlaceholder: false,
     createLoader: (ctx) =>
       composeLoaders(
         createTextFileLoader(ctx.bucketPathPattern),
@@ -582,6 +609,7 @@ export const BUCKETS: Record<string, Bucket> = {
     supportsLockedKeys: true,
     supportsIgnoredKeys: true,
     supportsLockedPatterns: true,
+    supportsLocalePlaceholder: true,
     createLoader: (ctx) =>
       composeLoaders(
         createTextFileLoader(ctx.bucketPathPattern),
@@ -606,6 +634,7 @@ export const BUCKETS: Record<string, Bucket> = {
     supportsLockedKeys: true,
     supportsIgnoredKeys: true,
     supportsLockedPatterns: true,
+    supportsLocalePlaceholder: true,
     createLoader: (ctx) =>
       composeLoaders(
         createTextFileLoader(ctx.bucketPathPattern),
@@ -623,6 +652,7 @@ export const BUCKETS: Record<string, Bucket> = {
     supportsLockedKeys: true,
     supportsIgnoredKeys: true,
     supportsLockedPatterns: true,
+    supportsLocalePlaceholder: false,
     createLoader: (ctx) =>
       composeLoaders(
         createTextFileLoader(ctx.bucketPathPattern),
