@@ -1,12 +1,12 @@
 import type { Logger } from "pino";
 
-export interface LoggerConfig {
+export type LoggerConfig = {
   slug: string;
   logDir: string;
   logFilePath: string;
-}
+};
 
-export interface LoggerCacheEntry {
+export type LoggerCacheEntry = {
   logger: Logger;
   config: LoggerConfig;
-}
+};

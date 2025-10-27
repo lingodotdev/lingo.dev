@@ -53,11 +53,6 @@ export function initLogger(slug: string): Logger {
 
 /**
  * Create a logger with automatic log rotation.
- * Rotation happens when:
- * - File size exceeds 10MB, or
- * - Daily interval is reached
- *
- * Old logs are compressed with gzip and up to 10 files are retained.
  */
 function createLogger(config: LoggerConfig): Logger {
   const logFileName = basename(config.logFilePath);

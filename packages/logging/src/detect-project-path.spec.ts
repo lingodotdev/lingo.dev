@@ -1,5 +1,3 @@
-// Unit tests for project path detection
-
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
 import {
   mkdirSync,
@@ -140,7 +138,10 @@ describe("detectProjectPath", () => {
 
     mkdirSync(webAppDir, { recursive: true });
     writeFileSync(join(repoRoot, "i18n.json"), "{}");
-    writeFileSync(join(repoRoot, "apps", "web", "next.config.ts"), "export default {}");
+    writeFileSync(
+      join(repoRoot, "apps", "web", "next.config.ts"),
+      "export default {}",
+    );
 
     // From web app subdirectory, search only for i18n.json
     process.chdir(webAppDir);
