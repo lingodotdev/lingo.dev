@@ -45,8 +45,20 @@
   </a>
   <a href="https://lingo.dev/en">
     <img
-      src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
-      alt="מוצר מספר 1 של היום ב-Product Hunt"
+      src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square"
+      alt="כלי פיתוח מספר 1 של החודש ב-Product Hunt"
+    />
+  </a>
+  <a href="https://lingo.dev/en">
+    <img
+      src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Week-orange?logo=producthunt&style=flat-square"
+      alt="מוצר מספר 1 של השבוע ב-Product Hunt"
+    />
+  </a>
+  <a href="https://lingo.dev/en">
+    <img
+      src="https://img.shields.io/badge/Product%20Hunt-%232%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
+      alt="מוצר מספר 2 של היום ב-Product Hunt"
     />
   </a>
   <a href="https://lingo.dev/en">
