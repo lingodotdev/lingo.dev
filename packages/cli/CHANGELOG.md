@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.113.7
+
+### Patch Changes
+
+- [#1243](https://github.com/lingodotdev/lingo.dev/pull/1243) [`4f5ffe6`](https://github.com/lingodotdev/lingo.dev/commit/4f5ffe62189949bb26a6c7825cb72c217aefa32f) Thanks [@vrcprl](https://github.com/vrcprl)! - Improve xcode-strings loader
+
 ## 0.113.6
 
 ### Patch Changes
