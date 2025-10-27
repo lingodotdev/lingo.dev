@@ -1,9 +1,8 @@
 // Unit tests for logger initialization
 
-import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
+import { describe, it, expect, beforeEach, afterEach } from "vitest";
 import {
   mkdirSync,
-  accessSync,
   rmSync,
   existsSync,
   readFileSync,
@@ -11,6 +10,7 @@ import {
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { initLogger } from "./init-logger.js";
+import { LOG_DIR } from "./constants.js";
 
 describe("initLogger", () => {
   const testLogDir = join(tmpdir(), "lingo-logging-test");
@@ -66,18 +66,22 @@ describe("initLogger", () => {
     // but we can verify the logger works
   });
 
-  it("should write logs to the log file", async () => {
+  it("should write logs to the log file", () => {
     const logger = initLogger(testSlug);
     const testMessage = "Test log message";
+    const testData = { userId: 123, action: "test" };
 
-    logger.info(testMessage);
+    logger.info(testData, testMessage);
 
-    // Wait a bit for the log to be written
-    await new Promise((resolve) => setTimeout(resolve, 100));
+    // With sync: true, logs are written immediately - no setTimeout needed
+    const logFilePath = join(LOG_DIR, `${testSlug}.log`);
+    expect(existsSync(logFilePath)).toBe(true);
 
-    // Note: In a real test, we'd need to know the exact log file path
-    // For now, we just verify the logger doesn't throw
-    expect(logger).toBeDefined();
+    // Verify log contents
+    const logContent = readFileSync(logFilePath, "utf-8");
+    expect(logContent).toContain(testMessage);
+    expect(logContent).toContain("userId");
+    expect(logContent).toContain("123");
   });
 
   it("should apply correct log level", () => {

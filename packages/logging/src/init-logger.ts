@@ -1,11 +1,7 @@
 import pino from "pino";
 import type { Logger } from "pino";
 import type { LoggerCacheEntry, LoggerConfig } from "./types.js";
-import {
-  LOG_DIR,
-  DEFAULT_LOG_LEVEL,
-  DEFAULT_REDACT_PATHS,
-} from "./constants.js";
+import { LOG_DIR, DEFAULT_LOG_LEVEL, DEFAULT_REDACT_PATHS } from "./constants";
 
 const loggerCache = new Map<string, LoggerCacheEntry>();
 
@@ -19,6 +15,7 @@ const loggerCache = new Map<string, LoggerCacheEntry>();
  */
 export function initLogger(slug: string): Logger {
   const cached = loggerCache.get(slug);
+
   if (cached) {
     return cached.logger;
   }
@@ -57,8 +54,8 @@ function createLogger(config: LoggerConfig): Logger {
 
   // Handle runtime errors on the destination stream to prevent crashes
   destination.on("error", (err) => {
-    // Silently ignore logging errors - don't let them crash the CLI
-    // In production, you might want to write to stderr or a fallback location
+    // Log to stderr so errors are visible but don't crash the CLI
+    console.error(`[Logger error]: ${err.message}`);
   });
 
   const logger = pino(
