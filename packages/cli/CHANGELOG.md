@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.113.8
+
+### Patch Changes
+
+- [#1245](https://github.com/lingodotdev/lingo.dev/pull/1245) [`03671f7`](https://github.com/lingodotdev/lingo.dev/commit/03671f7cb252d6bee3debce2f4a4eb989dc0050b) Thanks [@vrcprl](https://github.com/vrcprl)! - update xcode-strings example
+
 ## 0.113.7
 
 ### Patch Changes
