@@ -1,5 +1,5 @@
 ---
-"@lingo.dev/cli": minor
+"lingo.dev": minor
 ---
 
 Enable locked keys for all buckets
