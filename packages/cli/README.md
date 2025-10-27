@@ -1,4 +1,14 @@
 <p align="center">
+  <img src="https://img.shields.io/badge/First%20Contribution%20Challenge-Now%20Live!-brightgreen?style=for-the-badge" alt="First Contribution Challenge" />
+  <img src="https://img.shields.io/badge/Reward-5%20Winners-ff69b4?style=for-the-badge" alt="Reward" />
+</p>
+
+<p align="center">
+  🎉 Make your <strong>first-ever PR</strong> to this repo and you could be one of our <strong>5 rewarded contributors!</strong><br/>
+  💬 <a href="https://dub.link/tdectLW">Go through the announcement on Discord →</a>
+</p>
+
+<p align="center">
   <a href="https://lingo.dev">
     <img src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.compiler.png" width="100%" alt="Lingo.dev" />
   </a>
