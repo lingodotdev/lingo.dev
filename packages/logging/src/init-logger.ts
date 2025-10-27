@@ -1,7 +1,17 @@
 import pino from "pino";
 import type { Logger } from "pino";
+import { createStream } from "rotating-file-stream";
+import { basename } from "node:path";
 import type { LoggerCacheEntry, LoggerConfig } from "./types.js";
-import { LOG_DIR, DEFAULT_LOG_LEVEL, DEFAULT_REDACT_PATHS } from "./constants";
+import {
+  LOG_DIR,
+  DEFAULT_LOG_LEVEL,
+  DEFAULT_REDACT_PATHS,
+  LOG_ROTATION_MAX_SIZE,
+  LOG_ROTATION_MAX_FILES,
+  LOG_ROTATION_INTERVAL,
+  LOG_ROTATION_COMPRESS,
+} from "./constants.js";
 
 const loggerCache = new Map<string, LoggerCacheEntry>();
 
@@ -42,18 +52,27 @@ export function initLogger(slug: string): Logger {
 }
 
 /**
- * Create a logger that writes to file with sensitive data redaction.
- * Uses synchronous writes for immediate persistence in CLI applications.
+ * Create a logger with automatic log rotation.
+ * Rotation happens when:
+ * - File size exceeds 10MB, or
+ * - Daily interval is reached
+ *
+ * Old logs are compressed with gzip and up to 10 files are retained.
  */
 function createLogger(config: LoggerConfig): Logger {
-  const destination = pino.destination({
-    dest: config.logFilePath,
-    sync: true,
-    mkdir: true,
+  const logFileName = basename(config.logFilePath);
+
+  // Create rotating file stream with smart defaults
+  const stream = createStream(logFileName, {
+    size: LOG_ROTATION_MAX_SIZE, // Rotate at 10MB
+    interval: LOG_ROTATION_INTERVAL, // Daily rotation
+    maxFiles: LOG_ROTATION_MAX_FILES, // Keep 10 files
+    compress: LOG_ROTATION_COMPRESS, // Gzip old files
+    path: config.logDir, // Directory for logs
   });
 
-  // Handle runtime errors on the destination stream to prevent crashes
-  destination.on("error", (err) => {
+  // Handle runtime errors on the stream to prevent crashes
+  stream.on("error", (err) => {
     // Log to stderr so errors are visible but don't crash the CLI
     console.error(`[Logger error]: ${err.message}`);
   });
@@ -66,7 +85,7 @@ function createLogger(config: LoggerConfig): Logger {
         censor: "[REDACTED]",
       },
     },
-    destination,
+    stream,
   );
 
   return logger;

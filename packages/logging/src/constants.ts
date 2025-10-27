@@ -18,3 +18,9 @@ export const DEFAULT_REDACT_PATHS = [
   "authorization",
   "*.authorization",
 ] as const;
+
+// Smart defaults for log rotation
+export const LOG_ROTATION_MAX_SIZE = "10M"; // Rotate when file reaches 10MB
+export const LOG_ROTATION_MAX_FILES = 10; // Keep last 10 rotated files
+export const LOG_ROTATION_INTERVAL = "1d"; // Daily rotation
+export const LOG_ROTATION_COMPRESS = "gzip" as const; // Compress old files
