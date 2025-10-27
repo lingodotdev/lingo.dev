@@ -102,6 +102,29 @@ describe("bucket loaders", () => {
         },
       );
     });
+
+    it("should respect locked keys (pull)", async () => {
+      setupFileMocks();
+
+      const input = `<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="locked_key">Original</string>
+    <string name="unlocked_key">Hello</string>
+</resources>`;
+
+      mockFileOperations(input);
+
+      const androidLoader = createBucketLoader(
+        "android",
+        "values-[locale]/strings.xml",
+        { defaultLocale: "en" },
+        ["locked_key"],
+      );
+      androidLoader.setDefaultLocale("en");
+      const data = await androidLoader.pull("en");
+
+      expect(data).toEqual({ unlocked_key: "Hello" });
+    });
   });
 
   describe("csv bucket loader", () => {
@@ -160,6 +183,27 @@ describe("bucket loaders", () => {
         encoding: "utf-8",
         flag: "w",
       });
+    });
+
+    it("should respect locked keys (pull)", async () => {
+      setupFileMocks();
+
+      const input = `id,en\nlocked_key,Original\nunlocked_key,Hello`;
+
+      mockFileOperations(input);
+
+      const csvLoader = createBucketLoader(
+        "csv",
+        "i18n.csv",
+        {
+          defaultLocale: "en",
+        },
+        ["locked_key"],
+      );
+      csvLoader.setDefaultLocale("en");
+      const data = await csvLoader.pull("en");
+
+      expect(data).toEqual({ unlocked_key: "Hello" });
     });
   });
 
@@ -254,6 +298,29 @@ describe("bucket loaders", () => {
           flag: "w",
         },
       );
+    });
+
+    it("should respect locked keys (pull)", async () => {
+      setupFileMocks();
+
+      const input = `{
+        "@@locale": "en",
+        "locked_key": "Original",
+        "unlocked_key": "Hello"
+      }`;
+
+      mockFileOperations(input);
+
+      const flutterLoader = createBucketLoader(
+        "flutter",
+        "lib/l10n/app_[locale].arb",
+        { defaultLocale: "en" },
+        ["locked_key"],
+      );
+      flutterLoader.setDefaultLocale("en");
+      const data = await flutterLoader.pull("en");
+
+      expect(data).toEqual({ unlocked_key: "Hello" });
     });
   });
 
@@ -369,6 +436,35 @@ describe("bucket loaders", () => {
         expectedOutput,
         { encoding: "utf-8", flag: "w" },
       );
+    });
+
+    it("should respect locked keys (pull)", async () => {
+      setupFileMocks();
+
+      const input = `
+<html>
+  <head>
+    <title>Locked Title</title>
+  </head>
+  <body>
+    <h1>Hello</h1>
+  </body>
+</html>`;
+
+      mockFileOperations(input);
+
+      const htmlLoader = createBucketLoader(
+        "html",
+        "i18n/[locale].html",
+        { defaultLocale: "en" },
+        ["head/0/0"],
+      );
+      htmlLoader.setDefaultLocale("en");
+      const data = await htmlLoader.pull("en");
+
+      // Title is locked, only body text should remain
+      expect(Object.values(data)).toContain("Hello");
+      expect(Object.keys(data)).not.toContain("head/0/0");
     });
   });
 
@@ -522,6 +618,30 @@ describe("bucket loaders", () => {
       await expect(jsoncLoader.pull("en")).rejects.toThrow(
         "Failed to parse JSONC",
       );
+    });
+
+    it("should respect locked keys (pull)", async () => {
+      setupFileMocks();
+
+      const input = `{
+        "locked_key": "Original",
+        "unlocked_key": "Hello"
+      }`;
+
+      mockFileOperations(input);
+
+      const jsoncLoader = createBucketLoader(
+        "jsonc",
+        "i18n/[locale].jsonc",
+        {
+          defaultLocale: "en",
+        },
+        ["locked_key"],
+      );
+      jsoncLoader.setDefaultLocale("en");
+      const data = await jsoncLoader.pull("en");
+
+      expect(data).toEqual({ unlocked_key: "Hello" });
     });
   });
 
@@ -1119,6 +1239,30 @@ Otro párrafo con texto en **negrita** y en _cursiva_.
         flag: "w",
       });
     });
+
+    it("should respect locked keys (pull)", async () => {
+      setupFileMocks();
+
+      const input = dedent`---
+title: Locked Title
+---
+
+Content here.`;
+
+      mockFileOperations(input);
+
+      const markdownLoader = createBucketLoader(
+        "markdown",
+        "i18n/[locale].md",
+        { defaultLocale: "en" },
+        ["fm-attr-title"],
+      );
+      markdownLoader.setDefaultLocale("en");
+      const data = await markdownLoader.pull("en");
+
+      // frontmatter title removed
+      expect(Object.keys(data)).not.toContain("fm-attr-title");
+    });
   });
 
   describe("properties bucket loader", () => {
@@ -1208,6 +1352,25 @@ user.password=Contraseña
         { encoding: "utf-8", flag: "w" },
       );
     });
+
+    it("should respect locked keys (pull)", async () => {
+      setupFileMocks();
+
+      const input = `locked=Original\nunlocked=Hello`;
+
+      mockFileOperations(input);
+
+      const propertiesLoader = createBucketLoader(
+        "properties",
+        "i18n/[locale].properties",
+        { defaultLocale: "en" },
+        ["locked"],
+      );
+      propertiesLoader.setDefaultLocale("en");
+      const data = await propertiesLoader.pull("en");
+
+      expect(data).toEqual({ unlocked: "Hello" });
+    });
   });
 
   describe("xcode-strings bucket loader", () => {
@@ -1268,6 +1431,28 @@ user.password=Contraseña
         expectedOutput,
         { encoding: "utf-8", flag: "w" },
       );
+    });
+
+    it("should respect locked keys (pull)", async () => {
+      setupFileMocks();
+
+      const input = `
+"locked" = "Original";
+"hello" = "Hello!";
+      `.trim();
+
+      mockFileOperations(input);
+
+      const xcodeStringsLoader = createBucketLoader(
+        "xcode-strings",
+        "i18n/[locale].strings",
+        { defaultLocale: "en" },
+        ["locked"],
+      );
+      xcodeStringsLoader.setDefaultLocale("en");
+      const data = await xcodeStringsLoader.pull("en");
+
+      expect(data).toEqual({ hello: "Hello!" });
     });
   });
 
@@ -1371,6 +1556,36 @@ user.password=Contraseña
           flag: "w",
         },
       );
+    });
+
+    it("should respect locked keys (pull)", async () => {
+      setupFileMocks();
+
+      const input = `
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>locked</key>
+  <string>Original</string>
+  <key>hello</key>
+  <string>Hello!</string>
+</dict>
+</plist>
+      `.trim();
+
+      mockFileOperations(input);
+
+      const xcodeStringsdictLoader = createBucketLoader(
+        "xcode-stringsdict",
+        "i18n/[locale].stringsdict",
+        { defaultLocale: "en" },
+        ["locked"],
+      );
+      xcodeStringsdictLoader.setDefaultLocale("en");
+      const data = await xcodeStringsdictLoader.pull("en");
+
+      expect(data).toEqual({ hello: "Hello!" });
     });
   });
 
@@ -2173,6 +2388,27 @@ user.password=Contraseña
       expect(data).toEqual(expectedOutput);
     });
 
+    it("should respect locked keys (pull)", async () => {
+      setupFileMocks();
+
+      const input = `locked: Original\nhello: Hello!`;
+
+      mockFileOperations(input);
+
+      const yamlLoader = createBucketLoader(
+        "yaml",
+        "i18n/[locale].yaml",
+        {
+          defaultLocale: "en",
+        },
+        ["locked"],
+      );
+      yamlLoader.setDefaultLocale("en");
+      const data = await yamlLoader.pull("en");
+
+      expect(data).toEqual({ hello: "Hello!" });
+    });
+
     it("should save yaml", async () => {
       setupFileMocks();
 
@@ -2383,6 +2619,36 @@ Bar`.trim();
         flag: "w",
       });
     });
+
+    it("should respect locked keys (pull)", async () => {
+      setupFileMocks();
+      const input = `
+WEBVTT
+
+00:00:00.000 --> 00:00:01.000
+Hello world!
+
+00:00:30.000 --> 00:00:31.000
+Another cue
+      `.trim();
+
+      mockFileOperations(input);
+
+      const vttLoader = createBucketLoader(
+        "vtt",
+        "i18n/[locale].vtt",
+        {
+          defaultLocale: "en",
+        },
+        ["0#*"],
+      );
+      vttLoader.setDefaultLocale("en");
+      const data = await vttLoader.pull("en");
+
+      // First cue (index 0) locked, so only second remains
+      expect(Object.values(data)).toContain("Another cue");
+      expect(Object.values(data)).not.toContain("Hello world!");
+    });
   });
 
   describe("XML bucket loader", () => {
@@ -2470,6 +2736,25 @@ Bar`.trim();
         flag: "w",
       });
     });
+
+    it("should respect locked keys (pull)", async () => {
+      setupFileMocks();
+      const input = `<root><locked>Original</locked><hello>Hello!</hello></root>`;
+      mockFileOperations(input);
+
+      const xmlLoader = createBucketLoader(
+        "xml",
+        "i18n/[locale].xml",
+        {
+          defaultLocale: "en",
+        },
+        ["root/locked"],
+      );
+      xmlLoader.setDefaultLocale("en");
+      const data = await xmlLoader.pull("en");
+
+      expect(data).toEqual({ "root/hello": "Hello!" });
+    });
   });
 
   describe("srt bucket loader", () => {
@@ -2541,6 +2826,34 @@ Mundo!`;
         encoding: "utf-8",
         flag: "w",
       });
+    });
+
+    it("should respect locked keys (pull)", async () => {
+      setupFileMocks();
+      const input = `
+1
+00:00:00,000 --> 00:00:01,000
+Hello!
+
+2
+00:00:01,000 --> 00:00:02,000
+World!
+      `.trim();
+
+      mockFileOperations(input);
+
+      const srtLoader = createBucketLoader(
+        "srt",
+        "i18n/[locale].srt",
+        {
+          defaultLocale: "en",
+        },
+        ["1#00:00:00,000-00:00:01,000"],
+      );
+      srtLoader.setDefaultLocale("en");
+      const data = await srtLoader.pull("en");
+
+      expect(data).toEqual({ "2#00:00:01,000-00:00:02,000": "World!" });
     });
   });
 
@@ -2683,6 +2996,45 @@ Mundo!`;
       expect(fs.writeFile).toHaveBeenCalledWith("i18n/es.xlf", expectedOutput, {
         encoding: "utf-8",
         flag: "w",
+      });
+    });
+
+    it("should respect locked keys (pull)", async () => {
+      setupFileMocks();
+
+      const input = `
+  <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en-US">
+    <file id="namespace1">
+      <unit id="locked">
+        <segment>
+          <source>Original</source>
+        </segment>
+      </unit>
+      <unit id="key1">
+        <segment>
+          <source>Hello</source>
+        </segment>
+      </unit>
+    </file>
+  </xliff>
+      `.trim();
+
+      mockFileOperations(input);
+
+      const xliffLoader = createBucketLoader(
+        "xliff",
+        "i18n/[locale].xliff",
+        {
+          defaultLocale: "en",
+        },
+        ["resources%2Fnamespace1%2Flocked%2Fsource"],
+      );
+      xliffLoader.setDefaultLocale("en");
+      const data = await xliffLoader.pull("en");
+
+      expect(data).toEqual({
+        "resources%2Fnamespace1%2Fkey1%2Fsource": "Hello",
+        sourceLanguage: "en-US",
       });
     });
   });
@@ -2853,6 +3205,27 @@ return array(
         flag: "w",
       });
     });
+
+    it("should respect locked keys (pull)", async () => {
+      setupFileMocks();
+
+      const input = `<?php\n\nreturn [\n  'locked' => 'Original',\n  'hello' => 'Hello'\n];`;
+
+      mockFileOperations(input);
+
+      const phpLoader = createBucketLoader(
+        "php",
+        "i18n/[locale].php",
+        {
+          defaultLocale: "en",
+        },
+        ["locked"],
+      );
+      phpLoader.setDefaultLocale("en");
+      const data = await phpLoader.pull("en");
+
+      expect(data).toEqual({ hello: "Hello" });
+    });
   });
 
   describe("po bucket loader", () => {
@@ -2930,6 +3303,29 @@ return array(
         `msgid "You have %(count)d items"\nmsgstr "Sie haben %(count)d Elemente"`,
         { encoding: "utf-8", flag: "w" },
       );
+    });
+
+    it("should respect locked keys (pull)", async () => {
+      setupFileMocks();
+      const input = `# Comment\n\nmsgid "greeting"\nmsgstr "Hello"\n\nmsgid "farewell"\nmsgstr "Bye"`;
+      const payload = input; // same for mocking
+
+      mockFileOperations(payload);
+
+      const poLoader = createBucketLoader(
+        "po",
+        "i18n/[locale].po",
+        {
+          defaultLocale: "en",
+        },
+        ["greeting/singular"],
+      );
+      poLoader.setDefaultLocale("en");
+      const data = await poLoader.pull("en");
+
+      // Only farewell remains (po loader returns structured values, flattened to keys)
+      expect(Object.keys(data)).toContain("farewell/singular");
+      expect(Object.keys(data)).not.toContain("greeting/singular");
     });
   });
 
@@ -3062,6 +3458,38 @@ ${script}`;
         { encoding: "utf-8", flag: "w" },
       );
     });
+
+    it("should respect locked keys (pull)", async () => {
+      setupFileMocks();
+
+      const input = `${template}
+
+<i18n>
+{
+  "en": {
+    "locked": "Original",
+    "hello": "Hello!"
+  }
+}
+</i18n>
+
+${script}`;
+
+      mockFileOperations(input);
+
+      const vueLoader = createBucketLoader(
+        "vue-json",
+        "i18n/[locale].vue",
+        {
+          defaultLocale: "en",
+        },
+        ["locked"],
+      );
+      vueLoader.setDefaultLocale("en");
+      const data = await vueLoader.pull("en");
+
+      expect(data).toEqual({ hello: "Hello!" });
+    });
   });
   describe("ejs bucket loader", () => {
     it("should load ejs data", async () => {
@@ -3163,6 +3591,38 @@ ${script}`;
         expectedOutput,
         { encoding: "utf-8", flag: "w" },
       );
+    });
+
+    it("should respect locked keys (pull)", async () => {
+      setupFileMocks();
+
+      const input = `<!DOCTYPE html>
+<html>
+<head>
+  <title>Welcome Page</title>
+</head>
+<body>
+  <h1>Hello <%= user.name %>!</h1>
+  <p>Welcome to our application.</p>
+</body>
+</html>`;
+
+      mockFileOperations(input);
+
+      const ejsLoader = createBucketLoader(
+        "ejs",
+        "templates/[locale].ejs",
+        {
+          defaultLocale: "en",
+        },
+        ["text_0"],
+      );
+      ejsLoader.setDefaultLocale("en");
+      const data = await ejsLoader.pull("en");
+
+      // text_0 (title) is locked; remaining translatables present
+      expect(Object.keys(data)).not.toContain("text_0");
+      expect(Object.keys(data)).toContain("text_1");
     });
   });
 
@@ -3316,6 +3776,24 @@ Línea 3`;
         { encoding: "utf-8", flag: "w" },
       );
     });
+
+    it("should respect locked keys (pull)", async () => {
+      setupFileMocks();
+
+      const input = `Secret\nHello`;
+      mockFileOperations(input);
+
+      const txtLoader = createBucketLoader(
+        "txt",
+        "fastlane/metadata/[locale]/description.txt",
+        { defaultLocale: "en" },
+        ["1"],
+      );
+      txtLoader.setDefaultLocale("en");
+      const data = await txtLoader.pull("en");
+
+      expect(data).toEqual({ 2: "Hello" } as any);
+    });
   });
 
   describe("json-dictionary bucket loader", () => {
@@ -3380,6 +3858,92 @@ Línea 3`;
         expectedOutput,
         { encoding: "utf-8", flag: "w" },
       );
+    });
+
+    it("should respect locked keys (pull)", async () => {
+      setupFileMocks();
+      const input = {
+        title: { en: "I am a title" },
+        subtitle: { en: "Sub" },
+      };
+      mockFileOperations(JSON.stringify(input));
+      const loader = createBucketLoader(
+        "json-dictionary",
+        "i18n/[locale].json",
+        { defaultLocale: "en" },
+        ["title"],
+      );
+      loader.setDefaultLocale("en");
+      const data = await loader.pull("en");
+      expect(data).toEqual({ subtitle: "Sub" });
+    });
+  });
+
+  describe("yaml-root-key bucket loader", () => {
+    it("should respect locked keys (pull)", async () => {
+      setupFileMocks();
+      const input = `en:\n  locked: Original\n  hello: Hello!`;
+      mockFileOperations(input);
+      const loader = createBucketLoader(
+        "yaml-root-key",
+        "i18n/[locale].yml",
+        { defaultLocale: "en" },
+        ["locked"],
+      );
+      loader.setDefaultLocale("en");
+      const data = await loader.pull("en");
+      expect(data).toEqual({ hello: "Hello!" });
+    });
+  });
+
+  describe("xcode-xcstrings-v2 bucket loader", () => {
+    it("should respect locked keys (pull)", async () => {
+      setupFileMocks();
+      const input = JSON.stringify({
+        sourceLanguage: "en",
+        strings: {
+          locked: {
+            extractionState: "manual",
+            localizations: {
+              en: { stringUnit: { state: "translated", value: "Original" } },
+            },
+          },
+          hello: {
+            extractionState: "manual",
+            localizations: {
+              en: { stringUnit: { state: "translated", value: "Hello" } },
+            },
+          },
+        },
+      });
+      mockFileOperations(input);
+
+      const loader = createBucketLoader(
+        "xcode-xcstrings-v2",
+        "i18n/[locale].xcstrings",
+        { defaultLocale: "en" },
+        ["locked"],
+      );
+      loader.setDefaultLocale("en");
+      const data = await loader.pull("en");
+      expect(data).toEqual({ hello: "Hello" });
+    });
+  });
+
+  describe("typescript bucket loader", () => {
+    it("should respect locked keys (pull)", async () => {
+      setupFileMocks();
+      const input = `export default { locked: "Original", hello: "Hello" };`;
+      mockFileOperations(input);
+      const loader = createBucketLoader(
+        "typescript",
+        "i18n/[locale].ts",
+        { defaultLocale: "en" },
+        ["locked"],
+      );
+      loader.setDefaultLocale("en");
+      const data = await loader.pull("en");
+      expect(data).toEqual({ hello: "Hello" });
     });
   });
 });
