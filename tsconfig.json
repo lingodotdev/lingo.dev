@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@lingo.dev/_sdk": ["packages/sdk/src"],
+      "@lingo.dev/_sdk/*": ["packages/sdk/src/*"],
+      "@lingo.dev/_react": ["packages/react/src"],
+      "@lingo.dev/_react/*": ["packages/react/src/*"],
+      "@lingo.dev/_react/client": ["packages/react/src/client"],
+      "@lingo.dev/_react/rsc": ["packages/react/src/rsc"],
+      "@lingo.dev/_react/react-router": ["packages/react/src/react-router"],
+      "@lingo.dev/_compiler": ["packages/compiler/src"],
+      "@lingo.dev/_compiler/*": ["packages/compiler/src/*"],
+      "@lingo.dev/_locales": ["packages/locales/src"],
+      "@lingo.dev/_locales/*": ["packages/locales/src/*"],
+      "@lingo.dev/_spec": ["packages/spec/src"],
+      "@lingo.dev/_spec/*": ["packages/spec/src/*"]
+    }
+  }
+}
