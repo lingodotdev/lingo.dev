@@ -5,6 +5,7 @@ import "./globals.css";
 // Compiler: add imports
 import { LocaleSwitcher } from "lingo.dev/react/client";
 import { LingoProvider, loadDictionary } from "lingo.dev/react/rsc";
+import { SwipeNavigation } from './SwipeNavigation';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,6 +34,7 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
+          <SwipeNavigation />
           <div className="absolute top-2 right-3">
             <LocaleSwitcher
               locales={["en", "es", "zh", "ja", "fr", "de", "ru", "ar", "ko"]}
@@ -45,7 +47,4 @@ export default function RootLayout({
   );
 }
 
-import { SwipeNavigation } from './SwipeNavigation';
 
-// Then in your layout component, add:
-<SwipeNavigation />
