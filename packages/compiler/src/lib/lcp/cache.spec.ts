@@ -9,9 +9,8 @@ import { LCP_DICTIONARY_FILE_NAME } from "../../_const";
 vi.mock("fs");
 vi.mock("prettier");
 
-// cached JSON is stored in JS file, we need to add export default to make it valid JS file
-function toCachedString(cache: any) {
-  return `export default ${JSON.stringify(cache, null, 2)};`;
+function toJson(cache: any) {
+  return `${JSON.stringify(cache, null, 2)}`;
 }
 
 describe("LCPCache", () => {
@@ -79,7 +78,7 @@ describe("LCPCache", () => {
     it("returns empty dictionary when cache exists but has no entries for requested locale", () => {
       vi.mocked(fs.existsSync).mockReturnValue(true);
       vi.mocked(fs.readFileSync).mockReturnValue(
-        toCachedString({
+        toJson({
           version: 0.1,
           files: {
             "test.ts": {
@@ -104,10 +103,10 @@ describe("LCPCache", () => {
       });
     });
 
-    it("returns dictionary entries with matching hashfor requested locale when cache exists", () => {
+    it("returns dictionary entries with matching hash for requested locale when cache exists", () => {
       vi.mocked(fs.existsSync).mockReturnValue(true);
       vi.mocked(fs.readFileSync).mockReturnValue(
-        toCachedString({
+        toJson({
           version: 0.1,
           files: {
             "test.ts": {
@@ -185,7 +184,7 @@ describe("LCPCache", () => {
 
       expect(fs.writeFileSync).toHaveBeenCalledWith(
         cachePath,
-        toCachedString({
+        toJson({
           version: 0.1,
           files: {
             "test.ts": {
@@ -206,7 +205,7 @@ describe("LCPCache", () => {
     it("adds new locale to existing cache", async () => {
       vi.mocked(fs.existsSync).mockReturnValue(true);
       vi.mocked(fs.readFileSync).mockReturnValue(
-        toCachedString({
+        toJson({
           version: 0.1,
           files: {
             "test.ts": {
@@ -240,7 +239,7 @@ describe("LCPCache", () => {
 
       expect(fs.writeFileSync).toHaveBeenCalledWith(
         cachePath,
-        toCachedString({
+        toJson({
           version: 0.1,
           files: {
             "test.ts": {
@@ -262,7 +261,7 @@ describe("LCPCache", () => {
     it("overrides existing locale entries in cache", async () => {
       vi.mocked(fs.existsSync).mockReturnValue(true);
       vi.mocked(fs.readFileSync).mockReturnValue(
-        toCachedString({
+        toJson({
           version: 0.1,
           files: {
             "test.ts": {
@@ -297,7 +296,7 @@ describe("LCPCache", () => {
 
       expect(fs.writeFileSync).toHaveBeenCalledWith(
         cachePath,
-        toCachedString({
+        toJson({
           version: 0.1,
           files: {
             "test.ts": {
@@ -319,7 +318,7 @@ describe("LCPCache", () => {
     it("handles different files and entries between cache and dictionary", async () => {
       vi.mocked(fs.existsSync).mockReturnValue(true);
       vi.mocked(fs.readFileSync).mockReturnValue(
-        toCachedString({
+        toJson({
           version: 0.1,
           files: {
             "old.ts": {
@@ -378,7 +377,7 @@ describe("LCPCache", () => {
 
       expect(fs.writeFileSync).toHaveBeenCalledWith(
         cachePath,
-        toCachedString({
+        toJson({
           version: 0.1,
           files: {
             "new.ts": {
@@ -435,6 +434,45 @@ describe("LCPCache", () => {
       expect(prettier.resolveConfig).toHaveBeenCalledTimes(1);
       expect(prettier.format).toHaveBeenCalledTimes(1);
       expect(fs.writeFileSync).toHaveBeenCalledWith(cachePath, "formatted");
+    });
+
+    it("migrates from legacy export default JS cache on write", async () => {
+      const legacyPath = resolve(
+        process.cwd(),
+        params.sourceRoot,
+        params.lingoDir,
+        "dictionary.js",
+      );
+
+      // First existsSync call for new path -> false, second for legacy -> true
+      vi.mocked(fs.existsSync).mockImplementation((p: any) => p === legacyPath);
+      vi.mocked(fs.readFileSync).mockImplementation((p: any) => {
+        if (p === legacyPath) {
+          return `export default ${JSON.stringify(
+            {
+              version: 0.1,
+              files: {},
+            },
+            null,
+            2,
+          )};`;
+        }
+        return "";
+      });
+
+      const dictionary = {
+        version: 0.1,
+        locale: "en",
+        files: {},
+      };
+
+      await LCPCache.writeLocaleDictionary(dictionary, params);
+
+      // Should write JSON (new path)
+      expect(fs.writeFileSync).toHaveBeenCalledWith(
+        cachePath,
+        toJson({ version: 0.1, files: {} }),
+      );
     });
   });
 });
