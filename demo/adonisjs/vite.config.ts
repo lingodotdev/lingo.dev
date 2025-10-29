@@ -34,9 +34,7 @@ const withLingo = lingoCompiler.vite({
   rsc: false,
   useDirective: false,
   debug: false,
-  models: {
-    '*:*': 'google:gemini-2.0-flash',
-  },
+  models: 'lingo.dev',
 })
 
 export default withLingo(viteConfig)
