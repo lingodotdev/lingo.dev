@@ -3,6 +3,7 @@ import figlet from "figlet";
 import { vice } from "gradient-string";
 import readline from "readline";
 import { colors } from "../constants";
+import type { CmdRunTask } from "../cmd/run/_types";
 
 export async function renderClear() {
   console.log("\x1Bc");
@@ -135,5 +136,19 @@ export async function renderSummary(results: Map<any, any>) {
         `     ${chalk.hex(colors.white)(String(result.error?.message || "Unknown error"))}`,
       );
     }
+  }
+}
+
+export async function renderDryRun(tasks: CmdRunTask[]) {
+  console.log(chalk.hex(colors.orange)("[Dry Run]"));
+  if (!tasks.length) {
+    console.log(chalk.dim("No tasks would be executed."));
+    return;
+  }
+  for (const t of tasks) {
+    const displayPath = t.bucketPathPattern.replace("[locale]", t.targetLocale);
+    console.log(
+      `  • ${chalk.dim(displayPath)} ${chalk.hex(colors.yellow)(`(${t.sourceLocale} → ${t.targetLocale})`)}`,
+    );
   }
 }

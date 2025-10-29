@@ -49,6 +49,7 @@ export default async function setup(input: CmdRunContext) {
       },
       {
         title: "Selecting localization provider",
+        enabled: (ctx) => !ctx.flags.dryRun,
         task: async (ctx, task) => {
           ctx.localizer = createLocalizer(
             ctx.config?.provider,
@@ -67,7 +68,8 @@ export default async function setup(input: CmdRunContext) {
       },
       {
         title: "Checking authentication",
-        enabled: (ctx) => ctx.localizer?.id === "Lingo.dev",
+        enabled: (ctx) =>
+          !ctx.flags.dryRun && ctx.localizer?.id === "Lingo.dev",
         task: async (ctx, task) => {
           const authStatus = await ctx.localizer!.checkAuth();
           if (!authStatus.authenticated) {
@@ -80,7 +82,8 @@ export default async function setup(input: CmdRunContext) {
       },
       {
         title: "Validating configuration",
-        enabled: (ctx) => ctx.localizer?.id !== "Lingo.dev",
+        enabled: (ctx) =>
+          !ctx.flags.dryRun && ctx.localizer?.id !== "Lingo.dev",
         task: async (ctx, task) => {
           const validationStatus = await ctx.localizer!.validateSettings!();
           if (!validationStatus.valid) {
@@ -93,6 +96,7 @@ export default async function setup(input: CmdRunContext) {
       },
       {
         title: "Initializing localization provider",
+        enabled: (ctx) => !ctx.flags.dryRun,
         async task(ctx, task) {
           const isLingoDotDev = ctx.localizer!.id === "Lingo.dev";
 
