@@ -32,17 +32,24 @@ export const LingoComponent = React.forwardRef(
       $expressions,
       ...rest
     } = props;
-    const maybeValue = $dictionary?.files?.[$fileKey]?.entries?.[$entryKey];
 
+    // 1). try to find static translation from the dictionary
+    const maybeValue = $dictionary?.files?.[$fileKey]?.entries?.[$entryKey];
+    
+    const dynamicValue =
+      !maybeValue && typeof $entryKey === "string"
+        ? autoTranslateText($entryKey, $dictionary)
+        : maybeValue;
+    
     const children = useMemo(() => {
       return _.flow([
         (nodes) => ifNotEmpty(replaceElements, $elements, nodes),
         (nodes) => ifNotEmpty(replaceVariables, $variables, nodes),
         (nodes) => ifNotEmpty(replaceFunctions, $functions, nodes),
         (nodes) => ifNotEmpty(replaceExpressions, $expressions, nodes),
-      ])([maybeValue ?? $entryKey]);
+      ])([dynamicValue ?? $entryKey]);
     }, [
-      maybeValue,
+      dynamicValue,
       $entryKey,
       $elements,
       $variables,
@@ -65,8 +72,8 @@ export const LingoComponent = React.forwardRef(
   },
 );
 
-// testValue needs to be cloned before passing to the callback for the first time only
-// it can not be cloned inside the callback because it is called recursively
+
+
 function ifNotEmpty<T>(
   callback: (nodes: ReactNode[], value: T) => ReactNode[],
   testValue: T,
@@ -283,4 +290,13 @@ function replaceExpressions(
   }
 
   return processWithIndex(nodes);
+}
+
+/*  
+  helper for handle dynamic ( non-key ) translation text ......
+*/
+function autoTranslateText(text: string, dictionary: any): string {
+  const fallback = dictionary?.files?.auto?.entries?.[text];
+
+  return fallback || text;
 }
