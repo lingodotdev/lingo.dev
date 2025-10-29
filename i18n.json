@@ -1,5 +1,5 @@
 {
-  "version": "1.10",
+  "version": "1.11",
   "locale": {
     "source": "en",
     "targets": [
@@ -25,6 +25,15 @@
   "buckets": {
     "mdx": {
       "include": ["readme/[locale].md"]
+    }
+  },
+  "review": {
+    "attribute": "data-lingo-id",
+    "outputDir": ".lingo/context",
+    "routes": [],
+    "compiler": {
+      "sourceRoot": "src",
+      "lingoDir": "lingo"
     }
   },
   "$schema": "https://lingo.dev/schema/i18n.json"

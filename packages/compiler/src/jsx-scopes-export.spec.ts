@@ -11,6 +11,7 @@ vi.mock("./lib/lcp", () => {
     setScopeSkip: vi.fn().mockReturnThis(),
     setScopeOverrides: vi.fn().mockReturnThis(),
     setScopeContent: vi.fn().mockReturnThis(),
+    setScopeMarker: vi.fn().mockReturnThis(),
     save: vi.fn(),
   };
   const getInstance = vi.fn(() => instance);
@@ -50,6 +51,14 @@ export default function X(){
       "src/App.tsx",
       "0/declaration/body/0/argument",
       "Foobar",
+    );
+    expect(inst.setScopeMarker).toHaveBeenCalledWith(
+      "src/App.tsx",
+      "0/declaration/body/0/argument",
+      {
+        attribute: "data-lingo-id",
+        value: "src/App.tsx::0/declaration/body/0/argument",
+      },
     );
     expect(inst.save).toHaveBeenCalled();
   });

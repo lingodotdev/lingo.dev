@@ -78,6 +78,7 @@ describe("I18n Config Parser", () => {
     expect(result.version).toBe(LATEST_CONFIG_DEFINITION.defaultValue.version);
     expect(result.locale).toEqual(defaultConfig.locale);
     expect(result.buckets).toEqual({});
+    expect(result.review).toEqual(defaultConfig.review);
   });
 
   it("should upgrade v1 config to latest version", () => {
@@ -95,6 +96,7 @@ describe("I18n Config Parser", () => {
         include: ["src/blog/[locale]/*.md"],
       },
     });
+    expect(result.review).toEqual(defaultConfig.review);
   });
 
   it("should handle empty config and use defaults", () => {
@@ -112,7 +114,9 @@ describe("I18n Config Parser", () => {
     const result = parseI18nConfig(configWithExtra);
 
     expect(result).not.toHaveProperty("extraField");
-    expect(result).toEqual(createV1_4Config());
+    expect(result.locale).toEqual(createV1_4Config().locale);
+    expect(result.buckets).toEqual(createV1_4Config().buckets);
+    expect(result.review).toEqual(defaultConfig.review);
   });
 
   it("should throw an error for unsupported locales", () => {

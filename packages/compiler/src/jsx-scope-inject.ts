@@ -3,6 +3,7 @@ import {
   getJsxAttributeValue,
   getModuleExecutionMode,
   getOrCreateImport,
+  setJsxAttributeValue,
 } from "./utils";
 import * as t from "@babel/types";
 import _ from "lodash";
@@ -12,7 +13,11 @@ import { getJsxVariables } from "./utils/jsx-variables";
 import { getJsxFunctions } from "./utils/jsx-functions";
 import { getJsxExpressions } from "./utils/jsx-expressions";
 import { collectJsxScopes, getJsxScopeAttribute } from "./utils/jsx-scope";
-import { setJsxAttributeValue } from "./utils/jsx-attribute";
+import {
+  DEFAULT_CONTEXT_ATTRIBUTE,
+  resolveContextAttributeName,
+} from "./utils/context-marker";
+const invalidAttributeNameWarning = { value: false };
 
 export const lingoJsxScopeInjectMutation = createCodeMutation((payload) => {
   const mode = getModuleExecutionMode(payload.ast, payload.params.rsc);
@@ -54,6 +59,8 @@ export const lingoJsxScopeInjectMutation = createCodeMutation((payload) => {
       node: newNode,
     } as any;
 
+    const entryKey = getJsxScopeAttribute(jsxScope)!;
+
     // Add $as prop
     const as = /^[A-Z]/.test(originalJsxElementName)
       ? t.identifier(originalJsxElementName)
@@ -64,11 +71,38 @@ export const lingoJsxScopeInjectMutation = createCodeMutation((payload) => {
     setJsxAttributeValue(newNodePath, "$fileKey", payload.relativeFilePath);
 
     // Add $entryKey prop
-    setJsxAttributeValue(
-      newNodePath,
-      "$entryKey",
-      getJsxScopeAttribute(jsxScope)!,
-    );
+    setJsxAttributeValue(newNodePath, "$entryKey", entryKey);
+
+    if (payload.params.exposeContextAttribute) {
+      const { name: attributeName, usedFallback } = resolveContextAttributeName(
+        payload.params.contextAttributeName,
+      );
+
+      if (usedFallback && !invalidAttributeNameWarning.value) {
+        invalidAttributeNameWarning.value = true;
+        console.warn(
+          `⚠️  Lingo.dev: contextAttributeName must start with "data-". Using "${DEFAULT_CONTEXT_ATTRIBUTE}" instead.`,
+        );
+      }
+
+      const existingValue = getJsxAttributeValue(newNodePath, attributeName);
+      const existingString =
+        typeof existingValue === "string" ? existingValue.trim() : "";
+      const markerValue =
+        existingString.length > 0
+          ? existingString
+          : `${payload.relativeFilePath}::${entryKey}`;
+
+      const shouldSetMarker =
+        existingValue === undefined ||
+        existingValue === null ||
+        typeof existingValue !== "string" ||
+        existingString.length === 0;
+
+      if (shouldSetMarker) {
+        setJsxAttributeValue(newNodePath, attributeName, markerValue);
+      }
+    }
 
     // Extract $variables from original JSX scope before lingo component was inserted
     const $variables = getJsxVariables(jsxScope);
