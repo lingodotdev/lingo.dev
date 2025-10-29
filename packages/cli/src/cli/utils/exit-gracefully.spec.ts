@@ -37,6 +37,16 @@ describe("exitGracefully", () => {
     expect(mockExit).toHaveBeenCalledWith(0);
   });
 
+  it("should exit with specified exit code when no pending operations", () => {
+    // Mock no pending operations
+    (process as any)._getActiveHandles.mockReturnValue([]);
+    (process as any)._getActiveRequests.mockReturnValue([]);
+
+    exitGracefully(1);
+
+    expect(mockExit).toHaveBeenCalledWith(1);
+  });
+
   it("should wait and retry when there are pending operations", () => {
     vi.useFakeTimers();
 
@@ -142,8 +152,8 @@ describe("exitGracefully", () => {
     ]);
     (process as any)._getActiveRequests.mockReturnValue([]);
 
-    // Start with 1500ms already elapsed
-    exitGracefully(1500);
+    // Start with 1500ms already elapsed (exitCode=0, elapsedMs=1500)
+    exitGracefully(0, 1500);
 
     // Should exit after 500ms more (reaching 2000ms max)
     vi.advanceTimersByTime(500);
@@ -158,10 +168,27 @@ describe("exitGracefully", () => {
     ]);
     (process as any)._getActiveRequests.mockReturnValue([]);
 
-    exitGracefully(2500);
+    exitGracefully(0, 2500);
 
     // Should exit immediately as elapsed time exceeds max wait interval
     expect(mockExit).toHaveBeenCalledWith(0);
+  });
+
+  it("should exit with non-zero exit code when specified", () => {
+    vi.useFakeTimers();
+
+    // Mock pending operations
+    (process as any)._getActiveHandles.mockReturnValue([
+      { hasRef: () => true, close: () => {} },
+    ]);
+    (process as any)._getActiveRequests.mockReturnValue([]);
+
+    exitGracefully(1);
+
+    // Fast-forward to max wait time
+    vi.advanceTimersByTime(2000);
+
+    expect(mockExit).toHaveBeenCalledWith(1);
   });
 
   it("should handle mixed types of pending operations", () => {

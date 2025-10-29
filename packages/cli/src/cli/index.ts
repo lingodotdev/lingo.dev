@@ -21,6 +21,7 @@ import mayTheFourthCmd from "./cmd/may-the-fourth";
 import packageJson from "../../package.json";
 import run from "./cmd/run";
 import purgeCmd from "./cmd/purge";
+import { exitGracefully } from "./utils/exit-gracefully";
 
 export default new InteractiveCommand()
   .name("lingo.dev")
@@ -69,7 +70,7 @@ Star the the repo :) https://github.com/LingoDotDev/lingo.dev
       err.code === "commander.version" ||
       err.code === "commander.help"
     ) {
-      process.exit(0);
+      exitGracefully(0);
     }
-    process.exit(1);
+    exitGracefully(1);
   });
