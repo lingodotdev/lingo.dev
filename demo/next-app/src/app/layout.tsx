@@ -44,3 +44,8 @@ export default function RootLayout({
     </LingoProvider>
   );
 }
+
+import { SwipeNavigation } from './SwipeNavigation';
+
+// Then in your layout component, add:
+<SwipeNavigation />
