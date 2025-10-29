@@ -19,6 +19,21 @@ export default new Command()
     "--target",
     "Only list the target locale variants for each configured locale",
   )
+  .option(
+    "--bucket <bucket>",
+    "Filter by bucket type (e.g., json, yaml, android). Repeatable",
+    (val: string, prev: string[]) => (prev ? [...prev, val] : [val]),
+  )
+  .option(
+    "--target-locale <code>",
+    "Filter by target locale code. Repeatable",
+    (val: string, prev: string[]) => (prev ? [...prev, val] : [val]),
+  )
+  .option(
+    "--file <substr>",
+    "Filter bucket path patterns by substring/glob match. Repeatable",
+    (val: string, prev: string[]) => (prev ? [...prev, val] : [val]),
+  )
   .helpOption("-h, --help", "Show help")
   .action(async (type) => {
     const ora = Ora();
@@ -34,9 +49,19 @@ export default new Command()
           });
         }
 
-        const buckets = getBuckets(i18nConfig);
+        let buckets = getBuckets(i18nConfig);
+        if (type.bucket?.length) {
+          buckets = buckets.filter((b) => type.bucket.includes(b.type));
+        }
+
         for (const bucket of buckets) {
           for (const bucketConfig of bucket.paths) {
+            if (type.file?.length) {
+              const matches = type.file.some((f: string) =>
+                bucketConfig.pathPattern.includes(f),
+              );
+              if (!matches) continue;
+            }
             const sourceLocale = resolveOverriddenLocale(
               i18nConfig.locale.source,
               bucketConfig.delimiter,
@@ -45,18 +70,19 @@ export default new Command()
               /\[locale\]/g,
               sourceLocale,
             );
-            const targetPaths = i18nConfig.locale.targets.map(
-              (_targetLocale) => {
-                const targetLocale = resolveOverriddenLocale(
-                  _targetLocale,
-                  bucketConfig.delimiter,
-                );
-                return bucketConfig.pathPattern.replace(
-                  /\[locale\]/g,
-                  targetLocale,
-                );
-              },
-            );
+            const targetLocales: string[] = type.targetLocale?.length
+              ? type.targetLocale
+              : i18nConfig.locale.targets;
+            const targetPaths = targetLocales.map((_targetLocale) => {
+              const targetLocale = resolveOverriddenLocale(
+                _targetLocale,
+                bucketConfig.delimiter,
+              );
+              return bucketConfig.pathPattern.replace(
+                /\[locale\]/g,
+                targetLocale,
+              );
+            });
 
             const result: string[] = [];
             if (!type.source && !type.target) {
