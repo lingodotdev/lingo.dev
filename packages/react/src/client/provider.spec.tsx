@@ -1,7 +1,11 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
-import { LingoProvider, LingoProviderWrapper } from "./provider";
+import {
+  LingoProvider,
+  LingoProviderWrapper,
+  clearDictionaryCache,
+} from "./provider";
 import { LingoContext } from "./context";
 
 vi.mock("./utils", async (orig) => {
@@ -15,6 +19,7 @@ vi.mock("./utils", async (orig) => {
 describe("client/provider", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    clearDictionaryCache();
   });
 
   describe("LingoProvider", () => {
@@ -52,37 +57,46 @@ describe("client/provider", () => {
   });
 
   describe("LingoProviderWrapper", () => {
-    it("loads dictionary and renders children; returns null while loading", async () => {
+    it("loads dictionary with Suspense and renders children", async () => {
       const loadDictionary = vi
         .fn()
         .mockResolvedValue({ locale: "en", files: {} });
 
       const Child = () => <div data-testid="child">ok</div>;
 
-      const { container, findByTestId } = render(
+      const { findByTestId } = render(
         <LingoProviderWrapper loadDictionary={loadDictionary}>
           <Child />
         </LingoProviderWrapper>,
       );
 
-      // initially null during loading
-      expect(container.firstChild).toBeNull();
-
       await waitFor(() => expect(loadDictionary).toHaveBeenCalled());
       const child = await findByTestId("child");
-      expect(child != null).toBe(true);
+      expect(child).toBeTruthy();
     });
 
-    it("swallows load errors and stays null", async () => {
-      const loadDictionary = vi.fn().mockRejectedValue(new Error("boom"));
-      const { container } = render(
-        <LingoProviderWrapper loadDictionary={loadDictionary}>
-          <div />
+    it("supports custom fallback UI", async () => {
+      const loadDictionary = vi
+        .fn()
+        .mockResolvedValue({ locale: "en", files: {} });
+
+      const CustomFallback = () => (
+        <div data-testid="custom">Custom loading</div>
+      );
+      const Child = () => <div data-testid="child">ok</div>;
+
+      const { findByTestId } = render(
+        <LingoProviderWrapper
+          loadDictionary={loadDictionary}
+          fallback={<CustomFallback />}
+        >
+          <Child />
         </LingoProviderWrapper>,
       );
 
-      await vi.waitFor(() => expect(loadDictionary).toHaveBeenCalled());
-      expect(container.firstChild).toBeNull();
+      const child = await findByTestId("child");
+      expect(child).toBeTruthy();
+      expect(loadDictionary).toHaveBeenCalledWith("en");
     });
   });
 });

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { Suspense, ReactNode } from "react";
 import { LingoContext } from "./context";
 import { getLocaleFromCookies } from "./utils";
 
@@ -78,7 +78,6 @@ export type LingoProviderProps<D> = {
  * ```
  */
 export function LingoProvider<D>(props: LingoProviderProps<D>) {
-  // TODO: handle case when no dictionary is provided - throw suspense? return null / other fallback?
   if (!props.dictionary) {
     throw new Error("LingoProvider: dictionary is not provided.");
   }
@@ -88,6 +87,52 @@ export function LingoProvider<D>(props: LingoProviderProps<D>) {
       value={{ dictionary: props.dictionary }}
       children={props.children}
     />
+  );
+}
+
+/**
+ * A simple default fallback component displayed while the dictionary is loading.
+ */
+function DefaultLoadingFallback() {
+  return (
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        minHeight: "100vh",
+        fontFamily: "system-ui, -apple-system, sans-serif",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "1rem",
+        }}
+      >
+        <div
+          style={{
+            width: "40px",
+            height: "40px",
+            border: "3px solid #f3f3f3",
+            borderTop: "3px solid #3498db",
+            borderRadius: "50%",
+            animation: "spin 1s linear infinite",
+          }}
+        />
+        <style>
+          {`
+            @keyframes spin {
+              0% { transform: rotate(0deg); }
+              100% { transform: rotate(360deg); }
+            }
+          `}
+        </style>
+        <p style={{ color: "#666", margin: 0 }}>Loading translations...</p>
+      </div>
+    </div>
   );
 }
 
@@ -107,6 +152,11 @@ export type LingoProviderWrapperProps<D> = {
    * The child components containing localizable content.
    */
   children: React.ReactNode;
+  /**
+   * Optional fallback UI to display while the dictionary is loading.
+   * If not provided, a default loading spinner will be shown.
+   */
+  fallback?: ReactNode;
 };
 
 /**
@@ -116,10 +166,12 @@ export type LingoProviderWrapperProps<D> = {
  *
  * - Should be placed at the top of the component tree
  * - Should be used in purely client-side rendered applications (e.g., Vite-based apps)
+ * - Uses React Suspense internally to handle async dictionary loading
+ * - Shows a loading fallback while the dictionary is being fetched
  *
  * @template D - The type of the dictionary object containing localized content.
  *
- * @example Use in a Vite application
+ * @example Use in a Vite application with default fallback
  * ```tsx file="src/main.tsx"
  * import { LingoProviderWrapper, loadDictionary } from "lingo.dev/react/client";
  * import { StrictMode } from 'react'
@@ -135,32 +187,78 @@ export type LingoProviderWrapperProps<D> = {
  *   </StrictMode>,
  * );
  * ```
+ *
+ * @example Use with custom loading fallback
+ * ```tsx
+ * <LingoProviderWrapper
+ *   loadDictionary={(locale) => loadDictionary(locale)}
+ *   fallback={<div>Loading your language...</div>}
+ * >
+ *   <App />
+ * </LingoProviderWrapper>
+ * ```
  */
-export function LingoProviderWrapper<D>(props: LingoProviderWrapperProps<D>) {
-  const [dictionary, setDictionary] = useState<D | null>(null);
+/**
+ * Cache to store loaded dictionaries to maintain stable references
+ */
+const dictionaryCache = new Map<string, any>();
+const loadingPromises = new Map<string, Promise<any>>();
 
-  // for client-side rendered apps, the dictionary is also loaded on the client
-  useEffect(() => {
-    (async () => {
-      try {
-        const locale = getLocaleFromCookies();
-        console.log(
-          `[Lingo.dev] Loading dictionary file for locale ${locale}...`,
-        );
-        const localeDictionary = await props.loadDictionary(locale);
-        setDictionary(localeDictionary);
-      } catch (error) {
-        console.log("[Lingo.dev] Failed to load dictionary:", error);
-      }
-    })();
-  }, []);
+/**
+ * Clears the dictionary cache.
+ * @internal
+ */
+export function clearDictionaryCache() {
+  dictionaryCache.clear();
+  loadingPromises.clear();
+}
 
-  // TODO: handle case when the dictionary is loading (throw suspense?)
-  if (!dictionary) {
-    return null;
+/**
+ * Internal component that loads the dictionary and suspends until ready.
+ */
+function LingoProviderWrapperInternal<D>(
+  props: Omit<LingoProviderWrapperProps<D>, "fallback">,
+) {
+  const locale = getLocaleFromCookies();
+  const cacheKey = `dictionary-${locale}`;
+
+  // Check if dictionary is already loaded
+  if (dictionaryCache.has(cacheKey)) {
+    const dictionary = dictionaryCache.get(cacheKey);
+    return (
+      <LingoProvider dictionary={dictionary}>{props.children}</LingoProvider>
+    );
   }
 
+  // Check if we're currently loading
+  if (!loadingPromises.has(cacheKey)) {
+    console.log(`[Lingo.dev] Loading dictionary file for locale ${locale}...`);
+    const promise = props
+      .loadDictionary(locale)
+      .then((dict) => {
+        console.log(`[Lingo.dev] Dictionary loaded successfully`);
+        dictionaryCache.set(cacheKey, dict);
+        loadingPromises.delete(cacheKey);
+        return dict;
+      })
+      .catch((error) => {
+        console.error("[Lingo.dev] Failed to load dictionary:", error);
+        loadingPromises.delete(cacheKey);
+        throw error;
+      });
+    loadingPromises.set(cacheKey, promise);
+  }
+
+  // Throw the promise to trigger Suspense
+  throw loadingPromises.get(cacheKey)!;
+}
+
+export function LingoProviderWrapper<D>(props: LingoProviderWrapperProps<D>) {
+  const { fallback = <DefaultLoadingFallback />, ...rest } = props;
+
   return (
-    <LingoProvider dictionary={dictionary}>{props.children}</LingoProvider>
+    <Suspense fallback={fallback}>
+      <LingoProviderWrapperInternal {...rest} />
+    </Suspense>
   );
 }
