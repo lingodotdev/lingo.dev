@@ -30,11 +30,13 @@ const withLingo = lingoCompiler.vite({
   sourceRoot: 'inertia',
   lingoDir: 'lingo',
   sourceLocale: 'en',
-  targetLocales: ['es'],
+  targetLocales: ['es', 'ja', 'fr', 'ru', 'de', 'zh', 'ar', 'ko'],
   rsc: false,
   useDirective: false,
   debug: false,
-  models: 'lingo.dev',
+  models: {
+    '*:*': 'google:gemini-2.0-flash',
+  },
 })
 
 export default withLingo(viteConfig)
