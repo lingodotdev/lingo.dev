@@ -45,21 +45,31 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Use Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: "20"
+      - name: Build hermetic image
+        run: docker build -f Dockerfile.repro -t lingo-repro:20.12.2 .
 
-      - name: Lingo.dev
-        uses: ./
+      - name: Prepare pnpm store path
+        run: echo "REPRO_PNPM_STORE=${{ runner.temp }}/pnpm-store" >> $GITHUB_ENV
+
+      - name: Cache pnpm store
+        uses: actions/cache@v3
         with:
-          api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
-          version: ${{ inputs.version }}
-          pull-request: ${{ inputs['pull-request'] }}
-          commit-message: ${{ inputs['commit-message'] }}
-          pull-request-title: ${{ inputs['pull-request-title'] }}
-          working-directory: ${{ inputs['working-directory'] }}
-          process-own-commits: ${{ inputs['process-own-commits'] }}
-          parallel: ${{ inputs.parallel }}
+          path: ${{ env.REPRO_PNPM_STORE }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Lingo.dev (container)
         env:
           GH_TOKEN: ${{ github.token }}
+          LINGODOTDEV_API_KEY: ${{ secrets.LINGODOTDEV_API_KEY }}
+        run: |
+          REPRO_PNPM_STORE="${{ env.REPRO_PNPM_STORE }}" bash scripts/repro/exec.sh \
+            npx lingo.dev@${{ inputs.version }} ci \
+              --api-key "$LINGODOTDEV_API_KEY" \
+              --pull-request "${{ inputs['pull-request'] }}" \
+              --commit-message "${{ inputs['commit-message'] }}" \
+              --pull-request-title "${{ inputs['pull-request-title'] }}" \
+              --working-directory "${{ inputs['working-directory'] }}" \
+              --process-own-commits "${{ inputs['process-own-commits'] }}" \
+              --parallel ${{ inputs.parallel }}
