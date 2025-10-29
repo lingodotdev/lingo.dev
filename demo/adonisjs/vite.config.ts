@@ -18,6 +18,16 @@ const viteConfig: UserConfig = {
       entrypoints: ['inertia/app/app.tsx'],
       reload: ['resources/views/**/*.edge'],
     }) as unknown as PluginOption,
+    lingoCompiler.vite({
+      sourceRoot: 'inertia',
+      lingoDir: 'lingo',
+      sourceLocale: 'en',
+      targetLocales: ['es'],
+      rsc: false,
+      useDirective: false,
+      debug: true, // enable debug to see dictionary generation logs
+      models: 'lingo.dev',
+    }) as unknown as PluginOption, // force correct typing
   ],
   resolve: {
     alias: {
@@ -25,16 +35,3 @@ const viteConfig: UserConfig = {
     },
   },
 }
-
-const withLingo = lingoCompiler.vite({
-  sourceRoot: 'inertia',
-  lingoDir: 'lingo',
-  sourceLocale: 'en',
-  targetLocales: ['es'],
-  rsc: false,
-  useDirective: false,
-  debug: false,
-  models: 'lingo.dev',
-})
-
-export default withLingo(viteConfig)
