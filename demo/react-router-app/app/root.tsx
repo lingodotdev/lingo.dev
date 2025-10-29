@@ -49,7 +49,9 @@ export function Layout(props: { children: React.ReactNode }) {
           <ScrollRestoration />
           <Scripts />
           <div className="absolute top-2 right-3">
-            <LocaleSwitcher locales={["en", "es", "fr", "de"]} />
+            <LocaleSwitcher
+              locales={["en", "es", "zh", "ja", "fr", "de", "ru", "ar", "ko"]}
+            />
           </div>
         </body>
       </html>

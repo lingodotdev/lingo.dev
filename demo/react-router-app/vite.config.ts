@@ -9,7 +9,7 @@ import lingoCompiler from "lingo.dev/compiler";
 export default defineConfig(({ isSsrBuild }) =>
   lingoCompiler.vite({
     sourceRoot: "app",
-    targetLocales: ["es", "fr", "de"],
+    targetLocales: ["es", "ja", "fr", "ru", "de", "zh", "ar", "ko"],
     useDirective: false,
     models: "lingo.dev",
   })({
