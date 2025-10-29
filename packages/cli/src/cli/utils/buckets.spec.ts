@@ -23,6 +23,13 @@ describe("getBuckets", () => {
     },
   });
 
+  const toPosix = (s: string) => s.replace(/\\/g, "/");
+  const normalizeBuckets = (buckets: any) =>
+    buckets.map((b: any) => ({
+      type: b.type,
+      paths: b.paths.map((p: any) => ({ ...p, pathPattern: toPosix(p.pathPattern) })),
+    }));
+
   it("should return correct buckets", () => {
     mockGlobSync(["src/i18n/en.json"], ["src/translations/en/messages.json"]);
 
@@ -31,7 +38,7 @@ describe("getBuckets", () => {
       "src/translations/[locale]/messages.json",
     ]);
     const buckets = getBuckets(i18nConfig);
-    expect(buckets).toEqual([
+    expect(normalizeBuckets(buckets)).toEqual([
       {
         type: "json",
         paths: [
@@ -76,7 +83,7 @@ describe("getBuckets", () => {
       "src/i18n/data-*-[locale]-*/[locale].*.json",
     ]);
     const buckets = getBuckets(i18nConfig);
-    expect(buckets).toEqual([
+    expect(normalizeBuckets(buckets)).toEqual([
       {
         type: "json",
         paths: [
@@ -136,7 +143,7 @@ describe("getBuckets", () => {
       { path: "src/i18n/[locale].json", delimiter: "-" },
     ]);
     const buckets = getBuckets(i18nConfig);
-    expect(buckets).toEqual([
+    expect(normalizeBuckets(buckets)).toEqual([
       {
         type: "json",
         paths: [{ pathPattern: "src/i18n/[locale].json", delimiter: "-" }],
@@ -154,7 +161,7 @@ describe("getBuckets", () => {
       "src/[locale]/translations/[locale]/messages.json",
     ]);
     const buckets = getBuckets(i18nConfig);
-    expect(buckets).toEqual([
+    expect(normalizeBuckets(buckets)).toEqual([
       {
         type: "json",
         paths: [
