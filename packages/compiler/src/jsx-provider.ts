@@ -1,4 +1,5 @@
-import traverse, { NodePath } from "@babel/traverse";
+import traverse from "./utils/babel-traverse";
+import type { NodePath } from "./utils/babel-traverse";
 import * as t from "@babel/types";
 import { CompilerPayload, createCodeMutation } from "./_base";
 import { getJsxElementName } from "./utils/jsx-element";

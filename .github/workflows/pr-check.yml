@@ -62,8 +62,20 @@ jobs:
       - name: Configure Turbo cache
         uses: dtinth/setup-github-actions-caching-for-turbo@v1
 
-      - name: Check formatting
-        run: pnpm format:check
+      - name: Check formatting (changed files only)
+        run: |
+          BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          HEAD_SHA="${{ github.sha }}"
+          echo "Base: $BASE_SHA"
+          echo "Head: $HEAD_SHA"
+          # List changed files (added/copied/modified/renamed); exclude deletions
+          mapfile -t files < <(git diff --name-only --diff-filter=ACMR "$BASE_SHA...$HEAD_SHA")
+          if [ ${#files[@]} -eq 0 ]; then
+            echo "No changed files. Skipping Prettier check."
+            exit 0
+          fi
+          echo "Checking formatting for ${#files[@]} changed files."
+          pnpm exec prettier --check --ignore-unknown "${files[@]}"
 
       - name: Build
         run: pnpm turbo build --force

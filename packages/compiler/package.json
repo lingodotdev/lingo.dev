@@ -11,6 +11,23 @@
   "main": "build/index.cjs",
   "types": "build/index.d.ts",
   "module": "build/index.mjs",
+  "exports": {
+    ".": {
+      "types": "./build/index.d.ts",
+      "import": "./build/index.mjs",
+      "require": "./build/index.cjs"
+    },
+    "./vite": {
+      "types": "./build/vite.d.ts",
+      "import": "./build/vite.mjs",
+      "require": "./build/vite.cjs"
+    },
+    "./next": {
+      "types": "./build/next.d.ts",
+      "import": "./build/next.mjs",
+      "require": "./build/next.cjs"
+    }
+  },
   "files": [
     "build"
   ],
@@ -35,7 +52,8 @@
     "next": "15.2.4",
     "tsup": "^8.3.5",
     "typescript": "^5.4.5",
-    "vitest": "^2.1.4"
+    "vite": "^6.0.0",
+    "vitest": "^3.1.2"
   },
   "dependencies": {
     "@ai-sdk/google": "^1.2.19",
@@ -55,13 +73,21 @@
     "fast-xml-parser": "^5.0.8",
     "ini": "^5.0.0",
     "lodash": "^4.17.21",
+    "node-machine-id": "^1.1.12",
     "object-hash": "^3.0.0",
     "ollama-ai-provider": "^1.2.0",
+    "posthog-node": "^5.5.1",
     "prettier": "^3.4.2",
     "unplugin": "^2.1.2",
-    "zod": "^3.25.76",
-    "posthog-node": "^5.5.1",
-    "node-machine-id": "^1.1.12"
+    "zod": "^3.25.76"
+  },
+  "peerDependencies": {
+    "vite": "^5.0.0 || ^6.0.0"
+  },
+  "peerDependenciesMeta": {
+    "vite": {
+      "optional": true
+    }
   },
   "packageManager": "pnpm@9.12.3"
 }

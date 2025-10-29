@@ -29,6 +29,16 @@
       "import": "./build/compiler.mjs",
       "require": "./build/compiler.cjs"
     },
+    "./compiler/vite": {
+      "types": "./build/compiler/vite.d.ts",
+      "import": "./build/compiler/vite.mjs",
+      "require": "./build/compiler/vite.cjs"
+    },
+    "./compiler/next": {
+      "types": "./build/compiler/next.d.ts",
+      "import": "./build/compiler/next.mjs",
+      "require": "./build/compiler/next.cjs"
+    },
     "./react": {
       "types": "./build/react.d.ts",
       "import": "./build/react.mjs",
@@ -83,6 +93,12 @@
       ],
       "compiler": [
         "./build/compiler.d.ts"
+      ],
+      "compiler/vite": [
+        "./build/compiler/vite.d.ts"
+      ],
+      "compiler/next": [
+        "./build/compiler/next.d.ts"
       ],
       "react": [
         "./build/react.d.ts"
@@ -144,7 +160,6 @@
     "@markdoc/markdoc": "^0.5.4",
     "@modelcontextprotocol/sdk": "^1.5.0",
     "@openrouter/ai-sdk-provider": "^0.7.1",
-    "@paralleldrive/cuid2": "^2.2.2",
     "@types/ejs": "^3.1.5",
     "ai": "^4.3.15",
     "bitbucket": "^2.12.0",
@@ -233,7 +248,7 @@
     "@types/jsdom": "^21.1.7",
     "@types/lodash": "^4.17.16",
     "@types/mdast": "^4.0.4",
-    "@types/node": "^22.10.2",
+    "@types/node": "^20.19.23",
     "@types/node-gettext": "^3.0.6",
     "@types/object-hash": "^3.0.6",
     "@types/plist": "^3.0.5",
