@@ -1,0 +1,6 @@
+- [ ] Create readme/mr.md with Marathi translation of readme/en.md
+- [ ] Update i18n.json to add "mr" to targets array
+- [ ] Run build and test scripts to ensure no errors
+- [ ] Commit changes with message "docs: add Marathi translation of README and update i18n.json"
+- [ ] Push branch to origin
+- [ ] Open Pull Request
