@@ -12,6 +12,7 @@ import initCmd from "./cmd/init";
 import showCmd from "./cmd/show";
 import configCmd from "./cmd/config";
 import i18nCmd from "./cmd/i18n";
+import fix from "./cmd/fix";
 import lockfileCmd from "./cmd/lockfile";
 import cleanupCmd from "./cmd/cleanup";
 import mcpCmd from "./cmd/mcp";
@@ -54,6 +55,7 @@ Star the the repo :) https://github.com/LingoDotDev/lingo.dev
   .addCommand(logoutCmd)
   .addCommand(showCmd)
   .addCommand(configCmd)
+  .addCommand(fix)
   .addCommand(lockfileCmd)
   .addCommand(cleanupCmd)
   .addCommand(mcpCmd)
