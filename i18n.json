@@ -2,27 +2,106 @@
   "version": "1.10",
   "locale": {
     "source": "en",
+    "config": {
+      "direction": "ltr",
+      "script": "latin"
+    },
     "targets": [
-      "ru",
-      "he",
-      "fr",
-      "es",
-      "de",
-      "zh-Hans",
-      "ko",
-      "ja",
-      "it",
-      "ar",
-      "hi",
-      "pt-BR",
-      "uk-UA",
-      "bn",
-      "fa",
-      "pl",
-      "tr",
-      "ne",
-      "mr"
-      ,"si"
+      {
+        "code": "ar",
+        "direction": "rtl",
+        "script": "arabic"
+      },
+      {
+        "code": "bn",
+        "direction": "ltr",
+        "script": "bengali"
+      },
+      {
+        "code": "de",
+        "direction": "ltr",
+        "script": "latin"
+      },
+      {
+        "code": "es",
+        "direction": "ltr",
+        "script": "latin"
+      },
+      {
+        "code": "fa",
+        "direction": "rtl",
+        "script": "arabic"
+      },
+      {
+        "code": "fr",
+        "direction": "ltr",
+        "script": "latin"
+      },
+      {
+        "code": "he",
+        "direction": "rtl",
+        "script": "hebrew"
+      },
+      {
+        "code": "hi",
+        "direction": "ltr",
+        "script": "devanagari"
+      },
+      {
+        "code": "it",
+        "direction": "ltr",
+        "script": "latin"
+      },
+      {
+        "code": "ja",
+        "direction": "ltr",
+        "script": "japanese"
+      },
+      {
+        "code": "ko",
+        "direction": "ltr",
+        "script": "hangul"
+      },
+      {
+        "code": "mr",
+        "direction": "ltr",
+        "script": "devanagari"
+      },
+      {
+        "code": "ne",
+        "direction": "ltr",
+        "script": "devanagari"
+      },
+      {
+        "code": "pl",
+        "direction": "ltr",
+        "script": "latin"
+      },
+      {
+        "code": "pt-BR",
+        "direction": "ltr",
+        "script": "latin"
+      },
+      {
+        "code": "ru",
+        "direction": "ltr",
+        "script": "cyrillic"
+      },
+      {
+        "code": "tr",
+        "direction": "ltr",
+        "script": "latin"
+      },
+      {
+        "code": "uk-UA",
+        "direction": "ltr",
+        "script": "cyrillic"
+      },
+      {
+        "code": "zh-Hans",
+        "direction": "ltr",
+        "script": "hans"
+      }
     ]
   },
   "buckets": {
