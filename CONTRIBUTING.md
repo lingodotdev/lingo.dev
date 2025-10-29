@@ -33,7 +33,11 @@ cd lingo.dev
 pnpm install
 ```
 
-Next, configure an AI API key. You can use either a Lingo.dev API key or one of the supported LLM model providers.
+Next, configure an AI API key. You can use either a Lingo.dev API key or one of the supported LLM model providers. A simple way to do this is to create a `.env` file in the root of the project and add your key, like this:
+
+```
+GROQ_API_KEY="your-groq-api-key-here"
+```
 
 Please refer to our docs on how to set this up: https://lingo.dev/en/cli/quick-start#step-2-authentication
 
