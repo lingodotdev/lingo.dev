@@ -16,12 +16,12 @@ export function Welcome() {
             <a href="https://reactrouter.com/">
               <img
                 src={logoLight}
-                alt="React Router"
+                alt="React Router logo - light theme version"
                 className="block w-full dark:hidden h-[38px]"
               />
               <img
                 src={logoDark}
-                alt="React Router"
+                alt="React Router logo - dark theme version"
                 className="hidden w-full dark:block h-[38px]"
               />
             </a>
