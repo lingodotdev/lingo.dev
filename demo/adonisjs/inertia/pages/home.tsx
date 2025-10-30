@@ -1,6 +1,9 @@
 import { Head } from '@inertiajs/react'
 import { LocaleSwitcher } from 'lingo.dev/react/client'
 
+// Shared locale configuration - see packages/shared/locales.ts
+const SUPPORTED_LOCALES = ["ar","de","en","es","fr","ja","ko","ru","zh"];
+
 export default function Home() {
   return (
     <>
@@ -21,7 +24,7 @@ export default function Home() {
             To switch between locales, use the following dropdown:
           </p>
           <div className="flex justify-center">
-            <LocaleSwitcher locales={['en', 'es']} />
+            <LocaleSwitcher locales={SUPPORTED_LOCALES} />
           </div>
         </div>
       </div>
