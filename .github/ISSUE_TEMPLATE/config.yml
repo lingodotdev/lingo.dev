@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Discord Community
+    url: https://discord.gg/lingo
+    about: Join our Discord server for questions and discussions
+  - name: 📖 Documentation
+    url: https://lingo.dev/docs
+    about: Check our documentation for guides and API references
+  - name: ❓ Q&A Discussions
+    url: https://github.com/lingodotdev/lingo.dev/discussions
+    about: Ask questions and discuss with the community
