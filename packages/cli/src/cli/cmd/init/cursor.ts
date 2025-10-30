@@ -2,10 +2,9 @@ import { InteractiveCommand, InteractiveOption } from "interactive-commander";
 import Ora from "ora";
 import fs from "fs";
 import path from "path";
-import { fileURLToPath } from "url";
 import { confirm } from "@inquirer/prompts";
 
-const AGENTS_MD = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../../agents.md");
+const AGENTS_MD = path.resolve(process.cwd(), "packages/cli/agents.md");
 const CURSORRULES = path.resolve(process.cwd(), ".cursorrules");
 
 export default new InteractiveCommand()
