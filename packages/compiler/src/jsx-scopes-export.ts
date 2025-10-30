@@ -6,6 +6,7 @@ import { getJsxElementHash } from "./utils/hash";
 import { getJsxAttributesMap } from "./utils/jsx-attribute";
 import { extractJsxContent } from "./utils/jsx-content";
 import { collectJsxScopes } from "./utils/jsx-scope";
+import { resolveContextAttributeName } from "./utils/context-marker";
 import { CompilerPayload } from "./_base";
 
 // Processes only JSX element scopes
@@ -46,7 +47,7 @@ export function jsxScopesExportMutation(
       Boolean(skip || false),
     );
 
-    const attributesMap = getJsxAttributesMap(scope);
+  const attributesMap = getJsxAttributesMap(scope);
     const overrides = _.chain(attributesMap)
       .entries()
       .filter(([attributeKey]) =>
@@ -61,6 +62,19 @@ export function jsxScopesExportMutation(
 
     const content = extractJsxContent(scope);
     lcp.setScopeContent(payload.relativeFilePath, scopeKey, content);
+
+    const { name: attributeName } = resolveContextAttributeName(
+      payload.params.contextAttributeName,
+    );
+    const attributeValue = attributesMap[attributeName];
+    const markerValue =
+      typeof attributeValue === "string" && attributeValue.trim().length > 0
+        ? attributeValue.trim()
+        : `${payload.relativeFilePath}::${scopeKey}`;
+    lcp.setScopeMarker(payload.relativeFilePath, scopeKey, {
+      attribute: attributeName,
+      value: markerValue,
+    });
   }
 
   lcp.save();
