@@ -45,6 +45,13 @@ export const providerDetails: Record<
     getKeyLink: "https://console.mistral.ai",
     docsLink: "https://docs.mistral.ai",
   },
+  gemini: {
+    name: "Gemini (Google)",
+    apiKeyEnvVar: "GEMINI_API_KEY",
+    apiKeyConfigKey: "llm.geminiApiKey",
+    getKeyLink: "https://aistudio.google.com/apikey",
+    docsLink: "https://ai.google.dev/docs",
+  },
   "lingo.dev": {
     name: "Lingo.dev",
     apiKeyEnvVar: "LINGODOTDEV_API_KEY",

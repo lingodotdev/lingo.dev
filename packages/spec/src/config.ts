@@ -297,6 +297,7 @@ const providerSchema = Z.object({
     "ollama",
     "openrouter",
     "mistral",
+    "gemini",
   ]).describe("Identifier of the translation provider service."),
   model: Z.string().describe("Model name to use for translations."),
   prompt: Z.string().describe(
@@ -456,6 +457,7 @@ const providerSchemaV1_10 = Z.object({
     "ollama",
     "openrouter",
     "mistral",
+    "gemini",
   ]).describe("Identifier of the translation provider service."),
   model: Z.string().describe("Model name to use for translations."),
   prompt: Z.string().describe(

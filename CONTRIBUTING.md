@@ -94,7 +94,7 @@ Want to add support for a new LLM provider to Lingo.dev? Here's a checklist to h
    - Update documentation and this contributing guide as needed.
 
 **Tip:**
-Look at how existing providers like "groq", "google", and "mistral" are implemented for reference. Consistency helps us maintain quality and predictability!
+Look at how existing providers like "groq", "google", "gemini", and "mistral" are implemented for reference. Consistency helps us maintain quality and predictability!
 
 ## Issues
 

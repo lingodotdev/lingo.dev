@@ -49,6 +49,18 @@ export function getLingoDotDevKey() {
   return getLingoDotDevKeyFromEnv() || getLingoDotDevKeyFromRc();
 }
 
+export function getGeminiKeyFromEnv() {
+  return getKeyFromEnv("GEMINI_API_KEY");
+}
+
+export function getGeminiKeyFromRc() {
+  return getKeyFromRc("llm.geminiApiKey");
+}
+
+export function getGeminiKey() {
+  return getGeminiKeyFromEnv() || getGeminiKeyFromRc();
+}
+
 export function getGoogleKey() {
   return getGoogleKeyFromEnv() || getGoogleKeyFromRc();
 }
