@@ -463,7 +463,7 @@
 
 - [`2aedf3b`](https://github.com/lingodotdev/lingo.dev/commit/2aedf3bec2d9dffc7b43fc10dea0cab5742d44af) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - added support for .stringsdict
 
-- [#245](https://github.com/lingodotdev/lingo.dev/pull/245) [`3fc9da7`](https://github.com/lingodotdev/lingo.dev/commit/3fc9da7e3d2ec58e7f278c79a53eae6d3dfa5896) Thanks [@Nithishvb](https://github.com/Nithishvb)! - prevented overwritting of i18n.json with a default template for unsupported locales
+- [#245](https://github.com/lingodotdev/lingo.dev/pull/245) [`3fc9da7`](https://github.com/lingodotdev/lingo.dev/commit/3fc9da7e3d2ec58e7f278c79a53eae6d3dfa5896) Thanks [@Nithishvb](https://github.com/Nithishvb)! - prevented overwriting of i18n.json with a default template for unsupported locales
 
 - [`626082a`](https://github.com/lingodotdev/lingo.dev/commit/626082a64b88fb3b589acd950afeafe417ce5ddc) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - added Flutter .arb support
 
