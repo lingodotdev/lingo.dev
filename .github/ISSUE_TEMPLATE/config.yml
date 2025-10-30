@@ -1,0 +1,14 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Discord Community
+    url: https://lingo.dev/go/discord
+    about: Join our Discord for questions, discussions, and community support
+  - name: 📚 Documentation
+    url: https://lingo.dev/en
+    about: Check our comprehensive documentation for guides and API reference
+  - name: 🚀 Feature Discussions
+    url: https://github.com/lingodotdev/lingo.dev/discussions
+    about: Discuss ideas and proposals with the community before creating feature requests
+  - name: 🔒 Security Issues
+    url: mailto:security@lingo.dev
+    about: Report security vulnerabilities privately via email

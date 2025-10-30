@@ -35,6 +35,7 @@ describe("resolveLocaleCode", () => {
     expect(resolveLocaleCode("en")).toEqual("en-US");
     expect(resolveLocaleCode("fr")).toEqual("fr-FR");
     expect(resolveLocaleCode("az")).toEqual("az-AZ");
+    expect(resolveLocaleCode("mr")).toEqual("mr-IN");
   });
 
   it("should return the full locale code if it is already provided", () => {

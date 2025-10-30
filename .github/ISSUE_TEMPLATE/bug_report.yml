@@ -1,0 +1,162 @@
+name: 🐛 Bug Report
+description: Report a reproducible bug or regression in Lingo.dev
+title: "[Bug]: "
+labels: ["bug", "needs-triage"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Before you start
+        
+        Please search existing issues to avoid duplicates. For questions or support, use our [Discord community](https://lingo.dev/go/discord).
+
+  - type: checkboxes
+    id: prerequisites
+    attributes:
+      label: Prerequisites
+      description: Please confirm you have completed the following
+      options:
+        - label: I have searched existing issues and this is not a duplicate
+          required: true
+        - label: I have read the documentation
+          required: true
+        - label: I can reproduce this issue consistently
+          required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: A clear and concise description of the bug
+      placeholder: Describe what happened and what you expected to happen
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal Reproduction Steps
+      description: Provide the minimal steps to reproduce this bug
+      placeholder: |
+        1. Install lingo.dev with `npm install lingo.dev`
+        2. Create config file with `{ ... }`
+        3. Run command `npx lingo.dev run`
+        4. Observe error: ...
+      value: |
+        1. 
+        2. 
+        3. 
+        4. 
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What should have happened instead?
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      description: What actually happened? Include screenshots if applicable
+    validations:
+      required: true
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: Affected Component
+      description: Which component is experiencing the issue?
+      options:
+        - CLI
+        - Compiler (Build-time)
+        - SDK (Runtime)
+        - React Integration
+        - CI/CD Action
+        - Documentation
+        - Other (specify in additional context)
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Lingo.dev Version
+      description: Run `npx lingo.dev --version` to get the version
+      placeholder: "0.114.0"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      description: How severe is this bug?
+      options:
+        - Critical (blocks development/production)
+        - High (major feature broken)
+        - Medium (minor feature issue)
+        - Low (cosmetic/documentation)
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment Details
+      description: Please provide your environment information
+      placeholder: |
+        - OS: macOS 13.0 / Ubuntu 22.04 / Windows 11
+        - Node.js: 18.17.0 (run `node --version`)
+        - Package Manager: pnpm 8.6.0 (run `pnpm --version`)
+        - Framework: Next.js 14.0.0
+        - Browser: Chrome 118.0.0 (if applicable)
+      render: yaml
+    validations:
+      required: true
+
+  - type: textarea
+    id: config
+    attributes:
+      label: Configuration
+      description: Share your lingo.dev configuration (remove sensitive data)
+      placeholder: |
+        // i18n.json or relevant config
+        {
+          "locale": {
+            "source": "en",
+            "targets": ["es", "fr"]
+          }
+        }
+      render: json
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Error Logs & Stack Trace
+      description: Include complete error messages, stack traces, and relevant logs
+      placeholder: |
+        Run with --verbose flag for detailed logs:
+        npx lingo.dev run --verbose
+        
+        Paste the complete output here...
+      render: shell
+    validations:
+      required: true
+
+  - type: textarea
+    id: workaround
+    attributes:
+      label: Workaround
+      description: Have you found any temporary workaround for this issue?
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Any other relevant information, screenshots, or context

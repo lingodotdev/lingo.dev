@@ -1,0 +1,145 @@
+name: ✨ Feature Request
+description: Propose a new feature or enhancement for Lingo.dev
+title: "[Feature]: "
+labels: ["enhancement", "needs-triage"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Before you start
+        
+        Please search existing issues and discussions to avoid duplicates. Consider discussing complex features in our [Discord community](https://lingo.dev/go/discord) first.
+
+  - type: checkboxes
+    id: prerequisites
+    attributes:
+      label: Prerequisites
+      description: Please confirm you have completed the following
+      options:
+        - label: I have searched existing issues and discussions
+          required: true
+        - label: I have reviewed the roadmap and documentation
+          required: true
+        - label: This is a feature request, not a bug report
+          required: true
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Feature Summary
+      description: A clear and concise summary of the proposed feature
+      placeholder: Brief one-line description of the feature
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Statement
+      description: What problem does this feature solve? What pain point does it address?
+      placeholder: |
+        Describe the current limitation or problem:
+        - What workflow is currently difficult or impossible?
+        - What use case is not supported?
+        - What would this feature enable?
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: Detailed description of how you envision this feature working
+      placeholder: |
+        Describe your proposed solution:
+        - How should the feature work?
+        - What should the API/interface look like?
+        - Include code examples if applicable
+    validations:
+      required: true
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: Affected Component
+      description: Which component would this feature primarily affect?
+      options:
+        - CLI
+        - Compiler (Build-time)
+        - SDK (Runtime)
+        - React Integration
+        - CI/CD Action
+        - Documentation
+        - Developer Experience
+        - Performance
+        - Other (specify below)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How important is this feature to you?
+      options:
+        - Critical (blocking current project)
+        - High (would significantly improve workflow)
+        - Medium (nice to have improvement)
+        - Low (minor enhancement)
+    validations:
+      required: true
+
+  - type: textarea
+    id: use_cases
+    attributes:
+      label: Use Cases
+      description: Provide specific use cases and scenarios where this feature would be valuable
+      placeholder: |
+        1. Use case 1: When working with...
+        2. Use case 2: For projects that...
+        3. Use case 3: To enable...
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: What alternative solutions or workarounds have you considered?
+      placeholder: |
+        - Alternative 1: Tried using... but it doesn't work because...
+        - Alternative 2: Could use... but it has limitations...
+        - Current workaround: Currently doing... but it's problematic because...
+
+  - type: textarea
+    id: implementation
+    attributes:
+      label: Implementation Ideas
+      description: Do you have ideas about how this could be implemented? (Optional)
+      placeholder: |
+        If you have technical insights:
+        - Potential approach or architecture
+        - Similar features in other tools
+        - Technical considerations
+
+  - type: textarea
+    id: breaking_changes
+    attributes:
+      label: Breaking Changes
+      description: Would this feature require any breaking changes?
+      placeholder: |
+        - Would this change existing APIs?
+        - Would existing configurations need updates?
+        - How could migration be handled?
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Any other context, mockups, screenshots, or references
+      placeholder: |
+        - Links to similar features in other tools
+        - Screenshots or mockups
+        - Related issues or discussions
+        - Any other relevant information
