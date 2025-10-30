@@ -27,6 +27,10 @@ export function createBasicTranslator(
 
     const result = _.merge({}, ...subResults);
 
+    try {
+      onProgress(100, {}, result);
+    } catch {}
+
     return result;
   };
 
