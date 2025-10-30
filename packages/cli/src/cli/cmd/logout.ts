@@ -7,6 +7,7 @@ import {
   renderBanner,
   renderHero,
 } from "../utils/ui";
+import { exitGracefully } from "../utils/exit-gracefully";
 
 export default new Command()
   .command("logout")
@@ -26,6 +27,6 @@ export default new Command()
       Ora().succeed("Successfully logged out");
     } catch (error: any) {
       Ora().fail(error.message);
-      process.exit(1);
+      exitGracefully(1);
     }
   });

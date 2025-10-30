@@ -1,19 +1,19 @@
 const STEP_WAIT_INTERVAL = 250;
 const MAX_WAIT_INTERVAL = 2000;
 
-export function exitGracefully(elapsedMs = 0) {
+export function exitGracefully(exitCode: number = 0, elapsedMs = 0) {
   // Check if there are any pending operations
   const hasPendingOperations = checkForPendingOperations();
 
   if (hasPendingOperations && elapsedMs < MAX_WAIT_INTERVAL) {
     // Wait a bit longer if there are pending operations
     setTimeout(
-      () => exitGracefully(elapsedMs + STEP_WAIT_INTERVAL),
+      () => exitGracefully(exitCode, elapsedMs + STEP_WAIT_INTERVAL),
       STEP_WAIT_INTERVAL,
     );
   } else {
-    // Exit immediately if no pending operations
-    process.exit(0);
+    // Exit with the specified exit code
+    process.exit(exitCode);
   }
 }
 
