@@ -45,6 +45,13 @@ export const providerDetails: Record<
     getKeyLink: "https://console.mistral.ai",
     docsLink: "https://docs.mistral.ai",
   },
+  openai: {
+    name: "OpenAI",
+    apiKeyEnvVar: "OPENAI_API_KEY",
+    apiKeyConfigKey: "llm.openaiApiKey",
+    getKeyLink: "https://platform.openai.com/api-keys",
+    docsLink: "https://platform.openai.com/docs/guides/error-codes",
+  },
   "lingo.dev": {
     name: "Lingo.dev",
     apiKeyEnvVar: "LINGODOTDEV_API_KEY",

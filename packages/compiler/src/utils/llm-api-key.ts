@@ -82,3 +82,15 @@ export function getMistralKeyFromRc() {
 export function getMistralKeyFromEnv() {
   return getKeyFromEnv("MISTRAL_API_KEY");
 }
+
+export function getOpenAIKey() {
+  return getOpenAIKeyFromEnv() || getOpenAIKeyFromRc();
+}
+
+export function getOpenAIKeyFromRc() {
+  return getKeyFromRc("llm.openaiApiKey");
+}
+
+export function getOpenAIKeyFromEnv() {
+  return getKeyFromEnv("OPENAI_API_KEY");
+}
