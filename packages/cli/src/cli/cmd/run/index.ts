@@ -7,6 +7,7 @@ import setup from "./setup";
 import plan from "./plan";
 import execute from "./execute";
 import watch from "./watch";
+import dryRun from "./dry-run";
 import { CmdRunContext, flagsSchema } from "./_types";
 import frozen from "./frozen";
 import {
@@ -117,6 +118,10 @@ export default new Command()
     "--sound",
     "Play audio feedback when translations complete (success or failure sounds)",
   )
+  .option(
+    "--dry-run",
+    "Preview which files would be translated and how many strings would be affected without performing actual translation",
+  )
   .action(async (args) => {
     let authId: string | null = null;
     try {
@@ -149,14 +154,20 @@ export default new Command()
       await plan(ctx);
       await renderSpacer();
 
-      await frozen(ctx);
-      await renderSpacer();
+      // If dry-run mode is enabled, skip execution and show preview
+      if (ctx.flags.dryRun) {
+        await dryRun(ctx);
+        await renderSpacer();
+      } else {
+        await frozen(ctx);
+        await renderSpacer();
 
-      await execute(ctx);
-      await renderSpacer();
+        await execute(ctx);
+        await renderSpacer();
 
-      await renderSummary(ctx.results);
-      await renderSpacer();
+        await renderSummary(ctx.results);
+        await renderSpacer();
+      }
 
       // Play sound after main tasks complete if sound flag is enabled
       if (ctx.flags.sound) {
