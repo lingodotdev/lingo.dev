@@ -4,6 +4,7 @@ import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { createOllama } from "ollama-ai-provider";
 import { createMistral } from "@ai-sdk/mistral";
 import { createOpenAI } from "@ai-sdk/openai";
+import { createAnthropic } from "@ai-sdk/anthropic";
 import { generateText } from "ai";
 import { LingoDotDevEngine } from "@lingo.dev/_sdk";
 import { DictionarySchema } from "../schema";
@@ -23,6 +24,8 @@ import {
   getMistralKeyFromEnv,
   getOpenAIKey,
   getOpenAIKeyFromEnv,
+  getAnthropicKey,
+  getAnthropicKeyFromEnv,
   getLingoDotDevKeyFromEnv,
   getLingoDotDevKey,
 } from "../../../utils/llm-api-key";
@@ -406,9 +409,29 @@ export class LCPAPI {
         return createOpenAI({ apiKey: openaiKey })(modelId);
       }
 
+      case "anthropic": {
+        // Specific check for CI/CD or Docker missing Anthropic key
+        if (isRunningInCIOrDocker()) {
+          const anthropicFromEnv = getAnthropicKeyFromEnv();
+          if (!anthropicFromEnv) {
+            this._failMissingLLMKeyCi(providerId);
+          }
+        }
+        const anthropicKey = getAnthropicKey();
+        if (!anthropicKey) {
+          throw new Error(
+            "⚠️  Anthropic API key not found. Please set ANTHROPIC_API_KEY environment variable or configure it user-wide.",
+          );
+        }
+        console.log(
+          `Creating Anthropic client for ${targetLocale} using model ${modelId}`,
+        );
+        return createAnthropic({ apiKey: anthropicKey })(modelId);
+      }
+
       default: {
         throw new Error(
-          `⚠️  Provider "${providerId}" for locale "${targetLocale}" is not supported. Only "groq", "google", "openrouter", "ollama", "mistral", and "openai" providers are supported at the moment.`,
+          `⚠️  Provider "${providerId}" for locale "${targetLocale}" is not supported. Only "groq", "google", "openrouter", "ollama", "mistral", "openai", and "anthropic" providers are supported at the moment.`,
         );
       }
     }

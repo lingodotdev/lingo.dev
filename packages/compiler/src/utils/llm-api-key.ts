@@ -94,3 +94,15 @@ export function getOpenAIKeyFromRc() {
 export function getOpenAIKeyFromEnv() {
   return getKeyFromEnv("OPENAI_API_KEY");
 }
+
+export function getAnthropicKey() {
+  return getAnthropicKeyFromEnv() || getAnthropicKeyFromRc();
+}
+
+export function getAnthropicKeyFromRc() {
+  return getKeyFromRc("llm.anthropicApiKey");
+}
+
+export function getAnthropicKeyFromEnv() {
+  return getKeyFromEnv("ANTHROPIC_API_KEY");
+}

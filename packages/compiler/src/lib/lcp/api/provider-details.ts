@@ -52,6 +52,13 @@ export const providerDetails: Record<
     getKeyLink: "https://platform.openai.com/api-keys",
     docsLink: "https://platform.openai.com/docs/guides/error-codes",
   },
+  anthropic: {
+    name: "Anthropic",
+    apiKeyEnvVar: "ANTHROPIC_API_KEY",
+    apiKeyConfigKey: "llm.anthropicApiKey",
+    getKeyLink: "https://console.anthropic.com/",
+    docsLink: "https://docs.anthropic.com/claude/reference/errors",
+  },
   "lingo.dev": {
     name: "Lingo.dev",
     apiKeyEnvVar: "LINGODOTDEV_API_KEY",

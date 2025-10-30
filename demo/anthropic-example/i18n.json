@@ -1,0 +1,21 @@
+{
+  "$schema": "https://lingo.dev/schema/i18n.json",
+  "version": "1.10",
+  "locale": {
+    "source": "en",
+    "targets": ["es", "fr", "de", "ja", "zh"]
+  },
+  "provider": {
+    "id": "anthropic",
+    "model": "claude-3-5-sonnet-20241022",
+    "prompt": "Translate the following content from {source} to {target}. Maintain the original structure and formatting. Be accurate, natural, and culturally appropriate.",
+    "settings": {
+      "temperature": 0.2
+    }
+  },
+  "buckets": {
+    "json": {
+      "include": ["src/locales/[locale].json"]
+    }
+  }
+}
