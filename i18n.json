@@ -27,5 +27,13 @@
       "include": ["readme/[locale].md"]
     }
   },
+  "provider": {
+    "id": "google",
+    "model": "gemini-2.5-pro",
+    "prompt": "Translate from {source} to {target}. Output raw JSON only.",
+    "settings": {
+      "temperature": 0
+    }
+  },
   "$schema": "https://lingo.dev/schema/i18n.json"
 }
