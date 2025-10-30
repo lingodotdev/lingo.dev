@@ -6,7 +6,11 @@ import { Octokit } from "@octokit/rest";
 import * as prettier from "prettier";
 
 export function getRepoRoot(): string {
-  const __filename = fileURLToPath(import.meta.url);
+  const metadataUrl = import.meta.url;
+  if (!metadataUrl) {
+    throw new Error("import.meta.url is undefined");
+  }
+  const __filename = fileURLToPath(metadataUrl);
   const __dirname = path.dirname(__filename);
   let currentDir = __dirname;
 

@@ -9,7 +9,7 @@
     "new": "changeset",
     "new:empty": "changeset --empty",
     "format": "prettier . --write",
-    "format:check": "prettier . --check"
+    "format:check": "prettier . --check",
   },
   "devDependencies": {
     "@babel/generator": "^7.27.1",

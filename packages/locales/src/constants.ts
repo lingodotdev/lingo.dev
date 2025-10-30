@@ -28,5 +28,19 @@
  * - Script codes preserve their original case
  * - Region codes are converted to uppercase
  */
-export const LOCALE_REGEX =
-  /^([a-z]{2,3})(?:[-_]([A-Za-z]{4}))?(?:[-_]([A-Z]{2}|[0-9]{3}))?$/;
+// export const LOCALE_REGEX =
+//   /^([a-z]{2,3})(?:[-_]([A-Za-z]{4}))?(?:[-_]([A-Z]{2}|[0-9]{3}))?$/;
+
+/* The `export const LOCALE_REGEX` statement is defining a regular expression object named
+`LOCALE_REGEX` that is used for parsing locale strings. The regular expression is constructed using
+the `RegExp` constructor with the following components: */
+export const LOCALE_REGEX = new RegExp(
+  [
+    '^',
+    '([a-z]{2,3})',                    // Language code
+    '(?:[-_]([A-Za-z]{4}))?',          // Optional script code
+    '(?:[-_]([A-Z]{2}|[0-9]{3}))?',    // Optional region code
+    '$'
+  ].join(''),
+  'u'                                   // Unicode flag for better Unicode support
+);
