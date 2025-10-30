@@ -1,0 +1,109 @@
+name: ✨ Feature Request
+description: Suggest a new feature or enhancement for Lingo.dev
+title: "[FEATURE]: "
+labels: ["enhancement", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a feature! Please fill out the form below to help us understand your request.
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: 📋 Feature Summary
+      description: A brief summary of the feature you'd like to see
+      placeholder: Provide a concise summary of the feature...
+    validations:
+      required: true
+
+  - type: textarea
+    id: motivation
+    attributes:
+      label: 🎯 Motivation
+      description: Why is this feature needed? What problem does it solve?
+      placeholder: Explain the motivation and use case...
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-solution
+    attributes:
+      label: 💡 Proposed Solution
+      description: How would you like this feature to work?
+      placeholder: Describe your proposed solution...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: 🔧 Component
+      description: Which component should this feature be added to?
+      options:
+        - Compiler
+        - CLI
+        - SDK
+        - React Package
+        - Next.js Integration
+        - Vite Integration
+        - AdonisJS Integration
+        - React Router Integration
+        - Directus Integration
+        - Website/Docs
+        - CI/CD
+        - New Package/Integration
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: 🔄 Alternatives Considered
+      description: What alternative solutions or features have you considered?
+      placeholder: Describe any alternative approaches...
+
+  - type: textarea
+    id: example-usage
+    attributes:
+      label: 📝 Example Usage
+      description: Provide an example of how this feature would be used
+      placeholder: |
+        ```typescript
+        // Example code showing how the feature would work
+        ```
+      render: typescript
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: ⚡ Priority
+      description: How important is this feature to you?
+      options:
+        - Low - Nice to have
+        - Medium - Would be beneficial
+        - High - Important for my use case
+        - Critical - Blocking my project
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: 📌 Additional Context
+      description: Add any other context, mockups, or examples about the feature
+      placeholder: Any additional information...
+
+  - type: checkboxes
+    id: checkboxes
+    attributes:
+      label: ✅ Pre-submission Checklist
+      description: Please confirm the following before submitting
+      options:
+        - label: I have searched existing issues to ensure this feature hasn't been requested
+          required: true
+        - label: I have provided all the required information above
+          required: true
+        - label: I am willing to help implement this feature
+          required: false
