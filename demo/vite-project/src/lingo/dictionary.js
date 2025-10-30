@@ -101,6 +101,100 @@ export default {
           },
           hash: "fee72ece6f86de4a1331fb2bbfb53919",
         },
+        "8/body/1/argument/1/1/1-alt": {
+          content: {
+            en: "Vite logo",
+          },
+          hash: "4d15435212a4877c4226b33a8cae0488",
+        },
+        "8/body/1/argument/1/3/1-alt": {
+          content: {
+            en: "React logo",
+          },
+          hash: "b162441c9d07514a1c5124f9be178248",
+        },
+        "8/body/1/argument/11": {
+          content: {
+            en: "Click on the logos above to learn more",
+          },
+          hash: "fee72ece6f86de4a1331fb2bbfb53919",
+        },
+        "8/body/1/argument/3": {
+          content: {
+            en: "Lingo.dev loves Vite and React",
+          },
+          hash: "dd6ddb089b0748e6c88b28c56c643d02",
+        },
+        "8/body/1/argument/3/1/1-alt": {
+          content: {
+            en: "Vite logo",
+          },
+          hash: "4d15435212a4877c4226b33a8cae0488",
+        },
+        "8/body/1/argument/3/3/1-alt": {
+          content: {
+            en: "React logo",
+          },
+          hash: "b162441c9d07514a1c5124f9be178248",
+        },
+        "8/body/1/argument/5": {
+          content: {
+            en: "Lingo.dev loves Vite and React",
+          },
+          hash: "dd6ddb089b0748e6c88b28c56c643d02",
+        },
+        "8/body/1/argument/7": {
+          content: {
+            en: "Welcome to your new Vite & React application! This starter template includes everything you need to get started with Vite & React and Lingo.dev for internationalization.",
+          },
+          hash: "c6deea18ed327336cf526f7d5a268d18",
+        },
+        "8/body/1/argument/7/1": {
+          content: {
+            en: "count is {count}",
+          },
+          hash: "c0057f8ebaf4debdf07033f51a6fd99d",
+        },
+        "8/body/1/argument/7/3": {
+          content: {
+            en: "Edit <element:code>src/App.tsx</element:code> and save to test HMR",
+          },
+          hash: "d373807bd0794bcfad789f038c92d8d4",
+        },
+        "8/body/1/argument/9": {
+          content: {
+            en: "Click on the logos above to learn more",
+          },
+          hash: "fee72ece6f86de4a1331fb2bbfb53919",
+        },
+        "8/body/1/argument/9/1": {
+          content: {
+            en: "count is {count}",
+          },
+          hash: "c0057f8ebaf4debdf07033f51a6fd99d",
+        },
+        "8/body/1/argument/9/3": {
+          content: {
+            en: "Edit <element:code>src/App.tsx</element:code> and save to test HMR",
+          },
+          hash: "d373807bd0794bcfad789f038c92d8d4",
+        },
+      },
+    },
+    "components/ThemeToggle.tsx": {
+      entries: {
+        "2/declaration/body/5/consequent/0/argument-aria-label": {
+          content: {
+            en: "Toggle theme",
+          },
+          hash: "dd03ee6b83901fc440f90236483dafc5",
+        },
+        "2/declaration/body/5/consequent/0/argument/1": {
+          content: {
+            en: "🌙",
+          },
+          hash: "d5471eedf5e234042a92875588b840aa",
+        },
       },
     },
     "components/test.tsx": {

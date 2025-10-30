@@ -3,23 +3,49 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* Light mode colors */
+  --color-text: #213547;
+  --color-background: #ffffff;
+  --color-button-bg: #f9f9f9;
+  --color-link: #747bff;
+  --color-link-hover: #535bf2;
+}
+
+/* Dark mode colors */
+.dark {
+  --color-text: rgba(255, 255, 255, 0.87);
+  --color-background: #242424;
+  --color-button-bg: #1a1a1a;
+  --color-link: #646cff;
+  --color-link-hover: #535bf2;
+}
+
+/* Apply colors */
+html {
+  color-scheme: light dark;
+}
+
+body {
+  color: var(--color-text);
+  background-color: var(--color-background);
+  transition:
+    color 0.3s ease,
+    background-color 0.3s ease;
 }
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: var(--color-link);
   text-decoration: inherit;
+  transition: color 0.3s ease;
 }
 a:hover {
-  color: #535bf2;
+  color: var(--color-link-hover);
 }
 
 body {
@@ -42,27 +68,20 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: var(--color-button-bg);
+  color: var(--color-text);
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition:
+    border-color 0.25s,
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: var(--color-link);
 }
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-}
+/* Remove old prefers-color-scheme styles as we now use CSS custom properties */
