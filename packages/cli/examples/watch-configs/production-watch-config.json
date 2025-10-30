@@ -1,0 +1,34 @@
+{
+  "$schema": "./watch-config-schema.json",
+  "description": "Production/CI environment configuration optimized for performance and minimal output",
+  "patterns": {
+    "include": ["**/*.json", "**/*.yaml", "**/*.yml"],
+    "exclude": [
+      "**/node_modules/**",
+      "**/.git/**",
+      "**/build/**",
+      "**/dist/**",
+      "**/.next/**",
+      "**/.nuxt/**",
+      "**/coverage/**",
+      "**/*.tmp",
+      "**/*.backup.*",
+      "**/*.log",
+      "**/.DS_Store",
+      "**/Thumbs.db"
+    ]
+  },
+  "debounce": {
+    "delay": 5000,
+    "maxWait": 30000
+  },
+  "monitoring": {
+    "enableProgressIndicators": false,
+    "enableNotifications": false,
+    "logLevel": "minimal"
+  },
+  "performance": {
+    "batchSize": 100,
+    "rateLimitDelay": 50
+  }
+}

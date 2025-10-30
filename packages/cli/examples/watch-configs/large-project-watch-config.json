@@ -1,0 +1,44 @@
+{
+  "$schema": "./watch-config-schema.json",
+  "description": "Large project configuration with performance optimizations and batch processing",
+  "patterns": {
+    "include": [
+      "src/**/*.json",
+      "locales/**/*.json",
+      "translations/**/*.json",
+      "i18n/**/*.json",
+      "**/*.yaml",
+      "**/*.yml"
+    ],
+    "exclude": [
+      "**/node_modules/**",
+      "**/.git/**",
+      "**/build/**",
+      "**/dist/**",
+      "**/.next/**",
+      "**/.nuxt/**",
+      "**/coverage/**",
+      "**/test/**",
+      "**/tests/**",
+      "**/__tests__/**",
+      "**/*.tmp",
+      "**/*.backup.*",
+      "**/*.log",
+      "**/.DS_Store",
+      "**/Thumbs.db"
+    ]
+  },
+  "debounce": {
+    "delay": 3000,
+    "maxWait": 20000
+  },
+  "monitoring": {
+    "enableProgressIndicators": true,
+    "enableNotifications": false,
+    "logLevel": "minimal"
+  },
+  "performance": {
+    "batchSize": 100,
+    "rateLimitDelay": 50
+  }
+}

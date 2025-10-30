@@ -53,5 +53,23 @@ export const flagsSchema = z.object({
   watch: z.boolean().default(false),
   debounce: z.number().positive().default(5000), // 5 seconds default
   sound: z.boolean().optional(),
+  
+  // Enhanced watch options
+  watchInclude: z.array(z.string()).optional(),
+  watchExclude: z.array(z.string()).optional(),
+  watchConfig: z.string().optional(), // Path to watch config file
+  
+  // Advanced debouncing
+  debounceStrategy: z.enum(['simple', 'adaptive', 'batch']).default('simple'),
+  maxWait: z.number().positive().optional(),
+  
+  // Feedback options
+  quiet: z.boolean().default(false),
+  progress: z.boolean().default(true),
+  notifications: z.boolean().default(false),
+  
+  // Performance tuning
+  batchSize: z.number().positive().default(50),
+  rateLimitDelay: z.number().positive().default(100),
 });
 export type CmdRunFlags = z.infer<typeof flagsSchema>;

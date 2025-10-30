@@ -1,0 +1,103 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Lingo.dev Watch Configuration",
+  "description": "Configuration schema for Lingo.dev watch mode settings",
+  "type": "object",
+  "properties": {
+    "description": {
+      "type": "string",
+      "description": "Human-readable description of this configuration"
+    },
+    "patterns": {
+      "type": "object",
+      "description": "File patterns for watching",
+      "properties": {
+        "include": {
+          "type": "array",
+          "description": "Glob patterns for files to include in watching",
+          "items": {
+            "type": "string"
+          },
+          "examples": [["**/*.json", "src/locales/**/*.yaml"]]
+        },
+        "exclude": {
+          "type": "array",
+          "description": "Glob patterns for files to exclude from watching",
+          "items": {
+            "type": "string"
+          },
+          "examples": [["**/node_modules/**", "**/*.tmp"]]
+        }
+      },
+      "required": ["include"],
+      "additionalProperties": false
+    },
+    "debounce": {
+      "type": "object",
+      "description": "Debouncing configuration for file changes",
+      "properties": {
+        "delay": {
+          "type": "integer",
+          "description": "Delay in milliseconds after file changes before retranslating",
+          "minimum": 100,
+          "maximum": 60000,
+          "default": 5000
+        },
+        "maxWait": {
+          "type": "integer",
+          "description": "Maximum wait time in milliseconds before forcing retranslation",
+          "minimum": 1000,
+          "maximum": 300000
+        }
+      },
+      "required": ["delay"],
+      "additionalProperties": false
+    },
+    "monitoring": {
+      "type": "object",
+      "description": "Monitoring and feedback configuration",
+      "properties": {
+        "enableProgressIndicators": {
+          "type": "boolean",
+          "description": "Show progress indicators during retranslation",
+          "default": true
+        },
+        "enableNotifications": {
+          "type": "boolean",
+          "description": "Enable desktop notifications for watch events",
+          "default": false
+        },
+        "logLevel": {
+          "type": "string",
+          "description": "Logging verbosity level",
+          "enum": ["silent", "minimal", "verbose"],
+          "default": "minimal"
+        }
+      },
+      "additionalProperties": false
+    },
+    "performance": {
+      "type": "object",
+      "description": "Performance tuning configuration",
+      "properties": {
+        "batchSize": {
+          "type": "integer",
+          "description": "Number of files to process in a single batch",
+          "minimum": 1,
+          "maximum": 1000,
+          "default": 50
+        },
+        "rateLimitDelay": {
+          "type": "integer",
+          "description": "Delay between batches in milliseconds",
+          "minimum": 0,
+          "maximum": 10000,
+          "default": 100
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": ["patterns"],
+  "additionalProperties": false
+}
