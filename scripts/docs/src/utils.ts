@@ -20,11 +20,25 @@ export function getRepoRoot(): string {
   throw new Error("Could not find project root");
 }
 
-export function getGitHubToken() {
-  const token = process.env.GITHUB_TOKEN;
+export function getGitHubToken(): string {
+  let token = process.env.GITHUB_TOKEN || process.env.GH_TOKEN;
 
   if (!token) {
-    throw new Error("GITHUB_TOKEN environment variable is required.");
+    const envPath = path.join(process.cwd(), ".env");
+    if (existsSync(envPath)) {
+      const content = readFileSync(envPath, "utf-8");
+      const match = content.match(/^GITHUB_TOKEN\s*=\s*(.+)$/m);
+      if (match) token = match[1].trim();
+    }
+  }
+
+  if (!token) {
+    throw new Error(
+      `Missing GitHub authentication token.
+Please set one of the following:
+- GITHUB_TOKEN or GH_TOKEN environment variable
+- Or add GITHUB_TOKEN to a .env file in the project root`
+    );
   }
 
   return token;
