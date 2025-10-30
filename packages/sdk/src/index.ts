@@ -133,16 +133,35 @@ export class LingoDotDevEngine {
       signal,
     });
 
+    // if (!res.ok) {
+    //   if (res.status >= 500 && res.status < 600) {
+    //     const errorText = await res.text();
+    //     throw new Error(
+    //       `Server error (${res.status}): ${res.statusText}. ${errorText}. This may be due to temporary service issues.`,
+    //     );
+    //   } else if (res.status === 400) {
+    //     throw new Error(`Invalid request: ${res.statusText}`);
+    //   } else {
+    //     const errorText = await res.text();
+    //     throw new Error(errorText);
+    //   }
+    // }
+
+    /* The above TypeScript code is handling errors from a fetch request. It checks if the response
+    `res` is not ok (i.e., the status is not in the 200-299 range). If the status code is in the
+    500-599 range, it throws an error indicating a server error along with the status code, status
+    text, and the error text received from the response. If the status code is 400, it throws an
+    error indicating an invalid request with the status text. For any other status codes, it throws
+    an error with the error text received from the response. */
     if (!res.ok) {
+      const errorText = await res.text(); // Retrieve error text once
       if (res.status >= 500 && res.status < 600) {
-        const errorText = await res.text();
         throw new Error(
           `Server error (${res.status}): ${res.statusText}. ${errorText}. This may be due to temporary service issues.`,
         );
       } else if (res.status === 400) {
         throw new Error(`Invalid request: ${res.statusText}`);
       } else {
-        const errorText = await res.text();
         throw new Error(errorText);
       }
     }
@@ -592,8 +611,8 @@ export class ReplexicaEngine extends LingoDotDevEngine {
     if (!ReplexicaEngine.hasWarnedDeprecation) {
       console.warn(
         "ReplexicaEngine is deprecated and will be removed in a future release. " +
-          "Please use LingoDotDevEngine instead. " +
-          "See https://lingo.dev/cli for more information.",
+        "Please use LingoDotDevEngine instead. " +
+        "See https://lingo.dev/cli for more information.",
       );
       ReplexicaEngine.hasWarnedDeprecation = true;
     }
@@ -611,8 +630,8 @@ export class LingoEngine extends LingoDotDevEngine {
     if (!LingoEngine.hasWarnedDeprecation) {
       console.warn(
         "LingoEngine is deprecated and will be removed in a future release. " +
-          "Please use LingoDotDevEngine instead. " +
-          "See https://lingo.dev/cli for more information.",
+        "Please use LingoDotDevEngine instead. " +
+        "See https://lingo.dev/cli for more information.",
       );
       LingoEngine.hasWarnedDeprecation = true;
     }
