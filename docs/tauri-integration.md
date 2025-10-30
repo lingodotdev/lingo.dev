@@ -27,6 +27,11 @@ winget install --id Rustlang.Rustup
 curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
 ```
 
+2. Create a tauri Project
+ ``` bash 
+ npm create tauri-app@latest
+ ```
+
 2. Choose language for Frontend:
 
 ```
