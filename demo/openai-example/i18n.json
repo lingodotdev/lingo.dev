@@ -1,0 +1,21 @@
+{
+  "$schema": "https://lingo.dev/schema/i18n.json",
+  "version": "1.10",
+  "locale": {
+    "source": "en",
+    "targets": ["es", "fr", "de", "ja"]
+  },
+  "provider": {
+    "id": "openai",
+    "model": "gpt-4",
+    "prompt": "Translate the following content from {source} to {target}. Maintain the original structure and formatting. Be accurate and natural.",
+    "settings": {
+      "temperature": 0.3
+    }
+  },
+  "buckets": {
+    "json": {
+      "include": ["src/locales/[locale].json"]
+    }
+  }
+}
