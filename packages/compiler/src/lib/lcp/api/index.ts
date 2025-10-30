@@ -22,7 +22,10 @@ import {
   getMistralKeyFromEnv,
   getLingoDotDevKeyFromEnv,
   getLingoDotDevKey,
+  getGeminiKey,
+  getGeminiKeyFromEnv,
 } from "../../../utils/llm-api-key";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import dedent from "dedent";
 import { isRunningInCIOrDocker } from "../../../utils/env";
 import { LanguageModel } from "ai";
@@ -381,6 +384,31 @@ export class LCPAPI {
           `Creating Mistral client for ${targetLocale} using model ${modelId}`,
         );
         return createMistral({ apiKey: mistralKey })(modelId);
+      }
+
+      case "gemini": {
+        // Specific check for CI/CD or Docker missing Gemini key
+        if (isRunningInCIOrDocker()) {
+          const geminiFromEnv = getGeminiKeyFromEnv();
+          if (!geminiFromEnv) {
+            this._failMissingLLMKeyCi(providerId);
+          }
+        }
+        const geminiKey = getGeminiKey();
+        if (!geminiKey) {
+          throw new Error(
+            "⚠️  Gemini API key not found. Please set GEMINI_API_KEY environment variable or configure it user-wide.",
+          );
+        }
+        console.log(
+          `Creating Gemini client for ${targetLocale} using model ${modelId}`,
+        );
+        
+        // Use the AI SDK for Gemini
+        console.log(
+          `Creating Gemini client for ${targetLocale} using model ${modelId}`,
+        );
+        return createGoogleGenerativeAI({ apiKey: geminiKey })(modelId);
       }
 
       default: {
