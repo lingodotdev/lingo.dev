@@ -16,6 +16,7 @@ import {
   renderHero,
   pauseIfDebug,
   renderSummary,
+  renderDryRun,
 } from "../../utils/ui";
 import trackEvent from "../../utils/observability";
 import { determineAuthId } from "./_utils";
@@ -95,6 +96,10 @@ export default new Command()
     "Validate translations are up-to-date without making changes - fails if source files, target files, or lockfile are out of sync. Ideal for CI/CD to ensure translation consistency before deployment",
   )
   .option(
+    "--dry-run",
+    "Preview planned changes without writing any files or checksums",
+  )
+  .option(
     "--api-key <api-key>",
     "Override API key from settings or environment variables",
   )
@@ -151,6 +156,15 @@ export default new Command()
 
       await frozen(ctx);
       await renderSpacer();
+
+      if (ctx.flags.dryRun) {
+        await renderDryRun(ctx.tasks);
+        await trackEvent(authId, "cmd.run.success", {
+          config: ctx.config,
+          flags: ctx.flags,
+        });
+        return;
+      }
 
       await execute(ctx);
       await renderSpacer();
