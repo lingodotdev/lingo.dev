@@ -1,12 +1,3 @@
-Got it ✅
-You want the entire Django + Lingo.dev integration guide as a single GitHub-friendly Markdown file, inside one fenced code block, like the official framework guides.
-
-Here it is ⬇️
-(copy-paste directly to docs/django-guide.md or PR file)
-
-
----
-
 # 🌍 Lingo.dev + Django Integration Guide  
 AI-powered localization for Django projects
 
