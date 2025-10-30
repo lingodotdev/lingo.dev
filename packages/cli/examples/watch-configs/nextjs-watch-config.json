@@ -1,0 +1,43 @@
+{
+  "$schema": "./watch-config-schema.json",
+  "description": "Next.js application configuration with Next.js internationalization structure",
+  "patterns": {
+    "include": [
+      "locales/**/*.json",
+      "messages/**/*.json",
+      "translations/**/*.json",
+      "public/locales/**/*.json",
+      "src/locales/**/*.json",
+      "pages/api/locales/**/*.json"
+    ],
+    "exclude": [
+      "**/node_modules/**",
+      "**/.git/**",
+      "**/.next/**",
+      "**/build/**",
+      "**/dist/**",
+      "**/coverage/**",
+      "**/__tests__/**",
+      "**/*.test.js",
+      "**/*.test.ts",
+      "**/*.test.jsx",
+      "**/*.test.tsx",
+      "**/*.tmp",
+      "**/*.backup.*",
+      "**/.DS_Store"
+    ]
+  },
+  "debounce": {
+    "delay": 2500,
+    "maxWait": 15000
+  },
+  "monitoring": {
+    "enableProgressIndicators": true,
+    "enableNotifications": true,
+    "logLevel": "verbose"
+  },
+  "performance": {
+    "batchSize": 40,
+    "rateLimitDelay": 100
+  }
+}

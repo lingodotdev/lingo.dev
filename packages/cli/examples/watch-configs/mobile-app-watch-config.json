@@ -1,0 +1,45 @@
+{
+  "$schema": "./watch-config-schema.json",
+  "description": "Mobile application configuration for React Native, Flutter, or native mobile apps",
+  "patterns": {
+    "include": [
+      "assets/i18n/**/*.json",
+      "src/translations/**/*.json",
+      "src/locales/**/*.json",
+      "resources/strings/**/*.json",
+      "android/app/src/main/res/values*/*.xml",
+      "ios/**/*.strings",
+      "lib/l10n/**/*.json"
+    ],
+    "exclude": [
+      "**/node_modules/**",
+      "**/.git/**",
+      "**/build/**",
+      "**/dist/**",
+      "**/android/build/**",
+      "**/ios/build/**",
+      "**/.expo/**",
+      "**/coverage/**",
+      "**/__tests__/**",
+      "**/*.test.js",
+      "**/*.test.ts",
+      "**/*.test.dart",
+      "**/*.tmp",
+      "**/*.backup.*",
+      "**/.DS_Store"
+    ]
+  },
+  "debounce": {
+    "delay": 3000,
+    "maxWait": 15000
+  },
+  "monitoring": {
+    "enableProgressIndicators": true,
+    "enableNotifications": true,
+    "logLevel": "verbose"
+  },
+  "performance": {
+    "batchSize": 20,
+    "rateLimitDelay": 150
+  }
+}
