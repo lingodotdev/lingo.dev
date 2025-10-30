@@ -5,6 +5,7 @@ import "./globals.css";
 // Compiler: add imports
 import { LocaleSwitcher } from "lingo.dev/react/client";
 import { LingoProvider, loadDictionary } from "lingo.dev/react/rsc";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,9 +34,11 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          <div className="absolute top-2 right-3">
+          <div className="fixed top-4 right-4 flex items-center gap-4 z-50">
+            <ThemeToggle />
             <LocaleSwitcher
               locales={["en", "es", "zh", "ja", "fr", "de", "ru", "ar", "ko"]}
+            />
             />
           </div>
           {children}
