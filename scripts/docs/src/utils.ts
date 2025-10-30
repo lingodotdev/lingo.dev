@@ -7,6 +7,11 @@ import * as prettier from "prettier";
 
 export function getRepoRoot(): string {
   const metadataUrl = import.meta.url;
+  /* This code snippet is checking if the `metadataUrl` variable is falsy (in this case, `undefined`).
+  If `metadataUrl` is `undefined`, it means that the `import.meta.url` feature is not supported or
+  not available in the current environment. In that case, the code throws an error with the message
+  "import.meta.url is undefined" to indicate that the script relies on `import.meta.url` and cannot
+  proceed without it. */
   if (!metadataUrl) {
     throw new Error("import.meta.url is undefined");
   }
