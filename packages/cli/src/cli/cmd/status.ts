@@ -22,7 +22,7 @@ import trackEvent from "../utils/observability";
 import { minimatch } from "minimatch";
 import { exitGracefully } from "../utils/exit-gracefully";
 
-// Define types for our language stats
+// --- Types
 interface LanguageStats {
   complete: number;
   missing: number;
@@ -30,6 +30,24 @@ interface LanguageStats {
   words: number;
 }
 
+interface FileLangStats {
+  complete: number;
+  missing: number;
+  updated: number;
+  words: number;
+}
+
+// --- Helpers
+const formatPercent = (num: number, denom: number) =>
+  denom === 0 ? "0.0" : ((num / denom) * 100).toFixed(1);
+
+const plural = (n: number, singular: string, pluralForm?: string) =>
+  `${n} ${n === 1 ? singular : pluralForm ?? singular + "s"}`;
+
+const buildTable = (head: string[], colWidths?: number[]) =>
+  new Table({ head, style: { head: ["white"], border: [] }, colWidths });
+
+// --- Main command
 export default new Command()
   .command("status")
   .description("Show the status of the localization process")
@@ -71,7 +89,7 @@ export default new Command()
       const settings = getSettings(flags.apiKey);
       ora.succeed("Configuration loaded");
 
-      // Try to authenticate, but continue even if not authenticated
+      // Authentication (best-effort)
       try {
         ora.start("Checking authentication status...");
         const auth = await tryAuthenticate(settings);
@@ -83,7 +101,7 @@ export default new Command()
             "Not authenticated. Continuing without authentication. (Run `lingo.dev login` to authenticate)",
           );
         }
-      } catch (error) {
+      } catch (err) {
         ora.info("Authentication failed. Continuing without authentication.");
       }
 
@@ -91,114 +109,65 @@ export default new Command()
       validateParams(i18nConfig, flags);
       ora.succeed("Localization configuration is valid");
 
-      // Track event with or without authentication
-      trackEvent(authId || "status", "cmd.status.start", {
-        i18nConfig,
-        flags,
-      });
+      trackEvent(authId || "status", "cmd.status.start", { i18nConfig, flags });
 
+      // Filter buckets
       let buckets = getBuckets(i18nConfig!);
       if (flags.bucket?.length) {
-        buckets = buckets.filter((bucket: any) =>
-          flags.bucket!.includes(bucket.type),
-        );
+        buckets = buckets.filter((b: any) => flags.bucket!.includes(b.type));
       }
-      ora.succeed("Buckets retrieved");
 
       if (flags.file?.length) {
         buckets = buckets
           .map((bucket: any) => {
-            const paths = bucket.paths.filter((path: any) =>
-              flags.file!.find(
-                (file) =>
-                  path.pathPattern?.includes(file) ||
-                  path.pathPattern?.match(file) ||
-                  minimatch(path.pathPattern, file),
+            const paths = bucket.paths.filter((p: any) =>
+              flags.file!.some((f) =>
+                p.pathPattern?.includes(f) || p.pathPattern?.match(f) || minimatch(p.pathPattern, f),
               ),
             );
             return { ...bucket, paths };
           })
-          .filter((bucket: any) => bucket.paths.length > 0);
+          .filter((b: any) => b.paths.length > 0);
+
         if (buckets.length === 0) {
-          ora.fail(
-            "No buckets found. All buckets were filtered out by --file option.",
-          );
+          ora.fail("No buckets found. All buckets were filtered out by --file option.");
           process.exit(1);
         } else {
           ora.info(`\x1b[36mProcessing only filtered buckets:\x1b[0m`);
-          buckets.map((bucket: any) => {
+          buckets.forEach((bucket: any) => {
             ora.info(`  ${bucket.type}:`);
-            bucket.paths.forEach((path: any) => {
-              ora.info(`    - ${path.pathPattern}`);
-            });
+            bucket.paths.forEach((p: any) => ora.info(`    - ${p.pathPattern}`));
           });
         }
       }
 
-      const targetLocales = flags.locale?.length
-        ? flags.locale
-        : i18nConfig!.locale.targets;
+      const targetLocales = flags.locale?.length ? flags.locale : i18nConfig!.locale.targets;
 
-      // Global stats
+      // Initialize global tracking
       let totalSourceKeyCount = 0;
-      let uniqueKeysToTranslate = 0;
-      let totalExistingTranslations = 0;
-      const totalWordCount = new Map<string, number>(); // Words per language
+      const totalWordCount = new Map<string, number>();
       const languageStats: Record<string, LanguageStats> = {};
+      const fileStats: Record<string, { path: string; sourceKeys: number; wordCount: number; languageStats: Record<string, FileLangStats>; }> = {};
 
-      // Initialize per-language stats
       for (const locale of targetLocales) {
-        languageStats[locale] = {
-          complete: 0,
-          missing: 0,
-          updated: 0,
-          words: 0,
-        };
+        languageStats[locale] = { complete: 0, missing: 0, updated: 0, words: 0 };
         totalWordCount.set(locale, 0);
       }
 
-      // Per-file stats
-      const fileStats: Record<
-        string,
-        {
-          path: string;
-          sourceKeys: number;
-          wordCount: number;
-          languageStats: Record<
-            string,
-            {
-              complete: number;
-              missing: number;
-              updated: number;
-              words: number;
-            }
-          >;
-        }
-      > = {};
-
-      // Process each bucket
+      // Process each bucket and file
       for (const bucket of buckets) {
         try {
           console.log();
           ora.info(`Analyzing bucket: ${bucket.type}`);
 
           for (const bucketPath of bucket.paths) {
-            const bucketOra = Ora({ indent: 2 }).info(
-              `Analyzing path: ${bucketPath.pathPattern}`,
-            );
+            const bucketOra = Ora({ indent: 2 }).info(`Analyzing path: ${bucketPath.pathPattern}`);
 
-            const sourceLocale = resolveOverriddenLocale(
-              i18nConfig!.locale.source,
-              bucketPath.delimiter,
-            );
+            const sourceLocale = resolveOverriddenLocale(i18nConfig!.locale.source, bucketPath.delimiter);
             const bucketLoader = createBucketLoader(
               bucket.type,
               bucketPath.pathPattern,
-              {
-                defaultLocale: sourceLocale,
-                injectLocale: bucket.injectLocale,
-                formatter: i18nConfig!.formatter,
-              },
+              { defaultLocale: sourceLocale, injectLocale: bucket.injectLocale, formatter: i18nConfig!.formatter },
               bucket.lockedKeys,
               bucket.lockedPatterns,
               bucket.ignoredKeys,
@@ -207,184 +176,103 @@ export default new Command()
             bucketLoader.setDefaultLocale(sourceLocale);
             await bucketLoader.init();
 
-            // Initialize file stats
             const filePath = bucketPath.pathPattern;
             if (!fileStats[filePath]) {
-              fileStats[filePath] = {
-                path: filePath,
-                sourceKeys: 0,
-                wordCount: 0,
-                languageStats: {},
-              };
-
+              fileStats[filePath] = { path: filePath, sourceKeys: 0, wordCount: 0, languageStats: {} };
               for (const locale of targetLocales) {
-                fileStats[filePath].languageStats[locale] = {
-                  complete: 0,
-                  missing: 0,
-                  updated: 0,
-                  words: 0,
-                };
+                fileStats[filePath].languageStats[locale] = { complete: 0, missing: 0, updated: 0, words: 0 };
               }
             }
 
-            // Get source data and count source keys
             const sourceData = await bucketLoader.pull(sourceLocale);
-            const sourceKeys = Object.keys(sourceData);
+            const sourceKeys = Object.keys(sourceData || {});
             fileStats[filePath].sourceKeys = sourceKeys.length;
             totalSourceKeyCount += sourceKeys.length;
 
-            // Calculate source word count
+            // Count words in source
             let sourceWordCount = 0;
             for (const key of sourceKeys) {
               const value = sourceData[key];
-              if (typeof value === "string") {
-                const words = value.trim().split(/\s+/).length;
-                sourceWordCount += words;
-              }
+              if (typeof value === "string") sourceWordCount += value.trim().split(/\s+/).length;
             }
             fileStats[filePath].wordCount = sourceWordCount;
 
-            // Process each target locale
+            // Per-target locale processing
             for (const _targetLocale of targetLocales) {
-              const targetLocale = resolveOverriddenLocale(
-                _targetLocale,
-                bucketPath.delimiter,
-              );
-              bucketOra.start(
-                `[${sourceLocale} -> ${targetLocale}] Analyzing translation status...`,
-              );
+              const targetLocale = resolveOverriddenLocale(_targetLocale, bucketPath.delimiter);
+              bucketOra.start(`[${sourceLocale} -> ${targetLocale}] Analyzing translation status...`);
 
               let targetData = {};
               let fileExists = true;
 
               try {
                 targetData = await bucketLoader.pull(targetLocale);
-              } catch (error) {
+              } catch (err) {
                 fileExists = false;
-                bucketOra.info(
-                  `[${sourceLocale} -> ${targetLocale}] Target file not found, assuming all keys need translation.`,
-                );
+                bucketOra.info(`[${sourceLocale} -> ${targetLocale}] Target file not found, assuming all keys need translation.`);
               }
 
               if (!fileExists) {
-                // All keys are missing for this locale
-                fileStats[filePath].languageStats[_targetLocale].missing =
-                  sourceKeys.length;
-                fileStats[filePath].languageStats[_targetLocale].words =
-                  sourceWordCount;
+                // Everything missing
+                fileStats[filePath].languageStats[_targetLocale].missing = sourceKeys.length;
+                fileStats[filePath].languageStats[_targetLocale].words = sourceWordCount;
+
                 languageStats[_targetLocale].missing += sourceKeys.length;
                 languageStats[_targetLocale].words += sourceWordCount;
-                totalWordCount.set(
-                  _targetLocale,
-                  (totalWordCount.get(_targetLocale) || 0) + sourceWordCount,
-                );
+                totalWordCount.set(_targetLocale, (totalWordCount.get(_targetLocale) || 0) + sourceWordCount);
 
-                bucketOra.succeed(
-                  `[${sourceLocale} -> ${targetLocale}] ${chalk.red(
-                    `0% complete`,
-                  )} (0/${sourceKeys.length} keys) - file not found`,
-                );
+                bucketOra.succeed(`[${sourceLocale} -> ${targetLocale}] ${chalk.red(`0% complete`)} (0/${sourceKeys.length} keys) - file not found`);
                 continue;
               }
 
-              // Calculate delta for existing file
-              const deltaProcessor = createDeltaProcessor(
-                bucketPath.pathPattern,
-              );
+              // Delta calculation
+              const deltaProcessor = createDeltaProcessor(bucketPath.pathPattern);
               const checksums = await deltaProcessor.loadChecksums();
-              const delta = await deltaProcessor.calculateDelta({
-                sourceData,
-                targetData,
-                checksums,
-              });
+              const delta = await deltaProcessor.calculateDelta({ sourceData, targetData, checksums });
 
               const missingKeys = delta.added;
               const updatedKeys = delta.updated;
-              const completeKeys = sourceKeys.filter(
-                (key) =>
-                  !missingKeys.includes(key) && !updatedKeys.includes(key),
-              );
+              const completeKeys = sourceKeys.filter((k) => !missingKeys.includes(k) && !updatedKeys.includes(k));
 
-              // Count words that need translation
+              // Words to translate
               let wordsToTranslate = 0;
-              const keysToProcess = flags.force
-                ? sourceKeys
-                : [...missingKeys, ...updatedKeys];
-
+              const keysToProcess = flags.force ? sourceKeys : [...missingKeys, ...updatedKeys];
               for (const key of keysToProcess) {
-                const value = sourceData[String(key)];
-                if (typeof value === "string") {
-                  const words = value.trim().split(/\s+/).length;
-                  wordsToTranslate += words;
-                }
+                const v = sourceData[String(key)];
+                if (typeof v === "string") wordsToTranslate += v.trim().split(/\s+/).length;
               }
 
-              // Update file stats
-              fileStats[filePath].languageStats[_targetLocale].missing =
-                missingKeys.length;
-              fileStats[filePath].languageStats[_targetLocale].updated =
-                updatedKeys.length;
-              fileStats[filePath].languageStats[_targetLocale].complete =
-                completeKeys.length;
-              fileStats[filePath].languageStats[_targetLocale].words =
-                wordsToTranslate;
+              // Update stats
+              const fLangStats = fileStats[filePath].languageStats[_targetLocale];
+              fLangStats.missing = missingKeys.length;
+              fLangStats.updated = updatedKeys.length;
+              fLangStats.complete = completeKeys.length;
+              fLangStats.words = wordsToTranslate;
 
-              // Update global stats
               languageStats[_targetLocale].missing += missingKeys.length;
               languageStats[_targetLocale].updated += updatedKeys.length;
               languageStats[_targetLocale].complete += completeKeys.length;
               languageStats[_targetLocale].words += wordsToTranslate;
-              totalWordCount.set(
-                _targetLocale,
-                (totalWordCount.get(_targetLocale) || 0) + wordsToTranslate,
-              );
 
-              // Display progress
+              totalWordCount.set(_targetLocale, (totalWordCount.get(_targetLocale) || 0) + wordsToTranslate);
+
+              // Print file-level progress
               const totalKeysInFile = sourceKeys.length;
-              const completionPercent = (
-                (completeKeys.length / totalKeysInFile) *
-                100
-              ).toFixed(1);
+              const completionPercent = formatPercent(completeKeys.length, totalKeysInFile);
 
               if (missingKeys.length === 0 && updatedKeys.length === 0) {
-                bucketOra.succeed(
-                  `[${sourceLocale} -> ${targetLocale}] ${chalk.green(
-                    `100% complete`,
-                  )} (${completeKeys.length}/${totalKeysInFile} keys)`,
-                );
+                bucketOra.succeed(`[${sourceLocale} -> ${targetLocale}] ${chalk.green(`100% complete`)} (${completeKeys.length}/${totalKeysInFile} keys)`);
               } else {
-                const message = `[${sourceLocale} -> ${targetLocale}] ${
-                  parseFloat(completionPercent) > 50
-                    ? chalk.yellow(`${completionPercent}% complete`)
-                    : chalk.red(`${completionPercent}% complete`)
-                } (${completeKeys.length}/${totalKeysInFile} keys)`;
-
+                const message = `[${sourceLocale} -> ${targetLocale}] ${parseFloat(completionPercent) > 50 ? chalk.yellow(`${completionPercent}% complete`) : chalk.red(`${completionPercent}% complete`)} (${completeKeys.length}/${totalKeysInFile} keys)`;
                 bucketOra.succeed(message);
 
                 if (flags.verbose) {
                   if (missingKeys.length > 0) {
-                    console.log(
-                      `    ${chalk.red(`Missing:`)} ${missingKeys.length} keys, ~${wordsToTranslate} words`,
-                    );
-                    console.log(
-                      `    ${chalk.red(`Missing:`)} ${
-                        missingKeys.length
-                      } keys, ~${wordsToTranslate} words`,
-                    );
-                    console.log(
-                      `    ${chalk.dim(
-                        `Example missing: ${missingKeys
-                          .slice(0, 2)
-                          .join(", ")}${missingKeys.length > 2 ? "..." : ""}`,
-                      )}`,
-                    );
+                    console.log(`    ${chalk.red(`Missing:`)} ${missingKeys.length} keys, ~${wordsToTranslate} words`);
+                    console.log(`    ${chalk.dim(`Example missing: ${missingKeys.slice(0, 2).join(", ")}${missingKeys.length > 2 ? "..." : ""}`)}`);
                   }
                   if (updatedKeys.length > 0) {
-                    console.log(
-                      `    ${chalk.yellow(`Updated:`)} ${
-                        updatedKeys.length
-                      } keys that changed in source`,
-                    );
+                    console.log(`    ${chalk.yellow(`Updated:`)} ${updatedKeys.length} keys that changed in source`);
                   }
                 }
               }
@@ -395,74 +283,35 @@ export default new Command()
         }
       }
 
-      // Calculate unique keys needing translation and keys fully translated
-      // Count unique keys that need translation
-      const totalKeysNeedingTranslation = Object.values(languageStats).reduce(
-        (sum, stats) => {
-          return sum + stats.missing + stats.updated;
-        },
-        0,
-      );
+      // Post-processing summary
+      const totalKeysNeedingTranslation = Object.values(languageStats).reduce((s, st) => s + st.missing + st.updated, 0);
+      const totalCompletedKeys = totalSourceKeyCount - totalKeysNeedingTranslation / targetLocales.length;
 
-      // Calculate keys that are completely translated
-      const totalCompletedKeys =
-        totalSourceKeyCount -
-        totalKeysNeedingTranslation / targetLocales.length;
-
-      // Summary output
       console.log();
       ora.succeed(chalk.green(`Localization status completed.`));
 
-      // Create a visually impactful main header
+      // Header
       console.log(chalk.bold.cyan(`\n╔════════════════════════════════════╗`));
       console.log(chalk.bold.cyan(`║   LOCALIZATION STATUS REPORT       ║`));
       console.log(chalk.bold.cyan(`╚════════════════════════════════════╝`));
 
-      // Source content overview
+      // Source overview
       console.log(chalk.bold(`\n📝 SOURCE CONTENT:`));
-      console.log(
-        `• Source language: ${chalk.green(i18nConfig!.locale.source)}`,
-      );
-      console.log(
-        `• Source keys: ${chalk.yellow(
-          totalSourceKeyCount.toString(),
-        )} keys across all files`,
-      );
+      console.log(`• Source language: ${chalk.green(i18nConfig!.locale.source)}`);
+      console.log(`• Source keys: ${chalk.yellow(totalSourceKeyCount.toString())} keys across all files`);
 
-      // Create a language-by-language breakdown table
+      // Language table
       console.log(chalk.bold(`\n🌐 LANGUAGE BY LANGUAGE BREAKDOWN:`));
+      const table = buildTable(["Language", "Status", "Complete", "Missing", "Updated", "Total Keys", "Words to Translate"], [12, 20, 18, 12, 12, 12, 15]);
 
-      // Create a new table instance with cli-table3
-      const table = new Table({
-        head: [
-          "Language",
-          "Status",
-          "Complete",
-          "Missing",
-          "Updated",
-          "Total Keys",
-          "Words to Translate",
-        ],
-        style: {
-          head: ["white"], // White color for headers
-          border: [], // No color for borders
-        },
-        colWidths: [12, 20, 18, 12, 12, 12, 15], // Explicit column widths, making Status column wider
-      });
-
-      // Data rows
       let totalWordsToTranslate = 0;
       for (const locale of targetLocales) {
         const stats = languageStats[locale];
-        const percentComplete = (
-          (stats.complete / totalSourceKeyCount) *
-          100
-        ).toFixed(1);
+        const percentComplete = formatPercent(stats.complete, totalSourceKeyCount);
         const totalNeeded = stats.missing + stats.updated;
 
-        // Determine status text and color
-        let statusText;
-        let statusColor;
+        let statusText = "🔴 Not started";
+        let statusColor = chalk.red;
         if (stats.missing === totalSourceKeyCount) {
           statusText = "🔴 Not started";
           statusColor = chalk.red;
@@ -475,16 +324,11 @@ export default new Command()
         } else if (parseFloat(percentComplete) > 0) {
           statusText = "🟠 In progress";
           statusColor = chalk.yellow;
-        } else {
-          statusText = "🔴 Not started";
-          statusColor = chalk.red;
         }
 
-        // Create row data
         const words = totalWordCount.get(locale) || 0;
         totalWordsToTranslate += words;
 
-        // Add row to the table
         table.push([
           locale,
           statusColor(statusText),
@@ -496,64 +340,40 @@ export default new Command()
         ]);
       }
 
-      // Display the table
       console.log(table.toString());
 
-      // Total usage summary
+      // Usage estimate
       console.log(chalk.bold(`\n📊 USAGE ESTIMATE:`));
-      console.log(
-        `• WORDS TO BE CONSUMED: ~${chalk.yellow.bold(
-          totalWordsToTranslate.toLocaleString(),
-        )} words across all languages`,
-      );
-      console.log(
-        `  (Words are counted from source language for keys that need translation in target languages)`,
-      );
+      console.log(`• WORDS TO BE CONSUMED: ~${chalk.yellow.bold(totalWordsToTranslate.toLocaleString())} words across all languages`);
+      console.log(`  (Words are counted from source language for keys that need translation in target languages)`);
 
-      // Breakdown by language if we have multiple languages
+      // Per-language breakdown (guard against division by zero)
       if (targetLocales.length > 1) {
         console.log(`• Per-language breakdown:`);
         for (const locale of targetLocales) {
           const words = totalWordCount.get(locale) || 0;
-          const percent = ((words / totalWordsToTranslate) * 100).toFixed(1);
-          console.log(
-            `  - ${locale}: ~${words.toLocaleString()} words (${percent}% of total)`,
-          );
+          const percent = formatPercent(words, totalWordsToTranslate);
+          console.log(`  - ${locale}: ~${words.toLocaleString()} words (${percent}% of total)`);
         }
       }
 
-      // Detailed stats if flags.confirm is specified
+      // Detailed file breakdown when requested
       if (flags.confirm && Object.keys(fileStats).length > 0) {
         console.log(chalk.bold(`\n📑 BREAKDOWN BY FILE:`));
-
         Object.entries(fileStats)
-          .sort((a, b) => b[1].wordCount - a[1].wordCount) // Sort by word count
-          .forEach(([path, stats]) => {
-            // Skip files with no source keys
+          .sort((a, b) => b[1].wordCount - a[1].wordCount)
+          .forEach(([p, stats]) => {
             if (stats.sourceKeys === 0) return;
+            console.log(chalk.bold(`\n• ${p}:`));
+            console.log(`  ${stats.sourceKeys} source keys, ~${stats.wordCount.toLocaleString()} source words`);
 
-            console.log(chalk.bold(`\n• ${path}:`));
-            console.log(
-              `  ${
-                stats.sourceKeys
-              } source keys, ~${stats.wordCount.toLocaleString()} source words`,
-            );
-
-            // Create file detail table
-            const fileTable = new Table({
-              head: ["Language", "Status", "Details"],
-              style: {
-                head: ["white"],
-                border: [],
-              },
-              colWidths: [12, 20, 50], // Explicit column widths for file detail table
-            });
+            const fileTable = buildTable(["Language", "Status", "Details"], [12, 20, 50]);
 
             for (const locale of targetLocales) {
               const langStats = stats.languageStats[locale];
               const complete = langStats.complete;
               const total = stats.sourceKeys;
-              const completion = ((complete / total) * 100).toFixed(1);
+              const completion = formatPercent(complete, total);
 
               let status = "✅ Complete";
               let statusColor = chalk.green;
@@ -566,17 +386,12 @@ export default new Command()
                 statusColor = chalk.yellow;
               }
 
-              // Show counts only if there's something missing or updated
-              let details = "";
+              let details = "All keys translated";
               if (langStats.missing > 0 || langStats.updated > 0) {
-                const parts = [];
-                if (langStats.missing > 0)
-                  parts.push(`${langStats.missing} missing`);
-                if (langStats.updated > 0)
-                  parts.push(`${langStats.updated} changed`);
+                const parts: string[] = [];
+                if (langStats.missing > 0) parts.push(`${langStats.missing} missing`);
+                if (langStats.updated > 0) parts.push(`${langStats.updated} changed`);
                 details = `${parts.join(", ")}, ~${langStats.words} words`;
-              } else {
-                details = "All keys translated";
               }
 
               fileTable.push([locale, statusColor(status), details]);
@@ -586,61 +401,30 @@ export default new Command()
           });
       }
 
-      // Find fully translated and missing languages
-      const completeLanguages = targetLocales.filter(
-        (locale) =>
-          languageStats[locale].missing === 0 &&
-          languageStats[locale].updated === 0,
-      );
+      // Final tips & tracking
+      const completeLanguages = targetLocales.filter((l) => languageStats[l].missing === 0 && languageStats[l].updated === 0);
+      const missingLanguages = targetLocales.filter((l) => languageStats[l].complete === 0);
 
-      const missingLanguages = targetLocales.filter(
-        (locale) => languageStats[locale].complete === 0,
-      );
-
-      // Add optimization tips
       console.log(chalk.bold.green(`\n💡 OPTIMIZATION TIPS:`));
 
       if (missingLanguages.length > 0) {
-        console.log(
-          `• ${chalk.yellow(missingLanguages.join(", "))} ${
-            missingLanguages.length === 1 ? "has" : "have"
-          } no translations yet`,
-        );
+        console.log(`• ${chalk.yellow(missingLanguages.join(", "))} ${missingLanguages.length === 1 ? "has" : "have"} no translations yet`);
       }
 
       if (completeLanguages.length > 0) {
-        console.log(
-          `• ${chalk.green(completeLanguages.join(", "))} ${
-            completeLanguages.length === 1 ? "is" : "are"
-          } completely translated`,
-        );
+        console.log(`• ${chalk.green(completeLanguages.join(", "))} ${completeLanguages.length === 1 ? "is" : "are"} completely translated`);
       }
 
-      // Other tips
       if (targetLocales.length > 1) {
         console.log(`• Translating one language at a time reduces complexity`);
-        console.log(
-          `• Try 'lingo.dev@latest i18n --locale ${targetLocales[0]}' to process just one language`,
-        );
+        console.log(`• Try 'lingo.dev@latest i18n --locale ${targetLocales[0]}' to process just one language`);
       }
 
-      // Track successful completion
-      trackEvent(authId || "status", "cmd.status.success", {
-        i18nConfig,
-        flags,
-        totalSourceKeyCount,
-        languageStats,
-        totalWordsToTranslate,
-        authenticated: !!authId,
-      });
+      trackEvent(authId || "status", "cmd.status.success", { i18nConfig, flags, totalSourceKeyCount, languageStats, totalWordsToTranslate, authenticated: !!authId });
       exitGracefully();
     } catch (error: any) {
       ora.fail(error.message);
-      trackEvent(authId || "status", "cmd.status.error", {
-        flags,
-        error: error.message,
-        authenticated: !!authId,
-      });
+      trackEvent(authId || "status", "cmd.status.error", { flags, error: error.message, authenticated: !!authId });
       process.exit(1);
     }
   });
@@ -658,15 +442,9 @@ function parseFlags(options: any) {
 }
 
 async function tryAuthenticate(settings: ReturnType<typeof getSettings>) {
-  if (!settings.auth.apiKey) {
-    return null;
-  }
-
+  if (!settings.auth.apiKey) return null;
   try {
-    const authenticator = createAuthenticator({
-      apiKey: settings.auth.apiKey,
-      apiUrl: settings.auth.apiUrl,
-    });
+    const authenticator = createAuthenticator({ apiKey: settings.auth.apiKey, apiUrl: settings.auth.apiUrl });
     const user = await authenticator.whoami();
     return user;
   } catch (error) {
@@ -674,38 +452,14 @@ async function tryAuthenticate(settings: ReturnType<typeof getSettings>) {
   }
 }
 
-function validateParams(
-  i18nConfig: I18nConfig | null,
-  flags: ReturnType<typeof parseFlags>,
-) {
+function validateParams(i18nConfig: I18nConfig | null, flags: ReturnType<typeof parseFlags>) {
   if (!i18nConfig) {
-    throw new CLIError({
-      message:
-        "i18n.json not found. Please run `lingo.dev init` to initialize the project.",
-      docUrl: "i18nNotFound",
-    });
+    throw new CLIError({ message: "i18n.json not found. Please run `lingo.dev init` to initialize the project.", docUrl: "i18nNotFound", });
   } else if (!i18nConfig.buckets || !Object.keys(i18nConfig.buckets).length) {
-    throw new CLIError({
-      message:
-        "No buckets found in i18n.json. Please add at least one bucket containing i18n content.",
-      docUrl: "bucketNotFound",
-    });
-  } else if (
-    flags.locale?.some((locale) => !i18nConfig.locale.targets.includes(locale))
-  ) {
-    throw new CLIError({
-      message: `One or more specified locales do not exist in i18n.json locale.targets. Please add them to the list and try again.`,
-      docUrl: "localeTargetNotFound",
-    });
-  } else if (
-    flags.bucket?.some(
-      (bucket) =>
-        !i18nConfig.buckets[bucket as keyof typeof i18nConfig.buckets],
-    )
-  ) {
-    throw new CLIError({
-      message: `One or more specified buckets do not exist in i18n.json. Please add them to the list and try again.`,
-      docUrl: "bucketNotFound",
-    });
+    throw new CLIError({ message: "No buckets found in i18n.json. Please add at least one bucket containing i18n content.", docUrl: "bucketNotFound", });
+  } else if (flags.locale?.some((locale) => !i18nConfig.locale.targets.includes(locale))) {
+    throw new CLIError({ message: `One or more specified locales do not exist in i18n.json locale.targets. Please add them to the list and try again.`, docUrl: "localeTargetNotFound", });
+  } else if (flags.bucket?.some((bucket) => !i18nConfig.buckets[bucket as keyof typeof i18nConfig.buckets])) {
+    throw new CLIError({ message: `One or more specified buckets do not exist in i18n.json. Please add them to the list and try again.`, docUrl: "bucketNotFound", });
   }
 }
