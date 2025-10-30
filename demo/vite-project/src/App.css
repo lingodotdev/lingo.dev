@@ -58,3 +58,96 @@
   top: 0.5rem;
   right: 1rem;
 }
+
+/* Theme Toggle Styles */
+.theme-toggle {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 50;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 0.75rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  min-width: 44px; /* WCAG minimum touch target size */
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.theme-toggle:focus {
+  outline: 2px solid #646cff;
+  outline-offset: 2px;
+}
+
+.theme-toggle-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+}
+
+/* Dark mode styles */
+.dark .theme-toggle {
+  background: rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark .theme-toggle:hover {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+/* Mobile responsive improvements */
+@media (max-width: 768px) {
+  .theme-toggle {
+    top: 0.75rem;
+    left: 0.75rem;
+    padding: 0.6rem;
+    border-radius: 10px;
+    min-width: 48px; /* Larger touch target on mobile */
+    min-height: 48px;
+  }
+
+  .theme-toggle-icon {
+    font-size: 1.1rem;
+  }
+
+  /* Ensure it doesn't interfere with other UI elements */
+  .locale-switcher {
+    top: 0.75rem;
+    right: 0.75rem;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 480px) {
+  .theme-toggle {
+    top: 0.5rem;
+    left: 0.5rem;
+    padding: 0.5rem;
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .locale-switcher {
+    top: 0.5rem;
+    right: 0.5rem;
+  }
+}
+
+/* High DPI screens */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+  .theme-toggle {
+    border-width: 0.5px;
+  }
+}
