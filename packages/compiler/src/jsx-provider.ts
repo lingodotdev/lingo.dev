@@ -18,7 +18,8 @@ const jsxProviderMutation = createCodeMutation((payload) => {
           return;
         }
 
-        // TODO: later
+        // TODO: Enable HTML component replacement for automatic lang attribute injection
+        // Currently commented out pending further testing and validation
         // replaceHtmlComponent(payload, path);
 
         const lingoProviderImport = getOrCreateImport(payload.ast, {
