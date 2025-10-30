@@ -1,0 +1,127 @@
+.theme-toggle {
+  /* Override default button styles */
+  all: unset;
+
+  position: fixed !important;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1000;
+
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 !important;
+
+  border-radius: 50% !important;
+  border: 2px solid rgba(128, 128, 128, 0.5) !important;
+  background-color: rgba(255, 255, 255, 0.15) !important;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  /* Ensure visibility on mobile */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.theme-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.25) !important;
+  border-color: rgba(128, 128, 128, 0.7) !important;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.theme-toggle:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle svg {
+  width: 20px;
+  height: 20px;
+  color: currentColor;
+}
+
+/* Light theme styles */
+[data-theme="light"] .theme-toggle {
+  background-color: rgba(0, 0, 0, 0.08) !important;
+  border-color: rgba(0, 0, 0, 0.3) !important;
+  color: #333 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .theme-toggle:hover {
+  background-color: rgba(0, 0, 0, 0.15) !important;
+  border-color: rgba(0, 0, 0, 0.4) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Dark theme styles */
+[data-theme="dark"] .theme-toggle {
+  background-color: rgba(255, 255, 255, 0.15) !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  color: #fff !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .theme-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.25) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Mobile-specific adjustments */
+@media (max-width: 768px) {
+  .theme-toggle {
+    /* Ensure adequate touch target size */
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    min-height: 48px;
+
+    /* Adjust position for mobile */
+    top: 0.75rem;
+    left: 0.75rem;
+  }
+
+  .theme-toggle svg {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 480px) {
+  .theme-toggle {
+    /* Even larger touch target for small devices */
+    width: 50px;
+    height: 50px;
+    min-width: 50px;
+    min-height: 50px;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .theme-toggle {
+    border-width: 3px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .theme-toggle {
+    transition: none;
+  }
+
+  .theme-toggle:hover,
+  .theme-toggle:active {
+    transform: none;
+  }
+}

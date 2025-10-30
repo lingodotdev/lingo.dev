@@ -4,6 +4,7 @@ import viteLogo from "/vite.svg";
 import { LingoDotDev } from "./lingo-dot-dev";
 import "./App.css";
 import { TestComponent } from "./components/test";
+import { ThemeToggle } from "./components/ThemeToggle";
 
 import { LocaleSwitcher } from "lingo.dev/react/client";
 
@@ -12,6 +13,7 @@ function App() {
 
   return (
     <>
+      <ThemeToggle />
       <div className="logo-container">
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />

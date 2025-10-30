@@ -14,9 +14,15 @@ export default defineConfig(() =>
   lingoCompiler.vite({
     sourceRoot: "src",
     targetLocales: ["es", "fr", "ru", "de", "ja", "zh", "ar", "ko"],
-    models: "lingo.dev",
+    models: {
+      es: "groq:llama-3.3-70b-versatile",
+      fr: "groq:llama-3.3-70b-versatile",
+      ru: "groq:llama-3.3-70b-versatile",
+      de: "groq:llama-3.3-70b-versatile",
+      ja: "groq:llama-3.3-70b-versatile",
+      zh: "groq:llama-3.3-70b-versatile",
+      ar: "groq:llama-3.3-70b-versatile",
+      ko: "groq:llama-3.3-70b-versatile",
+    } as any,
   })(viteConfig),
 );
-// export default defineConfig({
-//   plugins: [react()],
-// })

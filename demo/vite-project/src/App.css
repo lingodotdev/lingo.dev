@@ -57,4 +57,13 @@
   position: absolute;
   top: 0.5rem;
   right: 1rem;
+  z-index: 100;
+}
+
+/* Adjust for mobile to prevent overlap with theme toggle */
+@media (max-width: 768px) {
+  .locale-switcher {
+    top: 0.75rem;
+    right: 0.75rem;
+  }
 }
