@@ -5,6 +5,9 @@ import react from '@vitejs/plugin-react'
 import lingoCompiler from 'lingo.dev/compiler'
 import { type UserConfig, type PluginOption } from 'vite'
 
+// Shared locale configuration - see packages/shared/locales.ts
+const SUPPORTED_LOCALES = ["ar","de","en","es","fr","ja","ko","ru","zh"] as any;
+
 const viteConfig: UserConfig = {
   plugins: [
     inertia({
@@ -30,7 +33,7 @@ const withLingo = lingoCompiler.vite({
   sourceRoot: 'inertia',
   lingoDir: 'lingo',
   sourceLocale: 'en',
-  targetLocales: ['es'],
+  targetLocales: SUPPORTED_LOCALES,
   rsc: false,
   useDirective: false,
   debug: false,
