@@ -1,0 +1,94 @@
+name: Feature Request
+description: Suggest a new feature or enhancement
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a feature! Please provide as much detail as possible.
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Feature Summary
+      description: A brief, clear description of the feature you'd like to see
+      placeholder: Add support for...
+    validations:
+      required: true
+
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation
+      description: Why is this feature important? What problem does it solve?
+      placeholder: |
+        This would help developers...
+        Currently, users have to...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component
+      description: Which component would this feature affect?
+      options:
+        - CLI
+        - Compiler
+        - SDK
+        - CI/CD
+        - Documentation
+        - Multiple components
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: How would you like this feature to work?
+      placeholder: |
+        The feature could work by...
+        Example usage:
+        ```bash
+        lingo.dev --new-feature
+        ```
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Have you considered any alternative solutions or workarounds?
+      placeholder: I've tried... but it doesn't work because...
+
+  - type: textarea
+    id: implementation
+    attributes:
+      label: Implementation Ideas
+      description: |
+        (Optional) If you have ideas about how to implement this, share them here.
+        Have you reviewed the CONTRIBUTING.md guide?
+      placeholder: |
+        This could be implemented by:
+        1. Updating packages/...
+        2. Adding new function...
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: Contribution
+      description: Would you be interested in implementing this feature?
+      options:
+        - label: I'm willing to submit a PR for this feature
+        - label: I've read the CONTRIBUTING.md guidelines
+        - label: I've searched for similar feature requests
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Add any other context, mockups, or examples
