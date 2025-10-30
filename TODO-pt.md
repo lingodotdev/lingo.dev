@@ -1,0 +1,9 @@
+- [ ] Create branch docs/add-portuguese-readme
+- [ ] Create readme/pt.md with Portuguese translation of readme/en.md
+- [ ] Update i18n.json to add "pt" to targets array
+- [ ] Update language navigation in main README.md to include Portuguese
+- [ ] Update language navigation in readme/pt.md
+- [ ] Run build and test scripts if possible
+- [ ] Commit changes with message "docs: add Portuguese translation of README and update i18n.json"
+- [ ] Push branch to origin
+- [ ] Open Pull Request
