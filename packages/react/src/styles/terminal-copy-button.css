@@ -1,0 +1,92 @@
+.terminal-copy-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: transparent;
+  border: none;
+  padding: 4px;
+  border-radius: 4px;
+  color: #6e7681;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+}
+
+.terminal-copy-btn:hover {
+  background-color: rgba(110, 118, 129, 0.1);
+  color: #c9d1d9;
+}
+
+.terminal-copy-btn:focus {
+  outline: 2px solid #58a6ff;
+  outline-offset: 2px;
+  opacity: 1;
+}
+
+.terminal-code-block:hover .terminal-copy-btn {
+  opacity: 1;
+}
+
+.terminal-copy-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+}
+
+.terminal-copy-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Copied state */
+.terminal-copy-btn.copied {
+  color: #3fb950;
+  pointer-events: none;
+}
+
+.terminal-copy-btn.copied .checkmark {
+  animation: checkmarkScale 0.2s ease-in-out;
+}
+
+@keyframes checkmarkScale {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Terminal block styling */
+.terminal-code-block {
+  position: relative;
+  background-color: #0d1117;
+  border-radius: 6px;
+  padding: 16px;
+  margin: 16px 0;
+  font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+  font-size: 14px;
+  line-height: 1.45;
+  overflow-x: auto;
+  color: #c9d1d9;
+}
+
+.terminal-code-block pre {
+  margin: 0;
+  overflow-x: auto;
+}
+
+.terminal-code-block code {
+  display: block;
+  white-space: pre;
+  -webkit-overflow-scrolling: touch;
+  overflow-x: auto;
+  max-width: 100%;
+}
