@@ -1,4 +1,25 @@
+
+
+
 import Z from "zod";
+import { ConfigCacheManager } from "./performance/config-cache-manager";
+import { LazyProviderConfigLoader } from "./performance/lazy-provider-loader";
+import { OptimizedConfigParser } from "./performance/optimized-config-parser";
+
+const cache = new ConfigCacheManager();
+const providerLoader = new LazyProviderConfigLoader();
+const parser = new OptimizedConfigParser(Z.any());
+
+export function loadConfig(source: string) {
+  const cached = cache.get(source);
+  if (cached) return cached;
+
+  const parsed = parser.parse(source);
+  cache.set(source, parsed);
+  return parsed;
+}
+
+
 import { localeCodeSchema } from "./locales";
 import { bucketTypeSchema } from "./formats";
 
