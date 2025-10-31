@@ -42,6 +42,17 @@
 </p>
 
 ---
+## 🚀 Interactive Demos & Playgrounds
+
+To help you get started quickly, you can try Lingo.dev directly in your browser using StackBlitz. No local setup is required!
+
+| Demo | Description | Try it Live |
+| :--- | :--- | :--- |
+| **Next.js (App Router)** | A demo showcasing Lingo.dev in a modern Next.js 14+ application. | [![Open in StackBlitz](https://img.shields.io/badge/Open%20in-StackBlitz-%231374F1?logo=stackblitz)](https://stackblitz.com/github/Circuit-Overtime/lingo.dev/tree/main/demo/next-app) <br> [View Code](./demo/next-app) |
+| **Vite + React** | A standard Vite + React (TypeScript) project demonstrating basic setup. | [![Open in StackBlitz](https://img.shields.io/badge/Open%20in-StackBlitz-%231374F1?logo=stackblitz)](https://stackblitz.com/github/Circuit-Overtime/lingo.dev/tree/main/demo/vite-project) <br> [View Code](./demo/vite-project) |
+| **React Router** | A demo using React Router for client-side routing and i18n. | [![Open in StackBlitz](https://img.shields.io/badge/Open%20in-StackBlitz-%231374F1?logo=stackblitz)](https://stackblitz.com/github/Circuit-Overtime/lingo.dev/tree/main/demo/react-router-app) <br> [View Code](./demo/react-router-app) |
+| **AdonisJS** | A server-side demo using the AdonisJS framework. | [![Open in StackBlitz](https://img.shields.io/badge/Open%20in-StackBlitz-%231374F1?logo=stackblitz)](https://stackblitz.com/github/Circuit-Overtime/lingo.dev/tree/main/demo/adonisjs) <br> [View Code](./demo/adonisjs) |
+---
 
 ## Meet the Compiler 🆕
 
