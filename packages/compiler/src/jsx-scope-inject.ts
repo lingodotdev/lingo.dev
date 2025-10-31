@@ -55,7 +55,10 @@ export const lingoJsxScopeInjectMutation = createCodeMutation((payload) => {
     } as any;
 
     // Add $as prop
-    const as = /^[A-Z]/.test(originalJsxElementName)
+    // Check if it's a member expression (contains dot) or starts with uppercase
+    const isMemberExpression = originalJsxElementName.includes(".");
+    const isComponent = /^[A-Z]/.test(originalJsxElementName);
+    const as = isMemberExpression || isComponent
       ? t.identifier(originalJsxElementName)
       : originalJsxElementName;
     setJsxAttributeValue(newNodePath, "$as", as);
