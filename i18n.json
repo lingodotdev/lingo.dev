@@ -19,13 +19,15 @@
       "bn",
       "fa",
       "pl",
-      "tr"
+      "tr",
+      "or"
     ]
   },
   "buckets": {
     "mdx": {
       "include": ["readme/[locale].md"]
     }
-  },
+  }
   "$schema": "https://lingo.dev/schema/i18n.json"
 }
+
