@@ -8,7 +8,8 @@ import { ModuleId } from "./_const";
 export const jsxHtmlLangMutation = createCodeMutation((payload) => {
   traverse(payload.ast, {
     JSXElement: (path) => {
-      if (getJsxElementName(path)?.toLowerCase() === "html") {
+      const elementName = getJsxElementName(path);
+      if (elementName?.toLowerCase() === "html") {
         const mode = getModuleExecutionMode(payload.ast, payload.params.rsc);
         const packagePath =
           mode === "client" ? ModuleId.ReactClient : ModuleId.ReactRSC;
