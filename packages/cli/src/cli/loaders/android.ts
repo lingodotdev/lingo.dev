@@ -137,7 +137,7 @@ export default function createAndroidLoader(): ILoader<
         console.error("Error parsing Android resource file:", error);
         throw new CLIError({
           message: "Failed to parse Android resource file",
-          docUrl: "androidResouceError",
+          docUrl: "androidResourceError",
         });
       }
     },
@@ -174,7 +174,7 @@ export default function createAndroidLoader(): ILoader<
         console.error("Error generating Android resource file:", error);
         throw new CLIError({
           message: "Failed to generate Android resource file",
-          docUrl: "androidResouceError",
+          docUrl: "androidResourceError",
         });
       }
     },
@@ -758,7 +758,7 @@ function asString(value: any, name: string): string {
   }
   throw new CLIError({
     message: `Expected string value for resource "${name}"`,
-    docUrl: "androidResouceError",
+    docUrl: "androidResourceError",
   });
 }
 
@@ -768,7 +768,7 @@ function asStringArray(value: any, name: string): string[] {
   }
   throw new CLIError({
     message: `Expected array of strings for resource "${name}"`,
-    docUrl: "androidResouceError",
+    docUrl: "androidResourceError",
   });
 }
 
@@ -779,7 +779,7 @@ function asPluralMap(value: any, name: string): Record<string, string> {
       if (typeof pluralValue !== "string") {
         throw new CLIError({
           message: `Expected plural item "${quantity}" of "${name}" to be a string`,
-          docUrl: "androidResouceError",
+          docUrl: "androidResourceError",
         });
       }
       result[quantity] = pluralValue;
@@ -788,7 +788,7 @@ function asPluralMap(value: any, name: string): Record<string, string> {
   }
   throw new CLIError({
     message: `Expected object value for plurals resource "${name}"`,
-    docUrl: "androidResouceError",
+    docUrl: "androidResourceError",
   });
 }
 
@@ -803,7 +803,7 @@ function asBoolean(value: any, name: string): boolean {
   }
   throw new CLIError({
     message: `Expected boolean value for resource "${name}"`,
-    docUrl: "androidResouceError",
+    docUrl: "androidResourceError",
   });
 }
 
@@ -813,7 +813,7 @@ function asInteger(value: any, name: string): number {
   }
   throw new CLIError({
     message: `Expected number value for resource "${name}"`,
-    docUrl: "androidResouceError",
+    docUrl: "androidResourceError",
   });
 }
 
@@ -1161,7 +1161,7 @@ function inferTypeFromValue(value: any): AndroidResourceType {
   }
   throw new CLIError({
     message: "Unable to infer Android resource type from payload",
-    docUrl: "androidResouceError",
+    docUrl: "androidResourceError",
   });
 }
 
