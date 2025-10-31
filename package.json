@@ -27,7 +27,6 @@
   "dependencies": {
     "@changesets/changelog-github": "^0.5.0",
     "@changesets/cli": "^2.27.10",
-    "build": "^0.1.4",
     "minimatch": "^10.0.3",
     "node-machine-id": "^1.1.12"
   },
