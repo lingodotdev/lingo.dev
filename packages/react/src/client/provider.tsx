@@ -107,6 +107,38 @@ export type LingoProviderWrapperProps<D> = {
    * The child components containing localizable content.
    */
   children: React.ReactNode;
+  /**
+   * Optional component to render while the dictionary is loading.
+   * If not provided, renders `null` during loading (default behavior).
+   *
+   * @example
+   * ```tsx
+   * <LingoProviderWrapper
+   *   loadDictionary={loadDictionary}
+   *   loadingComponent={<div>Loading translations...</div>}
+   * >
+   *   <App />
+   * </LingoProviderWrapper>
+   * ```
+   */
+  loadingComponent?: React.ReactNode;
+  /**
+   * Optional component to render when dictionary loading fails.
+   * Receives the error as a prop. If not provided, renders `null` on error (default behavior).
+   *
+   * @example
+   * ```tsx
+   * <LingoProviderWrapper
+   *   loadDictionary={loadDictionary}
+   *   errorComponent={({ error }) => (
+   *     <div>Failed to load translations: {error.message}</div>
+   *   )}
+   * >
+   *   <App />
+   * </LingoProviderWrapper>
+   * ```
+   */
+  errorComponent?: React.ComponentType<{ error: Error }>;
 };
 
 /**
@@ -137,7 +169,11 @@ export type LingoProviderWrapperProps<D> = {
  * ```
  */
 export function LingoProviderWrapper<D>(props: LingoProviderWrapperProps<D>) {
-  const [dictionary, setDictionary] = useState<D | null>(null);
+  const [state, setState] = useState<
+    | { status: "loading" }
+    | { status: "loaded"; dictionary: D }
+    | { status: "error"; error: Error }
+  >({ status: "loading" });
 
   // for client-side rendered apps, the dictionary is also loaded on the client
   useEffect(() => {
@@ -148,19 +184,29 @@ export function LingoProviderWrapper<D>(props: LingoProviderWrapperProps<D>) {
           `[Lingo.dev] Loading dictionary file for locale ${locale}...`,
         );
         const localeDictionary = await props.loadDictionary(locale);
-        setDictionary(localeDictionary);
+        setState({ status: "loaded", dictionary: localeDictionary });
       } catch (error) {
         console.log("[Lingo.dev] Failed to load dictionary:", error);
+        setState({
+          status: "error",
+          error: error instanceof Error ? error : new Error(String(error)),
+        });
       }
     })();
   }, []);
 
-  // TODO: handle case when the dictionary is loading (throw suspense?)
-  if (!dictionary) {
-    return null;
+  if (state.status === "loading") {
+    return props.loadingComponent ?? null;
+  }
+
+  if (state.status === "error") {
+    const ErrorComponent = props.errorComponent;
+    return ErrorComponent ? <ErrorComponent error={state.error} /> : null;
   }
 
   return (
-    <LingoProvider dictionary={dictionary}>{props.children}</LingoProvider>
+    <LingoProvider dictionary={state.dictionary}>
+      {props.children}
+    </LingoProvider>
   );
 }
