@@ -4,8 +4,8 @@
  * and schema validation using Zod
  */
 
-import { z } from 'zod';
-import { memoize } from 'lodash';
+import { z } from "zod";
+import { memoize } from "lodash";
 
 // Provider configuration schema
 const ProviderModelConfigSchema = z.object({
@@ -17,7 +17,7 @@ const ProviderModelConfigSchema = z.object({
 });
 
 const LocalePatternSchema = z.union([
-  z.literal('*:*'),
+  z.literal("*:*"),
   z.string().regex(/^[a-z]{2}:[a-z]{2}$/), // e.g., "en:es"
   z.string().regex(/^\*:[a-z]{2}$/), // e.g., "*:fr"
   z.string().regex(/^[a-z]{2}:\*$/), // e.g., "en:*"
@@ -25,24 +25,28 @@ const LocalePatternSchema = z.union([
 
 // Main configuration schema
 export const LingoConfigSchema = z.object({
-  sourceLocale: z.string().min(2).max(10).default('en'),
+  sourceLocale: z.string().min(2).max(10).default("en"),
   targetLocales: z.array(z.string().min(2).max(10)),
-  sourceRoot: z.string().default('src'),
-  lingoDir: z.string().default('lingo'),
+  sourceRoot: z.string().default("src"),
+  lingoDir: z.string().default("lingo"),
   rsc: z.boolean().default(false),
   debug: z.boolean().default(false),
   models: z.record(LocalePatternSchema, z.string()).optional(),
   prompt: z.string().optional(),
-  cache: z.object({
-    enabled: z.boolean().default(true),
-    ttl: z.number().positive().optional(),
-    directory: z.string().optional(),
-  }).optional(),
-  validation: z.object({
-    checkPlurals: z.boolean().default(true),
-    validateVariables: z.boolean().default(true),
-    ensureCompleteness: z.boolean().default(true),
-  }).optional(),
+  cache: z
+    .object({
+      enabled: z.boolean().default(true),
+      ttl: z.number().positive().optional(),
+      directory: z.string().optional(),
+    })
+    .optional(),
+  validation: z
+    .object({
+      checkPlurals: z.boolean().default(true),
+      validateVariables: z.boolean().default(true),
+      ensureCompleteness: z.boolean().default(true),
+    })
+    .optional(),
   providers: z.record(z.string(), ProviderModelConfigSchema).optional(),
 });
 
@@ -65,13 +69,13 @@ export interface ParseResult<T> {
 export class OptimizedConfigParser {
   private readonly parseCache = new Map<string, ParseResult<LingoConfig>>();
   private readonly schemaCache = new Map<string, z.ZodSchema>();
-  
+
   // Memoized parsing functions for better performance
   private readonly memoizedParse = memoize(
     this.parseInternal.bind(this),
     (input: string | object) => {
-      return typeof input === 'string' ? input : JSON.stringify(input);
-    }
+      return typeof input === "string" ? input : JSON.stringify(input);
+    },
   );
 
   /**
@@ -79,9 +83,9 @@ export class OptimizedConfigParser {
    */
   parse(input: string | object): ParseResult<LingoConfig> {
     const startTime = performance.now();
-    
+
     // Check cache for string inputs
-    if (typeof input === 'string') {
+    if (typeof input === "string") {
       const cached = this.parseCache.get(input);
       if (cached) {
         return { ...cached, parseTime: 0 }; // Indicate cache hit with 0 parse time
@@ -89,9 +93,9 @@ export class OptimizedConfigParser {
     }
 
     const result = this.memoizedParse(input);
-    
+
     // Cache the result for string inputs
-    if (typeof input === 'string') {
+    if (typeof input === "string") {
       this.parseCache.set(input, result);
     }
 
@@ -104,13 +108,13 @@ export class OptimizedConfigParser {
    */
   fastParse(input: string | object): LingoConfig | null {
     try {
-      const data = typeof input === 'string' ? JSON.parse(input) : input;
-      
+      const data = typeof input === "string" ? JSON.parse(input) : input;
+
       // Quick structural validation
       if (!data.targetLocales || !Array.isArray(data.targetLocales)) {
         return null;
       }
-      
+
       return data as LingoConfig;
     } catch {
       return null;
@@ -121,9 +125,9 @@ export class OptimizedConfigParser {
    * Stream parse for large configuration files
    */
   async *streamParse(
-    stream: AsyncIterable<string>
+    stream: AsyncIterable<string>,
   ): AsyncGenerator<Partial<LingoConfig>> {
-    let buffer = '';
+    let buffer = "";
     let depth = 0;
     let inString = false;
     let escaped = false;
@@ -136,17 +140,17 @@ export class OptimizedConfigParser {
         if (!escaped) {
           if (char === '"' && !inString) inString = true;
           else if (char === '"' && inString) inString = false;
-          else if (char === '\\') escaped = true;
+          else if (char === "\\") escaped = true;
           else if (!inString) {
-            if (char === '{' || char === '[') depth++;
-            else if (char === '}' || char === ']') depth--;
+            if (char === "{" || char === "[") depth++;
+            else if (char === "}" || char === "]") depth--;
           }
         } else {
           escaped = false;
         }
 
         // When we have a complete object at depth 1
-        if (depth === 1 && (char === ',' || char === '}')) {
+        if (depth === 1 && (char === "," || char === "}")) {
           try {
             // Extract and parse the current property
             const partial = this.extractPartialConfig(buffer);
@@ -202,13 +206,13 @@ export class OptimizedConfigParser {
       const patterns: Array<[RegExp, string]> = [];
 
       for (const [pattern, model] of Object.entries(optimized.models)) {
-        if (pattern === '*:*') {
+        if (pattern === "*:*") {
           // Default pattern - process last
           patterns.push([/.+:.+/, model]);
-        } else if (pattern.includes('*')) {
+        } else if (pattern.includes("*")) {
           // Wildcard pattern
           const regex = new RegExp(
-            pattern.replace('*', '[a-z]{2,10}').replace(':', ':')
+            pattern.replace("*", "[a-z]{2,10}").replace(":", ":"),
           );
           patterns.unshift([regex, model]); // More specific patterns first
         } else {
@@ -258,10 +262,11 @@ export class OptimizedConfigParser {
     schemaCacheSize: number;
     memoizedCacheSize: number;
   } {
+    const memoCache = this.memoizedParse.cache as Map<any, any> | undefined;
     return {
       parseCacheSize: this.parseCache.size,
       schemaCacheSize: this.schemaCache.size,
-      memoizedCacheSize: this.memoizedParse.cache.size ?? 0,
+      memoizedCacheSize: memoCache ? memoCache.size : 0,
     };
   }
 
@@ -273,17 +278,19 @@ export class OptimizedConfigParser {
     let data: unknown;
 
     try {
-      data = typeof input === 'string' ? JSON.parse(input) : input;
+      data = typeof input === "string" ? JSON.parse(input) : input;
     } catch (error) {
       return {
         data: {} as LingoConfig,
         parseTime: performance.now() - parseStart,
         validationTime: 0,
-        errors: [{ 
-          code: 'custom',
-          path: [],
-          message: `Failed to parse JSON: ${(error as Error).message}`
-        }],
+        errors: [
+          {
+            code: "custom",
+            path: [],
+            message: `Failed to parse JSON: ${(error as Error).message}`,
+          },
+        ],
       };
     }
 
@@ -331,7 +338,7 @@ export class OptimizedConfigParser {
    */
   private deepMerge(
     target: Partial<LingoConfig>,
-    source: Partial<LingoConfig>
+    source: Partial<LingoConfig>,
   ): Partial<LingoConfig> {
     const result = { ...target };
 
@@ -342,16 +349,16 @@ export class OptimizedConfigParser {
       if (sourceValue === undefined) continue;
 
       if (
-        typeof sourceValue === 'object' &&
+        typeof sourceValue === "object" &&
         sourceValue !== null &&
         !Array.isArray(sourceValue) &&
-        typeof targetValue === 'object' &&
+        typeof targetValue === "object" &&
         targetValue !== null &&
         !Array.isArray(targetValue)
       ) {
         result[key as keyof LingoConfig] = this.deepMerge(
           targetValue as any,
-          sourceValue as any
+          sourceValue as any,
         ) as any;
       } else {
         result[key as keyof LingoConfig] = sourceValue as any;
@@ -370,18 +377,18 @@ export class OptimizedConfigParser {
     // Check for large number of target locales
     if (config.targetLocales.length > 10) {
       warnings.push(
-        `Large number of target locales (${config.targetLocales.length}) may impact performance`
+        `Large number of target locales (${config.targetLocales.length}) may impact performance`,
       );
     }
 
     // Check for missing cache configuration
     if (!config.cache?.enabled) {
-      warnings.push('Caching is disabled, which may impact performance');
+      warnings.push("Caching is disabled, which may impact performance");
     }
 
     // Check for debug mode in production
-    if (config.debug && process.env.NODE_ENV === 'production') {
-      warnings.push('Debug mode is enabled in production environment');
+    if (config.debug && process.env.NODE_ENV === "production") {
+      warnings.push("Debug mode is enabled in production environment");
     }
 
     return warnings;
@@ -401,8 +408,8 @@ export function parseConfig(input: string | object): LingoConfig {
   if (result.errors && result.errors.length > 0) {
     throw new Error(
       `Configuration parsing failed: ${result.errors
-        .map(e => e.message)
-        .join(', ')}`
+        .map((e) => e.message)
+        .join(", ")}`,
     );
   }
   return result.data;
