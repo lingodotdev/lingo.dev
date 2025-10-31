@@ -1,0 +1,16 @@
+{
+  "locale": {
+    "source": "en",
+    "targets": ["es", "fr"]
+  },
+  "buckets": {
+    "json": {
+      "include": ["locales/[locale].json"]
+    }
+  },
+  "provider": {
+    "id": "lingo-dev",
+    "model": "gpt-4o-mini",
+    "prompt": "Translate the provided text from {source} to {target}."
+  }
+}

@@ -1,0 +1,2 @@
+lingo-sdk
+python-dotenv

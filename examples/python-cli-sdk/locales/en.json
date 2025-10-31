@@ -1,0 +1,5 @@
+{
+  "app_title": "Python Localization Demo",
+  "static_message": "This message was translated by the Lingo.dev CLI.",
+  "prompt_user": "Enter a phrase to translate dynamically:"
+}

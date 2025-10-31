@@ -141,6 +141,11 @@ export class LingoDotDevEngine {
         );
       } else if (res.status === 400) {
         throw new Error(`Invalid request: ${res.statusText}`);
+n    } else if (res.status === 401) {
+        throw new Error("Authentication Error (401): Invalid or missing API Key. Check LINGO_API_KEY.");
+    } else if (res.status === 429) {
+        throw new Error("Rate Limit Exceeded (429): Too many requests. Please implement a delay or retry mechanism.");
+
       } else {
         const errorText = await res.text();
         throw new Error(errorText);
@@ -210,6 +215,11 @@ export class LingoDotDevEngine {
       );
     } else if (typeof payload === "string") {
       return payload.trim().split(/\s+/).filter(Boolean).length;
+n    } else if (res.status === 401) {
+        throw new Error("Authentication Error (401): Invalid or missing API Key. Check LINGO_API_KEY.");
+    } else if (res.status === 429) {
+        throw new Error("Rate Limit Exceeded (429): Too many requests. Please implement a delay or retry mechanism.");
+
     } else {
       return 0;
     }
@@ -498,6 +508,11 @@ export class LingoDotDevEngine {
       if (current) {
         if (attribute) {
           (current as Element).setAttribute(attribute, value);
+n    } else if (res.status === 401) {
+        throw new Error("Authentication Error (401): Invalid or missing API Key. Check LINGO_API_KEY.");
+    } else if (res.status === 429) {
+        throw new Error("Rate Limit Exceeded (429): Too many requests. Please implement a delay or retry mechanism.");
+
         } else {
           current.textContent = value;
         }
