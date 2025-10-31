@@ -6,6 +6,10 @@ import "./globals.css";
 import { LocaleSwitcher } from "lingo.dev/react/client";
 import { LingoProvider, loadDictionary } from "lingo.dev/react/rsc";
 
+// NEW: bring in the full-bleed components
+import AnnouncementBar from "@/components/AnnouncementBar";
+import Navbar from "@/components/Navbar";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -23,21 +27,22 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   // Compiler: wrap with LingoProvider and render LocaleSwitcher
   return (
-    <LingoProvider loadDictionary={(locale) => loadDictionary(locale)}>
+    <LingoProvider loadDictionary={(Locale: any) => loadDictionary(Locale)}>
       <html lang="en">
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
+        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+          {/* Locale switcher (kept as-is) */}
           <div className="absolute top-2 right-3">
-            <LocaleSwitcher
-              locales={["en", "es", "zh", "ja", "fr", "de", "ru", "ar", "ko"]}
-            />
+            <LocaleSwitcher locales={["en", "es", "zh", "ja", "fr", "de", "ru", "ar", "ko"]} />
           </div>
+
+          {/* Full-bleed top bars */}
+          <AnnouncementBar />
+          <Navbar />
+
+          {/* Page content */}
           {children}
         </body>
       </html>
