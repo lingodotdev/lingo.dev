@@ -95,7 +95,7 @@ export default function TanstackFormTest() {
       <h2>Tanstack Forms + Lingo.dev Compiler Issue #1165</h2>
       
       <div style={{ marginBottom: '40px' }}>
-        <h3>❌ Broken: Lowercase variable name (form)</h3>
+        <h3>Broken: Lowercase variable name (form)</h3>
         <p>Using: <code>const form = useForm()</code></p>
         <p>Expected: Blue border, styled buttons with click functionality</p>
         <form.AppForm>
@@ -107,7 +107,7 @@ export default function TanstackFormTest() {
       </div>
 
       <div>
-        <h3>✅ Working: Uppercase variable name (FormContent)</h3>
+        <h3>Working: Uppercase variable name (FormContent)</h3>
         <p>Using: <code>const FormContent = useFormUppercase()</code></p>
         <p>Expected: Green border, styled buttons with click functionality</p>
         <FormContent.AppForm>
