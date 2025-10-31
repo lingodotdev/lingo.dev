@@ -37,6 +37,7 @@ import { withExponentialBackoff } from "../utils/exp-backoff";
 import trackEvent from "../utils/observability";
 import { createDeltaProcessor } from "../utils/delta";
 import { isICUPluralObject } from "../loaders/xcode-xcstrings-icu";
+import { startWatchMode } from "../utils/watcher";
 
 export default new Command()
   .command("i18n")
@@ -98,6 +99,13 @@ export default new Command()
 
     try {
       flags = parseFlags(options);
+
+      // If --watch mode is enabled, start watcher and skip normal execution
+      if (options.watch) {
+        await startWatchMode(flags);
+        return;
+      }
+
     } catch (parseError: any) {
       // Handle flag validation errors (like invalid locale codes)
       await trackEvent("unknown", "cmd.i18n.error", {
@@ -415,8 +423,7 @@ export default new Command()
                 }
 
                 bucketOra.start(
-                  `[${sourceLocale} -> ${targetLocale}] [${
-                    Object.keys(processableData).length
+                  `[${sourceLocale} -> ${targetLocale}] [${Object.keys(processableData).length
                   } entries] (0%) AI localization in progress...`,
                 );
                 let processPayload = createProcessor(i18nConfig!.provider, {
@@ -438,9 +445,8 @@ export default new Command()
                     targetData,
                   },
                   (progress, sourceChunk, processedChunk) => {
-                    bucketOra.text = `[${sourceLocale} -> ${targetLocale}] [${
-                      Object.keys(processableData).length
-                    } entries] (${progress}%) AI localization in progress...`;
+                    bucketOra.text = `[${sourceLocale} -> ${targetLocale}] [${Object.keys(processableData).length
+                      } entries] (${progress}%) AI localization in progress...`;
                   },
                 );
 
