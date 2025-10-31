@@ -155,7 +155,7 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 ![স্টার হিস্টরি চার্ট](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
 
-](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+](<https://www.star-history.com/#lingodotdev/lingo.dev&Date>)
 
 ## 🌐 অন্যান্য ভাষায় রিডমি
 
@@ -165,6 +165,6 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 ## 🌐 অন্যান্য ভাষায় রিডমি
 
-[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [नेपाली](/readme/ne.md)
 
 আপনার ভাষা দেখতে পাচ্ছেন না? এটি [`i18n.json`](./i18n.json) এ যোগ করুন এবং একটি PR খুলুন!
