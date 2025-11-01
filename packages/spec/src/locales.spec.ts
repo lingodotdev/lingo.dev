@@ -52,6 +52,11 @@ describe("resolveLocaleCode", () => {
     expect(resolveLocaleCode("sr")).toEqual("sr-RS");
     expect(resolveLocaleCode("zh")).toEqual("zh-CN");
   });
+
+  it("should resolve Marathi locale codes", () => {
+    expect(resolveLocaleCode("mr")).toEqual("mr-IN");
+    expect(resolveLocaleCode("mr-IN")).toEqual("mr-IN");
+  });
 });
 
 describe("getLocaleCodeDelimiter", () => {

@@ -215,6 +215,8 @@ const localeMap = {
   ka: ["ka-GE"],
   // Malayalam (India)
   ml: ["ml-IN"],
+  // Marathi (India)
+  mr: ["mr-IN"],
   // Armenian (Armenia)
   hy: ["hy-AM"],
   // Macedonian (Macedonia)
