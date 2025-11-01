@@ -11,6 +11,7 @@ import { LanguageModel, Message, generateText } from "ai";
 import { colors } from "../constants";
 import { jsonrepair } from "jsonrepair";
 import { createOllama } from "ollama-ai-provider";
+import { getDocsUrl } from "../utils/header";
 
 export default function createExplicitLocalizer(
   provider: NonNullable<I18nConfig["provider"]>,
@@ -31,7 +32,7 @@ export default function createExplicitLocalizer(
             colors.green,
           )("Lingo.dev")}
 
-          ${chalk.hex(colors.blue)("Docs: https://lingo.dev/go/docs")}
+          ${chalk.hex(colors.blue)(`Docs: ${getDocsUrl()}`)}
         `,
       );
     case "openai":
@@ -129,9 +130,7 @@ function createAiSdkLocalizer(params: {
           "provider",
         )} node from your i18n.json configuration to switch to ${chalk.hex(
           colors.green,
-        )("Lingo.dev")}
-
-        ${chalk.hex(colors.blue)("Docs: https://lingo.dev/go/docs")}
+        ${chalk.hex(colors.blue)(`Docs: ${getDocsUrl()}`)}
       `,
     );
   }

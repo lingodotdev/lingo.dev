@@ -21,6 +21,7 @@ import mayTheFourthCmd from "./cmd/may-the-fourth";
 import packageJson from "../../package.json";
 import run from "./cmd/run";
 import purgeCmd from "./cmd/purge";
+import { getDocsUrl } from "./utils/header";
 
 export default new InteractiveCommand()
   .name("lingo.dev")
@@ -39,7 +40,8 @@ ${vice(
 
 ⚡️ AI-powered open-source CLI for web & mobile localization.
 
-Star the the repo :) https://github.com/LingoDotDev/lingo.dev
+📚 Docs: ${getDocsUrl()}
+⭐ Star the repo :) https://github.com/LingoDotDev/lingo.dev
 `,
   )
   .version(`v${packageJson.version}`, "-v, --version", "Show version")
