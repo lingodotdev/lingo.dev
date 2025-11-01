@@ -43,6 +43,7 @@ export const flagsSchema = z.object({
   apiKey: z.string().optional(),
   force: z.boolean().optional(),
   frozen: z.boolean().optional(),
+  dryRun: z.boolean().optional(), // ✅ ADD THIS LINE
   verbose: z.boolean().optional(),
   strict: z.boolean().optional(),
   interactive: z.boolean().default(false),
@@ -54,4 +55,5 @@ export const flagsSchema = z.object({
   debounce: z.number().positive().default(5000), // 5 seconds default
   sound: z.boolean().optional(),
 });
+
 export type CmdRunFlags = z.infer<typeof flagsSchema>;

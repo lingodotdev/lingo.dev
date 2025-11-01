@@ -7,6 +7,7 @@ import setup from "./setup";
 import plan from "./plan";
 import execute from "./execute";
 import watch from "./watch";
+import dryRun from "./dry-run";
 import { CmdRunContext, flagsSchema } from "./_types";
 import frozen from "./frozen";
 import {
@@ -94,6 +95,11 @@ export default new Command()
     "--frozen",
     "Validate translations are up-to-date without making changes - fails if source files, target files, or lockfile are out of sync. Ideal for CI/CD to ensure translation consistency before deployment",
   )
+
+  .option(
+    "--dry-run",
+    "Preview what would be translated without making changes. Shows files, string counts, and estimated translation volume. Useful for planning and cost estimation",
+  )
   .option(
     "--api-key <api-key>",
     "Override API key from settings or environment variables",
@@ -148,6 +154,11 @@ export default new Command()
 
       await plan(ctx);
       await renderSpacer();
+
+      if (ctx.flags.dryRun) {
+        await dryRun(ctx);
+        return;
+      }
 
       await frozen(ctx);
       await renderSpacer();
