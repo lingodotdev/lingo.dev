@@ -17,6 +17,7 @@ pnpm install
 pnpm build
 ```
 
+
 Lingo.dev uses [pnpm](https://pnpm.io/) as its package manager.
 
 ### 2. Link the CLI Package

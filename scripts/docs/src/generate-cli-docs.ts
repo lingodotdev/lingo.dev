@@ -18,7 +18,6 @@ import { unified } from "unified";
 import { pathToFileURL } from "url";
 import { createOrUpdateGitHubComment, getRepoRoot } from "./utils";
 import { format as prettierFormat, resolveConfig } from "prettier";
-
 type CommandWithInternals = Command & {
   _hidden?: boolean;
   _helpCommand?: Command;
