@@ -3,6 +3,7 @@ import figlet from "figlet";
 import { vice } from "gradient-string";
 import readline from "readline";
 import { colors } from "../constants";
+import { getDocsUrl } from "./header";
 
 export async function renderClear() {
   console.log("\x1Bc");
@@ -37,10 +38,11 @@ export async function renderHero() {
   const label3 = "🎮 Join Discord:";
   const maxLabelWidth = 17; // Approximate visual width accounting for emoji
 
+  const docsUrl = getDocsUrl();
   console.log(
     `${chalk.hex(colors.blue)(label1.padEnd(maxLabelWidth + 1))} ${chalk.hex(
       colors.blue,
-    )("https://lingo.dev/go/docs")}`,
+    )(docsUrl)}`,
   ); // Docs emoji seems narrower
   console.log(
     `${chalk.hex(colors.blue)(label2.padEnd(maxLabelWidth))} ${chalk.hex(

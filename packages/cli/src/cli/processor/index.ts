@@ -11,6 +11,7 @@ import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { createMistral } from "@ai-sdk/mistral";
 import { createOllama } from "ollama-ai-provider";
+import { getDocsUrl } from "../utils/header";
 
 export default function createProcessor(
   provider: I18nConfig["provider"],
@@ -50,7 +51,7 @@ function getPureModelProvider(provider: I18nConfig["provider"]) {
     colors.green,
   )("Lingo.dev")}
 
-  ${chalk.hex(colors.blue)("Docs: https://lingo.dev/go/docs")}
+  ${chalk.hex(colors.blue)(`Docs: ${getDocsUrl()}`)}
 `;
 
   const createUnsupportedProviderErrorMessage = (providerId?: string) =>
@@ -65,7 +66,7 @@ function getPureModelProvider(provider: I18nConfig["provider"]) {
     colors.green,
   )("Lingo.dev")}
 
-  ${chalk.hex(colors.blue)("Docs: https://lingo.dev/go/docs")}
+  ${chalk.hex(colors.blue)(`Docs: ${getDocsUrl()}`)}
   `;
 
   switch (provider?.id) {

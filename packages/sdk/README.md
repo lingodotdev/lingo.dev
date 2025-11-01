@@ -16,4 +16,4 @@ import {} from 'lingo.dev/sdk';
 
 ### Documentation
 
-[Documentation](https://lingo.dev/go/docs)
+[Documentation](https://lingo.dev/cli)
