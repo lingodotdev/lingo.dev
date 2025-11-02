@@ -109,7 +109,7 @@ export class LCPServer {
       console.log(
         "ℹ️  Lingo.dev returns source dictionary - source and target locales are the same",
       );
-      // cache source dictionary for convenience when editing the dictionary.js file
+      // cache source dictionary for convenience when editing the dictionary cache file
       await LCPCache.writeLocaleDictionary(sourceDictionary, cacheParams);
       return sourceDictionary;
     } else {

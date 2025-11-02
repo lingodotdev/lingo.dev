@@ -9,8 +9,13 @@ import { LCP_DICTIONARY_FILE_NAME } from "../../_const";
 vi.mock("fs");
 vi.mock("prettier");
 
-// cached JSON is stored in JS file, we need to add export default to make it valid JS file
+// cached JSON is now stored in pure JSON format
 function toCachedString(cache: any) {
+  return JSON.stringify(cache, null, 2);
+}
+
+// legacy format for migration tests
+function toLegacyCachedString(cache: any) {
   return `export default ${JSON.stringify(cache, null, 2)};`;
 }
 
@@ -21,9 +26,13 @@ describe("LCPCache", () => {
       "test.ts": {
         scopes: {
           key1: {
+            type: "element",
+            content: "Test content",
             hash: "123",
           },
           newKey: {
+            type: "element",
+            content: "New content",
             hash: "111",
           },
         },
@@ -31,6 +40,8 @@ describe("LCPCache", () => {
       "old.ts": {
         scopes: {
           oldKey: {
+            type: "element",
+            content: "Old content",
             hash: "456",
           },
         },
@@ -38,6 +49,8 @@ describe("LCPCache", () => {
       "new.ts": {
         scopes: {
           brandNew: {
+            type: "element",
+            content: "Brand new content",
             hash: "222",
           },
         },
@@ -435,6 +448,111 @@ describe("LCPCache", () => {
       expect(prettier.resolveConfig).toHaveBeenCalledTimes(1);
       expect(prettier.format).toHaveBeenCalledTimes(1);
       expect(fs.writeFileSync).toHaveBeenCalledWith(cachePath, "formatted");
+    });
+  });
+
+  describe("migration from legacy format", () => {
+    it("reads and migrates legacy export default format to JSON", () => {
+      vi.mocked(fs.existsSync).mockReturnValue(true);
+      vi.mocked(fs.readFileSync).mockReturnValue(
+        toLegacyCachedString({
+          version: 0.1,
+          files: {
+            "test.ts": {
+              entries: {
+                key1: {
+                  content: {
+                    en: "Hello",
+                    fr: "Bonjour",
+                  },
+                  hash: "123",
+                },
+              },
+            },
+          },
+        }),
+      );
+
+      const dictionary = LCPCache.readLocaleDictionary("en", params);
+
+      // Should read the legacy format successfully
+      expect(dictionary).toEqual({
+        version: 0.1,
+        locale: "en",
+        files: {
+          "test.ts": {
+            entries: {
+              key1: "Hello",
+            },
+          },
+        },
+      });
+
+      // Should immediately re-write in new JSON format (migration)
+      expect(fs.writeFileSync).toHaveBeenCalledWith(
+        cachePath,
+        expect.stringMatching(/^\{[\s\S]*\}$/), // Should be pure JSON without export default
+      );
+    });
+
+    it("throws error for invalid legacy format", () => {
+      vi.mocked(fs.existsSync).mockReturnValue(true);
+      vi.mocked(fs.readFileSync).mockReturnValue(
+        "export default { invalid json syntax: }",
+      );
+
+      expect(() => {
+        LCPCache.readLocaleDictionary("en", params);
+      }).toThrow(/Failed to migrate legacy dictionary cache format/);
+    });
+
+    it("reads new JSON format without migration", () => {
+      vi.mocked(fs.existsSync).mockReturnValue(true);
+      vi.mocked(fs.readFileSync).mockReturnValue(
+        toCachedString({
+          version: 0.1,
+          files: {
+            "test.ts": {
+              entries: {
+                key1: {
+                  content: {
+                    en: "Hello",
+                    fr: "Bonjour",
+                  },
+                  hash: "123",
+                },
+              },
+            },
+          },
+        }),
+      );
+
+      const dictionary = LCPCache.readLocaleDictionary("en", params);
+
+      // Should read the new JSON format successfully
+      expect(dictionary).toEqual({
+        version: 0.1,
+        locale: "en",
+        files: {
+          "test.ts": {
+            entries: {
+              key1: "Hello",
+            },
+          },
+        },
+      });
+
+      // Should NOT trigger migration write
+      expect(fs.writeFileSync).not.toHaveBeenCalled();
+    });
+
+    it("throws error for invalid JSON format", () => {
+      vi.mocked(fs.existsSync).mockReturnValue(true);
+      vi.mocked(fs.readFileSync).mockReturnValue("{ invalid json }");
+
+      expect(() => {
+        LCPCache.readLocaleDictionary("en", params);
+      }).toThrow(/Failed to parse dictionary cache file/);
     });
   });
 });

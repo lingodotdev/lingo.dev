@@ -13,13 +13,13 @@ describe("getDictionaryPath", () => {
       sourceRoot: "src",
       lingoDir: "lingo",
       relativeFilePath: "./components/Button.tsx",
-      expected: "./../lingo/dictionary.js",
+      expected: "./../lingo/dictionary.json",
     },
     {
       sourceRoot: "src/app/content",
       lingoDir: "i18n",
       relativeFilePath: "../../components/Button.tsx",
-      expected: "./../app/content/i18n/dictionary.js",
+      expected: "./../app/content/i18n/dictionary.json",
     },
   ])(
     "returns correct path for file $relativeFilePath in $sourceRoot",
@@ -45,7 +45,7 @@ describe("getDictionaryPath", () => {
       relativeFilePath: "/project/src/components/Button.tsx",
     });
 
-    expect(result).toBe("./../lingo/dictionary.js");
+    expect(result).toBe("./../lingo/dictionary.json");
     // Ensure no back-slashes slip through
     expect(result).not.toMatch(/\\/);
   });
@@ -65,7 +65,7 @@ describe("getDictionaryPath", () => {
       relativeFilePath: "C:\\project\\src\\components\\Button.tsx",
     });
 
-    expect(result).toBe("./../lingo/dictionary.js");
+    expect(result).toBe("./../lingo/dictionary.json");
     expect(result).not.toMatch(/\\/);
   });
 });

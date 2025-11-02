@@ -23,7 +23,7 @@ export class LCPCache {
       if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir, { recursive: true });
       }
-      fs.writeFileSync(cachePath, "export default {};");
+      fs.writeFileSync(cachePath, "{}");
     }
   }
 
@@ -153,7 +153,7 @@ export class LCPCache {
       const config = await prettier.resolveConfig(cachePath);
       const prettierOptions = {
         ...(config ?? {}),
-        parser: config?.parser ? config.parser : "typescript",
+        parser: "json",
       };
       return await prettier.format(cachedContent, prettierOptions);
     } catch (error) {
@@ -168,7 +168,7 @@ export class LCPCache {
     params: LCPCacheParams,
   ) {
     const cachePath = this._getCachePath(params);
-    const cache = `export default ${JSON.stringify(dictionaryCache, null, 2)};`;
+    const cache = JSON.stringify(dictionaryCache, null, 2);
     const formattedCache = await this._format(cache, cachePath);
     fs.writeFileSync(cachePath, formattedCache);
   }
@@ -182,17 +182,48 @@ export class LCPCache {
         files: {},
       };
     }
-    const jsObjectString = fs.readFileSync(cachePath, "utf8");
+    const fileContent = fs.readFileSync(cachePath, "utf8");
 
-    // Remove 'export default' and trailing semicolon before parsing
-    const cache = jsObjectString
-      .replace(/^export default/, "")
-      .replace(/;\s*$/, "");
+    // Check if this is the legacy format (export default {...};)
+    if (fileContent.trim().startsWith("export default")) {
+      // Migrate from legacy format
+      const jsonContent = fileContent
+        .replace(/^export default\s+/, "")
+        .replace(/;\s*$/, "");
 
-    // Use Function constructor to safely evaluate the object
-    // eslint-disable-next-line no-new-func
-    const obj = new Function(`return (${cache})`)();
-    return obj;
+      try {
+        // Parse the legacy format safely using JSON.parse
+        const obj = JSON.parse(jsonContent);
+
+        // Immediately re-write in new JSON format (migration)
+        this._writeMigration(obj, params);
+
+        return obj;
+      } catch (error) {
+        throw new Error(
+          `Failed to migrate legacy dictionary cache format. Please delete the cache file and rebuild: ${cachePath}`,
+        );
+      }
+    }
+
+    // Parse new JSON format
+    try {
+      return JSON.parse(fileContent);
+    } catch (error) {
+      throw new Error(
+        `Failed to parse dictionary cache file. Please delete the cache file and rebuild: ${cachePath}`,
+      );
+    }
+  }
+
+  // write migration without formatting to avoid async issues
+  private static _writeMigration(
+    dictionaryCache: DictionaryCacheSchema,
+    params: LCPCacheParams,
+  ) {
+    const cachePath = this._getCachePath(params);
+    const cache = JSON.stringify(dictionaryCache, null, 2);
+    fs.writeFileSync(cachePath, cache);
   }
 
   // get cache file path
