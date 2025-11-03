@@ -1,6 +1,6 @@
---- 
-title: "Svelte" 
-subtitle: "AI translation for Svelte  with Lingo.dev CLI and SDK" 
+
+---
+title
 ---
 
 ## What is Svelte?
@@ -13,46 +13,47 @@ Unlike other frameworks, Svelte compiles your code to highly optimized JavaScrip
 ## What is Lingo.dev?
 
 [Lingo.dev](https://lingo.dev/) is an AI-powered translation platform.  
-It allows you to automatically translate content in your project using either a **CLI** for static content or an **SDK** for dynamic, real-time translations.
+It allows you to automatically translate content in your project using a **CLI** for static translations.
 
 ---
 
 ## About this guide
 
-This guide explains how to set up Lingo.dev in a Svelte project.  
+This guide explains how to set up **Lingo.dev CLI** in a Svelte project.  
 You will learn how to:
 
-- Install Svelte or SvelteKit
-- Create static and dynamic content
-- Configure Lingo.dev CLI and SDK
-- Use translated content in your Svelte components
+- Install Svelte or SvelteKit  
+- Create static content  
+- Configure and run Lingo.dev CLI  
+- Use translated content in your Svelte components  
 
 ---
 
-## Step 1. Install Svelte (If you have an existing svelte project, please skip to **Step 2**)
+## Step 1. Install Svelte (If you have an existing Svelte project, please skip to **Step 2**)
 
 ### Using SvelteKit
 
-1. Open a terminal of your choice.
+1. Open a terminal of your choice.  
 2. Create a new project:
 
 ```bash
-   npx sv create <Name-of-the-app>
-```
+npx sv create <Name-of-the-app>
+````
 
 3. Follow the prompts to choose options.
 4. Navigate into the project directory:
 
 ```bash
-   cd <Name-of-the-app>
+cd <Name-of-the-app>
 ```
+
 5. Start the development server:
 
 ```bash
-   npm run dev -- --open
+npm run dev -- --open
 ```
 
-6. This should open localhost with the svelte built in page.
+6. This should open localhost with the built-in Svelte page.
 
 ### Using Vite + Svelte (Svelte compiler only)
 
@@ -60,22 +61,25 @@ You will learn how to:
 2. Create a new project:
 
 ```bash
-   npm create vite@latest <Name-of-the-app> -- --template svelte
+npm create vite@latest <Name-of-the-app> -- --template svelte
 ```
+
 3. Navigate into the project directory:
 
 ```bash
-   cd <Name-of-the-app>
+cd <Name-of-the-app>
 ```
+
 4. Install dependencies:
 
 ```bash
-   npm install
+npm install
 ```
+
 5. Start the development server:
 
 ```bash
-   npm run dev -- --open
+npm run dev -- --open
 ```
 
 ---
@@ -92,49 +96,60 @@ You will learn how to:
 
 ---
 
-## Step 3. Install Lingo.dev in your project
+## Step 3. Install and Configure Lingo.dev CLI
 
-### Using Lingo.dev CLI (for static content)
-
-1. Initialize Lingo.dev in the project:
+### 1. Initialize Lingo.dev in the project
 
 ```bash
-   npx lingo.dev@latest init
+npx lingo.dev@latest init
 ```
-2. Log in to Lingo.dev:
+
+### 2. Log in to Lingo.dev
 
 ```bash
-   npx lingo.dev@latest login
+npx lingo.dev@latest login
 ```
-3. ⚠ On Windows, `npx` may inject a shell script that cannot run without WSL or Git Bash.
-   In that case, install globally:
+
+> ⚠ On Windows, `npx` may inject a shell script that cannot run without WSL or Git Bash.
+> In that case, install globally:
 
 ```bash
-   npm i -g lingo.dev
-   lingo.dev login
+npm i -g lingo.dev
+lingo.dev login
 ```
-4. Create a directory for localizable content:
+
+### 3. Create a directory for localizable content
 
 ```bash
-   mkdir -p src/lib/i18n
+mkdir -p src/lib/i18n
 ```
-5. Create an English content file:
+
+### 4. Create an English content file
 
 ```bash
-   touch src/lib/i18n/en.json
+touch src/lib/i18n/en.json
 ```
-6. Populate the file with your content, for example:
+
+### 5. Populate it with your content, for example:
 
 ```json
 {
-	"home": {
-		"title": "Welcome",
-		"subtitle": "This text is translated by Lingo.dev"
-	},
-	"cta": "Get started"
+  "home": {
+    "title": "Welcome",
+    "subtitle": "This text is translated by Lingo.dev"
+  },
+  "cta": "Get started"
 }
 ```
-7. Create an `i18n.json` file at the root of your project to configure the CLI.
+
+### 6. Create a root configuration file for the CLI
+
+```bash
+touch i18n.json
+```
+
+Add the following content:
+
 ```json
 {
   "$schema": "https://lingo.dev/schema/i18n.json",
@@ -150,42 +165,56 @@ You will learn how to:
   }
 }
 ```
-8. Run the CLI to generate target language content:
+
+### 7. Run the CLI to generate target language content
 
 ```bash
-   npx lingo.dev@latest run or lingo.dev run (for global installation)
+npx lingo.dev@latest run
+# or if globally installed
+lingo.dev run
 ```
 
-9. Create an i18n consumer
+---
+
+## Step 4. Create an i18n Consumer
+
+Add the following Svelte store setup to manage translations:
+
 ```ts
 // src/lib/i18n.ts
 import { writable } from "svelte/store";
-import en from "./i18n/en.json";
-import es from "./i18n/es.json";
+import en from "$lib/i18n/en.json";
+import es from "$lib/i18n/es.json";
 
-// All available translations
 const translations = { en, es };
 
-// Get the browser language or default to 'en'
-const browserLang = navigator.language.split("-")[0] || "en";
+type Locale = keyof typeof translations;
 
-// Svelte store for current locale
-export const locale = writable(browserLang);
+// Narrow the browser language to a supported locale or fallback to 'en'
+const detectedLang = (navigator.language.split("-")[0] || "en") as string;
+const browserLang: Locale = (Object.keys(translations) as Locale[]).includes(
+  detectedLang as Locale
+)
+  ? (detectedLang as Locale)
+  : "en";
 
-// Svelte store for the current translation
+// Svelte stores
+export const locale = writable<Locale>(browserLang);
 export const t = writable(translations[browserLang]);
 
 // Function to change the locale dynamically
-export function setLocale(newLocale: keyof typeof translations) {
+export function setLocale(newLocale: Locale) {
   if (translations[newLocale]) {
     locale.set(newLocale);
     t.set(translations[newLocale]);
   }
 }
-
 ```
 
-10. Use this in svelte components
+---
+
+## Step 5. Use Translations in a Svelte Component
+
 ```ts
 <script lang="ts">
   import { t, locale, setLocale } from "$lib/i18n";
@@ -193,7 +222,7 @@ export function setLocale(newLocale: keyof typeof translations) {
 
   let translation;
 
-  // Subscribe to store
+  // Subscribe to translation store
   const unsubscribe = t.subscribe(value => {
     translation = value;
   });
@@ -213,90 +242,29 @@ export function setLocale(newLocale: keyof typeof translations) {
   }
 </script>
 
-<h2>{translation.greeting}</h2>
-<p>{translation.farewell}</p>
-
+<h2>{translation.home.title}</h2>
+<p>{translation.home.subtitle}</p>
 <button on:click={toggleLocale}>
   { $locale === "en" ? "Switch to Español" : "Cambiar a English" }
 </button>
-
 ```
 
 ---
 
-### Using Lingo.dev SDK (for dynamic or real-time translations)
+## Step 6. Run and Test
 
-1. Install the SDK:
+Start your dev server again:
 
 ```bash
-   npm install lingo.dev
-```
-2. Create a file to initialize the SDK:
-
-```ts
-   // src/lib/lingo.ts
-   import { LingoDotDevEngine } from "lingo.dev/sdk";
-
-   export const lingoDotDev = new LingoDotDevEngine({
-     apiKey: "your-api-key-here"
-   });
-```
-3. Import this instance in your Svelte components to use real-time translations:
-
-```ts
-   import { lingoDotDev } from '$lib/lingo';
-```
-4. Optional: To avoid CORS issues, you can create backend APIs that call Lingo.dev instead of calling it directly from the browser.
-
-```ts
-	// src/routes/api/translate/+server.ts
-	import type { RequestHandler } from './$types';
-	import { lingoDotDev } from '$lib/i18n/lingo';
-
-	export const POST: RequestHandler = async ({ request }) => {
-	const { content, targetLocale } = await request.json();
-
-	const translated = await lingoDotDev.localizeObject(content, {
-		sourceLocale: 'en',
-		targetLocale
-	});
-
-	return new Response(JSON.stringify(translated), {
-		headers: { 'Content-Type': 'application/json' }
-	});
-	};
-
+npm run dev
 ```
 
-and then use the endpoint in svelte
+Visit your app in the browser and click the toggle button —
+you should see your text switch between **English** and **Spanish**, powered by **Lingo.dev CLI** translations.
 
-```ts
-<script lang="ts">
-  import { onMount } from 'svelte';
-
-  type Translation = {
-    greeting: string;
-    farewell: string;
-  };
-
-  let translated: Translation;
-
-  onMount(async () => {
-    const res = await fetch('/api/translate', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ content: { greeting: "Hello", farewell: "Goodbye" }, targetLocale: "es" })
-    });
-    translated = await res.json();
-  });
-</script>
-
-<h2>Translations</h2>
-<p>{translated.greeting}</p>
-<p>{translated.farewell}</p>
-
-```
+---
 
 ## Docs
-- Check out [Lingo.dev sdk](https://lingo.dev/sdk) for sdk features
-- Check out [Lingo.dev CLI tool](https://lingo.dev/cli) for more details on cli tool features.
+
+* [Lingo.dev CLI Documentation](https://lingo.dev/cli)
+* [Svelte Documentation](https://svelte.dev/docs)
