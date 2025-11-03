@@ -1,5 +1,69 @@
 # lingo.dev
 
+## 0.114.0
+
+### Minor Changes
+
+- [#1241](https://github.com/lingodotdev/lingo.dev/pull/1241) [`060680c`](https://github.com/lingodotdev/lingo.dev/commit/060680cd13c05dd77dd9d5447c064d948bd21cb0) Thanks [@davidturnbull](https://github.com/davidturnbull)! - Enable locked patterns for all buckets
+
+- [#1240](https://github.com/lingodotdev/lingo.dev/pull/1240) [`a956e53`](https://github.com/lingodotdev/lingo.dev/commit/a956e537d0d45565c3243dd0c5ba4eec8bed69c6) Thanks [@davidturnbull](https://github.com/davidturnbull)! - Enable ignored keys for all buckets
+
+- [#1239](https://github.com/lingodotdev/lingo.dev/pull/1239) [`3fd38c2`](https://github.com/lingodotdev/lingo.dev/commit/3fd38c2d38e4b22dcd824c865fe31abbc56bc862) Thanks [@davidturnbull](https://github.com/davidturnbull)! - Enable locked keys for all buckets
+
+### Patch Changes
+
+- [#1331](https://github.com/lingodotdev/lingo.dev/pull/1331) [`f102356`](https://github.com/lingodotdev/lingo.dev/commit/f102356e1ea12c800399ac11f074c42708c304b1) Thanks [@vrcprl](https://github.com/vrcprl)! - fix xcode-xcstrings-v2 flattening
+
+## 0.113.8
+
+### Patch Changes
+
+- [#1245](https://github.com/lingodotdev/lingo.dev/pull/1245) [`03671f7`](https://github.com/lingodotdev/lingo.dev/commit/03671f7cb252d6bee3debce2f4a4eb989dc0050b) Thanks [@vrcprl](https://github.com/vrcprl)! - update xcode-strings example
+
+## 0.113.7
+
+### Patch Changes
+
+- [#1243](https://github.com/lingodotdev/lingo.dev/pull/1243) [`4f5ffe6`](https://github.com/lingodotdev/lingo.dev/commit/4f5ffe62189949bb26a6c7825cb72c217aefa32f) Thanks [@vrcprl](https://github.com/vrcprl)! - Improve xcode-strings loader
+
+## 0.113.6
+
+### Patch Changes
+
+- [#1238](https://github.com/lingodotdev/lingo.dev/pull/1238) [`be8de32`](https://github.com/lingodotdev/lingo.dev/commit/be8de3280bb5dc5f409fc7680c0e5ff6a53e2fe5) Thanks [@vrcprl](https://github.com/vrcprl)! - enchance Android bucket loader
+
+- Updated dependencies [[`44a928b`](https://github.com/lingodotdev/lingo.dev/commit/44a928b473802cd07bec64f94a273ee1b845a0d0)]:
+  - @lingo.dev/_compiler@0.7.15
+
+## 0.113.5
+
+### Patch Changes
+
+- [#1233](https://github.com/lingodotdev/lingo.dev/pull/1233) [`79c4c00`](https://github.com/lingodotdev/lingo.dev/commit/79c4c00108b9c102cf53e1c090b286070a43e3d5) Thanks [@vrcprl](https://github.com/vrcprl)! - i18n xcode-scstring-v2 log fix
+
+## 0.113.4
+
+### Patch Changes
+
+- [#1230](https://github.com/lingodotdev/lingo.dev/pull/1230) [`b45347c`](https://github.com/lingodotdev/lingo.dev/commit/b45347c38572ee371b2bc494261b7e3e90c4aed1) Thanks [@vrcprl](https://github.com/vrcprl)! - add an xcode-xcstrings-v2 bucket type that supports cldr pluralization rules
+
+- Updated dependencies [[`b45347c`](https://github.com/lingodotdev/lingo.dev/commit/b45347c38572ee371b2bc494261b7e3e90c4aed1)]:
+  - @lingo.dev/_spec@0.41.1
+  - @lingo.dev/_sdk@0.12.6
+  - @lingo.dev/_compiler@0.7.14
+
+## 0.113.3
+
+### Patch Changes
+
+- [#1227](https://github.com/lingodotdev/lingo.dev/pull/1227) [`74d8efe`](https://github.com/lingodotdev/lingo.dev/commit/74d8efef8d4789f9baa5b7837e053c2571df0308) Thanks [@vrcprl](https://github.com/vrcprl)! - Add ignoredKeys support
+
+## 0.113.2
+
+### Patch Changes
+
+- [#1224](https://github.com/lingodotdev/lingo.dev/pull/1224) [`3d3c3d7`](https://github.com/lingodotdev/lingo.dev/commit/3d3c3d783a61443da50a5d182391db33a0d29c84) Thanks [@vrcprl](https://github.com/vrcprl)! - fix code replacement in mdx
+
 ## 0.113.1
 
 ### Patch Changes

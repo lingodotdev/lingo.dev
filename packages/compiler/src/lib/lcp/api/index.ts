@@ -397,38 +397,33 @@ export class LCPAPI {
    * The message explains why this situation is unusual and how to fix it.
    * @param providerId The ID of the LLM provider whose key is missing.
    */
-  private static _failMissingLLMKeyCi(providerId: string): void {
+  private static _failMissingLLMKeyCi(providerId: string): never {
     let details = providerDetails[providerId];
     if (!details) {
       // Fallback for unsupported provider in failure message logic
-      console.error(
+      throw new Error(
         `Internal Error: Missing details for provider "${providerId}" when reporting missing key in CI/CD. You might be using an unsupported provider.`,
       );
-      process.exit(1);
     }
 
-    console.log(
-      dedent`
-        \n
-        💡 You're using Lingo.dev Localization Compiler, and it detected unlocalized components in your app.
+    const errorMessage = dedent`
+      💡 You're using Lingo.dev Localization Compiler, and it detected unlocalized components in your app.
 
-        The compiler needs a ${details.name} API key to translate missing strings, but ${details.apiKeyEnvVar} is not set in the environment.
+      The compiler needs a ${details.name} API key to translate missing strings, but ${details.apiKeyEnvVar} is not set in the environment.
 
-        This is unexpected: typically you run a full build locally, commit the generated translation files, and push them to CI/CD.
+      This is unexpected: typically you run a full build locally, commit the generated translation files, and push them to CI/CD.
 
-        However, If you want CI/CD to translate the new strings, provide the key with:
-        • Session-wide: export ${details.apiKeyEnvVar}=<your-api-key>
-        • Project-wide / CI: add ${details.apiKeyEnvVar}=<your-api-key> to your pipeline environment variables
+      However, If you want CI/CD to translate the new strings, provide the key with:
+      • Session-wide: export ${details.apiKeyEnvVar}=<your-api-key>
+      • Project-wide / CI: add ${details.apiKeyEnvVar}=<your-api-key> to your pipeline environment variables
 
-        ⭐️ Also:
-        1. If you don't yet have a ${details.name} API key, get one for free at ${details.getKeyLink}
-        2. If you want to use a different LLM, update your configuration. Refer to documentation for help: https://lingo.dev/compiler
-        3. If the model you want to use isn't supported yet, raise an issue in our open-source repo: https://lingo.dev/go/gh
-
-        ✨
-      `,
-    );
-    process.exit(1);
+      ⭐️ Also:
+      1. If you don't yet have a ${details.name} API key, get one for free at ${details.getKeyLink}
+      2. If you want to use a different LLM, update your configuration. Refer to documentation for help: https://lingo.dev/compiler
+      3. If the model you want to use isn't supported yet, raise an issue in our open-source repo: https://lingo.dev/go/gh
+    `;
+    console.log(errorMessage);
+    throw new Error(`Missing ${details.name} API key in CI/CD environment.`);
   }
 
   /**
@@ -442,44 +437,39 @@ export class LCPAPI {
     providerId: string,
     targetLocale: string,
     errorMessage: string,
-  ): void {
+  ): never {
     const details = providerDetails[providerId];
     if (!details) {
       // Fallback
-      console.error(
-        `Internal Error: Missing details for provider "${providerId}" when reporting local failure.`,
+      throw new Error(
+        `Internal Error: Missing details for provider "${providerId}" when reporting local failure. Original Error: ${errorMessage}`,
       );
-      console.error(`Original Error: ${errorMessage}`);
-      process.exit(1);
     }
 
     const isInvalidApiKey = errorMessage.match("Invalid API Key"); // TODO: This may change per-provider, so might update this later
 
     if (isInvalidApiKey) {
-      console.log(dedent`
-          \n
-          ⚠️  Lingo.dev Compiler requires a valid ${details.name} API key to translate your application.
+      const message = dedent`
+        ⚠️  Lingo.dev Compiler requires a valid ${details.name} API key to translate your application.
 
-          It looks like you set ${details.name} API key but it is not valid. Please check your API key and try again.
+        It looks like you set ${details.name} API key but it is not valid. Please check your API key and try again.
 
-          Error details from ${details.name} API: ${errorMessage}
+        Error details from ${details.name} API: ${errorMessage}
 
-          👉 You can set the API key in one of the following ways:
-          1. User-wide: Run npx lingo.dev@latest config set ${details.apiKeyConfigKey} <your-api-key>
-          2. Project-wide: Add ${details.apiKeyEnvVar}=<your-api-key> to .env file in every project that uses Lingo.dev Localization Compiler
-          3 Session-wide: Run export ${details.apiKeyEnvVar}=<your-api-key> in your terminal before running the compiler to set the API key for the current session
+        👉 You can set the API key in one of the following ways:
+        1. User-wide: Run npx lingo.dev@latest config set ${details.apiKeyConfigKey} <your-api-key>
+        2. Project-wide: Add ${details.apiKeyEnvVar}=<your-api-key> to .env file in every project that uses Lingo.dev Localization Compiler
+        3 Session-wide: Run export ${details.apiKeyEnvVar}=<your-api-key> in your terminal before running the compiler to set the API key for the current session
 
-          ⭐️ Also:
-          1. If you don't yet have a ${details.name} API key, get one for free at ${details.getKeyLink}
-          2. If you want to use a different LLM, raise an issue in our open-source repo: https://lingo.dev/go/gh
-          3. If you have questions, feature requests, or would like to contribute, join our Discord: https://lingo.dev/go/discord
-
-          ✨
-        `);
+        ⭐️ Also:
+        1. If you don't yet have a ${details.name} API key, get one for free at ${details.getKeyLink}
+        2. If you want to use a different LLM, raise an issue in our open-source repo: https://lingo.dev/go/gh
+        3. If you have questions, feature requests, or would like to contribute, join our Discord: https://lingo.dev/go/discord
+      `;
+      console.log(message);
+      throw new Error(`Invalid ${details.name} API key.`);
     } else {
-      console.log(
-        dedent`
-        \n
+      const message = dedent`
         ⚠️  Lingo.dev Compiler tried to translate your application to "${targetLocale}" locale via ${
           details.name
         } but it failed.
@@ -502,11 +492,11 @@ export class LCPAPI {
         }?
         2. Did you reach any limits of your ${details.name} account?
         3. If you have questions, feature requests, or would like to contribute, join our Discord: https://lingo.dev/go/discord
-
-        ✨
-      `,
+      `;
+      console.log(message);
+      throw new Error(
+        `Translation failed for locale "${targetLocale}" using ${details.name}: ${errorMessage}`,
       );
     }
-    process.exit(1);
   }
 }

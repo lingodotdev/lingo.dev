@@ -1,5 +1,19 @@
 # @lingo.dev/\_compiler
 
+## 0.7.15
+
+### Patch Changes
+
+- [#1231](https://github.com/lingodotdev/lingo.dev/pull/1231) [`44a928b`](https://github.com/lingodotdev/lingo.dev/commit/44a928b473802cd07bec64f94a273ee1b845a0d0) Thanks [@davidturnbull](https://github.com/davidturnbull)! - Compiler now throws errors instead of abruptly exiting the process, allowing parent applications to handle errors gracefully
+
+## 0.7.14
+
+### Patch Changes
+
+- Updated dependencies [[`b45347c`](https://github.com/lingodotdev/lingo.dev/commit/b45347c38572ee371b2bc494261b7e3e90c4aed1)]:
+  - @lingo.dev/_spec@0.41.1
+  - @lingo.dev/_sdk@0.12.6
+
 ## 0.7.13
 
 ### Patch Changes

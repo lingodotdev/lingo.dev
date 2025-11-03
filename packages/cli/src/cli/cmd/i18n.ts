@@ -36,6 +36,7 @@ import createProcessor from "../processor";
 import { withExponentialBackoff } from "../utils/exp-backoff";
 import trackEvent from "../utils/observability";
 import { createDeltaProcessor } from "../utils/delta";
+import { isICUPluralObject } from "../loaders/xcode-xcstrings-icu";
 
 export default new Command()
   .command("i18n")
@@ -251,6 +252,8 @@ export default new Command()
                 injectLocale: bucket.injectLocale,
               },
               bucket.lockedKeys,
+              bucket.lockedPatterns,
+              bucket.ignoredKeys,
             );
             bucketLoader.setDefaultLocale(sourceLocale);
             await bucketLoader.init();
@@ -485,7 +488,23 @@ export default new Command()
                 }
 
                 const finalDiffSize = _.chain(finalTargetData)
-                  .omitBy((value, key) => value === targetData[key])
+                  .omitBy((value, key) => {
+                    const targetValue = targetData[key];
+
+                    // For ICU plural objects, use deep equality (excluding Symbol)
+                    if (
+                      isICUPluralObject(value) &&
+                      isICUPluralObject(targetValue)
+                    ) {
+                      return _.isEqual(
+                        { icu: value.icu, _meta: value._meta },
+                        { icu: targetValue.icu, _meta: targetValue._meta },
+                      );
+                    }
+
+                    // Default strict equality for other values
+                    return value === targetValue;
+                  })
                   .size()
                   .value();
 

@@ -35,7 +35,7 @@ function ensureSurroundingImageNewlines(_content: string) {
         ? match
         : `\n\n${match}\n\n`;
 
-      content = content.replaceAll(match, replacement);
+      content = content.replaceAll(match, () => replacement);
       workingContent = workingContent.replaceAll(match, "");
       found = true;
     }
@@ -65,7 +65,7 @@ function ensureTrailingFenceNewline(_content: string) {
       const replacement = match.trim().startsWith(">")
         ? match
         : `\n\n${match}\n\n`;
-      content = content.replaceAll(match, replacement);
+      content = content.replaceAll(match, () => replacement);
       workingContent = workingContent.replaceAll(match, "");
       found = true;
     }
@@ -106,7 +106,7 @@ function extractCodePlaceholders(content: string): {
     const replacement = codeBlock.trim().startsWith(">")
       ? `> ${placeholder}`
       : `${placeholder}`;
-    finalContent = finalContent.replace(codeBlock, replacement);
+    finalContent = finalContent.replace(codeBlock, () => replacement);
   }
 
   const inlineCodeMatches = finalContent.matchAll(inlineCodeRegex);
@@ -114,11 +114,9 @@ function extractCodePlaceholders(content: string): {
     const inlineCode = match[0];
     const inlineCodeHash = md5(inlineCode);
     const placeholder = `---INLINE-CODE-PLACEHOLDER-${inlineCodeHash}---`;
-
     codePlaceholders[placeholder] = inlineCode;
-
     const replacement = placeholder;
-    finalContent = finalContent.replace(inlineCode, replacement);
+    finalContent = finalContent.replace(inlineCode, () => replacement);
   }
 
   return {

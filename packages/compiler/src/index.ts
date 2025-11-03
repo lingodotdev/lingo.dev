@@ -79,8 +79,7 @@ const unplugin = createUnplugin<Partial<typeof defaultParams> | undefined>(
           params.targetLocales,
         );
         if (invalidLocales.length > 0) {
-          console.log(dedent`
-            \n
+          throw new Error(dedent`
             ⚠️  Lingo.dev Localization Compiler requires LLM model setup for the following locales: ${invalidLocales.join(
               ", ",
             )}.
@@ -89,10 +88,7 @@ const unplugin = createUnplugin<Partial<typeof defaultParams> | undefined>(
             1. Refer to documentation for help: https://lingo.dev/compiler
             2. If you want to use a different LLM, raise an issue in our open-source repo: https://lingo.dev/go/gh
             3. If you have questions, feature requests, or would like to contribute, join our Discord: https://lingo.dev/go/discord
-
-            ✨
           `);
-          process.exit(1);
         }
       }
     }
@@ -429,16 +425,15 @@ function validateLLMKeyDetails(configuredProviders: string[]): void {
         `);
     }
 
-    console.log(dedent`
+    const errorMessage = dedent`
       \n
       ⭐️ Also:
       1. If you want to use a different LLM, update your configuration. Refer to documentation for help: https://lingo.dev/compiler
       2. If the model/provider you want to use isn't supported yet, raise an issue in our open-source repo: https://lingo.dev/go/gh
       3. If you have questions, feature requests, or would like to contribute, join our Discord: https://lingo.dev/go/discord
-
-      ✨
-    `);
-    process.exit(1);
+    `;
+    console.log(errorMessage);
+    throw new Error("Missing required LLM API keys. See details above.");
   } else if (foundProviders.length > 0) {
     console.log(dedent`
         \n

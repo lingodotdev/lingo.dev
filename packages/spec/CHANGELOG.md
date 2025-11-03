@@ -1,5 +1,11 @@
 # @lingo.dev/\_spec
 
+## 0.41.1
+
+### Patch Changes
+
+- [#1230](https://github.com/lingodotdev/lingo.dev/pull/1230) [`b45347c`](https://github.com/lingodotdev/lingo.dev/commit/b45347c38572ee371b2bc494261b7e3e90c4aed1) Thanks [@vrcprl](https://github.com/vrcprl)! - add an xcode-xcstrings-v2 bucket type that supports cldr pluralization rules
+
 ## 0.41.0
 
 ### Minor Changes
