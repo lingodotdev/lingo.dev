@@ -22,21 +22,23 @@ Verify you’re using the App Router (there should be an `app/` directory).
 ## 2. Configure Next.js i18n routing
 Follow the official Next.js App Router internationalization guide.
 
-1) Add locales to `next.config.ts`:
+1) Add locales to `next.config.ts` (using modern i18n routing):
 ```ts
 // next.config.ts
-import type { NextConfig } from 'next'
+import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  i18n: {
-    locales: ['en', 'es', 'fr'],
-    defaultLocale: 'en',
+  experimental: {
+    i18nRouting: true, // Enable App Router–style locale handling
   },
-}
+  i18n: {
+    locales: ["en", "es", "fr"],
+    defaultLocale: "en",
+  },
+};
 
-export default nextConfig
+export default nextConfig;
 ```
-
 2) Create a locale segment and propagate the current locale (Server layout + Client provider):
 ```tsx
 // app/[locale]/layout.tsx
@@ -115,40 +117,21 @@ export default function Home() {
 
 4) Redirect the root path `/` to the default locale:
 ```ts
-// middleware.ts
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
+// proxy.js
+export default function proxy(request) {
+  const { pathname } = new URL(request.url);
 
-const PUBLIC_FILE = /\.(.*)$
-const locales = ['en', 'es', 'fr']
-const defaultLocale = 'en'
-
-export function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl
-
-  if (
-    pathname.startsWith('/_next') ||
-    pathname.includes('/api/') ||
-    PUBLIC_FILE.test(pathname)
-  ) {
-    return
+  // Redirect root path to default locale
+  if (pathname === "/") {
+    return Response.redirect(new URL("/en", request.url));
   }
 
-  const pathnameIsMissingLocale = locales.every(
-    (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`,
-  )
-
-  if (pathnameIsMissingLocale) {
-    const url = request.nextUrl.clone()
-    url.pathname = `/${defaultLocale}${pathname}`
-    return NextResponse.redirect(url)
-  }
-}
-
-export const config = {
-  matcher: ['/((?!api|_next|.*\\..*).*)'],
+  return;
 }
 ```
+Just to avoid confusion about where to place `proxy.js`,
+
+> **Note:** Place `proxy.js` in your project root (next to `next.config.ts`), not inside `app/` or `src/`.
 
 That’s the minimal App Router i18n shape: locale-prefixed routes and an `IntlProvider` per locale.
 
@@ -269,10 +252,8 @@ npx lingo.dev@latest run
 ```
 Confirm updates are reflected in `es.json` and `fr.json`.
 
-## 7. Commit and open a PR
-- Add this guide as `docs/nextjs-app-router.md` to your repository
-- Commit your sample app changes (if any) and open a PR
-- We’ll review, help polish, and if published, we’ll include a byline linking your GitHub profile
+## 7. Commit and share your integration
+Once your app and translations are working, commit the changes and open a pull request in the `docs/` folder if contributing this guide.
 
 ## Troubleshooting
 - If translations don’t appear, ensure the file path in `i18n.json` matches where your locale files live (must include `[locale]`).
