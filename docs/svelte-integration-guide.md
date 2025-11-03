@@ -39,8 +39,12 @@ You will learn how to:
 ```bash
    npx sv create <Name-of-the-app>
 ```
+- <img width="800" height="500" alt="C__Windows_system32_cmd exe  03-11-2025 13_13_47" src="https://github.com/user-attachments/assets/ed042e99-1299-4c3a-b847-90af28921dd8" />
 
 3. Follow the prompts to choose options.
+
+- <img width="800" height="500" alt="C__Windows_system32_cmd exe  03-11-2025 13_14_22" src="https://github.com/user-attachments/assets/ce6cbe26-7414-4d06-bbe8-37e4c2cd693d" />
+
 4. Navigate into the project directory:
 
 ```bash
@@ -106,8 +110,11 @@ You will learn how to:
 ```bash
    npx lingo.dev@latest login
 ```
+
 3. ⚠ On Windows, `npx` may inject a shell script that cannot run without WSL or Git Bash.
    In that case, install globally:
+
+- <img width="800" height="500" alt="C__Windows_system32_cmd exe  03-11-2025 13_48_58" src="https://github.com/user-attachments/assets/12ae0df7-a942-4e86-8cc6-1d88290ab947" />
 
 ```bash
    npm i -g lingo.dev
@@ -118,7 +125,7 @@ You will learn how to:
 ```bash
    mkdir -p src/lib/i18n
 ```
-5. Create an English content file:
+5. Create an English (or any preferred language) content file:
 
 ```bash
    touch src/lib/i18n/en.json
@@ -155,6 +162,7 @@ You will learn how to:
 ```bash
    npx lingo.dev@latest run or lingo.dev run (for global installation)
 ```
+- <img width="800" height="500" alt="MINGW64__c_Users_SOHAM_Desktop_web development_my-lingo-app 03-11-2025 13_57_40" src="https://github.com/user-attachments/assets/85654e36-37ed-4ed0-9770-dbeaddd7905a" />
 
 9. Create an i18n consumer
 ```ts
