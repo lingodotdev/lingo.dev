@@ -8,3 +8,9 @@ body {
   height: 100%;
   width: 100%;
 }
+
+html,
+body {
+  touch-action: pan-y;
+  overscroll-behavior-x: auto;
+}

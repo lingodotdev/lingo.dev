@@ -18,3 +18,9 @@
     --foreground: #ededed;
   }
 }
+
+html,
+body {
+  touch-action: pan-y;
+  overscroll-behavior-x: auto;
+}
