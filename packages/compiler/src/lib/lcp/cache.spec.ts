@@ -1,440 +1,379 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
-import { resolve } from "path";
-import { LCPCache, LCPCacheParams } from "./cache";
+import { describe, it, expect, beforeEach, afterEach } from "vitest";
 import * as fs from "fs";
-import * as prettier from "prettier";
-import { LCPSchema } from "./schema";
-import { LCP_DICTIONARY_FILE_NAME } from "../../_const";
-
-vi.mock("fs");
-vi.mock("prettier");
-
-// cached JSON is stored in JS file, we need to add export default to make it valid JS file
-function toCachedString(cache: any) {
-  return `export default ${JSON.stringify(cache, null, 2)};`;
-}
+import * as path from "path";
+import { LCPCache } from "./cache";
+import type { DictionaryCacheSchema, LCPSchema } from "./schema";
 
 describe("LCPCache", () => {
-  const lcp: LCPSchema = {
-    version: 0.1,
+  const testDir = path.join(process.cwd(), ".test-cache");
+  const sourceRoot = ".";
+  const lingoDir = ".test-cache";
+
+  const mockLCP: LCPSchema = {
     files: {
-      "test.ts": {
+      "test.tsx": {
         scopes: {
-          key1: {
-            hash: "123",
-          },
-          newKey: {
-            hash: "111",
-          },
-        },
-      },
-      "old.ts": {
-        scopes: {
-          oldKey: {
-            hash: "456",
-          },
-        },
-      },
-      "new.ts": {
-        scopes: {
-          brandNew: {
-            hash: "222",
+          "test-scope": {
+            hash: "test-hash-123",
           },
         },
       },
     },
   };
-  const params: LCPCacheParams = {
-    sourceRoot: ".",
-    lingoDir: ".lingo",
-    lcp,
+
+  const mockDictionary = {
+    version: 0.1,
+    locale: "en",
+    files: {
+      "test.tsx": {
+        entries: {
+          "test-scope": "Hello World",
+        },
+      },
+    },
   };
-  const cachePath = resolve(
-    process.cwd(),
-    params.sourceRoot,
-    params.lingoDir,
-    LCP_DICTIONARY_FILE_NAME,
-  );
 
   beforeEach(() => {
-    vi.clearAllMocks();
-    vi.mocked(prettier.format).mockImplementation(
-      async (value: string) => value,
-    );
+    // Clean up test directory before each test
+    if (fs.existsSync(testDir)) {
+      fs.rmSync(testDir, { recursive: true });
+    }
+    fs.mkdirSync(testDir, { recursive: true });
   });
 
-  describe("readLocaleDictionary", () => {
-    it("returns empty dictionary when no cache exists", () => {
-      vi.mocked(fs.existsSync).mockReturnValue(false);
+  afterEach(() => {
+    // Clean up test directory after each test
+    if (fs.existsSync(testDir)) {
+      fs.rmSync(testDir, { recursive: true });
+    }
+  });
 
-      const dictionary = LCPCache.readLocaleDictionary("en", params);
+  describe("JSON format", () => {
+    it("should write cache in JSON format", async () => {
+      const params = { sourceRoot, lingoDir, lcp: mockLCP };
 
-      expect(dictionary).toEqual({
-        version: 0.1,
-        locale: "en",
-        files: {},
-      });
+      await LCPCache.writeLocaleDictionary(mockDictionary, params);
+
+      const cachePath = path.join(testDir, "dictionary.json");
+      expect(fs.existsSync(cachePath)).toBe(true);
+
+      const content = fs.readFileSync(cachePath, "utf8");
+      // Should be valid JSON
+      expect(() => JSON.parse(content)).not.toThrow();
+
+      // Should not contain 'export default'
+      expect(content).not.toContain("export default");
     });
 
-    it("returns empty dictionary when cache exists but has no entries for requested locale", () => {
-      vi.mocked(fs.existsSync).mockReturnValue(true);
-      vi.mocked(fs.readFileSync).mockReturnValue(
-        toCachedString({
-          version: 0.1,
-          files: {
-            "test.ts": {
-              entries: {
-                key1: {
-                  content: {
-                    fr: "Bonjour",
-                  },
-                },
-              },
-            },
-          },
-        }),
-      );
+    it("should read cache from JSON format", async () => {
+      const params = { sourceRoot, lingoDir, lcp: mockLCP };
 
+      // Write dictionary
+      await LCPCache.writeLocaleDictionary(mockDictionary, params);
+
+      // Read it back
       const dictionary = LCPCache.readLocaleDictionary("en", params);
 
-      expect(dictionary).toEqual({
-        version: 0.1,
-        locale: "en",
-        files: {},
-      });
+      expect(dictionary.locale).toBe("en");
+      expect(dictionary.version).toBe(0.1);
+      expect(dictionary.files["test.tsx"].entries["test-scope"]).toBe(
+        "Hello World",
+      );
     });
 
-    it("returns dictionary entries with matching hashfor requested locale when cache exists", () => {
-      vi.mocked(fs.existsSync).mockReturnValue(true);
-      vi.mocked(fs.readFileSync).mockReturnValue(
-        toCachedString({
-          version: 0.1,
-          files: {
-            "test.ts": {
-              entries: {
-                key1: {
-                  content: {
-                    en: "Hello",
-                    fr: "Bonjour",
-                  },
-                  hash: "123",
-                },
-                newKey: {
-                  content: {
-                    en: "New",
-                    fr: "Nouveau",
-                  },
-                  hash: "888",
-                },
-              },
-            },
-            "somewhere-else.ts": {
-              entries: {
-                somethingElse: {
-                  content: {
-                    en: "Something else",
-                    fr: "Autre chose",
-                  },
-                  hash: "222",
-                },
-              },
-            },
-          },
-        }),
-      );
+    it("should return empty cache when file does not exist", () => {
+      const params = { sourceRoot, lingoDir, lcp: mockLCP };
 
       const dictionary = LCPCache.readLocaleDictionary("en", params);
 
-      expect(dictionary).toEqual({
+      expect(dictionary.locale).toBe("en");
+      expect(dictionary.files).toEqual({});
+    });
+
+    it("should ensure dictionary file exists with empty JSON object", () => {
+      const params = { sourceRoot, lingoDir };
+
+      LCPCache.ensureDictionaryFile(params);
+
+      const cachePath = path.join(testDir, "dictionary.json");
+      expect(fs.existsSync(cachePath)).toBe(true);
+
+      const content = fs.readFileSync(cachePath, "utf8");
+      expect(content).toBe("{}");
+    });
+
+    it("should maintain stable key ordering", async () => {
+      const params = { sourceRoot, lingoDir, lcp: mockLCP };
+
+      const dictionaryWithMultipleEntries = {
         version: 0.1,
         locale: "en",
         files: {
-          "new.ts": {
+          "zebra.tsx": {
             entries: {
-              brandNew: "Something else", // found in somewhere-else.ts under different key via matching hash
+              "zebra-scope": "Zebra",
             },
           },
-          "test.ts": {
+          "alpha.tsx": {
             entries: {
-              key1: "Hello", // found in test.ts under the same key via matching hash
+              "alpha-scope": "Alpha",
             },
           },
-        },
-      });
-    });
-  });
-
-  describe("writeLocaleDictionary", () => {
-    it("creates new cache when no cache exists", async () => {
-      vi.mocked(fs.existsSync).mockReturnValue(false);
-      vi.mocked(fs.writeFileSync);
-
-      const dictionary = {
-        version: 0.1,
-        locale: "en",
-        files: {
-          "test.ts": {
+          "beta.tsx": {
             entries: {
-              key1: "Hello",
+              "beta-scope": "Beta",
             },
           },
         },
       };
 
-      await LCPCache.writeLocaleDictionary(dictionary, params);
+      const extendedLCP: LCPSchema = {
+        files: {
+          "zebra.tsx": { scopes: { "zebra-scope": { hash: "hash-z" } } },
+          "alpha.tsx": { scopes: { "alpha-scope": { hash: "hash-a" } } },
+          "beta.tsx": { scopes: { "beta-scope": { hash: "hash-b" } } },
+        },
+      };
 
-      expect(fs.writeFileSync).toHaveBeenCalledWith(
-        cachePath,
-        toCachedString({
-          version: 0.1,
-          files: {
-            "test.ts": {
-              entries: {
-                key1: {
-                  content: {
-                    en: "Hello",
-                  },
-                  hash: "123",
-                },
-              },
+      await LCPCache.writeLocaleDictionary(dictionaryWithMultipleEntries, {
+        ...params,
+        lcp: extendedLCP,
+      });
+
+      const cachePath = path.join(testDir, "dictionary.json");
+      const content = fs.readFileSync(cachePath, "utf8");
+      const cache = JSON.parse(content);
+
+      // Files should be sorted alphabetically
+      const fileKeys = Object.keys(cache.files);
+      expect(fileKeys).toEqual(["alpha.tsx", "beta.tsx", "zebra.tsx"]);
+    });
+  });
+
+  describe("Legacy format migration", () => {
+    it("should migrate from legacy JS format to JSON", async () => {
+      const legacyCachePath = path.join(testDir, "dictionary.js");
+      const newCachePath = path.join(testDir, "dictionary.json");
+
+      // Create legacy format file
+      const legacyContent = `export default {
+  "version": 0.1,
+  "files": {
+    "test.tsx": {
+      "entries": {
+        "test-scope": {
+          "hash": "test-hash-123",
+          "content": {
+            "en": "Hello World"
+          }
+        }
+      }
+    }
+  }
+};`;
+      fs.writeFileSync(legacyCachePath, legacyContent);
+
+      const params = { sourceRoot, lingoDir, lcp: mockLCP };
+
+      // Read should trigger migration
+      const dictionary = LCPCache.readLocaleDictionary("en", params);
+
+      expect(dictionary.locale).toBe("en");
+      expect(dictionary.files["test.tsx"].entries["test-scope"]).toBe(
+        "Hello World",
+      );
+
+      // Writing should create new JSON format and remove legacy
+      await LCPCache.writeLocaleDictionary(mockDictionary, params);
+
+      // New format should exist
+      expect(fs.existsSync(newCachePath)).toBe(true);
+
+      // Legacy file should be removed
+      expect(fs.existsSync(legacyCachePath)).toBe(false);
+    });
+
+    it("should handle legacy format without 'export default' prefix", async () => {
+      const legacyCachePath = path.join(testDir, "dictionary.js");
+
+      // Create legacy format file without export statement (edge case)
+      const legacyContent = `{
+  "version": 0.1,
+  "files": {}
+}`;
+      fs.writeFileSync(legacyCachePath, legacyContent);
+
+      const params = { sourceRoot, lingoDir, lcp: mockLCP };
+
+      const dictionary = LCPCache.readLocaleDictionary("en", params);
+
+      expect(dictionary.version).toBe(0.1);
+      expect(dictionary.files).toEqual({});
+    });
+
+    it("should handle corrupted legacy cache gracefully", () => {
+      const legacyCachePath = path.join(testDir, "dictionary.js");
+
+      // Create invalid legacy format
+      fs.writeFileSync(legacyCachePath, "export default { invalid json");
+
+      const params = { sourceRoot, lingoDir, lcp: mockLCP };
+
+      // Should return empty cache without throwing
+      const dictionary = LCPCache.readLocaleDictionary("en", params);
+
+      expect(dictionary.files).toEqual({});
+    });
+  });
+
+  describe("Multiple locales", () => {
+    it("should handle multiple locales in cache", async () => {
+      const params = { sourceRoot, lingoDir, lcp: mockLCP };
+
+      // Write English dictionary
+      await LCPCache.writeLocaleDictionary(mockDictionary, params);
+
+      // Write Spanish dictionary
+      const spanishDictionary = {
+        version: 0.1,
+        locale: "es",
+        files: {
+          "test.tsx": {
+            entries: {
+              "test-scope": "Hola Mundo",
             },
           },
-        }),
+        },
+      };
+      await LCPCache.writeLocaleDictionary(spanishDictionary, params);
+
+      // Read English
+      const enDictionary = LCPCache.readLocaleDictionary("en", params);
+      expect(enDictionary.files["test.tsx"].entries["test-scope"]).toBe(
+        "Hello World",
+      );
+
+      // Read Spanish
+      const esDictionary = LCPCache.readLocaleDictionary("es", params);
+      expect(esDictionary.files["test.tsx"].entries["test-scope"]).toBe(
+        "Hola Mundo",
       );
     });
 
-    it("adds new locale to existing cache", async () => {
-      vi.mocked(fs.existsSync).mockReturnValue(true);
-      vi.mocked(fs.readFileSync).mockReturnValue(
-        toCachedString({
-          version: 0.1,
-          files: {
-            "test.ts": {
-              entries: {
-                key1: {
-                  content: {
-                    en: "Hello",
-                  },
-                  hash: "123",
-                },
+    it("should sort locales alphabetically in cache entries", async () => {
+      const params = { sourceRoot, lingoDir, lcp: mockLCP };
+
+      // Write locales in non-alphabetical order
+      await LCPCache.writeLocaleDictionary(
+        { ...mockDictionary, locale: "zh" },
+        params,
+      );
+      await LCPCache.writeLocaleDictionary(
+        { ...mockDictionary, locale: "en" },
+        params,
+      );
+      await LCPCache.writeLocaleDictionary(
+        { ...mockDictionary, locale: "es" },
+        params,
+      );
+
+      const cachePath = path.join(testDir, "dictionary.json");
+      const content = fs.readFileSync(cachePath, "utf8");
+      const cache: DictionaryCacheSchema = JSON.parse(content);
+
+      // Locales should be sorted
+      const locales = Object.keys(
+        cache.files["test.tsx"].entries["test-scope"].content,
+      );
+      expect(locales).toEqual(["en", "es", "zh"]);
+    });
+  });
+
+  describe("Hash validation", () => {
+    it("should invalidate cached entries when hash changes", async () => {
+      const params = { sourceRoot, lingoDir, lcp: mockLCP };
+
+      // Write initial dictionary
+      await LCPCache.writeLocaleDictionary(mockDictionary, params);
+
+      // Change the hash in LCP
+      const updatedLCP: LCPSchema = {
+        files: {
+          "test.tsx": {
+            scopes: {
+              "test-scope": {
+                hash: "new-hash-456", // Different hash
               },
             },
           },
-        }),
-      );
-      vi.mocked(fs.writeFileSync);
+        },
+      };
 
-      const dictionary = {
+      // Read with new hash
+      const dictionary = LCPCache.readLocaleDictionary("en", {
+        ...params,
+        lcp: updatedLCP,
+      });
+
+      // Should not return the old entry because hash doesn't match
+      expect(dictionary.files).toEqual({});
+    });
+
+    it("should reuse cached entries when hash matches", async () => {
+      const params = { sourceRoot, lingoDir, lcp: mockLCP };
+
+      // Write initial dictionary with multiple locales
+      await LCPCache.writeLocaleDictionary(mockDictionary, params);
+      await LCPCache.writeLocaleDictionary(
+        { ...mockDictionary, locale: "es", files: { "test.tsx": { entries: { "test-scope": "Hola" } } } },
+        params,
+      );
+
+      // Write French dictionary - should preserve existing locales
+      const frenchDictionary = {
         version: 0.1,
         locale: "fr",
         files: {
-          "test.ts": {
+          "test.tsx": {
             entries: {
-              key1: "Bonjour",
+              "test-scope": "Bonjour",
             },
           },
         },
       };
+      await LCPCache.writeLocaleDictionary(frenchDictionary, params);
 
-      await LCPCache.writeLocaleDictionary(dictionary, params);
+      // All three locales should exist
+      const enDict = LCPCache.readLocaleDictionary("en", params);
+      const esDict = LCPCache.readLocaleDictionary("es", params);
+      const frDict = LCPCache.readLocaleDictionary("fr", params);
 
-      expect(fs.writeFileSync).toHaveBeenCalledWith(
-        cachePath,
-        toCachedString({
-          version: 0.1,
-          files: {
-            "test.ts": {
-              entries: {
-                key1: {
-                  content: {
-                    en: "Hello",
-                    fr: "Bonjour",
-                  },
-                  hash: "123",
-                },
-              },
-            },
-          },
-        }),
-      );
+      expect(enDict.files["test.tsx"].entries["test-scope"]).toBe("Hello World");
+      expect(esDict.files["test.tsx"].entries["test-scope"]).toBe("Hola");
+      expect(frDict.files["test.tsx"].entries["test-scope"]).toBe("Bonjour");
+    });
+  });
+
+  describe("Error handling", () => {
+    it("should handle corrupted JSON cache gracefully", () => {
+      const cachePath = path.join(testDir, "dictionary.json");
+      fs.writeFileSync(cachePath, "{ invalid json }");
+
+      const params = { sourceRoot, lingoDir, lcp: mockLCP };
+
+      // Should return empty cache without throwing
+      const dictionary = LCPCache.readLocaleDictionary("en", params);
+      expect(dictionary.files).toEqual({});
     });
 
-    it("overrides existing locale entries in cache", async () => {
-      vi.mocked(fs.existsSync).mockReturnValue(true);
-      vi.mocked(fs.readFileSync).mockReturnValue(
-        toCachedString({
-          version: 0.1,
-          files: {
-            "test.ts": {
-              entries: {
-                key1: {
-                  content: {
-                    en: "Hello",
-                    fr: "Bonjour",
-                  },
-                  hash: "123",
-                },
-              },
-            },
-          },
-        }),
-      );
-      vi.mocked(fs.writeFileSync);
+    it("should create directory if it does not exist", () => {
+      const nonExistentDir = path.join(testDir, "nested", "deep");
+      const params = { sourceRoot: ".", lingoDir: nonExistentDir };
 
-      const dictionary = {
-        version: 0.1,
-        locale: "en",
-        files: {
-          "test.ts": {
-            entries: {
-              key1: "Hi",
-            },
-          },
-        },
-      };
+      LCPCache.ensureDictionaryFile(params);
 
-      await LCPCache.writeLocaleDictionary(dictionary, params);
-
-      expect(fs.writeFileSync).toHaveBeenCalledWith(
-        cachePath,
-        toCachedString({
-          version: 0.1,
-          files: {
-            "test.ts": {
-              entries: {
-                key1: {
-                  content: {
-                    en: "Hi",
-                    fr: "Bonjour",
-                  },
-                  hash: "123",
-                },
-              },
-            },
-          },
-        }),
-      );
-    });
-
-    it("handles different files and entries between cache and dictionary", async () => {
-      vi.mocked(fs.existsSync).mockReturnValue(true);
-      vi.mocked(fs.readFileSync).mockReturnValue(
-        toCachedString({
-          version: 0.1,
-          files: {
-            "old.ts": {
-              entries: {
-                oldKey: {
-                  content: {
-                    en: "Old",
-                    fr: "Vieux",
-                  },
-                  hash: "456",
-                },
-              },
-            },
-            "test.ts": {
-              entries: {
-                key1: {
-                  content: {
-                    en: "Hello",
-                    fr: "Bonjour",
-                  },
-                  hash: "123",
-                },
-                newKey: {
-                  content: {
-                    en: "New",
-                    fr: "Nouveau",
-                  },
-                  hash: "111",
-                },
-              },
-            },
-          },
-        }),
-      );
-      vi.mocked(fs.writeFileSync);
-
-      const dictionary = {
-        version: 0.1,
-        locale: "en",
-        files: {
-          "test.ts": {
-            entries: {
-              key1: "Hi",
-              newKey: "Newer",
-            },
-          },
-          "new.ts": {
-            entries: {
-              brandNew: "Brand New",
-            },
-          },
-        },
-      };
-
-      await LCPCache.writeLocaleDictionary(dictionary, params);
-
-      expect(fs.writeFileSync).toHaveBeenCalledWith(
-        cachePath,
-        toCachedString({
-          version: 0.1,
-          files: {
-            "new.ts": {
-              entries: {
-                brandNew: {
-                  content: {
-                    en: "Brand New",
-                  },
-                  hash: "222",
-                },
-              },
-            },
-            "test.ts": {
-              entries: {
-                key1: {
-                  content: {
-                    en: "Hi",
-                    fr: "Bonjour",
-                  },
-                  hash: "123",
-                },
-                newKey: {
-                  content: {
-                    en: "Newer",
-                    fr: "Nouveau",
-                  },
-                  hash: "111",
-                },
-              },
-            },
-          },
-        }),
-      );
-    });
-
-    it("formats the cache with prettier", async () => {
-      vi.mocked(prettier.resolveConfig).mockResolvedValue({});
-      vi.mocked(prettier.format).mockResolvedValue("formatted");
-
-      const dictionary = {
-        version: 0.1,
-        locale: "en",
-        files: {
-          "test.ts": {
-            entries: {
-              key1: "Hi",
-            },
-          },
-        },
-      };
-
-      await LCPCache.writeLocaleDictionary(dictionary, params);
-
-      expect(prettier.resolveConfig).toHaveBeenCalledTimes(1);
-      expect(prettier.format).toHaveBeenCalledTimes(1);
-      expect(fs.writeFileSync).toHaveBeenCalledWith(cachePath, "formatted");
+      const cachePath = path.join(nonExistentDir, "dictionary.json");
+      expect(fs.existsSync(cachePath)).toBe(true);
     });
   });
 });

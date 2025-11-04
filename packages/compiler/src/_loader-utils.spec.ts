@@ -98,7 +98,7 @@ describe("loadDictionary", () => {
     });
 
     const result = await loadDictionary({
-      resourcePath: "/project/src/lingo/dictionary.js",
+      resourcePath: "/project/src/lingo/dictionary.json",
       resourceQuery: "?locale=es",
       params: { sourceLocale: "en", targetLocales: ["es"], foo: "bar" },
       sourceRoot: "src",
@@ -131,7 +131,7 @@ describe("loadDictionary", () => {
     (serverMod.LCPServer.loadDictionaries as any).mockResolvedValueOnce({});
     await expect(
       loadDictionary({
-        resourcePath: "/project/src/lingo/dictionary.js",
+        resourcePath: "/project/src/lingo/dictionary.json",
         resourceQuery: "?locale=fr",
         params: { sourceLocale: "en", targetLocales: ["fr"] },
         sourceRoot: "src",

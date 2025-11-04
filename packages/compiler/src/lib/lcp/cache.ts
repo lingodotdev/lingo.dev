@@ -3,7 +3,10 @@ import * as path from "path";
 import * as prettier from "prettier";
 import { DictionaryCacheSchema, DictionarySchema, LCPSchema } from "./schema";
 import _ from "lodash";
-import { LCP_DICTIONARY_FILE_NAME } from "../../_const";
+import {
+  LCP_DICTIONARY_FILE_NAME,
+  LCP_DICTIONARY_LEGACY_FILE_NAME,
+} from "../../_const";
 
 export interface LCPCacheParams {
   sourceRoot: string;
@@ -23,7 +26,7 @@ export class LCPCache {
       if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir, { recursive: true });
       }
-      fs.writeFileSync(cachePath, "export default {};");
+      fs.writeFileSync(cachePath, "{}");
     }
   }
 
@@ -153,7 +156,7 @@ export class LCPCache {
       const config = await prettier.resolveConfig(cachePath);
       const prettierOptions = {
         ...(config ?? {}),
-        parser: config?.parser ? config.parser : "typescript",
+        parser: "json",
       };
       return await prettier.format(cachedContent, prettierOptions);
     } catch (error) {
@@ -168,31 +171,117 @@ export class LCPCache {
     params: LCPCacheParams,
   ) {
     const cachePath = this._getCachePath(params);
-    const cache = `export default ${JSON.stringify(dictionaryCache, null, 2)};`;
+    const cache = JSON.stringify(dictionaryCache, null, 2);
     const formattedCache = await this._format(cache, cachePath);
     fs.writeFileSync(cachePath, formattedCache);
+
+    // After successfully writing the new JSON format, remove legacy file if it exists
+    this._cleanupLegacyCache(params);
   }
 
-  // read cache from file as JSON
+  // read cache from file as JSON with backward compatibility for legacy format
   private static _read(params: LCPCacheParams): DictionaryCacheSchema {
     const cachePath = this._getCachePath(params);
-    if (!fs.existsSync(cachePath)) {
+    const legacyCachePath = this._getLegacyCachePath(params);
+
+    // Check if new JSON format exists
+    if (fs.existsSync(cachePath)) {
+      const content = fs.readFileSync(cachePath, "utf8");
+      try {
+        return JSON.parse(content);
+      } catch (error) {
+        console.warn(
+          `[lingo.dev] Failed to parse cache file at ${cachePath}, returning empty cache`,
+        );
+        return {
+          version: 0.1,
+          files: {},
+        };
+      }
+    }
+
+    // Check if legacy format exists and migrate
+    if (fs.existsSync(legacyCachePath)) {
+      return this._migrateLegacyCache(legacyCachePath, params);
+    }
+
+    // No cache exists
+    return {
+      version: 0.1,
+      files: {},
+    };
+  }
+
+  // Migrate legacy JS format to JSON
+  private static _migrateLegacyCache(
+    legacyCachePath: string,
+    params: LCPCacheParams,
+  ): DictionaryCacheSchema {
+    try {
+      const jsContent = fs.readFileSync(legacyCachePath, "utf8");
+
+      // Parse legacy format without executing code
+      const cache = this._parseLegacyFormat(jsContent);
+
+      // Log migration (can be guarded by debug flag if needed)
+      if (process.env.DEBUG) {
+        console.log(
+          `[lingo.dev] Migrating cache from legacy format (${legacyCachePath}) to JSON format`,
+        );
+      }
+
+      return cache;
+    } catch (error) {
+      console.warn(
+        `[lingo.dev] Failed to migrate legacy cache file at ${legacyCachePath}, returning empty cache`,
+      );
       return {
         version: 0.1,
         files: {},
       };
     }
-    const jsObjectString = fs.readFileSync(cachePath, "utf8");
+  }
 
-    // Remove 'export default' and trailing semicolon before parsing
-    const cache = jsObjectString
-      .replace(/^export default/, "")
-      .replace(/;\s*$/, "");
+  // Parse legacy "export default {...};" format safely without Function constructor
+  private static _parseLegacyFormat(content: string): DictionaryCacheSchema {
+    // Remove 'export default' prefix and trailing semicolon
+    let cleaned = content.trim();
 
-    // Use Function constructor to safely evaluate the object
-    // eslint-disable-next-line no-new-func
-    const obj = new Function(`return (${cache})`)();
-    return obj;
+    // Remove export default statement
+    cleaned = cleaned.replace(/^export\s+default\s+/, "");
+
+    // Remove trailing semicolon
+    cleaned = cleaned.replace(/;\s*$/, "");
+
+    // Parse as JSON - the legacy format was already valid JSON inside the export
+    try {
+      return JSON.parse(cleaned);
+    } catch (error) {
+      throw new Error("Failed to parse legacy cache format");
+    }
+  }
+
+  // Clean up legacy cache file after successful migration
+  private static _cleanupLegacyCache(params: {
+    sourceRoot: string;
+    lingoDir: string;
+  }) {
+    const legacyCachePath = this._getLegacyCachePath(params);
+    if (fs.existsSync(legacyCachePath)) {
+      try {
+        fs.unlinkSync(legacyCachePath);
+        if (process.env.DEBUG) {
+          console.log(
+            `[lingo.dev] Removed legacy cache file: ${legacyCachePath}`,
+          );
+        }
+      } catch (error) {
+        // Non-critical error, just log it
+        console.warn(
+          `[lingo.dev] Failed to remove legacy cache file at ${legacyCachePath}`,
+        );
+      }
+    }
   }
 
   // get cache file path
@@ -205,6 +294,19 @@ export class LCPCache {
       params.sourceRoot,
       params.lingoDir,
       LCP_DICTIONARY_FILE_NAME,
+    );
+  }
+
+  // get legacy cache file path
+  private static _getLegacyCachePath(params: {
+    sourceRoot: string;
+    lingoDir: string;
+  }) {
+    return path.resolve(
+      process.cwd(),
+      params.sourceRoot,
+      params.lingoDir,
+      LCP_DICTIONARY_LEGACY_FILE_NAME,
     );
   }
 }
