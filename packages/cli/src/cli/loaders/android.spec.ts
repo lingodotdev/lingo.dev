@@ -649,6 +649,34 @@ Line 2
     );
   });
 
+  it("should escape apostrophes in CDATA sections", async () => {
+    const input = `
+      <resources>
+        <string name="review_info"><![CDATA[Hosts can't see your review until they've written one. <u>Learn more</u>]]></string>
+      </resources>
+    `.trim();
+
+    const androidLoader = createAndroidLoader().setDefaultLocale("en");
+    const pulled = await androidLoader.pull("en", input);
+
+    expect(pulled.review_info).toBe(
+      "Hosts can't see your review until they've written one. <u>Learn more</u>",
+    );
+
+    const pushed = await androidLoader.push("fr", {
+      review_info:
+        "Les hôtes ne peuvent voir votre avis qu'après en avoir écrit un. <u>En savoir plus</u>",
+    });
+
+    // Apostrophes must be escaped even inside CDATA (Android AAPT requirement)
+    expect(pushed).toContain("qu\\'après");
+    expect(pushed).toContain("<![CDATA[");
+    expect(pushed).toContain("]]>");
+    // HTML tags should NOT be escaped inside CDATA
+    expect(pushed).toContain("<u>En savoir plus</u>");
+    expect(pushed).not.toContain("&lt;u&gt;");
+  });
+
   it("should preserve resource ordering after push", async () => {
     const input = `
       <resources>
@@ -699,7 +727,7 @@ Line 2
     expect(result).toMatch(/^<\?xml version="1\.0" encoding="utf-8"\?>/);
   });
 
-  it('should preserve translatable="false" items in target locale', async () => {
+  it('should exclude translatable="false" items from target locale', async () => {
     const input = `
       <resources>
         <string name="app_name">My App</string>
@@ -737,23 +765,25 @@ Line 2
       timeout: 30,
     });
 
-    // Check that translatable="false" items are included
-    expect(result).toContain('name="api_url"');
-    expect(result).toContain("https://api.example.com");
-    expect(result).toContain('translatable="false"');
-    expect(result).toContain('name="debug_key"');
-    expect(result).toContain("DEBUG_KEY");
-    expect(result).toContain('name="urls"');
-    expect(result).toContain("https://example.com");
-    expect(result).toContain('name="bytes"');
-    expect(result).toContain('name="is_debug"');
-    expect(result).toContain('name="version"');
-    expect(result).toContain(">42<");
+    // Check that translatable="false" items are NOT included
+    expect(result).not.toContain('name="api_url"');
+    expect(result).not.toContain("https://api.example.com");
+    expect(result).not.toContain('name="debug_key"');
+    expect(result).not.toContain("DEBUG_KEY");
+    expect(result).not.toContain('name="urls"');
+    expect(result).not.toContain('name="bytes"');
+    expect(result).not.toContain('name="is_debug"');
+    expect(result).not.toContain('name="version"');
 
     // Check that translatable items are translated
     expect(result).toContain("Mi Aplicación");
     expect(result).toContain("Rojo");
     expect(result).toContain("elemento");
+    expect(result).toContain('name="app_name"');
+    expect(result).toContain('name="colors"');
+    expect(result).toContain('name="items"');
+    expect(result).toContain('name="show_tutorial"');
+    expect(result).toContain('name="timeout"');
   });
 
   it("should use 4-space indentation by default", async () => {

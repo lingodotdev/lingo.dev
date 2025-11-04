@@ -414,12 +414,12 @@ checksums:
     button_text: 1d5f030c4ec9c869e647ae060518b948
     color_names/0: bace0083b78cdb188523bc4abc7b55c6
     color_names/1: 482ff383a4258357ba404f283682471d
-    color_names/2: a5cf034b2d370a976119335cd99f4217
+    color_names/2: a3f56a5c28ea75888356c2280aadc0e7
     notification_count/one: fe0aceb70f334c52a87937c36898a1d0
     notification_count/other: 13acfd95b16962ebe1f67dcd343513e1
     html_snippet: f060191b1af70b3848106a4df91f43cd
     apostrophe_example: 997099339b144b06266f8da411de8d93
-    cdata_example: ba876d1379f854628eaebf67ea330ccc
+    cdata_example: b88d55f92c4a90f64016e497051e997d
     mixed_items/0: 31c5d470a2fe8e1ae88e964fc673aee3
     mixed_items/1: 9823a57cbe6e6e84c1d025ce24a1eec4
   df547e152136431bbc29e26ae0eeabb4:
