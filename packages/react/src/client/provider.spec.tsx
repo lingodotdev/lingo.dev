@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, waitFor } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import { LingoProvider, LingoProviderWrapper } from "./provider";
 import { LingoContext } from "./context";
@@ -52,10 +52,9 @@ describe("client/provider", () => {
   });
 
   describe("LingoProviderWrapper", () => {
-    it("loads dictionary and renders children; returns null while loading", async () => {
-      const loadDictionary = vi
-        .fn()
-        .mockResolvedValue({ locale: "en", files: {} });
+    it("renders nothing while loading by default, then shows children", async () => {
+      const deferred = createDeferred<{ locale: string; files: Record<string, unknown> }>();
+      const loadDictionary = vi.fn(() => deferred.promise);
 
       const Child = () => <div data-testid="child">ok</div>;
 
@@ -65,24 +64,91 @@ describe("client/provider", () => {
         </LingoProviderWrapper>,
       );
 
-      // initially null during loading
+      // No fallback by default (renders nothing during load)
       expect(container.firstChild).toBeNull();
+
+      await act(async () => {
+        deferred.resolve({ locale: "en", files: {} });
+        await deferred.promise;
+      });
 
       await waitFor(() => expect(loadDictionary).toHaveBeenCalled());
       const child = await findByTestId("child");
-      expect(child != null).toBe(true);
+      expect(child).not.toBeNull();
     });
 
-    it("swallows load errors and stays null", async () => {
-      const loadDictionary = vi.fn().mockRejectedValue(new Error("boom"));
-      const { container } = render(
-        <LingoProviderWrapper loadDictionary={loadDictionary}>
+    it("supports a custom fallback", () => {
+      const loadDictionary = vi.fn(() => new Promise(() => {}));
+
+      render(
+        <LingoProviderWrapper
+          loadDictionary={loadDictionary}
+          fallback={<div data-testid="fallback">waiting</div>}
+        >
           <div />
         </LingoProviderWrapper>,
       );
 
-      await vi.waitFor(() => expect(loadDictionary).toHaveBeenCalled());
-      expect(container.firstChild).toBeNull();
+      const fallback = screen.getByTestId("fallback");
+      expect(fallback).not.toBeNull();
+      expect(fallback.textContent).toBe("waiting");
+    });
+
+    it("propagates load errors to the nearest error boundary", async () => {
+      const loadDictionary = vi.fn().mockRejectedValue(new Error("boom"));
+      const onError = vi.fn();
+      const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+
+      render(
+        <TestErrorBoundary onError={onError}>
+          <LingoProviderWrapper loadDictionary={loadDictionary}>
+            <div />
+          </LingoProviderWrapper>
+        </TestErrorBoundary>,
+      );
+
+      await waitFor(() => expect(onError).toHaveBeenCalled());
+      expect(onError.mock.calls[0][0]).toBeInstanceOf(Error);
+      expect(onError.mock.calls[0][0].message).toBe("boom");
+      
+      const errorBoundary = await screen.findByTestId("boundary-error");
+      expect(errorBoundary).not.toBeNull();
+      expect(errorBoundary.textContent).toBe("error");
+
+      consoleSpy.mockRestore();
     });
   });
 });
+
+function createDeferred<T>() {
+  let resolve!: (value: T | PromiseLike<T>) => void;
+  let reject!: (reason?: unknown) => void;
+  const promise = new Promise<T>((res, rej) => {
+    resolve = res;
+    reject = rej;
+  });
+  return { promise, resolve, reject };
+}
+
+class TestErrorBoundary extends React.Component<
+  { onError: (error: Error) => void; children: React.ReactNode },
+  { hasError: boolean }
+> {
+  state = { hasError: false };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error) {
+    this.props.onError(error);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return <div data-testid="boundary-error">error</div>;
+    }
+
+    return this.props.children;
+  }
+}
