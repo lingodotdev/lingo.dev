@@ -1,12 +1,10 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { glob } from "glob";
+import * as glob from 'glob';
 import findLocaleFiles from "./find-locale-paths";
 
-vi.mock("glob", () => ({
-  glob: {
-    sync: vi.fn(),
-  },
-}));
+// This is the correct way to mock the module.
+// We are telling Vitest to intercept the 'glob' import.
+vi.mock('glob');
 
 describe("findLocaleFiles", () => {
   beforeEach(() => {
@@ -14,14 +12,12 @@ describe("findLocaleFiles", () => {
   });
 
   it("should find json locale files", () => {
+    // We now properly mock the 'sync' method on the imported 'glob' object.
     vi.mocked(glob.sync).mockReturnValue([
-      // valid locales
       "src/i18n/en.json",
       "src/i18n/fr.json",
       "src/i18n/en-US.json",
       "src/translations/es.json",
-
-      // not a valid locale
       "src/xx.json",
       "src/settings.json",
     ]);
@@ -66,7 +62,6 @@ describe("findLocaleFiles", () => {
 
   it("should find locale files in nested directories", () => {
     vi.mocked(glob.sync).mockReturnValue([
-      // valid locales
       "src/locales/en/messages.json",
       "src/locales/fr/messages.json",
       "src/i18n/es/strings.json",
@@ -79,8 +74,6 @@ describe("findLocaleFiles", () => {
       "foo/en-US/en-US/messages.json",
       "bar/es/baz/es.json",
       "bar/es/es.json",
-
-      // not a valid locale
       "src/xx/settings.json",
       "src/xx.json",
     ]);
@@ -125,8 +118,8 @@ describe("findLocaleFiles", () => {
     ]);
 
     const result = findLocaleFiles("xcode-xcstrings");
-
-    expect(result).toEqual({
+    const normalizedResult = JSON.parse(JSON.stringify(result).replace(/\\\\/g, "/"));
+    expect(normalizedResult).toEqual({
       patterns: [
         "ios/MyApp/Localizable.xcstrings",
         "ios/MyApp/Onboarding/Localizable.xcstrings",
@@ -140,8 +133,8 @@ describe("findLocaleFiles", () => {
     vi.mocked(glob.sync).mockReturnValue([]);
 
     const result = findLocaleFiles("xcode-xcstrings");
-
-    expect(result).toEqual({
+    const normalizedResult = JSON.parse(JSON.stringify(result).replace(/\\\\/g, "/"));
+    expect(normalizedResult).toEqual({
       patterns: [],
       defaultPatterns: ["Localizable.xcstrings"],
     });

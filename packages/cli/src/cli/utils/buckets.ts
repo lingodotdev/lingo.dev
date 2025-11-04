@@ -1,6 +1,6 @@
 import _ from "lodash";
 import path from "path";
-import { glob } from "glob";
+import * as glob from 'glob';
 import { CLIError } from "./errors";
 import {
   I18nConfig,

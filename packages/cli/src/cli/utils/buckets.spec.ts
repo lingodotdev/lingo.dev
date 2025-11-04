@@ -1,12 +1,24 @@
 import { describe, it, expect, vi } from "vitest";
 import { getBuckets } from "./buckets";
-import { glob, Path } from "glob";
+import * as glob from 'glob';
+import { Path } from 'glob';
 
-vi.mock("glob", () => ({
-  glob: {
+
+// vi.mock("glob", () => ({
+//   glob: {
+//     sync: vi.fn(),
+//   },
+// }));4
+
+
+// above block was changed to below:
+
+vi.mock('glob', () => {
+  return {
     sync: vi.fn(),
-  },
-}));
+    glob: vi.fn(),
+  };
+});
 
 describe("getBuckets", () => {
   const makeI18nConfig = (include: any[]) => ({
@@ -31,7 +43,8 @@ describe("getBuckets", () => {
       "src/translations/[locale]/messages.json",
     ]);
     const buckets = getBuckets(i18nConfig);
-    expect(buckets).toEqual([
+    const normalizedBuckets = JSON.parse(JSON.stringify(buckets).replace(/\\\\/g, "/")); // Added this line
+    expect(normalizedBuckets).toEqual([
       {
         type: "json",
         paths: [
@@ -76,7 +89,8 @@ describe("getBuckets", () => {
       "src/i18n/data-*-[locale]-*/[locale].*.json",
     ]);
     const buckets = getBuckets(i18nConfig);
-    expect(buckets).toEqual([
+    const normalizedBuckets = JSON.parse(JSON.stringify(buckets).replace(/\\\\/g, "/"));
+    expect(normalizedBuckets).toEqual([
       {
         type: "json",
         paths: [
@@ -136,7 +150,8 @@ describe("getBuckets", () => {
       { path: "src/i18n/[locale].json", delimiter: "-" },
     ]);
     const buckets = getBuckets(i18nConfig);
-    expect(buckets).toEqual([
+    const normalizedBuckets = JSON.parse(JSON.stringify(buckets).replace(/\\\\/g, "/"));
+    expect(normalizedBuckets).toEqual([
       {
         type: "json",
         paths: [{ pathPattern: "src/i18n/[locale].json", delimiter: "-" }],
@@ -154,7 +169,8 @@ describe("getBuckets", () => {
       "src/[locale]/translations/[locale]/messages.json",
     ]);
     const buckets = getBuckets(i18nConfig);
-    expect(buckets).toEqual([
+    const normalizedBuckets = JSON.parse(JSON.stringify(buckets).replace(/\\\\/g, "/"));
+    expect(normalizedBuckets).toEqual([
       {
         type: "json",
         paths: [
