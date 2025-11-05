@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.114.2
+
+### Patch Changes
+
+- [#1535](https://github.com/lingodotdev/lingo.dev/pull/1535) [`f7215c1`](https://github.com/lingodotdev/lingo.dev/commit/f7215c1e435378aac8fc953765335cd478cbf507) Thanks [@vrcprl](https://github.com/vrcprl)! - prevent race condition in single-file format concurrent I/O
+
 ## 0.114.1
 
 ### Patch Changes
