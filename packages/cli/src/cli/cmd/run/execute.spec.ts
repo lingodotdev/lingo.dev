@@ -177,7 +177,9 @@ describe("execute.ts - Per-file I/O locking", () => {
           const limiter = getFileIoLimiter(task.file);
           await limiter(async () => {
             // Read
-            operations.push(`Task ${task.id}: Read ${JSON.stringify(fileContent)}`);
+            operations.push(
+              `Task ${task.id}: Read ${JSON.stringify(fileContent)}`,
+            );
             const currentContent = { ...fileContent };
 
             // Simulate processing
@@ -186,7 +188,9 @@ describe("execute.ts - Per-file I/O locking", () => {
             // Write
             currentContent[`key${task.id}`] = `value${task.id}`;
             fileContent = currentContent;
-            operations.push(`Task ${task.id}: Write ${JSON.stringify(fileContent)}`);
+            operations.push(
+              `Task ${task.id}: Write ${JSON.stringify(fileContent)}`,
+            );
           });
         }),
       );
