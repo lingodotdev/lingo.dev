@@ -372,7 +372,7 @@ function buildPullResult(document: AndroidDocument): Record<string, any> {
   const result: Record<string, any> = {};
 
   for (const resource of document.resourceNodes) {
-    if (!resource.translatable) {
+    if (!isTranslatable(resource)) {
       continue;
     }
 
@@ -418,6 +418,10 @@ function buildPullResult(document: AndroidDocument): Record<string, any> {
   return result;
 }
 
+function isTranslatable(resource: AndroidResourceNode): boolean {
+  return resource.translatable;
+}
+
 function buildTranslatedDocument(
   payload: Record<string, any>,
   existingDocument: AndroidDocument,
@@ -458,6 +462,9 @@ function buildTranslatedDocument(
 
   for (const resource of existingDocument.resourceNodes) {
     if (finalMap.has(resource.name)) {
+      continue;
+    }
+    if (!isTranslatable(resource)) {
       continue;
     }
     const cloned = cloneResourceNode(resource);
@@ -628,7 +635,10 @@ function setTextualNodeContent(
   value: string,
   useCdata: boolean,
 ): void {
-  const escapedValue = useCdata ? value : escapeAndroidString(value);
+  // CDATA needs apostrophe escaping but not XML entity escaping
+  const escapedValue = useCdata
+    ? escapeApostrophesOnly(value)
+    : escapeAndroidString(value);
   node._ = escapedValue;
 
   node.$$ = node.$$ ?? [];
@@ -643,7 +653,7 @@ function setTextualNodeContent(
   }
 
   textNode["#name"] = useCdata ? "__cdata" : "__text__";
-  textNode._ = useCdata ? value : escapedValue;
+  textNode._ = escapedValue;
 }
 
 function buildResourceNameMap(
@@ -825,6 +835,11 @@ function escapeAndroidString(value: string): string {
     .replace(/(?<!\\)'/g, "\\'");
 }
 
+function escapeApostrophesOnly(value: string): string {
+  // Even inside CDATA, apostrophes must be escaped for Android AAPT
+  return value.replace(/(?<!\\)'/g, "\\'");
+}
+
 function segmentsToString(segments: ContentSegment[]): string {
   return segments.map((segment) => segment.value).join("");
 }
@@ -962,13 +977,55 @@ function createResourceNodeFromValue(
 }
 
 function cloneDocumentStructure(document: AndroidDocument): AndroidDocument {
+  // Filter first - only keep translatable resources
+  const translatableResources = document.resourceNodes.filter(isTranslatable);
+
   const resourcesClone = deepClone(document.resources);
   const lookup = buildResourceLookup(resourcesClone);
   const resourceNodes: AndroidResourceNode[] = [];
 
-  for (const resource of document.resourceNodes) {
+  for (const resource of translatableResources) {
     const cloned = cloneResourceNodeFromLookup(resource, lookup);
     resourceNodes.push(cloned);
+  }
+
+  // Clean up XML structure - only keep translatable resource nodes
+  if (resourcesClone.$$ && Array.isArray(resourcesClone.$$)) {
+    const includedKeys = new Set(
+      resourceNodes.map((r) => resourceLookupKey(r.type, r.name)),
+    );
+
+    // Filter out non-translatable resources
+    let filtered = resourcesClone.$$.filter((child: any) => {
+      const elementName = child?.["#name"];
+      const name = child?.$?.name;
+      if (!isResourceElementName(elementName) || !name) {
+        return true; // Keep whitespace, comments, etc.
+      }
+      return includedKeys.has(resourceLookupKey(elementName, name));
+    });
+
+    // Remove consecutive whitespace nodes (fixes extra blank lines)
+    const cleaned: any[] = [];
+    let lastWasWhitespace = false;
+
+    for (const child of filtered) {
+      const isWhitespace =
+        child?.["#name"] === "__text__" && (!child._ || child._.trim() === "");
+
+      if (isWhitespace) {
+        if (!lastWasWhitespace) {
+          cleaned.push(child);
+          lastWasWhitespace = true;
+        }
+        // Skip consecutive whitespace
+      } else {
+        cleaned.push(child);
+        lastWasWhitespace = false;
+      }
+    }
+
+    resourcesClone.$$ = cleaned;
   }
 
   return {
