@@ -44,14 +44,26 @@
   </a>
   <a href="https://lingo.dev/en">
     <img
-      src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt 当日第一产品"
+      src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square"
+      alt="Product Hunt 本月最佳开发工具"
+    />
+  </a>
+  <a href="https://lingo.dev/en">
+    <img
+      src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Week-orange?logo=producthunt&style=flat-square"
+      alt="Product Hunt 本周最佳产品"
+    />
+  </a>
+  <a href="https://lingo.dev/en">
+    <img
+      src="https://img.shields.io/badge/Product%20Hunt-%232%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
+      alt="Product Hunt 今日第二佳产品"
     />
   </a>
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/GitHub-Trending-blue?logo=github&style=flat-square"
-      alt="GitHub 热门"
+      alt="GitHub 热门趋势"
     />
   </a>
 </p>
@@ -179,7 +191,7 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 ## ⭐ Star 历史
 
-如果您喜欢我们的工作，请给我们一个⭐，帮助我们达到4,000颗星！🌟
+如果您喜欢我们正在做的事情，请给我们一个 ⭐，帮助我们达到 5,000 颗星！🌟
 
 [
 

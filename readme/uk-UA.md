@@ -43,6 +43,30 @@
       alt="Останній коміт"
     />
   </a>
+  <a href="https://lingo.dev/en">
+    <img
+      src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square"
+      alt="Product Hunt #1 інструмент розробника місяця"
+    />
+  </a>
+  <a href="https://lingo.dev/en">
+    <img
+      src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Week-orange?logo=producthunt&style=flat-square"
+      alt="Product Hunt #1 продукт тижня"
+    />
+  </a>
+  <a href="https://lingo.dev/en">
+    <img
+      src="https://img.shields.io/badge/Product%20Hunt-%232%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
+      alt="Product Hunt #2 продукт дня"
+    />
+  </a>
+  <a href="https://lingo.dev/en">
+    <img
+      src="https://img.shields.io/badge/GitHub-Trending-blue?logo=github&style=flat-square"
+      alt="Тренди GitHub"
+    />
+  </a>
 </p>
 
 ---
@@ -155,7 +179,7 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 ![Графік історії зірок](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
 
-](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
+Якщо вам подобається те, що ми робимо, поставте нам ⭐ і допоможіть нам досягти 5 000 зірок! 🌟
 
 ## 🌐 Readme іншими мовами
 
