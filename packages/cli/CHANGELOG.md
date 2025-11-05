@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.114.3
+
+### Patch Changes
+
+- [#1542](https://github.com/lingodotdev/lingo.dev/pull/1542) [`e70385b`](https://github.com/lingodotdev/lingo.dev/commit/e70385bd1ac676bf5bd31b212d8510e6b7ebf793) Thanks [@sumitsaurabh927](https://github.com/sumitsaurabh927)! - chore: add changeset
+
 ## 0.114.2
 
 ### Patch Changes
