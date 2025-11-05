@@ -178,6 +178,6 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 ## 🌐 ਹੋਰ ਭਾਸ਼ਾਵਾਂ ਵਿੱਚ README
 
-[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी ](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [ਪੰਜਾਬੀ](/readme/pa.md) • [ਪੰਜਾਬੀ](/readme/pa.md) 
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी ](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [ਪੰਜਾਬੀ](/readme/pa.md) 
 
 ਆਪਣੀ ਭਾਸ਼ਾ ਨਹੀਂ ਦੇਖ ਰਹੇ? ਇਸਨੂੰ [`i18n.json`](./i18n.json) ਵਿੱਚ ਸ਼ਾਮਲ ਕਰੋ ਅਤੇ ਇੱਕ PR ਖੋਲ੍ਹੋ!
