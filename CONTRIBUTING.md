@@ -105,6 +105,33 @@ If you find a bug, please create an Issue and we'll triage it.
 - Before starting work on an issue, please comment on it and wait for it to be assigned to you. This prevents multiple people from working on the same issue simultaneously
 - Let's discuss implementation details in the issue comments or Discord before starting work, to ensure alignment between contributors and the Lingo.dev team
 
+---
+
+## 🧩 Contributor Assignment and PR Rules
+
+To maintain fairness and quality in our open-source contributions, we follow these rules for issue assignment and PR submission:
+
+### 🧠 Issue Assignment Priority
+1. **First priority:** The person who opened the issue.
+2. **Second priority:** The first commenter who volunteers to work on it (if the issue creator is not working on it).
+3. Please **wait to be assigned** before starting work or opening a PR.
+
+> ❌ Submitting a PR without being assigned may result in rejection — even if it solves the issue.
+
+---
+
+### 🚀 Pull Request Etiquette
+
+- Avoid submitting **low-effort or spammy PRs** (e.g., cosmetic or trivial edits made only to gain contributions).
+- Each PR must have **a single, clear objective** — “surgical PRs” are encouraged.
+- Use **Conventional Commit** titles: `feat:`, `fix:`, `docs:`, `chore:`, etc.
+- Provide a **clear and meaningful PR description** linking to the related issue.
+- Always include a **changeset** (`pnpm new`) for user-facing changes.
+- Make sure your PR passes all CI checks and formatting standards.
+
+> ✅ Ideal PRs are thoughtful, well-tested, and make meaningful improvements to the codebase.
+
+
 ## Pull Requests
 
 We love your Pull Requests! However, we maintain extremely high standards for code quality and design. We are looking for elegant, 12/10, beautiful code and deeply weighted system design decisions.
