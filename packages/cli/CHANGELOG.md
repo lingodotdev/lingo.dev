@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.114.1
+
+### Patch Changes
+
+- [#1532](https://github.com/lingodotdev/lingo.dev/pull/1532) [`898bd36`](https://github.com/lingodotdev/lingo.dev/commit/898bd36cc2e444641560d2ad2b28065a57072183) Thanks [@vrcprl](https://github.com/vrcprl)! - fix CDATA and translatable=false strings in Android bucket
+
 ## 0.114.0
 
 ### Minor Changes
