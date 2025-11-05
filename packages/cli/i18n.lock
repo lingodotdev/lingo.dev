@@ -497,6 +497,20 @@ checksums:
     quote_example: c519c83fe2629c0e9a6e7a14f64b6317
     newline_example: ae9313a2231a16f17e2367a4e5b322ee
     backslash_example: acf69a7273edf9f932f66027f699bbbe
+    mixed_escapes: 9285b600baf307f7c060e20dc5778fad
+    tab_example: 1451b8323511459dac68316a2594bb82
+    multiline_literal: a4c5d1c388a06e29d96833e4d2f14a26
+    multiline_mixed: f5d741606567d78281bc455074eb8f6c
+    multiline_with_quotes: c82ec05ec488644808917b9c958da8cc
+    after_comment: b7c19db10622cb67d4dd28270e85a428
+    after_multiline_comment: 759d0ffce80451996a5a45b33a0870cc
+    long_value: a54e8485e571c671e35865ba72cbcaf5
+    unicode_example: 2de42b1aef6d20b314928b9c2554759d
+    emoji: 1b387c2b5ce6c2cd608081ebcb5e6a94
+    accents: 8c054e17f9b960d9317ca110a6fedf8c
+    spaces_only: 8af60e2ee58a2e1e42071066e9c225da
+    many_quotes: e2ff57b8058ab2c03c5b07cf901a7a48
+    missing_semicolon: b2b5f0c3f552a348188de51bd4fcf511
     settings_title: 8df6777277469c1fd88cc18dde2f1cc3
     save_button: f7a2929f33bc420195e59ac5a8bcd454
   48bbac9fb7941a5da53508f37bfade60:
@@ -596,4 +610,194 @@ checksums:
     content/16: 14f593e7cf3b3df84a21e17db318912e
     content/17: 5f42d26a42aa29be063019eea27ad07c
     content/18: 48bb7e89e72d68d6de12f5cdac64fc18
-  e6d8e00051ea40ca138a9549ed52e1c6: {}
+  e6d8e00051ea40ca138a9549ed52e1c6:
+    navigation/home: 104a3db3b671c04e167eafbe21e57881
+    navigation/about: 944521eeeed2511833d2299931273c71
+    navigation/contact: 9afa39bc47019ee6dec6c74b6273967c
+    navigation/services: 8ea10b45b9abab2a3bfc3c07e1c9cdc6
+    forms/title: ac85dea7c7f0bf1cd7d48cc1b4da3acc
+    forms/name_label: 03c6ae7996d5841f743cd406b4eff72d
+    forms/email_label: 0ee22bbbe989a0c61a18023407d12dc2
+    forms/message_label: 1e460d0909502d0e94b9be562643af0d
+    forms/submit_button: 487177489aafc9c0243c57ef3850a2d9
+    forms/success_message: a0a7aa980dffa31d4d194af718a917b3
+  1254631a73b754e11a1b9ca8f7362025:
+    welcome_message: 0468579ef2fbc83c9d520c2f2f1c5059
+    item_count: 865b1c4a1a2e96d8bdb7503e5e15d93d
+  ee8bbe4c9de58af9c4d5e1f4373f4db1:
+    simple_string: ed0d4b1cde20d045f9f8c5007c784b0b
+    plural_comments_thread: 1ab6a2f6b0dd6fa73c6e30fdab646231
+    plural_complex_sentence: 8d40f9e84511cea41fef1cf51c3edb00
+    plural_download_speed: 27b5f56cfb2b89b75fc214e44905ae32
+    plural_likes_with_names: c2eae245671243f5705df84019efc570
+    plural_mixed_types: bb5ad4e902913e2490d6fc539ff68b75
+    plural_participants: 7078ed70d2729c392645ab96277cd945
+    plural_positional_args: 60e87c5d1c264d3dd6ab055b730440ff
+    plural_storage_usage: 6ca41d12a044a3eb965016cbaa0f06c5
+    plural_time_remaining: 462b02a90192a36b09e8e3461e86feb7
+    plural_unread_notifications: 245c5521213a87778b6de3baddc8e237
+    plural_with_float: 03c27afd9fb36362219518ccba1f9b79
+    plural_with_high_precision: f071e92703b130b2e1dfd6157d6449a8
+    plural_with_long_long: 7d3ca53ffbf5537982afe54f873acd97
+    plural_with_one_variable: a13ee33889bfe5cd058421e8e3b88fd7
+    plural_with_percentage: bdfc16db9f26a328582f99363583af9d
+    plural_with_two_variables: 06d39ea5949ac0632674393013ca1d3e
+    plural_with_units: ff49a87ccdf91ca1c81a1bda8f2492e5
+    plural_with_zero: 0b532546eb5ec66572b603ade0c3f535
+    simple_plural: 7c2a67ef893e1ad4f6a547d1f7b459de
+  0f98b7647666155847e3e788a431b083:
+    text_0: e4d2da607604b3fda41eef5e0dd35faa
+    text_1: 69eb28c44f7168b1df0455ad2a62588c
+    text_2: bff335b01588a8db802bd193c725ec11
+    text_3: 0744639a7ac440afe0d792ea79c54512
+    text_4: b4cc462fb3a00d2f60deefe548c10a33
+    text_5: d0fd310aef9cf3c5827f1db4b0c098a1
+    text_6: 85bb1f6fb66b5ab65a9c61469183236e
+    text_7: bdbc827b3d224e03394dfd56304500f2
+    text_8: 5e8497af456decf6cf716c0a23f1dbc2
+    text_9: d572e25ed81420669e65c03925da1001
+    text_10: 2cf6537fb69cdd2eb030e55bf4223b93
+    text_11: ec7b8f314fe9bc6591006707484ede61
+    text_12: c2460fb2a7887fdf2d68db2b553a4338
+    text_13: 3abe623951250bd24a9d7799415761ab
+    text_14: 988be328b82702586f2cd541858710fe
+    text_15: b2328773b0ef0699fd5791055c5cf9e2
+    text_16: 92acabd12cd9b63c825294c54fcbc806
+  a661dac7c4e5e7b85a84760d221260ae:
+    title: 0468579ef2fbc83c9d520c2f2f1c5059
+    description: fded006c54f10b76105c14ce3048c154
+    version: 54a9e730e88fb16291b852274d433923
+    support_email: 10627fcc465897af0f5e1bba042685f9
+    emoji: b328c432cee108a87a92f05258b6a651
+    author/name: febee8e9ab40b2fe5106d72675228d00
+    contributors/0/name: e80d4063a32adaad7b0a82b0bcc10551
+    contributors/1/name: b2bca2fa3c890618e56d07473f26ead3
+    messages/0: d1c3a9f35e377554a4ccaa467ca26614
+    messages/1: 0468579ef2fbc83c9d520c2f2f1c5059
+    config/theme/primary: 7535a3779d6934ea8ecf18f5cb5b93fd
+    mixed_array/0: 001b5b003d96c133534f5907abffdf77
+    mixed_array/3/nested_message: 5f0782dfc5993e99890c0475bc295a30
+    locked_key_1: 73fc105de1aefc3f0a97d187a80cf0a4
+  18ac35cad2b3022d734493a5fce7cddc:
+    navigation: 104a3db3b671c04e167eafbe21e57881
+    buttons/submit: 7c91ef5f747eea9f77a9c4f23e19fb2e
+    buttons/cancel: 2e2a849c2223911717de8caa2c71bade
+    messages/welcome: 1308168cca4fa5d8d7a0cf24e55e93fc
+    messages/error: 53a2b5f5e7d83c737c8e02fe18fb4bdb
+    forms/login/title: f4f219abeb5a465ecb1c7efaf50246de
+    forms/login/fields/username: 2ee65bc2dd2f12cf2672f95b2a054bf8
+    forms/login/fields/password: 223a61cf906ab9c40d22612c588dff48
+  3b3843fdc86f8dbbb17471b5db8a26d9:
+    heading-0: e19079d431e6b75a7d74e9c35639ea5a
+    paragraph-0: 6757b797fc6d8c5ec5628f2619274e28
+    paragraph-1: cc37b30c1aca11f64dc096264761368e
+    paragraph-2: 50e2b92b9e711ae7758f8edcc1767102
+    paragraph-3: 7bc573b304cf3a3414dd60f85eea4e36
+    heading-1: 80779abd23399c676227609057093235
+    paragraph-4: dfd87f4dde3d3e12fa6781966432465f
+    item-0: ad9b7460be42c194e4771cf5281d5fd0
+    item-1: 7d67473952061a571de034013964c5b6
+    item-2: 91cffca4db2b901a3a0310ca2ab17ed9
+    item-3: 56b97b82cc030c511847d1850af088a0
+    item-4: 05dc0a811ee5b04941c826293471367d
+    item-5: b1701133f7e62467e354a5fc526ea951
+    heading-2: ff6e4ea57280ef5a42ebbe2cf9e3273b
+    paragraph-5: 3e11ad608af106c15eed82d0e5d07712
+    item-6: 2b1ab56131399aab1842fc3a81dd170e
+    item-7: 8aedf70e351d5e5bb41ad66ad5ad18d8
+    item-8: 1d0eccad0413a69da0d45c481aa754e9
+    paragraph-6: e2a208aa62fd61821848519fa2abc211
+    heading-3: 2761eb3f80a7da53d2cd899f33641e98
+    paragraph-7: f341db1f3167bd074937f4399c3a1158
+    th-0: 58f5f3f37862b6312a2f20ec1a1fd0e8
+    th-1: e17686a22ffad04cc7bb70524ed4478b
+    td-0: 97813c8ae67d69575fd04e35a88aed0c
+    td-1: 117451569b718867c43b26d9ee3c4e8f
+    td-2: e801c1eaca53c3aa702b747ed750fdd1
+    td-3: ffd3eec5497af36d7b4e4185bad1313a
+    td-4: 03d20ebc4966301ceba02199a24e02dc
+    td-5: 86d0ae6fea0fbb119722ed3841f8385a
+    td-6: 6d26991f040628f6002efa192bebb9c2
+    heading-4: c8b45e4d54115ec279a2a6bde4b8a725
+    paragraph-8: 933c68ed0598328263d1146641d0ab2c
+    fence-0: ffdb698812040ead47e2039dfa22d9d7
+    paragraph-9: fe471cd364c38cc79a7638b4a5ffb528
+    heading-5: 4cbc75f1ae6830a190eb70628c4e4b54
+    paragraph-10: bc6097c6af86133a3972bdb7a5343dd2
+    fence-1: 31a1aab989ce9935c98e672182bffbbe
+    heading-6: fe53e9de958685ab7c70d0a973c0a146
+    paragraph-11: 69f77475eb830f1aa357f45db29f809e
+    item-9: 90f2650aad06503472c46ce2612b9bc8
+    item-10: a392737d0507463d40d1a8ff7502607c
+    item-11: 7ed6e23ffae34636a417daf72b3a5b6b
+    item-12: 0f93e7285aafb5c9929b29973f047026
+    item-13: 9dacb7c56bc894e4bcad39f41265e3a0
+    item-14: 496e1d7de5d7ff53f1af813a2ba46d7f
+    item-15: 1bd4ec30282cfc0bdf7d5f3559990a1c
+    item-16: 46c9eec1392a8d9f33170569e342bf7b
+    heading-7: aa8d69ad456402762aeb915a67cfa698
+    paragraph-12: 275eb44389d498dab93e38ed2889e5d9
+    paragraph-13: f05f450fffcb17520c441ab9789f40ce
+    paragraph-14: 915fe5ce4ded772d7844df222ebd9d3e
+    paragraph-15: 3fae115ccac303b7cd908b49b8509217
+    heading-8: 2fdf7c243436eba4bd1fe5ebd605ab96
+    paragraph-16: fc0f77d45ad1e1764d2793706eb8a049
+    paragraph-17: 6b4340d30988a714d34f0df9b3e18889
+    paragraph-18: a59d117938ed65f303209da2b23ad35a
+    paragraph-19: 28e8b27fb60b305a9caac04d8a92a038
+    tagName-0: 0421db688c4d19bb542014733d553a43
+    paragraph-20: 83951ea4c30a9b5057ff046e3a0bfc07
+    paragraph-21: 8d2152d9e84fff4b3cd98d1fb305be8f
+    heading-9: 6fe6489310962f6bc8ad13279106568b
+    item-17: 0539fa4e65545d8a334abf6e0aee57ab
+    item-18: a41ccc6f28eec377fb19a95b0b6db7a8
+    item-19: 45aa24cef8a5d9b037d898917a862563
+    paragraph-22: 59bf7b09d603b846c2cdd63cd878f20a
+    paragraph-23: 9e30a94d9122095ac52a52ed2a864a26
+    paragraph-24: 3b28910e425d79f9fd23ada6d6f33bff
+    paragraph-25: 05d9c0fe6c099b1e20ebdb2320a28257
+    paragraph-26: 04e7322f2d3ffb2d73ff2f64b71637c8
+    paragraph-27: 65ef9814c2d07fd3d54d9f7bee1bba6c
+    badge-0: c2d5d8760d96802e1b9a7bac290b1cfc
+    paragraph-28: df1f854bcdb047d98a68cd39704a8981
+    fm-attr-title: e19079d431e6b75a7d74e9c35639ea5a
+    fm-attr-description: 82574f93a40b35a16a4c9fc5c2ab58cf
+    fm-attr-author: a51ec27845d1fc7cf13c810f0e2d42ab
+  6da152a30ab05dbd1785c179224a09c9:
+    1#00:00:01,000-00:00:03,500: 5a2215cdfd6d9e9162efbdee57b89c27
+    2#00:00:04,000-00:00:06,500: ecb7d6cb214b6db6d02e6e98cdfea178
+    3#00:00:07,000-00:00:09,500: 3eee55196aea6ac13fb19eae7e7ffaf6
+    4#00:00:10,000-00:00:12,500: a6cc802efe3431c7a986ac5d42d62ce1
+    5#00:00:13,000-00:00:15,500: f73ef0a42ea51efb4e1e5fd2276ef243
+  7a5e07095171dd2f59dbcb8d4109574c:
+    "1": 5c0212aca9c84332df0190d13e929623
+    "2": d39d54116929959bf76f43655e7bebc9
+    "3": 960c83d6eeed679ee9fb1b2be2f9934b
+    "5": 78569dd2f0e7cd872659850ef2f9c19a
+    "6": 5c5a850ec695512b6182630c563eeed9
+  d67e3f776169ba16208faf8320e4318f:
+    0#1-3.5#1: 5df3c06b74cfc8558e85ff75a30a9162
+    1#4-7.2#subtitle-2: 0de65f1d2616b6959aa79ac5beb6e84c
+    2#8.5-12#3: 3351244c032529a099f1191477d9e488
+    3#13-16.5#: b9341abc965d5178a96d9bc4e8e2c59a
+    4#17-20#final-cue: 0b67e089cd3f39b8520d7a2be9f34362
+  b23a0b1bf493252238c751dd2d6cf17c:
+    root/title: 0468579ef2fbc83c9d520c2f2f1c5059
+    root/description/summary: f2c85bf6eeebeea33609e04598201bb6
+    root/description/details: 2ee85b8f2f0f1bc008d9cf1f916cb09c
+    root/image/%24/src: 3ce26f0a5486adf10e1b7eee1b866a70
+    root/image/%24/alt: 94058fbed56fffaef2e9bbea59ba4a54
+    root/image/%24/title: 60487c71b570d9dedca6fddd4a75d16a
+    root/link/_: e598091d132f890c37a6d4ed94f6d794
+    root/link/%24/href: 285d79d2783cf0769ab9e767362c1499
+    root/link/%24/label: 26ce69aad587f70d47e7606436bf1d6d
+    root/button/_: 7c91ef5f747eea9f77a9c4f23e19fb2e
+    root/button/%24/type: fa8748b22d5bac98fdcd57e3d6594cf3
+    root/button/%24/value: 7c91ef5f747eea9f77a9c4f23e19fb2e
+    root/button/%24/placeholder: 7b5d59cee6952db66043a4b289b51884
+    root/section/article/paragraph/sentence: 28ca53c71a2e3e3de79c892a9b193b1a
+    root/meta/%24/name: d097029e873a4b19132e2603bd2c9fe4
+    root/meta/%24/content: 0811ae3ab84aa87205383c3d8ac42bf3
+    root/message/greeting: 85559fc839c5181b7958654e62c987d5
+    root/message/body: ed0d4b1cde20d045f9f8c5007c784b0b
+    root/message/signature: 181c8c304980949e101865098f548705
