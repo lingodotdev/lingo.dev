@@ -20,6 +20,10 @@ export default defineConfig({
   splitting: true,
   bundle: true,
   sourcemap: true,
+  esbuildOptions(options) {
+    options.legalComments = "none";
+    options.absWorkingDir = process.cwd();
+  },
   external: ["readline/promises", "@babel/traverse", "node-machine-id"],
   outExtension: (ctx) => ({
     js: ctx.format === "cjs" ? ".cjs" : ".mjs",

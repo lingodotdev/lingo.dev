@@ -3,6 +3,7 @@ pnpm-lock.yaml
 packages/cli/demo/
 build/
 dist/
+.pnpm-store/
 .react-router/
 .turbo/
 .next/
