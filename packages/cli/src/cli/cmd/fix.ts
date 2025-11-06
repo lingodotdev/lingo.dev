@@ -4,7 +4,6 @@ import fs from "fs/promises";
 import { getConfig } from "../utils/config";
 import { glob } from "glob";
 
-
 const BOM = "\uFEFF";
 
 export default new InteractiveCommand()
@@ -43,12 +42,10 @@ export default new InteractiveCommand()
       return;
     }
 
-
     const allLocales = [config.locale.source, ...config.locale.targets];
     const basePatterns = Object.values(config.buckets).flatMap(
       (bucket: Bucket) => bucket.include,
     );
-
 
     const allPatterns = basePatterns.flatMap((pattern) => {
       if (pattern.includes("[locale]")) {
@@ -56,7 +53,6 @@ export default new InteractiveCommand()
       }
       return pattern;
     });
-
 
     const files = await glob(allPatterns, {
       ignore: "node_modules/**",
@@ -77,7 +73,6 @@ export default new InteractiveCommand()
       const fileContent = await fs.readFile(file, "utf-8");
       let fixedContent = fileContent;
       const appliedFixes: string[] = [];
-
 
       if (options.fixBom && fixedContent.startsWith(BOM)) {
         fixedContent = fixedContent.substring(BOM.length);
