@@ -9,6 +9,7 @@ const BOM = "\uFEFF";
 export default new InteractiveCommand()
   .command("fix")
   .description("Automatically repair common issues in source files")
+  .argument("[files...]", "Optional list of files to fix")
   .addOption(
     new InteractiveOption(
       "--dry-run",
@@ -25,51 +26,62 @@ export default new InteractiveCommand()
       .prompt(undefined)
       .default(true),
   )
-  .action(async (options) => {
+  .action(async (files: string[], options) => {
     const spinner = Ora().start("Searching for files to fix...");
+    let filesToProcess: string[] = [];
 
-    interface Bucket {
-      include: string[];
-    }
-    interface Config {
-      locale: { source: string; targets: string[] };
-      buckets: Record<string, Bucket>;
-    }
-
-    const config = (await getConfig()) as Config | undefined;
-    if (!config) {
-      spinner.fail("Configuration file (i18n.json) not found.");
-      return;
-    }
-
-    const allLocales = [config.locale.source, ...config.locale.targets];
-    const basePatterns = Object.values(config.buckets).flatMap(
-      (bucket: Bucket) => bucket.include,
-    );
-
-    const allPatterns = basePatterns.flatMap((pattern) => {
-      if (pattern.includes("[locale]")) {
-        return allLocales.map((locale) => pattern.replace("[locale]", locale));
+    if (files && files.length > 0) {
+      filesToProcess = files;
+      spinner.succeed(`Found ${filesToProcess.length} files. Analyzing...`);
+    } else {
+      interface Bucket {
+        include: string[];
       }
-      return pattern;
-    });
+      interface Config {
+        locale: { source: string; targets: string[] };
+        buckets: Record<string, Bucket>;
+      }
 
-    const files = await glob(allPatterns, {
-      ignore: "node_modules/**",
-      nodir: true,
-    });
+      const config = (await getConfig()) as Config | undefined;
+      if (!config) {
+        spinner.fail("Configuration file (i18n.json) not found.");
+        return;
+      }
 
-    if (!files.length) {
-      spinner.warn("No files found matching the patterns in your i18n.json.");
-      return;
+      const allLocales = [config.locale.source, ...config.locale.targets];
+      const basePatterns = Object.values(config.buckets).flatMap(
+        (bucket: Bucket) => bucket.include,
+      );
+
+      const allPatterns = basePatterns.flatMap((pattern) => {
+        if (pattern.includes("[locale]")) {
+          return allLocales.map((locale) =>
+            pattern.replace("[locale]", locale),
+          );
+        }
+        return pattern;
+      });
+
+      const configFiles = await glob(allPatterns, {
+        ignore: "node_modules/**",
+        nodir: true,
+      });
+
+      if (!configFiles.length) {
+        spinner.warn("No files found matching the patterns in your i18n.json.");
+        return;
+      }
+
+      filesToProcess = configFiles;
+      spinner.succeed(
+        `Found ${filesToProcess.length} files from i18n.json. Analyzing...`,
+      );
     }
-
-    spinner.succeed(`Found ${files.length} files. Analyzing...`);
 
     let filesFixed = 0;
     const fixes: { [key: string]: string[] } = {};
 
-    for (const file of files) {
+    for (const file of filesToProcess) {
       const fileContent = await fs.readFile(file, "utf-8");
       let fixedContent = fileContent;
       const appliedFixes: string[] = [];
