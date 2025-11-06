@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Discussions
+    url: https://github.com/lingodotdev/lingo.dev/discussions
+    about: Please use GitHub Discussions for questions, ideas, or general feedback.
+  - name: 📄 Documentation
+    url: https://lingo.dev/docs
+    about: Check the official documentation for setup and usage guides before raising an issue.
