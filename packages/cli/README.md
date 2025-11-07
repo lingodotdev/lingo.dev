@@ -16,7 +16,6 @@
   <a href="https://lingo.dev/ci">Lingo.dev CI/CD</a> •
   <a href="https://lingo.dev/sdk">Lingo.dev SDK</a>
 </p>
-
 <p align="center">
   <a href="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml">
     <img src="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml/badge.svg" alt="Release" />
@@ -173,3 +172,20 @@ If you like what we're doing, give us a ⭐ and help us reach 4,000 stars! 🌟
 [English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
 
 Don't see your language? Add it to [`i18n.json`](./i18n.json) and open a PR!
+
+---
+
+## 🚀 Try Lingo.dev Instantly
+
+Experience **Lingo.dev** live — no setup required!  
+You can explore the **SDK**, **CLI**, and **Compiler** directly in your browser.
+
+👉 **[Open Interactive Playground on StackBlitz](https://stackblitz.com/edit/lingo-dev-demo)**  
+👉 **[View CLI Demo on Replit](https://replit.com/@yourusername/lingo-cli-demo)**
+
+This playground helps you understand the main features of Lingo.dev, including:
+- 🧠 Language model–based localization  
+- ⚙️ Real-time compilation  
+- 💻 SDK & CI/CD integrations
+
+---
