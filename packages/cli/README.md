@@ -170,6 +170,31 @@ If you like what we're doing, give us a ⭐ and help us reach 5,000 stars! 🌟
 
 ## 🌐 Readme in other languages
 
-[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+<table>
+<tr>
+<td><a href="https://github.com/lingodotdev/lingo.dev">English</a></td>
+<td><a href="/readme/zh-Hans.md">中文</a></td>
+<td><a href="/readme/ja.md">日本語</a></td>
+<td><a href="/readme/ko.md">한국어</a></td>
+</tr>
+<tr>
+<td><a href="/readme/es.md">Español</a></td>
+<td><a href="/readme/fr.md">Français</a></td>
+<td><a href="/readme/ru.md">Русский</a></td>
+<td><a href="/readme/uk-UA.md">Українська</a></td>
+</tr>
+<tr>
+<td><a href="/readme/de.md">Deutsch</a></td>
+<td><a href="/readme/it.md">Italiano</a></td>
+<td><a href="/readme/ar.md">العربية</a></td>
+<td><a href="/readme/he.md">עברית</a></td>
+</tr>
+<tr>
+<td><a href="/readme/hi.md">हिन्दी</a></td>
+<td><a href="/readme/bn.md">বাংলা</a></td>
+<td><a href="/readme/fa.md">فارسی</a></td>
+</tr>
+</table>
+
 
 Don't see your language? Add it to [`i18n.json`](./i18n.json) and open a PR!
