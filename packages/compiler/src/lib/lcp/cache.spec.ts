@@ -325,7 +325,11 @@ describe("LCPCache", () => {
       // Write initial dictionary with multiple locales
       await LCPCache.writeLocaleDictionary(mockDictionary, params);
       await LCPCache.writeLocaleDictionary(
-        { ...mockDictionary, locale: "es", files: { "test.tsx": { entries: { "test-scope": "Hola" } } } },
+        {
+          ...mockDictionary,
+          locale: "es",
+          files: { "test.tsx": { entries: { "test-scope": "Hola" } } },
+        },
         params,
       );
 
@@ -348,7 +352,9 @@ describe("LCPCache", () => {
       const esDict = LCPCache.readLocaleDictionary("es", params);
       const frDict = LCPCache.readLocaleDictionary("fr", params);
 
-      expect(enDict.files["test.tsx"].entries["test-scope"]).toBe("Hello World");
+      expect(enDict.files["test.tsx"].entries["test-scope"]).toBe(
+        "Hello World",
+      );
       expect(esDict.files["test.tsx"].entries["test-scope"]).toBe("Hola");
       expect(frDict.files["test.tsx"].entries["test-scope"]).toBe("Bonjour");
     });
