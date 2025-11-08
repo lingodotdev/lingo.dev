@@ -35,7 +35,18 @@ export default function RootLayout({
         >
           <div className="absolute top-2 right-3">
             <LocaleSwitcher
-              locales={["en", "es", "zh", "ja", "fr", "de", "ru", "ar", "ko"]}
+              locales={[
+                "en",
+                "es",
+                "zh",
+                "ja",
+                "fr",
+                "de",
+                "ru",
+                "ar",
+                "ko",
+                "bn",
+              ]}
             />
           </div>
           {children}

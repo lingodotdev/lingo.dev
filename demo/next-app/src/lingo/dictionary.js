@@ -6,6 +6,7 @@ export default {
         "0/declaration/body/0/argument": {
           content: {
             ar: "قم بترجمة تطبيق React الخاص بك إلى كل لغة في دقائق.<element:br></element:br> توسع إلى الملايين من اليوم الأول<element:sup>*</element:sup>.",
+            bn: "মিনিটের মধ্যে প্রতিটি ভাষায় আপনার React অ্যাপ স্থানীয়করণ করুন। <element:br></element:br> প্রথম দিন থেকেই লক্ষ লক্ষ ব্যবহারকারীর জন্য প্রস্তুত থাকুন <element:sup>*</element:sup>।",
             de: "Lokalisieren Sie Ihre React-App in jeder Sprache in wenigen Minuten.<element:br></element:br> Skalieren Sie vom ersten Tag an auf Millionen<element:sup>*</element:sup>.",
             en: "Localize your React app in every language in minutes.<element:br></element:br> Scale to millions from day one<element:sup>*</element:sup>.",
             es: "Localiza tu aplicación React en todos los idiomas en minutos.<element:br></element:br> Escala a millones desde el primer día<element:sup>*</element:sup>.",
@@ -20,6 +21,7 @@ export default {
         "0/declaration/body/0/argument/3-title": {
           content: {
             ar: "يدعم العديد من أطر العمل الشائعة",
+            bn: "অনেক জনপ্রিয় ফ্রেমওয়ার্ক সমর্থন করে",
             de: "unterstützt viele beliebte Frameworks",
             en: "supports many popular frameworks",
             es: "soporta muchos frameworks populares",
