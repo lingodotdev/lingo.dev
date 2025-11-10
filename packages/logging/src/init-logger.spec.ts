@@ -59,14 +59,16 @@ describe("initLogger", () => {
     // but we can verify the logger works
   });
 
-  it("should write logs to the log file", () => {
+  it("should write logs to the log file", async () => {
     const logger = initLogger(testSlug);
     const testMessage = "Test log message";
     const testData = { userId: 123, action: "test" };
 
     logger.info(testData, testMessage);
 
-    // With sync: true, logs are written immediately - no setTimeout needed
+    // rotating-file-stream writes asynchronously, so we need to wait
+    await new Promise((resolve) => setTimeout(resolve, 100));
+
     const logFilePath = join(LOG_DIR, `${testSlug}.log`);
     expect(existsSync(logFilePath)).toBe(true);
 
