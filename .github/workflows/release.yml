@@ -36,9 +36,9 @@ jobs:
           fi
 
       - name: Use Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
-          node-version: 20.12.2
+          node-version: "20.17"
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
