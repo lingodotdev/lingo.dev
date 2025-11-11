@@ -69,7 +69,8 @@ export abstract class PlatformKit<
       commitMessage: env.LINGODOTDEV_COMMIT_MESSAGE || defaultMessage,
       pullRequestTitle: env.LINGODOTDEV_PULL_REQUEST_TITLE || defaultMessage,
       commitAuthorName: env.LINGODOTDEV_COMMIT_AUTHOR_NAME || "Lingo.dev",
-      commitAuthorEmail: env.LINGODOTDEV_COMMIT_AUTHOR_EMAIL || "support@lingo.dev",
+      commitAuthorEmail:
+        env.LINGODOTDEV_COMMIT_AUTHOR_EMAIL || "support@lingo.dev",
       workingDir: env.LINGODOTDEV_WORKING_DIRECTORY || ".",
       processOwnCommits: env.LINGODOTDEV_PROCESS_OWN_COMMITS || false,
     };
