@@ -259,4 +259,4 @@ export default new InteractiveCommand()
       Ora().info("Please see https://lingo.dev/cli");
     }
   })
-  .addCommand(cursorInitCmd); // Add cursor subcommand
+  .addCommand(cursorInitCmd);

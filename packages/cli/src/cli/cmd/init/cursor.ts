@@ -2,9 +2,14 @@ import { InteractiveCommand, InteractiveOption } from "interactive-commander";
 import Ora from "ora";
 import fs from "fs";
 import path from "path";
+import { fileURLToPath } from "url";
 import { confirm } from "@inquirer/prompts";
 
-const AGENTS_MD = path.resolve(process.cwd(), "packages/cli/agents.md");
+// Get the directory of this file (works in both dev and production)
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+// Access agents.md from assets directory (bundled with published package)
+const AGENTS_MD = path.resolve(__dirname, "../assets/agents.md");
+// Create .cursorrules in user's current working directory (their project)
 const CURSORRULES = path.resolve(process.cwd(), ".cursorrules");
 
 export default new InteractiveCommand()
