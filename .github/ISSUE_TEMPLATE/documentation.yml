@@ -1,0 +1,47 @@
+name: 📚 Documentation Issue
+description: Report docs problems with screenshots
+labels: ["Docs"]
+body:
+  - type: dropdown
+    id: type
+    attributes:
+      label: Issue Type
+      options:
+        - Broken link
+        - Typo/grammar
+        - Missing docs
+        - Outdated content
+        - Unclear explanation
+    validations:
+      required: true
+
+  - type: input
+    id: url
+    attributes:
+      label: Page URL
+      placeholder: "https://lingo.dev/en/cli/quick-start"
+    validations:
+      required: true
+
+  - type: textarea
+    id: issue
+    attributes:
+      label: What's Wrong?
+      placeholder: The link to X is broken / The example for Y is outdated
+    validations:
+      required: true
+
+  - type: textarea
+    id: fix
+    attributes:
+      label: Suggested Fix
+      placeholder: Change "old text" to "new text" / Update example to use latest API
+
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: Screenshot
+      description: "**REQUIRED** - Highlight the issue visually"
+      placeholder: Drag and drop screenshot showing the problem
+    validations:
+      required: true
