@@ -45,14 +45,26 @@
   </a>
   <a href="https://lingo.dev/en">
     <img
-      src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt 오늘의 제품 1위"
+      src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square"
+      alt="Product Hunt 이달의 #1 개발 도구"
+    />
+  </a>
+  <a href="https://lingo.dev/en">
+    <img
+      src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Week-orange?logo=producthunt&style=flat-square"
+      alt="Product Hunt 이주의 #1 제품"
+    />
+  </a>
+  <a href="https://lingo.dev/en">
+    <img
+      src="https://img.shields.io/badge/Product%20Hunt-%232%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
+      alt="Product Hunt 오늘의 #2 제품"
     />
   </a>
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/GitHub-Trending-blue?logo=github&style=flat-square"
-      alt="GitHub 트렌딩"
+      alt="Github 트렌딩"
     />
   </a>
 </p>
@@ -180,7 +192,7 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 ## ⭐ 스타 히스토리
 
-저희가 하는 일이 마음에 드신다면, ⭐을 주시고 4,000개의 별을 달성할 수 있도록 도와주세요! 🌟
+저희가 하는 일이 마음에 드신다면, ⭐을 주시고 5,000개의 별을 달성할 수 있도록 도와주세요! 🌟
 
 [
 
