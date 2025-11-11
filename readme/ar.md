@@ -28,7 +28,7 @@
   <a href="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml">
     <img
       src="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml/badge.svg"
-      alt="الإصدار"
+      alt="إصدار"
     />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md">
@@ -45,14 +45,26 @@
   </a>
   <a href="https://lingo.dev/en">
     <img
-      src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
-      alt="منتج رقم 1 لليوم على Product Hunt"
+      src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square"
+      alt="أداة تطوير رقم 1 للشهر على Product Hunt"
+    />
+  </a>
+  <a href="https://lingo.dev/en">
+    <img
+      src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Week-orange?logo=producthunt&style=flat-square"
+      alt="منتج رقم 1 للأسبوع على Product Hunt"
+    />
+  </a>
+  <a href="https://lingo.dev/en">
+    <img
+      src="https://img.shields.io/badge/Product%20Hunt-%232%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
+      alt="منتج رقم 2 لليوم على Product Hunt"
     />
   </a>
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/GitHub-Trending-blue?logo=github&style=flat-square"
-      alt="الأكثر رواجًا على GitHub"
+      alt="رائج على GitHub"
     />
   </a>
 </p>
@@ -180,7 +192,7 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 ## ⭐ تاريخ النجوم
 
-إذا أعجبك ما نقوم به، امنحنا ⭐ وساعدنا في الوصول إلى 4,000 نجمة! 🌟
+إذا أعجبك ما نقوم به، امنحنا نجمة ⭐ وساعدنا للوصول إلى 5,000 نجمة! 🌟
 
 [
 
