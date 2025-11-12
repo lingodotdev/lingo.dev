@@ -36,5 +36,5 @@ body:
     attributes:
       label: Checklist
       options:
-        - label: I have verified that a similar feature request does not already exist
+        - label: I have verified that a similar feature request does not already exist.
           required: true
