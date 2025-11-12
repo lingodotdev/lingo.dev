@@ -43,6 +43,30 @@
       alt="अंतिम कमिट"
     />
   </a>
+  <a href="https://lingo.dev/en">
+    <img
+      src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square"
+      alt="प्रोडक्ट हंट #1 महीने का डेवटूल"
+    />
+  </a>
+  <a href="https://lingo.dev/en">
+    <img
+      src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Week-orange?logo=producthunt&style=flat-square"
+      alt="प्रोडक्ट हंट #1 सप्ताह का प्रोडक्ट"
+    />
+  </a>
+  <a href="https://lingo.dev/en">
+    <img
+      src="https://img.shields.io/badge/Product%20Hunt-%232%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
+      alt="प्रोडक्ट हंट #2 दिन का प्रोडक्ट"
+    />
+  </a>
+  <a href="https://lingo.dev/en">
+    <img
+      src="https://img.shields.io/badge/GitHub-Trending-blue?logo=github&style=flat-square"
+      alt="गिटहब ट्रेंडिंग"
+    />
+  </a>
 </p>
 
 ---
@@ -168,7 +192,7 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 ## ⭐ स्टार इतिहास
 
-यदि आपको हमारा काम पसंद है, तो हमें एक ⭐ दें और 3,000 स्टार तक पहुंचने में हमारी मदद करें! 🌟
+अगर आपको हमारा काम पसंद है, तो हमें एक ⭐ दें और हमें 5,000 स्टार तक पहुंचने में मदद करें! 🌟
 
 [
 

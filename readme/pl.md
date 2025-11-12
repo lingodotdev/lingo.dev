@@ -28,7 +28,7 @@
   <a href="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml">
     <img
       src="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml/badge.svg"
-      alt="Release"
+      alt="Wydanie"
     />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md">
@@ -41,6 +41,30 @@
     <img
       src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev"
       alt="Ostatni commit"
+    />
+  </a>
+  <a href="https://lingo.dev/en">
+    <img
+      src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square"
+      alt="Product Hunt #1 Narzędzie dla deweloperów miesiąca"
+    />
+  </a>
+  <a href="https://lingo.dev/en">
+    <img
+      src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Week-orange?logo=producthunt&style=flat-square"
+      alt="Product Hunt #1 Produkt tygodnia"
+    />
+  </a>
+  <a href="https://lingo.dev/en">
+    <img
+      src="https://img.shields.io/badge/Product%20Hunt-%232%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
+      alt="Product Hunt #2 Produkt dnia"
+    />
+  </a>
+  <a href="https://lingo.dev/en">
+    <img
+      src="https://img.shields.io/badge/GitHub-Trending-blue?logo=github&style=flat-square"
+      alt="GitHub na topie"
     />
   </a>
 </p>
@@ -168,7 +192,7 @@ Jesteśmy napędzani przez społeczność i uwielbiamy wkład innych!
 
 ## ⭐ Historia gwiazdek
 
-Jeśli podoba Ci się to, co robimy, daj nam ⭐ i pomóż nam osiągnąć 3 000 gwiazdek! 🌟
+Jeśli podoba Ci się to, co robimy, daj nam ⭐ i pomóż nam osiągnąć 5 000 gwiazdek! 🌟
 
 [
 

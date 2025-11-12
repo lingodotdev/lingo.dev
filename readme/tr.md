@@ -40,7 +40,31 @@
   <a href="https://github.com/lingodotdev/lingo.dev/commits/main">
     <img
       src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev"
-      alt="Son Değişiklik"
+      alt="Son Taahhüt"
+    />
+  </a>
+  <a href="https://lingo.dev/en">
+    <img
+      src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square"
+      alt="Product Hunt Ayın #1 Geliştirici Aracı"
+    />
+  </a>
+  <a href="https://lingo.dev/en">
+    <img
+      src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Week-orange?logo=producthunt&style=flat-square"
+      alt="Product Hunt Haftanın #1 Ürünü"
+    />
+  </a>
+  <a href="https://lingo.dev/en">
+    <img
+      src="https://img.shields.io/badge/Product%20Hunt-%232%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
+      alt="Product Hunt Günün #2 Ürünü"
+    />
+  </a>
+  <a href="https://lingo.dev/en">
+    <img
+      src="https://img.shields.io/badge/GitHub-Trending-blue?logo=github&style=flat-square"
+      alt="Github trend"
     />
   </a>
 </p>
@@ -168,7 +192,7 @@ Topluluk odaklıyız ve katkıları seviyoruz!
 
 ## ⭐ Yıldız Tarihi
 
-Yaptıklarımızı beğeniyorsanız, bize bir ⭐ verin ve 3.000 yıldıza ulaşmamıza yardımcı olun! 🌟
+Yaptığımız işi beğendiyseniz, bize bir ⭐ verin ve 5.000 yıldıza ulaşmamıza yardımcı olun! 🌟
 
 [
 
