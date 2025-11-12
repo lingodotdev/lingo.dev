@@ -226,8 +226,38 @@ Lingo.dev CLI also supports TypeScript translation files for better type safety:
    }
    ```
 
-3. Configure ngx-translate to load TypeScript files instead of JSON files.
+3. Configure ngx-translate to load TypeScript files instead of JSON files.  
 
+   Here is an example of a custom `TranslateLoader` that loads TypeScript translation files:
+
+   ```typescript
+   // src/app/i18n/ts-translate-loader.ts
+   import { TranslateLoader } from '@ngx-translate/core';
+   import { Observable, of } from 'rxjs';
+
+   // Map of supported locales to their translation modules
+   const translationModules: Record<string, () => Promise<any>> = {
+     en: () => import('./en').then(m => m.translations),
+     es: () => import('./es').then(m => m.translations),
+     // Add more locales as needed
+   };
+
+   export class TsTranslateLoader implements TranslateLoader {
+     getTranslation(lang: string): Observable<any> {
+       const loader = translationModules[lang];
+       if (loader) {
+         return new Observable(observer => {
+           loader().then(translations => {
+             observer.next(translations);
+             observer.complete();
+           });
+         });
+       } else {
+         // Fallback: return empty object
+         return of({});
+       }
+     }
+   }
 ## Additional Links
 
 - [ngx-translate documentation](https://github.com/ngx-translate/core)
