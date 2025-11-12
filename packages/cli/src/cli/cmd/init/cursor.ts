@@ -47,9 +47,6 @@ export default new InteractiveCommand()
       spinner.info(
         ".cursorrules has been created with i18n-specific instructions for Cursor AI.",
       );
-      if (!fs.existsSync(CURSORRULES)) {
-        spinner.fail(".cursorrules not found after write");
-      }
     } catch (err) {
       spinner.fail(`Failed to write .cursorrules: ${err}`);
       process.exit(1);
