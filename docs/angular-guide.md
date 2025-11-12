@@ -218,6 +218,12 @@ Lingo.dev CLI also supports TypeScript translation files for better type safety:
 2. Update `i18n.json`:
    ```json
    {
+     "$schema": "https://lingo.dev/schema/i18n.json",
+     "version": "1.10",
+     "locale": {
+       "source": "en",
+       "targets": ["es"]
+     },
      "buckets": {
        "angular-translations": {
          "include": ["src/app/i18n/[locale].ts"]
