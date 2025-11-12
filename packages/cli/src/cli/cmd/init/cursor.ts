@@ -31,7 +31,7 @@ export default new InteractiveCommand()
     }
     // Check for existing .cursorrules
     const exists = fs.existsSync(CURSORRULES);
-    let shouldWrite = true;
+    let shouldWrite;
     if (exists && !options.force) {
       shouldWrite = await confirm({
         message: ".cursorrules already exists. Overwrite?",
