@@ -30,12 +30,18 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   // Compiler: wrap with LingoProvider and render LocaleSwitcher
   return (
-    <LingoProvider loadDictionary={(Locale: any) => loadDictionary(Locale)}>
+    <LingoProvider
+      loadDictionary={(Locale: string | null) => loadDictionary(Locale)}
+    >
       <html lang="en">
-        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        >
           {/* Locale switcher (kept as-is) */}
           <div className="absolute top-2 right-3">
-            <LocaleSwitcher locales={["en", "es", "zh", "ja", "fr", "de", "ru", "ar", "ko"]} />
+            <LocaleSwitcher
+              locales={["en", "es", "zh", "ja", "fr", "de", "ru", "ar", "ko"]}
+            />
           </div>
 
           {/* Full-bleed top bars */}
