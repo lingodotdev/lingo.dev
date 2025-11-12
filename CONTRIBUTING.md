@@ -7,7 +7,10 @@ Thank you for contributing! We maintain high standards for code quality and desi
 ## Before You Start
 
 1. **Find or create an issue** - Search [existing issues](https://github.com/lingodotdev/lingo.dev/issues) first
-2. **Wait to be assigned** - Comment on the issue and wait for assignment before starting work
+2. **Wait to be assigned** - Comment on the issue and wait for assignment before starting work. Assignment priority:
+   - First: Issue creator
+   - Second: First volunteer commenter
+   - **Submitting a PR without assignment will result in automatic rejection**
 3. **Discuss approach** - Align on implementation details before coding
 
 ## Pull Request Requirements
@@ -24,6 +27,7 @@ Thank you for contributing! We maintain high standards for code quality and desi
 
 - **Surgical PRs** - One clear objective per PR
 - **Clean code** - Elegant, well-reasoned implementation
+- **Meaningful changes** - No low-effort, cosmetic, or trivial edits made only to gain contributions
 - **No duplicate work** - Check if someone else already opened a PR
 
 ## Local Development
