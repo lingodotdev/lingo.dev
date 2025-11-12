@@ -10,7 +10,7 @@
 
 <p align="center">
   <strong>
-    ⚡ Lingo.dev - 开源的、由 AI 驱动的 i18n 工具包，利用 LLM 实现即时本地化。
+    ⚡ Lingo.dev - 开源的、由 AI 驱动的国际化工具包，使用 LLM 实现即时本地化。
   </strong>
 </p>
 
@@ -27,31 +27,43 @@
   <a href="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml">
     <img
       src="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml/badge.svg"
-      alt="发布"
+      alt="Release"
     />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md">
     <img
       src="https://img.shields.io/github/license/lingodotdev/lingo.dev"
-      alt="许可证"
+      alt="License"
     />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/commits/main">
     <img
       src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev"
-      alt="最后提交"
+      alt="Last Commit"
     />
   </a>
   <a href="https://lingo.dev/en">
     <img
-      src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt 当日第一产品"
+      src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square"
+      alt="Product Hunt #1 DevTool of the Month"
+    />
+  </a>
+  <a href="https://lingo.dev/en">
+    <img
+      src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Week-orange?logo=producthunt&style=flat-square"
+      alt="Product Hunt #1 DevTool of the Week"
+    />
+  </a>
+  <a href="https://lingo.dev/en">
+    <img
+      src="https://img.shields.io/badge/Product%20Hunt-%232%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
+      alt="Product Hunt #2 Product of the Day"
     />
   </a>
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/GitHub-Trending-blue?logo=github&style=flat-square"
-      alt="GitHub 热门"
+      alt="Github trending"
     />
   </a>
 </p>
@@ -60,7 +72,7 @@
 
 ## 认识编译器 🆕
 
-**Lingo.dev 编译器** 是一个免费、开源的编译中间件，旨在无需更改现有 React 组件的情况下，在构建时让任何 React 应用支持多语言。
+**Lingo.dev 编译器** 是一个免费的开源编译中间件，旨在无需更改现有 React 组件的情况下，在构建时使任何 React 应用程序支持多语言。
 
 一次安装：
 
@@ -81,22 +93,22 @@ export default lingoCompiler.next({
 })(existingNextConfig);
 ```
 
-运行 `next build`，即可看到西班牙语和法语的包生成 ✨
+运行 `next build`，即可看到西班牙语和法语的构建包 ✨
 
-[阅读文档 →](https://lingo.dev/compiler) 获取完整指南，并[加入我们的 Discord](https://lingo.dev/go/discord) 以获得设置帮助。
+[阅读文档 →](https://lingo.dev/compiler) 获取完整指南，并 [加入我们的 Discord](https://lingo.dev/go/discord) 以获取设置帮助。
 
 ---
 
-### 此仓库包含什么内容？
+### 此仓库包含什么？
 
-| 工具         | 简介                                              | 文档                                    |
-| ------------ | ------------------------------------------------- | --------------------------------------- |
-| **Compiler** | 构建时的 React 本地化                             | [/compiler](https://lingo.dev/compiler) |
-| **CLI**      | 一键本地化网页和移动应用、JSON、YAML、Markdown 等 | [/cli](https://lingo.dev/cli)           |
-| **CI/CD**    | 每次推送时自动提交翻译 + 根据需要创建拉取请求     | [/ci](https://lingo.dev/ci)             |
-| **SDK**      | 用户生成内容的实时翻译                            | [/sdk](https://lingo.dev/sdk)           |
+| 工具       | 简介                                              | 文档                                    |
+| ---------- | ------------------------------------------------- | --------------------------------------- |
+| **编译器** | 构建时的 React 本地化                             | [/compiler](https://lingo.dev/compiler) |
+| **CLI**    | 一键本地化网页和移动应用、JSON、YAML、Markdown 等 | [/cli](https://lingo.dev/cli)           |
+| **CI/CD**  | 每次推送时自动提交翻译 + 如有需要创建拉取请求     | [/ci](https://lingo.dev/ci)             |
+| **SDK**    | 用户生成内容的实时翻译                            | [/sdk](https://lingo.dev/sdk)           |
 
-以下是每个工具的快速概览 👇
+以下是每个功能的快速概览 👇
 
 ---
 
@@ -108,7 +120,7 @@ export default lingoCompiler.next({
 npx lingo.dev@latest run
 ```
 
-它会为每个字符串生成指纹，缓存结果，并仅重新翻译更改的部分。
+它为每个字符串生成指纹，缓存结果，并且只重新翻译发生变化的内容。
 
 [查看文档 →](https://lingo.dev/cli) 了解如何设置。
 
@@ -116,7 +128,7 @@ npx lingo.dev@latest run
 
 ### 🔄 Lingo.dev CI/CD
 
-自动交付完美翻译。
+自动交付完美的翻译。
 
 ```yaml
 # .github/workflows/i18n.yml
@@ -133,7 +145,7 @@ jobs:
           api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
 ```
 
-让你的代码库保持绿色，让你的产品无需手动步骤即可实现多语言支持。
+让你的代码库保持绿色，让你的产品多语言化，无需手动操作。
 
 [阅读文档 →](https://lingo.dev/ci)
 
@@ -171,19 +183,19 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 ## 🤝 社区
 
-我们以社区为驱动，欢迎您的贡献！
+我们以社区为驱动，欢迎大家的贡献！
 
-- 有想法？[提交问题](https://github.com/lingodotdev/lingo.dev/issues)
-- 想修复问题？[发送 PR](https://github.com/lingodotdev/lingo.dev/pulls)
+- 有想法？[提交一个问题](https://github.com/lingodotdev/lingo.dev/issues)
+- 想修复某些内容？[发送一个 PR](https://github.com/lingodotdev/lingo.dev/pulls)
 - 需要帮助？[加入我们的 Discord](https://lingo.dev/go/discord)
 
 ## ⭐ Star 历史
 
-如果您喜欢我们的工作，请给我们一个⭐，帮助我们达到4,000颗星！🌟
+如果你喜欢我们的工作，请给我们一个 ⭐，帮助我们达到 5,000 个星标！🌟
 
 [
 
-![Star 历史图表](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+![Star History Chart](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
 
 ](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
 

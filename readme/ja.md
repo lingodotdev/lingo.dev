@@ -11,7 +11,7 @@
 <p align="center">
   <strong>
     ⚡ Lingo.dev -
-    LLMによる即時ローカライゼーションを実現するオープンソースのAI駆動i18nツールキット
+    LLMによる即時ローカライゼーションのためのオープンソース、AI駆動のi18nツールキット
   </strong>
 </p>
 
@@ -45,14 +45,26 @@
   </a>
   <a href="https://lingo.dev/en">
     <img
-      src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt デイリー1位製品"
+      src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square"
+      alt="Product Hunt 月間デブツール第1位"
+    />
+  </a>
+  <a href="https://lingo.dev/en">
+    <img
+      src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Week-orange?logo=producthunt&style=flat-square"
+      alt="Product Hunt 週間プロダクト第1位"
+    />
+  </a>
+  <a href="https://lingo.dev/en">
+    <img
+      src="https://img.shields.io/badge/Product%20Hunt-%232%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
+      alt="Product Hunt デイリープロダクト第2位"
     />
   </a>
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/GitHub-Trending-blue?logo=github&style=flat-square"
-      alt="GitHub トレンド"
+      alt="Githubトレンド"
     />
   </a>
 </p>
@@ -61,15 +73,15 @@
 
 ## コンパイラの紹介 🆕
 
-**Lingo.dev コンパイラ**は、既存の React コンポーネントに変更を加えることなく、ビルド時に React アプリを多言語対応にするための無料のオープンソースコンパイラミドルウェアです。
+**Lingo.dev コンパイラ**は、既存のReactコンポーネントに変更を加えることなく、ビルド時に任意のReactアプリを多言語対応にするために設計された、無料のオープンソースコンパイラミドルウェアです。
 
-一度インストール:
+一度インストールするだけ：
 
 ```bash
 npm install lingo.dev
 ```
 
-ビルド設定で有効化:
+ビルド設定で有効化：
 
 ```js
 import lingoCompiler from "lingo.dev/compiler";
@@ -84,40 +96,40 @@ export default lingoCompiler.next({
 
 `next build` を実行すると、スペイン語とフランス語のバンドルが自動的に生成されます ✨
 
-[ドキュメントを読む →](https://lingo.dev/compiler) で完全ガイドを確認し、[Discord に参加](https://lingo.dev/go/discord) してセットアップのサポートを受けましょう。
+完全なガイドは[ドキュメントを読む →](https://lingo.dev/compiler)をご覧ください。セットアップのサポートが必要な場合は[Discordに参加](https://lingo.dev/go/discord)してください。
 
 ---
 
 ### このリポジトリには何が含まれていますか？
 
-| ツール       | 要約                                                                                   | ドキュメント                            |
-| ------------ | -------------------------------------------------------------------------------------- | --------------------------------------- |
-| **Compiler** | ビルド時の React ローカライゼーション                                                  | [/compiler](https://lingo.dev/compiler) |
-| **CLI**      | ウェブ・モバイルアプリ、JSON、YAML、マークダウンなどのワンコマンドローカライゼーション | [/cli](https://lingo.dev/cli)           |
-| **CI/CD**    | プッシュごとに翻訳を自動コミット + 必要に応じてプルリクエストを作成                    | [/ci](https://lingo.dev/ci)             |
-| **SDK**      | ユーザー生成コンテンツのリアルタイム翻訳                                               | [/sdk](https://lingo.dev/sdk)           |
+| ツール         | 要約                                                                                   | ドキュメント                            |
+| -------------- | -------------------------------------------------------------------------------------- | --------------------------------------- |
+| **コンパイラ** | ビルド時のReactローカライゼーション                                                    | [/compiler](https://lingo.dev/compiler) |
+| **CLI**        | ウェブやモバイルアプリ、JSON、YAML、マークダウンなどのワンコマンドローカライゼーション | [/cli](https://lingo.dev/cli)           |
+| **CI/CD**      | プッシュごとに翻訳を自動コミット + 必要に応じてプルリクエストを作成                    | [/ci](https://lingo.dev/ci)             |
+| **SDK**        | ユーザー生成コンテンツのリアルタイム翻訳                                               | [/sdk](https://lingo.dev/sdk)           |
 
-以下は各ツールの概要です 👇
+各ツールの要点は以下の通りです 👇
 
 ---
 
 ### ⚡️ Lingo.dev CLI
 
-ターミナルから直接コードとコンテンツを翻訳。
+ターミナルから直接コードとコンテンツを翻訳します。
 
 ```bash
 npx lingo.dev@latest run
 ```
 
-各文字列にフィンガープリントを付け、結果をキャッシュし、変更された部分のみを再翻訳します。
+すべての文字列に指紋を付け、結果をキャッシュし、変更された部分のみを再翻訳します。
 
-[ドキュメントに従う →](https://lingo.dev/cli) でセットアップ方法を学びましょう。
+[ドキュメントを確認 →](https://lingo.dev/cli) でセットアップ方法を学びましょう。
 
 ---
 
 ### 🔄 Lingo.dev CI/CD
 
-完璧な翻訳を自動的に提供。
+完璧な翻訳を自動的に提供します。
 
 ```yaml
 # .github/workflows/i18n.yml
@@ -134,7 +146,7 @@ jobs:
           api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
 ```
 
-手動操作なしでリポジトリを常に最新状態に保ち、製品の多言語対応を維持します。
+手動の手順なしで、リポジトリを正常に保ち、製品を多言語対応にします。
 
 [ドキュメントを読む →](https://lingo.dev/ci)
 
@@ -142,7 +154,7 @@ jobs:
 
 ### 🧩 Lingo.dev SDK
 
-動的コンテンツのためのリクエストごとの即時翻訳。
+動的コンテンツのリクエストごとの即時翻訳。
 
 ```ts
 import { LingoDotDevEngine } from "lingo.dev/sdk";
@@ -175,12 +187,12 @@ const translated = await lingoDotDev.localizeObject(content, {
 私たちはコミュニティ主導であり、貢献を歓迎します！
 
 - アイデアがありますか？ [イシューを開く](https://github.com/lingodotdev/lingo.dev/issues)
-- 何かを修正したいですか？ [PR を送信](https://github.com/lingodotdev/lingo.dev/pulls)
-- サポートが必要ですか？ [Discord に参加](https://lingo.dev/go/discord)
+- 何かを修正したいですか？ [PRを送信](https://github.com/lingodotdev/lingo.dev/pulls)
+- サポートが必要ですか？ [Discordに参加](https://lingo.dev/go/discord)
 
 ## ⭐ スター履歴
 
-私たちの取り組みが気に入ったら、⭐をつけて4,000スターに到達するのを手伝ってください！🌟
+私たちの取り組みが気に入ったら、⭐をつけて5,000スター達成を手伝ってください！ 🌟
 
 [
 
@@ -188,8 +200,8 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 ](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
 
-## 🌐 他言語の README
+## 🌐 他言語のREADME
 
 [English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
 
-あなたの言語が見つかりませんか？[`i18n.json`](./i18n.json)に追加して PR を開いてください！
+あなたの言語が見つかりませんか？[`i18n.json`](./i18n.json)に追加してPRを開いてください！
