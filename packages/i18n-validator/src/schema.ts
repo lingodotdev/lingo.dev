@@ -66,7 +66,6 @@ export const i18nSchema = z.object({
     .describe("Mapping of bucket names to their configurations."),
 });
 
-
 export type I18nConfig = z.infer<typeof i18nSchema>;
 export type BucketItem = z.infer<typeof bucketItemSchema>;
 export type BucketConfig = z.infer<typeof bucketSchema>;

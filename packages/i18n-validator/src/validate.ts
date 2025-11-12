@@ -52,11 +52,10 @@ export function validateI18nConfig(raw: unknown): ValidationResult {
     return { ok: true, parsed };
   } catch (err) {
     if (err instanceof ZodError) {
-      const zErr = err as ZodError;
-      const errs = zErr.issues.map(
+      const errs = err.issues.map(
         (e) => `${e.path.join(".") || "root"}: ${e.message}`,
       );
-      const suggestions = suggestionsFromError(zErr);
+      const suggestions = suggestionsFromError(err);
       return { ok: false, errors: errs, suggestions };
     }
     return { ok: false, errors: [String(err)] };

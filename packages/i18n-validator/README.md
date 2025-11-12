@@ -20,18 +20,13 @@ This package provides comprehensive runtime validation for Lingo.dev's `i18n.jso
 
 ## 📦 Installation & Setup
 
-### As a CLI tool (global):
+**Note:** This package is marked as `"private": true` in its `package.json` and is intended for use only within the Lingo.dev monorepo workspace. It cannot be installed globally or from the public npm registry.
+
+### In your project (within the monorepo):
 
 ```bash
-npm install -g @lingo.dev/i18n-validator
-lingo-validate-i18n
-```
-
-### In your project:
-
-```bash
-npm install @lingo.dev/i18n-validator
-pnpm install @lingo.dev/i18n-validator
+pnpm install
+pnpm --filter @lingo.dev/i18n-validator build
 ```
 
 ### Development setup:
@@ -73,8 +68,8 @@ import { validateI18nConfig } from "@lingo.dev/i18n-validator";
 const config = {
   locale: { source: "en", targets: ["es", "fr"] },
   buckets: {
-    json: { include: ["locales/[locale].json"] }
-  }
+    json: { include: ["locales/[locale].json"] },
+  },
 };
 
 const result = validateI18nConfig(config);
@@ -139,17 +134,17 @@ Suggestions:
 
 ## 🧰 File Overview
 
-| File | Description |
-|------|-------------|
-| **`src/index.ts`** | Main entry point exporting all public APIs for programmatic usage. |
-| **`src/cli.ts`** | CLI entry point with help text, error handling, and colored output using Chalk. |
-| **`src/schema.ts`** | Complete **Zod schema** for i18n.json v1.10, following [Lingo.dev's official spec](https://lingo.dev/en/cli/fundamentals/i18n-json-config). |
-| **`src/validate.ts`** | Core validation logic with custom checks for `[locale]` placeholders. Returns structured results with `ok`, `errors`, and `suggestions`. |
-| **`src/suggest.ts`** | Converts technical Zod error messages into **human-friendly suggestions** for common issues. |
-| **`test/validate.test.ts`** | Comprehensive test suite with 12+ scenarios covering valid configs, missing fields, invalid values, and edge cases. |
-| **`package.json`** | Package configuration with proper exports, dependencies, and build scripts. |
-| **`tsconfig.json`** | TypeScript config using ESM (`NodeNext`) for modern Node.js compatibility. |
-| **`vitest.config.ts`** | Test configuration for Vitest with globals and Node environment. |
+| File                        | Description                                                                                                                                 |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`src/index.ts`**          | Main entry point exporting all public APIs for programmatic usage.                                                                          |
+| **`src/cli.ts`**            | CLI entry point with help text, error handling, and colored output using Chalk.                                                             |
+| **`src/schema.ts`**         | Complete **Zod schema** for i18n.json v1.10, following [Lingo.dev's official spec](https://lingo.dev/en/cli/fundamentals/i18n-json-config). |
+| **`src/validate.ts`**       | Core validation logic with custom checks for `[locale]` placeholders. Returns structured results with `ok`, `errors`, and `suggestions`.    |
+| **`src/suggest.ts`**        | Converts technical Zod error messages into **human-friendly suggestions** for common issues.                                                |
+| **`test/validate.test.ts`** | Comprehensive test suite with 12+ scenarios covering valid configs, missing fields, invalid values, and edge cases.                         |
+| **`package.json`**          | Package configuration with proper exports, dependencies, and build scripts.                                                                 |
+| **`tsconfig.json`**         | TypeScript config using ESM (`NodeNext`) for modern Node.js compatibility.                                                                  |
+| **`vitest.config.ts`**      | Test configuration for Vitest with globals and Node environment.                                                                            |
 
 ---
 
@@ -270,9 +265,11 @@ Tests  12 passed (12)
 Validates an i18n configuration object.
 
 **Parameters:**
+
 - `config` - The configuration object to validate
 
 **Returns:**
+
 ```typescript
 type ValidationResult = {
   ok: boolean;
@@ -305,7 +302,7 @@ const result = validateI18nConfig(config);
 
 if (!result.ok) {
   console.error("❌ Invalid i18n.json configuration");
-  result.errors?.forEach(error => console.error(`  • ${error}`));
+  result.errors?.forEach((error) => console.error(`  • ${error}`));
   process.exit(1);
 }
 ```
@@ -323,8 +320,11 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '18'
-      - run: npx @lingo.dev/i18n-validator
+          node-version: "18"
+      - run: pnpm install
+      - run: pnpm --filter @lingo.dev/i18n-validator build
+      # The package is private; use the local CLI instead of npx
+      - run: node packages/i18n-validator/dist/src/cli.js
 ```
 
 ### In a Pre-commit Hook
@@ -346,6 +346,7 @@ jobs:
 This validator improves developer experience within Lingo.dev by providing early feedback on i18n configurations. It helps catch misconfigurations before they reach production.
 
 **Future improvements:**
+
 - JSON Schema generation for IDE autocompletion
 - Integration with popular bundlers (Webpack, Vite, etc.)
 - Support for custom validation rules
