@@ -132,7 +132,7 @@ To learn more, see [i18n.json configuration](/cli/fundamentals/i18n-json-config)
    ```javascript
    import { createI18n } from 'vue-i18n';
 
-   // Import all locale messages
+   // It only imports 5 specific locales
    import en from './locales/en.json';
    import es from './locales/es.json';
    import fr from './locales/fr.json';
@@ -149,7 +149,7 @@ To learn more, see [i18n.json configuration](/cli/fundamentals/i18n-json-config)
 
    // Create i18n instance
    export default createI18n({
-     legacy: false, // you must set `false`, to use Composition API
+     legacy: false, //you must set this to `false` to use Composition API
      locale: 'en', // set locale
      fallbackLocale: 'en', // set fallback locale
      messages, // set locale messages
