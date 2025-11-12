@@ -70,7 +70,7 @@ export default lingoCompiler.next({
 હવે `next build` ચલાવો અને જુઓ — Spanish અને French બંડલ તૈયાર ✨
 
 પૂર્ણ માર્ગદર્શિકા માટે [દસ્તાવેજો વાંચો →](https://lingo.dev/compiler)  
-અને તમારી મદદ માટે [અમારા Discord જોડાઓ](https://lingo.dev/go/discord)۔
+અને તમારી મદદ માટે [અમારા Discord જોડાઓ](https://lingo.dev/go/discord).
 
 ---
 
