@@ -73,5 +73,6 @@ pnpm changeset status --since origin/main
 
 - Automated code review by AI bots provides suggestions
 - Human reviewers make final decisions
+- **Address maintainer comments promptly** - PRs with unaddressed comments will be closed to keep the repo clean. Feel free to recreate once issues are resolved.
 
 Questions? Join our [Discord](https://lingo.dev/go/discord)!
