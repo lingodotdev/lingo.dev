@@ -53,7 +53,10 @@ describe("client/provider", () => {
 
   describe("LingoProviderWrapper", () => {
     it("renders nothing while loading by default, then shows children", async () => {
-      const deferred = createDeferred<{ locale: string; files: Record<string, unknown> }>();
+      const deferred = createDeferred<{
+        locale: string;
+        files: Record<string, unknown>;
+      }>();
       const loadDictionary = vi.fn(() => deferred.promise);
 
       const Child = () => <div data-testid="child">ok</div>;
@@ -97,7 +100,9 @@ describe("client/provider", () => {
     it("propagates load errors to the nearest error boundary", async () => {
       const loadDictionary = vi.fn().mockRejectedValue(new Error("boom"));
       const onError = vi.fn();
-      const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+      const consoleSpy = vi
+        .spyOn(console, "error")
+        .mockImplementation(() => {});
 
       render(
         <TestErrorBoundary onError={onError}>
@@ -110,7 +115,7 @@ describe("client/provider", () => {
       await waitFor(() => expect(onError).toHaveBeenCalled());
       expect(onError.mock.calls[0][0]).toBeInstanceOf(Error);
       expect(onError.mock.calls[0][0].message).toBe("boom");
-      
+
       const errorBoundary = await screen.findByTestId("boundary-error");
       expect(errorBoundary).not.toBeNull();
       expect(errorBoundary.textContent).toBe("error");
