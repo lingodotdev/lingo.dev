@@ -4,6 +4,7 @@ import Z from "zod";
 import YAML from "yaml";
 import { MD5 } from "object-hash";
 import _ from "lodash";
+import { getConfigRoot } from "./config";
 
 export function createLockfileHelper() {
   return {
@@ -79,7 +80,8 @@ export function createLockfileHelper() {
   }
 
   function _getLockfilePath() {
-    return path.join(process.cwd(), "i18n.lock");
+    const configRoot = getConfigRoot() || process.cwd();
+    return path.join(configRoot, "i18n.lock");
   }
 }
 

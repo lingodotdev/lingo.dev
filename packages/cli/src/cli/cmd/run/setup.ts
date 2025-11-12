@@ -3,7 +3,7 @@ import { Listr } from "listr2";
 import { colors } from "../../constants";
 import { CmdRunContext, flagsSchema } from "./_types";
 import { commonTaskRendererOptions } from "./_const";
-import { getConfig } from "../../utils/config";
+import { getConfigOrThrow } from "../../utils/config";
 import createLocalizer from "../../localizer";
 
 export default async function setup(input: CmdRunContext) {
@@ -21,13 +21,9 @@ export default async function setup(input: CmdRunContext) {
       {
         title: "Loading i18n configuration",
         task: async (ctx, task) => {
-          ctx.config = getConfig(true);
+          ctx.config = getConfigOrThrow(true);
 
-          if (!ctx.config) {
-            throw new Error(
-              "i18n.json not found. Please run `lingo.dev init` to initialize the project.",
-            );
-          } else if (
+          if (
             !ctx.config.buckets ||
             !Object.keys(ctx.config.buckets).length
           ) {
