@@ -1,0 +1,266 @@
+name: PR Ready to Merge Check
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+  pull_request_review:
+    types: [submitted, dismissed]
+  check_suite:
+    types: [completed]
+  workflow_run:
+    workflows: ["*"]
+    types: [completed]
+
+jobs:
+  label-when-ready:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' || github.event_name == 'pull_request_review'
+    permissions:
+      contents: read
+      pull-requests: write
+      checks: read
+
+    steps:
+      - name: Label PRs based on readiness
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const prNumber = context.payload.pull_request.number;
+
+            // Get PR details
+            const { data: pr } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: prNumber
+            });
+
+            // Skip draft PRs
+            if (pr.draft) {
+              console.log('Skipping draft PR');
+              return;
+            }
+
+            // Check mergeable state
+            let mergeable = pr.mergeable;
+            if (mergeable === null) {
+              console.log('Waiting for mergeable status...');
+              await new Promise(resolve => setTimeout(resolve, 2000));
+              const { data: updated } = await github.rest.pulls.get({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: prNumber
+              });
+              mergeable = updated.mergeable;
+            }
+
+            // Get check runs
+            const { data: checks } = await github.rest.checks.listForRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: pr.head.sha
+            });
+
+            // Determine status
+            const hasConflicts = mergeable === false;
+            const allChecksPass = checks.check_runs.every(
+              check => check.status === 'completed' &&
+              ['success', 'neutral', 'skipped'].includes(check.conclusion)
+            );
+
+            const isReady = !hasConflicts && allChecksPass && checks.total_count > 0;
+
+            // Get current labels
+            const labels = pr.labels.map(l => l.name);
+            const hasReady = labels.includes('ready to merge');
+            const hasNotReady = labels.includes('not ready');
+
+            // Build reason
+            let reasons = [];
+            if (hasConflicts) reasons.push('has merge conflicts');
+            if (!allChecksPass) {
+              const failed = checks.check_runs
+                .filter(c => c.status === 'completed' && !['success', 'neutral', 'skipped'].includes(c.conclusion))
+                .map(c => c.name);
+              if (failed.length) reasons.push(`failing checks: ${failed.join(', ')}`);
+            }
+            if (checks.total_count === 0) reasons.push('no checks have run yet');
+
+            const reason = reasons.length ? reasons.join(' and ') : 'all checks passed and no conflicts';
+
+            // Update labels and comment
+            let changed = false;
+
+            if (isReady && !hasReady) {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                labels: ['ready to merge']
+              });
+              if (hasNotReady) {
+                await github.rest.issues.removeLabel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: prNumber,
+                  name: 'not ready'
+                }).catch(() => {});
+              }
+              changed = true;
+              console.log('Added ready to merge label');
+            } else if (!isReady && !hasNotReady) {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                labels: ['not ready']
+              });
+              if (hasReady) {
+                await github.rest.issues.removeLabel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: prNumber,
+                  name: 'ready to merge'
+                }).catch(() => {});
+              }
+              changed = true;
+              console.log('Added not ready label');
+            }
+
+            // Comment on status change
+            if (changed) {
+              const emoji = isReady ? '✅' : '⚠️';
+              const status = isReady ? 'ready to merge' : 'not ready';
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                body: `${emoji} This PR is now **${status}** - ${reason}`
+              });
+            }
+
+  label-after-checks:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'check_suite' || github.event_name == 'workflow_run'
+    permissions:
+      contents: read
+      pull-requests: write
+      checks: read
+
+    steps:
+      - name: Find associated PRs and update labels
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            let prs = [];
+
+            if (context.eventName === 'check_suite') {
+              prs = context.payload.check_suite.pull_requests || [];
+            } else if (context.eventName === 'workflow_run') {
+              const { data: prList } = await github.rest.pulls.list({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                state: 'open',
+                head: `${context.repo.owner}:${context.payload.workflow_run.head_branch}`
+              });
+              prs = prList;
+            }
+
+            for (const pr of prs) {
+              const prNumber = pr.number;
+
+              // Get fresh PR data
+              const { data: fullPR } = await github.rest.pulls.get({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: prNumber
+              });
+
+              if (fullPR.draft) continue;
+
+              let mergeable = fullPR.mergeable;
+              if (mergeable === null) {
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                const { data: updated } = await github.rest.pulls.get({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  pull_number: prNumber
+                });
+                mergeable = updated.mergeable;
+              }
+
+              const { data: checks } = await github.rest.checks.listForRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: fullPR.head.sha
+              });
+
+              const hasConflicts = mergeable === false;
+              const allChecksPass = checks.check_runs.every(
+                check => check.status === 'completed' &&
+                ['success', 'neutral', 'skipped'].includes(check.conclusion)
+              );
+
+              const isReady = !hasConflicts && allChecksPass && checks.total_count > 0;
+              const labels = fullPR.labels.map(l => l.name);
+              const hasReady = labels.includes('ready to merge');
+              const hasNotReady = labels.includes('not ready');
+
+              let reasons = [];
+              if (hasConflicts) reasons.push('has merge conflicts');
+              if (!allChecksPass) {
+                const failed = checks.check_runs
+                  .filter(c => c.status === 'completed' && !['success', 'neutral', 'skipped'].includes(c.conclusion))
+                  .map(c => c.name);
+                if (failed.length) reasons.push(`failing checks: ${failed.join(', ')}`);
+              }
+              const reason = reasons.length ? reasons.join(' and ') : 'all checks passed and no conflicts';
+
+              let changed = false;
+
+              if (isReady && !hasReady) {
+                await github.rest.issues.addLabels({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: prNumber,
+                  labels: ['ready to merge']
+                });
+                if (hasNotReady) {
+                  await github.rest.issues.removeLabel({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: prNumber,
+                    name: 'not ready'
+                  }).catch(() => {});
+                }
+                changed = true;
+              } else if (!isReady && !hasNotReady) {
+                await github.rest.issues.addLabels({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: prNumber,
+                  labels: ['not ready']
+                });
+                if (hasReady) {
+                  await github.rest.issues.removeLabel({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: prNumber,
+                    name: 'ready to merge'
+                  }).catch(() => {});
+                }
+                changed = true;
+              }
+
+              if (changed) {
+                const emoji = isReady ? '✅' : '⚠️';
+                const status = isReady ? 'ready to merge' : 'not ready';
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: prNumber,
+                  body: `${emoji} This PR is now **${status}** - ${reason}`
+                });
+              }
+            }
