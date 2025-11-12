@@ -1,0 +1,19 @@
+{
+  "app.title": "Tauri i18n Demo",
+  "app.description": "A multilingual desktop application",
+  "nav.home": "Home",
+  "nav.about": "About",
+  "nav.settings": "Settings",
+  "home.welcome": "Welcome to Tauri!",
+  "home.description": "This is a demonstration of internationalization in Tauri applications.",
+  "home.features.title": "Features",
+  "home.features.fast": "Lightning fast performance",
+  "home.features.secure": "Built with security in mind",
+  "home.features.crossPlatform": "Works on Windows, macOS, and Linux",
+  "about.title": "About This App",
+  "about.description": "Built with Tauri, React, and react-intl for seamless multilingual support.",
+  "settings.title": "Settings",
+  "settings.language": "Language",
+  "settings.theme": "Theme",
+  "settings.save": "Save Settings"
+}
