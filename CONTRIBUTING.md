@@ -107,9 +107,8 @@ If you find a bug, please create an Issue and we'll triage it.
 
 ---
 
-## 🧩 Contributor Assignment and PR Rules
-
-To maintain fairness and quality in our open-source contributions, we follow these rules for issue assignment and PR submission:
+## 🧩 Issue Assignment Rules
+To maintain fairness and quality in our open-source contributions, we follow these rules for issue assignment:
 
 ### 🧠 Issue Assignment Priority
 1. **First priority:** The person who opened the issue.
