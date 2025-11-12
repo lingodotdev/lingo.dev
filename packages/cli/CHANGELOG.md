@@ -1,5 +1,44 @@
 # lingo.dev
 
+## 0.114.6
+
+### Patch Changes
+
+- Updated dependencies [[`d72c67c`](https://github.com/lingodotdev/lingo.dev/commit/d72c67c78a4d8f01077db8098b5d973ec98a4c1e)]:
+  - @lingo.dev/_spec@0.42.0
+  - @lingo.dev/_compiler@0.7.16
+  - @lingo.dev/_sdk@0.12.7
+
+## 0.114.5
+
+### Patch Changes
+
+- [#1565](https://github.com/lingodotdev/lingo.dev/pull/1565) [`0a0d0c9`](https://github.com/lingodotdev/lingo.dev/commit/0a0d0c9ea3c7111ed0b54cdafba1bae76eeb8663) Thanks [@vrcprl](https://github.com/vrcprl)! - configurable author commit
+
+## 0.114.4
+
+### Patch Changes
+
+- [#1544](https://github.com/lingodotdev/lingo.dev/pull/1544) [`68fb3ea`](https://github.com/lingodotdev/lingo.dev/commit/68fb3ea64fc0191ecee66403432e0c8efabab2b9) Thanks [@vrcprl](https://github.com/vrcprl)! - fix key encoding
+
+## 0.114.3
+
+### Patch Changes
+
+- [#1542](https://github.com/lingodotdev/lingo.dev/pull/1542) [`e70385b`](https://github.com/lingodotdev/lingo.dev/commit/e70385bd1ac676bf5bd31b212d8510e6b7ebf793) Thanks [@sumitsaurabh927](https://github.com/sumitsaurabh927)! - chore: add changeset
+
+## 0.114.2
+
+### Patch Changes
+
+- [#1535](https://github.com/lingodotdev/lingo.dev/pull/1535) [`f7215c1`](https://github.com/lingodotdev/lingo.dev/commit/f7215c1e435378aac8fc953765335cd478cbf507) Thanks [@vrcprl](https://github.com/vrcprl)! - prevent race condition in single-file format concurrent I/O
+
+## 0.114.1
+
+### Patch Changes
+
+- [#1532](https://github.com/lingodotdev/lingo.dev/pull/1532) [`898bd36`](https://github.com/lingodotdev/lingo.dev/commit/898bd36cc2e444641560d2ad2b28065a57072183) Thanks [@vrcprl](https://github.com/vrcprl)! - fix CDATA and translatable=false strings in Android bucket
+
 ## 0.114.0
 
 ### Minor Changes
