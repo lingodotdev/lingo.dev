@@ -7,15 +7,26 @@ import { I18nConfig } from "@lingo.dev/_spec";
 import chalk from "chalk";
 import dedent from "dedent";
 import { ILocalizer, LocalizerData } from "./_types";
-import { LanguageModel, Message, generateText } from "ai";
+import {
+  GenerateObjectResult,
+  GenerateTextResult,
+  LanguageModel,
+  Message,
+  generateObject,
+  generateText,
+} from "ai";
 import { colors } from "../constants";
 import { jsonrepair } from "jsonrepair";
 import { createOllama } from "ollama-ai-provider";
+import {
+  NormalizedModelSettings,
+  normalizeProviderSettings,
+} from "../utils/normalize-provider-settings";
 
 export default function createExplicitLocalizer(
   provider: NonNullable<I18nConfig["provider"]>,
 ): ILocalizer {
-  const settings = provider.settings || {};
+  const settings = normalizeProviderSettings(provider.id, provider.settings);
 
   switch (provider.id) {
     default:
@@ -38,6 +49,7 @@ export default function createExplicitLocalizer(
       return createAiSdkLocalizer({
         factory: (params) => createOpenAI(params).languageModel(provider.model),
         id: provider.id,
+        model: provider.model,
         prompt: provider.prompt,
         apiKeyName: "OPENAI_API_KEY",
         baseUrl: provider.baseUrl,
@@ -48,6 +60,7 @@ export default function createExplicitLocalizer(
         factory: (params) =>
           createAnthropic(params).languageModel(provider.model),
         id: provider.id,
+        model: provider.model,
         prompt: provider.prompt,
         apiKeyName: "ANTHROPIC_API_KEY",
         baseUrl: provider.baseUrl,
@@ -58,6 +71,7 @@ export default function createExplicitLocalizer(
         factory: (params) =>
           createGoogleGenerativeAI(params).languageModel(provider.model),
         id: provider.id,
+        model: provider.model,
         prompt: provider.prompt,
         apiKeyName: "GOOGLE_API_KEY",
         baseUrl: provider.baseUrl,
@@ -68,6 +82,7 @@ export default function createExplicitLocalizer(
         factory: (params) =>
           createOpenRouter(params).languageModel(provider.model),
         id: provider.id,
+        model: provider.model,
         prompt: provider.prompt,
         apiKeyName: "OPENROUTER_API_KEY",
         baseUrl: provider.baseUrl,
@@ -77,6 +92,7 @@ export default function createExplicitLocalizer(
       return createAiSdkLocalizer({
         factory: (_params) => createOllama().languageModel(provider.model),
         id: provider.id,
+        model: provider.model,
         prompt: provider.prompt,
         skipAuth: true,
         settings,
@@ -86,6 +102,7 @@ export default function createExplicitLocalizer(
         factory: (params) =>
           createMistral(params).languageModel(provider.model),
         id: provider.id,
+        model: provider.model,
         prompt: provider.prompt,
         apiKeyName: "MISTRAL_API_KEY",
         baseUrl: provider.baseUrl,
@@ -97,11 +114,12 @@ export default function createExplicitLocalizer(
 function createAiSdkLocalizer(params: {
   factory: (params: { apiKey?: string; baseUrl?: string }) => LanguageModel;
   id: NonNullable<I18nConfig["provider"]>["id"];
+  model: string;
   prompt: string;
   apiKeyName?: string;
   baseUrl?: string;
   skipAuth?: boolean;
-  settings?: { temperature?: number };
+  settings?: NormalizedModelSettings;
 }): ILocalizer {
   const skipAuth = params.skipAuth === true;
 
@@ -196,22 +214,49 @@ function createAiSdkLocalizer(params: {
         data: input.processableData,
       };
 
-      const response = await generateText({
-        model,
-        ...params.settings,
-        messages: [
-          { role: "system", content: systemPrompt },
-          { role: "user", content: "OK" },
-          ...shots.flatMap(
-            ([userShot, assistantShot]) =>
-              [
-                { role: "user", content: JSON.stringify(userShot) },
-                { role: "assistant", content: JSON.stringify(assistantShot) },
-              ] as Message[],
-          ),
-          { role: "user", content: JSON.stringify(payload) },
-        ],
-      });
+      let response: GenerateTextResult<any, any> | GenerateObjectResult<any>;
+      if (params.id === "google" && params.settings?.responseMimeType) {
+        response = await generateObject({
+          model,
+          output: "no-schema",
+          temperature: params.settings?.temperature,
+          messages: [
+            { role: "system", content: systemPrompt },
+            { role: "user", content: "OK" },
+            ...shots.flatMap(
+              ([userShot, assistantShot]) =>
+                [
+                  { role: "user", content: JSON.stringify(userShot) },
+                  { role: "assistant", content: JSON.stringify(assistantShot) },
+                ] as Message[],
+            ),
+            { role: "user", content: JSON.stringify(payload) },
+          ],
+        });
+      } else {
+        response = await generateText({
+          model,
+          temperature: params.settings?.temperature,
+          messages: [
+            { role: "system", content: systemPrompt },
+            { role: "user", content: "OK" },
+            ...shots.flatMap(
+              ([userShot, assistantShot]) =>
+                [
+                  { role: "user", content: JSON.stringify(userShot) },
+                  { role: "assistant", content: JSON.stringify(assistantShot) },
+                ] as Message[],
+            ),
+            { role: "user", content: JSON.stringify(payload) },
+          ],
+        });
+      }
+
+      // Handle GenerateObjectResult - response is already a json object
+      if ("object" in response) {
+        const result = response.object as any;
+        return result.data;
+      }
 
       const result = JSON.parse(response.text);
 
