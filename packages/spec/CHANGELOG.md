@@ -1,5 +1,11 @@
 # @lingo.dev/\_spec
 
+## 0.43.0
+
+### Minor Changes
+
+- [#1585](https://github.com/lingodotdev/lingo.dev/pull/1585) [`ac38e8e`](https://github.com/lingodotdev/lingo.dev/commit/ac38e8e8dea0d8c4cd3c8b00e6394bfbd8074611) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - Allow any valid ISO locale code in validation instead of hardcoded list. Validation now accepts any locale conforming to ISO 639-1, ISO 15924, ISO 3166-1, and UN M.49 standards.
+
 ## 0.42.0
 
 ### Minor Changes
