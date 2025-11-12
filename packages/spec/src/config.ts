@@ -295,6 +295,7 @@ const providerSchema = Z.object({
     "anthropic",
     "google",
     "ollama",
+    "aimlapi",
     "openrouter",
     "mistral",
   ]).describe("Identifier of the translation provider service."),
