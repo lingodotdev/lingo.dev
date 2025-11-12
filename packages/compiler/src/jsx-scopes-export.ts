@@ -47,17 +47,16 @@ export function jsxScopesExportMutation(
       Boolean(skip || false),
     );
 
-  const attributesMap = getJsxAttributesMap(scope);
-    const overrides = _.chain(attributesMap)
-      .entries()
-      .filter(([attributeKey]) =>
-        attributeKey.startsWith("data-lingo-override-"),
-      )
+    const attributesMap: Record<string, any> = getJsxAttributesMap(scope);
+    const overrides = Object.entries(attributesMap)
+      .filter(([attributeKey]) => attributeKey.startsWith("data-lingo-override-"))
       .map(([k, v]) => [k.split("data-lingo-override-")[1], v])
       .filter(([k]) => !!k)
       .filter(([, v]) => !!v)
-      .fromPairs()
-      .value();
+      .reduce((acc: Record<string, any>, [k, v]) => {
+        acc[String(k)] = v;
+        return acc;
+      }, {} as Record<string, any>);
     lcp.setScopeOverrides(payload.relativeFilePath, scopeKey, overrides);
 
     const content = extractJsxContent(scope);

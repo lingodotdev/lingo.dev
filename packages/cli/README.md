@@ -99,7 +99,7 @@ It fingerprints every string, caches results, and only re-translates what change
 
 ---
 
-### �️ Context Snapshot Manifest
+### 📸 Context Snapshot Manifest
 
 Feed your translators with real UI context. Once you've run the compiler, capture a manifest that links every localized JSX scope to its DOM marker:
 
@@ -115,7 +115,7 @@ Add per-route capture rules under the new `review` block in `i18n.json` to drive
 
 ---
 
-### �🔄 Lingo.dev CI/CD
+### 🔄 Lingo.dev CI/CD
 
 Ship perfect translations automatically.
 
