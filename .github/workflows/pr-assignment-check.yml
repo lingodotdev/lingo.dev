@@ -41,5 +41,4 @@ jobs:
 
             If no issues referenced or PR author is properly assigned, do nothing.
           claude_args: |
-            --max-turns 3
             --allowedTools "Bash,Read,Grep,Glob"
