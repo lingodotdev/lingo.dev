@@ -21,7 +21,6 @@ jobs:
         with:
           anthropic_api_key: ${{ secrets.CLAUDE_CODE_API_KEY }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          allowed_tools: "Bash,Read,Grep,Glob"
           prompt: |
             EXEMPT USERS: @maxprilutskiy, @vrcprl, @davidturnbull, @monicabe, @sumitsaurabh927, @AleksandrSl
 
@@ -46,4 +45,6 @@ jobs:
 
             4. Close message template (friendly, concise, no emojis):
                "Closing this PR as stale to keep the repo clean. Feel free to reopen or create a new PR once you're ready to continue. Thanks for your contribution!"
-          claude_args: "--max-turns 10"
+          claude_args: |
+            --max-turns 10
+            --allowedTools "Bash,Read,Grep,Glob"

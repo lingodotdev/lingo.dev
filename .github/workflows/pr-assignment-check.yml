@@ -26,7 +26,6 @@ jobs:
         with:
           anthropic_api_key: ${{ secrets.CLAUDE_CODE_API_KEY }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          allowed_tools: "Bash,Read,Grep,Glob"
           prompt: |
             EXEMPT USERS: @maxprilutskiy, @vrcprl, @davidturnbull, @monicabe, @sumitsaurabh927, @AleksandrSl (skip all checks if PR author is one of these)
 
@@ -41,4 +40,6 @@ jobs:
                - Encourage them to find other unassigned issues
 
             If no issues referenced or PR author is properly assigned, do nothing.
-          claude_args: "--max-turns 3"
+          claude_args: |
+            --max-turns 3
+            --allowedTools "Bash,Read,Grep,Glob"
