@@ -1,0 +1,26 @@
+{
+  "welcome": "Welcome to our innovative platform",
+  "navigation": {
+    "home": "Home",
+    "about": "About Us",
+    "contact": "Contact",
+    "pricing": "Pricing"
+  },
+  "buttons": {
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "save": "Save Changes",
+    "delete": "Delete"
+  },
+  "messages": {
+    "success": "Operation completed successfully!",
+    "error": "An unexpected error occurred. Please try again.",
+    "loading": "Processing your request...",
+    "confirmation": "Are you sure you want to proceed?"
+  },
+  "features": {
+    "ai_powered": "AI-Powered Translation",
+    "real_time": "Real-time Processing",
+    "multi_language": "Multi-language Support"
+  }
+}
