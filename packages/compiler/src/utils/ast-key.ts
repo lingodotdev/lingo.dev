@@ -1,6 +1,6 @@
-import { NodePath } from "@babel/traverse";
+import type { NodePath } from "./babel-traverse";
 import * as t from "@babel/types";
-import traverse from "@babel/traverse";
+import traverse from "./babel-traverse";
 
 export function getAstKey(nodePath: NodePath) {
   const keyChunks: any[] = [];

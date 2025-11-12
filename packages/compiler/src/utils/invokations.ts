@@ -1,5 +1,6 @@
 import * as t from "@babel/types";
-import traverse, { NodePath } from "@babel/traverse";
+import traverse from "./babel-traverse";
+import type { NodePath } from "./babel-traverse";
 
 export function findInvokations(
   ast: t.File,
