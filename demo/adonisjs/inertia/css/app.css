@@ -8,3 +8,9 @@ body {
   height: 100%;
   width: 100%;
 }
+
+/* Fix for issue #1254: Prevent layout shift when dropdown opens */
+html {
+  overflow-y: scroll; /* Always show scrollbar to prevent layout jump */
+  scrollbar-gutter: stable; /* Modern browsers: reserve space for scrollbar */
+}
