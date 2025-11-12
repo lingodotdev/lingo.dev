@@ -122,7 +122,6 @@ To maintain fairness and quality in our open-source contributions, we follow the
 ### 🚀 Pull Request Etiquette
 
 - Avoid submitting **low-effort or spammy PRs** (e.g., cosmetic or trivial edits made only to gain contributions).
-- Each PR must have **a single, clear objective** — “surgical PRs” are encouraged.
 - Use **Conventional Commit** titles: `feat:`, `fix:`, `docs:`, `chore:`, etc.
 - Provide a **clear and meaningful PR description** linking to the related issue.
 - Always include a **changeset** (`pnpm new`) for user-facing changes.
