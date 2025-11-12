@@ -928,6 +928,9 @@ importers:
 
   packages/spec:
     dependencies:
+      '@lingo.dev/_locales':
+        specifier: workspace:*
+        version: link:../locales
       zod:
         specifier: ^3.25.76
         version: 3.25.76
