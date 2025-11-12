@@ -26,7 +26,7 @@ body:
   - type: textarea
     attributes:
       label: Screenshots/Videos
-      description: Drag n Drop Screenshots or videos which would help us to view the bug visually
+      description: Drag and drop screenshots or videos which would help us to view the bug visually
     validations:
       required: false
   - type: textarea
