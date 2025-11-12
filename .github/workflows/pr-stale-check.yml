@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: anthropics/claude-code-action@v1
         with:
-          anthropic_api_key: ${{ secrets.CLAUDE_CODE_ANTHROPIC_API_KEY }}
+          anthropic_api_key: ${{ secrets.CLAUDE_CODE_API_KEY }}
           prompt: |
             EXEMPT USERS: @maxprilutskiy, @vrcprl, @davidturnbull, @monicabe, @sumitsaurabh927, @AleksandrSl
 
