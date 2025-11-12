@@ -1,5 +1,7 @@
 "use client";
 
+import { forwardRef } from "react";
+import type { HTMLAttributes } from "react";
 import {
   LingoComponent as LingoCoreComponent,
   LingoComponentProps as LingoCoreComponentProps,
@@ -8,23 +10,24 @@ import { useLingo } from "./context";
 
 export type LingoComponentProps = Omit<LingoCoreComponentProps, "$dictionary">;
 
-export function LingoComponent(props: LingoComponentProps) {
-  const { $as, $fileKey, $entryKey, ...rest } = props;
-  const lingo = useLingo();
-  return (
-    <LingoCoreComponent
-      $dictionary={lingo.dictionary}
-      $as={$as}
-      $fileKey={$fileKey}
-      $entryKey={$entryKey}
-      {...rest}
-    />
-  );
-}
+export const LingoComponent = forwardRef<any, LingoComponentProps>(
+  function LingoComponent(props, ref) {
+    const { $as, $fileKey, $entryKey, ...rest } = props;
+    const lingo = useLingo();
+    return (
+      <LingoCoreComponent
+        ref={ref}
+        $dictionary={lingo.dictionary}
+        $as={$as}
+        $fileKey={$fileKey}
+        $entryKey={$entryKey}
+        {...rest}
+      />
+    );
+  },
+);
 
-export function LingoHtmlComponent(
-  props: React.HTMLAttributes<HTMLHtmlElement>,
-) {
+export function LingoHtmlComponent(props: HTMLAttributes<HTMLHtmlElement>) {
   const lingo = useLingo();
   return (
     <html

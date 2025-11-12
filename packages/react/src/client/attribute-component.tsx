@@ -1,5 +1,6 @@
 "use client";
 
+import { forwardRef } from "react";
 import {
   LingoAttributeComponent as LingoCoreAttributeComponent,
   LingoAttributeComponentProps as LingoCoreAttributeComponentProps,
@@ -11,11 +12,15 @@ export type LingoAttributeComponentProps = Omit<
   "$dictionary"
 >;
 
-export function LingoAttributeComponent(props: LingoAttributeComponentProps) {
+export const LingoAttributeComponent = forwardRef<
+  any,
+  LingoAttributeComponentProps
+>(function LingoAttributeComponent(props, ref) {
   const { $attrAs, $attributes, $fileKey, ...rest } = props;
   const lingo = useLingo();
   return (
     <LingoCoreAttributeComponent
+      ref={ref}
       $dictionary={lingo.dictionary}
       $as={$attrAs}
       $attributes={$attributes}
@@ -23,4 +28,4 @@ export function LingoAttributeComponent(props: LingoAttributeComponentProps) {
       {...rest}
     />
   );
-}
+});
