@@ -26,7 +26,7 @@ export default new InteractiveCommand()
     try {
       template = fs.readFileSync(AGENTS_MD, "utf-8");
     } catch (err) {
-      spinner.fail(`Template not found: ${AGENTS_MD}`);
+      spinner.fail("Template file agents.md not found. Please reinstall the package.");
       return process.exit(1);
     }
     // Check for existing .cursorrules
