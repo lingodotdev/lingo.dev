@@ -51,7 +51,6 @@
 
 ```bash
 npm install lingo.dev
-````
 
 Build config मा सक्षम गर्न:
 
