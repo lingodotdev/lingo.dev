@@ -18,10 +18,11 @@
 <br />
 
 <p align="center">
-  <a href="https://lingo.dev/compiler">লিঙ্গো.ডেভ কম্পাইলার</a> •
-  <a href="https://lingo.dev/cli">লিঙ্গো.ডেভ সিএলআই</a> •
-  <a href="https://lingo.dev/ci">লিঙ্গো.ডেভ সিআই/সিডি</a> •
-  <a href="https://lingo.dev/sdk">লিঙ্গো.ডেভ এসডিকে</a>
+  <a href="https://lingo.dev/compiler">Lingo.dev কম্পাইলার</a> •
+  <a href="https://lingo.dev/mcp">Lingo.dev এমসিপি</a> •
+  <a href="https://lingo.dev/cli">Lingo.dev সিএলআই</a> •
+  <a href="https://lingo.dev/ci">Lingo.dev সিআই/সিডি</a> •
+  <a href="https://lingo.dev/sdk">Lingo.dev এসডিকে</a>
 </p>
 
 <p align="center">
@@ -202,6 +203,6 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 ## 🌐 অন্যান্য ভাষায় রিডমি
 
-[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Bhojpuri](/readme/bho.md)
 
 আপনার ভাষা দেখতে পাচ্ছেন না? এটি [`i18n.json`](./i18n.json) এ যোগ করুন এবং একটি পিআর খুলুন!
