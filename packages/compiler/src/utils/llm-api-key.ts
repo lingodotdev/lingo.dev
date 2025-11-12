@@ -82,3 +82,27 @@ export function getMistralKeyFromRc() {
 export function getMistralKeyFromEnv() {
   return getKeyFromEnv("MISTRAL_API_KEY");
 }
+
+export function getOpenAIKey() {
+  return getOpenAIKeyFromEnv() || getOpenAIKeyFromRc();
+}
+
+export function getOpenAIKeyFromRc() {
+  return getKeyFromRc("llm.openaiApiKey");
+}
+
+export function getOpenAIKeyFromEnv() {
+  return getKeyFromEnv("OPENAI_API_KEY");
+}
+
+export function getAnthropicKey() {
+  return getAnthropicKeyFromEnv() || getAnthropicKeyFromRc();
+}
+
+export function getAnthropicKeyFromRc() {
+  return getKeyFromRc("llm.anthropicApiKey");
+}
+
+export function getAnthropicKeyFromEnv() {
+  return getKeyFromEnv("ANTHROPIC_API_KEY");
+}

@@ -9,6 +9,8 @@ describe("provider-details", () => {
       "openrouter",
       "ollama",
       "mistral",
+      "openai",
+      "anthropic",
       "lingo.dev",
     ]);
   });
