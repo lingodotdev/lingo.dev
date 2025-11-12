@@ -3,14 +3,19 @@ import React from "react";
 import { LingoContext } from "./context";
 
 vi.mock("../core", () => {
-  return {
-    LingoAttributeComponent: (props: any) => {
+  const LingoAttributeComponent = React.forwardRef<HTMLDivElement, any>(
+    (props, ref) => {
       return React.createElement("div", {
         "data-testid": "core-attr",
         "data-has-dictionary": props.$dictionary ? "yes" : "no",
         "data-file": props.$fileKey,
+        ref,
       });
     },
+  );
+  LingoAttributeComponent.displayName = "MockLingoAttributeComponent";
+  return {
+    LingoAttributeComponent,
   };
 });
 
@@ -35,5 +40,27 @@ describe("client/attribute-component", () => {
       expect(el.getAttribute("data-has-dictionary")).toBe("yes");
       expect(el.getAttribute("data-file")).toBe("messages");
     });
+  });
+
+  it("forwards refs to the core component", async () => {
+    const dictionary = { locale: "en" } as any;
+    const { LingoAttributeComponent } = await import("./attribute-component");
+    const { render } = await import("@testing-library/react");
+
+    const ref = React.createRef<HTMLDivElement>();
+
+    render(
+      <LingoContext.Provider value={{ dictionary }}>
+        <LingoAttributeComponent
+          ref={ref}
+          $attrAs="a"
+          $fileKey="messages"
+          $attributes={{ title: "title" }}
+        />
+      </LingoContext.Provider>,
+    );
+
+    expect(ref.current).toBeInstanceOf(HTMLDivElement);
+    expect(ref.current?.dataset.file).toBe("messages");
   });
 });
