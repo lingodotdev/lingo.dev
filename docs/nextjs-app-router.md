@@ -57,7 +57,7 @@ async function loadMessages(locale: string) {
 }
 
 export default async function LocaleLayout({ children, params }: Props) {
-  const { locale } = params
+  const { locale } = await params
   const messages = await loadMessages(locale)
 
   return (
