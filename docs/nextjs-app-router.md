@@ -115,23 +115,27 @@ export default function Home() {
 }
 ```
 
-4) Redirect the root path `/` to the default locale:
+4) Redirect the root path `/` to the default locale using Next.js middleware:
 ```ts
-// proxy.js
-export default function proxy(request) {
-  const { pathname } = new URL(request.url);
+// middleware.ts
+import { NextRequest, NextResponse } from 'next/server';
+
+export function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
 
   // Redirect root path to default locale
   if (pathname === "/") {
-    return Response.redirect(new URL("/en", request.url));
+    const url = request.nextUrl.clone();
+    url.pathname = "/en";
+    return NextResponse.redirect(url);
   }
 
-  return;
+  return NextResponse.next();
 }
-```
-Just to avoid confusion about where to place `proxy.js`,
 
-> **Note:** Place `proxy.js` in your project root (next to `next.config.ts`), not inside `app/` or `src/`.
+export const config = {
+  matcher: ['/'],
+};
 
 That’s the minimal App Router i18n shape: locale-prefixed routes and an `IntlProvider` per locale.
 
