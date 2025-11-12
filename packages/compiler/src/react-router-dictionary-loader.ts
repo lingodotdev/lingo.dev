@@ -44,10 +44,7 @@ export const reactRouterDictionaryLoaderMutation = createCodeMutation(
 
       // Add the locale import map as the second argument
       invokation.arguments.push(localeImportMap);
-      // console.log("invokation modified", JSON.stringify(invokation, null, 2));
     }
-
-    // console.log("dictionary-loader", generate(payload.ast).code);
 
     return payload;
   },
