@@ -27,15 +27,7 @@ Follow the official Next.js App Router internationalization guide.
 // next.config.ts
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
-  experimental: {
-    i18nRouting: true, // Enable App Router–style locale handling
-  },
-  i18n: {
-    locales: ["en", "es", "fr"],
-    defaultLocale: "en",
-  },
-};
+const nextConfig: NextConfig = {};
 
 export default nextConfig;
 ```
