@@ -39,5 +39,5 @@ body:
     attributes:
       label: Please checkmark the following checklist
       options:
-        - label: I make sure that similar issue is not opened
+        - label: I make sure that a similar issue is not opened.
           required: true
