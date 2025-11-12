@@ -18,30 +18,30 @@ body:
   - type: input
     id: url
     attributes:
-      label: Page URL
-      placeholder: "https://lingo.dev/en/cli/quick-start"
+      label: URL
+      placeholder: "https://lingo.dev/..."
     validations:
       required: true
 
   - type: textarea
     id: issue
     attributes:
-      label: What's Wrong?
-      placeholder: The link to X is broken / The example for Y is outdated
+      label: Issue
+      placeholder: What's wrong?
     validations:
       required: true
 
   - type: textarea
     id: fix
     attributes:
-      label: Suggested Fix
-      placeholder: Change "old text" to "new text" / Update example to use latest API
+      label: Fix
+      placeholder: How to fix it?
 
   - type: textarea
     id: screenshot
     attributes:
       label: Screenshot
-      description: "**REQUIRED** - Highlight the issue visually"
-      placeholder: Drag and drop screenshot showing the problem
+      description: "**REQUIRED** - Show the issue"
+      placeholder: Drag screenshot here
     validations:
       required: true

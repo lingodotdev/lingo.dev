@@ -6,42 +6,29 @@ body:
     id: problem
     attributes:
       label: Problem
-      description: What can't you do today?
-      placeholder: "Currently, I cannot X because Y doesn't support Z"
+      placeholder: What can't you do today?
     validations:
       required: true
 
   - type: textarea
     id: solution
     attributes:
-      label: Proposed Solution
-      description: How should this work?
-      placeholder: |
-        Add a `--flag` that does X
-
-        Example usage:
-        ```bash
-        npx lingo.dev translate --flag=value
-        ```
+      label: Solution
+      placeholder: How should it work?
     validations:
       required: true
 
   - type: textarea
     id: visuals
     attributes:
-      label: Mockups/Examples
-      description: Show what this looks like (screenshots/diagrams/code examples)
-      placeholder: |
-        Attach:
-        - Mockup of UI change
-        - Example output
-        - Similar feature in other tools
+      label: Visuals
+      description: "**REQUIRED** - Show mockup/example"
+      placeholder: Drag screenshot/diagram here
     validations:
       required: true
 
   - type: textarea
     id: alternatives
     attributes:
-      label: Workarounds Tried
-      description: What have you attempted so far?
-      placeholder: "Tried X, but it fails because..."
+      label: Workarounds
+      placeholder: What have you tried?
