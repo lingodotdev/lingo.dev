@@ -1,6 +1,5 @@
 name: ✨ Feature Request
 description: Suggest a feature with clear use case
-labels: ["Good first issue"]
 body:
   - type: textarea
     id: problem

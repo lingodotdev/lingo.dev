@@ -1,6 +1,5 @@
 name: 📚 Documentation Issue
 description: Report docs problems with screenshots
-labels: ["Docs"]
 body:
   - type: dropdown
     id: type

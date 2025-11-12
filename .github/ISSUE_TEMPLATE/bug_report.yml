@@ -1,6 +1,5 @@
 name: 🐛 Bug Report
 description: Report a bug with detailed reproduction steps
-labels: ["Bug"]
 body:
   - type: markdown
     attributes:
