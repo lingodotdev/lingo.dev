@@ -63,3 +63,4 @@ jobs:
           parallel: ${{ inputs.parallel }}
         env:
           GH_TOKEN: ${{ github.token }}
+          OPENAI_API_KEY: ${{ secrets.BYOK_OPENAI_API_KEY }}

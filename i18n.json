@@ -29,5 +29,9 @@
       "include": ["readme/[locale].md"]
     }
   },
+  "provider": {
+    "id": "openai",
+    "model": "gpt-5"
+  },
   "$schema": "https://lingo.dev/schema/i18n.json"
 }
