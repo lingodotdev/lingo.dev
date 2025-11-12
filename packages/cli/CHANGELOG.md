@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.115.0
+
+### Minor Changes
+
+- [#1591](https://github.com/lingodotdev/lingo.dev/pull/1591) [`6267878`](https://github.com/lingodotdev/lingo.dev/commit/6267878d1be28337d77749e39ab3547b6a19b3ed) Thanks [@copilot-swe-agent](https://github.com/apps/copilot-swe-agent)! - Minor release
+
 ## 0.114.7
 
 ### Patch Changes
