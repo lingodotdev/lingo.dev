@@ -23,7 +23,7 @@ export class LCPCache {
       if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir, { recursive: true });
       }
-      fs.writeFileSync(cachePath, "export default {};");
+      fs.writeFileSync(cachePath, "{}");
     }
   }
 
@@ -153,7 +153,7 @@ export class LCPCache {
       const config = await prettier.resolveConfig(cachePath);
       const prettierOptions = {
         ...(config ?? {}),
-        parser: config?.parser ? config.parser : "typescript",
+        parser: config?.parser ? config.parser : "json",
       };
       return await prettier.format(cachedContent, prettierOptions);
     } catch (error) {
@@ -168,31 +168,48 @@ export class LCPCache {
     params: LCPCacheParams,
   ) {
     const cachePath = this._getCachePath(params);
-    const cache = `export default ${JSON.stringify(dictionaryCache, null, 2)};`;
+    const cache = `${JSON.stringify(dictionaryCache, null, 2)}`;
     const formattedCache = await this._format(cache, cachePath);
     fs.writeFileSync(cachePath, formattedCache);
   }
 
-  // read cache from file as JSON
+  // read cache from file as JSON with legacy migration support
   private static _read(params: LCPCacheParams): DictionaryCacheSchema {
     const cachePath = this._getCachePath(params);
+    const legacyPath = path.resolve(
+      process.cwd(),
+      params.sourceRoot,
+      params.lingoDir,
+      "dictionary.js",
+    );
     if (!fs.existsSync(cachePath)) {
+      // Fallback to legacy JS file if present
+      if (fs.existsSync(legacyPath)) {
+        const legacyContent = fs.readFileSync(legacyPath, "utf8");
+        const stripped = legacyContent
+          .replace(/^export default\s*/, "")
+          .replace(/;\s*$/, "");
+        try {
+          return JSON.parse(stripped);
+        } catch (_e) {
+          // If parsing fails, treat as empty cache
+        }
+      }
       return {
         version: 0.1,
         files: {},
       };
     }
-    const jsObjectString = fs.readFileSync(cachePath, "utf8");
-
-    // Remove 'export default' and trailing semicolon before parsing
-    const cache = jsObjectString
-      .replace(/^export default/, "")
-      .replace(/;\s*$/, "");
-
-    // Use Function constructor to safely evaluate the object
-    // eslint-disable-next-line no-new-func
-    const obj = new Function(`return (${cache})`)();
-    return obj;
+    const jsonString = fs.readFileSync(cachePath, "utf8");
+    try {
+      return JSON.parse(jsonString);
+    } catch (_e) {
+      // If somehow invalid JSON in new file, fallback to empty
+      return {
+        version: 0.1,
+        files: {},
+      };
+    }
   }
 
   // get cache file path
