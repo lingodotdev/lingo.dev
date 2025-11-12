@@ -2,7 +2,7 @@ name: PR Stale Check
 
 on:
   schedule:
-    - cron: '0 0 * * 1' # Every Monday at midnight UTC
+    - cron: "0 0 * * 1" # Every Monday at midnight UTC
   workflow_dispatch:
 
 jobs:

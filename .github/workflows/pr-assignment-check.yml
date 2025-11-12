@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       pr_number:
-        description: 'PR number to check'
+        description: "PR number to check"
         required: true
         type: number
 
