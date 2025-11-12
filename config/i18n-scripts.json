@@ -1,0 +1,44 @@
+{
+  "languageConfig": {
+    "ar": {
+      "direction": "rtl",
+      "script": "arabic",
+      "fontFamily": "'Noto Naskh Arabic', 'Arabic UI', system-ui, -apple-system"
+    },
+    "bn": {
+      "direction": "ltr",
+      "script": "bengali",
+      "fontFamily": "'Noto Sans Bengali', 'Bangla Sangam MN', system-ui, -apple-system"
+    },
+    "fa": {
+      "direction": "rtl",
+      "script": "arabic",
+      "fontFamily": "'Noto Naskh Arabic', 'Arabic UI', system-ui, -apple-system"
+    },
+    "he": {
+      "direction": "rtl",
+      "script": "hebrew",
+      "fontFamily": "'Noto Sans Hebrew', 'Hebrew UI', system-ui, -apple-system"
+    },
+    "hi": {
+      "direction": "ltr",
+      "script": "devanagari",
+      "fontFamily": "'Noto Sans Devanagari', 'Devanagari Sangam MN', system-ui, -apple-system"
+    },
+    "mr": {
+      "direction": "ltr",
+      "script": "devanagari",
+      "fontFamily": "'Noto Sans Devanagari', 'Devanagari Sangam MN', system-ui, -apple-system"
+    },
+    "ne": {
+      "direction": "ltr",
+      "script": "devanagari",
+      "fontFamily": "'Noto Sans Devanagari', 'Devanagari Sangam MN', system-ui, -apple-system"
+    },
+    "si": {
+      "direction": "ltr",
+      "script": "sinhala",
+      "fontFamily": "'Noto Sans Sinhala', 'Sinhala Sangam MN', system-ui, -apple-system"
+    }
+  }
+}
