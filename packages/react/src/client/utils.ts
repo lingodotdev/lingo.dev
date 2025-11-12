@@ -59,3 +59,30 @@ export function setLocaleInCookies(locale: string): void {
     sameSite: "lax",
   });
 }
+
+/**
+ * Returns a new array with duplicate strings removed while preserving order.
+ * Normalizes entries by trimming whitespace before comparing so common
+ * accidental duplicates (extra spaces) are removed as well.
+ *
+ * This is a small defensive helper intended for UI lists such as pricing
+ * feature lists where translations or assembled data may accidentally
+ * contain duplicate entries.
+ */
+export function dedupeFeatures(features?: Array<string | null | undefined>) {
+  if (!features || !Array.isArray(features)) return [] as string[];
+
+  const seen = new Set<string>();
+  const out: string[] = [];
+
+  for (const f of features) {
+    if (typeof f !== "string") continue;
+    const norm = f.trim();
+    if (!norm) continue;
+    if (seen.has(norm)) continue;
+    seen.add(norm);
+    out.push(norm);
+  }
+
+  return out;
+}
