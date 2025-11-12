@@ -19,6 +19,9 @@ jobs:
       pull-requests: write
       id-token: write
     steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: anthropics/claude-code-action@v1
         with:
           anthropic_api_key: ${{ secrets.CLAUDE_CODE_API_KEY }}
@@ -37,4 +40,6 @@ jobs:
                - Encourage them to find other unassigned issues
 
             If no issues referenced or PR author is properly assigned, do nothing.
-          claude_args: "--max-turns 3"
+          claude_args: |
+            --max-turns 3
+            --allowedTools "Bash,Read,Grep,Glob"
