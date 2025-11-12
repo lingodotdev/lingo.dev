@@ -21,6 +21,7 @@
     "@types/babel__traverse": "^7.20.7",
     "commitlint": "^19.7.1",
     "husky": "^9.1.7",
+    "lint-staged": "^16.2.6",
     "prettier": "^3.4.2",
     "turbo": "^2.5.0"
   },
@@ -30,5 +31,8 @@
     "minimatch": "^10.0.3",
     "node-machine-id": "^1.1.12"
   },
-  "packageManager": "pnpm@9.12.3"
+  "packageManager": "pnpm@9.12.3",
+  "lint-staged": {
+    "*": "prettier --write --ignore-unknown"
+  }
 }
