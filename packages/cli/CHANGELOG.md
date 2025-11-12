@@ -1,5 +1,20 @@
 # lingo.dev
 
+## 0.114.6
+
+### Patch Changes
+
+- Updated dependencies [[`d72c67c`](https://github.com/lingodotdev/lingo.dev/commit/d72c67c78a4d8f01077db8098b5d973ec98a4c1e)]:
+  - @lingo.dev/_spec@0.42.0
+  - @lingo.dev/_compiler@0.7.16
+  - @lingo.dev/_sdk@0.12.7
+
+## 0.114.5
+
+### Patch Changes
+
+- [#1565](https://github.com/lingodotdev/lingo.dev/pull/1565) [`0a0d0c9`](https://github.com/lingodotdev/lingo.dev/commit/0a0d0c9ea3c7111ed0b54cdafba1bae76eeb8663) Thanks [@vrcprl](https://github.com/vrcprl)! - configurable author commit
+
 ## 0.114.4
 
 ### Patch Changes
