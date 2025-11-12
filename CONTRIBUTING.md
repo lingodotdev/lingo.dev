@@ -124,7 +124,6 @@ To maintain fairness and quality in our open-source contributions, we follow the
 - Avoid submitting **low-effort or spammy PRs** (e.g., cosmetic or trivial edits made only to gain contributions).
 - Use **Conventional Commit** titles: `feat:`, `fix:`, `docs:`, `chore:`, etc.
 - Provide a **clear and meaningful PR description** linking to the related issue.
-- Always include a **changeset** (`pnpm new`) for user-facing changes.
 - Make sure your PR passes all CI checks and formatting standards.
 
 > ✅ Ideal PRs are thoughtful, well-tested, and make meaningful improvements to the codebase.
