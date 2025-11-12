@@ -114,7 +114,6 @@ To maintain fairness and quality in our open-source contributions, we follow the
 ### 🧠 Issue Assignment Priority
 1. **First priority:** The person who opened the issue.
 2. **Second priority:** The first commenter who volunteers to work on it (if the issue creator is not working on it).
-3. Please **wait to be assigned** before starting work or opening a PR.
 
 > ❌ Submitting a PR without being assigned may result in rejection — even if it solves the issue.
 
