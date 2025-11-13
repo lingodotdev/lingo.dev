@@ -444,6 +444,16 @@ const modelSettingsSchema = Z.object({
     .describe(
       "Controls randomness in model outputs (0=deterministic, 2=very random). Some models like GPT-5 require temperature=1.",
     ),
+  response_mime_type: Z.enum(["application/json", "text/x.enum"])
+    .optional()
+    .describe(
+      "Gemini-specific setting to force raw JSON output without Markdown wrappers.",
+    ),
+  response_schema: Z.record(Z.string(), Z.any())
+    .optional()
+    .describe(
+      "Gemini-specific JSON schema that tunes structured output enforcement.",
+    ),
 })
   .optional()
   .describe("Model-specific settings for translation requests.");

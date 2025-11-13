@@ -5,6 +5,7 @@ import { LocalizerFn } from "./_base";
 import { createLingoLocalizer } from "./lingo";
 import { createBasicTranslator } from "./basic";
 import { createOpenAI } from "@ai-sdk/openai";
+import { normalizeProviderSettings } from "../utils/normalize-provider-settings";
 import { colors } from "../constants";
 import { createAnthropic } from "@ai-sdk/anthropic";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
@@ -21,7 +22,7 @@ export default function createProcessor(
     return result;
   } else {
     const model = getPureModelProvider(provider);
-    const settings = provider.settings || {};
+    const settings = normalizeProviderSettings(provider.id, provider.settings);
     const result = createBasicTranslator(model, provider.prompt, settings);
     return result;
   }

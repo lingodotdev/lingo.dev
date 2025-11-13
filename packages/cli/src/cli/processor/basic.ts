@@ -1,15 +1,12 @@
 import { generateText, LanguageModelV1 } from "ai";
 import { LocalizerInput, LocalizerProgressFn } from "./_base";
+import { NormalizedModelSettings } from "../utils/normalize-provider-settings";
 import _ from "lodash";
-
-type ModelSettings = {
-  temperature?: number;
-};
 
 export function createBasicTranslator(
   model: LanguageModelV1,
   systemPrompt: string,
-  settings: ModelSettings = {},
+  settings: NormalizedModelSettings = {},
 ) {
   return async (input: LocalizerInput, onProgress: LocalizerProgressFn) => {
     const chunks = extractPayloadChunks(input.processableData);
