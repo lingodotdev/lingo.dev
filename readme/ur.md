@@ -12,7 +12,6 @@
 
 <p align="center">
   <a href="https://lingo.dev/compiler">Lingo.dev Compiler</a> •
-  <a href="https://lingo.dev/mcp">Lingo.dev MCP</a> •
   <a href="https://lingo.dev/cli">Lingo.dev CLI</a> •
   <a href="https://lingo.dev/ci">Lingo.dev CI/CD</a> •
   <a href="https://lingo.dev/sdk">Lingo.dev SDK</a>
@@ -44,17 +43,17 @@
 
 ---
 
-## Meet the Compiler 🆕
+## کمپائلر سے ملو 🆕
 
-**Lingo.dev Compiler** is a free, open-source compiler middleware, designed to make any React app multilingual at build time without requiring any changes to the existing React components.
+**Lingo.dev Compiler** ایک مفت اور اوپن سورس کمپائلر مڈل ویئر ہے جو کسی بھی React ایپ کو بلڈ ٹائم پر کثیراللسانی بنانے کے لیے تیار کیا گیا ہے، بغیر موجودہ React کمپوننٹس میں کوئی تبدیلی کیے۔
 
-Install once:
+ایک بار انسٹال کریں:
 
 ```bash
 npm install lingo.dev
 ```
 
-Enable in your build config:
+اپنے بلڈ کنفیگ میں فعال کریں:
 
 ```js
 import lingoCompiler from "lingo.dev/compiler";
@@ -67,13 +66,13 @@ export default lingoCompiler.next({
 })(existingNextConfig);
 ```
 
-Run `next build` and watch Spanish and French bundles pop out ✨
+اور دیکھیں کہ ہسپانوی اور فرانسیسی بنڈلز تیار ہو جاتے ہیں `next build` چلائیں ✨
 
 [Read the docs →](https://lingo.dev/compiler) for the full guide, and [Join our Discord](https://lingo.dev/go/discord) to get help with your setup.
 
 ---
 
-### What's inside this repo?
+### اس ریپو میں کیا ہے؟
 
 | Tool         | TL;DR                                                                          | Docs                                    |
 | ------------ | ------------------------------------------------------------------------------ | --------------------------------------- |
@@ -82,27 +81,27 @@ Run `next build` and watch Spanish and French bundles pop out ✨
 | **CI/CD**    | Auto-commit translations on every push + create pull requests if needed        | [/ci](https://lingo.dev/ci)             |
 | **SDK**      | Realtime translation for user-generated content                                | [/sdk](https://lingo.dev/sdk)           |
 
-Below are the quick hits for each 👇
+ذیل میں ہر ایک کا مختصر جائزہ 👇
 
 ---
 
 ### ⚡️ Lingo.dev CLI
 
-Translate code & content straight from your terminal.
+ٹرمینل سے براہِ راست کوڈ اور مواد کا ترجمہ کریں۔
 
 ```bash
 npx lingo.dev@latest run
 ```
 
-It fingerprints every string, caches results, and only re-translates what changed.
+یہ ہر سٹرنگ کا فنگرپرنٹ بناتا ہے، نتائج کو کیش کرتا ہے، اور صرف وہی دوبارہ ترجمہ کرتا ہے جو تبدیل ہوا ہو۔
 
-[Follow the docs →](https://lingo.dev/cli) to learn how to set it up.
+[دستاویزات دیکھیں →](https://lingo.dev/cli) سیٹ اپ کا طریقہ جاننے کے لیے۔
 
 ---
 
 ### 🔄 Lingo.dev CI/CD
 
-Ship perfect translations automatically.
+خودکار طور پر بہترین ترجمے جاری کریں۔
 
 ```yaml
 # .github/workflows/i18n.yml
@@ -119,15 +118,15 @@ jobs:
           api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
 ```
 
-Keeps your repo green and your product multilingual without the manual steps.
+یہ آپ کے ریپو کو ہمیشہ درست حالت میں رکھتا ہے اور بغیر کسی دستی مرحلے کے آپ کی پروڈکٹ کو کثیراللسانی بناتا ہے۔
 
-[Read the docs →](https://lingo.dev/ci)
+[مزید پڑھیں →](https://lingo.dev/ci)
 
 ---
 
 ### 🧩 Lingo.dev SDK
 
-Instant per-request translation for dynamic content.
+حرکت پذیر مواد کا فی درخواست ترجمہ فوری طور پر حاصل کریں۔
 
 ```ts
 import { LingoDotDevEngine } from "lingo.dev/sdk";
@@ -149,28 +148,28 @@ const translated = await lingoDotDev.localizeObject(content, {
 // Returns: { greeting: "Hola", farewell: "Adiós", message: "Bienvenido a nuestra plataforma" }
 ```
 
-Perfect for chat, user comments, and other real-time flows.
+یہ چیٹ، صارف کے تبصرے، اور دیگر ریئل ٹائم فیچرز کے لیے بہترین ہے۔
 
-[Read the docs →](https://lingo.dev/sdk)
+[مزید پڑھیں →](https://lingo.dev/sdk)
 
 ---
 
-## 🤝 Community
+## 🤝 کمیونٹی
 
-We're community-driven and love contributions!
+ہماری کمیونٹی بنیاد پر کام کرتی ہے اور آپ کی شمولیت کا خیرمقدم کرتی ہے!
 
-- Got an idea? [Open an issue](https://github.com/lingodotdev/lingo.dev/issues)
-- Want to fix something? [Send a PR](https://github.com/lingodotdev/lingo.dev/pulls)
-- Need help? [Join our Discord](https://lingo.dev/go/discord)
+- کوئی آئیڈیا ہے؟ [ایک مسئلہ کھولیں](https://github.com/lingodotdev/lingo.dev/issues)
+- کچھ درست کرنا چاہتے ہیں؟ [PR بھیجیں](https://github.com/lingodotdev/lingo.dev/pulls)
+- مدد چاہیے؟ [ہمارے Discord میں شامل ہوں](https://lingo.dev/go/discord)
 
-## ⭐ Star History
+## ⭐ اسٹار ہسٹری
 
-If you like what we're doing, give us a ⭐ and help us reach 5,000 stars! 🌟
+اگر آپ کو ہمارا کام پسند ہے تو ہمیں ایک ⭐ دیں اور 5,000 اسٹارز تک پہنچنے میں مدد کریں! 🌟
 
 [![Star History Chart](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
 
-## 🌐 Readme in other languages
+## 🌐 دیگر زبانوں میں README پڑھیں
 
-[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Bhojpuri](/readme/bho.md) • [اردو](/readme/ur.md)
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [اردو](/readme/ur.md)
 
-Don't see your language? Add it to [`i18n.json`](./i18n.json) and open a PR!
+اپنی زبان نہیں دیکھ رہے؟ [`i18n.json`](./i18n.json) میں شامل کریں اور PR بھیجیں!
