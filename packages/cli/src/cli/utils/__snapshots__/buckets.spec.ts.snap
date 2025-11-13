@@ -1,0 +1,239 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`getBuckets > placeholder restoration matrix > basic segment placeholder 1`] = `
+[
+  {
+    "paths": [
+      {
+        "delimiter": null,
+        "pathPattern": "src/[locale]/messages.json",
+      },
+    ],
+    "type": "json",
+  },
+]
+`;
+
+exports[`getBuckets > placeholder restoration matrix > brace expansion containing locale segment 1`] = `
+[
+  {
+    "paths": [
+      {
+        "delimiter": null,
+        "pathPattern": "src/modules/core/[locale]/strings/messages.json",
+      },
+    ],
+    "type": "json",
+  },
+]
+`;
+
+exports[`getBuckets > placeholder restoration matrix > character class adjacent to locale placeholder 1`] = `
+[
+  {
+    "paths": [
+      {
+        "delimiter": null,
+        "pathPattern": "src/files/id-[locale].json",
+      },
+    ],
+    "type": "json",
+  },
+]
+`;
+
+exports[`getBuckets > placeholder restoration matrix > deep translations path with static locale duplication 1`] = `
+[
+  {
+    "paths": [
+      {
+        "delimiter": null,
+        "pathPattern": "src/[locale]/module/en/translations/[locale].json",
+      },
+    ],
+    "type": "json",
+  },
+]
+`;
+
+exports[`getBuckets > placeholder restoration matrix > duplicated placeholder within a single segment 1`] = `
+[
+  {
+    "paths": [
+      {
+        "delimiter": null,
+        "pathPattern": "src/files/[locale]-[locale].json",
+      },
+    ],
+    "type": "json",
+  },
+]
+`;
+
+exports[`getBuckets > placeholder restoration matrix > extglob wrapping locale placeholder 1`] = `
+[
+  {
+    "paths": [
+      {
+        "delimiter": null,
+        "pathPattern": "src/modules/core-[locale].json",
+      },
+    ],
+    "type": "json",
+  },
+]
+`;
+
+exports[`getBuckets > placeholder restoration matrix > globstar after placeholder 1`] = `
+[
+  {
+    "paths": [
+      {
+        "delimiter": null,
+        "pathPattern": "src/i18n/[locale]/deep/messages.json",
+      },
+    ],
+    "type": "json",
+  },
+]
+`;
+
+exports[`getBuckets > placeholder restoration matrix > globstar before placeholder with extra segments 1`] = `
+[
+  {
+    "paths": [
+      {
+        "delimiter": null,
+        "pathPattern": "src/features/[locale]/messages.json",
+      },
+    ],
+    "type": "json",
+  },
+]
+`;
+
+exports[`getBuckets > placeholder restoration matrix > globstar before placeholder with zero extra segments 1`] = `
+[
+  {
+    "paths": [
+      {
+        "delimiter": null,
+        "pathPattern": "src/[locale]/messages.json",
+      },
+    ],
+    "type": "json",
+  },
+]
+`;
+
+exports[`getBuckets > placeholder restoration matrix > globstar surrounding placeholder with duplicate locale segment 1`] = `
+[
+  {
+    "paths": [
+      {
+        "delimiter": null,
+        "pathPattern": "src/[locale]/module/en/messages.json",
+      },
+    ],
+    "type": "json",
+  },
+]
+`;
+
+exports[`getBuckets > placeholder restoration matrix > multiple placeholder segments 1`] = `
+[
+  {
+    "paths": [
+      {
+        "delimiter": null,
+        "pathPattern": "src/[locale]/module/[locale]/messages.json",
+      },
+    ],
+    "type": "json",
+  },
+]
+`;
+
+exports[`getBuckets > placeholder restoration matrix > multiple placeholders separated by globstars 1`] = `
+[
+  {
+    "paths": [
+      {
+        "delimiter": null,
+        "pathPattern": "src/[locale]/foo/en/[locale].json",
+      },
+    ],
+    "type": "json",
+  },
+]
+`;
+
+exports[`getBuckets > placeholder restoration matrix > placeholder between single-segment wildcards 1`] = `
+[
+  {
+    "paths": [
+      {
+        "delimiter": null,
+        "pathPattern": "src/app/[locale]/file.json",
+      },
+    ],
+    "type": "json",
+  },
+]
+`;
+
+exports[`getBuckets > placeholder restoration matrix > placeholder inside file extension 1`] = `
+[
+  {
+    "paths": [
+      {
+        "delimiter": null,
+        "pathPattern": "src/messages.[locale].json",
+      },
+    ],
+    "type": "json",
+  },
+]
+`;
+
+exports[`getBuckets > placeholder restoration matrix > placeholder with prefix and suffix in same segment 1`] = `
+[
+  {
+    "paths": [
+      {
+        "delimiter": null,
+        "pathPattern": "src/files/pre[locale]post.json",
+      },
+    ],
+    "type": "json",
+  },
+]
+`;
+
+exports[`getBuckets > placeholder restoration matrix > static locale directory after placeholder 1`] = `
+[
+  {
+    "paths": [
+      {
+        "delimiter": null,
+        "pathPattern": "src/[locale]/module/en/messages.json",
+      },
+    ],
+    "type": "json",
+  },
+]
+`;
+
+exports[`getBuckets > placeholder restoration matrix > static locale directory before placeholder 1`] = `
+[
+  {
+    "paths": [
+      {
+        "delimiter": null,
+        "pathPattern": "src/en/module/[locale]/messages.json",
+      },
+    ],
+    "type": "json",
+  },
+]
+`;

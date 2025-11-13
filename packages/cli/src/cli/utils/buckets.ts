@@ -1,6 +1,7 @@
 import _ from "lodash";
 import path from "path";
 import { glob } from "glob";
+import { minimatch } from "minimatch";
 import { CLIError } from "./errors";
 import {
   I18nConfig,
@@ -10,6 +11,245 @@ import {
 } from "@lingo.dev/_spec";
 import { bucketTypeSchema } from "@lingo.dev/_spec";
 import Z from "zod";
+
+export type TemplateSegmentPart =
+  | { kind: "literal"; value: string }
+  | { kind: "glob"; value: string }
+  | { kind: "placeholder"; name: string };
+
+export type TemplateSegment =
+  | { kind: "globstar"; original: "**" }
+  | {
+      kind: "segment";
+      original: string;
+      parts: TemplateSegmentPart[];
+      hasPlaceholder: boolean;
+      hasGlob: boolean;
+    };
+
+const LOCALE_PLACEHOLDER = "[locale]";
+const GLOB_CHARS_REGEX = /[\*\?\[\]\{\}\(\)!+@,]/;
+
+function isGlobPattern(value: string) {
+  return GLOB_CHARS_REGEX.test(value);
+}
+
+function flushBuffer(
+  parts: TemplateSegmentPart[],
+  buffer: string,
+): string {
+  if (!buffer) {
+    return "";
+  }
+  if (isGlobPattern(buffer)) {
+    parts.push({ kind: "glob", value: buffer });
+  } else {
+    parts.push({ kind: "literal", value: buffer });
+  }
+  return "";
+}
+
+export function parsePatternTemplate(pattern: string): TemplateSegment[] {
+  const normalized = pattern.replace(/\\/g, "/");
+  const rawSegments = normalized.split("/");
+
+  return rawSegments.map<TemplateSegment>((segment) => {
+    if (segment === "**") {
+      return { kind: "globstar", original: "**" };
+    }
+
+    const parts: TemplateSegmentPart[] = [];
+    let buffer = "";
+    let index = 0;
+    while (index < segment.length) {
+      if (segment.startsWith(LOCALE_PLACEHOLDER, index)) {
+        buffer = flushBuffer(parts, buffer);
+        parts.push({ kind: "placeholder", name: "locale" });
+        index += LOCALE_PLACEHOLDER.length;
+        continue;
+      }
+      buffer += segment[index];
+      index += 1;
+    }
+    flushBuffer(parts, buffer);
+
+    const hasPlaceholder = parts.some((part) => part.kind === "placeholder");
+    const hasGlob = parts.some((part) => part.kind === "glob");
+
+    return {
+      kind: "segment",
+      original: segment,
+      parts,
+      hasPlaceholder,
+      hasGlob,
+    };
+  });
+}
+
+function segmentToConcretePattern(
+  segment: Extract<TemplateSegment, { kind: "segment" }>,
+  locale: string,
+): string {
+  if (!segment.hasPlaceholder) {
+    return segment.original;
+  }
+  return segment.original.split(LOCALE_PLACEHOLDER).join(locale);
+}
+
+function segmentMatchesSource(
+  segment: Extract<TemplateSegment, { kind: "segment" }>,
+  source: string,
+  locale: string,
+): boolean {
+  if (!segment.hasPlaceholder && !segment.hasGlob) {
+    return source === segment.original;
+  }
+  const concrete = segmentToConcretePattern(segment, locale);
+  return minimatch(source, concrete, { dot: true });
+}
+
+function renderSegment(
+  segment: Extract<TemplateSegment, { kind: "segment" }>,
+  source: string,
+  locale: string,
+): string | null {
+  const memo = new Map<string, string | null>();
+
+  const dfs = (partIndex: number, position: number): string | null => {
+    const memoKey = `${partIndex}|${position}`;
+    if (memo.has(memoKey)) {
+      return memo.get(memoKey)!;
+    }
+    if (partIndex === segment.parts.length) {
+      const result = position === source.length ? "" : null;
+      memo.set(memoKey, result);
+      return result;
+    }
+
+    const part = segment.parts[partIndex];
+
+    if (part.kind === "literal") {
+      if (source.startsWith(part.value, position)) {
+        const rest = dfs(partIndex + 1, position + part.value.length);
+        if (rest !== null) {
+          const result = part.value + rest;
+          memo.set(memoKey, result);
+          return result;
+        }
+      }
+      memo.set(memoKey, null);
+      return null;
+    }
+
+    if (part.kind === "placeholder") {
+      if (source.startsWith(locale, position)) {
+        const rest = dfs(partIndex + 1, position + locale.length);
+        if (rest !== null) {
+          const result = `${LOCALE_PLACEHOLDER}${rest}`;
+          memo.set(memoKey, result);
+          return result;
+        }
+      }
+      memo.set(memoKey, null);
+      return null;
+    }
+
+    for (let length = 0; position + length <= source.length; length += 1) {
+      const fragment = source.slice(position, position + length);
+      if (!minimatch(fragment, part.value, { dot: true })) {
+        continue;
+      }
+      const rest = dfs(partIndex + 1, position + length);
+      if (rest !== null) {
+        const result = fragment + rest;
+        memo.set(memoKey, result);
+        return result;
+      }
+    }
+
+    memo.set(memoKey, null);
+    return null;
+  };
+
+  return dfs(0, 0);
+}
+
+function buildOutputSegment(
+  segment: Extract<TemplateSegment, { kind: "segment" }>,
+  source: string,
+  locale: string,
+): string {
+  if (segment.hasPlaceholder) {
+    return renderSegment(segment, source, locale) ?? segment.original;
+  }
+  if (segment.hasGlob) {
+    return source;
+  }
+  return segment.original;
+}
+
+function matchTemplateToSource(
+  template: TemplateSegment[],
+  sourceSegments: string[],
+  locale: string,
+): string[] | null {
+  const memo = new Map<string, string[] | null>();
+
+  const dfs = (templateIndex: number, sourceIndex: number): string[] | null => {
+    const memoKey = `${templateIndex}|${sourceIndex}`;
+    if (memo.has(memoKey)) {
+      return memo.get(memoKey)!;
+    }
+    if (templateIndex === template.length) {
+      const result = sourceIndex === sourceSegments.length ? [] : null;
+      memo.set(memoKey, result);
+      return result;
+    }
+
+    const segment = template[templateIndex];
+
+    if (segment.kind === "globstar") {
+      for (let consume = 0; consume <= sourceSegments.length - sourceIndex; consume += 1) {
+        const rest = dfs(templateIndex + 1, sourceIndex + consume);
+        if (rest) {
+          const consumed = sourceSegments.slice(sourceIndex, sourceIndex + consume);
+          const combined = [...consumed, ...rest];
+          memo.set(memoKey, combined);
+          return combined;
+        }
+      }
+      memo.set(memoKey, null);
+      return null;
+    }
+
+    if (sourceIndex >= sourceSegments.length) {
+      memo.set(memoKey, null);
+      return null;
+    }
+
+    if (!segmentMatchesSource(segment, sourceSegments[sourceIndex], locale)) {
+      memo.set(memoKey, null);
+      return null;
+    }
+
+    const rest = dfs(templateIndex + 1, sourceIndex + 1);
+    if (!rest) {
+      memo.set(memoKey, null);
+      return null;
+    }
+
+    const current = buildOutputSegment(
+      segment,
+      sourceSegments[sourceIndex],
+      locale,
+    );
+    const combined = [current, ...rest];
+    memo.set(memoKey, combined);
+    return combined;
+  };
+
+  return dfs(0, 0);
+}
 
 type BucketConfig = {
   type: Z.infer<typeof bucketTypeSchema>;
@@ -70,6 +310,11 @@ function extractPathPatterns(
       delimiter: pattern.delimiter,
     })),
   );
+  const getUniqKey = (item: {
+    pathPattern: string;
+    delimiter?: LocaleDelimiter;
+  }) => `${item.pathPattern}::${item.delimiter ?? ""}`;
+  const uniqueIncludedPatterns = _.uniqBy(includedPatterns, getUniqKey);
   const excludedPatterns = exclude?.flatMap((pattern) =>
     expandPlaceholderedGlob(
       pattern.path,
@@ -79,10 +324,13 @@ function extractPathPatterns(
       delimiter: pattern.delimiter,
     })),
   );
+  const uniqueExcludedPatterns = excludedPatterns
+    ? _.uniqBy(excludedPatterns, getUniqKey)
+    : [];
   const result = _.differenceBy(
-    includedPatterns,
-    excludedPatterns ?? [],
-    (item) => item.pathPattern,
+    uniqueIncludedPatterns,
+    uniqueExcludedPatterns,
+    getUniqKey,
   );
   return result;
 }
@@ -110,28 +358,14 @@ function expandPlaceholderedGlob(
     });
   }
 
-  // Throw error if pathPattern contains "**" – we don't support recursive path patterns
-  if (pathPattern.includes("**")) {
-    throw new CLIError({
-      message: `Invalid path pattern: ${pathPattern}. Recursive path patterns are not supported.`,
-      docUrl: "invalidPathPattern",
-    });
-  }
-
-  // Break down path pattern into parts
-  const pathPatternChunks = pathPattern.split(path.sep);
-  // Find the index of the segment containing "[locale]"
-  const localeSegmentIndexes = pathPatternChunks.reduce(
-    (indexes, segment, index) => {
-      if (segment.includes("[locale]")) {
-        indexes.push(index);
-      }
-      return indexes;
-    },
-    [] as number[],
+  const template = parsePatternTemplate(pathPattern.split(path.sep).join("/"));
+  const normalizedLocale =
+    process.platform === "win32" ? sourceLocale.toLowerCase() : sourceLocale;
+  // substitute [locale] in pathPattern with normalized locale
+  const sourcePathPattern = pathPattern.replaceAll(
+    /\[locale\]/g,
+    normalizedLocale,
   );
-  // substitute [locale] in pathPattern with sourceLocale
-  const sourcePathPattern = pathPattern.replaceAll(/\[locale\]/g, sourceLocale);
   // Convert to Unix-style for Windows compatibility
   const unixStylePattern = sourcePathPattern.replace(/\\/g, "/");
 
@@ -153,27 +387,18 @@ function expandPlaceholderedGlob(
       sourcePath.replace(/\//g, path.sep),
     );
     const sourcePathChunks = normalizedSourcePath.split(path.sep);
-    localeSegmentIndexes.forEach((localeSegmentIndex) => {
-      // Find the position of the "[locale]" placeholder within the segment
-      const pathPatternChunk = pathPatternChunks[localeSegmentIndex];
-      const sourcePathChunk = sourcePathChunks[localeSegmentIndex];
-      const regexp = new RegExp(
-        "(" +
-          pathPatternChunk
-            .replaceAll(".", "\\.")
-            .replaceAll("*", ".*")
-            .replace("[locale]", `)${sourceLocale}(`) +
-          ")",
-      );
-      const match = sourcePathChunk.match(regexp);
-      if (match) {
-        const [, prefix, suffix] = match;
-        const placeholderedSegment = prefix + "[locale]" + suffix;
-        sourcePathChunks[localeSegmentIndex] = placeholderedSegment;
-      }
-    });
-    const placeholderedPath = sourcePathChunks.join(path.sep);
-    return placeholderedPath;
+    const matchedSegments = matchTemplateToSource(
+      template,
+      sourcePathChunks,
+      normalizedLocale,
+    );
+    if (!matchedSegments) {
+      throw new CLIError({
+        message: `Pattern "${_pathPattern}" does not map cleanly to matched path "${sourcePath}". Adjust the glob so the placeholder segments can be restored without ambiguity.`,
+        docUrl: "invalidPlaceholderMapping",
+      });
+    }
+    return matchedSegments.join(path.sep);
   });
   // return the placeholdered paths
   return placeholderedPaths;

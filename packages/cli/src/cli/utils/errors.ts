@@ -13,6 +13,7 @@ export const docLinks = {
   androidResouceError: "https://lingo.dev/cli",
   invalidBucketType: "https://lingo.dev/cli",
   invalidStringDict: "https://lingo.dev/cli",
+  invalidPlaceholderMapping: "https://lingo.dev/cli",
 };
 
 type DocLinkKeys = keyof typeof docLinks;
