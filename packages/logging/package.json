@@ -1,7 +1,7 @@
 {
-  "name": "@lingo.dev/_sdk",
-  "version": "0.12.8",
-  "description": "Lingo.dev JS SDK",
+  "name": "@lingo.dev/_logging",
+  "version": "0.2.0",
+  "description": "Lingo.dev logging utilities with Pino",
   "private": false,
   "publishConfig": {
     "access": "public"
@@ -18,19 +18,19 @@
     "dev": "tsup --watch",
     "build": "pnpm typecheck && tsup",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "keywords": [],
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@lingo.dev/_spec": "workspace:*",
-    "@paralleldrive/cuid2": "^2.2.2",
-    "jsdom": "^25.0.1",
-    "zod": "^3.25.76"
+    "env-paths": "^3.0.0",
+    "pino": "^9.6.0",
+    "rotating-file-stream": "^3.2.7"
   },
   "devDependencies": {
-    "@types/jsdom": "^21.1.7",
+    "@types/node": "^22.10.2",
     "tsup": "^8.3.5",
     "typescript": "^5.8.3",
     "vitest": "^3.1.2"
