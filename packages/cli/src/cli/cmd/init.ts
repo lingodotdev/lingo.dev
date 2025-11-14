@@ -19,6 +19,7 @@ import { ensurePatterns } from "../utils/ensure-patterns";
 import updateGitignore from "../utils/update-gitignore";
 import initCICD from "../utils/init-ci-cd";
 import open from "open";
+import bitbucketCmd from "./init/bitbucket";
 
 const openUrl = (path: string) => {
   const settings = getSettings(undefined);
@@ -258,4 +259,5 @@ export default new InteractiveCommand()
     if (!isInteractive) {
       Ora().info("Please see https://lingo.dev/cli");
     }
-  });
+  })
+  .addCommand(bitbucketCmd);

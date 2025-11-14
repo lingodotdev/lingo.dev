@@ -1,6 +1,6 @@
 import { checkbox, confirm } from "@inquirer/prompts";
 import fs from "fs";
-import { Ora } from "ora";
+import ora, { Ora } from "ora";
 import path from "path";
 
 type Platform = "github" | "bitbucket" | "gitlab";
@@ -143,5 +143,22 @@ function makeGitlabInitializer(spinner: Ora) {
 `,
     },
     spinner,
+  );
+}
+
+// New function for dedicated bitbucket init command
+export async function runBitbucketInit(): Promise<void> {
+  const spinner = ora();
+  const initializer = makeBitbucketInitializer(spinner);
+
+  await initializer.init();
+
+  console.log();
+  console.log("Remember to add your repository variables in Bitbucket:");
+  console.log("   1. Get your API key from: https://lingo.dev");
+  console.log("   2. Go to Repository settings → Repository variables");
+  console.log("   3. Add LINGODOTDEV_API_KEY");
+  console.log(
+    "   4. For PR mode: Add BB_TOKEN with repository & PR read/write scopes",
   );
 }
