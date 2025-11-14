@@ -227,7 +227,13 @@ export function setLocale(newLocale: Locale) {
   import { t, locale, setLocale } from "$lib/i18n";
   import { onMount } from "svelte";
 
-  let translation: {greeting: string};
+  let translation: {
+    home: {
+      title: string, 
+      subtitle: string
+    }, 
+    cta: string
+  }
 
   // Subscribe to translation store
   const unsubscribe = t.subscribe(value => {
@@ -249,7 +255,10 @@ export function setLocale(newLocale: Locale) {
   }
 </script>
 
-<h2>{translation.greeting}</h2>
+<h2>{translation.home.title}</h2>
+<p>{translation.home.subtitle}</p>
+
+<button>{translation.cta}</button>
 
 <button on:click={toggleLocale}>
   { $locale === "en" ? "Switch to Español" : "Cambiar a English" }
