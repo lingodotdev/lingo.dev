@@ -1,0 +1,35 @@
+{
+  "$schema": "./watch-config-schema.json",
+  "description": "Development environment configuration with fast feedback and notifications",
+  "patterns": {
+    "include": [
+      "src/**/*.json",
+      "locales/**/*.json",
+      "public/locales/**/*.json",
+      "assets/i18n/**/*.json"
+    ],
+    "exclude": [
+      "**/node_modules/**",
+      "**/.git/**",
+      "**/build/**",
+      "**/dist/**",
+      "**/.next/**",
+      "**/*.tmp",
+      "**/*.backup.*",
+      "**/.DS_Store"
+    ]
+  },
+  "debounce": {
+    "delay": 2000,
+    "maxWait": 10000
+  },
+  "monitoring": {
+    "enableProgressIndicators": true,
+    "enableNotifications": true,
+    "logLevel": "verbose"
+  },
+  "performance": {
+    "batchSize": 25,
+    "rateLimitDelay": 100
+  }
+}

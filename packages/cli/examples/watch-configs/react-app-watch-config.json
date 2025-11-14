@@ -1,0 +1,42 @@
+{
+  "$schema": "./watch-config-schema.json",
+  "description": "React application configuration with typical React project structure",
+  "patterns": {
+    "include": [
+      "src/locales/**/*.json",
+      "src/i18n/**/*.json",
+      "src/translations/**/*.json",
+      "public/locales/**/*.json",
+      "public/i18n/**/*.json"
+    ],
+    "exclude": [
+      "**/node_modules/**",
+      "**/.git/**",
+      "**/build/**",
+      "**/dist/**",
+      "**/.next/**",
+      "**/coverage/**",
+      "**/__tests__/**",
+      "**/*.test.js",
+      "**/*.test.ts",
+      "**/*.test.jsx",
+      "**/*.test.tsx",
+      "**/*.tmp",
+      "**/*.backup.*",
+      "**/.DS_Store"
+    ]
+  },
+  "debounce": {
+    "delay": 2000,
+    "maxWait": 12000
+  },
+  "monitoring": {
+    "enableProgressIndicators": true,
+    "enableNotifications": true,
+    "logLevel": "verbose"
+  },
+  "performance": {
+    "batchSize": 30,
+    "rateLimitDelay": 100
+  }
+}

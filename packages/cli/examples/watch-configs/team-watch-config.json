@@ -1,0 +1,44 @@
+{
+  "$schema": "./watch-config-schema.json",
+  "description": "Team development configuration with balanced settings for collaborative work",
+  "patterns": {
+    "include": [
+      "src/**/*.json",
+      "locales/**/*.json",
+      "translations/**/*.json",
+      "i18n/**/*.json",
+      "**/*.yaml",
+      "**/*.yml"
+    ],
+    "exclude": [
+      "**/node_modules/**",
+      "**/.git/**",
+      "**/build/**",
+      "**/dist/**",
+      "**/.next/**",
+      "**/.nuxt/**",
+      "**/coverage/**",
+      "**/__tests__/**",
+      "**/*.test.*",
+      "**/*.spec.*",
+      "**/*.tmp",
+      "**/*.backup.*",
+      "**/*.log",
+      "**/.DS_Store",
+      "**/Thumbs.db"
+    ]
+  },
+  "debounce": {
+    "delay": 4000,
+    "maxWait": 20000
+  },
+  "monitoring": {
+    "enableProgressIndicators": false,
+    "enableNotifications": false,
+    "logLevel": "minimal"
+  },
+  "performance": {
+    "batchSize": 50,
+    "rateLimitDelay": 100
+  }
+}
