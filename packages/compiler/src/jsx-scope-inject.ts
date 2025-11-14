@@ -14,6 +14,25 @@ import { getJsxExpressions } from "./utils/jsx-expressions";
 import { collectJsxScopes, getJsxScopeAttribute } from "./utils/jsx-scope";
 import { setJsxAttributeValue } from "./utils/jsx-attribute";
 
+/**
+ * Creates a proper AST node from a string that may contain dots (member expressions).
+ * For example, "form.Button" becomes a member expression AST, while "Button" becomes an identifier.
+ * @param str - The string to convert (e.g., "form.Button" or "Button")
+ * @returns A Babel AST Expression node
+ */
+function createMemberExpressionFromString(str: string): t.Expression {
+  const parts = str.split('.');
+  if (parts.length === 1) {
+    return t.identifier(parts[0]);
+  }
+
+  let expr: t.Expression = t.identifier(parts[0]);
+  for (let i = 1; i < parts.length; i++) {
+    expr = t.memberExpression(expr, t.identifier(parts[i]));
+  }
+  return expr;
+}
+
 export const lingoJsxScopeInjectMutation = createCodeMutation((payload) => {
   const mode = getModuleExecutionMode(payload.ast, payload.params.rsc);
   const jsxScopes = collectJsxScopes(payload.ast);
@@ -55,11 +74,13 @@ export const lingoJsxScopeInjectMutation = createCodeMutation((payload) => {
     } as any;
 
     // Add $as prop
-    // Check if it's a member expression (contains dot) or starts with uppercase
+    // Check if it's a member expression (contains dot) or starts with uppercase.
+    // Member expressions (e.g., form.Button) and uppercase names (e.g., Button) 
+    // should be treated as component references, not HTML element strings.
     const isMemberExpression = originalJsxElementName.includes(".");
     const isComponent = /^[A-Z]/.test(originalJsxElementName);
     const as = isMemberExpression || isComponent
-      ? t.identifier(originalJsxElementName)
+      ? createMemberExpressionFromString(originalJsxElementName)
       : originalJsxElementName;
     setJsxAttributeValue(newNodePath, "$as", as);
 

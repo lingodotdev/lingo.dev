@@ -7,12 +7,12 @@ function useForm() {
       <form style={{ padding: '20px', border: '2px solid blue' }}>{children}</form>
     ),
     CancelButton: ({ children, onClick }: { children: React.ReactNode; onClick?: () => void }) => (
-      <button 
+      <button
         type="button"
         onClick={onClick}
-        style={{ 
-          padding: '10px 20px', 
-          backgroundColor: 'red', 
+        style={{
+          padding: '10px 20px',
+          backgroundColor: 'red',
           color: 'white',
           marginRight: '10px',
           border: 'none',
@@ -24,11 +24,11 @@ function useForm() {
       </button>
     ),
     SubmitButton: ({ children }: { children: React.ReactNode }) => (
-      <button 
+      <button
         type="submit"
-        style={{ 
-          padding: '10px 20px', 
-          backgroundColor: 'green', 
+        style={{
+          padding: '10px 20px',
+          backgroundColor: 'green',
           color: 'white',
           border: 'none',
           borderRadius: '4px',
@@ -48,12 +48,12 @@ function useFormUppercase() {
       <form style={{ padding: '20px', border: '2px solid green' }}>{children}</form>
     ),
     CancelButton: ({ children, onClick }: { children: React.ReactNode; onClick?: () => void }) => (
-      <button 
+      <button
         type="button"
         onClick={onClick}
-        style={{ 
-          padding: '10px 20px', 
-          backgroundColor: 'red', 
+        style={{
+          padding: '10px 20px',
+          backgroundColor: 'red',
           color: 'white',
           marginRight: '10px',
           border: 'none',
@@ -65,11 +65,11 @@ function useFormUppercase() {
       </button>
     ),
     SubmitButton: ({ children }: { children: React.ReactNode }) => (
-      <button 
+      <button
         type="submit"
-        style={{ 
-          padding: '10px 20px', 
-          backgroundColor: 'green', 
+        style={{
+          padding: '10px 20px',
+          backgroundColor: 'green',
           color: 'white',
           border: 'none',
           borderRadius: '4px',
@@ -93,9 +93,9 @@ export default function TanstackFormTest() {
   return (
     <div style={{ padding: '20px' }}>
       <h2>Tanstack Forms + Lingo.dev Compiler Issue #1165</h2>
-      
+
       <div style={{ marginBottom: '40px' }}>
-        <h3>Broken: Lowercase variable name (form)</h3>
+        <h3>✅ Previously broken: Lowercase variable name (form) - now fixed</h3>
         <p>Using: <code>const form = useForm()</code></p>
         <p>Expected: Blue border, styled buttons with click functionality</p>
         <form.AppForm>
