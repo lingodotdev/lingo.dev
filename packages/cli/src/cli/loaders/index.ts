@@ -57,6 +57,688 @@ type BucketLoaderOptions = {
   formatter?: FormatterType;
 };
 
+export type BucketLoaderContext = {
+  bucketPathPattern: string;
+  options: BucketLoaderOptions;
+  lockedKeys?: string[];
+  lockedPatterns?: string[];
+  ignoredKeys?: string[];
+};
+
+export type Bucket = {
+  displayName: string;
+  supportsFormatter: boolean;
+  supportsInjectLocale: boolean;
+  supportsLockedKeys: boolean;
+  supportsIgnoredKeys: boolean;
+  supportsLockedPatterns: boolean;
+  supportsLocalePlaceholder: boolean;
+  createLoader: (
+    ctx: BucketLoaderContext,
+  ) => ILoader<void, Record<string, any>>;
+};
+
+export const BUCKETS: Record<string, Bucket> = {
+  android: {
+    displayName: "Android XML",
+    supportsFormatter: false,
+    supportsInjectLocale: false,
+    supportsLockedKeys: true,
+    supportsIgnoredKeys: true,
+    supportsLockedPatterns: true,
+    supportsLocalePlaceholder: true,
+    createLoader: (ctx) =>
+      composeLoaders(
+        createTextFileLoader(ctx.bucketPathPattern),
+        createLockedPatternsLoader(ctx.lockedPatterns),
+        createAndroidLoader(),
+        createEnsureKeyOrderLoader(),
+        createFlatLoader(),
+        createLockedKeysLoader(ctx.lockedKeys || []),
+        createIgnoredKeysLoader(ctx.ignoredKeys || []),
+        createSyncLoader(),
+        createUnlocalizableLoader(ctx.options.returnUnlocalizedKeys),
+      ),
+  },
+  csv: {
+    displayName: "CSV",
+    supportsFormatter: false,
+    supportsInjectLocale: false,
+    supportsLockedKeys: true,
+    supportsIgnoredKeys: true,
+    supportsLockedPatterns: true,
+    supportsLocalePlaceholder: false,
+    createLoader: (ctx) =>
+      composeLoaders(
+        createTextFileLoader(ctx.bucketPathPattern),
+        createLockedPatternsLoader(ctx.lockedPatterns),
+        createCsvLoader(),
+        createEnsureKeyOrderLoader(),
+        createFlatLoader(),
+        createLockedKeysLoader(ctx.lockedKeys || []),
+        createIgnoredKeysLoader(ctx.ignoredKeys || []),
+        createSyncLoader(),
+        createUnlocalizableLoader(ctx.options.returnUnlocalizedKeys),
+      ),
+  },
+  html: {
+    displayName: "HTML",
+    supportsFormatter: true,
+    supportsInjectLocale: false,
+    supportsLockedKeys: true,
+    supportsIgnoredKeys: true,
+    supportsLockedPatterns: true,
+    supportsLocalePlaceholder: true,
+    createLoader: (ctx) =>
+      composeLoaders(
+        createTextFileLoader(ctx.bucketPathPattern),
+        createFormatterLoader(
+          ctx.options.formatter,
+          "html",
+          ctx.bucketPathPattern,
+        ),
+        createLockedPatternsLoader(ctx.lockedPatterns),
+        createHtmlLoader(),
+        createLockedKeysLoader(ctx.lockedKeys || []),
+        createIgnoredKeysLoader(ctx.ignoredKeys || []),
+        createSyncLoader(),
+        createUnlocalizableLoader(ctx.options.returnUnlocalizedKeys),
+      ),
+  },
+  ejs: {
+    displayName: "EJS",
+    supportsFormatter: false,
+    supportsInjectLocale: false,
+    supportsLockedKeys: true,
+    supportsIgnoredKeys: true,
+    supportsLockedPatterns: true,
+    supportsLocalePlaceholder: true,
+    createLoader: (ctx) =>
+      composeLoaders(
+        createTextFileLoader(ctx.bucketPathPattern),
+        createLockedPatternsLoader(ctx.lockedPatterns),
+        createEjsLoader(),
+        createLockedKeysLoader(ctx.lockedKeys || []),
+        createIgnoredKeysLoader(ctx.ignoredKeys || []),
+        createSyncLoader(),
+        createUnlocalizableLoader(ctx.options.returnUnlocalizedKeys),
+      ),
+  },
+  json: {
+    displayName: "JSON",
+    supportsFormatter: true,
+    supportsInjectLocale: true,
+    supportsLockedKeys: true,
+    supportsIgnoredKeys: true,
+    supportsLockedPatterns: true,
+    supportsLocalePlaceholder: true,
+    createLoader: (ctx) =>
+      composeLoaders(
+        createTextFileLoader(ctx.bucketPathPattern),
+        createFormatterLoader(
+          ctx.options.formatter,
+          "json",
+          ctx.bucketPathPattern,
+        ),
+        createLockedPatternsLoader(ctx.lockedPatterns),
+        createJsonLoader(),
+        createEnsureKeyOrderLoader(),
+        createFlatLoader(),
+        createInjectLocaleLoader(ctx.options.injectLocale),
+        createLockedKeysLoader(ctx.lockedKeys || []),
+        createIgnoredKeysLoader(ctx.ignoredKeys || []),
+        createSyncLoader(),
+        createUnlocalizableLoader(ctx.options.returnUnlocalizedKeys),
+      ),
+  },
+  json5: {
+    displayName: "JSON5",
+    supportsFormatter: false,
+    supportsInjectLocale: true,
+    supportsLockedKeys: true,
+    supportsIgnoredKeys: true,
+    supportsLockedPatterns: true,
+    supportsLocalePlaceholder: true,
+    createLoader: (ctx) =>
+      composeLoaders(
+        createTextFileLoader(ctx.bucketPathPattern),
+        createLockedPatternsLoader(ctx.lockedPatterns),
+        createJson5Loader(),
+        createEnsureKeyOrderLoader(),
+        createFlatLoader(),
+        createInjectLocaleLoader(ctx.options.injectLocale),
+        createLockedKeysLoader(ctx.lockedKeys || []),
+        createIgnoredKeysLoader(ctx.ignoredKeys || []),
+        createSyncLoader(),
+        createUnlocalizableLoader(ctx.options.returnUnlocalizedKeys),
+      ),
+  },
+  jsonc: {
+    displayName: "JSONC",
+    supportsFormatter: false,
+    supportsInjectLocale: true,
+    supportsLockedKeys: true,
+    supportsIgnoredKeys: true,
+    supportsLockedPatterns: true,
+    supportsLocalePlaceholder: true,
+    createLoader: (ctx) =>
+      composeLoaders(
+        createTextFileLoader(ctx.bucketPathPattern),
+        createLockedPatternsLoader(ctx.lockedPatterns),
+        createJsoncLoader(),
+        createEnsureKeyOrderLoader(),
+        createFlatLoader(),
+        createInjectLocaleLoader(ctx.options.injectLocale),
+        createLockedKeysLoader(ctx.lockedKeys || []),
+        createIgnoredKeysLoader(ctx.ignoredKeys || []),
+        createSyncLoader(),
+        createUnlocalizableLoader(ctx.options.returnUnlocalizedKeys),
+      ),
+  },
+  markdown: {
+    displayName: "Markdown",
+    supportsFormatter: true,
+    supportsInjectLocale: false,
+    supportsLockedKeys: true,
+    supportsIgnoredKeys: true,
+    supportsLockedPatterns: true,
+    supportsLocalePlaceholder: true,
+    createLoader: (ctx) =>
+      composeLoaders(
+        createTextFileLoader(ctx.bucketPathPattern),
+        createFormatterLoader(
+          ctx.options.formatter,
+          "markdown",
+          ctx.bucketPathPattern,
+        ),
+        createLockedPatternsLoader(ctx.lockedPatterns),
+        createMarkdownLoader(),
+        createLockedKeysLoader(ctx.lockedKeys || []),
+        createIgnoredKeysLoader(ctx.ignoredKeys || []),
+        createSyncLoader(),
+        createUnlocalizableLoader(ctx.options.returnUnlocalizedKeys),
+      ),
+  },
+  markdoc: {
+    displayName: "Markdoc",
+    supportsFormatter: false,
+    supportsInjectLocale: false,
+    supportsLockedKeys: true,
+    supportsIgnoredKeys: true,
+    supportsLockedPatterns: true,
+    supportsLocalePlaceholder: true,
+    createLoader: (ctx) =>
+      composeLoaders(
+        createTextFileLoader(ctx.bucketPathPattern),
+        createLockedPatternsLoader(ctx.lockedPatterns),
+        createMarkdocLoader(),
+        createFlatLoader(),
+        createEnsureKeyOrderLoader(),
+        createLockedKeysLoader(ctx.lockedKeys || []),
+        createIgnoredKeysLoader(ctx.ignoredKeys || []),
+        createSyncLoader(),
+        createUnlocalizableLoader(ctx.options.returnUnlocalizedKeys),
+      ),
+  },
+  mdx: {
+    displayName: "MDX",
+    supportsFormatter: true,
+    supportsInjectLocale: false,
+    supportsLockedKeys: true,
+    supportsIgnoredKeys: true,
+    supportsLockedPatterns: true,
+    supportsLocalePlaceholder: true,
+    createLoader: (ctx) =>
+      composeLoaders(
+        createTextFileLoader(ctx.bucketPathPattern),
+        createFormatterLoader(
+          ctx.options.formatter,
+          "mdx",
+          ctx.bucketPathPattern,
+        ),
+        createMdxCodePlaceholderLoader(),
+        createLockedPatternsLoader(ctx.lockedPatterns),
+        createMdxFrontmatterSplitLoader(),
+        createMdxSectionsSplit2Loader(),
+        createLocalizableMdxDocumentLoader(),
+        createFlatLoader(),
+        createEnsureKeyOrderLoader(),
+        createLockedKeysLoader(ctx.lockedKeys || []),
+        createIgnoredKeysLoader(ctx.ignoredKeys || []),
+        createSyncLoader(),
+        createUnlocalizableLoader(ctx.options.returnUnlocalizedKeys),
+      ),
+  },
+  po: {
+    displayName: "PO",
+    supportsFormatter: false,
+    supportsInjectLocale: false,
+    supportsLockedKeys: true,
+    supportsIgnoredKeys: true,
+    supportsLockedPatterns: true,
+    supportsLocalePlaceholder: true,
+    createLoader: (ctx) =>
+      composeLoaders(
+        createTextFileLoader(ctx.bucketPathPattern),
+        createLockedPatternsLoader(ctx.lockedPatterns),
+        createPoLoader(),
+        createFlatLoader(),
+        createEnsureKeyOrderLoader(),
+        createLockedKeysLoader(ctx.lockedKeys || []),
+        createIgnoredKeysLoader(ctx.ignoredKeys || []),
+        createSyncLoader(),
+        createVariableLoader({ type: "python" }),
+        createUnlocalizableLoader(ctx.options.returnUnlocalizedKeys),
+      ),
+  },
+  properties: {
+    displayName: "Properties",
+    supportsFormatter: false,
+    supportsInjectLocale: false,
+    supportsLockedKeys: true,
+    supportsIgnoredKeys: true,
+    supportsLockedPatterns: true,
+    supportsLocalePlaceholder: true,
+    createLoader: (ctx) =>
+      composeLoaders(
+        createTextFileLoader(ctx.bucketPathPattern),
+        createLockedPatternsLoader(ctx.lockedPatterns),
+        createPropertiesLoader(),
+        createLockedKeysLoader(ctx.lockedKeys || []),
+        createIgnoredKeysLoader(ctx.ignoredKeys || []),
+        createSyncLoader(),
+        createUnlocalizableLoader(ctx.options.returnUnlocalizedKeys),
+      ),
+  },
+  "xcode-strings": {
+    displayName: "Xcode Strings",
+    supportsFormatter: false,
+    supportsInjectLocale: false,
+    supportsLockedKeys: true,
+    supportsIgnoredKeys: true,
+    supportsLockedPatterns: true,
+    supportsLocalePlaceholder: true,
+    createLoader: (ctx) =>
+      composeLoaders(
+        createTextFileLoader(ctx.bucketPathPattern),
+        createLockedPatternsLoader(ctx.lockedPatterns),
+        createXcodeStringsLoader(),
+        createLockedKeysLoader(ctx.lockedKeys || []),
+        createIgnoredKeysLoader(ctx.ignoredKeys || []),
+        createSyncLoader(),
+        createUnlocalizableLoader(ctx.options.returnUnlocalizedKeys),
+      ),
+  },
+  "xcode-stringsdict": {
+    displayName: "Xcode Stringsdict",
+    supportsFormatter: false,
+    supportsInjectLocale: false,
+    supportsLockedKeys: true,
+    supportsIgnoredKeys: true,
+    supportsLockedPatterns: true,
+    supportsLocalePlaceholder: true,
+    createLoader: (ctx) =>
+      composeLoaders(
+        createTextFileLoader(ctx.bucketPathPattern),
+        createLockedPatternsLoader(ctx.lockedPatterns),
+        createXcodeStringsdictLoader(),
+        createFlatLoader(),
+        createEnsureKeyOrderLoader(),
+        createLockedKeysLoader(ctx.lockedKeys || []),
+        createIgnoredKeysLoader(ctx.ignoredKeys || []),
+        createSyncLoader(),
+        createUnlocalizableLoader(ctx.options.returnUnlocalizedKeys),
+      ),
+  },
+  "xcode-xcstrings": {
+    displayName: "Xcode XCStrings",
+    supportsFormatter: false,
+    supportsInjectLocale: false,
+    supportsLockedKeys: true,
+    supportsIgnoredKeys: true,
+    supportsLockedPatterns: true,
+    supportsLocalePlaceholder: false,
+    createLoader: (ctx) =>
+      composeLoaders(
+        createTextFileLoader(ctx.bucketPathPattern),
+        createPlutilJsonTextLoader(),
+        createLockedPatternsLoader(ctx.lockedPatterns),
+        createJsonLoader(),
+        createXcodeXcstringsLoader(ctx.options.defaultLocale),
+        createFlatLoader(),
+        createEnsureKeyOrderLoader(),
+        createLockedKeysLoader(ctx.lockedKeys || []),
+        createIgnoredKeysLoader(ctx.ignoredKeys || []),
+        createSyncLoader(),
+        createVariableLoader({ type: "ieee" }),
+        createUnlocalizableLoader(ctx.options.returnUnlocalizedKeys),
+      ),
+  },
+  "xcode-xcstrings-v2": {
+    displayName: "Xcode XCStrings (v2)",
+    supportsFormatter: false,
+    supportsInjectLocale: false,
+    supportsLockedKeys: true,
+    supportsIgnoredKeys: true,
+    supportsLockedPatterns: true,
+    supportsLocalePlaceholder: false,
+    createLoader: (ctx) =>
+      composeLoaders(
+        createTextFileLoader(ctx.bucketPathPattern),
+        createPlutilJsonTextLoader(),
+        createLockedPatternsLoader(ctx.lockedPatterns),
+        createJsonLoader(),
+        createXcodeXcstringsLoader(ctx.options.defaultLocale),
+        createXcodeXcstringsV2Loader(ctx.options.defaultLocale),
+        createFlatLoader({ shouldPreserveObject: isICUPluralObject }),
+        createEnsureKeyOrderLoader(),
+        createLockedKeysLoader(ctx.lockedKeys || []),
+        createIgnoredKeysLoader(ctx.ignoredKeys || []),
+        createSyncLoader(),
+        createVariableLoader({ type: "ieee" }),
+        createUnlocalizableLoader(ctx.options.returnUnlocalizedKeys),
+      ),
+  },
+  yaml: {
+    displayName: "YAML",
+    supportsFormatter: true,
+    supportsInjectLocale: false,
+    supportsLockedKeys: true,
+    supportsIgnoredKeys: true,
+    supportsLockedPatterns: true,
+    supportsLocalePlaceholder: true,
+    createLoader: (ctx) =>
+      composeLoaders(
+        createTextFileLoader(ctx.bucketPathPattern),
+        createFormatterLoader(
+          ctx.options.formatter,
+          "yaml",
+          ctx.bucketPathPattern,
+        ),
+        createLockedPatternsLoader(ctx.lockedPatterns),
+        createYamlLoader(),
+        createFlatLoader(),
+        createEnsureKeyOrderLoader(),
+        createLockedKeysLoader(ctx.lockedKeys || []),
+        createIgnoredKeysLoader(ctx.ignoredKeys || []),
+        createSyncLoader(),
+        createUnlocalizableLoader(ctx.options.returnUnlocalizedKeys),
+      ),
+  },
+  "yaml-root-key": {
+    displayName: "YAML Root Key",
+    supportsFormatter: true,
+    supportsInjectLocale: false,
+    supportsLockedKeys: true,
+    supportsIgnoredKeys: true,
+    supportsLockedPatterns: true,
+    supportsLocalePlaceholder: false,
+    createLoader: (ctx) =>
+      composeLoaders(
+        createTextFileLoader(ctx.bucketPathPattern),
+        createFormatterLoader(
+          ctx.options.formatter,
+          "yaml",
+          ctx.bucketPathPattern,
+        ),
+        createLockedPatternsLoader(ctx.lockedPatterns),
+        createYamlLoader(),
+        createRootKeyLoader(true),
+        createFlatLoader(),
+        createEnsureKeyOrderLoader(),
+        createLockedKeysLoader(ctx.lockedKeys || []),
+        createIgnoredKeysLoader(ctx.ignoredKeys || []),
+        createSyncLoader(),
+        createUnlocalizableLoader(ctx.options.returnUnlocalizedKeys),
+      ),
+  },
+  flutter: {
+    displayName: "Flutter ARB",
+    supportsFormatter: true,
+    supportsInjectLocale: false,
+    supportsLockedKeys: true,
+    supportsIgnoredKeys: true,
+    supportsLockedPatterns: true,
+    supportsLocalePlaceholder: true,
+    createLoader: (ctx) =>
+      composeLoaders(
+        createTextFileLoader(ctx.bucketPathPattern),
+        createFormatterLoader(
+          ctx.options.formatter,
+          "json",
+          ctx.bucketPathPattern,
+        ),
+        createLockedPatternsLoader(ctx.lockedPatterns),
+        createJsonLoader(),
+        createEnsureKeyOrderLoader(),
+        createFlutterLoader(),
+        createFlatLoader(),
+        createLockedKeysLoader(ctx.lockedKeys || []),
+        createIgnoredKeysLoader(ctx.ignoredKeys || []),
+        createSyncLoader(),
+        createUnlocalizableLoader(ctx.options.returnUnlocalizedKeys),
+      ),
+  },
+  xliff: {
+    displayName: "XLIFF",
+    supportsFormatter: false,
+    supportsInjectLocale: false,
+    supportsLockedKeys: true,
+    supportsIgnoredKeys: true,
+    supportsLockedPatterns: true,
+    supportsLocalePlaceholder: true,
+    createLoader: (ctx) =>
+      composeLoaders(
+        createTextFileLoader(ctx.bucketPathPattern),
+        createLockedPatternsLoader(ctx.lockedPatterns),
+        createXliffLoader(),
+        createFlatLoader(),
+        createEnsureKeyOrderLoader(),
+        createLockedKeysLoader(ctx.lockedKeys || []),
+        createIgnoredKeysLoader(ctx.ignoredKeys || []),
+        createSyncLoader(),
+        createUnlocalizableLoader(ctx.options.returnUnlocalizedKeys),
+      ),
+  },
+  xml: {
+    displayName: "XML",
+    supportsFormatter: false,
+    supportsInjectLocale: false,
+    supportsLockedKeys: true,
+    supportsIgnoredKeys: true,
+    supportsLockedPatterns: true,
+    supportsLocalePlaceholder: true,
+    createLoader: (ctx) =>
+      composeLoaders(
+        createTextFileLoader(ctx.bucketPathPattern),
+        createLockedPatternsLoader(ctx.lockedPatterns),
+        createXmlLoader(),
+        createFlatLoader(),
+        createEnsureKeyOrderLoader(),
+        createLockedKeysLoader(ctx.lockedKeys || []),
+        createIgnoredKeysLoader(ctx.ignoredKeys || []),
+        createSyncLoader(),
+        createUnlocalizableLoader(ctx.options.returnUnlocalizedKeys),
+      ),
+  },
+  srt: {
+    displayName: "SRT",
+    supportsFormatter: false,
+    supportsInjectLocale: false,
+    supportsLockedKeys: true,
+    supportsIgnoredKeys: true,
+    supportsLockedPatterns: true,
+    supportsLocalePlaceholder: true,
+    createLoader: (ctx) =>
+      composeLoaders(
+        createTextFileLoader(ctx.bucketPathPattern),
+        createLockedPatternsLoader(ctx.lockedPatterns),
+        createSrtLoader(),
+        createLockedKeysLoader(ctx.lockedKeys || []),
+        createIgnoredKeysLoader(ctx.ignoredKeys || []),
+        createSyncLoader(),
+        createUnlocalizableLoader(ctx.options.returnUnlocalizedKeys),
+      ),
+  },
+  dato: {
+    displayName: "DatoCMS",
+    supportsFormatter: false,
+    supportsInjectLocale: false,
+    supportsLockedKeys: true,
+    supportsIgnoredKeys: true,
+    supportsLockedPatterns: false,
+    supportsLocalePlaceholder: false,
+    createLoader: (ctx) =>
+      composeLoaders(
+        createDatoLoader(ctx.bucketPathPattern),
+        createSyncLoader(),
+        createFlatLoader(),
+        createEnsureKeyOrderLoader(),
+        createLockedKeysLoader(ctx.lockedKeys || []),
+        createIgnoredKeysLoader(ctx.ignoredKeys || []),
+        createUnlocalizableLoader(ctx.options.returnUnlocalizedKeys),
+      ),
+  },
+  vtt: {
+    displayName: "WebVTT",
+    supportsFormatter: false,
+    supportsInjectLocale: false,
+    supportsLockedKeys: true,
+    supportsIgnoredKeys: true,
+    supportsLockedPatterns: true,
+    supportsLocalePlaceholder: true,
+    createLoader: (ctx) =>
+      composeLoaders(
+        createTextFileLoader(ctx.bucketPathPattern),
+        createLockedPatternsLoader(ctx.lockedPatterns),
+        createVttLoader(),
+        createLockedKeysLoader(ctx.lockedKeys || []),
+        createIgnoredKeysLoader(ctx.ignoredKeys || []),
+        createSyncLoader(),
+        createUnlocalizableLoader(ctx.options.returnUnlocalizedKeys),
+      ),
+  },
+  php: {
+    displayName: "PHP",
+    supportsFormatter: false,
+    supportsInjectLocale: false,
+    supportsLockedKeys: true,
+    supportsIgnoredKeys: true,
+    supportsLockedPatterns: true,
+    supportsLocalePlaceholder: true,
+    createLoader: (ctx) =>
+      composeLoaders(
+        createTextFileLoader(ctx.bucketPathPattern),
+        createLockedPatternsLoader(ctx.lockedPatterns),
+        createPhpLoader(),
+        createSyncLoader(),
+        createFlatLoader(),
+        createEnsureKeyOrderLoader(),
+        createLockedKeysLoader(ctx.lockedKeys || []),
+        createIgnoredKeysLoader(ctx.ignoredKeys || []),
+        createUnlocalizableLoader(ctx.options.returnUnlocalizedKeys),
+      ),
+  },
+  "vue-json": {
+    displayName: "Vue I18n",
+    supportsFormatter: false,
+    supportsInjectLocale: false,
+    supportsLockedKeys: true,
+    supportsIgnoredKeys: true,
+    supportsLockedPatterns: true,
+    supportsLocalePlaceholder: false,
+    createLoader: (ctx) =>
+      composeLoaders(
+        createTextFileLoader(ctx.bucketPathPattern),
+        createLockedPatternsLoader(ctx.lockedPatterns),
+        createVueJsonLoader(),
+        createSyncLoader(),
+        createFlatLoader(),
+        createEnsureKeyOrderLoader(),
+        createLockedKeysLoader(ctx.lockedKeys || []),
+        createIgnoredKeysLoader(ctx.ignoredKeys || []),
+        createUnlocalizableLoader(ctx.options.returnUnlocalizedKeys),
+      ),
+  },
+  typescript: {
+    displayName: "TypeScript",
+    supportsFormatter: true,
+    supportsInjectLocale: false,
+    supportsLockedKeys: true,
+    supportsIgnoredKeys: true,
+    supportsLockedPatterns: true,
+    supportsLocalePlaceholder: true,
+    createLoader: (ctx) =>
+      composeLoaders(
+        createTextFileLoader(ctx.bucketPathPattern),
+        createFormatterLoader(
+          ctx.options.formatter,
+          "typescript",
+          ctx.bucketPathPattern,
+        ),
+        createLockedPatternsLoader(ctx.lockedPatterns),
+        createTypescriptLoader(),
+        createFlatLoader(),
+        createEnsureKeyOrderLoader(),
+        createSyncLoader(),
+        createLockedKeysLoader(ctx.lockedKeys || []),
+        createIgnoredKeysLoader(ctx.ignoredKeys || []),
+        createUnlocalizableLoader(ctx.options.returnUnlocalizedKeys),
+      ),
+  },
+  txt: {
+    displayName: "Plain text",
+    supportsFormatter: false,
+    supportsInjectLocale: false,
+    supportsLockedKeys: true,
+    supportsIgnoredKeys: true,
+    supportsLockedPatterns: true,
+    supportsLocalePlaceholder: true,
+    createLoader: (ctx) =>
+      composeLoaders(
+        createTextFileLoader(ctx.bucketPathPattern),
+        createLockedPatternsLoader(ctx.lockedPatterns),
+        createTxtLoader(),
+        createLockedKeysLoader(ctx.lockedKeys || []),
+        createIgnoredKeysLoader(ctx.ignoredKeys || []),
+        createSyncLoader(),
+        createUnlocalizableLoader(ctx.options.returnUnlocalizedKeys),
+      ),
+  },
+  "json-dictionary": {
+    displayName: "JSON Dictionary",
+    supportsFormatter: true,
+    supportsInjectLocale: true,
+    supportsLockedKeys: true,
+    supportsIgnoredKeys: true,
+    supportsLockedPatterns: true,
+    supportsLocalePlaceholder: false,
+    createLoader: (ctx) =>
+      composeLoaders(
+        createTextFileLoader(ctx.bucketPathPattern),
+        createFormatterLoader(
+          ctx.options.formatter,
+          "json",
+          ctx.bucketPathPattern,
+        ),
+        createLockedPatternsLoader(ctx.lockedPatterns),
+        createJsonLoader(),
+        createJsonKeysLoader(),
+        createEnsureKeyOrderLoader(),
+        createFlatLoader(),
+        createInjectLocaleLoader(ctx.options.injectLocale),
+        createLockedKeysLoader(ctx.lockedKeys || []),
+        createIgnoredKeysLoader(ctx.ignoredKeys || []),
+        createSyncLoader(),
+        createUnlocalizableLoader(ctx.options.returnUnlocalizedKeys),
+      ),
+  },
+};
+
+export function getBucket(bucketType: string): Bucket | undefined {
+  return BUCKETS[bucketType];
+}
+
 export default function createBucketLoader(
   bucketType: Z.infer<typeof bucketTypeSchema>,
   bucketPathPattern: string,
@@ -65,369 +747,15 @@ export default function createBucketLoader(
   lockedPatterns?: string[],
   ignoredKeys?: string[],
 ): ILoader<void, Record<string, any>> {
-  switch (bucketType) {
-    default:
-      throw new Error(`Unsupported bucket type: ${bucketType}`);
-    case "android":
-      return composeLoaders(
-        createTextFileLoader(bucketPathPattern),
-        createLockedPatternsLoader(lockedPatterns),
-        createAndroidLoader(),
-        createEnsureKeyOrderLoader(),
-        createFlatLoader(),
-        createLockedKeysLoader(lockedKeys || []),
-        createIgnoredKeysLoader(ignoredKeys || []),
-        createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
-      );
-    case "csv":
-      return composeLoaders(
-        createTextFileLoader(bucketPathPattern),
-        createLockedPatternsLoader(lockedPatterns),
-        createCsvLoader(),
-        createEnsureKeyOrderLoader(),
-        createFlatLoader(),
-        createLockedKeysLoader(lockedKeys || []),
-        createIgnoredKeysLoader(ignoredKeys || []),
-        createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
-      );
-    case "html":
-      return composeLoaders(
-        createTextFileLoader(bucketPathPattern),
-        createFormatterLoader(options.formatter, "html", bucketPathPattern),
-        createLockedPatternsLoader(lockedPatterns),
-        createHtmlLoader(),
-        createLockedKeysLoader(lockedKeys || []),
-        createIgnoredKeysLoader(ignoredKeys || []),
-        createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
-      );
-    case "ejs":
-      return composeLoaders(
-        createTextFileLoader(bucketPathPattern),
-        createLockedPatternsLoader(lockedPatterns),
-        createEjsLoader(),
-        createLockedKeysLoader(lockedKeys || []),
-        createIgnoredKeysLoader(ignoredKeys || []),
-        createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
-      );
-    case "json":
-      return composeLoaders(
-        createTextFileLoader(bucketPathPattern),
-        createFormatterLoader(options.formatter, "json", bucketPathPattern),
-        createLockedPatternsLoader(lockedPatterns),
-        createJsonLoader(),
-        createEnsureKeyOrderLoader(),
-        createFlatLoader(),
-        createInjectLocaleLoader(options.injectLocale),
-        createLockedKeysLoader(lockedKeys || []),
-        createIgnoredKeysLoader(ignoredKeys || []),
-        createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
-      );
-    case "json5":
-      return composeLoaders(
-        createTextFileLoader(bucketPathPattern),
-        createLockedPatternsLoader(lockedPatterns),
-        createJson5Loader(),
-        createEnsureKeyOrderLoader(),
-        createFlatLoader(),
-        createInjectLocaleLoader(options.injectLocale),
-        createLockedKeysLoader(lockedKeys || []),
-        createIgnoredKeysLoader(ignoredKeys || []),
-        createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
-      );
-    case "jsonc":
-      return composeLoaders(
-        createTextFileLoader(bucketPathPattern),
-        createLockedPatternsLoader(lockedPatterns),
-        createJsoncLoader(),
-        createEnsureKeyOrderLoader(),
-        createFlatLoader(),
-        createInjectLocaleLoader(options.injectLocale),
-        createLockedKeysLoader(lockedKeys || []),
-        createIgnoredKeysLoader(ignoredKeys || []),
-        createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
-      );
-    case "markdown":
-      return composeLoaders(
-        createTextFileLoader(bucketPathPattern),
-        createFormatterLoader(options.formatter, "markdown", bucketPathPattern),
-        createLockedPatternsLoader(lockedPatterns),
-        createMarkdownLoader(),
-        createLockedKeysLoader(lockedKeys || []),
-        createIgnoredKeysLoader(ignoredKeys || []),
-        createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
-      );
-    case "markdoc":
-      return composeLoaders(
-        createTextFileLoader(bucketPathPattern),
-        createLockedPatternsLoader(lockedPatterns),
-        createMarkdocLoader(),
-        createFlatLoader(),
-        createEnsureKeyOrderLoader(),
-        createLockedKeysLoader(lockedKeys || []),
-        createIgnoredKeysLoader(ignoredKeys || []),
-        createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
-      );
-    case "mdx":
-      return composeLoaders(
-        createTextFileLoader(bucketPathPattern),
-        createFormatterLoader(options.formatter, "mdx", bucketPathPattern),
-        createMdxCodePlaceholderLoader(),
-        createLockedPatternsLoader(lockedPatterns),
-        createMdxFrontmatterSplitLoader(),
-        createMdxSectionsSplit2Loader(),
-        createLocalizableMdxDocumentLoader(),
-        createFlatLoader(),
-        createEnsureKeyOrderLoader(),
-        createLockedKeysLoader(lockedKeys || []),
-        createIgnoredKeysLoader(ignoredKeys || []),
-        createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
-      );
-    case "po":
-      return composeLoaders(
-        createTextFileLoader(bucketPathPattern),
-        createLockedPatternsLoader(lockedPatterns),
-        createPoLoader(),
-        createFlatLoader(),
-        createEnsureKeyOrderLoader(),
-        createLockedKeysLoader(lockedKeys || []),
-        createIgnoredKeysLoader(ignoredKeys || []),
-        createSyncLoader(),
-        createVariableLoader({ type: "python" }),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
-      );
-    case "properties":
-      return composeLoaders(
-        createTextFileLoader(bucketPathPattern),
-        createLockedPatternsLoader(lockedPatterns),
-        createPropertiesLoader(),
-        createLockedKeysLoader(lockedKeys || []),
-        createIgnoredKeysLoader(ignoredKeys || []),
-        createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
-      );
-    case "xcode-strings":
-      return composeLoaders(
-        createTextFileLoader(bucketPathPattern),
-        createLockedPatternsLoader(lockedPatterns),
-        createXcodeStringsLoader(),
-        createLockedKeysLoader(lockedKeys || []),
-        createIgnoredKeysLoader(ignoredKeys || []),
-        createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
-      );
-    case "xcode-stringsdict":
-      return composeLoaders(
-        createTextFileLoader(bucketPathPattern),
-        createLockedPatternsLoader(lockedPatterns),
-        createXcodeStringsdictLoader(),
-        createFlatLoader(),
-        createEnsureKeyOrderLoader(),
-        createLockedKeysLoader(lockedKeys || []),
-        createIgnoredKeysLoader(ignoredKeys || []),
-        createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
-      );
-    case "xcode-xcstrings":
-      return composeLoaders(
-        createTextFileLoader(bucketPathPattern),
-        createPlutilJsonTextLoader(),
-        createLockedPatternsLoader(lockedPatterns),
-        createJsonLoader(),
-        createXcodeXcstringsLoader(options.defaultLocale),
-        createFlatLoader(),
-        createEnsureKeyOrderLoader(),
-        createLockedKeysLoader(lockedKeys || []),
-        createIgnoredKeysLoader(ignoredKeys || []),
-        createSyncLoader(),
-        createVariableLoader({ type: "ieee" }),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
-      );
-    case "xcode-xcstrings-v2":
-      return composeLoaders(
-        createTextFileLoader(bucketPathPattern),
-        createPlutilJsonTextLoader(),
-        createLockedPatternsLoader(lockedPatterns),
-        createJsonLoader(),
-        createXcodeXcstringsLoader(options.defaultLocale),
-        createXcodeXcstringsV2Loader(options.defaultLocale),
-        createFlatLoader({ shouldPreserveObject: isICUPluralObject }),
-        createEnsureKeyOrderLoader(),
-        createLockedKeysLoader(lockedKeys || []),
-        createIgnoredKeysLoader(ignoredKeys || []),
-        createSyncLoader(),
-        createVariableLoader({ type: "ieee" }),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
-      );
-    case "yaml":
-      return composeLoaders(
-        createTextFileLoader(bucketPathPattern),
-        createFormatterLoader(options.formatter, "yaml", bucketPathPattern),
-        createLockedPatternsLoader(lockedPatterns),
-        createYamlLoader(),
-        createFlatLoader(),
-        createEnsureKeyOrderLoader(),
-        createLockedKeysLoader(lockedKeys || []),
-        createIgnoredKeysLoader(ignoredKeys || []),
-        createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
-      );
-    case "yaml-root-key":
-      return composeLoaders(
-        createTextFileLoader(bucketPathPattern),
-        createFormatterLoader(options.formatter, "yaml", bucketPathPattern),
-        createLockedPatternsLoader(lockedPatterns),
-        createYamlLoader(),
-        createRootKeyLoader(true),
-        createFlatLoader(),
-        createEnsureKeyOrderLoader(),
-        createLockedKeysLoader(lockedKeys || []),
-        createIgnoredKeysLoader(ignoredKeys || []),
-        createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
-      );
-    case "flutter":
-      return composeLoaders(
-        createTextFileLoader(bucketPathPattern),
-        createFormatterLoader(options.formatter, "json", bucketPathPattern),
-        createLockedPatternsLoader(lockedPatterns),
-        createJsonLoader(),
-        createEnsureKeyOrderLoader(),
-        createFlutterLoader(),
-        createFlatLoader(),
-        createLockedKeysLoader(lockedKeys || []),
-        createIgnoredKeysLoader(ignoredKeys || []),
-        createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
-      );
-    case "xliff":
-      return composeLoaders(
-        createTextFileLoader(bucketPathPattern),
-        createLockedPatternsLoader(lockedPatterns),
-        createXliffLoader(),
-        createFlatLoader(),
-        createEnsureKeyOrderLoader(),
-        createLockedKeysLoader(lockedKeys || []),
-        createIgnoredKeysLoader(ignoredKeys || []),
-        createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
-      );
-    case "xml":
-      return composeLoaders(
-        createTextFileLoader(bucketPathPattern),
-        createLockedPatternsLoader(lockedPatterns),
-        createXmlLoader(),
-        createFlatLoader(),
-        createEnsureKeyOrderLoader(),
-        createLockedKeysLoader(lockedKeys || []),
-        createIgnoredKeysLoader(ignoredKeys || []),
-        createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
-      );
-    case "srt":
-      return composeLoaders(
-        createTextFileLoader(bucketPathPattern),
-        createLockedPatternsLoader(lockedPatterns),
-        createSrtLoader(),
-        createLockedKeysLoader(lockedKeys || []),
-        createIgnoredKeysLoader(ignoredKeys || []),
-        createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
-      );
-    case "dato":
-      return composeLoaders(
-        createDatoLoader(bucketPathPattern),
-        createSyncLoader(),
-        createFlatLoader(),
-        createEnsureKeyOrderLoader(),
-        createLockedKeysLoader(lockedKeys || []),
-        createIgnoredKeysLoader(ignoredKeys || []),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
-      );
-    case "vtt":
-      return composeLoaders(
-        createTextFileLoader(bucketPathPattern),
-        createLockedPatternsLoader(lockedPatterns),
-        createVttLoader(),
-        createLockedKeysLoader(lockedKeys || []),
-        createIgnoredKeysLoader(ignoredKeys || []),
-        createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
-      );
-    case "php":
-      return composeLoaders(
-        createTextFileLoader(bucketPathPattern),
-        createLockedPatternsLoader(lockedPatterns),
-        createPhpLoader(),
-        createSyncLoader(),
-        createFlatLoader(),
-        createEnsureKeyOrderLoader(),
-        createLockedKeysLoader(lockedKeys || []),
-        createIgnoredKeysLoader(ignoredKeys || []),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
-      );
-    case "vue-json":
-      return composeLoaders(
-        createTextFileLoader(bucketPathPattern),
-        createLockedPatternsLoader(lockedPatterns),
-        createVueJsonLoader(),
-        createSyncLoader(),
-        createFlatLoader(),
-        createEnsureKeyOrderLoader(),
-        createLockedKeysLoader(lockedKeys || []),
-        createIgnoredKeysLoader(ignoredKeys || []),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
-      );
-    case "typescript":
-      return composeLoaders(
-        createTextFileLoader(bucketPathPattern),
-        createFormatterLoader(
-          options.formatter,
-          "typescript",
-          bucketPathPattern,
-        ),
-        createLockedPatternsLoader(lockedPatterns),
-        createTypescriptLoader(),
-        createFlatLoader(),
-        createEnsureKeyOrderLoader(),
-        createSyncLoader(),
-        createLockedKeysLoader(lockedKeys || []),
-        createIgnoredKeysLoader(ignoredKeys || []),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
-      );
-    case "txt":
-      return composeLoaders(
-        createTextFileLoader(bucketPathPattern),
-        createLockedPatternsLoader(lockedPatterns),
-        createTxtLoader(),
-        createLockedKeysLoader(lockedKeys || []),
-        createIgnoredKeysLoader(ignoredKeys || []),
-        createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
-      );
-    case "json-dictionary":
-      return composeLoaders(
-        createTextFileLoader(bucketPathPattern),
-        createFormatterLoader(options.formatter, "json", bucketPathPattern),
-        createLockedPatternsLoader(lockedPatterns),
-        createJsonLoader(),
-        createJsonKeysLoader(),
-        createEnsureKeyOrderLoader(),
-        createFlatLoader(),
-        createInjectLocaleLoader(options.injectLocale),
-        createLockedKeysLoader(lockedKeys || []),
-        createIgnoredKeysLoader(ignoredKeys || []),
-        createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
-      );
+  const bucket = BUCKETS[bucketType];
+  if (!bucket) {
+    throw new Error(`Unsupported bucket type: ${bucketType}`);
   }
+  return bucket.createLoader({
+    bucketPathPattern,
+    options,
+    lockedKeys,
+    lockedPatterns,
+    ignoredKeys,
+  });
 }
