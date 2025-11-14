@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useMemo } from "react";
+import type { ReactNode } from "react";
 import { LingoContext } from "./context";
 import { getLocaleFromCookies } from "./utils";
 
@@ -15,7 +16,7 @@ export type LingoProviderProps<D> = {
   /**
    * The child components containing localizable content.
    */
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 /**
@@ -78,7 +79,6 @@ export type LingoProviderProps<D> = {
  * ```
  */
 export function LingoProvider<D>(props: LingoProviderProps<D>) {
-  // TODO: handle case when no dictionary is provided - throw suspense? return null / other fallback?
   if (!props.dictionary) {
     throw new Error("LingoProvider: dictionary is not provided.");
   }
@@ -106,39 +106,11 @@ export type LingoProviderWrapperProps<D> = {
   /**
    * The child components containing localizable content.
    */
-  children: React.ReactNode;
+  children: ReactNode;
   /**
-   * Optional component to render while the dictionary is loading.
-   * If not provided, renders `null` during loading (default behavior).
-   *
-   * @example
-   * ```tsx
-   * <LingoProviderWrapper
-   *   loadDictionary={loadDictionary}
-   *   loadingComponent={<div>Loading translations...</div>}
-   * >
-   *   <App />
-   * </LingoProviderWrapper>
-   * ```
+   * Optional fallback element rendered while the dictionary is loading.
    */
-  loadingComponent?: React.ReactNode;
-  /**
-   * Optional component to render when dictionary loading fails.
-   * Receives the error as a prop. If not provided, renders `null` on error (default behavior).
-   *
-   * @example
-   * ```tsx
-   * <LingoProviderWrapper
-   *   loadDictionary={loadDictionary}
-   *   errorComponent={({ error }) => (
-   *     <div>Failed to load translations: {error.message}</div>
-   *   )}
-   * >
-   *   <App />
-   * </LingoProviderWrapper>
-   * ```
-   */
-  errorComponent?: React.ComponentType<{ error: Error }>;
+  fallback?: ReactNode;
 };
 
 /**
@@ -148,12 +120,13 @@ export type LingoProviderWrapperProps<D> = {
  *
  * - Should be placed at the top of the component tree
  * - Should be used in purely client-side rendered applications (e.g., Vite-based apps)
+ * - Suspends rendering while the dictionary loads (no UI by default, opt-in with `fallback` prop)
  *
  * @template D - The type of the dictionary object containing localized content.
  *
- * @example Use in a Vite application
+ * @example Use in a Vite application with loading UI
  * ```tsx file="src/main.tsx"
- * import { LingoProviderWrapper, loadDictionary } from "lingo.dev/react/client";
+ * import { LingoProviderFallback, LingoProviderWrapper, loadDictionary } from "lingo.dev/react/client";
  * import { StrictMode } from 'react'
  * import { createRoot } from 'react-dom/client'
  * import './index.css'
@@ -161,7 +134,10 @@ export type LingoProviderWrapperProps<D> = {
  *
  * createRoot(document.getElementById('root')!).render(
  *   <StrictMode>
- *     <LingoProviderWrapper loadDictionary={(locale) => loadDictionary(locale)}>
+ *     <LingoProviderWrapper
+ *       loadDictionary={(locale) => loadDictionary(locale)}
+ *       fallback={<LingoProviderFallback />}
+ *     >
  *       <App />
  *     </LingoProviderWrapper>
  *   </StrictMode>,
@@ -169,44 +145,88 @@ export type LingoProviderWrapperProps<D> = {
  * ```
  */
 export function LingoProviderWrapper<D>(props: LingoProviderWrapperProps<D>) {
-  const [state, setState] = useState<
-    | { status: "loading" }
-    | { status: "loaded"; dictionary: D }
-    | { status: "error"; error: Error }
-  >({ status: "loading" });
+  const locale = useMemo(() => getLocaleFromCookies(), []);
+  const resource = useMemo(
+    () =>
+      createDictionaryResource({
+        load: () => props.loadDictionary(locale),
+        locale,
+      }),
+    [props.loadDictionary, locale],
+  );
 
-  // for client-side rendered apps, the dictionary is also loaded on the client
-  useEffect(() => {
-    (async () => {
-      try {
-        const locale = getLocaleFromCookies();
-        console.log(
-          `[Lingo.dev] Loading dictionary file for locale ${locale}...`,
-        );
-        const localeDictionary = await props.loadDictionary(locale);
-        setState({ status: "loaded", dictionary: localeDictionary });
-      } catch (error) {
-        console.log("[Lingo.dev] Failed to load dictionary:", error);
-        setState({
-          status: "error",
-          error: error instanceof Error ? error : new Error(String(error)),
-        });
-      }
-    })();
-  }, []);
+  return (
+    <Suspense fallback={props.fallback}>
+      <DictionaryBoundary resource={resource}>
+        {props.children}
+      </DictionaryBoundary>
+    </Suspense>
+  );
+}
 
-  if (state.status === "loading") {
-    return props.loadingComponent ?? null;
-  }
-
-  if (state.status === "error") {
-    const ErrorComponent = props.errorComponent;
-    return ErrorComponent ? <ErrorComponent error={state.error} /> : null;
-  }
-
+function DictionaryBoundary<D>(props: {
+  resource: DictionaryResource<D>;
+  children: ReactNode;
+}) {
+  const dictionary = props.resource.read();
   return (
     <LingoProvider dictionary={state.dictionary}>
       {props.children}
     </LingoProvider>
+  );
+}
+
+type DictionaryResource<D> = {
+  read(): D;
+};
+
+function createDictionaryResource<D>(options: {
+  load: () => Promise<D>;
+  locale: string | null;
+}): DictionaryResource<D> {
+  let status: "pending" | "success" | "error" = "pending";
+  let value: D;
+  let error: unknown;
+
+  const { locale } = options;
+  console.log(`[Lingo.dev] Loading dictionary file for locale ${locale}...`);
+
+  const suspender = options
+    .load()
+    .then((result) => {
+      value = result;
+      status = "success";
+      return result;
+    })
+    .catch((err) => {
+      console.log("[Lingo.dev] Failed to load dictionary:", err);
+      error = err;
+      status = "error";
+      throw err;
+    });
+
+  return {
+    read(): D {
+      if (status === "pending") {
+        throw suspender;
+      }
+      if (status === "error") {
+        throw error;
+      }
+      return value;
+    },
+  };
+}
+
+export function LingoProviderFallback() {
+  return (
+    <div
+      role="status"
+      aria-live="polite"
+      aria-busy="true"
+      className="lingo-provider-fallback"
+    >
+      Loading translations...
+    </div>
   );
 }
