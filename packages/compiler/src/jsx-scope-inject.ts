@@ -30,10 +30,16 @@ export const lingoJsxScopeInjectMutation = createCodeMutation((payload) => {
       continue;
     }
 
-    // Check if this is a component (uppercase or member expression)
-    const isMemberExpression = originalJsxElementName.includes(".");
+    // Check if this is a React component:
+    // 1. Starts with uppercase (e.g., Button, MyComponent)
+    // 2. Member expression where the property starts with uppercase (e.g., form.Button, lib.Component)
+    //    Note: We check the last part after the dot to avoid incorrectly classifying HTML 
+    //    namespaced elements like svg.circle
     const isComponent = /^[A-Z]/.test(originalJsxElementName);
-    const isReactComponent = isMemberExpression || isComponent;
+    const isMemberExpression = originalJsxElementName.includes(".");
+    const isMemberExpressionComponent = isMemberExpression && 
+      /[A-Z]/.test(originalJsxElementName.split('.').pop() || '');
+    const isReactComponent = isComponent || isMemberExpressionComponent;
 
     // Import LingoComponent based on the module execution mode
     const packagePath =
@@ -84,6 +90,13 @@ export const lingoJsxScopeInjectMutation = createCodeMutation((payload) => {
         setJsxAttributeValue(lingoTextNodePath, "$expressions", $expressions);
       }
 
+      // Extract nested JSX elements to preserve them in the translation
+      // Elements like <strong>, <em>, etc. will be represented as {0}, {1} in the translation
+      const $elements = getNestedJsxElements(jsxScope);
+      if ($elements.elements.length > 0) {
+        setJsxAttributeValue(lingoTextNodePath, "$elements", $elements);
+      }
+
       if (mode === "server") {
         const loadDictionaryImport = getOrCreateImport(payload.ast, {
           exportedName: "loadDictionary",
@@ -102,6 +115,7 @@ export const lingoJsxScopeInjectMutation = createCodeMutation((payload) => {
       }
 
       // Replace only the text children with LingoText, keeping the component wrapper
+      // The nested elements are preserved through the $elements prop
       jsxScope.node.children = [lingoTextNode];
     } else {
       // For HTML elements, use the existing approach (replace entire element)
