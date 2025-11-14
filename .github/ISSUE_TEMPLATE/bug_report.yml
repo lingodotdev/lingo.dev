@@ -1,5 +1,8 @@
 name: 🐛 Bug Report
 description: Report a bug with detailed reproduction steps
+title: "[BUG] "
+labels:
+  - Bug
 body:
   - type: markdown
     attributes:
