@@ -66,6 +66,7 @@ export default new Command()
               const matchesFilter = type.file.some(
                 (f: string) =>
                   bucketConfig.pathPattern.includes(f) ||
+                  minimatch(bucketConfig.pathPattern, `*${f}*`) ||
                   minimatch(bucketConfig.pathPattern, f),
               );
               if (!matchesFilter) {
