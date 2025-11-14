@@ -115,14 +115,14 @@ npx lingo.dev@latest login
 ```
 
 3. ⚠ On Windows, `npx` may inject a shell script that cannot run without WSL or Git Bash.
+
    In that case, install globally:
 
-- <img width="800" height="500" alt="C__Windows_system32_cmd exe  03-11-2025 13_48_58" src="https://github.com/user-attachments/assets/12ae0df7-a942-4e86-8cc6-1d88290ab947" />
+   - <img width="800" height="500" alt="C__Windows_system32_cmd exe  03-11-2025 13_48_58" src="https://github.com/user-attachments/assets/12ae0df7-a942-4e86-8cc6-1d88290ab947" />
 
-```bash
-npm i -g lingo.dev
-lingo.dev login
-```
+   ```bash
+   npm i -g lingo.dev
+   lingo.dev login
 
 ### 3. Create a directory for localizable content
 
