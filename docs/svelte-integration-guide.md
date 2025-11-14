@@ -241,11 +241,8 @@ export function setLocale(newLocale: Locale) {
 
   // Toggle language
   function toggleLocale() {
-    locale.update(current => {
-      const next = current === "en" ? "es" : "en";
-      setLocale(next);
-      return next;
-    });
+    const next = $locale === "en" ? "es" : "en";
+    setLocale(next);
   }
 </script>
 
