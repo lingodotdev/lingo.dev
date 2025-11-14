@@ -241,8 +241,8 @@ export function setLocale(newLocale: Locale) {
   });
 
   // Cleanup on destroy
-  onMount(() => {
-    return () => unsubscribe();
+  onDestroy(() => {
+    unsubscribe();
   });
 
   // Toggle language
