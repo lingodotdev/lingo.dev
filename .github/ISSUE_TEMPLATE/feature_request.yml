@@ -1,5 +1,8 @@
 name: ✨ Feature Request
 description: Suggest a feature with clear use case
+title: "[FEATURE] "
+labels:
+  - improvement
 body:
   - type: textarea
     id: problem
