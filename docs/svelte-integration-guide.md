@@ -1,6 +1,6 @@
 
 ---
-title
+title: Svelte AI Translation with Lingo.dev
 ---
 
 ## What is Svelte?
