@@ -130,28 +130,28 @@ To learn more, see [i18n.json configuration](/cli/fundamentals/i18n-json-config)
 1. Create an i18n configuration file (`src/i18n.js`):
 
    ```javascript
-   import { createI18n } from 'vue-i18n';
+   import { createI18n } from "vue-i18n";
 
    // It only imports 5 specific locales
-   import en from './locales/en.json';
-   import es from './locales/es.json';
-   import fr from './locales/fr.json';
-   import de from './locales/de.json';
-   import ja from './locales/ja.json';
+   import en from "./locales/en.json";
+   import es from "./locales/es.json";
+   import fr from "./locales/fr.json";
+   import de from "./locales/de.json";
+   import ja from "./locales/ja.json";
 
    const messages = {
      en,
      es,
      fr,
      de,
-     ja
+     ja,
    };
 
    // Create i18n instance
    export default createI18n({
      legacy: false, //you must set this to `false` to use Composition API
-     locale: 'en', // set locale
-     fallbackLocale: 'en', // set fallback locale
+     locale: "en", // set locale
+     fallbackLocale: "en", // set fallback locale
      messages, // set locale messages
    });
    ```
@@ -159,15 +159,12 @@ To learn more, see [i18n.json configuration](/cli/fundamentals/i18n-json-config)
 2. Update your main.js file to use i18n:
 
    ```javascript
-   import { createApp } from 'vue';
-   import App from './App.vue';
-   import router from './router';
-   import i18n from './i18n';
+   import { createApp } from "vue";
+   import App from "./App.vue";
+   import router from "./router";
+   import i18n from "./i18n";
 
-   createApp(App)
-     .use(router)
-     .use(i18n)
-     .mount('#app');
+   createApp(App).use(router).use(i18n).mount("#app");
    ```
 
 ## Step 6. Implement language switching in your Vue components
@@ -178,9 +175,9 @@ To learn more, see [i18n.json configuration](/cli/fundamentals/i18n-json-config)
    <template>
      <div class="language-switcher">
        <label for="language-select">Language:</label>
-       <select 
+       <select
          id="language-select"
-         v-model="currentLocale" 
+         v-model="currentLocale"
          @change="changeLocale"
        >
          <option value="en">English</option>
@@ -193,11 +190,11 @@ To learn more, see [i18n.json configuration](/cli/fundamentals/i18n-json-config)
    </template>
 
    <script>
-   import { ref, watch } from 'vue';
-   import { useI18n } from 'vue-i18n';
+   import { ref, watch } from "vue";
+   import { useI18n } from "vue-i18n";
 
    export default {
-     name: 'LanguageSwitcher',
+     name: "LanguageSwitcher",
      setup() {
        const { locale } = useI18n();
        const currentLocale = ref(locale.value);
@@ -212,9 +209,9 @@ To learn more, see [i18n.json configuration](/cli/fundamentals/i18n-json-config)
 
        return {
          currentLocale,
-         changeLocale
+         changeLocale,
        };
-     }
+     },
    };
    </script>
 
@@ -241,9 +238,9 @@ To learn more, see [i18n.json configuration](/cli/fundamentals/i18n-json-config)
    <template>
      <div id="app">
        <header>
-         <h1>{{ $t('welcome') }}</h1>
-         <p>{{ $t('description') }}</p>
-         <p>{{ $t('greeting', { name: 'Vue.js' }) }}</p>
+         <h1>{{ $t("welcome") }}</h1>
+         <p>{{ $t("description") }}</p>
+         <p>{{ $t("greeting", { name: "Vue.js" }) }}</p>
          <LanguageSwitcher />
          <Counter />
        </header>
@@ -252,15 +249,15 @@ To learn more, see [i18n.json configuration](/cli/fundamentals/i18n-json-config)
    </template>
 
    <script>
-   import LanguageSwitcher from './components/LanguageSwitcher.vue';
-   import Counter from './components/Counter.vue';
+   import LanguageSwitcher from "./components/LanguageSwitcher.vue";
+   import Counter from "./components/Counter.vue";
 
    export default {
-     name: 'App',
+     name: "App",
      components: {
        LanguageSwitcher,
-       Counter
-     }
+       Counter,
+     },
    };
    </script>
 
@@ -279,28 +276,28 @@ To learn more, see [i18n.json configuration](/cli/fundamentals/i18n-json-config)
    ```vue
    <template>
      <div class="counter">
-       <p>{{ $t('counter', { count }) }}</p>
+       <p>{{ $t("counter", { count }) }}</p>
        <button @click="increment">+</button>
      </div>
    </template>
 
    <script>
-   import { ref } from 'vue';
+   import { ref } from "vue";
 
    export default {
-     name: 'Counter',
+     name: "Counter",
      setup() {
        const count = ref(0);
-       
+
        const increment = () => {
          count.value++;
        };
-       
+
        return {
          count,
-         increment
+         increment,
        };
-     }
+     },
    };
    </script>
 
