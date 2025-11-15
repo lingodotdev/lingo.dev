@@ -96,19 +96,17 @@ function _loadDefaults(): CliSettings {
 }
 
 function _loadEnv() {
-  return z
-    .looseObject({
-      LINGODOTDEV_API_KEY: Z.string().optional(),
-      LINGODOTDEV_API_URL: Z.string().optional(),
-      LINGODOTDEV_WEB_URL: Z.string().optional(),
-      OPENAI_API_KEY: Z.string().optional(),
-      ANTHROPIC_API_KEY: Z.string().optional(),
-      GROQ_API_KEY: Z.string().optional(),
-      GOOGLE_API_KEY: Z.string().optional(),
-      OPENROUTER_API_KEY: Z.string().optional(),
-      MISTRAL_API_KEY: Z.string().optional(),
-    })
-    .parse(process.env);
+  return Z.looseObject({
+    LINGODOTDEV_API_KEY: Z.string().optional(),
+    LINGODOTDEV_API_URL: Z.string().optional(),
+    LINGODOTDEV_WEB_URL: Z.string().optional(),
+    OPENAI_API_KEY: Z.string().optional(),
+    ANTHROPIC_API_KEY: Z.string().optional(),
+    GROQ_API_KEY: Z.string().optional(),
+    GOOGLE_API_KEY: Z.string().optional(),
+    OPENROUTER_API_KEY: Z.string().optional(),
+    MISTRAL_API_KEY: Z.string().optional(),
+  }).parse(process.env);
 }
 
 function _loadSystemFile() {
@@ -118,27 +116,21 @@ function _loadSystemFile() {
     : "";
   const data = Ini.parse(content);
 
-  return z
-    .looseObject({
-      auth: z
-        .looseObject({
-          apiKey: Z.string().optional(),
-          apiUrl: Z.string().optional(),
-          webUrl: Z.string().optional(),
-        })
-        .optional(),
-      llm: z
-        .looseObject({
-          openaiApiKey: Z.string().optional(),
-          anthropicApiKey: Z.string().optional(),
-          groqApiKey: Z.string().optional(),
-          googleApiKey: Z.string().optional(),
-          openrouterApiKey: Z.string().optional(),
-          mistralApiKey: Z.string().optional(),
-        })
-        .optional(),
-    })
-    .parse(data);
+  return Z.looseObject({
+    auth: Z.looseObject({
+      apiKey: Z.string().optional(),
+      apiUrl: Z.string().optional(),
+      webUrl: Z.string().optional(),
+    }).optional(),
+    llm: Z.looseObject({
+      openaiApiKey: Z.string().optional(),
+      anthropicApiKey: Z.string().optional(),
+      groqApiKey: Z.string().optional(),
+      googleApiKey: Z.string().optional(),
+      openrouterApiKey: Z.string().optional(),
+      mistralApiKey: Z.string().optional(),
+    }).optional(),
+  }).parse(data);
 }
 
 function _saveSystemFile(settings: CliSettings) {
