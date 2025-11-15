@@ -142,7 +142,7 @@ export const configV1Definition = extendConfigDefinition(configV0Definition, {
 export const configV1_1Definition = extendConfigDefinition(configV1Definition, {
   createSchema: (baseSchema) =>
     baseSchema.extend({
-      buckets: Z.record(
+      buckets: Z.partialRecord(
         bucketTypeSchema,
         Z.object({
           include: Z.array(Z.string())
@@ -250,7 +250,10 @@ export const configV1_3Definition = extendConfigDefinition(
   {
     createSchema: (baseSchema) =>
       baseSchema.extend({
-        buckets: Z.record(bucketTypeSchema, bucketValueSchemaV1_3).default({}),
+        buckets: Z.partialRecord(
+          bucketTypeSchema,
+          bucketValueSchemaV1_3,
+        ).default({}),
       }),
     createDefaultValue: (baseDefaultValue) => ({
       ...baseDefaultValue,
@@ -340,7 +343,10 @@ export const configV1_6Definition = extendConfigDefinition(
   {
     createSchema: (baseSchema) =>
       baseSchema.extend({
-        buckets: Z.record(bucketTypeSchema, bucketValueSchemaV1_6).default({}),
+        buckets: Z.partialRecord(
+          bucketTypeSchema,
+          bucketValueSchemaV1_6,
+        ).default({}),
       }),
     createDefaultValue: (baseDefaultValue) => ({
       ...baseDefaultValue,
@@ -368,7 +374,10 @@ export const configV1_7Definition = extendConfigDefinition(
   {
     createSchema: (baseSchema) =>
       baseSchema.extend({
-        buckets: Z.record(bucketTypeSchema, bucketValueSchemaV1_7).default({}),
+        buckets: Z.partialRecord(
+          bucketTypeSchema,
+          bucketValueSchemaV1_7,
+        ).default({}),
       }),
     createDefaultValue: (baseDefaultValue) => ({
       ...baseDefaultValue,
@@ -397,7 +406,10 @@ export const configV1_8Definition = extendConfigDefinition(
   {
     createSchema: (baseSchema) =>
       baseSchema.extend({
-        buckets: Z.record(bucketTypeSchema, bucketValueSchemaV1_8).default({}),
+        buckets: Z.partialRecord(
+          bucketTypeSchema,
+          bucketValueSchemaV1_8,
+        ).default({}),
       }),
     createDefaultValue: (baseDefaultValue) => ({
       ...baseDefaultValue,
