@@ -1,61 +1,62 @@
-# CONTRIBUTING.md
+# Contributing to Lingo.dev
 
-Thank you for contributing to Lingo.dev! We're an exciting open source project and we love having you contribute!
+Thank you for contributing! We maintain high standards for code quality and design.
 
-Here are some resources and guidance to help you get started:
+**IMPORTANT: Every requirement below is critical. If any requirement is not met, your issue or PR will be automatically rejected by the bots.**
 
-1. [Getting Started](#getting-started)
-2. [Issues](#issues)
-3. [Pull Requests](#pull-requests)
-4. [Release Process](#release-process)
+## Before You Start
 
-## Getting Started
+1. **Find or create an issue** - Search [existing issues](https://github.com/lingodotdev/lingo.dev/issues) first
+2. **Wait to be assigned** - Comment on the issue and wait for assignment before starting work. Assignment priority:
+   - First: Issue creator
+   - Second: First volunteer commenter
+   - **Submitting a PR without assignment will result in automatic rejection**
+3. **Discuss approach** - Align on implementation details before coding
 
-Here's how to get the project running locally:
+## Pull Request Requirements
+
+### Must Have
+
+- **Linked issue** - Reference the issue in your PR (e.g., "Closes #123")
+- **Valid title** - Use [Conventional Commits](https://www.conventionalcommits.org/): `feat:`, `fix:`, `chore:`, etc.
+- **Tests** - Unit tests for main code paths
+- **Changeset** - Run `pnpm new` from repo root
+- **Passing checks** - All CI checks must pass
+
+### Standards
+
+- **Surgical PRs** - One clear objective per PR
+- **Clean code** - Elegant, well-reasoned implementation
+- **Meaningful changes** - No low-effort, cosmetic, or trivial edits made only to gain contributions
+- **No duplicate work** - Check if someone else already opened a PR
+
+## Local Development
 
 ### Prerequisites
 
-- **Node.js**: Make sure you have Node.js version 18 or higher installed.
-- **pnpm**: You can install using this command `npm install -g pnpm` or by following [this guide](https://pnpm.io/installation)
-- **AI API Key**:
-  Currently, Groq, Google, and Mistral are supported.
-  - **GROQ API Key**: You can get one by signing up at [Groq](https://console.groq.com/)
-  - **GOOGLE API Key**: You can get one in the [Google AI Studio](https://aistudio.google.com/apikey)
-  - **MISTRAL API Key**: You can get one by signing up at [Mistral AI](https://console.mistral.ai)
+- Node.js 18+
+- pnpm (`npm install -g pnpm`)
+- AI API key (Groq, Google, or Mistral) - [setup guide](https://lingo.dev/en/cli/quick-start#step-2-authentication)
 
 ### Setup
-
-To set up the project, clone the repository and install the dependencies:
 
 ```bash
 git clone https://github.com/lingodotdev/lingo.dev
 cd lingo.dev
 pnpm install
+pnpm turbo build
 ```
 
-Next, configure an AI API key. You can use either a Lingo.dev API key or one of the supported LLM model providers.
-
-Please refer to our docs on how to set this up: https://lingo.dev/en/cli/quick-start#step-2-authentication
-
-_Note:_ When loading LLM API keys (both Lingo.dev and other LLM model providers like Groq or Mistral), the Lingo.dev Compiler checks the following sources in order of priority:
-
-1. Environment variables (via `process.env`)
-2. Environment files (`.env`, `.env.local`, `.env.development`)
-3. Lingo.dev configuration
-
-Next, you can run the project using the following commands:
+### Run Locally
 
 ```bash
-# start the build process
-pnpm turbo build
-
-# in terminal window 1 - watch for CLI code changes
+# Terminal 1 - watch CLI changes
 cd packages/cli
 pnpm run dev
 
-# in terminal window 2 - test the CLI
+# Terminal 2 - test CLI
 cd packages/cli
-pnpm lingo.dev --help # this command will use the current CLI code + demo config from ./packages/cli/i18n.json
+pnpm lingo.dev --help
 ```
 
 Feel free to ask questions on our [Discord server](https://lingo.dev/go/discord)!
@@ -165,16 +166,10 @@ A couple of things to keep in mind before you submit:
 
 #### Automated Code Review
 
-We use Claude Code to provide automated code reviews on all pull requests. This helps ensure:
+## Review Process
 
-- Code quality and maintainability
-- Security best practices
-- Performance considerations
-- Proper test coverage
-- Documentation completeness
+- Automated code review by AI bots provides suggestions
+- Human reviewers make final decisions
+- **Address maintainer comments promptly** - PRs with unaddressed comments will be closed to keep the repo clean. Feel free to recreate once issues are resolved.
 
-The automated review will post comments on your PR with suggestions and feedback. While these are helpful guidelines, human reviewers will make the final decisions. If Claude Code identifies critical security issues, please address them promptly.
-
----
-
-Thank you!
+Questions? Join our [Discord](https://lingo.dev/go/discord)!

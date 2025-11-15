@@ -1,6 +1,6 @@
 {
   "name": "@lingo.dev/_spec",
-  "version": "0.41.1",
+  "version": "0.43.0",
   "description": "Lingo.dev open specification",
   "private": false,
   "publishConfig": {
@@ -25,6 +25,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
+    "@lingo.dev/_locales": "workspace:*",
     "zod": "^3.25.76",
     "zod-to-json-schema": "^3.24.5"
   },

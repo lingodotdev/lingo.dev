@@ -1,5 +1,36 @@
 # lingo.dev
 
+## 0.115.0
+
+### Minor Changes
+
+- [#1591](https://github.com/lingodotdev/lingo.dev/pull/1591) [`6267878`](https://github.com/lingodotdev/lingo.dev/commit/6267878d1be28337d77749e39ab3547b6a19b3ed) Thanks [@copilot-swe-agent](https://github.com/apps/copilot-swe-agent)! - Minor release
+
+## 0.114.7
+
+### Patch Changes
+
+- Updated dependencies [[`ac38e8e`](https://github.com/lingodotdev/lingo.dev/commit/ac38e8e8dea0d8c4cd3c8b00e6394bfbd8074611), [`4d2359a`](https://github.com/lingodotdev/lingo.dev/commit/4d2359a3d7164f825bf5ddf62b5d13a4690cb4a2)]:
+  - @lingo.dev/_spec@0.43.0
+  - @lingo.dev/_react@0.6.0
+  - @lingo.dev/_compiler@0.7.17
+  - @lingo.dev/_sdk@0.12.8
+
+## 0.114.6
+
+### Patch Changes
+
+- Updated dependencies [[`d72c67c`](https://github.com/lingodotdev/lingo.dev/commit/d72c67c78a4d8f01077db8098b5d973ec98a4c1e)]:
+  - @lingo.dev/_spec@0.42.0
+  - @lingo.dev/_compiler@0.7.16
+  - @lingo.dev/_sdk@0.12.7
+
+## 0.114.5
+
+### Patch Changes
+
+- [#1565](https://github.com/lingodotdev/lingo.dev/pull/1565) [`0a0d0c9`](https://github.com/lingodotdev/lingo.dev/commit/0a0d0c9ea3c7111ed0b54cdafba1bae76eeb8663) Thanks [@vrcprl](https://github.com/vrcprl)! - configurable author commit
+
 ## 0.114.4
 
 ### Patch Changes
