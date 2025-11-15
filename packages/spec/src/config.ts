@@ -63,7 +63,7 @@ const extendConfigDefinition = <
         return safeResult.data;
       }
 
-      const localeErrors = safeResult.error.errors
+      const localeErrors = safeResult.error.issues
         .filter((issue) => issue.message.includes("Invalid locale code"))
         .map((issue) => {
           let unsupportedLocale = "";
