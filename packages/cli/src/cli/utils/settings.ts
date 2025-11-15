@@ -96,7 +96,8 @@ function _loadDefaults(): CliSettings {
 }
 
 function _loadEnv() {
-  return z.looseObject({
+  return z
+    .looseObject({
       LINGODOTDEV_API_KEY: Z.string().optional(),
       LINGODOTDEV_API_URL: Z.string().optional(),
       LINGODOTDEV_WEB_URL: Z.string().optional(),
@@ -117,20 +118,25 @@ function _loadSystemFile() {
     : "";
   const data = Ini.parse(content);
 
-  return z.looseObject({
-      auth: z.looseObject({
-        apiKey: Z.string().optional(),
-        apiUrl: Z.string().optional(),
-        webUrl: Z.string().optional(),
-      }).optional(),
-      llm: z.looseObject({
-        openaiApiKey: Z.string().optional(),
-        anthropicApiKey: Z.string().optional(),
-        groqApiKey: Z.string().optional(),
-        googleApiKey: Z.string().optional(),
-        openrouterApiKey: Z.string().optional(),
-        mistralApiKey: Z.string().optional(),
-      }).optional(),
+  return z
+    .looseObject({
+      auth: z
+        .looseObject({
+          apiKey: Z.string().optional(),
+          apiUrl: Z.string().optional(),
+          webUrl: Z.string().optional(),
+        })
+        .optional(),
+      llm: z
+        .looseObject({
+          openaiApiKey: Z.string().optional(),
+          anthropicApiKey: Z.string().optional(),
+          groqApiKey: Z.string().optional(),
+          googleApiKey: Z.string().optional(),
+          openrouterApiKey: Z.string().optional(),
+          mistralApiKey: Z.string().optional(),
+        })
+        .optional(),
     })
     .parse(data);
 }
