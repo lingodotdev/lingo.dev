@@ -1,0 +1,45 @@
+/* Copy button styles */
+.copy-button {
+  padding: 8px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #6b7280;
+  transition: color 0.2s ease;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.copy-button:hover {
+  color: #4b5563;
+}
+
+.copy-button svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Animation for the checkmark */
+.copy-button.copied {
+  color: #22c55e; /* Green color */
+}
+
+.copy-button .checkmark {
+  animation: checkmark 0.4s ease-in-out;
+}
+
+@keyframes checkmark {
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

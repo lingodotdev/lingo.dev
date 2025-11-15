@@ -278,10 +278,10 @@ importers:
         specifier: ^9.25.0
         version: 9.35.0
       '@types/react':
-        specifier: ^19.1.2
+        specifier: ^19.1.12
         version: 19.1.12
       '@types/react-dom':
-        specifier: ^19.1.2
+        specifier: ^19.1.7
         version: 19.1.7(@types/react@19.1.12)
       '@vitejs/plugin-react-swc':
         specifier: ^3.9.0
@@ -865,7 +865,7 @@ importers:
         specifier: ^4.17.4
         version: 4.17.16
       '@types/react':
-        specifier: ^18.3.18
+        specifier: ^18.3.20
         version: 18.3.20
       '@types/react-dom':
         specifier: ^19.1.7
@@ -880,10 +880,10 @@ importers:
         specifier: 15.2.4
         version: 15.2.4(@babel/core@7.27.4)(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       react:
-        specifier: ^19.0.0
+        specifier: ^19.1.0
         version: 19.1.0
       react-dom:
-        specifier: ^19.0.0
+        specifier: ^19.1.0
         version: 19.1.0(react@19.1.0)
       tsup:
         specifier: ^8.3.5
