@@ -84,13 +84,13 @@ export function createLockfileHelper() {
 }
 
 const LockfileSchema = Z.object({
-  version: Z.literal(1).default(1),
+  version: Z.literal(1).prefault(1),
   checksums: Z.record(
     Z.string(), // localizable files' keys
     Z.record(
       // checksums hashmap
       Z.string(), // key
       Z.string(), // checksum of the key's value in the source locale
-    ).default({}),
-  ).default({}),
+    ).prefault({}),
+  ).prefault({}),
 });

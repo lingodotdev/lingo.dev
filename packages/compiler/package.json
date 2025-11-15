@@ -61,7 +61,7 @@
     "posthog-node": "^5.5.1",
     "prettier": "^3.4.2",
     "unplugin": "^2.1.2",
-    "zod": "^3.25.76"
+    "zod": "^4.1.12"
   },
   "packageManager": "pnpm@9.12.3"
 }

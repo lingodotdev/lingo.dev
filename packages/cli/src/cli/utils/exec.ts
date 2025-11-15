@@ -65,8 +65,8 @@ export async function execWithRetry(
 // Helpers
 
 const ExecAsyncSchema = Z.object({
-  delay: Z.number().nonnegative().default(1000),
-  concurrency: Z.number().positive().default(1),
+  delay: Z.number().nonnegative().prefault(1000),
+  concurrency: Z.number().positive().prefault(1),
   onProgress: Z.function(
     Z.tuple([
       Z.number().positive(), // completed count
@@ -77,8 +77,8 @@ const ExecAsyncSchema = Z.object({
 });
 
 const ExecWithRetrySchema = Z.object({
-  delay: Z.number().nonnegative().default(0),
-  attempts: Z.number().positive().default(3),
+  delay: Z.number().nonnegative().prefault(0),
+  attempts: Z.number().positive().prefault(3),
 });
 
 function delay(ms: number) {

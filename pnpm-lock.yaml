@@ -346,16 +346,16 @@ importers:
     dependencies:
       '@ai-sdk/anthropic':
         specifier: ^2.0.42
-        version: 2.0.42(zod@3.25.76)
+        version: 2.0.42(zod@4.1.12)
       '@ai-sdk/google':
         specifier: ^2.0.29
-        version: 2.0.29(zod@3.25.76)
+        version: 2.0.29(zod@4.1.12)
       '@ai-sdk/mistral':
         specifier: ^2.0.23
-        version: 2.0.23(zod@3.25.76)
+        version: 2.0.23(zod@4.1.12)
       '@ai-sdk/openai':
         specifier: ^2.0.64
-        version: 2.0.64(zod@3.25.76)
+        version: 2.0.64(zod@4.1.12)
       '@babel/generator':
         specifier: ^7.27.1
         version: 7.27.1
@@ -409,7 +409,7 @@ importers:
         version: 1.5.0
       '@openrouter/ai-sdk-provider':
         specifier: ^1.2.1
-        version: 1.2.1(ai@5.0.89(zod@3.25.76))(zod@3.25.76)
+        version: 1.2.1(ai@5.0.89(zod@4.1.12))(zod@4.1.12)
       '@paralleldrive/cuid2':
         specifier: ^2.2.2
         version: 2.2.2
@@ -418,7 +418,7 @@ importers:
         version: 3.1.5
       ai:
         specifier: ^5.0.89
-        version: 5.0.89(zod@3.25.76)
+        version: 5.0.89(zod@4.1.12)
       bitbucket:
         specifier: ^2.12.0
         version: 2.12.0(encoding@0.1.13)
@@ -547,7 +547,7 @@ importers:
         version: 4.1.2
       ollama-ai-provider-v2:
         specifier: ^1.5.3
-        version: 1.5.3(zod@3.25.76)
+        version: 1.5.3(zod@4.1.12)
       open:
         specifier: ^10.2.0
         version: 10.2.0
@@ -627,8 +627,8 @@ importers:
         specifier: ^2.7.0
         version: 2.7.0
       zod:
-        specifier: ^3.25.76
-        version: 3.25.76
+        specifier: ^4.1.12
+        version: 4.1.12
     devDependencies:
       '@types/babel__generator':
         specifier: ^7.27.0
@@ -704,13 +704,13 @@ importers:
     dependencies:
       '@ai-sdk/google':
         specifier: ^2.0.29
-        version: 2.0.29(zod@3.25.76)
+        version: 2.0.29(zod@4.1.12)
       '@ai-sdk/groq':
         specifier: ^2.0.28
-        version: 2.0.28(zod@3.25.76)
+        version: 2.0.28(zod@4.1.12)
       '@ai-sdk/mistral':
         specifier: ^2.0.23
-        version: 2.0.23(zod@3.25.76)
+        version: 2.0.23(zod@4.1.12)
       '@babel/generator':
         specifier: ^7.26.5
         version: 7.27.1
@@ -731,13 +731,13 @@ importers:
         version: link:../spec
       '@openrouter/ai-sdk-provider':
         specifier: ^1.2.1
-        version: 1.2.1(ai@5.0.89(zod@3.25.76))(zod@3.25.76)
+        version: 1.2.1(ai@5.0.89(zod@4.1.12))(zod@4.1.12)
       '@prettier/sync':
         specifier: ^0.6.1
         version: 0.6.1(prettier@3.4.2)
       ai:
         specifier: ^5.0.89
-        version: 5.0.89(zod@3.25.76)
+        version: 5.0.89(zod@4.1.12)
       dedent:
         specifier: ^1.6.0
         version: 1.6.0
@@ -761,7 +761,7 @@ importers:
         version: 3.0.0
       ollama-ai-provider-v2:
         specifier: ^1.5.3
-        version: 1.5.3(zod@3.25.76)
+        version: 1.5.3(zod@4.1.12)
       posthog-node:
         specifier: ^5.5.1
         version: 5.5.1
@@ -772,8 +772,8 @@ importers:
         specifier: ^2.1.2
         version: 2.3.5
       zod:
-        specifier: ^3.25.76
-        version: 3.25.76
+        specifier: ^4.1.12
+        version: 4.1.12
     devDependencies:
       '@types/babel__generator':
         specifier: ^7.6.8
@@ -910,8 +910,8 @@ importers:
         specifier: ^25.0.1
         version: 25.0.1
       zod:
-        specifier: ^3.25.76
-        version: 3.25.76
+        specifier: ^4.1.12
+        version: 4.1.12
     devDependencies:
       '@types/jsdom':
         specifier: ^21.1.7
@@ -932,11 +932,11 @@ importers:
         specifier: workspace:*
         version: link:../locales
       zod:
-        specifier: ^3.25.76
-        version: 3.25.76
+        specifier: ^4.1.12
+        version: 4.1.12
       zod-to-json-schema:
         specifier: ^3.24.5
-        version: 3.24.5(zod@3.25.76)
+        version: 3.24.6(zod@4.1.12)
     devDependencies:
       '@types/node':
         specifier: ^22.13.5
@@ -954,11 +954,11 @@ importers:
   scripts/docs:
     dependencies:
       zod:
-        specifier: ^3.25.76
-        version: 3.25.76
+        specifier: ^4.1.12
+        version: 4.1.12
       zod-to-json-schema:
         specifier: ^3.24.5
-        version: 3.24.5(zod@3.25.76)
+        version: 3.24.6(zod@4.1.12)
     devDependencies:
       '@lingo.dev/_spec':
         specifier: workspace:*
@@ -10773,19 +10773,19 @@ packages:
     peerDependencies:
       zod: ^3.24.1
 
-  zod-to-json-schema@3.24.5:
-    resolution: {integrity: sha512-/AuWwMP+YqiPbsJx5D6TfgRTc4kTLjsh5SOcd4bLsfUg2RcEXrFMJl1DGgdHy2aCfsIA/cr/1JM0xcB2GZji8g==}
+  zod-to-json-schema@3.24.6:
+    resolution: {integrity: sha512-h/z3PKvcTcTetyjl1fkj79MHNEjm+HpD6NXheWjzOekY7kV+lwDYnHw+ivHkijnCSMz1yJaWBD9vu/Fcmk+vEg==}
     peerDependencies:
       zod: ^3.24.1
 
   zod@3.23.8:
     resolution: {integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==}
 
-  zod@3.24.1:
-    resolution: {integrity: sha512-muH7gBL9sI1nciMZV67X5fTKKBLtwpZ5VBp1vsOQzj1MhrBZ4wlVCm3gedKZWLp0Oyel8sIGfeiz54Su+OVT+A==}
-
   zod@3.25.76:
     resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
+
+  zod@4.1.12:
+    resolution: {integrity: sha512-JInaHOamG8pt5+Ey8kGmdcAcg3OL9reK8ltczgHTAwNhMys/6ThXHityHxVV2p3fkw/c+MAvBHFVYHFZDmjMCQ==}
 
   zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
@@ -11105,49 +11105,49 @@ snapshots:
       '@adonisjs/shield': 8.2.0(@adonisjs/core@6.19.0(@adonisjs/assembler@7.8.2(typescript@5.8.3))(@vinejs/vine@3.0.1)(edge.js@6.3.0))(@adonisjs/session@7.5.1(@adonisjs/core@6.19.0(@adonisjs/assembler@7.8.2(typescript@5.8.3))(@vinejs/vine@3.0.1)(edge.js@6.3.0))(edge.js@6.3.0))(edge.js@6.3.0)
       edge.js: 6.3.0
 
-  '@ai-sdk/anthropic@2.0.42(zod@3.25.76)':
+  '@ai-sdk/anthropic@2.0.42(zod@4.1.12)':
     dependencies:
       '@ai-sdk/provider': 2.0.0
-      '@ai-sdk/provider-utils': 3.0.16(zod@3.25.76)
-      zod: 3.25.76
+      '@ai-sdk/provider-utils': 3.0.16(zod@4.1.12)
+      zod: 4.1.12
 
-  '@ai-sdk/gateway@2.0.7(zod@3.25.76)':
+  '@ai-sdk/gateway@2.0.7(zod@4.1.12)':
     dependencies:
       '@ai-sdk/provider': 2.0.0
-      '@ai-sdk/provider-utils': 3.0.16(zod@3.25.76)
+      '@ai-sdk/provider-utils': 3.0.16(zod@4.1.12)
       '@vercel/oidc': 3.0.3
-      zod: 3.25.76
+      zod: 4.1.12
 
-  '@ai-sdk/google@2.0.29(zod@3.25.76)':
+  '@ai-sdk/google@2.0.29(zod@4.1.12)':
     dependencies:
       '@ai-sdk/provider': 2.0.0
-      '@ai-sdk/provider-utils': 3.0.16(zod@3.25.76)
-      zod: 3.25.76
+      '@ai-sdk/provider-utils': 3.0.16(zod@4.1.12)
+      zod: 4.1.12
 
-  '@ai-sdk/groq@2.0.28(zod@3.25.76)':
+  '@ai-sdk/groq@2.0.28(zod@4.1.12)':
     dependencies:
       '@ai-sdk/provider': 2.0.0
-      '@ai-sdk/provider-utils': 3.0.16(zod@3.25.76)
-      zod: 3.25.76
+      '@ai-sdk/provider-utils': 3.0.16(zod@4.1.12)
+      zod: 4.1.12
 
-  '@ai-sdk/mistral@2.0.23(zod@3.25.76)':
+  '@ai-sdk/mistral@2.0.23(zod@4.1.12)':
     dependencies:
       '@ai-sdk/provider': 2.0.0
-      '@ai-sdk/provider-utils': 3.0.16(zod@3.25.76)
-      zod: 3.25.76
+      '@ai-sdk/provider-utils': 3.0.16(zod@4.1.12)
+      zod: 4.1.12
 
-  '@ai-sdk/openai@2.0.64(zod@3.25.76)':
+  '@ai-sdk/openai@2.0.64(zod@4.1.12)':
     dependencies:
       '@ai-sdk/provider': 2.0.0
-      '@ai-sdk/provider-utils': 3.0.16(zod@3.25.76)
-      zod: 3.25.76
+      '@ai-sdk/provider-utils': 3.0.16(zod@4.1.12)
+      zod: 4.1.12
 
-  '@ai-sdk/provider-utils@3.0.16(zod@3.25.76)':
+  '@ai-sdk/provider-utils@3.0.16(zod@4.1.12)':
     dependencies:
       '@ai-sdk/provider': 2.0.0
       '@standard-schema/spec': 1.0.0
       eventsource-parser: 3.0.6
-      zod: 3.25.76
+      zod: 4.1.12
 
   '@ai-sdk/provider@2.0.0':
     dependencies:
@@ -13365,10 +13365,10 @@ snapshots:
       '@octokit/request-error': 6.1.7
       '@octokit/webhooks-methods': 5.1.1
 
-  '@openrouter/ai-sdk-provider@1.2.1(ai@5.0.89(zod@3.25.76))(zod@3.25.76)':
+  '@openrouter/ai-sdk-provider@1.2.1(ai@5.0.89(zod@4.1.12))(zod@4.1.12)':
     dependencies:
-      ai: 5.0.89(zod@3.25.76)
-      zod: 3.25.76
+      ai: 5.0.89(zod@4.1.12)
+      zod: 4.1.12
 
   '@opentelemetry/api@1.9.0': {}
 
@@ -13576,7 +13576,7 @@ snapshots:
       jsdom: 25.0.1
       typescript: 5.8.3
       vitest: 2.1.9(@types/node@24.2.0)(jsdom@25.0.1)(lightningcss@1.30.1)(terser@5.36.0)
-      zod: 3.24.1
+      zod: 3.25.76
     transitivePeerDependencies:
       - '@edge-runtime/vm'
       - '@types/node'
@@ -14941,13 +14941,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ai@5.0.89(zod@3.25.76):
+  ai@5.0.89(zod@4.1.12):
     dependencies:
-      '@ai-sdk/gateway': 2.0.7(zod@3.25.76)
+      '@ai-sdk/gateway': 2.0.7(zod@4.1.12)
       '@ai-sdk/provider': 2.0.0
-      '@ai-sdk/provider-utils': 3.0.16(zod@3.25.76)
+      '@ai-sdk/provider-utils': 3.0.16(zod@4.1.12)
       '@opentelemetry/api': 1.9.0
-      zod: 3.25.76
+      zod: 4.1.12
 
   ajv@6.12.6:
     dependencies:
@@ -17976,7 +17976,7 @@ snapshots:
       xmldom: 0.6.0
       xpath: 0.0.34
       yaml: 2.6.1
-      zod: 3.24.1
+      zod: 3.25.76
     transitivePeerDependencies:
       - '@edge-runtime/vm'
       - '@types/node'
@@ -18938,11 +18938,11 @@ snapshots:
       '@octokit/request-error': 6.1.7
       '@octokit/types': 13.8.0
 
-  ollama-ai-provider-v2@1.5.3(zod@3.25.76):
+  ollama-ai-provider-v2@1.5.3(zod@4.1.12):
     dependencies:
       '@ai-sdk/provider': 2.0.0
-      '@ai-sdk/provider-utils': 3.0.16(zod@3.25.76)
-      zod: 3.25.76
+      '@ai-sdk/provider-utils': 3.0.16(zod@4.1.12)
+      zod: 4.1.12
 
   on-exit-leak-free@2.1.2: {}
 
@@ -22092,14 +22092,14 @@ snapshots:
     dependencies:
       zod: 3.25.76
 
-  zod-to-json-schema@3.24.5(zod@3.25.76):
+  zod-to-json-schema@3.24.6(zod@4.1.12):
     dependencies:
-      zod: 3.25.76
+      zod: 4.1.12
 
   zod@3.23.8: {}
 
-  zod@3.24.1: {}
-
   zod@3.25.76: {}
+
+  zod@4.1.12: {}
 
   zwitch@2.0.4: {}

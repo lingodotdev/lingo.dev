@@ -24,7 +24,7 @@
     "vitest": "^3.2.4"
   },
   "dependencies": {
-    "zod": "^3.25.76",
+    "zod": "^4.1.12",
     "zod-to-json-schema": "^3.24.5"
   }
 }
