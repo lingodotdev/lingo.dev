@@ -178,6 +178,6 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 ## 🌐 മറ്റ് ഭാഷകളിലുള്ള റീഡ്മി
 
-[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+[English](https://github.com/lingodotdev/lingo.dev) • [Polski](/readme/pl.md) • [Türkçe](/readme/tr.md) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • **[മലയാളം](/readme/ml.md)**
 
 നിങ്ങളുടെ ഭാഷ കാണുന്നില്ലേ? അത് [`i18n.json`](./i18n.json) -ൽ ചേർത്ത് ഒരു PR തുറക്കുക!
