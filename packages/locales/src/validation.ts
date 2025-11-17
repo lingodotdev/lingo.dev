@@ -14,7 +14,9 @@ const VALID_LANGUAGE_CODES = new Set(
       lang.iso6392B, // 3-letter bibliographic code (ISO 639-2)
       lang.iso6392T, // 3-letter terminologic code (ISO 639-2)
       lang.iso6393, // 3-letter code (ISO 639-3)
-    ].filter(Boolean).map((code) => code.toLowerCase()),
+    ]
+      .filter((code): code is string => Boolean(code))
+      .map((code) => code.toLowerCase()),
   ),
 );
 
