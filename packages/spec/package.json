@@ -26,8 +26,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@lingo.dev/_locales": "workspace:*",
-    "zod": "^4.1.12",
-    "zod-to-json-schema": "^3.24.5"
+    "zod": "^4.1.12"
   },
   "devDependencies": {
     "@types/node": "^22.13.5",
