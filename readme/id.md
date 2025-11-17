@@ -98,7 +98,7 @@ npx lingo.dev@latest run
 ```
 Ini memfingerprint setiap string, menyimpan hasil dalam cache, dan hanya menerjemahkan ulang hal-hal yang telah berubah.
 
-[Ikuti dokumentasi →](https://lingo.dev/cli)untuk mempelajari cara menyiapkannya.
+[Ikuti dokumentasi →](https://lingo.dev/cli) untuk mempelajari cara menyiapkannya.
 
 ---
 
