@@ -693,6 +693,9 @@ importers:
 
   packages/compiler:
     dependencies:
+      '@ai-sdk/anthropic':
+        specifier: ^1.0.11
+        version: 1.2.11(zod@3.25.76)
       '@ai-sdk/google':
         specifier: ^1.2.19
         version: 1.2.19(zod@3.25.76)
@@ -702,6 +705,9 @@ importers:
       '@ai-sdk/mistral':
         specifier: ^1.2.8
         version: 1.2.8(zod@3.25.76)
+      '@ai-sdk/openai':
+        specifier: ^1.3.22
+        version: 1.3.22(zod@3.25.76)
       '@babel/generator':
         specifier: ^7.26.5
         version: 7.27.1
