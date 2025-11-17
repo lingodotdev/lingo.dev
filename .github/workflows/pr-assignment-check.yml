@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       pr_number:
-        description: 'PR number to check'
+        description: "PR number to check"
         required: true
         type: number
 
@@ -17,22 +17,27 @@ jobs:
       contents: read
       issues: read
       pull-requests: write
+      id-token: write
     steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: anthropics/claude-code-action@v1
         with:
-          anthropic_api_key: ${{ secrets.CLAUDE_CODE_ANTHROPIC_API_KEY }}
+          anthropic_api_key: ${{ secrets.CLAUDE_CODE_API_KEY }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          show_full_output: true
           prompt: |
             EXEMPT USERS: @maxprilutskiy, @vrcprl, @davidturnbull, @monicabe, @sumitsaurabh927, @AleksandrSl (skip all checks if PR author is one of these)
 
-            Check if this PR references any issues (via "Closes #123", "Fixes #456", etc.).
+            Close this PR if:
+            1. It doesn't reference any issue (no "Closes #123", "Fixes #456", etc.)
+            2. OR it references an issue where the PR author is NOT assigned
 
-            For each referenced issue:
-            1. Check if the issue has assignees
-            2. If yes, check if the PR author is one of the assignees
-            3. If the PR author is NOT an assignee, close this PR with a brief, friendly comment (2-3 sentences, no emojis) explaining:
-               - The issue was already assigned to someone else
-               - They should wait to be assigned before submitting PRs
-               - Encourage them to find other unassigned issues
+            When closing, leave a brief, friendly comment (2-3 sentences, no emojis) explaining:
+            - They need to reference an assigned issue or get assigned first
+            - They should find unassigned issues to work on
 
-            If no issues referenced or PR author is properly assigned, do nothing.
-          claude_args: "--max-turns 3"
+            Otherwise, do nothing.
+          claude_args: |
+            --allowedTools "Bash,Read,Grep,Glob"
