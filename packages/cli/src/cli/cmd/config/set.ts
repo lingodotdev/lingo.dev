@@ -6,11 +6,12 @@ import {
   SETTINGS_KEYS,
   loadSystemSettings,
   saveSettings,
+  getSettingsDisplayPath,
 } from "../../utils/settings";
 
 export default new Command()
   .name("set")
-  .description("Set or update a CLI setting in ~/.lingodotdevrc")
+  .description(`Set or update a CLI setting in ${getSettingsDisplayPath()}`)
   .addHelpText("afterAll", `\nAvailable keys:\n  ${SETTINGS_KEYS.join("\n  ")}`)
   .argument(
     "<key>",
