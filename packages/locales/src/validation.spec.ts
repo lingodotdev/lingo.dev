@@ -31,6 +31,23 @@ describe("isValidLocale", () => {
     expect(isValidLocale("zh")).toBe(true);
   });
 
+  it("should validate 3-letter language codes in locales", () => {
+    // Test ISO 639-2/3 codes that don't have 2-letter equivalents
+    expect(isValidLocale("fil")).toBe(true); // Filipino
+    expect(isValidLocale("fil-PH")).toBe(true); // Filipino (Philippines)
+    expect(isValidLocale("bar")).toBe(true); // Bavarian
+    expect(isValidLocale("bar-DE")).toBe(true); // Bavarian (Germany)
+    expect(isValidLocale("nap")).toBe(true); // Neapolitan
+    expect(isValidLocale("nap-IT")).toBe(true); // Neapolitan (Italy)
+    expect(isValidLocale("zgh")).toBe(true); // Standard Moroccan Tamazight
+    expect(isValidLocale("zgh-MA")).toBe(true); // Tamazight (Morocco)
+  });
+
+  it("should validate 3-letter language codes with script and region", () => {
+    // Test complex locales with 3-letter language codes
+    expect(isValidLocale("fil-Latn-PH")).toBe(true); // Filipino (Latin, Philippines)
+  });
+
   it("should validate locales with numeric region codes", () => {
     expect(isValidLocale("es-419")).toBe(true); // Latin America
     expect(isValidLocale("en-001")).toBe(true); // World
@@ -83,6 +100,22 @@ describe("isValidLanguageCode", () => {
     expect(isValidLanguageCode("yi")).toBe(true); // Yiddish
   });
 
+  it("should validate 3-letter ISO 639-2/3 language codes", () => {
+    // Test the specific codes that were reported as failing
+    expect(isValidLanguageCode("fil")).toBe(true); // Filipino
+    expect(isValidLanguageCode("bar")).toBe(true); // Bavarian
+    expect(isValidLanguageCode("nap")).toBe(true); // Neapolitan
+    expect(isValidLanguageCode("zgh")).toBe(true); // Standard Moroccan Tamazight
+  });
+
+  it("should validate other common 3-letter language codes", () => {
+    expect(isValidLanguageCode("eng")).toBe(true); // English (ISO 639-2)
+    expect(isValidLanguageCode("spa")).toBe(true); // Spanish (ISO 639-2)
+    expect(isValidLanguageCode("fra")).toBe(true); // French (ISO 639-2)
+    expect(isValidLanguageCode("deu")).toBe(true); // German (ISO 639-2)
+    expect(isValidLanguageCode("jpn")).toBe(true); // Japanese (ISO 639-2)
+  });
+
   it("should handle case insensitive validation", () => {
     expect(isValidLanguageCode("EN")).toBe(true);
     expect(isValidLanguageCode("Es")).toBe(true);
@@ -93,6 +126,15 @@ describe("isValidLanguageCode", () => {
     expect(isValidLanguageCode("xyz")).toBe(false);
     expect(isValidLanguageCode("fake")).toBe(false);
     expect(isValidLanguageCode("invalid")).toBe(false);
+  });
+
+  it("should reject invalid 3-letter language codes", () => {
+    // Ensure validation is not just accepting any 3-letter code
+    // Note: "aaa" is valid (Ghotuo language), so using truly invalid codes
+    expect(isValidLanguageCode("zzz")).toBe(false);
+    expect(isValidLanguageCode("xxx")).toBe(false);
+    expect(isValidLanguageCode("fake")).toBe(false);
+    expect(isValidLanguageCode("test")).toBe(false);
   });
 
   it("should handle edge cases", () => {
