@@ -1,57 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Basic translatable strings -->
     <string name="app_name">MyApp</string>
     <string name="welcome_message">Hello, world!</string>
     <string name="button_text">Get Started</string>
-    
+
+    <!-- Non-translatable configuration strings (will not appear in target locales) -->
     <string name="api_endpoint" translatable="false">https://api.example.com</string>
     <string name="debug_key" translatable="false">DEBUG_MODE_ENABLED</string>
-    
+
+    <!-- Translatable string arrays -->
     <string-array name="color_names">
         <item>Red</item>
         <item>Green</item>
-        <item>Blue</item>
+        <item>Blue!</item>
     </string-array>
-    
+
+    <!-- Non-translatable server URLs (will not appear in target locales) -->
     <string-array name="server_urls" translatable="false">
         <item>https://prod.example.com</item>
         <item>https://staging.example.com</item>
         <item>https://dev.example.com</item>
     </string-array>
-    
+
+    <!-- Translatable plurals -->
     <plurals name="notification_count">
         <item quantity="one">%d new message</item>
         <item quantity="other">%d new messages</item>
     </plurals>
-    
+
+    <!-- Non-translatable plurals (will not appear in target locales) -->
     <plurals name="cache_size" translatable="false">
         <item quantity="one">%d byte</item>
         <item quantity="other">%d bytes</item>
     </plurals>
-    
+
+    <!-- Translatable booleans -->
     <bool name="show_tutorial">true</bool>
     <bool name="enable_animations">false</bool>
-    
+
+    <!-- Non-translatable debug flags (will not appear in target locales) -->
     <bool name="is_debug_build" translatable="false">false</bool>
     <bool name="enable_logging" translatable="false">true</bool>
-    
+
+    <!-- Translatable integers -->
     <integer name="max_retry_attempts">3</integer>
     <integer name="default_timeout">30</integer>
-    
-    <integer name="build_version" translatable="false">42</integer>
+
+    <!-- Non-translatable version numbers (will not appear in target locales) -->
+    <integer name="build_version" translatable="false">43</integer>
     <integer name="api_version" translatable="false">1</integer>
-    
+
+    <!-- Special character handling -->
     <string name="html_snippet">&lt;b&gt;Bold&lt;/b&gt;</string>
 
     <string name="apostrophe_example">Don\'t forget!</string>
 
-    <string name="cdata_example"><![CDATA[Special <tag> ]]></string>
-    
+    <string name="cdata_example"><![CDATA[Users can only see your comment after they’ve signed up. <u>Learn more.</u>]]></string>
+
+    <!-- Array with whitespace preservation -->
     <string-array name="mixed_items">
         <item>  Item with spaces  </item>
         <item>    </item>
     </string-array>
-    
+
+    <!-- Non-translatable test resources (will not appear in target locales) -->
     <string-array name="non_localised_array" translatable="false">
         <item>Ignored</item>
     </string-array>
@@ -60,4 +73,29 @@
         <item quantity="one">Ignored</item>
         <item quantity="other">Ignored</item>
     </plurals>
+
+    <!-- Colors - will not be translated (copied as-is to target locales) -->
+    <color name="primary_color">#FF6200EE</color>
+    <color name="secondary_color">#FF03DAC5</color>
+
+    <!-- Dimensions - will not be translated (copied as-is to target locales) -->
+    <dimen name="text_size">16sp</dimen>
+    <dimen name="margin">8dp</dimen>
+
+    <!-- Integer arrays - will not be translated (copied as-is to target locales) -->
+    <integer-array name="numbers">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </integer-array>
+
+    <!-- Typed arrays - will not be translated (copied as-is to target locales) -->
+    <array name="icons">
+        <item>@drawable/icon1</item>
+        <item>@drawable/icon2</item>
+    </array>
+
+    <!-- Resource IDs - will not be translated (copied as-is to target locales) -->
+    <item type="id" name="button_ok" />
+
 </resources>
