@@ -222,8 +222,9 @@ Click the language switcher buttons and verify the translations update dynamical
 
 ## Known limitations
 
-- Ensure your Angular version supports the i18n or `@ngx-translate` method you're using.
-- Locale codes supported by Angular may differ from those supported by Lingo.dev.
+- Angular's built-in i18n is officially supported in Angular 9 and later. If you are using an older version, consider upgrading or using a third-party library.
+- The `@ngx-translate` library works with Angular 6 and above. Make sure your Angular version is compatible with the version of `@ngx-translate` you install.
+- Locale code formats may differ: Angular typically uses BCP 47 codes like `en-US` or `fr-FR`, while Lingo.dev may use codes like `en` or `en_US`. Ensure your locale codes match between your Angular app and your Lingo.dev project to avoid mismatches.
 - Lingo.dev’s automatic translation accuracy may vary depending on context.
 
 ## Next steps
