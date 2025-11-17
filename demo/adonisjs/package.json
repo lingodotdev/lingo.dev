@@ -59,6 +59,7 @@
     "@adonisjs/static": "^1.1.1",
     "@adonisjs/vite": "^4.0.0",
     "@inertiajs/react": "^2.0.17",
+    "@lingo.dev/_compiler": "workspace:^",
     "@vinejs/vine": "^3.0.1",
     "edge.js": "^6.2.1",
     "lingo.dev": "workspace:*",
