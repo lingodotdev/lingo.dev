@@ -162,7 +162,7 @@ Kami didukung oleh komunitas dan menyambut kontribusi!
 
 
 ## ⭐ Riwayat Bintang
-Jika Anda menyukai pekerjaan kami, beri kami ⭐ dan bantu kami mencapai 3.000 bintang! 🌟
+Jika Anda menyukai pekerjaan kami, beri kami ⭐ dan bantu kami mencapai 4.000 bintang! 🌟
 
 [
 
