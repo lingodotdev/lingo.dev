@@ -1,5 +1,13 @@
 # adonis
 
+## 0.0.35
+
+### Patch Changes
+
+- Updated dependencies []:
+  - lingo.dev@0.116.1
+  - @lingo.dev/_compiler@0.7.18
+
 ## 0.0.34
 
 ### Patch Changes
