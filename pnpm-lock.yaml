@@ -84,6 +84,9 @@ importers:
       '@inertiajs/react':
         specifier: ^2.0.17
         version: 2.1.5(react@19.1.0)
+      '@lingo.dev/_compiler':
+        specifier: workspace:^
+        version: link:../../packages/compiler
       '@vinejs/vine':
         specifier: ^3.0.1
         version: 3.0.1
