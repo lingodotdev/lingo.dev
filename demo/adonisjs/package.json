@@ -9,7 +9,6 @@
     "build": "node ace build",
     "dev": "node ace serve --hmr",
     "lint": "eslint .",
-    "format": "prettier --write .",
     "typecheck": "tsc --noEmit"
   },
   "imports": {
@@ -33,7 +32,6 @@
   "devDependencies": {
     "@adonisjs/assembler": "^7.8.2",
     "@adonisjs/eslint-config": "^2.0.0",
-    "@adonisjs/prettier-config": "^1.4.4",
     "@adonisjs/tsconfig": "^1.4.0",
     "@japa/assert": "^4.0.1",
     "@japa/plugin-adonisjs": "^4.0.0",
@@ -46,7 +44,6 @@
     "eslint": "^9.26.0",
     "hot-hook": "^0.4.0",
     "pino-pretty": "^13.0.0",
-    "prettier": "^3.5.3",
     "ts-node-maintained": "^10.9.5",
     "typescript": "~5.8.3",
     "vite": "^6.3.5"
@@ -74,6 +71,5 @@
       "./app/controllers/**/*.ts",
       "./app/middleware/*.ts"
     ]
-  },
-  "prettier": "@adonisjs/prettier-config"
+  }
 }
