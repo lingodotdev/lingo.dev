@@ -11,3 +11,9 @@
 ## Testing
 
 - When you add tests - make sure they pass
+
+## Changesets
+
+- Every PR must include a changeset
+- Create changeset: `pnpm new` from repo root
+- For changes that don't need a release (e.g., README updates): `pnpm new:empty`
