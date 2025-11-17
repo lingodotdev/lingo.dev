@@ -10,8 +10,8 @@
 
 <p align="center">
   <strong>
-    ⚡ Lingo.dev - כלי קוד פתוח מבוסס בינה מלאכותית לתרגום מיידי באמצעות מודלי
-    שפה גדולים.
+    ⚡ Lingo.dev - ערכת כלי i18n בקוד פתוח, מופעלת על ידי בינה מלאכותית לתרגום
+    מיידי עם LLMs.
   </strong>
 </p>
 
@@ -19,6 +19,7 @@
 
 <p align="center">
   <a href="https://lingo.dev/compiler">Lingo.dev Compiler</a> •
+  <a href="https://lingo.dev/mcp">Lingo.dev MCP</a> •
   <a href="https://lingo.dev/cli">Lingo.dev CLI</a> •
   <a href="https://lingo.dev/ci">Lingo.dev CI/CD</a> •
   <a href="https://lingo.dev/sdk">Lingo.dev SDK</a>
@@ -45,8 +46,20 @@
   </a>
   <a href="https://lingo.dev/en">
     <img
-      src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
-      alt="מוצר מספר 1 של היום ב-Product Hunt"
+      src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square"
+      alt="Product Hunt #1 DevTool של החודש"
+    />
+  </a>
+  <a href="https://lingo.dev/en">
+    <img
+      src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Week-orange?logo=producthunt&style=flat-square"
+      alt="Product Hunt #1 מוצר השבוע"
+    />
+  </a>
+  <a href="https://lingo.dev/en">
+    <img
+      src="https://img.shields.io/badge/Product%20Hunt-%232%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
+      alt="Product Hunt #2 מוצר היום"
     />
   </a>
   <a href="https://lingo.dev/en">
@@ -59,17 +72,17 @@
 
 ---
 
-## הכירו את הקומפיילר 🆕
+## הכירו את ה-Compiler 🆕
 
-**Lingo.dev Compiler** הוא מידלוור קומפיילר חינמי וקוד פתוח, המתוכנן להפוך כל אפליקציית React לרב-לשונית בזמן הבנייה מבלי לדרוש שינויים ברכיבי React הקיימים.
+**Lingo.dev Compiler** הוא middleware קומפיילר חינמי בקוד פתוח, המתוכנן להפוך כל אפליקציית React לרב-לשונית בזמן הבנייה מבלי לדרוש שינויים ברכיבי React הקיימים.
 
-התקינו פעם אחת:
+התקן פעם אחת:
 
 ```bash
 npm install lingo.dev
 ```
 
-הפעילו בתצורת הבנייה שלכם:
+הפעל בהגדרות הבנייה שלך:
 
 ```js
 import lingoCompiler from "lingo.dev/compiler";
@@ -82,22 +95,22 @@ export default lingoCompiler.next({
 })(existingNextConfig);
 ```
 
-הריצו `next build` וצפו בחבילות ספרדית וצרפתית מופיעות ✨
+הרץ `next build` וצפה בחבילות ספרדית וצרפתית מופיעות ✨
 
-[קראו את התיעוד →](https://lingo.dev/compiler) למדריך המלא, ו[הצטרפו לדיסקורד שלנו](https://lingo.dev/go/discord) כדי לקבל עזרה בהתקנה שלכם.
+[קרא את התיעוד ←](https://lingo.dev/compiler) למדריך המלא, ו[הצטרף לדיסקורד שלנו](https://lingo.dev/go/discord) כדי לקבל עזרה בהגדרה שלך.
 
 ---
 
-### מה נמצא במאגר זה?
+### מה נמצא בתוך מאגר זה?
 
-| כלי          | תקציר                                                                     | תיעוד                                   |
-| ------------ | ------------------------------------------------------------------------- | --------------------------------------- |
-| **Compiler** | לוקליזציה של React בזמן בנייה                                             | [/compiler](https://lingo.dev/compiler) |
-| **CLI**      | פקודה אחת ללוקליזציה של אפליקציות ווב ומובייל, JSON, YAML, markdown, ועוד | [/cli](https://lingo.dev/cli)           |
-| **CI/CD**    | קומיט אוטומטי של תרגומים בכל דחיפה + יצירת בקשות משיכה במידת הצורך        | [/ci](https://lingo.dev/ci)             |
-| **SDK**      | תרגום בזמן אמת לתוכן שנוצר על ידי משתמשים                                 | [/sdk](https://lingo.dev/sdk)           |
+| כלי          | בקצרה                                                                       | תיעוד                                   |
+| ------------ | --------------------------------------------------------------------------- | --------------------------------------- |
+| **Compiler** | לוקליזציה של React בזמן בנייה                                               | [/compiler](https://lingo.dev/compiler) |
+| **CLI**      | פקודה אחת ללוקליזציה עבור אפליקציות ווב ומובייל, JSON, YAML, markdown, ועוד | [/cli](https://lingo.dev/cli)           |
+| **CI/CD**    | קומיט אוטומטי של תרגומים בכל דחיפה + יצירת בקשות משיכה במידת הצורך          | [/ci](https://lingo.dev/ci)             |
+| **SDK**      | תרגום בזמן אמת עבור תוכן שנוצר על ידי משתמשים                               | [/sdk](https://lingo.dev/sdk)           |
 
-להלן סקירה מהירה של כל אחד 👇
+להלן הנקודות המהירות עבור כל אחד 👇
 
 ---
 
@@ -109,15 +122,15 @@ export default lingoCompiler.next({
 npx lingo.dev@latest run
 ```
 
-הוא מייצר טביעת אצבע לכל מחרוזת, מטמין תוצאות, ומתרגם מחדש רק את מה שהשתנה.
+הוא מייצר טביעת אצבע לכל מחרוזת, שומר תוצאות במטמון, ומתרגם מחדש רק את מה שהשתנה.
 
-[עקוב אחר התיעוד ←](https://lingo.dev/cli) כדי ללמוד כיצד להגדיר את זה.
+[עקבו אחר התיעוד →](https://lingo.dev/cli) כדי ללמוד כיצד להגדיר אותו.
 
 ---
 
 ### 🔄 Lingo.dev CI/CD
 
-שלח תרגומים מושלמים באופן אוטומטי.
+שחררו תרגומים מושלמים באופן אוטומטי.
 
 ```yaml
 # .github/workflows/i18n.yml
@@ -134,9 +147,9 @@ jobs:
           api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
 ```
 
-שומר על המאגר שלך ירוק ועל המוצר שלך רב-לשוני ללא צעדים ידניים.
+שומר על המאגר שלכם ירוק ועל המוצר שלכם רב-לשוני ללא צעדים ידניים.
 
-[קרא את התיעוד ←](https://lingo.dev/ci)
+[קראו את התיעוד →](https://lingo.dev/ci)
 
 ---
 
@@ -164,9 +177,9 @@ const translated = await lingoDotDev.localizeObject(content, {
 // Returns: { greeting: "Hola", farewell: "Adiós", message: "Bienvenido a nuestra plataforma" }
 ```
 
-מושלם עבור צ'אט, תגובות משתמשים וזרימות בזמן אמת אחרות.
+מושלם עבור צ'אט, תגובות משתמשים וזרימות אחרות בזמן אמת.
 
-[קרא את התיעוד ←](https://lingo.dev/sdk)
+[קראו את התיעוד →](https://lingo.dev/sdk)
 
 ---
 
@@ -174,13 +187,13 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 אנחנו מונעים על ידי הקהילה ואוהבים תרומות!
 
-- יש לך רעיון? [פתח סוגיה](https://github.com/lingodotdev/lingo.dev/issues)
-- רוצה לתקן משהו? [שלח PR](https://github.com/lingodotdev/lingo.dev/pulls)
-- צריך עזרה? [הצטרף לדיסקורד שלנו](https://lingo.dev/go/discord)
+- יש לכם רעיון? [פתחו סוגיה](https://github.com/lingodotdev/lingo.dev/issues)
+- רוצים לתקן משהו? [שלחו PR](https://github.com/lingodotdev/lingo.dev/pulls)
+- צריכים עזרה? [הצטרפו לדיסקורד שלנו](https://lingo.dev/go/discord)
 
 ## ⭐ היסטוריית כוכבים
 
-אם אתם אוהבים את מה שאנחנו עושים, תנו לנו ⭐ ועזרו לנו להגיע ל-4,000 כוכבים! 🌟
+אם אתם אוהבים את מה שאנחנו עושים, תנו לנו ⭐ ועזרו לנו להגיע ל-5,000 כוכבים! 🌟
 
 [
 
@@ -190,6 +203,6 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 ## 🌐 קרא אותי בשפות אחרות
 
-[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [भोजपुरी](/readme/bh.md) • [فارسی](/readme/fa.md)
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Bhojpuri](/readme/bho.md)
 
-לא רואה את השפה שלך? הוסף אותה ל-[`i18n.json`](./i18n.json) ופתח PR!
+לא רואים את השפה שלכם? הוסיפו אותה ל-[`i18n.json`](./i18n.json) ופתחו PR!
