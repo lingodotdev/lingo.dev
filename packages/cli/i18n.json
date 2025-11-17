@@ -16,6 +16,10 @@
     ]
   },
   "buckets": {
+    "mdx-root": {
+      "include": ["**/*.md", "**/*.mdx"],
+      "exclude": ["node_modules/**"]
+    },
     "xliff": {
       "include": ["demo/xliff/[locale]/*.xliff"]
     },
