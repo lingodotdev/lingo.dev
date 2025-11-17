@@ -1,0 +1,51 @@
+{
+  "name": "@lingo.dev/_compiler-beta",
+  "version": "0.0.0",
+  "description": "Lingo.dev Compiler Beta",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "main": "build/index.cjs",
+  "types": "build/index.d.cts",
+  "module": "build/index.mjs",
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "dev": "tsdown --watch",
+    "build": "pnpm typecheck && tsdown",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf build",
+    "test": "vitest --run",
+    "test:watch": "vitest -w"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/babel__core": "^7.20.5",
+    "@types/babel__generator": "^7.27.0",
+    "@types/babel__traverse": "^7.28.0",
+    "@types/node": "^22.10.5",
+    "@types/react": "^18.3.26",
+    "tsdown": "^0.16.5",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.9"
+  },
+  "dependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/generator": "^7.28.5",
+    "@babel/parser": "^7.28.5",
+    "@babel/preset-react": "^7.26.3",
+    "@babel/preset-typescript": "^7.26.0",
+    "@babel/traverse": "^7.28.5",
+    "@babel/types": "^7.28.5",
+    "@lingo.dev/_sdk": "workspace:*",
+    "@lingo.dev/_spec": "workspace:*",
+    "lodash": "^4.17.21"
+  },
+  "packageManager": "pnpm@9.12.3"
+}
