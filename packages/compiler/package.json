@@ -11,6 +11,13 @@
   "main": "build/index.cjs",
   "types": "build/index.d.ts",
   "module": "build/index.mjs",
+  "exports": {
+    ".": {
+      "types": "./build/index.d.ts",
+      "import": "./build/index.mjs",
+      "require": "./build/index.cjs"
+    }
+  },
   "files": [
     "build"
   ],
