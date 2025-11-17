@@ -151,7 +151,6 @@ export const configV1_1Definition = extendConfigDefinition(configV1Definition, {
               "File paths or glob patterns to include for this bucket.",
             ),
           exclude: Z.array(Z.string())
-            .prefault([])
             .optional()
             .describe(
               "File paths or glob patterns to exclude from this bucket.",
@@ -235,7 +234,6 @@ export const bucketValueSchemaV1_3 = Z.object({
     .default([])
     .describe("Glob patterns or bucket items to include for this bucket."),
   exclude: Z.array(Z.union([Z.string(), bucketItemSchema]))
-    .prefault([])
     .optional()
     .describe("Glob patterns or bucket items to exclude from this bucket."),
   injectLocale: Z.array(Z.string())
@@ -331,7 +329,6 @@ export const configV1_5Definition = extendConfigDefinition(
 // Changes: Add "lockedKeys" string array to bucket config
 export const bucketValueSchemaV1_6 = bucketValueSchemaV1_3.extend({
   lockedKeys: Z.array(Z.string())
-    .prefault([])
     .optional()
     .describe(
       "Keys that must remain unchanged and should never be overwritten by translations.",
@@ -362,7 +359,6 @@ export const configV1_6Definition = extendConfigDefinition(
 // Changes: Add "lockedPatterns" string array of regex patterns to bucket config
 export const bucketValueSchemaV1_7 = bucketValueSchemaV1_6.extend({
   lockedPatterns: Z.array(Z.string())
-    .prefault([])
     .optional()
     .describe(
       "Regular expression patterns whose matched content should remain locked during translation.",
@@ -394,7 +390,6 @@ export const configV1_7Definition = extendConfigDefinition(
 // Changes: Add "ignoredKeys" string array to bucket config
 export const bucketValueSchemaV1_8 = bucketValueSchemaV1_7.extend({
   ignoredKeys: Z.array(Z.string())
-    .prefault([])
     .optional()
     .describe(
       "Keys that should be completely ignored by translation processes.",
