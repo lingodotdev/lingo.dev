@@ -170,7 +170,9 @@ function DictionaryBoundary<D>(props: {
 }) {
   const dictionary = props.resource.read();
   return (
-    <LingoProvider dictionary={dictionary}>{props.children}</LingoProvider>
+    <LingoProvider dictionary={state.dictionary}>
+      {props.children}
+    </LingoProvider>
   );
 }
 
