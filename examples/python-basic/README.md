@@ -34,7 +34,7 @@ python-basic/
       Hello
    Goodbye
    नमस्ते
-   अलविदाrom translator import Translator
+   अलविदा
 
    # Initialize with English
    tr = Translator(lang='en')
