@@ -400,7 +400,7 @@ Notes:
 ## Examples & common workflows
 
 - Initialize a project non-interactively:
-  - `lingo.dev init --source en --targets es fr --bucket json --paths "src/locales/[locale].json"
+  - `lingo.dev init --source en --targets es fr --bucket json --paths "src/locales/[locale].json"`
 - Run localization in CI (validate lockfile only):
   - `lingo.dev run --frozen --api-key $LINGODOTDEV_API_KEY`
 - Start MCP server for agent integration:
