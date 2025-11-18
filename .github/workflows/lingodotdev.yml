@@ -46,9 +46,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Use Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "20.17"
 
       - name: Lingo.dev
         uses: ./

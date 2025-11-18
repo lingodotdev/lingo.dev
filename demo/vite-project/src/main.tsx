@@ -4,11 +4,18 @@ import "./index.css";
 import App from "./App.tsx";
 
 // Compiler: add import
-import { LingoProviderWrapper, loadDictionary } from "lingo.dev/react/client";
+import {
+  LingoProviderFallback,
+  LingoProviderWrapper,
+  loadDictionary,
+} from "lingo.dev/react/client";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <LingoProviderWrapper loadDictionary={(locale) => loadDictionary(locale)}>
+    <LingoProviderWrapper
+      loadDictionary={(locale) => loadDictionary(locale)}
+      fallback={<LingoProviderFallback />}
+    >
       <App />
     </LingoProviderWrapper>
   </StrictMode>,

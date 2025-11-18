@@ -10,6 +10,7 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --max-container-width: 1200px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -17,4 +18,20 @@
     --background: #0a0a0a;
     --foreground: #ededed;
   }
+}
+/* Stabilize layout when Windows scrollbars appear */
+html {
+  scrollbar-gutter: stable;
+}
+
+/* Ensure full-bleed bars actually span the viewport width */
+.site-announcement,
+.site-navbar {
+  width: 100%; /* never use 100vw — prevents scrollbar gutter */
+}
+
+/* Optional: small polish — consistent font smoothing */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }

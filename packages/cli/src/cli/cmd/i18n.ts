@@ -57,6 +57,7 @@ export default new Command()
   .option(
     "--key <key>",
     "Limit processing to a single translation key by exact match. Filters all buckets and locales to process only this key, useful for testing or debugging specific translations. Example: auth.login.title",
+    (val: string) => encodeURIComponent(val),
   )
   .option(
     "--file [files...]",

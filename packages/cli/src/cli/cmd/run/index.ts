@@ -84,7 +84,8 @@ export default new Command()
   .option(
     "--key <key>",
     "Filter keys by prefix matching on dot-separated paths. Example: auth.login to match all keys starting with auth.login. Repeat for multiple patterns",
-    (val: string, prev: string[]) => (prev ? [...prev, val] : [val]),
+    (val: string, prev: string[]) =>
+      prev ? [...prev, encodeURIComponent(val)] : [encodeURIComponent(val)],
   )
   .option(
     "--force",

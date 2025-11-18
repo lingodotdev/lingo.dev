@@ -1,6 +1,6 @@
 {
   "name": "@lingo.dev/_locales",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Lingo.dev locales",
   "private": false,
   "publishConfig": {
@@ -30,5 +30,8 @@
     "tsup": "^8.3.5",
     "typescript": "^5.8.3",
     "vitest": "^3.2.4"
+  },
+  "dependencies": {
+    "iso-639-3": "^3.0.1"
   }
 }

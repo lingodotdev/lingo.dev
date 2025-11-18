@@ -1,0 +1,59 @@
+name: Check for Merge Conflicts
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  # Also run when the base branch is updated
+  push:
+    branches:
+      - main
+
+jobs:
+  check-merge-conflict:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+
+    steps:
+      - name: Check for merge conflicts
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+
+            // Get the PR details to check mergeable state
+            const { data: pullRequest } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pr.number
+            });
+
+            console.log(`PR #${pr.number} mergeable state: ${pullRequest.mergeable_state}`);
+            console.log(`PR #${pr.number} mergeable: ${pullRequest.mergeable}`);
+
+            // The mergeable field can be: true, false, or null (if GitHub is still calculating)
+            if (pullRequest.mergeable === null) {
+              console.log('GitHub is still calculating mergeable status. Waiting...');
+              // Wait a bit and try again
+              await new Promise(resolve => setTimeout(resolve, 5000));
+
+              const { data: updatedPR } = await github.rest.pulls.get({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: pr.number
+              });
+
+              console.log(`Updated mergeable state: ${updatedPR.mergeable_state}`);
+              console.log(`Updated mergeable: ${updatedPR.mergeable}`);
+
+              if (updatedPR.mergeable === false) {
+                core.setFailed(`❌ PR #${pr.number} has merge conflicts that must be resolved.`);
+              } else if (updatedPR.mergeable === null) {
+                core.warning('⚠️  Could not determine merge conflict status. GitHub may still be calculating.');
+              } else {
+                console.log(`✅ PR #${pr.number} has no merge conflicts.`);
+              }
+            } else if (pullRequest.mergeable === false) {
+              core.setFailed(`❌ PR #${pr.number} has merge conflicts that must be resolved.`);
+            } else {
+              console.log(`✅ PR #${pr.number} has no merge conflicts.`);
+            }

@@ -2,9 +2,24 @@
   "version": "1.10",
   "locale": {
     "source": "en",
-    "targets": ["es"]
+    "targets": [
+      "es",
+      "or",
+      "ta",
+      "te",
+      "ml",
+      "mr",
+      "gu",
+      "pa",
+      "as",
+      "si"
+    ]
   },
   "buckets": {
+    "mdx-root": {
+      "include": ["**/*.md", "**/*.mdx"],
+      "exclude": ["node_modules/**"]
+    },
     "xliff": {
       "include": ["demo/xliff/[locale]/*.xliff"]
     },

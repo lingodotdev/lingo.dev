@@ -24,6 +24,20 @@ export const providerDetails: Record<
     getKeyLink: "https://ai.google.dev/",
     docsLink: "https://ai.google.dev/gemini-api/docs/troubleshooting",
   },
+  openai: {
+    name: "OpenAI",
+    apiKeyEnvVar: "OPENAI_API_KEY",
+    apiKeyConfigKey: "llm.openaiApiKey",
+    getKeyLink: "https://platform.openai.com/account/api-keys",
+    docsLink: "https://platform.openai.com/docs",
+  },
+  anthropic: {
+    name: "Anthropic",
+    apiKeyEnvVar: "ANTHROPIC_API_KEY",
+    apiKeyConfigKey: "llm.anthropicApiKey",
+    getKeyLink: "https://console.anthropic.com/get-api-key",
+    docsLink: "https://console.anthropic.com/docs",
+  },
   openrouter: {
     name: "OpenRouter",
     apiKeyEnvVar: "OPENROUTER_API_KEY",

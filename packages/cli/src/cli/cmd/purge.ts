@@ -34,6 +34,7 @@ export default new Command()
   .option(
     "--key <key>",
     "Filter which keys to delete using prefix matching on dot-separated key paths. Example: 'auth.login' matches all keys starting with auth.login. Omit this option to delete ALL keys. Keys marked as locked or ignored in i18n.json are automatically skipped",
+    (val: string) => encodeURIComponent(val),
   )
   .option(
     "--locale <locale>",

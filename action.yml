@@ -16,6 +16,8 @@ runs:
           --pull-request "${{ inputs.pull-request }}" \
           --commit-message "${{ inputs.commit-message }}" \
           --pull-request-title "${{ inputs.pull-request-title }}" \
+          --commit-author-name "${{ inputs.commit-author-name }}" \
+          --commit-author-email "${{ inputs.commit-author-email }}" \
           --working-directory "${{ inputs.working-directory }}" \
           --process-own-commits "${{ inputs.process-own-commits }}" \
           --parallel ${{ inputs.parallel }}
@@ -39,6 +41,14 @@ inputs:
   pull-request-title:
     description: "Pull request title"
     default: "feat: update translations via @LingoDotDev"
+    required: false
+  commit-author-name:
+    description: "Git commit author name"
+    default: "Lingo.dev"
+    required: false
+  commit-author-email:
+    description: "Git commit author email"
+    default: "support@lingo.dev"
     required: false
   working-directory:
     description: "Working directory"

@@ -1,5 +1,26 @@
 # @lingo.dev/\_sdk
 
+## 0.12.9
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @lingo.dev/_spec@0.43.1
+
+## 0.12.8
+
+### Patch Changes
+
+- Updated dependencies [[`ac38e8e`](https://github.com/lingodotdev/lingo.dev/commit/ac38e8e8dea0d8c4cd3c8b00e6394bfbd8074611)]:
+  - @lingo.dev/_spec@0.43.0
+
+## 0.12.7
+
+### Patch Changes
+
+- Updated dependencies [[`d72c67c`](https://github.com/lingodotdev/lingo.dev/commit/d72c67c78a4d8f01077db8098b5d973ec98a4c1e)]:
+  - @lingo.dev/_spec@0.42.0
+
 ## 0.12.6
 
 ### Patch Changes
@@ -60,7 +81,6 @@
 ### Minor Changes
 
 - [#1049](https://github.com/lingodotdev/lingo.dev/pull/1049) [`85dfc10`](https://github.com/lingodotdev/lingo.dev/commit/85dfc10961b116e31b2bb478f42013756ca49974) Thanks [@VAIBHAVSING](https://github.com/VAIBHAVSING)! - Added new methods to the SDK:
-
   1. `localizeStringArray`: Localizes an array of strings while maintaining their order.
 
   Also added comprehensive tests for these methods using Vitest.

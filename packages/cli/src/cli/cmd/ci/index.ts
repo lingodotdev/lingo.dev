@@ -14,6 +14,8 @@ interface CIOptions {
   pullRequest?: boolean;
   commitMessage?: string;
   pullRequestTitle?: string;
+  commitAuthorName?: string;
+  commitAuthorEmail?: string;
   workingDirectory?: string;
   processOwnCommits?: boolean;
 }
@@ -43,6 +45,14 @@ export default new Command()
   .option(
     "--pull-request-title <title>",
     "Title for the pull request when using --pull-request mode. Defaults to 'feat: update translations via @lingodotdev'",
+  )
+  .option(
+    "--commit-author-name <name>",
+    "Git commit author name. Defaults to 'Lingo.dev'",
+  )
+  .option(
+    "--commit-author-email <email>",
+    "Git commit author email. Defaults to 'support@lingo.dev'",
   )
   .option(
     "--working-directory <dir>",
@@ -82,6 +92,12 @@ export default new Command()
       }),
       ...(options.pullRequestTitle && {
         LINGODOTDEV_PULL_REQUEST_TITLE: options.pullRequestTitle,
+      }),
+      ...(options.commitAuthorName && {
+        LINGODOTDEV_COMMIT_AUTHOR_NAME: options.commitAuthorName,
+      }),
+      ...(options.commitAuthorEmail && {
+        LINGODOTDEV_COMMIT_AUTHOR_EMAIL: options.commitAuthorEmail,
       }),
       ...(options.workingDirectory && {
         LINGODOTDEV_WORKING_DIRECTORY: options.workingDirectory,

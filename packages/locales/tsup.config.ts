@@ -9,6 +9,8 @@ export default defineConfig({
   dts: true,
   cjsInterop: true,
   splitting: false,
+  // Bundle iso-639-3 since it's ESM-only and can't be required in CJS
+  noExternal: ["iso-639-3"],
   outExtension: (ctx) => ({
     js: ctx.format === "cjs" ? ".cjs" : ".mjs",
   }),
