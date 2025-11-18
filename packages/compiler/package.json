@@ -1,6 +1,6 @@
 {
   "name": "@lingo.dev/_compiler",
-  "version": "0.7.17",
+  "version": "0.7.18",
   "description": "Lingo.dev Compiler",
   "private": false,
   "publishConfig": {
@@ -11,6 +11,13 @@
   "main": "build/index.cjs",
   "types": "build/index.d.ts",
   "module": "build/index.mjs",
+  "exports": {
+    ".": {
+      "types": "./build/index.d.ts",
+      "import": "./build/index.mjs",
+      "require": "./build/index.cjs"
+    }
+  },
   "files": [
     "build"
   ],
@@ -38,9 +45,11 @@
     "vitest": "^2.1.4"
   },
   "dependencies": {
+    "@ai-sdk/anthropic": "^1.0.11",
     "@ai-sdk/google": "^1.2.19",
     "@ai-sdk/groq": "^1.2.3",
     "@ai-sdk/mistral": "^1.2.8",
+    "@ai-sdk/openai": "^1.3.22",
     "@babel/generator": "^7.26.5",
     "@babel/parser": "^7.26.7",
     "@babel/traverse": "^7.27.4",

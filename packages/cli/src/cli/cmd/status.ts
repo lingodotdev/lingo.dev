@@ -515,7 +515,10 @@ export default new Command()
         console.log(`• Per-language breakdown:`);
         for (const locale of targetLocales) {
           const words = totalWordCount.get(locale) || 0;
-          const percent = ((words / totalWordsToTranslate) * 100).toFixed(1);
+          const percent =
+            totalWordsToTranslate > 0
+              ? ((words / totalWordsToTranslate) * 100).toFixed(1)
+              : "0.0";
           console.log(
             `  - ${locale}: ~${words.toLocaleString()} words (${percent}% of total)`,
           );
