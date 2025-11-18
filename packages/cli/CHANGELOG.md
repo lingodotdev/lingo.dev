@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.116.2
+
+### Patch Changes
+
+- [#1617](https://github.com/lingodotdev/lingo.dev/pull/1617) [`b0ac42a`](https://github.com/lingodotdev/lingo.dev/commit/b0ac42a896b46d0670a5ad9817304b32125aef85) Thanks [@vrcprl](https://github.com/vrcprl)! - support for stringSet to xcode-xcstrings and v2
+
 ## 0.116.1
 
 ### Patch Changes
