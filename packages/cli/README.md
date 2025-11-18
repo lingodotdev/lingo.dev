@@ -12,6 +12,7 @@
 
 <p align="center">
   <a href="https://lingo.dev/compiler">Lingo.dev Compiler</a> •
+  <a href="https://lingo.dev/mcp">Lingo.dev MCP</a> •
   <a href="https://lingo.dev/cli">Lingo.dev CLI</a> •
   <a href="https://lingo.dev/ci">Lingo.dev CI/CD</a> •
   <a href="https://lingo.dev/sdk">Lingo.dev SDK</a>

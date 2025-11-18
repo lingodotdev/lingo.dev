@@ -19,6 +19,7 @@
 
 <p align="center">
   <a href="https://lingo.dev/compiler">Lingo.dev Compiler</a> •
+  <a href="https://lingo.dev/mcp">Lingo.dev MCP</a> •
   <a href="https://lingo.dev/cli">Lingo.dev CLI</a> •
   <a href="https://lingo.dev/ci">Lingo.dev CI/CD</a> •
   <a href="https://lingo.dev/sdk">Lingo.dev SDK</a>
@@ -202,6 +203,6 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 ## 🌐 Readme на других языках
 
-[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Bhojpuri](/readme/bho.md)
 
 Не видите своего языка? Добавьте его в [`i18n.json`](./i18n.json) и откройте PR!

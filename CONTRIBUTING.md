@@ -63,7 +63,6 @@ pnpm lingo.dev --help
 
 ```bash
 pnpm install --frozen-lockfile
-pnpm format:check
 pnpm turbo build --force
 pnpm turbo test --force
 pnpm changeset status --since origin/main
