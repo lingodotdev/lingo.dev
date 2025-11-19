@@ -1,5 +1,11 @@
 # @lingo.dev/\_react
 
+## 0.6.0
+
+### Minor Changes
+
+- [#1534](https://github.com/lingodotdev/lingo.dev/pull/1534) [`4d2359a`](https://github.com/lingodotdev/lingo.dev/commit/4d2359a3d7164f825bf5ddf62b5d13a4690cb4a2) Thanks [@verma-divyanshu-git](https://github.com/verma-divyanshu-git)! - add Suspense fallback to LingoProviderWrapper
+
 ## 0.5.0
 
 ### Minor Changes

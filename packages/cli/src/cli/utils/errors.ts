@@ -3,6 +3,9 @@ export const docLinks = {
   bucketNotFound: "https://lingo.dev/cli",
   authError: "https://lingo.dev/cli",
   localeTargetNotFound: "https://lingo.dev/cli",
+  // corrected key (previously misspelled as "lockFiletNotFound")
+  lockFileNotFound: "https://lingo.dev/cli",
+  // legacy alias for backward compatibility
   lockFiletNotFound: "https://lingo.dev/cli",
   failedReplexicaEngine: "https://lingo.dev/cli",
   placeHolderFailed: "https://lingo.dev/cli",
@@ -10,6 +13,9 @@ export const docLinks = {
   connectionFailed: "https://lingo.dev/cli",
   invalidType: "https://lingo.dev/cli",
   invalidPathPattern: "https://lingo.dev/cli",
+  // corrected key (previously misspelled as "androidResouceError")
+  androidResourceError: "https://lingo.dev/cli",
+  // legacy alias for backward compatibility
   androidResouceError: "https://lingo.dev/cli",
   invalidBucketType: "https://lingo.dev/cli",
   invalidStringDict: "https://lingo.dev/cli",
