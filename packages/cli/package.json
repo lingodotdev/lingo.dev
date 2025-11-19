@@ -1,6 +1,6 @@
 {
   "name": "lingo.dev",
-  "version": "0.113.8",
+  "version": "0.116.2",
   "description": "Lingo.dev CLI",
   "private": false,
   "publishConfig": {
@@ -196,7 +196,7 @@
     "php-array-reader": "^2.1.2",
     "plist": "^3.1.0",
     "posthog-node": "^5.8.1",
-    "prettier": "^3.4.2",
+    "prettier": "^3.6.2",
     "react": "^18.3.1",
     "rehype-stringify": "^10.0.1",
     "remark-disable-tokenizers": "^1.1.1",
