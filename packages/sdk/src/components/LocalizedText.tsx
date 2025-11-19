@@ -6,15 +6,16 @@ interface LocalizedTextProps {
   children: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
+  as?: keyof JSX.IntrinsicElements;
 }
 
-export function LocalizedText({ locale, children, className = '', style = {} }: LocalizedTextProps) {
+export function LocalizedText({ locale, children, className = '', style = {}, as: Component = 'div' }: LocalizedTextProps) {
   const { style: scriptStyle } = useScriptStyle(locale);
 
   return (
-    <div className={className} style={{ ...scriptStyle, ...style }}>
+    <Component className={className} style={{ ...scriptStyle, ...style }}>
       {children}
-    </div>
+    </Component>
   );
 }
 
