@@ -1,5 +1,33 @@
 # lingo.dev
 
+## 0.116.2
+
+### Patch Changes
+
+- [#1617](https://github.com/lingodotdev/lingo.dev/pull/1617) [`b0ac42a`](https://github.com/lingodotdev/lingo.dev/commit/b0ac42a896b46d0670a5ad9817304b32125aef85) Thanks [@vrcprl](https://github.com/vrcprl)! - support for stringSet to xcode-xcstrings and v2
+
+## 0.116.1
+
+### Patch Changes
+
+- Updated dependencies [[`0f6ffbf`](https://github.com/lingodotdev/lingo.dev/commit/0f6ffbf7dafafbead768eb9e52787cb6013aa1c3)]:
+  - @lingo.dev/_locales@0.2.0
+  - @lingo.dev/_spec@0.43.1
+  - @lingo.dev/_compiler@0.7.18
+  - @lingo.dev/_sdk@0.12.9
+
+## 0.116.0
+
+### Minor Changes
+
+- [#1519](https://github.com/lingodotdev/lingo.dev/pull/1519) [`5d808bd`](https://github.com/lingodotdev/lingo.dev/commit/5d808bd33eb3a0b5c685e3a3a6cb079ba86eb6e2) Thanks [@Dishantydv7](https://github.com/Dishantydv7)! - fix(status): prevent NaN% when totalWordsToTranslate is 0
+
+### Patch Changes
+
+- [`c0aa906`](https://github.com/lingodotdev/lingo.dev/commit/c0aa906880d26c5d01748e0d72b9f61ec989606d) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - Fix prettier formatter loaders after prettier config removal
+
+  Restores prettier as a runtime dependency for the CLI package and restores the `.prettierrc` config file needed by the formatter loaders. This fixes failing tests for HTML, JSON, and Markdown bucket loaders that depend on prettier for formatting translation files.
+
 ## 0.115.0
 
 ### Minor Changes
