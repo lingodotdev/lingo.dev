@@ -1,6 +1,9 @@
 import type { LoaderConfig } from "./types";
 import { loadMetadata, saveMetadata, upsertEntries } from "./metadata/manager";
 import { shouldTransformFile, transformComponent } from "./transform";
+import { startTranslationServer } from "./server";
+
+let globalServer: any;
 
 /**
  * Turbopack/Webpack loader for automatic translation
@@ -12,6 +15,7 @@ export default async function lingoLoader(
   source: string,
 ): Promise<void> {
   const callback = this.async();
+  console.warn("Loading", this.resourcePath);
 
   try {
     // Get loader options
@@ -26,11 +30,25 @@ export default async function lingoLoader(
         /\.spec\./,
         /\.test\./,
       ],
+      translator: this.getOptions().translator,
     };
 
     // Check if this file should be transformed
     if (!shouldTransformFile(this.resourcePath, config)) {
       return callback(null, source);
+    }
+
+    if (!globalServer) {
+      globalServer = await startTranslationServer({
+        startPort: 60000,
+        onError: (err) => {
+          console.error("Translation server error:", err);
+        },
+        onReady: () => {
+          console.log("Translation server started");
+        },
+        config,
+      });
     }
 
     // Load current metadata
@@ -42,6 +60,7 @@ export default async function lingoLoader(
       filePath: this.resourcePath,
       config,
       metadata,
+      serverPort: globalServer?.getPort() || null,
     });
 
     // If no transformation occurred, return original source

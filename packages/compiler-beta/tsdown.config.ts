@@ -3,13 +3,19 @@ import { defineConfig } from "tsdown";
 export default defineConfig({
   clean: true,
   target: "esnext",
-  entry: ["src/index.ts"],
+  entry: [
+    "src/index.ts",
+    "src/react/index.ts",
+    "src/react/client/*.tsx",
+    "src/react/client/*.ts",
+    "src/react/server/*.ts",
+    "src/translate/index.ts",
+    "src/loader.ts",
+    "src/json-loader.ts",
+    "src/api/route-handler.ts",
+    "src/vite-plugin.ts",
+  ],
   outDir: "build",
   format: ["cjs", "esm"],
   dts: true,
-  cjsInterop: true,
-  splitting: true,
-  outExtension: (ctx) => ({
-    js: ctx.format === "cjs" ? ".cjs" : ".mjs",
-  }),
 });

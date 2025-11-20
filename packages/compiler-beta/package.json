@@ -11,6 +11,48 @@
   "main": "build/index.cjs",
   "types": "build/index.d.cts",
   "module": "build/index.mjs",
+  "exports": {
+    ".": {
+      "types": "./build/index.d.cts",
+      "import": "./build/index.mjs",
+      "require": "./build/index.cjs"
+    },
+    "./react": {
+      "types": "./build/react/index.d.ts",
+      "import": "./build/react/index.mjs",
+      "require": "./build/react/index.cjs"
+    },
+    "./react/server": {
+      "types": "./build/react/server/index.d.ts",
+      "import": "./build/react/server/index.mjs",
+      "require": "./build/react/server/index.cjs"
+    },
+    "./translate": {
+      "types": "./build/translate/index.d.ts",
+      "import": "./build/translate/index.mjs",
+      "require": "./build/translate/index.cjs"
+    },
+    "./loader": {
+      "types": "./build/loader.d.ts",
+      "import": "./build/loader.mjs",
+      "require": "./build/loader.cjs"
+    },
+    "./json-loader": {
+      "types": "./build/json-loader.d.ts",
+      "import": "./build/json-loader.mjs",
+      "require": "./build/json-loader.cjs"
+    },
+    "./api": {
+      "types": "./build/api/route-handler.d.ts",
+      "import": "./build/api/route-handler.mjs",
+      "require": "./build/api/route-handler.cjs"
+    },
+    "./vite": {
+      "types": "./build/vite-plugin.d.ts",
+      "import": "./build/vite-plugin.mjs",
+      "require": "./build/vite-plugin.cjs"
+    }
+  },
   "files": [
     "build"
   ],
@@ -31,11 +73,15 @@
     "@types/babel__traverse": "^7.28.0",
     "@types/node": "^22.10.5",
     "@types/react": "^18.3.26",
+    "next": "^16.0.3",
     "tsdown": "^0.16.5",
     "typescript": "^5.9.3",
     "vitest": "^4.0.9"
   },
   "dependencies": {
+    "@ai-sdk/google": "^1.2.19",
+    "@ai-sdk/groq": "^1.2.3",
+    "@ai-sdk/mistral": "^1.2.8",
     "@babel/core": "^7.26.0",
     "@babel/generator": "^7.28.5",
     "@babel/parser": "^7.28.5",
@@ -45,7 +91,22 @@
     "@babel/types": "^7.28.5",
     "@lingo.dev/_sdk": "workspace:*",
     "@lingo.dev/_spec": "workspace:*",
-    "lodash": "^4.17.21"
+    "@openrouter/ai-sdk-provider": "^0.7.1",
+    "ai": "^4.2.10",
+    "dotenv": "^16.4.5",
+    "fast-xml-parser": "^5.0.8",
+    "lodash": "^4.17.21",
+    "ollama-ai-provider": "^1.2.0"
+  },
+  "peerDependencies": {
+    "next": "^15.0.0 || ^16.0.0",
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
+  },
+  "peerDependenciesMeta": {
+    "next": {
+      "optional": true
+    }
   },
   "packageManager": "pnpm@9.12.3"
 }

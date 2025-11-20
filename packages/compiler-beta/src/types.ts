@@ -2,6 +2,8 @@
  * Core types for the compiler-beta translation system
  */
 
+import type { TranslatorConfig } from "./translate";
+
 /**
  * Configuration for the translation loader
  */
@@ -35,6 +37,11 @@ export interface LoaderConfig {
    * Skip transformation for specific patterns
    */
   skipPatterns?: RegExp[];
+
+  /**
+   * Translation provider to use
+   */
+  translator?: TranslatorConfig;
 }
 
 /**
@@ -183,4 +190,9 @@ export interface BabelTransformOptions {
    * Current metadata
    */
   metadata: MetadataSchema;
+
+  /**
+   * Port of the translation server (if running)
+   */
+  serverPort?: number | null;
 }

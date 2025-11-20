@@ -1,4 +1,5 @@
-import type { PluginObj, types as t } from "@babel/core";
+import type { PluginObj } from "@babel/core";
+import * as t from "@babel/types";
 import traverse from "@babel/traverse";
 import type { NodePath } from "@babel/traverse";
 import type {
@@ -22,6 +23,7 @@ interface PluginState {
   config: LoaderConfig;
   metadata: MetadataSchema;
   filePath: string;
+  serverPort?: number | null;
 }
 
 /**
@@ -52,14 +54,12 @@ function isReactComponent(
 
 /**
  * Detect component type (Client vs Server)
+ * In Next.js App Router, components are Server Components by default unless:
+ * 1. They have "use client" directive
+ * 2. They are imported by a client component
  */
 function detectComponentType(path: NodePath<any>): ComponentType {
-  // Check if it's an async function (Server Component)
-  if (path.node.async === true) {
-    return "server" as ComponentType;
-  }
-
-  // Check for 'use client' directive
+  // Check for 'use client' directive first
   const program = path.findParent((p) => p.isProgram());
   if (program && program.isProgram()) {
     const directives = program.node.directives || [];
@@ -70,8 +70,9 @@ function detectComponentType(path: NodePath<any>): ComponentType {
     }
   }
 
-  // Default to client for non-async components
-  return "client" as ComponentType;
+  // In Next.js App Router, default is Server Component
+  // Server Components can be async or sync
+  return "server" as ComponentType;
 }
 
 /**
@@ -110,134 +111,113 @@ function hasUseI18nDirective(program: NodePath<t.Program>): boolean {
 }
 
 /**
- * Create the Babel plugin for auto-translation
+ * Create Babel visitors for auto-translation
  */
-export function createBabelPlugin(
+export function createBabelVisitors(
   config: LoaderConfig,
   metadata: MetadataSchema,
   filePath: string,
-): PluginObj {
+  visitorState: PluginState,
+  serverPort?: number | null,
+) {
   return {
-    name: "lingo-auto-translate",
-    visitor: {
-      Program: {
-        enter(path, state: any) {
-          const pluginState: PluginState = {
-            componentName: null,
-            componentType: "unknown" as ComponentType,
-            needsTranslationImport: false,
-            hasUseI18nDirective: hasUseI18nDirective(path),
-            newEntries: [],
-            config,
-            metadata,
-            filePath,
-          };
+    Program: {
+      enter(path: NodePath<t.Program>) {
+        // Initialize state
+        visitorState.hasUseI18nDirective = hasUseI18nDirective(path);
 
-          // Store state
-          state.pluginState = pluginState;
-
-          // Check if we should skip this file
-          if (config.useDirective && !pluginState.hasUseI18nDirective) {
-            // Skip transformation if directive is required but not present
-            path.skip();
-          }
-        },
-
-        exit(path, state: any) {
-          const pluginState: PluginState = state.pluginState;
-
-          // Inject translation import if needed
-          if (pluginState.needsTranslationImport) {
-            injectTranslationImport(path, pluginState);
-          }
-        },
-      },
-
-      // Capture component functions
-      FunctionDeclaration(path, state: any) {
-        const pluginState: PluginState = state.pluginState;
-
-        if (isReactComponent(path)) {
-          pluginState.componentName = inferComponentName(path);
-          pluginState.componentType = detectComponentType(path);
+        // Check if we should skip this file
+        if (config.useDirective && !visitorState.hasUseI18nDirective) {
+          // Skip transformation if directive is required but not present
+          path.skip();
         }
       },
 
-      ArrowFunctionExpression(path, state: any) {
-        const pluginState: PluginState = state.pluginState;
-
-        if (isReactComponent(path)) {
-          pluginState.componentName = inferComponentName(path);
-          pluginState.componentType = detectComponentType(path);
+      exit(path: NodePath<t.Program>) {
+        // Inject translation import if needed
+        if (visitorState.needsTranslationImport) {
+          injectTranslationImport(path, visitorState, serverPort);
         }
       },
+    },
 
-      FunctionExpression(path, state: any) {
-        const pluginState: PluginState = state.pluginState;
+    // Capture component functions
+    FunctionDeclaration(path: NodePath<t.FunctionDeclaration>) {
+      if (isReactComponent(path)) {
+        visitorState.componentName = inferComponentName(path);
+        visitorState.componentType = detectComponentType(path);
+      }
+    },
 
-        if (isReactComponent(path)) {
-          pluginState.componentName = inferComponentName(path);
-          pluginState.componentType = detectComponentType(path);
-        }
-      },
+    ArrowFunctionExpression(path: NodePath<t.ArrowFunctionExpression>) {
+      if (isReactComponent(path)) {
+        visitorState.componentName = inferComponentName(path);
+        visitorState.componentType = detectComponentType(path);
+      }
+    },
 
-      // Transform JSX text nodes
-      JSXText(path, state: any) {
-        const pluginState: PluginState = state.pluginState;
-        const t = state.types;
+    FunctionExpression(path: NodePath<t.FunctionExpression>) {
+      if (isReactComponent(path)) {
+        visitorState.componentName = inferComponentName(path);
+        visitorState.componentType = detectComponentType(path);
+      }
+    },
 
-        // Skip if no component context
-        if (!pluginState.componentName) {
-          return;
-        }
+    // Transform JSX text nodes
+    JSXText(path: NodePath<t.JSXText>) {
+      // Skip if no component context
+      if (!visitorState.componentName) {
+        return;
+      }
 
-        const text = path.node.value.trim();
+      const text = path.node.value.trim();
 
-        // Skip empty or whitespace-only text
-        if (!text) {
-          return;
-        }
+      // Skip empty or whitespace-only text
+      if (!text) {
+        return;
+      }
 
-        // Skip if text is just newlines/indentation
-        if (/^[\s\n]*$/.test(text)) {
-          return;
-        }
+      // Skip if text is just newlines/indentation
+      if (/^[\s\n]*$/.test(text)) {
+        return;
+      }
 
-        // Generate hash
-        const hash = generateTranslationHash(
-          text,
-          pluginState.componentName,
-          pluginState.filePath,
-        );
+      // Generate hash
+      const hash = generateTranslationHash(
+        text,
+        visitorState.componentName,
+        visitorState.filePath,
+      );
 
-        // Create translation entry
-        const context: TranslationContext = {
-          componentName: pluginState.componentName,
-          filePath: pluginState.filePath,
-          line: path.node.loc?.start.line,
-          column: path.node.loc?.start.column,
-        };
+      // Create translation entry
+      const context: TranslationContext = {
+        componentName: visitorState.componentName,
+        filePath: visitorState.filePath,
+        line: path.node.loc?.start.line,
+        column: path.node.loc?.start.column,
+      };
 
-        const entry: TranslationEntry = {
-          sourceText: text,
-          context,
-          hash,
-          addedAt: new Date().toISOString(),
-        };
+      const entry: TranslationEntry = {
+        sourceText: text,
+        context,
+        hash,
+        addedAt: new Date().toISOString(),
+      };
 
-        // Store new entry
-        pluginState.newEntries.push(entry);
+      // Store new entry
+      visitorState.newEntries.push(entry);
 
-        // Replace text with {t("hash")}
-        const tCall = t.callExpression(t.identifier("t"), [
-          t.stringLiteral(hash),
-        ]);
+      // Replace text with {t("hash")}
+      const tCall = t.callExpression(t.identifier("t"), [
+        t.stringLiteral(hash),
+        t.stringLiteral(text),
+      ]);
 
-        path.replaceWith(t.jsxExpressionContainer(tCall));
+      // path.replaceWith(t.stringLiteral(hash));
+      path.replaceWith(t.jsxExpressionContainer(tCall));
 
-        // Mark that we need translation import
-        pluginState.needsTranslationImport = true;
-      },
+      // Mark that we need translation import
+      visitorState.needsTranslationImport = true;
     },
   };
 }
@@ -248,29 +228,55 @@ export function createBabelPlugin(
 function injectTranslationImport(
   programPath: NodePath<t.Program>,
   state: PluginState,
+  serverPort?: number | null,
 ): void {
-  const t = require("@babel/types") as typeof import("@babel/types");
+  // Determine if we're dealing with a server or client component
+  const isServerComponent = state.componentType === "server";
 
-  // For now, inject a simple useTranslation hook
-  // TODO: Differentiate between client and server components
-  const importDeclaration = t.importDeclaration(
-    [
-      t.importSpecifier(
-        t.identifier("useTranslation"),
-        t.identifier("useTranslation"),
-      ),
-    ],
-    t.stringLiteral("@lingo.dev/runtime"), // TODO: Make this configurable
-  );
+  if (isServerComponent) {
+    // Import getServerTranslations for Server Components
+    const getServerTranslationsImport = t.importDeclaration(
+      [
+        t.importSpecifier(
+          t.identifier("getServerTranslations"),
+          t.identifier("getServerTranslations"),
+        ),
+      ],
+      t.stringLiteral("@lingo.dev/_compiler-beta/react/server"),
+    );
 
-  // Insert at the top of the file
-  programPath.node.body.unshift(importDeclaration);
+    // Import metadata JSON for bundling
+    const metadataPath = `./${state.config.lingoDir}/metadata.json`;
+    const metadataImport = t.importDeclaration(
+      [t.importDefaultSpecifier(t.identifier("__lingoMetadata"))],
+      t.stringLiteral(metadataPath),
+    );
 
-  // Find the component function and inject hook call
+    programPath.node.body.unshift(metadataImport);
+    programPath.node.body.unshift(getServerTranslationsImport);
+  } else {
+    // Import useTranslation for Client Components
+    const importDeclaration = t.importDeclaration(
+      [
+        t.importSpecifier(
+          t.identifier("useTranslation"),
+          t.identifier("useTranslation"),
+        ),
+      ],
+      t.stringLiteral("@lingo.dev/_compiler-beta/react"),
+    );
+    programPath.node.body.unshift(importDeclaration);
+  }
+
+  // Find the component function and inject appropriate translation call
   programPath.traverse({
     FunctionDeclaration(path) {
       if (path.node.id?.name === state.componentName) {
-        injectHookCall(path, t);
+        if (isServerComponent) {
+          injectServerTranslationCall(path, state.config, serverPort);
+        } else {
+          injectHookCall(path);
+        }
       }
     },
     ArrowFunctionExpression(path) {
@@ -281,18 +287,21 @@ function injectTranslationImport(
         parent.id.type === "Identifier" &&
         parent.id.name === state.componentName
       ) {
-        injectHookCall(path, t);
+        if (isServerComponent) {
+          injectServerTranslationCall(path, state.config, serverPort);
+        } else {
+          injectHookCall(path);
+        }
       }
     },
   });
 }
 
 /**
- * Inject const t = useTranslation() at the start of the component
+ * Inject const t = useTranslation() at the start of the component (Client Components)
  */
 function injectHookCall(
   componentPath: NodePath<t.FunctionDeclaration | t.ArrowFunctionExpression>,
-  t: typeof import("@babel/types"),
 ): void {
   const body = componentPath.get("body");
 
@@ -300,6 +309,7 @@ function injectHookCall(
     return;
   }
 
+  // useTranslation() takes no arguments - serverPort comes from context
   const hookCall = t.variableDeclaration("const", [
     t.variableDeclarator(
       t.identifier("t"),
@@ -312,8 +322,62 @@ function injectHookCall(
 }
 
 /**
- * Extract new entries from plugin state
+ * Inject const t = await getServerTranslations() at the start of the component (Server Components)
+ * Also makes the component async if it isn't already
  */
-export function extractNewEntries(state: any): TranslationEntry[] {
-  return state.pluginState?.newEntries || [];
+function injectServerTranslationCall(
+  componentPath: NodePath<t.FunctionDeclaration | t.ArrowFunctionExpression>,
+  config: any,
+  serverPort?: number | null,
+): void {
+  const body = componentPath.get("body");
+
+  if (!body.isBlockStatement()) {
+    return;
+  }
+
+  // Make the component async if it isn't already
+  if (!componentPath.node.async) {
+    componentPath.node.async = true;
+  }
+
+  // Create options object for getServerTranslations
+  const optionsProperties = [
+    // Pass the imported metadata (required)
+    t.objectProperty(t.identifier("metadata"), t.identifier("__lingoMetadata")),
+  ];
+
+  // Pass sourceLocale if configured
+  if (config.sourceLocale) {
+    optionsProperties.push(
+      t.objectProperty(
+        t.identifier("sourceLocale"),
+        t.stringLiteral(config.sourceLocale),
+      ),
+    );
+  }
+
+  // Pass serverPort if available
+  if (serverPort) {
+    optionsProperties.push(
+      t.objectProperty(
+        t.identifier("serverPort"),
+        t.numericLiteral(serverPort),
+      ),
+    );
+  }
+
+  const callArgs = [t.objectExpression(optionsProperties)];
+
+  const serverCall = t.variableDeclaration("const", [
+    t.variableDeclarator(
+      t.identifier("t"),
+      t.awaitExpression(
+        t.callExpression(t.identifier("getServerTranslations"), callArgs),
+      ),
+    ),
+  ]);
+
+  // Insert at the beginning of the function body
+  body.node.body.unshift(serverCall);
 }

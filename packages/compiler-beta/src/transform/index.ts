@@ -1,4 +1,6 @@
-import { transformSync } from "@babel/core";
+import * as parser from "@babel/parser";
+import traverse from "@babel/traverse";
+import generate from "@babel/generator";
 import path from "path";
 import type {
   BabelTransformOptions,
@@ -6,7 +8,7 @@ import type {
   MetadataSchema,
   TransformResult,
 } from "../types";
-import { createBabelPlugin, extractNewEntries } from "./babel-plugin";
+import { createBabelVisitors } from "./babel-plugin";
 
 /**
  * Transform component code to inject translation calls
@@ -14,7 +16,7 @@ import { createBabelPlugin, extractNewEntries } from "./babel-plugin";
 export function transformComponent(
   options: BabelTransformOptions,
 ): TransformResult {
-  const { code, filePath, config, metadata } = options;
+  const { code, filePath, config, metadata, serverPort } = options;
 
   // Get relative file path for consistent hashing
   const relativeFilePath = path
@@ -23,33 +25,50 @@ export function transformComponent(
     .join("/"); // Always normalize for cross-platform consistency
 
   try {
-    // Transform with Babel
-    const result = transformSync(code, {
-      filename: filePath,
-      plugins: [createBabelPlugin(config, metadata, relativeFilePath)],
-      presets: ["@babel/preset-react", "@babel/preset-typescript"],
-      sourceMaps: true,
-      configFile: false, // Don't load external babel config
-      babelrc: false, // Don't load .babelrc
+    // Parse the code with TypeScript and JSX support
+    const ast = parser.parse(code, {
+      sourceType: "module",
+      plugins: ["jsx", "typescript"],
     });
 
-    if (!result || !result.code) {
-      return {
-        code,
-        transformed: false,
-      };
-    }
+    // Create visitor state
+    const visitorState = {
+      componentName: null as string | null,
+      componentType: "unknown" as any,
+      needsTranslationImport: false,
+      hasUseI18nDirective: false,
+      newEntries: [] as any[],
+      config,
+      metadata,
+      filePath: relativeFilePath,
+      serverPort,
+    };
 
-    // Extract new entries from plugin state
-    const newEntries = result.metadata
-      ? extractNewEntries(result.metadata)
-      : [];
+    // Apply our translation transformation
+    const visitors = createBabelVisitors(
+      config,
+      metadata,
+      relativeFilePath,
+      visitorState,
+      serverPort,
+    );
+    traverse(ast, visitors);
+
+    // Generate code from AST
+    const output = generate(
+      ast,
+      {
+        sourceMaps: true,
+        retainLines: false,
+      },
+      code,
+    );
 
     return {
-      code: result.code,
-      map: result.map,
-      newEntries,
-      transformed: newEntries.length > 0,
+      code: output.code,
+      map: output.map,
+      newEntries: visitorState.newEntries,
+      transformed: visitorState.newEntries.length > 0,
     };
   } catch (error) {
     console.error(`Failed to transform ${filePath}:`, error);
