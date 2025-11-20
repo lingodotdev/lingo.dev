@@ -43,6 +43,7 @@ export const flagsSchema = z.object({
   apiKey: z.string().optional(),
   force: z.boolean().optional(),
   frozen: z.boolean().optional(),
+  dryRun: z.boolean().optional(),
   verbose: z.boolean().optional(),
   strict: z.boolean().optional(),
   interactive: z.boolean().default(false),
