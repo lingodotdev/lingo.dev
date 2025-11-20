@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback } from "react";
 import { useTranslationContext } from "./TranslationContext";
 
 /**
@@ -37,34 +37,27 @@ export type TranslationFunction = (hash: string, source: string) => string;
  * ```
  */
 export function useTranslation(): TranslationFunction {
-  const { translations, requestTranslation } = useTranslationContext();
-  const [translatingHash, startTranslation] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (translatingHash) {
-      requestTranslation(translatingHash);
-    }
-  }, [startTranslation]);
+  const { translations, registerHash, locale, sourceLocale } =
+    useTranslationContext();
 
   /**
    * Translation function
+   * Registers the hash with the provider and returns the translation or fallback
    */
   const t = useCallback(
     (hash: string, source: string): string => {
-      // For target locales, check translations cache
-      if (translations[hash]) {
-        return translations[hash];
+      // For source locale, always return source text
+      if (locale === sourceLocale) {
+        return source;
       }
 
-      if (!translatingHash) {
-        startTranslation(hash);
-      }
+      // Register this hash (provider will request translation if missing)
+      registerHash(hash);
 
-      // No metadata entry found, return hash
-      console.warn(`[useTranslation] Unknown hash: ${hash}`);
-      return source;
+      // Return translation if available, otherwise return source as fallback
+      return translations[hash] || source;
     },
-    [translations, requestTranslation, startTranslation, translatingHash],
+    [translations, registerHash, locale, sourceLocale],
   );
 
   return t;

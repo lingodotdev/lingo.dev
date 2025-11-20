@@ -2,12 +2,12 @@
 
 import {
   createContext,
-  useContext,
-  useState,
+  type ReactNode,
   useCallback,
+  useContext,
   useEffect,
   useRef,
-  type ReactNode,
+  useState,
 } from "react";
 
 /**
@@ -30,10 +30,10 @@ export interface TranslationContextType {
   translations: Record<string, string>;
 
   /**
-   * Request a translation for a given hash
-   * Translations are batched automatically
+   * Register a hash as being used in a component
+   * The provider will automatically request missing translations
    */
-  requestTranslation: (hash: string) => void;
+  registerHash: (hash: string) => void;
 
   /**
    * Whether translations are currently being loaded
@@ -135,66 +135,57 @@ export function TranslationProvider({
   const serverPort =
     providedServerPort ||
     (typeof window !== "undefined" && (window as any).__LINGO_SERVER_PORT__) ||
-    null;
+    60000;
 
   const [locale, setLocaleState] = useState(initialLocale);
   const [translations, setTranslations] =
     useState<Record<string, string>>(initialTranslations);
-  const [pendingTranslations, setPendingTranslations] = useState<Set<string>>(
-    new Set(),
-  );
   const [isLoading, setIsLoading] = useState(false);
 
+  // Track registered hashes from components (updated every render)
+  const registeredHashesRef = useRef<Set<string>>(new Set());
+
+  // Track which hashes are pending translation request
+  const pendingHashesRef = useRef<Set<string>>(new Set());
+
   // Batch timer reference
-  const [batchTimer, setBatchTimer] = useState<NodeJS.Timeout | null>(null);
+  const batchTimerRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Use ref to track translations without causing re-renders in requestTranslation
+  // Use ref to track translations to avoid stale closures
   const translationsRef = useRef<Record<string, string>>(initialTranslations);
+  const localeRef = useRef(locale);
 
-  // Keep ref in sync with state
+  // Keep refs in sync with state
   useEffect(() => {
     translationsRef.current = translations;
   }, [translations]);
 
+  useEffect(() => {
+    localeRef.current = locale;
+  }, [locale]);
+
   /**
-   * Default fetch function - calls /api/translate endpoint or server if port provided
+   * Default fetch function - calls batch translation endpoint
    */
   const defaultFetchTranslations = useCallback(
     async (hashes: string[], targetLocale: string) => {
-      // Determine the URL based on whether serverPort is provided
-      const url = serverPort
-        ? `http://127.0.0.1:${serverPort}/translations/${targetLocale}`
-        : "/api/translate";
+      // Use POST endpoint for batch translation
+      const url = `http://127.0.0.1:${serverPort}/translations/${targetLocale}`;
 
       const response = await fetch(url, {
-        method: serverPort ? "GET" : "POST",
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: serverPort
-          ? undefined
-          : JSON.stringify({
-              hashes,
-              locale: targetLocale,
-            }),
+        body: JSON.stringify({ hashes }),
       });
 
       if (!response.ok) {
         throw new Error(`Translation API error: ${response.statusText}`);
       }
 
-      const data = await response.json();
-
-      // If using server, extract translations from dictionary format
-      if (serverPort && data.files) {
-        const allTranslations: Record<string, string> = {};
-        Object.values(data.files || {}).forEach((file: any) => {
-          Object.assign(allTranslations, file.entries || {});
-        });
-        return allTranslations;
-      }
-
-      return data;
+      // Response is a hash -> translation map
+      return await response.json();
     },
     [serverPort],
   );
@@ -202,81 +193,88 @@ export function TranslationProvider({
   const fetchFn = customFetchTranslations || defaultFetchTranslations;
 
   /**
-   * Execute batched translation request
+   * Register a hash as being used in a component
+   * Called during render - must not trigger state updates
    */
-  const executeBatch = useCallback(async () => {
-    if (pendingTranslations.size === 0) return;
+  const registerHash = useCallback((hash: string) => {
+    registeredHashesRef.current.add(hash);
+  }, []);
 
-    setIsLoading(true);
-    const hashes = Array.from(pendingTranslations);
+  /**
+   * Check for missing translations and request them (batched)
+   * This runs after every render
+   */
+  useEffect(() => {
+    // Skip if source locale
+    if (locale === sourceLocale) {
+      registeredHashesRef.current.clear();
+      return;
+    }
+
+    // Find hashes that are registered but not translated and not already pending
+    const missingHashes: string[] = [];
+    for (const hash of registeredHashesRef.current) {
+      if (
+        !translationsRef.current[hash] &&
+        !pendingHashesRef.current.has(hash)
+      ) {
+        missingHashes.push(hash);
+        pendingHashesRef.current.add(hash);
+      }
+    }
+
+    // Clear registered hashes for next render
+    registeredHashesRef.current.clear();
+
+    // If no missing hashes, nothing to do
+    if (missingHashes.length === 0) return;
 
     console.log(
-      `[lingo.dev] Fetching translations for ${hashes.length} hashes in locale ${locale}`,
+      `[lingo.dev] Requesting translations for ${missingHashes.length} hashes in locale ${locale}`,
     );
-    try {
-      const newTranslations = await fetchFn(hashes, locale);
 
-      setTranslations((prev) => ({ ...prev, ...newTranslations }));
-      setPendingTranslations(new Set());
-    } catch (error) {
-      console.error(
-        "[TranslationProvider] Failed to fetch translations:",
-        error,
-      );
-      // Keep pending translations for retry
-    } finally {
-      setIsLoading(false);
+    // Cancel existing timer
+    if (batchTimerRef.current) {
+      clearTimeout(batchTimerRef.current);
     }
-  }, [pendingTranslations, locale, fetchFn]);
+
+    // Batch the request
+    batchTimerRef.current = setTimeout(async () => {
+      const hashesToFetch = Array.from(pendingHashesRef.current);
+      pendingHashesRef.current.clear();
+
+      if (hashesToFetch.length === 0) return;
+
+      setIsLoading(true);
+      try {
+        const newTranslations = await fetchFn(hashesToFetch, localeRef.current);
+
+        setTranslations((prev) => ({ ...prev, ...newTranslations }));
+      } catch (error) {
+        console.error(
+          "[TranslationProvider] Failed to fetch translations:",
+          error,
+        );
+        // Remove from pending so they can be retried
+        for (const hash of hashesToFetch) {
+          pendingHashesRef.current.delete(hash);
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    }, batchDelay);
+  }); // Run after every render
 
   /**
    * Clear batch timer on unmount
    */
   useEffect(() => {
     return () => {
-      if (batchTimer) {
-        clearTimeout(batchTimer);
+      if (batchTimerRef.current) {
+        clearTimeout(batchTimerRef.current);
       }
     };
-  }, [batchTimer]);
-
-  /**
-   * Request a translation (will be batched)
-   */
-  const requestTranslation = useCallback(
-    (hash: string) => {
-      console.log(
-        `[lingo.dev] Requesting translation for ${hash} in locale ${locale}`,
-      );
-      // Skip if already have translation (use ref to avoid dependency)
-      if (translationsRef.current[hash]) return;
-
-      // Skip if it's the source locale (no translation needed)
-      if (locale === sourceLocale) return;
-
-      // Add to pending set
-      setPendingTranslations((prev) => {
-        // Skip if already pending
-        if (prev.has(hash)) return prev;
-
-        const next = new Set(prev);
-        next.add(hash);
-        return next;
-      });
-
-      // Schedule batch execution
-      if (batchTimer) {
-        clearTimeout(batchTimer);
-      }
-
-      const timer = setTimeout(() => {
-        executeBatch();
-      }, batchDelay);
-
-      setBatchTimer(timer);
-    },
-    [locale, sourceLocale, batchTimer, batchDelay, executeBatch],
-  );
+  }, []);
 
   /**
    * Change locale and load translations dynamically
@@ -327,6 +325,11 @@ export function TranslationProvider({
           Object.assign(allTranslations, file.entries || {});
         });
 
+        console.log(
+          `[lingo.dev] Translations loaded for ${newLocale}:`,
+          allTranslations,
+        );
+
         setTranslations(allTranslations);
       } catch (error) {
         console.error(
@@ -348,7 +351,7 @@ export function TranslationProvider({
         locale,
         setLocale,
         translations,
-        requestTranslation,
+        registerHash,
         isLoading,
         sourceLocale,
         serverPort,

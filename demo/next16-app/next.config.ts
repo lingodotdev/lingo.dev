@@ -18,7 +18,7 @@ const nextConfig: NextConfig = {
               sourceLocale: "en",
               useDirective: false, // Set to true to require 'use i18n' directive
               isDev: process.env.NODE_ENV !== "production",
-              translator: "pseudo", // Enable pseudolocalization for testing
+              translator: { type: "pseudo" }, // Enable pseudolocalization for testing
             },
           },
         ],

@@ -3,7 +3,10 @@
  *
  * This server:
  * - Finds a free port automatically
- * - Serves translations via GET /translations/:locale/:hash
+ * - Serves translations via:
+ *   - GET /translations/:locale - Full dictionary (cached)
+ *   - GET /translations/:locale/:hash - Single hash translation
+ *   - POST /translations/:locale (body: { hashes: string[] }) - Batch translation
  * - Uses the same translation logic as middleware
  * - Can be started/stopped programmatically
  */
@@ -11,7 +14,10 @@
 import http from "http";
 import { URL } from "url";
 import type { TranslationMiddlewareConfig } from "../shared-middleware";
-import { handleTranslationRequest } from "../shared-middleware";
+import {
+  handleTranslationRequest,
+  handleHashTranslationRequest,
+} from "../shared-middleware";
 
 export interface TranslationServerOptions {
   /**
@@ -180,7 +186,7 @@ export class TranslationServer {
 
       // Handle CORS for browser requests
       res.setHeader("Access-Control-Allow-Origin", "*");
-      res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
+      res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
       res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
       if (req.method === "OPTIONS") {
@@ -196,17 +202,27 @@ export class TranslationServer {
         return;
       }
 
+      // Batch translation endpoint: POST /translations/:locale
+      const postMatch = url.pathname.match(/^\/translations\/([^/]+)$/);
+      if (postMatch && req.method === "POST") {
+        const [, locale] = postMatch;
+        await this.handleBatchTranslationRequest(locale, req, res);
+        return;
+      }
+
       // Translation endpoint: GET /translations/:locale/:hash
-      const match = url.pathname.match(/^\/translations\/([^/]+)\/([^/]+)$/);
-      if (match) {
-        const [, locale, hash] = match;
-        await this.handleTranslationRequest(locale, hash, res);
+      const hashMatch = url.pathname.match(
+        /^\/translations\/([^/]+)\/([^/]+)$/,
+      );
+      if (hashMatch && req.method === "GET") {
+        const [, locale, hash] = hashMatch;
+        await this.handleSingleHashRequest(locale, hash, res);
         return;
       }
 
       // Translation dictionary endpoint: GET /translations/:locale
       const dictMatch = url.pathname.match(/^\/translations\/([^/]+)$/);
-      if (dictMatch) {
+      if (dictMatch && req.method === "GET") {
         const [, locale] = dictMatch;
         await this.handleDictionaryRequest(locale, res);
         return;
@@ -222,6 +238,7 @@ export class TranslationServer {
             "GET /health",
             "GET /translations/:locale",
             "GET /translations/:locale/:hash",
+            "POST /translations/:locale (with body: { hashes: string[] })",
           ],
         }),
       );
@@ -238,16 +255,20 @@ export class TranslationServer {
   }
 
   /**
-   * Handle translation request for a specific hash
+   * Handle translation request for a single hash
    */
-  private async handleTranslationRequest(
+  private async handleSingleHashRequest(
     locale: string,
     hash: string,
     res: http.ServerResponse,
   ): Promise<void> {
     try {
-      // Get the full dictionary for the locale
-      const response = await handleTranslationRequest(locale, this.config);
+      // Use hash-based request for efficiency
+      const response = await handleHashTranslationRequest(
+        locale,
+        [hash],
+        this.config,
+      );
 
       if (response.status !== 200) {
         res.writeHead(response.status, response.headers);
@@ -255,21 +276,11 @@ export class TranslationServer {
         return;
       }
 
-      // Parse dictionary and extract specific hash
-      const dictionary = JSON.parse(response.body);
+      // Parse the result
+      const translations = JSON.parse(response.body);
+      const translation = translations[hash];
 
-      // Find the translation for this hash
-      let translation: string | null = null;
-
-      for (const file of Object.values(dictionary.files || {})) {
-        const entries = (file as any).entries || {};
-        if (entries[hash]) {
-          translation = entries[hash];
-          break;
-        }
-      }
-
-      if (translation === null) {
+      if (!translation) {
         res.writeHead(404, { "Content-Type": "application/json" });
         res.end(
           JSON.stringify({
@@ -295,6 +306,64 @@ export class TranslationServer {
     } catch (error) {
       console.error(
         `[lingo.dev] Error getting translation for ${locale}/${hash}:`,
+        error,
+      );
+      res.writeHead(500, { "Content-Type": "application/json" });
+      res.end(
+        JSON.stringify({
+          error: "Translation generation failed",
+          message: error instanceof Error ? error.message : "Unknown error",
+        }),
+      );
+    }
+  }
+
+  /**
+   * Handle batch translation request
+   */
+  private async handleBatchTranslationRequest(
+    locale: string,
+    req: http.IncomingMessage,
+    res: http.ServerResponse,
+  ): Promise<void> {
+    try {
+      // Read request body
+      let body = "";
+      for await (const chunk of req) {
+        body += chunk.toString();
+      }
+
+      // Parse body
+      const { hashes } = JSON.parse(body);
+
+      if (!Array.isArray(hashes)) {
+        res.writeHead(400, { "Content-Type": "application/json" });
+        res.end(
+          JSON.stringify({
+            error: "Bad Request",
+            message: "Body must contain 'hashes' array",
+          }),
+        );
+        return;
+      }
+
+      // Use hash-based request for efficiency
+      const response = await handleHashTranslationRequest(
+        locale,
+        hashes,
+        this.config,
+      );
+
+      // Set headers from shared middleware
+      Object.entries(response.headers).forEach(([key, value]) => {
+        res.setHeader(key, value);
+      });
+
+      res.writeHead(response.status);
+      res.end(response.body);
+    } catch (error) {
+      console.error(
+        `[lingo.dev] Error getting batch translations for ${locale}:`,
         error,
       );
       res.writeHead(500, { "Content-Type": "application/json" });
