@@ -10,7 +10,7 @@
 import fs from "fs/promises";
 import path from "path";
 import { transformComponent } from "./transform";
-import type { LoaderConfig } from "./types";
+import type { LoaderConfig } from "../types";
 import { handleTranslationRequest } from "./shared-middleware";
 
 // Import types conditionally to avoid build errors

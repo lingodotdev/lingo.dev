@@ -162,10 +162,7 @@ export function LocaleSwitcher({
   const router = useRouter();
 
   const handleLocaleChange = (newLocale: string) => {
-    // 1. Update cookie (for Server Components to read)
     setLocaleInCookies(newLocale, cookieName, cookieMaxAge);
-
-    // 2. Update context (for Client Components to re-render)
     setLocale(newLocale);
 
     // 3. Refresh Server Components (if router provided)

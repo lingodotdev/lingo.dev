@@ -1,6 +1,4 @@
-import type { PluginObj } from "@babel/core";
 import * as t from "@babel/types";
-import traverse from "@babel/traverse";
 import type { NodePath } from "@babel/traverse";
 import type {
   ComponentType,
@@ -8,8 +6,8 @@ import type {
   MetadataSchema,
   TranslationContext,
   TranslationEntry,
-} from "../types";
-import { generateTranslationHash } from "../utils/hash";
+} from "../../types";
+import { generateTranslationHash } from "../../utils/hash";
 
 /**
  * Plugin state to track transformation

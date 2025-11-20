@@ -52,17 +52,13 @@ export async function saveMetadata(
   metadata: MetadataSchema,
 ): Promise<void> {
   const metadataPath = getMetadataPath(config);
-
-  // Ensure directory exists
   await fs.mkdir(path.dirname(metadataPath), { recursive: true });
 
-  // Update stats
   metadata.stats = {
     totalEntries: Object.keys(metadata.entries).length,
     lastUpdated: new Date().toISOString(),
   };
 
-  // Write to file
   await fs.writeFile(metadataPath, JSON.stringify(metadata, null, 2), "utf-8");
 }
 
@@ -76,13 +72,11 @@ export function upsertEntry(
   const existing = metadata.entries[entry.hash];
 
   if (existing) {
-    // Update lastSeenAt
     metadata.entries[entry.hash] = {
       ...existing,
       lastSeenAt: new Date().toISOString(),
     };
   } else {
-    // Add new entry
     metadata.entries[entry.hash] = entry;
   }
 

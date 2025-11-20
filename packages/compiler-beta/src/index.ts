@@ -1,6 +1,5 @@
 export const version = "0.0.0";
 
-// Export types
 export type {
   LoaderConfig,
   TranslationContext,
@@ -12,7 +11,6 @@ export type {
   ComponentType,
 } from "./types";
 
-// Export metadata management
 export {
   loadMetadata,
   saveMetadata,
@@ -23,18 +21,9 @@ export {
   getMetadataPath,
 } from "./metadata/manager";
 
-// Export transformation
-export { transformComponent, shouldTransformFile } from "./transform";
+export { default as loader } from "./plugin/loader";
 
-// Export loader (default export for webpack/turbopack)
-export { default as loader } from "./loader";
-
-// Export utilities
-export {
-  generateTranslationHash,
-  isValidHash,
-  generateShortHash,
-} from "./utils/hash";
+export { generateTranslationHash, isValidHash } from "./utils/hash";
 
 /**
  * Initialize the compiler-beta

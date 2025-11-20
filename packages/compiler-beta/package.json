@@ -13,9 +13,9 @@
   "module": "build/index.mjs",
   "exports": {
     ".": {
-      "types": "./build/index.d.cts",
-      "import": "./build/index.mjs",
-      "require": "./build/index.cjs"
+      "types": "./build/plugin/index.d.cts",
+      "import": "./build/plugin/index.mjs",
+      "require": "./build/plugin/index.cjs"
     },
     "./react": {
       "types": "./build/react/index.d.ts",
@@ -32,20 +32,10 @@
       "import": "./build/translate/index.mjs",
       "require": "./build/translate/index.cjs"
     },
-    "./loader": {
-      "types": "./build/loader.d.ts",
-      "import": "./build/loader.mjs",
-      "require": "./build/loader.cjs"
-    },
-    "./json-loader": {
-      "types": "./build/json-loader.d.ts",
-      "import": "./build/json-loader.mjs",
-      "require": "./build/json-loader.cjs"
-    },
-    "./api": {
-      "types": "./build/api/route-handler.d.ts",
-      "import": "./build/api/route-handler.mjs",
-      "require": "./build/api/route-handler.cjs"
+    "./next/loader": {
+      "types": "./build/plugin/loader.d.ts",
+      "import": "./build/plugin/loader.mjs",
+      "require": "./build/plugin/loader.cjs"
     },
     "./vite": {
       "types": "./build/vite-plugin.d.ts",

@@ -10,12 +10,11 @@
 
 import fs from "fs/promises";
 import path from "path";
-import type { DictionarySchema } from "./react/server";
+import type { DictionarySchema } from "../react/server";
 import {
   createCachedTranslatorFromConfig,
   type TranslatorConfig,
-  type Translator,
-} from "./translate";
+} from "../translate";
 
 export interface TranslationMiddlewareConfig {
   sourceRoot: string;

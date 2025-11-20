@@ -5,9 +5,8 @@ import path from "path";
 import type {
   BabelTransformOptions,
   LoaderConfig,
-  MetadataSchema,
   TransformResult,
-} from "../types";
+} from "../../types";
 import { createBabelVisitors } from "./babel-plugin";
 
 /**

@@ -20,10 +20,3 @@ export function generateTranslationHash(
 export function isValidHash(hash: string): boolean {
   return /^[a-f0-9]{12}$/.test(hash);
 }
-
-/**
- * Generate a short hash for testing purposes
- */
-export function generateShortHash(input: string): string {
-  return crypto.createHash("md5").update(input).digest("hex").substring(0, 8);
-}

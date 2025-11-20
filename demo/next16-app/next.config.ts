@@ -11,7 +11,7 @@ const nextConfig: NextConfig = {
       "*.{tsx,jsx}": {
         loaders: [
           {
-            loader: "@lingo.dev/_compiler-beta/loader",
+            loader: "@lingo.dev/_compiler-beta/next/loader",
             options: {
               sourceRoot: "./app",
               lingoDir: ".lingo",

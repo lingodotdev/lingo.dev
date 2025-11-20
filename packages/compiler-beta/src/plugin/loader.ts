@@ -1,7 +1,7 @@
-import type { LoaderConfig } from "./types";
-import { loadMetadata, saveMetadata, upsertEntries } from "./metadata/manager";
+import type { LoaderConfig } from "../types";
+import { loadMetadata, saveMetadata, upsertEntries } from "../metadata/manager";
 import { shouldTransformFile, transformComponent } from "./transform";
-import { startTranslationServer } from "./server";
+import { startTranslationServer } from "../server";
 
 let globalServer: any;
 

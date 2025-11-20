@@ -13,11 +13,11 @@
 
 import http from "http";
 import { URL } from "url";
-import type { TranslationMiddlewareConfig } from "../shared-middleware";
 import {
-  handleTranslationRequest,
   handleHashTranslationRequest,
-} from "../shared-middleware";
+  handleTranslationRequest,
+  type TranslationMiddlewareConfig,
+} from "../plugin/shared-middleware";
 
 export interface TranslationServerOptions {
   /**
