@@ -1,5 +1,19 @@
 import crypto from "crypto";
 
+/*
+ * TODO
+ *  If we find md5 too slow, we can use FNV-1a
+ *  function generateHash(text: string): string {
+ *    let hash = 2166136261;
+ *    for (let i = 0; i < text.length; i++) {
+ *      hash ^= text.charCodeAt(i);
+ *      hash += (hash << 1) + (hash << 4) + (hash << 7) + (hash << 8) + (hash << 12);
+ *    }
+ *    return (hash >>> 0).toString(36).padStart(7, '0').slice(0, 12);
+ *  }
+ *
+ */
+
 /**
  * Generate a hash for a translation entry
  * Hash is based on: sourceText + componentName + filePath
