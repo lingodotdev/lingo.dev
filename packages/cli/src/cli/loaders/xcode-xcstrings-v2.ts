@@ -15,21 +15,71 @@ const CLDR_PLURAL_CATEGORIES = new Set([
 ]);
 
 /**
- * Build ICU MessageFormat string from xcstrings plural forms
- * @example {one: "1 item", other: "%d items"} → "{count, plural, one {1 item} other {%d items}}"
+ * Get CLDR plural categories used by a locale
+ * @param locale - The locale to check (e.g., "en", "ru", "zh")
+ * @returns Array of plural category names used by this locale
  */
-function buildIcuPluralString(forms: Record<string, string>): string {
-  const parts = Object.entries(forms).map(
-    ([form, text]) => `${form} {${text}}`,
-  );
-  return `{count, plural, ${parts.join(" ")}}`;
+function getRequiredPluralCategories(locale: string): string[] {
+  try {
+    const pluralRules = new Intl.PluralRules(locale);
+    const categories = pluralRules.resolvedOptions().pluralCategories;
+    if (!categories || categories.length === 0) {
+      return ["other"];
+    }
+    return categories;
+  } catch (error) {
+    // Fallback for unsupported locales - 'other' is the only universally required form
+    return ["other"];
+  }
 }
 
 /**
- * Parse ICU MessageFormat string back to xcstrings plural forms
- * @example "{count, plural, one {1 item} other {%d items}}" → {one: "1 item", other: "%d items"}
+ * Check if a plural form is valid for a given locale
+ * Always allows exact match forms (=0, =1, =2)
+ * @param form - The plural form to check (e.g., "one", "few", "=0")
+ * @param locale - The target locale
+ * @returns true if the form should be kept
  */
-function parseIcuPluralString(icuString: string): Record<string, string> {
+function isValidPluralForm(form: string, locale: string): boolean {
+  // Always allow exact match forms (=0, =1, =2, etc.)
+  if (form.startsWith("=")) return true;
+
+  // Check if form is a required CLDR category for this locale
+  const requiredCategories = getRequiredPluralCategories(locale);
+  return requiredCategories.includes(form);
+}
+
+/**
+ * Build ICU MessageFormat string from xcstrings plural forms
+ * Converts optional CLDR forms to exact match syntax for better backend understanding
+ * @param forms - Plural forms from xcstrings
+ * @param sourceLocale - Source language locale to determine required vs optional forms
+ * @returns ICU MessageFormat string
+ */
+function buildIcuPluralString(
+  forms: Record<string, string>,
+  sourceLocale: string,
+): string {
+  const requiredCategories = new Set(getRequiredPluralCategories(sourceLocale));
+
+  const parts = Object.entries(forms).map(([form, text]) => {
+    // Convert optional CLDR forms to exact match syntax
+    let normalizedForm = form;
+    if (!requiredCategories.has(form)) {
+      if (form === "zero") normalizedForm = "=0";
+      else if (form === "one") normalizedForm = "=1";
+      else if (form === "two") normalizedForm = "=2";
+    }
+    return `${normalizedForm} {${text}}`;
+  });
+
+  return `{count, plural, ${parts.join(" ")}}`;
+}
+
+function parseIcuPluralString(
+  icuString: string,
+  locale: string,
+): Record<string, string> {
   const pluralMatch = icuString.match(/\{[\w]+,\s*plural,\s*(.+)\}$/);
   if (!pluralMatch) {
     throw new Error(`Invalid ICU plural format: ${icuString}`);
@@ -37,6 +87,7 @@ function parseIcuPluralString(icuString: string): Record<string, string> {
 
   const formsText = pluralMatch[1];
   const forms: Record<string, string> = {};
+  const exactMatches = new Set<string>(); // Track which forms came from exact matches
 
   let i = 0;
   while (i < formsText.length) {
@@ -66,6 +117,18 @@ function parseIcuPluralString(icuString: string): Record<string, string> {
     }
 
     if (!formName) break;
+
+    // Convert exact match syntax back to CLDR category names
+    if (formName === "=0") {
+      formName = "zero";
+      exactMatches.add("zero");
+    } else if (formName === "=1") {
+      formName = "one";
+      exactMatches.add("one");
+    } else if (formName === "=2") {
+      formName = "two";
+      exactMatches.add("two");
+    }
 
     // Skip whitespace and find opening brace
     while (i < formsText.length && /\s/.test(formsText[i])) {
@@ -105,7 +168,14 @@ function parseIcuPluralString(icuString: string): Record<string, string> {
     forms[formName] = formText;
   }
 
-  return forms;
+  const filteredForms: Record<string, string> = {};
+  for (const [form, text] of Object.entries(forms)) {
+    if (exactMatches.has(form) || isValidPluralForm(form, locale)) {
+      filteredForms[form] = text;
+    }
+  }
+
+  return filteredForms;
 }
 
 /**
@@ -157,7 +227,7 @@ export default function createXcodeXcstringsV2Loader(
                     forms[form] = (formData as any).stringUnit.value;
                   }
 
-                  const icuString = buildIcuPluralString(forms);
+                  const icuString = buildIcuPluralString(forms, locale);
                   resultData[translationKey].substitutions[subName] = {
                     variations: {
                       plural: icuString,
@@ -182,7 +252,7 @@ export default function createXcodeXcstringsV2Loader(
                 }
               }
 
-              const icuString = buildIcuPluralString(forms);
+              const icuString = buildIcuPluralString(forms, locale);
               resultData[translationKey].variations = {
                 plural: icuString,
               };
@@ -238,7 +308,7 @@ export default function createXcodeXcstringsV2Loader(
 
             if (pluralValue && isIcuPluralString(pluralValue)) {
               try {
-                const pluralForms = parseIcuPluralString(pluralValue);
+                const pluralForms = parseIcuPluralString(pluralValue, locale);
                 const pluralOut: any = {};
                 for (const [form, text] of Object.entries(pluralForms)) {
                   pluralOut[form] = {
@@ -288,7 +358,7 @@ export default function createXcodeXcstringsV2Loader(
 
           if (isIcuPluralString(pluralValue)) {
             try {
-              const pluralForms = parseIcuPluralString(pluralValue);
+              const pluralForms = parseIcuPluralString(pluralValue, locale);
               const pluralOut: any = {};
               for (const [form, text] of Object.entries(pluralForms)) {
                 pluralOut[form] = {
