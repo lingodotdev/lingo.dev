@@ -610,41 +610,32 @@ checksums:
     content/16: 14f593e7cf3b3df84a21e17db318912e
     content/17: 5f42d26a42aa29be063019eea27ad07c
     content/18: 48bb7e89e72d68d6de12f5cdac64fc18
-  e6d8e00051ea40ca138a9549ed52e1c6:
-    navigation/home: 104a3db3b671c04e167eafbe21e57881
-    navigation/about: 944521eeeed2511833d2299931273c71
-    navigation/contact: 9afa39bc47019ee6dec6c74b6273967c
-    navigation/services: 8ea10b45b9abab2a3bfc3c07e1c9cdc6
-    forms/title: ac85dea7c7f0bf1cd7d48cc1b4da3acc
-    forms/name_label: 03c6ae7996d5841f743cd406b4eff72d
-    forms/email_label: 0ee22bbbe989a0c61a18023407d12dc2
-    forms/message_label: 1e460d0909502d0e94b9be562643af0d
-    forms/submit_button: 487177489aafc9c0243c57ef3850a2d9
-    forms/success_message: a0a7aa980dffa31d4d194af718a917b3
+  e6d8e00051ea40ca138a9549ed52e1c6: {}
   1254631a73b754e11a1b9ca8f7362025:
-    welcome_message: 0468579ef2fbc83c9d520c2f2f1c5059
-    item_count: 865b1c4a1a2e96d8bdb7503e5e15d93d
+    item_count/variations/plural: 2b2b1ff20c417ea68d07d66ba30a5c14
+    notification_message/stringUnit: d14316154e233634917e317452c5f42c
+    notification_message/substitutions/count_items/variations/plural: 3db7a8a0078bc1a87ccdb095af3164a5
   ee8bbe4c9de58af9c4d5e1f4373f4db1:
-    simple_string: ed0d4b1cde20d045f9f8c5007c784b0b
-    plural_comments_thread: 1ab6a2f6b0dd6fa73c6e30fdab646231
-    plural_complex_sentence: 8d40f9e84511cea41fef1cf51c3edb00
-    plural_download_speed: 27b5f56cfb2b89b75fc214e44905ae32
-    plural_likes_with_names: c2eae245671243f5705df84019efc570
-    plural_mixed_types: bb5ad4e902913e2490d6fc539ff68b75
-    plural_participants: 7078ed70d2729c392645ab96277cd945
-    plural_positional_args: 60e87c5d1c264d3dd6ab055b730440ff
-    plural_storage_usage: 6ca41d12a044a3eb965016cbaa0f06c5
-    plural_time_remaining: 462b02a90192a36b09e8e3461e86feb7
-    plural_unread_notifications: 245c5521213a87778b6de3baddc8e237
-    plural_with_float: 03c27afd9fb36362219518ccba1f9b79
-    plural_with_high_precision: f071e92703b130b2e1dfd6157d6449a8
-    plural_with_long_long: 7d3ca53ffbf5537982afe54f873acd97
-    plural_with_one_variable: a13ee33889bfe5cd058421e8e3b88fd7
-    plural_with_percentage: bdfc16db9f26a328582f99363583af9d
-    plural_with_two_variables: 06d39ea5949ac0632674393013ca1d3e
-    plural_with_units: ff49a87ccdf91ca1c81a1bda8f2492e5
-    plural_with_zero: 0b532546eb5ec66572b603ade0c3f535
-    simple_plural: 7c2a67ef893e1ad4f6a547d1f7b459de
+    plural_comments_thread/variations/plural: 81291beceb25e10acb79cf697c484b71
+    plural_complex_sentence/variations/plural: 993e6806b530cc645b0f4d4d28126bb4
+    plural_download_speed/variations/plural: a25c6b896b06a81f76a9191dfa683d3c
+    plural_likes_with_names/variations/plural: 6ac9fd8b346fe5ebd275885d6463b181
+    plural_mixed_types/variations/plural: a03ccdfcc3f45d988184cacfd80aea67
+    plural_participants/variations/plural: d8a1e452a071a41cf8d8a16cfd4e06e5
+    plural_positional_args/variations/plural: f66423f9ca6b02f4d83586cc814646cb
+    plural_storage_usage/variations/plural: b40ad5e569a937206e120b1aa027fc10
+    plural_time_remaining/variations/plural: 6486a72fb367e941f1ed953a1184f824
+    plural_unread_notifications/variations/plural: 418cf5a9a7f7f1743af4d99db892f422
+    plural_with_float/variations/plural: 0d8ec56f120924931e39048ad7ffccc2
+    plural_with_high_precision/variations/plural: ada7f82e4097be81131932cc9b2ea1a9
+    plural_with_long_long/variations/plural: 611a8637df0c250d1648a86a5f732032
+    plural_with_one_variable/variations/plural: 8ef6aeb236e499b575e1a42580eeb658
+    plural_with_percentage/variations/plural: 1be17a6c1b5f6072a524d205244bef68
+    plural_with_two_variables/variations/plural: 6635c58e089c6be521bd1836b92db44a
+    plural_with_units/variations/plural: 2aa9f2a59ec0552f14f98039412b9952
+    plural_with_zero/variations/plural: ed51bd1a9e405f4ad68f24bd0d771708
+    simple_plural/variations/plural: dcaae1387d28339af1fff9e8cfe4ebb9
+    simple_string/stringUnit: ed0d4b1cde20d045f9f8c5007c784b0b
   0f98b7647666155847e3e788a431b083:
     text_0: e4d2da607604b3fda41eef5e0dd35faa
     text_1: 69eb28c44f7168b1df0455ad2a62588c
