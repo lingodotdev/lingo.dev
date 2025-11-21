@@ -126,22 +126,22 @@
             }
           }
         }
-      },
-      "welcome_message" : {
-        "comment" : "Welcome message shown on the app's home screen",
-        "extractionState" : "manual",
-        "localizations" : {
-          "en" : {
-            "stringUnit" : {
-              "state" : "translated",
-              "value" : "Hello, world!"
-            }
-          },
-          "es" : {
-            "stringUnit" : {
-              "state" : "translated",
-              "value" : "¡Hola, mundo!"
-            }
+      }
+    },
+    "welcome_message" : {
+      "comment" : "Welcome message shown on the app's home screen",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hello, world!"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¡Hola, mundo!"
           }
         }
       }
