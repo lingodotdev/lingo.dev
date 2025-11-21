@@ -303,7 +303,8 @@ describe("loaders/xcode-xcstrings-v2", () => {
       loader.setDefaultLocale(defaultLocale);
       const result = await loader.pull("en", inputWithZero);
 
-      expect(result["items"].variations.plural).toContain("zero {No items}");
+      // English "zero" is optional, so it should be converted to =0
+      expect(result["items"].variations.plural).toContain("=0 {No items}");
       expect(result["items"].variations.plural).toContain("one {1 item}");
       expect(result["items"].variations.plural).toContain("other {%d items}");
     });
@@ -776,19 +777,22 @@ describe("loaders/xcode-xcstrings-v2", () => {
 
       const result = await loader.push("fr", payload);
 
+      // Exact matches (=0, =1) should be converted back to CLDR names (zero, one)
       expect(
         result!.strings["downloads"].localizations["fr"].variations.plural,
-      ).toHaveProperty("=0");
+      ).toHaveProperty("zero");
       expect(
         result!.strings["downloads"].localizations["fr"].variations.plural,
-      ).toHaveProperty("=1");
+      ).toHaveProperty("one");
       expect(
-        result!.strings["downloads"].localizations["fr"].variations.plural["=0"]
-          .stringUnit.value,
+        result!.strings["downloads"].localizations["fr"].variations.plural[
+          "zero"
+        ].stringUnit.value,
       ).toBe("No downloads");
       expect(
-        result!.strings["downloads"].localizations["fr"].variations.plural["=1"]
-          .stringUnit.value,
+        result!.strings["downloads"].localizations["fr"].variations.plural[
+          "one"
+        ].stringUnit.value,
       ).toBe("One download");
     });
 
@@ -1018,13 +1022,14 @@ describe("loaders/xcode-xcstrings-v2", () => {
 
       const hints = await loader.pullHints();
 
-      expect(hints["app.title"]).toEqual({
+      expect(hints).toBeDefined();
+      expect(hints!["app.title"]).toEqual({
         hint: "The main app title",
       });
-      expect(hints["item_count"]).toEqual({
+      expect(hints!["item_count"]).toEqual({
         hint: "Number of items",
       });
-      expect(hints["notification_message"]).toEqual({
+      expect(hints!["notification_message"]).toEqual({
         hint: "Notification with substitutions",
       });
     });
@@ -1052,6 +1057,383 @@ describe("loaders/xcode-xcstrings-v2", () => {
       const hints = await loader.pullHints();
 
       expect(hints).toEqual({});
+    });
+  });
+
+  describe("ICU plural form normalization", () => {
+    it("should convert optional English forms (zero) to exact match (=0)", async () => {
+      const loader = createXcodeXcstringsV2Loader("en");
+      loader.setDefaultLocale("en");
+
+      const input = {
+        sourceLanguage: "en",
+        strings: {
+          items: {
+            localizations: {
+              en: {
+                variations: {
+                  plural: {
+                    zero: { stringUnit: { value: "No items" } },
+                    one: { stringUnit: { value: "1 item" } },
+                    other: { stringUnit: { value: "%d items" } },
+                  },
+                },
+              },
+            },
+          },
+        },
+      };
+
+      const result = await loader.pull("en", input);
+
+      // English: one/other are required, zero is optional → becomes =0
+      expect(result.items.variations.plural).toBe(
+        "{count, plural, =0 {No items} one {1 item} other {%d items}}",
+      );
+    });
+
+    it("should keep required Russian forms as CLDR keywords", async () => {
+      const loader = createXcodeXcstringsV2Loader("ru");
+      loader.setDefaultLocale("ru");
+
+      const input = {
+        sourceLanguage: "ru",
+        strings: {
+          items: {
+            localizations: {
+              ru: {
+                variations: {
+                  plural: {
+                    one: { stringUnit: { value: "1 предмет" } },
+                    few: { stringUnit: { value: "%d предмета" } },
+                    many: { stringUnit: { value: "%d предметов" } },
+                    other: { stringUnit: { value: "%d элементов" } },
+                  },
+                },
+              },
+            },
+          },
+        },
+      };
+
+      const result = await loader.pull("ru", input);
+
+      // Russian: all forms are required, stay as CLDR keywords
+      expect(result.items.variations.plural).toContain("one {");
+      expect(result.items.variations.plural).toContain("few {");
+      expect(result.items.variations.plural).toContain("many {");
+      expect(result.items.variations.plural).toContain("other {");
+      expect(result.items.variations.plural).not.toContain("=");
+    });
+
+    it("should convert Chinese optional one to =1", async () => {
+      const loader = createXcodeXcstringsV2Loader("zh");
+      loader.setDefaultLocale("zh");
+
+      const input = {
+        sourceLanguage: "zh",
+        strings: {
+          items: {
+            localizations: {
+              zh: {
+                variations: {
+                  plural: {
+                    one: { stringUnit: { value: "1 件商品" } },
+                    other: { stringUnit: { value: "%d 件商品" } },
+                  },
+                },
+              },
+            },
+          },
+        },
+      };
+
+      const result = await loader.pull("zh", input);
+
+      // Chinese: only "other" is required, "one" is optional → becomes =1
+      expect(result.items.variations.plural).toBe(
+        "{count, plural, =1 {1 件商品} other {%d 件商品}}",
+      );
+    });
+
+    it("should round-trip: xcstrings → ICU (=0) → xcstrings (zero)", async () => {
+      const loader = createXcodeXcstringsV2Loader("en");
+      loader.setDefaultLocale("en");
+
+      const originalInput = {
+        sourceLanguage: "en",
+        strings: {
+          items: {
+            localizations: {
+              en: {
+                variations: {
+                  plural: {
+                    zero: { stringUnit: { value: "No items" } },
+                    one: { stringUnit: { value: "1 item" } },
+                    other: { stringUnit: { value: "%d items" } },
+                  },
+                },
+              },
+            },
+          },
+        },
+      };
+
+      // Pull: xcstrings → ICU (converts zero to =0)
+      const pulled = await loader.pull("en", originalInput);
+      expect(pulled.items.variations.plural).toContain("=0 {No items}");
+
+      // Push back: ICU → xcstrings (converts =0 back to zero)
+      const pushed = await loader.push("en", pulled);
+
+      expect(
+        pushed.strings.items.localizations.en.variations.plural,
+      ).toHaveProperty("zero");
+      expect(
+        pushed.strings.items.localizations.en.variations.plural,
+      ).toHaveProperty("one");
+      expect(
+        pushed.strings.items.localizations.en.variations.plural,
+      ).toHaveProperty("other");
+      expect(
+        pushed.strings.items.localizations.en.variations.plural.zero.stringUnit
+          .value,
+      ).toBe("No items");
+    });
+  });
+
+  describe("Backend response filtering", () => {
+    it("should filter out invalid plural forms for English (keep only one, other, exact matches)", async () => {
+      const loader = createXcodeXcstringsV2Loader("en");
+      loader.setDefaultLocale("en");
+
+      const originalInput = {
+        sourceLanguage: "en",
+        version: "1.0",
+        strings: {
+          items: {
+            localizations: {
+              en: {
+                variations: {
+                  plural: {
+                    one: {
+                      stringUnit: { state: "translated", value: "1 item" },
+                    },
+                    other: {
+                      stringUnit: { state: "translated", value: "%d items" },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      };
+
+      // Initialize loader state
+      await loader.pull("en", originalInput);
+
+      // Simulate backend response with extra forms that English doesn't need
+      const backendResponse = {
+        "items/variations/plural":
+          "{count, plural, one {1 item} few {%d items (few)} many {%d items (many)} other {%d items}}",
+      };
+
+      const pushed = await loader.push("en", backendResponse);
+
+      // Should only have 'one' and 'other', not 'few' or 'many'
+      expect(
+        pushed.strings.items.localizations.en.variations.plural,
+      ).toHaveProperty("one");
+      expect(
+        pushed.strings.items.localizations.en.variations.plural,
+      ).toHaveProperty("other");
+      expect(
+        pushed.strings.items.localizations.en.variations.plural,
+      ).not.toHaveProperty("few");
+      expect(
+        pushed.strings.items.localizations.en.variations.plural,
+      ).not.toHaveProperty("many");
+    });
+
+    it("should keep all required plural forms for Russian", async () => {
+      const loader = createXcodeXcstringsV2Loader("en");
+      loader.setDefaultLocale("en");
+
+      const originalInput = {
+        sourceLanguage: "en",
+        version: "1.0",
+        strings: {
+          items: {
+            localizations: {
+              en: {
+                variations: {
+                  plural: {
+                    one: {
+                      stringUnit: { state: "translated", value: "1 item" },
+                    },
+                    other: {
+                      stringUnit: { state: "translated", value: "%d items" },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      };
+
+      // Initialize loader state
+      await loader.pull("en", originalInput);
+
+      // Russian requires: one, few, many, other
+      const backendResponse = {
+        items: {
+          variations: {
+            plural:
+              "{count, plural, one {%d товар} few {%d товара} many {%d товаров} other {%d товаров}}",
+          },
+        },
+      };
+
+      const pushed = await loader.push("ru", backendResponse);
+
+      // Should keep all Russian forms
+      expect(
+        pushed.strings.items.localizations.ru.variations.plural,
+      ).toHaveProperty("one");
+      expect(
+        pushed.strings.items.localizations.ru.variations.plural,
+      ).toHaveProperty("few");
+      expect(
+        pushed.strings.items.localizations.ru.variations.plural,
+      ).toHaveProperty("many");
+      expect(
+        pushed.strings.items.localizations.ru.variations.plural,
+      ).toHaveProperty("other");
+    });
+
+    it("should filter out optional forms for Chinese (keep only other, exact matches)", async () => {
+      const loader = createXcodeXcstringsV2Loader("en");
+      loader.setDefaultLocale("en");
+
+      const originalInput = {
+        sourceLanguage: "en",
+        version: "1.0",
+        strings: {
+          items: {
+            localizations: {
+              en: {
+                variations: {
+                  plural: {
+                    one: {
+                      stringUnit: { state: "translated", value: "1 item" },
+                    },
+                    other: {
+                      stringUnit: { state: "translated", value: "%d items" },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      };
+
+      // Initialize loader state
+      await loader.pull("en", originalInput);
+
+      // Chinese only requires 'other', but backend might return 'one'
+      const backendResponse = {
+        items: {
+          variations: {
+            plural: "{count, plural, one {1 件商品} other {%d 件商品}}",
+          },
+        },
+      };
+
+      const pushed = await loader.push("zh", backendResponse);
+
+      // Should only have 'other', not 'one'
+      expect(
+        pushed.strings.items.localizations.zh.variations.plural,
+      ).not.toHaveProperty("one");
+      expect(
+        pushed.strings.items.localizations.zh.variations.plural,
+      ).toHaveProperty("other");
+    });
+
+    it("should always preserve exact match forms (=0, =1, =2) for any locale", async () => {
+      const loader = createXcodeXcstringsV2Loader("en");
+      loader.setDefaultLocale("en");
+
+      const originalInput = {
+        sourceLanguage: "en",
+        version: "1.0",
+        strings: {
+          items: {
+            localizations: {
+              en: {
+                variations: {
+                  plural: {
+                    one: {
+                      stringUnit: { state: "translated", value: "1 item" },
+                    },
+                    other: {
+                      stringUnit: { state: "translated", value: "%d items" },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      };
+
+      // Initialize loader state
+      await loader.pull("en", originalInput);
+
+      // Backend returns exact matches along with required forms
+      const backendResponseEn = {
+        items: {
+          variations: {
+            plural:
+              "{count, plural, =0 {No items} =1 {One item} other {%d items}}",
+          },
+        },
+      };
+
+      // Test for English
+      const pushedEn = await loader.push("en", backendResponseEn);
+      expect(
+        pushedEn.strings.items.localizations.en.variations.plural,
+      ).toHaveProperty("zero"); // =0 → zero
+      expect(
+        pushedEn.strings.items.localizations.en.variations.plural,
+      ).toHaveProperty("one"); // =1 → one
+      expect(
+        pushedEn.strings.items.localizations.en.variations.plural,
+      ).toHaveProperty("other");
+
+      // Test for Chinese (which doesn't normally use 'one', but exact matches should be kept)
+      const backendResponseZh = {
+        items: {
+          variations: {
+            plural:
+              "{count, plural, =0 {没有商品} =1 {一件商品} other {%d 件商品}}",
+          },
+        },
+      };
+      const pushedZh = await loader.push("zh", backendResponseZh);
+      expect(
+        pushedZh.strings.items.localizations.zh.variations.plural,
+      ).toHaveProperty("zero"); // =0 → zero
+      expect(
+        pushedZh.strings.items.localizations.zh.variations.plural,
+      ).toHaveProperty("one"); // =1 → one
+      expect(
+        pushedZh.strings.items.localizations.zh.variations.plural,
+      ).toHaveProperty("other");
     });
   });
 });
