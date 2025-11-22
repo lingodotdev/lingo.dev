@@ -12,6 +12,7 @@ export const bucketTypes = [
   "markdown",
   "markdoc",
   "mdx",
+  "mjml",
   "xcode-strings",
   "xcode-stringsdict",
   "xcode-xcstrings",
