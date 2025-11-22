@@ -144,6 +144,14 @@ export class LCP {
     return this._setScopeField(fileKey, scopeKey, "content", content);
   }
 
+  setScopeMarker(
+    fileKey: string,
+    scopeKey: string,
+    marker: { attribute: string; value: string },
+  ): this {
+    return this._setScopeField(fileKey, scopeKey, "marker", marker);
+  }
+
   toJSON() {
     const files = _(this.data?.files)
       .mapValues((file: any, fileName: string) => {

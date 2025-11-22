@@ -5,8 +5,12 @@ import * as parser from "@babel/parser";
 import generate from "@babel/generator";
 
 // Helper function to run mutation and get result
-function runMutation(code: string, rsc = false) {
-  const params = { ...defaultParams, rsc };
+function runMutation(
+  code: string,
+  rsc = false,
+  paramsOverride?: Partial<typeof defaultParams>,
+) {
+  const params = { ...defaultParams, ...(paramsOverride ?? {}), rsc };
   const input = createPayload({ code, params, relativeFilePath: "test" });
   const mutated = lingoJsxScopeInjectMutation(input);
   if (!mutated) throw new Error("Mutation returned null");
@@ -151,6 +155,56 @@ function Component() {
 `.trim();
 
       const result = runMutation(input);
+      expect(normalizeCode(result)).toBe(normalizeCode(expected));
+    });
+
+    it("should inject context marker attribute when enabled", () => {
+      const input = `
+function Component() {
+  return <section>
+    <h1 data-jsx-scope="0/body/0/argument/1">Hello world!</h1>
+  </section>;
+}
+`.trim();
+
+      const expected = `
+import { LingoComponent } from "lingo.dev/react/client";
+function Component() {
+  return <section>
+    <LingoComponent data-jsx-scope="0/body/0/argument/1" $as="h1" $fileKey="test" $entryKey="0/body/0/argument/1" data-lingo-id="test::0/body/0/argument/1" />
+  </section>;
+}
+`.trim();
+
+      const result = runMutation(input, false, {
+        exposeContextAttribute: true,
+      });
+
+      expect(normalizeCode(result)).toBe(normalizeCode(expected));
+    });
+
+    it("should preserve an existing context attribute value", () => {
+      const input = `
+function Component() {
+  return <section>
+    <h1 data-jsx-scope="0/body/0/argument/1" data-lingo-id="custom-marker">Hello world!</h1>
+  </section>;
+}
+`.trim();
+
+      const expected = `
+import { LingoComponent } from "lingo.dev/react/client";
+function Component() {
+  return <section>
+    <LingoComponent data-jsx-scope="0/body/0/argument/1" data-lingo-id="custom-marker" $as="h1" $fileKey="test" $entryKey="0/body/0/argument/1" />
+  </section>;
+}
+`.trim();
+
+      const result = runMutation(input, false, {
+        exposeContextAttribute: true,
+      });
+
       expect(normalizeCode(result)).toBe(normalizeCode(expected));
     });
   });
