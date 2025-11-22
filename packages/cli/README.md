@@ -100,6 +100,31 @@ It fingerprints every string, caches results, and only re-translates what change
 
 ---
 
+### 🎭 Pseudo-Localization Mode
+
+Test your UI for internationalization readiness without waiting for translations!
+
+```bash
+npx lingo.dev@latest run --pseudo
+```
+
+Pseudo-localization automatically replaces all extracted strings with accented characters and marks them with a **⚡** symbol, helping you:
+
+- ✅ Catch truncated text and layout overflow issues
+- ✅ Test UI before translations are ready
+- ✅ Detect missing i18n integrations
+- ✅ Validate font support for special characters
+
+**Example:**
+- Input: `<p>Submit</p>`
+- Output: `<p>Šûbmíţ⚡</p>`
+
+No external API calls required — runs instantly offline.
+
+[Learn more →](./PSEUDO_LOCALIZATION.md) about pseudo-localization testing.
+
+---
+
 ### 🔄 Lingo.dev CI/CD
 
 Ship perfect translations automatically.
