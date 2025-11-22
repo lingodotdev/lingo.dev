@@ -71,7 +71,7 @@ export type CompilerParams = {
    * If set to an object, the compiler will use the model(s) specified in the object:
    *
    * - The key is a string that represents the source and target locales, separated by a colon (e.g., `"en:es"`).
-   * - The value is a string that represents the LLM provider and model, separated by a colon (e.g., `"google:gemini-2.0-flash"`).
+   * - The value is a string that represents the LLM provider and model, separated by a colon (e.g., `"google:gemini-2.5-flash"`).
    *
    * You can use `*` as a wildcard to match any locale.
    *

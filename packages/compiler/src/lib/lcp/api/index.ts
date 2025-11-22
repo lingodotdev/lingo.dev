@@ -289,7 +289,7 @@ export class LCPAPI {
    * Instantiates an AI model based on provider and model ID.
    * Includes CI/CD API key checks.
    * @param providerId The ID of the AI provider (e.g., "groq", "google").
-   * @param modelId The ID of the specific model (e.g., "llama3-8b-8192", "gemini-2.0-flash").
+   * @param modelId The ID of the specific model (e.g., "llama3-8b-8192", "gemini-2.5-flash").
    * @param targetLocale The target locale being translated to (for logging/error messages).
    * @returns An instantiated AI LanguageModel.
    * @throws Error if the provider is not supported or API key is missing in CI/CD.
