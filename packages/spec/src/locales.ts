@@ -182,6 +182,8 @@ const localeMap = {
     "bn-BD", // Bangladesh
     "bn-IN", // India
   ],
+  // Bhojpuri (India)
+  bh: ["bh-IN"],
   // Irish (Ireland)
   ga: ["ga-IE"],
   // Galician (Spain)
