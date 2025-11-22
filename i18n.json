@@ -2,25 +2,68 @@
   "version": "1.10",
   "locale": {
     "source": "en",
+    "config": {
+      "direction": "ltr",
+      "script": "latin"
+    },
     "targets": [
-      "ru",
-      "he",
-      "fr",
-      "es",
-      "de",
-      "zh-Hans",
-      "ko",
-      "ja",
-      "it",
-      "ar",
-      "hi",
-      "pt-BR",
-      "uk-UA",
-      "bn",
-      "fa",
-      "pl",
-      "tr",
-      "ur"
+      {
+        "code": "ar"
+      },
+      {
+        "code": "bn"
+      },
+      {
+        "code": "de"
+      },
+      {
+        "code": "es"
+      },
+      {
+        "code": "fa"
+      },
+      {
+        "code": "fr"
+      },
+      {
+        "code": "he"
+      },
+      {
+        "code": "hi"
+      },
+      {
+        "code": "it"
+      },
+      {
+        "code": "ja"
+      },
+      {
+        "code": "ko"
+      },
+      {
+        "code": "mr"
+      },
+      {
+        "code": "ne"
+      },
+      {
+        "code": "pl"
+      },
+      {
+        "code": "pt-BR"
+      },
+      {
+        "code": "ru"
+      },
+      {
+        "code": "tr"
+      },
+      {
+        "code": "uk-UA"
+      },
+      {
+        "code": "zh-Hans"
+      }
     ]
   },
   "buckets": {

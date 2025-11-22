@@ -1,4 +1,4 @@
-<p align="center">
+<![CDATA[<p align="center">
   <a href="https://lingo.dev">
     <img
       src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.compiler.png"
@@ -10,16 +10,14 @@
 
 <p align="center">
   <strong>
-    ⚡ Lingo.dev - LLM ସହିତ ଶୀଘ୍ର ସ୍ଥାନୀୟକରଣ ପାଇଁ ଓପନ୍ ସୋର୍ସ, AI-ପାୱାର୍ଡ i୧୮n
-    ଟୁଲ୍କିଟ୍।
+    ⚡ Lingo.dev - ଓପନ-ସୋର୍ସ, AI-ସଂଚାଳିତ i18n ଟୁଲକିଟ୍ LLMs ସହିତ ତତ୍କାଳ ସ୍ଥାନୀୟକରଣ ପାଇଁ।
   </strong>
 </p>
 
 <br />
 
 <p align="center">
-  <a href="https://lingo.dev/compiler">Lingo.dev Compiler</a> •
-  <a href="https://lingo.dev/mcp">Lingo.dev MCP</a> •
+  <a href="https://lingo.dev/compiler">Lingo.dev କମ୍ପାଇଲର</a> •
   <a href="https://lingo.dev/cli">Lingo.dev CLI</a> •
   <a href="https://lingo.dev/ci">Lingo.dev CI/CD</a> •
   <a href="https://lingo.dev/sdk">Lingo.dev SDK</a>
@@ -29,7 +27,7 @@
   <a href="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml">
     <img
       src="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml/badge.svg"
-      alt="ମୁକ୍ତି"
+      alt="ରିଲିଜ୍"
     />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md">
@@ -44,21 +42,33 @@
       alt="ଶେଷ କମିଟ୍"
     />
   </a>
+  <a href="https://lingo.dev/en">
+    <img src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square" alt="ମାସର #୧ DevTool" />
+  </a>
+  <a href="https://lingo.dev/en">
+    <img src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Week-orange?logo=producthunt&style=flat-square" alt="ସପ୍ତାହର #୧ ଉତ୍ପାଦ" />
+  </a>
+  <a href="https://lingo.dev/en">
+    <img src="https://img.shields.io/badge/Product%20Hunt-%232%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square" alt="ଦିନର #୨ ଉତ୍ପାଦ" />
+  </a>
+  <a href="https://lingo.dev/en">
+    <img src="https://img.shields.io/badge/GitHub-Trending-blue?logo=github&style=flat-square" alt="Github ରେ ଟ୍ରେଣ୍ଡିଂ" />
+  </a>
 </p>
 
 ---
 
-## କମ୍ପାଇଲର୍ ବିଷୟରେ ଜାଣନ୍ତୁ 🆕
+## କମ୍ପାଇଲର ସହ ଭେଟନ୍ତୁ 🆕
 
-**Lingo.dev କମ୍ପାଇଲର୍** ଏକ ମାଗଣା, ଓପନ୍ ସୋର୍ସ ଉପକରଣ ଯାହାକି ଯେକୌଣସି React ଆପ୍ଲିକେସନ୍ କୁ ଏକାଧିକ ଭାଷା ସମର୍ଥନ କରିବାରେ ସାହାଯ୍ୟ କରେ | ଏହା ଆପ୍ଲିକେସନ୍ କୁ ବିଲ୍ଡ ସମୟରେ ଅନୁବାଦ କରିଥାଏ, କୌଣସି ବିଦ୍ୟମାନ React ଉପାଦାନକୁ ପରିବର୍ତ୍ତନ କରିବାର ଆବଶ୍ୟକତା ନାହିଁ |
+**Lingo.dev କମ୍ପାଇଲର** ଏକ ମୁକ୍ତ, ଓପନ-ସୋର୍ସ କମ୍ପାଇଲର ମିଡଲୱେର, ଯାହା ବିଦ୍ୟମାନ React କମ୍ପୋନେଣ୍ଟଗୁଡ଼ିକରେ କୌଣସି ପରିବର୍ତ୍ତନ ଆବଶ୍ୟକ ନକରି ବିଲ୍ଡ ସମୟରେ ଯେକୌଣସି React ଆପ୍‌କୁ ବହୁଭାଷୀ କରିବା ପାଇଁ ଡିଜାଇନ୍ କରାଯାଇଛି।
 
-ଥରେ ଏହା ସଂସ୍ଥାପିତ ହେଲେ:
+ଥରେ ଇନଷ୍ଟଲ୍ କରନ୍ତୁ:
 
 ```bash
 npm install lingo.dev
 ```
 
-ଆପଣଙ୍କ ବିଲ୍ଡ କନଫିଗରେ, ଏହାକୁ ସକ୍ରିୟ କରନ୍ତୁ:
+ଆପଣଙ୍କ ବିଲ୍ଡ କନଫିଗ୍‌ରେ ସକ୍ଷମ କରନ୍ତୁ:
 
 ```js
 import lingoCompiler from "lingo.dev/compiler";
@@ -71,114 +81,35 @@ export default lingoCompiler.next({
 })(existingNextConfig);
 ```
 
-`next build` କମାଣ୍ଡ ଚଲାନ୍ତୁ ଏବଂ ଆପଣ ସ୍ପେନୀୟ ଏବଂ ଫରାସୀ ବଣ୍ଡଲଗୁଡ଼ିକ ଦେଖିବାକୁ ପାଇବେ। ✨
+`next build` ଚଲାନ୍ତୁ ଏବଂ ସ୍ପାନିଶ୍ ଓ ଫ୍ରେଞ୍ଚ ବଣ୍ଡଲଗୁଡ଼ିକ ପପ୍ ଆଉଟ୍ ଦେଖନ୍ତୁ ✨
 
-[ଦଲିଲଟି ପଢନ୍ତୁ। →](https://lingo.dev/compiler) ସମ୍ପୂର୍ଣ୍ଣ ଗାଇଡ୍ ପାଇଁ, ଏବଂ [ଆମର Discord ମୁଁ ଯୋଗ ଦେବି।](https://lingo.dev/go/discord) ଆପଣଙ୍କ ସେଟଅପ୍‌ରେ ସାହାଯ୍ୟ ପାଇଁ।
+ସମ୍ପୂର୍ଣ୍ଣ ଗାଇଡ୍ ପାଇଁ [ଡକ୍ୟୁମେଣ୍ଟେସନ୍ ପଢ଼ନ୍ତୁ →](https://lingo.dev/compiler), ଏବଂ ଆପଣଙ୍କ ସେଟଅପ୍‌ରେ ସହାୟତା ପାଇବା ପାଇଁ [ଆମ Discord ରେ ଯୋଗ ଦିଅନ୍ତୁ](https://lingo.dev/go/discord)।
 
 ---
 
-### ଏହି ରେପୋରେ କ’ଣ ଅଛି?
+### ଏହି ରିପୋରେ କ'ଣ ଅଛି?
 
-| ଉପକରଣ          | ସଂକ୍ଷିପ୍ତ ବର୍ଣ୍ଣନା                                                                                           | ଡକ୍ୟୁମେଣ୍ଟ୍                             |     |
-| -------------- | ------------------------------------------------------------------------------------------------------------ | --------------------------------------- | --- |
-| **ସଙ୍କଳନକାରୀ** | ନିର୍ମାଣ ସମୟ React ସ୍ଥାନୀକରଣ                                                                                  | [/compiler](https://lingo.dev/compiler) |
-| **CLI**        | ୱେବ୍ ଏବଂ ମୋବାଇଲ୍ ଆପ୍ସ, JSON, YAML, ମାର୍କଡାଉନ୍, + ଅଧିକ ପାଇଁ ଏକ-ଆଦେଶ ସ୍ଥାନୀକରଣ                                 | [/cli](https://lingo.dev/cli)           |
-| **CI/CD**      | ପ୍ରତ୍ୟେକ ପୁଶ୍ ଉପରେ ଅନୁବାଦଗୁଡ଼ିକୁ ସ୍ୱୟଂକ୍ରିୟ ଭାବେ କମିଟ୍ କରନ୍ତୁ। + ଆବଶ୍ୟକ ଅନୁସାରେ ଏକ ପୁଲ୍ ଅନୁରୋଧ ସୃଷ୍ଟିକରନ୍ତୁ। | [/ci](https://lingo.dev/ci)             |
-| **SDK**        | ଉପଭୋକ୍ତାଙ୍କ ଦ୍ୱାରା ସୃଷ୍ଟି ହୋଇଥିବା ବିଷୟବସ୍ତୁ ପାଇଁ ରିଅଲଟାଇମ୍ ଅନୁବାଦ                                            | [/sdk](https://lingo.dev/sdk)           |
+| ଟୁଲ୍          | ସଂକ୍ଷିପ୍ତରେ                                                                    | ଡକ୍ୟୁମେଣ୍ଟେସନ୍                              |
+| ------------ | ----------------------------------------------------------------------------- | ------------------------------------------ |
+| **କମ୍ପାଇଲର** | ବିଲ୍ଡ-ଟାଇମ୍ React ସ୍ଥାନୀୟକରଣ                                                 | [/compiler](https://lingo.dev/compiler)     |
+| **CLI**      | ୱେବ୍ ଓ ମୋବାଇଲ୍ ଆପ୍ସ, JSON, YAML, markdown ଏବଂ ଅଧିକ ପାଇଁ ଏକ-କମାଣ୍ଡ ସ୍ଥାନୀୟକରଣ | [/cli](https://lingo.dev/cli)               |
+| **CI/CD**    | ପ୍ରତ୍ୟେକ ପୁଶ୍‌ରେ ଅଟୋ-କମିଟ୍ ଅନୁବାଦ + ଆବଶ୍ୟକ ହେଲେ ପୁଲ୍ ରିକ୍ୱେଷ୍ଟ ତିଆରି         | [/ci](https://lingo.dev/ci)                 |
+| **SDK**      | ବ୍ୟବହାରକାରୀ-ସୃଷ୍ଟି ସାମଗ୍ରୀ ପାଇଁ ରିୟଲଟାଇମ୍ ଅନୁବାଦ                         | [/sdk](https://lingo.dev/sdk)               |
 
-ପ୍ରତ୍ୟେକଟି କ’ଣ ପାଇଁ ତାହାର ଏକ ସଂକ୍ଷିପ୍ତ ସାରାଂଶ ନିମ୍ନରେ ଦିଆଯାଇଛି 👇
+ତଳେ ପ୍ରତ୍ୟେକ ପାଇଁ ଦ୍ରୁତ ସୂଚନା ଦିଆଯାଇଛି 👇
 
 ---
 
 ### ⚡️ Lingo.dev CLI
 
-ଆପଣ ନିଜ କମାଣ୍ଡ ଲାଇନରୁ ସିଧାସଳଖ କୋଡ୍ ଏବଂ ବିଷୟବସ୍ତୁ ଅନୁବାଦ କରିପାରିବେ |
+ସିଧାସଳଖ ଆପଣଙ୍କ ଟର୍ମିନାଲରୁ କୋଡ୍ ଓ ବିଷୟବସ୍ତୁ ଅନୁବାଦ କରନ୍ତୁ।
 
 ```bash
 npx lingo.dev@latest run
 ```
 
-ଏହି ପ୍ରକ୍ରିୟା ପ୍ରତ୍ୟେକ ଷ୍ଟ୍ରିଙ୍ଗକୁ ଚିହ୍ନଟ କରି, ଫଳାଫଳଗୁଡ଼ିକୁ ସଂରକ୍ଷଣ କରି ଏବଂ କେବଳ ପରିବର୍ତ୍ତନ ହୋଇଥିବା ଅଂଶଗୁଡ଼ିକୁ ପୁନଃ ଅନୁବାଦ କରି କାର୍ଯ୍ୟ କରିଥାଏ |
+ଏହା ପ୍ରତ୍ୟେକ ଷ୍ଟ୍ରିଙ୍ଗର ଫିଙ୍ଗରପ୍ରିଣ୍ଟ ତିଆରି କରେ, ଫଳାଫଳଗୁଡ଼ିକୁ କ୍ୟାଶ୍ କରେ, ଏବଂ କେବଳ ପରିବର୍ତ୍ତିତ ଜିନିଷଗୁଡ଼ିକର ପୁନଃ ଅନୁବାଦ କରେ।
 
-[[ଏହି ଡକ୍ୟୁମେଣ୍ଟ ଯାଞ୍ଚ କରନ୍ତୁ] →](https://lingo.dev/cli) କିପରି ଆରମ୍ଭ କରିବେ ଜାଣିବା ପାଇଁ
+ଏହାକୁ କିପରି ସେଟ୍ ଅପ୍ କରିବେ ଜାଣିବା ପାଇଁ [ଡକ୍ୟୁମେଣ୍ଟେସନ୍ ଅନୁସରଣ କରନ୍ତୁ →](https://lingo.dev/cli)।
 
----
-
-### 🔄 Lingo.dev CI/CD
-
-ଆପଣାମୁହଁରେ ତ୍ରୁଟିଶୂନ୍ୟ ଅନୁବାଦ ପ୍ରଦାନ କରନ୍ତୁ।
-
-```yaml
-# .github/workflows/i18n.yml
-name: Lingo.dev i18n
-on: [push]
-
-jobs:
-  i18n:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: lingodotdev/lingo.dev@main
-        with:
-          api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
-```
-
-ମାନୁଆଲ୍ ଷ୍ଟେପ୍ ବିନା ତୁମର ରେପୋ ସବୁଜ ଏବଂ ତୁମର ଉତ୍ପାଦକୁ ବହୁଭାଷୀ ରଖେ |
-
-[ଅଧିକ ବିବରଣୀ ପାଇଁ ଡକ୍ୟୁମେଣ୍ଟ ଯାଞ୍ଚ କରନ୍ତୁ →](https://lingo.dev/ci)
-
----
-
-### 🧩 Lingo.dev SDK
-
-ଗତିଶୀଳ ବିଷୟବସ୍ତୁ ପାଇଁ ତତକ୍ଷଣାତ୍ ଅନୁରୋଧ ଅନୁବାଦ |
-
-```ts
-import { LingoDotDevEngine } from "lingo.dev/sdk";
-
-const lingoDotDev = new LingoDotDevEngine({
-  apiKey: "your-api-key-here",
-});
-
-const content = {
-  greeting: "Hello",
-  farewell: "Goodbye",
-  message: "Welcome to our platform",
-};
-
-const translated = await lingoDotDev.localizeObject(content, {
-  sourceLocale: "en",
-  targetLocale: "es",
-});
-// Returns: { greeting: "Hola", farewell: "Adiós", message: "Bienvenido a nuestra plataforma" }
-```
-
-ଏହି ଉପକରଣଟି ଚାଟ୍, ଉପଭୋକ୍ତାଙ୍କ ମନ୍ତବ୍ୟ ଏବଂ ଅନ୍ୟାନ୍ୟ ଗତିଶୀଳ ପ୍ରବାହ ପରି ରିଅଲ୍-ଟାଇମରେ ବିଷୟବସ୍ତୁ ଅନୁବାଦ କରିବା ପାଇଁ ବହୁତ ଭଲ।
-
-[ଏଠାରେ ଡକ୍ୟୁମେଣ୍ଟେସନ୍ ଯାଞ୍ଚ କରନ୍ତୁ →](https://lingo.dev/sdk)
-
----
-
-## 🤝 ସମ୍ପ୍ରଦାୟ
-
-ଆମେ ଏକ ସମ୍ପ୍ରଦାୟ ଦ୍ୱାରା ପରିଚାଳିତ ଗୋଷ୍ଠୀ ଏବଂ ଅବଦାନକୁ ସ୍ୱାଗତ କରୁ!
-
-- ଯଦି ଆପଣଙ୍କର କୌଣସି ଧାରଣା ଅଛି, [ଏକ ପ୍ରସଙ୍ଗ ଖୋଲନ୍ତୁ](https://github.com/lingodotdev/lingo.dev/issues)
-- ଯଦି ଆପଣ କିଛି ଠିକ୍ କରିବାକୁ ଚାହୁଁଛନ୍ତି, [ଏକ PR ପଠାନ୍ତୁ](https://github.com/lingodotdev/lingo.dev/pulls)
-- ଯଦି ଆପଣଙ୍କୁ ସହାୟତା ଦରକାର, [ଆମର Discord ରେ ଯୋଗ ଦିଅନ୍ତୁ](https://lingo.dev/go/discord)
-
-## ⭐ ତାରା ଇତିହାସ
-
-ଯଦି ତୁମେ ଆମର କାମ ପସନ୍ଦ କରୁଛ, ଆମକୁ ଏକ give ଦିଅ ଏବଂ 5,000 ତାରକା ପାଖରେ ପହଞ୍ଚିବାରେ ସାହାଯ୍ୟ କର!
-
-[
-
-![ତାରା ଇତିହାସ ଚାର୍ଟ](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
-
-](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
-
-## 🌐 ଅନ୍ୟ ଭାଷାରେ ପ Read ଼ନ୍ତୁ |
-
-[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Bhojpuri](/readme/bho.md)
-
-ଯଦି ଆପଣଙ୍କର ଭାଷା ତାଲିକାଭୁକ୍ତ ହୋଇନାହିଁ? ଏହା [`i18n.json`](./i18n.json) ଏକ PR ଯୋଡନ୍ତୁ ଏବଂ ଖୋଲନ୍ତୁ!
+---]]>
