@@ -2,7 +2,7 @@
 
 ## Overview
 
-Successfully implemented a **Pseudo-Localization Mode** feature for Lingo.dev that allows developers to test UI internationalization readiness without waiting for actual translations or external API calls.
+**Pseudo-Localization Mode** feature for Lingo.dev that allows developers to test UI internationalization readiness without waiting for actual translations or external API calls.
 
 ## Files Created
 

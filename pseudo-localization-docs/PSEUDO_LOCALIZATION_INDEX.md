@@ -31,13 +31,13 @@ Start here based on what you need:
    - Detailed troubleshooting
 
 ### 🏗️ For Maintainers & Contributors
-1. **Implementation Summary** → [`PSEUDO_LOCALIZATION_IMPLEMENTATION.md`](PSEUDO_LOCALIZATION_IMPLEMENTATION.md)
+1. **Implementation Summary** → [`PSEUDO_LOCALIZATION_IMPLEMENTATION.md`](pseudo-localization-docs/PSEUDO_LOCALIZATION_IMPLEMENTATION.md)
    - File-by-file changes
    - Architecture overview
    - Feature capabilities
    - Test results
 
-2. **Complete Summary** → [`PSEUDO_LOCALIZATION_COMPLETE_SUMMARY.md`](PSEUDO_LOCALIZATION_COMPLETE_SUMMARY.md)
+2. **Complete Summary** → [`PSEUDO_LOCALIZATION_COMPLETE_SUMMARY.md`](pseudo-localization-docs/PSEUDO_LOCALIZATION_COMPLETE_SUMMARY.md)
    - Complete technical overview
    - Code statistics
    - Performance analysis
