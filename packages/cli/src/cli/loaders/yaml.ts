@@ -42,6 +42,19 @@ function getStringType(
 ): ToStringOptions["defaultStringType"] {
   if (yamlString) {
     const lines = yamlString.split("\n");
+
+    // Check if the file uses literal block scalars (|, |-, |+)
+    const hasLiteralBlockScalar = lines.find((line) => {
+      const trimmedLine = line.trim();
+      return trimmedLine.match(/:\s*\|[-+]?\s*$/);
+    });
+
+    // If literal block scalars are used, always use PLAIN to preserve them
+    if (hasLiteralBlockScalar) {
+      return "PLAIN";
+    }
+
+    // Otherwise, check for double quotes on string values
     const hasDoubleQuotes = lines.find((line) => {
       const trimmedLine = line.trim();
       return (
