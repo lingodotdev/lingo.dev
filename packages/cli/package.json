@@ -165,7 +165,7 @@
     "figlet": "1.9.4",
     "flat": "6.0.1",
     "gettext-parser": "8.0.0",
-    "glob": "11.0.0",
+    "glob": "11.1.0",
     "gradient-string": "3.0.0",
     "gray-matter": "4.0.3",
     "ini": "5.0.0",

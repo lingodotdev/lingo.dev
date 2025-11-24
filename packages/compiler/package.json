@@ -42,7 +42,7 @@
     "next": "15.2.4",
     "tsup": "8.5.1",
     "typescript": "5.9.3",
-    "vitest": "2.1.4"
+    "vitest": "4.0.13"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "1.2.11",
