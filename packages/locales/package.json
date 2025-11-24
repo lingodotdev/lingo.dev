@@ -26,12 +26,12 @@
   "author": "",
   "license": "Apache-2.0",
   "devDependencies": {
-    "@types/node": "^22.13.5",
-    "tsup": "^8.3.5",
-    "typescript": "^5.8.3",
-    "vitest": "^3.2.4"
+    "@types/node": "22.13.5",
+    "tsup": "8.5.1",
+    "typescript": "5.9.3",
+    "vitest": "3.2.4"
   },
   "dependencies": {
-    "iso-639-3": "^3.0.1"
+    "iso-639-3": "3.0.1"
   }
 }

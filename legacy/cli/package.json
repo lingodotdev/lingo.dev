@@ -22,7 +22,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "lingo.dev": "*"
+    "lingo.dev": "0.116.5"
   },
   "deprecated": "Replexica is now Lingo.dev! Please use our new CLI package by running: npx lingo.dev@latest. Visit https://lingo.dev for the latest features and documentation."
 }
