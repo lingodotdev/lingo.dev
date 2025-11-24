@@ -1,5 +1,47 @@
 # next-app
 
+## 0.2.91
+
+### Patch Changes
+
+- Updated dependencies [[`9c338a8`](https://github.com/lingodotdev/lingo.dev/commit/9c338a8c5fab77c386d74700a6055c73d06daafd)]:
+  - lingo.dev@0.116.5
+
+## 0.2.90
+
+### Patch Changes
+
+- Updated dependencies [[`3dd04bd`](https://github.com/lingodotdev/lingo.dev/commit/3dd04bd937828c16862b2b1459576931028bb01a)]:
+  - lingo.dev@0.116.4
+
+## 0.2.89
+
+### Patch Changes
+
+- Updated dependencies [[`dd09791`](https://github.com/lingodotdev/lingo.dev/commit/dd09791948351046e083b077805db9039ee2faf1)]:
+  - lingo.dev@0.116.3
+
+## 0.2.88
+
+### Patch Changes
+
+- Updated dependencies [[`b0ac42a`](https://github.com/lingodotdev/lingo.dev/commit/b0ac42a896b46d0670a5ad9817304b32125aef85)]:
+  - lingo.dev@0.116.2
+
+## 0.2.87
+
+### Patch Changes
+
+- Updated dependencies []:
+  - lingo.dev@0.116.1
+
+## 0.2.86
+
+### Patch Changes
+
+- Updated dependencies [[`c0aa906`](https://github.com/lingodotdev/lingo.dev/commit/c0aa906880d26c5d01748e0d72b9f61ec989606d), [`5d808bd`](https://github.com/lingodotdev/lingo.dev/commit/5d808bd33eb3a0b5c685e3a3a6cb079ba86eb6e2)]:
+  - lingo.dev@0.116.0
+
 ## 0.2.85
 
 ### Patch Changes
