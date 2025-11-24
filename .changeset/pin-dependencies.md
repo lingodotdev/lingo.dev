@@ -1,6 +1,5 @@
 ---
 "lingo.dev": minor
-"@lingo.dev/_cli": minor
 "@lingo.dev/_compiler": minor
 "@lingo.dev/_locales": minor
 "@lingo.dev/_logging": minor
