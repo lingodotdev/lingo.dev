@@ -25,14 +25,14 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@lingo.dev/_spec": "workspace:*",
-    "@paralleldrive/cuid2": "^2.2.2",
-    "jsdom": "^25.0.1",
-    "zod": "^3.25.76"
+    "@paralleldrive/cuid2": "2.2.2",
+    "jsdom": "25.0.1",
+    "zod": "3.25.76"
   },
   "devDependencies": {
-    "@types/jsdom": "^21.1.7",
-    "tsup": "^8.3.5",
-    "typescript": "^5.8.3",
-    "vitest": "^3.1.2"
+    "@types/jsdom": "21.1.7",
+    "tsup": "8.5.1",
+    "typescript": "5.9.3",
+    "vitest": "3.1.2"
   }
 }

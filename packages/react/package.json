@@ -41,26 +41,26 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@testing-library/react": "^16.3.0",
-    "@types/js-cookie": "^3.0.6",
-    "@types/lodash": "^4.17.4",
-    "@types/react": "^18.3.18",
-    "@types/react-dom": "^19.1.7",
-    "@vitejs/plugin-react": "^4.4.1",
-    "chokidar-cli": "^3.0.0",
+    "@testing-library/react": "16.3.0",
+    "@types/js-cookie": "3.0.6",
+    "@types/lodash": "4.17.21",
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "4.4.1",
+    "chokidar-cli": "3.0.0",
     "next": "15.2.4",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "tsup": "^8.3.5",
-    "typescript": "^5.4.5",
-    "unbuild": "^3.5.0",
-    "vitest": "^3.1.1"
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "tsup": "8.5.1",
+    "typescript": "5.9.3",
+    "unbuild": "3.6.1",
+    "vitest": "3.1.1"
   },
   "peerDependencies": {
     "next": "15.2.4"
   },
   "dependencies": {
-    "js-cookie": "^3.0.5",
-    "lodash": "^4.17.21"
+    "js-cookie": "3.0.5",
+    "lodash": "4.17.21"
   }
 }

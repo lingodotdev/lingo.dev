@@ -26,13 +26,13 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@lingo.dev/_locales": "workspace:*",
-    "zod": "^3.25.76",
-    "zod-to-json-schema": "^3.24.5"
+    "zod": "3.25.76",
+    "zod-to-json-schema": "3.25.0"
   },
   "devDependencies": {
-    "@types/node": "^22.13.5",
-    "tsup": "^8.3.5",
-    "typescript": "^5.8.3",
-    "vitest": "^3.1.2"
+    "@types/node": "22.13.5",
+    "tsup": "8.5.1",
+    "typescript": "5.9.3",
+    "vitest": "3.1.2"
   }
 }
