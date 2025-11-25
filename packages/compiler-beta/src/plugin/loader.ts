@@ -2,6 +2,7 @@ import type { LoaderConfig } from "../types";
 import { loadMetadata, saveMetadata, upsertEntries } from "../metadata/manager";
 import { shouldTransformFile, transformComponent } from "./transform";
 import { startTranslationServer } from "../server";
+import { translationQueue } from "./translation-queue";
 
 let globalServer: any;
 
@@ -72,6 +73,12 @@ export default async function lingoLoader(
     if (result.newEntries && result.newEntries.length > 0) {
       const updatedMetadata = upsertEntries(metadata, result.newEntries);
       await saveMetadata(config, updatedMetadata);
+
+      // Enqueue hashes for translation (production builds only)
+      if (!config.isDev) {
+        const hashes = result.newEntries.map((entry) => entry.hash);
+        translationQueue.enqueue(hashes);
+      }
 
       // Log new translations discovered (in dev mode)
       if (config.isDev) {

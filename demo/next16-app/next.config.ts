@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { LingoWebpackPlugin } from "@lingo.dev/_compiler-beta/plugin";
 
 const nextConfig: NextConfig = {
   /* config options here */
@@ -24,6 +25,24 @@ const nextConfig: NextConfig = {
         ],
       },
     },
+  },
+
+  // Add webpack configuration for production builds
+  webpack: (config, { isServer }) => {
+    // Only add plugin to server build to avoid duplicates
+    if (isServer) {
+      config.plugins.push(
+        new LingoWebpackPlugin({
+          sourceRoot: "./app",
+          lingoDir: ".lingo",
+          sourceLocale: "en",
+          targetLocales: ["de", "fr"],
+          translator: { type: "pseudo" }, // Use the same translator as loader
+          outputDir: "./public/translations",
+        }),
+      );
+    }
+    return config;
   },
 };
 
