@@ -1,5 +1,23 @@
 # @lingo.dev/\_sdk
 
+## 0.13.0
+
+### Minor Changes
+
+- [#1634](https://github.com/lingodotdev/lingo.dev/pull/1634) [`48fab66`](https://github.com/lingodotdev/lingo.dev/commit/48fab66b6806455d9faa1dcb169d4c61194e2144) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - Pin all dependencies to exact versions to prevent supply chain attacks. Dependencies no longer use caret (^) or tilde (~) ranges, ensuring full control over version updates and requiring explicit review of all dependency changes.
+
+### Patch Changes
+
+- Updated dependencies [[`48fab66`](https://github.com/lingodotdev/lingo.dev/commit/48fab66b6806455d9faa1dcb169d4c61194e2144)]:
+  - @lingo.dev/_spec@0.44.0
+
+## 0.12.9
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @lingo.dev/_spec@0.43.1
+
 ## 0.12.8
 
 ### Patch Changes
@@ -74,7 +92,6 @@
 ### Minor Changes
 
 - [#1049](https://github.com/lingodotdev/lingo.dev/pull/1049) [`85dfc10`](https://github.com/lingodotdev/lingo.dev/commit/85dfc10961b116e31b2bb478f42013756ca49974) Thanks [@VAIBHAVSING](https://github.com/VAIBHAVSING)! - Added new methods to the SDK:
-
   1. `localizeStringArray`: Localizes an array of strings while maintaining their order.
 
   Also added comprehensive tests for these methods using Vitest.

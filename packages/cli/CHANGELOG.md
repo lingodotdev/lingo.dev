@@ -1,5 +1,66 @@
 # lingo.dev
 
+## 0.117.0
+
+### Minor Changes
+
+- [#1634](https://github.com/lingodotdev/lingo.dev/pull/1634) [`48fab66`](https://github.com/lingodotdev/lingo.dev/commit/48fab66b6806455d9faa1dcb169d4c61194e2144) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - Pin all dependencies to exact versions to prevent supply chain attacks. Dependencies no longer use caret (^) or tilde (~) ranges, ensuring full control over version updates and requiring explicit review of all dependency changes.
+
+### Patch Changes
+
+- Updated dependencies [[`48fab66`](https://github.com/lingodotdev/lingo.dev/commit/48fab66b6806455d9faa1dcb169d4c61194e2144)]:
+  - @lingo.dev/_compiler@0.8.0
+  - @lingo.dev/_locales@0.3.0
+  - @lingo.dev/_react@0.7.0
+  - @lingo.dev/_sdk@0.13.0
+  - @lingo.dev/_spec@0.44.0
+
+## 0.116.5
+
+### Patch Changes
+
+- [#1626](https://github.com/lingodotdev/lingo.dev/pull/1626) [`9c338a8`](https://github.com/lingodotdev/lingo.dev/commit/9c338a8c5fab77c386d74700a6055c73d06daafd) Thanks [@vrcprl](https://github.com/vrcprl)! - preserve YAML literal block scalars without backslash escaping
+
+## 0.116.4
+
+### Patch Changes
+
+- [#1622](https://github.com/lingodotdev/lingo.dev/pull/1622) [`3dd04bd`](https://github.com/lingodotdev/lingo.dev/commit/3dd04bd937828c16862b2b1459576931028bb01a) Thanks [@vrcprl](https://github.com/vrcprl)! - Fix ICU input
+
+## 0.116.3
+
+### Patch Changes
+
+- [#1620](https://github.com/lingodotdev/lingo.dev/pull/1620) [`dd09791`](https://github.com/lingodotdev/lingo.dev/commit/dd09791948351046e083b077805db9039ee2faf1) Thanks [@vrcprl](https://github.com/vrcprl)! - add substitutions support to xcode-xcstrings-v2
+
+## 0.116.2
+
+### Patch Changes
+
+- [#1617](https://github.com/lingodotdev/lingo.dev/pull/1617) [`b0ac42a`](https://github.com/lingodotdev/lingo.dev/commit/b0ac42a896b46d0670a5ad9817304b32125aef85) Thanks [@vrcprl](https://github.com/vrcprl)! - support for stringSet to xcode-xcstrings and v2
+
+## 0.116.1
+
+### Patch Changes
+
+- Updated dependencies [[`0f6ffbf`](https://github.com/lingodotdev/lingo.dev/commit/0f6ffbf7dafafbead768eb9e52787cb6013aa1c3)]:
+  - @lingo.dev/_locales@0.2.0
+  - @lingo.dev/_spec@0.43.1
+  - @lingo.dev/_compiler@0.7.18
+  - @lingo.dev/_sdk@0.12.9
+
+## 0.116.0
+
+### Minor Changes
+
+- [#1519](https://github.com/lingodotdev/lingo.dev/pull/1519) [`5d808bd`](https://github.com/lingodotdev/lingo.dev/commit/5d808bd33eb3a0b5c685e3a3a6cb079ba86eb6e2) Thanks [@Dishantydv7](https://github.com/Dishantydv7)! - fix(status): prevent NaN% when totalWordsToTranslate is 0
+
+### Patch Changes
+
+- [`c0aa906`](https://github.com/lingodotdev/lingo.dev/commit/c0aa906880d26c5d01748e0d72b9f61ec989606d) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - Fix prettier formatter loaders after prettier config removal
+
+  Restores prettier as a runtime dependency for the CLI package and restores the `.prettierrc` config file needed by the formatter loaders. This fixes failing tests for HTML, JSON, and Markdown bucket loaders that depend on prettier for formatting translation files.
+
 ## 0.115.0
 
 ### Minor Changes
@@ -259,7 +320,6 @@
 ### Patch Changes
 
 - [#1149](https://github.com/lingodotdev/lingo.dev/pull/1149) [`bd3f69d`](https://github.com/lingodotdev/lingo.dev/commit/bd3f69dde76814146f775bc87241fa2fad012ab0) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - Fix CI command hanging due to process.exit calls
-
   - Remove PostHog shutdown() call that was causing process to hang
   - Replace process.exit() with proper exception throwing in i18n and run commands
   - Upgrade posthog-node from 5.5.1 to 5.8.1 for better stability
@@ -546,7 +606,6 @@
 - [#966](https://github.com/lingodotdev/lingo.dev/pull/966) [`8b306bc`](https://github.com/lingodotdev/lingo.dev/commit/8b306bcd0a3231ffd8bde283414b6d069b7a5b99) Thanks [@VAIBHAVSING](https://github.com/VAIBHAVSING)! - Add watch mode to CLI for automatic retranslation on file changes
 
   This release introduces a new watch mode feature that automatically triggers retranslation when changes are detected in source files:
-
   - **New `--watch` flag**: Enables file watching mode that monitors source files for changes
   - **New `--debounce` flag**: Configurable debounce delay (default: 5 seconds) to prevent excessive retranslations
   - **Intelligent file pattern detection**: Automatically determines which files to watch based on i18n.json bucket configurations
@@ -567,7 +626,6 @@
   ```
 
   **Technical Implementation:**
-
   - Uses `chokidar` for robust cross-platform file watching
   - Integrates seamlessly with existing CLI pipeline (setup → plan → execute)
   - Maintains full compatibility with all existing CLI options and workflows
@@ -584,7 +642,6 @@
 ### Minor Changes
 
 - [#958](https://github.com/lingodotdev/lingo.dev/pull/958) [`84fd214`](https://github.com/lingodotdev/lingo.dev/commit/84fd214a21766e7683c5d645fcb8c4c0162eb0b6) Thanks [@chrissiwaffler](https://github.com/chrissiwaffler)! - feat: add Mistral AI as a supported LLM provider
-
   - Added Mistral AI provider support across the entire lingo.dev ecosystem
   - Users can now use Mistral models for localization by setting MISTRAL_API_KEY
   - Supports all Mistral models available through the @ai-sdk/mistral package
@@ -612,7 +669,6 @@
 ### Minor Changes
 
 - [#956](https://github.com/lingodotdev/lingo.dev/pull/956) [`ce8c75c`](https://github.com/lingodotdev/lingo.dev/commit/ce8c75c7fc1a2124d3e18444bc356c4dfce26434) Thanks [@VAIBHAVSING](https://github.com/VAIBHAVSING)! - feat: add EJS (Embedded JavaScript) templating engine support
-
   - Added EJS loader to support parsing and translating EJS template files
   - EJS loader extracts translatable text while preserving EJS tags and expressions
   - Updated spec package to include "ejs" in supported bucket types
@@ -1198,7 +1254,6 @@
 - [#700](https://github.com/lingodotdev/lingo.dev/pull/700) [`c5ccf81`](https://github.com/lingodotdev/lingo.dev/commit/c5ccf81e9c2bd27bae332306da2a41e41bbeb87d) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - Add support for locked patterns in MDX loader
 
   This change adds support for preserving specific patterns in MDX files during translation, including:
-
   - !params syntax for parameter documentation
   - !! parameter_name headings
   - !type declarations
