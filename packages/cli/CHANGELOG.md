@@ -1,5 +1,38 @@
 # lingo.dev
 
+## 0.117.0
+
+### Minor Changes
+
+- [#1634](https://github.com/lingodotdev/lingo.dev/pull/1634) [`48fab66`](https://github.com/lingodotdev/lingo.dev/commit/48fab66b6806455d9faa1dcb169d4c61194e2144) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - Pin all dependencies to exact versions to prevent supply chain attacks. Dependencies no longer use caret (^) or tilde (~) ranges, ensuring full control over version updates and requiring explicit review of all dependency changes.
+
+### Patch Changes
+
+- Updated dependencies [[`48fab66`](https://github.com/lingodotdev/lingo.dev/commit/48fab66b6806455d9faa1dcb169d4c61194e2144)]:
+  - @lingo.dev/_compiler@0.8.0
+  - @lingo.dev/_locales@0.3.0
+  - @lingo.dev/_react@0.7.0
+  - @lingo.dev/_sdk@0.13.0
+  - @lingo.dev/_spec@0.44.0
+
+## 0.116.5
+
+### Patch Changes
+
+- [#1626](https://github.com/lingodotdev/lingo.dev/pull/1626) [`9c338a8`](https://github.com/lingodotdev/lingo.dev/commit/9c338a8c5fab77c386d74700a6055c73d06daafd) Thanks [@vrcprl](https://github.com/vrcprl)! - preserve YAML literal block scalars without backslash escaping
+
+## 0.116.4
+
+### Patch Changes
+
+- [#1622](https://github.com/lingodotdev/lingo.dev/pull/1622) [`3dd04bd`](https://github.com/lingodotdev/lingo.dev/commit/3dd04bd937828c16862b2b1459576931028bb01a) Thanks [@vrcprl](https://github.com/vrcprl)! - Fix ICU input
+
+## 0.116.3
+
+### Patch Changes
+
+- [#1620](https://github.com/lingodotdev/lingo.dev/pull/1620) [`dd09791`](https://github.com/lingodotdev/lingo.dev/commit/dd09791948351046e083b077805db9039ee2faf1) Thanks [@vrcprl](https://github.com/vrcprl)! - add substitutions support to xcode-xcstrings-v2
+
 ## 0.116.2
 
 ### Patch Changes
