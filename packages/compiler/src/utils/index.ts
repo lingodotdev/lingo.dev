@@ -1,8 +1,8 @@
-import traverse from "@babel/traverse";
+import { traverse } from "../babel-interop";
 import * as t from "@babel/types";
 import _ from "lodash";
 
-import { NodePath } from "@babel/traverse";
+import { NodePath } from "../babel-interop"
 import { getJsxAttributeValue, setJsxAttributeValue } from "./jsx-attribute";
 
 // "root" is a JSXElement node that is the root of the JSX tree,
