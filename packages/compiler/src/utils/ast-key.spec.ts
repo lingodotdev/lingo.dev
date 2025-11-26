@@ -1,6 +1,6 @@
 import { it, describe, expect } from "vitest";
 import { parse } from "@babel/parser";
-import traverse, { NodePath } from "@babel/traverse";
+import { traverse, NodePath } from "../babel-interop";
 import { getAstKey, getAstByKey } from "./ast-key";
 
 describe("ast key", () => {
