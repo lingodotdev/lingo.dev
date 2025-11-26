@@ -1,5 +1,5 @@
 import * as t from "@babel/types";
-import { NodePath } from "@babel/traverse";
+import { NodePath } from "../babel-interop";
 
 export function getJsxElementName(nodePath: NodePath<t.JSXElement>) {
   const openingElement = nodePath.node.openingElement;

@@ -1,5 +1,11 @@
 # @lingo.dev/\_compiler
 
+## 0.8.1
+
+### Patch Changes
+
+- [#1637](https://github.com/lingodotdev/lingo.dev/pull/1637) [`ec2f00a`](https://github.com/lingodotdev/lingo.dev/commit/ec2f00a0a1127ff4c5333ce4c6d8d691f89c4b17) Thanks [@AleksandrSl](https://github.com/AleksandrSl)! - fix babel CJS/ESM
+
 ## 0.8.0
 
 ### Minor Changes
