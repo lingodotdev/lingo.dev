@@ -1,5 +1,5 @@
 import * as t from "@babel/types";
-import traverse, { NodePath } from "../babel-interop"
+import { traverse, NodePath } from "../babel-interop";
 import { parse } from "@babel/parser";
 import {
   getJsxAttributeValue,

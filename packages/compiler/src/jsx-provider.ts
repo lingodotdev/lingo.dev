@@ -11,7 +11,7 @@ import { ModuleId } from "./_const";
  */
 const jsxProviderMutation = createCodeMutation((payload) => {
   traverse(payload.ast, {
-    JSXElement: (path) => {
+    JSXElement: (path: NodePath<t.JSXElement>) => {
       if (getJsxElementName(path)?.toLowerCase() === "html") {
         const mode = getModuleExecutionMode(payload.ast, payload.params.rsc);
         if (mode === "client") {

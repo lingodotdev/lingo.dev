@@ -1,4 +1,4 @@
-import { NodePath } from "../babel-interop"
+import { NodePath } from "../babel-interop";
 import * as t from "@babel/types";
 import { traverse } from "../babel-interop";
 
@@ -60,7 +60,7 @@ function _getProgramNodePath(ast: t.File): NodePath<t.Program> | null {
   let result: NodePath<t.Program> | null = null;
 
   traverse(ast, {
-    Program(nodePath) {
+    Program(nodePath: NodePath<t.Program>) {
       result = nodePath;
       nodePath.stop();
     },

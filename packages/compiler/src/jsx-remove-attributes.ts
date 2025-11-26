@@ -1,7 +1,6 @@
 import { createCodeMutation, CompilerPayload } from "./_base";
 import * as t from "@babel/types";
-import { traverse } from "./babel-interop";
-import { NodePath } from "../babel-interop"
+import { traverse, NodePath } from "./babel-interop";
 
 /**
  * This mutation identifies JSX elements with data-jsx-* attributes and removes them
