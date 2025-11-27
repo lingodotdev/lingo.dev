@@ -10,6 +10,7 @@ import {
 } from "@lingo.dev/_spec";
 import { bucketTypeSchema } from "@lingo.dev/_spec";
 import Z from "zod";
+import { getConfigRoot } from "./config";
 
 type BucketConfig = {
   type: Z.infer<typeof bucketTypeSchema>;
@@ -99,13 +100,15 @@ function expandPlaceholderedGlob(
   _pathPattern: string,
   sourceLocale: string,
 ): string[] {
-  const absolutePathPattern = path.resolve(_pathPattern);
+  const configRoot = getConfigRoot() || process.cwd();
+
+  const absolutePathPattern = path.resolve(configRoot, _pathPattern);
   const pathPattern = normalizePath(
-    path.relative(process.cwd(), absolutePathPattern),
+    path.relative(configRoot, absolutePathPattern),
   );
   if (pathPattern.startsWith("..")) {
     throw new CLIError({
-      message: `Invalid path pattern: ${pathPattern}. Path pattern must be within the current working directory.`,
+      message: `Invalid path pattern: ${pathPattern}. Path pattern must be within the config root directory.`,
       docUrl: "invalidPathPattern",
     });
   }
@@ -141,10 +144,11 @@ function expandPlaceholderedGlob(
       follow: true,
       withFileTypes: true,
       windowsPathsNoEscape: true, // Windows path support
+      cwd: configRoot,
     })
     .filter((file) => file.isFile() || file.isSymbolicLink())
     .map((file) => file.fullpath())
-    .map((fullpath) => normalizePath(path.relative(process.cwd(), fullpath)));
+    .map((fullpath) => normalizePath(path.relative(configRoot, fullpath)));
 
   // transform each source file path back to [locale] placeholder paths
   const placeholderedPaths = sourcePaths.map((sourcePath) => {
