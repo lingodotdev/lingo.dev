@@ -1,4 +1,4 @@
-import { NodePath } from "@babel/traverse";
+import { NodePath } from "../babel-interop";
 import * as t from "@babel/types";
 import { Expression, V8IntrinsicIdentifier } from "@babel/types";
 
