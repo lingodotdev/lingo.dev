@@ -235,4 +235,186 @@ world: World`;
     const reparsed = await loader.pull("en", result);
     expect(reparsed).toEqual(data);
   });
+
+  it("push should preserve mixed value quoting (some quoted, some unquoted)", async () => {
+    const loader = createYamlLoader();
+    loader.setDefaultLocale("en");
+
+    // Mixed quoting: some values quoted, some plain, some YAML references
+    const yamlInput = `gender:
+  f: "Feminine"
+  m: "Masculine"
+  female: :@f
+  male: :@m`;
+
+    await loader.pull("en", yamlInput);
+
+    const data = {
+      gender: {
+        f: "Femenino",
+        m: "Masculino",
+        female: ":@f",
+        male: ":@m",
+      },
+    };
+
+    const result = await loader.push("en", data, yamlInput);
+
+    // Quoted values should remain quoted
+    expect(result).toContain('"Femenino"');
+    expect(result).toContain('"Masculino"');
+
+    // YAML references should remain unquoted
+    expect(result).toContain("female: :@f");
+    expect(result).toContain("male: :@m");
+
+    // Should NOT quote all values globally
+    expect(result).not.toMatch(/female:\s*":@f"/);
+    expect(result).not.toMatch(/male:\s*":@m"/);
+  });
+
+  it("push should preserve mixed key quoting (some keys quoted, some unquoted)", async () => {
+    const loader = createYamlLoader();
+    loader.setDefaultLocale("en");
+
+    // Mixed key quoting: one key quoted, others plain
+    const yamlInput = `gender:
+  f: Feminine
+  "m": Masculine
+  n: Neutral`;
+
+    await loader.pull("en", yamlInput);
+
+    const data = {
+      gender: {
+        f: "Femenino",
+        m: "Masculino",
+        n: "Neutro",
+      },
+    };
+
+    const result = await loader.push("en", data, yamlInput);
+
+    // Only 'm' key should be quoted
+    expect(result).toMatch(/"m":\s*Masculino/);
+
+    // Other keys should NOT be quoted
+    expect(result).toMatch(/f:\s*Femenino/);
+    expect(result).not.toContain('"f":');
+    expect(result).toMatch(/n:\s*Neutro/);
+    expect(result).not.toContain('"n":');
+
+    // Root key should not be quoted
+    expect(result).not.toContain('"gender":');
+  });
+
+  it("push should preserve both mixed key and value quoting simultaneously", async () => {
+    const loader = createYamlLoader();
+    loader.setDefaultLocale("en");
+
+    // Complex scenario: mixed keys AND mixed values
+    const yamlInput = `config:
+  "special-key": "quoted value"
+  normalKey: plain value
+  anotherKey: "another quoted"`;
+
+    await loader.pull("en", yamlInput);
+
+    const data = {
+      config: {
+        "special-key": "valor citado",
+        normalKey: "valor plano",
+        anotherKey: "otro citado",
+      },
+    };
+
+    const result = await loader.push("en", data, yamlInput);
+
+    // Quoted key should remain quoted
+    expect(result).toMatch(/"special-key":/);
+
+    // Other keys should not be quoted
+    expect(result).toMatch(/normalKey:/);
+    expect(result).not.toContain('"normalKey"');
+    expect(result).toMatch(/anotherKey:/);
+    expect(result).not.toContain('"anotherKey"');
+
+    // Quoted values should remain quoted
+    expect(result).toContain('"valor citado"');
+    expect(result).toContain('"otro citado"');
+
+    // Plain value should remain plain
+    expect(result).toMatch(/normalKey:\s*valor plano/);
+  });
+
+  it("push should preserve nested mixed quoting", async () => {
+    const loader = createYamlLoader();
+    loader.setDefaultLocale("en");
+
+    // Nested structure with mixed quoting at different levels
+    const yamlInput = `i18n:
+  inflections:
+    gender:
+      f: "Feminine"
+      "m": "Masculine"
+      female: :@f`;
+
+    await loader.pull("en", yamlInput);
+
+    const data = {
+      i18n: {
+        inflections: {
+          gender: {
+            f: "Femenino",
+            m: "Masculino",
+            female: ":@f",
+          },
+        },
+      },
+    };
+
+    const result = await loader.push("en", data, yamlInput);
+
+    // Only 'm' key should be quoted
+    expect(result).toMatch(/"m":/);
+    expect(result).not.toContain('"f":');
+
+    // Parent keys should not be quoted
+    expect(result).not.toContain('"i18n":');
+    expect(result).not.toContain('"inflections":');
+    expect(result).not.toContain('"gender":');
+
+    // Quoted value should be quoted, reference unquoted
+    expect(result).toContain('"Femenino"');
+    expect(result).toMatch(/female:\s*:@f/);
+  });
+
+  it("push should preserve quoting in yaml-root-key format (locale as root)", async () => {
+    const loader = createYamlLoader();
+    loader.setDefaultLocale("en");
+
+    const yamlInput = `en:
+  "greeting": "Hello!"
+  message: Welcome`;
+
+    await loader.pull("en", yamlInput);
+
+    const data = {
+      en: {
+        greeting: "¡Hola!",
+        message: "Bienvenido",
+      },
+    };
+
+    const result = await loader.push("en", data, yamlInput);
+
+    // The quoted key and value should remain quoted
+    expect(result).toContain('"greeting":');
+    expect(result).toContain('"¡Hola!"');
+
+    // The unquoted key and value should remain unquoted
+    expect(result).toMatch(/\smessage:\s/); // message key unquoted
+    expect(result).not.toContain('"message"');
+    expect(result).toMatch(/message:\s*Bienvenido/); // value unquoted
+  });
 });
