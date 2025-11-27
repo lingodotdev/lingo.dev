@@ -388,4 +388,33 @@ world: World`;
     expect(result).toContain('"Femenino"');
     expect(result).toMatch(/female:\s*:@f/);
   });
+
+  it("push should preserve quoting in yaml-root-key format (locale as root)", async () => {
+    const loader = createYamlLoader();
+    loader.setDefaultLocale("en");
+
+    const yamlInput = `en:
+  "greeting": "Hello!"
+  message: Welcome`;
+
+    await loader.pull("en", yamlInput);
+
+    const data = {
+      en: {
+        greeting: "¡Hola!",
+        message: "Bienvenido",
+      },
+    };
+
+    const result = await loader.push("en", data, yamlInput);
+
+    // The quoted key and value should remain quoted
+    expect(result).toContain('"greeting":');
+    expect(result).toContain('"¡Hola!"');
+
+    // The unquoted key and value should remain unquoted
+    expect(result).toMatch(/\smessage:\s/); // message key unquoted
+    expect(result).not.toContain('"message"');
+    expect(result).toMatch(/message:\s*Bienvenido/); // value unquoted
+  });
 });

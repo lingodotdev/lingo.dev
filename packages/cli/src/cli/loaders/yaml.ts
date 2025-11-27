@@ -62,19 +62,7 @@ function extractQuotingMetadata(doc: YAML.Document): QuotingMetadata {
   const root = doc.contents;
   if (!root) return metadata;
 
-  // Detect yaml-root-key pattern (single root key like "en:" or "es:")
-  let startNode: any = root;
-  if (isYAMLMap(root)) {
-    const rootMap = root as any;
-    if (rootMap.items && rootMap.items.length === 1) {
-      const firstPair = rootMap.items[0];
-      if (firstPair && firstPair.value) {
-        startNode = firstPair.value;
-      }
-    }
-  }
-
-  walkAndExtract(startNode, [], metadata);
+  walkAndExtract(root, [], metadata);
   return metadata;
 }
 
@@ -129,19 +117,7 @@ function applyQuotingMetadata(
   const root = doc.contents;
   if (!root) return;
 
-  // Detect yaml-root-key pattern
-  let startNode: any = root;
-  if (isYAMLMap(root)) {
-    const rootMap = root as any;
-    if (rootMap.items && rootMap.items.length === 1) {
-      const firstPair = rootMap.items[0];
-      if (firstPair && firstPair.value) {
-        startNode = firstPair.value;
-      }
-    }
-  }
-
-  walkAndApply(startNode, [], metadata);
+  walkAndApply(root, [], metadata);
 }
 
 // Walk AST and apply quoting information
