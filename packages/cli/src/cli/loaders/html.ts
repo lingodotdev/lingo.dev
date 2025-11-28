@@ -9,6 +9,7 @@ export default function createHtmlLoader(): ILoader<
   string,
   Record<string, string>
 > {
+
   // Based on WHATWG HTML spec: https://html.spec.whatwg.org/multipage/indices.html
   // Phrasing content = inline elements that should be preserved within text
   const PHRASING_ELEMENTS = new Set([
@@ -98,6 +99,7 @@ export default function createHtmlLoader(): ILoader<
     "tr",
     "td",
     "th",
+    "caption",
     "form",
     "fieldset",
     "legend",
@@ -107,11 +109,12 @@ export default function createHtmlLoader(): ILoader<
     "hr",
     "search",
     "dialog",
+    "noscript",
     "title", // <title> should be treated as a block element for translation
   ]);
 
   // Tags whose content should never be translated
-  const UNLOCALIZABLE_TAGS = new Set(["script", "style", "noscript"]);
+  const UNLOCALIZABLE_TAGS = new Set(["script", "style"]);
 
   // Attributes that should be translated separately
   const LOCALIZABLE_ATTRIBUTES: Record<string, string[]> = {
@@ -218,6 +221,16 @@ export default function createHtmlLoader(): ILoader<
             result[path] = content;
           }
           // Don't recurse into children - innerHTML captures everything
+          return;
+        }
+
+        // If this is a standalone phrasing element with text content, extract it
+        if (PHRASING_ELEMENTS.has(tagName) && hasTranslatableContent(element)) {
+          const content = getInnerHTML(element).trim();
+          if (content) {
+            result[path] = content;
+          }
+          // Don't recurse - innerHTML captures everything
           return;
         }
 

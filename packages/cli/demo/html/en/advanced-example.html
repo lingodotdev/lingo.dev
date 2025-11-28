@@ -1,0 +1,989 @@
+<!doctype html>
+<html
+  lang="en"
+  dir="ltr"
+  class="no-js"
+  data-theme="light"
+  itemscope
+  itemtype="https://schema.org/WebPage"
+>
+  <head>
+    <!-- Baseline -->
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="color-scheme" content="light dark" />
+    <meta
+      name="theme-color"
+      content="#0ea5e9"
+      media="(prefers-color-scheme: light)"
+    />
+    <meta
+      name="theme-color"
+      content="#111827"
+      media="(prefers-color-scheme: dark)"
+    />
+    <meta
+      name="description"
+      content="A maximal HTML5 showcase with broad element/attribute coverage."
+    />
+    <meta
+      name="keywords"
+      content="HTML5, elements, attributes, demo, reference"
+    />
+    <meta name="author" content="ChatGPT" />
+    <meta name="generator" content="GPT-5.1 Thinking" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta
+      name="robots"
+      content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"
+    />
+    <meta name="format-detection" content="telephone=no,address=no,email=no" />
+
+    <!-- Open Graph / Twitter -->
+    <meta property="og:title" content="Maximal HTML5 Showcase" />
+    <meta
+      property="og:description"
+      content="Broad coverage of HTML elements and attributes in one file."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://example.com/maximal-html" />
+    <meta property="og:image" content="https://example.com/og-image.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Maximal HTML5 Showcase" />
+    <meta
+      name="twitter:description"
+      content="Broad HTML element/attribute demo."
+    />
+    <meta name="twitter:image" content="https://example.com/og-image.png" />
+
+    <!-- Icons / Links -->
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%94%A5%3C/text%3E%3C/svg%3E"
+    />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link
+      rel="manifest"
+      href="/site.webmanifest"
+      crossorigin="use-credentials"
+    />
+    <link rel="canonical" href="https://example.com/maximal-html" />
+    <link
+      rel="preload"
+      href="/fonts/demo.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="prefetch" href="/next-page.html" />
+    <link rel="dns-prefetch" href="//cdn.example.com" />
+    <link rel="preconnect" href="https://cdn.example.com" crossorigin />
+    <link
+      rel="alternate"
+      href="/rss.xml"
+      type="application/rss+xml"
+      title="RSS"
+    />
+    <link
+      rel="alternate"
+      href="/feed.atom"
+      type="application/atom+xml"
+      title="Atom"
+    />
+    <link rel="help" href="/help.html" />
+    <link rel="license" href="/license.html" />
+    <link rel="author" href="/humans.txt" />
+    <link
+      rel="search"
+      href="/opensearch.xml"
+      type="application/opensearchdescription+xml"
+      title="Search"
+    />
+    <link
+      rel="stylesheet"
+      href="data:text/css,
+    :root{--bg:#0b1020;--bg2:#111827;--fg:#e5e7eb;--muted:#9ca3af;--accent:#38bdf8;--ok:#22c55e;--warn:#f59e0b;--err:#ef4444;font:16px/1.5 system-ui, sans-serif;}
+    body{margin:0;background:linear-gradient(180deg,var(--bg),var(--bg2));color:var(--fg);}
+    header,nav,main,aside,footer,section,article{padding:1rem;}
+    .container{display:grid;grid-template-columns: 1fr minmax(0, 900px) 300px 1fr;gap:1rem;}
+    .container>main{grid-column:2;}
+    .container>aside{grid-column:3;background:#0f172a;border-radius:12px;}
+    code,kbd,pre,samp{background:#0f172a;padding:.1rem .3rem;border-radius:6px;}
+    table{border-collapse:collapse;width:100%;}
+    th,td{border:1px solid #334155;padding:.4rem;}
+    fieldset{border:1px solid #334155;border-radius:10px;padding:1rem;}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.75rem;}
+    .card{background:#0f172a;border:1px solid #1f2937;border-radius:14px;padding:1rem;box-shadow:0 8px 30px rgba(0,0,0,.25);}
+    .pill{display:inline-block;padding:.1rem .5rem;border:1px solid #334155;border-radius:999px;color:var(--muted);}
+    .sr-only{position:absolute;left:-9999px;}
+    details{background:#0b1225;border-radius:10px;padding:.5rem 1rem;}
+    progress, meter{width:100%;}
+    mark{background:#fde68a;color:#111827;padding:0 .2rem;border-radius:4px;}
+  "
+    />
+    <style>
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          scroll-behavior: auto;
+          animation: none;
+          transition: none;
+        }
+      }
+      :focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+      }
+    </style>
+
+    <!-- Base URL example -->
+    <base href="https://example.com/" target="_blank" />
+
+    <title>Maximal HTML5 Showcase</title>
+
+    <!-- JSON-LD -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Maximal HTML5 Showcase",
+        "description": "Broad coverage of HTML elements and attributes"
+      }
+    </script>
+
+    <!-- Module + classic scripts -->
+    <script type="module">
+      const $ = (sel, root = document) => root.querySelector(sel);
+      window.addEventListener("DOMContentLoaded", () => {
+        const themeBtn = $("#themeToggle");
+        themeBtn?.addEventListener("click", () => {
+          const html = document.documentElement;
+          html.dataset.theme = html.dataset.theme === "dark" ? "light" : "dark";
+          themeBtn.setAttribute(
+            "aria-pressed",
+            String(html.dataset.theme === "dark"),
+          );
+        });
+
+        $("#openDialog")?.addEventListener("click", () =>
+          $("#demoDialog").showModal(),
+        );
+        $("#closeDialog")?.addEventListener("click", () =>
+          $("#demoDialog").close(),
+        );
+
+        $("#showPopover")?.addEventListener("click", () =>
+          $("#demoPopover").togglePopover(),
+        );
+      });
+    </script>
+    <script
+      nomodule
+      defer
+      src="data:text/javascript,console.log('nomodule fallback');"
+    ></script>
+  </head>
+
+  <body id="top" class="app" data-app-version="1.0.0" spellcheck="true">
+    <a href="#main" class="sr-only">Skip to main content</a>
+
+    <header role="banner" aria-label="Site header">
+      <div class="grid">
+        <div>
+          <h1 itemprop="name">Maximal HTML5 Showcase</h1>
+          <p itemprop="description">
+            This file tries to cover a <strong>huge swath</strong> of modern
+            HTML elements, structures, and attributes. It can’t literally
+            include “every possible” attribute, but it’s a dense reference.
+          </p>
+          <p>
+            <span class="pill">HTML5</span>
+            <span class="pill">ARIA</span>
+            <span class="pill">Forms</span>
+            <span class="pill">Media</span>
+            <span class="pill">SVG</span>
+            <span class="pill">MathML</span>
+          </p>
+        </div>
+
+        <div>
+          <nav aria-label="Primary navigation">
+            <ul>
+              <li><a href="#text" accesskey="t" rel="bookmark">Text</a></li>
+              <li><a href="#media" rel="nofollow">Media</a></li>
+              <li><a href="#forms" rel="help">Forms</a></li>
+              <li><a href="#tables" rel="index">Tables</a></li>
+              <li><a href="#misc" rel="tag">Misc</a></li>
+            </ul>
+          </nav>
+          <button
+            id="themeToggle"
+            type="button"
+            aria-pressed="false"
+            aria-label="Toggle theme"
+          >
+            Toggle theme
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="container">
+      <main id="main" role="main" tabindex="-1">
+        <!-- SECTION: TEXT & SEMANTICS -->
+        <section id="text" aria-labelledby="text-heading" class="card">
+          <h2 id="text-heading">Text, Semantics & Inline Elements</h2>
+
+          <article itemscope itemtype="https://schema.org/Article">
+            <header>
+              <h3 itemprop="headline">Article header</h3>
+              <p class="meta">
+                <time
+                  itemprop="datePublished"
+                  datetime="2025-11-28T10:00:00-08:00"
+                >
+                  November 28, 2025
+                </time>
+                <span aria-hidden="true"> • </span>
+                <span itemprop="author">
+                  By <a href="about.html" rel="author">Lingo.dev</a>
+                </span>
+              </p>
+            </header>
+
+            <p>
+              Paragraph with <em>emphasis</em>, <strong>strong</strong>,
+              <i>italic</i>, <b>bold</b>, <u>underline</u>,
+              <s>strikethrough</s>, <small>small text</small>,
+              <mark>highlight</mark>,
+              <abbr title="HyperText Markup Language">HTML</abbr>,
+              <dfn>definition</dfn>,
+              <q cite="https://example.com/quote-source">inline quote</q>, and a
+              <cite>citation</cite>.
+            </p>
+
+            <p>
+              Subscripts H<sub>2</sub>O, superscripts x<sup>2</sup>, and an
+              inline span:
+              <span lang="en">English text</span>. Here’s
+              <bdi>isolated text</bdi> and <bdo dir="rtl">reversed text</bdo>.
+            </p>
+
+            <p>
+              Code-ish stuff: <code>const x = 1;</code>, keyboard:
+              <kbd>Ctrl</kbd>+<kbd>C</kbd>, sample output: <samp>OK</samp>, and
+              variable <var>n</var>.
+            </p>
+
+            <pre
+              aria-label="Preformatted block"
+            ><code>// Preformatted code block
+function hello(name){
+  return `Hello, ${name}`;
+}</code></pre>
+
+            <blockquote cite="https://example.com/long-quote">
+              <p>
+                Block quote with nested <q>a short quote</q> and attribution.
+              </p>
+              <footer>— <cite>Someone</cite></footer>
+            </blockquote>
+
+            <hr />
+
+            <p>
+              Links with attributes:
+              <a
+                href="https://example.com"
+                target="_blank"
+                rel="noopener noreferrer external"
+                hreflang="en"
+                type="text/html"
+                referrerpolicy="no-referrer"
+              >
+                external link </a
+              >, <a href="#top" download="demo.html">download-ish link</a>,
+              <a
+                href="mailto:test@example.com?subject=Hello"
+                role="button"
+                aria-label="mailto link"
+                >mailto</a
+              >, <a href="tel:+15551234567">tel</a>.
+            </p>
+
+            <ul>
+              <li>Unordered list item</li>
+              <li>Another item with <a href="#forms">anchor</a></li>
+            </ul>
+
+            <ol start="3" reversed>
+              <li value="10">Ordered item with custom value</li>
+              <li>Next ordered item</li>
+            </ol>
+
+            <menu type="toolbar" aria-label="Toolbar menu">
+              <li><button type="button">Menu button 1</button></li>
+              <li><button type="button">Menu button 2</button></li>
+            </menu>
+
+            <dl>
+              <dt>Term A</dt>
+              <dd>Definition for term A.</dd>
+              <dt>Term B</dt>
+              <dd>Definition for term B.</dd>
+            </dl>
+
+            <figure>
+              <img
+                src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='240'%3E%3Crect width='100%25' height='100%25' fill='%23111827'/%3E%3Ctext x='50%25' y='50%25' fill='%23e5e7eb' font-size='28' text-anchor='middle' dominant-baseline='middle'%3EInline SVG Image Placeholder%3C/text%3E%3C/svg%3E"
+                alt="Placeholder image"
+                width="640"
+                height="240"
+                loading="lazy"
+                decoding="async"
+                referrerpolicy="no-referrer"
+                crossorigin="anonymous"
+              />
+              <figcaption>Figure + figcaption.</figcaption>
+            </figure>
+
+            <details>
+              <summary>Expandable details with summary</summary>
+              <p>Details content. Supports <a href="#misc">more anchors</a>.</p>
+            </details>
+
+            <p>
+              Ruby annotation example:
+              <ruby>Text<rt>annotation</rt></ruby>
+            </p>
+
+            <footer>
+              <p>
+                Article footer with
+                <span itemprop="keywords">keywords, tags, etc.</span>
+              </p>
+            </footer>
+          </article>
+        </section>
+
+        <!-- SECTION: LAYOUT & STRUCTURE -->
+        <section id="layout" aria-labelledby="layout-heading" class="card">
+          <h2 id="layout-heading">Layout & Structural Elements</h2>
+
+          <div class="grid">
+            <section aria-label="Nested section">
+              <h3>Section inside grid</h3>
+              <p>Using <code>section</code> for thematic grouping.</p>
+            </section>
+
+            <article aria-label="Nested article">
+              <h3>Article inside grid</h3>
+              <p>Using <code>article</code> for self-contained content.</p>
+            </article>
+
+            <div role="region" aria-label="Generic div region">
+              <h3>Generic div + ARIA region</h3>
+              <p>Sometimes a div is fine with proper roles.</p>
+            </div>
+          </div>
+
+          <p>
+            Inline container: <span data-demo="true">span</span> • block
+            container:
+            <span data-demo="true" hidden>div (hidden)</span>
+          </p>
+
+          <template id="tplCard">
+            <div class="card">Template content (not rendered until cloned)</div>
+          </template>
+        </section>
+
+        <!-- SECTION: MEDIA -->
+        <section id="media" aria-labelledby="media-heading" class="card">
+          <h2 id="media-heading">Media Elements</h2>
+
+          <h3>Audio</h3>
+          <audio controls preload="metadata" loop muted>
+            <source
+              src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAESsAADAwAAABAAgAZGF0YQAAAAA="
+              type="audio/wav"
+            />
+            Your browser does not support audio.
+          </audio>
+
+          <h3>Video</h3>
+          <video
+            controls
+            width="420"
+            height="240"
+            poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='240'%3E%3Crect width='100%25' height='100%25' fill='%230f172a'/%3E%3Ctext x='50%25' y='50%25' fill='%23e5e7eb' font-size='18' text-anchor='middle'%3EVideo Poster%3C/text%3E%3C/svg%3E"
+          >
+            <source
+              src="data:video/mp4;base64,AAAAIGZ0eXBpc29tAAAAAGlzb20"
+              type="video/mp4"
+            />
+            <track
+              kind="captions"
+              srclang="en"
+              label="English"
+              default
+              src="data:text/vtt,WEBVTT%0A%0A00:00:00.000%20--%3E%2000:00:01.000%0AHello!"
+            />
+            Your browser does not support video.
+          </video>
+
+          <h3>Picture / Responsive Images</h3>
+          <picture>
+            <source
+              media="(min-width: 800px)"
+              srcset="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='200'%3E%3Crect width='100%25' height='100%25' fill='%230ea5e9'/%3E%3Ctext x='50%25' y='50%25' fill='white' font-size='28' text-anchor='middle'%3EWide Source%3C/text%3E%3C/svg%3E"
+            />
+            <img
+              alt="Responsive fallback"
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='500' height='200'%3E%3Crect width='100%25' height='100%25' fill='%2322c55e'/%3E%3Ctext x='50%25' y='50%25' fill='white' font-size='24' text-anchor='middle'%3ENarrow Fallback%3C/text%3E%3C/svg%3E"
+            />
+          </picture>
+
+          <h3>Iframe / Embed / Object</h3>
+          <iframe
+            title="Sandboxed iframe"
+            srcdoc="<p>iframe srcdoc content</p>"
+            loading="lazy"
+            sandbox="allow-scripts allow-same-origin"
+            referrerpolicy="no-referrer"
+            width="100%"
+            height="80"
+          >
+          </iframe>
+
+          <embed
+            type="image/svg+xml"
+            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='60'%3E%3Ctext x='10' y='40'%3EEmbed%3C/text%3E%3C/svg%3E"
+          />
+
+          <object
+            type="image/svg+xml"
+            data="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='60'%3E%3Ctext x='10' y='40'%3EObject%3C/text%3E%3C/svg%3E"
+          >
+            Fallback text for object.
+          </object>
+
+          <h3>Canvas</h3>
+          <canvas
+            id="demoCanvas"
+            width="300"
+            height="100"
+            aria-label="Canvas demo"
+          >
+            Canvas fallback text.
+          </canvas>
+          <script>
+            const c = document.getElementById("demoCanvas");
+            if (c?.getContext) {
+              const ctx = c.getContext("2d");
+              ctx.fillRect(10, 10, 80, 80);
+              ctx.font = "16px system-ui";
+              ctx.fillText("Canvas!", 110, 55);
+            }
+          </script>
+        </section>
+
+        <!-- SECTION: SVG -->
+        <section id="svg" aria-labelledby="svg-heading" class="card">
+          <h2 id="svg-heading">Inline SVG</h2>
+
+          <svg
+            width="100%"
+            height="180"
+            viewBox="0 0 600 180"
+            role="img"
+            aria-label="SVG demo"
+          >
+            <defs>
+              <linearGradient id="g" x1="0" x2="1">
+                <stop offset="0%" stop-color="#38bdf8" />
+                <stop offset="100%" stop-color="#22c55e" />
+              </linearGradient>
+              <clipPath id="clip">
+                <circle cx="90" cy="90" r="70" />
+              </clipPath>
+            </defs>
+
+            <rect x="0" y="0" width="600" height="180" fill="url(#g)" />
+            <g clip-path="url(#clip)">
+              <image
+                href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Crect width='100%25' height='100%25' fill='%23111827'/%3E%3Ctext x='50%25' y='50%25' fill='white' dominant-baseline='middle' text-anchor='middle'%3EIMG%3C/text%3E%3C/svg%3E"
+                x="20"
+                y="20"
+                width="140"
+                height="140"
+                preserveAspectRatio="xMidYMid slice"
+              />
+            </g>
+
+            <circle
+              cx="90"
+              cy="90"
+              r="70"
+              fill="none"
+              stroke="#111827"
+              stroke-width="6"
+            />
+            <path
+              d="M220 140 C260 30, 340 30, 380 140"
+              fill="none"
+              stroke="#111827"
+              stroke-width="5"
+            />
+            <polygon
+              points="420,140 500,40 580,140"
+              fill="#111827"
+              opacity="0.3"
+            />
+            <text
+              x="300"
+              y="95"
+              text-anchor="middle"
+              font-size="28"
+              fill="#111827"
+            >
+              SVG Elements
+            </text>
+          </svg>
+        </section>
+
+        <!-- SECTION: MATHML -->
+        <section id="math" aria-labelledby="math-heading" class="card">
+          <h2 id="math-heading">MathML (if supported)</h2>
+          <math display="block">
+            <mrow>
+              <msup><mi>a</mi><mn>2</mn></msup>
+              <mo>+</mo>
+              <msup><mi>b</mi><mn>2</mn></msup>
+              <mo>=</mo>
+              <msup><mi>c</mi><mn>2</mn></msup>
+            </mrow>
+          </math>
+        </section>
+
+        <!-- SECTION: FORMS -->
+        <section id="forms" aria-labelledby="forms-heading" class="card">
+          <h2 id="forms-heading">Forms (a lot of inputs)</h2>
+
+          <form
+            action="/submit"
+            method="post"
+            enctype="multipart/form-data"
+            autocomplete="on"
+            novalidate
+          >
+            <fieldset>
+              <legend>Basics</legend>
+
+              <label for="txt">Text</label>
+              <input
+                id="txt"
+                name="txt"
+                type="text"
+                placeholder="Hello"
+                required
+                minlength="2"
+                maxlength="50"
+                pattern="[A-Za-z0-9\\s]+"
+                inputmode="text"
+                autocomplete="name"
+              />
+
+              <label for="pwd">Password</label>
+              <input
+                id="pwd"
+                name="pwd"
+                type="password"
+                required
+                autocomplete="current-password"
+              />
+
+              <label for="email">Email</label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                multiple
+                placeholder="a@b.com"
+                autocomplete="email"
+              />
+
+              <label for="url">URL</label>
+              <input id="url" name="url" type="url" placeholder="https://" />
+
+              <label for="tel">Telephone</label>
+              <input
+                id="tel"
+                name="tel"
+                type="tel"
+                placeholder="+1..."
+                autocomplete="tel"
+              />
+
+              <label for="search">Search</label>
+              <input
+                id="search"
+                name="search"
+                type="search"
+                aria-describedby="searchHelp"
+              />
+              <small id="searchHelp">Search help text.</small>
+
+              <label for="num">Number</label>
+              <input
+                id="num"
+                name="num"
+                type="number"
+                min="0"
+                max="10"
+                step="0.5"
+                value="3.5"
+              />
+
+              <label for="range">Range</label>
+              <input
+                id="range"
+                name="range"
+                type="range"
+                min="0"
+                max="100"
+                value="40"
+              />
+
+              <label for="color">Color</label>
+              <input id="color" name="color" type="color" value="#38bdf8" />
+
+              <label for="date">Date</label>
+              <input id="date" name="date" type="date" />
+
+              <label for="datetime">Datetime-local</label>
+              <input id="datetime" name="datetime" type="datetime-local" />
+
+              <label for="month">Month</label>
+              <input id="month" name="month" type="month" />
+
+              <label for="week">Week</label>
+              <input id="week" name="week" type="week" />
+
+              <label for="time">Time</label>
+              <input id="time" name="time" type="time" />
+
+              <label for="file">File</label>
+              <input
+                id="file"
+                name="file"
+                type="file"
+                accept=".png,.jpg,.jpeg,.svg"
+                multiple
+              />
+
+              <label for="textarea">Textarea</label>
+              <textarea
+                id="textarea"
+                name="textarea"
+                rows="3"
+                cols="40"
+                placeholder="Write here..."
+                wrap="soft"
+              ></textarea>
+
+              <label for="select">Select</label>
+              <select id="select" name="select" required>
+                <optgroup label="Group 1">
+                  <option value="a">Option A</option>
+                  <option value="b" selected>Option B</option>
+                </optgroup>
+                <optgroup label="Group 2" disabled>
+                  <option value="c">Option C</option>
+                </optgroup>
+              </select>
+
+              <label for="datalist">Datalist</label>
+              <input
+                id="datalist"
+                name="datalist"
+                list="demoList"
+                placeholder="Pick one"
+              />
+              <datalist id="demoList">
+                <option value="Alpha"></option>
+                <option value="Beta"></option>
+                <option value="Gamma"></option>
+              </datalist>
+
+              <label>
+                <input type="checkbox" name="check" value="yes" checked />
+                Checkbox
+              </label>
+
+              <div role="group" aria-labelledby="radioLabel">
+                <span id="radioLabel">Radio group</span><br />
+                <label
+                  ><input type="radio" name="radio" value="1" checked />
+                  One</label
+                >
+                <label><input type="radio" name="radio" value="2" /> Two</label>
+              </div>
+
+              <label for="outputA">Output + calculation</label>
+              <input
+                id="outputA"
+                type="number"
+                name="a"
+                value="2"
+                oninput="result.value=Number(a.value)+Number(b.value)"
+              />
+              <input
+                id="outputB"
+                type="number"
+                name="b"
+                value="3"
+                oninput="result.value=Number(a.value)+Number(b.value)"
+              />
+              <output name="result">5</output>
+
+              <button type="submit">Submit</button>
+              <button type="reset">Reset</button>
+              <button type="button" disabled>Disabled</button>
+            </fieldset>
+
+            <fieldset>
+              <legend>Advanced widgets</legend>
+
+              <label for="meter">Meter</label>
+              <meter
+                id="meter"
+                min="0"
+                max="100"
+                low="30"
+                high="80"
+                optimum="90"
+                value="65"
+              >
+                65%
+              </meter>
+
+              <label for="progress">Progress</label>
+              <progress id="progress" max="100" value="45">45%</progress>
+
+              <label for="readonly">Readonly & disabled</label>
+              <input id="readonly" value="Readonly field" readonly />
+              <input value="Disabled field" disabled />
+
+              <label for="hidden">Hidden input</label>
+              <input id="hidden" type="hidden" name="csrf" value="token123" />
+
+              <label for="btnImg">Image button</label>
+              <input
+                id="btnImg"
+                type="image"
+                alt="Send"
+                src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='32'%3E%3Crect width='100%25' height='100%25' fill='%2338bdf8'/%3E%3Ctext x='50%25' y='55%25' fill='white' text-anchor='middle'%3ESend%3C/text%3E%3C/svg%3E"
+              />
+
+              <label for="button">Button element</label>
+              <button id="button" type="button" name="button" value="clicked">
+                Click me
+              </button>
+            </fieldset>
+          </form>
+        </section>
+
+        <!-- SECTION: TABLES -->
+        <section id="tables" aria-labelledby="tables-heading" class="card">
+          <h2 id="tables-heading">Tables</h2>
+
+          <table>
+            <caption>
+              Complex table with colgroup, thead, tbody, tfoot
+            </caption>
+            <colgroup>
+              <col span="1" style="width: 30%" />
+              <col span="2" style="width: 35%" />
+              <col span="1" style="width: 35%" />
+            </colgroup>
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Role</th>
+                <th scope="col">Status</th>
+                <th scope="col">Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Ada</th>
+                <td headers="role">Engineer</td>
+                <td><data value="1">Active</data></td>
+                <td><input type="text" value="Inline input in table" /></td>
+              </tr>
+              <tr>
+                <th scope="row">Linus</th>
+                <td>Maintainer</td>
+                <td><data value="0">Away</data></td>
+                <td><del>Old note</del> <ins>New note</ins></td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="4">Footer row</td>
+              </tr>
+            </tfoot>
+          </table>
+        </section>
+
+        <!-- SECTION: INTERACTIVE / MISC -->
+        <section id="misc" aria-labelledby="misc-heading" class="card">
+          <h2 id="misc-heading">Interactive, Embedded, and Misc Elements</h2>
+
+          <h3>Dialog</h3>
+          <button id="openDialog" type="button">Open dialog</button>
+          <dialog id="demoDialog" aria-labelledby="dlgTitle">
+            <h4 id="dlgTitle">Demo dialog</h4>
+            <p>Native dialog element with <code>showModal()</code>.</p>
+            <form method="dialog">
+              <button id="closeDialog">Close</button>
+            </form>
+          </dialog>
+
+          <h3>Popover</h3>
+          <button id="showPopover" type="button" popovertarget="demoPopover">
+            Toggle popover
+          </button>
+          <div id="demoPopover" popover>
+            I am a popover.
+            <button
+              type="button"
+              popovertarget="demoPopover"
+              popovertargetaction="hide"
+            >
+              Hide
+            </button>
+          </div>
+
+          <h3>Disclosure / Summary</h3>
+          <details open>
+            <summary>Open details</summary>
+            <p>
+              Some details text. Includes <kbd>Esc</kbd> to close dialog, etc.
+            </p>
+          </details>
+
+          <h3>Word break opportunities</h3>
+          <p><wbr />Word<wbr />Break<wbr />Opportunities.</p>
+
+          <h3>Slots (Web Components-ready)</h3>
+          <div>
+            <slot name="example-slot">Fallback slot content</slot>
+          </div>
+
+          <h3>Autocomplete list (ul[role=listbox])</h3>
+          <ul role="listbox" aria-label="Suggestions">
+            <li role="option" aria-selected="true">Suggestion 1</li>
+            <li role="option">Suggestion 2</li>
+          </ul>
+
+          <h3>Keyboard navigation target</h3>
+          <div tabindex="0" role="button" aria-pressed="false">
+            Focusable div button
+          </div>
+
+          <h3>Address / Contact</h3>
+          <address>
+            123 Demo St.<br />
+            Example City, EX 00000<br />
+            <a href="mailto:contact@example.com">contact@example.com</a>
+          </address>
+
+          <h3>Annotation / Edits</h3>
+          <p>
+            This is <del datetime="2023-01-01">deleted</del> and
+            <ins datetime="2023-01-02">inserted</ins>.
+          </p>
+
+          <h3>Text isolation example</h3>
+          <p>Mixing text: <bdi>isolated segment</bdi> + normal English.</p>
+
+          <h3>Noscript</h3>
+          <noscript>
+            JavaScript is disabled. Some interactive demos won’t work.
+          </noscript>
+        </section>
+      </main>
+
+      <aside role="complementary" aria-label="Sidebar" class="card">
+        <h2>Sidebar / Aside</h2>
+
+        <section>
+          <h3>Search</h3>
+          <form role="search" action="/search">
+            <label for="q">Query</label>
+            <input
+              id="q"
+              name="q"
+              type="search"
+              placeholder="Search..."
+              autocomplete="off"
+            />
+            <button type="submit">Go</button>
+          </form>
+        </section>
+
+        <section>
+          <h3>Navigation (secondary)</h3>
+          <nav aria-label="Secondary nav">
+            <ol>
+              <li><a href="#top">Top</a></li>
+              <li><a href="#text">Text</a></li>
+              <li><a href="#media">Media</a></li>
+              <li><a href="#forms">Forms</a></li>
+            </ol>
+          </nav>
+        </section>
+
+        <section>
+          <h3>Meter / Progress recap</h3>
+          <meter min="0" max="1" value="0.8">80%</meter>
+          <progress max="10" value="7">7/10</progress>
+        </section>
+
+        <section>
+          <h3>Time</h3>
+          <p>
+            <time datetime="2025-11-28">Today</time>
+            <br />
+            <time datetime="2025-11-28T12:34:56Z">Timestamp</time>
+          </p>
+        </section>
+      </aside>
+    </div>
+
+    <footer role="contentinfo" class="card">
+      <p>
+        Footer with small print.
+        <small>&copy; <time datetime="2025">2025</time> Demo.</small>
+      </p>
+
+      <p>
+        <a href="#top" rel="up">Back to top</a>
+      </p>
+    </footer>
+
+    <!-- Accessibility live region -->
+    <div
+      aria-live="polite"
+      aria-atomic="true"
+      class="sr-only"
+      id="liveRegion"
+    ></div>
+  </body>
+</html>
