@@ -610,7 +610,27 @@ checksums:
     content/16: 14f593e7cf3b3df84a21e17db318912e
     content/17: 5f42d26a42aa29be063019eea27ad07c
     content/18: 48bb7e89e72d68d6de12f5cdac64fc18
-  e6d8e00051ea40ca138a9549ed52e1c6: {}
+  e6d8e00051ea40ca138a9549ed52e1c6:
+    navigation/home: 104a3db3b671c04e167eafbe21e57881
+    navigation/about: 7ed93e7bbfca42a405d61ea3c2791aae
+    navigation/contact: 9afa39bc47019ee6dec6c74b6273967c
+    navigation/services: 8ea10b45b9abab2a3bfc3c07e1c9cdc6
+    navigation/forms/title: cd1568dd5f8241c9429dc634de250ef4
+    navigation/forms/name_label: b00c01deec0af9a441331a5134210de1
+    navigation/forms/email_label: 3ba3f099b1b9be6c35ad797da660cb9f
+    navigation/forms/message_label: f2f72126bd244cfc534eab395e054362
+    navigation/forms/submit_button: da352018f0db23d97405e3e44ccfe50d
+    navigation/forms/success_message: a0a7aa980dffa31d4d194af718a917b3
+    navigation/inflections/gender/f: 1cdef9a43e68074eae7dce0248f7e5a9
+    navigation/inflections/gender/m: 91f7f601c08b37b397f14f952416623f
+    navigation/inflections/gender/n: cab8f0be0df82bac41435dee4d2eb1df
+    navigation/inflections/gender/female: f4adbe8df79a872d3c16329a7e7a361a
+    navigation/inflections/gender/male: 9ebdcb660f503bb2618ae7ae086617e2
+    navigation/inflections/gender/neuter: 603743850a2510aaa6a5eb9dbfbe7416
+    navigation/inflections/gender/F: f4adbe8df79a872d3c16329a7e7a361a
+    navigation/inflections/gender/M: 9ebdcb660f503bb2618ae7ae086617e2
+    navigation/inflections/gender/N: 603743850a2510aaa6a5eb9dbfbe7416
+    navigation/inflections/gender/default: 453a466f60641d9934bbee33dc4cd2b6
   1254631a73b754e11a1b9ca8f7362025:
     item_count/variations/plural: 2b2b1ff20c417ea68d07d66ba30a5c14
     notification_message/stringUnit: d14316154e233634917e317452c5f42c
