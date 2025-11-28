@@ -1,5 +1,35 @@
 # @lingo.dev/\_spec
 
+## 0.44.0
+
+### Minor Changes
+
+- [#1634](https://github.com/lingodotdev/lingo.dev/pull/1634) [`48fab66`](https://github.com/lingodotdev/lingo.dev/commit/48fab66b6806455d9faa1dcb169d4c61194e2144) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - Pin all dependencies to exact versions to prevent supply chain attacks. Dependencies no longer use caret (^) or tilde (~) ranges, ensuring full control over version updates and requiring explicit review of all dependency changes.
+
+### Patch Changes
+
+- Updated dependencies [[`48fab66`](https://github.com/lingodotdev/lingo.dev/commit/48fab66b6806455d9faa1dcb169d4c61194e2144)]:
+  - @lingo.dev/_locales@0.3.0
+
+## 0.43.1
+
+### Patch Changes
+
+- Updated dependencies [[`0f6ffbf`](https://github.com/lingodotdev/lingo.dev/commit/0f6ffbf7dafafbead768eb9e52787cb6013aa1c3)]:
+  - @lingo.dev/_locales@0.2.0
+
+## 0.43.0
+
+### Minor Changes
+
+- [#1585](https://github.com/lingodotdev/lingo.dev/pull/1585) [`ac38e8e`](https://github.com/lingodotdev/lingo.dev/commit/ac38e8e8dea0d8c4cd3c8b00e6394bfbd8074611) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - Allow any valid ISO locale code in validation instead of hardcoded list. Validation now accepts any locale conforming to ISO 639-1, ISO 15924, ISO 3166-1, and UN M.49 standards.
+
+## 0.42.0
+
+### Minor Changes
+
+- [#1583](https://github.com/lingodotdev/lingo.dev/pull/1583) [`d72c67c`](https://github.com/lingodotdev/lingo.dev/commit/d72c67c78a4d8f01077db8098b5d973ec98a4c1e) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - Allow any valid ISO locale code in validation instead of hardcoded list. Validation now accepts any locale conforming to ISO 639-1, ISO 15924, ISO 3166-1, and UN M.49 standards.
+
 ## 0.41.1
 
 ### Patch Changes
@@ -75,7 +105,6 @@
 ### Minor Changes
 
 - [#958](https://github.com/lingodotdev/lingo.dev/pull/958) [`84fd214`](https://github.com/lingodotdev/lingo.dev/commit/84fd214a21766e7683c5d645fcb8c4c0162eb0b6) Thanks [@chrissiwaffler](https://github.com/chrissiwaffler)! - feat: add Mistral AI as a supported LLM provider
-
   - Added Mistral AI provider support across the entire lingo.dev ecosystem
   - Users can now use Mistral models for localization by setting MISTRAL_API_KEY
   - Supports all Mistral models available through the @ai-sdk/mistral package
@@ -86,7 +115,6 @@
 ### Minor Changes
 
 - [#956](https://github.com/lingodotdev/lingo.dev/pull/956) [`ce8c75c`](https://github.com/lingodotdev/lingo.dev/commit/ce8c75c7fc1a2124d3e18444bc356c4dfce26434) Thanks [@VAIBHAVSING](https://github.com/VAIBHAVSING)! - feat: add EJS (Embedded JavaScript) templating engine support
-
   - Added EJS loader to support parsing and translating EJS template files
   - EJS loader extracts translatable text while preserving EJS tags and expressions
   - Updated spec package to include "ejs" in supported bucket types
@@ -152,7 +180,6 @@
 - [#700](https://github.com/lingodotdev/lingo.dev/pull/700) [`c5ccf81`](https://github.com/lingodotdev/lingo.dev/commit/c5ccf81e9c2bd27bae332306da2a41e41bbeb87d) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - Add support for locked patterns in MDX loader
 
   This change adds support for preserving specific patterns in MDX files during translation, including:
-
   - !params syntax for parameter documentation
   - !! parameter_name headings
   - !type declarations

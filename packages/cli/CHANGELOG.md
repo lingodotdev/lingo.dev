@@ -1,5 +1,146 @@
 # lingo.dev
 
+## 0.117.4
+
+### Patch Changes
+
+- [#1644](https://github.com/lingodotdev/lingo.dev/pull/1644) [`2881712`](https://github.com/lingodotdev/lingo.dev/commit/2881712a1964dfa36eedfe70a00ae438f400647b) Thanks [@vrcprl](https://github.com/vrcprl)! - preserve list formatting in YAML files
+
+## 0.117.3
+
+### Patch Changes
+
+- [#1642](https://github.com/lingodotdev/lingo.dev/pull/1642) [`9f429c6`](https://github.com/lingodotdev/lingo.dev/commit/9f429c6c8a64f8f829ac7bc1fc293697c5d93b9f) Thanks [@vrcprl](https://github.com/vrcprl)! - Preserve formatting in YAML files
+
+## 0.117.2
+
+### Patch Changes
+
+- [#1640](https://github.com/lingodotdev/lingo.dev/pull/1640) [`80bcbe4`](https://github.com/lingodotdev/lingo.dev/commit/80bcbe4a65e0728e5795bb5b4f2b6e3d7e3aa206) Thanks [@vrcprl](https://github.com/vrcprl)! - preserve formatting for yaml format
+
+## 0.117.1
+
+### Patch Changes
+
+- Updated dependencies [[`ec2f00a`](https://github.com/lingodotdev/lingo.dev/commit/ec2f00a0a1127ff4c5333ce4c6d8d691f89c4b17)]:
+  - @lingo.dev/_compiler@0.8.1
+
+## 0.117.0
+
+### Minor Changes
+
+- [#1634](https://github.com/lingodotdev/lingo.dev/pull/1634) [`48fab66`](https://github.com/lingodotdev/lingo.dev/commit/48fab66b6806455d9faa1dcb169d4c61194e2144) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - Pin all dependencies to exact versions to prevent supply chain attacks. Dependencies no longer use caret (^) or tilde (~) ranges, ensuring full control over version updates and requiring explicit review of all dependency changes.
+
+### Patch Changes
+
+- Updated dependencies [[`48fab66`](https://github.com/lingodotdev/lingo.dev/commit/48fab66b6806455d9faa1dcb169d4c61194e2144)]:
+  - @lingo.dev/_compiler@0.8.0
+  - @lingo.dev/_locales@0.3.0
+  - @lingo.dev/_react@0.7.0
+  - @lingo.dev/_sdk@0.13.0
+  - @lingo.dev/_spec@0.44.0
+
+## 0.116.5
+
+### Patch Changes
+
+- [#1626](https://github.com/lingodotdev/lingo.dev/pull/1626) [`9c338a8`](https://github.com/lingodotdev/lingo.dev/commit/9c338a8c5fab77c386d74700a6055c73d06daafd) Thanks [@vrcprl](https://github.com/vrcprl)! - preserve YAML literal block scalars without backslash escaping
+
+## 0.116.4
+
+### Patch Changes
+
+- [#1622](https://github.com/lingodotdev/lingo.dev/pull/1622) [`3dd04bd`](https://github.com/lingodotdev/lingo.dev/commit/3dd04bd937828c16862b2b1459576931028bb01a) Thanks [@vrcprl](https://github.com/vrcprl)! - Fix ICU input
+
+## 0.116.3
+
+### Patch Changes
+
+- [#1620](https://github.com/lingodotdev/lingo.dev/pull/1620) [`dd09791`](https://github.com/lingodotdev/lingo.dev/commit/dd09791948351046e083b077805db9039ee2faf1) Thanks [@vrcprl](https://github.com/vrcprl)! - add substitutions support to xcode-xcstrings-v2
+
+## 0.116.2
+
+### Patch Changes
+
+- [#1617](https://github.com/lingodotdev/lingo.dev/pull/1617) [`b0ac42a`](https://github.com/lingodotdev/lingo.dev/commit/b0ac42a896b46d0670a5ad9817304b32125aef85) Thanks [@vrcprl](https://github.com/vrcprl)! - support for stringSet to xcode-xcstrings and v2
+
+## 0.116.1
+
+### Patch Changes
+
+- Updated dependencies [[`0f6ffbf`](https://github.com/lingodotdev/lingo.dev/commit/0f6ffbf7dafafbead768eb9e52787cb6013aa1c3)]:
+  - @lingo.dev/_locales@0.2.0
+  - @lingo.dev/_spec@0.43.1
+  - @lingo.dev/_compiler@0.7.18
+  - @lingo.dev/_sdk@0.12.9
+
+## 0.116.0
+
+### Minor Changes
+
+- [#1519](https://github.com/lingodotdev/lingo.dev/pull/1519) [`5d808bd`](https://github.com/lingodotdev/lingo.dev/commit/5d808bd33eb3a0b5c685e3a3a6cb079ba86eb6e2) Thanks [@Dishantydv7](https://github.com/Dishantydv7)! - fix(status): prevent NaN% when totalWordsToTranslate is 0
+
+### Patch Changes
+
+- [`c0aa906`](https://github.com/lingodotdev/lingo.dev/commit/c0aa906880d26c5d01748e0d72b9f61ec989606d) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - Fix prettier formatter loaders after prettier config removal
+
+  Restores prettier as a runtime dependency for the CLI package and restores the `.prettierrc` config file needed by the formatter loaders. This fixes failing tests for HTML, JSON, and Markdown bucket loaders that depend on prettier for formatting translation files.
+
+## 0.115.0
+
+### Minor Changes
+
+- [#1591](https://github.com/lingodotdev/lingo.dev/pull/1591) [`6267878`](https://github.com/lingodotdev/lingo.dev/commit/6267878d1be28337d77749e39ab3547b6a19b3ed) Thanks [@copilot-swe-agent](https://github.com/apps/copilot-swe-agent)! - Minor release
+
+## 0.114.7
+
+### Patch Changes
+
+- Updated dependencies [[`ac38e8e`](https://github.com/lingodotdev/lingo.dev/commit/ac38e8e8dea0d8c4cd3c8b00e6394bfbd8074611), [`4d2359a`](https://github.com/lingodotdev/lingo.dev/commit/4d2359a3d7164f825bf5ddf62b5d13a4690cb4a2)]:
+  - @lingo.dev/_spec@0.43.0
+  - @lingo.dev/_react@0.6.0
+  - @lingo.dev/_compiler@0.7.17
+  - @lingo.dev/_sdk@0.12.8
+
+## 0.114.6
+
+### Patch Changes
+
+- Updated dependencies [[`d72c67c`](https://github.com/lingodotdev/lingo.dev/commit/d72c67c78a4d8f01077db8098b5d973ec98a4c1e)]:
+  - @lingo.dev/_spec@0.42.0
+  - @lingo.dev/_compiler@0.7.16
+  - @lingo.dev/_sdk@0.12.7
+
+## 0.114.5
+
+### Patch Changes
+
+- [#1565](https://github.com/lingodotdev/lingo.dev/pull/1565) [`0a0d0c9`](https://github.com/lingodotdev/lingo.dev/commit/0a0d0c9ea3c7111ed0b54cdafba1bae76eeb8663) Thanks [@vrcprl](https://github.com/vrcprl)! - configurable author commit
+
+## 0.114.4
+
+### Patch Changes
+
+- [#1544](https://github.com/lingodotdev/lingo.dev/pull/1544) [`68fb3ea`](https://github.com/lingodotdev/lingo.dev/commit/68fb3ea64fc0191ecee66403432e0c8efabab2b9) Thanks [@vrcprl](https://github.com/vrcprl)! - fix key encoding
+
+## 0.114.3
+
+### Patch Changes
+
+- [#1542](https://github.com/lingodotdev/lingo.dev/pull/1542) [`e70385b`](https://github.com/lingodotdev/lingo.dev/commit/e70385bd1ac676bf5bd31b212d8510e6b7ebf793) Thanks [@sumitsaurabh927](https://github.com/sumitsaurabh927)! - chore: add changeset
+
+## 0.114.2
+
+### Patch Changes
+
+- [#1535](https://github.com/lingodotdev/lingo.dev/pull/1535) [`f7215c1`](https://github.com/lingodotdev/lingo.dev/commit/f7215c1e435378aac8fc953765335cd478cbf507) Thanks [@vrcprl](https://github.com/vrcprl)! - prevent race condition in single-file format concurrent I/O
+
+## 0.114.1
+
+### Patch Changes
+
+- [#1532](https://github.com/lingodotdev/lingo.dev/pull/1532) [`898bd36`](https://github.com/lingodotdev/lingo.dev/commit/898bd36cc2e444641560d2ad2b28065a57072183) Thanks [@vrcprl](https://github.com/vrcprl)! - fix CDATA and translatable=false strings in Android bucket
+
 ## 0.114.0
 
 ### Minor Changes
@@ -204,7 +345,6 @@
 ### Patch Changes
 
 - [#1149](https://github.com/lingodotdev/lingo.dev/pull/1149) [`bd3f69d`](https://github.com/lingodotdev/lingo.dev/commit/bd3f69dde76814146f775bc87241fa2fad012ab0) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - Fix CI command hanging due to process.exit calls
-
   - Remove PostHog shutdown() call that was causing process to hang
   - Replace process.exit() with proper exception throwing in i18n and run commands
   - Upgrade posthog-node from 5.5.1 to 5.8.1 for better stability
@@ -491,7 +631,6 @@
 - [#966](https://github.com/lingodotdev/lingo.dev/pull/966) [`8b306bc`](https://github.com/lingodotdev/lingo.dev/commit/8b306bcd0a3231ffd8bde283414b6d069b7a5b99) Thanks [@VAIBHAVSING](https://github.com/VAIBHAVSING)! - Add watch mode to CLI for automatic retranslation on file changes
 
   This release introduces a new watch mode feature that automatically triggers retranslation when changes are detected in source files:
-
   - **New `--watch` flag**: Enables file watching mode that monitors source files for changes
   - **New `--debounce` flag**: Configurable debounce delay (default: 5 seconds) to prevent excessive retranslations
   - **Intelligent file pattern detection**: Automatically determines which files to watch based on i18n.json bucket configurations
@@ -512,7 +651,6 @@
   ```
 
   **Technical Implementation:**
-
   - Uses `chokidar` for robust cross-platform file watching
   - Integrates seamlessly with existing CLI pipeline (setup → plan → execute)
   - Maintains full compatibility with all existing CLI options and workflows
@@ -529,7 +667,6 @@
 ### Minor Changes
 
 - [#958](https://github.com/lingodotdev/lingo.dev/pull/958) [`84fd214`](https://github.com/lingodotdev/lingo.dev/commit/84fd214a21766e7683c5d645fcb8c4c0162eb0b6) Thanks [@chrissiwaffler](https://github.com/chrissiwaffler)! - feat: add Mistral AI as a supported LLM provider
-
   - Added Mistral AI provider support across the entire lingo.dev ecosystem
   - Users can now use Mistral models for localization by setting MISTRAL_API_KEY
   - Supports all Mistral models available through the @ai-sdk/mistral package
@@ -557,7 +694,6 @@
 ### Minor Changes
 
 - [#956](https://github.com/lingodotdev/lingo.dev/pull/956) [`ce8c75c`](https://github.com/lingodotdev/lingo.dev/commit/ce8c75c7fc1a2124d3e18444bc356c4dfce26434) Thanks [@VAIBHAVSING](https://github.com/VAIBHAVSING)! - feat: add EJS (Embedded JavaScript) templating engine support
-
   - Added EJS loader to support parsing and translating EJS template files
   - EJS loader extracts translatable text while preserving EJS tags and expressions
   - Updated spec package to include "ejs" in supported bucket types
@@ -1143,7 +1279,6 @@
 - [#700](https://github.com/lingodotdev/lingo.dev/pull/700) [`c5ccf81`](https://github.com/lingodotdev/lingo.dev/commit/c5ccf81e9c2bd27bae332306da2a41e41bbeb87d) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - Add support for locked patterns in MDX loader
 
   This change adds support for preserving specific patterns in MDX files during translation, including:
-
   - !params syntax for parameter documentation
   - !! parameter_name headings
   - !type declarations
