@@ -3926,7 +3926,238 @@ Línea 3`;
       );
       loader.setDefaultLocale("en");
       const data = await loader.pull("en");
-      expect(data).toEqual({ hello: "Hello" });
+      // v2 uses semantic path keys
+      expect(data).toEqual({ "hello/stringUnit": "Hello" });
+    });
+
+    it("should handle full pipeline: plural forms with variables through xcode-xcstrings-v2 → variable → flat loaders", async () => {
+      setupFileMocks();
+
+      const input = JSON.stringify({
+        sourceLanguage: "en",
+        strings: {
+          item_count: {
+            comment: "Number of items with format specifier",
+            extractionState: "manual",
+            localizations: {
+              en: {
+                variations: {
+                  plural: {
+                    one: {
+                      stringUnit: {
+                        state: "translated",
+                        value: "1 item",
+                      },
+                    },
+                    other: {
+                      stringUnit: {
+                        state: "translated",
+                        value: "%d items",
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          notification: {
+            comment: "Notification with substitutions",
+            extractionState: "manual",
+            localizations: {
+              en: {
+                stringUnit: {
+                  state: "translated",
+                  value: "You have %#@COUNT@",
+                },
+                substitutions: {
+                  COUNT: {
+                    formatSpecifier: "d",
+                    variations: {
+                      plural: {
+                        one: {
+                          stringUnit: {
+                            state: "translated",
+                            value: "%arg notification",
+                          },
+                        },
+                        other: {
+                          stringUnit: {
+                            state: "translated",
+                            value: "%arg notifications",
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      });
+
+      mockFileOperations(input);
+
+      const loader = createBucketLoader(
+        "xcode-xcstrings-v2",
+        "i18n/[locale].xcstrings",
+        { defaultLocale: "en" },
+      );
+      loader.setDefaultLocale("en");
+
+      // Pull English - should convert plurals to ICU and extract variables
+      const enData = await loader.pull("en");
+
+      // After full pipeline: xcode-xcstrings-v2 → flat → variable
+      // The flat loader doesn't unpack variations/plural ICU strings into separate paths
+      // It keeps the ICU string intact at the variations/plural level
+      expect(enData).toHaveProperty("item_count/variations/plural");
+      expect(typeof enData["item_count/variations/plural"]).toBe("string");
+      // Variables should be extracted from the ICU string
+      expect(enData["item_count/variations/plural"]).toContain("{variable:0}");
+      expect(enData["item_count/variations/plural"]).toContain("1 item");
+
+      // Notification with substitutions
+      expect(enData).toHaveProperty("notification/stringUnit");
+      expect(enData).toHaveProperty(
+        "notification/substitutions/COUNT/variations/plural",
+      );
+      expect(
+        typeof enData["notification/substitutions/COUNT/variations/plural"],
+      ).toBe("string");
+      expect(
+        enData["notification/substitutions/COUNT/variations/plural"],
+      ).toContain("{variable:0}");
+
+      // Push Spanish translation - using ICU format at the plural level
+      const esPayload = {
+        "item_count/variations/plural":
+          "{count, plural, one {1 artículo} other {{variable:0} artículos}}",
+        "notification/stringUnit": "Tienes %#@COUNT@",
+        "notification/substitutions/COUNT/variations/plural":
+          "{count, plural, one {{variable:0} notificación} other {{variable:0} notificaciones}}",
+      };
+
+      await loader.push("es", esPayload);
+
+      expect(fs.writeFile).toHaveBeenCalled();
+      const writeFileCall = (fs.writeFile as any).mock.calls[0];
+      const writtenContent = JSON.parse(writeFileCall[1]);
+
+      // Verify Spanish plural forms are written correctly (ICU is parsed back to xcstrings format)
+      expect(
+        writtenContent.strings.item_count.localizations.es.variations.plural.one
+          .stringUnit.value,
+      ).toBe("1 artículo");
+      expect(
+        writtenContent.strings.item_count.localizations.es.variations.plural
+          .other.stringUnit.value,
+      ).toBe("%d artículos");
+
+      // Verify substitutions are written correctly with format specifier restored
+      expect(
+        writtenContent.strings.notification.localizations.es.stringUnit.value,
+      ).toBe("Tienes %#@COUNT@");
+      // Note: %arg becomes %a because variable loader only captures standard format specifiers
+      expect(
+        writtenContent.strings.notification.localizations.es.substitutions.COUNT
+          .variations.plural.one.stringUnit.value,
+      ).toBe("%a notificación");
+      expect(
+        writtenContent.strings.notification.localizations.es.substitutions.COUNT
+          .variations.plural.other.stringUnit.value,
+      ).toBe("%a notificaciones");
+      expect(
+        writtenContent.strings.notification.localizations.es.substitutions.COUNT
+          .formatSpecifier,
+      ).toBe("d");
+    });
+
+    it("should handle Russian locale with locale-specific plural forms (few/many) through full pipeline", async () => {
+      setupFileMocks();
+
+      const input = JSON.stringify({
+        sourceLanguage: "en",
+        strings: {
+          items: {
+            extractionState: "manual",
+            localizations: {
+              en: {
+                variations: {
+                  plural: {
+                    one: {
+                      stringUnit: {
+                        state: "translated",
+                        value: "1 item",
+                      },
+                    },
+                    other: {
+                      stringUnit: {
+                        state: "translated",
+                        value: "%d items",
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      });
+
+      mockFileOperations(input);
+
+      const loader = createBucketLoader(
+        "xcode-xcstrings-v2",
+        "i18n/[locale].xcstrings",
+        { defaultLocale: "en" },
+      );
+      loader.setDefaultLocale("en");
+
+      await loader.pull("en");
+
+      // Backend returns Russian with locale-specific forms (one/few/many/other) in ICU format
+      const ruPayload = {
+        "items/variations/plural":
+          "{count, plural, one {1 предмет} few {{variable:0} предмета} many {{variable:0} предметов} other {{variable:0} элементов}}",
+      };
+
+      await loader.push("ru", ruPayload);
+
+      expect(fs.writeFile).toHaveBeenCalled();
+      const writeFileCall = (fs.writeFile as any).mock.calls[0];
+      const writtenContent = JSON.parse(writeFileCall[1]);
+
+      // Verify all Russian plural forms are present and variables are restored
+      expect(
+        writtenContent.strings.items.localizations.ru.variations.plural,
+      ).toHaveProperty("one");
+      expect(
+        writtenContent.strings.items.localizations.ru.variations.plural,
+      ).toHaveProperty("few");
+      expect(
+        writtenContent.strings.items.localizations.ru.variations.plural,
+      ).toHaveProperty("many");
+      expect(
+        writtenContent.strings.items.localizations.ru.variations.plural,
+      ).toHaveProperty("other");
+
+      expect(
+        writtenContent.strings.items.localizations.ru.variations.plural.one
+          .stringUnit.value,
+      ).toBe("1 предмет");
+      expect(
+        writtenContent.strings.items.localizations.ru.variations.plural.few
+          .stringUnit.value,
+      ).toBe("%d предмета");
+      expect(
+        writtenContent.strings.items.localizations.ru.variations.plural.many
+          .stringUnit.value,
+      ).toBe("%d предметов");
+      expect(
+        writtenContent.strings.items.localizations.ru.variations.plural.other
+          .stringUnit.value,
+      ).toBe("%d элементов");
     });
   });
 

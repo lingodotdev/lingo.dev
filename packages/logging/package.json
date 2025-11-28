@@ -1,0 +1,38 @@
+{
+  "name": "@lingo.dev/_logging",
+  "version": "0.3.0",
+  "description": "Lingo.dev logging utilities with Pino",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "sideEffects": false,
+  "types": "build/index.d.ts",
+  "module": "build/index.mjs",
+  "main": "build/index.cjs",
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "dev": "tsup --watch",
+    "build": "pnpm typecheck && tsup",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "env-paths": "3.0.0",
+    "pino": "9.6.0",
+    "rotating-file-stream": "3.2.7"
+  },
+  "devDependencies": {
+    "@types/node": "22.10.2",
+    "tsup": "8.5.1",
+    "typescript": "5.9.3",
+    "vitest": "3.1.2"
+  }
+}

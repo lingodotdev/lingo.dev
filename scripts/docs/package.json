@@ -1,5 +1,6 @@
 {
   "name": "docs",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -12,19 +13,19 @@
   },
   "devDependencies": {
     "@lingo.dev/_spec": "workspace:*",
-    "@octokit/rest": "^20.1.2",
-    "@types/mdast": "^4.0.4",
-    "@types/node": "^24.0.10",
-    "@vitest/ui": "^3.2.4",
-    "commander": "^12.0.0",
-    "remark-stringify": "^11.0.0",
-    "tsx": "^4.7.1",
-    "typescript": "^5.8.3",
-    "unified": "^11.0.4",
-    "vitest": "^3.2.4"
+    "@octokit/rest": "20.1.2",
+    "@types/mdast": "4.0.4",
+    "@types/node": "24.0.10",
+    "@vitest/ui": "3.2.4",
+    "commander": "12.0.0",
+    "remark-stringify": "11.0.0",
+    "tsx": "4.20.6",
+    "typescript": "5.9.3",
+    "unified": "11.0.5",
+    "vitest": "3.2.4"
   },
   "dependencies": {
-    "zod": "^3.25.76",
-    "zod-to-json-schema": "^3.24.5"
+    "zod": "3.25.76",
+    "zod-to-json-schema": "3.25.0"
   }
 }

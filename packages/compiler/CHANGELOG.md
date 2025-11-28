@@ -1,5 +1,47 @@
 # @lingo.dev/\_compiler
 
+## 0.8.1
+
+### Patch Changes
+
+- [#1637](https://github.com/lingodotdev/lingo.dev/pull/1637) [`ec2f00a`](https://github.com/lingodotdev/lingo.dev/commit/ec2f00a0a1127ff4c5333ce4c6d8d691f89c4b17) Thanks [@AleksandrSl](https://github.com/AleksandrSl)! - fix babel CJS/ESM
+
+## 0.8.0
+
+### Minor Changes
+
+- [#1634](https://github.com/lingodotdev/lingo.dev/pull/1634) [`48fab66`](https://github.com/lingodotdev/lingo.dev/commit/48fab66b6806455d9faa1dcb169d4c61194e2144) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - Pin all dependencies to exact versions to prevent supply chain attacks. Dependencies no longer use caret (^) or tilde (~) ranges, ensuring full control over version updates and requiring explicit review of all dependency changes.
+
+### Patch Changes
+
+- Updated dependencies [[`48fab66`](https://github.com/lingodotdev/lingo.dev/commit/48fab66b6806455d9faa1dcb169d4c61194e2144)]:
+  - @lingo.dev/_sdk@0.13.0
+  - @lingo.dev/_spec@0.44.0
+
+## 0.7.18
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @lingo.dev/_spec@0.43.1
+  - @lingo.dev/_sdk@0.12.9
+
+## 0.7.17
+
+### Patch Changes
+
+- Updated dependencies [[`ac38e8e`](https://github.com/lingodotdev/lingo.dev/commit/ac38e8e8dea0d8c4cd3c8b00e6394bfbd8074611)]:
+  - @lingo.dev/_spec@0.43.0
+  - @lingo.dev/_sdk@0.12.8
+
+## 0.7.16
+
+### Patch Changes
+
+- Updated dependencies [[`d72c67c`](https://github.com/lingodotdev/lingo.dev/commit/d72c67c78a4d8f01077db8098b5d973ec98a4c1e)]:
+  - @lingo.dev/_spec@0.42.0
+  - @lingo.dev/_sdk@0.12.7
+
 ## 0.7.15
 
 ### Patch Changes
@@ -112,7 +154,6 @@
 ### Minor Changes
 
 - [#997](https://github.com/lingodotdev/lingo.dev/pull/997) [`bd9538a`](https://github.com/lingodotdev/lingo.dev/commit/bd9538ac6eba0ffc91ffc1fef5db6366c13e9e06) Thanks [@VAIBHAVSING](https://github.com/VAIBHAVSING)! - ### Whitespace Normalization Fix
-
   - Improved `normalizeJsxWhitespace` logic to preserve leading spaces inside JSX elements while removing unnecessary formatting whitespace and extra lines.
   - Ensured explicit whitespace (e.g., `{" "}`) is handled correctly without introducing double spaces.
   - Added targeted tests (`jsx-content-whitespace.spec.ts`) to verify whitespace handling.
@@ -190,7 +231,6 @@
 ### Minor Changes
 
 - [#958](https://github.com/lingodotdev/lingo.dev/pull/958) [`84fd214`](https://github.com/lingodotdev/lingo.dev/commit/84fd214a21766e7683c5d645fcb8c4c0162eb0b6) Thanks [@chrissiwaffler](https://github.com/chrissiwaffler)! - feat: add Mistral AI as a supported LLM provider
-
   - Added Mistral AI provider support across the entire lingo.dev ecosystem
   - Users can now use Mistral models for localization by setting MISTRAL_API_KEY
   - Supports all Mistral models available through the @ai-sdk/mistral package
