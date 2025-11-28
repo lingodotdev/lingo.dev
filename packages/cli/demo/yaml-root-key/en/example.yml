@@ -24,3 +24,32 @@ en:
         M: :@m
         N: :@n
         default: :m
+  date:
+    abbr_day_names:
+      - "Mon"
+      - "Tue"
+      - "Wed"
+      - "Thu"
+      - "Fri"
+      - "Sat"
+      - "Sun"
+    abbr_month_names:
+      - null
+      - "Jan"
+      - "Feb"
+      - "Mar"
+      - "Apr"
+      - "May"
+      - "Jun"
+      - "Jul"
+      - "Aug"
+      - "Sep"
+      - "Oct"
+      - "Nov"
+      - "Dec"
+    formats:
+      default: "MM/dd/yyyy"
+      long: "MMMM d, yyyy"
+      short: "MM/dd/yy"
+      time: "h:mm a"
+      time_with_seconds: "h:mm:ss a"

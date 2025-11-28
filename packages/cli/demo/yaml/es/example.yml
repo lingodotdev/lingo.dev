@@ -5,15 +5,15 @@ user_profile:
   display_name: "John Doe"
   bio: Desarrollador de software
 navigation_items:
-  - Inicio
-  - Acerca de
-  - Contacto
+  - "Inicio"
+  - "Acerca de"
+  - "Contacto"
 product:
   name: "MyWidget"
   tagline: El mejor widget de todos
   features:
-    - Fácil de usar
-    - Rápido y confiable
+    - "Fácil de usar"
+    - "Rápido y confiable"
 settings:
   max_users: 100
   enabled: true
