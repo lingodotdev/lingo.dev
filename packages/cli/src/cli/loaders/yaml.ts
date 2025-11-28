@@ -28,16 +28,21 @@ export default function createYamlLoader(): ILoader<
       try {
         // Parse source and extract quoting metadata
         const sourceDoc = YAML.parseDocument(originalInput);
-        const metadata = extractQuotingMetadata(sourceDoc);
 
-        // Create output document and apply source quoting
+        // Create output document - let the library handle smart quoting
         const outputDoc = YAML.parseDocument(
           YAML.stringify(payload, {
             lineWidth: -1,
             defaultKeyType: "PLAIN",
           }),
         );
-        applyQuotingMetadata(outputDoc, metadata);
+
+        // Detect if this is yaml-root-key format by comparing structures
+        const isRootKeyFormat = detectRootKeyFormat(sourceDoc, outputDoc);
+
+        // Extract and apply metadata with root-key awareness
+        const metadata = extractQuotingMetadata(sourceDoc, isRootKeyFormat);
+        applyQuotingMetadata(outputDoc, metadata, isRootKeyFormat);
 
         return outputDoc.toString({ lineWidth: -1 });
       } catch (error) {
@@ -53,8 +58,52 @@ export default function createYamlLoader(): ILoader<
   });
 }
 
+// Detect if this is yaml-root-key format by comparing source and output structures
+function detectRootKeyFormat(
+  sourceDoc: YAML.Document,
+  outputDoc: YAML.Document,
+): boolean {
+  const sourceRoot = sourceDoc.contents;
+  const outputRoot = outputDoc.contents;
+
+  // Both must be maps with single root key
+  if (!isYAMLMap(sourceRoot) || !isYAMLMap(outputRoot)) {
+    return false;
+  }
+
+  const sourceMap = sourceRoot as any;
+  const outputMap = outputRoot as any;
+
+  if (
+    !sourceMap.items ||
+    sourceMap.items.length !== 1 ||
+    !outputMap.items ||
+    outputMap.items.length !== 1
+  ) {
+    return false;
+  }
+
+  const sourceRootKey = getKeyValue(sourceMap.items[0].key);
+  const outputRootKey = getKeyValue(outputMap.items[0].key);
+
+  // If both have single root keys that are DIFFERENT strings, it's yaml-root-key format
+  // (e.g., source has "en:", output has "es:")
+  if (
+    sourceRootKey !== outputRootKey &&
+    typeof sourceRootKey === "string" &&
+    typeof outputRootKey === "string"
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
 // Extract quoting metadata from source document
-function extractQuotingMetadata(doc: YAML.Document): QuotingMetadata {
+function extractQuotingMetadata(
+  doc: YAML.Document,
+  skipRootKey: boolean,
+): QuotingMetadata {
   const metadata: QuotingMetadata = {
     keys: new Map<string, string>(),
     values: new Map<string, string>(),
@@ -62,7 +111,17 @@ function extractQuotingMetadata(doc: YAML.Document): QuotingMetadata {
   const root = doc.contents;
   if (!root) return metadata;
 
-  walkAndExtract(root, [], metadata);
+  let startNode: any = root;
+
+  // If yaml-root-key format, skip the locale root key
+  if (skipRootKey && isYAMLMap(root)) {
+    const rootMap = root as any;
+    if (rootMap.items && rootMap.items.length === 1) {
+      startNode = rootMap.items[0].value;
+    }
+  }
+
+  walkAndExtract(startNode, [], metadata);
   return metadata;
 }
 
@@ -113,11 +172,22 @@ function walkAndExtract(
 function applyQuotingMetadata(
   doc: YAML.Document,
   metadata: QuotingMetadata,
+  skipRootKey: boolean,
 ): void {
   const root = doc.contents;
   if (!root) return;
 
-  walkAndApply(root, [], metadata);
+  let startNode: any = root;
+
+  // If yaml-root-key format, skip the locale root key
+  if (skipRootKey && isYAMLMap(root)) {
+    const rootMap = root as any;
+    if (rootMap.items && rootMap.items.length === 1) {
+      startNode = rootMap.items[0].value;
+    }
+  }
+
+  walkAndApply(startNode, [], metadata);
 }
 
 // Walk AST and apply quoting information

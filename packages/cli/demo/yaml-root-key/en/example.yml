@@ -1,13 +1,26 @@
-es:
+en:
   navigation:
-    home: "Inicio"
-    about: "Sobre nosotros"
-    contact: "Contacto"
-    services: "Servicios"
-  forms:
-    title: "Formulario de contacto"
-    name_label: "Su nombre"
-    email_label: "Dirección de correo electrónico"
-    message_label: "Mensaje"
-    submit_button: "Enviar mensaje"
-    success_message: "¡Gracias por su mensaje!"
+    home: "Home"
+    about: "About us"
+    contact: "Contact"
+    services: "Services"
+    forms:
+      title: "Contact form"
+      name_label: "Your name"
+      email_label: "Email address"
+      "message_label": Message
+      submit_button: Submit message
+      success_message: "Thank you for your message!"
+    inflections:
+      number_of_items: 100
+      gender:
+        f: "Feminine"
+        m: "Masculine"
+        n: "Neuter"
+        female: :@f
+        male: :@m
+        neuter: :@n
+        F: :@f
+        M: :@m
+        N: :@n
+        default: :m

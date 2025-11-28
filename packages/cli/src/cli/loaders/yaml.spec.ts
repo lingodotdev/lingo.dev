@@ -417,4 +417,37 @@ world: World`;
     expect(result).not.toContain('"message"');
     expect(result).toMatch(/message:\s*Bienvenido/); // value unquoted
   });
+
+  it("push should preserve quoting across different locale keys", async () => {
+    const loader = createYamlLoader();
+    loader.setDefaultLocale("en");
+
+    // Source has 'en:' root key
+    const yamlInput = `en:
+  navigation:
+    home: "Home"
+  forms:
+    "message_label": "Message"`;
+
+    await loader.pull("en", yamlInput);
+
+    // Target has 'es:' root key (different from source!)
+    const data = {
+      es: {
+        navigation: {
+          home: "Inicio",
+        },
+        forms: {
+          message_label: "Mensaje",
+        },
+      },
+    };
+
+    const result = await loader.push("es", data, yamlInput);
+
+    // Quoting should be preserved despite different root keys (en vs es)
+    expect(result).toContain('home: "Inicio"');
+    expect(result).toContain('"message_label":');
+    expect(result).toContain('"Mensaje"');
+  });
 });
