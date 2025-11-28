@@ -285,6 +285,15 @@ export default function createHtmlLoader(): ILoader<
             extractFromElement(child, ["body", bodyIndex++]);
           }
         }
+      } else {
+        // Handle HTML fragments (no <html> element) - process root elements directly
+        let rootIndex = 0;
+        const rootElements = dom.filter(
+          (child): child is Element => child.type === "tag"
+        );
+        for (const child of rootElements) {
+          extractFromElement(child, [rootIndex++]);
+        }
       }
 
       return result;
@@ -316,32 +325,13 @@ export default function createHtmlLoader(): ILoader<
         html.attribs.lang = locale;
       }
 
-      // Resolve path to element in the DOM
-      function resolvePathToElement(path: string): Element | null {
-        if (!html) return null;
+      // Helper to traverse child elements by numeric indices
+      function traverseByIndices(
+        element: Element | null,
+        indices: string[]
+      ): Element | null {
+        let current = element;
 
-        const parts = path.split("/");
-        const [rootTag, ...indices] = parts;
-
-        // Find head or body
-        let current: Element | null = null;
-        if (rootTag === "head") {
-          current = domutils.findOne(
-            (elem) => elem.type === "tag" && elem.name.toLowerCase() === "head",
-            html.children,
-            true
-          ) as Element | null;
-        } else if (rootTag === "body") {
-          current = domutils.findOne(
-            (elem) => elem.type === "tag" && elem.name.toLowerCase() === "body",
-            html.children,
-            true
-          ) as Element | null;
-        }
-
-        if (!current) return null;
-
-        // Traverse by indices
         for (const indexStr of indices) {
           if (!current) return null;
 
@@ -358,6 +348,54 @@ export default function createHtmlLoader(): ILoader<
         }
 
         return current;
+      }
+
+      // Resolve path to element in the DOM
+      function resolvePathToElement(path: string): Element | null {
+        const parts = path.split("/");
+        const [rootTag, ...indices] = parts;
+
+        let current: Element | null = null;
+
+        if (html) {
+          // Full HTML document with <html>, <head>, <body>
+          // Find head or body
+          if (rootTag === "head") {
+            current = domutils.findOne(
+              (elem) => elem.type === "tag" && elem.name.toLowerCase() === "head",
+              html.children,
+              true
+            ) as Element | null;
+          } else if (rootTag === "body") {
+            current = domutils.findOne(
+              (elem) => elem.type === "tag" && elem.name.toLowerCase() === "body",
+              html.children,
+              true
+            ) as Element | null;
+          }
+
+          if (!current) return null;
+
+          // Traverse by indices
+          return traverseByIndices(current, indices);
+        } else {
+          // HTML fragment - no <html> element
+          // Path is just numeric indices from root
+          const rootElements = dom.filter(
+            (child): child is Element => child.type === "tag"
+          );
+
+          // First part is the root index
+          const rootIndex = parseInt(rootTag, 10);
+          if (rootIndex >= rootElements.length) {
+            return null;
+          }
+
+          current = rootElements[rootIndex];
+
+          // Traverse remaining indices
+          return traverseByIndices(current, indices);
+        }
       }
 
       // Apply translations
