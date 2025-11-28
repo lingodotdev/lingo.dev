@@ -15,6 +15,7 @@ import createCsvLoader from "./csv";
 import createHtmlLoader from "./html";
 import createMarkdownLoader from "./markdown";
 import createMarkdocLoader from "./markdoc";
+import createMjmlLoader from "./mjml";
 import createPropertiesLoader from "./properties";
 import createXcodeStringsLoader from "./xcode-strings";
 import createXcodeStringsdictLoader from "./xcode-stringsdict";
@@ -185,6 +186,17 @@ export default function createBucketLoader(
         createLocalizableMdxDocumentLoader(),
         createFlatLoader(),
         createEnsureKeyOrderLoader(),
+        createLockedKeysLoader(lockedKeys || []),
+        createIgnoredKeysLoader(ignoredKeys || []),
+        createSyncLoader(),
+        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+      );
+    case "mjml":
+      return composeLoaders(
+        createTextFileLoader(bucketPathPattern),
+        createFormatterLoader(options.formatter, "html", bucketPathPattern),
+        createLockedPatternsLoader(lockedPatterns),
+        createMjmlLoader(),
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
         createSyncLoader(),
