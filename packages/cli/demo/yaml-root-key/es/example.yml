@@ -24,3 +24,32 @@ es:
         M: :@m
         N: :@n
         default: :m
+  date:
+    abbr_day_names:
+      - "Lun"
+      - "Mar"
+      - "Mié"
+      - "Jue"
+      - "Vie"
+      - "Sáb"
+      - "Dom"
+    abbr_month_names:
+      - null
+      - "Ene"
+      - "Feb"
+      - "Mar"
+      - "Abr"
+      - "May"
+      - "Jun"
+      - "Jul"
+      - "Ago"
+      - "Sep"
+      - "Oct"
+      - "Nov"
+      - "Dic"
+    formats:
+      default: "dd/MM/yyyy"
+      long: "d 'de' MMMM 'de' yyyy"
+      short: "dd/MM/yy"
+      time: "H:mm"
+      time_with_seconds: "H:mm:ss"

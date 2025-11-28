@@ -631,6 +631,30 @@ checksums:
     navigation/inflections/gender/M: 9ebdcb660f503bb2618ae7ae086617e2
     navigation/inflections/gender/N: 603743850a2510aaa6a5eb9dbfbe7416
     navigation/inflections/gender/default: 453a466f60641d9934bbee33dc4cd2b6
+    date/abbr_day_names/0: b29e2b72f74643194654961775178fec
+    date/abbr_day_names/1: b750502bab403473852a20cea73dcf2c
+    date/abbr_day_names/2: 4786ce2a2427ad9183ef1a6f7385fb24
+    date/abbr_day_names/3: ce25e3f9bfc6cfdc6017f791045da079
+    date/abbr_day_names/4: 4029492def3bd66fa5a9d1c693743b62
+    date/abbr_day_names/5: 0f0718f17b758ea9d5167c120c230be6
+    date/abbr_day_names/6: 3b32ac0f13383ecdf580b4db09773fda
+    date/abbr_month_names/1: 268e5f1e700c23c50b88e8c6aa754c88
+    date/abbr_month_names/2: c111dae80531454da886782893e71541
+    date/abbr_month_names/3: 3055ece906ba97d9b5050b4385d873a9
+    date/abbr_month_names/4: 7a76ba706f71adc981bc050190ccc63f
+    date/abbr_month_names/5: 320223c5afaaf28560a3a84d3527d51c
+    date/abbr_month_names/6: 47f51f7cecc9bd30eef853748a40f2e7
+    date/abbr_month_names/7: 5088467e6b771d6f02e1d4ea3550dd96
+    date/abbr_month_names/8: 160006d60703204ab06369352f5f2520
+    date/abbr_month_names/9: 91cac5f11e31c9907ea26a79fe5df889
+    date/abbr_month_names/10: 384ae5bd38358c3f8db4560d59405c70
+    date/abbr_month_names/11: a87c80252a5b03a82a0d16c510b5ed12
+    date/abbr_month_names/12: 2a7ffd15bea3a6fdb664dff36b0e8043
+    date/formats/default: df39f2ed8e14212ef5664e0603460e76
+    date/formats/long: 60dc8afda933eee168c7eb73bda1a296
+    date/formats/short: 05eb7bb8ee06c9de1435ba4cd1d81dcf
+    date/formats/time: 1407af7bd151a6fa95e2d51497454cc2
+    date/formats/time_with_seconds: f02992d40da922a1382859c45cb0231e
   1254631a73b754e11a1b9ca8f7362025:
     item_count/variations/plural: 2b2b1ff20c417ea68d07d66ba30a5c14
     notification_message/stringUnit: d14316154e233634917e317452c5f42c

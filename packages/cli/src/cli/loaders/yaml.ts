@@ -236,44 +236,17 @@ function walkAndApply(
   }
 }
 
-// Type guards
+// Type guards using YAML library's built-in functions
 function isScalar(node: any): boolean {
-  if (node?.constructor?.name === "Scalar") {
-    return true;
-  }
-  return (
-    node &&
-    typeof node === "object" &&
-    "value" in node &&
-    ("type" in node || "format" in node)
-  );
+  return YAML.isScalar(node);
 }
 
 function isYAMLMap(node: any): boolean {
-  if (node?.constructor?.name === "YAMLMap") {
-    return true;
-  }
-  return (
-    node &&
-    typeof node === "object" &&
-    "items" in node &&
-    Array.isArray(node.items) &&
-    !("value" in node)
-  );
+  return YAML.isMap(node);
 }
 
 function isYAMLSeq(node: any): boolean {
-  if (node?.constructor?.name === "YAMLSeq") {
-    return true;
-  }
-  return (
-    node &&
-    typeof node === "object" &&
-    "items" in node &&
-    Array.isArray(node.items) &&
-    !("type" in node) &&
-    !("value" in node)
-  );
+  return YAML.isSeq(node);
 }
 
 function getKeyValue(key: any): string | number | null {
