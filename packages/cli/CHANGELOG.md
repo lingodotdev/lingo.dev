@@ -1,5 +1,23 @@
 # lingo.dev
 
+## 0.117.4
+
+### Patch Changes
+
+- [#1644](https://github.com/lingodotdev/lingo.dev/pull/1644) [`2881712`](https://github.com/lingodotdev/lingo.dev/commit/2881712a1964dfa36eedfe70a00ae438f400647b) Thanks [@vrcprl](https://github.com/vrcprl)! - preserve list formatting in YAML files
+
+## 0.117.3
+
+### Patch Changes
+
+- [#1642](https://github.com/lingodotdev/lingo.dev/pull/1642) [`9f429c6`](https://github.com/lingodotdev/lingo.dev/commit/9f429c6c8a64f8f829ac7bc1fc293697c5d93b9f) Thanks [@vrcprl](https://github.com/vrcprl)! - Preserve formatting in YAML files
+
+## 0.117.2
+
+### Patch Changes
+
+- [#1640](https://github.com/lingodotdev/lingo.dev/pull/1640) [`80bcbe4`](https://github.com/lingodotdev/lingo.dev/commit/80bcbe4a65e0728e5795bb5b4f2b6e3d7e3aa206) Thanks [@vrcprl](https://github.com/vrcprl)! - preserve formatting for yaml format
+
 ## 0.117.1
 
 ### Patch Changes
