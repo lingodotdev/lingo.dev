@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.117.5
+
+### Patch Changes
+
+- [#1639](https://github.com/lingodotdev/lingo.dev/pull/1639) [`a881f81`](https://github.com/lingodotdev/lingo.dev/commit/a881f8115059168dabb4cbe07a1d28ca33d36ece) Thanks [@vrcprl](https://github.com/vrcprl)! - rewrite HTML loader with block-based translation
+
 ## 0.117.4
 
 ### Patch Changes
