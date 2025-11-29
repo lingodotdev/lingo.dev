@@ -21,7 +21,7 @@ export default function Home() {
             To switch between locales, use the following dropdown:
           </p>
           <div className="flex justify-center">
-            <LocaleSwitcher locales={['en', 'es']} />
+            <LocaleSwitcher locales={['en', 'es', 'zh', 'ja', 'fr', 'de', 'ru', 'ar', 'ko']} />
           </div>
         </div>
       </div>
