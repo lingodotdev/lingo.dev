@@ -641,19 +641,12 @@ function setTextualNodeContent(
     : escapeAndroidString(value);
   node._ = escapedValue;
 
-  node.$$ = node.$$ ?? [];
-  let textNode = node.$$.find(
-    (child: any) =>
-      child["#name"] === "__text__" || child["#name"] === "__cdata",
-  );
-
-  if (!textNode) {
-    textNode = {};
-    node.$$.push(textNode);
-  }
-
-  textNode["#name"] = useCdata ? "__cdata" : "__text__";
-  textNode._ = escapedValue;
+  // Replace entire children array to avoid duplicating inline HTML elements
+  // When inline HTML exists (e.g., <b>text</b>), xml2js creates element nodes
+  // in node.$$ that would otherwise be serialized alongside the escaped text
+  node.$$ = [
+    { "#name": useCdata ? "__cdata" : "__text__", _: escapedValue }
+  ];
 }
 
 function buildResourceNameMap(

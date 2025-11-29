@@ -422,6 +422,8 @@ checksums:
     cdata_example: b88d55f92c4a90f64016e497051e997d
     mixed_items/0: 31c5d470a2fe8e1ae88e964fc673aee3
     mixed_items/1: 9823a57cbe6e6e84c1d025ce24a1eec4
+    terms_of_use_raw: e3048f75742e66473369a83c10ea95c3
+    view_your_options: 416ed59ca3254f9da0d565c7c75f9033
   df547e152136431bbc29e26ae0eeabb4:
     title: 0468579ef2fbc83c9d520c2f2f1c5059
     description: 49f8864eb0e53903f04532bf33e1e4fa
