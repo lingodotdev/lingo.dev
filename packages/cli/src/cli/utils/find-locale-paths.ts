@@ -95,7 +95,7 @@ function findLocaleFilesForFilename(fileName: string) {
 
   const localeFilesAndPatterns = localeFiles.map((file: string) => ({
     file,
-    pattern: path.join(path.dirname(file), pattern),
+    pattern: path.join(path.dirname(file), pattern).replace(/\\/g, "/"),
   }));
   const grouppedFilesAndPatterns = _.groupBy(localeFilesAndPatterns, "pattern");
   const patterns = Object.keys(grouppedFilesAndPatterns);
