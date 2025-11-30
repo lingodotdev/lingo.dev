@@ -1,5 +1,17 @@
 # lingo.dev
 
+## 0.117.6
+
+### Patch Changes
+
+- [#1647](https://github.com/lingodotdev/lingo.dev/pull/1647) [`a9e1af5`](https://github.com/lingodotdev/lingo.dev/commit/a9e1af5a57b9711ac1ef98b40b5f7abff4b0c31a) Thanks [@vrcprl](https://github.com/vrcprl)! - prevent HTML tag duplication in Android bucket
+
+## 0.117.5
+
+### Patch Changes
+
+- [#1639](https://github.com/lingodotdev/lingo.dev/pull/1639) [`a881f81`](https://github.com/lingodotdev/lingo.dev/commit/a881f8115059168dabb4cbe07a1d28ca33d36ece) Thanks [@vrcprl](https://github.com/vrcprl)! - rewrite HTML loader with block-based translation
+
 ## 0.117.4
 
 ### Patch Changes
