@@ -95,7 +95,11 @@
         <item>@drawable/icon2</item>
     </array>
 
+    <string name="terms_of_use_raw"><u>Terms of Use</u></string>
+
     <!-- Resource IDs - will not be translated (copied as-is to target locales) -->
     <item type="id" name="button_ok" />
+
+    <string name="view_your_options"><u>View your options</u></string>
 
 </resources>

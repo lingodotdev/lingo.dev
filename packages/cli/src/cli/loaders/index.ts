@@ -1,5 +1,4 @@
 import Z from "zod";
-import jsdom from "jsdom";
 import { bucketTypeSchema } from "@lingo.dev/_spec";
 import { composeLoaders } from "./_utils";
 import createJsonLoader from "./json";
@@ -20,8 +19,7 @@ import createPropertiesLoader from "./properties";
 import createXcodeStringsLoader from "./xcode-strings";
 import createXcodeStringsdictLoader from "./xcode-stringsdict";
 import createXcodeXcstringsLoader from "./xcode-xcstrings";
-import createXcodeXcstringsV2Loader from "./xcode-xcstrings-v2-loader";
-import { isICUPluralObject } from "./xcode-xcstrings-icu";
+import createXcodeXcstringsV2Loader from "./xcode-xcstrings-v2";
 import createUnlocalizableLoader from "./unlocalizable";
 import { createFormatterLoader, FormatterType } from "./formatters";
 import createPoLoader from "./po";
@@ -258,9 +256,8 @@ export default function createBucketLoader(
         createPlutilJsonTextLoader(),
         createLockedPatternsLoader(lockedPatterns),
         createJsonLoader(),
-        createXcodeXcstringsLoader(options.defaultLocale),
         createXcodeXcstringsV2Loader(options.defaultLocale),
-        createFlatLoader({ shouldPreserveObject: isICUPluralObject }),
+        createFlatLoader(),
         createEnsureKeyOrderLoader(),
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
