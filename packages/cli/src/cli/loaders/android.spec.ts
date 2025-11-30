@@ -94,6 +94,34 @@ describe("android loader", () => {
     });
   });
 
+  it("should correctly handle HTML markup in strings during push without duplication", async () => {
+    const input = `
+      <resources>
+        <string name="terms_of_use"><u>Terms of Use</u></string>
+        <string name="welcome">Welcome to <b>Android</b>!</string>
+      </resources>
+    `.trim();
+
+    const androidLoader = createAndroidLoader().setDefaultLocale("en");
+
+    // Pull first to initialize loader state
+    await androidLoader.pull("en", input);
+
+    // Push translated content with HTML
+    const pushed = await androidLoader.push("es", {
+      terms_of_use: "<u>Términos de uso</u>",
+      welcome: "Bienvenido a <b>Android</b>!",
+    });
+
+    // Verify no duplication - should only contain escaped HTML, not both escaped and unescaped
+    expect(pushed).toContain("&lt;u&gt;Términos de uso&lt;/u&gt;");
+    expect(pushed).not.toContain("<u>Términos de uso</u>&lt;u&gt;");
+    expect(pushed).not.toContain("&lt;u&gt;Terms of Use&lt;/u&gt;&lt;u&gt;Términos de uso&lt;/u&gt;");
+
+    expect(pushed).toContain("&lt;b&gt;Android&lt;/b&gt;");
+    expect(pushed).not.toContain("<b>Android</b>&lt;b&gt;");
+  });
+
   it("should correctly handle format strings", async () => {
     const input = `
       <resources>

@@ -325,7 +325,7 @@ describe("bucket loaders", () => {
   });
 
   describe("html bucket loader", () => {
-    it("should load html data", async () => {
+    it("should load html data with inline elements preserved", async () => {
       setupFileMocks();
 
       const input = `
@@ -335,12 +335,11 @@ describe("bucket loaders", () => {
     <meta name="description" content="Page description" />
   </head>
   <body>
-    some simple text without an html tag
     <h1>Hello, world!</h1>
     <p>
-      This is a paragraph with a 
+      This is a paragraph with a
       <a href="https://example.com">link</a>
-      and 
+      and
       <b>
         bold and <i>italic text</i>
       </b>
@@ -350,16 +349,17 @@ describe("bucket loaders", () => {
 </html>
       `.trim();
       const expectedOutput = {
-        "head/0/0": "My Page",
+        "head/0": "My Page",
         "head/1#content": "Page description",
-        "body/0": "some simple text without an html tag",
-        "body/1/0": "Hello, world!",
-        "body/2/0": "This is a paragraph with a",
-        "body/2/1/0": "link",
-        "body/2/2": "and",
-        "body/2/3/0": "bold and",
-        "body/2/3/1/0": "italic text",
-        "body/2/4": ".",
+        "body/0": "Hello, world!",
+        "body/1": `This is a paragraph with a
+      <a href="https://example.com">link</a>
+      and
+      <b>
+        bold and
+        <i>italic text</i>
+      </b>
+      .`,
       };
 
       mockFileOperations(input);
@@ -373,7 +373,7 @@ describe("bucket loaders", () => {
       expect(data).toEqual(expectedOutput);
     });
 
-    it("should save html data", async () => {
+    it("should save html data with inline elements preserved", async () => {
       const input = dedent`
 <html>
   <head>
@@ -381,7 +381,6 @@ describe("bucket loaders", () => {
     <meta name="description" content="Page description" />
   </head>
   <body>
-    some simple text without an html tag
     <h1>Hello, world!</h1>
     <p>
       This is a paragraph with a <a href="https://example.com">link</a> and <b>bold and <i>italic text</i></b>
@@ -390,36 +389,31 @@ describe("bucket loaders", () => {
 </html>
       `.trim();
       const payload = {
-        "head/0/0": "Mi Página",
+        "head/0": "Mi Página",
         "head/1#content": "Descripción de la página",
-        "body/0": "texto simple sin etiqueta html",
-        "body/1/0": "¡Hola, mundo!",
-        "body/2/0": "Este es un párrafo con un ",
-        "body/2/1/0": "enlace",
-        "body/2/2": " y ",
-        "body/2/3/0": "texto en negrita y ",
-        "body/2/3/1/0": "texto en cursiva",
+        "body/0": "¡Hola, mundo!",
+        "body/1":
+          'Este es un párrafo con un <a href="https://example.com">enlace</a> y <b>texto en negrita y <i>texto en cursiva</i></b>',
       };
-      const expectedOutput = `<html lang="es">
-  <head>
-    <title>Mi Página</title>
-    <meta name="description" content="Descripción de la página" />
-  </head>
-  <body>
-    texto simple sin etiqueta html
-    <h1>¡Hola, mundo!</h1>
-    <p>
-      Este es un párrafo con un
-      <a href="https://example.com">enlace</a>
-      y
-      <b>
-        texto en negrita y
-        <i>texto en cursiva</i>
-      </b>
-    </p>
-  </body>
-</html>
-      `.trim();
+      const expectedOutput =
+        '<html lang="es">\n' +
+        "  <head>\n" +
+        "    <title>Mi Página</title>\n" +
+        '    <meta name="description" content="Descripción de la página" />\n' +
+        "  </head>\n" +
+        "  <body>\n" +
+        "    <h1>¡Hola, mundo!</h1>\n" +
+        "    <p>\n" +
+        "      Este es un párrafo con un\n" +
+        '      <a href="https://example.com">enlace</a>\n' +
+        "      y\n" +
+        "      <b>\n" +
+        "        texto en negrita y\n" +
+        "        <i>texto en cursiva</i>\n" +
+        "      </b>\n" +
+        "    </p>\n" +
+        "  </body>\n" +
+        "</html>";
 
       mockFileOperations(input);
 
@@ -457,14 +451,14 @@ describe("bucket loaders", () => {
         "html",
         "i18n/[locale].html",
         { defaultLocale: "en" },
-        ["head/0/0"],
+        ["head/0"],
       );
       htmlLoader.setDefaultLocale("en");
       const data = await htmlLoader.pull("en");
 
       // Title is locked, only body text should remain
       expect(Object.values(data)).toContain("Hello");
-      expect(Object.keys(data)).not.toContain("head/0/0");
+      expect(Object.keys(data)).not.toContain("head/0");
     });
   });
 
