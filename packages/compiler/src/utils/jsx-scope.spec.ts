@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { parse } from "@babel/parser";
-import traverse, { NodePath } from "@babel/traverse";
+import { traverse, NodePath } from "../babel-interop";
 import * as t from "@babel/types";
 import {
   collectJsxScopes,
