@@ -2,7 +2,7 @@
   "version": "1.10",
   "locale": {
     "source": "en",
-    "targets": ["es"]
+    "targets": ["es", "ru"]
   },
   "buckets": {
     "xliff": {
@@ -50,6 +50,9 @@
       "include": ["demo/mdx/[locale]/*.mdx"],
       "lockedKeys": ["meta/locked_key_1"],
       "ignoredKeys": ["meta/ignored_key_1"]
+    },
+    "mjml": {
+      "include": ["demo/mjml/[locale]/*.mjml"]
     },
     "po": {
       "include": ["demo/po/[locale]/*.po"]
