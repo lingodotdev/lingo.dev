@@ -12,6 +12,10 @@ export function createBasicTranslator(
   settings: ModelSettings = {},
 ) {
   return async (input: LocalizerInput, onProgress: LocalizerProgressFn) => {
+    try {
+      onProgress(0, {}, {});
+    } catch {}
+    
     const chunks = extractPayloadChunks(input.processableData);
 
     const subResults: Record<string, any>[] = [];
@@ -79,9 +83,14 @@ export function createBasicTranslator(
       ],
     });
 
-    const result = JSON.parse(response.text);
-
-    return result?.data || {};
+let parsed: any;
+    try {
+      parsed = JSON.parse(response.text);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      throw new Error(`Failed to parse model response as JSON: ${message}`);
+    }
+    return parsed?.data || {};
   }
 }
 
