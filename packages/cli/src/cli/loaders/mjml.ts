@@ -13,13 +13,14 @@ const LOCALIZABLE_TEXT_COMPONENTS = [
   "mj-accordion-text",
 ];
 
-// HTML elements inside mj-table that contain localizable text
-const LOCALIZABLE_HTML_ELEMENTS = [
+// HTML leaf block elements that should be extracted as complete units
+// These are block-level elements that contain text + inline elements (like <strong>, <span>)
+// but should not have their children extracted separately (to avoid duplication)
+const HTML_LEAF_BLOCKS = [
   "p",
   "h1", "h2", "h3", "h4", "h5", "h6",
-  "td", "th",
   "li",
-  "div", "span",
+  // Note: td, th, div, span are NOT leaf blocks - they're containers
 ];
 
 // MJML components with localizable attributes
@@ -67,23 +68,7 @@ export default function createMjmlLoader(): ILoader<
 
         // Traverse using $$ children array
         traverseMjmlWithUpdate(rootNode, (node, path, componentName) => {
-          // Extract text content from localizable MJML components
-          if (LOCALIZABLE_TEXT_COMPONENTS.includes(componentName)) {
-            const textContent = extractTextContent(node);
-            if (textContent) {
-              result[path] = textContent;
-            }
-          }
-
-          // Extract text content from localizable HTML elements (inside mj-table)
-          if (LOCALIZABLE_HTML_ELEMENTS.includes(componentName)) {
-            const textContent = extractTextContent(node);
-            if (textContent) {
-              result[path] = textContent;
-            }
-          }
-
-          // Extract localizable attributes (both MJML and HTML)
+          // Extract localizable attributes first (always do this)
           const localizableAttrs = LOCALIZABLE_ATTRIBUTES[componentName];
           if (localizableAttrs && typeof node === "object" && node.$) {
             localizableAttrs.forEach((attr) => {
@@ -94,7 +79,27 @@ export default function createMjmlLoader(): ILoader<
             });
           }
 
-          return undefined; // Just traversing, not updating
+          // Extract text content from localizable MJML components
+          if (LOCALIZABLE_TEXT_COMPONENTS.includes(componentName)) {
+            const textContent = extractTextContent(node);
+            if (textContent) {
+              result[path] = textContent;
+              // Skip children - they're already included in the innerHTML
+              return "SKIP_CHILDREN";
+            }
+          }
+
+          // Extract text content from HTML leaf blocks (like <p>, <h1>, etc.)
+          if (HTML_LEAF_BLOCKS.includes(componentName)) {
+            const textContent = extractTextContent(node);
+            if (textContent) {
+              result[path] = textContent;
+              // Skip children - they're already included in the innerHTML
+              return "SKIP_CHILDREN";
+            }
+          }
+
+          return undefined; // Continue traversing into children
         }, rootPath);
       } catch (error) {
         console.error("Failed to parse MJML:", error);
@@ -133,6 +138,17 @@ export default function createMjmlLoader(): ILoader<
         const rootPath = rootNode["#name"] || rootKey || "";
 
         traverseMjmlWithUpdate(rootNode, (node, path, componentName) => {
+          // Update attributes first (always do this)
+          const localizableAttrs = LOCALIZABLE_ATTRIBUTES[componentName];
+          if (localizableAttrs && typeof node === "object" && node.$) {
+            localizableAttrs.forEach((attr) => {
+              const attrKey = `${path}#${attr}`;
+              if (data[attrKey] !== undefined) {
+                node.$[attr] = data[attrKey];
+              }
+            });
+          }
+
           // Update text content for MJML components
           if (LOCALIZABLE_TEXT_COMPONENTS.includes(componentName) && data[path]) {
             if (typeof node === "object") {
@@ -153,11 +169,12 @@ export default function createMjmlLoader(): ILoader<
                 }
               }
             }
-            return data[path]; // Return new value for string nodes
+            // Skip children - they've already been updated as part of innerHTML
+            return "SKIP_CHILDREN";
           }
 
-          // Update text content for HTML elements (inside mj-table)
-          if (LOCALIZABLE_HTML_ELEMENTS.includes(componentName) && data[path]) {
+          // Update text content for HTML leaf blocks
+          if (HTML_LEAF_BLOCKS.includes(componentName) && data[path]) {
             if (typeof node === "object") {
               const translatedContent = data[path];
 
@@ -176,21 +193,11 @@ export default function createMjmlLoader(): ILoader<
                 }
               }
             }
-            return data[path]; // Return new value for string nodes
+            // Skip children - they've already been updated as part of innerHTML
+            return "SKIP_CHILDREN";
           }
 
-          // Update attributes
-          const localizableAttrs = LOCALIZABLE_ATTRIBUTES[componentName];
-          if (localizableAttrs && typeof node === "object" && node.$) {
-            localizableAttrs.forEach((attr) => {
-              const attrKey = `${path}#${attr}`;
-              if (data[attrKey] !== undefined) {
-                node.$[attr] = data[attrKey];
-              }
-            });
-          }
-
-          return undefined; // No update
+          return undefined; // Continue traversing
         }, rootPath);
 
         // Use custom serializer to preserve order
@@ -340,7 +347,10 @@ function extractTextContent(node: any): string | null {
 
   // If node is an object, we need to serialize the inner HTML content
   if (typeof node === "object" && node !== null) {
-    return serializeInnerHTML(node);
+    const html = serializeInnerHTML(node);
+    // Trim outer whitespace (newlines/indentation) from the final extracted HTML
+    // This matches HTML loader behavior
+    return html ? html.trim() : null;
   }
 
   return null;
@@ -484,7 +494,7 @@ function serializeInnerHTML(node: any): string | null {
       const childName = child["#name"];
 
       if (childName === "__text__") {
-        // Text node
+        // Text node - preserve all whitespace
         html += child._ || "";
       } else if (childName && !childName.startsWith("__")) {
         // Element node (like <a>, <span>, <strong>, etc.)
@@ -493,26 +503,26 @@ function serializeInnerHTML(node: any): string | null {
           .map(([key, value]) => ` ${key}="${escapeAttributeValue(String(value))}"`)
           .join("");
 
-        const innerText = child._ || "";
-
         // Self-closing tags for void elements
         const voidElements = ["img", "br", "hr", "input", "meta", "link"];
-        if (voidElements.includes(childName) && !innerText) {
+        if (voidElements.includes(childName)) {
           html += `<${childName}${attrString} />`;
         } else {
-          html += `<${childName}${attrString}>${innerText}</${childName}>`;
+          // Recursively serialize inner content
+          const innerContent = serializeInnerHTML(child) || "";
+          html += `<${childName}${attrString}>${innerContent}</${childName}>`;
         }
       }
     });
 
-    const trimmed = html.trim();
-    return trimmed || null;
+    // Don't trim here - preserve all whitespace in HTML
+    // Trimming happens at extraction time in extractTextContent if needed
+    return html || null;
   }
 
   // Fallback for simple text node
   const textContent = node._ || "";
-  const trimmed = textContent.trim();
-  return trimmed || null;
+  return textContent || null;
 }
 
 // Serialize MJML preserving element order (similar to Android serializeElement)
