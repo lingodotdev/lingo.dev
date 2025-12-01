@@ -1,0 +1,22 @@
+name: Translation Validation
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  translate:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Validate translations with Lingo.dev
+        run: npx lingo.dev@latest ci --api-key "$LINGODOTDEV_API_KEY"
+        env:
+          LINGODOTDEV_API_KEY: ${{ secrets.LINGODOTDEV_API_KEY }}
