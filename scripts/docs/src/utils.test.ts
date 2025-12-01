@@ -1,4 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import fs from "fs";
+import path from "path";
 import {
   getRepoRoot,
   getGitHubToken,
@@ -39,6 +41,30 @@ describe("utils", () => {
       expect(() => getGitHubToken()).toThrow(
         "GITHUB_TOKEN environment variable is required.",
       );
+    });
+
+    it("should return token when GH_TOKEN is set as a fallback", () => {
+      vi.stubEnv("GITHUB_TOKEN", "");
+      vi.stubEnv("GH_TOKEN", "fallback-token");
+
+      const result = getGitHubToken();
+      expect(result).toBe("fallback-token");
+    });
+
+    it("should read token from .env file if environment variables are not set", () => {
+      vi.stubEnv("GITHUB_TOKEN", "");
+      vi.stubEnv("GH_TOKEN", "");
+      const envPath = path.join(process.cwd(), ".env");
+      fs.writeFileSync(envPath, "GITHUB_TOKEN=env-file-token");
+      const result = getGitHubToken();
+      expect(result).toBe("env-file-token");
+      fs.unlinkSync(envPath);
+    });
+
+    it("should throw detailed error when no token found", () => {
+      vi.stubEnv("GITHUB_TOKEN", "");
+      vi.stubEnv("GH_TOKEN", "");
+      expect(() => getGitHubToken()).toThrow(/Missing GitHub authentication token/);
     });
   });
 
