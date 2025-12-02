@@ -2,7 +2,7 @@
   "version": "1.10",
   "locale": {
     "source": "en",
-    "targets": ["es", "ru"]
+    "targets": ["es"]
   },
   "buckets": {
     "xliff": {
