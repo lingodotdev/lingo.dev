@@ -1,5 +1,13 @@
 # adonis
 
+## 0.0.49
+
+### Patch Changes
+
+- Updated dependencies [[`738bf08`](https://github.com/lingodotdev/lingo.dev/commit/738bf08edfe226392ec4534e05864101bc66c39c)]:
+  - lingo.dev@0.117.9
+  - @lingo.dev/_compiler@0.8.4
+
 ## 0.0.48
 
 ### Patch Changes
