@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DICTIONARY type="multilanguage">
+  <ENTRY id="Control.Text.WelcomeDlg#Title">
+    <STRING lang="en" value="Welcome to the [ProductName] Setup Wizard"/>
+    <STRING lang="es" value="Bienvenido al asistente de instalación de [ProductName]"/>
+  </ENTRY>
+  <ENTRY id="Control.Text.WelcomeDlg#Description">
+    <STRING lang="en" value="The Setup Wizard will install [ProductName] on your computer. Click Next to continue or Cancel to exit the Setup Wizard."/>
+    <STRING lang="es" value="El asistente de instalación instalará [ProductName] en su ordenador. Haga clic en Siguiente para continuar o en Cancelar para salir del asistente de instalación."/>
+  </ENTRY>
+  <ENTRY id="Control.Text.LicenseAgreementDlg#Title">
+    <STRING lang="en" value="End-User License Agreement"/>
+    <STRING lang="es" value="Acuerdo de licencia para el usuario final"/>
+  </ENTRY>
+  <ENTRY id="Control.Text.LicenseAgreementDlg#Description">
+    <STRING lang="en" value="Please read the following license agreement carefully."/>
+    <STRING lang="es" value="Por favor, lea atentamente el siguiente acuerdo de licencia."/>
+  </ENTRY>
+  <ENTRY id="Control.Text.LicenseAgreementDlg#AcceptCheckbox">
+    <STRING lang="en" value="I accept the terms in the License Agreement"/>
+    <STRING lang="es" value="Acepto los términos del acuerdo de licencia"/>
+  </ENTRY>
+  <ENTRY id="Control.Text.FolderDlg#Title">
+    <STRING lang="en" value="Destination Folder"/>
+    <STRING lang="es" value="Carpeta de destino"/>
+  </ENTRY>
+  <ENTRY id="Control.Text.FolderDlg#Description">
+    <STRING lang="en" value="Click Next to install to the default folder or click Change to choose another."/>
+    <STRING lang="es" value="Haga clic en Siguiente para instalar en la carpeta predeterminada o haga clic en Cambiar para elegir otra."/>
+  </ENTRY>
+  <ENTRY id="Control.Text.FolderDlg#ChangeButton">
+    <STRING lang="en" value="Change..."/>
+    <STRING lang="es" value="Cambiar..."/>
+  </ENTRY>
+  <ENTRY id="Control.Text.ProgressDlg#Title">
+    <STRING lang="en" value="Installing [ProductName]"/>
+    <STRING lang="es" value="Instalando [ProductName]"/>
+  </ENTRY>
+  <ENTRY id="Control.Text.ProgressDlg#Description">
+    <STRING lang="en" value="Please wait while the Setup Wizard installs [ProductName]. This may take several minutes."/>
+    <STRING lang="es" value="Por favor, espere mientras el asistente de instalación instala [ProductName]. Esto puede tardar varios minutos."/>
+  </ENTRY>
+  <ENTRY id="Control.Text.ProgressDlg#StatusLabel">
+    <STRING lang="en" value="Status:"/>
+    <STRING lang="es" value="Estado:"/>
+  </ENTRY>
+  <ENTRY id="Control.Text.CompleteDlg#Title">
+    <STRING lang="en" value="Completing the [ProductName] Setup Wizard"/>
+    <STRING lang="es" value="Completando el asistente de instalación de [ProductName]"/>
+  </ENTRY>
+  <ENTRY id="Control.Text.CompleteDlg#Description">
+    <STRING lang="en" value="Click the Finish button to exit the Setup Wizard."/>
+    <STRING lang="es" value="Haga clic en el botón Finalizar para salir del asistente de instalación."/>
+  </ENTRY>
+  <ENTRY id="Control.Text.CompleteDlg#LaunchCheckbox">
+    <STRING lang="en" value="Launch [ProductName]"/>
+    <STRING lang="es" value="Iniciar [ProductName]"/>
+  </ENTRY>
+  <ENTRY id="Control.Text.MaintenanceDlg#Title">
+    <STRING lang="en" value="Modify, Repair or Remove installation"/>
+    <STRING lang="es" value="Modificar, reparar o eliminar la instalación"/>
+  </ENTRY>
+  <ENTRY id="Control.Text.MaintenanceDlg#ModifyButton">
+    <STRING lang="en" value="Modify"/>
+    <STRING lang="es" value="Modificar"/>
+  </ENTRY>
+  <ENTRY id="Control.Text.MaintenanceDlg#RepairButton">
+    <STRING lang="en" value="Repair"/>
+    <STRING lang="es" value="Reparar"/>
+  </ENTRY>
+  <ENTRY id="Control.Text.MaintenanceDlg#RemoveButton">
+    <STRING lang="en" value="Remove"/>
+    <STRING lang="es" value="Eliminar"/>
+  </ENTRY>
+  <ENTRY id="Property.ProductName">
+    <STRING lang="en" value="My Application"/>
+    <STRING lang="es" value="My Application"/>
+  </ENTRY>
+  <ENTRY id="Property.ProductVersion">
+    <STRING lang="en" value="1.0.0"/>
+    <STRING lang="es" value="1.0.0"/>
+  </ENTRY>
+  <ENTRY id="Property.Manufacturer">
+    <STRING lang="en" value="My Company"/>
+    <STRING lang="es" value="My Company"/>
+  </ENTRY>
+  <ENTRY id="Property.ARPCOMMENTS">
+    <STRING lang="en" value="Application for managing projects and tasks"/>
+    <STRING lang="es" value="Aplicación para gestionar proyectos y tareas"/>
+  </ENTRY>
+  <ENTRY id="Property.ARPCONTACT">
+    <STRING lang="en" value="support@mycompany.com"/>
+    <STRING lang="es" value="support@mycompany.com"/>
+  </ENTRY>
+  <ENTRY id="Control.Text.ErrorDlg#Title">
+    <STRING lang="en" value="[ProductName] Setup Error"/>
+    <STRING lang="es" value="Error de instalación de [ProductName]"/>
+  </ENTRY>
+  <ENTRY id="Control.Text.ErrorDlg#Description">
+    <STRING lang="en" value="The Setup Wizard ended prematurely because of an error. Your system has not been modified."/>
+    <STRING lang="es" value="El asistente de instalación finalizó prematuramente debido a un error. Su sistema no ha sido modificado."/>
+  </ENTRY>
+  <ENTRY id="Control.Text.CancelDlg#Title">
+    <STRING lang="en" value="Cancel Setup"/>
+    <STRING lang="es" value="Cancelar configuración"/>
+  </ENTRY>
+  <ENTRY id="Control.Text.CancelDlg#Description">
+    <STRING lang="en" value="Are you sure you want to cancel the installation?"/>
+    <STRING lang="es" value="¿Está seguro de que desea cancelar la instalación?"/>
+  </ENTRY>
+  <ENTRY id="Control.Button.Next">
+    <STRING lang="en" value="Next!"/>
+    <STRING lang="es" value="Siguiente!"/>
+  </ENTRY>
+  <ENTRY id="Control.Button.Back">
+    <STRING lang="en" value="Back"/>
+    <STRING lang="es" value="Atrás"/>
+  </ENTRY>
+  <ENTRY id="Control.Button.Cancel">
+    <STRING lang="en" value="Cancel"/>
+    <STRING lang="es" value="Cancelar"/>
+  </ENTRY>
+  <ENTRY id="Control.Button.Finish">
+    <STRING lang="en" value="Finish"/>
+    <STRING lang="es" value="Finalizar"/>
+  </ENTRY>
+  <ENTRY id="Control.Button.Yes">
+    <STRING lang="en" value="Yes"/>
+    <STRING lang="es" value="Sí"/>
+  </ENTRY>
+  <ENTRY id="Control.Button.No">
+    <STRING lang="en" value="No"/>
+    <STRING lang="es" value="No"/>
+  </ENTRY>
+</DICTIONARY>

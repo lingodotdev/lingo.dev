@@ -10,6 +10,7 @@ import createYamlLoader from "./yaml";
 import createRootKeyLoader from "./root-key";
 import createFlutterLoader from "./flutter";
 import { ILoader } from "./_types";
+import createAilLoader from "./ail";
 import createAndroidLoader from "./android";
 import createCsvLoader from "./csv";
 import createHtmlLoader from "./html";
@@ -68,6 +69,18 @@ export default function createBucketLoader(
   switch (bucketType) {
     default:
       throw new Error(`Unsupported bucket type: ${bucketType}`);
+    case "ail":
+      return composeLoaders(
+        createTextFileLoader(bucketPathPattern),
+        createLockedPatternsLoader(lockedPatterns),
+        createAilLoader(),
+        createEnsureKeyOrderLoader(),
+        createFlatLoader(),
+        createLockedKeysLoader(lockedKeys || []),
+        createIgnoredKeysLoader(ignoredKeys || []),
+        createSyncLoader(),
+        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+      );
     case "android":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
