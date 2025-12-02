@@ -1,6 +1,7 @@
 import Z from "zod";
 
 export const bucketTypes = [
+  "ail",
   "android",
   "csv",
   "ejs",

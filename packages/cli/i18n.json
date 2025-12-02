@@ -5,6 +5,9 @@
     "targets": ["es"]
   },
   "buckets": {
+    "ail": {
+      "include": ["demo/ail/*.ail"]
+    },
     "xliff": {
       "include": ["demo/xliff/[locale]/*.xliff"]
     },
