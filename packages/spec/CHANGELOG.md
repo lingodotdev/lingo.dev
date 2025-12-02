@@ -1,5 +1,11 @@
 # @lingo.dev/\_spec
 
+## 0.44.3
+
+### Patch Changes
+
+- [#1655](https://github.com/lingodotdev/lingo.dev/pull/1655) [`738bf08`](https://github.com/lingodotdev/lingo.dev/commit/738bf08edfe226392ec4534e05864101bc66c39c) Thanks [@vrcprl](https://github.com/vrcprl)! - add AIL bucket
+
 ## 0.44.2
 
 ### Patch Changes
