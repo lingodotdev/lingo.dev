@@ -44,6 +44,7 @@ import createMdxSectionsSplit2Loader from "./mdx2/sections-split-2";
 import createLockedPatternsLoader from "./locked-patterns";
 import createIgnoredKeysLoader from "./ignored-keys";
 import createEjsLoader from "./ejs";
+import createTwigLoader from "./twig";
 import createEnsureKeyOrderLoader from "./ensure-key-order";
 import createTxtLoader from "./txt";
 import createJsonKeysLoader from "./json-dictionary";
@@ -411,6 +412,16 @@ export default function createBucketLoader(
         createSyncLoader(),
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
+        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+      );
+    case "twig":
+      return composeLoaders(
+        createTextFileLoader(bucketPathPattern),
+        createLockedPatternsLoader(lockedPatterns),
+        createTwigLoader(),
+        createLockedKeysLoader(lockedKeys || []),
+        createIgnoredKeysLoader(ignoredKeys || []),
+        createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
     case "txt":
