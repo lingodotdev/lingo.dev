@@ -1,5 +1,11 @@
 # @lingo.dev/\_spec
 
+## 0.44.2
+
+### Patch Changes
+
+- [#1653](https://github.com/lingodotdev/lingo.dev/pull/1653) [`f6352b6`](https://github.com/lingodotdev/lingo.dev/commit/f6352b6222e425d5d184c1591a90b1d13a7effbc) Thanks [@vrcprl](https://github.com/vrcprl)! - add Twig bucket
+
 ## 0.44.1
 
 ### Patch Changes
