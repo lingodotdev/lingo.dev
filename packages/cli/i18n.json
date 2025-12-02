@@ -71,6 +71,9 @@
       "lockedKeys": ["forms/locked_key_1"],
       "ignoredKeys": ["forms/ignored_key_1"]
     },
+    "twig": {
+      "include": ["demo/twig/[locale]/*.twig"]
+    },
     "vtt": {
       "include": ["demo/vtt/[locale]/*.vtt"]
     },
