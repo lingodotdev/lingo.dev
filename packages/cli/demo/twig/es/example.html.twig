@@ -1,0 +1,66 @@
+{% set user = app.user %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta name="description" content="Bienvenido a nuestra aplicación">
+    <title>Bienvenido</title>
+</head>
+<body>
+    <header>
+        <nav><a href="/" title="Ir a la página de inicio">Inicio</a>
+            <a href="/about" title="Conoce más sobre nosotros">Acerca de</a>
+            <a href="/contact" title="Ponte en contacto">Contacto</a></nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Bienvenido a nuestra plataforma</h1>
+            <p>Hola <strong>{{ user.name }}</strong>, nos alegra tenerte aquí!</p>
+            <p>Comienza a explorar nuestras funciones y descubre lo que nos hace <em>únicos</em>.</p>
+        </section>
+
+        {% if user.isPremium %}
+        <section class="premium-benefits">
+            <h2>Beneficios premium</h2>
+            <ul>
+                <li>Acceso ilimitado a todas las funciones</li>
+                <li>Soporte prioritario al cliente</li>
+                <li>Análisis y reportes avanzados</li>
+            </ul>
+        </section>
+        {% endif %}
+
+        <section class="getting-started">
+            <h2>Primeros pasos</h2>
+            <p>Sigue estos sencillos pasos para comenzar tu experiencia:</p>
+            <ol>
+                <li>Completa tu perfil</li>
+                <li>Explora el panel de control</li>
+                <li>Invita a los miembros de tu equipo</li>
+            </ol>
+
+            <form action="/profile/update" method="post"><label for="bio">Cuéntanos sobre ti:</label>
+                <textarea id="bio" name="bio" placeholder="Ingresa tu biografía aquí" aria-label="Biografía del usuario"></textarea>
+
+                <label for="email">Dirección de correo electrónico:</label>
+                <input type="email" id="email" name="email" placeholder="tu@email.com" aria-label="Dirección de correo electrónico">
+
+                <button type="submit" title="Guardar los cambios de tu perfil">Guardar perfil</button></form>
+        </section>
+
+        {# This section is for internal notes and won't be displayed #}
+        {% if app.debug %}
+        <section class="debug-info">
+            <h3>Información de depuración</h3>
+            <p>ID de usuario: {{ user.id }}</p>
+            <p>Último inicio de sesión: {{ user.lastLogin|date('Y-m-d H:i:s') }}</p>
+        </section>
+        {% endif %}
+    </main>
+
+    <footer>
+        <p>¿Necesitas ayuda? <a href="/support" title="Visita nuestro centro de soporte">Contacta con soporte</a></p>
+        <p>© {{ "now"|date('Y') }} Nuestra empresa. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>

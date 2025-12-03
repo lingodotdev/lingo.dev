@@ -1,6 +1,7 @@
 import Z from "zod";
 
 export const bucketTypes = [
+  "ail",
   "android",
   "csv",
   "ejs",
@@ -12,6 +13,8 @@ export const bucketTypes = [
   "markdown",
   "markdoc",
   "mdx",
+  "mjml",
+  "twig",
   "xcode-strings",
   "xcode-stringsdict",
   "xcode-xcstrings",
