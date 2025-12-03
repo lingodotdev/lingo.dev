@@ -1,0 +1,33 @@
+name: ✨ Feature Request
+description: Suggest a feature with clear use case
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      placeholder: What can't you do today?
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Solution
+      placeholder: How should it work?
+    validations:
+      required: true
+
+  - type: textarea
+    id: visuals
+    attributes:
+      label: Visuals
+      description: "**REQUIRED** - Show mockup/example"
+      placeholder: Drag screenshot/diagram here
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Workarounds
+      placeholder: What have you tried?
