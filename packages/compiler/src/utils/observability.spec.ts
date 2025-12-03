@@ -7,7 +7,9 @@ vi.mock("node-machine-id", () => ({ machineId: async () => "device-123" }));
 // Mock PostHog client used by dynamic import inside trackEvent
 const capture = vi.fn(async () => undefined);
 const shutdown = vi.fn(async () => undefined);
-const PostHogMock = vi.fn((_key: string, _cfg: any) => ({ capture, shutdown }));
+const PostHogMock = vi.fn(function(_key: string, _cfg: any) {
+  return { capture, shutdown };
+});
 vi.mock("posthog-node", () => ({ PostHog: PostHogMock }));
 
 describe("trackEvent", () => {

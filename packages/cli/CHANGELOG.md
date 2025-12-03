@@ -1,5 +1,90 @@
 # lingo.dev
 
+## 0.117.9
+
+### Patch Changes
+
+- [#1655](https://github.com/lingodotdev/lingo.dev/pull/1655) [`738bf08`](https://github.com/lingodotdev/lingo.dev/commit/738bf08edfe226392ec4534e05864101bc66c39c) Thanks [@vrcprl](https://github.com/vrcprl)! - add AIL bucket
+
+- Updated dependencies [[`738bf08`](https://github.com/lingodotdev/lingo.dev/commit/738bf08edfe226392ec4534e05864101bc66c39c)]:
+  - @lingo.dev/_spec@0.44.3
+  - @lingo.dev/_compiler@0.8.4
+  - @lingo.dev/_sdk@0.13.3
+
+## 0.117.8
+
+### Patch Changes
+
+- [#1653](https://github.com/lingodotdev/lingo.dev/pull/1653) [`f6352b6`](https://github.com/lingodotdev/lingo.dev/commit/f6352b6222e425d5d184c1591a90b1d13a7effbc) Thanks [@vrcprl](https://github.com/vrcprl)! - add Twig bucket
+
+- Updated dependencies [[`f6352b6`](https://github.com/lingodotdev/lingo.dev/commit/f6352b6222e425d5d184c1591a90b1d13a7effbc)]:
+  - @lingo.dev/_spec@0.44.2
+  - @lingo.dev/_compiler@0.8.3
+  - @lingo.dev/_sdk@0.13.2
+
+## 0.117.7
+
+### Patch Changes
+
+- [#1628](https://github.com/lingodotdev/lingo.dev/pull/1628) [`ad646a4`](https://github.com/lingodotdev/lingo.dev/commit/ad646a4f44dc2f0771eb3aa2783872b4d0e55f57) Thanks [@vrcprl](https://github.com/vrcprl)! - Add MJML bucket support
+
+- Updated dependencies [[`ad646a4`](https://github.com/lingodotdev/lingo.dev/commit/ad646a4f44dc2f0771eb3aa2783872b4d0e55f57)]:
+  - @lingo.dev/_spec@0.44.1
+  - @lingo.dev/_compiler@0.8.2
+  - @lingo.dev/_sdk@0.13.1
+
+## 0.117.6
+
+### Patch Changes
+
+- [#1647](https://github.com/lingodotdev/lingo.dev/pull/1647) [`a9e1af5`](https://github.com/lingodotdev/lingo.dev/commit/a9e1af5a57b9711ac1ef98b40b5f7abff4b0c31a) Thanks [@vrcprl](https://github.com/vrcprl)! - prevent HTML tag duplication in Android bucket
+
+## 0.117.5
+
+### Patch Changes
+
+- [#1639](https://github.com/lingodotdev/lingo.dev/pull/1639) [`a881f81`](https://github.com/lingodotdev/lingo.dev/commit/a881f8115059168dabb4cbe07a1d28ca33d36ece) Thanks [@vrcprl](https://github.com/vrcprl)! - rewrite HTML loader with block-based translation
+
+## 0.117.4
+
+### Patch Changes
+
+- [#1644](https://github.com/lingodotdev/lingo.dev/pull/1644) [`2881712`](https://github.com/lingodotdev/lingo.dev/commit/2881712a1964dfa36eedfe70a00ae438f400647b) Thanks [@vrcprl](https://github.com/vrcprl)! - preserve list formatting in YAML files
+
+## 0.117.3
+
+### Patch Changes
+
+- [#1642](https://github.com/lingodotdev/lingo.dev/pull/1642) [`9f429c6`](https://github.com/lingodotdev/lingo.dev/commit/9f429c6c8a64f8f829ac7bc1fc293697c5d93b9f) Thanks [@vrcprl](https://github.com/vrcprl)! - Preserve formatting in YAML files
+
+## 0.117.2
+
+### Patch Changes
+
+- [#1640](https://github.com/lingodotdev/lingo.dev/pull/1640) [`80bcbe4`](https://github.com/lingodotdev/lingo.dev/commit/80bcbe4a65e0728e5795bb5b4f2b6e3d7e3aa206) Thanks [@vrcprl](https://github.com/vrcprl)! - preserve formatting for yaml format
+
+## 0.117.1
+
+### Patch Changes
+
+- Updated dependencies [[`ec2f00a`](https://github.com/lingodotdev/lingo.dev/commit/ec2f00a0a1127ff4c5333ce4c6d8d691f89c4b17)]:
+  - @lingo.dev/_compiler@0.8.1
+
+## 0.117.0
+
+### Minor Changes
+
+- [#1634](https://github.com/lingodotdev/lingo.dev/pull/1634) [`48fab66`](https://github.com/lingodotdev/lingo.dev/commit/48fab66b6806455d9faa1dcb169d4c61194e2144) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - Pin all dependencies to exact versions to prevent supply chain attacks. Dependencies no longer use caret (^) or tilde (~) ranges, ensuring full control over version updates and requiring explicit review of all dependency changes.
+
+### Patch Changes
+
+- Updated dependencies [[`48fab66`](https://github.com/lingodotdev/lingo.dev/commit/48fab66b6806455d9faa1dcb169d4c61194e2144)]:
+  - @lingo.dev/_compiler@0.8.0
+  - @lingo.dev/_locales@0.3.0
+  - @lingo.dev/_react@0.7.0
+  - @lingo.dev/_sdk@0.13.0
+  - @lingo.dev/_spec@0.44.0
+
 ## 0.116.5
 
 ### Patch Changes
