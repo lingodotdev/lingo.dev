@@ -1,5 +1,17 @@
 # @lingo.dev/\_react
 
+## 0.7.0
+
+### Minor Changes
+
+- [#1634](https://github.com/lingodotdev/lingo.dev/pull/1634) [`48fab66`](https://github.com/lingodotdev/lingo.dev/commit/48fab66b6806455d9faa1dcb169d4c61194e2144) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - Pin all dependencies to exact versions to prevent supply chain attacks. Dependencies no longer use caret (^) or tilde (~) ranges, ensuring full control over version updates and requiring explicit review of all dependency changes.
+
+## 0.6.0
+
+### Minor Changes
+
+- [#1534](https://github.com/lingodotdev/lingo.dev/pull/1534) [`4d2359a`](https://github.com/lingodotdev/lingo.dev/commit/4d2359a3d7164f825bf5ddf62b5d13a4690cb4a2) Thanks [@verma-divyanshu-git](https://github.com/verma-divyanshu-git)! - add Suspense fallback to LingoProviderWrapper
+
 ## 0.5.0
 
 ### Minor Changes

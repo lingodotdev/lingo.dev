@@ -1,0 +1,70 @@
+{% set user = app.user %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="description" content="Welcome to our application">
+    <title>Welcome</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/" title="Go to homepage">Home</a>
+            <a href="/about" title="Learn more about us">About</a>
+            <a href="/contact" title="Get in touch">Contact</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Welcome to Our Platform</h1>
+            <p>Hello <strong>{{ user.name }}</strong>, we're glad to have you here!</p>
+            <p>Start exploring our features and discover what makes us <em>unique</em>.</p>
+        </section>
+
+        {% if user.isPremium %}
+        <section class="premium-benefits">
+            <h2>Premium Benefits</h2>
+            <ul>
+                <li>Unlimited access to all features</li>
+                <li>Priority customer support</li>
+                <li>Advanced analytics and reporting</li>
+            </ul>
+        </section>
+        {% endif %}
+
+        <section class="getting-started">
+            <h2>Getting Started</h2>
+            <p>Follow these simple steps to begin your journey:</p>
+            <ol>
+                <li>Complete your profile</li>
+                <li>Explore the dashboard</li>
+                <li>Invite your team members</li>
+            </ol>
+
+            <form action="/profile/update" method="post">
+                <label for="bio">Tell us about yourself:</label>
+                <textarea id="bio" name="bio" placeholder="Enter your bio here" aria-label="User biography"></textarea>
+
+                <label for="email">Email address:</label>
+                <input type="email" id="email" name="email" placeholder="your@email.com" aria-label="Email address">
+
+                <button type="submit" title="Save your profile changes">Save Profile</button>
+            </form>
+        </section>
+
+        {# This section is for internal notes and won't be displayed #}
+        {% if app.debug %}
+        <section class="debug-info">
+            <h3>Debug Information</h3>
+            <p>User ID: {{ user.id }}</p>
+            <p>Last login: {{ user.lastLogin|date('Y-m-d H:i:s') }}</p>
+        </section>
+        {% endif %}
+    </main>
+
+    <footer>
+        <p>Need help? <a href="/support" title="Visit our support center">Contact Support</a></p>
+        <p>&copy; {{ "now"|date('Y') }} Our Company. All rights reserved.</p>
+    </footer>
+</body>
+</html>
