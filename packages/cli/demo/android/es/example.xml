@@ -23,7 +23,7 @@
 
     <string name="html_snippet">&lt;b&gt;Negrita&lt;/b&gt;</string>
 
-    <string name="apostrophe_example">¡No olvides!</string>
+    <string name="apostrophe_example">¡No lo olvides!</string>
 
     <string name="cdata_example"><![CDATA[Los usuarios solo pueden ver tu comentario después de registrarse. <u>Más información.</u>]]></string>
 
@@ -49,6 +49,10 @@
         <item>@drawable/icon2</item>
     </array>
 
+    <string name="terms_of_use_raw">&lt;u&gt;Términos de uso&lt;/u&gt;</string>
+
     <item type="id" name="button_ok"></item>
+
+    <string name="view_your_options">&lt;u&gt;Ver tus opciones&lt;/u&gt;</string>
 
 </resources>
