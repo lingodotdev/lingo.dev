@@ -1,5 +1,44 @@
 # lingo.dev
 
+## 0.117.10
+
+### Patch Changes
+
+- [#1658](https://github.com/lingodotdev/lingo.dev/pull/1658) [`77cf56e`](https://github.com/lingodotdev/lingo.dev/commit/77cf56e57725c680d071c6f5bc310e77c8ead463) Thanks [@vrcprl](https://github.com/vrcprl)! - fix mjml format issue
+
+## 0.117.9
+
+### Patch Changes
+
+- [#1655](https://github.com/lingodotdev/lingo.dev/pull/1655) [`738bf08`](https://github.com/lingodotdev/lingo.dev/commit/738bf08edfe226392ec4534e05864101bc66c39c) Thanks [@vrcprl](https://github.com/vrcprl)! - add AIL bucket
+
+- Updated dependencies [[`738bf08`](https://github.com/lingodotdev/lingo.dev/commit/738bf08edfe226392ec4534e05864101bc66c39c)]:
+  - @lingo.dev/_spec@0.44.3
+  - @lingo.dev/_compiler@0.8.4
+  - @lingo.dev/_sdk@0.13.3
+
+## 0.117.8
+
+### Patch Changes
+
+- [#1653](https://github.com/lingodotdev/lingo.dev/pull/1653) [`f6352b6`](https://github.com/lingodotdev/lingo.dev/commit/f6352b6222e425d5d184c1591a90b1d13a7effbc) Thanks [@vrcprl](https://github.com/vrcprl)! - add Twig bucket
+
+- Updated dependencies [[`f6352b6`](https://github.com/lingodotdev/lingo.dev/commit/f6352b6222e425d5d184c1591a90b1d13a7effbc)]:
+  - @lingo.dev/_spec@0.44.2
+  - @lingo.dev/_compiler@0.8.3
+  - @lingo.dev/_sdk@0.13.2
+
+## 0.117.7
+
+### Patch Changes
+
+- [#1628](https://github.com/lingodotdev/lingo.dev/pull/1628) [`ad646a4`](https://github.com/lingodotdev/lingo.dev/commit/ad646a4f44dc2f0771eb3aa2783872b4d0e55f57) Thanks [@vrcprl](https://github.com/vrcprl)! - Add MJML bucket support
+
+- Updated dependencies [[`ad646a4`](https://github.com/lingodotdev/lingo.dev/commit/ad646a4f44dc2f0771eb3aa2783872b4d0e55f57)]:
+  - @lingo.dev/_spec@0.44.1
+  - @lingo.dev/_compiler@0.8.2
+  - @lingo.dev/_sdk@0.13.1
+
 ## 0.117.6
 
 ### Patch Changes
