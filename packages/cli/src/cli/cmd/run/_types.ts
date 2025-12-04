@@ -53,5 +53,6 @@ export const flagsSchema = z.object({
   watch: z.boolean().default(false),
   debounce: z.number().positive().default(5000), // 5 seconds default
   sound: z.boolean().optional(),
+  pseudo: z.boolean().optional(),
 });
 export type CmdRunFlags = z.infer<typeof flagsSchema>;
