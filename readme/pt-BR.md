@@ -82,6 +82,18 @@ Instale uma vez:
 npm install lingo.dev
 ```
 
+Ative na sua configuração de build:
+
+```js
+import lingoCompiler from "lingo.dev/compiler";
+
+const existingNextConfig = {};
+
+export default lingoCompiler.next({
+  sourceLocale: "en",
+  targetLocales: ["es", "fr"],
+})(existingNextConfig);
+```
 Habilite na sua configuração de build:
 
 ```js
@@ -157,6 +169,10 @@ Mantém seu repositório atualizado e seu produto multilíngue sem etapas manuai
 
 Tradução instantânea por requisição para conteúdo dinâmico.
 
+Perfeito para chat, comentários de usuários e outros fluxos em tempo real.
+
+[Leia a documentação →](https://lingo.dev/sdk)
+
 ```ts
 import { LingoDotDevEngine } from "lingo.dev/sdk";
 
@@ -203,6 +219,7 @@ Se você gosta do que estamos fazendo, dê-nos uma ⭐ e ajude-nos a alcançar 5
 
 ## 🌐 Readme em outros idiomas
 
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
 [English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Bhojpuri](/readme/bho.md)
 
 Não vê seu idioma? Adicione-o ao [`i18n.json`](./i18n.json) e abra um PR!
