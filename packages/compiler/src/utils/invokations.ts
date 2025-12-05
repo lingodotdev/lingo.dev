@@ -1,5 +1,5 @@
 import * as t from "@babel/types";
-import traverse, { NodePath } from "@babel/traverse";
+import { traverse, NodePath } from "../babel-interop";
 
 export function findInvokations(
   ast: t.File,
@@ -11,13 +11,13 @@ export function findInvokations(
   const result: t.CallExpression[] = [];
 
   traverse(ast, {
-    ImportDeclaration(path) {
+    ImportDeclaration(path: NodePath<t.ImportDeclaration>) {
       if (!params.moduleName.includes(path.node.source.value)) return;
 
       const importNames = new Map<string, boolean | string>();
       const specifiers = path.node.specifiers;
 
-      specifiers.forEach((specifier) => {
+      specifiers.forEach((specifier: t.ImportSpecifier | t.ImportDefaultSpecifier | t.ImportNamespaceSpecifier) => {
         if (
           t.isImportSpecifier(specifier) &&
           t.isIdentifier(specifier.imported) &&

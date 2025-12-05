@@ -303,6 +303,35 @@ describe("loaders/xcode-xcstrings", () => {
     });
   });
 
+  describe("stringSet support", () => {
+    it("should pull and push stringSet.values as array", async () => {
+      const input = {
+        sourceLanguage: "en",
+        strings: {
+          "app.shortcut": {
+            extractionState: "extracted_with_value",
+            localizations: {
+              en: { stringSet: { state: "new", values: ["Open", "Launch"] } },
+            },
+          },
+        },
+        version: "1.0",
+      };
+
+      const loader = createXcodeXcstringsLoader(defaultLocale);
+      loader.setDefaultLocale(defaultLocale);
+      await loader.pull(defaultLocale, input);
+      const pulled = await loader.pull("en", input);
+
+      expect(pulled["app.shortcut"]).toEqual(["Open", "Launch"]);
+
+      const pushed = await loader.push("es", { "app.shortcut": ["Abrir"] }, input);
+      expect(pushed!.strings["app.shortcut"].localizations.es).toEqual({
+        stringSet: { state: "translated", values: ["Abrir"] },
+      });
+    });
+  });
+
   describe("_removeLocale", () => {
     it("should remove the locale from the input", () => {
       const input = {

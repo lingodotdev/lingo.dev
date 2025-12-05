@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useMemo } from "react";
+import type { ReactNode } from "react";
 import { LingoContext } from "./context";
 import { getLocaleFromCookies } from "./utils";
 
@@ -15,7 +16,7 @@ export type LingoProviderProps<D> = {
   /**
    * The child components containing localizable content.
    */
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 /**
@@ -78,7 +79,6 @@ export type LingoProviderProps<D> = {
  * ```
  */
 export function LingoProvider<D>(props: LingoProviderProps<D>) {
-  // TODO: handle case when no dictionary is provided - throw suspense? return null / other fallback?
   if (!props.dictionary) {
     throw new Error("LingoProvider: dictionary is not provided.");
   }
@@ -106,7 +106,11 @@ export type LingoProviderWrapperProps<D> = {
   /**
    * The child components containing localizable content.
    */
-  children: React.ReactNode;
+  children: ReactNode;
+  /**
+   * Optional fallback element rendered while the dictionary is loading.
+   */
+  fallback?: ReactNode;
 };
 
 /**
@@ -116,12 +120,13 @@ export type LingoProviderWrapperProps<D> = {
  *
  * - Should be placed at the top of the component tree
  * - Should be used in purely client-side rendered applications (e.g., Vite-based apps)
+ * - Suspends rendering while the dictionary loads (no UI by default, opt-in with `fallback` prop)
  *
  * @template D - The type of the dictionary object containing localized content.
  *
- * @example Use in a Vite application
+ * @example Use in a Vite application with loading UI
  * ```tsx file="src/main.tsx"
- * import { LingoProviderWrapper, loadDictionary } from "lingo.dev/react/client";
+ * import { LingoProviderFallback, LingoProviderWrapper, loadDictionary } from "lingo.dev/react/client";
  * import { StrictMode } from 'react'
  * import { createRoot } from 'react-dom/client'
  * import './index.css'
@@ -129,7 +134,10 @@ export type LingoProviderWrapperProps<D> = {
  *
  * createRoot(document.getElementById('root')!).render(
  *   <StrictMode>
- *     <LingoProviderWrapper loadDictionary={(locale) => loadDictionary(locale)}>
+ *     <LingoProviderWrapper
+ *       loadDictionary={(locale) => loadDictionary(locale)}
+ *       fallback={<LingoProviderFallback />}
+ *     >
  *       <App />
  *     </LingoProviderWrapper>
  *   </StrictMode>,
@@ -137,30 +145,86 @@ export type LingoProviderWrapperProps<D> = {
  * ```
  */
 export function LingoProviderWrapper<D>(props: LingoProviderWrapperProps<D>) {
-  const [dictionary, setDictionary] = useState<D | null>(null);
-
-  // for client-side rendered apps, the dictionary is also loaded on the client
-  useEffect(() => {
-    (async () => {
-      try {
-        const locale = getLocaleFromCookies();
-        console.log(
-          `[Lingo.dev] Loading dictionary file for locale ${locale}...`,
-        );
-        const localeDictionary = await props.loadDictionary(locale);
-        setDictionary(localeDictionary);
-      } catch (error) {
-        console.log("[Lingo.dev] Failed to load dictionary:", error);
-      }
-    })();
-  }, []);
-
-  // TODO: handle case when the dictionary is loading (throw suspense?)
-  if (!dictionary) {
-    return null;
-  }
+  const locale = useMemo(() => getLocaleFromCookies(), []);
+  const resource = useMemo(
+    () =>
+      createDictionaryResource({
+        load: () => props.loadDictionary(locale),
+        locale,
+      }),
+    [props.loadDictionary, locale],
+  );
 
   return (
+    <Suspense fallback={props.fallback}>
+      <DictionaryBoundary resource={resource}>
+        {props.children}
+      </DictionaryBoundary>
+    </Suspense>
+  );
+}
+
+function DictionaryBoundary<D>(props: {
+  resource: DictionaryResource<D>;
+  children: ReactNode;
+}) {
+  const dictionary = props.resource.read();
+  return (
     <LingoProvider dictionary={dictionary}>{props.children}</LingoProvider>
+  );
+}
+
+type DictionaryResource<D> = {
+  read(): D;
+};
+
+function createDictionaryResource<D>(options: {
+  load: () => Promise<D>;
+  locale: string | null;
+}): DictionaryResource<D> {
+  let status: "pending" | "success" | "error" = "pending";
+  let value: D;
+  let error: unknown;
+
+  const { locale } = options;
+  console.log(`[Lingo.dev] Loading dictionary file for locale ${locale}...`);
+
+  const suspender = options
+    .load()
+    .then((result) => {
+      value = result;
+      status = "success";
+      return result;
+    })
+    .catch((err) => {
+      console.log("[Lingo.dev] Failed to load dictionary:", err);
+      error = err;
+      status = "error";
+      throw err;
+    });
+
+  return {
+    read(): D {
+      if (status === "pending") {
+        throw suspender;
+      }
+      if (status === "error") {
+        throw error;
+      }
+      return value;
+    },
+  };
+}
+
+export function LingoProviderFallback() {
+  return (
+    <div
+      role="status"
+      aria-live="polite"
+      aria-busy="true"
+      className="lingo-provider-fallback"
+    >
+      Loading translations...
+    </div>
   );
 }
