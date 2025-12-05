@@ -137,7 +137,7 @@ export default function createAndroidLoader(): ILoader<
         console.error("Error parsing Android resource file:", error);
         throw new CLIError({
           message: "Failed to parse Android resource file",
-          docUrl: "androidResouceError",
+          docUrl: "androidResourceError",
         });
       }
     },
@@ -174,7 +174,7 @@ export default function createAndroidLoader(): ILoader<
         console.error("Error generating Android resource file:", error);
         throw new CLIError({
           message: "Failed to generate Android resource file",
-          docUrl: "androidResouceError",
+          docUrl: "androidResourceError",
         });
       }
     },
@@ -372,7 +372,7 @@ function buildPullResult(document: AndroidDocument): Record<string, any> {
   const result: Record<string, any> = {};
 
   for (const resource of document.resourceNodes) {
-    if (!resource.translatable) {
+    if (!isTranslatable(resource)) {
       continue;
     }
 
@@ -418,6 +418,10 @@ function buildPullResult(document: AndroidDocument): Record<string, any> {
   return result;
 }
 
+function isTranslatable(resource: AndroidResourceNode): boolean {
+  return resource.translatable;
+}
+
 function buildTranslatedDocument(
   payload: Record<string, any>,
   existingDocument: AndroidDocument,
@@ -458,6 +462,9 @@ function buildTranslatedDocument(
 
   for (const resource of existingDocument.resourceNodes) {
     if (finalMap.has(resource.name)) {
+      continue;
+    }
+    if (!isTranslatable(resource)) {
       continue;
     }
     const cloned = cloneResourceNode(resource);
@@ -628,22 +635,18 @@ function setTextualNodeContent(
   value: string,
   useCdata: boolean,
 ): void {
-  const escapedValue = useCdata ? value : escapeAndroidString(value);
+  // CDATA needs apostrophe escaping but not XML entity escaping
+  const escapedValue = useCdata
+    ? escapeApostrophesOnly(value)
+    : escapeAndroidString(value);
   node._ = escapedValue;
 
-  node.$$ = node.$$ ?? [];
-  let textNode = node.$$.find(
-    (child: any) =>
-      child["#name"] === "__text__" || child["#name"] === "__cdata",
-  );
-
-  if (!textNode) {
-    textNode = {};
-    node.$$.push(textNode);
-  }
-
-  textNode["#name"] = useCdata ? "__cdata" : "__text__";
-  textNode._ = useCdata ? value : escapedValue;
+  // Replace entire children array to avoid duplicating inline HTML elements
+  // When inline HTML exists (e.g., <b>text</b>), xml2js creates element nodes
+  // in node.$$ that would otherwise be serialized alongside the escaped text
+  node.$$ = [
+    { "#name": useCdata ? "__cdata" : "__text__", _: escapedValue }
+  ];
 }
 
 function buildResourceNameMap(
@@ -758,7 +761,7 @@ function asString(value: any, name: string): string {
   }
   throw new CLIError({
     message: `Expected string value for resource "${name}"`,
-    docUrl: "androidResouceError",
+    docUrl: "androidResourceError",
   });
 }
 
@@ -768,7 +771,7 @@ function asStringArray(value: any, name: string): string[] {
   }
   throw new CLIError({
     message: `Expected array of strings for resource "${name}"`,
-    docUrl: "androidResouceError",
+    docUrl: "androidResourceError",
   });
 }
 
@@ -779,7 +782,7 @@ function asPluralMap(value: any, name: string): Record<string, string> {
       if (typeof pluralValue !== "string") {
         throw new CLIError({
           message: `Expected plural item "${quantity}" of "${name}" to be a string`,
-          docUrl: "androidResouceError",
+          docUrl: "androidResourceError",
         });
       }
       result[quantity] = pluralValue;
@@ -788,7 +791,7 @@ function asPluralMap(value: any, name: string): Record<string, string> {
   }
   throw new CLIError({
     message: `Expected object value for plurals resource "${name}"`,
-    docUrl: "androidResouceError",
+    docUrl: "androidResourceError",
   });
 }
 
@@ -803,7 +806,7 @@ function asBoolean(value: any, name: string): boolean {
   }
   throw new CLIError({
     message: `Expected boolean value for resource "${name}"`,
-    docUrl: "androidResouceError",
+    docUrl: "androidResourceError",
   });
 }
 
@@ -813,7 +816,7 @@ function asInteger(value: any, name: string): number {
   }
   throw new CLIError({
     message: `Expected number value for resource "${name}"`,
-    docUrl: "androidResouceError",
+    docUrl: "androidResourceError",
   });
 }
 
@@ -823,6 +826,11 @@ function escapeAndroidString(value: string): string {
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/(?<!\\)'/g, "\\'");
+}
+
+function escapeApostrophesOnly(value: string): string {
+  // Even inside CDATA, apostrophes must be escaped for Android AAPT
+  return value.replace(/(?<!\\)'/g, "\\'");
 }
 
 function segmentsToString(segments: ContentSegment[]): string {
@@ -962,13 +970,55 @@ function createResourceNodeFromValue(
 }
 
 function cloneDocumentStructure(document: AndroidDocument): AndroidDocument {
+  // Filter first - only keep translatable resources
+  const translatableResources = document.resourceNodes.filter(isTranslatable);
+
   const resourcesClone = deepClone(document.resources);
   const lookup = buildResourceLookup(resourcesClone);
   const resourceNodes: AndroidResourceNode[] = [];
 
-  for (const resource of document.resourceNodes) {
+  for (const resource of translatableResources) {
     const cloned = cloneResourceNodeFromLookup(resource, lookup);
     resourceNodes.push(cloned);
+  }
+
+  // Clean up XML structure - only keep translatable resource nodes
+  if (resourcesClone.$$ && Array.isArray(resourcesClone.$$)) {
+    const includedKeys = new Set(
+      resourceNodes.map((r) => resourceLookupKey(r.type, r.name)),
+    );
+
+    // Filter out non-translatable resources
+    let filtered = resourcesClone.$$.filter((child: any) => {
+      const elementName = child?.["#name"];
+      const name = child?.$?.name;
+      if (!isResourceElementName(elementName) || !name) {
+        return true; // Keep whitespace, comments, etc.
+      }
+      return includedKeys.has(resourceLookupKey(elementName, name));
+    });
+
+    // Remove consecutive whitespace nodes (fixes extra blank lines)
+    const cleaned: any[] = [];
+    let lastWasWhitespace = false;
+
+    for (const child of filtered) {
+      const isWhitespace =
+        child?.["#name"] === "__text__" && (!child._ || child._.trim() === "");
+
+      if (isWhitespace) {
+        if (!lastWasWhitespace) {
+          cleaned.push(child);
+          lastWasWhitespace = true;
+        }
+        // Skip consecutive whitespace
+      } else {
+        cleaned.push(child);
+        lastWasWhitespace = false;
+      }
+    }
+
+    resourcesClone.$$ = cleaned;
   }
 
   return {
@@ -1161,7 +1211,7 @@ function inferTypeFromValue(value: any): AndroidResourceType {
   }
   throw new CLIError({
     message: "Unable to infer Android resource type from payload",
-    docUrl: "androidResouceError",
+    docUrl: "androidResourceError",
   });
 }
 

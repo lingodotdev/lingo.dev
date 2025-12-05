@@ -1,0 +1,9 @@
+{
+  "semverGroups": [
+    {
+      "dependencies": ["**"],
+      "dependencyTypes": ["prod", "dev"],
+      "range": ""
+    }
+  ]
+}
