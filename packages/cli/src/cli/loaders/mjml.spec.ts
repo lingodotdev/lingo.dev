@@ -697,4 +697,140 @@ describe("mjml loader", () => {
     expect(output).toMatch(/Comience con (<\/span>)?<strong>/);
     expect(output).not.toContain("Comience con<strong>");
   });
+
+  test("should handle empty input string in pull", async () => {
+    const loader = createMjmlLoader();
+    loader.setDefaultLocale("en");
+
+    const result = await loader.pull("en", "");
+
+    expect(result).toEqual({});
+  });
+
+  test("should handle whitespace-only input in pull", async () => {
+    const loader = createMjmlLoader();
+    loader.setDefaultLocale("en");
+
+    const result = await loader.pull("en", "   \n\t  ");
+
+    expect(result).toEqual({});
+  });
+
+  test("should handle empty input string in push", async () => {
+    const loader = createMjmlLoader();
+    loader.setDefaultLocale("en");
+
+    // Need to pull first to initialize state
+    await loader.pull("en", "");
+    const output = await loader.push("es", {}, "");
+
+    expect(output).toBe("");
+  });
+
+  test("should handle whitespace-only input in push", async () => {
+    const loader = createMjmlLoader();
+    loader.setDefaultLocale("en");
+
+    // Need to pull first to initialize state
+    await loader.pull("en", "   \n\t  ");
+    const output = await loader.push("es", {}, "   \n\t  ");
+
+    expect(output).toBe("   \n\t  ");
+  });
+
+  test("should not add XML declaration to output", async () => {
+    const loader = createMjmlLoader();
+    loader.setDefaultLocale("en");
+
+    const inputWithoutDeclaration = `<mjml>
+  <mj-body>
+    <mj-section>
+      <mj-column>
+        <mj-text>Hello World</mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>`;
+
+    await loader.pull("en", inputWithoutDeclaration);
+
+    const translations = {
+      "mjml/mj-body/0/mj-section/0/mj-column/0/mj-text/0": "Hola Mundo",
+    };
+
+    const output = await loader.push("es", translations, inputWithoutDeclaration);
+
+    // Should NOT start with XML declaration
+    expect(output).not.toMatch(/^<\?xml/);
+    // Should start with <mjml>
+    expect(output.trim()).toMatch(/^<mjml>/);
+    expect(output).toContain("Hola Mundo");
+  });
+
+  test("should handle input with XML declaration and not duplicate it", async () => {
+    const loader = createMjmlLoader();
+    loader.setDefaultLocale("en");
+
+    const inputWithDeclaration = `<?xml version="1.0" encoding="UTF-8"?>
+<mjml>
+  <mj-body>
+    <mj-section>
+      <mj-column>
+        <mj-text>Hello World</mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>`;
+
+    await loader.pull("en", inputWithDeclaration);
+
+    const translations = {
+      "mjml/mj-body/0/mj-section/0/mj-column/0/mj-text/0": "Hola Mundo",
+    };
+
+    const output = await loader.push("es", translations, inputWithDeclaration);
+
+    // Should not duplicate XML declaration
+    const declarationMatches = output.match(/<\?xml/g);
+    expect(declarationMatches).toBeNull(); // No XML declaration in output
+    expect(output).toContain("Hola Mundo");
+  });
+
+  test("should match structure of source file without XML declaration", async () => {
+    const loader = createMjmlLoader();
+    loader.setDefaultLocale("en");
+
+    // Source file format (en-US)
+    const sourceInput = `<mjml>
+  <mj-body>
+    <mj-section padding="26px 0px 86px 45px">
+      <mj-column>
+        <mj-image
+          src="cid:logo.png"
+          alt="GitProtect logo"
+          width="140px"
+          height="35px"
+          padding="0"
+          align="left"
+        />
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>`;
+
+    await loader.pull("en", sourceInput);
+
+    const translations = {
+      "mjml/mj-body/0/mj-section/0/mj-column/0/mj-image/0#alt": "Logo de GitProtect",
+    };
+
+    const output = await loader.push("es", translations, sourceInput);
+
+    // Generated file should match source structure
+    expect(output.trim()).toMatch(/^<mjml>/);
+    expect(output).not.toMatch(/^<\?xml/);
+    expect(output).toContain("Logo de GitProtect");
+    expect(output).toContain("<mjml>");
+    expect(output).toContain("</mjml>");
+  });
 });
