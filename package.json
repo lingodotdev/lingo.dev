@@ -9,7 +9,8 @@
     "test": "turbo test",
     "new": "changeset",
     "new:empty": "changeset --empty",
-    "prebuild": "syncpack lint-semver-ranges --filter '.*' --types prod,dev"
+    "format": "prettier . --write",
+    "format:check": "prettier . --check",
   },
   "devDependencies": {
     "@babel/generator": "7.28.5",
