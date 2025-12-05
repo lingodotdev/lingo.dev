@@ -1,0 +1,21 @@
+version: 1
+checksums:
+  c1acde0589961652d4caf8a39d080857:
+    mjml/mj-head/0/mj-title/0: c514a686b50f7158b2dd08ea65d3bc8a
+    mjml/mj-head/0/mj-preview/0: 4ce14f6062c814cbdcdf8b0a3cb094d3
+    mjml/mj-body/0/mj-section/0/mj-column/0/mj-image/0#alt: 82d5c0d5994508210ee02d684819f4b8
+    mjml/mj-body/0/mj-section/1/mj-column/0/mj-text/0: b320b02942617a70dcbd1beac61da11a
+    mjml/mj-body/0/mj-section/1/mj-column/0/mj-text/1: 028311348a5aeefea365fdf422a3fb21
+    mjml/mj-body/0/mj-section/1/mj-column/0/mj-text/2: 0dfdc9b80ee70fcc2b28d0e81e03fabc
+    mjml/mj-body/0/mj-section/2/mj-column/0/mj-button/0#title: 5c96f738bd6153ee07b72094cdfd2b98
+    mjml/mj-body/0/mj-section/2/mj-column/0/mj-button/0#aria-label: 42dcab68d931f9145d9b6d76740a5c66
+    mjml/mj-body/0/mj-section/2/mj-column/0/mj-button/0: dc8001d5c58294d22fe0b0e6118dbfb7
+    mjml/mj-body/0/mj-section/3/mj-column/0/mj-text/0: a18f14ab69467cbdbe467df6255cfda7
+    mjml/mj-body/0/mj-section/3/mj-column/0/mj-text/1: e83236e98aad1937bc99a47cff159caa
+    mjml/mj-body/0/mj-section/4/mj-column/0/mj-social/0/mj-social-element/0#title: 180bd8aa700f6cedf65e0a2079503cea
+    mjml/mj-body/0/mj-section/4/mj-column/0/mj-social/0/mj-social-element/0#alt: ac8afe226a7424849c247e6a9d566f64
+    mjml/mj-body/0/mj-section/4/mj-column/0/mj-social/0/mj-social-element/1#title: ea4c2a7a9a60cbb0f8f9632222a46abe
+    mjml/mj-body/0/mj-section/4/mj-column/0/mj-social/0/mj-social-element/1#alt: ba3d4aed69a50759b53a0b7c319a3ad9
+    mjml/mj-body/0/mj-section/4/mj-column/0/mj-social/0/mj-social-element/2#title: 754efa5f98f51c510ff268e217877d8b
+    mjml/mj-body/0/mj-section/4/mj-column/0/mj-social/0/mj-social-element/2#alt: c9555810826c30d571ffae869a236494
+    mjml/mj-body/0/mj-section/4/mj-column/0/mj-text/0: 9ac6c625c7af33d70634846c8c9d11b0

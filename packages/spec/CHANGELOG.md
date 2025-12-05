@@ -1,5 +1,41 @@
 # @lingo.dev/\_spec
 
+## 0.44.3
+
+### Patch Changes
+
+- [#1655](https://github.com/lingodotdev/lingo.dev/pull/1655) [`738bf08`](https://github.com/lingodotdev/lingo.dev/commit/738bf08edfe226392ec4534e05864101bc66c39c) Thanks [@vrcprl](https://github.com/vrcprl)! - add AIL bucket
+
+## 0.44.2
+
+### Patch Changes
+
+- [#1653](https://github.com/lingodotdev/lingo.dev/pull/1653) [`f6352b6`](https://github.com/lingodotdev/lingo.dev/commit/f6352b6222e425d5d184c1591a90b1d13a7effbc) Thanks [@vrcprl](https://github.com/vrcprl)! - add Twig bucket
+
+## 0.44.1
+
+### Patch Changes
+
+- [#1628](https://github.com/lingodotdev/lingo.dev/pull/1628) [`ad646a4`](https://github.com/lingodotdev/lingo.dev/commit/ad646a4f44dc2f0771eb3aa2783872b4d0e55f57) Thanks [@vrcprl](https://github.com/vrcprl)! - Add MJML bucket support
+
+## 0.44.0
+
+### Minor Changes
+
+- [#1634](https://github.com/lingodotdev/lingo.dev/pull/1634) [`48fab66`](https://github.com/lingodotdev/lingo.dev/commit/48fab66b6806455d9faa1dcb169d4c61194e2144) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - Pin all dependencies to exact versions to prevent supply chain attacks. Dependencies no longer use caret (^) or tilde (~) ranges, ensuring full control over version updates and requiring explicit review of all dependency changes.
+
+### Patch Changes
+
+- Updated dependencies [[`48fab66`](https://github.com/lingodotdev/lingo.dev/commit/48fab66b6806455d9faa1dcb169d4c61194e2144)]:
+  - @lingo.dev/_locales@0.3.0
+
+## 0.43.1
+
+### Patch Changes
+
+- Updated dependencies [[`0f6ffbf`](https://github.com/lingodotdev/lingo.dev/commit/0f6ffbf7dafafbead768eb9e52787cb6013aa1c3)]:
+  - @lingo.dev/_locales@0.2.0
+
 ## 0.43.0
 
 ### Minor Changes
@@ -87,7 +123,6 @@
 ### Minor Changes
 
 - [#958](https://github.com/lingodotdev/lingo.dev/pull/958) [`84fd214`](https://github.com/lingodotdev/lingo.dev/commit/84fd214a21766e7683c5d645fcb8c4c0162eb0b6) Thanks [@chrissiwaffler](https://github.com/chrissiwaffler)! - feat: add Mistral AI as a supported LLM provider
-
   - Added Mistral AI provider support across the entire lingo.dev ecosystem
   - Users can now use Mistral models for localization by setting MISTRAL_API_KEY
   - Supports all Mistral models available through the @ai-sdk/mistral package
@@ -98,7 +133,6 @@
 ### Minor Changes
 
 - [#956](https://github.com/lingodotdev/lingo.dev/pull/956) [`ce8c75c`](https://github.com/lingodotdev/lingo.dev/commit/ce8c75c7fc1a2124d3e18444bc356c4dfce26434) Thanks [@VAIBHAVSING](https://github.com/VAIBHAVSING)! - feat: add EJS (Embedded JavaScript) templating engine support
-
   - Added EJS loader to support parsing and translating EJS template files
   - EJS loader extracts translatable text while preserving EJS tags and expressions
   - Updated spec package to include "ejs" in supported bucket types
@@ -164,7 +198,6 @@
 - [#700](https://github.com/lingodotdev/lingo.dev/pull/700) [`c5ccf81`](https://github.com/lingodotdev/lingo.dev/commit/c5ccf81e9c2bd27bae332306da2a41e41bbeb87d) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - Add support for locked patterns in MDX loader
 
   This change adds support for preserving specific patterns in MDX files during translation, including:
-
   - !params syntax for parameter documentation
   - !! parameter_name headings
   - !type declarations
