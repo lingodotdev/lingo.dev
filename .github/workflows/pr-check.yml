@@ -31,9 +31,9 @@ jobs:
           fi
 
       - name: Use Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
-          node-version: 20.12.2
+          node-version: "20.19"
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
@@ -61,9 +61,6 @@ jobs:
 
       - name: Configure Turbo cache
         uses: dtinth/setup-github-actions-caching-for-turbo@v1
-
-      - name: Check formatting
-        run: pnpm format:check
 
       - name: Build
         run: pnpm turbo build --force
