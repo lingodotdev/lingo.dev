@@ -1,6 +1,6 @@
 import { parse } from "@babel/parser";
-import traverse from "@babel/traverse";
-import generate from "@babel/generator";
+import { traverse, NodePath } from "../babel-interop";
+import { generate } from "../babel-interop";
 import { getJsxExpressions } from "./jsx-expressions";
 import { describe, expect, it } from "vitest";
 import * as t from "@babel/types";
@@ -18,7 +18,7 @@ describe("getJsxExpressions", () => {
     let result;
 
     traverse(ast, {
-      JSXElement(path) {
+      JSXElement(path: NodePath<t.JSXElement>) {
         result = getJsxExpressions(path);
         path.stop();
       },
@@ -32,7 +32,7 @@ describe("getJsxExpressions", () => {
     let result;
 
     traverse(ast, {
-      JSXElement(path) {
+      JSXElement(path: NodePath<t.JSXElement>) {
         result = getJsxExpressions(path);
         path.stop();
       },
@@ -46,7 +46,7 @@ describe("getJsxExpressions", () => {
     let result;
 
     traverse(ast, {
-      JSXElement(path) {
+      JSXElement(path: NodePath<t.JSXElement>) {
         result = getJsxExpressions(path);
         path.stop();
       },
@@ -60,7 +60,7 @@ describe("getJsxExpressions", () => {
     let result: t.ArrayExpression | undefined;
 
     traverse(ast, {
-      JSXElement(path) {
+      JSXElement(path: NodePath<t.JSXElement>) {
         result = getJsxExpressions(path);
         path.stop();
       },
@@ -74,7 +74,7 @@ describe("getJsxExpressions", () => {
     let result: t.ArrayExpression | undefined;
 
     traverse(ast, {
-      JSXElement(path) {
+      JSXElement(path: NodePath<t.JSXElement>) {
         result = getJsxExpressions(path);
         path.stop();
       },
@@ -90,7 +90,7 @@ describe("getJsxExpressions", () => {
     let result: t.ArrayExpression | undefined;
 
     traverse(ast, {
-      JSXElement(path) {
+      JSXElement(path: NodePath<t.JSXElement>) {
         result = getJsxExpressions(path);
         path.stop();
       },

@@ -1,7 +1,7 @@
 import { execSync } from "child_process";
 import path from "path";
 import {
-  gitConfig,
+  getGitConfig,
   IntegrationFlow,
   escapeShellArg,
   IIntegrationFlowOptions,
@@ -90,6 +90,7 @@ export class InBranchFlow extends IntegrationFlow {
   private configureGit() {
     const { processOwnCommits } = this.platformKit.config;
     const { baseBranchName } = this.platformKit.platformConfig;
+    const gitConfig = getGitConfig(this.platformKit);
 
     this.ora.info(`Current working directory:`);
     execSync(`pwd`, { stdio: "inherit" });

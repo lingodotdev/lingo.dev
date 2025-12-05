@@ -1,0 +1,13 @@
+{
+  "version": "1.10",
+  "locale": {
+    "source": "en",
+    "targets": ["es", "ru"]
+  },
+  "buckets": {
+    "twig": {
+      "include": ["./[locale]/*.twig"]
+    }
+  },
+  "$schema": "https://lingo.dev/schema/i18n.json"
+}
