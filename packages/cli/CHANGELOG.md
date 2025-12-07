@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.117.10
+
+### Patch Changes
+
+- [#1658](https://github.com/lingodotdev/lingo.dev/pull/1658) [`77cf56e`](https://github.com/lingodotdev/lingo.dev/commit/77cf56e57725c680d071c6f5bc310e77c8ead463) Thanks [@vrcprl](https://github.com/vrcprl)! - fix mjml format issue
+
 ## 0.117.9
 
 ### Patch Changes

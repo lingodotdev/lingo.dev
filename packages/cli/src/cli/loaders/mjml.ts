@@ -34,6 +34,11 @@ export default function createMjmlLoader(): ILoader<
     async pull(locale, input) {
       const result: Record<string, any> = {};
 
+      // Handle empty input
+      if (!input || input.trim() === "") {
+        return result;
+      }
+
       try {
         const parsed = await parseStringPromise(input, {
           explicitArray: true,
@@ -88,8 +93,13 @@ export default function createMjmlLoader(): ILoader<
     },
 
     async push(locale, data, originalInput) {
+      // Handle empty input
+      if (!originalInput || originalInput.trim() === "") {
+        return originalInput || "";
+      }
+
       try {
-        const parsed = await parseStringPromise(originalInput || "", {
+        const parsed = await parseStringPromise(originalInput, {
           explicitArray: true,
           explicitChildren: true,
           preserveChildrenOrder: true,
@@ -275,13 +285,14 @@ function convertDomToXmlNode(domNode: any): any {
 }
 
 function serializeMjml(parsed: any): string {
-  const xmlDec = '<?xml version="1.0" encoding="UTF-8"?>\n';
-
   const rootKey = Object.keys(parsed).find(key => !key.startsWith("_") && !key.startsWith("$"));
   const rootNode = rootKey ? parsed[rootKey] : parsed;
 
   const body = serializeElement(rootNode);
-  return xmlDec + body;
+
+  // Don't add XML declaration - xml2js already preserves it in the parsed object
+  // or it will be added by the consumer if needed
+  return body;
 }
 
 function serializeElement(node: any, indent: string = ""): string {
