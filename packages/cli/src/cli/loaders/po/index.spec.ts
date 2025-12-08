@@ -367,6 +367,45 @@ msgstr "[upd] Apple"
     const result = await loader.push("en", updatedData);
     expect(result).toEqual(expectedOutput);
   });
+
+  it("should preserve existing Language header when pushing translations with metadata in first section", async () => {
+    const loader = createLoader();
+    const sourceInput = `msgid ""
+msgstr ""
+"Language: en\\n"
+"Content-Type: text/plain; charset=utf-8\\n"
+"Content-Transfer-Encoding: 8bit\\n"
+"X-Generator: next-intl\\n"
+#: hello.py:1
+msgid "Hello world"
+msgstr "Hello world"`;
+
+    const targetInput = `msgid ""
+msgstr ""
+"Language: es\\n"
+"Content-Type: text/plain; charset=utf-8\\n"
+"Content-Transfer-Encoding: 8bit\\n"
+"X-Generator: next-intl\\n"
+#: hello.py:1
+msgid "Hello world"
+msgstr ""`;
+
+    await loader.pull("en", sourceInput);
+    await loader.pull("es", targetInput);
+
+    const updatedData = {
+      "Hello world": {
+        singular: "Hola mundo",
+        plural: null,
+      },
+    };
+
+    const result = await loader.push("es", updatedData);
+
+    expect(result).toContain('"Language: es\\n"');
+    expect(result).not.toContain('"Language: en\\n"');
+    expect(result).toContain('msgstr "Hola mundo"');
+  });
 });
 
 function createLoader(params: PoLoaderParams = { multiline: false }) {

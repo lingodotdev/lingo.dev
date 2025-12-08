@@ -81,7 +81,25 @@ export function createPoDataLoader(
             return section;
           }
           if (data[msgid]) {
+            // Find the corresponding section in pullInput to preserve headers
+            const currentSection = currentSections.find((cs) => {
+              const csPo = gettextParser.po.parse(cs);
+              const csContextKey = _.keys(csPo.translations)[0];
+              const csEntries = csPo.translations[csContextKey];
+              const csMsgid = Object.keys(csEntries).find(
+                (key) => csEntries[key].msgid,
+              );
+              return csMsgid === msgid;
+            });
+
+            let headersToUse = sectionPo.headers;
+            if (currentSection) {
+              const currentSectionPo = gettextParser.po.parse(currentSection);
+              headersToUse = currentSectionPo.headers || sectionPo.headers;
+            }
+
             const updatedPo = _.merge({}, sectionPo, {
+              headers: headersToUse,
               translations: {
                 [contextKey]: {
                   [msgid]: {
