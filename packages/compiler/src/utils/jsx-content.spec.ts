@@ -1,5 +1,5 @@
 import * as t from "@babel/types";
-import traverse, { NodePath } from "@babel/traverse";
+import { traverse, NodePath } from "../babel-interop";
 import { parse } from "@babel/parser";
 import { extractJsxContent } from "./jsx-content";
 import { describe, it, expect } from "vitest";

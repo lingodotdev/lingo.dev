@@ -36,7 +36,6 @@ import createProcessor from "../processor";
 import { withExponentialBackoff } from "../utils/exp-backoff";
 import trackEvent from "../utils/observability";
 import { createDeltaProcessor } from "../utils/delta";
-import { isICUPluralObject } from "../loaders/xcode-xcstrings-icu";
 
 export default new Command()
   .command("i18n")
@@ -492,18 +491,11 @@ export default new Command()
                   .omitBy((value, key) => {
                     const targetValue = targetData[key];
 
-                    // For ICU plural objects, use deep equality (excluding Symbol)
-                    if (
-                      isICUPluralObject(value) &&
-                      isICUPluralObject(targetValue)
-                    ) {
-                      return _.isEqual(
-                        { icu: value.icu, _meta: value._meta },
-                        { icu: targetValue.icu, _meta: targetValue._meta },
-                      );
+                    // For objects (like plural variations), use deep equality
+                    // For primitives (strings, numbers), use strict equality
+                    if (typeof value === "object" && value !== null) {
+                      return _.isEqual(value, targetValue);
                     }
-
-                    // Default strict equality for other values
                     return value === targetValue;
                   })
                   .size()

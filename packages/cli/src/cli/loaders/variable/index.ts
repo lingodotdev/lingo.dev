@@ -1,7 +1,6 @@
 import _ from "lodash";
 import { ILoader } from "../_types";
 import { composeLoaders, createLoader } from "../_utils";
-import { isICUPluralObject } from "../xcode-xcstrings-icu";
 
 export type VariableLoaderParams = {
   type: "ieee" | "python";
@@ -15,7 +14,7 @@ export default function createVariableLoader(
 
 type VariableExtractionPayload = {
   variables: string[];
-  value: string | any; // Can be string or ICU object
+  value: string;
 };
 
 function variableExtractLoader(
@@ -29,22 +28,7 @@ function variableExtractLoader(
       for (const [key, value] of Object.entries(inputValues)) {
         const originalValue = originalInput[key];
 
-        // Handle ICU objects: strip metadata before sending to backend
-        if (isICUPluralObject(originalValue)) {
-          // ICU objects have metadata, but backend only needs the ICU string
-          // Strip _meta and pass through only the ICU string
-          const icuValue = isICUPluralObject(value)
-            ? { icu: value.icu }
-            : value;
-
-          result[key] = {
-            value: icuValue,
-            variables: [], // Metadata stored separately, not in variables
-          };
-          continue;
-        }
-
-        // Handle regular strings
+        // Extract format specifiers from the original value
         const matches = originalValue.match(specifierPattern) || [];
         result[key] = result[key] || {
           value,
@@ -73,24 +57,14 @@ function variableExtractLoader(
       for (const [key, valueObj] of Object.entries(data)) {
         result[key] = valueObj.value;
 
-        // Restore metadata for ICU objects
-        const resultValue = result[key];
-        if (isICUPluralObject(resultValue)) {
-          const originalValue = originalInput?.[key];
-          if (isICUPluralObject(originalValue) && originalValue._meta) {
-            // Restore the _meta and type marker from original input
-            (resultValue as any)._meta = originalValue._meta;
-            (resultValue as any)[Symbol.for("@lingo.dev/icu-plural-object")] =
-              true;
-          }
-        }
-
-        // Restore variables for regular strings
         for (let i = 0; i < valueObj.variables.length; i++) {
           const variable = valueObj.variables[i];
           const currentValue = result[key];
           if (typeof currentValue === "string") {
-            const newValue = currentValue?.replace(`{variable:${i}}`, variable);
+            const newValue = currentValue?.replaceAll(
+              `{variable:${i}}`,
+              variable,
+            );
             result[key] = newValue;
           }
         }

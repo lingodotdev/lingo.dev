@@ -1,6 +1,6 @@
 import * as t from "@babel/types";
-import traverse from "@babel/traverse";
-import { NodePath } from "@babel/traverse";
+import { traverse } from "../babel-interop";
+import { NodePath } from "../babel-interop";
 
 export function collectJsxAttributeScopes(
   node: t.Node,

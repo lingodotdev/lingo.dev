@@ -399,8 +399,9 @@ describe("ignored keys support across buckets", () => {
     );
     loader.setDefaultLocale("en");
     const data = await loader.pull("en");
-    expect(Object.keys(data)).toContain("hello");
-    expect(Object.keys(data)).not.toContain("world");
+    // xcode-xcstrings-v2 uses flat loader, so keys are paths like "hello/stringUnit"
+    expect(Object.keys(data).some((k) => k.startsWith("hello"))).toBe(true);
+    expect(Object.keys(data).some((k) => k.startsWith("world"))).toBe(false);
   });
 
   it("yaml: should omit ignored keys on pull", async () => {

@@ -29,7 +29,7 @@ export function composeLoaders(
       }
       return result;
     },
-    pullHints: async (originalInput) => {
+    pullHints: async (originalInput?) => {
       let result: any = originalInput;
       for (let i = 0; i < loaders.length; i++) {
         const subResult = await loaders[i].pullHints?.(result);
@@ -67,8 +67,8 @@ export function createLoader<I, O, C>(
       state.defaultLocale = locale;
       return this;
     },
-    async pullHints() {
-      return lDefinition.pullHints?.(state.originalInput!);
+    async pullHints(originalInput?: I) {
+      return lDefinition.pullHints?.(originalInput || state.originalInput!);
     },
     async pull(locale, input) {
       if (!state.defaultLocale) {

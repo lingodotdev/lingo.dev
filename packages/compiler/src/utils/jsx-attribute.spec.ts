@@ -1,5 +1,5 @@
 import * as t from "@babel/types";
-import traverse, { NodePath } from "@babel/traverse";
+import { traverse, NodePath } from "../babel-interop";
 import { parse } from "@babel/parser";
 import {
   getJsxAttributeValue,
@@ -7,7 +7,7 @@ import {
   getJsxAttributesMap,
 } from "./jsx-attribute";
 import { describe, it, expect } from "vitest";
-import generate from "@babel/generator";
+import { generate } from "../babel-interop";
 
 describe("JSX Attribute Value Utils", () => {
   function parseJSX(code: string): t.File {

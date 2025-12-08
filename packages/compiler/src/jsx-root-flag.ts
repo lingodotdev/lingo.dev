@@ -1,4 +1,4 @@
-import traverse from "@babel/traverse";
+import { traverse } from "./babel-interop";
 import { createCodeMutation } from "./_base";
 import { getJsxRoots } from "./utils";
 import * as t from "@babel/types";

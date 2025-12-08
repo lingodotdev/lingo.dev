@@ -28,12 +28,12 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@replexica/sdk": "^0.7.7"
+    "@replexica/sdk": "0.7.7"
   },
   "devDependencies": {
-    "@directus/extensions-sdk": "12.1.4",
-    "tsup": "^8.3.5",
-    "typescript": "^5.8.3",
-    "vitest": "^2.1.8"
+    "@directus/extensions-sdk": "17.0.3",
+    "tsup": "8.5.1",
+    "typescript": "5.9.3",
+    "vitest": "4.0.13"
   }
 }

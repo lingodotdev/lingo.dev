@@ -180,6 +180,117 @@ describe("createVariableLoader", () => {
       createVariableLoader({ type: "invalid" });
     }).toThrow("Unsupported variable format type: invalid");
   });
+
+  describe("replaceAll behavior", () => {
+    it("should handle multiple occurrences of same variable in a string", async () => {
+      const loader = createLoader("ieee");
+      const input = {
+        repeated: "Test %d and %d and %d",
+      };
+
+      // Pull to extract variables
+      await loader.pull("en", input);
+
+      // Backend might return translation with multiple placeholders
+      const payload = {
+        repeated: "Prueba {variable:0} y {variable:1} y {variable:2}",
+      };
+
+      const result = await loader.push("en", payload);
+
+      // All placeholders should be restored correctly
+      expect(result).toEqual({
+        repeated: "Prueba %d y %d y %d",
+      });
+    });
+
+    it("should handle variable restoration in ICU-like plural strings", async () => {
+      const loader = createLoader("ieee");
+
+      // Simulates what comes from xcode-xcstrings-v2 loader after ICU conversion
+      const input = {
+        pluralString: "{count, plural, one {%d item} other {%d items}}",
+      };
+
+      await loader.pull("en", input);
+
+      const payload = {
+        pluralString:
+          "{count, plural, one {{variable:0} artículo} other {{variable:0} artículos}}",
+      };
+
+      const result = await loader.push("es", payload);
+
+      // Both occurrences of {variable:0} should be replaced with %d
+      expect(result.pluralString).toBe(
+        "{count, plural, one {%d artículo} other {%d artículos}}",
+      );
+    });
+
+    it("should handle multiple different variables in ICU-like format", async () => {
+      const loader = createLoader("ieee");
+
+      const input = {
+        complex:
+          "{count, plural, one {%1$d file of %2$d MB} other {%1$d files of %2$d MB}}",
+      };
+
+      await loader.pull("en", input);
+
+      const payload = {
+        complex:
+          "{count, plural, one {{variable:0} fichier de {variable:1} Mo} other {{variable:0} fichiers de {variable:1} Mo}}",
+      };
+
+      const result = await loader.push("fr", payload);
+
+      // Should restore all variable occurrences correctly
+      expect(result.complex).toBe(
+        "{count, plural, one {%1$d fichier de %2$d Mo} other {%1$d fichiers de %2$d Mo}}",
+      );
+    });
+
+    it("should handle python format with ICU plurals", async () => {
+      const loader = createLoader("python");
+
+      const input = {
+        pythonPlural:
+          "{count, plural, one {%(num)d item} other {%(num)d items}}",
+      };
+
+      await loader.pull("en", input);
+
+      const payload = {
+        pythonPlural:
+          "{count, plural, one {{variable:0} artículo} other {{variable:0} artículos}}",
+      };
+
+      const result = await loader.push("es", payload);
+
+      expect(result.pythonPlural).toBe(
+        "{count, plural, one {%(num)d artículo} other {%(num)d artículos}}",
+      );
+    });
+
+    it("should handle same variable appearing many times", async () => {
+      const loader = createLoader("ieee");
+
+      const input = {
+        manyRepeats: "Test: %s, %s, %s, %s, %s",
+      };
+
+      await loader.pull("en", input);
+
+      const payload = {
+        manyRepeats:
+          "Prueba: {variable:0}, {variable:1}, {variable:2}, {variable:3}, {variable:4}",
+      };
+
+      const result = await loader.push("es", payload);
+
+      expect(result.manyRepeats).toBe("Prueba: %s, %s, %s, %s, %s");
+    });
+  });
 });
 
 function createLoader(type: VariableLoaderParams["type"]) {

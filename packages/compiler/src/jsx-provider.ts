@@ -1,4 +1,4 @@
-import traverse, { NodePath } from "@babel/traverse";
+import { NodePath, traverse } from "./babel-interop";
 import * as t from "@babel/types";
 import { CompilerPayload, createCodeMutation } from "./_base";
 import { getJsxElementName } from "./utils/jsx-element";
@@ -11,7 +11,7 @@ import { ModuleId } from "./_const";
  */
 const jsxProviderMutation = createCodeMutation((payload) => {
   traverse(payload.ast, {
-    JSXElement: (path) => {
+    JSXElement: (path: NodePath<t.JSXElement>) => {
       if (getJsxElementName(path)?.toLowerCase() === "html") {
         const mode = getModuleExecutionMode(payload.ast, payload.params.rsc);
         if (mode === "client") {
@@ -93,11 +93,11 @@ function replaceHtmlComponent(
     (attr) => attr.type === "JSXAttribute" && attr.name.name === "lang",
   );
   if (!t.isJSXAttribute(langAttribute)) {
-    (langAttribute = t.jsxAttribute(
+    ((langAttribute = t.jsxAttribute(
       t.jsxIdentifier("lang"),
       t.stringLiteral(""),
     )),
-      path.node.openingElement.attributes.push(langAttribute);
+      path.node.openingElement.attributes.push(langAttribute));
   }
   langAttribute.value = t.jsxExpressionContainer(
     t.awaitExpression(

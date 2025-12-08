@@ -1,4 +1,4 @@
-import traverse from "@babel/traverse";
+import { traverse, NodePath } from "./babel-interop";
 import * as t from "@babel/types";
 import { createCodeMutation } from "./_base";
 import { getJsxElementName } from "./utils/jsx-element";
@@ -7,7 +7,7 @@ import { ModuleId } from "./_const";
 
 export const jsxHtmlLangMutation = createCodeMutation((payload) => {
   traverse(payload.ast, {
-    JSXElement: (path) => {
+    JSXElement: (path: NodePath<t.JSXElement>) => {
       if (getJsxElementName(path)?.toLowerCase() === "html") {
         const mode = getModuleExecutionMode(payload.ast, payload.params.rsc);
         const packagePath =

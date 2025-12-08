@@ -1,5 +1,6 @@
 {
   "name": "@lingo.dev",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "prepare": "husky",
@@ -7,25 +8,27 @@
     "typecheck": "turbo typecheck",
     "test": "turbo test",
     "new": "changeset",
-    "new:empty": "changeset --empty"
+    "new:empty": "changeset --empty",
+    "prebuild": "syncpack lint-semver-ranges --filter '.*' --types prod,dev"
   },
   "devDependencies": {
-    "@babel/generator": "^7.27.1",
-    "@babel/parser": "^7.27.1",
-    "@babel/traverse": "^7.27.4",
-    "@babel/types": "^7.27.1",
-    "@commitlint/cli": "^19.8.0",
-    "@commitlint/config-conventional": "^19.8.0",
-    "@types/babel__traverse": "^7.20.7",
-    "commitlint": "^19.7.1",
-    "husky": "^9.1.7",
-    "turbo": "^2.5.0"
+    "@babel/generator": "7.28.5",
+    "@babel/parser": "7.28.5",
+    "@babel/traverse": "7.28.5",
+    "@babel/types": "7.28.5",
+    "@commitlint/cli": "19.8.1",
+    "@commitlint/config-conventional": "19.8.1",
+    "@types/babel__traverse": "7.28.0",
+    "commitlint": "19.8.1",
+    "husky": "9.1.7",
+    "syncpack": "13.0.4",
+    "turbo": "2.6.1"
   },
   "dependencies": {
-    "@changesets/changelog-github": "^0.5.0",
-    "@changesets/cli": "^2.27.10",
-    "minimatch": "^10.0.3",
-    "node-machine-id": "^1.1.12"
+    "@changesets/changelog-github": "0.5.1",
+    "@changesets/cli": "2.29.7",
+    "minimatch": "10.1.1",
+    "node-machine-id": "1.1.12"
   },
   "packageManager": "pnpm@9.12.3"
 }

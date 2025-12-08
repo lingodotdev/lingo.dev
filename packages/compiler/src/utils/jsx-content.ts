@@ -1,4 +1,4 @@
-import { NodePath } from "@babel/traverse";
+import { NodePath } from "../babel-interop";
 import * as t from "@babel/types";
 import { getJsxElementName } from "./jsx-element";
 import _ from "lodash";

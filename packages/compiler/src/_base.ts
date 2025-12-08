@@ -1,4 +1,4 @@
-import generate, { GeneratorResult } from "@babel/generator";
+import { generate, GeneratorResult } from "./babel-interop";
 import * as t from "@babel/types";
 import * as parser from "@babel/parser";
 import { LocaleCode } from "@lingo.dev/_spec";
