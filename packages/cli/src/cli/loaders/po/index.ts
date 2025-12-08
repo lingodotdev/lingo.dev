@@ -63,35 +63,27 @@ export function createPoDataLoader(
           const contextKey = _.keys(sectionPo.translations)[0];
           const entries = sectionPo.translations[contextKey];
           const msgid = Object.keys(entries).find((key) => entries[key].msgid);
-          if (!msgid) {
-            // If the section is empty, try to find it in the current sections
-            const currentSection = currentSections.find((cs) => {
-              const csPo = gettextParser.po.parse(cs);
-              const csContextKey = _.keys(csPo.translations)[0];
-              const csEntries = csPo.translations[csContextKey];
-              const csMsgid = Object.keys(csEntries).find(
-                (key) => csEntries[key].msgid,
-              );
-              return csMsgid === msgid;
-            });
+          
+          // Find the corresponding section in pullInput (target file) once
+          const currentSection = currentSections.find((cs) => {
+            const csPo = gettextParser.po.parse(cs);
+            const csContextKey = _.keys(csPo.translations)[0];
+            const csEntries = csPo.translations[csContextKey];
+            const csMsgid = Object.keys(csEntries).find(
+              (key) => csEntries[key].msgid,
+            );
+            return csMsgid === msgid;
+          });
 
+          if (!msgid) {
+            // If the section is empty (metadata section), return the target's version
             if (currentSection) {
               return currentSection;
             }
             return section;
           }
           if (data[msgid]) {
-            // Find the corresponding section in pullInput to preserve headers
-            const currentSection = currentSections.find((cs) => {
-              const csPo = gettextParser.po.parse(cs);
-              const csContextKey = _.keys(csPo.translations)[0];
-              const csEntries = csPo.translations[csContextKey];
-              const csMsgid = Object.keys(csEntries).find(
-                (key) => csEntries[key].msgid,
-              );
-              return csMsgid === msgid;
-            });
-
+            // Preserve headers from the target file (pullInput)
             let headersToUse = sectionPo.headers;
             if (currentSection) {
               const currentSectionPo = gettextParser.po.parse(currentSection);
