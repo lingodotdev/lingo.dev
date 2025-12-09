@@ -220,7 +220,7 @@
     "xml2js": "0.6.2",
     "xpath": "0.0.34",
     "yaml": "2.8.1",
-    "zod": "3.25.76"
+    "zod": "4.1.13"
   },
   "devDependencies": {
     "@types/babel__generator": "7.27.0",
