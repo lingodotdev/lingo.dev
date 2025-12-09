@@ -1,5 +1,11 @@
 # @lingo.dev/\_compiler
 
+## 0.8.5
+
+### Patch Changes
+
+- [#1660](https://github.com/lingodotdev/lingo.dev/pull/1660) [`1b2980d`](https://github.com/lingodotdev/lingo.dev/commit/1b2980d9215eca4f2db101af530680d6eb3be8eb) Thanks [@wotschofsky](https://github.com/wotschofsky)! - Upgrade to non-vulnerable Next.js versions (React2Shell)
+
 ## 0.8.4
 
 ### Patch Changes
