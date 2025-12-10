@@ -1,5 +1,11 @@
 # @lingo.dev/\_react
 
+## 0.7.2
+
+### Patch Changes
+
+- [#1665](https://github.com/lingodotdev/lingo.dev/pull/1665) [`b898777`](https://github.com/lingodotdev/lingo.dev/commit/b89877729555025e0380451fa495573c2a114a6b) Thanks [@vrcprl](https://github.com/vrcprl)! - Upd react version
+
 ## 0.7.1
 
 ### Patch Changes
