@@ -1,10 +1,16 @@
 {
   "name": "@lingo.dev/_compiler",
-  "version": "0.8.5",
+  "version": "0.8.6",
   "description": "Lingo.dev Compiler",
   "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lingodotdev/lingo.dev.git",
+    "directory": "packages/compiler"
+  },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "provenance": true
   },
   "sideEffects": false,
   "type": "module",
