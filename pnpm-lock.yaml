@@ -86,7 +86,7 @@ importers:
         version: 4.0.0(@adonisjs/core@6.19.1(@adonisjs/assembler@7.8.2(typescript@5.9.3))(@vinejs/vine@3.0.1)(edge.js@6.3.0))(@adonisjs/shield@8.2.0(@adonisjs/core@6.19.1(@adonisjs/assembler@7.8.2(typescript@5.9.3))(@vinejs/vine@3.0.1)(edge.js@6.3.0))(@adonisjs/session@7.5.1(@adonisjs/core@6.19.1(@adonisjs/assembler@7.8.2(typescript@5.9.3))(@vinejs/vine@3.0.1)(edge.js@6.3.0))(edge.js@6.3.0))(edge.js@6.3.0))(edge.js@6.3.0)(vite@6.3.5(@types/node@22.15.18)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))
       '@inertiajs/react':
         specifier: 2.2.18
-        version: 2.2.18(react@19.2.0)
+        version: 2.2.18(react@19.2.1)
       '@lingo.dev/_compiler':
         specifier: workspace:^
         version: link:../../packages/compiler
@@ -100,11 +100,11 @@ importers:
         specifier: workspace:*
         version: link:../../packages/cli
       react:
-        specifier: 19.2.0
-        version: 19.2.0
+        specifier: 19.2.1
+        version: 19.2.1
       react-dom:
-        specifier: 19.2.0
-        version: 19.2.0(react@19.2.0)
+        specifier: 19.2.1
+        version: 19.2.1(react@19.2.1)
       reflect-metadata:
         specifier: 0.2.2
         version: 0.2.2
@@ -168,13 +168,13 @@ importers:
         version: link:../../packages/cli
       next:
         specifier: 15.3.6
-        version: 15.3.6(@opentelemetry/api@1.9.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+        version: 15.3.6(@opentelemetry/api@1.9.0)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
       react:
-        specifier: 19.2.0
-        version: 19.2.0
+        specifier: 19.2.1
+        version: 19.2.1
       react-dom:
-        specifier: 19.2.0
-        version: 19.2.0(react@19.2.0)
+        specifier: 19.2.1
+        version: 19.2.1(react@19.2.1)
     devDependencies:
       '@eslint/eslintrc':
         specifier: '3'
@@ -208,10 +208,10 @@ importers:
     dependencies:
       '@react-router/node':
         specifier: 7.9.6
-        version: 7.9.6(react-router@7.9.6(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(typescript@5.9.3)
+        version: 7.9.6(react-router@7.9.6(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(typescript@5.9.3)
       '@react-router/serve':
         specifier: 7.9.6
-        version: 7.9.6(react-router@7.9.6(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(typescript@5.9.3)
+        version: 7.9.6(react-router@7.9.6(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(typescript@5.9.3)
       isbot:
         specifier: 5.1.32
         version: 5.1.32
@@ -219,18 +219,18 @@ importers:
         specifier: workspace:*
         version: link:../../packages/cli
       react:
-        specifier: 19.2.0
-        version: 19.2.0
+        specifier: 19.2.1
+        version: 19.2.1
       react-dom:
-        specifier: 19.2.0
-        version: 19.2.0(react@19.2.0)
+        specifier: 19.2.1
+        version: 19.2.1(react@19.2.1)
       react-router:
         specifier: 7.9.6
-        version: 7.9.6(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+        version: 7.9.6(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
     devDependencies:
       '@react-router/dev':
         specifier: 7.9.6
-        version: 7.9.6(@react-router/serve@7.9.6(react-router@7.9.6(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(typescript@5.9.3))(@types/node@20.19.25)(jiti@2.6.1)(lightningcss@1.30.2)(react-router@7.9.6(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(terser@5.44.1)(tsx@4.20.6)(typescript@5.9.3)(vite@6.3.3(@types/node@20.19.25)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(yaml@2.8.1)
+        version: 7.9.6(@react-router/serve@7.9.6(react-router@7.9.6(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(typescript@5.9.3))(@types/node@20.19.25)(jiti@2.6.1)(lightningcss@1.30.2)(react-router@7.9.6(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(terser@5.44.1)(tsx@4.20.6)(typescript@5.9.3)(vite@6.3.3(@types/node@20.19.25)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(yaml@2.8.1)
       '@tailwindcss/vite':
         specifier: 4.1.17
         version: 4.1.17(vite@6.3.3(@types/node@20.19.25)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))
@@ -262,11 +262,11 @@ importers:
         specifier: 4.4.1
         version: 4.4.1(vite@6.3.5(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))
       react:
-        specifier: 19.2.0
-        version: 19.2.0
+        specifier: 19.2.1
+        version: 19.2.1
       react-dom:
-        specifier: 19.2.0
-        version: 19.2.0(react@19.2.0)
+        specifier: 19.2.1
+        version: 19.2.1(react@19.2.1)
     devDependencies:
       '@eslint/js':
         specifier: 9.39.1
@@ -328,13 +328,13 @@ importers:
     dependencies:
       lingo.dev:
         specifier: '*'
-        version: 0.116.5(@types/node@24.10.1)(@types/react@19.2.7)(encoding@0.1.13)(next@15.3.6(@opentelemetry/api@1.9.0)(react-dom@19.2.0(react@18.3.1))(react@18.3.1))
+        version: 0.116.5(@types/node@24.10.1)(@types/react@19.2.7)(encoding@0.1.13)(next@15.3.6(@opentelemetry/api@1.9.0)(react-dom@19.2.1(react@18.3.1))(react@18.3.1))
 
   legacy/sdk:
     dependencies:
       lingo.dev:
         specifier: '*'
-        version: 0.116.5(@types/node@24.10.1)(@types/react@19.2.7)(encoding@0.1.13)(next@15.3.6(@opentelemetry/api@1.9.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))
+        version: 0.116.5(@types/node@24.10.1)(@types/react@19.2.7)(encoding@0.1.13)(next@15.3.6(@opentelemetry/api@1.9.0)(react-dom@19.2.1(react@19.2.1))(react@19.2.1))
 
   packages/cli:
     dependencies:
@@ -376,7 +376,7 @@ importers:
         version: 39.34.3
       '@inkjs/ui':
         specifier: 2.0.0
-        version: 2.0.0(ink@4.2.0(@types/react@19.2.7)(react@19.2.0))
+        version: 2.0.0(ink@4.2.0(@types/react@19.2.7)(react@19.2.1))
       '@inquirer/prompts':
         specifier: 7.8.0
         version: 7.8.0(@types/node@22.10.2)
@@ -397,13 +397,13 @@ importers:
         version: link:../spec
       '@markdoc/markdoc':
         specifier: 0.5.4
-        version: 0.5.4(@types/react@19.2.7)(react@19.2.0)
+        version: 0.5.4(@types/react@19.2.7)(react@19.2.1)
       '@modelcontextprotocol/sdk':
         specifier: 1.22.0
         version: 1.22.0
       '@openrouter/ai-sdk-provider':
         specifier: 0.7.1
-        version: 0.7.1(ai@4.3.15(react@19.2.0)(zod@3.25.76))(zod@3.25.76)
+        version: 0.7.1(ai@4.3.15(react@19.2.1)(zod@3.25.76))(zod@3.25.76)
       '@paralleldrive/cuid2':
         specifier: 2.2.2
         version: 2.2.2
@@ -412,7 +412,7 @@ importers:
         version: 3.1.5
       ai:
         specifier: 4.3.15
-        version: 4.3.15(react@19.2.0)(zod@3.25.76)
+        version: 4.3.15(react@19.2.1)(zod@3.25.76)
       bitbucket:
         specifier: 2.12.0
         version: 2.12.0(encoding@0.1.13)
@@ -493,13 +493,13 @@ importers:
         version: 5.0.0
       ink:
         specifier: 4.2.0
-        version: 4.2.0(@types/react@19.2.7)(react@19.2.0)
+        version: 4.2.0(@types/react@19.2.7)(react@19.2.1)
       ink-progress-bar:
         specifier: 3.0.0
         version: 3.0.0
       ink-spinner:
         specifier: 5.0.0
-        version: 5.0.0(ink@4.2.0(@types/react@19.2.7)(react@19.2.0))(react@19.2.0)
+        version: 5.0.0(ink@4.2.0(@types/react@19.2.7)(react@19.2.1))(react@19.2.1)
       inquirer:
         specifier: 12.6.0
         version: 12.6.0(@types/node@22.10.2)
@@ -576,8 +576,8 @@ importers:
         specifier: 3.6.2
         version: 3.6.2
       react:
-        specifier: 19.2.0
-        version: 19.2.0
+        specifier: 19.2.1
+        version: 19.2.1
       rehype-stringify:
         specifier: 10.0.1
         version: 10.0.1
@@ -743,10 +743,10 @@ importers:
         version: link:../spec
       '@openrouter/ai-sdk-provider':
         specifier: 0.7.1
-        version: 0.7.1(ai@4.2.10(react@19.2.0)(zod@3.25.76))(zod@3.25.76)
+        version: 0.7.1(ai@4.2.10(react@19.2.1)(zod@3.25.76))(zod@3.25.76)
       ai:
         specifier: 4.2.10
-        version: 4.2.10(react@19.2.0)(zod@3.25.76)
+        version: 4.2.10(react@19.2.1)(zod@3.25.76)
       dedent:
         specifier: 1.7.0
         version: 1.7.0
@@ -801,7 +801,7 @@ importers:
         version: 19.2.7
       next:
         specifier: 15.2.6
-        version: 15.2.6(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+        version: 15.2.6(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
       tsup:
         specifier: 8.5.1
         version: 8.5.1(@swc/core@1.15.3)(jiti@2.6.1)(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.8.1)
@@ -867,7 +867,7 @@ importers:
     devDependencies:
       '@testing-library/react':
         specifier: 16.3.0
-        version: 16.3.0(@testing-library/dom@10.4.0)(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+        version: 16.3.0(@testing-library/dom@10.4.0)(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
       '@types/js-cookie':
         specifier: 3.0.6
         version: 3.0.6
@@ -888,13 +888,13 @@ importers:
         version: 3.0.0
       next:
         specifier: 15.2.6
-        version: 15.2.6(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+        version: 15.2.6(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
       react:
-        specifier: 19.2.0
-        version: 19.2.0
+        specifier: 19.2.1
+        version: 19.2.1
       react-dom:
-        specifier: 19.2.0
-        version: 19.2.0(react@19.2.0)
+        specifier: 19.2.1
+        version: 19.2.1(react@19.2.1)
       tsup:
         specifier: 8.5.1
         version: 8.5.1(@swc/core@1.15.3)(jiti@2.6.1)(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.8.1)
@@ -9168,10 +9168,10 @@ packages:
     resolution: {integrity: sha512-K5zQjDllxWkf7Z5xJdV0/B0WTNqx6vxG70zJE4N0kBs4LovmEYWJzQGxC9bS9RAKu3bgM40lrd5zoLJ12MQ5BA==}
     engines: {node: '>= 0.10'}
 
-  react-dom@19.2.0:
-    resolution: {integrity: sha512-UlbRu4cAiGaIewkPyiRGJk0imDN2T3JjieT6spoL2UeSf5od4n5LB/mQ4ejmxhCFT1tYe8IvaFulzynWovsEFQ==}
+  react-dom@19.2.1:
+    resolution: {integrity: sha512-ibrK8llX2a4eOskq1mXKu/TGZj9qzomO+sNfO98M6d9zIPOEhlBkMkBUBLd1vgS0gQsLDBzA+8jJBVXDnfHmJg==}
     peerDependencies:
-      react: ^19.2.0
+      react: ^19.2.1
 
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
@@ -9210,8 +9210,8 @@ packages:
     resolution: {integrity: sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==}
     engines: {node: '>=0.10.0'}
 
-  react@19.2.0:
-    resolution: {integrity: sha512-tmbWg6W31tQLeB5cdIBOicJDJRR2KzXsV7uSK9iNfLWQ5bIZfxuPEHp7M8wiHyHnn0DD1i7w3Zmin0FtkrwoCQ==}
+  react@19.2.1:
+    resolution: {integrity: sha512-DGrYcCWK7tvYMnWh79yrPHt+vdx9tY+1gPZa7nJQtO/p8bLTDaHp4dzwEhQB7pZ4Xe3ok4XKuEPrVuc+wlpkmw==}
     engines: {node: '>=0.10.0'}
 
   read-package-up@11.0.0:
@@ -11392,22 +11392,22 @@ snapshots:
     optionalDependencies:
       zod: 3.25.76
 
-  '@ai-sdk/react@1.2.12(react@19.2.0)(zod@3.25.76)':
+  '@ai-sdk/react@1.2.12(react@19.2.1)(zod@3.25.76)':
     dependencies:
       '@ai-sdk/provider-utils': 2.2.8(zod@3.25.76)
       '@ai-sdk/ui-utils': 1.2.11(zod@3.25.76)
-      react: 19.2.0
-      swr: 2.3.3(react@19.2.0)
+      react: 19.2.1
+      swr: 2.3.3(react@19.2.1)
       throttleit: 2.1.0
     optionalDependencies:
       zod: 3.25.76
 
-  '@ai-sdk/react@1.2.5(react@19.2.0)(zod@3.25.76)':
+  '@ai-sdk/react@1.2.5(react@19.2.1)(zod@3.25.76)':
     dependencies:
       '@ai-sdk/provider-utils': 2.2.3(zod@3.25.76)
       '@ai-sdk/ui-utils': 1.2.4(zod@3.25.76)
-      react: 19.2.0
-      swr: 2.3.3(react@19.2.0)
+      react: 19.2.1
+      swr: 2.3.3(react@19.2.1)
       throttleit: 2.1.0
     optionalDependencies:
       zod: 3.25.76
@@ -13134,12 +13134,12 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  '@inertiajs/react@2.2.18(react@19.2.0)':
+  '@inertiajs/react@2.2.18(react@19.2.1)':
     dependencies:
       '@inertiajs/core': 2.2.18
       '@types/lodash-es': 4.17.12
       lodash-es: 4.17.21
-      react: 19.2.0
+      react: 19.2.1
     transitivePeerDependencies:
       - debug
 
@@ -13151,13 +13151,13 @@ snapshots:
       figures: 6.1.0
       ink: 4.2.0(@types/react@19.2.7)(react@18.3.1)
 
-  '@inkjs/ui@2.0.0(ink@4.2.0(@types/react@19.2.7)(react@19.2.0))':
+  '@inkjs/ui@2.0.0(ink@4.2.0(@types/react@19.2.7)(react@19.2.1))':
     dependencies:
       chalk: 5.6.2
       cli-spinners: 3.2.0
       deepmerge: 4.3.1
       figures: 6.1.0
-      ink: 4.2.0(@types/react@19.2.7)(react@19.2.0)
+      ink: 4.2.0(@types/react@19.2.7)(react@19.2.1)
 
   '@inquirer/ansi@1.0.2': {}
 
@@ -13650,17 +13650,17 @@ snapshots:
     dependencies:
       iso-639-3: 3.0.1
 
-  '@lingo.dev/_react@0.6.0(next@15.3.6(@opentelemetry/api@1.9.0)(react-dom@19.2.0(react@18.3.1))(react@18.3.1))':
+  '@lingo.dev/_react@0.6.0(next@15.3.6(@opentelemetry/api@1.9.0)(react-dom@19.2.1(react@18.3.1))(react@18.3.1))':
     dependencies:
       js-cookie: 3.0.5
       lodash: 4.17.21
-      next: 15.3.6(@opentelemetry/api@1.9.0)(react-dom@19.2.0(react@18.3.1))(react@18.3.1)
+      next: 15.3.6(@opentelemetry/api@1.9.0)(react-dom@19.2.1(react@18.3.1))(react@18.3.1)
 
-  '@lingo.dev/_react@0.6.0(next@15.3.6(@opentelemetry/api@1.9.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))':
+  '@lingo.dev/_react@0.6.0(next@15.3.6(@opentelemetry/api@1.9.0)(react-dom@19.2.1(react@19.2.1))(react@19.2.1))':
     dependencies:
       js-cookie: 3.0.5
       lodash: 4.17.21
-      next: 15.3.6(@opentelemetry/api@1.9.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      next: 15.3.6(@opentelemetry/api@1.9.0)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
 
   '@lingo.dev/_sdk@0.12.9':
     dependencies:
@@ -13705,12 +13705,12 @@ snapshots:
       '@types/react': 19.2.7
       react: 18.3.1
 
-  '@markdoc/markdoc@0.5.4(@types/react@19.2.7)(react@19.2.0)':
+  '@markdoc/markdoc@0.5.4(@types/react@19.2.7)(react@19.2.1)':
     optionalDependencies:
       '@types/linkify-it': 3.0.5
       '@types/markdown-it': 12.2.3
       '@types/react': 19.2.7
-      react: 19.2.0
+      react: 19.2.1
 
   '@mjackson/node-fetch-server@0.2.0': {}
 
@@ -14046,11 +14046,11 @@ snapshots:
       '@octokit/request-error': 6.1.7
       '@octokit/webhooks-methods': 5.1.1
 
-  '@openrouter/ai-sdk-provider@0.7.1(ai@4.2.10(react@19.2.0)(zod@3.25.76))(zod@3.25.76)':
+  '@openrouter/ai-sdk-provider@0.7.1(ai@4.2.10(react@19.2.1)(zod@3.25.76))(zod@3.25.76)':
     dependencies:
       '@ai-sdk/provider': 1.1.3
       '@ai-sdk/provider-utils': 2.2.8(zod@3.25.76)
-      ai: 4.2.10(react@19.2.0)(zod@3.25.76)
+      ai: 4.2.10(react@19.2.1)(zod@3.25.76)
       zod: 3.25.76
 
   '@openrouter/ai-sdk-provider@0.7.1(ai@4.3.15(react@18.3.1)(zod@3.25.76))(zod@3.25.76)':
@@ -14060,11 +14060,11 @@ snapshots:
       ai: 4.3.15(react@18.3.1)(zod@3.25.76)
       zod: 3.25.76
 
-  '@openrouter/ai-sdk-provider@0.7.1(ai@4.3.15(react@19.2.0)(zod@3.25.76))(zod@3.25.76)':
+  '@openrouter/ai-sdk-provider@0.7.1(ai@4.3.15(react@19.2.1)(zod@3.25.76))(zod@3.25.76)':
     dependencies:
       '@ai-sdk/provider': 1.1.3
       '@ai-sdk/provider-utils': 2.2.8(zod@3.25.76)
-      ai: 4.3.15(react@19.2.0)(zod@3.25.76)
+      ai: 4.3.15(react@19.2.1)(zod@3.25.76)
       zod: 3.25.76
 
   '@opentelemetry/api@1.9.0': {}
@@ -14204,7 +14204,7 @@ snapshots:
     dependencies:
       cross-spawn: 7.0.6
 
-  '@react-router/dev@7.9.6(@react-router/serve@7.9.6(react-router@7.9.6(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(typescript@5.9.3))(@types/node@20.19.25)(jiti@2.6.1)(lightningcss@1.30.2)(react-router@7.9.6(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(terser@5.44.1)(tsx@4.20.6)(typescript@5.9.3)(vite@6.3.3(@types/node@20.19.25)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(yaml@2.8.1)':
+  '@react-router/dev@7.9.6(@react-router/serve@7.9.6(react-router@7.9.6(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(typescript@5.9.3))(@types/node@20.19.25)(jiti@2.6.1)(lightningcss@1.30.2)(react-router@7.9.6(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(terser@5.44.1)(tsx@4.20.6)(typescript@5.9.3)(vite@6.3.3(@types/node@20.19.25)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(yaml@2.8.1)':
     dependencies:
       '@babel/core': 7.28.5
       '@babel/generator': 7.28.5
@@ -14214,7 +14214,7 @@ snapshots:
       '@babel/traverse': 7.28.5
       '@babel/types': 7.28.5
       '@npmcli/package-json': 4.0.1
-      '@react-router/node': 7.9.6(react-router@7.9.6(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(typescript@5.9.3)
+      '@react-router/node': 7.9.6(react-router@7.9.6(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(typescript@5.9.3)
       '@remix-run/node-fetch-server': 0.9.0
       arg: 5.0.2
       babel-dead-code-elimination: 1.0.10
@@ -14230,14 +14230,14 @@ snapshots:
       picocolors: 1.1.1
       prettier: 3.6.2
       react-refresh: 0.14.2
-      react-router: 7.9.6(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      react-router: 7.9.6(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
       semver: 7.7.3
       tinyglobby: 0.2.15
       valibot: 1.1.0(typescript@5.9.3)
       vite: 6.3.3(@types/node@20.19.25)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1)
       vite-node: 3.2.4(@types/node@20.19.25)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1)
     optionalDependencies:
-      '@react-router/serve': 7.9.6(react-router@7.9.6(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(typescript@5.9.3)
+      '@react-router/serve': 7.9.6(react-router@7.9.6(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(typescript@5.9.3)
       typescript: 5.9.3
     transitivePeerDependencies:
       - '@types/node'
@@ -14255,31 +14255,31 @@ snapshots:
       - tsx
       - yaml
 
-  '@react-router/express@7.9.6(express@4.21.2)(react-router@7.9.6(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(typescript@5.9.3)':
+  '@react-router/express@7.9.6(express@4.21.2)(react-router@7.9.6(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(typescript@5.9.3)':
     dependencies:
-      '@react-router/node': 7.9.6(react-router@7.9.6(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(typescript@5.9.3)
+      '@react-router/node': 7.9.6(react-router@7.9.6(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(typescript@5.9.3)
       express: 4.21.2
-      react-router: 7.9.6(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      react-router: 7.9.6(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
     optionalDependencies:
       typescript: 5.9.3
 
-  '@react-router/node@7.9.6(react-router@7.9.6(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(typescript@5.9.3)':
+  '@react-router/node@7.9.6(react-router@7.9.6(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(typescript@5.9.3)':
     dependencies:
       '@mjackson/node-fetch-server': 0.2.0
-      react-router: 7.9.6(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      react-router: 7.9.6(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
     optionalDependencies:
       typescript: 5.9.3
 
-  '@react-router/serve@7.9.6(react-router@7.9.6(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(typescript@5.9.3)':
+  '@react-router/serve@7.9.6(react-router@7.9.6(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(typescript@5.9.3)':
     dependencies:
       '@mjackson/node-fetch-server': 0.2.0
-      '@react-router/express': 7.9.6(express@4.21.2)(react-router@7.9.6(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(typescript@5.9.3)
-      '@react-router/node': 7.9.6(react-router@7.9.6(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(typescript@5.9.3)
+      '@react-router/express': 7.9.6(express@4.21.2)(react-router@7.9.6(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(typescript@5.9.3)
+      '@react-router/node': 7.9.6(react-router@7.9.6(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(typescript@5.9.3)
       compression: 1.8.1
       express: 4.21.2
       get-port: 5.1.1
       morgan: 1.10.1
-      react-router: 7.9.6(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      react-router: 7.9.6(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
       source-map-support: 0.5.21
     transitivePeerDependencies:
       - supports-color
@@ -15081,12 +15081,12 @@ snapshots:
       lz-string: 1.5.0
       pretty-format: 27.5.1
 
-  '@testing-library/react@16.3.0(@testing-library/dom@10.4.0)(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)':
+  '@testing-library/react@16.3.0(@testing-library/dom@10.4.0)(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)':
     dependencies:
       '@babel/runtime': 7.28.4
       '@testing-library/dom': 10.4.0
-      react: 19.2.0
-      react-dom: 19.2.0(react@19.2.0)
+      react: 19.2.1
+      react-dom: 19.2.1(react@19.2.1)
     optionalDependencies:
       '@types/react': 19.2.7
       '@types/react-dom': 19.2.3(@types/react@19.2.7)
@@ -16059,17 +16059,17 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ai@4.2.10(react@19.2.0)(zod@3.25.76):
+  ai@4.2.10(react@19.2.1)(zod@3.25.76):
     dependencies:
       '@ai-sdk/provider': 1.1.0
       '@ai-sdk/provider-utils': 2.2.3(zod@3.25.76)
-      '@ai-sdk/react': 1.2.5(react@19.2.0)(zod@3.25.76)
+      '@ai-sdk/react': 1.2.5(react@19.2.1)(zod@3.25.76)
       '@ai-sdk/ui-utils': 1.2.4(zod@3.25.76)
       '@opentelemetry/api': 1.9.0
       jsondiffpatch: 0.6.0
       zod: 3.25.76
     optionalDependencies:
-      react: 19.2.0
+      react: 19.2.1
 
   ai@4.3.15(react@18.3.1)(zod@3.25.76):
     dependencies:
@@ -16083,17 +16083,17 @@ snapshots:
     optionalDependencies:
       react: 18.3.1
 
-  ai@4.3.15(react@19.2.0)(zod@3.25.76):
+  ai@4.3.15(react@19.2.1)(zod@3.25.76):
     dependencies:
       '@ai-sdk/provider': 1.1.3
       '@ai-sdk/provider-utils': 2.2.8(zod@3.25.76)
-      '@ai-sdk/react': 1.2.12(react@19.2.0)(zod@3.25.76)
+      '@ai-sdk/react': 1.2.12(react@19.2.1)(zod@3.25.76)
       '@ai-sdk/ui-utils': 1.2.11(zod@3.25.76)
       '@opentelemetry/api': 1.9.0
       jsondiffpatch: 0.6.0
       zod: 3.25.76
     optionalDependencies:
-      react: 19.2.0
+      react: 19.2.1
 
   ajv-formats@3.0.1(ajv@8.17.1):
     optionalDependencies:
@@ -18355,11 +18355,11 @@ snapshots:
       ink: 4.2.0(@types/react@19.2.7)(react@18.3.1)
       react: 18.3.1
 
-  ink-spinner@5.0.0(ink@4.2.0(@types/react@19.2.7)(react@19.2.0))(react@19.2.0):
+  ink-spinner@5.0.0(ink@4.2.0(@types/react@19.2.7)(react@19.2.1))(react@19.2.1):
     dependencies:
       cli-spinners: 2.9.2
-      ink: 4.2.0(@types/react@19.2.7)(react@19.2.0)
-      react: 19.2.0
+      ink: 4.2.0(@types/react@19.2.7)(react@19.2.1)
+      react: 19.2.1
 
   ink@4.2.0(@types/react@19.2.7)(react@18.3.1):
     dependencies:
@@ -18394,7 +18394,7 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  ink@4.2.0(@types/react@19.2.7)(react@19.2.0):
+  ink@4.2.0(@types/react@19.2.7)(react@19.2.1):
     dependencies:
       ansi-escapes: 6.2.1
       auto-bind: 5.0.1
@@ -18409,8 +18409,8 @@ snapshots:
       is-upper-case: 2.0.2
       lodash: 4.17.21
       patch-console: 2.0.0
-      react: 19.2.0
-      react-reconciler: 0.29.2(react@19.2.0)
+      react: 19.2.1
+      react-reconciler: 0.29.2(react@19.2.1)
       scheduler: 0.23.2
       signal-exit: 3.0.7
       slice-ansi: 6.0.0
@@ -18970,7 +18970,7 @@ snapshots:
 
   lines-and-columns@1.2.4: {}
 
-  lingo.dev@0.116.5(@types/node@24.10.1)(@types/react@19.2.7)(encoding@0.1.13)(next@15.3.6(@opentelemetry/api@1.9.0)(react-dom@19.2.0(react@18.3.1))(react@18.3.1)):
+  lingo.dev@0.116.5(@types/node@24.10.1)(@types/react@19.2.7)(encoding@0.1.13)(next@15.3.6(@opentelemetry/api@1.9.0)(react-dom@19.2.1(react@18.3.1))(react@18.3.1)):
     dependencies:
       '@ai-sdk/anthropic': 1.2.11(zod@3.25.76)
       '@ai-sdk/google': 1.2.19(zod@3.25.76)
@@ -18988,7 +18988,7 @@ snapshots:
       '@inquirer/prompts': 7.8.0(@types/node@24.10.1)
       '@lingo.dev/_compiler': 0.7.18(react@18.3.1)
       '@lingo.dev/_locales': 0.2.0
-      '@lingo.dev/_react': 0.6.0(next@15.3.6(@opentelemetry/api@1.9.0)(react-dom@19.2.0(react@18.3.1))(react@18.3.1))
+      '@lingo.dev/_react': 0.6.0(next@15.3.6(@opentelemetry/api@1.9.0)(react-dom@19.2.1(react@18.3.1))(react@18.3.1))
       '@lingo.dev/_sdk': 0.12.9
       '@lingo.dev/_spec': 0.43.1
       '@markdoc/markdoc': 0.5.4(@types/react@19.2.7)(react@18.3.1)
@@ -19082,7 +19082,7 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  lingo.dev@0.116.5(@types/node@24.10.1)(@types/react@19.2.7)(encoding@0.1.13)(next@15.3.6(@opentelemetry/api@1.9.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)):
+  lingo.dev@0.116.5(@types/node@24.10.1)(@types/react@19.2.7)(encoding@0.1.13)(next@15.3.6(@opentelemetry/api@1.9.0)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)):
     dependencies:
       '@ai-sdk/anthropic': 1.2.11(zod@3.25.76)
       '@ai-sdk/google': 1.2.19(zod@3.25.76)
@@ -19100,7 +19100,7 @@ snapshots:
       '@inquirer/prompts': 7.8.0(@types/node@24.10.1)
       '@lingo.dev/_compiler': 0.7.18(react@18.3.1)
       '@lingo.dev/_locales': 0.2.0
-      '@lingo.dev/_react': 0.6.0(next@15.3.6(@opentelemetry/api@1.9.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))
+      '@lingo.dev/_react': 0.6.0(next@15.3.6(@opentelemetry/api@1.9.0)(react-dom@19.2.1(react@19.2.1))(react@19.2.1))
       '@lingo.dev/_sdk': 0.12.9
       '@lingo.dev/_spec': 0.43.1
       '@markdoc/markdoc': 0.5.4(@types/react@19.2.7)(react@18.3.1)
@@ -19897,7 +19897,7 @@ snapshots:
 
   negotiator@1.0.0: {}
 
-  next@15.2.6(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0):
+  next@15.2.6(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@19.2.1(react@19.2.1))(react@19.2.1):
     dependencies:
       '@next/env': 15.2.6
       '@swc/counter': 0.1.3
@@ -19905,9 +19905,9 @@ snapshots:
       busboy: 1.6.0
       caniuse-lite: 1.0.30001757
       postcss: 8.4.31
-      react: 19.2.0
-      react-dom: 19.2.0(react@19.2.0)
-      styled-jsx: 5.1.6(@babel/core@7.28.5)(react@19.2.0)
+      react: 19.2.1
+      react-dom: 19.2.1(react@19.2.1)
+      styled-jsx: 5.1.6(@babel/core@7.28.5)(react@19.2.1)
     optionalDependencies:
       '@next/swc-darwin-arm64': 15.2.5
       '@next/swc-darwin-x64': 15.2.5
@@ -19923,7 +19923,7 @@ snapshots:
       - '@babel/core'
       - babel-plugin-macros
 
-  next@15.3.6(@opentelemetry/api@1.9.0)(react-dom@19.2.0(react@18.3.1))(react@18.3.1):
+  next@15.3.6(@opentelemetry/api@1.9.0)(react-dom@19.2.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@next/env': 15.3.6
       '@swc/counter': 0.1.3
@@ -19932,7 +19932,7 @@ snapshots:
       caniuse-lite: 1.0.30001757
       postcss: 8.4.31
       react: 18.3.1
-      react-dom: 19.2.0(react@18.3.1)
+      react-dom: 19.2.1(react@18.3.1)
       styled-jsx: 5.1.6(react@18.3.1)
     optionalDependencies:
       '@next/swc-darwin-arm64': 15.3.5
@@ -19949,7 +19949,7 @@ snapshots:
       - '@babel/core'
       - babel-plugin-macros
 
-  next@15.3.6(@opentelemetry/api@1.9.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0):
+  next@15.3.6(@opentelemetry/api@1.9.0)(react-dom@19.2.1(react@19.2.1))(react@19.2.1):
     dependencies:
       '@next/env': 15.3.6
       '@swc/counter': 0.1.3
@@ -19957,9 +19957,9 @@ snapshots:
       busboy: 1.6.0
       caniuse-lite: 1.0.30001757
       postcss: 8.4.31
-      react: 19.2.0
-      react-dom: 19.2.0(react@19.2.0)
-      styled-jsx: 5.1.6(@babel/core@7.28.5)(react@19.2.0)
+      react: 19.2.1
+      react-dom: 19.2.1(react@19.2.1)
+      styled-jsx: 5.1.6(@babel/core@7.28.5)(react@19.2.1)
     optionalDependencies:
       '@next/swc-darwin-arm64': 15.3.5
       '@next/swc-darwin-x64': 15.3.5
@@ -20795,14 +20795,14 @@ snapshots:
       iconv-lite: 0.7.0
       unpipe: 1.0.0
 
-  react-dom@19.2.0(react@18.3.1):
+  react-dom@19.2.1(react@18.3.1):
     dependencies:
       react: 18.3.1
       scheduler: 0.27.0
 
-  react-dom@19.2.0(react@19.2.0):
+  react-dom@19.2.1(react@19.2.1):
     dependencies:
-      react: 19.2.0
+      react: 19.2.1
       scheduler: 0.27.0
 
   react-is@16.13.1: {}
@@ -20817,29 +20817,29 @@ snapshots:
       react: 18.3.1
       scheduler: 0.23.2
 
-  react-reconciler@0.29.2(react@19.2.0):
+  react-reconciler@0.29.2(react@19.2.1):
     dependencies:
       loose-envify: 1.4.0
-      react: 19.2.0
+      react: 19.2.1
       scheduler: 0.23.2
 
   react-refresh@0.14.2: {}
 
   react-refresh@0.17.0: {}
 
-  react-router@7.9.6(react-dom@19.2.0(react@19.2.0))(react@19.2.0):
+  react-router@7.9.6(react-dom@19.2.1(react@19.2.1))(react@19.2.1):
     dependencies:
       cookie: 1.0.2
-      react: 19.2.0
+      react: 19.2.1
       set-cookie-parser: 2.7.2
     optionalDependencies:
-      react-dom: 19.2.0(react@19.2.0)
+      react-dom: 19.2.1(react@19.2.1)
 
   react@18.3.1:
     dependencies:
       loose-envify: 1.4.0
 
-  react@19.2.0: {}
+  react@19.2.1: {}
 
   read-package-up@11.0.0:
     dependencies:
@@ -21681,10 +21681,10 @@ snapshots:
     dependencies:
       '@tokenizer/token': 0.3.0
 
-  styled-jsx@5.1.6(@babel/core@7.28.5)(react@19.2.0):
+  styled-jsx@5.1.6(@babel/core@7.28.5)(react@19.2.1):
     dependencies:
       client-only: 0.0.1
-      react: 19.2.0
+      react: 19.2.1
     optionalDependencies:
       '@babel/core': 7.28.5
 
@@ -21735,11 +21735,11 @@ snapshots:
       react: 18.3.1
       use-sync-external-store: 1.5.0(react@18.3.1)
 
-  swr@2.3.3(react@19.2.0):
+  swr@2.3.3(react@19.2.1):
     dependencies:
       dequal: 2.0.3
-      react: 19.2.0
-      use-sync-external-store: 1.5.0(react@19.2.0)
+      react: 19.2.1
+      use-sync-external-store: 1.5.0(react@19.2.1)
 
   symbol-tree@3.2.4: {}
 
@@ -22271,9 +22271,9 @@ snapshots:
     dependencies:
       react: 18.3.1
 
-  use-sync-external-store@1.5.0(react@19.2.0):
+  use-sync-external-store@1.5.0(react@19.2.1):
     dependencies:
-      react: 19.2.0
+      react: 19.2.1
 
   util-deprecate@1.0.2: {}
 
