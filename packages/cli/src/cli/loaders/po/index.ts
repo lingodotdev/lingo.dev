@@ -84,11 +84,9 @@ export function createPoDataLoader(
           }
           if (data[msgid]) {
             // Preserve headers from the target file (pullInput)
-            let headersToUse = sectionPo.headers;
-            if (currentSection) {
-              const currentSectionPo = gettextParser.po.parse(currentSection);
-              headersToUse = currentSectionPo.headers || sectionPo.headers;
-            }
+            const headersToUse = currentSection
+              ? gettextParser.po.parse(currentSection).headers
+              : sectionPo.headers;
 
             const updatedPo = _.merge({}, sectionPo, {
               headers: headersToUse,
