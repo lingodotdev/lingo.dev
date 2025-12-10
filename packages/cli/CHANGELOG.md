@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.117.14
+
+### Patch Changes
+
+- [#1664](https://github.com/lingodotdev/lingo.dev/pull/1664) [`7367bee`](https://github.com/lingodotdev/lingo.dev/commit/7367bee3318a14647bf9bd0105270b2492fcec31) Thanks [@vrcprl](https://github.com/vrcprl)! - supp[ort keys with whitespaces
+
 ## 0.117.13
 
 ### Patch Changes
