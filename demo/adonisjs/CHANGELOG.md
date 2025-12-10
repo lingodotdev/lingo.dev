@@ -1,5 +1,37 @@
 # adonis
 
+## 0.0.54
+
+### Patch Changes
+
+- Updated dependencies [[`7367bee`](https://github.com/lingodotdev/lingo.dev/commit/7367bee3318a14647bf9bd0105270b2492fcec31)]:
+  - lingo.dev@0.117.14
+
+## 0.0.53
+
+### Patch Changes
+
+- Updated dependencies [[`1a857bd`](https://github.com/lingodotdev/lingo.dev/commit/1a857bdf76d50afb3024a2437da5fd60e6721bb9)]:
+  - @lingo.dev/_compiler@0.8.6
+  - lingo.dev@0.117.13
+
+## 0.0.52
+
+### Patch Changes
+
+- [#1665](https://github.com/lingodotdev/lingo.dev/pull/1665) [`b898777`](https://github.com/lingodotdev/lingo.dev/commit/b89877729555025e0380451fa495573c2a114a6b) Thanks [@vrcprl](https://github.com/vrcprl)! - Upd react version
+
+- Updated dependencies [[`b898777`](https://github.com/lingodotdev/lingo.dev/commit/b89877729555025e0380451fa495573c2a114a6b)]:
+  - lingo.dev@0.117.12
+
+## 0.0.51
+
+### Patch Changes
+
+- Updated dependencies [[`1b2980d`](https://github.com/lingodotdev/lingo.dev/commit/1b2980d9215eca4f2db101af530680d6eb3be8eb)]:
+  - @lingo.dev/_compiler@0.8.5
+  - lingo.dev@0.117.11
+
 ## 0.0.50
 
 ### Patch Changes

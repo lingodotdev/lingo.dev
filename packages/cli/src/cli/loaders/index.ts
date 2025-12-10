@@ -58,6 +58,15 @@ type BucketLoaderOptions = {
   formatter?: FormatterType;
 };
 
+/**
+ * Helper function to encode keys for buckets that use flat loader
+ * The flat loader encodes keys using encodeURIComponent, so we need to
+ * encode locked/ignored keys patterns to match against the encoded keys
+ */
+function encodeKeys(keys: string[]): string[] {
+  return keys.map((key) => encodeURIComponent(key));
+}
+
 export default function createBucketLoader(
   bucketType: Z.infer<typeof bucketTypeSchema>,
   bucketPathPattern: string,
@@ -270,8 +279,8 @@ export default function createBucketLoader(
         createXcodeXcstringsLoader(options.defaultLocale),
         createFlatLoader(),
         createEnsureKeyOrderLoader(),
-        createLockedKeysLoader(lockedKeys || []),
-        createIgnoredKeysLoader(ignoredKeys || []),
+        createLockedKeysLoader(encodeKeys(lockedKeys || [])),
+        createIgnoredKeysLoader(encodeKeys(ignoredKeys || [])),
         createSyncLoader(),
         createVariableLoader({ type: "ieee" }),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
@@ -285,8 +294,8 @@ export default function createBucketLoader(
         createXcodeXcstringsV2Loader(options.defaultLocale),
         createFlatLoader(),
         createEnsureKeyOrderLoader(),
-        createLockedKeysLoader(lockedKeys || []),
-        createIgnoredKeysLoader(ignoredKeys || []),
+        createLockedKeysLoader(encodeKeys(lockedKeys || [])),
+        createIgnoredKeysLoader(encodeKeys(ignoredKeys || [])),
         createSyncLoader(),
         createVariableLoader({ type: "ieee" }),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),

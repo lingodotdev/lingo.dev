@@ -1,5 +1,21 @@
 # @lingo.dev/\_compiler
 
+## 0.8.6
+
+### Patch Changes
+
+- [#1667](https://github.com/lingodotdev/lingo.dev/pull/1667) [`1a857bd`](https://github.com/lingodotdev/lingo.dev/commit/1a857bdf76d50afb3024a2437da5fd60e6721bb9) Thanks [@vrcprl](https://github.com/vrcprl)! - Upd NPM workflows
+
+- Updated dependencies [[`1a857bd`](https://github.com/lingodotdev/lingo.dev/commit/1a857bdf76d50afb3024a2437da5fd60e6721bb9)]:
+  - @lingo.dev/_spec@0.44.4
+  - @lingo.dev/_sdk@0.13.4
+
+## 0.8.5
+
+### Patch Changes
+
+- [#1660](https://github.com/lingodotdev/lingo.dev/pull/1660) [`1b2980d`](https://github.com/lingodotdev/lingo.dev/commit/1b2980d9215eca4f2db101af530680d6eb3be8eb) Thanks [@wotschofsky](https://github.com/wotschofsky)! - Upgrade to non-vulnerable Next.js versions (React2Shell)
+
 ## 0.8.4
 
 ### Patch Changes

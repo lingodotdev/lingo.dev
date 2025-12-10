@@ -1,5 +1,23 @@
 # @lingo.dev/\_react
 
+## 0.7.3
+
+### Patch Changes
+
+- [#1667](https://github.com/lingodotdev/lingo.dev/pull/1667) [`1a857bd`](https://github.com/lingodotdev/lingo.dev/commit/1a857bdf76d50afb3024a2437da5fd60e6721bb9) Thanks [@vrcprl](https://github.com/vrcprl)! - Upd NPM workflows
+
+## 0.7.2
+
+### Patch Changes
+
+- [#1665](https://github.com/lingodotdev/lingo.dev/pull/1665) [`b898777`](https://github.com/lingodotdev/lingo.dev/commit/b89877729555025e0380451fa495573c2a114a6b) Thanks [@vrcprl](https://github.com/vrcprl)! - Upd react version
+
+## 0.7.1
+
+### Patch Changes
+
+- [#1660](https://github.com/lingodotdev/lingo.dev/pull/1660) [`1b2980d`](https://github.com/lingodotdev/lingo.dev/commit/1b2980d9215eca4f2db101af530680d6eb3be8eb) Thanks [@wotschofsky](https://github.com/wotschofsky)! - Upgrade to non-vulnerable Next.js versions (React2Shell)
+
 ## 0.7.0
 
 ### Minor Changes
