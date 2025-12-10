@@ -201,7 +201,7 @@
     "plist": "3.1.0",
     "posthog-node": "5.14.0",
     "prettier": "3.6.2",
-    "react": "19.2.0",
+    "react": "19.2.1",
     "rehype-stringify": "10.0.1",
     "remark-disable-tokenizers": "1.1.1",
     "remark-frontmatter": "5.0.0",
