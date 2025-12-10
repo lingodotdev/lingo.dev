@@ -64,6 +64,7 @@ export function createPoDataLoader(
           const entries = sectionPo.translations[contextKey];
           const msgid = Object.keys(entries).find((key) => entries[key].msgid);
           
+          // If the section is empty, try to find it in the current sections
           const currentSection = currentSections.find((cs) => {
             const csPo = gettextParser.po.parse(cs);
             const csContextKey = _.keys(csPo.translations)[0];
@@ -75,7 +76,6 @@ export function createPoDataLoader(
           });
 
           if (!msgid) {
-            // If the section is empty, try to find it in the current sections
             if (currentSection) {
               return currentSection;
             }
