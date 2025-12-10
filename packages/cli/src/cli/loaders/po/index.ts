@@ -64,7 +64,6 @@ export function createPoDataLoader(
           const entries = sectionPo.translations[contextKey];
           const msgid = Object.keys(entries).find((key) => entries[key].msgid);
           
-          // Find the corresponding section in pullInput (target file) once
           const currentSection = currentSections.find((cs) => {
             const csPo = gettextParser.po.parse(cs);
             const csContextKey = _.keys(csPo.translations)[0];
@@ -83,7 +82,7 @@ export function createPoDataLoader(
             return section;
           }
           if (data[msgid]) {
-            // Preserve headers from the target file (pullInput)
+            // Preserve headers from the target file
             const headersToUse = currentSection
               ? gettextParser.po.parse(currentSection).headers
               : sectionPo.headers;
