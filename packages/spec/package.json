@@ -4,7 +4,8 @@
   "description": "Lingo.dev open specification",
   "private": false,
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "provenance": true
   },
   "type": "module",
   "sideEffects": false,
