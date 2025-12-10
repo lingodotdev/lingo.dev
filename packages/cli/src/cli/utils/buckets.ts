@@ -175,8 +175,8 @@ function expandPlaceholderedGlob(
     const placeholderedPath = sourcePathChunks.join(path.sep);
     return placeholderedPath;
   });
-  // return the placeholdered paths
-  return placeholderedPaths;
+  // return the placeholdered paths (normalized to forward slashes for cross-platform compatibility)
+  return placeholderedPaths.map(p => p.replace(/\\/g, "/"));
 }
 
 function resolveBucketItem(bucketItem: string | BucketItem): BucketItem {
