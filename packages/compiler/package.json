@@ -4,7 +4,8 @@
   "description": "Lingo.dev Compiler",
   "private": false,
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "provenance": true
   },
   "sideEffects": false,
   "type": "module",
