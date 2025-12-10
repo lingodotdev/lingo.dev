@@ -75,7 +75,7 @@ export function createPoDataLoader(
           });
 
           if (!msgid) {
-            // If the section is empty (metadata section), return the target's version
+            // If the section is empty, try to find it in the current sections
             if (currentSection) {
               return currentSection;
             }
