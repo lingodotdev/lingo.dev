@@ -174,7 +174,7 @@ export default new Command()
         flags: ctx.flags,
       });
     } catch (error: any) {
-      await trackEvent(authId || "unknown", "cmd.run.error", {});
+      await trackEvent(authId, "cmd.run.error", {});
       // Play sad sound if sound flag is enabled
       if (args.sound) {
         await playSound("failure");

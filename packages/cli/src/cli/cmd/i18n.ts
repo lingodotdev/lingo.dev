@@ -100,7 +100,7 @@ export default new Command()
       flags = parseFlags(options);
     } catch (parseError: any) {
       // Handle flag validation errors (like invalid locale codes)
-      await trackEvent("unknown", "cmd.i18n.error", {
+      await trackEvent(null, "cmd.i18n.error", {
         errorType: "validation_error",
         errorName: parseError.name || "ValidationError",
         errorMessage: parseError.message || "Invalid command line options",
@@ -581,7 +581,7 @@ export default new Command()
         });
       } else {
         ora.warn("Localization completed with errors.");
-        await trackEvent(authId || "unknown", "cmd.i18n.error", {
+        await trackEvent(authId, "cmd.i18n.error", {
           flags,
           ...aggregateErrorAnalytics(
             errorDetails,
@@ -612,7 +612,7 @@ export default new Command()
         };
       }
 
-      await trackEvent(authId || "unknown", "cmd.i18n.error", {
+      await trackEvent(authId, "cmd.i18n.error", {
         flags,
         errorType,
         errorName: error.name || "Error",
