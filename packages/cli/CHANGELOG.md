@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.117.16
+
+### Patch Changes
+
+- [#1662](https://github.com/lingodotdev/lingo.dev/pull/1662) [`a60aa1e`](https://github.com/lingodotdev/lingo.dev/commit/a60aa1ec01149a4ef418b9025ae50891264f9123) Thanks [@ceolinwill](https://github.com/ceolinwill)! - fix language header for PO files
+
 ## 0.117.15
 
 ### Patch Changes
