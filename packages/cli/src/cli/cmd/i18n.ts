@@ -93,6 +93,10 @@ export default new Command()
   .action(async function (options) {
     updateGitignore();
 
+    await trackEvent(null, "cmd.i18n.start", {
+      rawOptions: options,
+    });
+
     const ora = Ora();
     let flags: ReturnType<typeof parseFlags>;
 
@@ -109,6 +113,7 @@ export default new Command()
         errorCount: 1,
         stage: "flag_validation",
       });
+      await new Promise((resolve) => setTimeout(resolve, 50));
       throw parseError;
     }
 
@@ -147,11 +152,6 @@ export default new Command()
         authId = auth.id;
         ora.succeed(`Authenticated as ${auth.email}`);
       }
-
-      await trackEvent(authId, "cmd.i18n.start", {
-        i18nConfig,
-        flags,
-      });
 
       let buckets = getBuckets(i18nConfig!);
       if (flags.bucket?.length) {
@@ -579,6 +579,7 @@ export default new Command()
           localeCount: targetLocales.length,
           processedSuccessfully: true,
         });
+        await new Promise((resolve) => setTimeout(resolve, 50));
       } else {
         ora.warn("Localization completed with errors.");
         await trackEvent(authId, "cmd.i18n.error", {
@@ -590,6 +591,7 @@ export default new Command()
             i18nConfig!,
           ),
         });
+        await new Promise((resolve) => setTimeout(resolve, 50));
       }
     } catch (error: any) {
       ora.fail(error.message);
@@ -623,6 +625,7 @@ export default new Command()
         errorCount: errorDetails.length + 1,
         previousErrors: createPreviousErrorContext(errorDetails),
       });
+      await new Promise((resolve) => setTimeout(resolve, 50));
     }
   });
 
