@@ -1,6 +1,6 @@
 {
   "name": "next-app",
-  "version": "0.2.102",
+  "version": "0.2.111",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -10,9 +10,9 @@
   },
   "dependencies": {
     "lingo.dev": "workspace:*",
-    "next": "15.3.1",
-    "react": "19.2.0",
-    "react-dom": "19.2.0"
+    "next": "15.3.8",
+    "react": "19.2.3",
+    "react-dom": "19.2.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "3",
