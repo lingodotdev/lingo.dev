@@ -6,7 +6,7 @@ import { getRepositoryId } from "./repository-id";
 const POSTHOG_API_KEY = "phc_eR0iSoQufBxNY36k0f0T15UvHJdTfHlh8rJcxsfhfXk";
 const POSTHOG_HOST = "eu.i.posthog.com";
 const POSTHOG_PATH = "/i/v0/e/";
-const REQUEST_TIMEOUT_MS = 1000;
+const REQUEST_TIMEOUT_MS = 3000;
 const TRACKING_VERSION = "2.0";
 
 function determineDistinctId(providedId: string | null | undefined): {

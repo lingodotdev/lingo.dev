@@ -636,6 +636,7 @@ export default new Command()
         totalWordsToTranslate,
         authenticated: !!authId,
       });
+      await new Promise((resolve) => setTimeout(resolve, 50));
       exitGracefully();
     } catch (error: any) {
       ora.fail(error.message);
@@ -644,6 +645,7 @@ export default new Command()
         error: error.message,
         authenticated: !!authId,
       });
+      await new Promise((resolve) => setTimeout(resolve, 50));
       process.exit(1);
     }
   });
