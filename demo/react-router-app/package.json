@@ -1,6 +1,6 @@
 {
   "name": "react-router-app",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "private": true,
   "type": "module",
   "scripts": {
