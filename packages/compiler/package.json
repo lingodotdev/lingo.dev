@@ -45,7 +45,7 @@
     "@types/lodash": "4.17.21",
     "@types/object-hash": "3.0.6",
     "@types/react": "19.2.7",
-    "next": "15.2.6",
+    "next": "15.3.8",
     "tsup": "8.5.1",
     "typescript": "5.9.3",
     "vitest": "4.0.13"
