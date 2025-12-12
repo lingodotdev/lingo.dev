@@ -1,5 +1,42 @@
 # next-app
 
+## 0.2.111
+
+### Patch Changes
+
+- Updated dependencies [[`bb14deb`](https://github.com/lingodotdev/lingo.dev/commit/bb14debf734bf87a2ea64946f8e7235c01b05578)]:
+  - lingo.dev@0.117.19
+
+## 0.2.110
+
+### Patch Changes
+
+- [`3b24647`](https://github.com/lingodotdev/lingo.dev/commit/3b246473f6f4773f00ea13211bc2be59a98e0b7c) Thanks [@vrcprl](https://github.com/vrcprl)! - Update Next.js to 15.3.8 to address security vulnerability
+
+- Updated dependencies []:
+  - lingo.dev@0.117.18
+
+## 0.2.109
+
+### Patch Changes
+
+- Updated dependencies [[`29949db`](https://github.com/lingodotdev/lingo.dev/commit/29949db24ff9c8938233ebb42e8189690c3c7813)]:
+  - lingo.dev@0.117.17
+
+## 0.2.108
+
+### Patch Changes
+
+- Updated dependencies [[`a60aa1e`](https://github.com/lingodotdev/lingo.dev/commit/a60aa1ec01149a4ef418b9025ae50891264f9123)]:
+  - lingo.dev@0.117.16
+
+## 0.2.107
+
+### Patch Changes
+
+- Updated dependencies [[`d7ccd60`](https://github.com/lingodotdev/lingo.dev/commit/d7ccd6000cd980333e7ac4b63da4e2ba624c3de4)]:
+  - lingo.dev@0.117.15
+
 ## 0.2.106
 
 ### Patch Changes

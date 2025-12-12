@@ -173,8 +173,10 @@ export default new Command()
         config: ctx.config,
         flags: ctx.flags,
       });
+      await new Promise((resolve) => setTimeout(resolve, 50));
     } catch (error: any) {
-      await trackEvent(authId || "unknown", "cmd.run.error", {});
+      await trackEvent(authId, "cmd.run.error", {});
+      await new Promise((resolve) => setTimeout(resolve, 50));
       // Play sad sound if sound flag is enabled
       if (args.sound) {
         await playSound("failure");

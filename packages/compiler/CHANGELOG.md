@@ -1,5 +1,17 @@
 # @lingo.dev/\_compiler
 
+## 0.8.8
+
+### Patch Changes
+
+- [`3b24647`](https://github.com/lingodotdev/lingo.dev/commit/3b246473f6f4773f00ea13211bc2be59a98e0b7c) Thanks [@vrcprl](https://github.com/vrcprl)! - Update Next.js to 15.3.8 to address security vulnerability
+
+## 0.8.7
+
+### Patch Changes
+
+- [#1672](https://github.com/lingodotdev/lingo.dev/pull/1672) [`29949db`](https://github.com/lingodotdev/lingo.dev/commit/29949db24ff9c8938233ebb42e8189690c3c7813) Thanks [@vrcprl](https://github.com/vrcprl)! - Improve observability
+
 ## 0.8.6
 
 ### Patch Changes
