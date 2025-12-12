@@ -93,10 +93,6 @@ export default new Command()
   .action(async function (options) {
     updateGitignore();
 
-    await trackEvent(null, "cmd.i18n.start", {
-      rawOptions: options,
-    });
-
     const ora = Ora();
     let flags: ReturnType<typeof parseFlags>;
 
@@ -152,6 +148,11 @@ export default new Command()
         authId = auth.id;
         ora.succeed(`Authenticated as ${auth.email}`);
       }
+
+      await trackEvent(authId, "cmd.i18n.start", {
+        i18nConfig,
+        flags,
+      });
 
       let buckets = getBuckets(i18nConfig!);
       if (flags.bucket?.length) {
