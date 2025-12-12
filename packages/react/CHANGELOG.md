@@ -1,5 +1,11 @@
 # @lingo.dev/\_react
 
+## 0.7.5
+
+### Patch Changes
+
+- [`3b24647`](https://github.com/lingodotdev/lingo.dev/commit/3b246473f6f4773f00ea13211bc2be59a98e0b7c) Thanks [@vrcprl](https://github.com/vrcprl)! - Update Next.js to 15.3.8 to address security vulnerability
+
 ## 0.7.4
 
 ### Patch Changes
