@@ -1,5 +1,11 @@
 # @lingo.dev/\_compiler
 
+## 0.8.7
+
+### Patch Changes
+
+- [#1672](https://github.com/lingodotdev/lingo.dev/pull/1672) [`29949db`](https://github.com/lingodotdev/lingo.dev/commit/29949db24ff9c8938233ebb42e8189690c3c7813) Thanks [@vrcprl](https://github.com/vrcprl)! - Improve observability
+
 ## 0.8.6
 
 ### Patch Changes
