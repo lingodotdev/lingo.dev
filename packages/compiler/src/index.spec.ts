@@ -37,3 +37,19 @@ describe("compiler integration", () => {
     expect(out.plugins[0]).toBeDefined();
   });
 });
+
+it("next() handles string nextConfig (Next.js 16 compatibility)", () => {
+  // Test the problematic case from Next.js 16 where nextConfig is a string
+  const stringConfig = 'phase-production-build' as any;
+  
+  const result = compiler.next({
+    sourceRoot: "src",
+    models: "lingo.dev",
+    turbopack: { enabled: false },
+  })(stringConfig);
+  
+  // Should not throw an error and should return a valid NextConfig object
+  expect(typeof result).toBe("object");
+  expect(typeof result.webpack).toBe("function");
+});
+

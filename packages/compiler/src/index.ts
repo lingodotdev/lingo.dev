@@ -184,6 +184,9 @@ export default {
       },
     ) =>
     (nextConfig: any = {}): NextConfig => {
+      if (typeof nextConfig !== 'object' || nextConfig === null) {
+    nextConfig = {};
+  }
       const mergedParams = _.merge(
         {},
         defaultParams,
