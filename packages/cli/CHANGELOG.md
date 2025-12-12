@@ -1,5 +1,50 @@
 # lingo.dev
 
+## 0.117.15
+
+### Patch Changes
+
+- [`d7ccd60`](https://github.com/lingodotdev/lingo.dev/commit/d7ccd6000cd980333e7ac4b63da4e2ba624c3de4) Thanks [@vrcprl](https://github.com/vrcprl)! - chore: update React to 19.2.3 to fix CVE-2025-55184 (DoS) and CVE-2025-55183 (source code exposure)
+
+- Updated dependencies [[`d7ccd60`](https://github.com/lingodotdev/lingo.dev/commit/d7ccd6000cd980333e7ac4b63da4e2ba624c3de4)]:
+  - @lingo.dev/_react@0.7.4
+
+## 0.117.14
+
+### Patch Changes
+
+- [#1664](https://github.com/lingodotdev/lingo.dev/pull/1664) [`7367bee`](https://github.com/lingodotdev/lingo.dev/commit/7367bee3318a14647bf9bd0105270b2492fcec31) Thanks [@vrcprl](https://github.com/vrcprl)! - supp[ort keys with whitespaces
+
+## 0.117.13
+
+### Patch Changes
+
+- [#1667](https://github.com/lingodotdev/lingo.dev/pull/1667) [`1a857bd`](https://github.com/lingodotdev/lingo.dev/commit/1a857bdf76d50afb3024a2437da5fd60e6721bb9) Thanks [@vrcprl](https://github.com/vrcprl)! - Upd NPM workflows
+
+- Updated dependencies [[`1a857bd`](https://github.com/lingodotdev/lingo.dev/commit/1a857bdf76d50afb3024a2437da5fd60e6721bb9)]:
+  - @lingo.dev/_compiler@0.8.6
+  - @lingo.dev/_locales@0.3.1
+  - @lingo.dev/_react@0.7.3
+  - @lingo.dev/_spec@0.44.4
+  - @lingo.dev/_sdk@0.13.4
+
+## 0.117.12
+
+### Patch Changes
+
+- [#1665](https://github.com/lingodotdev/lingo.dev/pull/1665) [`b898777`](https://github.com/lingodotdev/lingo.dev/commit/b89877729555025e0380451fa495573c2a114a6b) Thanks [@vrcprl](https://github.com/vrcprl)! - Upd react version
+
+- Updated dependencies [[`b898777`](https://github.com/lingodotdev/lingo.dev/commit/b89877729555025e0380451fa495573c2a114a6b)]:
+  - @lingo.dev/_react@0.7.2
+
+## 0.117.11
+
+### Patch Changes
+
+- Updated dependencies [[`1b2980d`](https://github.com/lingodotdev/lingo.dev/commit/1b2980d9215eca4f2db101af530680d6eb3be8eb)]:
+  - @lingo.dev/_compiler@0.8.5
+  - @lingo.dev/_react@0.7.1
+
 ## 0.117.10
 
 ### Patch Changes

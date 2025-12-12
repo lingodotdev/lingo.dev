@@ -1,5 +1,42 @@
 # next-app
 
+## 0.2.107
+
+### Patch Changes
+
+- Updated dependencies [[`d7ccd60`](https://github.com/lingodotdev/lingo.dev/commit/d7ccd6000cd980333e7ac4b63da4e2ba624c3de4)]:
+  - lingo.dev@0.117.15
+
+## 0.2.106
+
+### Patch Changes
+
+- Updated dependencies [[`7367bee`](https://github.com/lingodotdev/lingo.dev/commit/7367bee3318a14647bf9bd0105270b2492fcec31)]:
+  - lingo.dev@0.117.14
+
+## 0.2.105
+
+### Patch Changes
+
+- Updated dependencies [[`1a857bd`](https://github.com/lingodotdev/lingo.dev/commit/1a857bdf76d50afb3024a2437da5fd60e6721bb9)]:
+  - lingo.dev@0.117.13
+
+## 0.2.104
+
+### Patch Changes
+
+- [#1665](https://github.com/lingodotdev/lingo.dev/pull/1665) [`b898777`](https://github.com/lingodotdev/lingo.dev/commit/b89877729555025e0380451fa495573c2a114a6b) Thanks [@vrcprl](https://github.com/vrcprl)! - Upd react version
+
+- Updated dependencies [[`b898777`](https://github.com/lingodotdev/lingo.dev/commit/b89877729555025e0380451fa495573c2a114a6b)]:
+  - lingo.dev@0.117.12
+
+## 0.2.103
+
+### Patch Changes
+
+- Updated dependencies []:
+  - lingo.dev@0.117.11
+
 ## 0.2.102
 
 ### Patch Changes
