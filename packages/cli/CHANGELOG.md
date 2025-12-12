@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.117.20
+
+### Patch Changes
+
+- [#1681](https://github.com/lingodotdev/lingo.dev/pull/1681) [`595215f`](https://github.com/lingodotdev/lingo.dev/commit/595215f0060fb365faf0b988e39a561649359517) Thanks [@vrcprl](https://github.com/vrcprl)! - improve observability for i18n
+
 ## 0.117.19
 
 ### Patch Changes
