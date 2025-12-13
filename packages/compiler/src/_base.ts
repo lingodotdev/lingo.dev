@@ -64,6 +64,23 @@ export type CompilerParams = {
    */
   debug: boolean;
   /**
+   * When `true`, the compiler will inject a stable DOM data attribute on every
+   * localized JSX scope so that downstream tooling (like the context capture
+   * pipeline) can discover strings at runtime.
+   *
+   * @default false
+   */
+  exposeContextAttribute: boolean;
+  /**
+   * The name of the DOM data attribute that will be injected when
+   * `exposeContextAttribute` is enabled. Use a `data-*` attribute to avoid
+  * interfering with user props. Values that do not start with `data-` fall
+  * back to `data-lingo-id`.
+   *
+   * @default "data-lingo-id"
+   */
+  contextAttributeName: string;
+  /**
    * The model(s) to use for translation.
    *
    * If set to `"lingo.dev"`, the compiler will use Lingo.dev Engine.
@@ -202,6 +219,8 @@ export const defaultParams: CompilerParams = {
   rsc: false,
   useDirective: false,
   debug: false,
+  exposeContextAttribute: false,
+  contextAttributeName: "data-lingo-id",
   models: {},
   prompt: null,
 };

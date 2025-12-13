@@ -485,8 +485,105 @@ export const configV1_10Definition = extendConfigDefinition(
   },
 );
 
+// v1.10 -> v1.11
+// Changes: Add optional "review" section used by the context snapshot tooling
+const reviewRouteSchema = Z.union([
+  Z.string(),
+  Z.object({
+    path: Z.string().describe(
+      "Route path or absolute URL to capture for visual review recordings.",
+    ),
+    name: Z.string()
+      .optional()
+      .describe("Optional human-readable route label used in reports."),
+    locales: Z.array(localeCodeSchema)
+      .optional()
+      .describe(
+        "Override the locales to capture for this specific route. Defaults to global review locales.",
+      ),
+  }),
+]).describe(
+  "A route definition (string shorthand or object) to capture during context review runs.",
+);
+
+const reviewCompilerSchema = Z.object({
+  sourceRoot: Z.string()
+    .default("src")
+    .describe(
+      "Path to the compiler source root (Next.js app/, src/, etc.) relative to the repository root.",
+    ),
+  lingoDir: Z.string()
+    .default("lingo")
+    .describe(
+      "Directory inside the source root where Lingo compiler artifacts (meta.json, dictionary.js) are stored.",
+    ),
+}).describe("Compiler output location used by the context review tooling.");
+
+type ReviewRoute =
+  | string
+  | {
+      path: string;
+      name?: string;
+      locales?: string[];
+    };
+
+const createDefaultReviewConfig = () => ({
+  attribute: "data-lingo-id",
+  outputDir: ".lingo/context",
+  routes: [] as ReviewRoute[],
+  compiler: {
+    sourceRoot: "src",
+    lingoDir: "lingo",
+  },
+});
+
+const reviewSchema = Z.object({
+  attribute: Z.string()
+    .default("data-lingo-id")
+    .describe(
+      "Name of the DOM data attribute injected by the compiler for context markers. Must begin with 'data-' or it will fall back to 'data-lingo-id'.",
+    ),
+  outputDir: Z.string()
+    .default(".lingo/context")
+    .describe(
+      "Output directory (relative to the repo root) where review artifacts are written.",
+    ),
+  routes: Z.array(reviewRouteSchema)
+    .default([])
+    .describe(
+      "List of routes or absolute URLs to crawl when capturing visual/string context.",
+    ),
+  compiler: reviewCompilerSchema.default({
+    sourceRoot: "src",
+    lingoDir: "lingo",
+  }),
+}).describe("Configuration for the context snapshot review tooling.");
+
+export const configV1_11Definition = extendConfigDefinition(
+  configV1_10Definition,
+  {
+    createSchema: (baseSchema) =>
+      baseSchema.extend({
+        review: reviewSchema
+          .default(createDefaultReviewConfig())
+          .describe("Context snapshot configuration block."),
+      }),
+    createDefaultValue: (baseDefaultValue) => ({
+      ...baseDefaultValue,
+      version: "1.11",
+      review: createDefaultReviewConfig(),
+    }),
+    createUpgrader: (oldConfig) => ({
+      ...oldConfig,
+      version: "1.11",
+      review:
+        (oldConfig as any).review ?? createDefaultReviewConfig(),
+    }),
+  },
+);
+
 // exports
-export const LATEST_CONFIG_DEFINITION = configV1_10Definition;
+export const LATEST_CONFIG_DEFINITION = configV1_11Definition;
 
 export type I18nConfig = Z.infer<(typeof LATEST_CONFIG_DEFINITION)["schema"]>;
 

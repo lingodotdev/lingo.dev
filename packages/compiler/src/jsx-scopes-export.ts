@@ -6,6 +6,7 @@ import { getJsxElementHash } from "./utils/hash";
 import { getJsxAttributesMap } from "./utils/jsx-attribute";
 import { extractJsxContent } from "./utils/jsx-content";
 import { collectJsxScopes } from "./utils/jsx-scope";
+import { resolveContextAttributeName } from "./utils/context-marker";
 import { CompilerPayload } from "./_base";
 
 // Processes only JSX element scopes
@@ -46,21 +47,33 @@ export function jsxScopesExportMutation(
       Boolean(skip || false),
     );
 
-    const attributesMap = getJsxAttributesMap(scope);
-    const overrides = _.chain(attributesMap)
-      .entries()
-      .filter(([attributeKey]) =>
-        attributeKey.startsWith("data-lingo-override-"),
-      )
+    const attributesMap: Record<string, any> = getJsxAttributesMap(scope);
+    const overrides = Object.entries(attributesMap)
+      .filter(([attributeKey]) => attributeKey.startsWith("data-lingo-override-"))
       .map(([k, v]) => [k.split("data-lingo-override-")[1], v])
       .filter(([k]) => !!k)
       .filter(([, v]) => !!v)
-      .fromPairs()
-      .value();
+      .reduce((acc: Record<string, any>, [k, v]) => {
+        acc[String(k)] = v;
+        return acc;
+      }, {} as Record<string, any>);
     lcp.setScopeOverrides(payload.relativeFilePath, scopeKey, overrides);
 
     const content = extractJsxContent(scope);
     lcp.setScopeContent(payload.relativeFilePath, scopeKey, content);
+
+    const { name: attributeName } = resolveContextAttributeName(
+      payload.params.contextAttributeName,
+    );
+    const attributeValue = attributesMap[attributeName];
+    const markerValue =
+      typeof attributeValue === "string" && attributeValue.trim().length > 0
+        ? attributeValue.trim()
+        : `${payload.relativeFilePath}::${scopeKey}`;
+    lcp.setScopeMarker(payload.relativeFilePath, scopeKey, {
+      attribute: attributeName,
+      value: markerValue,
+    });
   }
 
   lcp.save();

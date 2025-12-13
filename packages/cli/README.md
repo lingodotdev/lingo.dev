@@ -100,6 +100,22 @@ It fingerprints every string, caches results, and only re-translates what change
 
 ---
 
+### 📸 Context Snapshot Manifest
+
+Feed your translators with real UI context. Once you've run the compiler, capture a manifest that links every localized JSX scope to its DOM marker:
+
+```bash
+npx lingo.dev@latest review capture
+```
+
+The command reads `meta.json`/`dictionary.js`, outputs `.lingo/context/context-manifest.json`, and reminds you to enable `exposeContextAttribute` in your build config so `data-lingo-id` markers show up in the rendered app.
+
+Each manifest entry includes the compiler-provided `marker.attribute`/`marker.value` pair alongside source and translated strings, making it easy to target the exact DOM nodes when capturing context.
+
+Add per-route capture rules under the new `review` block in `i18n.json` to drive upcoming screenshot automation.
+
+---
+
 ### 🔄 Lingo.dev CI/CD
 
 Ship perfect translations automatically.

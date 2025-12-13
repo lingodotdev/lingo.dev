@@ -9,6 +9,12 @@ export const lcpScope = z.object({
   context: z.string().optional(),
   skip: z.boolean().optional(),
   overrides: z.record(z.string(), z.string()).optional(),
+  marker: z
+    .object({
+      attribute: z.string(),
+      value: z.string(),
+    })
+    .optional(),
 });
 
 export type LCPScope = z.infer<typeof lcpScope>;
