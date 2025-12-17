@@ -1,5 +1,17 @@
 # lingo.dev
 
+## 0.117.21
+
+### Patch Changes
+
+- [#1683](https://github.com/lingodotdev/lingo.dev/pull/1683) [`d2d44a1`](https://github.com/lingodotdev/lingo.dev/commit/d2d44a180b20102bf176dbd46866afab72380b74) Thanks [@ceolinwill](https://github.com/ceolinwill)! - fix racing condition where concurrent processing could use data from the wrong locale
+
+## 0.117.20
+
+### Patch Changes
+
+- [#1681](https://github.com/lingodotdev/lingo.dev/pull/1681) [`595215f`](https://github.com/lingodotdev/lingo.dev/commit/595215f0060fb365faf0b988e39a561649359517) Thanks [@vrcprl](https://github.com/vrcprl)! - improve observability for i18n
+
 ## 0.117.19
 
 ### Patch Changes
