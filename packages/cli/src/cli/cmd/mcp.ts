@@ -48,8 +48,8 @@ export default new Command()
       "translate",
       "Detect language and translate text with Lingo.dev.",
       {
-        text: Z.string(),
-        targetLocale: Z.string().regex(/^[a-z]{2}(-[A-Z]{2})?$/),
+        text: Z.string() as any,
+        targetLocale: Z.string().regex(/^[a-z]{2}(-[A-Z]{2})?$/) as any,
       },
       async ({ text, targetLocale }) => {
         const sourceLocale = await replexicaEngine.recognizeLocale(text);
