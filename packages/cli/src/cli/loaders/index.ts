@@ -1,5 +1,4 @@
 import Z from "zod";
-import jsdom from "jsdom";
 import { bucketTypeSchema } from "@lingo.dev/_spec";
 import { composeLoaders } from "./_utils";
 import createJsonLoader from "./json";
@@ -11,17 +10,18 @@ import createYamlLoader from "./yaml";
 import createRootKeyLoader from "./root-key";
 import createFlutterLoader from "./flutter";
 import { ILoader } from "./_types";
+import createAilLoader from "./ail";
 import createAndroidLoader from "./android";
 import createCsvLoader from "./csv";
 import createHtmlLoader from "./html";
 import createMarkdownLoader from "./markdown";
 import createMarkdocLoader from "./markdoc";
+import createMjmlLoader from "./mjml";
 import createPropertiesLoader from "./properties";
 import createXcodeStringsLoader from "./xcode-strings";
 import createXcodeStringsdictLoader from "./xcode-stringsdict";
 import createXcodeXcstringsLoader from "./xcode-xcstrings";
-import createXcodeXcstringsV2Loader from "./xcode-xcstrings-v2-loader";
-import { isICUPluralObject } from "./xcode-xcstrings-icu";
+import createXcodeXcstringsV2Loader from "./xcode-xcstrings-v2";
 import createUnlocalizableLoader from "./unlocalizable";
 import { createFormatterLoader, FormatterType } from "./formatters";
 import createPoLoader from "./po";
@@ -45,6 +45,7 @@ import createMdxSectionsSplit2Loader from "./mdx2/sections-split-2";
 import createLockedPatternsLoader from "./locked-patterns";
 import createIgnoredKeysLoader from "./ignored-keys";
 import createEjsLoader from "./ejs";
+import createTwigLoader from "./twig";
 import createEnsureKeyOrderLoader from "./ensure-key-order";
 import createTxtLoader from "./txt";
 import createJsonKeysLoader from "./json-dictionary";
@@ -57,6 +58,15 @@ type BucketLoaderOptions = {
   formatter?: FormatterType;
 };
 
+/**
+ * Helper function to encode keys for buckets that use flat loader
+ * The flat loader encodes keys using encodeURIComponent, so we need to
+ * encode locked/ignored keys patterns to match against the encoded keys
+ */
+function encodeKeys(keys: string[]): string[] {
+  return keys.map((key) => encodeURIComponent(key));
+}
+
 export default function createBucketLoader(
   bucketType: Z.infer<typeof bucketTypeSchema>,
   bucketPathPattern: string,
@@ -68,6 +78,18 @@ export default function createBucketLoader(
   switch (bucketType) {
     default:
       throw new Error(`Unsupported bucket type: ${bucketType}`);
+    case "ail":
+      return composeLoaders(
+        createTextFileLoader(bucketPathPattern),
+        createLockedPatternsLoader(lockedPatterns),
+        createAilLoader(),
+        createEnsureKeyOrderLoader(),
+        createFlatLoader(),
+        createLockedKeysLoader(lockedKeys || []),
+        createIgnoredKeysLoader(ignoredKeys || []),
+        createSyncLoader(),
+        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+      );
     case "android":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
@@ -192,6 +214,17 @@ export default function createBucketLoader(
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
+    case "mjml":
+      return composeLoaders(
+        createTextFileLoader(bucketPathPattern),
+        createFormatterLoader(options.formatter, "html", bucketPathPattern),
+        createLockedPatternsLoader(lockedPatterns),
+        createMjmlLoader(),
+        createLockedKeysLoader(lockedKeys || []),
+        createIgnoredKeysLoader(ignoredKeys || []),
+        createSyncLoader(),
+        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+      );
     case "po":
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
@@ -246,8 +279,8 @@ export default function createBucketLoader(
         createXcodeXcstringsLoader(options.defaultLocale),
         createFlatLoader(),
         createEnsureKeyOrderLoader(),
-        createLockedKeysLoader(lockedKeys || []),
-        createIgnoredKeysLoader(ignoredKeys || []),
+        createLockedKeysLoader(encodeKeys(lockedKeys || [])),
+        createIgnoredKeysLoader(encodeKeys(ignoredKeys || [])),
         createSyncLoader(),
         createVariableLoader({ type: "ieee" }),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
@@ -258,12 +291,11 @@ export default function createBucketLoader(
         createPlutilJsonTextLoader(),
         createLockedPatternsLoader(lockedPatterns),
         createJsonLoader(),
-        createXcodeXcstringsLoader(options.defaultLocale),
         createXcodeXcstringsV2Loader(options.defaultLocale),
-        createFlatLoader({ shouldPreserveObject: isICUPluralObject }),
+        createFlatLoader(),
         createEnsureKeyOrderLoader(),
-        createLockedKeysLoader(lockedKeys || []),
-        createIgnoredKeysLoader(ignoredKeys || []),
+        createLockedKeysLoader(encodeKeys(lockedKeys || [])),
+        createIgnoredKeysLoader(encodeKeys(ignoredKeys || [])),
         createSyncLoader(),
         createVariableLoader({ type: "ieee" }),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
@@ -402,6 +434,16 @@ export default function createBucketLoader(
         createSyncLoader(),
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
+        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+      );
+    case "twig":
+      return composeLoaders(
+        createTextFileLoader(bucketPathPattern),
+        createLockedPatternsLoader(lockedPatterns),
+        createTwigLoader(),
+        createLockedKeysLoader(lockedKeys || []),
+        createIgnoredKeysLoader(ignoredKeys || []),
+        createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
     case "txt":

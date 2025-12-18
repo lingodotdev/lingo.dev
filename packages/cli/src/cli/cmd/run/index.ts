@@ -84,7 +84,8 @@ export default new Command()
   .option(
     "--key <key>",
     "Filter keys by prefix matching on dot-separated paths. Example: auth.login to match all keys starting with auth.login. Repeat for multiple patterns",
-    (val: string, prev: string[]) => (prev ? [...prev, val] : [val]),
+    (val: string, prev: string[]) =>
+      prev ? [...prev, encodeURIComponent(val)] : [encodeURIComponent(val)],
   )
   .option(
     "--force",
@@ -172,8 +173,10 @@ export default new Command()
         config: ctx.config,
         flags: ctx.flags,
       });
+      await new Promise((resolve) => setTimeout(resolve, 50));
     } catch (error: any) {
-      await trackEvent(authId || "unknown", "cmd.run.error", {});
+      await trackEvent(authId, "cmd.run.error", {});
+      await new Promise((resolve) => setTimeout(resolve, 50));
       // Play sad sound if sound flag is enabled
       if (args.sound) {
         await playSound("failure");

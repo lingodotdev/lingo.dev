@@ -10,15 +10,15 @@
 
 <p align="center">
   <strong>
-    ⚡ Lingo.dev - LLM을 활용한 즉각적인 현지화를 위한 오픈소스, AI 기반 i18n
-    툴킷
+    ⚡ Lingo.dev - LLM을 통한 즉각적인 현지화를 위한 오픈소스, AI 기반 i18n 툴킷
   </strong>
 </p>
 
 <br />
 
 <p align="center">
-  <a href="https://lingo.dev/compiler">Lingo.dev 컴파일러</a> •
+  <a href="https://lingo.dev/compiler">Lingo.dev Compiler</a> •
+  <a href="https://lingo.dev/mcp">Lingo.dev MCP</a> •
   <a href="https://lingo.dev/cli">Lingo.dev CLI</a> •
   <a href="https://lingo.dev/ci">Lingo.dev CI/CD</a> •
   <a href="https://lingo.dev/sdk">Lingo.dev SDK</a>
@@ -34,7 +34,7 @@
   <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md">
     <img
       src="https://img.shields.io/github/license/lingodotdev/lingo.dev"
-      alt="라이선스"
+      alt="라이센스"
     />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/commits/main">
@@ -45,23 +45,35 @@
   </a>
   <a href="https://lingo.dev/en">
     <img
-      src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt 오늘의 제품 1위"
+      src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square"
+      alt="Product Hunt 이달의 #1 개발 도구"
+    />
+  </a>
+  <a href="https://lingo.dev/en">
+    <img
+      src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Week-orange?logo=producthunt&style=flat-square"
+      alt="Product Hunt 이주의 #1 제품"
+    />
+  </a>
+  <a href="https://lingo.dev/en">
+    <img
+      src="https://img.shields.io/badge/Product%20Hunt-%232%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
+      alt="Product Hunt 오늘의 #2 제품"
     />
   </a>
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/GitHub-Trending-blue?logo=github&style=flat-square"
-      alt="GitHub 트렌딩"
+      alt="Github 트렌딩"
     />
   </a>
 </p>
 
 ---
 
-## 컴파일러 소개 🆕
+## 컴파일러를 만나보세요 🆕
 
-**Lingo.dev 컴파일러**는 기존 React 컴포넌트를 변경하지 않고도 빌드 타임에 모든 React 앱을 다국어로 만들 수 있도록 설계된 무료 오픈소스 컴파일러 미들웨어입니다.
+**Lingo.dev 컴파일러**는 기존 React 컴포넌트를 변경하지 않고도 빌드 시점에 모든 React 앱을 다국어로 만들 수 있도록 설계된 무료 오픈소스 컴파일러 미들웨어입니다.
 
 한 번만 설치하세요:
 
@@ -69,7 +81,7 @@
 npm install lingo.dev
 ```
 
-빌드 구성에서 활성화하세요:
+빌드 설정에서 활성화하세요:
 
 ```js
 import lingoCompiler from "lingo.dev/compiler";
@@ -82,7 +94,7 @@ export default lingoCompiler.next({
 })(existingNextConfig);
 ```
 
-`next build`를 실행하면 스페인어와 프랑스어 번들이 자동으로 생성됩니다 ✨
+`next build`를 실행하고 스페인어와 프랑스어 번들이 생성되는 것을 확인하세요 ✨
 
 전체 가이드는 [문서 읽기 →](https://lingo.dev/compiler)를 참조하고, 설정에 도움이 필요하면 [Discord에 참여하세요](https://lingo.dev/go/discord).
 
@@ -92,26 +104,26 @@ export default lingoCompiler.next({
 
 | 도구         | 요약                                                            | 문서                                    |
 | ------------ | --------------------------------------------------------------- | --------------------------------------- |
-| **Compiler** | 빌드 타임 React 현지화                                          | [/compiler](https://lingo.dev/compiler) |
+| **컴파일러** | 빌드 시점 React 현지화                                          | [/compiler](https://lingo.dev/compiler) |
 | **CLI**      | 웹 및 모바일 앱, JSON, YAML, 마크다운 등을 위한 원커맨드 현지화 | [/cli](https://lingo.dev/cli)           |
-| **CI/CD**    | 모든 푸시에서 자동 커밋 번역 및 필요시 풀 리퀘스트 생성         | [/ci](https://lingo.dev/ci)             |
+| **CI/CD**    | 모든 푸시에서 자동 번역 커밋 + 필요시 풀 리퀘스트 생성          | [/ci](https://lingo.dev/ci)             |
 | **SDK**      | 사용자 생성 콘텐츠를 위한 실시간 번역                           | [/sdk](https://lingo.dev/sdk)           |
 
-각 도구에 대한 간략한 설명은 아래를 참조하세요 👇
+각각에 대한 핵심 내용은 다음과 같습니다 👇
 
 ---
 
 ### ⚡️ Lingo.dev CLI
 
-터미널에서 직접 코드 및 콘텐츠를 번역하세요.
+터미널에서 직접 코드와 콘텐츠를 번역하세요.
 
 ```bash
 npx lingo.dev@latest run
 ```
 
-모든 문자열에 지문을 생성하고, 결과를 캐싱하며, 변경된 부분만 재번역합니다.
+모든 문자열에 지문을 남기고, 결과를 캐시하며, 변경된 부분만 다시 번역합니다.
 
-설정 방법을 알아보려면 [문서를 따라가세요 →](https://lingo.dev/cli).
+설정 방법을 알아보려면 [문서를 따라가세요 →](https://lingo.dev/cli)
 
 ---
 
@@ -180,7 +192,7 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 ## ⭐ 스타 히스토리
 
-저희가 하는 일이 마음에 드신다면, ⭐을 주시고 4,000개의 별을 달성할 수 있도록 도와주세요! 🌟
+저희가 하는 일이 마음에 드신다면, ⭐을 주시고 5,000개 스타 달성을 도와주세요! 🌟
 
 [
 
@@ -188,8 +200,8 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 ](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
 
-## 🌐 다른 언어로 된 README
+## 🌐 다른 언어로 된 리드미
 
-[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Bhojpuri](/readme/bho.md)
 
 원하는 언어가 보이지 않나요? [`i18n.json`](./i18n.json)에 추가하고 PR을 열어주세요!
