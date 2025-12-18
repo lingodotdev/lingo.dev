@@ -8,7 +8,7 @@
   "empty": "",
   "emoji": "🚀",
   "author": {
-    "name": "Juan Pérez"
+    "name": "Jose Pérez"
   },
   "contributors": [
     {
@@ -18,7 +18,7 @@
       "name": "Roberto"
     }
   ],
-  "messages": ["Bienvenido a Mi aplicación", "¡Hola, mundo!"],
+  "messages": ["Bienvenido a My Product", "¡Hola, mundo!"],
   "config": {
     "theme": {
       "primary": "Tema Azul"
@@ -32,5 +32,6 @@
       "nested_message": "Texto anidado"
     }
   ],
-  "locked_key_1": "This value is locked and should not be changed"
+  "locked_key_1": "This value is locked and should not be changed",
+  "ignored_key_1": "Este valor se ignora y no debería aparecer en las configuraciones regionales de destino"
 }
