@@ -1,10 +1,16 @@
 {
   "name": "lingo.dev",
-  "version": "0.117.10",
+  "version": "0.117.21",
   "description": "Lingo.dev CLI",
   "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lingodotdev/lingo.dev.git",
+    "directory": "packages/cli"
+  },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "provenance": true
   },
   "type": "module",
   "sideEffects": false,
@@ -201,7 +207,7 @@
     "plist": "3.1.0",
     "posthog-node": "5.14.0",
     "prettier": "3.6.2",
-    "react": "19.2.0",
+    "react": "19.2.3",
     "rehype-stringify": "10.0.1",
     "remark-disable-tokenizers": "1.1.1",
     "remark-frontmatter": "5.0.0",

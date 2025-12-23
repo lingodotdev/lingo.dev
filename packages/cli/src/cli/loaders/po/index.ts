@@ -63,25 +63,32 @@ export function createPoDataLoader(
           const contextKey = _.keys(sectionPo.translations)[0];
           const entries = sectionPo.translations[contextKey];
           const msgid = Object.keys(entries).find((key) => entries[key].msgid);
-          if (!msgid) {
-            // If the section is empty, try to find it in the current sections
-            const currentSection = currentSections.find((cs) => {
-              const csPo = gettextParser.po.parse(cs);
-              const csContextKey = _.keys(csPo.translations)[0];
-              const csEntries = csPo.translations[csContextKey];
-              const csMsgid = Object.keys(csEntries).find(
-                (key) => csEntries[key].msgid,
-              );
-              return csMsgid === msgid;
-            });
+          
+          // If the section is empty, try to find it in the current sections
+          const currentSection = currentSections.find((cs) => {
+            const csPo = gettextParser.po.parse(cs);
+            const csContextKey = _.keys(csPo.translations)[0];
+            const csEntries = csPo.translations[csContextKey];
+            const csMsgid = Object.keys(csEntries).find(
+              (key) => csEntries[key].msgid,
+            );
+            return csMsgid === msgid;
+          });
 
+          if (!msgid) {
             if (currentSection) {
               return currentSection;
             }
             return section;
           }
           if (data[msgid]) {
+            // Preserve headers from the target file
+            const headers = currentSection
+              ? gettextParser.po.parse(currentSection).headers
+              : sectionPo.headers;
+
             const updatedPo = _.merge({}, sectionPo, {
+              headers,
               translations: {
                 [contextKey]: {
                   [msgid]: {
