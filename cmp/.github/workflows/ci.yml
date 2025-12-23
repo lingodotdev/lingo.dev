@@ -1,0 +1,77 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5.0.1
+        # pnpm version is taken from package.json
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+      - name: Use Node.js 20
+        uses: actions/setup-node@v6.0.0
+        with:
+          node-version: 20
+          cache: "pnpm"
+      - name: Install dependencies
+        run: pnpm install
+      - name: Lint
+        run: pnpm lint:check
+      - name: Check formatting
+        run: pnpm format:check
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5.0.1
+        # pnpm version is taken from package.json
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+      - name: Use Node.js 20
+        uses: actions/setup-node@v6.0.0
+        with:
+          node-version: 20
+          cache: "pnpm"
+      - name: Install dependencies
+        run: pnpm install
+      - name: Build
+        run: pnpm build
+      - name: Test
+        run: pnpm test
+
+  playwright-e2e:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5.0.1
+        # pnpm version is taken from package.json
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+      - name: Use Node.js 20
+        uses: actions/setup-node@v6.0.0
+        with:
+          node-version: 20
+          cache: "pnpm"
+      - name: Install dependencies
+        run: pnpm install
+      - name: Install Playwright Browsers
+        working-directory: ./compiler
+        run: pnpm exec playwright install --with-deps
+      - name: Prepare tests
+        working-directory: ./compiler
+        run: pnpm run test:prepare
+      - name: Run tests
+        working-directory: ./compiler
+        run: pnpm run test:e2e
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30

@@ -1,0 +1,33 @@
+{
+  "name": "compiler-monorepo",
+  "packageManager": "pnpm@10.23.0+sha512.21c4e5698002ade97e4efe8b8b4a89a8de3c85a37919f957e7a0f30f38fbc5bbdd05980ffe29179b2fb6e6e691242e098d945d1601772cad0fef5fb6411e2a4b",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "prepare": "husky",
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check",
+    "lint": "oxlint --fix",
+    "lint:check": "oxlint --type-aware"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "nano-staged": "^0.9.0",
+    "oxlint": "^1.29.0",
+    "oxlint-tsgolint": "^0.8.0",
+    "prettier": "^3.6.2",
+    "turbo": "^2.6.1"
+  },
+  "nano-staged": {
+    "*": [
+      "prettier --write --ignore-unknown",
+      "oxlint"
+    ]
+  }
+}
