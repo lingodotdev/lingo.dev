@@ -1,5 +1,11 @@
 # @lingo.dev/\_logging
 
+## 0.3.1
+
+### Patch Changes
+
+- [#1667](https://github.com/lingodotdev/lingo.dev/pull/1667) [`1a857bd`](https://github.com/lingodotdev/lingo.dev/commit/1a857bdf76d50afb3024a2437da5fd60e6721bb9) Thanks [@vrcprl](https://github.com/vrcprl)! - Upd NPM workflows
+
 ## 0.3.0
 
 ### Minor Changes

@@ -92,7 +92,7 @@ export default new Command()
       ora.succeed("Localization configuration is valid");
 
       // Track event with or without authentication
-      trackEvent(authId || "status", "cmd.status.start", {
+      trackEvent(authId, "cmd.status.start", {
         i18nConfig,
         flags,
       });
@@ -628,7 +628,7 @@ export default new Command()
       }
 
       // Track successful completion
-      trackEvent(authId || "status", "cmd.status.success", {
+      trackEvent(authId, "cmd.status.success", {
         i18nConfig,
         flags,
         totalSourceKeyCount,
@@ -636,14 +636,16 @@ export default new Command()
         totalWordsToTranslate,
         authenticated: !!authId,
       });
+      await new Promise((resolve) => setTimeout(resolve, 50));
       exitGracefully();
     } catch (error: any) {
       ora.fail(error.message);
-      trackEvent(authId || "status", "cmd.status.error", {
+      trackEvent(authId, "cmd.status.error", {
         flags,
         error: error.message,
         authenticated: !!authId,
       });
+      await new Promise((resolve) => setTimeout(resolve, 50));
       process.exit(1);
     }
   });

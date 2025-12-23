@@ -539,12 +539,12 @@ checksums:
     notification_count/count/zero: ac0137deebf6e2b972c6c714dd8658ee
     notification_count/count/other: 9b350a78e1c499b9ab69eb330162c8ee
   11b3ea8486d8e09d2bf06db1811e0490:
-    welcome_message: 0468579ef2fbc83c9d520c2f2f1c5059
+    welcome_message: 448b66505b7e5cdac4547cf30f742648
   1254631a73b754e11a1b9ca8f7362025:
     item_count/variations/plural: 021a2f0c489893d720d30fe4277ccdb5
     notification_message/stringUnit: d14316154e233634917e317452c5f42c
     notification_message/substitutions/count_items/variations/plural: 3db7a8a0078bc1a87ccdb095af3164a5
-    welcome_message/stringUnit: 0468579ef2fbc83c9d520c2f2f1c5059
+    welcome%20message/stringUnit: 0468579ef2fbc83c9d520c2f2f1c5059
   ee8bbe4c9de58af9c4d5e1f4373f4db1:
     plural_comments_thread/variations/plural: 97a71bd34c84a4a5743d658937695acb
     plural_complex_sentence/variations/plural: 2a1d1e020670dc56bbe319866dbbfca9
@@ -756,3 +756,62 @@ checksums:
     Control.Button.Finish: ffa7a10f71182b48fefed7135bee24fa
     Control.Button.Yes: ec580fd11a45779b039466f1e35eed2a
     Control.Button.No: 8c708225830b06df2d1141c536f2a0d6
+  260f1c30bddb38efcbf007f3adf662fa:
+    "%25lld%20unit_days/variations/plural": 6cebb166a1f103ab1d5cb94e777a654a
+    hello%20world/stringUnit: a2aa5a2c93a8a789a3c7f089817d4c17
+  8595fe363b79f6a8524b7b3f788f84c9:
+    Control.Text.WelcomeDlg%23Title: 93af4b47a8c0a84ce9fb82d2ee2bca13
+    Control.Text.WelcomeDlg%23Description: 9cbc6500217ae2a7b3ffd74a3c723493
+    Control.Text.LicenseAgreementDlg%23Title: 3fe6d3757d7129ede78b41dd06042bf2
+    Control.Text.LicenseAgreementDlg%23Description: dcb0c3ee6751632a4fdf2c96953f99e1
+    Control.Text.LicenseAgreementDlg%23AcceptCheckbox: 768d9d11db014facbc1b65af8e39e260
+    Control.Text.FolderDlg%23Title: 0076b1dd48fd382d64661a81b9961042
+    Control.Text.FolderDlg%23Description: bc1455ec06d5f670d5084586cf2ba9de
+    Control.Text.FolderDlg%23ChangeButton: d4c59a35bb9636f6c8ea1e8bc5c6d624
+    Control.Text.ProgressDlg%23Title: a3040b342470f8c7b057d5db6f8b558b
+    Control.Text.ProgressDlg%23Description: 277d8219f832a99164df480f4304716b
+    Control.Text.ProgressDlg%23StatusLabel: 6eddeb13a4e7ccb25e21ec3f665dbcdf
+    Control.Text.CompleteDlg%23Title: 7adc37e2e844b5a4594f9440724b2bb5
+    Control.Text.CompleteDlg%23Description: 8c45e01cbb06e94401df2e6a944023bd
+    Control.Text.CompleteDlg%23LaunchCheckbox: a4ff2781965a961d37c74514339cc0e2
+    Control.Text.MaintenanceDlg%23Title: df4569e2e3e6e525954c94833e3ad2c5
+    Control.Text.MaintenanceDlg%23ModifyButton: 108a14dd240bb930dd1b2c7615099615
+    Control.Text.MaintenanceDlg%23RepairButton: 9368af6bdea003a293f24c8a6dc38b51
+    Control.Text.MaintenanceDlg%23RemoveButton: dba2fe5fe9f83f8078c687f28cba4b52
+    Property.ProductName: c215a8d46c95f00089c5ea0d17eef742
+    Property.ProductVersion: 54a9e730e88fb16291b852274d433923
+    Property.Manufacturer: 31ec2d348b96a835b044ab1ee28c317a
+    Property.ARPCOMMENTS: a595ddbc7e0bab708e0b2516287fdf92
+    Property.ARPCONTACT: a7ad445ceffe0a5172a059a9d6c985a5
+    Control.Text.ErrorDlg%23Title: 18d4f5c54da93fa36d82b65d528c2bee
+    Control.Text.ErrorDlg%23Description: 8a1c0b60c4a355277b5477982834ada5
+    Control.Text.CancelDlg%23Title: 805177777f2474248fd32002327571a0
+    Control.Text.CancelDlg%23Description: 48b33c48c57096b86971cc78d5a5cefd
+    Control.Button.Next: 45e9f984df59a475157f2c1b26655ac4
+    Control.Button.Back: f541015a827e37cb3b1234e56bc2aa3c
+    Control.Button.Cancel: 2e2a849c2223911717de8caa2c71bade
+    Control.Button.Finish: ffa7a10f71182b48fefed7135bee24fa
+    Control.Button.Yes: ec580fd11a45779b039466f1e35eed2a
+    Control.Button.No: 8c708225830b06df2d1141c536f2a0d6
+  868daf6de703449b418b99d1b57173ae:
+    head/0#content: 1308168cca4fa5d8d7a0cf24e55e93fc
+    head/1: 3180ad6b8de344b781637750259e0f53
+    body/0/0: 9de5fe40cbf5f851a6d2270f01fe0739
+    body/1/0/0: c59070fe496d5e4bd0066295b63a9056
+    body/1/0/1: 12d74865332bf1988d51e84ba67aae09
+    body/1/0/2: 58f0e438e665c77eedc440c5a8529b1a
+    body/1/1/0: 119e3aa396d12a5a1aa7058e0983f9b9
+    body/1/1/1/0: 60f9a22f4200bb4620a6ff7a1797ec30
+    body/1/1/1/1: 03846a81f16f5e4a11acfd9445ad497d
+    body/1/1/1/2: 15aae9d70ff1fb682f7d86baca81dcc0
+    body/1/2/0: fbd403146395526d68ac68d142a50e21
+    body/1/2/1: da8dc7fe06175d8b805f7f565bfe2788
+    body/1/2/2/0: 061e1acc1b9ebad9de09fd5626e813c7
+    body/1/2/2/1: 67f022a3f9e278d065a063b5e29dd932
+    body/1/2/2/2: 7e23f048179f6661050edaa796528fe0
+    body/1/2/3: 635f7e9a4afc00de34f975914afbb8b8
+    body/1/3/0: 7a7892379e31868abba9865d20be2b72
+    body/1/3/1: 8740df822561d74d51bb30e4b39d6193
+    body/1/3/2: 0429f12258fabbde3abaca3dd9986178
+    body/2/0: d32e57e4a5a65f3bee8b63dcb2bfa8e7
+    body/2/1: 7e10a8ab9cc4e6d603b3cdc48849688f

@@ -92,7 +92,8 @@
       "ignoredKeys": ["item_count"]
     },
     "xcode-xcstrings-v2": {
-      "include": ["demo/xcode-xcstrings-v2/*.xcstrings"]
+      "include": ["demo/xcode-xcstrings-v2/example.xcstrings"],
+      "lockedKeys": ["%d items left"]
     },
     "xml": {
       "include": ["demo/xml/[locale]/*.xml"]

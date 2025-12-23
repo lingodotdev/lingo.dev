@@ -4155,6 +4155,126 @@ Línea 3`;
     });
   });
 
+  describe("xcode-xcstrings-v2 bucket loader with locked keys containing spaces", () => {
+    it("should properly filter locked keys with spaces during pull operations", async () => {
+      setupFileMocks();
+
+      const input = JSON.stringify({
+        sourceLanguage: "en",
+        strings: {
+          "hello world": {
+            comment: "Greeting - should be locked",
+            extractionState: "manual",
+            localizations: {
+              en: {
+                stringUnit: {
+                  state: "translated",
+                  value: "Hello, world!",
+                },
+              },
+              es: {
+                stringUnit: {
+                  state: "translated",
+                  value: "¡Hola, mundo!",
+                },
+              },
+            },
+          },
+          "%lld unit_days": {
+            comment: "Days count - should be locked",
+            extractionState: "manual",
+            localizations: {
+              en: {
+                variations: {
+                  plural: {
+                    one: {
+                      stringUnit: {
+                        state: "translated",
+                        value: "%lld day",
+                      },
+                    },
+                    other: {
+                      stringUnit: {
+                        state: "translated",
+                        value: "%lld days",
+                      },
+                    },
+                  },
+                },
+              },
+              es: {
+                variations: {
+                  plural: {
+                    one: {
+                      stringUnit: {
+                        state: "translated",
+                        value: "%lld día",
+                      },
+                    },
+                    other: {
+                      stringUnit: {
+                        state: "translated",
+                        value: "%lld días",
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          regular_key: {
+            comment: "Regular translatable key",
+            extractionState: "manual",
+            localizations: {
+              en: {
+                stringUnit: {
+                  state: "translated",
+                  value: "Regular",
+                },
+              },
+              es: {
+                stringUnit: {
+                  state: "translated",
+                  value: "Regular",
+                },
+              },
+            },
+          },
+        },
+      });
+
+      mockFileOperations(input);
+
+      // Test with lockedKeys including keys with spaces and special characters
+      const xcodeXcstringsV2LoaderWithLockedKeys = createBucketLoader(
+        "xcode-xcstrings-v2",
+        "i18n/[locale].xcstrings",
+        {
+          defaultLocale: "en",
+        },
+        ["hello world", "%lld unit_days"], // lockedKeys with spaces and special chars
+      );
+      xcodeXcstringsV2LoaderWithLockedKeys.setDefaultLocale("en");
+
+      // First pull the default locale to initialize the loader
+      await xcodeXcstringsV2LoaderWithLockedKeys.pull("en");
+
+      // Pull data for translation - should filter out locked keys
+      const dataForTranslation =
+        await xcodeXcstringsV2LoaderWithLockedKeys.pull("es");
+
+      // Locked keys should be filtered out (they get flattened and encoded)
+      // After flat loader, keys become "hello%20world/stringUnit" and "%25lld%20unit_days/variations/plural"
+      expect(dataForTranslation).not.toHaveProperty("hello%20world/stringUnit");
+      expect(dataForTranslation).not.toHaveProperty("%25lld%20unit_days/variations/plural");
+
+      // Non-locked keys should remain (flattened)
+      expect(dataForTranslation).toHaveProperty("regular_key/stringUnit");
+      expect(dataForTranslation["regular_key/stringUnit"]).toBe("Regular");
+    });
+
+  });
+
   describe("typescript bucket loader", () => {
     it("should respect locked keys (pull)", async () => {
       setupFileMocks();

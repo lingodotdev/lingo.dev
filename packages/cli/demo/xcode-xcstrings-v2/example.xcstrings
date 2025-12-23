@@ -1,6 +1,24 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "%d items left" : {
+      "comment" : "Number of items remaining - key has space and special char",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d items remaining"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d items remaining"
+          }
+        }
+      }
+    },
     "api_key" : {
       "comment" : "API key used for authentication - should not be translated",
       "extractionState" : "manual",
@@ -128,8 +146,8 @@
         }
       }
     },
-    "welcome_message" : {
-      "comment" : "Welcome message shown on the app's home screen",
+    "welcome message" : {
+      "comment" : "Welcome message shown on the app's home screen - key has space",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {

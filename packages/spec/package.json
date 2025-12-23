@@ -1,10 +1,16 @@
 {
   "name": "@lingo.dev/_spec",
-  "version": "0.44.3",
+  "version": "0.44.4",
   "description": "Lingo.dev open specification",
   "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lingodotdev/lingo.dev.git",
+    "directory": "packages/spec"
+  },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "provenance": true
   },
   "type": "module",
   "sideEffects": false,

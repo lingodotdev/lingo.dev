@@ -17,6 +17,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
+      id-token: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -38,7 +39,10 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20.19"
+          node-version: "22"
+
+      - name: Upgrade npm for OIDC support
+        run: npm install -g npm@11.5.1
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
@@ -93,4 +97,4 @@ jobs:
           commit: "chore: bump package version"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true
