@@ -1,6 +1,6 @@
 {
   "name": "@lingo.dev/compiler",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Lingo.dev Compiler",
   "private": false,
   "repository": {
