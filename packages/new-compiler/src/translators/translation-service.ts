@@ -10,7 +10,7 @@
 
 import type { TranslationCache } from "./cache";
 import type { TranslatableEntry, Translator } from "./api";
-import type { MetadataSchema } from "../types";
+import type { LingoEnvironment, MetadataSchema } from "../types";
 import {
   type PluralizationConfig,
   PluralizationService,
@@ -18,8 +18,11 @@ import {
 import type { Logger } from "../utils/logger";
 import type { LocaleCode } from "lingo.dev/spec";
 import { PseudoTranslator } from "./pseudotranslator";
+import { LingoTranslator } from "./lingo";
+import { type CacheConfig, createCache } from "./cache-factory";
+import { MemoryTranslationCache } from "./memory-cache";
 
-export interface TranslationServiceConfig {
+export type TranslationServiceConfig = {
   /**
    * Source locale (e.g., "en")
    */
@@ -30,7 +33,13 @@ export interface TranslationServiceConfig {
    * If provided, enables automatic pluralization of source messages
    */
   pluralization: Omit<PluralizationConfig, "sourceLocale">;
-}
+  models: "lingo.dev" | Record<string, string>;
+  prompt?: string;
+  environment: LingoEnvironment;
+  dev?: {
+    usePseudotranslator?: boolean;
+  };
+} & CacheConfig;
 
 export interface TranslationResult {
   /**
@@ -55,29 +64,75 @@ export interface TranslationError {
 }
 
 export class TranslationService {
-  private useCache = true;
   private pluralizationService?: PluralizationService;
+  private translator: Translator<any>;
+  private cache: TranslationCache;
 
   constructor(
-    private translator: Translator<any>,
-    private cache: TranslationCache,
     private config: TranslationServiceConfig,
     private logger: Logger,
   ) {
-    const isPseudo = this.translator instanceof PseudoTranslator;
-    this.useCache = !isPseudo;
+    const isDev = config.environment === "development";
 
-    // Initialize pluralization service if enabled
-    // Do this once at construction to avoid repeated API key validation and model creation
-    if (this.config.pluralization?.enabled !== false && !isPseudo) {
-      this.logger.info("Initializing pluralization service...");
-      this.pluralizationService = new PluralizationService(
-        {
-          ...this.config.pluralization,
-          sourceLocale: this.config.sourceLocale,
-        },
-        this.logger,
+    // 1. Explicit dev override takes precedence
+    if (isDev && config.dev?.usePseudotranslator) {
+      this.logger.info(
+        "📝 Using pseudotranslator (dev.usePseudotranslator enabled)",
       );
+      this.translator = new PseudoTranslator({ delayMedian: 100 }, logger);
+      this.cache = new MemoryTranslationCache();
+    } else {
+      // 2. Try to create real translator
+      // LingoTranslator constructor will validate and fetch API keys
+      // If validation fails, it will throw an error with helpful message
+      try {
+        const models = config.models;
+
+        this.logger.debug(
+          `Creating Lingo translator with models: ${JSON.stringify(models)}`,
+        );
+
+        this.cache = createCache(config);
+        this.translator = new LingoTranslator(
+          {
+            models,
+            sourceLocale: config.sourceLocale,
+            prompt: config.prompt,
+          },
+          this.logger,
+        );
+
+        if (this.config.pluralization?.enabled) {
+          this.pluralizationService = new PluralizationService(
+            {
+              ...this.config.pluralization,
+              sourceLocale: this.config.sourceLocale,
+            },
+            this.logger,
+          );
+        }
+      } catch (error) {
+        // 3. Auto-fallback in dev mode if creation fails
+        if (isDev) {
+          // Use console.error to ensure visibility in all contexts (loader, server, etc.)
+          const errorMsg =
+            error instanceof Error ? error.message : String(error);
+          this.logger.warn(`\n⚠️ Translation setup error: ${errorMsg}\n`);
+          this.logger.warn(
+            `⚠️ Auto-fallback to pseudotranslator in development mode.\n` +
+              ` Set the required API keys for real translations.\n`,
+          );
+
+          this.translator = new PseudoTranslator(
+            { delayMedian: 100 },
+            this.logger,
+          );
+          this.cache = new MemoryTranslationCache();
+        } else {
+          // 4. Fail in production
+          throw error;
+        }
+      }
     }
   }
 
@@ -106,9 +161,7 @@ export class TranslationService {
     // Step 2: Check cache first (same for all locales, including source)
     this.logger.debug(`[TRACE] Checking cache for locale: ${locale}`);
     const cacheStartTime = performance.now();
-    const cachedTranslations = this.useCache
-      ? await this.cache.get(locale)
-      : {};
+    const cachedTranslations = await this.cache.get(locale);
     const cacheEndTime = performance.now();
     this.logger.debug(
       `[TRACE] Cache check completed in ${(cacheEndTime - cacheStartTime).toFixed(2)}ms, found ${Object.keys(cachedTranslations).length} entries`,
@@ -290,20 +343,9 @@ export class TranslationService {
     }
 
     // Step 5: Update cache with successful translations (skip for pseudo)
-    if (this.useCache && Object.keys(newTranslations).length > 0) {
+    if (Object.keys(newTranslations).length > 0) {
       try {
-        this.logger.debug(
-          `[TRACE] Updating cache with ${Object.keys(newTranslations).length} translations for ${locale}`,
-        );
-        const updateStartTime = performance.now();
         await this.cache.update(locale, newTranslations);
-        const updateEndTime = performance.now();
-        this.logger.debug(
-          `[TRACE] Cache update completed in ${(updateEndTime - updateStartTime).toFixed(2)}ms`,
-        );
-        this.logger.info(
-          `Updated cache with ${Object.keys(newTranslations).length} translations for ${locale}`,
-        );
       } catch (error) {
         this.logger.error(`Failed to update cache:`, error);
         // Don't fail the request if cache update fails

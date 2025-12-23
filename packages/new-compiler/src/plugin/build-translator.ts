@@ -11,12 +11,9 @@ import fs from "fs/promises";
 import path from "path";
 import type { LingoConfig, MetadataSchema } from "../types";
 import { logger } from "../utils/logger";
-import {
-  startTranslationServer,
-  type TranslationServer,
-} from "../translation-server";
+import { startTranslationServer, type TranslationServer, } from "../translation-server";
 import { loadMetadata } from "../metadata/manager";
-import { createCache, type TranslationCache } from "../translators";
+import { createCache, type TranslationCache, TranslationService, } from "../translators";
 import { dictionaryFrom } from "../translators/api";
 import type { LocaleCode } from "lingo.dev/spec";
 
@@ -108,7 +105,7 @@ export async function processBuildTranslations(
 
   try {
     translationServer = await startTranslationServer({
-      startPort: config.dev.translationServerStartPort,
+      translationService: new TranslationService(config, logger),
       onError: (err) => {
         logger.error("Translation server error:", err);
       },

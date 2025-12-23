@@ -26,6 +26,7 @@ import { processBuildTranslations } from "./build-translator";
 import { registerCleanupOnCurrentProcess } from "./cleanup";
 import path from "path";
 import fs from "fs";
+import { TranslationService } from "../translators";
 
 export type LingoPluginOptions = PartialLingoConfig;
 
@@ -112,7 +113,7 @@ export const lingoUnplugin = createUnplugin<
 
   async function startServer() {
     const server = await startTranslationServer({
-      startPort,
+      translationService: new TranslationService(config, logger),
       onError: (err) => {
         logger.error("Translation server error:", err);
       },

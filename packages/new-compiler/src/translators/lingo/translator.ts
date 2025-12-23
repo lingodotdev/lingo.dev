@@ -31,7 +31,7 @@ export interface LingoTranslatorConfig {
 /**
  * Lingo translator using AI models
  */
-export class Service implements Translator<LingoTranslatorConfig> {
+export class LingoTranslator implements Translator<LingoTranslatorConfig> {
   private readonly validatedKeys: ValidatedApiKeys;
 
   constructor(
