@@ -33,7 +33,9 @@ jobs:
 
       - name: Verify commit is signed
         run: |
-          if git log -1 --format="%G?" | grep -q "G"; then
+          SIG_STATUS=$(git log -1 --format="%G?")
+          echo "Signature status: $SIG_STATUS"
+          if [[ "$SIG_STATUS" == "G" ]] || [[ "$SIG_STATUS" == "U" ]]; then
             echo "✅ Commit is properly signed!"
           else
             echo "❌ Commit is NOT signed!"
