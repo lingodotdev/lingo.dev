@@ -9,6 +9,8 @@
     "test": "turbo test",
     "new": "changeset",
     "new:empty": "changeset --empty",
+    "beta:enter": "changeset pre enter beta",
+    "beta:exit": "changeset pre exit",
     "prebuild": "syncpack lint-semver-ranges --filter '.*' --types prod,dev"
   },
   "devDependencies": {
