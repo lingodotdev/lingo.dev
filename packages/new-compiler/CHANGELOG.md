@@ -1,5 +1,11 @@
 # @lingo.dev/compiler
 
+## 0.1.1
+
+### Patch Changes
+
+- [`b6e4ea9`](https://github.com/lingodotdev/lingo.dev/commit/b6e4ea9266723499cef5e9a55bd9b052740cfe5e) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - No-op release to test Trusted Publishing with OIDC
+
 ## 0.1.0
 
 ### Minor Changes
