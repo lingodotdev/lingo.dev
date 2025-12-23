@@ -163,7 +163,7 @@ export class PluralizationService {
           ],
         }),
         DEFAULT_TIMEOUTS.AI_API * 2, // Double timeout for batch
-        `Pluralization with ${this.languageModel.provider}`,
+        `Pluralization with ${this.languageModel}`,
       );
 
       const responseText = response.text.trim();
