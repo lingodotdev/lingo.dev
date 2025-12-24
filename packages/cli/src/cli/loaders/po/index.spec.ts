@@ -367,6 +367,103 @@ msgstr "[upd] Apple"
     const result = await loader.push("en", updatedData);
     expect(result).toEqual(expectedOutput);
   });
+
+  it("should preserve existing Language header when pushing translations with metadata in first section", async () => {
+    const loader = createLoader();
+    const sourceInput = `msgid ""
+msgstr ""
+"Language: en\\n"
+"Content-Type: text/plain; charset=utf-8\\n"
+"Content-Transfer-Encoding: 8bit\\n"
+"X-Generator: next-intl\\n"
+#: hello.py:1
+msgid "Hello world"
+msgstr "Hello world"`;
+
+    const targetInput = `msgid ""
+msgstr ""
+"Language: es\\n"
+"Content-Type: text/plain; charset=utf-8\\n"
+"Content-Transfer-Encoding: 8bit\\n"
+"X-Generator: next-intl\\n"
+#: hello.py:1
+msgid "Hello world"
+msgstr ""`;
+
+    await loader.pull("en", sourceInput);
+    await loader.pull("es", targetInput);
+
+    const updatedData = {
+      "Hello world": {
+        singular: "Hola mundo",
+        plural: null,
+      },
+    };
+
+    const result = await loader.push("es", updatedData);
+
+    expect(result).toContain('"Language: es\\n"');
+    expect(result).not.toContain('"Language: en\\n"');
+    expect(result).toContain('msgstr "Hola mundo"');
+  });
+
+  it("should preserve Language header for each locale when multiple target locales are pulled before push", async () => {
+    // This test verifies the fix for a bug where pulling multiple target locales
+    // before pushing would cause the Language header to be overwritten with the
+    // wrong locale's value (e.g., es.po would get "Language: en" instead of "Language: es")
+    const loader = createLoader();
+
+    const sourceInput = `msgid ""
+msgstr ""
+"Language: en\\n"
+"Content-Type: text/plain; charset=utf-8\\n"
+
+#: hello.py:1
+msgid "Hello"
+msgstr "Hello"`;
+
+    const spanishInput = `msgid ""
+msgstr ""
+"Language: es\\n"
+"Content-Type: text/plain; charset=utf-8\\n"
+
+#: hello.py:1
+msgid "Hello"
+msgstr ""`;
+
+    const portugueseInput = `msgid ""
+msgstr ""
+"Language: pt\\n"
+"Content-Type: text/plain; charset=utf-8\\n"
+
+#: hello.py:1
+msgid "Hello"
+msgstr ""`;
+
+    await loader.pull("en", sourceInput);
+
+    // Pull multiple target locales (simulates concurrent processing)
+    await loader.pull("es", spanishInput);
+    await loader.pull("pt", portugueseInput);
+
+    const spanishResult = await loader.push("es", {
+      Hello: { singular: "Hola", plural: null },
+    });
+
+    const portugueseResult = await loader.push("pt", {
+      Hello: { singular: "Olá", plural: null },
+    });
+
+    expect(spanishResult).toContain('"Language: es\\n"');
+    expect(spanishResult).not.toContain('"Language: pt\\n"');
+    expect(spanishResult).not.toContain('"Language: en\\n"');
+    expect(spanishResult).toContain('msgstr "Hola"');
+
+    expect(portugueseResult).toContain('"Language: pt\\n"');
+    expect(portugueseResult).not.toContain('"Language: es\\n"');
+    expect(portugueseResult).not.toContain('"Language: en\\n"');
+    expect(portugueseResult).toContain('msgstr "Olá"');
+  });
 });
 
 function createLoader(params: PoLoaderParams = { multiline: false }) {
