@@ -1,0 +1,189 @@
+{
+  "name": "@lingo.dev/compiler",
+  "version": "0.1.1",
+  "description": "Lingo.dev Compiler",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lingodotdev/lingo.dev.git",
+    "directory": "packages/new-compiler"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "sideEffects": false,
+  "type": "module",
+  "main": "build/index.cjs",
+  "types": "build/index.d.cts",
+  "module": "build/index.mjs",
+  "exports": {
+    ".": {
+      "types": "./build/plugin/index.d.cts",
+      "import": "./build/plugin/index.mjs",
+      "require": "./build/plugin/index.cjs"
+    },
+    "./react": {
+      "react-server": {
+        "types": "./build/react/server/index.d.ts",
+        "import": "./build/react/server/index.mjs",
+        "default": "./build/react/server/index.cjs"
+      },
+      "default": {
+        "types": "./build/react/client/index.d.ts",
+        "import": "./build/react/client/index.mjs",
+        "default": "./build/react/client/index.cjs"
+      }
+    },
+    "./virtual/config": {
+      "types": "./build/virtual/config.d.ts",
+      "import": "./build/virtual/config.mjs",
+      "require": "./build/virtual/config.cjs"
+    },
+    "./virtual/locale/server": {
+      "types": "./build/virtual/locale/server.d.ts",
+      "import": "./build/virtual/locale/server.mjs",
+      "require": "./build/virtual/locale/server.cjs"
+    },
+    "./virtual/locale/client": {
+      "types": "./build/virtual/locale/client.d.ts",
+      "import": "./build/virtual/locale/client.mjs",
+      "require": "./build/virtual/locale/client.cjs"
+    },
+    "./react/client": {
+      "types": "./build/react/index.d.ts",
+      "import": "./build/react/index.mjs",
+      "require": "./build/react/index.cjs"
+    },
+    "./react/next": {
+      "react-server": {
+        "types": "./build/react/next/server.d.ts",
+        "import": "./build/react/next/server.mjs",
+        "default": "./build/react/next/server.cjs"
+      },
+      "default": {
+        "types": "./build/react/next/client.d.ts",
+        "import": "./build/react/next/client.mjs",
+        "default": "./build/react/next/client.cjs"
+      }
+    },
+    "./react/config": {
+      "types": "./build/react/config.d.ts",
+      "import": "./build/react/config.mjs",
+      "require": "./build/react/config.cjs"
+    },
+    "./react/server": {
+      "types": "./build/react/server-only/index.d.ts",
+      "import": "./build/react/server-only/index.mjs",
+      "require": "./build/react/server-only/index.cjs"
+    },
+    "./next": {
+      "types": "./build/plugin/next.d.ts",
+      "import": "./build/plugin/next.mjs",
+      "require": "./build/plugin/next.cjs"
+    },
+    "./vite": {
+      "types": "./build/plugin/vite.d.ts",
+      "import": "./build/plugin/vite.mjs",
+      "require": "./build/plugin/vite.cjs"
+    },
+    "./webpack": {
+      "types": "./build/plugin/webpack.d.ts",
+      "import": "./build/plugin/webpack.mjs",
+      "require": "./build/plugin/webpack.cjs"
+    },
+    "./next-compiler-loader": {
+      "types": "./build/plugin/next-compiler-loader.d.ts",
+      "import": "./build/plugin/next-compiler-loader.mjs",
+      "require": "./build/plugin/next-compiler-loader.cjs"
+    },
+    "./next-config-loader": {
+      "types": "./build/plugin/next-config-loader.d.ts",
+      "import": "./build/plugin/next-config-loader.mjs",
+      "require": "./build/plugin/next-config-loader.cjs"
+    },
+    "./next-locale-server-loader": {
+      "types": "./build/plugin/next-locale-server-loader.d.ts",
+      "import": "./build/plugin/next-locale-server-loader.mjs",
+      "require": "./build/plugin/next-locale-server-loader.cjs"
+    },
+    "./next-locale-client-loader": {
+      "types": "./build/plugin/next-locale-client-loader.d.ts",
+      "import": "./build/plugin/next-locale-client-loader.mjs",
+      "require": "./build/plugin/next-locale-client-loader.cjs"
+    }
+  },
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "dev": "tsdown --watch",
+    "build": "pnpm typecheck && tsdown",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf build",
+    "test": "vitest --run",
+    "test:watch": "vitest -w",
+    "test:prepare": "pnpm build && tsx tests/helpers/prepare-fixtures.ts",
+    "test:e2e": "playwright test --reporter=list",
+    "test:e2e:next": "playwright test --grep next --reporter=list",
+    "test:e2e:vite": "playwright test --grep vite --reporter=list",
+    "test:e2e:shared": "playwright test tests/e2e/shared --reporter=list",
+    "test:e2e:headed": "playwright test --headed",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:debug": "playwright test --debug",
+    "test:e2e:report": "playwright show-report"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.56.1",
+    "@types/babel__core": "^7.20.5",
+    "@types/babel__generator": "^7.27.0",
+    "@types/babel__traverse": "^7.28.0",
+    "@types/node": "^25.0.3",
+    "@types/proper-lockfile": "^4.1.4",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "@types/ws": "^8.18.1",
+    "next": "^16.1.0",
+    "tsdown": "^0.18.2",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "unplugin": "^2.3.11",
+    "vitest": "^4.0.16"
+  },
+  "dependencies": {
+    "@ai-sdk/google": "^3.0.1",
+    "@ai-sdk/groq": "^3.0.1",
+    "@ai-sdk/mistral": "^3.0.1",
+    "@babel/core": "^7.26.0",
+    "@babel/generator": "^7.28.5",
+    "@babel/parser": "^7.28.5",
+    "@babel/preset-react": "^7.26.3",
+    "@babel/preset-typescript": "^7.26.0",
+    "@babel/traverse": "^7.28.5",
+    "@babel/types": "^7.28.5",
+    "@formatjs/icu-messageformat-parser": "^3.1.1",
+    "@openrouter/ai-sdk-provider": "^1.5.4",
+    "ai": "^6.0.3",
+    "ai-sdk-ollama": "^3.0.0",
+    "dotenv": "^17.2.3",
+    "fast-xml-parser": "^5.3.3",
+    "intl-messageformat": "^11.0.6",
+    "lingo.dev": "^0.117.0",
+    "lodash": "^4.17.21",
+    "proper-lockfile": "^4.1.2",
+    "ws": "^8.18.3"
+  },
+  "peerDependencies": {
+    "next": "^15.0.0 || ^16.0.4",
+    "react": "^19.0.0",
+    "react-dom": " ^19.0.0"
+  },
+  "peerDependenciesMeta": {
+    "next": {
+      "optional": true
+    }
+  }
+}
