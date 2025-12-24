@@ -19,7 +19,7 @@
     },
     "test:e2e:prepare": {
       "dependsOn": [
-        "^build"
+        "build"
       ]
     },
     "test:e2e": {

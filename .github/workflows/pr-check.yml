@@ -73,6 +73,7 @@ jobs:
         run: pnpm changeset status --since origin/main
 
   compiler-e2e:
+    needs: check
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
