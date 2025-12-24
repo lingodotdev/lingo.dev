@@ -6,7 +6,7 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import remarkStringify from "remark-stringify";
 import { unified } from "unified";
-import { toJSONSchema } from "zod";
+import { zodToJsonSchema } from "zod-to-json-schema";
 import { renderMarkdown } from "./json-schema/markdown-renderer";
 import { parseSchema } from "./json-schema/parser";
 import type { JSONSchemaObject } from "./json-schema/types";
@@ -62,8 +62,9 @@ async function main() {
 
   const outputArg = process.argv[2];
 
-  const schema = toJSONSchema(LATEST_CONFIG_DEFINITION.schema, {
-    target: "openapi-3.0",
+  const schema = zodToJsonSchema(LATEST_CONFIG_DEFINITION.schema, {
+    name: "I18nConfig",
+    markdownDescription: true,
   });
 
   console.log("🔄 Generating i18n.json reference docs...");
