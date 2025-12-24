@@ -154,36 +154,24 @@ export class TranslationService {
     // Step 1: Determine which hashes we need to work with
     const workingHashes = requestedHashes || Object.keys(metadata.entries);
 
-    this.logger.info(
+    this.logger.debug(
       `Translation requested for ${workingHashes.length} hashes in locale: ${locale}`,
     );
 
     // Step 2: Check cache first (same for all locales, including source)
-    this.logger.debug(`[TRACE] Checking cache for locale: ${locale}`);
-    const cacheStartTime = performance.now();
     const cachedTranslations = await this.cache.get(locale);
-    const cacheEndTime = performance.now();
-    this.logger.debug(
-      `[TRACE] Cache check completed in ${(cacheEndTime - cacheStartTime).toFixed(2)}ms, found ${Object.keys(cachedTranslations).length} entries`,
-    );
 
     // Step 3: Determine what needs translation/pluralization
     const uncachedHashes = workingHashes.filter(
       (hash) => !cachedTranslations[hash],
     );
     this.logger.debug(
-      `[TRACE] ${uncachedHashes.length} hashes need processing, ${workingHashes.length - uncachedHashes.length} are cached`,
+      `${uncachedHashes.length} hashes need processing, ${workingHashes.length - uncachedHashes.length} are cached`,
     );
 
     const cachedCount = workingHashes.length - uncachedHashes.length;
 
     if (uncachedHashes.length === 0) {
-      // All cached!
-      const endTime = performance.now();
-      this.logger.info(
-        `Cache hit for all ${workingHashes.length} hashes in ${locale} in ${(endTime - startTime).toFixed(2)}ms`,
-      );
-
       return {
         translations: this.pickTranslations(cachedTranslations, workingHashes),
         errors: [],
@@ -196,7 +184,7 @@ export class TranslationService {
       };
     }
 
-    this.logger.info(
+    this.logger.debug(
       `Generating translations for ${uncachedHashes.length} uncached hashes in ${locale}...`,
     );
 
@@ -212,12 +200,12 @@ export class TranslationService {
 
     // Step 5: Process pluralization for filtered entries
     if (this.pluralizationService) {
-      this.logger.info(
+      this.logger.debug(
         `Processing pluralization for ${Object.keys(filteredMetadata.entries).length} entries...`,
       );
       const pluralStats =
         await this.pluralizationService.process(filteredMetadata);
-      this.logger.info(
+      this.logger.debug(
         `Pluralization stats: ${pluralStats.pluralized} pluralized, ${pluralStats.rejected} rejected, ${pluralStats.failed} failed`,
       );
     }
@@ -227,7 +215,7 @@ export class TranslationService {
     const hashesNeedingTranslation: string[] = [];
 
     this.logger.debug(
-      `[TRACE] Checking for overrides in ${uncachedHashes.length} entries`,
+      `Checking for overrides in ${uncachedHashes.length} entries`,
     );
 
     for (const hash of uncachedHashes) {
@@ -238,7 +226,7 @@ export class TranslationService {
       if (entry.overrides && entry.overrides[locale]) {
         overriddenTranslations[hash] = entry.overrides[locale];
         this.logger.debug(
-          `[TRACE] Using override for ${hash} in locale ${locale}: "${entry.overrides[locale]}"`,
+          `Using override for ${hash} in locale ${locale}: "${entry.overrides[locale]}"`,
         );
       } else {
         hashesNeedingTranslation.push(hash);
@@ -246,22 +234,11 @@ export class TranslationService {
     }
 
     const overrideCount = Object.keys(overriddenTranslations).length;
-    if (overrideCount > 0) {
-      this.logger.info(
-        `Found ${overrideCount} override(s) for locale ${locale}, skipping AI translation for these entries`,
-      );
-    }
 
     // Step 7: Prepare entries for translation (excluding overridden ones)
-    this.logger.debug(
-      `[TRACE] Preparing ${hashesNeedingTranslation.length} entries for translation (after overrides)`,
-    );
     const entriesToTranslate = this.prepareEntries(
       filteredMetadata,
       hashesNeedingTranslation,
-    );
-    this.logger.debug(
-      `[TRACE] Prepared ${Object.keys(entriesToTranslate).length} entries`,
     );
 
     // Step 8: Translate or return source text
@@ -271,7 +248,7 @@ export class TranslationService {
     if (locale === this.config.sourceLocale) {
       // For source locale, just return the (possibly pluralized) sourceText
       this.logger.debug(
-        `[TRACE] Source locale detected, returning sourceText for ${hashesNeedingTranslation.length} entries`,
+        `Source locale detected, returning sourceText for ${hashesNeedingTranslation.length} entries`,
       );
       for (const [hash, entry] of Object.entries(entriesToTranslate)) {
         newTranslations[hash] = entry.text;
@@ -280,30 +257,16 @@ export class TranslationService {
       // For other locales, translate only entries without overrides
       try {
         this.logger.debug(
-          `[TRACE] Calling translator.translate() for ${locale} with ${Object.keys(entriesToTranslate).length} entries`,
+          `Translating ${locale} with ${Object.keys(entriesToTranslate).length} entries`,
         );
-        this.logger.debug(`[TRACE] About to await translator.translate()...`);
-        const translateStartTime = performance.now();
-        this.logger.debug(`[TRACE] Executing translator.translate() NOW`);
         const translatedTexts = await this.translator.translate(
           locale,
           entriesToTranslate,
         );
-        this.logger.debug(`[TRACE] translator.translate() returned`);
-
         // Merge translated texts with overridden translations
         newTranslations = { ...overriddenTranslations, ...translatedTexts };
-
-        const translateEndTime = performance.now();
-        this.logger.debug(
-          `[TRACE] translator.translate() completed in ${(translateEndTime - translateStartTime).toFixed(2)}ms`,
-        );
-        this.logger.debug(
-          `[TRACE] Received ${Object.keys(translatedTexts).length} translations (+ ${overrideCount} overrides)`,
-        );
       } catch (error) {
-        // Complete failure - log and return what we have from cache
-        this.logger.error(`Translation failed completely:`, error);
+        this.logger.error(`Translation failed:`, error);
 
         return {
           translations: this.pickTranslations(
@@ -336,7 +299,7 @@ export class TranslationService {
           errors.push({
             hash,
             sourceText: entry?.sourceText || "",
-            error: "Translation not returned by translator",
+            error: "Translator doesn't return translation",
           });
         }
       }
@@ -357,7 +320,7 @@ export class TranslationService {
     const result = this.pickTranslations(allTranslations, workingHashes);
 
     const endTime = performance.now();
-    this.logger.info(
+    this.logger.debug(
       `Translation completed for ${locale}: ${Object.keys(newTranslations).length} new, ${cachedCount} cached, ${errors.length} errors in ${(endTime - startTime).toFixed(2)}ms`,
     );
 

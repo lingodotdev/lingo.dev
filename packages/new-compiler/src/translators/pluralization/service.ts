@@ -56,7 +56,7 @@ export class PluralizationService {
     this.sourceLocale = config.sourceLocale;
     this.prompt = getSystemPrompt({ sourceLocale: config.sourceLocale });
 
-    this.logger.info(
+    this.logger.debug(
       `Initialized pluralization service with ${localeModel.provider}:${localeModel.name}`,
     );
   }
@@ -72,22 +72,23 @@ export class PluralizationService {
     candidates: PluralCandidate[],
     batchSize: number = 10,
   ): Promise<Map<string, ICUGenerationResult>> {
-    const results = new Map<string, ICUGenerationResult>();
-
-    // Check cache first
-    const uncachedCandidates = candidates.filter((c) => {
-      const cached = this.cache.get(c.hash);
-      if (cached) {
-        results.set(c.hash, cached);
-        return false;
-      }
-      return true;
-    });
+    const { uncachedCandidates, results } = candidates.reduce(
+      (acc, c) => {
+        const cached = this.cache.get(c.hash);
+        if (cached) {
+          acc.results.set(c.hash, cached);
+        } else {
+          acc.uncachedCandidates.push(c);
+        }
+        return acc;
+      },
+      {
+        uncachedCandidates: [] as PluralCandidate[],
+        results: new Map<string, ICUGenerationResult>(),
+      },
+    );
 
     if (uncachedCandidates.length === 0) {
-      this.logger.debug(
-        `All ${candidates.length} candidates found in cache, skipping LLM call`,
-      );
       return results;
     }
 
