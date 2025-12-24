@@ -1,31 +1,32 @@
 {
-    "version": "1.10",
-    "locale": {
-      "source": "en",
-      "targets": [
-        "ru",
-        "he",
-        "fr",
-        "es",
-        "de",
-        "zh-Hans",
-        "ko",
-        "ja",
-        "it",
-        "ar",
-        "hi",
-        "pt-BR",
-        "uk-UA",
-        "bn",
-        "fa",
-        "pl",
-        "tr"
-      ]
-    },
-    "buckets": {
-      "mdx": {
-        "include": ["readme/[locale].md"]
-      }
-    },
-    "$schema": "https://lingo.dev/schema/i18n.json"
-  }
+  "version": "1.10",
+  "locale": {
+    "source": "en",
+    "targets": [
+      "ru",
+      "he",
+      "fr",
+      "es",
+      "de",
+      "zh-Hans",
+      "ko",
+      "ja",
+      "it",
+      "ar",
+      "hi",
+      "pt-BR",
+      "uk-UA",
+      "bn",
+      "fa",
+      "pl",
+      "tr",
+      "ur"
+    ]
+  },
+  "buckets": {
+    "mdx": {
+      "include": ["readme/[locale].md"]
+    }
+  },
+  "$schema": "https://lingo.dev/schema/i18n.json"
+}
