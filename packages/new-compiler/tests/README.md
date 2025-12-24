@@ -19,7 +19,7 @@ pnpm playwright:install
 3. **Prepare test fixtures** (one-time setup):
 
 ```bash
-pnpm test:prepare
+pnpm test:e2e:prepare
 ```
 
 This will:
@@ -28,7 +28,7 @@ This will:
 - Install dependencies in each fixture
 - Takes 2-3 minutes but only needs to be run once
 
-**Note:** You only need to re-run `pnpm test:prepare` if:
+**Note:** You only need to re-run `pnpm test:e2e:prepare` if:
 
 - Demo app dependencies change
 - You want to test with updated demo apps
@@ -86,7 +86,7 @@ tests/
 1. **Preparation Stage** (once):
    - Demo apps are copied to `tests/fixtures/`
    - Dependencies are installed in each fixture
-   - Run with: `pnpm test:prepare`
+   - Run with: `pnpm test:e2e:prepare`
 
 2. **Test Execution** (fast):
    - Each test copies the prepared fixture (with node_modules) to a temp directory
@@ -158,7 +158,7 @@ test("my test", async ({ page }) => {
 
 ### "Fixture not found" error
 
-Run `pnpm test:prepare` to prepare the fixtures before running tests.
+Run `pnpm test:e2e:prepare` to prepare the fixtures before running tests.
 
 ### Port conflicts
 
@@ -178,4 +178,4 @@ Failed tests may leave temp directories. They're in your OS temp folder with `li
 
 ### Outdated fixtures
 
-If demo apps change significantly, re-run `pnpm test:prepare` to update the fixtures.
+If demo apps change significantly, re-run `pnpm test:e2e:prepare` to update the fixtures.

@@ -10,6 +10,7 @@ import { createMistral } from "@ai-sdk/mistral";
 import type { LanguageModel } from "ai";
 import * as dotenv from "dotenv";
 import * as path from "path";
+import { formatNoApiKeysError } from "./provider-details";
 
 export type LocaleModel = {
   provider: string;
@@ -169,7 +170,7 @@ export function validateAndGetApiKeys(
   config: "lingo.dev" | Record<string, string>,
 ): ValidatedApiKeys {
   const keys: ValidatedApiKeys = {};
-  const missingKeys: Array<{ provider: string; envVar: string }> = [];
+  const missingProviders: string[] = [];
 
   // Determine which providers are configured
   let providersToValidate: string[];
@@ -195,7 +196,7 @@ export function validateAndGetApiKeys(
 
     if (!providerConfig) {
       throw new Error(
-        `⚠️  Unknown provider "${provider}". Supported providers: ${Object.keys(providerDetails).join(", ")}`,
+        `⚠️ Unknown provider "${provider}". Supported providers: ${Object.keys(providerDetails).join(", ")}`,
       );
     }
 
@@ -208,21 +209,13 @@ export function validateAndGetApiKeys(
     if (key) {
       keys[provider] = key;
     } else {
-      missingKeys.push({
-        provider: providerConfig.name,
-        envVar: providerConfig.apiKeyEnvVar,
-      });
+      missingProviders.push(provider);
     }
   }
 
   // If any keys are missing, throw with detailed error
-  if (missingKeys.length > 0) {
-    const errorLines = missingKeys.map(
-      ({ provider, envVar }) => `  - ${provider}: ${envVar}`,
-    );
-    throw new Error(
-      `⚠️  Missing API keys for configured providers:\n${errorLines.join("\n")}\n\nPlease set the required environment variables.`,
-    );
+  if (missingProviders.length > 0) {
+    throw new Error(formatNoApiKeysError(missingProviders));
   }
 
   return keys;
@@ -253,6 +246,7 @@ export function createAiModel(
     ? validatedKeys[model.provider]
     : undefined;
 
+  // TODO (AleksandrSl 25/12/2025): Do we really need to make a second check? Maybe creation should be combined with validation.
   // Verify key is present for providers that require it
   if (providerConfig.apiKeyEnvVar && !apiKey) {
     throw new Error(

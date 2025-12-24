@@ -38,6 +38,7 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
+      // If we need more than one browser at some point, add them to CI browser installation step too.
       name: "chromium",
       use: { ...devices["Desktop Chrome"] },
     },

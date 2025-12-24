@@ -444,7 +444,6 @@ export async function main(): Promise<void> {
 
     // Start server
     const { server, url } = await startOrGetTranslationServer({
-      startPort,
       config,
       // requestTimeout: cliOpts.timeout || 30000,
       onError: (err) => {

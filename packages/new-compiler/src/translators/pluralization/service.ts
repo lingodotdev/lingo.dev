@@ -31,7 +31,6 @@ import { validateICU } from "./icu-validator";
  */
 export class PluralizationService {
   private readonly languageModel: LanguageModel;
-  private readonly modelName: string;
   private cache = new Map<string, ICUGenerationResult>();
   private readonly prompt: string;
   private readonly sourceLocale: string;
@@ -42,26 +41,23 @@ export class PluralizationService {
   ) {
     const localeModel = parseModelString(config.model);
     if (!localeModel) {
-      throw new Error(`Invalid model format: "${config.model}"`);
+      throw new Error(`Invalid model format in pluralization service: "${config.model}"`);
     }
 
     // Validate and fetch API keys for the pluralization provider
     // We need to create a models config that validateAndFetchApiKeys can use
     const modelsConfig: Record<string, string> = {
-      "*:*": config.model, // Single model for pluralization
+      "*:*": config.model,
     };
 
-    this.logger.info("Validating API keys for pluralization...");
     const validatedKeys = validateAndGetApiKeys(modelsConfig);
-    this.logger.info("✅ API keys validated for pluralization");
 
     this.languageModel = createAiModel(localeModel, validatedKeys);
-    this.modelName = `${localeModel.provider}:${localeModel.name}`;
     this.sourceLocale = config.sourceLocale;
     this.prompt = getSystemPrompt({ sourceLocale: config.sourceLocale });
 
-    this.logger.info(
-      `Initialized pluralization service with ${this.modelName}`,
+    this.logger.debug(
+      `Initialized pluralization service with ${localeModel.provider}:${localeModel.name}`,
     );
   }
 
@@ -76,26 +72,27 @@ export class PluralizationService {
     candidates: PluralCandidate[],
     batchSize: number = 10,
   ): Promise<Map<string, ICUGenerationResult>> {
-    const results = new Map<string, ICUGenerationResult>();
-
-    // Check cache first
-    const uncachedCandidates = candidates.filter((c) => {
-      const cached = this.cache.get(c.hash);
-      if (cached) {
-        results.set(c.hash, cached);
-        return false;
-      }
-      return true;
-    });
+    const { uncachedCandidates, results } = candidates.reduce(
+      (acc, c) => {
+        const cached = this.cache.get(c.hash);
+        if (cached) {
+          acc.results.set(c.hash, cached);
+        } else {
+          acc.uncachedCandidates.push(c);
+        }
+        return acc;
+      },
+      {
+        uncachedCandidates: [] as PluralCandidate[],
+        results: new Map<string, ICUGenerationResult>(),
+      },
+    );
 
     if (uncachedCandidates.length === 0) {
-      this.logger.debug(
-        `All ${candidates.length} candidates found in cache, skipping LLM call`,
-      );
       return results;
     }
 
-    this.logger.info(
+    this.logger.debug(
       `Processing ${uncachedCandidates.length} candidates (${candidates.length - uncachedCandidates.length} cached)`,
     );
 
@@ -103,7 +100,7 @@ export class PluralizationService {
     for (let i = 0; i < uncachedCandidates.length; i += batchSize) {
       const batch = uncachedCandidates.slice(i, i + batchSize);
 
-      this.logger.info(
+      this.logger.debug(
         `Processing batch ${Math.floor(i / batchSize) + 1}/${Math.ceil(uncachedCandidates.length / batchSize)} (${batch.length} candidates)`,
       );
 
@@ -167,7 +164,7 @@ export class PluralizationService {
           ],
         }),
         DEFAULT_TIMEOUTS.AI_API * 2, // Double timeout for batch
-        `Pluralization with ${this.modelName}`,
+        `Pluralization with ${this.languageModel}`,
       );
 
       const responseText = response.text.trim();
@@ -214,7 +211,7 @@ export class PluralizationService {
       for (const candidate of candidates) {
         if (!results.has(candidate.hash)) {
           this.logger.warn(
-            `No result returned for candidate: ${candidate.sourceText}`,
+            `No result returned for a candidate: ${candidate.sourceText}`,
           );
           results.set(candidate.hash, {
             success: false,
@@ -266,7 +263,7 @@ export class PluralizationService {
       };
     }
 
-    this.logger.info(
+    this.logger.debug(
       `Starting pluralization processing for ${totalEntries} entries`,
     );
 
@@ -280,7 +277,7 @@ export class PluralizationService {
 
     const candidates = detectPluralCandidates(entriesMap, this.logger);
 
-    this.logger.info(
+    this.logger.debug(
       `Found ${candidates.length} plural candidates (${((candidates.length / totalEntries) * 100).toFixed(1)}%)`,
     );
 
@@ -352,8 +349,7 @@ export class PluralizationService {
         continue;
       }
 
-      // Update metadata entry in-place
-      this.logger.info(
+      this.logger.debug(
         `Pluralizing: "${entry.sourceText}" -> "${result.icuText}"`,
       );
       entry.sourceText = result.icuText;
@@ -363,7 +359,7 @@ export class PluralizationService {
     const endTime = performance.now();
     const duration = endTime - startTime;
 
-    this.logger.info(
+    this.logger.debug(
       `Pluralization completed: ${pluralized} pluralized, ${rejected} rejected, ${failed} failed in ${duration.toFixed(0)}ms`,
     );
 
@@ -374,24 +370,6 @@ export class PluralizationService {
       rejected,
       failed,
       durationMs: duration,
-    };
-  }
-
-  /**
-   * Clear the cache
-   */
-  clearCache(): void {
-    this.cache.clear();
-    this.logger.debug("Pluralization cache cleared");
-  }
-
-  /**
-   * Get cache statistics
-   */
-  getCacheStats(): { size: number; hits: number } {
-    return {
-      size: this.cache.size,
-      hits: 0, // We don't track hits currently
     };
   }
 }

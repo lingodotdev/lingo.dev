@@ -17,11 +17,7 @@ import { URL } from "url";
 import { WebSocket, WebSocketServer } from "ws";
 import type { MetadataSchema, TranslationMiddlewareConfig } from "../types";
 import { getLogger } from "./logger";
-import {
-  createCache,
-  createTranslator,
-  TranslationService,
-} from "../translators";
+import { TranslationService } from "../translators";
 import {
   createEmptyMetadata,
   getMetadataPath,
@@ -33,25 +29,9 @@ import type { LocaleCode } from "lingo.dev/spec";
 import { parseLocaleOrThrow } from "../utils/is-valid-locale";
 
 export interface TranslationServerOptions {
-  /**
-   * Starting port to try (will find next available if taken)
-   * @default 3456
-   */
-  startPort?: number;
-
-  /**
-   * Configuration for translation generation
-   */
   config: TranslationMiddlewareConfig;
-
-  /**
-   * Callback when server is ready
-   */
+  translationService?: TranslationService;
   onReady?: (port: number) => void;
-
-  /**
-   * Callback on error
-   */
   onError?: (error: Error) => void;
 }
 
@@ -59,12 +39,11 @@ export class TranslationServer {
   private server: http.Server | null = null;
   private url: string | undefined = undefined;
   private logger;
-  private config: TranslationMiddlewareConfig;
-  private configHash: string;
-  private startPort: number;
-  private onReadyCallback?: (port: number) => void;
-  private onErrorCallback?: (error: Error) => void;
-  private translationService: TranslationService | null = null;
+  private readonly config: TranslationMiddlewareConfig;
+  private readonly configHash: string;
+  private readonly startPort: number;
+  private readonly onReadyCallback?: (port: number) => void;
+  private readonly onErrorCallback?: (error: Error) => void;
   private metadata: MetadataSchema | null = null;
   private connections: Set<Socket> = new Set();
   private wss: WebSocketServer | null = null;
@@ -75,11 +54,16 @@ export class TranslationServer {
   private isBusy = false;
   private busyTimeout: NodeJS.Timeout | null = null;
   private readonly BUSY_DEBOUNCE_MS = 500; // Time after last translation to send "idle" event
+  private readonly translationService: TranslationService;
 
   constructor(options: TranslationServerOptions) {
     this.config = options.config;
     this.configHash = hashConfig(options.config);
-    this.startPort = options.startPort || 60000;
+    this.translationService =
+      options.translationService ??
+      // Fallback is for CLI start only.
+      new TranslationService(options.config, getLogger(options.config));
+    this.startPort = options.config.dev.translationServerStartPort;
     this.onReadyCallback = options.onReady;
     this.onErrorCallback = options.onError;
     this.logger = getLogger(this.config);
@@ -94,19 +78,6 @@ export class TranslationServer {
     }
 
     this.logger.info(`🔧 Initializing translator...`);
-
-    const translator = createTranslator(this.config, this.logger);
-    const cache = createCache(this.config);
-
-    this.translationService = new TranslationService(
-      translator,
-      cache,
-      {
-        sourceLocale: this.config.sourceLocale,
-        pluralization: this.config.pluralization,
-      },
-      this.logger,
-    );
 
     const port = await this.findAvailablePort(this.startPort);
 
@@ -281,14 +252,13 @@ export class TranslationServer {
    * Start a new server or get the URL of an existing one on the preferred port.
    *
    * This method optimizes for the common case where a translation server is already
-   * running on port 60000. If that port is taken, it checks if it's our service
+   * running on a preferred port. If that port is taken, it checks if it's our service
    * by calling the health check endpoint. If it is, we reuse it instead of starting
    * a new server on a different port.
    *
    * @returns URL of the running server (new or existing)
    */
   async startOrGetUrl(): Promise<string> {
-    // If this instance already has a server running, return its URL
     if (this.server && this.url) {
       this.logger.info(`Using existing server instance at ${this.url}`);
       return this.url;
@@ -527,7 +497,6 @@ export class TranslationServer {
 
         res.on("end", () => {
           try {
-            // Check if response is valid and has the expected structure
             if (res.statusCode === 200) {
               const json = JSON.parse(data);
               // Our translation server returns { status: "ok", port: ..., configHash: ... }
@@ -680,11 +649,6 @@ export class TranslationServer {
         );
         return;
       }
-
-      if (!this.translationService) {
-        throw new Error("Translation service not initialized");
-      }
-
       // Reload metadata to ensure we have the latest entries
       // (new entries may have been added since server started)
       await this.reloadMetadata();
@@ -746,10 +710,6 @@ export class TranslationServer {
   ): Promise<void> {
     try {
       const parsedLocale = parseLocaleOrThrow(locale);
-
-      if (!this.translationService) {
-        throw new Error("Translation service not initialized");
-      }
 
       // Reload metadata to ensure we have the latest entries
       // (new entries may have been added since server started)
@@ -842,9 +802,6 @@ export function hashConfig(config: Record<string, SerializableValue>): string {
   return crypto.createHash("md5").update(serialized).digest("hex").slice(0, 12);
 }
 
-/**
- * Create and start a translation server
- */
 export async function startTranslationServer(
   options: TranslationServerOptions,
 ): Promise<TranslationServer> {
@@ -856,10 +813,10 @@ export async function startTranslationServer(
 /**
  * Create a translation server and start it or reuse an existing one on the preferred port
  *
- * Since we have little control over the dev server start in next, we can start the translation server only in the loader,
- * and loaders could be started from multiple processes (it seems) or similar we need a way to avoid starting multiple servers.
+ * Since we have little control over the dev server start in next, we can start the translation server only in the async config or in the loader,
+ * they both could be run in different processes, and we need a way to avoid starting multiple servers.
  * This one will try to start a server on the preferred port (which seems to be an atomic operation), and if it fails,
- * it checks if the server already started is ours and returns its url.
+ * it checks if the server that is already started is ours and returns its url.
  *
  * @returns Object containing the server instance and its URL
  */

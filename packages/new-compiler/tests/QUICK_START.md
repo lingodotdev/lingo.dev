@@ -10,7 +10,7 @@ pnpm install
 pnpm playwright:install
 
 # 3. Prepare test fixtures (takes 2-3 minutes)
-pnpm test:prepare
+pnpm test:e2e:prepare
 ```
 
 ## Running Tests
@@ -37,7 +37,7 @@ Instead of installing dependencies on every test run, we use a two-stage approac
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│ Stage 1: Preparation (ONE TIME - run pnpm test:prepare)    │
+│ Stage 1: Preparation (ONE TIME - run pnpm test:e2e:prepare)    │
 ├─────────────────────────────────────────────────────────────┤
 │                                                             │
 │  demo/next16/  ──────┐                                     │
@@ -79,7 +79,7 @@ Instead of installing dependencies on every test run, we use a two-stage approac
 
 **10x faster test execution!**
 
-## When to Re-run `pnpm test:prepare`
+## When to Re-run `pnpm test:e2e:prepare`
 
 - When demo app `package.json` changes
 - When you update demo app dependencies
@@ -124,17 +124,3 @@ test("my test", async ({ page }) => {
   }
 });
 ```
-
-## CI/CD Integration
-
-In CI, run both stages:
-
-```yaml
-- name: Prepare fixtures
-  run: pnpm test:prepare
-
-- name: Run E2E tests
-  run: pnpm test:e2e
-```
-
-You could also cache the `tests/fixtures/` directory to speed up CI runs.

@@ -1,20 +1,10 @@
 import { generateText } from "ai";
 import { LingoDotDevEngine } from "lingo.dev/sdk";
-import {
-  dictionaryFrom,
-  type DictionarySchema,
-  type TranslatableEntry,
-  type Translator,
-} from "../api";
+import { dictionaryFrom, type DictionarySchema, type TranslatableEntry, type Translator, } from "../api";
 import { getSystemPrompt } from "./prompt";
 import { obj2xml, parseXmlFromResponseText } from "../parse-xml";
 import { shots } from "./shots";
-import {
-  createAiModel,
-  getLocaleModel,
-  validateAndGetApiKeys,
-  type ValidatedApiKeys,
-} from "./model-factory";
+import { createAiModel, getLocaleModel, validateAndGetApiKeys, type ValidatedApiKeys, } from "./model-factory";
 import { Logger } from "../../utils/logger";
 import { DEFAULT_TIMEOUTS, withTimeout } from "../../utils/timeout";
 import type { LocaleCode } from "lingo.dev/spec";
@@ -31,7 +21,7 @@ export interface LingoTranslatorConfig {
 /**
  * Lingo translator using AI models
  */
-export class Service implements Translator<LingoTranslatorConfig> {
+export class LingoTranslator implements Translator<LingoTranslatorConfig> {
   private readonly validatedKeys: ValidatedApiKeys;
 
   constructor(
@@ -51,7 +41,7 @@ export class Service implements Translator<LingoTranslatorConfig> {
     entriesMap: Record<string, TranslatableEntry>,
   ): Promise<Record<string, string>> {
     this.logger.debug(
-      `[TRACE-LINGO] translate() called for ${locale} with ${Object.keys(entriesMap).length} entries`,
+      `translate() called for ${locale} with ${Object.keys(entriesMap).length} entries`,
     );
 
     const sourceDictionary: DictionarySchema = dictionaryFrom(
@@ -62,7 +52,7 @@ export class Service implements Translator<LingoTranslatorConfig> {
     );
 
     this.logger.debug(
-      `[TRACE-LINGO] Created source dictionary with ${Object.keys(sourceDictionary.entries).length} entries`,
+      `Created source dictionary with ${Object.keys(sourceDictionary.entries).length} entries`,
     );
     const translated = await this.translateDictionary(sourceDictionary, locale);
 
@@ -76,18 +66,17 @@ export class Service implements Translator<LingoTranslatorConfig> {
     sourceDictionary: DictionarySchema,
     targetLocale: string,
   ): Promise<DictionarySchema> {
-    this.logger.debug(
-      `[TRACE-LINGO] Chunking dictionary with ${Object.keys(sourceDictionary.entries).length} entries`,
-    );
     const chunks = this.chunkDictionary(sourceDictionary);
-    this.logger.debug(`[TRACE-LINGO] Split into ${chunks.length} chunks`);
+    this.logger.debug(
+      `Split dictionary with ${Object.keys(sourceDictionary.entries).length} into ${chunks.length} chunks`,
+    );
 
     const translatedChunks: DictionarySchema[] = [];
 
     for (let i = 0; i < chunks.length; i++) {
       const chunk = chunks[i];
       this.logger.debug(
-        `[TRACE-LINGO] Translating chunk ${i + 1}/${chunks.length} with ${Object.keys(chunk.entries).length} entries`,
+        `Translating chunk ${i + 1}/${chunks.length} with ${Object.keys(chunk.entries).length} entries`,
       );
       const chunkStartTime = performance.now();
 
@@ -95,16 +84,15 @@ export class Service implements Translator<LingoTranslatorConfig> {
 
       const chunkEndTime = performance.now();
       this.logger.debug(
-        `[TRACE-LINGO] Chunk ${i + 1}/${chunks.length} completed in ${(chunkEndTime - chunkStartTime).toFixed(2)}ms`,
+        `Chunk ${i + 1}/${chunks.length} completed in ${(chunkEndTime - chunkStartTime).toFixed(2)}ms`,
       );
 
       translatedChunks.push(translatedChunk);
     }
 
-    this.logger.debug(`[TRACE-LINGO] All chunks translated, merging results`);
     const result = this.mergeDictionaries(translatedChunks);
     this.logger.debug(
-      `[TRACE-LINGO] Merge completed, final dictionary has ${Object.keys(result.entries).length} entries`,
+      `Merge completed, final dictionary has ${Object.keys(result.entries).length} entries`,
     );
 
     return result;
@@ -139,7 +127,7 @@ export class Service implements Translator<LingoTranslatorConfig> {
       );
     }
 
-    this.logger.info(
+    this.logger.debug(
       `Using Lingo.dev Engine to localize from "${this.config.sourceLocale}" to "${targetLocale}"`,
     );
 
@@ -184,7 +172,7 @@ export class Service implements Translator<LingoTranslatorConfig> {
       );
     }
 
-    this.logger.info(
+    this.logger.debug(
       `Using LLM ("${localeModel.provider}":"${localeModel.name}") to translate from "${this.config.sourceLocale}" to "${targetLocale}"`,
     );
 
