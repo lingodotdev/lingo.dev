@@ -117,7 +117,7 @@ export async function setupFixture(
   const fixturePath = path.join(process.cwd(), "tests", "fixtures", framework);
   if (!fsSync.existsSync(fixturePath)) {
     throw new Error(
-      `Fixture for ${framework} not found. Run "pnpm test:prepare" first.`,
+      `Fixture for ${framework} not found. Run "pnpm test:e2e:prepare" first.`,
     );
   }
 
@@ -126,7 +126,7 @@ export async function setupFixture(
     console.error(`❌ Fixture integrity check failed for ${framework}:`);
     errors.forEach((error) => console.error(`  - ${error}`));
     throw new Error(
-      `Fixture integrity check failed. Please run "pnpm test:prepare" to recreate fixtures.`,
+      `Fixture integrity check failed. Please run "pnpm test:e2e:prepare" to recreate fixtures.`,
     );
   }
   console.log(
