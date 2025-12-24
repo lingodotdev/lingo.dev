@@ -297,7 +297,6 @@ export async function withLingo(
     }
 
     logger.info("Running post-build translation generation...");
-    logger.info(`Build mode: Using metadata file: ${metadataFilePath}`);
 
     try {
       await processBuildTranslations({
@@ -306,7 +305,10 @@ export async function withLingo(
         metadataFilePath,
       });
     } catch (error) {
-      logger.error("Translation generation failed:", error);
+      logger.error(
+        "Translation generation failed:",
+        error instanceof Error ? error.message : error,
+      );
       throw error;
     }
   };

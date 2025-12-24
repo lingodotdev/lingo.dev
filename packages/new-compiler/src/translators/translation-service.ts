@@ -117,11 +117,9 @@ export class TranslationService {
           // Use console.error to ensure visibility in all contexts (loader, server, etc.)
           const errorMsg =
             error instanceof Error ? error.message : String(error);
-          this.logger.warn(`\n⚠️ Translation setup error: ${errorMsg}\n`);
-          this.logger.warn(
-            `⚠️ Auto-fallback to pseudotranslator in development mode.\n` +
-              ` Set the required API keys for real translations.\n`,
-          );
+          this.logger.warn(`⚠️ Translation setup error: \n${errorMsg}\n
+⚠️ Auto-fallback to pseudotranslator in development mode.
+Set the required API keys for real translations.`);
 
           this.translator = new PseudoTranslator(
             { delayMedian: 100 },

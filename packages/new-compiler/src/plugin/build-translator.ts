@@ -64,10 +64,6 @@ export async function processBuildTranslations(
 
   logger.info(`🌍 Build mode: ${buildMode}`);
 
-  if (metadataFilePath) {
-    logger.info(`📋 Using build metadata file: ${metadataFilePath}`);
-  }
-
   const metadata = await loadMetadata(metadataFilePath);
 
   if (!metadata || Object.keys(metadata.entries).length === 0) {
@@ -172,7 +168,10 @@ export async function processBuildTranslations(
       stats,
     };
   } catch (error) {
-    logger.error("❌ Translation generation failed:", error);
+    logger.error(
+      "❌ Translation generation failed:\n",
+      error instanceof Error ? error.message : error,
+    );
     process.exit(1);
   } finally {
     if (translationServer) {
