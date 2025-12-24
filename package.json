@@ -1,0 +1,34 @@
+{
+  "name": "@lingo.dev",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "prepare": "husky",
+    "build": "turbo build",
+    "typecheck": "turbo typecheck",
+    "test": "turbo test",
+    "new": "changeset",
+    "new:empty": "changeset --empty",
+    "prebuild": "syncpack lint-semver-ranges --filter '.*' --types prod,dev"
+  },
+  "devDependencies": {
+    "@babel/generator": "7.28.5",
+    "@babel/parser": "7.28.5",
+    "@babel/traverse": "7.28.5",
+    "@babel/types": "7.28.5",
+    "@commitlint/cli": "19.8.1",
+    "@commitlint/config-conventional": "19.8.1",
+    "@types/babel__traverse": "7.28.0",
+    "commitlint": "19.8.1",
+    "husky": "9.1.7",
+    "syncpack": "13.0.4",
+    "turbo": "2.6.1"
+  },
+  "dependencies": {
+    "@changesets/changelog-github": "0.5.1",
+    "@changesets/cli": "2.29.7",
+    "minimatch": "10.1.1",
+    "node-machine-id": "1.1.12"
+  },
+  "packageManager": "pnpm@9.12.3"
+}
