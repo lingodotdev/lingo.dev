@@ -1,0 +1,26 @@
+{
+  "version": 0.1,
+  "locale": "en",
+  "entries": {
+    "8492c53cfbaf": "About Lingo.dev",
+    "8aa4fe3f0590": "This is a demo application showcasing the Lingo.dev compiler for automatic translations in React applications.",
+    "af76f667703b": "Key Features",
+    "999a96fc5866": "Automatic extraction of translatable text from JSX",
+    "b285bf7876d3": "Build-time transformation with zero runtime overhead",
+    "ab0450919701": "Support for multiple bundlers (Vite, Webpack, Next.js)",
+    "2d626508fb8f": "Hash-based translation system for stable identifiers",
+    "aca12d550fe2": "Server and client component support",
+    "44a3311c3a4a": "How It Works",
+    "0add30e37450": "The compiler analyzes your React components at build time and automatically extracts all translatable strings. It then generates translations using your configured translation provider.",
+    "07d84d34dd3a": "Simply add the \"use i18n\" directive at the top of your component files, and the compiler handles the rest!",
+    "daa4d8839395": "Clicked {counter} times",
+    "52ed9ee761d8": "Hello World",
+    "f11fc78c3ac0": "<b0>Mixed</b0> content <i0>fragment</i0>",
+    "556f5956dca7": "Welcome to Lingo.dev compiler demo",
+    "02704ec4e52a": "It automatically extract text from your JSX and translate it to other languages.",
+    "de6bfb30be49": "Text inserted as an <code0></code0> is not translated: {text}",
+    "5c15bd35e916": "To translate it you have to wrap it into the '<'>{translatableText} '<'/>",
+    "93b50fe805b7": "Text external to the component is not translated: {externalText}",
+    "d756b03ffbf5": "Content that has text and other tags inside will br translated as a single entity: {translatableMixedContextFragment}"
+  }
+}

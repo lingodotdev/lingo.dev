@@ -1,0 +1,13 @@
+# Build output
+build/
+
+# Playwright
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
+
+# Translation server logs
+translation-server.log
