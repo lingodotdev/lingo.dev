@@ -6,7 +6,6 @@
 "@lingo.dev/_locales": patch
 "@lingo.dev/_logging": patch
 "@lingo.dev/_react": patch
-"adonis": patch
 "next-app": patch
 "@lingo.dev/_spec": patch
 "lingo.dev": patch
