@@ -23,8 +23,9 @@ function extractCommentsFromJsonc(jsoncString: string): Record<string, any> {
     return {};
   }
 
-  // Track nesting context
-  const contextStack: Array<{ key: string; isArray: boolean }> = [];
+  // Track nesting context with array indices
+  const contextStack: Array<{ key: string; isArray: boolean; arrayIndex?: number }> = [];
+  let arrayObjectCount: Record<number, number> = {}; // Track object count per array depth
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
@@ -42,12 +43,12 @@ function extractCommentsFromJsonc(jsoncString: string): Record<string, any> {
         const keyMatch = line.match(/^\s*["']?([^"':,\s]+)["']?\s*:/);
         if (keyMatch) {
           const key = keyMatch[1];
-          const path = contextStack.map((ctx) => ctx.key).filter(Boolean);
+          const path = contextStack.map((ctx) => ctx.arrayIndex !== undefined ? String(ctx.arrayIndex) : ctx.key).filter(Boolean);
           keyInfo = { key, path };
         }
       } else {
         // For standalone comments, find the next key
-        keyInfo = findAssociatedKey(lines, commentData.lineIndex, contextStack);
+        keyInfo = findAssociatedKey(lines, commentData.lineIndex, contextStack, arrayObjectCount);
       }
 
       if (keyInfo && keyInfo.key) {
@@ -60,7 +61,7 @@ function extractCommentsFromJsonc(jsoncString: string): Record<string, any> {
     }
 
     // Update context for object/array nesting
-    updateContext(contextStack, line, result);
+    updateContext(contextStack, line, result, arrayObjectCount);
   }
 
   return comments;
@@ -166,7 +167,8 @@ function extractBlockComment(
 function findAssociatedKey(
   lines: string[],
   commentLineIndex: number,
-  contextStack: Array<{ key: string; isArray: boolean }>,
+  contextStack: Array<{ key: string; isArray: boolean; arrayIndex?: number }>,
+  arrayObjectCount: Record<number, number>,
 ): { key: string | null; path: string[] } {
   // Look for the next key after the comment
   for (let i = commentLineIndex + 1; i < lines.length; i++) {
@@ -175,10 +177,40 @@ function findAssociatedKey(
     if (
       !line ||
       line.startsWith("//") ||
-      line.startsWith("/*") ||
-      line === "{" ||
-      line === "}"
+      line.startsWith("/*")
     ) {
+      continue;
+    }
+
+    // Check if we're about to enter an array object
+    if (line === "{" && contextStack.length > 0) {
+      const parent = contextStack[contextStack.length - 1];
+      if (parent.isArray) {
+        // Get the current array index from arrayObjectCount
+        const depth = contextStack.length - 1;
+        const arrayIndex = arrayObjectCount[depth] || 0;
+
+        // Continue looking for the key inside this object
+        for (let j = i + 1; j < lines.length; j++) {
+          const innerLine = lines[j].trim();
+          if (!innerLine || innerLine.startsWith("//") || innerLine.startsWith("/*")) continue;
+
+          const keyMatch = innerLine.match(/^\s*["']?([^"':,\s]+)["']?\s*:/);
+          if (keyMatch) {
+            const key = keyMatch[1];
+            const path = contextStack
+              .map((ctx) => ctx.arrayIndex !== undefined ? String(ctx.arrayIndex) : ctx.key)
+              .filter(Boolean);
+            path.push(String(arrayIndex));
+            return { key, path };
+          }
+
+          if (innerLine === "}") break;
+        }
+      }
+    }
+
+    if (line === "{" || line === "}") {
       continue;
     }
 
@@ -186,7 +218,9 @@ function findAssociatedKey(
     const keyMatch = line.match(/^\s*["']?([^"':,\s]+)["']?\s*:/);
     if (keyMatch) {
       const key = keyMatch[1];
-      const path = contextStack.map((ctx) => ctx.key).filter(Boolean);
+      const path = contextStack
+        .map((ctx) => ctx.arrayIndex !== undefined ? String(ctx.arrayIndex) : ctx.key)
+        .filter(Boolean);
       return { key, path };
     }
   }
@@ -195,12 +229,23 @@ function findAssociatedKey(
 }
 
 function updateContext(
-  contextStack: Array<{ key: string; isArray: boolean }>,
+  contextStack: Array<{ key: string; isArray: boolean; arrayIndex?: number }>,
   line: string,
   parsedJson: any,
+  arrayObjectCount: Record<number, number>,
 ): void {
-  // This is a simplified context tracking - in a full implementation,
-  // you'd want more sophisticated AST-based tracking
+  const trimmed = line.trim();
+
+  // Track opening of arrays
+  const arrayMatch = line.match(/^\s*["']?([^"':,\s]+)["']?\s*:\s*\[/);
+  if (arrayMatch) {
+    const depth = contextStack.length;
+    arrayObjectCount[depth] = 0; // Initialize counter for this array
+    contextStack.push({ key: arrayMatch[1], isArray: true });
+    return;
+  }
+
+  // Track opening of objects
   const openBraces = (line.match(/\{/g) || []).length;
   const closeBraces = (line.match(/\}/g) || []).length;
 
@@ -209,11 +254,35 @@ function updateContext(
     const keyMatch = line.match(/^\s*["']?([^"':,\s]+)["']?\s*:\s*\{/);
     if (keyMatch) {
       contextStack.push({ key: keyMatch[1], isArray: false });
+    } else if (trimmed === '{' && contextStack.length > 0) {
+      // This is an object within an array
+      const parent = contextStack[contextStack.length - 1];
+      if (parent.isArray) {
+        const depth = contextStack.length - 1;
+        const arrayIndex = arrayObjectCount[depth] || 0;
+        contextStack.push({ key: '', isArray: false, arrayIndex });
+        arrayObjectCount[depth]++;
+      }
     }
-  } else if (closeBraces > openBraces) {
-    // Pop context when closing braces
+  }
+
+  // Track closing of objects and arrays
+  const openBrackets = (line.match(/\[/g) || []).length;
+  const closeBrackets = (line.match(/\]/g) || []).length;
+
+  if (closeBraces > openBraces) {
     for (let i = 0; i < closeBraces - openBraces; i++) {
       contextStack.pop();
+    }
+  }
+
+  if (closeBrackets > openBrackets) {
+    for (let i = 0; i < closeBrackets - openBrackets; i++) {
+      const popped = contextStack.pop();
+      if (popped?.isArray) {
+        const depth = contextStack.length;
+        delete arrayObjectCount[depth]; // Clean up counter
+      }
     }
   }
 }
