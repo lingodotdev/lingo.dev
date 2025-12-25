@@ -169,7 +169,7 @@ We're community-driven and love contributions!
 
 ## ⭐ Star History
 
-If you like what we're doing, give us a ⭐ and help us reach 5,000 stars! 🌟
+If you like what we're doing, give us a ⭐ and help us reach 6,000 stars! 🌟
 
 [![Star History Chart](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
 
