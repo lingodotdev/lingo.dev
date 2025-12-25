@@ -78,20 +78,24 @@
 一次安装：
 
 ```bash
-npm install lingo.dev
+npm install @lingo.dev/compiler
 ```
 
 在构建配置中启用：
 
-```js
-import lingoCompiler from "lingo.dev/compiler";
+```ts
+import type { NextConfig } from "next";
+import { withLingo } from "@lingo.dev/compiler/next";
 
-const existingNextConfig = {};
+const nextConfig: NextConfig = {};
 
-export default lingoCompiler.next({
-  sourceLocale: "en",
-  targetLocales: ["es", "fr"],
-})(existingNextConfig);
+export default async function (): Promise<NextConfig> {
+  return await withLingo(nextConfig, {
+    sourceLocale: "en",
+    targetLocales: ["es", "fr"],
+    models: "lingo.dev",
+  });
+}
 ```
 
 运行 `next build`，即可看到西班牙语和法语的构建包 ✨
@@ -192,7 +196,7 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 ## ⭐ Star 历史
 
-如果你喜欢我们的工作，请给我们一个 ⭐，帮助我们达到 5,000 个星标！🌟
+如果你喜欢我们的项目，请为我们点个⭐，帮助我们达到6,000颗星！🌟
 
 [
 

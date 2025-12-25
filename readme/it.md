@@ -79,20 +79,24 @@
 Installa una volta:
 
 ```bash
-npm install lingo.dev
+npm install @lingo.dev/compiler
 ```
 
 Abilita nella tua configurazione di build:
 
-```js
-import lingoCompiler from "lingo.dev/compiler";
+```ts
+import type { NextConfig } from "next";
+import { withLingo } from "@lingo.dev/compiler/next";
 
-const existingNextConfig = {};
+const nextConfig: NextConfig = {};
 
-export default lingoCompiler.next({
-  sourceLocale: "en",
-  targetLocales: ["es", "fr"],
-})(existingNextConfig);
+export default async function (): Promise<NextConfig> {
+  return await withLingo(nextConfig, {
+    sourceLocale: "en",
+    targetLocales: ["es", "fr"],
+    models: "lingo.dev",
+  });
+}
 ```
 
 Esegui `next build` e guarda apparire i bundle in spagnolo e francese ✨
@@ -193,7 +197,7 @@ Siamo guidati dalla community e amiamo i contributi!
 
 ## ⭐ Cronologia delle stelle
 
-Se ti piace quello che stiamo facendo, dacci una ⭐ e aiutaci a raggiungere 5.000 stelle! 🌟
+Se ti piace quello che facciamo, lasciaci una ⭐ e aiutaci a raggiungere 6.000 stelle! 🌟
 
 [
 
