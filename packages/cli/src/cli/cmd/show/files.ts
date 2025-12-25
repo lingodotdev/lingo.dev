@@ -1,6 +1,7 @@
 import { Command } from "interactive-commander";
 import _ from "lodash";
 import Ora from "ora";
+import { minimatch } from "minimatch";
 import { getConfig } from "../../utils/config";
 import { CLIError } from "../../utils/errors";
 import { getBuckets } from "../../utils/buckets";
@@ -19,6 +20,21 @@ export default new Command()
     "--target",
     "Only list the target locale variants for each configured locale",
   )
+  .option(
+    "--bucket <bucket>",
+    "Limit processing to specific bucket types defined in i18n.json (e.g., json, yaml, android). Repeat the flag to include multiple bucket types. Defaults to all configured buckets",
+    (val: string, prev: string[]) => (prev ? [...prev, val] : [val]),
+  )
+  .option(
+    "--target-locale <target-locale>",
+    "Limit processing to the listed target locale codes from i18n.json. Repeat the flag to include multiple locales. Defaults to all configured target locales",
+    (val: string, prev: string[]) => (prev ? [...prev, val] : [val]),
+  )
+  .option(
+    "--file <file>",
+    "Filter bucket path pattern values by substring match. Examples: messages.json or locale/. Repeat to add multiple filters",
+    (val: string, prev: string[]) => (prev ? [...prev, val] : [val]),
+  )
   .helpOption("-h, --help", "Show help")
   .action(async (type) => {
     const ora = Ora();
@@ -34,9 +50,29 @@ export default new Command()
           });
         }
 
-        const buckets = getBuckets(i18nConfig);
+        // Get all buckets and apply bucket filter if specified
+        let buckets = getBuckets(i18nConfig);
+        if (type.bucket) {
+          buckets = buckets.filter((b) => type.bucket.includes(b.type));
+        }
+
+        // Apply target-locale filter if specified
+        const targetLocales = type.targetLocale || i18nConfig.locale.targets;
+
         for (const bucket of buckets) {
           for (const bucketConfig of bucket.paths) {
+            // Apply file filter if specified
+            if (type.file) {
+              const matchesFilter = type.file.some(
+                (f: string) =>
+                  bucketConfig.pathPattern.includes(f) ||
+                  minimatch(bucketConfig.pathPattern, f),
+              );
+              if (!matchesFilter) {
+                continue;
+              }
+            }
+
             const sourceLocale = resolveOverriddenLocale(
               i18nConfig.locale.source,
               bucketConfig.delimiter,
@@ -45,8 +81,8 @@ export default new Command()
               /\[locale\]/g,
               sourceLocale,
             );
-            const targetPaths = i18nConfig.locale.targets.map(
-              (_targetLocale) => {
+            const targetPaths = targetLocales.map(
+              (_targetLocale: string) => {
                 const targetLocale = resolveOverriddenLocale(
                   _targetLocale,
                   bucketConfig.delimiter,
