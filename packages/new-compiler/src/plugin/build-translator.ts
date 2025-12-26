@@ -65,6 +65,13 @@ export async function processBuildTranslations(
     (process.env.LINGO_BUILD_MODE as "translate" | "cache-only") ||
     config.buildMode;
 
+  if (buildMode !== "translate" && buildMode !== "cache-only") {
+    logger.error(
+      `❌ Invalid build mode: "${buildMode}". Must be "translate" or "cache-only".`,
+    );
+    process.exit(1);
+  }
+
   logger.info(`🌍 Build mode: ${buildMode}`);
 
   if (metadataFilePath) {
@@ -123,7 +130,9 @@ export async function processBuildTranslations(
       : config.targetLocales;
 
     logger.info(
-      `Processing translations for ${allLocales.length} locale(s)${needsSourceLocale ? " (including source locale for pluralization)" : ""}...`,
+      `Processing translations for ${allLocales.length} locale(s)${
+        needsSourceLocale ? " (including source locale for pluralization)" : ""
+      }...`,
     );
 
     const stats: BuildTranslationResult["stats"] = {};
@@ -229,9 +238,9 @@ async function validateCache(
 
         // Log first few missing hashes for debugging
         logger.debug(
-          `Missing hashes in ${locale}: ${missingHashes.slice(0, 5).join(", ")}${
-            missingHashes.length > 5 ? "..." : ""
-          }`,
+          `Missing hashes in ${locale}: ${missingHashes
+            .slice(0, 5)
+            .join(", ")}${missingHashes.length > 5 ? "..." : ""}`,
         );
       }
     } catch (error) {
@@ -307,7 +316,9 @@ async function copyStaticFiles(
       );
 
       logger.info(
-        `✓ Generated ${locale}.json (${Object.keys(entries).length} translations)`,
+        `✓ Generated ${locale}.json (${
+          Object.keys(entries).length
+        } translations)`,
       );
     } catch (error) {
       logger.error(`❌ Failed to generate ${locale}.json:`, error);
