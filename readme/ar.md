@@ -79,20 +79,24 @@
 قم بالتثبيت مرة واحدة:
 
 ```bash
-npm install lingo.dev
+npm install @lingo.dev/compiler
 ```
 
 قم بالتفعيل في إعدادات البناء الخاصة بك:
 
-```js
-import lingoCompiler from "lingo.dev/compiler";
+```ts
+import type { NextConfig } from "next";
+import { withLingo } from "@lingo.dev/compiler/next";
 
-const existingNextConfig = {};
+const nextConfig: NextConfig = {};
 
-export default lingoCompiler.next({
-  sourceLocale: "en",
-  targetLocales: ["es", "fr"],
-})(existingNextConfig);
+export default async function (): Promise<NextConfig> {
+  return await withLingo(nextConfig, {
+    sourceLocale: "en",
+    targetLocales: ["es", "fr"],
+    models: "lingo.dev",
+  });
+}
 ```
 
 قم بتشغيل `next build` وشاهد حزم الإسبانية والفرنسية تظهر ✨
@@ -193,7 +197,7 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 ## ⭐ تاريخ النجوم
 
-إذا أعجبك ما نقوم به، امنحنا ⭐ وساعدنا للوصول إلى 5,000 نجمة! 🌟
+إذا أعجبك ما نقوم به، امنحنا ⭐ وساعدنا في الوصول إلى 6,000 نجمة! 🌟
 
 [
 

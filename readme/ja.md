@@ -79,20 +79,24 @@
 一度インストールするだけ：
 
 ```bash
-npm install lingo.dev
+npm install @lingo.dev/compiler
 ```
 
 ビルド設定で有効化：
 
-```js
-import lingoCompiler from "lingo.dev/compiler";
+```ts
+import type { NextConfig } from "next";
+import { withLingo } from "@lingo.dev/compiler/next";
 
-const existingNextConfig = {};
+const nextConfig: NextConfig = {};
 
-export default lingoCompiler.next({
-  sourceLocale: "en",
-  targetLocales: ["es", "fr"],
-})(existingNextConfig);
+export default async function (): Promise<NextConfig> {
+  return await withLingo(nextConfig, {
+    sourceLocale: "en",
+    targetLocales: ["es", "fr"],
+    models: "lingo.dev",
+  });
+}
 ```
 
 `next build` を実行すると、スペイン語とフランス語のバンドルが自動的に生成されます ✨
@@ -193,7 +197,7 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 ## ⭐ スター履歴
 
-私たちの取り組みが気に入ったら、⭐をつけて5,000スター達成を手伝ってください！ 🌟
+私たちの取り組みが気に入ったら、⭐を付けて6,000スターの達成にご協力ください！🌟
 
 [
 
