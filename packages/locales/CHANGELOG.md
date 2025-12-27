@@ -1,5 +1,11 @@
 # @lingo.dev/\_locales
 
+## 0.3.2
+
+### Patch Changes
+
+- [#1711](https://github.com/lingodotdev/lingo.dev/pull/1711) [`40dc1bb`](https://github.com/lingodotdev/lingo.dev/commit/40dc1bbd03633d7046da5580858f728dffdcbf81) Thanks [@vrcprl](https://github.com/vrcprl)! - Fix CLDR loading
+
 ## 0.3.1
 
 ### Patch Changes
