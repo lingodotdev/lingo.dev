@@ -91,7 +91,7 @@ export default async function execute(input: CmdRunContext) {
 
           return task.newListr(workerTasks, {
             concurrent: true,
-            exitOnError: false,
+            exitOnError: !!ctx.flags.strict,
             rendererOptions: {
               ...commonTaskRendererOptions,
               collapseSubtasks: true,
@@ -101,7 +101,7 @@ export default async function execute(input: CmdRunContext) {
       },
     ],
     {
-      exitOnError: false,
+      exitOnError: !!input.flags.strict,
       rendererOptions: commonTaskRendererOptions,
     },
   ).run(input);
@@ -319,6 +319,9 @@ function createWorkerTask(args: {
               targetLocale: assignedTask.targetLocale,
             } satisfies CmdRunTaskResult;
           } catch (error) {
+            if (args.ctx.flags.strict) {
+              throw error;
+            }
             return {
               status: "error",
               error: error as Error,
