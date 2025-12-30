@@ -13,6 +13,13 @@ describe("findLocaleFiles", () => {
     vi.clearAllMocks();
   });
 
+  const toPosix = (s: string) => s.replace(/\\/g, "/");
+  const normalize = (r: { patterns: string[]; defaultPatterns: string[] } | null) =>
+    r && {
+      patterns: r.patterns.map(toPosix),
+      defaultPatterns: r.defaultPatterns.map(toPosix),
+    };
+
   it("should find json locale files", () => {
     vi.mocked(glob.sync).mockReturnValue([
       // valid locales
@@ -26,7 +33,7 @@ describe("findLocaleFiles", () => {
       "src/settings.json",
     ]);
 
-    const result = findLocaleFiles("json");
+    const result = normalize(findLocaleFiles("json"));
 
     expect(result).toEqual({
       patterns: ["src/i18n/[locale].json", "src/translations/[locale].json"],
@@ -41,7 +48,7 @@ describe("findLocaleFiles", () => {
       "translations/es.yml",
     ]);
 
-    const result = findLocaleFiles("yaml");
+    const result = normalize(findLocaleFiles("yaml"));
 
     expect(result).toEqual({
       patterns: ["locales/[locale].yml", "translations/[locale].yml"],
@@ -56,7 +63,7 @@ describe("findLocaleFiles", () => {
       "lib/translations/fr.arb",
     ]);
 
-    const result = findLocaleFiles("flutter");
+    const result = normalize(findLocaleFiles("flutter"));
 
     expect(result).toEqual({
       patterns: ["lib/l10n/[locale].arb", "lib/translations/[locale].arb"],
@@ -124,7 +131,7 @@ describe("findLocaleFiles", () => {
       "ios/MyApp/xx/Localizable.xcstrings",
     ]);
 
-    const result = findLocaleFiles("xcode-xcstrings");
+    const result = normalize(findLocaleFiles("xcode-xcstrings"));
 
     expect(result).toEqual({
       patterns: [
