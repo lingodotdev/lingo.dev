@@ -1,5 +1,6 @@
 import path from "path";
 import fs from "fs";
+import { getConfigRoot } from "./config";
 
 interface CacheRow {
   targetLocale: string;
@@ -81,7 +82,8 @@ function _appendToCache(rows: CacheRow[]) {
 }
 
 function _getCacheFilePath() {
-  return path.join(process.cwd(), "i18n.cache");
+  const configRoot = getConfigRoot() || process.cwd();
+  return path.join(configRoot, "i18n.cache");
 }
 
 function _buildJSONLines(rows: CacheRow[]) {
