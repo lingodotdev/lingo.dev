@@ -130,7 +130,7 @@ export async function verifyFixtureIntegrity(
   const checksumsPath = getChecksumFilePath(fixturePath);
   if (!fsSync.existsSync(checksumsPath)) {
     errors.push(
-      "Checksums file not found. Please run 'pnpm test:prepare' to generate it.",
+      "Checksums file not found. Please run 'pnpm test:e2e:prepare' to generate it.",
     );
     return { valid: false, errors };
   }

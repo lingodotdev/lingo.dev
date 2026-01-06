@@ -12,6 +12,7 @@ import { startOrGetTranslationServer } from "../translation-server/translation-s
 import { cleanupExistingMetadata, getMetadataPath } from "../metadata/manager";
 import { registerCleanupOnCurrentProcess } from "./cleanup";
 import { useI18nRegex } from "./transform/use-i18n";
+import { TranslationService } from "../translators";
 
 export type LingoNextPluginOptions = PartialLingoConfig;
 
@@ -205,14 +206,12 @@ export async function withLingo(
     `Initializing Lingo.dev compiler. Is dev mode: ${isDev}. Is main runner: ${isMainRunner()}`,
   );
 
-  // TODO (AleksandrSl 12/12/2025): Add API keys validation too, so we can log it nicely.
-
   // Try to start up the translation server once.
   // We have two barriers, a simple one here and a more complex one inside the startTranslationServer which doesn't start the server if it can find one running.
   // We do not use isMainRunner here, because we need to start the server as early as possible, so the loaders get the translation server url. The main runner in dev mode runs after a dev server process is started.
   if (isDev && !process.env.LINGO_TRANSLATION_SERVER_URL) {
     const translationServer = await startOrGetTranslationServer({
-      startPort: lingoConfig.dev.translationServerStartPort,
+      translationService: new TranslationService(lingoConfig, logger),
       onError: (err) => {
         logger.error("Translation server error:", err);
       },
@@ -298,7 +297,6 @@ export async function withLingo(
     }
 
     logger.info("Running post-build translation generation...");
-    logger.info(`Build mode: Using metadata file: ${metadataFilePath}`);
 
     try {
       await processBuildTranslations({
@@ -307,7 +305,10 @@ export async function withLingo(
         metadataFilePath,
       });
     } catch (error) {
-      logger.error("Translation generation failed:", error);
+      logger.error(
+        "Translation generation failed:",
+        error instanceof Error ? error.message : error,
+      );
       throw error;
     }
   };
