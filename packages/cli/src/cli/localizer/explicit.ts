@@ -95,7 +95,7 @@ export default function createExplicitLocalizer(
 }
 
 function createAiSdkLocalizer(params: {
-  factory: (params: { apiKey?: string; baseUrl?: string }) => LanguageModel;
+  factory: (params: { apiKey?: string; baseURL?: string }) => LanguageModel;
   id: NonNullable<I18nConfig["provider"]>["id"];
   prompt: string;
   apiKeyName?: string;
@@ -137,7 +137,7 @@ function createAiSdkLocalizer(params: {
   }
 
   const model = params.factory(
-    skipAuth ? {} : { apiKey, baseUrl: params.baseUrl },
+    skipAuth ? {} : { apiKey, baseURL: params.baseUrl },
   );
 
   return {
