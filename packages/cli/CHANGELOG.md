@@ -1,5 +1,21 @@
 # lingo.dev
 
+## 0.117.23
+
+### Patch Changes
+
+- Updated dependencies [[`40dc1bb`](https://github.com/lingodotdev/lingo.dev/commit/40dc1bbd03633d7046da5580858f728dffdcbf81)]:
+  - @lingo.dev/_locales@0.3.2
+  - @lingo.dev/_spec@0.44.5
+  - @lingo.dev/_compiler@0.8.9
+  - @lingo.dev/_sdk@0.13.5
+
+## 0.117.22
+
+### Patch Changes
+
+- [#1710](https://github.com/lingodotdev/lingo.dev/pull/1710) [`020424f`](https://github.com/lingodotdev/lingo.dev/commit/020424f2601c535e88c66aeeece5a15fb9b66b70) Thanks [@vrcprl](https://github.com/vrcprl)! - Add support for JSONC comments in arrays
+
 ## 0.117.21
 
 ### Patch Changes

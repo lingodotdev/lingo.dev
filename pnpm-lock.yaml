@@ -914,7 +914,7 @@ importers:
         specifier: ^11.0.6
         version: 11.0.6
       lingo.dev:
-        specifier: ^0.117.0
+        specifier: ^0.117.21
         version: 0.117.21(@types/node@25.0.3)(@types/react@19.2.7)(encoding@0.1.13)(next@16.1.1(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.57.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))
       lodash:
         specifier: ^4.17.21
