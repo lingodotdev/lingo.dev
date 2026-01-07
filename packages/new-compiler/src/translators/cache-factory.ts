@@ -8,6 +8,8 @@ import { LocalTranslationCache } from "./local-cache";
 import { logger } from "../utils/logger";
 import { getCacheDir } from "../utils/path-helpers";
 
+export type CacheConfig = Pick<LingoConfig, "cacheType"> & PathConfig;
+
 /**
  * Create a cache instance based on the config
  *
@@ -21,7 +23,7 @@ import { getCacheDir } from "../utils/path-helpers";
  * ```
  */
 export function createCache(
-  config: Pick<LingoConfig, "cacheType"> & PathConfig,
+  config: CacheConfig,
 ): TranslationCache {
   switch (config.cacheType) {
     case "local":

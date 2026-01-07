@@ -21,25 +21,11 @@ export class PseudoTranslator implements Translator<PseudoTranslatorConfig> {
   ) {}
 
   translate(locale: LocaleCode, entries: Record<string, TranslatableEntry>) {
-    this.logger.debug(
-      `[TRACE-PSEUDO] translate() ENTERED for ${locale} with ${Object.keys(entries).length} entries`,
-    );
     const delay = this.config?.delayMedian ?? 0;
     const actualDelay = this.getRandomDelay(delay);
 
-    this.logger.debug(
-      `[TRACE-PSEUDO] Config delay: ${delay}ms, actual delay: ${actualDelay}ms`,
-    );
-
     return new Promise<Record<string, string>>((resolve) => {
-      this.logger.debug(
-        `[TRACE-PSEUDO] Promise created, scheduling setTimeout for ${actualDelay}ms`,
-      );
-
       setTimeout(() => {
-        this.logger.debug(
-          `[TRACE-PSEUDO] setTimeout callback fired for ${locale}, processing entries`,
-        );
 
         const result = Object.fromEntries(
           Object.entries(entries).map(([hash, entry]) => {
@@ -47,16 +33,8 @@ export class PseudoTranslator implements Translator<PseudoTranslatorConfig> {
           }),
         );
 
-        this.logger.debug(
-          `[TRACE-PSEUDO] Pseudolocalization complete, resolving with ${Object.keys(result).length} translations`,
-        );
         resolve(result);
-        this.logger.debug(`[TRACE-PSEUDO] Promise resolved for ${locale}`);
       }, actualDelay);
-
-      this.logger.debug(
-        `[TRACE-PSEUDO] setTimeout scheduled, returning promise`,
-      );
     });
   }
 
