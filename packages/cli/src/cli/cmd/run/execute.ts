@@ -227,6 +227,11 @@ function createWorkerTask(args: {
               .fromPairs()
               .value();
 
+            // Verbose: print the data to be processed
+            if (args.ctx.flags.verbose) {
+              console.log(JSON.stringify(processableData, null, 2));
+            }
+
             if (!Object.keys(processableData).length) {
               await fileIoLimiter(async () => {
                 // re-push in case some of the unlocalizable / meta data changed
@@ -284,6 +289,11 @@ function createWorkerTask(args: {
                 });
               },
             );
+
+            // Verbose: print the processed translation chunk
+            if (args.ctx.flags.verbose) {
+              console.log(JSON.stringify(processedTargetData, null, 2));
+            }
 
             const finalTargetData = _.merge(
               {},
