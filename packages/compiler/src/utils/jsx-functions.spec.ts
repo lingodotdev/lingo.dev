@@ -1,6 +1,6 @@
 import { parse } from "@babel/parser";
-import traverse from "@babel/traverse";
-import generate from "@babel/generator";
+import { traverse } from "../babel-interop";
+import { generate } from "../babel-interop";
 import { getJsxFunctions } from "./jsx-functions";
 import { describe, expect, it } from "vitest";
 

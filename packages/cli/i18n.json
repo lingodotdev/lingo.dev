@@ -5,6 +5,9 @@
     "targets": ["es"]
   },
   "buckets": {
+    "ail": {
+      "include": ["demo/ail/*.ail"]
+    },
     "xliff": {
       "include": ["demo/xliff/[locale]/*.xliff"]
     },
@@ -51,6 +54,9 @@
       "lockedKeys": ["meta/locked_key_1"],
       "ignoredKeys": ["meta/ignored_key_1"]
     },
+    "mjml": {
+      "include": ["demo/mjml/[locale]/*.mjml"]
+    },
     "po": {
       "include": ["demo/po/[locale]/*.po"]
     },
@@ -68,6 +74,9 @@
       "lockedKeys": ["forms/locked_key_1"],
       "ignoredKeys": ["forms/ignored_key_1"]
     },
+    "twig": {
+      "include": ["demo/twig/[locale]/*.twig"]
+    },
     "vtt": {
       "include": ["demo/vtt/[locale]/*.vtt"]
     },
@@ -83,7 +92,8 @@
       "ignoredKeys": ["item_count"]
     },
     "xcode-xcstrings-v2": {
-      "include": ["demo/xcode-xcstrings-v2/*.xcstrings"]
+      "include": ["demo/xcode-xcstrings-v2/example.xcstrings"],
+      "lockedKeys": ["%d items left"]
     },
     "xml": {
       "include": ["demo/xml/[locale]/*.xml"]
