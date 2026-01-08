@@ -79,20 +79,24 @@
 একবার ইনস্টল করুন:
 
 ```bash
-npm install lingo.dev
+npm install @lingo.dev/compiler
 ```
 
 আপনার বিল্ড কনফিগে সক্রিয় করুন:
 
-```js
-import lingoCompiler from "lingo.dev/compiler";
+```ts
+import type { NextConfig } from "next";
+import { withLingo } from "@lingo.dev/compiler/next";
 
-const existingNextConfig = {};
+const nextConfig: NextConfig = {};
 
-export default lingoCompiler.next({
-  sourceLocale: "en",
-  targetLocales: ["es", "fr"],
-})(existingNextConfig);
+export default async function (): Promise<NextConfig> {
+  return await withLingo(nextConfig, {
+    sourceLocale: "en",
+    targetLocales: ["es", "fr"],
+    models: "lingo.dev",
+  });
+}
 ```
 
 `next build` চালান এবং স্প্যানিশ ও ফরাসি বান্ডলগুলি দেখুন ✨
@@ -193,7 +197,7 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 ## ⭐ স্টার হিস্টরি
 
-আমরা যা করছি তা যদি আপনার পছন্দ হয়, আমাদের একটি ⭐ দিন এবং ৫,০০০ স্টার পৌঁছাতে সাহায্য করুন! 🌟
+আপনি যদি আমাদের কাজ পছন্দ করেন, আমাদের একটি ⭐ দিন এবং ৬,০০০ তারকায় পৌঁছাতে সাহায্য করুন! 🌟
 
 [
 
