@@ -9,15 +9,15 @@ const POSTHOG_PATH = "/i/v0/e/";
 const REQUEST_TIMEOUT_MS = 3000;
 const TRACKING_VERSION = "2.0";
 
-function determineDistinctId(providedId: string | null | undefined): {
+function determineDistinctId(email: string | null | undefined): {
   distinct_id: string;
   distinct_id_source: string;
   project_id: string | null;
 } {
-  if (providedId) {
+  if (email) {
     const projectId = getRepositoryId();
     return {
-      distinct_id: providedId,
+      distinct_id: email,
       distinct_id_source: "email",
       project_id: projectId,
     };
@@ -46,7 +46,7 @@ function determineDistinctId(providedId: string | null | undefined): {
 }
 
 export default function trackEvent(
-  distinctId: string | null | undefined,
+  email: string | null | undefined,
   event: string,
   properties?: Record<string, any>,
 ): void {
@@ -56,7 +56,7 @@ export default function trackEvent(
 
   setImmediate(() => {
     try {
-      const identityInfo = determineDistinctId(distinctId);
+      const identityInfo = determineDistinctId(email);
 
       if (process.env.DEBUG === "true") {
         console.log(
