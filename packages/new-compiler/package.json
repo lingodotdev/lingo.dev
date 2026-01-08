@@ -171,7 +171,7 @@
     "dotenv": "^17.2.3",
     "fast-xml-parser": "^5.3.3",
     "intl-messageformat": "^11.0.6",
-    "lingo.dev": "^0.117.24",
+    "lingo.dev": "^0.117.23",
     "lodash": "^4.17.21",
     "proper-lockfile": "^4.1.2",
     "ws": "^8.18.3"
