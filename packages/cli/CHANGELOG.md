@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.117.24
+
+### Patch Changes
+
+- [#1724](https://github.com/lingodotdev/lingo.dev/pull/1724) [`c617611`](https://github.com/lingodotdev/lingo.dev/commit/c61761181c5f8145ec2e54f34d33ad04a90968e3) Thanks [@vrcprl](https://github.com/vrcprl)! - fix observability for status command
+
 ## 0.117.23
 
 ### Patch Changes

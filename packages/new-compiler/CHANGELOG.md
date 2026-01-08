@@ -1,5 +1,14 @@
 # @lingo.dev/compiler
 
+## 0.1.3
+
+### Patch Changes
+
+- [#1705](https://github.com/lingodotdev/lingo.dev/pull/1705) [`c77c8c8`](https://github.com/lingodotdev/lingo.dev/commit/c77c8c8b8e1db859839b184882d56a0ef7da1ab0) Thanks [@AleksandrSl](https://github.com/AleksandrSl)! - Show logs of the translator initialization to notify about possible problems with LLM keys
+
+- Updated dependencies [[`c617611`](https://github.com/lingodotdev/lingo.dev/commit/c61761181c5f8145ec2e54f34d33ad04a90968e3)]:
+  - lingo.dev@0.117.24
+
 ## 0.1.2
 
 ### Patch Changes
