@@ -1,9 +1,7 @@
 import * as machineIdLib from "node-machine-id";
 import { getRc } from "./rc";
 import { getRepositoryId } from "./repository-id";
-
-const TRACKING_VERSION = "3.0";
-const COMPILER_PACKAGE = "@lingo.dev/compiler";
+import { TRACKING_VERSION, COMPILER_PACKAGE } from "./tracking-events";
 
 export default async function trackEvent(
   event: string,
