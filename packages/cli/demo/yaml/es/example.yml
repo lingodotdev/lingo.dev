@@ -21,5 +21,5 @@ settings:
 complex_structure:
   level_one:
     level_two:
-      message: "Texto anidado profundo"
+      message: "Texto profundamente anidado"
 locked_key_1: "This value is locked and should not be changed"

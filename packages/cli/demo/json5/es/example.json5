@@ -2,24 +2,24 @@
   title: '¡Hola, mundo!',
   description: 'Una aplicación de demostración simple con características JSON5',
   version: '1.0.0',
-  support_email: 'soporte@example.com',
+  support_email: 'support@example.com',
   homepage: 'https://lingo.dev',
   deprecated: null,
   empty: '',
   emoji: '🚀',
   author: {
-    name: 'Juan Pérez',
+    name: 'John Doe',
   },
   contributors: [
     {
-      name: 'Alicia',
+      name: 'Alice',
     },
     {
-      name: 'Roberto',
+      name: 'Bob',
     },
   ],
   messages: [
-    'Bienvenido a MiApp',
+    'Bienvenido a MyApp',
     '¡Hola, mundo!',
   ],
   config: {
