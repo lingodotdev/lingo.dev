@@ -910,6 +910,9 @@ importers:
       fast-xml-parser:
         specifier: ^5.3.3
         version: 5.3.3
+      ini:
+        specifier: 5.0.0
+        version: 5.0.0
       intl-messageformat:
         specifier: ^11.0.6
         version: 11.0.6
@@ -919,6 +922,12 @@ importers:
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
+      node-machine-id:
+        specifier: 1.1.12
+        version: 1.1.12
+      posthog-node:
+        specifier: 5.14.0
+        version: 5.14.0
       proper-lockfile:
         specifier: ^4.1.2
         version: 4.1.2
@@ -944,6 +953,9 @@ importers:
       '@types/babel__traverse':
         specifier: ^7.28.0
         version: 7.28.0
+      '@types/ini':
+        specifier: 4.1.1
+        version: 4.1.1
       '@types/node':
         specifier: ^25.0.3
         version: 25.0.3
