@@ -48,11 +48,28 @@ export async function prepareAllFixtures(): Promise<void> {
   // Create fixtures directory
   await fs.mkdir(fixturesDir, { recursive: true });
 
+  // Pack the compiler once and reuse for all fixtures
+  console.log("\n📦 Packing compiler into tarball...");
+  const compilerRoot = process.cwd();
+  const packResult = await execAsync("pnpm pack --pack-destination /tmp", {
+    cwd: compilerRoot,
+    timeout: 60000,
+  });
+
+  // Extract tarball filename from pack output
+  const tarballMatch = packResult.stdout.match(/lingo\.dev-compiler-[\d.]+\.tgz/);
+  if (!tarballMatch) {
+    throw new Error(`Failed to find tarball in pack output: ${packResult.stdout}`);
+  }
+  const tarballName = tarballMatch[0];
+  const tarballPath = path.join("/tmp", tarballName);
+  console.log(`  ✅ Packed compiler: ${tarballName}`);
+
   // Prepare Next.js fixture
-  await prepareFixture("next", demoDir, fixturesDir);
+  await prepareFixture("next", demoDir, fixturesDir, tarballPath);
 
   // Prepare Vite fixture
-  await prepareFixture("vite", demoDir, fixturesDir);
+  await prepareFixture("vite", demoDir, fixturesDir, tarballPath);
 
   console.log("\n✅ All fixtures prepared successfully!");
   console.log("You can now run tests with: pnpm test:e2e");
@@ -62,6 +79,7 @@ async function prepareFixture(
   framework: "next" | "vite",
   demoDir: string,
   fixturesDir: string,
+  tarballPath: string,
 ): Promise<void> {
   console.log(`\n📦 Preparing ${framework} fixture...`);
 
@@ -100,16 +118,14 @@ async function prepareFixture(
     console.log(`  Modified vite.config.ts to disable devtools`);
   }
 
-  // Update package.json to use local compiler with file: reference
-  console.log(`  Updating package.json to use local compiler...`);
+  // Update package.json to use packed compiler
+  console.log(`  Updating package.json to use packed compiler...`);
   const packageJsonPath = path.join(destPath, "package.json");
   const packageJson = JSON.parse(await fs.readFile(packageJsonPath, "utf-8"));
-  // Use current directory (compiler/) which contains package.json and build/
-  const compilerRoot = process.cwd();
 
-  // Replace workspace:* with file: path
+  // Replace workspace:* with tarball path
   if (packageJson.dependencies?.["@lingo.dev/compiler"]) {
-    packageJson.dependencies["@lingo.dev/compiler"] = `file:${compilerRoot}`;
+    packageJson.dependencies["@lingo.dev/compiler"] = `file:${tarballPath}`;
   }
 
   await fs.writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2));
