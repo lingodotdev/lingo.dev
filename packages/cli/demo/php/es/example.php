@@ -3,7 +3,7 @@
 return [
   '0' => '¡Hola, mundo!',
   '1' => 'Bienvenido a MyApp',
-  '2' => 'Es "simple\\" con una barra invertida \\ y salto de línea\\nTodo el texto aquí',
+  '2' => 'Es "simple\\" con una barra invertida \\ y salto de línea\nTodo el texto aquí',
   '3' => [
     'welcome_message' => '¡Bienvenido!'
   ],
@@ -28,11 +28,11 @@ return [
   ],
   '7' => [
     'mixed_content' => [
-      'title' => 'Ajustes',
+      'title' => 'Configuración',
       'count' => 42,
       'enabled' => true,
       'nothing_here' => null,
-      'description' => 'Ajustes y preferencias de la aplicación'
+      'description' => 'Configuración y preferencias de la aplicación'
     ]
   ]
 ];
