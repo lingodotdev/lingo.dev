@@ -148,7 +148,7 @@
     "@lingo.dev/_sdk": "workspace:*",
     "@lingo.dev/_spec": "workspace:*",
     "@markdoc/markdoc": "0.5.4",
-    "@modelcontextprotocol/sdk": "1.22.0",
+    "@modelcontextprotocol/sdk": "1.25.2",
     "@openrouter/ai-sdk-provider": "0.7.1",
     "@paralleldrive/cuid2": "2.2.2",
     "@types/ejs": "3.1.5",
