@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.117.26
+
+### Patch Changes
+
+- [#1730](https://github.com/lingodotdev/lingo.dev/pull/1730) [`ea02a43`](https://github.com/lingodotdev/lingo.dev/commit/ea02a43b6c4eaeddf61fa62c7564a4231b67ef82) Thanks [@vrcprl](https://github.com/vrcprl)! - Upd code placeholders to prevent gray-matter engine error
+
 ## 0.117.25
 
 ### Patch Changes
