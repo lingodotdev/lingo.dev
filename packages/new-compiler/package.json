@@ -173,7 +173,7 @@
     "fast-xml-parser": "^5.3.3",
     "ini": "5.0.0",
     "intl-messageformat": "^11.0.6",
-    "lingo.dev": "^0.117.25",
+    "lingo.dev": "workspace:^",
     "lodash": "^4.17.21",
     "node-machine-id": "1.1.12",
     "posthog-node": "5.14.0",
