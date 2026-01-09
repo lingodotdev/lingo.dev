@@ -1,5 +1,12 @@
 # react-router-app
 
+## 1.0.26
+
+### Patch Changes
+
+- Updated dependencies [[`68b8496`](https://github.com/lingodotdev/lingo.dev/commit/68b849602a88b9f9aa3097f37ce2f0ccf97c1ad5)]:
+  - lingo.dev@0.117.25
+
 ## 1.0.25
 
 ### Patch Changes
