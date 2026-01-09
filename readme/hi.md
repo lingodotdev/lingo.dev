@@ -79,20 +79,24 @@
 एक बार इंस्टॉल करें:
 
 ```bash
-npm install lingo.dev
+npm install @lingo.dev/compiler
 ```
 
 अपने बिल्ड कॉन्फिग में सक्षम करें:
 
-```js
-import lingoCompiler from "lingo.dev/compiler";
+```ts
+import type { NextConfig } from "next";
+import { withLingo } from "@lingo.dev/compiler/next";
 
-const existingNextConfig = {};
+const nextConfig: NextConfig = {};
 
-export default lingoCompiler.next({
-  sourceLocale: "en",
-  targetLocales: ["es", "fr"],
-})(existingNextConfig);
+export default async function (): Promise<NextConfig> {
+  return await withLingo(nextConfig, {
+    sourceLocale: "en",
+    targetLocales: ["es", "fr"],
+    models: "lingo.dev",
+  });
+}
 ```
 
 `next build` चलाएं और स्पेनिश और फ्रेंच बंडल्स को बाहर आते देखें ✨
@@ -193,7 +197,7 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 ## ⭐ स्टार इतिहास
 
-अगर आपको हमारा काम पसंद है, तो हमें एक ⭐ दें और हमें 5,000 स्टार तक पहुंचने में मदद करें! 🌟
+यदि आपको हमारा काम पसंद आ रहा है, तो हमें एक ⭐ दें और 6,000 स्टार तक पहुंचने में हमारी मदद करें! 🌟
 
 [
 

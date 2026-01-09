@@ -79,20 +79,24 @@
 یک بار نصب کنید:
 
 ```bash
-npm install lingo.dev
+npm install @lingo.dev/compiler
 ```
 
 در پیکربندی ساخت خود فعال کنید:
 
-```js
-import lingoCompiler from "lingo.dev/compiler";
+```ts
+import type { NextConfig } from "next";
+import { withLingo } from "@lingo.dev/compiler/next";
 
-const existingNextConfig = {};
+const nextConfig: NextConfig = {};
 
-export default lingoCompiler.next({
-  sourceLocale: "en",
-  targetLocales: ["es", "fr"],
-})(existingNextConfig);
+export default async function (): Promise<NextConfig> {
+  return await withLingo(nextConfig, {
+    sourceLocale: "en",
+    targetLocales: ["es", "fr"],
+    models: "lingo.dev",
+  });
+}
 ```
 
 دستور `next build` را اجرا کنید و ببینید که بسته‌های اسپانیایی و فرانسوی ظاهر می‌شوند ✨
@@ -193,7 +197,7 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 ## ⭐ تاریخچه ستاره‌ها
 
-اگر از آنچه انجام می‌دهیم خوشتان می‌آید، به ما ⭐ بدهید و به ما کمک کنید به ۵,۰۰۰ ستاره برسیم! 🌟
+اگر از کاری که انجام می‌دهیم خوشتان می‌آید، به ما یک ⭐ بدهید و به ما کمک کنید به 6000 ستاره برسیم! 🌟
 
 [
 
