@@ -4,9 +4,12 @@
  */
 
 // Base URL for CLDR data from GitHub
-const CLDR_BASE_URL =
-  process.env.CLDR_BASE_URL ||
-  "https://raw.githubusercontent.com/unicode-org/cldr-json/main/cldr-json/cldr-localenames-full/main";
+function getCLDRBaseUrl(): string {
+  if (typeof process !== "undefined" && process.env?.CLDR_BASE_URL) {
+    return process.env.CLDR_BASE_URL;
+  }
+  return "https://raw.githubusercontent.com/unicode-org/cldr-json/main/cldr-json/cldr-localenames-full/main";
+}
 
 interface NameData {
   [key: string]: string;
@@ -30,7 +33,7 @@ export async function loadTerritoryNames(
   try {
     // Fetch from GitHub raw URL
     const response = await fetch(
-      `${CLDR_BASE_URL}/${displayLanguage}/territories.json`,
+      `${getCLDRBaseUrl()}/${displayLanguage}/territories.json`,
     );
 
     if (!response.ok) {
@@ -71,7 +74,7 @@ export async function loadLanguageNames(
   try {
     // Fetch from GitHub raw URL
     const response = await fetch(
-      `${CLDR_BASE_URL}/${displayLanguage}/languages.json`,
+      `${getCLDRBaseUrl()}/${displayLanguage}/languages.json`,
     );
 
     if (!response.ok) {
@@ -112,7 +115,7 @@ export async function loadScriptNames(
   try {
     // Fetch from GitHub raw URL
     const response = await fetch(
-      `${CLDR_BASE_URL}/${displayLanguage}/scripts.json`,
+      `${getCLDRBaseUrl()}/${displayLanguage}/scripts.json`,
     );
 
     if (!response.ok) {

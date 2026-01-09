@@ -1,5 +1,36 @@
 # lingo.dev
 
+## 0.117.25
+
+### Patch Changes
+
+- [#1726](https://github.com/lingodotdev/lingo.dev/pull/1726) [`68b8496`](https://github.com/lingodotdev/lingo.dev/commit/68b849602a88b9f9aa3097f37ce2f0ccf97c1ad5) Thanks [@vrcprl](https://github.com/vrcprl)! - Observability improvement
+
+- Updated dependencies [[`68b8496`](https://github.com/lingodotdev/lingo.dev/commit/68b849602a88b9f9aa3097f37ce2f0ccf97c1ad5)]:
+  - @lingo.dev/_compiler@0.8.10
+
+## 0.117.24
+
+### Patch Changes
+
+- [#1724](https://github.com/lingodotdev/lingo.dev/pull/1724) [`c617611`](https://github.com/lingodotdev/lingo.dev/commit/c61761181c5f8145ec2e54f34d33ad04a90968e3) Thanks [@vrcprl](https://github.com/vrcprl)! - fix observability for status command
+
+## 0.117.23
+
+### Patch Changes
+
+- Updated dependencies [[`40dc1bb`](https://github.com/lingodotdev/lingo.dev/commit/40dc1bbd03633d7046da5580858f728dffdcbf81)]:
+  - @lingo.dev/_locales@0.3.2
+  - @lingo.dev/_spec@0.44.5
+  - @lingo.dev/_compiler@0.8.9
+  - @lingo.dev/_sdk@0.13.5
+
+## 0.117.22
+
+### Patch Changes
+
+- [#1710](https://github.com/lingodotdev/lingo.dev/pull/1710) [`020424f`](https://github.com/lingodotdev/lingo.dev/commit/020424f2601c535e88c66aeeece5a15fb9b66b70) Thanks [@vrcprl](https://github.com/vrcprl)! - Add support for JSONC comments in arrays
+
 ## 0.117.21
 
 ### Patch Changes

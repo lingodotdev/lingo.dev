@@ -1,5 +1,12 @@
 # @lingo.dev/\_spec
 
+## 0.44.5
+
+### Patch Changes
+
+- Updated dependencies [[`40dc1bb`](https://github.com/lingodotdev/lingo.dev/commit/40dc1bbd03633d7046da5580858f728dffdcbf81)]:
+  - @lingo.dev/_locales@0.3.2
+
 ## 0.44.4
 
 ### Patch Changes

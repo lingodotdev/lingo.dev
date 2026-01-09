@@ -17,7 +17,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-      id-token: write
+      id-token: write  # Required for npm Trusted Publishing with OIDC
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -87,6 +87,13 @@ jobs:
       - name: Test
         run: pnpm turbo test --force
 
+      - name: Import GPG key
+        uses: crazy-max/ghaction-import-gpg@v6
+        with:
+          gpg_private_key: ${{ secrets.GHA_BOT_GPG }}
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+
       - name: Create Release Pull Request or Publish to npm
         id: changesets
         uses: changesets/action@v1
@@ -95,6 +102,7 @@ jobs:
           version: pnpm changeset version
           publish: pnpm changeset publish
           commit: "chore: bump package version"
+          setupGitUser: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_CONFIG_PROVENANCE: true

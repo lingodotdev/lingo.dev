@@ -79,20 +79,24 @@
 התקן פעם אחת:
 
 ```bash
-npm install lingo.dev
+npm install @lingo.dev/compiler
 ```
 
 הפעל בהגדרות הבנייה שלך:
 
-```js
-import lingoCompiler from "lingo.dev/compiler";
+```ts
+import type { NextConfig } from "next";
+import { withLingo } from "@lingo.dev/compiler/next";
 
-const existingNextConfig = {};
+const nextConfig: NextConfig = {};
 
-export default lingoCompiler.next({
-  sourceLocale: "en",
-  targetLocales: ["es", "fr"],
-})(existingNextConfig);
+export default async function (): Promise<NextConfig> {
+  return await withLingo(nextConfig, {
+    sourceLocale: "en",
+    targetLocales: ["es", "fr"],
+    models: "lingo.dev",
+  });
+}
 ```
 
 הרץ `next build` וצפה בחבילות ספרדית וצרפתית מופיעות ✨
@@ -193,7 +197,7 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 ## ⭐ היסטוריית כוכבים
 
-אם אתם אוהבים את מה שאנחנו עושים, תנו לנו ⭐ ועזרו לנו להגיע ל-5,000 כוכבים! 🌟
+אם אתם אוהבים את מה שאנחנו עושים, תנו לנו ⭐ ועזרו לנו להגיע ל-6,000 כוכבים! 🌟
 
 [
 
