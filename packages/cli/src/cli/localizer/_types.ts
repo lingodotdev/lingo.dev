@@ -16,7 +16,7 @@ export type LocalizerProgressFn = (
 ) => void;
 
 export interface ILocalizer {
-  id: "Lingo.dev" | NonNullable<I18nConfig["provider"]>["id"];
+  id: "Lingo.dev" | "pseudo" | NonNullable<I18nConfig["provider"]>["id"];
   checkAuth: () => Promise<{
     authenticated: boolean;
     username?: string;
