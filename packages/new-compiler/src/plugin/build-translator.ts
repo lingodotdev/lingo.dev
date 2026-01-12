@@ -11,12 +11,9 @@ import fs from "fs/promises";
 import path from "path";
 import type { LingoConfig, MetadataSchema } from "../types";
 import { logger } from "../utils/logger";
-import {
-  startTranslationServer,
-  type TranslationServer,
-} from "../translation-server";
+import { startTranslationServer, type TranslationServer, } from "../translation-server";
 import { loadMetadata } from "../metadata/manager";
-import { createCache, type TranslationCache } from "../translators";
+import { createCache, type TranslationCache, TranslationService, } from "../translators";
 import { dictionaryFrom } from "../translators/api";
 import type { LocaleCode } from "lingo.dev/spec";
 
@@ -67,10 +64,6 @@ export async function processBuildTranslations(
 
   logger.info(`🌍 Build mode: ${buildMode}`);
 
-  if (metadataFilePath) {
-    logger.info(`📋 Using build metadata file: ${metadataFilePath}`);
-  }
-
   const metadata = await loadMetadata(metadataFilePath);
 
   if (!metadata || Object.keys(metadata.entries).length === 0) {
@@ -108,7 +101,7 @@ export async function processBuildTranslations(
 
   try {
     translationServer = await startTranslationServer({
-      startPort: config.dev.translationServerStartPort,
+      translationService: new TranslationService(config, logger),
       onError: (err) => {
         logger.error("Translation server error:", err);
       },
@@ -175,7 +168,10 @@ export async function processBuildTranslations(
       stats,
     };
   } catch (error) {
-    logger.error("❌ Translation generation failed:", error);
+    logger.error(
+      "❌ Translation generation failed:\n",
+      error instanceof Error ? error.message : error,
+    );
     process.exit(1);
   } finally {
     if (translationServer) {

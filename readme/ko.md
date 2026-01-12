@@ -78,20 +78,24 @@
 한 번만 설치하세요:
 
 ```bash
-npm install lingo.dev
+npm install @lingo.dev/compiler
 ```
 
 빌드 설정에서 활성화하세요:
 
-```js
-import lingoCompiler from "lingo.dev/compiler";
+```ts
+import type { NextConfig } from "next";
+import { withLingo } from "@lingo.dev/compiler/next";
 
-const existingNextConfig = {};
+const nextConfig: NextConfig = {};
 
-export default lingoCompiler.next({
-  sourceLocale: "en",
-  targetLocales: ["es", "fr"],
-})(existingNextConfig);
+export default async function (): Promise<NextConfig> {
+  return await withLingo(nextConfig, {
+    sourceLocale: "en",
+    targetLocales: ["es", "fr"],
+    models: "lingo.dev",
+  });
+}
 ```
 
 `next build`를 실행하고 스페인어와 프랑스어 번들이 생성되는 것을 확인하세요 ✨
@@ -192,7 +196,7 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 ## ⭐ 스타 히스토리
 
-저희가 하는 일이 마음에 드신다면, ⭐을 주시고 5,000개 스타 달성을 도와주세요! 🌟
+저희가 하는 일이 마음에 드신다면 ⭐를 눌러주시고 6,000개의 별을 달성할 수 있도록 도와주세요! 🌟
 
 [
 

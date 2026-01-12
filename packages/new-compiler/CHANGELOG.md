@@ -1,5 +1,23 @@
 # @lingo.dev/compiler
 
+## 0.1.4
+
+### Patch Changes
+
+- [#1726](https://github.com/lingodotdev/lingo.dev/pull/1726) [`68b8496`](https://github.com/lingodotdev/lingo.dev/commit/68b849602a88b9f9aa3097f37ce2f0ccf97c1ad5) Thanks [@vrcprl](https://github.com/vrcprl)! - Observability improvement
+
+- Updated dependencies [[`68b8496`](https://github.com/lingodotdev/lingo.dev/commit/68b849602a88b9f9aa3097f37ce2f0ccf97c1ad5)]:
+  - lingo.dev@0.117.25
+
+## 0.1.3
+
+### Patch Changes
+
+- [#1705](https://github.com/lingodotdev/lingo.dev/pull/1705) [`c77c8c8`](https://github.com/lingodotdev/lingo.dev/commit/c77c8c8b8e1db859839b184882d56a0ef7da1ab0) Thanks [@AleksandrSl](https://github.com/AleksandrSl)! - Show logs of the translator initialization to notify about possible problems with LLM keys
+
+- Updated dependencies [[`c617611`](https://github.com/lingodotdev/lingo.dev/commit/c61761181c5f8145ec2e54f34d33ad04a90968e3)]:
+  - lingo.dev@0.117.24
+
 ## 0.1.2
 
 ### Patch Changes

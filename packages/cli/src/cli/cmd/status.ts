@@ -63,7 +63,7 @@ export default new Command()
   .action(async function (options) {
     const ora = Ora();
     const flags = parseFlags(options);
-    let authId: string | null = null;
+    let email: string | null = null;
 
     try {
       ora.start("Loading configuration...");
@@ -76,7 +76,7 @@ export default new Command()
         ora.start("Checking authentication status...");
         const auth = await tryAuthenticate(settings);
         if (auth) {
-          authId = auth.id;
+          email = auth.email;
           ora.succeed(`Authenticated as ${auth.email}`);
         } else {
           ora.info(
@@ -92,10 +92,11 @@ export default new Command()
       ora.succeed("Localization configuration is valid");
 
       // Track event with or without authentication
-      trackEvent(authId, "cmd.status.start", {
+      trackEvent(email, "cmd.status.start", {
         i18nConfig,
         flags,
       });
+      await new Promise((resolve) => setTimeout(resolve, 50));
 
       let buckets = getBuckets(i18nConfig!);
       if (flags.bucket?.length) {
@@ -628,22 +629,22 @@ export default new Command()
       }
 
       // Track successful completion
-      trackEvent(authId, "cmd.status.success", {
+      trackEvent(email, "cmd.status.success", {
         i18nConfig,
         flags,
         totalSourceKeyCount,
         languageStats,
         totalWordsToTranslate,
-        authenticated: !!authId,
+        authenticated: !!email,
       });
       await new Promise((resolve) => setTimeout(resolve, 50));
       exitGracefully();
     } catch (error: any) {
       ora.fail(error.message);
-      trackEvent(authId, "cmd.status.error", {
+      trackEvent(email, "cmd.status.error", {
         flags,
         error: error.message,
-        authenticated: !!authId,
+        authenticated: !!email,
       });
       await new Promise((resolve) => setTimeout(resolve, 50));
       process.exit(1);

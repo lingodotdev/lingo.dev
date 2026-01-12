@@ -125,7 +125,7 @@ export default new Command()
     }
 
     let hasErrors = false;
-    let authId: string | null = null;
+    let email: string | null = null;
     const errorDetails: ErrorDetail[] = [];
     try {
       ora.start("Loading configuration...");
@@ -141,15 +141,15 @@ export default new Command()
       const isByokMode = !!i18nConfig?.provider;
 
       if (isByokMode) {
-        authId = null;
+        email = null;
         ora.succeed("Using external provider (BYOK mode)");
       } else {
         const auth = await validateAuth(settings);
-        authId = auth.id;
+        email = auth.email;
         ora.succeed(`Authenticated as ${auth.email}`);
       }
 
-      await trackEvent(authId, "cmd.i18n.start", {
+      await trackEvent(email, "cmd.i18n.start", {
         i18nConfig,
         flags,
       });
@@ -569,7 +569,7 @@ export default new Command()
       console.log();
       if (!hasErrors) {
         ora.succeed("Localization completed.");
-        await trackEvent(authId, "cmd.i18n.success", {
+        await trackEvent(email, "cmd.i18n.success", {
           i18nConfig: {
             sourceLocale: i18nConfig!.locale.source,
             targetLocales: i18nConfig!.locale.targets,
@@ -583,7 +583,7 @@ export default new Command()
         await new Promise((resolve) => setTimeout(resolve, 50));
       } else {
         ora.warn("Localization completed with errors.");
-        await trackEvent(authId, "cmd.i18n.error", {
+        await trackEvent(email, "cmd.i18n.error", {
           flags,
           ...aggregateErrorAnalytics(
             errorDetails,
@@ -615,7 +615,7 @@ export default new Command()
         };
       }
 
-      await trackEvent(authId, "cmd.i18n.error", {
+      await trackEvent(email, "cmd.i18n.error", {
         flags,
         errorType,
         errorName: error.name || "Error",

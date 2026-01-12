@@ -17,6 +17,16 @@
         "^build"
       ]
     },
+    "test:e2e:prepare": {
+      "dependsOn": [
+        "build"
+      ]
+    },
+    "test:e2e": {
+      "dependsOn": [
+        "test:e2e:prepare"
+      ]
+    },
     "deploy": {
       "dependsOn": [
         "build",

@@ -79,20 +79,24 @@
 Встановіть один раз:
 
 ```bash
-npm install lingo.dev
+npm install @lingo.dev/compiler
 ```
 
 Увімкніть у конфігурації збірки:
 
-```js
-import lingoCompiler from "lingo.dev/compiler";
+```ts
+import type { NextConfig } from "next";
+import { withLingo } from "@lingo.dev/compiler/next";
 
-const existingNextConfig = {};
+const nextConfig: NextConfig = {};
 
-export default lingoCompiler.next({
-  sourceLocale: "en",
-  targetLocales: ["es", "fr"],
-})(existingNextConfig);
+export default async function (): Promise<NextConfig> {
+  return await withLingo(nextConfig, {
+    sourceLocale: "en",
+    targetLocales: ["es", "fr"],
+    models: "lingo.dev",
+  });
+}
 ```
 
 Запустіть `next build` і спостерігайте, як з'являються іспанські та французькі пакети ✨
@@ -193,7 +197,7 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 ## ⭐ Історія зірок
 
-Якщо вам подобається те, що ми робимо, поставте нам ⭐ і допоможіть нам досягти 5000 зірок! 🌟
+Якщо вам подобається те, що ми робимо, поставте нам ⭐ і допоможіть досягти 6000 зірок! 🌟
 
 [
 

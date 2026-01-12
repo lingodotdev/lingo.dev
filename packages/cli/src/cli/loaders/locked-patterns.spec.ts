@@ -22,7 +22,7 @@ describe("Locked Patterns Loader", () => {
 
       const result = await loader.pull("en", md);
 
-      const placeholderRegex = /---LOCKED-PATTERN-[0-9a-f]+---/g;
+      const placeholderRegex = /\{\/\* LOCKED_PATTERN_[0-9a-f]+\s*\*\/\}/g;
       const placeholders = result.match(placeholderRegex) || [];
       expect(placeholders.length).toBe(0); // No patterns should be replaced
 
@@ -54,25 +54,25 @@ describe("Locked Patterns Loader", () => {
 
       const result = await loader.pull("en", md);
 
-      const placeholderRegex = /---LOCKED-PATTERN-[0-9a-f]+---/g;
+      const placeholderRegex = /\{\/\* LOCKED_PATTERN_[0-9a-f]+\s*\*\/\}/g;
       const placeholders = result.match(placeholderRegex) || [];
       expect(placeholders.length).toBe(3); // Three patterns should be replaced
 
       const sanitizedContent = result.replace(
         placeholderRegex,
-        "---PLACEHOLDER---",
+        "{/* PLACEHOLDER */}",
       );
 
       const expectedSanitized = dedent`
         # Title
-        
+
         Some content.
-        
-        ---PLACEHOLDER---
-        
-        ---PLACEHOLDER---
-        
-        ---PLACEHOLDER---
+
+        {/* PLACEHOLDER */}
+
+        {/* PLACEHOLDER */}
+
+        {/* PLACEHOLDER */}
       `;
 
       expect(sanitizedContent).toBe(expectedSanitized);
@@ -116,7 +116,7 @@ describe("Locked Patterns Loader", () => {
 
       const result = await loader.pull("en", md);
 
-      const placeholderRegex = /---LOCKED-PATTERN-[0-9a-f]+---/g;
+      const placeholderRegex = /\{\/\* LOCKED_PATTERN_[0-9a-f]+\s*\*\/\}/g;
       const placeholders = result.match(placeholderRegex) || [];
       expect(placeholders.length).toBe(0); // No patterns should be replaced
 
@@ -143,24 +143,24 @@ describe("Locked Patterns Loader", () => {
 
       const result = await loader.pull("en", md);
 
-      const placeholderRegex = /---LOCKED-PATTERN-[0-9a-f]+---/g;
+      const placeholderRegex = /\{\/\* LOCKED_PATTERN_[0-9a-f]+\s*\*\/\}/g;
       const placeholders = result.match(placeholderRegex) || [];
       expect(placeholders.length).toBe(2); // Two patterns should be replaced
 
       const sanitizedContent = result.replace(
         placeholderRegex,
-        "---PLACEHOLDER---",
+        "{/* PLACEHOLDER */}",
       );
 
       const expectedSanitized = dedent`
         # Parameters
-        
-        ---PLACEHOLDER---
-        
+
+        {/* PLACEHOLDER */}
+
         The public key of the account to query.
-        
-        ---PLACEHOLDER---
-        
+
+        {/* PLACEHOLDER */}
+
         Encoding format for the returned Account data.
       `;
 
@@ -221,28 +221,28 @@ describe("Locked Patterns Loader", () => {
 
       const result = await loader.pull("en", md);
 
-      const placeholderRegex = /---LOCKED-PATTERN-[0-9a-f]+---/g;
+      const placeholderRegex = /\{\/\* LOCKED_PATTERN_[0-9a-f]+\s*\*\/\}/g;
       const placeholders = result.match(placeholderRegex) || [];
       expect(placeholders.length).toBe(6); // Six patterns should be replaced
 
       const sanitizedContent = result.replace(
         placeholderRegex,
-        "---PLACEHOLDER---",
+        "{/* PLACEHOLDER */}",
       );
 
       const expectedSanitized = dedent`
-        ---PLACEHOLDER---
-        
-        ---PLACEHOLDER---
-        ---PLACEHOLDER---
-        
+        {/* PLACEHOLDER */}
+
+        {/* PLACEHOLDER */}
+        {/* PLACEHOLDER */}
+
         The public key of the account to query.
-        
-        ---PLACEHOLDER---
-        
-        ---PLACEHOLDER---
-        ---PLACEHOLDER---
-        
+
+        {/* PLACEHOLDER */}
+
+        {/* PLACEHOLDER */}
+        {/* PLACEHOLDER */}
+
         Encoding format for the returned Account data.
       `;
 
@@ -277,6 +277,31 @@ describe("Locked Patterns Loader", () => {
       `;
 
       expect(pushed).toBe(expectedPushed);
+    });
+  });
+
+  describe("placeholder format edge cases (regression)", () => {
+    it("should handle placeholder at content start without triggering gray-matter", async () => {
+      const loader = createLockedPatternsLoader(["^!! [\\w_]+"]);
+      loader.setDefaultLocale("en");
+
+      const md = dedent`
+        !! parameter_name
+
+        Some description text.
+      `;
+
+      const pulled = await loader.pull("en", md);
+
+      expect(pulled).toMatch(/^\{\/\* LOCKED_PATTERN/);
+
+      const matter = require('gray-matter');
+      const mdxDocument = matter.stringify(pulled, { title: 'Test' });
+
+      expect(mdxDocument).toContain('{/*');
+
+      const restored = await loader.push("en", pulled);
+      expect(restored).toBe(md);
     });
   });
 });

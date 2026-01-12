@@ -26,12 +26,26 @@ import { processBuildTranslations } from "./build-translator";
 import { registerCleanupOnCurrentProcess } from "./cleanup";
 import path from "path";
 import fs from "fs";
+import { TranslationService } from "../translators";
+import trackEvent from "../utils/observability";
+import {
+  TRACKING_EVENTS,
+  sanitizeConfigForTracking,
+} from "../utils/tracking-events";
 
 export type LingoPluginOptions = PartialLingoConfig;
 
 let translationServer: TranslationServer;
 
 const PLUGIN_NAME = "lingo-compiler";
+
+// Tracking state
+let alreadySentBuildStartEvent = false;
+let buildStartTime: number | null = null;
+let filesTransformedCount = 0;
+let totalEntriesCount = 0;
+let hasTransformErrors = false;
+let currentFramework: "vite" | "webpack" | "next" | null = null;
 
 function tryLocalOrReturnVirtual(
   config: LingoConfig,
@@ -89,6 +103,23 @@ const virtualModulesLoaders = Object.fromEntries(
 );
 
 /**
+ * Send build start tracking event
+ */
+function sendBuildStartEvent(
+  framework: "vite" | "webpack" | "next",
+  config: LingoConfig,
+) {
+  if (alreadySentBuildStartEvent) return;
+  alreadySentBuildStartEvent = true;
+
+  trackEvent(TRACKING_EVENTS.BUILD_START, {
+    framework,
+    configuration: sanitizeConfigForTracking(config),
+    environment: config.environment,
+  });
+}
+
+/**
  * Universal plugin for Lingo.dev compiler
  * Supports Vite, Webpack
  */
@@ -112,7 +143,7 @@ export const lingoUnplugin = createUnplugin<
 
   async function startServer() {
     const server = await startTranslationServer({
-      startPort,
+      translationService: new TranslationService(config, logger),
       onError: (err) => {
         logger.error("Translation server error:", err);
       },
@@ -148,6 +179,14 @@ export const lingoUnplugin = createUnplugin<
       async buildStart() {
         const metadataFilePath = getMetadataPath();
 
+        // Track build start
+        currentFramework = "vite";
+        sendBuildStartEvent("vite", config);
+        buildStartTime = Date.now();
+        filesTransformedCount = 0;
+        totalEntriesCount = 0;
+        hasTransformErrors = false;
+
         cleanupExistingMetadata(metadataFilePath);
         registerCleanupOnCurrentProcess({
           cleanup: () => cleanupExistingMetadata(metadataFilePath),
@@ -167,9 +206,31 @@ export const lingoUnplugin = createUnplugin<
               publicOutputPath: "public/translations",
               metadataFilePath,
             });
+
+            if (buildStartTime && !hasTransformErrors) {
+              trackEvent(TRACKING_EVENTS.BUILD_SUCCESS, {
+                framework: "vite",
+                stats: {
+                  totalEntries: totalEntriesCount,
+                  filesTransformed: filesTransformedCount,
+                  buildDuration: Date.now() - buildStartTime,
+                },
+                environment: config.environment,
+              });
+            }
           } catch (error) {
             logger.error("Build-time translation processing failed:", error);
           }
+        } else if (buildStartTime && !hasTransformErrors) {
+          trackEvent(TRACKING_EVENTS.BUILD_SUCCESS, {
+            framework: "vite",
+            stats: {
+              totalEntries: totalEntriesCount,
+              filesTransformed: filesTransformedCount,
+              buildDuration: Date.now() - buildStartTime,
+            },
+            environment: config.environment,
+          });
         }
       },
     },
@@ -182,6 +243,14 @@ export const lingoUnplugin = createUnplugin<
       config.environment = webpackMode;
 
       compiler.hooks.initialize.tap(PLUGIN_NAME, () => {
+        // Track build start
+        currentFramework = "webpack";
+        sendBuildStartEvent("webpack", config);
+        buildStartTime = Date.now();
+        filesTransformedCount = 0;
+        totalEntriesCount = 0;
+        hasTransformErrors = false;
+
         cleanupExistingMetadata(metadataFilePath);
         registerCleanupOnCurrentProcess({
           cleanup: () => cleanupExistingMetadata(metadataFilePath),
@@ -202,10 +271,32 @@ export const lingoUnplugin = createUnplugin<
               publicOutputPath: "public/translations",
               metadataFilePath,
             });
+
+            if (buildStartTime && !hasTransformErrors) {
+              trackEvent(TRACKING_EVENTS.BUILD_SUCCESS, {
+                framework: "webpack",
+                stats: {
+                  totalEntries: totalEntriesCount,
+                  filesTransformed: filesTransformedCount,
+                  buildDuration: Date.now() - buildStartTime,
+                },
+                environment: config.environment,
+              });
+            }
           } catch (error) {
             logger.error("Build-time translation processing failed:", error);
             throw error;
           }
+        } else if (buildStartTime && !hasTransformErrors) {
+          trackEvent(TRACKING_EVENTS.BUILD_SUCCESS, {
+            framework: "webpack",
+            stats: {
+              totalEntries: totalEntriesCount,
+              filesTransformed: filesTransformedCount,
+              buildDuration: Date.now() - buildStartTime,
+            },
+            environment: config.environment,
+          });
         }
       });
 
@@ -268,6 +359,10 @@ export const lingoUnplugin = createUnplugin<
           if (result.newEntries && result.newEntries.length > 0) {
             await metadataManager.saveMetadataWithEntries(result.newEntries);
 
+            // Track stats for observability
+            totalEntriesCount += result.newEntries.length;
+            filesTransformedCount++;
+
             logger.debug(
               `Found ${result.newEntries.length} translatable text(s) in ${id}`,
             );
@@ -279,6 +374,19 @@ export const lingoUnplugin = createUnplugin<
             map: result.map,
           };
         } catch (error) {
+          hasTransformErrors = true;
+
+          // Track error event
+          if (currentFramework) {
+            trackEvent(TRACKING_EVENTS.BUILD_ERROR, {
+              framework: currentFramework,
+              errorType: "transform",
+              errorMessage: error instanceof Error ? error.message : "Unknown transform error",
+              filePath: id,
+              environment: config.environment,
+            });
+          }
+
           logger.error(`Transform error in ${id}:`, error);
           return null;
         }

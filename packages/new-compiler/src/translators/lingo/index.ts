@@ -4,5 +4,5 @@
  * Real AI-powered translation using various LLM providers
  */
 
-export { Service } from "./service";
-export type { LingoTranslatorConfig } from "./service";
+export { LingoTranslator } from "./translator";
+export type { LingoTranslatorConfig } from "./translator";

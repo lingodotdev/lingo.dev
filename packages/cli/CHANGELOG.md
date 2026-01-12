@@ -1,5 +1,26 @@
 # lingo.dev
 
+## 0.117.26
+
+### Patch Changes
+
+- [#1730](https://github.com/lingodotdev/lingo.dev/pull/1730) [`ea02a43`](https://github.com/lingodotdev/lingo.dev/commit/ea02a43b6c4eaeddf61fa62c7564a4231b67ef82) Thanks [@vrcprl](https://github.com/vrcprl)! - Upd code placeholders to prevent gray-matter engine error
+
+## 0.117.25
+
+### Patch Changes
+
+- [#1726](https://github.com/lingodotdev/lingo.dev/pull/1726) [`68b8496`](https://github.com/lingodotdev/lingo.dev/commit/68b849602a88b9f9aa3097f37ce2f0ccf97c1ad5) Thanks [@vrcprl](https://github.com/vrcprl)! - Observability improvement
+
+- Updated dependencies [[`68b8496`](https://github.com/lingodotdev/lingo.dev/commit/68b849602a88b9f9aa3097f37ce2f0ccf97c1ad5)]:
+  - @lingo.dev/_compiler@0.8.10
+
+## 0.117.24
+
+### Patch Changes
+
+- [#1724](https://github.com/lingodotdev/lingo.dev/pull/1724) [`c617611`](https://github.com/lingodotdev/lingo.dev/commit/c61761181c5f8145ec2e54f34d33ad04a90968e3) Thanks [@vrcprl](https://github.com/vrcprl)! - fix observability for status command
+
 ## 0.117.23
 
 ### Patch Changes
