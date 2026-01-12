@@ -2,14 +2,14 @@
 "login_button" = "Iniciar sesión";
 "error_message" = "Algo salió mal";
 "user_profile_title" = "Perfil de usuario";
-"quote_example" = "Ella dijo \"¡Hola mundo!\"";
+"quote_example" = "Ella dijo \"Hola mundo\"";
 "newline_example" = "Primera línea\nSegunda línea";
 "backslash_example" = "Ruta: C:\\Users\\Documents";
-"mixed_escapes" = "Cita: \" Nueva línea: \\n Barra invertida: \\\\";
+"mixed_escapes" = "Comilla: \" Salto de línea: \\n Barra invertida: \\\\";
 "tab_example" = "Columna1\tColumna2\tColumna3";
 "multiline_literal" = "Esta es la línea 1\nEsta es la línea 2\nEsta es la línea 3";
 "multiline_mixed" = "Comienza aquí\n  Línea con sangría\nTermina aquí";
-"multiline_with_quotes" = "Él dijo \"Hola\"\nLuego ella dijo \"Adiós\"\nFin";
+"multiline_with_quotes" = "Él dijo \"Hola\"\nLuego ella dijo \"Adiós\"\nEl fin";
 "after_comment" = "Valor después del comentario";
 "after_multiline_comment" = "Valor después del comentario multilínea";
 "empty_string" = "";
