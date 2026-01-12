@@ -79,20 +79,24 @@
 Bir kez yükleyin:
 
 ```bash
-npm install lingo.dev
+npm install @lingo.dev/compiler
 ```
 
 Derleme yapılandırmanızda etkinleştirin:
 
-```js
-import lingoCompiler from "lingo.dev/compiler";
+```ts
+import type { NextConfig } from "next";
+import { withLingo } from "@lingo.dev/compiler/next";
 
-const existingNextConfig = {};
+const nextConfig: NextConfig = {};
 
-export default lingoCompiler.next({
-  sourceLocale: "en",
-  targetLocales: ["es", "fr"],
-})(existingNextConfig);
+export default async function (): Promise<NextConfig> {
+  return await withLingo(nextConfig, {
+    sourceLocale: "en",
+    targetLocales: ["es", "fr"],
+    models: "lingo.dev",
+  });
+}
 ```
 
 `next build` komutunu çalıştırın ve İspanyolca ve Fransızca paketlerin ortaya çıkışını izleyin ✨
@@ -193,7 +197,7 @@ Topluluk odaklıyız ve katkıları seviyoruz!
 
 ## ⭐ Yıldız Geçmişi
 
-Yaptıklarımızı beğeniyorsanız, bize bir ⭐ verin ve 5.000 yıldıza ulaşmamıza yardımcı olun! 🌟
+Yaptıklarımızı beğendiyseniz, bize bir ⭐ verin ve 6.000 yıldıza ulaşmamıza yardımcı olun! 🌟
 
 [
 

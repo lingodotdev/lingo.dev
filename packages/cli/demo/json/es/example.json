@@ -8,20 +8,20 @@
   "empty": "",
   "emoji": "🚀",
   "author": {
-    "name": "Juan Pérez"
+    "name": "John Doe"
   },
   "contributors": [
     {
-      "name": "Alicia"
+      "name": "Alice"
     },
     {
-      "name": "Roberto"
+      "name": "Bob"
     }
   ],
-  "messages": ["Bienvenido a Mi aplicación", "¡Hola, mundo!"],
+  "messages": ["Bienvenido a MyApp", "¡Hola, mundo!"],
   "config": {
     "theme": {
-      "primary": "Tema Azul"
+      "primary": "Tema azul"
     }
   },
   "mixed_array": [

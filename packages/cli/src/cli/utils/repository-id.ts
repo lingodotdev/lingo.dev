@@ -1,6 +1,22 @@
 import { execSync } from "child_process";
+import { createHash } from "crypto";
 
 let cachedGitRepoId: string | null | undefined = undefined;
+
+function hashProjectName(fullPath: string): string {
+  const parts = fullPath.split("/");
+  if (parts.length !== 2) {
+    return createHash("sha256").update(fullPath).digest("hex").slice(0, 8);
+  }
+
+  const [org, project] = parts;
+  const hashedProject = createHash("sha256")
+    .update(project)
+    .digest("hex")
+    .slice(0, 8);
+
+  return `${org}/${hashedProject}`;
+}
 
 export function clearRepositoryIdCache(): void {
   cachedGitRepoId = undefined;
@@ -17,15 +33,18 @@ export function getRepositoryId(): string | null {
 
 function getCIRepositoryId(): string | null {
   if (process.env.GITHUB_REPOSITORY) {
-    return `github:${process.env.GITHUB_REPOSITORY}`;
+    const hashed = hashProjectName(process.env.GITHUB_REPOSITORY);
+    return `github:${hashed}`;
   }
 
   if (process.env.CI_PROJECT_PATH) {
-    return `gitlab:${process.env.CI_PROJECT_PATH}`;
+    const hashed = hashProjectName(process.env.CI_PROJECT_PATH);
+    return `gitlab:${hashed}`;
   }
 
   if (process.env.BITBUCKET_REPO_FULL_NAME) {
-    return `bitbucket:${process.env.BITBUCKET_REPO_FULL_NAME}`;
+    const hashed = hashProjectName(process.env.BITBUCKET_REPO_FULL_NAME);
+    return `bitbucket:${hashed}`;
   }
 
   return null;
@@ -74,9 +93,11 @@ function parseGitUrl(url: string): string | null {
 
   if (!repoPath) return null;
 
+  const hashedPath = hashProjectName(repoPath);
+
   if (platform) {
-    return `${platform}:${repoPath}`;
+    return `${platform}:${hashedPath}`;
   }
 
-  return `git:${repoPath}`;
+  return `git:${hashedPath}`;
 }

@@ -1,6 +1,6 @@
 {
   "name": "@lingo.dev/compiler",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "description": "Lingo.dev Compiler",
   "private": false,
   "repository": {
@@ -141,6 +141,7 @@
     "@types/babel__core": "^7.20.5",
     "@types/babel__generator": "^7.27.0",
     "@types/babel__traverse": "^7.28.0",
+    "@types/ini": "4.1.1",
     "@types/node": "^25.0.3",
     "@types/proper-lockfile": "^4.1.4",
     "@types/react": "^19.2.7",
@@ -170,9 +171,12 @@
     "ai-sdk-ollama": "^3.0.0",
     "dotenv": "^17.2.3",
     "fast-xml-parser": "^5.3.3",
+    "ini": "5.0.0",
     "intl-messageformat": "^11.0.6",
-    "lingo.dev": "^0.117.21",
+    "lingo.dev": "workspace:^",
     "lodash": "^4.17.21",
+    "node-machine-id": "1.1.12",
+    "posthog-node": "5.14.0",
     "proper-lockfile": "^4.1.2",
     "ws": "^8.18.3"
   },

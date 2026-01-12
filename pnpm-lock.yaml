@@ -910,15 +910,24 @@ importers:
       fast-xml-parser:
         specifier: ^5.3.3
         version: 5.3.3
+      ini:
+        specifier: 5.0.0
+        version: 5.0.0
       intl-messageformat:
         specifier: ^11.0.6
         version: 11.0.6
       lingo.dev:
-        specifier: ^0.117.21
-        version: 0.117.21(@types/node@25.0.3)(@types/react@19.2.7)(encoding@0.1.13)(next@16.1.1(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.57.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))
+        specifier: workspace:^
+        version: link:../cli
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
+      node-machine-id:
+        specifier: 1.1.12
+        version: 1.1.12
+      posthog-node:
+        specifier: 5.14.0
+        version: 5.14.0
       proper-lockfile:
         specifier: ^4.1.2
         version: 4.1.2
@@ -944,6 +953,9 @@ importers:
       '@types/babel__traverse':
         specifier: ^7.28.0
         version: 7.28.0
+      '@types/ini':
+        specifier: 4.1.1
+        version: 4.1.1
       '@types/node':
         specifier: ^25.0.3
         version: 25.0.3
@@ -12483,12 +12495,6 @@ snapshots:
     dependencies:
       iso-639-3: 3.0.1
 
-  '@lingo.dev/_react@0.7.5(next@16.1.1(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.57.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))':
-    dependencies:
-      js-cookie: 3.0.5
-      lodash: 4.17.21
-      next: 16.1.1(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.57.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
-
   '@lingo.dev/_react@0.7.5(next@16.1.1(@opentelemetry/api@1.9.0)(@playwright/test@1.57.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))':
     dependencies:
       js-cookie: 3.0.5
@@ -17862,122 +17868,6 @@ snapshots:
   lilconfig@3.1.3: {}
 
   lines-and-columns@1.2.4: {}
-
-  lingo.dev@0.117.21(@types/node@25.0.3)(@types/react@19.2.7)(encoding@0.1.13)(next@16.1.1(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.57.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)):
-    dependencies:
-      '@ai-sdk/anthropic': 1.2.11(zod@3.25.76)
-      '@ai-sdk/google': 1.2.19(zod@3.25.76)
-      '@ai-sdk/mistral': 1.2.8(zod@3.25.76)
-      '@ai-sdk/openai': 1.3.22(zod@3.25.76)
-      '@babel/generator': 7.28.5
-      '@babel/parser': 7.28.5
-      '@babel/traverse': 7.28.5
-      '@babel/types': 7.28.5
-      '@biomejs/js-api': 3.0.0(@biomejs/wasm-nodejs@2.3.7)
-      '@biomejs/wasm-nodejs': 2.3.7
-      '@datocms/cma-client-node': 4.0.1
-      '@gitbeaker/rest': 39.34.3
-      '@inkjs/ui': 2.0.0(ink@4.2.0(@types/react@19.2.7)(react@19.2.3))
-      '@inquirer/prompts': 7.8.0(@types/node@25.0.3)
-      '@lingo.dev/_compiler': 0.8.8(react@19.2.3)
-      '@lingo.dev/_locales': 0.3.1
-      '@lingo.dev/_react': 0.7.5(next@16.1.1(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.57.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))
-      '@lingo.dev/_sdk': 0.13.4
-      '@lingo.dev/_spec': 0.44.4
-      '@markdoc/markdoc': 0.5.4(@types/react@19.2.7)(react@19.2.3)
-      '@modelcontextprotocol/sdk': 1.22.0
-      '@openrouter/ai-sdk-provider': 0.7.1(ai@4.3.15(react@19.2.3)(zod@3.25.76))(zod@3.25.76)
-      '@paralleldrive/cuid2': 2.2.2
-      '@types/ejs': 3.1.5
-      ai: 4.3.15(react@19.2.3)(zod@3.25.76)
-      bitbucket: 2.12.0(encoding@0.1.13)
-      chalk: 5.6.2
-      chokidar: 4.0.3
-      cli-progress: 3.12.0
-      cli-table3: 0.6.5
-      cors: 2.8.5
-      csv-parse: 5.6.0
-      csv-stringify: 6.6.0
-      date-fns: 4.1.0
-      dedent: 1.7.0
-      diff: 7.0.0
-      dom-serializer: 2.0.0
-      domhandler: 5.0.3
-      domutils: 3.2.2
-      dotenv: 16.4.7
-      ejs: 3.1.10
-      express: 5.1.0
-      external-editor: 3.1.0
-      figlet: 1.9.4
-      flat: 6.0.1
-      gettext-parser: 8.0.0
-      glob: 11.1.0
-      gradient-string: 3.0.0
-      gray-matter: 4.0.3
-      htmlparser2: 10.0.0
-      ini: 5.0.0
-      ink: 4.2.0(@types/react@19.2.7)(react@19.2.3)
-      ink-progress-bar: 3.0.0
-      ink-spinner: 5.0.0(ink@4.2.0(@types/react@19.2.7)(react@19.2.3))(react@19.2.3)
-      inquirer: 12.6.0(@types/node@25.0.3)
-      interactive-commander: 0.5.194(@types/node@25.0.3)
-      is-url: 1.2.4
-      jsdom: 25.0.1
-      json5: 2.2.3
-      jsonc-parser: 3.3.1
-      jsonrepair: 3.13.1
-      listr2: 8.3.2
-      lodash: 4.17.21
-      marked: 15.0.6
-      mdast-util-from-markdown: 2.0.2
-      mdast-util-gfm: 3.1.0
-      micromark-extension-gfm: 3.0.0
-      node-machine-id: 1.1.12
-      node-webvtt: 1.9.4
-      object-hash: 3.0.0
-      octokit: 4.0.2
-      ollama-ai-provider: 1.2.0(zod@3.25.76)
-      open: 10.2.0
-      ora: 8.1.1
-      p-limit: 6.2.0
-      php-array-reader: 2.1.2
-      plist: 3.1.0
-      posthog-node: 5.14.0
-      prettier: 3.6.2
-      react: 19.2.3
-      rehype-stringify: 10.0.1
-      remark-disable-tokenizers: 1.1.1
-      remark-frontmatter: 5.0.0
-      remark-gfm: 4.0.1
-      remark-mdx: 3.1.1
-      remark-mdx-frontmatter: 5.2.0
-      remark-parse: 11.0.0
-      remark-rehype: 11.1.2
-      remark-stringify: 11.0.0
-      sax: 1.4.3
-      srt-parser-2: 1.2.3
-      unified: 11.0.5
-      unist-util-visit: 5.0.0
-      vfile: 6.0.3
-      xliff: 6.2.2
-      xml2js: 0.6.2
-      xpath: 0.0.34
-      yaml: 2.8.1
-      zod: 3.25.76
-    transitivePeerDependencies:
-      - '@biomejs/wasm-bundler'
-      - '@biomejs/wasm-web'
-      - '@cfworker/json-schema'
-      - '@types/node'
-      - '@types/react'
-      - babel-plugin-macros
-      - bufferutil
-      - canvas
-      - encoding
-      - next
-      - react-devtools-core
-      - supports-color
-      - utf-8-validate
 
   lingo.dev@0.117.21(@types/node@25.0.3)(@types/react@19.2.7)(encoding@0.1.13)(next@16.1.1(@opentelemetry/api@1.9.0)(@playwright/test@1.57.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)):
     dependencies:

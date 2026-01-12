@@ -6,19 +6,19 @@
   </ENTRY>
   <ENTRY id="Control.Text.WelcomeDlg#Description">
     <STRING lang="en" value="The Setup Wizard will install [ProductName] on your computer. Click Next to continue or Cancel to exit the Setup Wizard."/>
-    <STRING lang="es" value="El asistente de instalación instalará [ProductName] en su ordenador. Haga clic en Siguiente para continuar o en Cancelar para salir del asistente de instalación."/>
+    <STRING lang="es" value="El asistente de instalación instalará [ProductName] en su equipo. Haga clic en Siguiente para continuar o en Cancelar para salir del asistente de instalación."/>
   </ENTRY>
   <ENTRY id="Control.Text.LicenseAgreementDlg#Title">
     <STRING lang="en" value="End-User License Agreement"/>
-    <STRING lang="es" value="Acuerdo de licencia para el usuario final"/>
+    <STRING lang="es" value="Contrato de licencia de usuario final"/>
   </ENTRY>
   <ENTRY id="Control.Text.LicenseAgreementDlg#Description">
     <STRING lang="en" value="Please read the following license agreement carefully."/>
-    <STRING lang="es" value="Por favor, lea atentamente el siguiente acuerdo de licencia."/>
+    <STRING lang="es" value="Lea atentamente el siguiente contrato de licencia."/>
   </ENTRY>
   <ENTRY id="Control.Text.LicenseAgreementDlg#AcceptCheckbox">
     <STRING lang="en" value="I accept the terms in the License Agreement"/>
-    <STRING lang="es" value="Acepto los términos del acuerdo de licencia"/>
+    <STRING lang="es" value="Acepto los términos del contrato de licencia"/>
   </ENTRY>
   <ENTRY id="Control.Text.FolderDlg#Title">
     <STRING lang="en" value="Destination Folder"/>
@@ -38,7 +38,7 @@
   </ENTRY>
   <ENTRY id="Control.Text.ProgressDlg#Description">
     <STRING lang="en" value="Please wait while the Setup Wizard installs [ProductName]. This may take several minutes."/>
-    <STRING lang="es" value="Por favor, espere mientras el asistente de instalación instala [ProductName]. Esto puede tardar varios minutos."/>
+    <STRING lang="es" value="Espere mientras el asistente de instalación instala [ProductName]. Esto puede tardar varios minutos."/>
   </ENTRY>
   <ENTRY id="Control.Text.ProgressDlg#StatusLabel">
     <STRING lang="en" value="Status:"/>
@@ -46,7 +46,7 @@
   </ENTRY>
   <ENTRY id="Control.Text.CompleteDlg#Title">
     <STRING lang="en" value="Completing the [ProductName] Setup Wizard"/>
-    <STRING lang="es" value="Completando el asistente de instalación de [ProductName]"/>
+    <STRING lang="es" value="Finalizando el asistente de instalación de [ProductName]"/>
   </ENTRY>
   <ENTRY id="Control.Text.CompleteDlg#Description">
     <STRING lang="en" value="Click the Finish button to exit the Setup Wizard."/>
@@ -102,7 +102,7 @@
   </ENTRY>
   <ENTRY id="Control.Text.CancelDlg#Title">
     <STRING lang="en" value="Cancel Setup"/>
-    <STRING lang="es" value="Cancelar configuración"/>
+    <STRING lang="es" value="Cancelar instalación"/>
   </ENTRY>
   <ENTRY id="Control.Text.CancelDlg#Description">
     <STRING lang="en" value="Are you sure you want to cancel the installation?"/>
@@ -110,7 +110,7 @@
   </ENTRY>
   <ENTRY id="Control.Button.Next">
     <STRING lang="en" value="Next!"/>
-    <STRING lang="es" value="Siguiente!"/>
+    <STRING lang="es" value="Siguiente"/>
   </ENTRY>
   <ENTRY id="Control.Button.Back">
     <STRING lang="en" value="Back"/>

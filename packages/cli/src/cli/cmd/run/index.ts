@@ -18,7 +18,7 @@ import {
   renderSummary,
 } from "../../utils/ui";
 import trackEvent from "../../utils/observability";
-import { determineAuthId } from "./_utils";
+import { determineEmail } from "./_utils";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -119,7 +119,7 @@ export default new Command()
     "Play audio feedback when translations complete (success or failure sounds)",
   )
   .action(async (args) => {
-    let authId: string | null = null;
+    let email: string | null = null;
     try {
       const ctx: CmdRunContext = {
         flags: flagsSchema.parse(args),
@@ -138,9 +138,9 @@ export default new Command()
 
       await setup(ctx);
 
-      authId = await determineAuthId(ctx);
+      email = await determineEmail(ctx);
 
-      await trackEvent(authId, "cmd.run.start", {
+      await trackEvent(email, "cmd.run.start", {
         config: ctx.config,
         flags: ctx.flags,
       });
@@ -169,13 +169,17 @@ export default new Command()
         await watch(ctx);
       }
 
-      await trackEvent(authId, "cmd.run.success", {
+      await trackEvent(email, "cmd.run.success", {
         config: ctx.config,
         flags: ctx.flags,
       });
       await new Promise((resolve) => setTimeout(resolve, 50));
     } catch (error: any) {
-      await trackEvent(authId, "cmd.run.error", {});
+      await trackEvent(email, "cmd.run.error", {
+        flags: args,
+        error: error.message,
+        authenticated: !!email,
+      });
       await new Promise((resolve) => setTimeout(resolve, 50));
       // Play sad sound if sound flag is enabled
       if (args.sound) {
