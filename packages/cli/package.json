@@ -113,7 +113,8 @@
   "files": [
     "bin",
     "build",
-    "assets"
+    "assets",
+    "agents.md"
   ],
   "scripts": {
     "lingo.dev": "node --inspect=9229 ./bin/cli.mjs",

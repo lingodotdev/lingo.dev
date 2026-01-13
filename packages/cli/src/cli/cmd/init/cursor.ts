@@ -5,11 +5,11 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { confirm } from "@inquirer/prompts";
 
-// Get the directory of this file (works in both dev and production)
+// Get the directory of this file
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-// Access agents.md from assets directory (bundled with published package)
-const AGENTS_MD = path.resolve(__dirname, "../assets/agents.md");
-// Create .cursorrules in user's current working directory (their project)
+// Access agents.md from package root (works in both dev and production)
+const AGENTS_MD = path.resolve(__dirname, "../../../../agents.md");
+// Create .cursorrules in user's current working directory
 const CURSORRULES = path.resolve(process.cwd(), ".cursorrules");
 
 export default new InteractiveCommand()
