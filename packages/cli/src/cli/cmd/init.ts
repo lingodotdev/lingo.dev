@@ -116,9 +116,9 @@ export default new InteractiveCommand()
           } catch (err) {
             throw new Error(`Invalid path: ${p}`);
           }
-          
         }
         return values;
+        
       })
       .prompt(undefined) // make non-interactive
       .default([]),
