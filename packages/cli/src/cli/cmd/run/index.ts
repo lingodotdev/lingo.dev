@@ -118,6 +118,10 @@ export default new Command()
     "--sound",
     "Play audio feedback when translations complete (success or failure sounds)",
   )
+  .option(
+    "--pseudo",
+    "Enable pseudo-localization mode: automatically pseudo-translates all extracted strings with accented characters and visual markers without calling any external API. Useful for testing UI internationalization readiness",
+  )
   .action(async (args) => {
     let email: string | null = null;
     try {
