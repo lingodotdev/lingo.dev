@@ -1,5 +1,20 @@
 # lingo.dev
 
+## 0.118.0
+
+### Minor Changes
+
+- [`18ef68f`](https://github.com/lingodotdev/lingo.dev/commit/18ef68f8d51f0d3208cfe1f1d2167e2e1580fdcc) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - vNext localizer
+
+### Patch Changes
+
+- [#1629](https://github.com/lingodotdev/lingo.dev/pull/1629) [`d76b729`](https://github.com/lingodotdev/lingo.dev/commit/d76b729ba692f1ec258355ebed5b47d7137b001d) Thanks [@ashutoshdebug](https://github.com/ashutoshdebug)! - Add a pseudo-localization mode (--pseudo) to the CLI, including character mapping, recursive object handling, localizer implementation and tests
+
+- Updated dependencies [[`18ef68f`](https://github.com/lingodotdev/lingo.dev/commit/18ef68f8d51f0d3208cfe1f1d2167e2e1580fdcc)]:
+  - @lingo.dev/_spec@0.45.0
+  - @lingo.dev/_compiler@0.8.11
+  - @lingo.dev/_sdk@0.13.6
+
 ## 0.117.26
 
 ### Patch Changes
