@@ -31,7 +31,7 @@
     "@replexica/sdk": "0.7.12"
   },
   "devDependencies": {
-    "@directus/extensions-sdk": "17.0.3",
+    "@directus/extensions-sdk": "17.0.5",
     "tsup": "8.5.1",
     "typescript": "5.9.3",
     "vitest": "4.0.13"
