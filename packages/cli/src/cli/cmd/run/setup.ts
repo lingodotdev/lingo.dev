@@ -51,14 +51,15 @@ export default async function setup(input: CmdRunContext) {
         title: "Selecting localization provider",
         task: async (ctx, task) => {
           const provider = ctx.flags.pseudo ? "pseudo" : ctx.config?.provider;
-          ctx.localizer = createLocalizer(provider, ctx.flags.apiKey);
+          const vNext = ctx.config?.vNext;
+          ctx.localizer = createLocalizer(provider, ctx.flags.apiKey, vNext);
           if (!ctx.localizer) {
             throw new Error(
               "Could not create localization provider. Please check your i18n.json configuration.",
             );
           }
           task.title =
-            ctx.localizer.id === "Lingo.dev"
+            ctx.localizer.id === "Lingo.dev" || ctx.localizer.id === "Lingo.dev vNext"
               ? `Using ${chalk.hex(colors.green)(ctx.localizer.id)} provider`
               : ctx.localizer.id === "pseudo"
                 ? `Using ${chalk.hex(colors.blue)("pseudo")} mode for testing`
@@ -68,7 +69,7 @@ export default async function setup(input: CmdRunContext) {
       {
         title: "Checking authentication",
         enabled: (ctx) =>
-          ctx.localizer?.id === "Lingo.dev" && !ctx.flags.pseudo,
+          (ctx.localizer?.id === "Lingo.dev" || ctx.localizer?.id === "Lingo.dev vNext") && !ctx.flags.pseudo,
         task: async (ctx, task) => {
           const authStatus = await ctx.localizer!.checkAuth();
           if (!authStatus.authenticated) {
@@ -81,7 +82,7 @@ export default async function setup(input: CmdRunContext) {
       },
       {
         title: "Validating configuration",
-        enabled: (ctx) => ctx.localizer?.id !== "Lingo.dev",
+        enabled: (ctx) => ctx.localizer?.id !== "Lingo.dev" && ctx.localizer?.id !== "Lingo.dev vNext",
         task: async (ctx, task) => {
           const validationStatus = await ctx.localizer!.validateSettings!();
           if (!validationStatus.valid) {
