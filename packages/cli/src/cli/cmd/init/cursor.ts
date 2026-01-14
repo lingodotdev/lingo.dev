@@ -6,9 +6,13 @@ import { fileURLToPath } from "url";
 import { confirm } from "@inquirer/prompts";
 
 // Get the directory of this file
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 // Access agents.md from package root (works in both dev and production)
-const AGENTS_MD = path.resolve(__dirname, "../../../../agents.md");
+// Resolve from current file location: try both paths to handle dev and bundled environments
+const AGENTS_MD = fs.existsSync(path.resolve(__dirname, "../agents.md"))
+  ? path.resolve(__dirname, "../agents.md")
+  : path.resolve(__dirname, "../../../../agents.md");
 // Create .cursorrules in user's current working directory
 const CURSORRULES = path.resolve(process.cwd(), ".cursorrules");
 
