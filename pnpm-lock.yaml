@@ -168,8 +168,8 @@ importers:
   integrations/directus:
     dependencies:
       '@replexica/sdk':
-        specifier: 0.7.7
-        version: 0.7.7(@types/node@25.0.3)(lightningcss@1.30.2)(terser@5.36.0)
+        specifier: 0.7.12
+        version: 0.7.12(@types/node@25.0.3)(lightningcss@1.30.2)(terser@5.36.0)
     devDependencies:
       '@directus/extensions-sdk':
         specifier: 17.0.3
@@ -182,7 +182,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 4.0.13
-        version: 4.0.13(@opentelemetry/api@1.9.0)(@types/debug@4.1.12)(@types/node@25.0.3)(jiti@2.6.1)(jsdom@25.0.1)(lightningcss@1.30.2)(terser@5.36.0)(tsx@4.21.0)(yaml@2.8.1)
+        version: 4.0.13(@opentelemetry/api@1.9.0)(@types/debug@4.1.12)(@types/node@25.0.3)(jiti@2.6.1)(jsdom@27.4.0)(lightningcss@1.30.2)(terser@5.36.0)(tsx@4.21.0)(yaml@2.8.1)
 
   legacy/cli:
     dependencies:
@@ -3408,11 +3408,9 @@ packages:
   '@quansync/fs@1.0.0':
     resolution: {integrity: sha512-4TJ3DFtlf1L5LDMaM6CanJ/0lckGNtJcMjQ1NAV6zDmA0tEHKZtxNKin8EgPaVX1YzljbxckyT2tJrpQKAtngQ==}
 
-  '@replexica/sdk@0.7.7':
-    resolution: {integrity: sha512-kE8AILyPLQz8Mhho6BRjD4YDDA+WSYCl6jD8C9qdIVne+Oppo84rlTBJynIWrfM9mgCyIzRwLJqstYkLJ3v/wg==}
-
-  '@replexica/spec@0.22.0':
-    resolution: {integrity: sha512-GqCxrAATe3MLysGwaR+6IC72D2635rwJzZqH3h0u2HOOyNAJehfAyK73HCDBEEC2zHfH/m5MUQE9lWaIoljB2w==}
+  '@replexica/sdk@0.7.12':
+    resolution: {integrity: sha512-8yLWWMsBQbAxq1kCa8rSPDfZBBICR5881DB9KkcwWdiY+JyaeC0WJG/uRy4HvlB2ZDxKVXiexnsYHafaI+icGQ==}
+    deprecated: 'Replexica is now Lingo.dev! Please use our new SDK package by running: npm install lingo.dev. Visit https://lingo.dev for the latest features and documentation.'
 
   '@rolldown/binding-android-arm64@1.0.0-beta.55':
     resolution: {integrity: sha512-5cPpHdO+zp+klznZnIHRO1bMHDq5hS9cqXodEKAaa/dQTPDjnE91OwAsy3o1gT2x4QaY8NzdBXAvutYdaw0WeA==}
@@ -13564,14 +13562,9 @@ snapshots:
     dependencies:
       quansync: 1.0.0
 
-  '@replexica/sdk@0.7.7(@types/node@25.0.3)(lightningcss@1.30.2)(terser@5.36.0)':
+  '@replexica/sdk@0.7.12(@types/node@25.0.3)(lightningcss@1.30.2)(terser@5.36.0)':
     dependencies:
-      '@paralleldrive/cuid2': 2.2.2
-      '@replexica/spec': 0.22.0(@types/node@25.0.3)(jsdom@25.0.1)(lightningcss@1.30.2)(terser@5.36.0)
-      jsdom: 25.0.1
-      typescript: 5.9.3
-      vitest: 2.1.9(@types/node@25.0.3)(jsdom@25.0.1)(lightningcss@1.30.2)(terser@5.36.0)
-      zod: 3.25.76
+      lingo.dev: 0.70.3(@types/node@25.0.3)(lightningcss@1.30.2)(terser@5.36.0)
     transitivePeerDependencies:
       - '@edge-runtime/vm'
       - '@types/node'
@@ -13590,28 +13583,6 @@ snapshots:
       - supports-color
       - terser
       - utf-8-validate
-
-  '@replexica/spec@0.22.0(@types/node@25.0.3)(jsdom@25.0.1)(lightningcss@1.30.2)(terser@5.36.0)':
-    dependencies:
-      typescript: 5.9.3
-      vitest: 2.1.9(@types/node@25.0.3)(jsdom@25.0.1)(lightningcss@1.30.2)(terser@5.36.0)
-      zod: 3.25.76
-    transitivePeerDependencies:
-      - '@edge-runtime/vm'
-      - '@types/node'
-      - '@vitest/browser'
-      - '@vitest/ui'
-      - happy-dom
-      - jsdom
-      - less
-      - lightningcss
-      - msw
-      - sass
-      - sass-embedded
-      - stylus
-      - sugarss
-      - supports-color
-      - terser
 
   '@rolldown/binding-android-arm64@1.0.0-beta.55':
     optional: true
@@ -22171,47 +22142,6 @@ snapshots:
       '@types/node': 24.0.10
       '@vitest/ui': 3.2.4(vitest@3.2.4)
       jsdom: 27.4.0
-    transitivePeerDependencies:
-      - jiti
-      - less
-      - lightningcss
-      - msw
-      - sass
-      - sass-embedded
-      - stylus
-      - sugarss
-      - supports-color
-      - terser
-      - tsx
-      - yaml
-
-  vitest@4.0.13(@opentelemetry/api@1.9.0)(@types/debug@4.1.12)(@types/node@25.0.3)(jiti@2.6.1)(jsdom@25.0.1)(lightningcss@1.30.2)(terser@5.36.0)(tsx@4.21.0)(yaml@2.8.1):
-    dependencies:
-      '@vitest/expect': 4.0.13
-      '@vitest/mocker': 4.0.13(vite@7.3.0(@types/node@25.0.3)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.36.0)(tsx@4.21.0)(yaml@2.8.1))
-      '@vitest/pretty-format': 4.0.13
-      '@vitest/runner': 4.0.13
-      '@vitest/snapshot': 4.0.13
-      '@vitest/spy': 4.0.13
-      '@vitest/utils': 4.0.13
-      debug: 4.4.3
-      es-module-lexer: 1.7.0
-      expect-type: 1.2.2
-      magic-string: 0.30.21
-      pathe: 2.0.3
-      picomatch: 4.0.3
-      std-env: 3.10.0
-      tinybench: 2.9.0
-      tinyexec: 0.3.2
-      tinyglobby: 0.2.15
-      tinyrainbow: 3.0.3
-      vite: 7.3.0(@types/node@25.0.3)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.36.0)(tsx@4.21.0)(yaml@2.8.1)
-      why-is-node-running: 2.3.0
-    optionalDependencies:
-      '@opentelemetry/api': 1.9.0
-      '@types/debug': 4.1.12
-      '@types/node': 25.0.3
-      jsdom: 25.0.1
     transitivePeerDependencies:
       - jiti
       - less
