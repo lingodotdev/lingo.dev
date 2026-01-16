@@ -61,5 +61,5 @@ export default new Command()
   });
 
 const flagsSchema = Z.object({
-  force: Z.boolean().default(false),
+  force: Z.boolean().prefault(false),
 });
