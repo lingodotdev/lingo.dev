@@ -10,14 +10,22 @@ import { commonTaskRendererOptions } from "./_const";
 import createBucketLoader from "../../loaders";
 import { createDeltaProcessor, Delta } from "../../utils/delta";
 
-const MAX_WORKER_COUNT = 10;
+const WARN_CONCURRENCY_COUNT = 30;
 
 export default async function execute(input: CmdRunContext) {
   const effectiveConcurrency = Math.min(
     input.flags.concurrency,
     input.tasks.length,
-    MAX_WORKER_COUNT,
   );
+
+  if (effectiveConcurrency >= WARN_CONCURRENCY_COUNT) {
+    console.warn(
+      chalk.yellow(
+        `⚠️ High concurrency (${effectiveConcurrency}) may cause failures in some environments.`,
+      ),
+    );
+  }
+
   console.log(chalk.hex(colors.orange)(`[Localization]`));
 
   return new Listr<CmdRunContext>(
