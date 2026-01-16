@@ -28,7 +28,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           show_full_output: true
           prompt: |
-            EXEMPT USERS: @maxprilutskiy, @vrcprl, @davidturnbull, @monicabe, @sumitsaurabh927, @AleksandrSl (skip all checks if PR author is one of these)
+            EXEMPT USERS: @maxprilutskiy, @vrcprl, @davidturnbull, @monicabe, @sumitsaurabh927, @AleksandrSl, @cherkanovart (skip all checks if PR author is one of these)
 
             Close this PR if:
             1. It doesn't reference any issue (no "Closes #123", "Fixes #456", etc.)
