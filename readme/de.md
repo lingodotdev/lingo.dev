@@ -99,7 +99,7 @@ export default async function (): Promise<NextConfig> {
 }
 ```
 
-Führe `next build` aus und sieh zu, wie spanische und französische Bundles erscheinen ✨
+Führen Sie `next build` aus und beobachten Sie, wie spanische und französische Bundles erscheinen ✨
 
 [Dokumentation lesen →](https://lingo.dev/compiler) für die vollständige Anleitung und [tritt unserem Discord bei](https://lingo.dev/go/discord), um Hilfe bei deiner Einrichtung zu erhalten.
 
@@ -209,4 +209,4 @@ Wenn Ihnen gefällt, was wir tun, geben Sie uns einen ⭐ und helfen Sie uns, 6.
 
 [English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Bhojpuri](/readme/bho.md)
 
-Deine Sprache ist nicht dabei? Füge sie zu [`i18n.json`](./i18n.json) hinzu und eröffne einen PR!
+Ihre Sprache ist nicht dabei? Fügen Sie sie zu [`i18n.json`](./i18n.json) hinzu und öffnen Sie einen PR!
