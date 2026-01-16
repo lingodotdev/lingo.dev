@@ -209,4 +209,4 @@ Si te gusta lo que hacemos, danos una ⭐ y ayúdanos a alcanzar las 6000 estrel
 
 [English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Bhojpuri](/readme/bho.md)
 
-¿No ves tu idioma? ¡Añádelo a [`i18n.json`](./i18n.json) y abre un PR!
+¿No ves tu idioma? Añádelo a [`i18n.json`](./i18n.json) y abre un PR!
