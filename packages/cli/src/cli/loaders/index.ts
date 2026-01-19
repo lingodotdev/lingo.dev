@@ -49,6 +49,7 @@ import createTwigLoader from "./twig";
 import createEnsureKeyOrderLoader from "./ensure-key-order";
 import createTxtLoader from "./txt";
 import createJsonKeysLoader from "./json-dictionary";
+import createCsvPerLocaleLoader from "./csv-per-locale";
 
 type BucketLoaderOptions = {
   returnUnlocalizedKeys?: boolean;
@@ -107,6 +108,18 @@ export default function createBucketLoader(
         createTextFileLoader(bucketPathPattern),
         createLockedPatternsLoader(lockedPatterns),
         createCsvLoader(),
+        createEnsureKeyOrderLoader(),
+        createFlatLoader(),
+        createLockedKeysLoader(lockedKeys || []),
+        createIgnoredKeysLoader(ignoredKeys || []),
+        createSyncLoader(),
+        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+      );
+    case "csv-per-locale":
+      return composeLoaders(
+        createTextFileLoader(bucketPathPattern),
+        createLockedPatternsLoader(lockedPatterns),
+        createCsvPerLocaleLoader(),
         createEnsureKeyOrderLoader(),
         createFlatLoader(),
         createLockedKeysLoader(lockedKeys || []),
