@@ -161,7 +161,7 @@
     "@babel/core": "7.26.0",
     "@babel/generator": "7.28.5",
     "@babel/parser": "7.28.5",
-    "@babel/preset-react": "7.26.3",
+    "@babel/preset-react": "7.28.5",
     "@babel/preset-typescript": "7.26.0",
     "@babel/traverse": "7.28.5",
     "@babel/types": "7.28.5",
