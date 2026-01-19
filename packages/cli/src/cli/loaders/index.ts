@@ -68,6 +68,21 @@ function encodeKeys(keys: string[]): string[] {
   return keys.map((key) => encodeURIComponent(key));
 }
 
+/**
+ * Normalizes patterns for CSV buckets (csv, csv-per-locale)
+ * Automatically adds "*\/" prefix if pattern doesn't contain "/" and doesn't start with "*\/"
+ * This allows users to write "id" instead of "*\/id"
+ */
+
+function normalizeCsvPatterns(patterns: string[]): string[] {
+  return patterns.map((pattern) => {
+    if (pattern.includes("/") || pattern.startsWith("*/")) {
+      return pattern;
+    }
+    return `*/${pattern}`;
+  });
+}
+
 export default function createBucketLoader(
   bucketType: Z.infer<typeof bucketTypeSchema>,
   bucketPathPattern: string,
@@ -122,8 +137,8 @@ export default function createBucketLoader(
         createCsvPerLocaleLoader(),
         createEnsureKeyOrderLoader(),
         createFlatLoader(),
-        createLockedKeysLoader(lockedKeys || []),
-        createIgnoredKeysLoader(ignoredKeys || []),
+        createLockedKeysLoader(normalizeCsvPatterns(lockedKeys || [])),
+        createIgnoredKeysLoader(normalizeCsvPatterns(ignoredKeys || [])),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
