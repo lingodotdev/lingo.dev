@@ -98,7 +98,7 @@ export default async function (): Promise<NextConfig> {
 }
 ```
 
-运行 `next build`，即可看到西班牙语和法语的构建包 ✨
+运行 `next build`，即可看到西班牙语和法语的 bundle 自动生成 ✨
 
 [阅读文档 →](https://lingo.dev/compiler) 获取完整指南，并 [加入我们的 Discord](https://lingo.dev/go/discord) 以获取设置帮助。
 
@@ -208,4 +208,4 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 [English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Bhojpuri](/readme/bho.md)
 
-没有看到您的语言？将其添加到 [`i18n.json`](./i18n.json) 并提交一个 PR！
+没有看到你的语言？请将其添加到 [`i18n.json`](./i18n.json) 并提交 PR！

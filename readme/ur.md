@@ -132,9 +132,22 @@ npm install @lingo.dev/compiler
 
 ایک مرتبہ انسٹال کریں:
 
----CODE-PLACEHOLDER-681c094f641f13a112a2a2e2787---
+```ts
+import type { NextConfig } from "next";
+import { withLingo } from "@lingo.dev/compiler/next";
 
-اپنے build کنفیگ میں فعال کریں:
+const nextConfig: NextConfig = {};
+
+export default async function (): Promise<NextConfig> {
+  return await withLingo(nextConfig, {
+    sourceLocale: "en",
+    targetLocales: ["es", "fr"],
+    models: "lingo.dev",
+  });
+}
+```
+
+`next build` چلائیں اور ہسپانوی اور فرانسیسی بنڈلز کو نمودار ہوتے دیکھیں ✨
 
 ```js
 import lingoCompiler from "lingo.dev/compiler";
@@ -166,7 +179,9 @@ export default lingoCompiler.next({
 
 ---
 
-### ⚡️ Lingo.dev CLI
+```bash
+npx lingo.dev@latest run
+```
 
 اپنے ٹرمینل سے براہِ راست کوڈ اور مواد کا ترجمہ کریں۔
 
@@ -180,7 +195,20 @@ npx lingo.dev@latest run
 
 ---
 
-### 🔄 Lingo.dev CI/CD
+```yaml
+# .github/workflows/i18n.yml
+name: Lingo.dev i18n
+on: [push]
+
+jobs:
+  i18n:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: lingodotdev/lingo.dev@main
+        with:
+          api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
+```
 
 تراجم کو خودکار انداز میں شپ کریں۔
 
@@ -205,7 +233,25 @@ jobs:
 
 ---
 
-### 🧩 Lingo.dev SDK
+```ts
+import { LingoDotDevEngine } from "lingo.dev/sdk";
+
+const lingoDotDev = new LingoDotDevEngine({
+  apiKey: "your-api-key-here",
+});
+
+const content = {
+  greeting: "Hello",
+  farewell: "Goodbye",
+  message: "Welcome to our platform",
+};
+
+const translated = await lingoDotDev.localizeObject(content, {
+  sourceLocale: "en",
+  targetLocale: "es",
+});
+// Returns: { greeting: "Hola", farewell: "Adiós", message: "Bienvenido a nuestra plataforma" }
+```
 
 ڈائنامک مواد کے لیے ہر درخواست پر فوری ترجمہ۔
 
@@ -251,4 +297,4 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 ](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
 
-## 🌐 دیگر زبانوں میں ریڈمی
+اپنی زبان نظر نہیں آرہی؟ اسے [`i18n.json`](./i18n.json) میں شامل کریں اور PR کھولیں!
