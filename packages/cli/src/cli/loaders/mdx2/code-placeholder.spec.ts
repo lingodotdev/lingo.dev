@@ -3,7 +3,7 @@ import createMdxCodePlaceholderLoader from "./code-placeholder";
 import dedent from "dedent";
 import { md5 } from "../../utils/md5";
 
-const PLACEHOLDER_REGEX = /---CODE-PLACEHOLDER-[0-9a-f]+---/g;
+const PLACEHOLDER_REGEX = /\{\/\* CODE_PLACEHOLDER_[0-9a-f]+\s*\*\/\}/g;
 
 const sampleContent = dedent`
 Paragraph with some code:
@@ -20,7 +20,7 @@ describe("MDX Code Placeholder Loader", () => {
   it("should replace fenced code with placeholder on pull", async () => {
     const result = await loader.pull("en", sampleContent);
     const hash = md5('```js\nconsole.log("foo");\n```');
-    const expected = `Paragraph with some code:\n\n---CODE-PLACEHOLDER-${hash}---`;
+    const expected = `Paragraph with some code:\n\n{/* CODE_PLACEHOLDER_${hash} */}`;
     expect(result.trim()).toBe(expected);
   });
 
@@ -407,7 +407,7 @@ describe("MDX Code Placeholder Loader", () => {
       const md = "This is some `inline()` code.";
       const pulled = await loader.pull("en", md);
       const hash = md5("`inline()`");
-      const expected = `This is some ---INLINE-CODE-PLACEHOLDER-${hash}--- code.`;
+      const expected = `This is some {/* INLINE_CODE_PLACEHOLDER_${hash} */} code.`;
       expect(pulled).toBe(expected);
     });
 
@@ -535,7 +535,7 @@ describe("MDX Code Placeholder Loader", () => {
       const pushed = await loader.push("en", translated);
 
       // Should not contain any placeholders
-      expect(pushed).not.toMatch(/---CODE-PLACEHOLDER-[0-9a-f]+---/);
+      expect(pushed).not.toMatch(/\{\/\* CODE_PLACEHOLDER_[0-9a-f]+\s*\*\/\}/);
 
       // Should preserve all special $ characters exactly as they were
       expect(pushed).toContain('const price = "$100";');
@@ -556,7 +556,7 @@ describe("MDX Code Placeholder Loader", () => {
       const pushed = await loader.push("en", translated);
 
       // Should not contain any placeholders
-      expect(pushed).not.toMatch(/---INLINE-CODE-PLACEHOLDER-[0-9a-f]+---/);
+      expect(pushed).not.toMatch(/\{\/\* INLINE_CODE_PLACEHOLDER_[0-9a-f]+\s*\*\/\}/);
 
       // Should preserve all special $ characters
       expect(pushed).toContain("`$price`");
@@ -577,8 +577,8 @@ describe("MDX Code Placeholder Loader", () => {
       const pushed = await loader.push("en", translated);
 
       // Should not contain any placeholders
-      expect(pushed).not.toMatch(/---INLINE-CODE-PLACEHOLDER-[0-9a-f]+---/);
-      expect(pushed).not.toMatch(/---CODE-PLACEHOLDER-[0-9a-f]+---/);
+      expect(pushed).not.toMatch(/\{\/\* INLINE_CODE_PLACEHOLDER_[0-9a-f]+\s*\*\/\}/);
+      expect(pushed).not.toMatch(/\{\/\* CODE_PLACEHOLDER_[0-9a-f]+\s*\*\/\}/);
       expect(pushed).toContain("`getData()`");
       expect(pushed).toContain("Utilize");
     });
@@ -605,9 +605,9 @@ describe("MDX Code Placeholder Loader", () => {
 
       // The fix: ALL placeholders should be replaced, including Arabic ones
       expect(pushedResult).not.toMatch(
-        /---INLINE-CODE-PLACEHOLDER-[0-9a-f]+---/,
+        /\{\/\* INLINE_CODE_PLACEHOLDER_[0-9a-f]+\s*\*\/\}/,
       );
-      expect(pushedResult).not.toMatch(/---CODE-PLACEHOLDER-[0-9a-f]+---/);
+      expect(pushedResult).not.toMatch(/\{\/\* CODE_PLACEHOLDER_[0-9a-f]+\s*\*\/\}/);
 
       // The Arabic inline code should be preserved and translated text should be there
       expect(pushedResult).toContain("`الحصول_على_البيانات()`");
@@ -639,9 +639,9 @@ describe("MDX Code Placeholder Loader", () => {
 
       // All placeholders should be replaced, even when not in current pullInput
       expect(pushedResult).not.toMatch(
-        /---INLINE-CODE-PLACEHOLDER-[0-9a-f]+---/,
+        /\{\/\* INLINE_CODE_PLACEHOLDER_[0-9a-f]+\s*\*\/\}/,
       );
-      expect(pushedResult).not.toMatch(/---CODE-PLACEHOLDER-[0-9a-f]+---/);
+      expect(pushedResult).not.toMatch(/\{\/\* CODE_PLACEHOLDER_[0-9a-f]+\s*\*\/\}/);
       expect(pushedResult).toContain("`الحصول_على_البيانات()`");
       expect(pushedResult).toContain("قم بتطبيق");
     });
@@ -737,7 +737,7 @@ describe("MDX Code Placeholder Loader", () => {
       // The code block should be present and not replaced with placeholder
       expect(dePushed).toContain("```bash");
       expect(dePushed).toContain("npm install");
-      expect(dePushed).not.toMatch(/---CODE-PLACEHOLDER-/);
+      expect(dePushed).not.toMatch(/\{\/\* CODE_PLACEHOLDER_/);
     });
 
     it("should preserve double newlines around placeholders for section splitting", async () => {
@@ -764,7 +764,7 @@ describe("MDX Code Placeholder Loader", () => {
       const pulled = await loader.pull("en", md);
 
       // Verify placeholders are surrounded by double newlines for proper section splitting
-      const placeholders = pulled.match(/---CODE-PLACEHOLDER-[a-f0-9]+---/g);
+      const placeholders = pulled.match(/\{\/\* CODE_PLACEHOLDER_[a-f0-9]+\s*\*\/\}/g);
       expect(placeholders).toHaveLength(2);
 
       // Check that each placeholder has double newlines around it
@@ -811,15 +811,15 @@ describe("adjacent code blocks bug", () => {
 
     console.log("PULLED CONTENT:");
     console.log(pulled);
-    console.log("---");
+    console.log("___");
 
     // The bug: placeholder is concatenated with "typescript" from next block
-    const bugPattern = /---CODE-PLACEHOLDER-[a-f0-9]+---typescript/;
+    const bugPattern = /\{\/\* CODE_PLACEHOLDER_[a-f0-9]+\s*\*\/\}typescript/;
     expect(pulled).not.toMatch(bugPattern);
 
     // Should have proper separation
     expect(pulled).toMatch(
-      /---CODE-PLACEHOLDER-[a-f0-9]+---\n\n---CODE-PLACEHOLDER-[a-f0-9]+---/,
+      /\{\/\* CODE_PLACEHOLDER_[a-f0-9]+\s*\*\/\}\n\n\{\/\* CODE_PLACEHOLDER_[a-f0-9]+\s*\*\/\}/,
     );
   });
 });
@@ -866,5 +866,119 @@ describe("$ special character handling in replacement functions", () => {
     // All $ characters in URL and alt text should be preserved
     expect(pushed).toContain("![Price: $100]");
     expect(pushed).toContain("price=$500&currency=$USD");
+  });
+});
+
+describe("placeholder format edge cases (regression)", () => {
+  // Tests for edge cases that would fail with `---` or `___` placeholder formats
+  // These tests pass with current `{/* */}` format and document why it's used
+
+  it("should handle placeholder at content start (gray-matter edge case)", async () => {
+    // Korean translation scenario: inline code moves to sentence start
+    // Would fail with `---` format (gray-matter engine detection)
+    const loader = createMdxCodePlaceholderLoader();
+    loader.setDefaultLocale("en");
+
+    const englishMdx = `Understanding the \`code\` directory.`;
+    await loader.pull("en", englishMdx);
+
+    const koreanMdx = `\`코드\` 디렉토리와 그 내용을 이해합니다.`;
+    const pulled = await loader.pull("ko", koreanMdx);
+
+    expect(pulled).toMatch(/^\{\/\* INLINE_CODE_PLACEHOLDER/);
+
+    // Simulate frontmatter-split: matter.stringify with placeholder at start
+    const matter = require('gray-matter');
+    const mdxDocument = matter.stringify(pulled, { title: 'Test' });
+
+    expect(mdxDocument).toContain('{/*');
+
+    const restored = await loader.push("ko", pulled, koreanMdx, "en", koreanMdx);
+    expect(restored).toBe(koreanMdx);
+  });
+
+  it("should preserve placeholder without Markdown emphasis parsing", async () => {
+    // Would fail with `___` format (parsed as bold-italic)
+    const loader = createMdxCodePlaceholderLoader();
+    loader.setDefaultLocale("en");
+
+    const mdContent = dedent`
+      Paragraph with \`inline code\` in middle.
+
+      More text with \`code\` here.
+    `;
+
+    const pulled = await loader.pull("en", mdContent);
+
+    // Simulate Markdown parsing
+    const { unified } = require('unified');
+    const remarkParse = require('remark-parse').default;
+    const remarkStringify = require('remark-stringify').default;
+
+    const processor = unified().use(remarkParse).use(remarkStringify);
+    const parsed = processor.stringify(processor.parse(pulled));
+
+    // JSX comments get escaped by Markdown but structure is preserved
+    // Underscores in placeholder names get escaped: INLINE\_CODE\_PLACEHOLDER
+    expect(parsed).toMatch(/INLINE[_\\]*CODE[_\\]*PLACEHOLDER/);
+    expect(parsed).not.toContain('***'); // Not parsed as bold-italic
+    expect(parsed).not.toMatch(/___CODE.*___/); // Not using underscore format
+
+    const restored = await loader.push("en", pulled, mdContent, "en", mdContent);
+    expect(restored).toBe(mdContent);
+  });
+
+  it("should handle multiple placeholders at different positions", async () => {
+    // Tests placeholders at start, middle, and after newlines
+    const loader = createMdxCodePlaceholderLoader();
+    loader.setDefaultLocale("en");
+
+    const mdContent = dedent`
+      \`start\` with code
+
+      Middle has \`code\` too.
+
+      \`another\` line starts with code.
+    `;
+
+    const pulled = await loader.pull("en", mdContent);
+    const placeholders = pulled.match(/\{\/\* INLINE_CODE_PLACEHOLDER_[a-f0-9]+\s*\*\/\}/g);
+    expect(placeholders).toHaveLength(3);
+
+    const matter = require('gray-matter');
+    const mdxDoc = matter.stringify(pulled, {
+      title: 'Multiple Placeholders'
+    });
+
+    expect(mdxDoc).toContain('{/*');
+
+    const restored = await loader.push("en", pulled, mdContent, "en", mdContent);
+    expect(restored).toBe(mdContent);
+  });
+
+  it("should handle code block placeholder at document start", async () => {
+    // Would fail with `---` format at document start
+    const loader = createMdxCodePlaceholderLoader();
+    loader.setDefaultLocale("en");
+
+    const mdContent = dedent`
+      \`\`\`js
+      console.log("test");
+      \`\`\`
+
+      Text after code block.
+    `;
+
+    const pulled = await loader.pull("en", mdContent);
+    expect(pulled).toMatch(/^\{\/\* CODE_PLACEHOLDER/);
+
+    const matter = require('gray-matter');
+    const mdxDoc = matter.stringify(pulled, { title: 'Code First' });
+
+    expect(mdxDoc).toContain('title: Code First');
+    expect(mdxDoc).toContain('{/*');
+
+    const restored = await loader.push("en", pulled, mdContent, "en", mdContent);
+    expect(restored).toBe(mdContent);
   });
 });

@@ -36,7 +36,6 @@ import createProcessor from "../processor";
 import { withExponentialBackoff } from "../utils/exp-backoff";
 import trackEvent from "../utils/observability";
 import { createDeltaProcessor } from "../utils/delta";
-import { isICUPluralObject } from "../loaders/xcode-xcstrings-icu";
 
 export default new Command()
   .command("i18n")
@@ -57,6 +56,7 @@ export default new Command()
   .option(
     "--key <key>",
     "Limit processing to a single translation key by exact match. Filters all buckets and locales to process only this key, useful for testing or debugging specific translations. Example: auth.login.title",
+    (val: string) => encodeURIComponent(val),
   )
   .option(
     "--file [files...]",
@@ -100,7 +100,7 @@ export default new Command()
       flags = parseFlags(options);
     } catch (parseError: any) {
       // Handle flag validation errors (like invalid locale codes)
-      await trackEvent("unknown", "cmd.i18n.error", {
+      await trackEvent(null, "cmd.i18n.error", {
         errorType: "validation_error",
         errorName: parseError.name || "ValidationError",
         errorMessage: parseError.message || "Invalid command line options",
@@ -109,6 +109,7 @@ export default new Command()
         errorCount: 1,
         stage: "flag_validation",
       });
+      await new Promise((resolve) => setTimeout(resolve, 50));
       throw parseError;
     }
 
@@ -124,7 +125,7 @@ export default new Command()
     }
 
     let hasErrors = false;
-    let authId: string | null = null;
+    let email: string | null = null;
     const errorDetails: ErrorDetail[] = [];
     try {
       ora.start("Loading configuration...");
@@ -140,15 +141,15 @@ export default new Command()
       const isByokMode = !!i18nConfig?.provider;
 
       if (isByokMode) {
-        authId = null;
+        email = null;
         ora.succeed("Using external provider (BYOK mode)");
       } else {
         const auth = await validateAuth(settings);
-        authId = auth.id;
+        email = auth.email;
         ora.succeed(`Authenticated as ${auth.email}`);
       }
 
-      await trackEvent(authId, "cmd.i18n.start", {
+      await trackEvent(email, "cmd.i18n.start", {
         i18nConfig,
         flags,
       });
@@ -491,18 +492,11 @@ export default new Command()
                   .omitBy((value, key) => {
                     const targetValue = targetData[key];
 
-                    // For ICU plural objects, use deep equality (excluding Symbol)
-                    if (
-                      isICUPluralObject(value) &&
-                      isICUPluralObject(targetValue)
-                    ) {
-                      return _.isEqual(
-                        { icu: value.icu, _meta: value._meta },
-                        { icu: targetValue.icu, _meta: targetValue._meta },
-                      );
+                    // For objects (like plural variations), use deep equality
+                    // For primitives (strings, numbers), use strict equality
+                    if (typeof value === "object" && value !== null) {
+                      return _.isEqual(value, targetValue);
                     }
-
-                    // Default strict equality for other values
                     return value === targetValue;
                   })
                   .size()
@@ -575,7 +569,7 @@ export default new Command()
       console.log();
       if (!hasErrors) {
         ora.succeed("Localization completed.");
-        await trackEvent(authId, "cmd.i18n.success", {
+        await trackEvent(email, "cmd.i18n.success", {
           i18nConfig: {
             sourceLocale: i18nConfig!.locale.source,
             targetLocales: i18nConfig!.locale.targets,
@@ -586,9 +580,10 @@ export default new Command()
           localeCount: targetLocales.length,
           processedSuccessfully: true,
         });
+        await new Promise((resolve) => setTimeout(resolve, 50));
       } else {
         ora.warn("Localization completed with errors.");
-        await trackEvent(authId || "unknown", "cmd.i18n.error", {
+        await trackEvent(email, "cmd.i18n.error", {
           flags,
           ...aggregateErrorAnalytics(
             errorDetails,
@@ -597,6 +592,7 @@ export default new Command()
             i18nConfig!,
           ),
         });
+        await new Promise((resolve) => setTimeout(resolve, 50));
       }
     } catch (error: any) {
       ora.fail(error.message);
@@ -619,7 +615,7 @@ export default new Command()
         };
       }
 
-      await trackEvent(authId || "unknown", "cmd.i18n.error", {
+      await trackEvent(email, "cmd.i18n.error", {
         flags,
         errorType,
         errorName: error.name || "Error",
@@ -630,6 +626,7 @@ export default new Command()
         errorCount: errorDetails.length + 1,
         previousErrors: createPreviousErrorContext(errorDetails),
       });
+      await new Promise((resolve) => setTimeout(resolve, 50));
     }
   });
 

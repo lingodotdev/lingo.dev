@@ -19,6 +19,7 @@ import { ensurePatterns } from "../utils/ensure-patterns";
 import updateGitignore from "../utils/update-gitignore";
 import initCICD from "../utils/init-ci-cd";
 import open from "open";
+import cursorInitCmd from "./init/cursor";
 
 const openUrl = (path: string) => {
   const settings = getSettings(undefined);
@@ -116,8 +117,8 @@ export default new InteractiveCommand()
             throw new Error(`Invalid path: ${p}`);
           }
         }
-
         return values;
+        
       })
       .prompt(undefined) // make non-interactive
       .default([]),
@@ -258,4 +259,5 @@ export default new InteractiveCommand()
     if (!isInteractive) {
       Ora().info("Please see https://lingo.dev/cli");
     }
-  });
+  })
+  .addCommand(cursorInitCmd);

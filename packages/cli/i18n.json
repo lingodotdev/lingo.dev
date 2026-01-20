@@ -5,6 +5,9 @@
     "targets": ["es"]
   },
   "buckets": {
+    "ail": {
+      "include": ["demo/ail/*.ail"]
+    },
     "xliff": {
       "include": ["demo/xliff/[locale]/*.xliff"]
     },
@@ -14,6 +17,14 @@
     "csv": {
       "include": ["demo/csv/example.csv"]
     },
+    "csv-per-locale": {
+      "include": ["demo/csv-per-locale/[locale]/example.csv"],
+      "lockedKeys": ["locked_key_1"],
+      "ignoredKeys": ["ignored_key_1"]
+    },
+    "ejs": {
+      "include": ["demo/ejs/[locale]/*.ejs"]
+    },
     "flutter": {
       "include": ["demo/flutter/[locale]/*.arb"]
     },
@@ -21,14 +32,23 @@
       "include": ["demo/html/[locale]/*.html"]
     },
     "json": {
-      "include": ["demo/json/[locale]/*.json"],
+      "include": ["demo/json/[locale]/example.json"],
       "lockedKeys": ["locked_key_1"],
       "ignoredKeys": ["ignored_key_1"]
     },
     "jsonc": {
-      "include": ["demo/jsonc/[locale]/*.jsonc"],
+      "include": ["demo/jsonc/[locale]/example.jsonc"],
       "lockedKeys": ["locked_key_1"],
       "ignoredKeys": ["ignored_key_1"]
+    },
+    "json5": {
+      "include": ["demo/json5/[locale]/example.json5"]
+    },
+    "json-dictionary": {
+      "include": ["demo/json-dictionary/example.json"]
+    },
+    "markdoc": {
+      "include": ["demo/markdoc/[locale]/*.markdoc"]
     },
     "markdown": {
       "include": ["demo/markdown/[locale]/*.md"],
@@ -39,16 +59,31 @@
       "lockedKeys": ["meta/locked_key_1"],
       "ignoredKeys": ["meta/ignored_key_1"]
     },
+    "mjml": {
+      "include": ["demo/mjml/[locale]/*.mjml"]
+    },
     "po": {
       "include": ["demo/po/[locale]/*.po"]
     },
     "properties": {
       "include": ["demo/properties/[locale]/*.properties"]
     },
+    "srt": {
+      "include": ["demo/srt/[locale]/*.srt"]
+    },
+    "txt": {
+      "include": ["demo/txt/[locale]/*.txt"]
+    },
     "typescript": {
       "include": ["demo/typescript/[locale]/*.ts"],
       "lockedKeys": ["forms/locked_key_1"],
       "ignoredKeys": ["forms/ignored_key_1"]
+    },
+    "twig": {
+      "include": ["demo/twig/[locale]/*.twig"]
+    },
+    "vtt": {
+      "include": ["demo/vtt/[locale]/*.vtt"]
     },
     "xcode-strings": {
       "include": ["demo/xcode-strings/[locale]/*.strings"]
@@ -62,7 +97,11 @@
       "ignoredKeys": ["item_count"]
     },
     "xcode-xcstrings-v2": {
-      "include": ["demo/xcode-xcstrings-v2/*.xcstrings"]
+      "include": ["demo/xcode-xcstrings-v2/example.xcstrings"],
+      "lockedKeys": ["%d items left"]
+    },
+    "xml": {
+      "include": ["demo/xml/[locale]/*.xml"]
     },
     "yaml": {
       "include": ["demo/yaml/[locale]/*.yml"],
