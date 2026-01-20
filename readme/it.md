@@ -10,8 +10,8 @@
 
 <p align="center">
   <strong>
-    ⚡ Lingo.dev - toolkit open-source per la localizzazione istantanea con LLM,
-    potenziato dall'IA.
+    ⚡ Lingo.dev - toolkit i18n open-source e basato su AI per la localizzazione
+    istantanea con LLM.
   </strong>
 </p>
 
@@ -35,13 +35,13 @@
   <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md">
     <img
       src="https://img.shields.io/github/license/lingodotdev/lingo.dev"
-      alt="License"
+      alt="Licenza"
     />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/commits/main">
     <img
       src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev"
-      alt="Last Commit"
+      alt="Ultimo commit"
     />
   </a>
   <a href="https://lingo.dev/en">
@@ -53,13 +53,13 @@
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Week-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #1 Prodotto della settimana"
+      alt="Product Hunt #1 DevTool della settimana"
     />
   </a>
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/Product%20Hunt-%232%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #2 Prodotto del giorno"
+      alt="Product Hunt #2 prodotto del giorno"
     />
   </a>
   <a href="https://lingo.dev/en">
@@ -74,7 +74,7 @@
 
 ## Scopri il Compiler 🆕
 
-**Lingo.dev Compiler** è un middleware compiler gratuito e open-source, progettato per rendere qualsiasi app React multilingue in fase di compilazione senza richiedere modifiche ai componenti React esistenti.
+**Lingo.dev Compiler** è un middleware di compilazione gratuito e open-source, progettato per rendere multilingue qualsiasi app React in fase di build senza richiedere modifiche ai componenti React esistenti.
 
 Installa una volta:
 
@@ -99,22 +99,22 @@ export default async function (): Promise<NextConfig> {
 }
 ```
 
-Esegui `next build` e guarda i bundle spagnoli e francesi apparire ✨
+Esegui `next build` e guarda apparire i bundle in spagnolo e francese ✨
 
-[Leggi la documentazione →](https://lingo.dev/compiler) per la guida completa, e [Unisciti al nostro Discord](https://lingo.dev/go/discord) per ricevere aiuto con la tua configurazione.
+[Leggi la documentazione →](https://lingo.dev/compiler) per la guida completa, e [unisciti al nostro Discord](https://lingo.dev/go/discord) per ricevere aiuto con la tua configurazione.
 
 ---
 
-### Cosa c'è in questo repository?
+### Cosa c'è in questa repo?
 
-| Strumento    | In breve                                                                              | Documentazione                          |
-| ------------ | ------------------------------------------------------------------------------------- | --------------------------------------- |
-| **Compiler** | Localizzazione React in fase di compilazione                                          | [/compiler](https://lingo.dev/compiler) |
-| **CLI**      | Localizzazione con un solo comando per app web e mobile, JSON, YAML, markdown e altro | [/cli](https://lingo.dev/cli)           |
-| **CI/CD**    | Auto-commit delle traduzioni ad ogni push + creazione di pull request se necessario   | [/ci](https://lingo.dev/ci)             |
-| **SDK**      | Traduzione in tempo reale per contenuti generati dagli utenti                         | [/sdk](https://lingo.dev/sdk)           |
+| Tool         | TL;DR                                                                                     | Documentazione                          |
+| ------------ | ----------------------------------------------------------------------------------------- | --------------------------------------- |
+| **Compiler** | Localizzazione React in fase di build                                                     | [/compiler](https://lingo.dev/compiler) |
+| **CLI**      | Localizzazione con un solo comando per app web e mobile, JSON, YAML, markdown e altro     | [/cli](https://lingo.dev/cli)           |
+| **CI/CD**    | Commit automatico delle traduzioni ad ogni push + creazione di pull request se necessario | [/ci](https://lingo.dev/ci)             |
+| **SDK**      | Traduzione in tempo reale per contenuti generati dagli utenti                             | [/sdk](https://lingo.dev/sdk)           |
 
-Ecco i punti principali per ciascuno 👇
+Di seguito trovi i punti salienti per ciascuno 👇
 
 ---
 
@@ -126,9 +126,9 @@ Traduci codice e contenuti direttamente dal tuo terminale.
 npx lingo.dev@latest run
 ```
 
-Crea un'impronta digitale per ogni stringa, memorizza i risultati nella cache e ritraduce solo ciò che è cambiato.
+Crea un'impronta digitale di ogni stringa, memorizza i risultati nella cache e ritraduce solo ciò che è cambiato.
 
-[Segui la documentazione →](https://lingo.dev/cli) per imparare come configurarlo.
+[Segui la documentazione →](https://lingo.dev/cli) per scoprire come configurarlo.
 
 ---
 
@@ -151,7 +151,7 @@ jobs:
           api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
 ```
 
-Mantiene il tuo repository in ordine e il tuo prodotto multilingue senza passaggi manuali.
+Mantiene il tuo repository pulito e il tuo prodotto multilingue senza passaggi manuali.
 
 [Leggi la documentazione →](https://lingo.dev/ci)
 
@@ -192,21 +192,28 @@ Perfetto per chat, commenti degli utenti e altri flussi in tempo reale.
 Siamo guidati dalla community e amiamo i contributi!
 
 - Hai un'idea? [Apri una issue](https://github.com/lingodotdev/lingo.dev/issues)
-- Vuoi sistemare qualcosa? [Invia una PR](https://github.com/lingodotdev/lingo.dev/pulls)
+- Vuoi correggere qualcosa? [Invia una PR](https://github.com/lingodotdev/lingo.dev/pulls)
 - Hai bisogno di aiuto? [Unisciti al nostro Discord](https://lingo.dev/go/discord)
 
 ## ⭐ Cronologia delle stelle
 
-Se ti piace quello che facciamo, lasciaci una ⭐ e aiutaci a raggiungere 6.000 stelle! 🌟
+Se ti piace quello che facciamo, dacci una ⭐ e aiutaci a raggiungere le 6.000 stelle! 🌟
 
 [
 
-![Grafico della cronologia delle stelle](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+![Grafico cronologia stelle](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
 
 ](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
 
 ## 🌐 Readme in altre lingue
 
-[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Bhojpuri](/readme/bho.md)
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [Português (Brasil)](/readme/pt-BR.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Polski](/readme/pl.md) • [Türkçe](/readme/tr.md) • [اردو](/readme/ur.md) • [भोजपुरी](/readme/bho.md) • [অসমীয়া](/readme/as-IN.md) • [ગુજરાતી](/readme/gu-IN.md) • [മലയാളം (IN)](/readme/ml-IN.md) • [मराठी](/readme/mr-IN.md) • [ଓଡ଼ିଆ](/readme/or-IN.md) • [ਪੰਜਾਬੀ](/readme/pa-IN.md) • [සිංහල](/readme/si-LK.md) • [தமிழ்](/readme/ta-IN.md) • [తెలుగు](/readme/te-IN.md)
 
 Non vedi la tua lingua? Aggiungila a [`i18n.json`](./i18n.json) e apri una PR!
+
+**Formato locale:** usa i codici [BCP-47](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale): `language[-Script][-REGION]`
+
+- Lingua: ISO 639-1/2/3 minuscolo (`en`, `zh`, `bho`)
+- Script: ISO 15924 maiuscolo iniziale (`Hans`, `Hant`, `Latn`)
+- Regione: ISO 3166-1 alpha-2 maiuscolo (`US`, `CN`, `IN`)
+- Esempi: `en`, `pt-BR`, `zh-Hans`, {/_ INLINE_CODE_PLACEHOLDER_6e553bb40a655db7be211ded60744c98 _/

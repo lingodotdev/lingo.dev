@@ -29,54 +29,54 @@
   <a href="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml">
     <img
       src="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml/badge.svg"
-      alt="Sürüm"
+      alt="Release"
     />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md">
     <img
       src="https://img.shields.io/github/license/lingodotdev/lingo.dev"
-      alt="Lisans"
+      alt="License"
     />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/commits/main">
     <img
       src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev"
-      alt="Son Commit"
+      alt="Last Commit"
     />
   </a>
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt Ayın #1 Geliştirici Aracı"
+      alt="Product Hunt #1 DevTool of the Month"
     />
   </a>
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Week-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt Haftanın #1 Ürünü"
+      alt="Product Hunt #1 DevTool of the Week"
     />
   </a>
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/Product%20Hunt-%232%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt Günün #2 Ürünü"
+      alt="Product Hunt #2 Product of the Day"
     />
   </a>
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/GitHub-Trending-blue?logo=github&style=flat-square"
-      alt="Github trend"
+      alt="Github trending"
     />
   </a>
 </p>
 
 ---
 
-## Derleyici ile tanışın 🆕
+## Compiler ile tanışın 🆕
 
-**Lingo.dev Derleyici**, mevcut React bileşenlerinde herhangi bir değişiklik gerektirmeden, derleme zamanında herhangi bir React uygulamasını çok dilli hale getirmek için tasarlanmış ücretsiz, açık kaynaklı bir derleyici ara yazılımıdır.
+**Lingo.dev Compiler**, mevcut React bileşenlerinde herhangi bir değişiklik gerektirmeden, herhangi bir React uygulamasını derleme zamanında çok dilli hale getirmek için tasarlanmış ücretsiz, açık kaynaklı bir derleyici ara yazılımıdır.
 
-Bir kez yükleyin:
+Bir kez kurun:
 
 ```bash
 npm install @lingo.dev/compiler
@@ -105,22 +105,22 @@ Tam kılavuz için [belgeleri okuyun →](https://lingo.dev/compiler) ve kurulum
 
 ---
 
-### Bu depoda neler var?
+### Bu repo'nun içinde neler var?
 
-| Araç          | Kısaca                                                                                        | Belgeler                                |
-| ------------- | --------------------------------------------------------------------------------------------- | --------------------------------------- |
-| **Derleyici** | Derleme zamanında React yerelleştirme                                                         | [/compiler](https://lingo.dev/compiler) |
-| **CLI**       | Web ve mobil uygulamalar, JSON, YAML, markdown ve daha fazlası için tek komutla yerelleştirme | [/cli](https://lingo.dev/cli)           |
-| **CI/CD**     | Her push'ta otomatik çeviri commit'leri + gerekirse pull request oluşturma                    | [/ci](https://lingo.dev/ci)             |
-| **SDK**       | Kullanıcı tarafından oluşturulan içerik için gerçek zamanlı çeviri                            | [/sdk](https://lingo.dev/sdk)           |
+| Araç         | Kısaca                                                                                        | Belgeler                                |
+| ------------ | --------------------------------------------------------------------------------------------- | --------------------------------------- |
+| **Compiler** | Derleme zamanında React yerelleştirme                                                         | [/compiler](https://lingo.dev/compiler) |
+| **CLI**      | Web ve mobil uygulamalar, JSON, YAML, markdown ve daha fazlası için tek komutla yerelleştirme | [/cli](https://lingo.dev/cli)           |
+| **CI/CD**    | Her push'ta otomatik çeviri commit'i + gerekirse pull request oluşturma                       | [/ci](https://lingo.dev/ci)             |
+| **SDK**      | Kullanıcı tarafından oluşturulan içerik için gerçek zamanlı çeviri                            | [/sdk](https://lingo.dev/sdk)           |
 
-İşte her biri için hızlı bilgiler 👇
+Aşağıda her biri için hızlı özetler bulunuyor 👇
 
 ---
 
 ### ⚡️ Lingo.dev CLI
 
-Doğrudan terminalinizden kod ve içerik çevirin.
+Kodu ve içeriği doğrudan terminalinizden çevirin.
 
 ```bash
 npx lingo.dev@latest run
@@ -151,7 +151,7 @@ jobs:
           api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
 ```
 
-Manuel adımlar olmadan deponuzu yeşil ve ürününüzü çok dilli tutar.
+Deponuzu yeşil tutar ve ürününüzü manuel adımlar olmadan çok dilli hale getirir.
 
 [Belgeleri okuyun →](https://lingo.dev/ci)
 
@@ -159,7 +159,7 @@ Manuel adımlar olmadan deponuzu yeşil ve ürününüzü çok dilli tutar.
 
 ### 🧩 Lingo.dev SDK
 
-Dinamik içerik için anında istek başına çeviri.
+Dinamik içerik için istek başına anında çeviri.
 
 ```ts
 import { LingoDotDevEngine } from "lingo.dev/sdk";
@@ -195,9 +195,9 @@ Topluluk odaklıyız ve katkıları seviyoruz!
 - Bir şeyi düzeltmek mi istiyorsunuz? [Bir PR gönderin](https://github.com/lingodotdev/lingo.dev/pulls)
 - Yardıma mı ihtiyacınız var? [Discord'umuza katılın](https://lingo.dev/go/discord)
 
-## ⭐ Yıldız Geçmişi
+## ⭐ Yıldız geçmişi
 
-Yaptıklarımızı beğendiyseniz, bize bir ⭐ verin ve 6.000 yıldıza ulaşmamıza yardımcı olun! 🌟
+Yaptıklarımızı beğeniyorsanız, bize bir ⭐ verin ve 6.000 yıldıza ulaşmamıza yardımcı olun! 🌟
 
 [
 
@@ -205,8 +205,15 @@ Yaptıklarımızı beğendiyseniz, bize bir ⭐ verin ve 6.000 yıldıza ulaşma
 
 ](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
 
-## 🌐 Diğer dillerde benioku
+## 🌐 Diğer dillerde readme
 
-[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Bhojpuri](/readme/bho.md)
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [Português (Brasil)](/readme/pt-BR.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Polski](/readme/pl.md) • [Türkçe](/readme/tr.md) • [اردو](/readme/ur.md) • [भोजपुरी](/readme/bho.md) • [অসমীয়া](/readme/as-IN.md) • [ગુજરાતી](/readme/gu-IN.md) • [മലയാളം (IN)](/readme/ml-IN.md) • [मराठी](/readme/mr-IN.md) • [ଓଡ଼ିଆ](/readme/or-IN.md) • [ਪੰਜਾਬੀ](/readme/pa-IN.md) • [සිංහල](/readme/si-LK.md) • [தமிழ்](/readme/ta-IN.md) • [తెలుగు](/readme/te-IN.md)
 
 Dilinizi görmüyor musunuz? [`i18n.json`](./i18n.json) dosyasına ekleyin ve bir PR açın!
+
+**Yerel ayar formatı:** [BCP-47](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) kodlarını kullanın: `language[-Script][-REGION]`
+
+- Dil: ISO 639-1/2/3 küçük harf (`en`, `zh`, `bho`)
+- Alfabe: ISO 15924 baş harfi büyük (`Hans`, `Hant`, `Latn`)
+- Bölge: ISO 3166-1 alpha-2 büyük harf (`US`, `CN`, `IN`)
+- Örnekler: `en`, `pt-BR`, `zh-Hans`, `sr-Cyrl-RS`

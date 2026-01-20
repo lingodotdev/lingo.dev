@@ -10,8 +10,8 @@
 
 <p align="center">
   <strong>
-    ⚡ Lingo.dev - boîte à outils i18n open-source, alimentée par l'IA pour une
-    localisation instantanée avec les LLM.
+    ⚡ Lingo.dev - boîte à outils i18n open-source et alimentée par l'IA pour
+    une localisation instantanée avec les LLM.
   </strong>
 </p>
 
@@ -35,13 +35,13 @@
   <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md">
     <img
       src="https://img.shields.io/github/license/lingodotdev/lingo.dev"
-      alt="License"
+      alt="Licence"
     />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/commits/main">
     <img
       src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev"
-      alt="Last Commit"
+      alt="Dernier commit"
     />
   </a>
   <a href="https://lingo.dev/en">
@@ -53,19 +53,19 @@
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Week-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #1 Produit de la semaine"
+      alt="Product Hunt #1 DevTool de la semaine"
     />
   </a>
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/Product%20Hunt-%232%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #2 Produit du jour"
+      alt="Product Hunt #2 produit du jour"
     />
   </a>
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/GitHub-Trending-blue?logo=github&style=flat-square"
-      alt="Tendance Github"
+      alt="Tendances GitHub"
     />
   </a>
 </p>
@@ -99,7 +99,7 @@ export default async function (): Promise<NextConfig> {
 }
 ```
 
-Exécutez `next build` et regardez les bundles espagnol et français apparaître ✨
+Lancez `next build` et regardez les bundles espagnol et français apparaître ✨
 
 [Consultez la documentation →](https://lingo.dev/compiler) pour le guide complet, et [rejoignez notre Discord](https://lingo.dev/go/discord) pour obtenir de l'aide avec votre configuration.
 
@@ -107,32 +107,32 @@ Exécutez `next build` et regardez les bundles espagnol et français apparaître
 
 ### Que contient ce dépôt ?
 
-| Outil        | En bref                                                                                     | Documentation                           |
-| ------------ | ------------------------------------------------------------------------------------------- | --------------------------------------- |
-| **Compiler** | Localisation React au moment de la compilation                                              | [/compiler](https://lingo.dev/compiler) |
-| **CLI**      | Localisation en une commande pour applications web et mobiles, JSON, YAML, markdown, + plus | [/cli](https://lingo.dev/cli)           |
-| **CI/CD**    | Commit automatique des traductions à chaque push + création de pull requests si nécessaire  | [/ci](https://lingo.dev/ci)             |
-| **SDK**      | Traduction en temps réel pour le contenu généré par les utilisateurs                        | [/sdk](https://lingo.dev/sdk)           |
+| Outil        | En bref                                                                                      | Documentation                           |
+| ------------ | -------------------------------------------------------------------------------------------- | --------------------------------------- |
+| **Compiler** | Localisation React au moment de la compilation                                               | [/compiler](https://lingo.dev/compiler) |
+| **CLI**      | Localisation en une commande pour applications web et mobiles, JSON, YAML, markdown, et plus | [/cli](https://lingo.dev/cli)           |
+| **CI/CD**    | Commit automatique des traductions à chaque push + création de pull requests si nécessaire   | [/ci](https://lingo.dev/ci)             |
+| **SDK**      | Traduction en temps réel pour le contenu généré par les utilisateurs                         | [/sdk](https://lingo.dev/sdk)           |
 
 Voici les points essentiels pour chacun 👇
 
 ---
 
-### ⚡️ Lingo.dev CLI
+### ⚡️ CLI Lingo.dev
 
-Traduisez du code et du contenu directement depuis votre terminal.
+Traduisez le code et le contenu directement depuis votre terminal.
 
 ```bash
 npx lingo.dev@latest run
 ```
 
-Il crée une empreinte digitale pour chaque chaîne, met en cache les résultats et ne retraduit que ce qui a changé.
+Il empreinte chaque chaîne, met en cache les résultats et ne retraduit que ce qui a changé.
 
-[Suivez la documentation →](https://lingo.dev/cli) pour apprendre comment le configurer.
+[Consultez la documentation →](https://lingo.dev/cli) pour apprendre à le configurer.
 
 ---
 
-### 🔄 Lingo.dev CI/CD
+### 🔄 CI/CD Lingo.dev
 
 Livrez des traductions parfaites automatiquement.
 
@@ -151,13 +151,13 @@ jobs:
           api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
 ```
 
-Garde votre dépôt au vert et votre produit multilingue sans étapes manuelles.
+Garde votre dépôt au vert et votre produit multilingue sans les étapes manuelles.
 
 [Consultez la documentation →](https://lingo.dev/ci)
 
 ---
 
-### 🧩 Lingo.dev SDK
+### 🧩 SDK Lingo.dev
 
 Traduction instantanée par requête pour le contenu dynamique.
 
@@ -181,7 +181,7 @@ const translated = await lingoDotDev.localizeObject(content, {
 // Returns: { greeting: "Hola", farewell: "Adiós", message: "Bienvenido a nuestra plataforma" }
 ```
 
-Parfait pour les chats, les commentaires d'utilisateurs et autres flux en temps réel.
+Parfait pour le chat, les commentaires des utilisateurs et autres flux en temps réel.
 
 [Consultez la documentation →](https://lingo.dev/sdk)
 
@@ -189,9 +189,9 @@ Parfait pour les chats, les commentaires d'utilisateurs et autres flux en temps 
 
 ## 🤝 Communauté
 
-Nous sommes orientés communauté et adorons les contributions !
+Nous sommes portés par la communauté et adorons les contributions !
 
-- Vous avez une idée ? [Ouvrez un ticket](https://github.com/lingodotdev/lingo.dev/issues)
+- Vous avez une idée ? [Ouvrez une issue](https://github.com/lingodotdev/lingo.dev/issues)
 - Vous voulez corriger quelque chose ? [Envoyez une PR](https://github.com/lingodotdev/lingo.dev/pulls)
 - Besoin d'aide ? [Rejoignez notre Discord](https://lingo.dev/go/discord)
 
@@ -201,12 +201,19 @@ Si vous aimez ce que nous faisons, donnez-nous une ⭐ et aidez-nous à atteindr
 
 [
 
-![Graphique d'historique des étoiles](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+![Graphique de l'historique des étoiles](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
 
 ](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
 
 ## 🌐 Readme dans d'autres langues
 
-[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Bhojpuri](/readme/bho.md)
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [Português (Brasil)](/readme/pt-BR.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Polski](/readme/pl.md) • [Türkçe](/readme/tr.md) • [اردو](/readme/ur.md) • [भोजपुरी](/readme/bho.md) • [অসমীয়া](/readme/as-IN.md) • [ગુજરાતી](/readme/gu-IN.md) • [മലയാളം (IN)](/readme/ml-IN.md) • [मराठी](/readme/mr-IN.md) • [ଓଡ଼ିଆ](/readme/or-IN.md) • [ਪੰਜਾਬੀ](/readme/pa-IN.md) • [සිංහල](/readme/si-LK.md) • [தமிழ்](/readme/ta-IN.md) • [తెలుగు](/readme/te-IN.md)
 
 Vous ne voyez pas votre langue ? Ajoutez-la à [`i18n.json`](./i18n.json) et ouvrez une PR !
+
+**Format de locale :** utilisez les codes [BCP-47](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) : `language[-Script][-REGION]`
+
+- Langue : ISO 639-1/2/3 en minuscules (`en`, `zh`, `bho`)
+- Écriture : ISO 15924 en casse de titre (`Hans`, `Hant`, `Latn`)
+- Région : ISO 3166-1 alpha-2 en majuscules (`US`, `CN`, `IN`)
+- Exemples : `en`, `pt-BR`, `zh-Hans`, `sr-Cyrl-RS`
