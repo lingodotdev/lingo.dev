@@ -99,7 +99,7 @@ export default async function (): Promise<NextConfig> {
 }
 ```
 
-Запустіть `next build` і спостерігайте, як з'являються іспанські та французькі пакети ✨
+Запустіть `next build` і спостерігайте, як з'являються іспанські та французькі бандли ✨
 
 [Читайте документацію →](https://lingo.dev/compiler) для повного керівництва та [приєднуйтесь до нашого Discord](https://lingo.dev/go/discord), щоб отримати допомогу з налаштуванням.
 
@@ -209,4 +209,4 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 [English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Bhojpuri](/readme/bho.md)
 
-Не бачите своєї мови? Додайте її до [`i18n.json`](./i18n.json) і відкрийте PR!
+Не бачите свою мову? Додайте її до [`i18n.json`](./i18n.json) і відкрийте PR!

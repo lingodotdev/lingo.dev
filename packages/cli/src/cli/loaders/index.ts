@@ -49,6 +49,7 @@ import createTwigLoader from "./twig";
 import createEnsureKeyOrderLoader from "./ensure-key-order";
 import createTxtLoader from "./txt";
 import createJsonKeysLoader from "./json-dictionary";
+import createCsvPerLocaleLoader from "./csv-per-locale";
 
 type BucketLoaderOptions = {
   returnUnlocalizedKeys?: boolean;
@@ -65,6 +66,21 @@ type BucketLoaderOptions = {
  */
 function encodeKeys(keys: string[]): string[] {
   return keys.map((key) => encodeURIComponent(key));
+}
+
+/**
+ * Normalizes patterns for CSV buckets (csv, csv-per-locale)
+ * Automatically adds "*\/" prefix if pattern doesn't contain "/" and doesn't start with "*\/"
+ * This allows users to write "id" instead of "*\/id"
+ */
+
+function normalizeCsvPatterns(patterns: string[]): string[] {
+  return patterns.map((pattern) => {
+    if (pattern.includes("/") || pattern.startsWith("*/")) {
+      return pattern;
+    }
+    return `*/${pattern}`;
+  });
 }
 
 export default function createBucketLoader(
@@ -111,6 +127,18 @@ export default function createBucketLoader(
         createFlatLoader(),
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
+        createSyncLoader(),
+        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+      );
+    case "csv-per-locale":
+      return composeLoaders(
+        createTextFileLoader(bucketPathPattern),
+        createLockedPatternsLoader(lockedPatterns),
+        createCsvPerLocaleLoader(),
+        createEnsureKeyOrderLoader(),
+        createFlatLoader(),
+        createLockedKeysLoader(normalizeCsvPatterns(lockedKeys || [])),
+        createIgnoredKeysLoader(normalizeCsvPatterns(ignoredKeys || [])),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );

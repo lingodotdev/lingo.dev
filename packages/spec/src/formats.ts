@@ -35,6 +35,7 @@ export const bucketTypes = [
   "typescript",
   "txt",
   "json-dictionary",
+  "csv-per-locale",
 ] as const;
 
 export const bucketTypeSchema = Z.enum(bucketTypes);
