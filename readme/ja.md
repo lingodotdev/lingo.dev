@@ -99,7 +99,7 @@ export default async function (): Promise<NextConfig> {
 }
 ```
 
-`next build` を実行すると、スペイン語とフランス語のバンドルが自動的に生成されます ✨
+`next build`を実行すると、スペイン語とフランス語のバンドルが生成されます✨
 
 完全なガイドは[ドキュメントを読む →](https://lingo.dev/compiler)をご覧ください。セットアップのサポートが必要な場合は[Discordに参加](https://lingo.dev/go/discord)してください。
 
@@ -209,4 +209,4 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 [English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Bhojpuri](/readme/bho.md)
 
-あなたの言語が見つかりませんか？[`i18n.json`](./i18n.json)に追加してPRを開いてください！
+お使いの言語が見つかりませんか？[`i18n.json`](./i18n.json)に追加してプルリクエストを開いてください！

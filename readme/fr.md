@@ -99,7 +99,7 @@ export default async function (): Promise<NextConfig> {
 }
 ```
 
-Exécutez `next build` et regardez les bundles en espagnol et en français apparaître ✨
+Exécutez `next build` et regardez les bundles espagnol et français apparaître ✨
 
 [Consultez la documentation →](https://lingo.dev/compiler) pour le guide complet, et [rejoignez notre Discord](https://lingo.dev/go/discord) pour obtenir de l'aide avec votre configuration.
 
