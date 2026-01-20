@@ -485,8 +485,29 @@ export const configV1_10Definition = extendConfigDefinition(
   },
 );
 
+// v1.10 -> v1.11
+// Changes: Add "vNext" field for Lingo.dev vNext provider
+export const configV1_11Definition = extendConfigDefinition(
+  configV1_10Definition,
+  {
+    createSchema: (baseSchema) =>
+      baseSchema.extend({
+        vNext: Z.string()
+          .optional(),
+      }),
+    createDefaultValue: (baseDefaultValue) => ({
+      ...baseDefaultValue,
+      version: "1.11",
+    }),
+    createUpgrader: (oldConfig) => ({
+      ...oldConfig,
+      version: "1.11",
+    }),
+  },
+);
+
 // exports
-export const LATEST_CONFIG_DEFINITION = configV1_10Definition;
+export const LATEST_CONFIG_DEFINITION = configV1_11Definition;
 
 export type I18nConfig = Z.infer<(typeof LATEST_CONFIG_DEFINITION)["schema"]>;
 

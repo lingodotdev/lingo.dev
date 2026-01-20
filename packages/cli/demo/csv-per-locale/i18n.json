@@ -1,0 +1,15 @@
+{
+  "version": "1.10",
+  "locale": {
+    "source": "en",
+    "targets": ["es"]
+  },
+  "buckets": {
+    "csv-per-locale": {
+      "include": ["./[locale]/example.csv"],
+      "lockedKeys": ["locked_key_1"],
+      "ignoredKeys": ["ignored_key_1"]
+    }
+  },
+  "$schema": "https://lingo.dev/schema/i18n.json"
+}

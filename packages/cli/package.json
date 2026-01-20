@@ -1,6 +1,6 @@
 {
   "name": "lingo.dev",
-  "version": "0.117.26",
+  "version": "0.120.0",
   "description": "Lingo.dev CLI",
   "private": false,
   "repository": {
@@ -113,7 +113,8 @@
   "files": [
     "bin",
     "build",
-    "assets"
+    "assets",
+    "agents.md"
   ],
   "scripts": {
     "lingo.dev": "node --inspect=9229 ./bin/cli.mjs",

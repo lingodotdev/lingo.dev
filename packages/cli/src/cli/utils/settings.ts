@@ -31,6 +31,11 @@ export function getSettings(explicitApiKey: string | undefined): CliSettings {
         env.LINGODOTDEV_WEB_URL ||
         systemFile.auth?.webUrl ||
         defaults.auth.webUrl,
+      vnext: {
+        apiKey:
+          env.LINGO_API_KEY ||
+          systemFile.auth?.vnext?.apiKey,
+      },
     },
     llm: {
       openaiApiKey: env.OPENAI_API_KEY || systemFile.llm?.openaiApiKey,
@@ -67,6 +72,9 @@ const SettingsSchema = Z.object({
     apiKey: Z.string(),
     apiUrl: Z.string(),
     webUrl: Z.string(),
+    vnext: Z.object({
+      apiKey: Z.string().optional(),
+    }).optional(),
   }),
   llm: Z.object({
     openaiApiKey: Z.string().optional(),
@@ -100,6 +108,7 @@ function _loadEnv() {
     LINGODOTDEV_API_KEY: Z.string().optional(),
     LINGODOTDEV_API_URL: Z.string().optional(),
     LINGODOTDEV_WEB_URL: Z.string().optional(),
+    LINGO_API_KEY: Z.string().optional(),
     OPENAI_API_KEY: Z.string().optional(),
     ANTHROPIC_API_KEY: Z.string().optional(),
     GROQ_API_KEY: Z.string().optional(),
@@ -123,6 +132,9 @@ function _loadSystemFile() {
       apiKey: Z.string().optional(),
       apiUrl: Z.string().optional(),
       webUrl: Z.string().optional(),
+      vnext: Z.object({
+        apiKey: Z.string().optional(),
+      }).optional(),
     }).optional(),
     llm: Z.object({
       openaiApiKey: Z.string().optional(),
@@ -223,6 +235,12 @@ function _envVarsInfo() {
     console.info(
       "\x1b[36m%s\x1b[0m",
       `ℹ️  Using LINGODOTDEV_WEB_URL: ${env.LINGODOTDEV_WEB_URL}`,
+    );
+  }
+  if (env.LINGO_API_KEY && systemFile.auth?.vnext?.apiKey) {
+    console.info(
+      "\x1b[36m%s\x1b[0m",
+      `ℹ️  Using LINGO_API_KEY env var instead of key from user config`,
     );
   }
 }

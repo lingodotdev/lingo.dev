@@ -106,7 +106,7 @@ function createAiSdkLocalizer(params: {
   const skipAuth = params.skipAuth === true;
 
   const apiKey = process.env[params?.apiKeyName ?? ""];
-  if ((!skipAuth && !apiKey) || !params.apiKeyName) {
+  if (!skipAuth && (!apiKey || !params.apiKeyName)) {
     throw new Error(
       dedent`
         You're trying to use raw ${chalk.dim(params.id)} API for translation. ${
