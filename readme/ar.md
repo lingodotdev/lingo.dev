@@ -10,7 +10,7 @@
 
 <p align="center">
   <strong>
-    ⚡ Lingo.dev - مجموعة أدوات i18n مفتوحة المصدر ومدعومة بالذكاء الاصطناعي
+    ⚡ Lingo.dev - مجموعة أدوات الترجمة مفتوحة المصدر مدعومة بالذكاء الاصطناعي
     للترجمة الفورية باستخدام نماذج اللغة الكبيرة.
   </strong>
 </p>
@@ -29,60 +29,60 @@
   <a href="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml">
     <img
       src="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml/badge.svg"
-      alt="إصدار"
+      alt="Release"
     />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md">
     <img
       src="https://img.shields.io/github/license/lingodotdev/lingo.dev"
-      alt="الترخيص"
+      alt="License"
     />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/commits/main">
     <img
       src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev"
-      alt="آخر تعديل"
+      alt="Last Commit"
     />
   </a>
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square"
-      alt="أداة تطوير رقم 1 للشهر على Product Hunt"
+      alt="Product Hunt #1 DevTool of the Month"
     />
   </a>
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Week-orange?logo=producthunt&style=flat-square"
-      alt="منتج رقم 1 للأسبوع على Product Hunt"
+      alt="Product Hunt #1 DevTool of the Week"
     />
   </a>
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/Product%20Hunt-%232%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
-      alt="منتج رقم 2 لليوم على Product Hunt"
+      alt="Product Hunt #2 Product of the Day"
     />
   </a>
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/GitHub-Trending-blue?logo=github&style=flat-square"
-      alt="رائج على GitHub"
+      alt="Github trending"
     />
   </a>
 </p>
 
 ---
 
-## تعرف على المُجمّع 🆕
+## تعرّف على المُجمّع 🆕
 
-**مُجمّع Lingo.dev** هو وسيط تجميع مجاني ومفتوح المصدر، مصمم لجعل أي تطبيق React متعدد اللغات في وقت البناء دون الحاجة إلى إجراء أي تغييرات على مكونات React الحالية.
+**Lingo.dev Compiler** هو برنامج وسيط مجاني ومفتوح المصدر، مصمم لجعل أي تطبيق React متعدد اللغات في وقت البناء دون الحاجة إلى أي تغييرات على مكونات React الموجودة.
 
-قم بالتثبيت مرة واحدة:
+ثبّته مرة واحدة:
 
 ```bash
 npm install @lingo.dev/compiler
 ```
 
-قم بالتفعيل في إعدادات البناء الخاصة بك:
+فعّله في إعدادات البناء الخاصة بك:
 
 ```ts
 import type { NextConfig } from "next";
@@ -99,26 +99,26 @@ export default async function (): Promise<NextConfig> {
 }
 ```
 
-قم بتشغيل `next build` وشاهد حزم الإسبانية والفرنسية تظهر ✨
+شغّل `next build` وشاهد حزم الإسبانية والفرنسية تظهر ✨
 
-[اقرأ الوثائق ←](https://lingo.dev/compiler) للدليل الكامل، و[انضم إلى Discord الخاص بنا](https://lingo.dev/go/discord) للحصول على المساعدة في الإعداد.
+[اقرأ الوثائق ←](https://lingo.dev/compiler) للحصول على الدليل الكامل، و[انضم إلى Discord الخاص بنا](https://lingo.dev/go/discord) للحصول على المساعدة في إعدادك.
 
 ---
 
-### ما الذي يوجد في هذا المستودع؟
+### ما الموجود داخل هذا المستودع؟
 
-| الأداة                     | ملخص سريع                                                           | الوثائق                                 |
-| -------------------------- | ------------------------------------------------------------------- | --------------------------------------- |
-| **المُجمّع**               | ترجمة React في وقت البناء                                           | [/compiler](https://lingo.dev/compiler) |
-| **واجهة سطر الأوامر**      | ترجمة بأمر واحد لتطبيقات الويب والجوال، JSON، YAML، markdown، وأكثر | [/cli](https://lingo.dev/cli)           |
-| **CI/CD**                  | تعديلات تلقائية للترجمات مع كل دفع + إنشاء طلبات سحب إذا لزم الأمر  | [/ci](https://lingo.dev/ci)             |
-| **مجموعة تطوير البرمجيات** | ترجمة فورية للمحتوى الذي ينشئه المستخدم                             | [/sdk](https://lingo.dev/sdk)           |
+| الأداة       | الملخص                                                                  | الوثائق                                 |
+| ------------ | ----------------------------------------------------------------------- | --------------------------------------- |
+| **Compiler** | ترجمة React في وقت البناء                                               | [/compiler](https://lingo.dev/compiler) |
+| **CLI**      | ترجمة بأمر واحد لتطبيقات الويب والموبايل، JSON، YAML، markdown، والمزيد | [/cli](https://lingo.dev/cli)           |
+| **CI/CD**    | إرسال الترجمات تلقائيًا عند كل دفع + إنشاء طلبات سحب عند الحاجة         | [/ci](https://lingo.dev/ci)             |
+| **SDK**      | ترجمة فورية للمحتوى الذي ينشئه المستخدم                                 | [/sdk](https://lingo.dev/sdk)           |
 
 فيما يلي النقاط السريعة لكل منها 👇
 
 ---
 
-### ⚡️ واجهة سطر أوامر Lingo.dev
+### ⚡️ Lingo.dev CLI
 
 ترجم الكود والمحتوى مباشرة من الطرفية الخاصة بك.
 
@@ -126,15 +126,15 @@ export default async function (): Promise<NextConfig> {
 npx lingo.dev@latest run
 ```
 
-يقوم بوضع بصمة لكل نص، ويخزن النتائج في ذاكرة التخزين المؤقت، ويعيد ترجمة ما تغير فقط.
+يقوم ببصمة كل سلسلة نصية، ويخزن النتائج مؤقتاً، ويعيد ترجمة ما تغير فقط.
 
-[اتبع الوثائق ←](https://lingo.dev/cli) لمعرفة كيفية إعداده.
+[اتبع الوثائق ←](https://lingo.dev/cli) لتتعلم كيفية إعداده.
 
 ---
 
-### 🔄 التكامل المستمر/النشر المستمر من Lingo.dev
+### 🔄 Lingo.dev CI/CD
 
-أرسل ترجمات مثالية تلقائيًا.
+قم بشحن ترجمات مثالية تلقائياً.
 
 ```yaml
 # .github/workflows/i18n.yml
@@ -151,13 +151,13 @@ jobs:
           api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
 ```
 
-يحافظ على مستودعك أخضر ومنتجك متعدد اللغات دون الخطوات اليدوية.
+يحافظ على مستودعك نظيفاً ومنتجك متعدد اللغات دون خطوات يدوية.
 
 [اقرأ الوثائق ←](https://lingo.dev/ci)
 
 ---
 
-### 🧩 مجموعة تطوير البرمجيات من Lingo.dev
+### 🧩 Lingo.dev SDK
 
 ترجمة فورية لكل طلب للمحتوى الديناميكي.
 
@@ -181,7 +181,7 @@ const translated = await lingoDotDev.localizeObject(content, {
 // Returns: { greeting: "Hola", farewell: "Adiós", message: "Bienvenido a nuestra plataforma" }
 ```
 
-مثالية للدردشة، وتعليقات المستخدمين، وتدفقات الوقت الفعلي الأخرى.
+مثالي للدردشة وتعليقات المستخدمين وتدفقات الوقت الفعلي الأخرى.
 
 [اقرأ الوثائق ←](https://lingo.dev/sdk)
 
@@ -205,8 +205,15 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 ](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
 
-## 🌐 الملف التعريفي بلغات أخرى
+## 🌐 اقرأني بلغات أخرى
 
-[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Bhojpuri](/readme/bho.md)
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [Português (Brasil)](/readme/pt-BR.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Polski](/readme/pl.md) • [Türkçe](/readme/tr.md) • [اردو](/readme/ur.md) • [भोजपुरी](/readme/bho.md) • [অসমীয়া](/readme/as-IN.md) • [ગુજરાતી](/readme/gu-IN.md) • [മലയാളം (IN)](/readme/ml-IN.md) • [मराठी](/readme/mr-IN.md) • [ଓଡ଼ିଆ](/readme/or-IN.md) • [ਪੰਜਾਬੀ](/readme/pa-IN.md) • [සිංහල](/readme/si-LK.md) • [தமிழ்](/readme/ta-IN.md) • [తెలుగు](/readme/te-IN.md)
 
 لا ترى لغتك؟ أضفها إلى [`i18n.json`](./i18n.json) وافتح طلب سحب!
+
+**تنسيق اللغة المحلية:** استخدم رموز [BCP-47](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale): `language[-Script][-REGION]`
+
+- اللغة: ISO 639-1/2/3 أحرف صغيرة (`en`، `zh`، `bho`)
+- الكتابة: ISO 15924 حالة العنوان (`Hans`، `Hant`، `Latn`)
+- المنطقة: ISO 3166-1 alpha-2 أحرف كبيرة (`US`، `CN`، `IN`)
+- أمثلة: `en`، `pt-BR`، `zh-Hans`، `sr-Cyrl-RS`

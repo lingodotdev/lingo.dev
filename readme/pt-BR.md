@@ -10,8 +10,8 @@
 
 <p align="center">
   <strong>
-    ⚡ Lingo.dev - kit de ferramentas i18n de código aberto, com tecnologia de
-    IA para localização instantânea com LLMs.
+    ⚡ Lingo.dev - kit de ferramentas i18n de código aberto, com IA, para
+    localização instantânea com LLMs.
   </strong>
 </p>
 
@@ -35,13 +35,13 @@
   <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md">
     <img
       src="https://img.shields.io/github/license/lingodotdev/lingo.dev"
-      alt="License"
+      alt="Licença"
     />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/commits/main">
     <img
       src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev"
-      alt="Last Commit"
+      alt="Último Commit"
     />
   </a>
   <a href="https://lingo.dev/en">
@@ -53,7 +53,7 @@
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Week-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #1 Produto da Semana"
+      alt="Product Hunt #1 DevTool da Semana"
     />
   </a>
   <a href="https://lingo.dev/en">
@@ -65,7 +65,7 @@
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/GitHub-Trending-blue?logo=github&style=flat-square"
-      alt="Github em alta"
+      alt="Trending no Github"
     />
   </a>
 </p>
@@ -74,7 +74,7 @@
 
 ## Conheça o Compiler 🆕
 
-**Lingo.dev Compiler** é um middleware compilador gratuito e de código aberto, projetado para tornar qualquer aplicativo React multilíngue durante o tempo de compilação sem exigir alterações nos componentes React existentes.
+**Lingo.dev Compiler** é um middleware de compilação gratuito e de código aberto, projetado para tornar qualquer aplicativo React multilíngue em tempo de build sem exigir alterações nos componentes React existentes.
 
 Instale uma vez:
 
@@ -99,22 +99,22 @@ export default async function (): Promise<NextConfig> {
 }
 ```
 
-Execute `next build` e veja os pacotes em espanhol e francês aparecerem ✨
+Execute `next build` e veja os bundles em espanhol e francês aparecerem ✨
 
 [Leia a documentação →](https://lingo.dev/compiler) para o guia completo, e [Entre no nosso Discord](https://lingo.dev/go/discord) para obter ajuda com sua configuração.
 
 ---
 
-### O que há neste repositório?
+### O que tem dentro deste repositório?
 
-| Ferramenta   | Resumo                                                                                | Documentação                            |
-| ------------ | ------------------------------------------------------------------------------------- | --------------------------------------- |
-| **Compiler** | Localização React em tempo de compilação                                              | [/compiler](https://lingo.dev/compiler) |
-| **CLI**      | Localização com um comando para aplicativos web e mobile, JSON, YAML, markdown e mais | [/cli](https://lingo.dev/cli)           |
-| **CI/CD**    | Commit automático de traduções a cada push + criação de pull requests se necessário   | [/ci](https://lingo.dev/ci)             |
-| **SDK**      | Tradução em tempo real para conteúdo gerado pelo usuário                              | [/sdk](https://lingo.dev/sdk)           |
+| Ferramenta   | Resumo                                                                               | Documentação                            |
+| ------------ | ------------------------------------------------------------------------------------ | --------------------------------------- |
+| **Compiler** | Localização React em tempo de build                                                  | [/compiler](https://lingo.dev/compiler) |
+| **CLI**      | Localização com um comando para apps web e mobile, JSON, YAML, markdown e muito mais | [/cli](https://lingo.dev/cli)           |
+| **CI/CD**    | Auto-commit de traduções a cada push + criação de pull requests quando necessário    | [/ci](https://lingo.dev/ci)             |
+| **SDK**      | Tradução em tempo real para conteúdo gerado por usuários                             | [/sdk](https://lingo.dev/sdk)           |
 
-Abaixo estão os principais pontos para cada um 👇
+Abaixo estão os destaques rápidos para cada um 👇
 
 ---
 
@@ -126,9 +126,9 @@ Traduza código e conteúdo diretamente do seu terminal.
 npx lingo.dev@latest run
 ```
 
-Ele cria uma impressão digital de cada string, armazena resultados em cache e só retraduz o que foi alterado.
+Ele cria uma impressão digital de cada string, armazena resultados em cache e só retraduz o que mudou.
 
-[Siga a documentação →](https://lingo.dev/cli) para aprender como configurá-lo.
+[Siga a documentação →](https://lingo.dev/cli) para aprender como configurar.
 
 ---
 
@@ -151,7 +151,7 @@ jobs:
           api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
 ```
 
-Mantém seu repositório atualizado e seu produto multilíngue sem etapas manuais.
+Mantém seu repositório funcionando e seu produto multilíngue sem etapas manuais.
 
 [Leia a documentação →](https://lingo.dev/ci)
 
@@ -201,12 +201,19 @@ Se você gosta do que estamos fazendo, nos dê uma ⭐ e nos ajude a alcançar 6
 
 [
 
-![Gráfico de Histórico de Estrelas](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+![Gráfico de histórico de estrelas](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
 
 ](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
 
-## 🌐 Readme em outros idiomas
+## 🌐 Leia-me em outros idiomas
 
-[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Bhojpuri](/readme/bho.md)
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [Português (Brasil)](/readme/pt-BR.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Polski](/readme/pl.md) • [Türkçe](/readme/tr.md) • [اردو](/readme/ur.md) • [भोजपुरी](/readme/bho.md) • [অসমীয়া](/readme/as-IN.md) • [ગુજરાતી](/readme/gu-IN.md) • [മലയാളം (IN)](/readme/ml-IN.md) • [मराठी](/readme/mr-IN.md) • [ଓଡ଼ିଆ](/readme/or-IN.md) • [ਪੰਜਾਬੀ](/readme/pa-IN.md) • [සිංහල](/readme/si-LK.md) • [தமிழ்](/readme/ta-IN.md) • [తెలుగు](/readme/te-IN.md)
 
 Não vê o seu idioma? Adicione-o em [`i18n.json`](./i18n.json) e abra um PR!
+
+**Formato de locale:** Use códigos [BCP-47](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale): `language[-Script][-REGION]`
+
+- Idioma: ISO 639-1/2/3 em minúsculas (`en`, `zh`, `bho`)
+- Script: ISO 15924 em title case (`Hans`, `Hant`, `Latn`)
+- Região: ISO 3166-1 alpha-2 em maiúsculas (`US`, `CN`, `IN`)
+- Exemplos: `en`, `pt-BR`, `zh-Hans`, `sr-Cyrl-RS`
