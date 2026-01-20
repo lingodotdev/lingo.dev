@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.119.0
+
+### Minor Changes
+
+- [#1409](https://github.com/lingodotdev/lingo.dev/pull/1409) [`978b817`](https://github.com/lingodotdev/lingo.dev/commit/978b81793dff52abb348b1b0977cb233232721d0) Thanks [@SK8-infi](https://github.com/SK8-infi)! - feat: add init cursor command for .cursorrules setup
+
 ## 0.118.0
 
 ### Minor Changes
