@@ -1,0 +1,228 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`renderRichText > should handle nested components inside component tags 1`] = `
+[
+  <React.Fragment
+    data-key="0"
+  >
+    You have 
+  </React.Fragment>,
+  <React.Fragment
+    data-key="1"
+  >
+    <strong>
+      10
+    </strong>
+  </React.Fragment>,
+  <React.Fragment
+    data-key="2"
+  >
+     items
+  </React.Fragment>,
+]
+`;
+
+exports[`renderRichText > should handle the page.tsx example case 1`] = `
+[
+  <React.Fragment
+    data-key="0"
+  >
+    Looking for a starting points or more instructions? Head over to 
+  </React.Fragment>,
+  <React.Fragment
+    data-key="1"
+  >
+    <a
+      className="font-medium"
+      href="https://vercel.com/templates"
+    >
+      Templates
+    </a>
+  </React.Fragment>,
+  <React.Fragment
+    data-key="2"
+  >
+     or the 
+  </React.Fragment>,
+  <React.Fragment
+    data-key="3"
+  >
+    <a
+      className="font-medium"
+      href="https://nextjs.org/learn"
+    >
+      Learning
+    </a>
+  </React.Fragment>,
+  <React.Fragment
+    data-key="4"
+  >
+     center.
+  </React.Fragment>,
+]
+`;
+
+exports[`renderRichText > should handle whitespace around component tags 1`] = `
+[
+  <React.Fragment
+    data-key="0"
+  >
+    Looking for help? Head over to 
+  </React.Fragment>,
+  <React.Fragment
+    data-key="1"
+  >
+    <a>
+      Templates
+    </a>
+  </React.Fragment>,
+  <React.Fragment
+    data-key="2"
+  >
+     or the 
+  </React.Fragment>,
+  <React.Fragment
+    data-key="3"
+  >
+    <a>
+      Learning
+    </a>
+  </React.Fragment>,
+  <React.Fragment
+    data-key="4"
+  >
+     center.
+  </React.Fragment>,
+]
+`;
+
+exports[`renderRichText > should render complex mixed content with variables and components 1`] = `
+[
+  <React.Fragment
+    data-key="0"
+  >
+    Hello Alice, you have 
+  </React.Fragment>,
+  <React.Fragment
+    data-key="1"
+  >
+    <strong>
+      5
+    </strong>
+  </React.Fragment>,
+  <React.Fragment
+    data-key="2"
+  >
+     messages
+  </React.Fragment>,
+]
+`;
+
+exports[`renderRichText > should render component placeholders with JSX 1`] = `
+[
+  <React.Fragment
+    data-key="0"
+  >
+    Click 
+  </React.Fragment>,
+  <React.Fragment
+    data-key="1"
+  >
+    <a
+      href="/home"
+    >
+      here
+    </a>
+  </React.Fragment>,
+]
+`;
+
+exports[`renderRichText > should render fragments with expressions 1`] = `
+[
+  <React.Fragment
+    data-key="0"
+  >
+    Content that has text and other tags inside will be translated as a single entity: 
+  </React.Fragment>,
+  <React.Fragment
+    data-key="1"
+  >
+    <React.Fragment>
+      <React.Fragment
+        data-key="0"
+      >
+        <b>
+          Mixed
+        </b>
+      </React.Fragment>
+      <React.Fragment
+        data-key="1"
+      >
+         content 
+      </React.Fragment>
+      <React.Fragment
+        data-key="2"
+      >
+        <i>
+          fragment
+        </i>
+      </React.Fragment>
+    </React.Fragment>
+  </React.Fragment>,
+]
+`;
+
+exports[`renderRichText > should render multiple same-type components 1`] = `
+[
+  <React.Fragment
+    data-key="0"
+  >
+    Click 
+  </React.Fragment>,
+  <React.Fragment
+    data-key="1"
+  >
+    <a
+      href="/home"
+    >
+      here
+    </a>
+  </React.Fragment>,
+  <React.Fragment
+    data-key="2"
+  >
+     or 
+  </React.Fragment>,
+  <React.Fragment
+    data-key="3"
+  >
+    <a
+      href="/about"
+    >
+      there
+    </a>
+  </React.Fragment>,
+]
+`;
+
+exports[`renderRichText > should render untranslatable content as is 1`] = `
+[
+  <React.Fragment
+    data-key="0"
+  >
+    Install using 
+  </React.Fragment>,
+  <React.Fragment
+    data-key="1"
+  >
+    <code>
+      npm install package
+    </code>
+  </React.Fragment>,
+  <React.Fragment
+    data-key="2"
+  >
+     command
+  </React.Fragment>,
+]
+`;

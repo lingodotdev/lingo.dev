@@ -1,5 +1,555 @@
 # lingo.dev
 
+## 0.120.0
+
+### Minor Changes
+
+- [#1738](https://github.com/lingodotdev/lingo.dev/pull/1738) [`348b2de`](https://github.com/lingodotdev/lingo.dev/commit/348b2de39412101bacb5ed541b0db23f0ca6213d) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Remove hardcoded concurrency limit
+
+- [#1742](https://github.com/lingodotdev/lingo.dev/pull/1742) [`04c3679`](https://github.com/lingodotdev/lingo.dev/commit/04c3679c69231012f167da1640dc17ac57743d6b) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Add csv-per-locale bucket and improve ignoredKeys support for CSV
+
+### Patch Changes
+
+- [#1749](https://github.com/lingodotdev/lingo.dev/pull/1749) [`5bc0c89`](https://github.com/lingodotdev/lingo.dev/commit/5bc0c8952d1bc01be7a2e7b49506f6a5f8f05a59) Thanks [@sumitsaurabh927](https://github.com/sumitsaurabh927)! - create a new space for community contributions like demo apps etc
+
+- [#1748](https://github.com/lingodotdev/lingo.dev/pull/1748) [`797f913`](https://github.com/lingodotdev/lingo.dev/commit/797f9132b5cf05fe457968b691bca10db1fc37bb) Thanks [@jarne](https://github.com/jarne)! - Fix API key check condition that breaks the Ollama provider
+
+- Updated dependencies [[`04c3679`](https://github.com/lingodotdev/lingo.dev/commit/04c3679c69231012f167da1640dc17ac57743d6b), [`5bc0c89`](https://github.com/lingodotdev/lingo.dev/commit/5bc0c8952d1bc01be7a2e7b49506f6a5f8f05a59)]:
+  - @lingo.dev/_spec@0.46.0
+  - @lingo.dev/_compiler@0.8.12
+  - @lingo.dev/_locales@0.3.3
+  - @lingo.dev/_react@0.7.6
+  - @lingo.dev/_sdk@0.13.7
+
+## 0.119.0
+
+### Minor Changes
+
+- [#1409](https://github.com/lingodotdev/lingo.dev/pull/1409) [`978b817`](https://github.com/lingodotdev/lingo.dev/commit/978b81793dff52abb348b1b0977cb233232721d0) Thanks [@SK8-infi](https://github.com/SK8-infi)! - feat: add init cursor command for .cursorrules setup
+
+## 0.118.0
+
+### Minor Changes
+
+- [`18ef68f`](https://github.com/lingodotdev/lingo.dev/commit/18ef68f8d51f0d3208cfe1f1d2167e2e1580fdcc) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - vNext localizer
+
+### Patch Changes
+
+- [#1629](https://github.com/lingodotdev/lingo.dev/pull/1629) [`d76b729`](https://github.com/lingodotdev/lingo.dev/commit/d76b729ba692f1ec258355ebed5b47d7137b001d) Thanks [@ashutoshdebug](https://github.com/ashutoshdebug)! - Add a pseudo-localization mode (--pseudo) to the CLI, including character mapping, recursive object handling, localizer implementation and tests
+
+- Updated dependencies [[`18ef68f`](https://github.com/lingodotdev/lingo.dev/commit/18ef68f8d51f0d3208cfe1f1d2167e2e1580fdcc)]:
+  - @lingo.dev/_spec@0.45.0
+  - @lingo.dev/_compiler@0.8.11
+  - @lingo.dev/_sdk@0.13.6
+
+## 0.117.26
+
+### Patch Changes
+
+- [#1730](https://github.com/lingodotdev/lingo.dev/pull/1730) [`ea02a43`](https://github.com/lingodotdev/lingo.dev/commit/ea02a43b6c4eaeddf61fa62c7564a4231b67ef82) Thanks [@vrcprl](https://github.com/vrcprl)! - Upd code placeholders to prevent gray-matter engine error
+
+## 0.117.25
+
+### Patch Changes
+
+- [#1726](https://github.com/lingodotdev/lingo.dev/pull/1726) [`68b8496`](https://github.com/lingodotdev/lingo.dev/commit/68b849602a88b9f9aa3097f37ce2f0ccf97c1ad5) Thanks [@vrcprl](https://github.com/vrcprl)! - Observability improvement
+
+- Updated dependencies [[`68b8496`](https://github.com/lingodotdev/lingo.dev/commit/68b849602a88b9f9aa3097f37ce2f0ccf97c1ad5)]:
+  - @lingo.dev/_compiler@0.8.10
+
+## 0.117.24
+
+### Patch Changes
+
+- [#1724](https://github.com/lingodotdev/lingo.dev/pull/1724) [`c617611`](https://github.com/lingodotdev/lingo.dev/commit/c61761181c5f8145ec2e54f34d33ad04a90968e3) Thanks [@vrcprl](https://github.com/vrcprl)! - fix observability for status command
+
+## 0.117.23
+
+### Patch Changes
+
+- Updated dependencies [[`40dc1bb`](https://github.com/lingodotdev/lingo.dev/commit/40dc1bbd03633d7046da5580858f728dffdcbf81)]:
+  - @lingo.dev/_locales@0.3.2
+  - @lingo.dev/_spec@0.44.5
+  - @lingo.dev/_compiler@0.8.9
+  - @lingo.dev/_sdk@0.13.5
+
+## 0.117.22
+
+### Patch Changes
+
+- [#1710](https://github.com/lingodotdev/lingo.dev/pull/1710) [`020424f`](https://github.com/lingodotdev/lingo.dev/commit/020424f2601c535e88c66aeeece5a15fb9b66b70) Thanks [@vrcprl](https://github.com/vrcprl)! - Add support for JSONC comments in arrays
+
+## 0.117.21
+
+### Patch Changes
+
+- [#1683](https://github.com/lingodotdev/lingo.dev/pull/1683) [`d2d44a1`](https://github.com/lingodotdev/lingo.dev/commit/d2d44a180b20102bf176dbd46866afab72380b74) Thanks [@ceolinwill](https://github.com/ceolinwill)! - fix racing condition where concurrent processing could use data from the wrong locale
+
+## 0.117.20
+
+### Patch Changes
+
+- [#1681](https://github.com/lingodotdev/lingo.dev/pull/1681) [`595215f`](https://github.com/lingodotdev/lingo.dev/commit/595215f0060fb365faf0b988e39a561649359517) Thanks [@vrcprl](https://github.com/vrcprl)! - improve observability for i18n
+
+## 0.117.19
+
+### Patch Changes
+
+- [#1678](https://github.com/lingodotdev/lingo.dev/pull/1678) [`bb14deb`](https://github.com/lingodotdev/lingo.dev/commit/bb14debf734bf87a2ea64946f8e7235c01b05578) Thanks [@vrcprl](https://github.com/vrcprl)! - Fix inconsistent event tracking in CLI to ensure start/success/error events are always paired correctly for accurate health metrics
+
+## 0.117.18
+
+### Patch Changes
+
+- Updated dependencies [[`3b24647`](https://github.com/lingodotdev/lingo.dev/commit/3b246473f6f4773f00ea13211bc2be59a98e0b7c)]:
+  - @lingo.dev/_compiler@0.8.8
+  - @lingo.dev/_react@0.7.5
+
+## 0.117.17
+
+### Patch Changes
+
+- [#1672](https://github.com/lingodotdev/lingo.dev/pull/1672) [`29949db`](https://github.com/lingodotdev/lingo.dev/commit/29949db24ff9c8938233ebb42e8189690c3c7813) Thanks [@vrcprl](https://github.com/vrcprl)! - Improve observability
+
+- Updated dependencies [[`29949db`](https://github.com/lingodotdev/lingo.dev/commit/29949db24ff9c8938233ebb42e8189690c3c7813)]:
+  - @lingo.dev/_compiler@0.8.7
+
+## 0.117.16
+
+### Patch Changes
+
+- [#1662](https://github.com/lingodotdev/lingo.dev/pull/1662) [`a60aa1e`](https://github.com/lingodotdev/lingo.dev/commit/a60aa1ec01149a4ef418b9025ae50891264f9123) Thanks [@ceolinwill](https://github.com/ceolinwill)! - fix language header for PO files
+
+## 0.117.15
+
+### Patch Changes
+
+- [`d7ccd60`](https://github.com/lingodotdev/lingo.dev/commit/d7ccd6000cd980333e7ac4b63da4e2ba624c3de4) Thanks [@vrcprl](https://github.com/vrcprl)! - chore: update React to 19.2.3 to fix CVE-2025-55184 (DoS) and CVE-2025-55183 (source code exposure)
+
+- Updated dependencies [[`d7ccd60`](https://github.com/lingodotdev/lingo.dev/commit/d7ccd6000cd980333e7ac4b63da4e2ba624c3de4)]:
+  - @lingo.dev/_react@0.7.4
+
+## 0.117.14
+
+### Patch Changes
+
+- [#1664](https://github.com/lingodotdev/lingo.dev/pull/1664) [`7367bee`](https://github.com/lingodotdev/lingo.dev/commit/7367bee3318a14647bf9bd0105270b2492fcec31) Thanks [@vrcprl](https://github.com/vrcprl)! - supp[ort keys with whitespaces
+
+## 0.117.13
+
+### Patch Changes
+
+- [#1667](https://github.com/lingodotdev/lingo.dev/pull/1667) [`1a857bd`](https://github.com/lingodotdev/lingo.dev/commit/1a857bdf76d50afb3024a2437da5fd60e6721bb9) Thanks [@vrcprl](https://github.com/vrcprl)! - Upd NPM workflows
+
+- Updated dependencies [[`1a857bd`](https://github.com/lingodotdev/lingo.dev/commit/1a857bdf76d50afb3024a2437da5fd60e6721bb9)]:
+  - @lingo.dev/_compiler@0.8.6
+  - @lingo.dev/_locales@0.3.1
+  - @lingo.dev/_react@0.7.3
+  - @lingo.dev/_spec@0.44.4
+  - @lingo.dev/_sdk@0.13.4
+
+## 0.117.12
+
+### Patch Changes
+
+- [#1665](https://github.com/lingodotdev/lingo.dev/pull/1665) [`b898777`](https://github.com/lingodotdev/lingo.dev/commit/b89877729555025e0380451fa495573c2a114a6b) Thanks [@vrcprl](https://github.com/vrcprl)! - Upd react version
+
+- Updated dependencies [[`b898777`](https://github.com/lingodotdev/lingo.dev/commit/b89877729555025e0380451fa495573c2a114a6b)]:
+  - @lingo.dev/_react@0.7.2
+
+## 0.117.11
+
+### Patch Changes
+
+- Updated dependencies [[`1b2980d`](https://github.com/lingodotdev/lingo.dev/commit/1b2980d9215eca4f2db101af530680d6eb3be8eb)]:
+  - @lingo.dev/_compiler@0.8.5
+  - @lingo.dev/_react@0.7.1
+
+## 0.117.10
+
+### Patch Changes
+
+- [#1658](https://github.com/lingodotdev/lingo.dev/pull/1658) [`77cf56e`](https://github.com/lingodotdev/lingo.dev/commit/77cf56e57725c680d071c6f5bc310e77c8ead463) Thanks [@vrcprl](https://github.com/vrcprl)! - fix mjml format issue
+
+## 0.117.9
+
+### Patch Changes
+
+- [#1655](https://github.com/lingodotdev/lingo.dev/pull/1655) [`738bf08`](https://github.com/lingodotdev/lingo.dev/commit/738bf08edfe226392ec4534e05864101bc66c39c) Thanks [@vrcprl](https://github.com/vrcprl)! - add AIL bucket
+
+- Updated dependencies [[`738bf08`](https://github.com/lingodotdev/lingo.dev/commit/738bf08edfe226392ec4534e05864101bc66c39c)]:
+  - @lingo.dev/_spec@0.44.3
+  - @lingo.dev/_compiler@0.8.4
+  - @lingo.dev/_sdk@0.13.3
+
+## 0.117.8
+
+### Patch Changes
+
+- [#1653](https://github.com/lingodotdev/lingo.dev/pull/1653) [`f6352b6`](https://github.com/lingodotdev/lingo.dev/commit/f6352b6222e425d5d184c1591a90b1d13a7effbc) Thanks [@vrcprl](https://github.com/vrcprl)! - add Twig bucket
+
+- Updated dependencies [[`f6352b6`](https://github.com/lingodotdev/lingo.dev/commit/f6352b6222e425d5d184c1591a90b1d13a7effbc)]:
+  - @lingo.dev/_spec@0.44.2
+  - @lingo.dev/_compiler@0.8.3
+  - @lingo.dev/_sdk@0.13.2
+
+## 0.117.7
+
+### Patch Changes
+
+- [#1628](https://github.com/lingodotdev/lingo.dev/pull/1628) [`ad646a4`](https://github.com/lingodotdev/lingo.dev/commit/ad646a4f44dc2f0771eb3aa2783872b4d0e55f57) Thanks [@vrcprl](https://github.com/vrcprl)! - Add MJML bucket support
+
+- Updated dependencies [[`ad646a4`](https://github.com/lingodotdev/lingo.dev/commit/ad646a4f44dc2f0771eb3aa2783872b4d0e55f57)]:
+  - @lingo.dev/_spec@0.44.1
+  - @lingo.dev/_compiler@0.8.2
+  - @lingo.dev/_sdk@0.13.1
+
+## 0.117.6
+
+### Patch Changes
+
+- [#1647](https://github.com/lingodotdev/lingo.dev/pull/1647) [`a9e1af5`](https://github.com/lingodotdev/lingo.dev/commit/a9e1af5a57b9711ac1ef98b40b5f7abff4b0c31a) Thanks [@vrcprl](https://github.com/vrcprl)! - prevent HTML tag duplication in Android bucket
+
+## 0.117.5
+
+### Patch Changes
+
+- [#1639](https://github.com/lingodotdev/lingo.dev/pull/1639) [`a881f81`](https://github.com/lingodotdev/lingo.dev/commit/a881f8115059168dabb4cbe07a1d28ca33d36ece) Thanks [@vrcprl](https://github.com/vrcprl)! - rewrite HTML loader with block-based translation
+
+## 0.117.4
+
+### Patch Changes
+
+- [#1644](https://github.com/lingodotdev/lingo.dev/pull/1644) [`2881712`](https://github.com/lingodotdev/lingo.dev/commit/2881712a1964dfa36eedfe70a00ae438f400647b) Thanks [@vrcprl](https://github.com/vrcprl)! - preserve list formatting in YAML files
+
+## 0.117.3
+
+### Patch Changes
+
+- [#1642](https://github.com/lingodotdev/lingo.dev/pull/1642) [`9f429c6`](https://github.com/lingodotdev/lingo.dev/commit/9f429c6c8a64f8f829ac7bc1fc293697c5d93b9f) Thanks [@vrcprl](https://github.com/vrcprl)! - Preserve formatting in YAML files
+
+## 0.117.2
+
+### Patch Changes
+
+- [#1640](https://github.com/lingodotdev/lingo.dev/pull/1640) [`80bcbe4`](https://github.com/lingodotdev/lingo.dev/commit/80bcbe4a65e0728e5795bb5b4f2b6e3d7e3aa206) Thanks [@vrcprl](https://github.com/vrcprl)! - preserve formatting for yaml format
+
+## 0.117.1
+
+### Patch Changes
+
+- Updated dependencies [[`ec2f00a`](https://github.com/lingodotdev/lingo.dev/commit/ec2f00a0a1127ff4c5333ce4c6d8d691f89c4b17)]:
+  - @lingo.dev/_compiler@0.8.1
+
+## 0.117.0
+
+### Minor Changes
+
+- [#1634](https://github.com/lingodotdev/lingo.dev/pull/1634) [`48fab66`](https://github.com/lingodotdev/lingo.dev/commit/48fab66b6806455d9faa1dcb169d4c61194e2144) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - Pin all dependencies to exact versions to prevent supply chain attacks. Dependencies no longer use caret (^) or tilde (~) ranges, ensuring full control over version updates and requiring explicit review of all dependency changes.
+
+### Patch Changes
+
+- Updated dependencies [[`48fab66`](https://github.com/lingodotdev/lingo.dev/commit/48fab66b6806455d9faa1dcb169d4c61194e2144)]:
+  - @lingo.dev/_compiler@0.8.0
+  - @lingo.dev/_locales@0.3.0
+  - @lingo.dev/_react@0.7.0
+  - @lingo.dev/_sdk@0.13.0
+  - @lingo.dev/_spec@0.44.0
+
+## 0.116.5
+
+### Patch Changes
+
+- [#1626](https://github.com/lingodotdev/lingo.dev/pull/1626) [`9c338a8`](https://github.com/lingodotdev/lingo.dev/commit/9c338a8c5fab77c386d74700a6055c73d06daafd) Thanks [@vrcprl](https://github.com/vrcprl)! - preserve YAML literal block scalars without backslash escaping
+
+## 0.116.4
+
+### Patch Changes
+
+- [#1622](https://github.com/lingodotdev/lingo.dev/pull/1622) [`3dd04bd`](https://github.com/lingodotdev/lingo.dev/commit/3dd04bd937828c16862b2b1459576931028bb01a) Thanks [@vrcprl](https://github.com/vrcprl)! - Fix ICU input
+
+## 0.116.3
+
+### Patch Changes
+
+- [#1620](https://github.com/lingodotdev/lingo.dev/pull/1620) [`dd09791`](https://github.com/lingodotdev/lingo.dev/commit/dd09791948351046e083b077805db9039ee2faf1) Thanks [@vrcprl](https://github.com/vrcprl)! - add substitutions support to xcode-xcstrings-v2
+
+## 0.116.2
+
+### Patch Changes
+
+- [#1617](https://github.com/lingodotdev/lingo.dev/pull/1617) [`b0ac42a`](https://github.com/lingodotdev/lingo.dev/commit/b0ac42a896b46d0670a5ad9817304b32125aef85) Thanks [@vrcprl](https://github.com/vrcprl)! - support for stringSet to xcode-xcstrings and v2
+
+## 0.116.1
+
+### Patch Changes
+
+- Updated dependencies [[`0f6ffbf`](https://github.com/lingodotdev/lingo.dev/commit/0f6ffbf7dafafbead768eb9e52787cb6013aa1c3)]:
+  - @lingo.dev/_locales@0.2.0
+  - @lingo.dev/_spec@0.43.1
+  - @lingo.dev/_compiler@0.7.18
+  - @lingo.dev/_sdk@0.12.9
+
+## 0.116.0
+
+### Minor Changes
+
+- [#1519](https://github.com/lingodotdev/lingo.dev/pull/1519) [`5d808bd`](https://github.com/lingodotdev/lingo.dev/commit/5d808bd33eb3a0b5c685e3a3a6cb079ba86eb6e2) Thanks [@Dishantydv7](https://github.com/Dishantydv7)! - fix(status): prevent NaN% when totalWordsToTranslate is 0
+
+### Patch Changes
+
+- [`c0aa906`](https://github.com/lingodotdev/lingo.dev/commit/c0aa906880d26c5d01748e0d72b9f61ec989606d) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - Fix prettier formatter loaders after prettier config removal
+
+  Restores prettier as a runtime dependency for the CLI package and restores the `.prettierrc` config file needed by the formatter loaders. This fixes failing tests for HTML, JSON, and Markdown bucket loaders that depend on prettier for formatting translation files.
+
+## 0.115.0
+
+### Minor Changes
+
+- [#1591](https://github.com/lingodotdev/lingo.dev/pull/1591) [`6267878`](https://github.com/lingodotdev/lingo.dev/commit/6267878d1be28337d77749e39ab3547b6a19b3ed) Thanks [@copilot-swe-agent](https://github.com/apps/copilot-swe-agent)! - Minor release
+
+## 0.114.7
+
+### Patch Changes
+
+- Updated dependencies [[`ac38e8e`](https://github.com/lingodotdev/lingo.dev/commit/ac38e8e8dea0d8c4cd3c8b00e6394bfbd8074611), [`4d2359a`](https://github.com/lingodotdev/lingo.dev/commit/4d2359a3d7164f825bf5ddf62b5d13a4690cb4a2)]:
+  - @lingo.dev/_spec@0.43.0
+  - @lingo.dev/_react@0.6.0
+  - @lingo.dev/_compiler@0.7.17
+  - @lingo.dev/_sdk@0.12.8
+
+## 0.114.6
+
+### Patch Changes
+
+- Updated dependencies [[`d72c67c`](https://github.com/lingodotdev/lingo.dev/commit/d72c67c78a4d8f01077db8098b5d973ec98a4c1e)]:
+  - @lingo.dev/_spec@0.42.0
+  - @lingo.dev/_compiler@0.7.16
+  - @lingo.dev/_sdk@0.12.7
+
+## 0.114.5
+
+### Patch Changes
+
+- [#1565](https://github.com/lingodotdev/lingo.dev/pull/1565) [`0a0d0c9`](https://github.com/lingodotdev/lingo.dev/commit/0a0d0c9ea3c7111ed0b54cdafba1bae76eeb8663) Thanks [@vrcprl](https://github.com/vrcprl)! - configurable author commit
+
+## 0.114.4
+
+### Patch Changes
+
+- [#1544](https://github.com/lingodotdev/lingo.dev/pull/1544) [`68fb3ea`](https://github.com/lingodotdev/lingo.dev/commit/68fb3ea64fc0191ecee66403432e0c8efabab2b9) Thanks [@vrcprl](https://github.com/vrcprl)! - fix key encoding
+
+## 0.114.3
+
+### Patch Changes
+
+- [#1542](https://github.com/lingodotdev/lingo.dev/pull/1542) [`e70385b`](https://github.com/lingodotdev/lingo.dev/commit/e70385bd1ac676bf5bd31b212d8510e6b7ebf793) Thanks [@sumitsaurabh927](https://github.com/sumitsaurabh927)! - chore: add changeset
+
+## 0.114.2
+
+### Patch Changes
+
+- [#1535](https://github.com/lingodotdev/lingo.dev/pull/1535) [`f7215c1`](https://github.com/lingodotdev/lingo.dev/commit/f7215c1e435378aac8fc953765335cd478cbf507) Thanks [@vrcprl](https://github.com/vrcprl)! - prevent race condition in single-file format concurrent I/O
+
+## 0.114.1
+
+### Patch Changes
+
+- [#1532](https://github.com/lingodotdev/lingo.dev/pull/1532) [`898bd36`](https://github.com/lingodotdev/lingo.dev/commit/898bd36cc2e444641560d2ad2b28065a57072183) Thanks [@vrcprl](https://github.com/vrcprl)! - fix CDATA and translatable=false strings in Android bucket
+
+## 0.114.0
+
+### Minor Changes
+
+- [#1241](https://github.com/lingodotdev/lingo.dev/pull/1241) [`060680c`](https://github.com/lingodotdev/lingo.dev/commit/060680cd13c05dd77dd9d5447c064d948bd21cb0) Thanks [@davidturnbull](https://github.com/davidturnbull)! - Enable locked patterns for all buckets
+
+- [#1240](https://github.com/lingodotdev/lingo.dev/pull/1240) [`a956e53`](https://github.com/lingodotdev/lingo.dev/commit/a956e537d0d45565c3243dd0c5ba4eec8bed69c6) Thanks [@davidturnbull](https://github.com/davidturnbull)! - Enable ignored keys for all buckets
+
+- [#1239](https://github.com/lingodotdev/lingo.dev/pull/1239) [`3fd38c2`](https://github.com/lingodotdev/lingo.dev/commit/3fd38c2d38e4b22dcd824c865fe31abbc56bc862) Thanks [@davidturnbull](https://github.com/davidturnbull)! - Enable locked keys for all buckets
+
+### Patch Changes
+
+- [#1331](https://github.com/lingodotdev/lingo.dev/pull/1331) [`f102356`](https://github.com/lingodotdev/lingo.dev/commit/f102356e1ea12c800399ac11f074c42708c304b1) Thanks [@vrcprl](https://github.com/vrcprl)! - fix xcode-xcstrings-v2 flattening
+
+## 0.113.8
+
+### Patch Changes
+
+- [#1245](https://github.com/lingodotdev/lingo.dev/pull/1245) [`03671f7`](https://github.com/lingodotdev/lingo.dev/commit/03671f7cb252d6bee3debce2f4a4eb989dc0050b) Thanks [@vrcprl](https://github.com/vrcprl)! - update xcode-strings example
+
+## 0.113.7
+
+### Patch Changes
+
+- [#1243](https://github.com/lingodotdev/lingo.dev/pull/1243) [`4f5ffe6`](https://github.com/lingodotdev/lingo.dev/commit/4f5ffe62189949bb26a6c7825cb72c217aefa32f) Thanks [@vrcprl](https://github.com/vrcprl)! - Improve xcode-strings loader
+
+## 0.113.6
+
+### Patch Changes
+
+- [#1238](https://github.com/lingodotdev/lingo.dev/pull/1238) [`be8de32`](https://github.com/lingodotdev/lingo.dev/commit/be8de3280bb5dc5f409fc7680c0e5ff6a53e2fe5) Thanks [@vrcprl](https://github.com/vrcprl)! - enchance Android bucket loader
+
+- Updated dependencies [[`44a928b`](https://github.com/lingodotdev/lingo.dev/commit/44a928b473802cd07bec64f94a273ee1b845a0d0)]:
+  - @lingo.dev/_compiler@0.7.15
+
+## 0.113.5
+
+### Patch Changes
+
+- [#1233](https://github.com/lingodotdev/lingo.dev/pull/1233) [`79c4c00`](https://github.com/lingodotdev/lingo.dev/commit/79c4c00108b9c102cf53e1c090b286070a43e3d5) Thanks [@vrcprl](https://github.com/vrcprl)! - i18n xcode-scstring-v2 log fix
+
+## 0.113.4
+
+### Patch Changes
+
+- [#1230](https://github.com/lingodotdev/lingo.dev/pull/1230) [`b45347c`](https://github.com/lingodotdev/lingo.dev/commit/b45347c38572ee371b2bc494261b7e3e90c4aed1) Thanks [@vrcprl](https://github.com/vrcprl)! - add an xcode-xcstrings-v2 bucket type that supports cldr pluralization rules
+
+- Updated dependencies [[`b45347c`](https://github.com/lingodotdev/lingo.dev/commit/b45347c38572ee371b2bc494261b7e3e90c4aed1)]:
+  - @lingo.dev/_spec@0.41.1
+  - @lingo.dev/_sdk@0.12.6
+  - @lingo.dev/_compiler@0.7.14
+
+## 0.113.3
+
+### Patch Changes
+
+- [#1227](https://github.com/lingodotdev/lingo.dev/pull/1227) [`74d8efe`](https://github.com/lingodotdev/lingo.dev/commit/74d8efef8d4789f9baa5b7837e053c2571df0308) Thanks [@vrcprl](https://github.com/vrcprl)! - Add ignoredKeys support
+
+## 0.113.2
+
+### Patch Changes
+
+- [#1224](https://github.com/lingodotdev/lingo.dev/pull/1224) [`3d3c3d7`](https://github.com/lingodotdev/lingo.dev/commit/3d3c3d783a61443da50a5d182391db33a0d29c84) Thanks [@vrcprl](https://github.com/vrcprl)! - fix code replacement in mdx
+
+## 0.113.1
+
+### Patch Changes
+
+- [#1222](https://github.com/lingodotdev/lingo.dev/pull/1222) [`38139c8`](https://github.com/lingodotdev/lingo.dev/commit/38139c81a85001739cece60873c0c6ad711327a4) Thanks [@vrcprl](https://github.com/vrcprl)! - fix regex replacement
+
+- Updated dependencies [[`38139c8`](https://github.com/lingodotdev/lingo.dev/commit/38139c81a85001739cece60873c0c6ad711327a4)]:
+  - @lingo.dev/_compiler@0.7.13
+
+## 0.113.0
+
+### Minor Changes
+
+- [#1211](https://github.com/lingodotdev/lingo.dev/pull/1211) [`3413dad`](https://github.com/lingodotdev/lingo.dev/commit/3413dad22af688a6d26649c4f25e18304b3caee6) Thanks [@davidturnbull](https://github.com/davidturnbull)! - Add `--frozen` mode to validate translations without writing changes.
+
+## 0.112.1
+
+### Patch Changes
+
+- [#1218](https://github.com/lingodotdev/lingo.dev/pull/1218) [`26d2ec1`](https://github.com/lingodotdev/lingo.dev/commit/26d2ec155c5868a5bdce1027cd76a5a2d4f8f2b1) Thanks [@vrcprl](https://github.com/vrcprl)! - add 'show ignored-keys' and 'show locked-keys' commands
+
+## 0.112.0
+
+### Minor Changes
+
+- [#1186](https://github.com/lingodotdev/lingo.dev/pull/1186) [`82f5e7c`](https://github.com/lingodotdev/lingo.dev/commit/82f5e7cdde9a2a15b4c2a7fcb8c67ed64eab596b) Thanks [@davidturnbull](https://github.com/davidturnbull)! - Add Markdoc support
+
+### Patch Changes
+
+- [#1215](https://github.com/lingodotdev/lingo.dev/pull/1215) [`e858174`](https://github.com/lingodotdev/lingo.dev/commit/e858174fd5165e0ea3e3f25fa1fc3edb292bc58f) Thanks [@vrcprl](https://github.com/vrcprl)! - add provider settings
+
+- Updated dependencies [[`82f5e7c`](https://github.com/lingodotdev/lingo.dev/commit/82f5e7cdde9a2a15b4c2a7fcb8c67ed64eab596b), [`e858174`](https://github.com/lingodotdev/lingo.dev/commit/e858174fd5165e0ea3e3f25fa1fc3edb292bc58f)]:
+  - @lingo.dev/_spec@0.41.0
+  - @lingo.dev/_compiler@0.7.12
+  - @lingo.dev/_sdk@0.12.5
+
+## 0.111.16
+
+### Patch Changes
+
+- [#1185](https://github.com/lingodotdev/lingo.dev/pull/1185) [`f3d4987`](https://github.com/lingodotdev/lingo.dev/commit/f3d4987ddc393c28d488f030c087f3e99a667975) Thanks [@sumitsaurabh927](https://github.com/sumitsaurabh927)! - updated product hunt badges
+
+- [#1208](https://github.com/lingodotdev/lingo.dev/pull/1208) [`a933b81`](https://github.com/lingodotdev/lingo.dev/commit/a933b8102763e0481f088c847da53e0eee3f0617) Thanks [@vrcprl](https://github.com/vrcprl)! - Fix run retranslation with run command
+
+## 0.111.15
+
+### Patch Changes
+
+- Updated dependencies [[`1fa218c`](https://github.com/lingodotdev/lingo.dev/commit/1fa218c13bf90df6d175fb18264f59c1a10b967c)]:
+  - @lingo.dev/_spec@0.40.4
+  - @lingo.dev/_compiler@0.7.11
+  - @lingo.dev/_sdk@0.12.4
+
+## 0.111.14
+
+### Patch Changes
+
+- [#1200](https://github.com/lingodotdev/lingo.dev/pull/1200) [`dd0663f`](https://github.com/lingodotdev/lingo.dev/commit/dd0663fdcdd0ff4fd5748386758a8c20f9e52a4b) Thanks [@vrcprl](https://github.com/vrcprl)! - fix Biome JS API v3 bug
+
+## 0.111.13
+
+### Patch Changes
+
+- [#1197](https://github.com/lingodotdev/lingo.dev/pull/1197) [`762396b`](https://github.com/lingodotdev/lingo.dev/commit/762396bb37110dbe3e4e000edb27892b318aa3ef) Thanks [@vrcprl](https://github.com/vrcprl)! - biome error logging
+
+## 0.111.12
+
+### Patch Changes
+
+- [#1195](https://github.com/lingodotdev/lingo.dev/pull/1195) [`468a59b`](https://github.com/lingodotdev/lingo.dev/commit/468a59b89736c72253b1f32abbf30a950e5434ec) Thanks [@vrcprl](https://github.com/vrcprl)! - Fix Biome formatting
+
+## 0.111.11
+
+### Patch Changes
+
+- [#1192](https://github.com/lingodotdev/lingo.dev/pull/1192) [`bbc71b9`](https://github.com/lingodotdev/lingo.dev/commit/bbc71b9948ccc289c9669d8b0c276c9596f6a5e7) Thanks [@vrcprl](https://github.com/vrcprl)! - Add biome support
+
+- Updated dependencies [[`bbc71b9`](https://github.com/lingodotdev/lingo.dev/commit/bbc71b9948ccc289c9669d8b0c276c9596f6a5e7)]:
+  - @lingo.dev/_spec@0.40.3
+  - @lingo.dev/_compiler@0.7.10
+  - @lingo.dev/_sdk@0.12.3
+
+## 0.111.10
+
+### Patch Changes
+
+- [#1189](https://github.com/lingodotdev/lingo.dev/pull/1189) [`0e6d605`](https://github.com/lingodotdev/lingo.dev/commit/0e6d605a9ad6835bef26c40895760c652a69b7a2) Thanks [@vrcprl](https://github.com/vrcprl)! - upd stars
+
+## 0.111.9
+
+### Patch Changes
+
+- [#1177](https://github.com/lingodotdev/lingo.dev/pull/1177) [`03138da`](https://github.com/lingodotdev/lingo.dev/commit/03138dac37e869e2e99702ffd3c76532f1c58aa6) Thanks [@davidturnbull](https://github.com/davidturnbull)! - Improve CLI command descriptions
+
+- [#1183](https://github.com/lingodotdev/lingo.dev/pull/1183) [`9557fe5`](https://github.com/lingodotdev/lingo.dev/commit/9557fe572d3e4a1a4d8c1e35417fe3b7531c3d52) Thanks [@vrcprl](https://github.com/vrcprl)! - fix lockedKeys in xcstrings
+
+## 0.111.8
+
+### Patch Changes
+
+- [#1174](https://github.com/lingodotdev/lingo.dev/pull/1174) [`64225d0`](https://github.com/lingodotdev/lingo.dev/commit/64225d073999d599ba86f65fee8e08e3e5f2800b) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - locale-codes reexport
+
+## 0.111.7
+
+### Patch Changes
+
+- Updated dependencies [[`6579d70`](https://github.com/lingodotdev/lingo.dev/commit/6579d70bc670c2fdc06c09842d931b07e134151c)]:
+  - @lingo.dev/_spec@0.40.2
+  - @lingo.dev/_compiler@0.7.9
+  - @lingo.dev/_sdk@0.12.2
+
+## 0.111.6
+
+### Patch Changes
+
+- [#1164](https://github.com/lingodotdev/lingo.dev/pull/1164) [`88b7e31`](https://github.com/lingodotdev/lingo.dev/commit/88b7e3132c77d0a1e823de4ee6ef5a96a3098b97) Thanks [@vrcprl](https://github.com/vrcprl)! - upd demo
+
+## 0.111.5
+
+### Patch Changes
+
+- [#1166](https://github.com/lingodotdev/lingo.dev/pull/1166) [`d9294c0`](https://github.com/lingodotdev/lingo.dev/commit/d9294c0bbb993454ad3654f77dd48d82211e0465) Thanks [@vrcprl](https://github.com/vrcprl)! - enhance cli errors debugging
+
+## 0.111.4
+
+### Patch Changes
+
+- [#1157](https://github.com/lingodotdev/lingo.dev/pull/1157) [`100b141`](https://github.com/lingodotdev/lingo.dev/commit/100b141d2143e33b603830475ba55089dc421e3d) Thanks [@ankur0904](https://github.com/ankur0904)! - add --sound flag for task completion
+
 ## 0.111.3
 
 ### Patch Changes
@@ -11,7 +561,6 @@
 ### Patch Changes
 
 - [#1149](https://github.com/lingodotdev/lingo.dev/pull/1149) [`bd3f69d`](https://github.com/lingodotdev/lingo.dev/commit/bd3f69dde76814146f775bc87241fa2fad012ab0) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - Fix CI command hanging due to process.exit calls
-
   - Remove PostHog shutdown() call that was causing process to hang
   - Replace process.exit() with proper exception throwing in i18n and run commands
   - Upgrade posthog-node from 5.5.1 to 5.8.1 for better stability
@@ -298,7 +847,6 @@
 - [#966](https://github.com/lingodotdev/lingo.dev/pull/966) [`8b306bc`](https://github.com/lingodotdev/lingo.dev/commit/8b306bcd0a3231ffd8bde283414b6d069b7a5b99) Thanks [@VAIBHAVSING](https://github.com/VAIBHAVSING)! - Add watch mode to CLI for automatic retranslation on file changes
 
   This release introduces a new watch mode feature that automatically triggers retranslation when changes are detected in source files:
-
   - **New `--watch` flag**: Enables file watching mode that monitors source files for changes
   - **New `--debounce` flag**: Configurable debounce delay (default: 5 seconds) to prevent excessive retranslations
   - **Intelligent file pattern detection**: Automatically determines which files to watch based on i18n.json bucket configurations
@@ -319,7 +867,6 @@
   ```
 
   **Technical Implementation:**
-
   - Uses `chokidar` for robust cross-platform file watching
   - Integrates seamlessly with existing CLI pipeline (setup → plan → execute)
   - Maintains full compatibility with all existing CLI options and workflows
@@ -336,7 +883,6 @@
 ### Minor Changes
 
 - [#958](https://github.com/lingodotdev/lingo.dev/pull/958) [`84fd214`](https://github.com/lingodotdev/lingo.dev/commit/84fd214a21766e7683c5d645fcb8c4c0162eb0b6) Thanks [@chrissiwaffler](https://github.com/chrissiwaffler)! - feat: add Mistral AI as a supported LLM provider
-
   - Added Mistral AI provider support across the entire lingo.dev ecosystem
   - Users can now use Mistral models for localization by setting MISTRAL_API_KEY
   - Supports all Mistral models available through the @ai-sdk/mistral package
@@ -364,7 +910,6 @@
 ### Minor Changes
 
 - [#956](https://github.com/lingodotdev/lingo.dev/pull/956) [`ce8c75c`](https://github.com/lingodotdev/lingo.dev/commit/ce8c75c7fc1a2124d3e18444bc356c4dfce26434) Thanks [@VAIBHAVSING](https://github.com/VAIBHAVSING)! - feat: add EJS (Embedded JavaScript) templating engine support
-
   - Added EJS loader to support parsing and translating EJS template files
   - EJS loader extracts translatable text while preserving EJS tags and expressions
   - Updated spec package to include "ejs" in supported bucket types
@@ -950,7 +1495,6 @@
 - [#700](https://github.com/lingodotdev/lingo.dev/pull/700) [`c5ccf81`](https://github.com/lingodotdev/lingo.dev/commit/c5ccf81e9c2bd27bae332306da2a41e41bbeb87d) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - Add support for locked patterns in MDX loader
 
   This change adds support for preserving specific patterns in MDX files during translation, including:
-
   - !params syntax for parameter documentation
   - !! parameter_name headings
   - !type declarations

@@ -19,7 +19,7 @@ type VariableExtractionPayload = {
 
 function variableExtractLoader(
   params: VariableLoaderParams,
-): ILoader<Record<string, string>, Record<string, VariableExtractionPayload>> {
+): ILoader<Record<string, any>, Record<string, VariableExtractionPayload>> {
   const specifierPattern = getFormatSpecifierPattern(params.type);
   return createLoader({
     pull: async (locale, input, initXtx, originalLocale, originalInput) => {
@@ -27,6 +27,8 @@ function variableExtractLoader(
       const inputValues = _.omitBy(input, _.isEmpty);
       for (const [key, value] of Object.entries(inputValues)) {
         const originalValue = originalInput[key];
+
+        // Extract format specifiers from the original value
         const matches = originalValue.match(specifierPattern) || [];
         result[key] = result[key] || {
           value,
@@ -51,14 +53,20 @@ function variableExtractLoader(
       pullInput,
       pullOutput,
     ) => {
-      const result: Record<string, string> = {};
+      const result: Record<string, any> = {};
       for (const [key, valueObj] of Object.entries(data)) {
         result[key] = valueObj.value;
+
         for (let i = 0; i < valueObj.variables.length; i++) {
           const variable = valueObj.variables[i];
           const currentValue = result[key];
-          const newValue = currentValue?.replace(`{variable:${i}}`, variable);
-          result[key] = newValue;
+          if (typeof currentValue === "string") {
+            const newValue = currentValue?.replaceAll(
+              `{variable:${i}}`,
+              variable,
+            );
+            result[key] = newValue;
+          }
         }
       }
       return result;

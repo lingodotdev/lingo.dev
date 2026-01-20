@@ -14,7 +14,9 @@ import {
 
 export default new Command()
   .command("login")
-  .description("Authenticate with Lingo.dev API")
+  .description(
+    "Open browser to authenticate with lingo.dev and save your API key",
+  )
   .helpOption("-h, --help", "Show help")
   .action(async () => {
     try {

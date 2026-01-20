@@ -3,6 +3,11 @@ import figlet from "figlet";
 import { vice } from "gradient-string";
 import readline from "readline";
 import { colors } from "../constants";
+import fs from "fs"; // <-- ADD THIS IMPORT
+
+function isCI(): boolean {
+  return Boolean(process.env.CI) || fs.existsSync("/.dockerenv");
+}
 
 export async function renderClear() {
   console.log("\x1Bc");
@@ -37,10 +42,17 @@ export async function renderHero() {
   const label3 = "🎮 Join Discord:";
   const maxLabelWidth = 17; // Approximate visual width accounting for emoji
 
+    // --- ADD THIS LOGIC ---
+  const isCIEnv = isCI(); // <-- USE THE LOCAL HELPER FUNCTION
+  const docsUrl = isCIEnv
+    ? "https://lingo.dev/ci"
+    : "https://lingo.dev/cli";
+  // ------------------------
+
   console.log(
     `${chalk.hex(colors.blue)(label1.padEnd(maxLabelWidth + 1))} ${chalk.hex(
       colors.blue,
-    )("https://lingo.dev/go/docs")}`,
+    )(docsUrl)}`,
   ); // Docs emoji seems narrower
   console.log(
     `${chalk.hex(colors.blue)(label2.padEnd(maxLabelWidth))} ${chalk.hex(
@@ -77,28 +89,62 @@ export async function pauseIfDebug(debug: boolean) {
 export async function renderSummary(results: Map<any, any>) {
   console.log(chalk.hex(colors.green)("[Done]"));
 
-  const skippedTasksCount = Array.from(results.values()).filter(
+  const skippedResults = Array.from(results.values()).filter(
     (r) => r.status === "skipped",
-  ).length;
-  console.log(`• ${chalk.hex(colors.yellow)(skippedTasksCount)} from cache`);
-
-  const succeededTasksCount = Array.from(results.values()).filter(
+  );
+  const succeededResults = Array.from(results.values()).filter(
     (r) => r.status === "success",
-  ).length;
-  console.log(`• ${chalk.hex(colors.yellow)(succeededTasksCount)} processed`);
-
-  const failedTasksCount = Array.from(results.values()).filter(
+  );
+  const failedResults = Array.from(results.values()).filter(
     (r) => r.status === "error",
-  ).length;
-  console.log(`• ${chalk.hex(colors.yellow)(failedTasksCount)} failed`);
+  );
 
-  if (failedTasksCount > 0) {
-    console.log(chalk.hex(colors.orange)("\n[Failed]"));
-    for (const result of Array.from(results.values()).filter(
-      (r) => r.status === "error",
-    )) {
+  console.log(
+    `• ${chalk.hex(colors.yellow)(skippedResults.length)} from cache`,
+  );
+  console.log(
+    `• ${chalk.hex(colors.yellow)(succeededResults.length)} processed`,
+  );
+  console.log(`• ${chalk.hex(colors.yellow)(failedResults.length)} failed`);
+
+  // Show processed files
+  if (succeededResults.length > 0) {
+    console.log(chalk.hex(colors.green)("\n[Processed Files]"));
+    for (const result of succeededResults) {
+      const displayPath =
+        result.pathPattern?.replace("[locale]", result.targetLocale) ||
+        "unknown";
       console.log(
-        `❌ ${chalk.hex(colors.white)(String(result.error.message))}\n`,
+        `  ✓ ${chalk.dim(displayPath)} ${chalk.hex(colors.yellow)(`(${result.sourceLocale} → ${result.targetLocale})`)}`,
+      );
+    }
+  }
+
+  // Show cached files
+  if (skippedResults.length > 0) {
+    console.log(chalk.hex(colors.blue)("\n[Cached Files]"));
+    for (const result of skippedResults) {
+      const displayPath =
+        result.pathPattern?.replace("[locale]", result.targetLocale) ||
+        "unknown";
+      console.log(
+        `  ⚡ ${chalk.dim(displayPath)} ${chalk.hex(colors.yellow)(`(${result.sourceLocale} → ${result.targetLocale})`)}`,
+      );
+    }
+  }
+
+  // Show failed files
+  if (failedResults.length > 0) {
+    console.log(chalk.hex(colors.orange)("\n[Failed Files]"));
+    for (const result of failedResults) {
+      const displayPath =
+        result.pathPattern?.replace("[locale]", result.targetLocale) ||
+        "unknown";
+      console.log(
+        `  ❌ ${chalk.dim(displayPath)} ${chalk.hex(colors.yellow)(`(${result.sourceLocale} → ${result.targetLocale})`)}`,
+      );
+      console.log(
+        `     ${chalk.hex(colors.white)(String(result.error?.message || "Unknown error"))}`,
       );
     }
   }

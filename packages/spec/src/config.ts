@@ -13,16 +13,19 @@ export const localeSchema = Z.object({
 }).describe("Locale configuration block.");
 
 // factories
-type ConfigDefinition<T extends Z.ZodRawShape, P extends Z.ZodRawShape> = {
+type ConfigDefinition<
+  T extends Z.ZodRawShape,
+  _P extends Z.ZodRawShape = any,
+> = {
   schema: Z.ZodObject<T>;
   defaultValue: Z.infer<Z.ZodObject<T>>;
   parse: (rawConfig: unknown) => Z.infer<Z.ZodObject<T>>;
 };
 const createConfigDefinition = <
   T extends Z.ZodRawShape,
-  P extends Z.ZodRawShape,
+  _P extends Z.ZodRawShape = any,
 >(
-  definition: ConfigDefinition<T, P>,
+  definition: ConfigDefinition<T, _P>,
 ) => definition;
 
 type ConfigDefinitionExtensionParams<
@@ -93,7 +96,9 @@ const extendConfigDefinition = <
 
 // any -> v0
 const configV0Schema = Z.object({
-  version: Z.number().default(0).describe("The version number of the schema."),
+  version: Z.union([Z.number(), Z.string()])
+    .default(0)
+    .describe("The version number of the schema."),
 });
 export const configV0Definition = createConfigDefinition({
   schema: configV0Schema,
@@ -406,8 +411,104 @@ export const configV1_8Definition = extendConfigDefinition(
   },
 );
 
+// v1.8 -> v1.9
+// Changes: Add "formatter" field to top-level config
+export const configV1_9Definition = extendConfigDefinition(
+  configV1_8Definition,
+  {
+    createSchema: (baseSchema) =>
+      baseSchema.extend({
+        formatter: Z.enum(["prettier", "biome"])
+          .optional()
+          .describe(
+            "Code formatter to use for all buckets. Defaults to 'prettier' if not specified and a prettier config is found.",
+          ),
+      }),
+    createDefaultValue: (baseDefaultValue) => ({
+      ...baseDefaultValue,
+      version: 1.9,
+    }),
+    createUpgrader: (oldConfig) => ({
+      ...oldConfig,
+      version: 1.9,
+    }),
+  },
+);
+
+// v1.9 -> v1.10
+// Changes: Add "settings" field to provider config for model-specific parameters
+const modelSettingsSchema = Z.object({
+  temperature: Z.number()
+    .min(0)
+    .max(2)
+    .optional()
+    .describe(
+      "Controls randomness in model outputs (0=deterministic, 2=very random). Some models like GPT-5 require temperature=1.",
+    ),
+})
+  .optional()
+  .describe("Model-specific settings for translation requests.");
+
+const providerSchemaV1_10 = Z.object({
+  id: Z.enum([
+    "openai",
+    "anthropic",
+    "google",
+    "ollama",
+    "openrouter",
+    "mistral",
+  ]).describe("Identifier of the translation provider service."),
+  model: Z.string().describe("Model name to use for translations."),
+  prompt: Z.string().describe(
+    "Prompt template used when requesting translations.",
+  ),
+  baseUrl: Z.string()
+    .optional()
+    .describe("Custom base URL for the provider API (optional)."),
+  settings: modelSettingsSchema,
+}).describe("Configuration for the machine-translation provider.");
+
+export const configV1_10Definition = extendConfigDefinition(
+  configV1_9Definition,
+  {
+    createSchema: (baseSchema) =>
+      baseSchema.extend({
+        provider: providerSchemaV1_10.optional(),
+      }),
+    createDefaultValue: (baseDefaultValue) => ({
+      ...baseDefaultValue,
+      version: "1.10",
+    }),
+    createUpgrader: (oldConfig) => ({
+      ...oldConfig,
+      version: "1.10",
+    }),
+  },
+);
+
+// v1.10 -> v1.11
+// Changes: Add "vNext" field for Lingo.dev vNext provider
+export const configV1_11Definition = extendConfigDefinition(
+  configV1_10Definition,
+  {
+    createSchema: (baseSchema) =>
+      baseSchema.extend({
+        vNext: Z.string()
+          .optional(),
+      }),
+    createDefaultValue: (baseDefaultValue) => ({
+      ...baseDefaultValue,
+      version: "1.11",
+    }),
+    createUpgrader: (oldConfig) => ({
+      ...oldConfig,
+      version: "1.11",
+    }),
+  },
+);
+
 // exports
-export const LATEST_CONFIG_DEFINITION = configV1_8Definition;
+export const LATEST_CONFIG_DEFINITION = configV1_11Definition;
 
 export type I18nConfig = Z.infer<(typeof LATEST_CONFIG_DEFINITION)["schema"]>;
 

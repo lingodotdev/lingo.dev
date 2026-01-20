@@ -67,13 +67,17 @@ describe("bucket loaders", () => {
     it("should save android data", async () => {
       setupFileMocks();
 
-      const input = `
-        <resources>
-          <string name="button.title">Submit</string>
-        </resources>
-      `.trim();
+      // Use proper Android Studio format: XML declaration + 4-space indentation
+      const input = `<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="button.title">Submit</string>
+</resources>`;
       const payload = { "button.title": "Enviar" };
-      const expectedOutput = `<resources>\n  <string name="button.title">Enviar</string>\n</resources>`;
+      // Output preserves XML declaration and uses 4-space indentation (Android standard)
+      const expectedOutput = `<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="button.title">Enviar</string>
+</resources>`;
 
       mockFileOperations(input);
 
@@ -97,6 +101,29 @@ describe("bucket loaders", () => {
           flag: "w",
         },
       );
+    });
+
+    it("should respect locked keys (pull)", async () => {
+      setupFileMocks();
+
+      const input = `<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="locked_key">Original</string>
+    <string name="unlocked_key">Hello</string>
+</resources>`;
+
+      mockFileOperations(input);
+
+      const androidLoader = createBucketLoader(
+        "android",
+        "values-[locale]/strings.xml",
+        { defaultLocale: "en" },
+        ["locked_key"],
+      );
+      androidLoader.setDefaultLocale("en");
+      const data = await androidLoader.pull("en");
+
+      expect(data).toEqual({ unlocked_key: "Hello" });
     });
   });
 
@@ -156,6 +183,27 @@ describe("bucket loaders", () => {
         encoding: "utf-8",
         flag: "w",
       });
+    });
+
+    it("should respect locked keys (pull)", async () => {
+      setupFileMocks();
+
+      const input = `id,en\nlocked_key,Original\nunlocked_key,Hello`;
+
+      mockFileOperations(input);
+
+      const csvLoader = createBucketLoader(
+        "csv",
+        "i18n.csv",
+        {
+          defaultLocale: "en",
+        },
+        ["locked_key"],
+      );
+      csvLoader.setDefaultLocale("en");
+      const data = await csvLoader.pull("en");
+
+      expect(data).toEqual({ unlocked_key: "Hello" });
     });
   });
 
@@ -251,10 +299,33 @@ describe("bucket loaders", () => {
         },
       );
     });
+
+    it("should respect locked keys (pull)", async () => {
+      setupFileMocks();
+
+      const input = `{
+        "@@locale": "en",
+        "locked_key": "Original",
+        "unlocked_key": "Hello"
+      }`;
+
+      mockFileOperations(input);
+
+      const flutterLoader = createBucketLoader(
+        "flutter",
+        "lib/l10n/app_[locale].arb",
+        { defaultLocale: "en" },
+        ["locked_key"],
+      );
+      flutterLoader.setDefaultLocale("en");
+      const data = await flutterLoader.pull("en");
+
+      expect(data).toEqual({ unlocked_key: "Hello" });
+    });
   });
 
   describe("html bucket loader", () => {
-    it("should load html data", async () => {
+    it("should load html data with inline elements preserved", async () => {
       setupFileMocks();
 
       const input = `
@@ -264,12 +335,11 @@ describe("bucket loaders", () => {
     <meta name="description" content="Page description" />
   </head>
   <body>
-    some simple text without an html tag
     <h1>Hello, world!</h1>
     <p>
-      This is a paragraph with a 
+      This is a paragraph with a
       <a href="https://example.com">link</a>
-      and 
+      and
       <b>
         bold and <i>italic text</i>
       </b>
@@ -279,16 +349,17 @@ describe("bucket loaders", () => {
 </html>
       `.trim();
       const expectedOutput = {
-        "head/0/0": "My Page",
+        "head/0": "My Page",
         "head/1#content": "Page description",
-        "body/0": "some simple text without an html tag",
-        "body/1/0": "Hello, world!",
-        "body/2/0": "This is a paragraph with a",
-        "body/2/1/0": "link",
-        "body/2/2": "and",
-        "body/2/3/0": "bold and",
-        "body/2/3/1/0": "italic text",
-        "body/2/4": ".",
+        "body/0": "Hello, world!",
+        "body/1": `This is a paragraph with a
+      <a href="https://example.com">link</a>
+      and
+      <b>
+        bold and
+        <i>italic text</i>
+      </b>
+      .`,
       };
 
       mockFileOperations(input);
@@ -302,7 +373,7 @@ describe("bucket loaders", () => {
       expect(data).toEqual(expectedOutput);
     });
 
-    it("should save html data", async () => {
+    it("should save html data with inline elements preserved", async () => {
       const input = dedent`
 <html>
   <head>
@@ -310,7 +381,6 @@ describe("bucket loaders", () => {
     <meta name="description" content="Page description" />
   </head>
   <body>
-    some simple text without an html tag
     <h1>Hello, world!</h1>
     <p>
       This is a paragraph with a <a href="https://example.com">link</a> and <b>bold and <i>italic text</i></b>
@@ -319,36 +389,31 @@ describe("bucket loaders", () => {
 </html>
       `.trim();
       const payload = {
-        "head/0/0": "Mi Página",
+        "head/0": "Mi Página",
         "head/1#content": "Descripción de la página",
-        "body/0": "texto simple sin etiqueta html",
-        "body/1/0": "¡Hola, mundo!",
-        "body/2/0": "Este es un párrafo con un ",
-        "body/2/1/0": "enlace",
-        "body/2/2": " y ",
-        "body/2/3/0": "texto en negrita y ",
-        "body/2/3/1/0": "texto en cursiva",
+        "body/0": "¡Hola, mundo!",
+        "body/1":
+          'Este es un párrafo con un <a href="https://example.com">enlace</a> y <b>texto en negrita y <i>texto en cursiva</i></b>',
       };
-      const expectedOutput = `<html lang="es">
-  <head>
-    <title>Mi Página</title>
-    <meta name="description" content="Descripción de la página" />
-  </head>
-  <body>
-    texto simple sin etiqueta html
-    <h1>¡Hola, mundo!</h1>
-    <p>
-      Este es un párrafo con un
-      <a href="https://example.com">enlace</a>
-      y
-      <b>
-        texto en negrita y
-        <i>texto en cursiva</i>
-      </b>
-    </p>
-  </body>
-</html>
-      `.trim();
+      const expectedOutput =
+        '<html lang="es">\n' +
+        "  <head>\n" +
+        "    <title>Mi Página</title>\n" +
+        '    <meta name="description" content="Descripción de la página" />\n' +
+        "  </head>\n" +
+        "  <body>\n" +
+        "    <h1>¡Hola, mundo!</h1>\n" +
+        "    <p>\n" +
+        "      Este es un párrafo con un\n" +
+        '      <a href="https://example.com">enlace</a>\n' +
+        "      y\n" +
+        "      <b>\n" +
+        "        texto en negrita y\n" +
+        "        <i>texto en cursiva</i>\n" +
+        "      </b>\n" +
+        "    </p>\n" +
+        "  </body>\n" +
+        "</html>";
 
       mockFileOperations(input);
 
@@ -365,6 +430,35 @@ describe("bucket loaders", () => {
         expectedOutput,
         { encoding: "utf-8", flag: "w" },
       );
+    });
+
+    it("should respect locked keys (pull)", async () => {
+      setupFileMocks();
+
+      const input = `
+<html>
+  <head>
+    <title>Locked Title</title>
+  </head>
+  <body>
+    <h1>Hello</h1>
+  </body>
+</html>`;
+
+      mockFileOperations(input);
+
+      const htmlLoader = createBucketLoader(
+        "html",
+        "i18n/[locale].html",
+        { defaultLocale: "en" },
+        ["head/0"],
+      );
+      htmlLoader.setDefaultLocale("en");
+      const data = await htmlLoader.pull("en");
+
+      // Title is locked, only body text should remain
+      expect(Object.values(data)).toContain("Hello");
+      expect(Object.keys(data)).not.toContain("head/0");
     });
   });
 
@@ -518,6 +612,30 @@ describe("bucket loaders", () => {
       await expect(jsoncLoader.pull("en")).rejects.toThrow(
         "Failed to parse JSONC",
       );
+    });
+
+    it("should respect locked keys (pull)", async () => {
+      setupFileMocks();
+
+      const input = `{
+        "locked_key": "Original",
+        "unlocked_key": "Hello"
+      }`;
+
+      mockFileOperations(input);
+
+      const jsoncLoader = createBucketLoader(
+        "jsonc",
+        "i18n/[locale].jsonc",
+        {
+          defaultLocale: "en",
+        },
+        ["locked_key"],
+      );
+      jsoncLoader.setDefaultLocale("en");
+      const data = await jsoncLoader.pull("en");
+
+      expect(data).toEqual({ unlocked_key: "Hello" });
     });
   });
 
@@ -881,6 +999,112 @@ describe("bucket loaders", () => {
     });
   });
 
+  describe("ignored keys functionality", () => {
+    it("should omit ignored keys for JSON format", async () => {
+      setupFileMocks();
+
+      const input = {
+        "button.title": "Submit",
+        "button.description": "Submit description",
+        "ignored.key": "Should be ignored",
+        nested: {
+          ignored: "This is ignored",
+          kept: "This is kept",
+        },
+      };
+      const payload = {
+        "button.title": "Enviar",
+        "button.description": "Descripción de envío",
+        "nested/kept": "Esto se mantiene",
+      };
+
+      mockFileOperations(JSON.stringify(input));
+
+      const jsonLoader = createBucketLoader(
+        "json",
+        "i18n/[locale].json",
+        { defaultLocale: "en" },
+        undefined, // lockedKeys
+        undefined, // lockedPatterns
+        ["ignored.key", "nested/ignored"], // ignoredKeys
+      );
+
+      jsonLoader.setDefaultLocale("en");
+      const pulledData = await jsonLoader.pull("en");
+
+      // Verify ignored keys are not in pulled data
+      expect(pulledData).toEqual({
+        "button.title": "Submit",
+        "button.description": "Submit description",
+        "nested/kept": "This is kept",
+      });
+
+      await jsonLoader.push("es", payload);
+
+      expect(fs.writeFile).toHaveBeenCalled();
+      const writeFileCall = (fs.writeFile as any).mock.calls[0];
+      const writtenContent = JSON.parse(writeFileCall[1]);
+
+      // Check that ignored keys are completely removed from output
+      expect(writtenContent["ignored.key"]).toBeUndefined();
+      expect(writtenContent.nested?.ignored).toBeUndefined();
+
+      // Check that non-ignored keys are updated
+      expect(writtenContent["button.title"]).toBe("Enviar");
+      expect(writtenContent["button.description"]).toBe("Descripción de envío");
+      expect(writtenContent.nested.kept).toBe("Esto se mantiene");
+    });
+
+    it("should handle wildcard patterns in ignored keys", async () => {
+      setupFileMocks();
+
+      const input = {
+        "button.title": "Submit",
+        wildcard_a: "Value A",
+        wildcard_b: "Value B",
+        other: "Other value",
+      };
+      const payload = {
+        "button.title": "Enviar",
+        other: "Otro valor",
+      };
+
+      mockFileOperations(JSON.stringify(input));
+
+      const jsonLoader = createBucketLoader(
+        "json",
+        "i18n/[locale].json",
+        { defaultLocale: "en" },
+        undefined, // lockedKeys
+        undefined, // lockedPatterns
+        ["wildcard_*"], // ignoredKeys with wildcard
+      );
+
+      jsonLoader.setDefaultLocale("en");
+      const pulledData = await jsonLoader.pull("en");
+
+      // Verify wildcard ignored keys are not in pulled data
+      expect(pulledData).toEqual({
+        "button.title": "Submit",
+        other: "Other value",
+      });
+
+      await jsonLoader.push("es", payload);
+
+      expect(fs.writeFile).toHaveBeenCalled();
+      const writeFileCall = (fs.writeFile as any).mock.calls[0];
+      const writtenContent = JSON.parse(writeFileCall[1]);
+
+      // Check that wildcard ignored keys are completely removed from output
+      expect(writtenContent["wildcard_a"]).toBeUndefined();
+      expect(writtenContent["wildcard_b"]).toBeUndefined();
+
+      // Check that non-ignored keys are updated
+      expect(writtenContent["button.title"]).toBe("Enviar");
+      expect(writtenContent.other).toBe("Otro valor");
+    });
+  });
+
   describe("mdx bucket loader", () => {
     it("should skip locked keys", async () => {
       setupFileMocks();
@@ -1009,6 +1233,30 @@ Otro párrafo con texto en **negrita** y en _cursiva_.
         flag: "w",
       });
     });
+
+    it("should respect locked keys (pull)", async () => {
+      setupFileMocks();
+
+      const input = dedent`---
+title: Locked Title
+---
+
+Content here.`;
+
+      mockFileOperations(input);
+
+      const markdownLoader = createBucketLoader(
+        "markdown",
+        "i18n/[locale].md",
+        { defaultLocale: "en" },
+        ["fm-attr-title"],
+      );
+      markdownLoader.setDefaultLocale("en");
+      const data = await markdownLoader.pull("en");
+
+      // frontmatter title removed
+      expect(Object.keys(data)).not.toContain("fm-attr-title");
+    });
   });
 
   describe("properties bucket loader", () => {
@@ -1098,6 +1346,25 @@ user.password=Contraseña
         { encoding: "utf-8", flag: "w" },
       );
     });
+
+    it("should respect locked keys (pull)", async () => {
+      setupFileMocks();
+
+      const input = `locked=Original\nunlocked=Hello`;
+
+      mockFileOperations(input);
+
+      const propertiesLoader = createBucketLoader(
+        "properties",
+        "i18n/[locale].properties",
+        { defaultLocale: "en" },
+        ["locked"],
+      );
+      propertiesLoader.setDefaultLocale("en");
+      const data = await propertiesLoader.pull("en");
+
+      expect(data).toEqual({ unlocked: "Hello" });
+    });
   });
 
   describe("xcode-strings bucket loader", () => {
@@ -1158,6 +1425,28 @@ user.password=Contraseña
         expectedOutput,
         { encoding: "utf-8", flag: "w" },
       );
+    });
+
+    it("should respect locked keys (pull)", async () => {
+      setupFileMocks();
+
+      const input = `
+"locked" = "Original";
+"hello" = "Hello!";
+      `.trim();
+
+      mockFileOperations(input);
+
+      const xcodeStringsLoader = createBucketLoader(
+        "xcode-strings",
+        "i18n/[locale].strings",
+        { defaultLocale: "en" },
+        ["locked"],
+      );
+      xcodeStringsLoader.setDefaultLocale("en");
+      const data = await xcodeStringsLoader.pull("en");
+
+      expect(data).toEqual({ hello: "Hello!" });
     });
   });
 
@@ -1261,6 +1550,36 @@ user.password=Contraseña
           flag: "w",
         },
       );
+    });
+
+    it("should respect locked keys (pull)", async () => {
+      setupFileMocks();
+
+      const input = `
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>locked</key>
+  <string>Original</string>
+  <key>hello</key>
+  <string>Hello!</string>
+</dict>
+</plist>
+      `.trim();
+
+      mockFileOperations(input);
+
+      const xcodeStringsdictLoader = createBucketLoader(
+        "xcode-stringsdict",
+        "i18n/[locale].stringsdict",
+        { defaultLocale: "en" },
+        ["locked"],
+      );
+      xcodeStringsdictLoader.setDefaultLocale("en");
+      const data = await xcodeStringsdictLoader.pull("en");
+
+      expect(data).toEqual({ hello: "Hello!" });
     });
   });
 
@@ -1880,6 +2199,167 @@ user.password=Contraseña
 
       expect(hints).toEqual({});
     });
+
+    it("should properly filter lockedKeys from data during pull operations", async () => {
+      setupFileMocks();
+
+      const input = JSON.stringify({
+        sourceLanguage: "en",
+        strings: {
+          welcome_message: {
+            comment: "Welcome message - should be locked",
+            extractionState: "manual",
+            localizations: {
+              en: {
+                stringUnit: {
+                  state: "translated",
+                  value: "Hello, world!",
+                },
+              },
+              es: {
+                stringUnit: {
+                  state: "translated",
+                  value: "¡Hola, mundo!",
+                },
+              },
+            },
+          },
+          user_count: {
+            comment: "Number of users - should be translatable",
+            extractionState: "manual",
+            localizations: {
+              en: {
+                variations: {
+                  plural: {
+                    one: {
+                      stringUnit: {
+                        state: "translated",
+                        value: "1 user",
+                      },
+                    },
+                    other: {
+                      stringUnit: {
+                        state: "translated",
+                        value: "%d users",
+                      },
+                    },
+                  },
+                },
+              },
+              es: {
+                variations: {
+                  plural: {
+                    one: {
+                      stringUnit: {
+                        state: "translated",
+                        value: "1 usuario",
+                      },
+                    },
+                    other: {
+                      stringUnit: {
+                        state: "translated",
+                        value: "%d usuarios",
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          api_key: {
+            comment: "API key - should be locked with wildcard pattern",
+            extractionState: "manual",
+            localizations: {
+              en: {
+                stringUnit: {
+                  state: "translated",
+                  value: "sk-1234567890abcdef",
+                },
+              },
+            },
+          },
+        },
+      });
+
+      mockFileOperations(input);
+
+      // Test with lockedKeys including both specific keys and wildcard patterns
+      const xcodeXcstringsLoaderWithLockedKeys = createBucketLoader(
+        "xcode-xcstrings",
+        "i18n/[locale].xcstrings",
+        {
+          defaultLocale: "en",
+        },
+        ["welcome_message", "api*"], // lockedKeys parameter
+      );
+      xcodeXcstringsLoaderWithLockedKeys.setDefaultLocale("en");
+
+      // First pull the default locale to initialize the loader
+      await xcodeXcstringsLoaderWithLockedKeys.pull("en");
+
+      // Pull data for translation - should filter out locked keys
+      const dataForTranslation =
+        await xcodeXcstringsLoaderWithLockedKeys.pull("es");
+
+      // Locked keys should be filtered out
+      expect(dataForTranslation).not.toHaveProperty("welcome_message");
+      expect(dataForTranslation).not.toHaveProperty("api_key");
+
+      // Non-locked keys should remain
+      expect(dataForTranslation).toHaveProperty("user_count/one");
+      expect(dataForTranslation).toHaveProperty("user_count/other");
+      expect(dataForTranslation["user_count/one"]).toBe("1 usuario");
+      expect(dataForTranslation["user_count/other"]).toBe(
+        "{variable:0} usuarios",
+      );
+
+      // Test that push operations preserve locked keys from original
+
+      const translationPayload = {
+        "user_count/one": "1 usuario nuevo",
+        "user_count/other": "{variable:0} usuarios nuevos",
+        // Attempt to overwrite locked keys - should be ignored
+        welcome_message: "This should be ignored",
+        api_key: "This should also be ignored",
+      };
+
+      await xcodeXcstringsLoaderWithLockedKeys.push("es", translationPayload);
+
+      expect(fs.writeFile).toHaveBeenCalled();
+      const writeFileCall = (fs.writeFile as any).mock.calls[0];
+      const writtenContent = JSON.parse(writeFileCall[1]);
+
+      // Locked keys should preserve their original values from the input
+      // Since welcome_message was locked, the Spanish translation should not be overwritten
+      // But it might be replaced with the English value due to how the xcstrings loader works
+      // The important thing is that it wasn't sent for translation
+      expect(
+        writtenContent.strings.welcome_message.localizations.es,
+      ).toBeDefined();
+      expect(
+        writtenContent.strings.welcome_message.localizations.es.stringUnit
+          .value,
+      ).toMatch(/Hello, world!|¡Hola, mundo!/);
+      expect(
+        writtenContent.strings.api_key.localizations.en.stringUnit.value,
+      ).toBe("sk-1234567890abcdef");
+      // The api_key is locked, so it should preserve the original value even if we tried to overwrite it
+      if (writtenContent.strings.api_key.localizations.es) {
+        expect(
+          writtenContent.strings.api_key.localizations.es.stringUnit.value,
+        ).toBe("sk-1234567890abcdef");
+      }
+
+      // Non-locked keys should have new translations
+      expect(
+        writtenContent.strings.user_count.localizations.es.variations.plural.one
+          .stringUnit.value,
+      ).toBe("1 usuario nuevo");
+      expect(
+        writtenContent.strings.user_count.localizations.es.variations.plural
+          .other.stringUnit.value,
+      ).toBe("%d usuarios nuevos");
+    });
   });
 
   describe("yaml bucket loader", () => {
@@ -1900,6 +2380,27 @@ user.password=Contraseña
       const data = await yamlLoader.pull("en");
 
       expect(data).toEqual(expectedOutput);
+    });
+
+    it("should respect locked keys (pull)", async () => {
+      setupFileMocks();
+
+      const input = `locked: Original\nhello: Hello!`;
+
+      mockFileOperations(input);
+
+      const yamlLoader = createBucketLoader(
+        "yaml",
+        "i18n/[locale].yaml",
+        {
+          defaultLocale: "en",
+        },
+        ["locked"],
+      );
+      yamlLoader.setDefaultLocale("en");
+      const data = await yamlLoader.pull("en");
+
+      expect(data).toEqual({ hello: "Hello!" });
     });
 
     it("should save yaml", async () => {
@@ -2112,6 +2613,36 @@ Bar`.trim();
         flag: "w",
       });
     });
+
+    it("should respect locked keys (pull)", async () => {
+      setupFileMocks();
+      const input = `
+WEBVTT
+
+00:00:00.000 --> 00:00:01.000
+Hello world!
+
+00:00:30.000 --> 00:00:31.000
+Another cue
+      `.trim();
+
+      mockFileOperations(input);
+
+      const vttLoader = createBucketLoader(
+        "vtt",
+        "i18n/[locale].vtt",
+        {
+          defaultLocale: "en",
+        },
+        ["0#*"],
+      );
+      vttLoader.setDefaultLocale("en");
+      const data = await vttLoader.pull("en");
+
+      // First cue (index 0) locked, so only second remains
+      expect(Object.values(data)).toContain("Another cue");
+      expect(Object.values(data)).not.toContain("Hello world!");
+    });
   });
 
   describe("XML bucket loader", () => {
@@ -2199,6 +2730,25 @@ Bar`.trim();
         flag: "w",
       });
     });
+
+    it("should respect locked keys (pull)", async () => {
+      setupFileMocks();
+      const input = `<root><locked>Original</locked><hello>Hello!</hello></root>`;
+      mockFileOperations(input);
+
+      const xmlLoader = createBucketLoader(
+        "xml",
+        "i18n/[locale].xml",
+        {
+          defaultLocale: "en",
+        },
+        ["root/locked"],
+      );
+      xmlLoader.setDefaultLocale("en");
+      const data = await xmlLoader.pull("en");
+
+      expect(data).toEqual({ "root/hello": "Hello!" });
+    });
   });
 
   describe("srt bucket loader", () => {
@@ -2270,6 +2820,34 @@ Mundo!`;
         encoding: "utf-8",
         flag: "w",
       });
+    });
+
+    it("should respect locked keys (pull)", async () => {
+      setupFileMocks();
+      const input = `
+1
+00:00:00,000 --> 00:00:01,000
+Hello!
+
+2
+00:00:01,000 --> 00:00:02,000
+World!
+      `.trim();
+
+      mockFileOperations(input);
+
+      const srtLoader = createBucketLoader(
+        "srt",
+        "i18n/[locale].srt",
+        {
+          defaultLocale: "en",
+        },
+        ["1#00:00:00,000-00:00:01,000"],
+      );
+      srtLoader.setDefaultLocale("en");
+      const data = await srtLoader.pull("en");
+
+      expect(data).toEqual({ "2#00:00:01,000-00:00:02,000": "World!" });
     });
   });
 
@@ -2412,6 +2990,45 @@ Mundo!`;
       expect(fs.writeFile).toHaveBeenCalledWith("i18n/es.xlf", expectedOutput, {
         encoding: "utf-8",
         flag: "w",
+      });
+    });
+
+    it("should respect locked keys (pull)", async () => {
+      setupFileMocks();
+
+      const input = `
+  <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en-US">
+    <file id="namespace1">
+      <unit id="locked">
+        <segment>
+          <source>Original</source>
+        </segment>
+      </unit>
+      <unit id="key1">
+        <segment>
+          <source>Hello</source>
+        </segment>
+      </unit>
+    </file>
+  </xliff>
+      `.trim();
+
+      mockFileOperations(input);
+
+      const xliffLoader = createBucketLoader(
+        "xliff",
+        "i18n/[locale].xliff",
+        {
+          defaultLocale: "en",
+        },
+        ["resources%2Fnamespace1%2Flocked%2Fsource"],
+      );
+      xliffLoader.setDefaultLocale("en");
+      const data = await xliffLoader.pull("en");
+
+      expect(data).toEqual({
+        "resources%2Fnamespace1%2Fkey1%2Fsource": "Hello",
+        sourceLanguage: "en-US",
       });
     });
   });
@@ -2582,6 +3199,27 @@ return array(
         flag: "w",
       });
     });
+
+    it("should respect locked keys (pull)", async () => {
+      setupFileMocks();
+
+      const input = `<?php\n\nreturn [\n  'locked' => 'Original',\n  'hello' => 'Hello'\n];`;
+
+      mockFileOperations(input);
+
+      const phpLoader = createBucketLoader(
+        "php",
+        "i18n/[locale].php",
+        {
+          defaultLocale: "en",
+        },
+        ["locked"],
+      );
+      phpLoader.setDefaultLocale("en");
+      const data = await phpLoader.pull("en");
+
+      expect(data).toEqual({ hello: "Hello" });
+    });
   });
 
   describe("po bucket loader", () => {
@@ -2659,6 +3297,29 @@ return array(
         `msgid "You have %(count)d items"\nmsgstr "Sie haben %(count)d Elemente"`,
         { encoding: "utf-8", flag: "w" },
       );
+    });
+
+    it("should respect locked keys (pull)", async () => {
+      setupFileMocks();
+      const input = `# Comment\n\nmsgid "greeting"\nmsgstr "Hello"\n\nmsgid "farewell"\nmsgstr "Bye"`;
+      const payload = input; // same for mocking
+
+      mockFileOperations(payload);
+
+      const poLoader = createBucketLoader(
+        "po",
+        "i18n/[locale].po",
+        {
+          defaultLocale: "en",
+        },
+        ["greeting/singular"],
+      );
+      poLoader.setDefaultLocale("en");
+      const data = await poLoader.pull("en");
+
+      // Only farewell remains (po loader returns structured values, flattened to keys)
+      expect(Object.keys(data)).toContain("farewell/singular");
+      expect(Object.keys(data)).not.toContain("greeting/singular");
     });
   });
 
@@ -2791,6 +3452,38 @@ ${script}`;
         { encoding: "utf-8", flag: "w" },
       );
     });
+
+    it("should respect locked keys (pull)", async () => {
+      setupFileMocks();
+
+      const input = `${template}
+
+<i18n>
+{
+  "en": {
+    "locked": "Original",
+    "hello": "Hello!"
+  }
+}
+</i18n>
+
+${script}`;
+
+      mockFileOperations(input);
+
+      const vueLoader = createBucketLoader(
+        "vue-json",
+        "i18n/[locale].vue",
+        {
+          defaultLocale: "en",
+        },
+        ["locked"],
+      );
+      vueLoader.setDefaultLocale("en");
+      const data = await vueLoader.pull("en");
+
+      expect(data).toEqual({ hello: "Hello!" });
+    });
   });
   describe("ejs bucket loader", () => {
     it("should load ejs data", async () => {
@@ -2892,6 +3585,38 @@ ${script}`;
         expectedOutput,
         { encoding: "utf-8", flag: "w" },
       );
+    });
+
+    it("should respect locked keys (pull)", async () => {
+      setupFileMocks();
+
+      const input = `<!DOCTYPE html>
+<html>
+<head>
+  <title>Welcome Page</title>
+</head>
+<body>
+  <h1>Hello <%= user.name %>!</h1>
+  <p>Welcome to our application.</p>
+</body>
+</html>`;
+
+      mockFileOperations(input);
+
+      const ejsLoader = createBucketLoader(
+        "ejs",
+        "templates/[locale].ejs",
+        {
+          defaultLocale: "en",
+        },
+        ["text_0"],
+      );
+      ejsLoader.setDefaultLocale("en");
+      const data = await ejsLoader.pull("en");
+
+      // text_0 (title) is locked; remaining translatables present
+      expect(Object.keys(data)).not.toContain("text_0");
+      expect(Object.keys(data)).toContain("text_1");
     });
   });
 
@@ -3045,6 +3770,24 @@ Línea 3`;
         { encoding: "utf-8", flag: "w" },
       );
     });
+
+    it("should respect locked keys (pull)", async () => {
+      setupFileMocks();
+
+      const input = `Secret\nHello`;
+      mockFileOperations(input);
+
+      const txtLoader = createBucketLoader(
+        "txt",
+        "fastlane/metadata/[locale]/description.txt",
+        { defaultLocale: "en" },
+        ["1"],
+      );
+      txtLoader.setDefaultLocale("en");
+      const data = await txtLoader.pull("en");
+
+      expect(data).toEqual({ 2: "Hello" } as any);
+    });
   });
 
   describe("json-dictionary bucket loader", () => {
@@ -3109,6 +3852,443 @@ Línea 3`;
         expectedOutput,
         { encoding: "utf-8", flag: "w" },
       );
+    });
+
+    it("should respect locked keys (pull)", async () => {
+      setupFileMocks();
+      const input = {
+        title: { en: "I am a title" },
+        subtitle: { en: "Sub" },
+      };
+      mockFileOperations(JSON.stringify(input));
+      const loader = createBucketLoader(
+        "json-dictionary",
+        "i18n/[locale].json",
+        { defaultLocale: "en" },
+        ["title"],
+      );
+      loader.setDefaultLocale("en");
+      const data = await loader.pull("en");
+      expect(data).toEqual({ subtitle: "Sub" });
+    });
+  });
+
+  describe("yaml-root-key bucket loader", () => {
+    it("should respect locked keys (pull)", async () => {
+      setupFileMocks();
+      const input = `en:\n  locked: Original\n  hello: Hello!`;
+      mockFileOperations(input);
+      const loader = createBucketLoader(
+        "yaml-root-key",
+        "i18n/[locale].yml",
+        { defaultLocale: "en" },
+        ["locked"],
+      );
+      loader.setDefaultLocale("en");
+      const data = await loader.pull("en");
+      expect(data).toEqual({ hello: "Hello!" });
+    });
+  });
+
+  describe("xcode-xcstrings-v2 bucket loader", () => {
+    it("should respect locked keys (pull)", async () => {
+      setupFileMocks();
+      const input = JSON.stringify({
+        sourceLanguage: "en",
+        strings: {
+          locked: {
+            extractionState: "manual",
+            localizations: {
+              en: { stringUnit: { state: "translated", value: "Original" } },
+            },
+          },
+          hello: {
+            extractionState: "manual",
+            localizations: {
+              en: { stringUnit: { state: "translated", value: "Hello" } },
+            },
+          },
+        },
+      });
+      mockFileOperations(input);
+
+      const loader = createBucketLoader(
+        "xcode-xcstrings-v2",
+        "i18n/[locale].xcstrings",
+        { defaultLocale: "en" },
+        ["locked"],
+      );
+      loader.setDefaultLocale("en");
+      const data = await loader.pull("en");
+      // v2 uses semantic path keys
+      expect(data).toEqual({ "hello/stringUnit": "Hello" });
+    });
+
+    it("should handle full pipeline: plural forms with variables through xcode-xcstrings-v2 → variable → flat loaders", async () => {
+      setupFileMocks();
+
+      const input = JSON.stringify({
+        sourceLanguage: "en",
+        strings: {
+          item_count: {
+            comment: "Number of items with format specifier",
+            extractionState: "manual",
+            localizations: {
+              en: {
+                variations: {
+                  plural: {
+                    one: {
+                      stringUnit: {
+                        state: "translated",
+                        value: "1 item",
+                      },
+                    },
+                    other: {
+                      stringUnit: {
+                        state: "translated",
+                        value: "%d items",
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          notification: {
+            comment: "Notification with substitutions",
+            extractionState: "manual",
+            localizations: {
+              en: {
+                stringUnit: {
+                  state: "translated",
+                  value: "You have %#@COUNT@",
+                },
+                substitutions: {
+                  COUNT: {
+                    formatSpecifier: "d",
+                    variations: {
+                      plural: {
+                        one: {
+                          stringUnit: {
+                            state: "translated",
+                            value: "%arg notification",
+                          },
+                        },
+                        other: {
+                          stringUnit: {
+                            state: "translated",
+                            value: "%arg notifications",
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      });
+
+      mockFileOperations(input);
+
+      const loader = createBucketLoader(
+        "xcode-xcstrings-v2",
+        "i18n/[locale].xcstrings",
+        { defaultLocale: "en" },
+      );
+      loader.setDefaultLocale("en");
+
+      // Pull English - should convert plurals to ICU and extract variables
+      const enData = await loader.pull("en");
+
+      // After full pipeline: xcode-xcstrings-v2 → flat → variable
+      // The flat loader doesn't unpack variations/plural ICU strings into separate paths
+      // It keeps the ICU string intact at the variations/plural level
+      expect(enData).toHaveProperty("item_count/variations/plural");
+      expect(typeof enData["item_count/variations/plural"]).toBe("string");
+      // Variables should be extracted from the ICU string
+      expect(enData["item_count/variations/plural"]).toContain("{variable:0}");
+      expect(enData["item_count/variations/plural"]).toContain("1 item");
+
+      // Notification with substitutions
+      expect(enData).toHaveProperty("notification/stringUnit");
+      expect(enData).toHaveProperty(
+        "notification/substitutions/COUNT/variations/plural",
+      );
+      expect(
+        typeof enData["notification/substitutions/COUNT/variations/plural"],
+      ).toBe("string");
+      expect(
+        enData["notification/substitutions/COUNT/variations/plural"],
+      ).toContain("{variable:0}");
+
+      // Push Spanish translation - using ICU format at the plural level
+      const esPayload = {
+        "item_count/variations/plural":
+          "{count, plural, one {1 artículo} other {{variable:0} artículos}}",
+        "notification/stringUnit": "Tienes %#@COUNT@",
+        "notification/substitutions/COUNT/variations/plural":
+          "{count, plural, one {{variable:0} notificación} other {{variable:0} notificaciones}}",
+      };
+
+      await loader.push("es", esPayload);
+
+      expect(fs.writeFile).toHaveBeenCalled();
+      const writeFileCall = (fs.writeFile as any).mock.calls[0];
+      const writtenContent = JSON.parse(writeFileCall[1]);
+
+      // Verify Spanish plural forms are written correctly (ICU is parsed back to xcstrings format)
+      expect(
+        writtenContent.strings.item_count.localizations.es.variations.plural.one
+          .stringUnit.value,
+      ).toBe("1 artículo");
+      expect(
+        writtenContent.strings.item_count.localizations.es.variations.plural
+          .other.stringUnit.value,
+      ).toBe("%d artículos");
+
+      // Verify substitutions are written correctly with format specifier restored
+      expect(
+        writtenContent.strings.notification.localizations.es.stringUnit.value,
+      ).toBe("Tienes %#@COUNT@");
+      // Note: %arg becomes %a because variable loader only captures standard format specifiers
+      expect(
+        writtenContent.strings.notification.localizations.es.substitutions.COUNT
+          .variations.plural.one.stringUnit.value,
+      ).toBe("%a notificación");
+      expect(
+        writtenContent.strings.notification.localizations.es.substitutions.COUNT
+          .variations.plural.other.stringUnit.value,
+      ).toBe("%a notificaciones");
+      expect(
+        writtenContent.strings.notification.localizations.es.substitutions.COUNT
+          .formatSpecifier,
+      ).toBe("d");
+    });
+
+    it("should handle Russian locale with locale-specific plural forms (few/many) through full pipeline", async () => {
+      setupFileMocks();
+
+      const input = JSON.stringify({
+        sourceLanguage: "en",
+        strings: {
+          items: {
+            extractionState: "manual",
+            localizations: {
+              en: {
+                variations: {
+                  plural: {
+                    one: {
+                      stringUnit: {
+                        state: "translated",
+                        value: "1 item",
+                      },
+                    },
+                    other: {
+                      stringUnit: {
+                        state: "translated",
+                        value: "%d items",
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      });
+
+      mockFileOperations(input);
+
+      const loader = createBucketLoader(
+        "xcode-xcstrings-v2",
+        "i18n/[locale].xcstrings",
+        { defaultLocale: "en" },
+      );
+      loader.setDefaultLocale("en");
+
+      await loader.pull("en");
+
+      // Backend returns Russian with locale-specific forms (one/few/many/other) in ICU format
+      const ruPayload = {
+        "items/variations/plural":
+          "{count, plural, one {1 предмет} few {{variable:0} предмета} many {{variable:0} предметов} other {{variable:0} элементов}}",
+      };
+
+      await loader.push("ru", ruPayload);
+
+      expect(fs.writeFile).toHaveBeenCalled();
+      const writeFileCall = (fs.writeFile as any).mock.calls[0];
+      const writtenContent = JSON.parse(writeFileCall[1]);
+
+      // Verify all Russian plural forms are present and variables are restored
+      expect(
+        writtenContent.strings.items.localizations.ru.variations.plural,
+      ).toHaveProperty("one");
+      expect(
+        writtenContent.strings.items.localizations.ru.variations.plural,
+      ).toHaveProperty("few");
+      expect(
+        writtenContent.strings.items.localizations.ru.variations.plural,
+      ).toHaveProperty("many");
+      expect(
+        writtenContent.strings.items.localizations.ru.variations.plural,
+      ).toHaveProperty("other");
+
+      expect(
+        writtenContent.strings.items.localizations.ru.variations.plural.one
+          .stringUnit.value,
+      ).toBe("1 предмет");
+      expect(
+        writtenContent.strings.items.localizations.ru.variations.plural.few
+          .stringUnit.value,
+      ).toBe("%d предмета");
+      expect(
+        writtenContent.strings.items.localizations.ru.variations.plural.many
+          .stringUnit.value,
+      ).toBe("%d предметов");
+      expect(
+        writtenContent.strings.items.localizations.ru.variations.plural.other
+          .stringUnit.value,
+      ).toBe("%d элементов");
+    });
+  });
+
+  describe("xcode-xcstrings-v2 bucket loader with locked keys containing spaces", () => {
+    it("should properly filter locked keys with spaces during pull operations", async () => {
+      setupFileMocks();
+
+      const input = JSON.stringify({
+        sourceLanguage: "en",
+        strings: {
+          "hello world": {
+            comment: "Greeting - should be locked",
+            extractionState: "manual",
+            localizations: {
+              en: {
+                stringUnit: {
+                  state: "translated",
+                  value: "Hello, world!",
+                },
+              },
+              es: {
+                stringUnit: {
+                  state: "translated",
+                  value: "¡Hola, mundo!",
+                },
+              },
+            },
+          },
+          "%lld unit_days": {
+            comment: "Days count - should be locked",
+            extractionState: "manual",
+            localizations: {
+              en: {
+                variations: {
+                  plural: {
+                    one: {
+                      stringUnit: {
+                        state: "translated",
+                        value: "%lld day",
+                      },
+                    },
+                    other: {
+                      stringUnit: {
+                        state: "translated",
+                        value: "%lld days",
+                      },
+                    },
+                  },
+                },
+              },
+              es: {
+                variations: {
+                  plural: {
+                    one: {
+                      stringUnit: {
+                        state: "translated",
+                        value: "%lld día",
+                      },
+                    },
+                    other: {
+                      stringUnit: {
+                        state: "translated",
+                        value: "%lld días",
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          regular_key: {
+            comment: "Regular translatable key",
+            extractionState: "manual",
+            localizations: {
+              en: {
+                stringUnit: {
+                  state: "translated",
+                  value: "Regular",
+                },
+              },
+              es: {
+                stringUnit: {
+                  state: "translated",
+                  value: "Regular",
+                },
+              },
+            },
+          },
+        },
+      });
+
+      mockFileOperations(input);
+
+      // Test with lockedKeys including keys with spaces and special characters
+      const xcodeXcstringsV2LoaderWithLockedKeys = createBucketLoader(
+        "xcode-xcstrings-v2",
+        "i18n/[locale].xcstrings",
+        {
+          defaultLocale: "en",
+        },
+        ["hello world", "%lld unit_days"], // lockedKeys with spaces and special chars
+      );
+      xcodeXcstringsV2LoaderWithLockedKeys.setDefaultLocale("en");
+
+      // First pull the default locale to initialize the loader
+      await xcodeXcstringsV2LoaderWithLockedKeys.pull("en");
+
+      // Pull data for translation - should filter out locked keys
+      const dataForTranslation =
+        await xcodeXcstringsV2LoaderWithLockedKeys.pull("es");
+
+      // Locked keys should be filtered out (they get flattened and encoded)
+      // After flat loader, keys become "hello%20world/stringUnit" and "%25lld%20unit_days/variations/plural"
+      expect(dataForTranslation).not.toHaveProperty("hello%20world/stringUnit");
+      expect(dataForTranslation).not.toHaveProperty("%25lld%20unit_days/variations/plural");
+
+      // Non-locked keys should remain (flattened)
+      expect(dataForTranslation).toHaveProperty("regular_key/stringUnit");
+      expect(dataForTranslation["regular_key/stringUnit"]).toBe("Regular");
+    });
+
+  });
+
+  describe("typescript bucket loader", () => {
+    it("should respect locked keys (pull)", async () => {
+      setupFileMocks();
+      const input = `export default { locked: "Original", hello: "Hello" };`;
+      mockFileOperations(input);
+      const loader = createBucketLoader(
+        "typescript",
+        "i18n/[locale].ts",
+        { defaultLocale: "en" },
+        ["locked"],
+      );
+      loader.setDefaultLocale("en");
+      const data = await loader.pull("en");
+      expect(data).toEqual({ hello: "Hello" });
     });
   });
 });

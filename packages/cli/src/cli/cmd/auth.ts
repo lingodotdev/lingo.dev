@@ -5,16 +5,16 @@ import { createAuthenticator } from "../utils/auth";
 
 export default new Command()
   .command("auth")
-  .description("Show current authentication status")
+  .description("Show current authentication status and user email")
   .helpOption("-h, --help", "Show help")
   // Deprecated options, safe to remove after September 2025
   .option(
     "--login",
-    "Login to your account (deprecated: use 'lingo.dev login' instead)",
+    "DEPRECATED: Shows deprecation warning and exits. Use `lingo.dev login` instead",
   )
   .option(
     "--logout",
-    "Logout from your account (deprecated: use 'lingo.dev logout' instead)",
+    "DEPRECATED: Shows deprecation warning and exits. Use `lingo.dev logout` instead",
   )
   .action(async (options) => {
     try {

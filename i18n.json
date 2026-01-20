@@ -1,5 +1,5 @@
 {
-  "version": 1.7,
+  "version": "1.10",
   "locale": {
     "source": "en",
     "targets": [
@@ -19,7 +19,8 @@
       "bn",
       "fa",
       "pl",
-      "tr"
+      "tr",
+      "ur"
     ]
   },
   "buckets": {

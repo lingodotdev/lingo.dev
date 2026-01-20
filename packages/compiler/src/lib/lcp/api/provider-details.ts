@@ -30,6 +30,19 @@ export const providerDetails: Record<
     apiKeyConfigKey: "llm.aimlApiKey",
     getKeyLink: "https://aimlapi.com",
     docsLink: "https://docs.aimlapi.com/",
+  openai: {
+    name: "OpenAI",
+    apiKeyEnvVar: "OPENAI_API_KEY",
+    apiKeyConfigKey: "llm.openaiApiKey",
+    getKeyLink: "https://platform.openai.com/account/api-keys",
+    docsLink: "https://platform.openai.com/docs",
+  },
+  anthropic: {
+    name: "Anthropic",
+    apiKeyEnvVar: "ANTHROPIC_API_KEY",
+    apiKeyConfigKey: "llm.anthropicApiKey",
+    getKeyLink: "https://console.anthropic.com/get-api-key",
+    docsLink: "https://console.anthropic.com/docs",
   },
   openrouter: {
     name: "OpenRouter",
@@ -54,7 +67,7 @@ export const providerDetails: Record<
   },
   "lingo.dev": {
     name: "Lingo.dev",
-    apiKeyEnvVar: "LINGO_API_KEY",
+    apiKeyEnvVar: "LINGODOTDEV_API_KEY",
     apiKeyConfigKey: "auth.apiKey",
     getKeyLink: "https://lingo.dev",
     docsLink: "https://lingo.dev/docs",

@@ -169,7 +169,7 @@ describe("loaders/xcode-xcstrings", () => {
       });
     });
 
-    it("should push plural translations", async () => {
+    it("should push plural translations in plain object format", async () => {
       const loader = createXcodeXcstringsLoader(defaultLocale);
       loader.setDefaultLocale(defaultLocale);
       await loader.pull(defaultLocale, mockInput);
@@ -300,6 +300,35 @@ describe("loaders/xcode-xcstrings", () => {
       expect(
         result!.strings["key.missing-localization"].localizations.en,
       ).toBeUndefined();
+    });
+  });
+
+  describe("stringSet support", () => {
+    it("should pull and push stringSet.values as array", async () => {
+      const input = {
+        sourceLanguage: "en",
+        strings: {
+          "app.shortcut": {
+            extractionState: "extracted_with_value",
+            localizations: {
+              en: { stringSet: { state: "new", values: ["Open", "Launch"] } },
+            },
+          },
+        },
+        version: "1.0",
+      };
+
+      const loader = createXcodeXcstringsLoader(defaultLocale);
+      loader.setDefaultLocale(defaultLocale);
+      await loader.pull(defaultLocale, input);
+      const pulled = await loader.pull("en", input);
+
+      expect(pulled["app.shortcut"]).toEqual(["Open", "Launch"]);
+
+      const pushed = await loader.push("es", { "app.shortcut": ["Abrir"] }, input);
+      expect(pushed!.strings["app.shortcut"].localizations.es).toEqual({
+        stringSet: { state: "translated", values: ["Abrir"] },
+      });
     });
   });
 

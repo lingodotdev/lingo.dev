@@ -25,6 +25,11 @@ export default function createXcodeXcstringsLoader(
         if (langTranslationEntity) {
           if ("stringUnit" in langTranslationEntity) {
             resultData[translationKey] = langTranslationEntity.stringUnit.value;
+          } else if ("stringSet" in langTranslationEntity) {
+            const values = langTranslationEntity.stringSet.values;
+            if (Array.isArray(values) && values.length > 0) {
+              resultData[translationKey] = values;
+            }
           } else if ("variations" in langTranslationEntity) {
             if ("plural" in langTranslationEntity.variations) {
               resultData[translationKey] = {};
@@ -72,6 +77,22 @@ export default function createXcodeXcstringsLoader(
                 stringUnit: {
                   state: "translated",
                   value,
+                },
+              },
+            },
+          };
+
+          if (hasDoNotTranslateFlag) {
+            langDataToMerge.strings[key].shouldTranslate = false;
+          }
+        } else if (Array.isArray(value)) {
+          langDataToMerge.strings[key] = {
+            extractionState: originalInput?.strings?.[key]?.extractionState,
+            localizations: {
+              [locale]: {
+                stringSet: {
+                  state: "translated",
+                  values: value,
                 },
               },
             },

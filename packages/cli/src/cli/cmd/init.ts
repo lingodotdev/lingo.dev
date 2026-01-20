@@ -19,6 +19,7 @@ import { ensurePatterns } from "../utils/ensure-patterns";
 import updateGitignore from "../utils/update-gitignore";
 import initCICD from "../utils/init-ci-cd";
 import open from "open";
+import cursorInitCmd from "./init/cursor";
 
 const openUrl = (path: string) => {
   const settings = getSettings(undefined);
@@ -36,15 +37,21 @@ const throwHelpError = (option: string, value: string) => {
 
 export default new InteractiveCommand()
   .command("init")
-  .description("Initialize Lingo.dev project")
+  .description("Create i18n.json configuration file for a new project")
   .helpOption("-h, --help", "Show help")
   .addOption(
-    new InteractiveOption("-f --force", "Overwrite existing config")
+    new InteractiveOption(
+      "-f --force",
+      "Overwrite existing Lingo.dev configuration instead of aborting initialization (destructive operation)",
+    )
       .prompt(undefined)
       .default(false),
   )
   .addOption(
-    new InteractiveOption("-s --source <locale>", "Source locale")
+    new InteractiveOption(
+      "-s --source <locale>",
+      "Primary language of your application that content will be translated from. Defaults to 'en'",
+    )
       .argParser((value) => {
         try {
           resolveLocaleCode(value as LocaleCode);
@@ -56,7 +63,10 @@ export default new InteractiveCommand()
       .default("en"),
   )
   .addOption(
-    new InteractiveOption("-t --targets <locale...>", "List of target locales")
+    new InteractiveOption(
+      "-t --targets <locale...>",
+      "Target languages to translate to. Accepts locale codes like 'es', 'fr', 'de-AT' separated by commas or spaces. Defaults to 'es'",
+    )
       .argParser((value) => {
         const values = (
           value.includes(",") ? value.split(",") : value.split(" ")
@@ -73,7 +83,10 @@ export default new InteractiveCommand()
       .default("es"),
   )
   .addOption(
-    new InteractiveOption("-b, --bucket <type>", "Type of bucket")
+    new InteractiveOption(
+      "-b, --bucket <type>",
+      "File format for your translation files. Must match a supported type such as json, yaml, or android",
+    )
       .argParser((value) => {
         if (!bucketTypes.includes(value as (typeof bucketTypes)[number])) {
           throwHelpError("bucket format", value);
@@ -85,7 +98,7 @@ export default new InteractiveCommand()
   .addOption(
     new InteractiveOption(
       "-p, --paths [path...]",
-      "List of paths for the bucket",
+      "File paths containing translations when using --no-interactive mode. Specify paths with [locale] placeholder, separated by commas or spaces",
     )
       .argParser((value) => {
         if (!value || value.length === 0) return [];
@@ -104,8 +117,8 @@ export default new InteractiveCommand()
             throw new Error(`Invalid path: ${p}`);
           }
         }
-
         return values;
+        
       })
       .prompt(undefined) // make non-interactive
       .default([]),
@@ -246,4 +259,5 @@ export default new InteractiveCommand()
     if (!isInteractive) {
       Ora().info("Please see https://lingo.dev/cli");
     }
-  });
+  })
+  .addCommand(cursorInitCmd);

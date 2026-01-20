@@ -29,11 +29,6 @@ export class LCP {
       }
       fs.writeFileSync(filePath, "{}");
 
-      console.log(dedent`
-          \n
-          ⚠️  Lingo.dev Compiler detected missing meta.json file in lingo directory. 
-          Please restart the build / watch command to regenerate all Lingo.dev Compiler files.
-        `);
       try {
         fs.rmdirSync(path.resolve(process.cwd(), ".next"), {
           recursive: true,
@@ -41,7 +36,10 @@ export class LCP {
       } catch (error) {
         // Ignore errors if directory doesn't exist
       }
-      process.exit(1);
+      throw new Error(dedent`
+        ⚠️  Lingo.dev Compiler detected missing meta.json file in lingo directory.
+        Please restart the build / watch command to regenerate all Lingo.dev Compiler files.
+      `);
     }
   }
 

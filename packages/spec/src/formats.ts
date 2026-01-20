@@ -1,6 +1,7 @@
 import Z from "zod";
 
 export const bucketTypes = [
+  "ail",
   "android",
   "csv",
   "ejs",
@@ -10,10 +11,14 @@ export const bucketTypes = [
   "json5",
   "jsonc",
   "markdown",
+  "markdoc",
   "mdx",
+  "mjml",
+  "twig",
   "xcode-strings",
   "xcode-stringsdict",
   "xcode-xcstrings",
+  "xcode-xcstrings-v2",
   "yaml",
   "yaml-root-key",
   "properties",
@@ -30,6 +35,7 @@ export const bucketTypes = [
   "typescript",
   "txt",
   "json-dictionary",
+  "csv-per-locale",
 ] as const;
 
 export const bucketTypeSchema = Z.enum(bucketTypes);

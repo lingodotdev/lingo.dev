@@ -35,7 +35,7 @@ function ensureSurroundingImageNewlines(_content: string) {
         ? match
         : `\n\n${match}\n\n`;
 
-      content = content.replaceAll(match, replacement);
+      content = content.replaceAll(match, () => replacement);
       workingContent = workingContent.replaceAll(match, "");
       found = true;
     }
@@ -65,7 +65,7 @@ function ensureTrailingFenceNewline(_content: string) {
       const replacement = match.trim().startsWith(">")
         ? match
         : `\n\n${match}\n\n`;
-      content = content.replaceAll(match, replacement);
+      content = content.replaceAll(match, () => replacement);
       workingContent = workingContent.replaceAll(match, "");
       found = true;
     }
@@ -99,26 +99,24 @@ function extractCodePlaceholders(content: string): {
   for (const match of codeBlockMatches) {
     const codeBlock = match[0];
     const codeBlockHash = md5(codeBlock);
-    const placeholder = `---CODE-PLACEHOLDER-${codeBlockHash}---`;
+    const placeholder = `{/* CODE_PLACEHOLDER_${codeBlockHash} */}`;
 
     codePlaceholders[placeholder] = codeBlock;
 
     const replacement = codeBlock.trim().startsWith(">")
       ? `> ${placeholder}`
       : `${placeholder}`;
-    finalContent = finalContent.replace(codeBlock, replacement);
+    finalContent = finalContent.replace(codeBlock, () => replacement);
   }
 
   const inlineCodeMatches = finalContent.matchAll(inlineCodeRegex);
   for (const match of inlineCodeMatches) {
     const inlineCode = match[0];
     const inlineCodeHash = md5(inlineCode);
-    const placeholder = `---INLINE-CODE-PLACEHOLDER-${inlineCodeHash}---`;
-
+    const placeholder = `{/* INLINE_CODE_PLACEHOLDER_${inlineCodeHash} */}`;
     codePlaceholders[placeholder] = inlineCode;
-
     const replacement = placeholder;
-    finalContent = finalContent.replace(inlineCode, replacement);
+    finalContent = finalContent.replace(inlineCode, () => replacement);
   }
 
   return {
@@ -162,7 +160,10 @@ export default function createMdxCodePlaceholderLoader(): ILoader<
         const replacement = original.startsWith(">")
           ? _.trimStart(original, "> ")
           : original;
-        result = result.replaceAll(placeholder, replacement);
+
+        // Use function replacer to avoid special $ character handling
+        // When using a string, $ has special meaning (e.g., $` inserts text before match)
+        result = result.replaceAll(placeholder, () => replacement);
       }
 
       return result;

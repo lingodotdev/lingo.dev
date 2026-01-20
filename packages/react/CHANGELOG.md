@@ -1,5 +1,53 @@
 # @lingo.dev/\_react
 
+## 0.7.6
+
+### Patch Changes
+
+- [#1749](https://github.com/lingodotdev/lingo.dev/pull/1749) [`5bc0c89`](https://github.com/lingodotdev/lingo.dev/commit/5bc0c8952d1bc01be7a2e7b49506f6a5f8f05a59) Thanks [@sumitsaurabh927](https://github.com/sumitsaurabh927)! - create a new space for community contributions like demo apps etc
+
+## 0.7.5
+
+### Patch Changes
+
+- [`3b24647`](https://github.com/lingodotdev/lingo.dev/commit/3b246473f6f4773f00ea13211bc2be59a98e0b7c) Thanks [@vrcprl](https://github.com/vrcprl)! - Update Next.js to 15.3.8 to address security vulnerability
+
+## 0.7.4
+
+### Patch Changes
+
+- [`d7ccd60`](https://github.com/lingodotdev/lingo.dev/commit/d7ccd6000cd980333e7ac4b63da4e2ba624c3de4) Thanks [@vrcprl](https://github.com/vrcprl)! - chore: update React to 19.2.3 to fix CVE-2025-55184 (DoS) and CVE-2025-55183 (source code exposure)
+
+## 0.7.3
+
+### Patch Changes
+
+- [#1667](https://github.com/lingodotdev/lingo.dev/pull/1667) [`1a857bd`](https://github.com/lingodotdev/lingo.dev/commit/1a857bdf76d50afb3024a2437da5fd60e6721bb9) Thanks [@vrcprl](https://github.com/vrcprl)! - Upd NPM workflows
+
+## 0.7.2
+
+### Patch Changes
+
+- [#1665](https://github.com/lingodotdev/lingo.dev/pull/1665) [`b898777`](https://github.com/lingodotdev/lingo.dev/commit/b89877729555025e0380451fa495573c2a114a6b) Thanks [@vrcprl](https://github.com/vrcprl)! - Upd react version
+
+## 0.7.1
+
+### Patch Changes
+
+- [#1660](https://github.com/lingodotdev/lingo.dev/pull/1660) [`1b2980d`](https://github.com/lingodotdev/lingo.dev/commit/1b2980d9215eca4f2db101af530680d6eb3be8eb) Thanks [@wotschofsky](https://github.com/wotschofsky)! - Upgrade to non-vulnerable Next.js versions (React2Shell)
+
+## 0.7.0
+
+### Minor Changes
+
+- [#1634](https://github.com/lingodotdev/lingo.dev/pull/1634) [`48fab66`](https://github.com/lingodotdev/lingo.dev/commit/48fab66b6806455d9faa1dcb169d4c61194e2144) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - Pin all dependencies to exact versions to prevent supply chain attacks. Dependencies no longer use caret (^) or tilde (~) ranges, ensuring full control over version updates and requiring explicit review of all dependency changes.
+
+## 0.6.0
+
+### Minor Changes
+
+- [#1534](https://github.com/lingodotdev/lingo.dev/pull/1534) [`4d2359a`](https://github.com/lingodotdev/lingo.dev/commit/4d2359a3d7164f825bf5ddf62b5d13a4690cb4a2) Thanks [@verma-divyanshu-git](https://github.com/verma-divyanshu-git)! - add Suspense fallback to LingoProviderWrapper
+
 ## 0.5.0
 
 ### Minor Changes

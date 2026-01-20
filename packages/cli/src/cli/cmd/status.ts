@@ -36,31 +36,34 @@ export default new Command()
   .helpOption("-h, --help", "Show help")
   .option(
     "--locale <locale>",
-    "Locale to process",
+    "Limit the report to specific target locales from i18n.json. Repeat the flag to include multiple locales. Defaults to all configured target locales",
     (val: string, prev: string[]) => (prev ? [...prev, val] : [val]),
   )
   .option(
     "--bucket <bucket>",
-    "Bucket to process",
+    "Limit the report to specific bucket types defined in i18n.json (e.g., json, yaml, android). Repeat the flag to include multiple bucket types. Defaults to all buckets",
     (val: string, prev: string[]) => (prev ? [...prev, val] : [val]),
   )
   .option(
     "--file [files...]",
-    "File to process. Process only files that include this string in their path. Useful if you have a lot of files and want to focus on a specific one. Specify more files separated by commas or spaces.",
+    "Filter the status report to only include files whose paths contain these substrings. Example: 'components' to match any file path containing 'components'",
   )
   .option(
     "--force",
-    "Ignore lockfile and process all keys, useful for estimating full re-translation",
+    "Force all keys to be counted as needing translation, bypassing change detection. Shows word estimates for a complete retranslation regardless of current translation status",
   )
-  .option("--verbose", "Show detailed output including key-level word counts")
+  .option(
+    "--verbose",
+    "Print detailed output showing missing and updated key counts with example key names for each file and locale",
+  )
   .option(
     "--api-key <api-key>",
-    "Explicitly set the API key to use, override the default API key from settings",
+    "Override the API key from settings or environment variables for this run",
   )
   .action(async function (options) {
     const ora = Ora();
     const flags = parseFlags(options);
-    let authId: string | null = null;
+    let email: string | null = null;
 
     try {
       ora.start("Loading configuration...");
@@ -73,7 +76,7 @@ export default new Command()
         ora.start("Checking authentication status...");
         const auth = await tryAuthenticate(settings);
         if (auth) {
-          authId = auth.id;
+          email = auth.email;
           ora.succeed(`Authenticated as ${auth.email}`);
         } else {
           ora.info(
@@ -89,10 +92,11 @@ export default new Command()
       ora.succeed("Localization configuration is valid");
 
       // Track event with or without authentication
-      trackEvent(authId || "status", "cmd.status.start", {
+      trackEvent(email, "cmd.status.start", {
         i18nConfig,
         flags,
       });
+      await new Promise((resolve) => setTimeout(resolve, 50));
 
       let buckets = getBuckets(i18nConfig!);
       if (flags.bucket?.length) {
@@ -194,8 +198,11 @@ export default new Command()
               {
                 defaultLocale: sourceLocale,
                 injectLocale: bucket.injectLocale,
+                formatter: i18nConfig!.formatter,
               },
               bucket.lockedKeys,
+              bucket.lockedPatterns,
+              bucket.ignoredKeys,
             );
 
             bucketLoader.setDefaultLocale(sourceLocale);
@@ -509,7 +516,10 @@ export default new Command()
         console.log(`• Per-language breakdown:`);
         for (const locale of targetLocales) {
           const words = totalWordCount.get(locale) || 0;
-          const percent = ((words / totalWordsToTranslate) * 100).toFixed(1);
+          const percent =
+            totalWordsToTranslate > 0
+              ? ((words / totalWordsToTranslate) * 100).toFixed(1)
+              : "0.0";
           console.log(
             `  - ${locale}: ~${words.toLocaleString()} words (${percent}% of total)`,
           );
@@ -619,22 +629,24 @@ export default new Command()
       }
 
       // Track successful completion
-      trackEvent(authId || "status", "cmd.status.success", {
+      trackEvent(email, "cmd.status.success", {
         i18nConfig,
         flags,
         totalSourceKeyCount,
         languageStats,
         totalWordsToTranslate,
-        authenticated: !!authId,
+        authenticated: !!email,
       });
+      await new Promise((resolve) => setTimeout(resolve, 50));
       exitGracefully();
     } catch (error: any) {
       ora.fail(error.message);
-      trackEvent(authId || "status", "cmd.status.error", {
+      trackEvent(email, "cmd.status.error", {
         flags,
         error: error.message,
-        authenticated: !!authId,
+        authenticated: !!email,
       });
+      await new Promise((resolve) => setTimeout(resolve, 50));
       process.exit(1);
     }
   });

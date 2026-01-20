@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import {
   getLocaleCodeDelimiter,
+  localeCodeSchema,
   normalizeLocale,
   resolveLocaleCode,
   resolveOverriddenLocale,
@@ -86,5 +87,59 @@ describe("resolveOverridenLocale", () => {
   it("should return the same locale if no recognized delimiter is found", () => {
     expect(resolveOverriddenLocale("enUS", "_")).toEqual("enUS");
     expect(resolveOverriddenLocale("frFR", "-")).toEqual("frFR");
+  });
+});
+
+describe("localeCodeSchema validation", () => {
+  describe("standard BCP 47 format (hyphen)", () => {
+    it("should accept language-region codes", () => {
+      expect(localeCodeSchema.safeParse("en-US").success).toBe(true);
+      expect(localeCodeSchema.safeParse("fr-CA").success).toBe(true);
+      expect(localeCodeSchema.safeParse("es-MX").success).toBe(true);
+    });
+
+    it("should accept language-script-region codes", () => {
+      expect(localeCodeSchema.safeParse("zh-Hans-CN").success).toBe(true);
+      expect(localeCodeSchema.safeParse("sr-Latn-RS").success).toBe(true);
+      expect(localeCodeSchema.safeParse("sr-Cyrl-RS").success).toBe(true);
+    });
+  });
+
+  describe("underscore format (Java/Android)", () => {
+    it("should accept language_region codes", () => {
+      expect(localeCodeSchema.safeParse("en_US").success).toBe(true);
+      expect(localeCodeSchema.safeParse("pt_BR").success).toBe(true);
+      expect(localeCodeSchema.safeParse("de_DE").success).toBe(true);
+    });
+
+    it("should accept language_script_region codes", () => {
+      expect(localeCodeSchema.safeParse("zh_Hans_CN").success).toBe(true);
+      expect(localeCodeSchema.safeParse("sr_Cyrl_RS").success).toBe(true);
+    });
+  });
+
+  describe("Android r-prefix format", () => {
+    it("should accept language-rRegion codes", () => {
+      expect(localeCodeSchema.safeParse("en-rUS").success).toBe(true);
+      expect(localeCodeSchema.safeParse("fr-rCA").success).toBe(true);
+      expect(localeCodeSchema.safeParse("es-rMX").success).toBe(true);
+      expect(localeCodeSchema.safeParse("zh-rCN").success).toBe(true);
+    });
+  });
+
+  describe("invalid locale codes", () => {
+    it("should reject invalid language codes", () => {
+      expect(localeCodeSchema.safeParse("invalid-US").success).toBe(false);
+      expect(localeCodeSchema.safeParse("xx-US").success).toBe(false);
+    });
+
+    it("should reject invalid region codes", () => {
+      expect(localeCodeSchema.safeParse("en-FAKE").success).toBe(false);
+      expect(localeCodeSchema.safeParse("en-ZZ").success).toBe(false);
+    });
+
+    it("should reject invalid script codes", () => {
+      expect(localeCodeSchema.safeParse("zh-Fake-CN").success).toBe(false);
+    });
   });
 });

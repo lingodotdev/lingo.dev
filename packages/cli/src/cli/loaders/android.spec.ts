@@ -94,6 +94,34 @@ describe("android loader", () => {
     });
   });
 
+  it("should correctly handle HTML markup in strings during push without duplication", async () => {
+    const input = `
+      <resources>
+        <string name="terms_of_use"><u>Terms of Use</u></string>
+        <string name="welcome">Welcome to <b>Android</b>!</string>
+      </resources>
+    `.trim();
+
+    const androidLoader = createAndroidLoader().setDefaultLocale("en");
+
+    // Pull first to initialize loader state
+    await androidLoader.pull("en", input);
+
+    // Push translated content with HTML
+    const pushed = await androidLoader.push("es", {
+      terms_of_use: "<u>Términos de uso</u>",
+      welcome: "Bienvenido a <b>Android</b>!",
+    });
+
+    // Verify no duplication - should only contain escaped HTML, not both escaped and unescaped
+    expect(pushed).toContain("&lt;u&gt;Términos de uso&lt;/u&gt;");
+    expect(pushed).not.toContain("<u>Términos de uso</u>&lt;u&gt;");
+    expect(pushed).not.toContain("&lt;u&gt;Terms of Use&lt;/u&gt;&lt;u&gt;Términos de uso&lt;/u&gt;");
+
+    expect(pushed).toContain("&lt;b&gt;Android&lt;/b&gt;");
+    expect(pushed).not.toContain("<b>Android</b>&lt;b&gt;");
+  });
+
   it("should correctly handle format strings", async () => {
     const input = `
       <resources>
@@ -603,5 +631,280 @@ Line 2
     expect(pushed).toContain("Please don\\'t hesitate to contact us");
     expect(pushed).toContain("- %d user\\'s item");
     expect(pushed).not.toContain("- %d user\\\\'s item");
+  });
+
+  // Tests for Issue Fixes
+
+  it("should preserve whitespace in array items during pull and push", async () => {
+    const input = `
+      <resources>
+        <string-array name="mixed_items">
+          <item>  Item with spaces  </item>
+          <item>    </item>
+        </string-array>
+      </resources>
+    `.trim();
+
+    const androidLoader = createAndroidLoader().setDefaultLocale("en");
+    const pulled = await androidLoader.pull("en", input);
+
+    expect(pulled.mixed_items).toEqual(["  Item with spaces  ", "    "]);
+
+    const pushed = await androidLoader.push("en", {
+      mixed_items: ["  Elemento con espacios  ", "    "],
+    });
+
+    expect(pushed).toContain("<item>  Elemento con espacios  </item>");
+    expect(pushed).toContain("<item>    </item>");
+  });
+
+  it("should retain CDATA wrappers for translated strings", async () => {
+    const input = `
+      <resources>
+        <string name="cdata_example"><![CDATA[Special <tag> ]]></string>
+      </resources>
+    `.trim();
+
+    const androidLoader = createAndroidLoader().setDefaultLocale("en");
+    await androidLoader.pull("en", input);
+
+    const pushed = await androidLoader.push("es", {
+      cdata_example: "Especial <tag> ",
+    });
+
+    expect(pushed).toContain(
+      '<string name="cdata_example"><![CDATA[Especial <tag> ]]></string>',
+    );
+  });
+
+  it("should escape apostrophes in CDATA sections", async () => {
+    const input = `
+      <resources>
+        <string name="review_info"><![CDATA[Hosts can't see your review until they've written one. <u>Learn more</u>]]></string>
+      </resources>
+    `.trim();
+
+    const androidLoader = createAndroidLoader().setDefaultLocale("en");
+    const pulled = await androidLoader.pull("en", input);
+
+    expect(pulled.review_info).toBe(
+      "Hosts can't see your review until they've written one. <u>Learn more</u>",
+    );
+
+    const pushed = await androidLoader.push("fr", {
+      review_info:
+        "Les hôtes ne peuvent voir votre avis qu'après en avoir écrit un. <u>En savoir plus</u>",
+    });
+
+    // Apostrophes must be escaped even inside CDATA (Android AAPT requirement)
+    expect(pushed).toContain("qu\\'après");
+    expect(pushed).toContain("<![CDATA[");
+    expect(pushed).toContain("]]>");
+    // HTML tags should NOT be escaped inside CDATA
+    expect(pushed).toContain("<u>En savoir plus</u>");
+    expect(pushed).not.toContain("&lt;u&gt;");
+  });
+
+  it("should preserve resource ordering after push", async () => {
+    const input = `
+      <resources>
+        <string name="first">First</string>
+        <string-array name="colors">
+          <item>Red</item>
+          <item>Green</item>
+        </string-array>
+        <plurals name="messages">
+          <item quantity="one">%d message</item>
+          <item quantity="other">%d messages</item>
+        </plurals>
+        <bool name="show_tutorial">true</bool>
+        <integer name="retry_count">3</integer>
+      </resources>
+    `.trim();
+
+    const androidLoader = createAndroidLoader().setDefaultLocale("en");
+    const roundTrip = await androidLoader.pull("en", input);
+    const pushed = await androidLoader.push("en", roundTrip);
+
+    const order = Array.from(
+      pushed.matchAll(
+        /<(string|string-array|plurals|bool|integer)\s+name="([^"]+)"/g,
+      ),
+    ).map(([, , name]) => name);
+
+    expect(order).toEqual([
+      "first",
+      "colors",
+      "messages",
+      "show_tutorial",
+      "retry_count",
+    ]);
+  });
+
+  it("should preserve XML declaration from source file", async () => {
+    const input = `<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="test">Test</string>
+</resources>`;
+
+    const androidLoader = createAndroidLoader().setDefaultLocale("en");
+    await androidLoader.pull("en", input);
+
+    const result = await androidLoader.push("es", { test: "Prueba" });
+
+    expect(result).toMatch(/^<\?xml version="1\.0" encoding="utf-8"\?>/);
+  });
+
+  it('should exclude translatable="false" items from target locale', async () => {
+    const input = `
+      <resources>
+        <string name="app_name">My App</string>
+        <string name="api_url" translatable="false">https://api.example.com</string>
+        <string name="debug_key" translatable="false">DEBUG_KEY</string>
+        <string-array name="colors">
+          <item>Red</item>
+        </string-array>
+        <string-array name="urls" translatable="false">
+          <item>https://example.com</item>
+        </string-array>
+        <plurals name="items">
+          <item quantity="one">%d item</item>
+          <item quantity="other">%d items</item>
+        </plurals>
+        <plurals name="bytes" translatable="false">
+          <item quantity="one">%d byte</item>
+          <item quantity="other">%d bytes</item>
+        </plurals>
+        <bool name="show_tutorial">true</bool>
+        <bool name="is_debug" translatable="false">false</bool>
+        <integer name="timeout">30</integer>
+        <integer name="version" translatable="false">42</integer>
+      </resources>
+    `.trim();
+
+    const androidLoader = createAndroidLoader().setDefaultLocale("en");
+    await androidLoader.pull("en", input);
+
+    const result = await androidLoader.push("es", {
+      app_name: "Mi Aplicación",
+      colors: ["Rojo"],
+      items: { one: "%d elemento", other: "%d elementos" },
+      show_tutorial: true,
+      timeout: 30,
+    });
+
+    // Check that translatable="false" items are NOT included
+    expect(result).not.toContain('name="api_url"');
+    expect(result).not.toContain("https://api.example.com");
+    expect(result).not.toContain('name="debug_key"');
+    expect(result).not.toContain("DEBUG_KEY");
+    expect(result).not.toContain('name="urls"');
+    expect(result).not.toContain('name="bytes"');
+    expect(result).not.toContain('name="is_debug"');
+    expect(result).not.toContain('name="version"');
+
+    // Check that translatable items are translated
+    expect(result).toContain("Mi Aplicación");
+    expect(result).toContain("Rojo");
+    expect(result).toContain("elemento");
+    expect(result).toContain('name="app_name"');
+    expect(result).toContain('name="colors"');
+    expect(result).toContain('name="items"');
+    expect(result).toContain('name="show_tutorial"');
+    expect(result).toContain('name="timeout"');
+  });
+
+  it("should use 4-space indentation by default", async () => {
+    const input = `<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="test">Test</string>
+    <string name="another">Another</string>
+</resources>`;
+
+    const androidLoader = createAndroidLoader().setDefaultLocale("en");
+    await androidLoader.pull("en", input);
+
+    const result = await androidLoader.push("es", {
+      test: "Prueba",
+      another: "Otro",
+    });
+
+    // Check for 4-space indentation (default)
+    // Note: Users should use formatters (Prettier/Biome) for custom indentation
+    expect(result).toContain('\n    <string name="test">');
+    expect(result).toContain('\n    <string name="another">');
+  });
+
+  it("should preserve XML declaration encoding from source file", async () => {
+    const inputUtf8 = `<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="test">Test</string>
+</resources>`;
+
+    const inputUpperUTF8 = `<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <string name="test">Test</string>
+</resources>`;
+
+    const inputISO = `<?xml version="1.0" encoding="ISO-8859-1"?>
+<resources>
+    <string name="test">Test</string>
+</resources>`;
+
+    const androidLoader = createAndroidLoader().setDefaultLocale("en");
+
+    // Test lowercase utf-8
+    await androidLoader.pull("en", inputUtf8);
+    let result = await androidLoader.push("es", { test: "Prueba" });
+    expect(result).toMatch(/^<\?xml version="1\.0" encoding="utf-8"\?>/);
+
+    // Test uppercase UTF-8
+    await androidLoader.pull("en", inputUpperUTF8);
+    result = await androidLoader.push("es", { test: "Prueba" });
+    expect(result).toMatch(/^<\?xml version="1\.0" encoding="UTF-8"\?>/);
+
+    // Test ISO-8859-1
+    await androidLoader.pull("en", inputISO);
+    result = await androidLoader.push("es", { test: "Prueba" });
+    expect(result).toMatch(/^<\?xml version="1\.0" encoding="ISO-8859-1"\?>/);
+  });
+
+  it("should preserve XML version from source file", async () => {
+    const inputV10 = `<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="test">Test</string>
+</resources>`;
+
+    const inputV11 = `<?xml version="1.1" encoding="utf-8"?>
+<resources>
+    <string name="test">Test</string>
+</resources>`;
+
+    const androidLoader = createAndroidLoader().setDefaultLocale("en");
+
+    // Test version 1.0
+    await androidLoader.pull("en", inputV10);
+    let result = await androidLoader.push("es", { test: "Prueba" });
+    expect(result).toMatch(/^<\?xml version="1\.0"/);
+
+    // Test version 1.1
+    await androidLoader.pull("en", inputV11);
+    result = await androidLoader.push("es", { test: "Prueba" });
+    expect(result).toMatch(/^<\?xml version="1\.1"/);
+  });
+
+  it("should omit XML declaration when source has none", async () => {
+    const inputNoDeclaration = `<resources>
+    <string name="test">Test</string>
+</resources>`;
+
+    const androidLoader = createAndroidLoader().setDefaultLocale("en");
+    await androidLoader.pull("en", inputNoDeclaration);
+
+    const result = await androidLoader.push("es", { test: "Prueba" });
+
+    // Should start immediately with the root element (no declaration)
+    expect(result).not.toMatch(/^<\?xml/);
+    expect(result.trim().startsWith("<resources>")).toBe(true);
   });
 });

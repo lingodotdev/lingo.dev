@@ -51,7 +51,7 @@ describe("ignored-keys loader", () => {
     expect(result).toEqual({ greeting: "hola" });
   });
 
-  it("should merge the ignored keys back when pushing a target locale", async () => {
+  it("should remove ignored keys when pushing a target locale", async () => {
     const loader = createLoader();
 
     // Initial pull for the default locale
@@ -69,18 +69,18 @@ describe("ignored-keys loader", () => {
     };
     await loader.pull(targetLocale, targetInput);
 
-    // Data that will be pushed (ignored keys are intentionally missing)
+    // Data that will be pushed (may still contain ignored keys from translation)
     const dataToPush = {
       greeting: "hola",
+      meta: "should be removed",
+      todo: "should be removed",
     };
 
     const pushResult = await loader.push(targetLocale, dataToPush);
 
-    // The loader should have re-inserted the ignored keys from the pull input.
+    // The loader should have removed the ignored keys completely.
     expect(pushResult).toEqual({
       greeting: "hola",
-      meta: "meta es",
-      todo: "todo es",
     });
   });
 
@@ -138,7 +138,7 @@ describe("ignored-keys loader", () => {
     });
   });
 
-  it("should merge wildcard-ignored keys back when pushing a target locale", async () => {
+  it("should remove wildcard-ignored keys when pushing a target locale", async () => {
     const loader = createLoader();
     await loader.pull(defaultLocale, {
       greeting: "hello",
@@ -162,7 +162,10 @@ describe("ignored-keys loader", () => {
     });
     const dataToPush = {
       greeting: "hola",
+      meta: "should be removed",
+      "pages/0/title": "should be removed",
       "pages/0/content": "Contenido Nuveo",
+      "pages/foo/title": "should be removed",
       "pages/foo/content": "Contenido Nuevo Foo",
       "pages/bar/notitle": "No Título",
       "pages/bar/content": "Contenido Nuevo Bar",
@@ -170,10 +173,7 @@ describe("ignored-keys loader", () => {
     const pushResult = await loader.push(targetLocale, dataToPush);
     expect(pushResult).toEqual({
       greeting: "hola",
-      meta: "meta es",
-      "pages/0/title": "Título 0",
       "pages/0/content": "Contenido Nuveo",
-      "pages/foo/title": "Título Foo",
       "pages/foo/content": "Contenido Nuevo Foo",
       "pages/bar/notitle": "No Título",
       "pages/bar/content": "Contenido Nuevo Bar",
