@@ -99,7 +99,7 @@ export default async function (): Promise<NextConfig> {
 }
 ```
 
-`next build` चलाएं और स्पेनिश और फ्रेंच बंडल्स को बाहर आते देखें ✨
+`next build` चलाएं और स्पेनिश और फ्रेंच बंडल देखें ✨
 
 पूरी गाइड के लिए [दस्तावेज़ पढ़ें →](https://lingo.dev/compiler), और अपने सेटअप में मदद पाने के लिए [हमारे Discord से जुड़ें](https://lingo.dev/go/discord)।
 
@@ -209,4 +209,4 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 [English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Bhojpuri](/readme/bho.md)
 
-अपनी भाषा नहीं दिख रही है? इसे [`i18n.json`](./i18n.json) में जोड़ें और एक पीआर खोलें!
+अपनी भाषा नहीं दिख रही? इसे [`i18n.json`](./i18n.json) में जोड़ें और PR खोलें!
