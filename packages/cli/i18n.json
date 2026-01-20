@@ -17,6 +17,11 @@
     "csv": {
       "include": ["demo/csv/example.csv"]
     },
+    "csv-per-locale": {
+      "include": ["demo/csv-per-locale/[locale]/example.csv"],
+      "lockedKeys": ["locked_key_1"],
+      "ignoredKeys": ["ignored_key_1"]
+    },
     "ejs": {
       "include": ["demo/ejs/[locale]/*.ejs"]
     },
