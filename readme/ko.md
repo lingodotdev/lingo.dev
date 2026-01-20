@@ -98,7 +98,7 @@ export default async function (): Promise<NextConfig> {
 }
 ```
 
-`next build`를 실행하고 스페인어와 프랑스어 번들이 생성되는 것을 확인하세요 ✨
+`next build`를 실행하면 스페인어와 프랑스어 번들이 생성됩니다 ✨
 
 전체 가이드는 [문서 읽기 →](https://lingo.dev/compiler)를 참조하고, 설정에 도움이 필요하면 [Discord에 참여하세요](https://lingo.dev/go/discord).
 
@@ -208,4 +208,4 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 [English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Bhojpuri](/readme/bho.md)
 
-원하는 언어가 보이지 않나요? [`i18n.json`](./i18n.json)에 추가하고 PR을 열어주세요!
+원하는 언어가 없나요? [`i18n.json`](./i18n.json)에 추가하고 PR을 열어주세요!
