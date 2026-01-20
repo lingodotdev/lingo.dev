@@ -104,8 +104,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/new-compiler
       '@tailwindcss/vite':
-        specifier: 4.0.6
-        version: 4.0.6(vite@7.3.0(@types/node@22.10.2)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))
+        specifier: 4.1.18
+        version: 4.1.18(vite@7.3.0(@types/node@22.10.2)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))
       '@tanstack/react-devtools':
         specifier: 0.7.0
         version: 0.7.0(@types/react-dom@19.2.0(@types/react@19.2.0))(@types/react@19.2.0)(csstype@3.2.3)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(solid-js@1.9.10)
@@ -128,8 +128,8 @@ importers:
         specifier: 19.2.0
         version: 19.2.0(react@19.2.0)
       tailwindcss:
-        specifier: 4.0.6
-        version: 4.0.6
+        specifier: 4.1.18
+        version: 4.1.18
     devDependencies:
       '@tanstack/devtools-vite':
         specifier: 0.3.11
@@ -169,7 +169,7 @@ importers:
     dependencies:
       '@replexica/sdk':
         specifier: 0.7.12
-        version: 0.7.12(@types/node@25.0.3)(@types/react@19.2.7)(encoding@0.1.13)(next@16.1.1(@opentelemetry/api@1.9.0)(@playwright/test@1.57.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))
+        version: 0.7.12(@types/node@25.0.3)(encoding@0.1.13)
     devDependencies:
       '@directus/extensions-sdk':
         specifier: 17.0.3
@@ -3806,10 +3806,10 @@ packages:
   '@tailwindcss/postcss@4.1.17':
     resolution: {integrity: sha512-+nKl9N9mN5uJ+M7dBOOCzINw94MPstNR/GtIhz1fpZysxL/4a+No64jCBD6CPN+bIHWFx3KWuu8XJRrj/572Dw==}
 
-  '@tailwindcss/vite@4.0.6':
-    resolution: {integrity: sha512-O25vZ/URWbZ2JHdk2o8wH7jOKqEGCsYmX3GwGmYS5DjE4X3mpf93a72Rn7VRnefldNauBzr5z2hfZptmBNtTUQ==}
+  '@tailwindcss/vite@4.1.18':
+    resolution: {integrity: sha512-jVA+/UpKL1vRLg6Hkao5jldawNmRo7mQYrZtNHMIVpLfLhDml5nMRUo/8MwoX2vNXvnaXNNMedrMfMugAVX1nA==}
     peerDependencies:
-      vite: ^5.2.0 || ^6
+      vite: ^5.2.0 || ^6 || ^7
 
   '@tanstack/devtools-client@0.0.4':
     resolution: {integrity: sha512-LefnH9KE9uRDEWifc3QDcooskA8ikfs41bybDTgpYQpyTUspZnaEdUdya9Hry0KYxZ8nos0S3nNbsP79KHqr6Q==}
@@ -8711,9 +8711,6 @@ packages:
     engines: {node: '>=18.18.0'}
     hasBin: true
 
-  tailwindcss@4.0.6:
-    resolution: {integrity: sha512-mysewHYJKaXgNOW6pp5xon/emCsfAMnO8WMaGKZZ35fomnR/T5gYnRg2/yRTTrtXiEl1tiVkeRt0eMO6HxEZqw==}
-
   tailwindcss@4.1.17:
     resolution: {integrity: sha512-j9Ee2YjuQqYT9bbRTfTZht9W/ytp5H+jJpZKiYdP/bpnXARAuELt9ofP0lPnmHjbga7SNQIxdTAXCmtKVYjN+Q==}
 
@@ -12306,7 +12303,7 @@ snapshots:
     dependencies:
       quansync: 1.0.0
 
-  '@replexica/sdk@0.7.12(@types/node@25.0.3)(@types/react@19.2.7)(encoding@0.1.13)(next@16.1.1(@opentelemetry/api@1.9.0)(@playwright/test@1.57.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))':
+  '@replexica/sdk@0.7.12(@types/node@25.0.3)(encoding@0.1.13)':
     dependencies:
       lingo.dev: 0.117.21(@types/node@25.0.3)(@types/react@19.2.7)(encoding@0.1.13)(next@16.1.1(@opentelemetry/api@1.9.0)(@playwright/test@1.57.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))
     transitivePeerDependencies:
@@ -13100,12 +13097,11 @@ snapshots:
       postcss: 8.5.6
       tailwindcss: 4.1.17
 
-  '@tailwindcss/vite@4.0.6(vite@7.3.0(@types/node@22.10.2)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))':
+  '@tailwindcss/vite@4.1.18(vite@7.3.0(@types/node@22.10.2)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))':
     dependencies:
       '@tailwindcss/node': 4.1.18
       '@tailwindcss/oxide': 4.1.18
-      lightningcss: 1.30.2
-      tailwindcss: 4.0.6
+      tailwindcss: 4.1.18
       vite: 7.3.0(@types/node@22.10.2)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2)
 
   '@tanstack/devtools-client@0.0.4':
@@ -19057,8 +19053,6 @@ snapshots:
       ts-toolbelt: 9.6.0
     transitivePeerDependencies:
       - typescript
-
-  tailwindcss@4.0.6: {}
 
   tailwindcss@4.1.17: {}
 
