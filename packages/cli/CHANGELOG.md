@@ -1,5 +1,26 @@
 # lingo.dev
 
+## 0.120.0
+
+### Minor Changes
+
+- [#1738](https://github.com/lingodotdev/lingo.dev/pull/1738) [`348b2de`](https://github.com/lingodotdev/lingo.dev/commit/348b2de39412101bacb5ed541b0db23f0ca6213d) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Remove hardcoded concurrency limit
+
+- [#1742](https://github.com/lingodotdev/lingo.dev/pull/1742) [`04c3679`](https://github.com/lingodotdev/lingo.dev/commit/04c3679c69231012f167da1640dc17ac57743d6b) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Add csv-per-locale bucket and improve ignoredKeys support for CSV
+
+### Patch Changes
+
+- [#1749](https://github.com/lingodotdev/lingo.dev/pull/1749) [`5bc0c89`](https://github.com/lingodotdev/lingo.dev/commit/5bc0c8952d1bc01be7a2e7b49506f6a5f8f05a59) Thanks [@sumitsaurabh927](https://github.com/sumitsaurabh927)! - create a new space for community contributions like demo apps etc
+
+- [#1748](https://github.com/lingodotdev/lingo.dev/pull/1748) [`797f913`](https://github.com/lingodotdev/lingo.dev/commit/797f9132b5cf05fe457968b691bca10db1fc37bb) Thanks [@jarne](https://github.com/jarne)! - Fix API key check condition that breaks the Ollama provider
+
+- Updated dependencies [[`04c3679`](https://github.com/lingodotdev/lingo.dev/commit/04c3679c69231012f167da1640dc17ac57743d6b), [`5bc0c89`](https://github.com/lingodotdev/lingo.dev/commit/5bc0c8952d1bc01be7a2e7b49506f6a5f8f05a59)]:
+  - @lingo.dev/_spec@0.46.0
+  - @lingo.dev/_compiler@0.8.12
+  - @lingo.dev/_locales@0.3.3
+  - @lingo.dev/_react@0.7.6
+  - @lingo.dev/_sdk@0.13.7
+
 ## 0.119.0
 
 ### Minor Changes

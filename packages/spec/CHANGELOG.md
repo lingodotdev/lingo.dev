@@ -1,5 +1,18 @@
 # @lingo.dev/\_spec
 
+## 0.46.0
+
+### Minor Changes
+
+- [#1742](https://github.com/lingodotdev/lingo.dev/pull/1742) [`04c3679`](https://github.com/lingodotdev/lingo.dev/commit/04c3679c69231012f167da1640dc17ac57743d6b) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Add csv-per-locale bucket and improve ignoredKeys support for CSV
+
+### Patch Changes
+
+- [#1749](https://github.com/lingodotdev/lingo.dev/pull/1749) [`5bc0c89`](https://github.com/lingodotdev/lingo.dev/commit/5bc0c8952d1bc01be7a2e7b49506f6a5f8f05a59) Thanks [@sumitsaurabh927](https://github.com/sumitsaurabh927)! - create a new space for community contributions like demo apps etc
+
+- Updated dependencies [[`5bc0c89`](https://github.com/lingodotdev/lingo.dev/commit/5bc0c8952d1bc01be7a2e7b49506f6a5f8f05a59)]:
+  - @lingo.dev/_locales@0.3.3
+
 ## 0.45.0
 
 ### Minor Changes
