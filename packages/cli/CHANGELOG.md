@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.121.0
+
+### Minor Changes
+
+- [#1270](https://github.com/lingodotdev/lingo.dev/pull/1270) [`606fd5b`](https://github.com/lingodotdev/lingo.dev/commit/606fd5b10d9d15a42a65d1cb763f59210d3c8842) Thanks [@pahimauchil](https://github.com/pahimauchil)! - Added Malayalam translation for README and updated i18n.json to include "ml" in targets.
+
 ## 0.120.0
 
 ### Minor Changes
