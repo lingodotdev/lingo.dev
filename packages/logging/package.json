@@ -1,6 +1,6 @@
 {
   "name": "@lingo.dev/_logging",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Lingo.dev logging utilities with Pino",
   "private": false,
   "repository": {
