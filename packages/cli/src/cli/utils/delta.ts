@@ -4,6 +4,7 @@ import { md5 } from "./md5";
 import { tryReadFile, writeFile, checkIfFileExists } from "../utils/fs";
 import * as path from "path";
 import YAML from "yaml";
+import { getConfigRoot } from "./config";
 
 const LockSchema = z.object({
   version: z.literal(1).prefault(1),
@@ -33,7 +34,8 @@ export type Delta = {
 };
 
 export function createDeltaProcessor(fileKey: string) {
-  const lockfilePath = path.join(process.cwd(), "i18n.lock");
+  const configRoot = getConfigRoot() || process.cwd();
+  const lockfilePath = path.join(configRoot, "i18n.lock");
   return {
     async checkIfLockExists() {
       return checkIfFileExists(lockfilePath);
