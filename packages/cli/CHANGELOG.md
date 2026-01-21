@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.122.1
+
+### Patch Changes
+
+- [#1757](https://github.com/lingodotdev/lingo.dev/pull/1757) [`1a250e6`](https://github.com/lingodotdev/lingo.dev/commit/1a250e64c01d4d62413b826485cfa4928e582b3d) Thanks [@vrcprl](https://github.com/vrcprl)! - remove old mcp command
+
 ## 0.122.0
 
 ### Minor Changes
