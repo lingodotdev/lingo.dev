@@ -104,7 +104,7 @@ function _loadDefaults(): CliSettings {
 }
 
 function _loadEnv() {
-  return Z.object({
+  return Z.looseObject({
     LINGODOTDEV_API_KEY: Z.string().optional(),
     LINGODOTDEV_API_URL: Z.string().optional(),
     LINGODOTDEV_WEB_URL: Z.string().optional(),
@@ -115,9 +115,7 @@ function _loadEnv() {
     GOOGLE_API_KEY: Z.string().optional(),
     OPENROUTER_API_KEY: Z.string().optional(),
     MISTRAL_API_KEY: Z.string().optional(),
-  })
-    .passthrough()
-    .parse(process.env);
+  }).parse(process.env);
 }
 
 function _loadSystemFile() {
@@ -127,8 +125,8 @@ function _loadSystemFile() {
     : "";
   const data = Ini.parse(content);
 
-  return Z.object({
-    auth: Z.object({
+  return Z.looseObject({
+    auth: Z.looseObject({
       apiKey: Z.string().optional(),
       apiUrl: Z.string().optional(),
       webUrl: Z.string().optional(),
@@ -136,7 +134,7 @@ function _loadSystemFile() {
         apiKey: Z.string().optional(),
       }).optional(),
     }).optional(),
-    llm: Z.object({
+    llm: Z.looseObject({
       openaiApiKey: Z.string().optional(),
       anthropicApiKey: Z.string().optional(),
       groqApiKey: Z.string().optional(),
@@ -144,9 +142,7 @@ function _loadSystemFile() {
       openrouterApiKey: Z.string().optional(),
       mistralApiKey: Z.string().optional(),
     }).optional(),
-  })
-    .passthrough()
-    .parse(data);
+  }).parse(data);
 }
 
 function _saveSystemFile(settings: CliSettings) {

@@ -94,6 +94,16 @@ export default new Command()
     updateGitignore();
 
     const ora = Ora();
+
+    // Show deprecation warning
+    console.log();
+    ora.warn(
+      chalk.yellow(
+        " DEPRECATED: 'i18n' is deprecated. Please use 'run' instead. Docs: https://lingo.dev/cli/commands/run",
+      ),
+    );
+    console.log();
+
     let flags: ReturnType<typeof parseFlags>;
 
     try {
@@ -641,8 +651,8 @@ function parseFlags(options: any) {
     strict: Z.boolean().optional(),
     key: Z.string().optional(),
     file: Z.array(Z.string()).optional(),
-    interactive: Z.boolean().default(false),
-    debug: Z.boolean().default(false),
+    interactive: Z.boolean().prefault(false),
+    debug: Z.boolean().prefault(false),
   }).parse(options);
 }
 
