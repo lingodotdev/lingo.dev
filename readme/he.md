@@ -10,8 +10,8 @@
 
 <p align="center">
   <strong>
-    ⚡ Lingo.dev - ערכת כלי i18n בקוד פתוח, מופעלת על ידי בינה מלאכותית לתרגום
-    מיידי עם LLMs.
+    ⚡ Lingo.dev - ערכת כלים בקוד פתוח מבוססת AI לתרגום מיידי עם מודלי שפה
+    גדולים.
   </strong>
 </p>
 
@@ -29,43 +29,43 @@
   <a href="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml">
     <img
       src="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml/badge.svg"
-      alt="שחרור"
+      alt="Release"
     />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md">
     <img
       src="https://img.shields.io/github/license/lingodotdev/lingo.dev"
-      alt="רישיון"
+      alt="License"
     />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/commits/main">
     <img
       src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev"
-      alt="קומיט אחרון"
+      alt="Last Commit"
     />
   </a>
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #1 DevTool של החודש"
+      alt="Product Hunt #1 DevTool of the Month"
     />
   </a>
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Week-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #1 מוצר השבוע"
+      alt="Product Hunt #1 DevTool of the Week"
     />
   </a>
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/Product%20Hunt-%232%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #2 מוצר היום"
+      alt="Product Hunt #2 Product of the Day"
     />
   </a>
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/GitHub-Trending-blue?logo=github&style=flat-square"
-      alt="מגמות ב-Github"
+      alt="Github trending"
     />
   </a>
 </p>
@@ -74,15 +74,15 @@
 
 ## הכירו את ה-Compiler 🆕
 
-**Lingo.dev Compiler** הוא middleware קומפיילר חינמי בקוד פתוח, המתוכנן להפוך כל אפליקציית React לרב-לשונית בזמן הבנייה מבלי לדרוש שינויים ברכיבי React הקיימים.
+**Lingo.dev Compiler** הוא תוכנת ביניים חינמית בקוד פתוח, שתוכננה להפוך כל אפליקציית React לרב-לשונית בזמן הבנייה ללא צורך בשינויים בקומפוננטות ה-React הקיימות.
 
-התקן פעם אחת:
+התקנה חד-פעמית:
 
 ```bash
 npm install @lingo.dev/compiler
 ```
 
-הפעל בהגדרות הבנייה שלך:
+הפעלה בקובץ תצורת הבנייה:
 
 ```ts
 import type { NextConfig } from "next";
@@ -99,42 +99,42 @@ export default async function (): Promise<NextConfig> {
 }
 ```
 
-הרץ `next build` וצפה בחבילות הספרדית והצרפתית מופיעות ✨
+הריצו `next build` וצפו בחבילות בספרדית ובצרפתית מופיעות ✨
 
-[קרא את התיעוד ←](https://lingo.dev/compiler) למדריך המלא, ו[הצטרף לדיסקורד שלנו](https://lingo.dev/go/discord) כדי לקבל עזרה בהגדרה שלך.
+[קראו את התיעוד →](https://lingo.dev/compiler) למדריך המלא, ו[הצטרפו ל-Discord שלנו](https://lingo.dev/go/discord) כדי לקבל עזרה בהגדרה.
 
 ---
 
-### מה נמצא בתוך מאגר זה?
+### מה נמצא בתוך הריפו הזה?
 
-| כלי          | בקצרה                                                                       | תיעוד                                   |
-| ------------ | --------------------------------------------------------------------------- | --------------------------------------- |
-| **Compiler** | לוקליזציה של React בזמן בנייה                                               | [/compiler](https://lingo.dev/compiler) |
-| **CLI**      | פקודה אחת ללוקליזציה עבור אפליקציות ווב ומובייל, JSON, YAML, markdown, ועוד | [/cli](https://lingo.dev/cli)           |
-| **CI/CD**    | קומיט אוטומטי של תרגומים בכל דחיפה + יצירת בקשות משיכה במידת הצורך          | [/ci](https://lingo.dev/ci)             |
-| **SDK**      | תרגום בזמן אמת עבור תוכן שנוצר על ידי משתמשים                               | [/sdk](https://lingo.dev/sdk)           |
+| כלי          | תקציר                                                              | תיעוד                                   |
+| ------------ | ------------------------------------------------------------------ | --------------------------------------- |
+| **Compiler** | תרגום React בזמן בנייה                                             | [/compiler](https://lingo.dev/compiler) |
+| **CLI**      | תרגום בפקודה אחת לאפליקציות ווב ומובייל, JSON, YAML, markdown ועוד | [/cli](https://lingo.dev/cli)           |
+| **CI/CD**    | תרגומים אוטומטיים בכל push + יצירת pull requests במידת הצורך       | [/ci](https://lingo.dev/ci)             |
+| **SDK**      | תרגום בזמן אמת לתוכן שנוצר על ידי משתמשים                          | [/sdk](https://lingo.dev/sdk)           |
 
-להלן הנקודות המהירות עבור כל אחד 👇
+להלן הנקודות המרכזיות עבור כל אחד 👇
 
 ---
 
 ### ⚡️ Lingo.dev CLI
 
-תרגמו קוד ותוכן ישירות מהטרמינל שלכם.
+תרגם קוד ותוכן ישירות מהטרמינל שלך.
 
 ```bash
 npx lingo.dev@latest run
 ```
 
-הוא מייצר טביעת אצבע לכל מחרוזת, שומר תוצאות במטמון, ומתרגם מחדש רק את מה שהשתנה.
+הוא יוצר טביעת אצבע לכל מחרוזת, שומר תוצאות במטמון, ומתרגם מחדש רק את מה שהשתנה.
 
-[עקבו אחר התיעוד →](https://lingo.dev/cli) כדי ללמוד כיצד להגדיר אותו.
+[עקוב אחר התיעוד ←](https://lingo.dev/cli) כדי ללמוד כיצד להגדיר אותו.
 
 ---
 
 ### 🔄 Lingo.dev CI/CD
 
-שחררו תרגומים מושלמים באופן אוטומטי.
+שלח תרגומים מושלמים באופן אוטומטי.
 
 ```yaml
 # .github/workflows/i18n.yml
@@ -151,15 +151,15 @@ jobs:
           api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
 ```
 
-שומר על המאגר שלכם ירוק ועל המוצר שלכם רב-לשוני ללא צעדים ידניים.
+שומר על המאגר שלך ירוק ועל המוצר שלך רב-לשוני ללא שלבים ידניים.
 
-[קראו את התיעוד →](https://lingo.dev/ci)
+[קרא את התיעוד ←](https://lingo.dev/ci)
 
 ---
 
 ### 🧩 Lingo.dev SDK
 
-תרגום מיידי לפי בקשה עבור תוכן דינמי.
+תרגום מיידי לכל בקשה עבור תוכן דינמי.
 
 ```ts
 import { LingoDotDevEngine } from "lingo.dev/sdk";
@@ -181,9 +181,9 @@ const translated = await lingoDotDev.localizeObject(content, {
 // Returns: { greeting: "Hola", farewell: "Adiós", message: "Bienvenido a nuestra plataforma" }
 ```
 
-מושלם עבור צ'אט, תגובות משתמשים וזרימות אחרות בזמן אמת.
+מושלם עבור צ'אט, תגובות משתמשים ותהליכים אחרים בזמן אמת.
 
-[קראו את התיעוד →](https://lingo.dev/sdk)
+[קרא את התיעוד ←](https://lingo.dev/sdk)
 
 ---
 
@@ -191,13 +191,13 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 אנחנו מונעים על ידי הקהילה ואוהבים תרומות!
 
-- יש לכם רעיון? [פתחו סוגיה](https://github.com/lingodotdev/lingo.dev/issues)
-- רוצים לתקן משהו? [שלחו PR](https://github.com/lingodotdev/lingo.dev/pulls)
-- צריכים עזרה? [הצטרפו לדיסקורד שלנו](https://lingo.dev/go/discord)
+- יש לך רעיון? [פתח issue](https://github.com/lingodotdev/lingo.dev/issues)
+- רוצה לתקן משהו? [שלח PR](https://github.com/lingodotdev/lingo.dev/pulls)
+- צריך עזרה? [הצטרף לדיסקורד שלנו](https://lingo.dev/go/discord)
 
 ## ⭐ היסטוריית כוכבים
 
-אם אתם אוהבים את מה שאנחנו עושים, תנו לנו ⭐ ועזרו לנו להגיע ל-6,000 כוכבים! 🌟
+אם אתה אוהב את מה שאנחנו עושים, תן לנו ⭐ ועזור לנו להגיע ל-6,000 כוכבים! 🌟
 
 [
 
@@ -205,8 +205,15 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 ](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
 
-## 🌐 קרא אותי בשפות אחרות
+## 🌐 קובץ readme בשפות אחרות
 
-[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Bhojpuri](/readme/bho.md)
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [Português (Brasil)](/readme/pt-BR.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Polski](/readme/pl.md) • [Türkçe](/readme/tr.md) • [اردو](/readme/ur.md) • [भोजपुरी](/readme/bho.md) • [অসমীয়া](/readme/as-IN.md) • [ગુજરાતી](/readme/gu-IN.md) • [മലയാളം (IN)](/readme/ml-IN.md) • [मराठी](/readme/mr-IN.md) • [ଓଡ଼ିଆ](/readme/or-IN.md) • [ਪੰਜਾਬੀ](/readme/pa-IN.md) • [සිංහල](/readme/si-LK.md) • [தமிழ்](/readme/ta-IN.md) • [తెలుగు](/readme/te-IN.md)
 
-לא רואה את השפה שלך? הוסף אותה ל-[`i18n.json`](./i18n.json) ופתח PR!
+לא רואה את השפה שלך? הוסף אותה ל-`i18n.json` ופתח PR!
+
+**פורמט לוקייל:** יש להשתמש בקודים של [BCP-47](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale): `language[-Script][-REGION]`
+
+- שפה: ISO 639-1/2/3 באותיות קטנות (`en`, `zh`, `bho`)
+- כתב: ISO 15924 באותיות רישיות (`Hans`, `Hant`, `Latn`)
+- אזור: ISO 3166-1 alpha-2 באותיות גדולות (`US`, `CN`, `IN`)
+- דוגמאות: `en`, `pt-BR`, `zh-Hans`, `sr-Cyrl-RS`
