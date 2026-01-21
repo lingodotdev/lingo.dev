@@ -45,13 +45,13 @@ export const flagsSchema = z.object({
   frozen: z.boolean().optional(),
   verbose: z.boolean().optional(),
   strict: z.boolean().optional(),
-  interactive: z.boolean().default(false),
-  concurrency: z.number().positive().default(10),
-  debug: z.boolean().default(false),
+  interactive: z.boolean().prefault(false),
+  concurrency: z.number().positive().prefault(10),
+  debug: z.boolean().prefault(false),
   sourceLocale: z.string().optional(),
   targetLocale: z.array(z.string()).optional(),
-  watch: z.boolean().default(false),
-  debounce: z.number().positive().default(5000), // 5 seconds default
+  watch: z.boolean().prefault(false),
+  debounce: z.number().positive().prefault(5000), // 5 seconds default
   sound: z.boolean().optional(),
   pseudo: z.boolean().optional(),
 });

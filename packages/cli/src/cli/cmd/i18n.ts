@@ -651,8 +651,8 @@ function parseFlags(options: any) {
     strict: Z.boolean().optional(),
     key: Z.string().optional(),
     file: Z.array(Z.string()).optional(),
-    interactive: Z.boolean().default(false),
-    debug: Z.boolean().default(false),
+    interactive: Z.boolean().prefault(false),
+    debug: Z.boolean().prefault(false),
   }).parse(options);
 }
 
