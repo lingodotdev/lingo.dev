@@ -1,5 +1,16 @@
 # lingo.dev
 
+## 0.122.0
+
+### Minor Changes
+
+- [#1559](https://github.com/lingodotdev/lingo.dev/pull/1559) [`e8407e6`](https://github.com/lingodotdev/lingo.dev/commit/e8407e6bb3c951f0fe3d9c2a3b109cb21090e08c) Thanks [@The-Best-Codes](https://github.com/The-Best-Codes)! - Upgrade Compiler and CLI to AI SDK v5.
+
+### Patch Changes
+
+- Updated dependencies [[`e8407e6`](https://github.com/lingodotdev/lingo.dev/commit/e8407e6bb3c951f0fe3d9c2a3b109cb21090e08c)]:
+  - @lingo.dev/_compiler@0.9.0
+
 ## 0.121.1
 
 ### Patch Changes
