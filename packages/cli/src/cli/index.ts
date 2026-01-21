@@ -14,7 +14,6 @@ import configCmd from "./cmd/config";
 import i18nCmd from "./cmd/i18n";
 import lockfileCmd from "./cmd/lockfile";
 import cleanupCmd from "./cmd/cleanup";
-import mcpCmd from "./cmd/mcp";
 import ciCmd from "./cmd/ci";
 import statusCmd from "./cmd/status";
 import mayTheFourthCmd from "./cmd/may-the-fourth";
@@ -56,7 +55,6 @@ Star the the repo :) https://github.com/LingoDotDev/lingo.dev
   .addCommand(configCmd)
   .addCommand(lockfileCmd)
   .addCommand(cleanupCmd)
-  .addCommand(mcpCmd)
   .addCommand(ciCmd)
   .addCommand(statusCmd)
   .addCommand(mayTheFourthCmd, { hidden: true })
