@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.121.1
+
+### Patch Changes
+
+- [#1752](https://github.com/lingodotdev/lingo.dev/pull/1752) [`b563670`](https://github.com/lingodotdev/lingo.dev/commit/b563670ecdb663bffced547d0600954df8bfbaa4) Thanks [@vrcprl](https://github.com/vrcprl)! - Add deprecation warning to 'i18n' command, directing users to use 'run' instead
+
 ## 0.121.0
 
 ### Minor Changes
