@@ -34,24 +34,13 @@ describe("LCP", () => {
   });
 
   describe("ensureFile", () => {
-    let originalExit: any;
-    beforeEach(() => {
-      // stub exit to avoid existing the actual test process
-      originalExit = process.exit;
-      // @ts-expect-error override for test
-      process.exit = vi.fn();
-    });
-    afterEach(() => {
-      // restore mocked exit behavior
-      (process.exit as any) = originalExit;
-    });
-
-    it("creates meta.json and exists the process", () => {
+    it("creates meta.json and throws an error", () => {
       (fs.existsSync as any).mockReturnValueOnce(false);
-      LCP.ensureFile({ sourceRoot: "src", lingoDir: "lingo" });
+      expect(() => {
+        LCP.ensureFile({ sourceRoot: "src", lingoDir: "lingo" });
+      }).toThrow(/Lingo.dev Compiler detected missing meta.json file/);
       expect(fs.mkdirSync).toHaveBeenCalled();
       expect(fs.writeFileSync).toHaveBeenCalled();
-      expect(process.exit).toHaveBeenCalledWith(1);
     });
 
     it("does not create meta.json if it already exists", () => {
@@ -59,7 +48,6 @@ describe("LCP", () => {
       LCP.ensureFile({ sourceRoot: "src", lingoDir: "lingo" });
       expect(fs.mkdirSync).not.toHaveBeenCalled();
       expect(fs.writeFileSync).not.toHaveBeenCalled();
-      expect(process.exit).not.toHaveBeenCalled();
     });
   });
 

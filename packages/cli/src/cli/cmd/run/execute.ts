@@ -10,14 +10,22 @@ import { commonTaskRendererOptions } from "./_const";
 import createBucketLoader from "../../loaders";
 import { createDeltaProcessor, Delta } from "../../utils/delta";
 
-const MAX_WORKER_COUNT = 10;
+const WARN_CONCURRENCY_COUNT = 30;
 
 export default async function execute(input: CmdRunContext) {
   const effectiveConcurrency = Math.min(
     input.flags.concurrency,
     input.tasks.length,
-    MAX_WORKER_COUNT,
   );
+
+  if (effectiveConcurrency >= WARN_CONCURRENCY_COUNT) {
+    console.warn(
+      chalk.yellow(
+        `⚠️ High concurrency (${effectiveConcurrency}) may cause failures in some environments.`,
+      ),
+    );
+  }
+
   console.log(chalk.hex(colors.orange)(`[Localization]`));
 
   return new Listr<CmdRunContext>(
@@ -54,6 +62,19 @@ export default async function execute(input: CmdRunContext) {
 
           const i18nLimiter = pLimit(effectiveConcurrency);
           const ioLimiter = pLimit(1);
+
+          const perFileIoLimiters = new Map<string, LimitFunction>();
+          const getFileIoLimiter = (
+            bucketPathPattern: string,
+          ): LimitFunction => {
+            const lockKey = bucketPathPattern;
+
+            if (!perFileIoLimiters.has(lockKey)) {
+              perFileIoLimiters.set(lockKey, pLimit(1));
+            }
+            return perFileIoLimiters.get(lockKey)!;
+          };
+
           const workersCount = effectiveConcurrency;
 
           const workerTasks: ListrTask[] = [];
@@ -68,6 +89,7 @@ export default async function execute(input: CmdRunContext) {
                 ioLimiter,
                 i18nLimiter,
                 initialChecksumsMap,
+                getFileIoLimiter,
                 onDone() {
                   task.title = createExecutionProgressMessage(ctx);
                 },
@@ -154,6 +176,7 @@ function createWorkerTask(args: {
   i18nLimiter: LimitFunction;
   onDone: () => void;
   initialChecksumsMap: Map<string, Record<string, string>>;
+  getFileIoLimiter: (bucketPathPattern: string) => LimitFunction;
 }): ListrTask {
   return {
     title: "Initializing...",
@@ -174,12 +197,19 @@ function createWorkerTask(args: {
 
         const taskResult = await args.i18nLimiter(async () => {
           try {
-            const sourceData = await bucketLoader.pull(
-              assignedTask.sourceLocale,
+            // Pull operations must be serialized per-file for single-file formats
+            // where multiple locales share the same file (e.g., xcode-xcstrings)
+            const fileIoLimiter = args.getFileIoLimiter(
+              assignedTask.bucketPathPattern,
             );
-            const hints = await bucketLoader.pullHints();
-            const targetData = await bucketLoader.pull(
-              assignedTask.targetLocale,
+            const sourceData = await fileIoLimiter(async () =>
+              bucketLoader.pull(assignedTask.sourceLocale),
+            );
+            const hints = await fileIoLimiter(async () =>
+              bucketLoader.pullHints(),
+            );
+            const targetData = await fileIoLimiter(async () =>
+              bucketLoader.pull(assignedTask.targetLocale),
             );
             const delta = await deltaProcessor.calculateDelta({
               sourceData,
@@ -206,7 +236,7 @@ function createWorkerTask(args: {
               .value();
 
             if (!Object.keys(processableData).length) {
-              await args.ioLimiter(async () => {
+              await fileIoLimiter(async () => {
                 // re-push in case some of the unlocalizable / meta data changed
                 await bucketLoader.push(assignedTask.targetLocale, targetData);
               });
@@ -230,7 +260,7 @@ function createWorkerTask(args: {
               },
               async (progress, _sourceChunk, processedChunk) => {
                 // write translated chunks as they are received from LLM
-                await args.ioLimiter(async () => {
+                await fileIoLimiter(async () => {
                   // pull the latest source data before pushing for buckets that store all locales in a single file
                   await bucketLoader.pull(assignedTask.sourceLocale);
                   // pull the latest target data to include all already processed chunks
@@ -274,7 +304,7 @@ function createWorkerTask(args: {
               finalTargetData,
             );
 
-            await args.ioLimiter(async () => {
+            await fileIoLimiter(async () => {
               // not all localizers have progress callback (eg. explicit localizer),
               // the final target data might not be pushed yet - push now to ensure it's up to date
               await bucketLoader.pull(assignedTask.sourceLocale);

@@ -20,7 +20,7 @@ export const lcpFile = z.object({
 export type LCPFile = z.infer<typeof lcpFile>;
 
 export const lcpSchema = z.object({
-  version: z.number().default(0.1),
+  version: z.number().prefault(0.1),
   files: z.record(z.string(), lcpFile).optional(),
 });
 
@@ -35,7 +35,7 @@ export const dictionaryFile = z.object({
 export type DictionaryFile = z.infer<typeof dictionaryFile>;
 
 export const dictionarySchema = z.object({
-  version: z.number().default(0.1),
+  version: z.number().prefault(0.1),
   locale: z.string(),
   files: z.record(z.string(), dictionaryFile),
 });
@@ -55,7 +55,7 @@ export const dictionaryCacheFile = z.object({
 });
 
 export const dictionaryCacheSchema = z.object({
-  version: z.number().default(0.1),
+  version: z.number().prefault(0.1),
   files: z.record(z.string(), dictionaryCacheFile),
 });
 

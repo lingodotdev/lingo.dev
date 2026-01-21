@@ -7,10 +7,10 @@ import { I18nConfig } from "@lingo.dev/_spec";
 import chalk from "chalk";
 import dedent from "dedent";
 import { ILocalizer, LocalizerData } from "./_types";
-import { LanguageModel, Message, generateText } from "ai";
+import { LanguageModel, ModelMessage, generateText } from "ai";
 import { colors } from "../constants";
 import { jsonrepair } from "jsonrepair";
-import { createOllama } from "ollama-ai-provider";
+import { createOllama } from "ollama-ai-provider-v2";
 
 export default function createExplicitLocalizer(
   provider: NonNullable<I18nConfig["provider"]>,
@@ -106,7 +106,7 @@ function createAiSdkLocalizer(params: {
   const skipAuth = params.skipAuth === true;
 
   const apiKey = process.env[params?.apiKeyName ?? ""];
-  if ((!skipAuth && !apiKey) || !params.apiKeyName) {
+  if (!skipAuth && (!apiKey || !params.apiKeyName)) {
     throw new Error(
       dedent`
         You're trying to use raw ${chalk.dim(params.id)} API for translation. ${
@@ -207,7 +207,7 @@ function createAiSdkLocalizer(params: {
               [
                 { role: "user", content: JSON.stringify(userShot) },
                 { role: "assistant", content: JSON.stringify(assistantShot) },
-              ] as Message[],
+              ] as ModelMessage[],
           ),
           { role: "user", content: JSON.stringify(payload) },
         ],

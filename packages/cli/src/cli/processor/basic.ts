@@ -1,4 +1,4 @@
-import { generateText, LanguageModelV1 } from "ai";
+import { generateText, LanguageModel } from "ai";
 import { LocalizerInput, LocalizerProgressFn } from "./_base";
 import _ from "lodash";
 
@@ -7,7 +7,7 @@ type ModelSettings = {
 };
 
 export function createBasicTranslator(
-  model: LanguageModelV1,
+  model: LanguageModel,
   systemPrompt: string,
   settings: ModelSettings = {},
 ) {

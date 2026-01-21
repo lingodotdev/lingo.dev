@@ -23,10 +23,12 @@ export abstract class IntegrationFlow implements IIntegrationFlow {
   abstract run(options: IIntegrationFlowOptions): Promise<boolean>;
 }
 
-export const gitConfig = {
-  userName: "Lingo.dev",
-  userEmail: "support@lingo.dev",
-};
+export function getGitConfig(platformKit: PlatformKit) {
+  return {
+    userName: platformKit.config.commitAuthorName,
+    userEmail: platformKit.config.commitAuthorEmail,
+  };
+}
 
 export function escapeShellArg(arg: string): string {
   return `'${arg.replace(/'/g, "'\\''")}'`;

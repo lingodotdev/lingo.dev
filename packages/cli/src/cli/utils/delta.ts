@@ -7,7 +7,7 @@ import YAML from "yaml";
 import { getConfigRoot } from "./config";
 
 const LockSchema = z.object({
-  version: z.literal(1).default(1),
+  version: z.literal(1).prefault(1),
   checksums: z
     .record(
       z.string(), // localizable files' keys
@@ -19,9 +19,9 @@ const LockSchema = z.object({
           // checksum of the key's value in the source locale
           z.string(),
         )
-        .default({}),
+        .prefault({}),
     )
-    .default({}),
+    .prefault({}),
 });
 export type LockData = z.infer<typeof LockSchema>;
 

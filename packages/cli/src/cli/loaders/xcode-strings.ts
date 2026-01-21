@@ -1,5 +1,8 @@
 import { ILoader } from "./_types";
 import { createLoader } from "./_utils";
+import { Tokenizer } from "./xcode-strings/tokenizer";
+import { Parser } from "./xcode-strings/parser";
+import { escapeString } from "./xcode-strings/escape";
 
 export default function createXcodeStringsLoader(): ILoader<
   string,
@@ -7,36 +10,26 @@ export default function createXcodeStringsLoader(): ILoader<
 > {
   return createLoader({
     async pull(locale, input) {
-      const lines = input.split("\n");
-      const result: Record<string, string> = {};
+      // Tokenize the input
+      const tokenizer = new Tokenizer(input);
+      const tokens = tokenizer.tokenize();
 
-      for (const line of lines) {
-        const trimmedLine = line.trim();
-        if (trimmedLine && !trimmedLine.startsWith("//")) {
-          const match = trimmedLine.match(/^"(.+)"\s*=\s*"(.+)";$/);
-          if (match) {
-            const [, key, value] = match;
-            result[key] = unescapeXcodeString(value);
-          }
-        }
-      }
+      // Parse tokens into key-value pairs
+      const parser = new Parser(tokens);
+      const result = parser.parse();
 
       return result;
     },
+
     async push(locale, payload) {
-      const lines = Object.entries(payload).map(([key, value]) => {
-        const escapedValue = escapeXcodeString(value);
-        return `"${key}" = "${escapedValue}";`;
-      });
+      const lines = Object.entries(payload)
+        .filter(([_, value]) => value != null)
+        .map(([key, value]) => {
+          const escapedValue = escapeString(value);
+          return `"${key}" = "${escapedValue}";`;
+        });
+
       return lines.join("\n");
     },
   });
-}
-
-function unescapeXcodeString(str: string): string {
-  return str.replace(/\\"/g, '"').replace(/\\n/g, "\n").replace(/\\\\/g, "\\");
-}
-
-function escapeXcodeString(str: string): string {
-  return str.replace(/\\/g, "\\\\").replace(/"/g, '\\"').replace(/\n/g, "\\n");
 }

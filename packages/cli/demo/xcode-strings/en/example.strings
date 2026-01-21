@@ -1,18 +1,70 @@
+/* Basic examples */
 "welcome_message" = "Hello, world!";
 "login_button" = "Log In";
 "error_message" = "Something went wrong";
 
 "user_profile_title" = "User Profile";
 
+/* Escaped characters */
 "quote_example" = "She said \"Hello world!\"";
 "newline_example" = "First line\nSecond line";
 "backslash_example" = "Path: C:\\Users\\Documents";
+"mixed_escapes" = "Quote: \" Newline: \\n Backslash: \\\\";
+"tab_example" = "Column1\tColumn2\tColumn3";
 
+/* Multi-line string with literal newlines */
+"multiline_literal" = "This is line 1
+This is line 2
+This is line 3";
 
+/* Multi-line with mixed content */
+"multiline_mixed" = "Start here
+  Indented line
+End here";
+
+/* Multi-line with quotes inside */
+"multiline_with_quotes" = "He said \"Hello\"
+Then she said \"Goodbye\"
+The end";
+
+/* Single-line comments */
+// This is a comment that should be ignored
+"after_comment" = "Value after comment";
+
+/* Multi-line comment block */
+/*
+ * This entire block
+ * should be ignored
+ * by the parser
+ */
+"after_multiline_comment" = "Value after multiline comment";
+
+/* Empty value */
+"empty_string" = "";
+
+/* Very long value */
+"long_value" = "This is a very long string that contains a lot of text to test how the parser handles longer content without any special characters or escapes just plain text going on and on";
+
+/* Unicode and special characters */
+"unicode_example" = "Hello 世界 🌍";
+"emoji" = "👋 Hello! 🎉";
+"accents" = "Café, naïve, résumé";
+
+/* Edge case: Value with only spaces */
+"spaces_only" = "   ";
+
+/* Edge case: Multiple quotes */
+"many_quotes" = "\"\"\"Multiple quotes\"\"\"";
+
+/* Edge case: URL */
+"url_example" = "https://example.com/path?key=value&other=123";
+
+/* Malformed entries (should be skipped gracefully) */
 This is not a valid key-value pair
-"incomplete_pair" = 
+"incomplete_pair" =
 = "missing_key";
 "missing_semicolon" = "This line has no semicolon"
 
+/* Valid entries after malformed ones */
 "settings_title" = "Settings";
 "save_button" = "Save";

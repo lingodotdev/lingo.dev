@@ -1,9 +1,9 @@
 import * as t from "@babel/types";
-import traverse, { NodePath } from "@babel/traverse";
+import { traverse, NodePath } from "../babel-interop";
 import { parse } from "@babel/parser";
 import { getJsxElementName, getNestedJsxElements } from "./jsx-element";
 import { describe, it, expect } from "vitest";
-import generate from "@babel/generator";
+import { generate } from "../babel-interop";
 
 function parseJSX(code: string): t.File {
   return parse(code, {

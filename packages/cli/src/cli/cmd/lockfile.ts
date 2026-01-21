@@ -43,6 +43,9 @@ export default new Command()
               defaultLocale: sourceLocale,
               formatter: i18nConfig!.formatter,
             },
+            bucket.lockedKeys,
+            bucket.lockedPatterns,
+            bucket.ignoredKeys,
           );
           bucketLoader.setDefaultLocale(sourceLocale);
 
@@ -58,5 +61,5 @@ export default new Command()
   });
 
 const flagsSchema = Z.object({
-  force: Z.boolean().default(false),
+  force: Z.boolean().prefault(false),
 });
