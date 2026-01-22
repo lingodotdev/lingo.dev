@@ -1,0 +1,107 @@
+export const en = {
+  login: {
+    title: "Sign in to your account",
+    subtitle: "Welcome back! Please enter your details.",
+    email_label: "Email",
+    email_placeholder: "Enter your email",
+    password_label: "Password",
+    password_placeholder: "Enter your password",
+    button: "Sign in",
+    error_invalid: "Invalid email or password",
+    demo_hint: "Demo: Use any email and password",
+  },
+  dashboard: {
+    welcome: "Welcome back",
+    overview: "Dashboard Overview",
+    metrics: {
+      total_users: "Total Users",
+      active_users: "Active Users",
+      monthly_revenue: "Monthly Revenue",
+      churn_rate: "Churn Rate",
+      growth_rate: "Growth Rate",
+    },
+    activity: {
+      title: "Recent Activity",
+      empty: "No recent activity",
+    },
+  },
+  users: {
+    title: "Users Management",
+    subtitle: "Manage your team members and their account permissions.",
+    search_placeholder: "Search users...",
+    table: {
+      name: "Name",
+      email: "Email",
+      role: "Role",
+      status: "Status",
+      country: "Country",
+      joined: "Joined",
+    },
+    status: {
+      active: "Active",
+      suspended: "Suspended",
+    },
+    role: {
+      admin: "Admin",
+      manager: "Manager",
+      user: "User",
+    },
+    empty: "No users found",
+  },
+  settings: {
+    title: "Settings",
+    subtitle: "Manage your application preferences.",
+    language: {
+      title: "Language",
+      description: "Select your preferred language for the dashboard.",
+    },
+    appearance: {
+      title: "Appearance",
+      description: "Customize the look and feel of your dashboard.",
+    },
+  },
+  sidebar: {
+    dashboard: "Dashboard",
+    users: "Users",
+    settings: "Settings",
+  },
+  topbar: {
+    search_placeholder: "Search...",
+    notifications: "Notifications",
+    profile: "Profile",
+  },
+  common: {
+    logout: "Logout",
+    loading: "Loading...",
+    save: "Save",
+    cancel: "Cancel",
+    edit: "Edit",
+    delete: "Delete",
+    confirm: "Confirm",
+    back: "Back",
+    next: "Next",
+    previous: "Previous",
+    of: "of",
+    showing: "Showing",
+    results: "results",
+    translating: "Translating...",
+  },
+  activity_actions: {
+    logged_in: "logged in",
+    logged_out: "logged out",
+    updated_profile: "updated profile",
+    updated_settings: "updated settings",
+    created_user: "created a new user",
+    deleted_user: "deleted a user",
+    changed_password: "changed password",
+    exported_data: "exported data",
+  },
+  languages: {
+    en: "English",
+    hi: "Hindi",
+    fr: "French",
+    es: "Spanish",
+  },
+};
+
+export type TranslationSchema = typeof en;

@@ -1,0 +1,138 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-primary: theme(colors.surface.50);
+    --bg-secondary: theme(colors.white);
+    --bg-tertiary: theme(colors.surface.100);
+    --bg-elevated: theme(colors.white);
+    --bg-hover: theme(colors.surface.100);
+    --bg-active: theme(colors.surface.200);
+    
+    --text-primary: theme(colors.surface.900);
+    --text-secondary: theme(colors.surface.600);
+    --text-tertiary: theme(colors.surface.500);
+    --text-muted: theme(colors.surface.400);
+    
+    --border-default: theme(colors.surface.200);
+    --border-subtle: theme(colors.surface.100);
+    
+    --accent-primary: theme(colors.accent.600);
+    --accent-hover: theme(colors.accent.700);
+    --accent-subtle: theme(colors.accent.50);
+    --accent-text: theme(colors.accent.700);
+  }
+
+  .dark {
+    --bg-primary: theme(colors.surface.950);
+    --bg-secondary: theme(colors.surface.900);
+    --bg-tertiary: theme(colors.surface.850);
+    --bg-elevated: theme(colors.surface.800);
+    --bg-hover: theme(colors.surface.800);
+    --bg-active: theme(colors.surface.700);
+    
+    --text-primary: theme(colors.surface.100);
+    --text-secondary: theme(colors.surface.400);
+    --text-tertiary: theme(colors.surface.500);
+    --text-muted: theme(colors.surface.600);
+    
+    --border-default: theme(colors.surface.800);
+    --border-subtle: theme(colors.surface.850);
+    
+    --accent-primary: theme(colors.accent.500);
+    --accent-hover: theme(colors.accent.400);
+    --accent-subtle: rgb(99 102 241 / 0.1);
+    --accent-text: theme(colors.accent.400);
+  }
+
+  html {
+    @apply antialiased;
+  }
+
+  body {
+    @apply bg-[var(--bg-primary)] text-[var(--text-primary)] transition-colors duration-300;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .surface {
+    @apply bg-[var(--bg-secondary)] border border-[var(--border-subtle)];
+  }
+
+  .surface-elevated {
+    @apply bg-[var(--bg-elevated)] shadow-soft-md dark:shadow-dark-md;
+  }
+
+  .text-primary {
+    @apply text-[var(--text-primary)];
+  }
+
+  .text-secondary {
+    @apply text-[var(--text-secondary)];
+  }
+
+  .text-muted {
+    @apply text-[var(--text-muted)];
+  }
+
+  .accent-bg {
+    @apply bg-[var(--accent-primary)];
+  }
+
+  .accent-text {
+    @apply text-[var(--accent-text)];
+  }
+
+  .accent-subtle-bg {
+    @apply bg-[var(--accent-subtle)];
+  }
+
+  .interactive {
+    @apply transition-all duration-200 ease-gentle;
+  }
+
+  .interactive-scale {
+    @apply transition-all duration-200 ease-gentle hover:scale-[1.02] active:scale-[0.98];
+  }
+
+  .focus-ring {
+    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-primary)];
+  }
+}
+
+@layer utilities {
+  .animation-delay-100 {
+    animation-delay: 100ms;
+  }
+  .animation-delay-200 {
+    animation-delay: 200ms;
+  }
+  .animation-delay-300 {
+    animation-delay: 300ms;
+  }
+  .animation-delay-400 {
+    animation-delay: 400ms;
+  }
+  .animation-delay-500 {
+    animation-delay: 500ms;
+  }
+  .animation-delay-600 {
+    animation-delay: 600ms;
+  }
+
+  .opacity-0-initial {
+    opacity: 0;
+  }
+}
