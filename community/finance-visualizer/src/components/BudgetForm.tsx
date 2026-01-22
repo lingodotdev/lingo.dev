@@ -237,7 +237,7 @@ export function BudgetForm({ onSuccess }: BudgetFormProps) {
               {existingBudgets.map((budget) => {
                 const category = categories.find(c => c.value === budget.category);
                 return (
-                  <div key={budget._id as string} className="flex items-center justify-between p-3 border rounded-lg">
+                  <div key={budget._id as unknown as string} className="flex items-center justify-between p-3 border rounded-lg">
                     <div className="flex items-center gap-3">
                       <span className="text-xl">{category?.icon}</span>
                       <div>
@@ -248,7 +248,7 @@ export function BudgetForm({ onSuccess }: BudgetFormProps) {
                     <Button
                       variant="destructive"
                       size="sm"
-                      onClick={() => handleDeleteBudget(budget._id as string)}
+                      onClick={() => handleDeleteBudget(budget._id as unknown as string)}
                     >
                       Delete
                     </Button>

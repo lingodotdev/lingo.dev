@@ -7,6 +7,7 @@ This demo showcases how **Lingo.dev** can translate an existing application into
 ## Features
 
 - **Multi-language Support**: Automatically translated into 5+ languages using Lingo.dev.
+- **Language Switcher**: Easily switch between supported languages (EN, ES, FR, DE, ZH, JA).
 - **Transaction Tracking**: Add, edit, and delete income and expenses.
 - **Visual Analytics**: Interactive charts (Pie, Bar) for spending analysis.
 - **Budgeting**: Set and monitor monthly category budgets.
@@ -29,6 +30,7 @@ export default async function (): Promise<NextConfig> {
   return await withLingo(nextConfig, {
     sourceLocale: "en",
     targetLocales: ["es", "fr", "de", "zh", "ja"],
+    sourceRoot: "src/app",
     models: "lingo.dev",
   });
 }
@@ -71,7 +73,7 @@ export default async function (): Promise<NextConfig> {
 
 5. **Open your browser**
    Navigate to [http://localhost:3000](http://localhost:3000). You will see the English version.
-   To see translated versions, access the locales subpaths (e.g., depends on middleware configuration, or Lingo.dev's routing strategy).
+   Use the **Language Switcher** in the top right corner to switch languages.
 
 ## Project Structure
 
@@ -87,6 +89,7 @@ src/
 │   ├── layout.tsx
 │   └── page.tsx                  # Main dashboard
 ├── components/
+│   ├── LanguageSwitcher.tsx      # Language selection component
 │   ├── BudgetComparisonChart.tsx # Budget vs actual comparison
 │   ├── BudgetForm.tsx            # Budget setting form
 │   ├── CategoryPieChart.tsx      # Category breakdown pie chart

@@ -44,7 +44,7 @@ export function MonthlyExpensesChart({ data }: MonthlyExpensesChartProps) {
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="month" />
             <YAxis tickFormatter={formatCurrency} />
-            <Tooltip formatter={(value: number) => [formatCurrency(value), 'Total']} />
+            <Tooltip formatter={(value: number | undefined) => [formatCurrency(value || 0), 'Total']} />
             <Legend />
             <Bar dataKey="total" fill="#8884d8" />
           </BarChart>

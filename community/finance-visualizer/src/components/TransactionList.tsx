@@ -44,7 +44,7 @@ export function TransactionList({ transactions, fetchTransactions }: Transaction
           </TableHeader>
           <TableBody>
             {transactions.map((transaction: ITransaction) => (
-              <TableRow key={transaction._id as string}>
+              <TableRow key={transaction._id as unknown as string}>
                 <TableCell className="font-medium">{transaction.description}</TableCell>
                 <TableCell>
                   <span 
@@ -87,7 +87,7 @@ export function TransactionList({ transactions, fetchTransactions }: Transaction
                         />
                       </DialogContent>
                     </Dialog>
-                    <Button variant="destructive" size="sm" onClick={() => handleDelete(transaction._id as string)}>
+                    <Button variant="destructive" size="sm" onClick={() => handleDelete(transaction._id as unknown as string)}>
                       Delete
                     </Button>
                   </div>

@@ -23,6 +23,7 @@ import { ITransaction } from "@/models/Transaction";
 import { IBudget } from "@/models/Budget";
 import { PlusIcon, RotateCcw } from "lucide-react";
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 export default function Home() {
   const [transactions, setTransactions] = useState<ITransaction[]>([]);
@@ -83,7 +84,8 @@ export default function Home() {
               Personal Finance Visualizer
             </h1>
             <div className="flex items-center gap-2">
-              <Button 
+              <LanguageSwitcher />
+              <Button  
                 variant="outline" 
                 size="sm" 
                 onClick={fetchTransactions}

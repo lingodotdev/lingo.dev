@@ -135,7 +135,7 @@ export function DashboardSummary({ transactions, icons }: DashboardSummaryProps)
           <div className="space-y-2">
             {recentTransactions.length > 0 ? (
               recentTransactions.map((transaction) => (
-                <div key={transaction._id as string} className="flex items-center justify-between">
+                <div key={transaction._id as unknown as string} className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <span>{getCategoryIcon(transaction.category)}</span>
                     <div>
