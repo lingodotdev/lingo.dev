@@ -1,14 +1,14 @@
 import { LingoDotDevEngine } from "lingo.dev/sdk";
 
-const LINGO_API_KEY = process.env.LINGO_API_KEY;
+// The SDK automatically uses LINGODOTDEV_API_KEY from environment variables
 
 export async function translateText(
   texts: string[],
   targetLocale: string,
   sourceLocale: string = "en",
 ): Promise<string[]> {
-  if (!LINGO_API_KEY) {
-    throw new Error("LINGO_API_KEY is not configured");
+  if (!process.env.LINGODOTDEV_API_KEY) {
+    throw new Error("LINGODOTDEV_API_KEY is not configured");
   }
 
   // Filter out empty/null texts and track their indices
@@ -31,7 +31,7 @@ export async function translateText(
 
   try {
     const lingoDotDev = new LingoDotDevEngine({
-      apiKey: LINGO_API_KEY,
+      apiKey: process.env.LINGODOTDEV_API_KEY!,
     });
 
     const result = await lingoDotDev.localizeObject(textObject, {
