@@ -38,3 +38,4 @@ yarn-error.log*
 .DS_Store
 *.pem
 i18n.cache
+demo/react-router-app/
