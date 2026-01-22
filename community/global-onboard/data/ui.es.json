@@ -1,0 +1,19 @@
+{
+  "app.title": "GlobalOnboard",
+  "app.subtitle": "Una sola lista de incorporación. Cualquier idioma.",
+  "hr.panel_title": "Configuración de RR. HH.",
+  "employee.panel_title": "Vista previa para empleados",
+  "field.company_name": "Nombre de la empresa",
+  "field.role": "Cargo",
+  "field.language": "Idioma del empleado",
+  "section.checklist": "Lista de tareas de incorporación",
+  "section.welcome_note": "Nota de bienvenida de RR. HH.",
+  "section.template": "Plantilla base",
+  "field.base_language": "Idioma base",
+  "field.base_language_value": "Inglés (en)",
+  "label.tasks": "Tareas",
+  "label.language_switcher": "Selecciona un idioma",
+  "status.translating": "Traduciendo la nota de bienvenida...",
+  "status.translation_error": "Traducción no disponible. Mostrando inglés.",
+  "welcome.placeholder": "¡Bienvenido al equipo! Comparte un mensaje cálido para la nueva persona."
+}
