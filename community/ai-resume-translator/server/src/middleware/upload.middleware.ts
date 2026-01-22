@@ -1,6 +1,6 @@
 import multer, { FileFilterCallback } from "multer";
 import { Request } from "express";
-import { ACCEPTED_FILE_TYPES } from "@/constants";
+import { ACCEPTED_FILE_TYPES, MAX_FILE_SIZE_BYTES } from "@/constants";
 import ApiError from "@/utils/ApiError";
 import { FileType } from "@/types/file.type";
 
@@ -41,7 +41,7 @@ const upload = multer({
   storage: storage,
   fileFilter: fileFilter,
   limits: {
-    fileSize: 5 * 1024 * 1024, // 5MB limit
+    fileSize: MAX_FILE_SIZE_BYTES,
   },
 });
 
