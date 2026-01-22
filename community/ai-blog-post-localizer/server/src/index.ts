@@ -13,9 +13,10 @@ const PORT = process.env.PORT;
 const I18N_PATH = path.join(process.cwd(), "i18n", "en.json"); 
 
 
-app.post("/content",async (req,res)=>{
+app.post("/content", async (req,res)=>{
     try {
-    const content = req.body(); 
+    const content = req.body; 
+    
 
     if(typeof content !== 'object') {
         return res.status(400).json({
@@ -37,6 +38,29 @@ app.post("/content",async (req,res)=>{
         })
     }
 })
+
+
+
+
+app.get("/content-translate",async (req,res)=>{
+
+    //Read file synchronously
+    const data = fs.readFileSync(I18N_PATH, "utf-8"); 
+
+    //Parse JSON if needed 
+    const content = JSON.parse(data); 
+
+    res.json({
+        content
+    })
+
+   
+
+})
+
+
+
+
 
 
 app.listen(PORT, ()=>{
