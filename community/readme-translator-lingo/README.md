@@ -99,7 +99,9 @@ npx tsc
 
 4. **Run the CLI**
 ```
- node dist/index.js -i <path-of-the-file/SOMEFILE.md> -l es -o <output-path-for-translated-files>
+ node dist/index.js -i <path-of-the-file/SOMEFILE.md> -l es,fr -o <output-path-for-translated-files>
+
+ #In place of es or fr you can give any supported languages.
 ```
 
 **Note** : No need to specify any file name in the output path. It will automatically be generated with exact same file name that you provide as input with translated language extension.
