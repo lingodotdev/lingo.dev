@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { Globe } from "lucide-react";
-import { useLingoContext, LocaleSwitcher } from "@lingo.dev/compiler/react";
+import { useLingoContext } from "@lingo.dev/compiler/react";
 import { Button } from "@/components/ui/button";
 
 const locales = [
