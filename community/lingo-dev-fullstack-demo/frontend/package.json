@@ -1,0 +1,39 @@
+{
+  "name": "lingo-dev-localization-frontend",
+  "version": "1.0.0",
+  "description": "Frontend UI for Lingo.dev localization demo application",
+  "main": "index.html",
+  "scripts": {
+    "start": "serve -s .",
+    "dev": "live-server --port=3000",
+    "build": "echo 'Build process would happen here'"
+  },
+  "keywords": [
+    "lingo.dev",
+    "localization",
+    "translation",
+    "dashboard",
+    "ui"
+  ],
+  "author": "Community Contributor",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "axios": "^1.6.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.22.0",
+    "@babel/preset-env": "^7.22.0",
+    "@babel/preset-react": "^7.22.0",
+    "babel-loader": "^9.1.0",
+    "css-loader": "^6.8.0",
+    "html-webpack-plugin": "^5.5.0",
+    "style-loader": "^3.3.0",
+    "webpack": "^5.88.0",
+    "webpack-cli": "^5.1.0",
+    "webpack-dev-server": "^4.15.0",
+    "live-server": "^1.2.2",
+    "serve": "^14.2.0"
+  }
+}
