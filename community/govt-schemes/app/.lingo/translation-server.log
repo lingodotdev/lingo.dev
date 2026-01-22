@@ -1,0 +1,49 @@
+2026-01-22T21:18:59.499Z [INFO] [Lingo.dev] 🔧 Initializing translator...
+2026-01-22T21:18:59.505Z [DEBUG] [Lingo.dev] Starting translation server on port 60000
+2026-01-22T21:18:59.514Z [INFO] [Lingo.dev] Translation server listening on http://127.0.0.1:60000
+2026-01-22T21:18:59.514Z [INFO] [Lingo.dev] WebSocket server initialized
+2026-01-22T21:18:59.515Z [DEBUG] [Lingo.dev] Reloaded metadata: 10 entries
+2026-01-22T21:18:59.515Z [INFO] [Lingo.dev] Translating all 10 entries to en
+2026-01-22T21:18:59.515Z [DEBUG] [Lingo.dev] Reloaded metadata: 10 entries
+2026-01-22T21:18:59.515Z [INFO] [Lingo.dev] Translating all 10 entries to hi
+2026-01-22T21:19:27.342Z [INFO] [Lingo.dev] 🔧 Initializing translator...
+2026-01-22T21:19:27.347Z [DEBUG] [Lingo.dev] Starting translation server on port 60000
+2026-01-22T21:19:27.347Z [INFO] [Lingo.dev] Translation server listening on http://127.0.0.1:60000
+2026-01-22T21:19:27.347Z [INFO] [Lingo.dev] WebSocket server initialized
+2026-01-22T21:19:27.348Z [DEBUG] [Lingo.dev] Reloaded metadata: 10 entries
+2026-01-22T21:19:27.348Z [INFO] [Lingo.dev] Translating all 10 entries to en
+2026-01-22T21:19:27.348Z [INFO] [Lingo.dev] Translation server stopped
+2026-01-22T21:21:25.539Z [INFO] [Lingo.dev] 🔧 Initializing translator...
+2026-01-22T21:21:25.545Z [DEBUG] [Lingo.dev] Starting translation server on port 60000
+2026-01-22T21:21:25.561Z [INFO] [Lingo.dev] Translation server listening on http://127.0.0.1:60000
+2026-01-22T21:21:25.561Z [INFO] [Lingo.dev] WebSocket server initialized
+2026-01-22T21:21:25.561Z [DEBUG] [Lingo.dev] Reloaded metadata: 10 entries
+2026-01-22T21:21:25.561Z [INFO] [Lingo.dev] Translating all 10 entries to en
+2026-01-22T21:21:25.562Z [DEBUG] [Lingo.dev] Reloaded metadata: 10 entries
+2026-01-22T21:21:25.562Z [INFO] [Lingo.dev] Translating all 10 entries to hi
+2026-01-22T21:21:25.562Z [DEBUG] [Lingo.dev] Reloaded metadata: 10 entries
+2026-01-22T21:21:25.562Z [INFO] [Lingo.dev] Translating all 10 entries to bn
+2026-01-22T21:21:25.562Z [DEBUG] [Lingo.dev] Reloaded metadata: 10 entries
+2026-01-22T21:21:25.562Z [INFO] [Lingo.dev] Translating all 10 entries to te
+2026-01-22T21:21:25.562Z [DEBUG] [Lingo.dev] Reloaded metadata: 10 entries
+2026-01-22T21:21:25.562Z [INFO] [Lingo.dev] Translating all 10 entries to mr
+2026-01-22T21:21:25.562Z [DEBUG] [Lingo.dev] Reloaded metadata: 10 entries
+2026-01-22T21:21:25.562Z [INFO] [Lingo.dev] Translating all 10 entries to ta
+2026-01-22T21:21:25.562Z [DEBUG] [Lingo.dev] Reloaded metadata: 10 entries
+2026-01-22T21:21:25.562Z [INFO] [Lingo.dev] Translating all 10 entries to gu
+2026-01-22T21:21:25.562Z [DEBUG] [Lingo.dev] Reloaded metadata: 10 entries
+2026-01-22T21:21:25.562Z [INFO] [Lingo.dev] Translating all 10 entries to ur
+2026-01-22T21:21:25.562Z [DEBUG] [Lingo.dev] Reloaded metadata: 10 entries
+2026-01-22T21:21:25.562Z [INFO] [Lingo.dev] Translating all 10 entries to kn
+2026-01-22T21:21:25.562Z [DEBUG] [Lingo.dev] Reloaded metadata: 10 entries
+2026-01-22T21:21:25.562Z [INFO] [Lingo.dev] Translating all 10 entries to ml
+2026-01-22T21:21:25.562Z [DEBUG] [Lingo.dev] Reloaded metadata: 10 entries
+2026-01-22T21:21:25.562Z [INFO] [Lingo.dev] Translating all 10 entries to pa
+2026-01-22T21:21:25.562Z [DEBUG] [Lingo.dev] Reloaded metadata: 10 entries
+2026-01-22T21:21:25.562Z [INFO] [Lingo.dev] Translating all 10 entries to or
+2026-01-22T21:21:25.563Z [DEBUG] [Lingo.dev] Reloaded metadata: 10 entries
+2026-01-22T21:21:25.563Z [INFO] [Lingo.dev] Translating all 10 entries to as
+2026-01-22T21:21:25.563Z [DEBUG] [Lingo.dev] Reloaded metadata: 10 entries
+2026-01-22T21:21:25.563Z [INFO] [Lingo.dev] Translating all 10 entries to ks
+2026-01-22T21:21:25.563Z [DEBUG] [Lingo.dev] Reloaded metadata: 10 entries
+2026-01-22T21:21:25.563Z [INFO] [Lingo.dev] Translating all 10 entries to mai

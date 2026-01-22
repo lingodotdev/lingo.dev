@@ -1,0 +1,21 @@
+{
+  "sourceLocale": "en",
+  "locales": [
+    "hi",
+    "bn",
+    "te",
+    "mr",
+    "ta",
+    "gu",
+    "ur",
+    "kn",
+    "ml",
+    "pa",
+    "or",
+    "ks",
+    "mai"
+  ],
+  "translation": {
+    "provider": "groq"
+  }
+}
