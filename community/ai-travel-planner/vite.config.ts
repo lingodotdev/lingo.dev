@@ -8,7 +8,10 @@ import { lingoCompilerPlugin } from "@lingo.dev/compiler/vite";
 // Build mode can be controlled via LINGO_BUILD_MODE env variable
 // - "translate": Generate translations during build (requires API key)
 // - "cache-only": Use cached translations only (for CI/production)
-const buildMode = (process.env.LINGO_BUILD_MODE as "translate" | "cache-only") || "translate";
+// Default to "cache-only" in production (CI) to use pre-cached translations
+const buildMode =
+  (process.env.LINGO_BUILD_MODE as "translate" | "cache-only") ||
+  (process.env.CI || process.env.VERCEL ? "cache-only" : "translate");
 
 // https://vitejs.dev/config/
 export default defineConfig({
