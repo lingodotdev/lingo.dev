@@ -1,0 +1,90 @@
+.sticky-language-wrapper {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.75rem;
+}
+
+.globe-trigger {
+  width: 3rem;
+  height: 3rem;
+  background: rgba(26, 26, 26, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 100px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  transition: var(--transition-smooth);
+}
+
+.globe-trigger svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  opacity: 0.8;
+}
+
+.globe-trigger:hover {
+  transform: scale(1.05);
+  background: rgba(234, 88, 12, 0.15);
+  border-color: rgba(234, 88, 12, 0.3);
+}
+
+.sticky-language-wrapper.is-open .globe-trigger {
+  background: linear-gradient(135deg, #ea580c, #c2410c);
+  border-color: transparent;
+}
+
+.language-options {
+  background: rgba(26, 26, 26, 0.9);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.25rem;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  width: 140px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  
+  /* Initial state: closed */
+  opacity: 0;
+  transform: translateY(-10px) scale(0.95);
+  pointer-events: none;
+  transition: var(--transition-smooth);
+}
+
+.sticky-language-wrapper.is-open .language-options {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: all;
+}
+
+.lang-option-btn {
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #a1a1aa;
+  text-align: left;
+  transition: var(--transition-smooth);
+}
+
+.lang-option-btn:hover {
+  background: rgba(234, 88, 12, 0.1);
+  color: white;
+}
+
+.lang-option-btn.active {
+  background: rgba(234, 88, 12, 0.15);
+  color: #f97316;
+  border: 1px solid rgba(234, 88, 12, 0.25);
+}

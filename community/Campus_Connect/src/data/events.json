@@ -1,0 +1,26 @@
+[
+  {
+    "id": "dsa",
+    "category": "workshop",
+    "time": "5:00 PM",
+    "date": "12 Feb 2026",
+    "venue": "Block A, Room 204",
+    "duration": "2 hours"
+  },
+  {
+    "id": "hackathon",
+    "category": "hackathon",
+    "time": "10:00 AM",
+    "date": "15 Feb 2026",
+    "venue": "Block B, Auditorium",
+    "duration": "24 hours"
+  },
+  {
+    "id": "placement",
+    "category": "placement",
+    "time": "2:00 PM",
+    "date": "18 Feb 2026",
+    "venue": "Block C, Seminar Hall",
+    "duration": "1.5 hours"
+  }
+]

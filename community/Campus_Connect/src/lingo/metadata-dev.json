@@ -1,0 +1,64 @@
+{
+  "entries": {
+    "0ca44f5409ae": {
+      "type": "content",
+      "sourceText": "Hindi",
+      "context": {
+        "componentName": "App",
+        "filePath": "App.jsx"
+      },
+      "hash": "0ca44f5409ae",
+      "location": {
+        "filePath": "App.jsx",
+        "line": 23,
+        "column": 8
+      }
+    },
+    "cebdda4469a8": {
+      "type": "content",
+      "sourceText": "Punjabi",
+      "context": {
+        "componentName": "App",
+        "filePath": "App.jsx"
+      },
+      "hash": "cebdda4469a8",
+      "location": {
+        "filePath": "App.jsx",
+        "line": 24,
+        "column": 8
+      }
+    },
+    "354a292553d7": {
+      "type": "content",
+      "sourceText": "English",
+      "context": {
+        "componentName": "App",
+        "filePath": "App.jsx"
+      },
+      "hash": "354a292553d7",
+      "location": {
+        "filePath": "App.jsx",
+        "line": 25,
+        "column": 8
+      }
+    },
+    "408f4d91487e": {
+      "type": "content",
+      "sourceText": "•",
+      "context": {
+        "componentName": "EventCard",
+        "filePath": "components/EventCard.jsx"
+      },
+      "hash": "408f4d91487e",
+      "location": {
+        "filePath": "components/EventCard.jsx",
+        "line": 16,
+        "column": 8
+      }
+    }
+  },
+  "stats": {
+    "totalEntries": 4,
+    "lastUpdated": "2026-01-22T16:06:55.490Z"
+  }
+}

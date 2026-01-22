@@ -1,0 +1,72 @@
+{
+  "events": {
+    "dsa": {
+      "title": "DSA Workshop",
+      "desc": "Master arrays and trees with hands-on practice",
+      "longDesc": "A hands-on workshop focused on arrays, trees, and problem-solving techniques used in technical interviews."
+    },
+    "hackathon": {
+      "title": "Campus Hackathon",
+      "desc": "Build real-world solutions in 24 hours",
+      "longDesc": "Join fellow developers for a 24-hour sprint to build impactful solutions for campus problems. Prizes for top teams!"
+    },
+    "placement": {
+      "title": "Placement Drive Talk",
+      "desc": "Learn about upcoming placement opportunities",
+      "longDesc": "Essential session for final year students covering the upcoming placement calendar, company criteria, and prep tips."
+    },
+    "count": "{{count}} events today"
+  },
+  "categories": {
+    "workshop": "Workshops",
+    "hackathon": "Hackathons",
+    "placement": "Placements"
+  },
+  "ui": {
+    "register": "Register now",
+    "copied": "Venue copied",
+    "time": "Time",
+    "venue": "Venue",
+    "copyVenue": "Copy venue"
+  },
+  "eventDetail": {
+    "about": "About this event",
+    "date": "Date",
+    "time": "Time",
+    "venue": "Venue",
+    "duration": "Duration",
+    "back": "Back to events",
+    "register": "Register for event"
+  },
+  "hero": {
+    "title": "Everything Happening on Campus. In One Place.",
+    "subtitle": "Workshops, hackathons, placement talks, and student events. Clear timing. Clear location. No confusion.",
+    "cta_primary": "Explore Events",
+    "cta_secondary": "View Today's Events",
+    "accessibility_hint": "Designed to work smoothly for a diverse campus audience.",
+    "proof": {
+      "events": "Real campus events, not placeholders",
+      "timing": "Exact venue & timing",
+      "filter": "Filter by event type",
+      "mobile": "Mobile-friendly by default"
+    },
+    "capabilities": {
+      "discover": {
+        "title": "Discover Events Easily",
+        "line": "See all workshops, hackathons, and placement talks in one feed."
+      },
+      "decide": {
+        "title": "Get Clear Details",
+        "line": "Time, venue, and purpose. No digging through posters or groups."
+      },
+      "act": {
+        "title": "Take Action",
+        "line": "Copy venue, share details, and register without confusion."
+      }
+    }
+  },
+  "footer": {
+    "copyright": "© 2026 Campus Connect. All rights reserved.",
+    "builtBy": "Built with passion for university students."
+  }
+}

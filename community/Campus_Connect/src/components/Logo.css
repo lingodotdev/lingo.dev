@@ -1,0 +1,49 @@
+
+
+.logo-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  color: #f97316;
+  transition: all 0.3s ease;
+}
+
+.campus-logo:hover .logo-icon {
+  color: #ea580c;
+  transform: scale(1.1);
+}
+
+.logo-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.logo-text {
+  display: flex;
+  align-items: center;
+}
+
+.logo-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #ffd6d6;
+  letter-spacing: -0.02em;
+  
+}
+
+@media (max-width: 640px) {
+  .campus-logo {
+    padding: 0.6rem 1rem;
+  }
+  
+  .logo-icon {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .logo-title {
+    font-size: 0.85rem;
+  }
+}
