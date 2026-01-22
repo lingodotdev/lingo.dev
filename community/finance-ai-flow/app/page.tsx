@@ -267,7 +267,10 @@ export default function Home() {
                     style={{ marginBottom: '1.5rem', padding: '1.5rem' }}
                 >
                     <h3 style={{ marginTop: 0, marginBottom: '1.5rem', fontSize: '1.25rem' }}>Cash Flow Analysis</h3>
-                    <OverviewChart />
+                    <OverviewChart
+                        transactions={transactions}
+                        onAddTransaction={() => setIsTransModalOpen(true)}
+                    />
                 </motion.div>
 
                 {/* Transactions & AI */}
