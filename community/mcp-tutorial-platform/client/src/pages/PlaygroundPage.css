@@ -1,0 +1,219 @@
+.playground-page {
+    min-height: 100vh;
+    padding-bottom: var(--space-3xl);
+}
+
+.playground-header {
+    text-align: center;
+    padding: var(--space-3xl) 0 var(--space-xl);
+}
+
+.playground-header h1 {
+    font-size: var(--text-4xl);
+    margin-bottom: var(--space-md);
+}
+
+.playground-content {
+    padding: var(--space-2xl) 0;
+}
+
+.playground-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-xl);
+    margin-bottom: var(--space-2xl);
+}
+
+.playground-panel .card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.panel-description {
+    color: var(--text-secondary);
+    margin-bottom: var(--space-lg);
+    font-size: var(--text-sm);
+}
+
+.output-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-md);
+}
+
+.output-header h3 {
+    margin: 0;
+}
+
+/* Form Elements */
+.form-group {
+    margin-bottom: var(--space-lg);
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: var(--space-sm);
+    color: var(--text-primary);
+    font-size: var(--text-sm);
+}
+
+.input {
+    width: 100%;
+    padding: var(--space-sm) var(--space-md);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: var(--text-base);
+    transition: all var(--transition-fast);
+}
+
+.input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+}
+
+.textarea {
+    resize: vertical;
+    font-family: var(--font-mono);
+    line-height: 1.6;
+}
+
+.select {
+    cursor: pointer;
+}
+
+/* Monaco Editor Wrapper */
+.monaco-wrapper {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    flex: 1;
+}
+
+/* Empty Output */
+.empty-output {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 600px;
+    color: var(--text-tertiary);
+    text-align: center;
+    border: 2px dashed var(--border);
+    border-radius: var(--radius-md);
+}
+
+.empty-icon {
+    font-size: 4rem;
+    margin-bottom: var(--space-md);
+    opacity: 0.5;
+}
+
+.empty-output p {
+    max-width: 400px;
+    color: var(--text-tertiary);
+}
+
+/* Examples Section */
+.examples-section {
+    margin-top: var(--space-2xl);
+    padding-top: var(--space-xl);
+    border-top: 1px solid var(--border);
+}
+
+.examples-section h4 {
+    font-size: var(--text-base);
+    margin-bottom: var(--space-md);
+    color: var(--text-secondary);
+}
+
+.examples-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.example-btn {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    text-align: left;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
+}
+
+.example-btn:hover {
+    background: var(--bg-elevated);
+    border-color: var(--primary);
+    color: var(--text-primary);
+}
+
+.example-icon {
+    font-size: var(--text-base);
+    flex-shrink: 0;
+}
+
+.example-text {
+    flex: 1;
+    line-height: 1.5;
+}
+
+/* Info Banner */
+.info-banner {
+    display: flex;
+    gap: var(--space-lg);
+    padding: var(--space-lg);
+    background: rgba(79, 70, 229, 0.05);
+    border-color: var(--primary);
+}
+
+.info-icon {
+    font-size: var(--text-3xl);
+    flex-shrink: 0;
+}
+
+.info-content h4 {
+    font-size: var(--text-lg);
+    margin-bottom: var(--space-sm);
+}
+
+.info-content p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .playground-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .monaco-wrapper {
+        min-height: 400px;
+    }
+}
+
+@media (max-width: 768px) {
+    .info-banner {
+        flex-direction: column;
+    }
+
+    .output-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-sm);
+    }
+}
