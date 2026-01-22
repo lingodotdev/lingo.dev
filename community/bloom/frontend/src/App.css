@@ -1,0 +1,5 @@
+/* Hide navbar on chat page */
+body:has(.chat-container) nav {
+  display: none;
+}
+
