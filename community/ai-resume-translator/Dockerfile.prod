@@ -1,4 +1,4 @@
-# Production Dockerfile for Server
+# Production Dockerfile
 FROM node:20-alpine AS builder
 
 WORKDIR /app

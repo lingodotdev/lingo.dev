@@ -4,11 +4,20 @@ import express, {
   type Response,
 } from "express";
 import cors from "cors";
+import path from "path";
+import { fileURLToPath } from "url";
 import ApiError from "./utils/ApiError";
 import ApiResponse from "./utils/ApiResponse";
 import translateRouter from "@/routes/translate.routes.js";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const app = express();
+
+// Configure EJS
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "../views"));
 
 // Middleware
 app.use(
@@ -22,7 +31,14 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Static files
+app.use(express.static(path.join(__dirname, "../public")));
+
 // Routes
+app.get("/", (_: Request, res: Response) => {
+  res.render("index", { title: "AI Resume Translator" });
+});
+
 app.get("/health", (_: Request, res: Response) => {
   res.status(200).json(
     new ApiResponse(200, "Server is running...", {

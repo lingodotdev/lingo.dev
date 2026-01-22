@@ -1,4 +1,4 @@
-# Development Dockerfile for Server
+# Development Dockerfile
 FROM node:20-alpine
 
 WORKDIR /app
