@@ -23,6 +23,7 @@ It will help open-source maintainers and developers make their projects accessib
 
 2. **Clone & Install Dependencies**
 - clone the repo
+- git checkout community/readme-translator (if you are on main branch)
 - cd readme-translator-lingo
 - npm install
 
