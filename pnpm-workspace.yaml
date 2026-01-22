@@ -3,6 +3,7 @@ packages:
   - "./demo/*"
   - "./integrations/*"
   - "./legacy/*"
+  - "./community/*"
   - "./action"
   - "./php/*"
   - "./scripts/*"

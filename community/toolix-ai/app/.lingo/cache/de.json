@@ -1,0 +1,23 @@
+{
+  "version": 0.1,
+  "locale": "de",
+  "entries": {
+    "dc12b3f20fc8": "Toolix AI - Tool-fähiger KI-Agent",
+    "208cd1813fb4": "Tool-fähiger KI-Agent",
+    "b20df8aee16c": "Toolix AI - Tool-fähiger KI-Agent",
+    "a74e7861d457": "Ihr intelligenter Assistent für Wetterabfragen, mathematische Berechnungen, Code-Generierung und mehr.",
+    "6db4078ac77c": "Toolix AI - Tool-fähiger KI-Agent",
+    "858542fcfc1c": "Ihr intelligenter Assistent für Wetterabfragen, mathematische Berechnungen, Code-Generierung und mehr.",
+    "b6f7e25ef404": "Toolix AI",
+    "4d48e9e1f287": "Tool-fähiger KI-Agent",
+    "3753f228bfcc": "Bearbeitung abbrechen",
+    "021d207fd060": "Bearbeitung speichern",
+    "e5a6dc0e2066": "Nachricht bearbeiten",
+    "3f7313821824": "Willkommen bei Toolix AI",
+    "e9faa77e65cc": "Ihr intelligenter Assistent für Wetter, Berechnungen, Programmierung und mehr",
+    "52d305e566f0": "KI denkt nach...",
+    "d44898e9c547": "{count, plural, one {# Quelle verwendet} other {# Quellen verwendet} =0 {Keine Quellen verwendet}}",
+    "9af875616e8b": "Kopiert!",
+    "ebeb22859f46": "Kopieren"
+  }
+}

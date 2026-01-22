@@ -1,0 +1,23 @@
+{
+  "version": 0.1,
+  "locale": "es",
+  "entries": {
+    "dc12b3f20fc8": "Toolix AI - Agente de IA con herramientas",
+    "208cd1813fb4": "Agente de IA con herramientas",
+    "b20df8aee16c": "Toolix AI - Agente de IA con herramientas",
+    "a74e7861d457": "Tu asistente inteligente para consultas meteorológicas, cálculos matemáticos, generación de código y más.",
+    "6db4078ac77c": "Toolix AI - Agente de IA con herramientas",
+    "858542fcfc1c": "Tu asistente inteligente para consultas meteorológicas, cálculos matemáticos, generación de código y más.",
+    "b6f7e25ef404": "Toolix AI",
+    "4d48e9e1f287": "Agente de IA con herramientas",
+    "3753f228bfcc": "Cancelar edición",
+    "021d207fd060": "Guardar edición",
+    "e5a6dc0e2066": "Editar mensaje",
+    "3f7313821824": "Bienvenido a Toolix AI",
+    "e9faa77e65cc": "Tu asistente inteligente para el clima, cálculos, programación y más",
+    "52d305e566f0": "La IA está pensando...",
+    "d44898e9c547": "Se {count, plural, one {usó # fuente} other {usaron # fuentes} =0 {no se usaron fuentes}}",
+    "9af875616e8b": "¡Copiado!",
+    "ebeb22859f46": "Copiar"
+  }
+}
