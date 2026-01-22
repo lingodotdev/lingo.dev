@@ -1,0 +1,23 @@
+{
+  "name": "lingo-dev-playground",
+  "version": "1.0.0",
+  "description": "Lingo.dev SDK Pattern Implementation for Community Giveaway",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["translation", "lingo.dev", "localization", "sdk", "giveaway"],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
