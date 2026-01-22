@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class NotificationService {
 
+
+
   private final NotificationRepository repository;
 
   public NotificationService(NotificationRepository repository) {
@@ -21,4 +23,5 @@ public class NotificationService {
     log.setResolvedMessage(message);
     return repository.save(log);
   }
+
 }

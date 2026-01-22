@@ -1,6 +1,7 @@
 package com.lingonotify.controller;
 
 import com.lingonotify.service.NotificationService;
+import com.lingonotify.service.TranslationService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -10,20 +11,28 @@ import java.util.Map;
 public class NotificationController {
 
   private final NotificationService service;
+  private final TranslationService translationService;
 
-  public NotificationController(NotificationService service) {
+  // ✅ Constructor injection (BEST PRACTICE)
+  public NotificationController(
+    NotificationService service,
+    TranslationService translationService
+  ) {
     this.service = service;
+    this.translationService = translationService;
   }
 
   @PostMapping
   public Map<String, String> notify(
     @RequestHeader(value = "Accept-Language", defaultValue = "en") String lang,
-    @RequestBody Map<String, String> body) {
+    @RequestBody Map<String, String> body
+  ) {
 
     String messageKey = body.get("messageKey");
 
-    // Placeholder until Lingo.dev step
-    String translatedMessage = "Translated message for " + messageKey;
+    // ✅ REAL translation
+    String translatedMessage =
+      translationService.translate(messageKey, lang);
 
     service.save(messageKey, lang, translatedMessage);
 
