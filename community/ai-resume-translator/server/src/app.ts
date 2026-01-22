@@ -6,6 +6,7 @@ import express, {
 import cors from "cors";
 import ApiError from "./utils/ApiError";
 import ApiResponse from "./utils/ApiResponse";
+import translateRouter from "@/routes/translate.routes.js";
 
 const app = express();
 
@@ -33,11 +34,14 @@ app.get("/health", (_: Request, res: Response) => {
   );
 });
 
+// External Routers
+app.use("/api/v1/translate", translateRouter);
+
 // Error handling middleware
 
 // 404 Not Found Handler
-app.use((_: Request, res: Response) => {
-  res.status(404).json(new ApiError(404, "Route not found"));
+app.use((_: Request, _res: Response, next: NextFunction) => {
+  next(new ApiError(404, "Route not found"));
 });
 
 // ERROR HANDLER
