@@ -154,6 +154,9 @@ interface TranslationState {
   translationContext: string;
   translationHints: string[];
   translationTone: TranslationTone;
+  // Globe modal state
+  isGlobeExpanded: boolean;
+  globeExpandedAutoClose: boolean;
 
   setSourceText: (text: string) => void;
   setSourceLanguage: (language: Language | null) => void;
@@ -172,6 +175,9 @@ interface TranslationState {
   setTranslationContext: (context: string) => void;
   setTranslationHints: (hints: string[]) => void;
   setTranslationTone: (tone: TranslationTone) => void;
+  // Globe modal
+  setGlobeExpanded: (expanded: boolean) => void;
+  expandGlobeForTranslation: () => void;
 }
 
 export const useTranslationStore = create<TranslationState>((set) => ({
@@ -190,6 +196,9 @@ export const useTranslationStore = create<TranslationState>((set) => ({
   translationContext: "",
   translationHints: [],
   translationTone: "default" as TranslationTone,
+  // Globe modal state
+  isGlobeExpanded: false,
+  globeExpandedAutoClose: false,
 
   setSourceText: (text) => set({ sourceText: text }),
   setSourceLanguage: (language) => set({ sourceLanguage: language }),
@@ -238,4 +247,7 @@ export const useTranslationStore = create<TranslationState>((set) => ({
   setTranslationContext: (context) => set({ translationContext: context }),
   setTranslationHints: (hints) => set({ translationHints: hints }),
   setTranslationTone: (tone) => set({ translationTone: tone }),
+  // Globe modal
+  setGlobeExpanded: (expanded) => set({ isGlobeExpanded: expanded, globeExpandedAutoClose: false }),
+  expandGlobeForTranslation: () => set({ isGlobeExpanded: true, globeExpandedAutoClose: true }),
 }));

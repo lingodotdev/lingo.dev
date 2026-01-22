@@ -4,6 +4,14 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap");
 
+/* Twemoji font for cross-platform emoji support */
+@font-face {
+  font-family: "Twemoji";
+  src: url("https://cdn.jsdelivr.net/npm/twemoji-colr-font@14.0.2/twemoji.woff2") format("woff2");
+  font-display: swap;
+  unicode-range: U+1F1E0-1F1FF; /* Flag emojis range */
+}
+
 /* Dark theme (default) */
 :root,
 [data-theme="dark"] {

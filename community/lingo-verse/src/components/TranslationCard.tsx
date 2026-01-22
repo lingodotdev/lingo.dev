@@ -3,6 +3,7 @@
 import { Translation } from "@/store/useTranslationStore";
 import { motion } from "framer-motion";
 import { TextToSpeech } from "./TextToSpeech";
+import { FlagImage } from "./FlagImage";
 
 interface TranslationCardProps {
   translation: Translation;
@@ -25,13 +26,12 @@ export function TranslationCard({ translation, index }: TranslationCardProps) {
       {/* Header */}
       <div className="flex items-center justify-between mb-4 relative">
         <div className="flex items-center gap-3">
-          <motion.span
-            className="text-3xl"
+          <motion.div
             animate={isLoading ? { rotate: [0, 10, -10, 0] } : {}}
             transition={{ repeat: Infinity, duration: 0.5 }}
           >
-            {language.flag}
-          </motion.span>
+            <FlagImage languageCode={language.code} size={32} />
+          </motion.div>
           <div>
             <h3 className="font-semibold text-lg">{language.name}</h3>
             <p className="text-sm text-[var(--text-muted)]">

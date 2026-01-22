@@ -21,6 +21,7 @@ export function TranslateButton() {
     translationContext,
     translationHints,
     translationTone,
+    expandGlobeForTranslation,
   } = useTranslationStore();
 
   const handleTranslate = async () => {
@@ -33,6 +34,9 @@ export function TranslateButton() {
       return;
     }
 
+    // Expand the globe into modal view for immersive translation experience
+    expandGlobeForTranslation();
+    
     setIsTranslating(true);
     startTranslationTimer();
 

@@ -1,4 +1,6 @@
 export { Globe } from "./Globe";
+export { GlobeModal } from "./GlobeModal";
+export { FlagImage } from "./FlagImage";
 export { TranslationInput } from "./TranslationInput";
 export { TranslationCard } from "./TranslationCard";
 export { LanguageSelector } from "./LanguageSelector";

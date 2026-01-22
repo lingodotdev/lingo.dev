@@ -7,6 +7,7 @@ import {
 } from "@/store/useTranslationStore";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
+import { FlagImage } from "./FlagImage";
 
 export function LanguageSelector() {
   const {
@@ -45,7 +46,11 @@ export function LanguageSelector() {
             className="w-full glass rounded-xl p-4 flex items-center justify-between hover:border-[var(--accent-primary)]/30 transition-all"
           >
             <div className="flex items-center gap-3">
-              <span className="text-2xl">{sourceLanguage?.flag || "🌐"}</span>
+              {sourceLanguage ? (
+                <FlagImage languageCode={sourceLanguage.code} size={28} />
+              ) : (
+                <span className="text-2xl">🌐</span>
+              )}
               <div className="text-left">
                 <p className="font-medium">
                   {sourceLanguage?.name || "Auto-detect"}
@@ -121,7 +126,7 @@ export function LanguageSelector() {
                           : ""
                       }`}
                     >
-                      <span className="text-xl">{lang.flag}</span>
+                      <FlagImage languageCode={lang.code} size={24} />
                       <div className="text-left">
                         <p className="font-medium">{lang.name}</p>
                         <p className="text-xs text-[var(--text-muted)]">
@@ -180,7 +185,7 @@ export function LanguageSelector() {
                 }`}
               >
                 <div className="flex items-center gap-2">
-                  <span className="text-lg">{lang.flag}</span>
+                  <FlagImage languageCode={lang.code} size={22} />
                   <div className="min-w-0">
                     <p className="font-medium text-sm truncate">{lang.name}</p>
                     <p className="text-xs text-[var(--text-muted)] truncate">

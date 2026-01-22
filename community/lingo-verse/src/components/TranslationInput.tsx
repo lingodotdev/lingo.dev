@@ -2,6 +2,7 @@
 
 import { useTranslationStore } from "@/store/useTranslationStore";
 import { motion } from "framer-motion";
+import { FlagImage } from "./FlagImage";
 
 export function TranslationInput() {
   const {
@@ -25,7 +26,11 @@ export function TranslationInput() {
 
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
-          <span className="text-2xl">{sourceLanguage?.flag || "🌐"}</span>
+          {sourceLanguage ? (
+            <FlagImage languageCode={sourceLanguage.code} size={28} />
+          ) : (
+            <span className="text-2xl">🌐</span>
+          )}
           <div>
             <h3 className="text-sm font-medium text-[var(--text-secondary)]">
               Source Language
@@ -53,7 +58,7 @@ export function TranslationInput() {
             animate={{ opacity: 1, scale: 1 }}
             className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--accent-primary)]/10 border border-[var(--accent-primary)]/20"
           >
-            <span className="text-sm">{detectedLanguage.flag}</span>
+            <FlagImage languageCode={detectedLanguage.code} size={16} />
             <span className="text-sm text-[var(--accent-primary)]">
               Detected: {detectedLanguage.name}
             </span>

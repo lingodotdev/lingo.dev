@@ -522,12 +522,25 @@ export function Globe() {
   const { theme } = useThemeStore();
   
   return (
-    <div className="w-full h-full min-h-[400px]">
+    <div 
+      style={{ 
+        width: "100%", 
+        height: "100%",
+        position: "relative",
+      }}
+    >
       <Canvas 
         key={`canvas-${theme}`} 
-        camera={{ position: [0, 0, 6], fov: 45 }}
+        camera={{ position: [0, 0, 4.2], fov: 60 }}
         gl={{ alpha: true, antialias: true }}
-        style={{ background: 'transparent' }}
+        style={{ 
+          background: 'transparent',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+        }}
       >
         <Scene />
       </Canvas>

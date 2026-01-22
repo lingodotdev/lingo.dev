@@ -17,6 +17,7 @@ import { KeyboardShortcuts } from "@/components/KeyboardShortcuts";
 import { TranslationHints } from "@/components/TranslationHints";
 import { ToneSelector } from "@/components/ToneSelector";
 import { FeatureShowcase } from "@/components/FeatureShowcase";
+import { GlobeModal } from "@/components/GlobeModal";
 
 // Dynamic import for 3D Globe to avoid SSR issues
 const Globe = dynamic(
@@ -185,7 +186,9 @@ export default function Home() {
               transition={{ duration: 0.8 }}
               className="relative aspect-square max-h-[500px]"
             >
-              <Globe />
+              <GlobeModal>
+                <Globe />
+              </GlobeModal>
 
               {/* Globe legend */}
               <div className="absolute bottom-4 left-4 glass rounded-lg p-3 text-xs">
@@ -197,6 +200,11 @@ export default function Home() {
                   <span className="w-3 h-3 rounded-full bg-[var(--accent-primary)]" />
                   <span>Target</span>
                 </div>
+              </div>
+              
+              {/* Click hint */}
+              <div className="absolute top-4 left-1/2 -translate-x-1/2 text-xs text-[var(--text-muted)] opacity-60">
+                Click to expand
               </div>
             </motion.div>
 
