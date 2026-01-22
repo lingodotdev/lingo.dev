@@ -3,6 +3,7 @@ import mammoth from "mammoth";
 import ApiError from "@/utils/ApiError";
 
 import { FileType } from "@/types/file.type";
+import { MAX_EXTRACTED_TEXT_LENGTH } from "@/constants";
 
 // A service to extract text from files
 
@@ -11,13 +12,25 @@ class Extractor {
     filePath: string,
     mimeType: FileType,
   ): Promise<string> {
+    let text = "";
     if (mimeType === FileType.PDF) {
-      return this.extractTextFromPdf(filePath);
+      text = await this.extractTextFromPdf(filePath);
     } else if (mimeType === FileType.DOCX) {
-      return this.extractTextFromDocx(filePath);
+      text = await this.extractTextFromDocx(filePath);
     } else {
       throw new ApiError(400, `Unsupported file type: ${mimeType}`);
     }
+
+    if (!text || text.length === 0) {
+      throw new ApiError(400, `No text extracted from file: ${filePath}`);
+    } else if (text.length > MAX_EXTRACTED_TEXT_LENGTH) {
+      throw new ApiError(
+        400,
+        `Extracted text exceeds maximum allowed length of ${MAX_EXTRACTED_TEXT_LENGTH} characters.`,
+      );
+    }
+
+    return text;
   }
 
   private async extractTextFromPdf(pdfPath: string): Promise<string> {
@@ -42,8 +55,9 @@ class Extractor {
 
   private clean(text: string): string {
     return text
-      .replace(/\s{2,}/g, " ")
-      .replace(/\n{2,}/g, "\n")
+      .replace(/\r\n/g, "\n") // normalize Windows newlines
+      .replace(/[ \t]+$/gm, "") // trim line-end spaces
+      .replace(/\n{3,}/g, "\n\n") // max 1 blank line
       .trim();
   }
 }
