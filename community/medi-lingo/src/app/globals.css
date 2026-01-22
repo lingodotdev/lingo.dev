@@ -1,0 +1,266 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  
+  /* Clinical Blue Theme Colors */
+  --color-clinical: var(--clinical);
+  --color-clinical-foreground: var(--clinical-foreground);
+  --color-clinical-light: var(--clinical-light);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+}
+
+:root {
+  --radius: 0.75rem;
+  
+  /* Clinical Blue Theme - Light Mode */
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+  
+  /* Primary: Clinical Blue */
+  --primary: #0ea5e9;
+  --primary-foreground: #ffffff;
+  
+  /* Secondary: Soft Gray */
+  --secondary: #f1f5f9;
+  --secondary-foreground: #0f172a;
+  
+  /* Muted */
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  
+  /* Accent */
+  --accent: #e0f2fe;
+  --accent-foreground: #0c4a6e;
+  
+  /* Destructive */
+  --destructive: #ef4444;
+  
+  /* Border & Input */
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #0ea5e9;
+  
+  /* Clinical Theme Specific */
+  --clinical: #0ea5e9;
+  --clinical-foreground: #ffffff;
+  --clinical-light: #e0f2fe;
+  
+  /* Semantic Colors */
+  --success: #10b981;
+  --success-foreground: #ffffff;
+  --warning: #f59e0b;
+  --warning-foreground: #ffffff;
+  --info: #8b5cf6;
+  --info-foreground: #ffffff;
+  
+  /* Charts */
+  --chart-1: #0ea5e9;
+  --chart-2: #10b981;
+  --chart-3: #f59e0b;
+  --chart-4: #8b5cf6;
+  --chart-5: #ec4899;
+  
+  /* Sidebar */
+  --sidebar: #ffffff;
+  --sidebar-foreground: #0f172a;
+  --sidebar-primary: #0ea5e9;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #e0f2fe;
+  --sidebar-accent-foreground: #0c4a6e;
+  --sidebar-border: #e2e8f0;
+  --sidebar-ring: #0ea5e9;
+}
+
+.dark {
+  /* Clinical Blue Theme - Dark Mode */
+  --background: #0f172a;
+  --foreground: #f1f5f9;
+  --card: #1e293b;
+  --card-foreground: #f1f5f9;
+  --popover: #1e293b;
+  --popover-foreground: #f1f5f9;
+  
+  /* Primary: Clinical Blue */
+  --primary: #38bdf8;
+  --primary-foreground: #0c4a6e;
+  
+  /* Secondary */
+  --secondary: #334155;
+  --secondary-foreground: #f1f5f9;
+  
+  /* Muted */
+  --muted: #334155;
+  --muted-foreground: #94a3b8;
+  
+  /* Accent */
+  --accent: #0c4a6e;
+  --accent-foreground: #e0f2fe;
+  
+  /* Destructive */
+  --destructive: #f87171;
+  
+  /* Border & Input */
+  --border: #334155;
+  --input: #334155;
+  --ring: #38bdf8;
+  
+  /* Clinical Theme Specific */
+  --clinical: #38bdf8;
+  --clinical-foreground: #0c4a6e;
+  --clinical-light: #0c4a6e;
+  
+  /* Semantic Colors */
+  --success: #34d399;
+  --success-foreground: #064e3b;
+  --warning: #fbbf24;
+  --warning-foreground: #78350f;
+  --info: #a78bfa;
+  --info-foreground: #4c1d95;
+  
+  /* Charts */
+  --chart-1: #38bdf8;
+  --chart-2: #34d399;
+  --chart-3: #fbbf24;
+  --chart-4: #a78bfa;
+  --chart-5: #f472b6;
+  
+  /* Sidebar */
+  --sidebar: #1e293b;
+  --sidebar-foreground: #f1f5f9;
+  --sidebar-primary: #38bdf8;
+  --sidebar-primary-foreground: #0c4a6e;
+  --sidebar-accent: #0c4a6e;
+  --sidebar-accent-foreground: #e0f2fe;
+  --sidebar-border: #334155;
+  --sidebar-ring: #38bdf8;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+}
+
+@layer utilities {
+  /* Fade-in animation */
+  .animate-fade-in {
+    animation: fade-in 0.5s ease-out forwards;
+  }
+  
+  .animate-fade-in-up {
+    animation: fade-in-up 0.5s ease-out forwards;
+  }
+  
+  .animate-slide-in-right {
+    animation: slide-in-right 0.3s ease-out forwards;
+  }
+  
+  /* Staggered children animation */
+  .animate-stagger > * {
+    opacity: 0;
+    animation: fade-in-up 0.4s ease-out forwards;
+  }
+  
+  .animate-stagger > *:nth-child(1) { animation-delay: 0.1s; }
+  .animate-stagger > *:nth-child(2) { animation-delay: 0.2s; }
+  .animate-stagger > *:nth-child(3) { animation-delay: 0.3s; }
+  .animate-stagger > *:nth-child(4) { animation-delay: 0.4s; }
+  .animate-stagger > *:nth-child(5) { animation-delay: 0.5s; }
+  .animate-stagger > *:nth-child(6) { animation-delay: 0.6s; }
+  
+  /* Gradient text */
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary to-sky-600 bg-clip-text text-transparent;
+  }
+  
+  /* Glass effect */
+  .glass {
+    @apply bg-white/80 dark:bg-slate-900/80 backdrop-blur-lg;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
