@@ -25,6 +25,18 @@ export function cleanupExistingMetadata(metadataFilePath: string) {
   // General cleanup. Delete metadata and stop the server if any was started.
   logger.debug(`Attempting to cleanup metadata file: ${metadataFilePath}`);
 
+  // First, clean up the lock file to avoid ECOMPROMISED errors from proper-lockfile
+  const lockFilePath = `${metadataFilePath}.lock`;
+  try {
+    fs.unlinkSync(lockFilePath);
+    logger.debug(`🧹 Cleaned up lock file: ${lockFilePath}`);
+  } catch (error: any) {
+    // Ignore if lock file doesn't exist
+    if (error.code !== "ENOENT") {
+      logger.debug(`Failed to cleanup lock file: ${error.message}`);
+    }
+  }
+
   try {
     fs.unlinkSync(metadataFilePath);
     logger.info(`🧹 Cleaned up build metadata file: ${metadataFilePath}`);
@@ -173,6 +185,10 @@ export class MetadataManager {
         maxTimeout: 1000,
       },
       stale: 2000,
+      // Handle compromised lock gracefully - this happens during cleanup when the lock file is deleted
+      onCompromised: (err) => {
+        logger.debug(`Lock compromised (expected during cleanup): ${err.message}`);
+      },
     });
 
     try {
