@@ -6,20 +6,6 @@ This directory is a dedicated space for community-driven projects, demo applicat
 
 **Note:** The code in this directory is for examples and educational purposes. It exists separately from the core Lingo.dev product source code. If you want to contribute to the core product (like the CLI, compiler etc), you can go through our or open new one.
 
-## 🌟 Featured Projects
-
-### [Lingo Daily](./lingo-daily) 📰
-
-A production-ready, Linear-inspired news dashboard showcasing Lingo.dev's powerful i18n features.
-
-**Tech Stack:** Next.js 16, React 19, Tailwind CSS 4, Lucide Icons  
-**Features:** 5-language support, dynamic interpolation, smart pluralization, date localization, dark/light themes  
-**Status:** ✅ Complete - Ready to run
-
-Built for the Lingo.dev Community Sprint to demonstrate best-in-class localization practices.
-
----
-
 ## 📂 What belongs here?
 
 We encourage you to submit projects that help others learn and build. Ideal contributions include:
