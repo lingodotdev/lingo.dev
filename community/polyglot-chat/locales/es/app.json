@@ -1,0 +1,71 @@
+{
+  "common": {
+    "app_name": "PolyglotChat",
+    "tagline": "Chatea en cualquier idioma",
+    "description": "Una demostración de chat multilingüe en tiempo real impulsada por Lingo.dev"
+  },
+  "nav": {
+    "home": "Inicio",
+    "chat": "Chat",
+    "metrics": "Métricas",
+    "moderator": "Moderador"
+  },
+  "chat": {
+    "placeholder": "Escribe un mensaje...",
+    "send": "Enviar",
+    "simulate_burst": "Simular ráfaga",
+    "view_original": "Ver original",
+    "view_translation": "Ver traducción",
+    "translating": "Traduciendo...",
+    "your_language": "Tu idioma:"
+  },
+  "badges": {
+    "tm": "MT",
+    "tm_tooltip": "Desde la caché de memoria de traducción",
+    "translated": "Traducido",
+    "translated_tooltip": "Traducción en vivo vía API",
+    "original": "Original",
+    "original_tooltip": "No se necesita traducción",
+    "flagged": "Marcado"
+  },
+  "metrics": {
+    "title": "Métricas de Traducción",
+    "subtitle": "Estadísticas en tiempo real del rendimiento de traducción",
+    "tm_hit_rate": "Tasa de aciertos MT",
+    "avg_latency": "Latencia promedio",
+    "total_translations": "Total de traducciones",
+    "api_calls": "Llamadas API",
+    "tm_hits": "Aciertos MT",
+    "flagged": "Marcados",
+    "refresh": "Actualizar",
+    "reset": "Reiniciar",
+    "auto_refresh": "Auto-actualizar (5s)"
+  },
+  "moderator": {
+    "title": "Cola de Moderación",
+    "subtitle": "Revisa los mensajes marcados antes de mostrarlos a los usuarios",
+    "pending": "Pendiente",
+    "approved": "Aprobado",
+    "rejected": "Rechazado",
+    "approve": "Aprobar",
+    "reject": "Rechazar",
+    "confidence": "Confianza",
+    "all_clear": "¡Todo despejado!",
+    "no_pending": "No hay mensajes pendientes de moderación."
+  },
+  "providers": {
+    "lingo": "Lingo.dev SDK",
+    "lingo_desc": "Traducciones de mejor calidad",
+    "gemini": "Google Gemini",
+    "gemini_desc": "IA rápida y capaz",
+    "huggingface": "Hugging Face",
+    "huggingface_desc": "Modelos comunitarios gratuitos",
+    "none": "Sin proveedor",
+    "none_desc": "Configura las claves API"
+  },
+  "errors": {
+    "translation_failed": "La traducción falló",
+    "no_provider": "No hay proveedor de traducción configurado",
+    "api_error": "Ocurrió un error de API"
+  }
+}

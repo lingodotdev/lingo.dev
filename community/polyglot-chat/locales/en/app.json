@@ -1,0 +1,71 @@
+{
+  "common": {
+    "app_name": "PolyglotChat",
+    "tagline": "Chat in Any Language",
+    "description": "A realtime multilingual chat demo powered by Lingo.dev"
+  },
+  "nav": {
+    "home": "Home",
+    "chat": "Chat",
+    "metrics": "Metrics",
+    "moderator": "Moderator"
+  },
+  "chat": {
+    "placeholder": "Type a message...",
+    "send": "Send",
+    "simulate_burst": "Simulate Burst",
+    "view_original": "View Original",
+    "view_translation": "View Translation",
+    "translating": "Translating...",
+    "your_language": "Your language:"
+  },
+  "badges": {
+    "tm": "TM",
+    "tm_tooltip": "From Translation Memory cache",
+    "translated": "Translated",
+    "translated_tooltip": "Live translation via API",
+    "original": "Original",
+    "original_tooltip": "No translation needed",
+    "flagged": "Flagged"
+  },
+  "metrics": {
+    "title": "Translation Metrics",
+    "subtitle": "Real-time statistics for translation performance",
+    "tm_hit_rate": "TM Hit Rate",
+    "avg_latency": "Avg Latency",
+    "total_translations": "Total Translations",
+    "api_calls": "API Calls",
+    "tm_hits": "TM Hits",
+    "flagged": "Flagged",
+    "refresh": "Refresh",
+    "reset": "Reset",
+    "auto_refresh": "Auto-refresh (5s)"
+  },
+  "moderator": {
+    "title": "Moderation Queue",
+    "subtitle": "Review flagged messages before they are shown to users",
+    "pending": "Pending",
+    "approved": "Approved",
+    "rejected": "Rejected",
+    "approve": "Approve",
+    "reject": "Reject",
+    "confidence": "Confidence",
+    "all_clear": "All Clear!",
+    "no_pending": "No messages pending moderation."
+  },
+  "providers": {
+    "lingo": "Lingo.dev SDK",
+    "lingo_desc": "Best quality translations",
+    "gemini": "Google Gemini",
+    "gemini_desc": "Fast & capable AI",
+    "huggingface": "Hugging Face",
+    "huggingface_desc": "Free community models",
+    "none": "No Provider",
+    "none_desc": "Configure API keys"
+  },
+  "errors": {
+    "translation_failed": "Translation failed",
+    "no_provider": "No translation provider configured",
+    "api_error": "API error occurred"
+  }
+}
