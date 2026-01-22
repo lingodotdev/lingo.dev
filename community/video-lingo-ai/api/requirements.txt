@@ -1,2 +1,5 @@
 fastapi
 uvicorn
+dotenv
+faster_whisper
+transformers
