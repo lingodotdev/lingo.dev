@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lingo Page Translator</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Lingo Page Translator</h1>
+    
+    <div class="form-group">
+      <label for="targetLanguage">Target Language:</label>
+      <select id="targetLanguage">
+        <option value="en">English</option>
+        <option value="hi">Hindi</option>
+        <option value="ja">Japanese</option>
+        <option value="es">Spanish</option>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label for="apiKey">Lingo.dev API Key:</label>
+      <input type="password" id="apiKey" placeholder="Enter your API key">
+    </div>
+    
+    <div class="form-group">
+      <label for="apiEndpoint">API Endpoint (optional):</label>
+      <input type="text" id="apiEndpoint" placeholder="https://api.lingo.dev/v1/translate">
+      <small style="font-size: 11px; color: #666; display: block; margin-top: 4px;">
+        Leave empty to use default endpoint
+      </small>
+    </div>
+    
+    <button id="translateBtn" class="translate-button">Translate Page</button>
+    
+    <div id="status" class="status"></div>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>
