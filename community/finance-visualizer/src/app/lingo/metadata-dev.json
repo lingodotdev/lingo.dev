@@ -254,18 +254,61 @@
         "column": 18
       }
     },
-    "fcb16dfebadd": {
-      "type": "content",
-      "sourceText": "Monthly Expenses",
+    "2bc8d415c5ee": {
+      "type": "attribute",
+      "sourceText": "Language",
       "context": {
-        "componentName": "MonthlyExpensesChart",
-        "filePath": "../components/MonthlyExpensesChart.tsx"
+        "attributeName": "placeholder",
+        "componentName": "LanguageSwitcher",
+        "filePath": "../components/LanguageSwitcher.tsx"
       },
-      "hash": "fcb16dfebadd",
+      "hash": "2bc8d415c5ee",
       "location": {
-        "filePath": "../components/MonthlyExpensesChart.tsx",
-        "line": 39,
+        "filePath": "../components/LanguageSwitcher.tsx",
+        "line": 66,
         "column": 8
+      }
+    },
+    "1611ce2b1cda": {
+      "type": "content",
+      "sourceText": "{expression0} ({expression1}%)",
+      "context": {
+        "componentName": "CustomTooltip",
+        "filePath": "../components/CategoryPieChart.tsx"
+      },
+      "hash": "1611ce2b1cda",
+      "location": {
+        "filePath": "../components/CategoryPieChart.tsx",
+        "line": 45,
+        "column": 10
+      }
+    },
+    "bf59a2a94746": {
+      "type": "content",
+      "sourceText": "Category Breakdown",
+      "context": {
+        "componentName": "CategoryPieChart",
+        "filePath": "../components/CategoryPieChart.tsx"
+      },
+      "hash": "bf59a2a94746",
+      "location": {
+        "filePath": "../components/CategoryPieChart.tsx",
+        "line": 88,
+        "column": 8
+      }
+    },
+    "b1cc3b866e6e": {
+      "type": "content",
+      "sourceText": "No data available",
+      "context": {
+        "componentName": "CategoryPieChart",
+        "filePath": "../components/CategoryPieChart.tsx"
+      },
+      "hash": "b1cc3b866e6e",
+      "location": {
+        "filePath": "../components/CategoryPieChart.tsx",
+        "line": 77,
+        "column": 10
       }
     },
     "2489170265e1": {
@@ -464,6 +507,104 @@
         "column": 12
       }
     },
+    "6e15a14724e5": {
+      "type": "content",
+      "sourceText": "Close",
+      "context": {
+        "componentName": "DialogContent",
+        "filePath": "../components/ui/dialog.tsx"
+      },
+      "hash": "6e15a14724e5",
+      "location": {
+        "filePath": "../components/ui/dialog.tsx",
+        "line": 75,
+        "column": 12
+      }
+    },
+    "7c378b9f152b": {
+      "type": "content",
+      "sourceText": "No transactions found. Add your first transaction to get started!",
+      "context": {
+        "componentName": "TransactionList",
+        "filePath": "../components/TransactionList.tsx"
+      },
+      "hash": "7c378b9f152b",
+      "location": {
+        "filePath": "../components/TransactionList.tsx",
+        "line": 30,
+        "column": 10
+      }
+    },
+    "d053cbf5dcfc": {
+      "type": "content",
+      "sourceText": "Description",
+      "context": {
+        "componentName": "TransactionList",
+        "filePath": "../components/TransactionList.tsx"
+      },
+      "hash": "d053cbf5dcfc",
+      "location": {
+        "filePath": "../components/TransactionList.tsx",
+        "line": 38,
+        "column": 14
+      }
+    },
+    "4de1c42fb33c": {
+      "type": "content",
+      "sourceText": "Category",
+      "context": {
+        "componentName": "TransactionList",
+        "filePath": "../components/TransactionList.tsx"
+      },
+      "hash": "4de1c42fb33c",
+      "location": {
+        "filePath": "../components/TransactionList.tsx",
+        "line": 39,
+        "column": 14
+      }
+    },
+    "2559106e2362": {
+      "type": "content",
+      "sourceText": "Amount",
+      "context": {
+        "componentName": "TransactionList",
+        "filePath": "../components/TransactionList.tsx"
+      },
+      "hash": "2559106e2362",
+      "location": {
+        "filePath": "../components/TransactionList.tsx",
+        "line": 40,
+        "column": 14
+      }
+    },
+    "702db28a0071": {
+      "type": "content",
+      "sourceText": "Date",
+      "context": {
+        "componentName": "TransactionList",
+        "filePath": "../components/TransactionList.tsx"
+      },
+      "hash": "702db28a0071",
+      "location": {
+        "filePath": "../components/TransactionList.tsx",
+        "line": 41,
+        "column": 14
+      }
+    },
+    "8daae99e281c": {
+      "type": "content",
+      "sourceText": "Actions",
+      "context": {
+        "componentName": "TransactionList",
+        "filePath": "../components/TransactionList.tsx"
+      },
+      "hash": "8daae99e281c",
+      "location": {
+        "filePath": "../components/TransactionList.tsx",
+        "line": 42,
+        "column": 14
+      }
+    },
     "8e51f83c3bae": {
       "type": "content",
       "sourceText": "Total Expenses",
@@ -604,6 +745,20 @@
         "column": 14
       }
     },
+    "fcb16dfebadd": {
+      "type": "content",
+      "sourceText": "Monthly Expenses",
+      "context": {
+        "componentName": "MonthlyExpensesChart",
+        "filePath": "../components/MonthlyExpensesChart.tsx"
+      },
+      "hash": "fcb16dfebadd",
+      "location": {
+        "filePath": "../components/MonthlyExpensesChart.tsx",
+        "line": 39,
+        "column": 8
+      }
+    },
     "80cea66cba9b": {
       "type": "content",
       "sourceText": "Budget vs Actual - {expression0}{selectedYear}",
@@ -631,194 +786,10 @@
         "line": 103,
         "column": 10
       }
-    },
-    "6e15a14724e5": {
-      "type": "content",
-      "sourceText": "Close",
-      "context": {
-        "componentName": "DialogContent",
-        "filePath": "../components/ui/dialog.tsx"
-      },
-      "hash": "6e15a14724e5",
-      "location": {
-        "filePath": "../components/ui/dialog.tsx",
-        "line": 75,
-        "column": 12
-      }
-    },
-    "1611ce2b1cda": {
-      "type": "content",
-      "sourceText": "{expression0} ({expression1}%)",
-      "context": {
-        "componentName": "CustomTooltip",
-        "filePath": "../components/CategoryPieChart.tsx"
-      },
-      "hash": "1611ce2b1cda",
-      "location": {
-        "filePath": "../components/CategoryPieChart.tsx",
-        "line": 45,
-        "column": 10
-      }
-    },
-    "bf59a2a94746": {
-      "type": "content",
-      "sourceText": "Category Breakdown",
-      "context": {
-        "componentName": "CategoryPieChart",
-        "filePath": "../components/CategoryPieChart.tsx"
-      },
-      "hash": "bf59a2a94746",
-      "location": {
-        "filePath": "../components/CategoryPieChart.tsx",
-        "line": 88,
-        "column": 8
-      }
-    },
-    "b1cc3b866e6e": {
-      "type": "content",
-      "sourceText": "No data available",
-      "context": {
-        "componentName": "CategoryPieChart",
-        "filePath": "../components/CategoryPieChart.tsx"
-      },
-      "hash": "b1cc3b866e6e",
-      "location": {
-        "filePath": "../components/CategoryPieChart.tsx",
-        "line": 77,
-        "column": 10
-      }
-    },
-    "7c378b9f152b": {
-      "type": "content",
-      "sourceText": "No transactions found. Add your first transaction to get started!",
-      "context": {
-        "componentName": "TransactionList",
-        "filePath": "../components/TransactionList.tsx"
-      },
-      "hash": "7c378b9f152b",
-      "location": {
-        "filePath": "../components/TransactionList.tsx",
-        "line": 30,
-        "column": 10
-      }
-    },
-    "d053cbf5dcfc": {
-      "type": "content",
-      "sourceText": "Description",
-      "context": {
-        "componentName": "TransactionList",
-        "filePath": "../components/TransactionList.tsx"
-      },
-      "hash": "d053cbf5dcfc",
-      "location": {
-        "filePath": "../components/TransactionList.tsx",
-        "line": 38,
-        "column": 14
-      }
-    },
-    "4de1c42fb33c": {
-      "type": "content",
-      "sourceText": "Category",
-      "context": {
-        "componentName": "TransactionList",
-        "filePath": "../components/TransactionList.tsx"
-      },
-      "hash": "4de1c42fb33c",
-      "location": {
-        "filePath": "../components/TransactionList.tsx",
-        "line": 39,
-        "column": 14
-      }
-    },
-    "2559106e2362": {
-      "type": "content",
-      "sourceText": "Amount",
-      "context": {
-        "componentName": "TransactionList",
-        "filePath": "../components/TransactionList.tsx"
-      },
-      "hash": "2559106e2362",
-      "location": {
-        "filePath": "../components/TransactionList.tsx",
-        "line": 40,
-        "column": 14
-      }
-    },
-    "702db28a0071": {
-      "type": "content",
-      "sourceText": "Date",
-      "context": {
-        "componentName": "TransactionList",
-        "filePath": "../components/TransactionList.tsx"
-      },
-      "hash": "702db28a0071",
-      "location": {
-        "filePath": "../components/TransactionList.tsx",
-        "line": 41,
-        "column": 14
-      }
-    },
-    "8daae99e281c": {
-      "type": "content",
-      "sourceText": "Actions",
-      "context": {
-        "componentName": "TransactionList",
-        "filePath": "../components/TransactionList.tsx"
-      },
-      "hash": "8daae99e281c",
-      "location": {
-        "filePath": "../components/TransactionList.tsx",
-        "line": 42,
-        "column": 14
-      }
-    },
-    "3c602a7a7ec2": {
-      "type": "attribute",
-      "sourceText": "Search language...",
-      "context": {
-        "attributeName": "placeholder",
-        "componentName": "LanguageSwitcher",
-        "filePath": "../components/LanguageSwitcher.tsx"
-      },
-      "hash": "3c602a7a7ec2",
-      "location": {
-        "filePath": "../components/LanguageSwitcher.tsx",
-        "line": 53,
-        "column": 10
-      }
-    },
-    "b1b7b65889fb": {
-      "type": "content",
-      "sourceText": "No language found.",
-      "context": {
-        "componentName": "LanguageSwitcher",
-        "filePath": "../components/LanguageSwitcher.tsx"
-      },
-      "hash": "b1b7b65889fb",
-      "location": {
-        "filePath": "../components/LanguageSwitcher.tsx",
-        "line": 55,
-        "column": 12
-      }
-    },
-    "2bc8d415c5ee": {
-      "type": "attribute",
-      "sourceText": "Language",
-      "context": {
-        "attributeName": "placeholder",
-        "componentName": "LanguageSwitcher",
-        "filePath": "../components/LanguageSwitcher.tsx"
-      },
-      "hash": "2bc8d415c5ee",
-      "location": {
-        "filePath": "../components/LanguageSwitcher.tsx",
-        "line": 66,
-        "column": 8
-      }
     }
   },
   "stats": {
-    "totalEntries": 58,
-    "lastUpdated": "2026-01-22T20:12:34.161Z"
+    "totalEntries": 56,
+    "lastUpdated": "2026-01-22T20:16:58.992Z"
   }
 }
