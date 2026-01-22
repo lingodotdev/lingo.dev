@@ -306,3 +306,31 @@ This project is part of the Lingo.dev community contributions and is licensed un
 ---
 
 Built with love for the Lingo.dev community
+
+## 🚀 Live Demo
+
+Check out the live deployment at: [https://lingo-dev-ai-travel-planner.vercel.app](https://lingo-dev-ai-travel-planner.vercel.app)
+
+## 📊 Deployment Notes
+
+This demo is successfully deployed on Vercel with:
+- **Build Command**: `pnpm turbo build --filter=ai-travel-planner --force`
+- **Output Directory**: `community/ai-travel-planner/dist`
+- **Node Version**: 18.x
+- **React 19** with automatic JSX transform
+- **Vite 7** for fast builds
+- **Lingo.dev Compiler** for internationalization
+
+### Deployment Fixes Applied
+
+1. **React Deduplication**: Added `resolve.dedupe: ["react", "react-dom"]` to prevent hook errors
+2. **Lock File Cleanup**: Fixed metadata manager to handle file locking gracefully
+3. **Cache-Only Mode**: Uses pre-generated translations for production builds
+
+## 🎁 Contributing
+
+This demo app was created as part of the Lingo.dev community swag campaign (#1761). Feel free to:
+- Fork and enhance the app
+- Add new features or destinations
+- Improve the UI/UX
+- Add more languages
