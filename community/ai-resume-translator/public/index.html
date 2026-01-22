@@ -3,10 +3,309 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles/index.css" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <title>AI Resume Translator</title>
   </head>
-  <body>
-    <h1>AI Resume Translator</h1>
+  <body class="min-h-screen bg-slate-50 text-slate-900 font-[Manrope]">
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div class="bg-aurora blur-3xl opacity-70"></div>
+    </div>
+
+    <div class="relative isolate">
+      <header class="max-w-6xl mx-auto px-4 pt-10 pb-8 flex flex-col gap-6">
+        <div class="flex items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <div
+              class="h-11 w-11 rounded-2xl bg-gradient-to-br from-teal-500 to-emerald-400 shadow-brand flex items-center justify-center text-white"
+            >
+              <svg
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 32 32"
+                class="h-7 w-7"
+              >
+                <path
+                  fill="currentColor"
+                  d="M6 7.5c0-1.1.9-2 2-2h8.8c.5 0 1 .2 1.4.6l3.2 3.2c.4.4.6.9.6 1.4V24c0 1.1-.9 2-2 2H8c-1.1 0-2-.9-2-2zm4 3.5v2h6v-2zm0 4v2h8v-2zm0 4v2h4v-2zM18 10h3.2L18 6.8z"
+                />
+              </svg>
+            </div>
+            <div>
+              <p
+                class="text-sm font-semibold text-teal-700 uppercase tracking-[0.15em]"
+              >
+                Lingo.dev
+              </p>
+              <p class="text-lg font-semibold text-slate-900">
+                AI Resume Translator
+              </p>
+            </div>
+          </div>
+          <span
+            class="inline-flex items-center gap-2 rounded-full bg-white/80 px-3 py-2 text-sm font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 backdrop-blur"
+          >
+            <span
+              class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"
+            ></span>
+            Real-time PDF output
+          </span>
+        </div>
+        <div class="max-w-3xl space-y-3">
+          <h1
+            class="text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl"
+          >
+            Translate your resume into any market-ready language
+          </h1>
+          <p class="text-lg text-slate-600">
+            Upload a PDF or DOCX, pick source and target languages, and receive
+            an instantly downloadable, professionally formatted PDF translation
+            powered by the Lingo.dev SDK.
+          </p>
+        </div>
+      </header>
+
+      <main class="max-w-6xl mx-auto px-4 pb-14">
+        <section class="grid lg:grid-cols-3 gap-6 lg:gap-8 items-start">
+          <div class="lg:col-span-2 space-y-6">
+            <div class="glass-card shadow-brand-soft">
+              <div class="flex items-start justify-between gap-3 mb-6">
+                <div>
+                  <p class="text-sm font-semibold text-emerald-700">
+                    Upload → Translate → Download
+                  </p>
+                  <h2 class="text-2xl font-bold text-slate-900 mt-1">
+                    Translation request
+                  </h2>
+                  <p class="text-sm text-slate-500">
+                    Files stay temporary on the server; translations stream back
+                    as PDF immediately.
+                  </p>
+                </div>
+                <div
+                  class="hidden sm:flex items-center gap-2 text-xs font-semibold text-slate-600 bg-emerald-50 text-emerald-700 px-3 py-2 rounded-full"
+                >
+                  <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+                  Secured upload
+                </div>
+              </div>
+
+              <form id="uploadForm" class="space-y-5">
+                <div
+                  id="formError"
+                  class="hidden rounded-lg border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700"
+                ></div>
+                <div
+                  id="successBanner"
+                  class="hidden rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800"
+                ></div>
+
+                <div
+                  class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between rounded-xl border border-dashed border-slate-200 bg-gradient-to-r from-white to-slate-50 px-4 py-4"
+                >
+                  <div>
+                    <p class="text-sm font-semibold text-slate-700">
+                      Resume file
+                    </p>
+                    <p class="text-xs text-slate-500">PDF or DOCX · Max 5 MB</p>
+                  </div>
+                  <label
+                    class="inline-flex items-center gap-2 rounded-full bg-slate-900 text-white px-4 py-2 text-sm font-semibold shadow-md cursor-pointer"
+                  >
+                    <input
+                      id="fileInput"
+                      name="file"
+                      type="file"
+                      accept=".pdf,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                      class="hidden"
+                    />
+                    <svg
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5 text-white/90"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M9 17V7m0 0l-3 3m3-3l3 3m3 7V7m0 0l-3 3m3-3l3 3"
+                      />
+                    </svg>
+                    Choose file
+                  </label>
+                  <p
+                    id="fileNameHint"
+                    class="text-xs text-slate-500 sm:text-right w-full sm:w-auto truncate"
+                  >
+                    No file selected yet.
+                  </p>
+                </div>
+
+                <div class="grid sm:grid-cols-2 gap-4">
+                  <div class="space-y-2">
+                    <label
+                      for="sourceLanguage"
+                      class="text-sm font-semibold text-slate-700"
+                      >Source language</label
+                    >
+                    <select
+                      id="sourceLanguage"
+                      name="sourceLanguage"
+                      class="input-field"
+                    >
+                      <option value="" disabled selected>Select source</option>
+                      <option value="en">English</option>
+                      <option value="es">Spanish</option>
+                      <option value="fr">French</option>
+                      <option value="de">German</option>
+                      <option value="zh">Chinese</option>
+                      <option value="ja">Japanese</option>
+                      <option value="ko">Korean</option>
+                    </select>
+                  </div>
+                  <div class="space-y-2">
+                    <label
+                      for="targetLanguage"
+                      class="text-sm font-semibold text-slate-700"
+                      >Target language</label
+                    >
+                    <select
+                      id="targetLanguage"
+                      name="targetLanguage"
+                      class="input-field"
+                    >
+                      <option value="" disabled selected>Select target</option>
+                      <option value="en">English</option>
+                      <option value="es">Spanish</option>
+                      <option value="fr">French</option>
+                      <option value="de">German</option>
+                      <option value="zh">Chinese</option>
+                      <option value="ja">Japanese</option>
+                      <option value="ko">Korean</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="flex flex-wrap gap-3 items-center">
+                  <button
+                    type="submit"
+                    class="btn-primary group"
+                    id="submitButton"
+                  >
+                    <span
+                      class="transition-transform duration-150 group-hover:translate-x-0.5"
+                      >Translate & Download</span
+                    >
+                  </button>
+                  <button type="button" class="btn-ghost" id="resetButton">
+                    Reset form
+                  </button>
+                  <div class="flex items-center gap-2 text-xs text-slate-500">
+                    <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+                    Instant PDF streaming on success
+                  </div>
+                </div>
+
+                <div
+                  id="loadingState"
+                  class="hidden flex items-center gap-3 rounded-lg bg-slate-900 text-white px-4 py-3 text-sm"
+                >
+                  <span class="loader"></span>
+                  Translating your resume… this usually takes a few seconds.
+                </div>
+              </form>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-4">
+              <div class="info-card">
+                <p
+                  class="text-xs uppercase font-semibold tracking-[0.1em] text-slate-500"
+                >
+                  Secure
+                </p>
+                <p class="text-lg font-semibold text-slate-900">
+                  Temporary uploads only
+                </p>
+                <p class="text-sm text-slate-600">
+                  Files are deleted after translation completes or on any error.
+                </p>
+              </div>
+              <div class="info-card">
+                <p
+                  class="text-xs uppercase font-semibold tracking-[0.1em] text-slate-500"
+                >
+                  Quality
+                </p>
+                <p class="text-lg font-semibold text-slate-900">
+                  Context-aware output
+                </p>
+                <p class="text-sm text-slate-600">
+                  Uses Lingo.dev resume-tuned models for professional phrasing.
+                </p>
+              </div>
+              <div class="info-card">
+                <p
+                  class="text-xs uppercase font-semibold tracking-[0.1em] text-slate-500"
+                >
+                  Delivery
+                </p>
+                <p class="text-lg font-semibold text-slate-900">
+                  Direct PDF download
+                </p>
+                <p class="text-sm text-slate-600">
+                  Translation streams back as a ready-to-send PDF automatically.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <aside class="glass-card h-full shadow-brand-soft">
+            <p class="text-sm font-semibold text-emerald-700 mb-2">
+              Powered by Lingo.dev
+            </p>
+            <h3 class="text-xl font-bold text-slate-900 mb-2">
+              Supported languages
+            </h3>
+            <p class="text-sm text-slate-600 mb-4">
+              Tap a popular language below to auto-fill your target selection.
+              Backend keeps the live list in sync.
+            </p>
+            <div
+              id="languageList"
+              class="flex flex-wrap gap-2 text-sm text-slate-700"
+            ></div>
+            <div
+              class="mt-6 rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600"
+            >
+              <p class="font-semibold text-slate-800 mb-1">How it works</p>
+              <ol class="list-decimal list-inside space-y-1">
+                <li>Upload your resume.</li>
+                <li>Backend extracts and translates via Lingo.dev SDK.</li>
+                <li>A formatted PDF streams back and downloads instantly.</li>
+              </ol>
+            </div>
+          </aside>
+        </section>
+      </main>
+    </div>
+
+    <script defer src="/scripts/app.js"></script>
   </body>
 </html>
