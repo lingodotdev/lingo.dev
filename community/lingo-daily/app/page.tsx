@@ -10,19 +10,21 @@ import { Button } from "@/components/ui/button";
 
 export default function Home() {
   const [articles, setArticles] = useState<NewsArticle[]>([]);
+  const [visibleCount, setVisibleCount] = useState(6);
   const [translations, setTranslations] = useState<
     Map<string, { title: string; description: string }>
   >(new Map());
   const [selectedLanguage, setSelectedLanguage] = useState("en");
   const [isLoading, setIsLoading] = useState(true);
   const [isTranslating, setIsTranslating] = useState(false);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const fetchNews = useCallback(async () => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch("/api/news");
+      const response = await fetch("/api/news?pageSize=20");
       if (!response.ok) throw new Error("Failed to fetch news");
       const data = await response.json();
       // Filter out articles with [Removed] content
@@ -33,6 +35,7 @@ export default function Home() {
             article.description !== "[Removed]",
         ) || [];
       setArticles(validArticles);
+      setVisibleCount(6);
       setTranslations(new Map());
     } catch (err) {
       setError("Failed to load news. Please try again.");
@@ -43,7 +46,7 @@ export default function Home() {
   }, []);
 
   const translateArticles = useCallback(
-    async (targetLocale: string) => {
+    async (targetLocale: string, count: number) => {
       if (targetLocale === "en" || articles.length === 0) {
         setTranslations(new Map());
         return;
@@ -51,9 +54,10 @@ export default function Home() {
 
       setIsTranslating(true);
       try {
-        // Prepare texts for translation
+        // Prepare texts for translation (only visible articles)
         const textsToTranslate: string[] = [];
-        articles.forEach((article) => {
+        const articlesToTranslate = articles.slice(0, count);
+        articlesToTranslate.forEach((article) => {
           textsToTranslate.push(article.title || "");
           textsToTranslate.push(article.description || "");
         });
@@ -77,7 +81,7 @@ export default function Home() {
           string,
           { title: string; description: string }
         >();
-        articles.forEach((article, index) => {
+        articlesToTranslate.forEach((article, index) => {
           const key = `${article.title}-${index}`;
           newTranslations.set(key, {
             title: translatedTexts[index * 2] || article.title,
@@ -103,15 +107,31 @@ export default function Home() {
 
   useEffect(() => {
     if (articles.length > 0 && selectedLanguage !== "en") {
-      translateArticles(selectedLanguage);
+      translateArticles(selectedLanguage, visibleCount);
     } else {
       setTranslations(new Map());
     }
-  }, [selectedLanguage, articles, translateArticles]);
+  }, [selectedLanguage, articles, visibleCount, translateArticles]);
 
   const handleLanguageChange = (language: string) => {
     setSelectedLanguage(language);
   };
+
+  const handleLoadMore = async () => {
+    setIsLoadingMore(true);
+    const newCount = visibleCount + 6;
+    setVisibleCount(newCount);
+
+    // Translate new articles if not in English
+    if (selectedLanguage !== "en") {
+      await translateArticles(selectedLanguage, newCount);
+    }
+
+    setIsLoadingMore(false);
+  };
+
+  const visibleArticles = articles.slice(0, visibleCount);
+  const hasMore = visibleCount < articles.length;
 
   return (
     <div className="min-h-screen bg-background">
@@ -171,7 +191,30 @@ export default function Home() {
         {isLoading ? (
           <NewsGridSkeleton />
         ) : (
-          <NewsGrid articles={articles} translations={translations} />
+          <>
+            <NewsGrid articles={visibleArticles} translations={translations} />
+
+            {/* Load More Button */}
+            {hasMore && (
+              <div className="mt-8 flex justify-center">
+                <Button
+                  onClick={handleLoadMore}
+                  disabled={isLoadingMore}
+                  size="lg"
+                  className="gap-2"
+                >
+                  {isLoadingMore ? (
+                    <>
+                      <RefreshCw className="h-4 w-4 animate-spin" />
+                      Loading...
+                    </>
+                  ) : (
+                    "Load More Articles"
+                  )}
+                </Button>
+              </div>
+            )}
+          </>
         )}
 
         {/* Translation Status */}
