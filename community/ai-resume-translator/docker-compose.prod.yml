@@ -1,0 +1,35 @@
+services:
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile.prod
+    container_name: resume_server_prod
+    ports:
+      - "8000:8000"
+    environment:
+      NODE_ENV: production
+      PORT: 8000
+      CLIENT_URL: ${CLIENT_URL:-http://localhost}
+    networks:
+      - resume_network_prod
+    restart: always
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile.prod
+    container_name: resume_client_prod
+    ports:
+      - "80:3000"
+    environment:
+      NODE_ENV: production
+      REACT_APP_API_URL: ${API_URL:-http://localhost:8000}
+    depends_on:
+      - server
+    networks:
+      - resume_network_prod
+    restart: always
+
+networks:
+  resume_network_prod:
+    driver: bridge

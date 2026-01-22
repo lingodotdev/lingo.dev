@@ -1,0 +1,40 @@
+services:
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile.dev
+    container_name: resume_server_dev
+    ports:
+      - "8000:8000"
+    environment:
+      NODE_ENV: development
+      PORT: 8000
+      CLIENT_URL: http://localhost:5173
+    volumes:
+      - ./server:/app
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    command: npm run dev
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile.dev
+    container_name: resume_client_dev
+    ports:
+      - "5173:5173"
+    environment:
+      NODE_ENV: development
+      REACT_APP_API_URL: http://localhost:8000
+    volumes:
+      - ./client:/app
+    depends_on:
+      - server
+    command: npm run dev
+
+networks:
+  default:
+    name: resume_network
