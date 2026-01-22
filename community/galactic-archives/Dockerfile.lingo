@@ -1,0 +1,9 @@
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Install Lingo CLI globally
+RUN npm install -g lingo.dev
+
+# Default command to run
+CMD ["lingo.dev", "run"]

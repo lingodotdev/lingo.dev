@@ -1,0 +1,33 @@
+{
+  "HomePage": {
+    "title": "BASE DE DATOS DE MUNDOS CONOCIDOS",
+    "subtitle": "Accediendo a registros estáticos del ordenador central. Encriptado para transmisión universal.",
+    "planets": {
+      "kepler": {
+        "type": "TIPO: GIGANTE GASEOSO",
+        "name": "Kepler-186f",
+        "description": "Un planeta gigante compuesto principalmente de hidrógeno y helio. Su atmósfera contiene trazas de metano.",
+        "distance": "DIST: 400 AL",
+        "habitability": "HAB: 0%"
+      },
+      "proxima": {
+        "type": "TIPO: DESIERTO",
+        "name": "Próxima Centauri b",
+        "description": "Un mundo rocoso con temperaturas superficiales abrasadoras.",
+        "distance": "DIST: 4.2 AL",
+        "habitability": "HAB: 15%"
+      },
+      "gliese": {
+        "type": "TIPO: OCEÁNICO",
+        "name": "Gliese 667 Cc",
+        "description": "Cubierto enteramente por un océano profundo y bioluminiscente.",
+        "distance": "DIST: 23 AL",
+        "habitability": "HAB: 85%"
+      }
+    },
+    "comms": {
+      "title": "TRANSMISOR SUBESPACIAL",
+      "status": "Enlace de traducción en vivo activo."
+    }
+  }
+}

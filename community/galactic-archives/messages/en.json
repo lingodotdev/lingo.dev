@@ -1,0 +1,33 @@
+{
+  "HomePage": {
+    "title": "KNOWN WORLDS DATABASE",
+    "subtitle": "Accessing static records from the central mainframe. Encrypted for universal transmission.",
+    "planets": {
+      "kepler": {
+        "type": "TYPE: GAS GIANT",
+        "name": "Kepler-186f",
+        "description": "A giant planet composed mainly of hydrogen and helium. Its atmosphere contains traces of methane, giving it a distinct blue hue visible from the outer rim.",
+        "distance": "DIST: 400 LY",
+        "habitability": "HAB: 0%"
+      },
+      "proxima": {
+        "type": "TYPE: DESERT",
+        "name": "Proxima Centauri b",
+        "description": "A rocky world with scorching surface temperatures. Ancient ruins suggest a once-thriving civilization that vanished mysteriously over a millennium ago.",
+        "distance": "DIST: 4.2 LY",
+        "habitability": "HAB: 15%"
+      },
+      "gliese": {
+        "type": "TYPE: OCEANIC",
+        "name": "Gliese 667 Cc",
+        "description": "Covered entirely by a deep, bioluminescent ocean. The native flora emits a soft pulse of light that synchronizes with the planet's three moons.",
+        "distance": "DIST: 23 LY",
+        "habitability": "HAB: 85%"
+      }
+    },
+    "comms": {
+      "title": "SUBSPACE TRANSMITTER",
+      "status": "Live translation uplink. Enter a message to broadcast to allied sectors."
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "sourceLocale": "en",
+  "targetLocales": ["es", "fr", "de", "ja", "zh", "ru"],
+  "catalogs": [
+    {
+      "path": "messages/{locale}.json",
+      "include": ["messages/en.json"]
+    }
+  ]
+}

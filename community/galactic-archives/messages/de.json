@@ -1,0 +1,33 @@
+{
+  "HomePage": {
+    "title": "[DE] KNOWN WORLDS DATABASE",
+    "subtitle": "[DE] Accessing static records from the central mainframe. Encrypted for universal transmission.",
+    "planets": {
+      "kepler": {
+        "type": "[DE] TYPE: GAS GIANT",
+        "name": "Kepler-186f",
+        "description": "[DE] A giant planet composed mainly of hydrogen and helium.",
+        "distance": "DIST: 400 LY",
+        "habitability": "HAB: 0%"
+      },
+      "proxima": {
+        "type": "[DE] TYPE: DESERT",
+        "name": "Proxima Centauri b",
+        "description": "[DE] A rocky world with scorching surface temperatures.",
+        "distance": "DIST: 4.2 LY",
+        "habitability": "HAB: 15%"
+      },
+      "gliese": {
+        "type": "[DE] TYPE: OCEANIC",
+        "name": "Gliese 667 Cc",
+        "description": "[DE] Covered entirely by a deep, bioluminescent ocean.",
+        "distance": "DIST: 23 LY",
+        "habitability": "HAB: 85%"
+      }
+    },
+    "comms": {
+      "title": "[DE] SUBSPACE TRANSMITTER",
+      "status": "[DE] Live translation uplink."
+    }
+  }
+}

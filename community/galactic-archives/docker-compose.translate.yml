@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  translator:
+    build:
+      context: .
+      dockerfile: Dockerfile.lingo
+    volumes:
+      - .:/app
+    environment:
+      - LANGO_API_KEY=${LINGO_API_KEY}
+    command: lingo.dev run
