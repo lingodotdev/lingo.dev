@@ -1,0 +1,127 @@
+@import "tailwindcss";
+
+
+:root {
+
+  --background: #0f1115;     
+  --foreground: #e6e8eb;        
+
+  --surface: #151821;         
+  --surface-muted: #1b1f2a;     
+
+ 
+  --border: #252a36;
+
+ 
+  --accent: #6366f1;          
+  --accent-soft: #818cf8;
+
+ 
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --error: #ef4444;
+
+
+  --text-muted: #9ca3af;
+  --text-subtle: #6b7280;
+
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-border: var(--border);
+
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+
+  --color-muted: var(--text-muted);
+  --color-subtle: var(--text-subtle);
+
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+}
+
+html,
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4 {
+  color: var(--foreground);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+p {
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.card {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.card-muted {
+  background-color: var(--surface-muted);
+}
+
+.divider {
+  border-bottom: 1px solid var(--border);
+}
+
+textarea,
+input {
+  background-color: var(--surface-muted);
+  color: var(--foreground);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+textarea::placeholder,
+input::placeholder {
+  color: var(--text-subtle);
+}
+
+textarea:focus,
+input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+
+button {
+  background-color: var(--accent);
+  color: white;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+button:hover {
+  background-color: var(--accent-soft);
+}
+
+
+pre,
+code {
+  background-color: #0b0d12;
+  color: #e5e7eb;
+  font-family: var(--font-mono), monospace;
+  border-radius: 8px;
+}
