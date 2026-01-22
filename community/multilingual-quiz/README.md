@@ -147,28 +147,6 @@ The `correctAnswer` is the index (0-3) of the correct option in the options arra
 - **Lingo.dev SDK** - Multilingual AI translations
 - **CSS3** - Animations and styling
 
-## Lingo.dev Integration
-
-The app uses the Lingo.dev SDK for translations:
-
-```typescript
-import { LingoDotDevEngine } from 'lingo.dev/sdk';
-
-const lingoDotDev = new LingoDotDevEngine({ apiKey: 'your-api-key' });
-
-// Translate text
-const translated = await lingoDotDev.localizeText(text, {
-  sourceLocale: 'en',
-  targetLocale: 'es',
-});
-
-// Translate objects
-const translatedObj = await lingoDotDev.localizeObject(obj, {
-  sourceLocale: 'en',
-  targetLocale: 'fr',
-});
-```
-
 ## License
 
 MIT
