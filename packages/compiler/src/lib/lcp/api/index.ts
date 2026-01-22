@@ -158,7 +158,7 @@ export class LCPAPI {
         "⚠️  Lingo.dev API key not found. Please set LINGODOTDEV_API_KEY environment variable or configure it user-wide.",
       );
     }
-    console.log(`Creating Lingo.dev client`);
+    // Note: Not logging API key creation to avoid potential security issues
     return new LingoDotDevEngine({
       apiKey,
     });

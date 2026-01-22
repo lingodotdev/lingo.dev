@@ -187,7 +187,6 @@ function createDictionaryResource<D>(options: {
   let error: unknown;
 
   const { locale } = options;
-  console.log(`[Lingo.dev] Loading dictionary file for locale ${locale}...`);
 
   const suspender = options
     .load()
@@ -197,7 +196,6 @@ function createDictionaryResource<D>(options: {
       return result;
     })
     .catch((err) => {
-      console.log("[Lingo.dev] Failed to load dictionary:", err);
       error = err;
       status = "error";
       throw err;

@@ -46,7 +46,7 @@ const extendConfigDefinition = <
   T extends Z.ZodRawShape,
   P extends Z.ZodRawShape,
 >(
-  definition: ConfigDefinition<P, any>,
+  definition: ConfigDefinition<P, Z.ZodRawShape>,
   params: ConfigDefinitionExtensionParams<T, P>,
 ) => {
   const schema = params.createSchema(definition.schema);
@@ -69,15 +69,16 @@ const extendConfigDefinition = <
           let unsupportedLocale = "";
           const path = issue.path;
 
-          const config = rawConfig as { locale?: { [key: string]: any } };
+          const config = rawConfig as { locale?: { [key: string]: unknown } };
 
           if (config.locale) {
-            unsupportedLocale = path.reduce<any>((acc, key) => {
-              if (acc && typeof acc === "object" && key in acc) {
-                return acc[key];
+            const localeValue = path.reduce<unknown>((acc, key) => {
+              if (acc && typeof acc === "object" && typeof key === "string" && key in acc) {
+                return (acc as Record<string, unknown>)[key];
               }
               return acc;
             }, config.locale);
+            unsupportedLocale = typeof localeValue === "string" ? localeValue : String(localeValue);
           }
 
           return `Unsupported locale: ${unsupportedLocale}`;
@@ -522,8 +523,9 @@ export function parseI18nConfig(rawConfig: unknown) {
   try {
     const result = LATEST_CONFIG_DEFINITION.parse(rawConfig);
     return result;
-  } catch (error: any) {
-    throw new Error(`Failed to parse config: ${error.message}`);
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    throw new Error(`Failed to parse config: ${errorMessage}`);
   }
 }
 

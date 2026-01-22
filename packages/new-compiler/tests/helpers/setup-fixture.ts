@@ -420,13 +420,16 @@ async function updateConfig(
 ): Promise<void> {
   if (framework === "next") {
     const configPath = path.join(tempPath, "next.config.ts");
-    // For now, just log that we would update the config
+    // Config merging is not implemented yet - this is a placeholder for future functionality
+    // The test fixtures currently use default configurations
+    // eslint-disable-next-line no-console
     console.log(`Would update Next.js config with:`, config);
-    // TODO: Implement config merging
   } else {
     const configPath = path.join(tempPath, "vite.config.ts");
+    // Config merging is not implemented yet - this is a placeholder for future functionality
+    // The test fixtures currently use default configurations
+    // eslint-disable-next-line no-console
     console.log(`Would update Vite config with:`, config);
-    // TODO: Implement config merging
   }
 }
 

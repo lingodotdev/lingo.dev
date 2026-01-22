@@ -269,9 +269,8 @@ export const localeCodeSchema = Z.string().refine(
  * @throws {Error} If the provided locale code is invalid.
  */
 export const resolveLocaleCode = (value: string): LocaleCodeFull => {
-  const existingFullLocaleCode = Object.values(localeMap)
-    .flat()
-    .includes(value as any);
+  const allLocaleCodes = Object.values(localeMap).flat() as string[];
+  const existingFullLocaleCode = allLocaleCodes.includes(value);
   if (existingFullLocaleCode) {
     return value as LocaleCodeFull;
   }

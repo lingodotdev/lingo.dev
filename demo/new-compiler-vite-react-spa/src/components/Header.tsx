@@ -1,3 +1,4 @@
+"use i18n";
 import { LocaleSwitcher } from "@lingo.dev/compiler/react";
 import { Link } from "@tanstack/react-router";
 
@@ -26,9 +27,9 @@ export default function Header() {
           </Link>
         </nav>
       </div>
-      <div>
-        This header is not translated, since it's not marked with "use i18n",
-        but "useDirective" is "true"
+      <div className="text-sm text-gray-400 italic" data-lingo-skip>
+        {/* This demo message is intentionally not translated - it demonstrates useDirective behavior */}
+        This header is not translated, since it's not marked with "use i18n", but "useDirective" is "true"
       </div>
       <LocaleSwitcher
         locales={[

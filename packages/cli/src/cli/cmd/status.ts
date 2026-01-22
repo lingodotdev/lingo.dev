@@ -676,6 +676,8 @@ async function tryAuthenticate(settings: ReturnType<typeof getSettings>) {
     const user = await authenticator.whoami();
     return user;
   } catch (error) {
+    // Silently return null if authentication fails - this is expected when user is not authenticated
+    // Error details are not needed here as this is a status check, not an error condition
     return null;
   }
 }

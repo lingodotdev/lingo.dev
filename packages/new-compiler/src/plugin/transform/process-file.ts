@@ -727,16 +727,12 @@ const fileVisitors = {
   // const myFunction = function() {
   //   return 'hello';
   // };
-  //
+  // Example of function declarations that are handled:
   // const myFunction2 = function namedFunc() {
   //   return 'hello';
   // };
   //
-  // setTimeout(function() {
-  //   console.log('hello');
-  // }, 1000);
-  // While
-  // export default function() {}
+  // While export default function() {} is also handled
   // is not
   FunctionExpression(path: NodePath<t.FunctionExpression>) {
     processComponentFunction(path, this.visitorState);

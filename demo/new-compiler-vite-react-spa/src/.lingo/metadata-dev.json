@@ -1,0 +1,632 @@
+{
+  "entries": {
+    "8492c53cfbaf": {
+      "type": "content",
+      "sourceText": "About Lingo.dev",
+      "context": {
+        "componentName": "About",
+        "filePath": "routes/about.tsx"
+      },
+      "hash": "8492c53cfbaf",
+      "location": {
+        "filePath": "routes/about.tsx",
+        "line": 11,
+        "column": 6
+      }
+    },
+    "8aa4fe3f0590": {
+      "type": "content",
+      "sourceText": "This is a demo application showcasing the Lingo.dev compiler for automatic translations in React applications.",
+      "context": {
+        "componentName": "About",
+        "filePath": "routes/about.tsx"
+      },
+      "hash": "8aa4fe3f0590",
+      "location": {
+        "filePath": "routes/about.tsx",
+        "line": 12,
+        "column": 6
+      }
+    },
+    "af76f667703b": {
+      "type": "content",
+      "sourceText": "Key Features",
+      "context": {
+        "componentName": "About",
+        "filePath": "routes/about.tsx"
+      },
+      "hash": "af76f667703b",
+      "location": {
+        "filePath": "routes/about.tsx",
+        "line": 18,
+        "column": 10
+      }
+    },
+    "999a96fc5866": {
+      "type": "content",
+      "sourceText": "Automatic extraction of translatable text from JSX",
+      "context": {
+        "componentName": "About",
+        "filePath": "routes/about.tsx"
+      },
+      "hash": "999a96fc5866",
+      "location": {
+        "filePath": "routes/about.tsx",
+        "line": 20,
+        "column": 12
+      }
+    },
+    "b285bf7876d3": {
+      "type": "content",
+      "sourceText": "Build-time transformation with zero runtime overhead",
+      "context": {
+        "componentName": "About",
+        "filePath": "routes/about.tsx"
+      },
+      "hash": "b285bf7876d3",
+      "location": {
+        "filePath": "routes/about.tsx",
+        "line": 21,
+        "column": 12
+      }
+    },
+    "ab0450919701": {
+      "type": "content",
+      "sourceText": "Support for multiple bundlers (Vite, Webpack, Next.js)",
+      "context": {
+        "componentName": "About",
+        "filePath": "routes/about.tsx"
+      },
+      "hash": "ab0450919701",
+      "location": {
+        "filePath": "routes/about.tsx",
+        "line": 22,
+        "column": 12
+      }
+    },
+    "2d626508fb8f": {
+      "type": "content",
+      "sourceText": "Hash-based translation system for stable identifiers",
+      "context": {
+        "componentName": "About",
+        "filePath": "routes/about.tsx"
+      },
+      "hash": "2d626508fb8f",
+      "location": {
+        "filePath": "routes/about.tsx",
+        "line": 23,
+        "column": 12
+      }
+    },
+    "aca12d550fe2": {
+      "type": "content",
+      "sourceText": "Server and client component support",
+      "context": {
+        "componentName": "About",
+        "filePath": "routes/about.tsx"
+      },
+      "hash": "aca12d550fe2",
+      "location": {
+        "filePath": "routes/about.tsx",
+        "line": 24,
+        "column": 12
+      }
+    },
+    "44a3311c3a4a": {
+      "type": "content",
+      "sourceText": "How It Works",
+      "context": {
+        "componentName": "About",
+        "filePath": "routes/about.tsx"
+      },
+      "hash": "44a3311c3a4a",
+      "location": {
+        "filePath": "routes/about.tsx",
+        "line": 28,
+        "column": 10
+      }
+    },
+    "0add30e37450": {
+      "type": "content",
+      "sourceText": "The compiler analyzes your React components at build time and automatically extracts all translatable strings. It then generates translations using your configured translation provider.",
+      "context": {
+        "componentName": "About",
+        "filePath": "routes/about.tsx"
+      },
+      "hash": "0add30e37450",
+      "location": {
+        "filePath": "routes/about.tsx",
+        "line": 29,
+        "column": 10
+      }
+    },
+    "07d84d34dd3a": {
+      "type": "content",
+      "sourceText": "Simply add the \"use i18n\" directive at the top of your component files, and the compiler handles the rest!",
+      "context": {
+        "componentName": "About",
+        "filePath": "routes/about.tsx"
+      },
+      "hash": "07d84d34dd3a",
+      "location": {
+        "filePath": "routes/about.tsx",
+        "line": 34,
+        "column": 10
+      }
+    },
+    "daa4d8839395": {
+      "type": "content",
+      "sourceText": "Clicked {counter} times",
+      "context": {
+        "componentName": "Button",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "daa4d8839395",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 15,
+        "column": 4
+      }
+    },
+    "52ed9ee761d8": {
+      "type": "content",
+      "sourceText": "Hello World",
+      "context": {
+        "componentName": "App",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "52ed9ee761d8",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 26,
+        "column": 27
+      }
+    },
+    "f11fc78c3ac0": {
+      "type": "content",
+      "sourceText": "<b0>Mixed</b0> content <i0>fragment</i0>",
+      "context": {
+        "componentName": "App",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "f11fc78c3ac0",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 28,
+        "column": 2
+      }
+    },
+    "556f5956dca7": {
+      "type": "content",
+      "sourceText": "Welcome to Lingo.dev compiler demo",
+      "context": {
+        "componentName": "App",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "556f5956dca7",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 35,
+        "column": 6
+      }
+    },
+    "02704ec4e52a": {
+      "type": "content",
+      "sourceText": "It automatically extract text from your JSX and translate it to other languages.",
+      "context": {
+        "componentName": "App",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "02704ec4e52a",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 38,
+        "column": 6
+      }
+    },
+    "de6bfb30be49": {
+      "type": "content",
+      "sourceText": "Text inserted as an <code0></code0> is not translated: {text}",
+      "context": {
+        "componentName": "App",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "de6bfb30be49",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 43,
+        "column": 6
+      }
+    },
+    "5c15bd35e916": {
+      "type": "content",
+      "sourceText": "To translate it you have to wrap it into the '<'>{translatableText} '<'/>",
+      "context": {
+        "componentName": "App",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "5c15bd35e916",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 47,
+        "column": 6
+      }
+    },
+    "93b50fe805b7": {
+      "type": "content",
+      "sourceText": "Text external to the component is not translated: {externalText}",
+      "context": {
+        "componentName": "App",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "93b50fe805b7",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 51,
+        "column": 6
+      }
+    },
+    "d756b03ffbf5": {
+      "type": "content",
+      "sourceText": "Content that has text and other tags inside will br translated as a single entity: {translatableMixedContextFragment}",
+      "context": {
+        "componentName": "App",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "d756b03ffbf5",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 54,
+        "column": 6
+      }
+    },
+    "5f1bc5ab9ff5": {
+      "type": "content",
+      "sourceText": "Lingo.dev compiler Tanstack router demo",
+      "context": {
+        "componentName": "Header",
+        "filePath": "components/Header.tsx"
+      },
+      "hash": "5f1bc5ab9ff5",
+      "location": {
+        "filePath": "components/Header.tsx",
+        "line": 9,
+        "column": 8
+      }
+    },
+    "239d52bcab2f": {
+      "type": "content",
+      "sourceText": "Home",
+      "context": {
+        "componentName": "Header",
+        "filePath": "components/Header.tsx"
+      },
+      "hash": "239d52bcab2f",
+      "location": {
+        "filePath": "components/Header.tsx",
+        "line": 13,
+        "column": 10
+      }
+    },
+    "666be8972ed1": {
+      "type": "content",
+      "sourceText": "About",
+      "context": {
+        "componentName": "Header",
+        "filePath": "components/Header.tsx"
+      },
+      "hash": "666be8972ed1",
+      "location": {
+        "filePath": "components/Header.tsx",
+        "line": 20,
+        "column": 10
+      }
+    },
+    "e8e00daa14af": {
+      "type": "content",
+      "sourceText": "This header is not translated, since it's not marked with \"use i18n\", but \"useDirective\" is \"true\"",
+      "context": {
+        "componentName": "Header",
+        "filePath": "components/Header.tsx"
+      },
+      "hash": "e8e00daa14af",
+      "location": {
+        "filePath": "components/Header.tsx",
+        "line": 30,
+        "column": 6
+      }
+    },
+    "115c88c3a8a4": {
+      "type": "content",
+      "sourceText": "This header content is translated because it has \"use i18n\" directive, and \"useDirective\" is \"true\"",
+      "context": {
+        "componentName": "Header",
+        "filePath": "components/Header.tsx"
+      },
+      "hash": "115c88c3a8a4",
+      "location": {
+        "filePath": "components/Header.tsx",
+        "line": 30,
+        "column": 6
+      }
+    },
+    "1cd27278ff59": {
+      "type": "content",
+      "sourceText": "This header is not translated, since it''s not marked with \"use i18n\", but \"useDirective\" is \"true\"",
+      "context": {
+        "componentName": "Header",
+        "filePath": "components/Header.tsx"
+      },
+      "hash": "1cd27278ff59",
+      "location": {
+        "filePath": "components/Header.tsx",
+        "line": 30,
+        "column": 6
+      }
+    },
+    "6d1e4214c5ee": {
+      "type": "content",
+      "sourceText": "Clicked {counter} times",
+      "context": {
+        "componentName": "InteractiveButton",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "6d1e4214c5ee",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 15,
+        "column": 4
+      }
+    },
+    "dfbe53ee739f": {
+      "type": "content",
+      "sourceText": "It automatically extracts text from your JSX and translates it to other languages.",
+      "context": {
+        "componentName": "App",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "dfbe53ee739f",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 78,
+        "column": 10
+      }
+    },
+    "d1bdda836c7d": {
+      "type": "content",
+      "sourceText": "Learn More →",
+      "context": {
+        "componentName": "App",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "d1bdda836c7d",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 84,
+        "column": 12
+      }
+    },
+    "e5d05fc65744": {
+      "type": "attribute",
+      "sourceText": "Expression Variables",
+      "context": {
+        "attributeName": "title",
+        "componentName": "App",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "e5d05fc65744",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 95,
+        "column": 10
+      }
+    },
+    "e609a1a8936a": {
+      "type": "attribute",
+      "sourceText": "Text inserted as an expression variable is not automatically translated:",
+      "context": {
+        "attributeName": "description",
+        "componentName": "App",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "e609a1a8936a",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 95,
+        "column": 10
+      }
+    },
+    "6642fec76360": {
+      "type": "content",
+      "sourceText": "Text inserted as an <code0></code0> is not translated: <span0>{text}</span0>",
+      "context": {
+        "componentName": "App",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "6642fec76360",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 99,
+        "column": 12
+      }
+    },
+    "d90e3ccf3f83": {
+      "type": "attribute",
+      "sourceText": "Translatable Fragments",
+      "context": {
+        "attributeName": "title",
+        "componentName": "App",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "d90e3ccf3f83",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 107,
+        "column": 10
+      }
+    },
+    "74d8f9622fa5": {
+      "type": "attribute",
+      "sourceText": "To translate text, wrap it in JSX fragments:",
+      "context": {
+        "attributeName": "description",
+        "componentName": "App",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "74d8f9622fa5",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 107,
+        "column": 10
+      }
+    },
+    "441040b09fcb": {
+      "type": "content",
+      "sourceText": "To translate it you have to wrap it into the <code0></code0>{translatableText}<code1></code1>",
+      "context": {
+        "componentName": "App",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "441040b09fcb",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 111,
+        "column": 12
+      }
+    },
+    "475e5040241c": {
+      "type": "attribute",
+      "sourceText": "External Text",
+      "context": {
+        "attributeName": "title",
+        "componentName": "App",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "475e5040241c",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 123,
+        "column": 10
+      }
+    },
+    "968808dbfc04": {
+      "type": "attribute",
+      "sourceText": "Text defined outside the component is not translated:",
+      "context": {
+        "attributeName": "description",
+        "componentName": "App",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "968808dbfc04",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 123,
+        "column": 10
+      }
+    },
+    "e457f3246c27": {
+      "type": "content",
+      "sourceText": "Text external to the component is not translated: <span0>{externalText}</span0>",
+      "context": {
+        "componentName": "App",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "e457f3246c27",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 127,
+        "column": 12
+      }
+    },
+    "61f40bd05cad": {
+      "type": "attribute",
+      "sourceText": "Rich Content",
+      "context": {
+        "attributeName": "title",
+        "componentName": "App",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "61f40bd05cad",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 135,
+        "column": 10
+      }
+    },
+    "864e97bde163": {
+      "type": "attribute",
+      "sourceText": "Content with text and tags inside will be translated as a single entity:",
+      "context": {
+        "attributeName": "description",
+        "componentName": "App",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "864e97bde163",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 135,
+        "column": 10
+      }
+    },
+    "5f5d12016db7": {
+      "type": "content",
+      "sourceText": "Content that has text and other tags inside will be translated as a single entity: <span0>{translatableMixedContextFragment}</span0>",
+      "context": {
+        "componentName": "App",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "5f5d12016db7",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 139,
+        "column": 12
+      }
+    },
+    "9baf3ab1f1dd": {
+      "type": "content",
+      "sourceText": "Ready to get started?",
+      "context": {
+        "componentName": "App",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "9baf3ab1f1dd",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 152,
+        "column": 12
+      }
+    },
+    "2caba70feb03": {
+      "type": "content",
+      "sourceText": "Switch languages using the locale switcher in the header to see translations in action!",
+      "context": {
+        "componentName": "App",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "2caba70feb03",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 155,
+        "column": 12
+      }
+    },
+    "c64adaadaa51": {
+      "type": "content",
+      "sourceText": "Explore Features →",
+      "context": {
+        "componentName": "App",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "c64adaadaa51",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 158,
+        "column": 12
+      }
+    }
+  },
+  "stats": {
+    "totalEntries": 44,
+    "lastUpdated": "2026-01-22T13:06:49.367Z"
+  }
+}

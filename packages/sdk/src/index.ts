@@ -196,7 +196,7 @@ export class LingoDotDevEngine {
    * @returns The total number of words
    */
   private countWordsInRecord(
-    payload: any | Record<string, any> | Array<any>,
+    payload: unknown,
   ): number {
     if (Array.isArray(payload)) {
       return payload.reduce(
@@ -227,7 +227,7 @@ export class LingoDotDevEngine {
    * @returns A new object with the same structure but localized string values
    */
   async localizeObject(
-    obj: Record<string, any>,
+    obj: Record<string, unknown>,
     params: Z.infer<typeof localizationParamsSchema>,
     progressCallback?: (
       progress: number,
@@ -235,7 +235,7 @@ export class LingoDotDevEngine {
       processedChunk: Record<string, string>,
     ) => void,
     signal?: AbortSignal,
-  ): Promise<Record<string, any>> {
+  ): Promise<Record<string, unknown>> {
     return this._localizeRaw(obj, params, progressCallback, signal);
   }
 
@@ -590,6 +590,8 @@ export class ReplexicaEngine extends LingoDotDevEngine {
   constructor(config: Partial<Z.infer<typeof engineParamsSchema>>) {
     super(config);
     if (!ReplexicaEngine.hasWarnedDeprecation) {
+      // Deprecation warning - using console.warn is appropriate for SDK deprecation notices
+      // eslint-disable-next-line no-console
       console.warn(
         "ReplexicaEngine is deprecated and will be removed in a future release. " +
           "Please use LingoDotDevEngine instead. " +
@@ -609,6 +611,8 @@ export class LingoEngine extends LingoDotDevEngine {
   constructor(config: Partial<Z.infer<typeof engineParamsSchema>>) {
     super(config);
     if (!LingoEngine.hasWarnedDeprecation) {
+      // Deprecation warning - using console.warn is appropriate for SDK deprecation notices
+      // eslint-disable-next-line no-console
       console.warn(
         "LingoEngine is deprecated and will be removed in a future release. " +
           "Please use LingoDotDevEngine instead. " +

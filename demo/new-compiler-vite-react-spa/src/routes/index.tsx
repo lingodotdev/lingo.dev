@@ -12,7 +12,10 @@ function Button() {
   const [counter, setCounter] = useState(0);
 
   return (
-    <button onClick={() => setCounter((old) => old + 1)}>
+    <button
+      onClick={() => setCounter((old) => old + 1)}
+      className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105 active:scale-95 cursor-pointer"
+    >
       Clicked {counter} times
     </button>
   );
