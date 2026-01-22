@@ -1,0 +1,61 @@
+{
+  "name": "dev-sprint-manager",
+  "version": "1.0.0",
+  "description": "A modern, multilingual project management tool with real-time translation powered by Lingo.dev API - Standalone Demo",
+  "private": false,
+  "type": "module",
+  "keywords": [
+    "react",
+    "vite",
+    "translation",
+    "i18n",
+    "lingo.dev",
+    "kanban",
+    "project-management",
+    "demo",
+    "hackathon"
+  ],
+  "author": "Dev-Sprint Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/dev-sprint-manager.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/dev-sprint-manager/issues"
+  },
+  "homepage": "https://github.com/your-username/dev-sprint-manager#readme",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "server": "node server.js",
+    "dev:full": "concurrently \"npm run server\" \"npm run dev\"",
+    "setup": "node setup.js",
+    "verify": "node verify-setup.js",
+    "test": "echo \"Tests coming soon\" && exit 0"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "framer-motion": "^12.28.1",
+    "lingo.dev": "^0.122.1",
+    "lucide-react": "^0.562.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.25.0",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "@vitejs/plugin-react": "^4.4.1",
+    "concurrently": "^9.1.0",
+    "eslint": "^9.25.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "globals": "^16.0.0",
+    "vite": "^6.3.5"
+  }
+}

@@ -1,0 +1,10 @@
+/* Resetting default app styles to allow full screen layout */
+#root {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}

@@ -1,0 +1,13 @@
+{
+  "version": "1.10",
+  "locale": {
+    "source": "en",
+    "targets": ["hi", "es", "fr", "ja"]
+  },
+  "mode": "real-time",
+  "description": "Real-time translation demo - no locale packs generated",
+  "buckets": {
+    "note": "No locale files needed - everything translated on-demand via API"
+  },
+  "$schema": "https://lingo.dev/schema/i18n.json"
+}
