@@ -1,0 +1,5 @@
+Hallo von CustomHack
+
+Willkommen bei CustomHack {{name}}!
+
+Dies ist eine E-Mail von deiner Anwendung.

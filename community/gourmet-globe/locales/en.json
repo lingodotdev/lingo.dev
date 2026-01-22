@@ -1,0 +1,36 @@
+{
+  "hero": {
+    "title": "GourmetGlobe: The AI-Powered Food Network",
+    "subtitle": "Discover authentic recipes from around the world, translated perfectly into your language using Lingo.dev.",
+    "cta": "Explore Recipes"
+  },
+  "sections": {
+    "trending": "Trending Global Flavors",
+    "categories": "Browse by Category"
+  },
+  "recipes": {
+    "pasta": {
+      "title": "Classic Italian Pasta",
+      "description": "Handcrafted tagliatelle with a rich, slow-cooked Bolognese sauce and fresh herbs."
+    },
+    "biryani": {
+      "title": "Authentic Chicken Biryani",
+      "description": "Fragrant basmati rice layered with succulent chicken and aromatic blend of Indian spices."
+    },
+    "sushi": {
+      "title": "Premium Sushi Platter",
+      "description": "A selection of fresh Nigiri and Maki rolls made with the finest Atlantic salmon and Bluefin tuna."
+    },
+    "pastry": {
+      "title": "Artisan French Pastry",
+      "description": "Flaky buttery croissants and delicate macarons from the heart of Paris."
+    }
+  },
+  "features": {
+    "ai_localized": "Localized by AI",
+    "realtime_translation": "Real-time translation for global foodies."
+  },
+  "footer": {
+    "rights": "© 2026 GourmetGlobe. Built with Lingo.dev"
+  }
+}
