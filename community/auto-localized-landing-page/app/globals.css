@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #fafafa;
+  --fg: #171717;
+  --muted: #737373;
+  --border: #e5e5e5;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Simple focus styles */
+*:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Hide scrollbar but keep functionality */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
