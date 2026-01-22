@@ -1,5 +1,13 @@
 # lingo.dev
 
+## 0.124.0
+
+### Minor Changes
+
+- [#1793](https://github.com/lingodotdev/lingo.dev/pull/1793) [`29c598c`](https://github.com/lingodotdev/lingo.dev/commit/29c598caa1fc6b02693eafa12d245f8fbfdfe4b8) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Fix CLI command script for Windows 11 and Bash compatibility
+
+- [#1793](https://github.com/lingodotdev/lingo.dev/pull/1793) [`29c598c`](https://github.com/lingodotdev/lingo.dev/commit/29c598caa1fc6b02693eafa12d245f8fbfdfe4b8) Thanks [@cherkanovart](https://github.com/cherkanovart)! - roll back
+
 ## 0.123.0
 
 ### Minor Changes
