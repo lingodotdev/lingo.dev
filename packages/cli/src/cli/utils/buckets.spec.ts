@@ -1,6 +1,8 @@
 import { describe, it, expect, vi } from "vitest";
 import { getBuckets } from "./buckets";
-import { glob, Path } from "glob";
+import * as pkg from "glob";
+import type { Path } from "glob";
+const { glob } = pkg;
 
 vi.mock("glob", () => ({
   glob: {
