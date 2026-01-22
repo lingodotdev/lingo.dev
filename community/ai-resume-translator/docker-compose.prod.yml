@@ -1,35 +1,21 @@
 services:
-  server:
+  app:
     build:
-      context: ./server
+      context: .
       dockerfile: Dockerfile.prod
-    container_name: resume_server_prod
+    container_name: resume-translator-prod
     ports:
-      - "8000:8000"
+      - "80:8000"
     environment:
       NODE_ENV: production
       PORT: 8000
-      CLIENT_URL: ${CLIENT_URL:-http://localhost}
+    env_file:
+      - .env
     networks:
-      - resume_network_prod
+      - resume-network
     restart: always
-
-  client:
-    build:
-      context: ./client
-      dockerfile: Dockerfile.prod
-    container_name: resume_client_prod
-    ports:
-      - "80:3000"
-    environment:
-      NODE_ENV: production
-      REACT_APP_API_URL: ${API_URL:-http://localhost:8000}
-    depends_on:
-      - server
-    networks:
-      - resume_network_prod
-    restart: always
+    command: npm start
 
 networks:
-  resume_network_prod:
+  resume-network:
     driver: bridge
