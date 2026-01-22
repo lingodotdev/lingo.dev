@@ -1,0 +1,21 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node ./dist/index.js",
+    "dev": "npm run build && npm run start"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@types/express": "^5.0.6",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "typescript": "^5.9.3"
+  }
+}
