@@ -6,3 +6,4 @@ packages:
   - "./action"
   - "./php/*"
   - "./scripts/*"
+  - "./community/urbackend-global-console*"

@@ -1,0 +1,86 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+:root {
+  /* Colors - Core Black Theme (Supabase-like) */
+  --color-primary: #3ECF8E;
+  --color-primary-hover: #34B27B;
+
+  --color-bg-main: #000000;
+  --color-bg-sidebar: #050505;
+  --color-bg-card: #0A0A0A;
+  --color-bg-input: #0F0F0F;
+
+  --color-text-main: #EDEDED;
+  --color-text-muted: #888888;
+
+  --color-border: #1E1E1E;
+  --color-border-hover: #333333;
+
+  --color-danger: #ea5455;
+  --color-success: #3ECF8E;
+  
+  --glass-bg: rgba(10, 10, 10, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.05);
+
+  --sidebar-width: 260px;
+  --header-height: 56px;
+  --border-radius: 6px;
+}
+
+/* Custom Utilities mimicking urBackend */
+@theme {
+  --color-primary: var(--color-primary);
+  --color-sidebar: var(--color-bg-sidebar);
+  --color-card: var(--color-bg-card);
+  --color-input: var(--color-bg-input);
+}
+
+body {
+  background-color: var(--color-bg-main);
+  color: var(--color-text-main);
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+}
+
+/* Glassmorphism Panel */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+}
+
+.card {
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card:hover {
+  border-color: var(--color-border-hover);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius);
+  font-weight: 500;
+  font-size: 0.875rem;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: #000;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-hover);
+  box-shadow: 0 4px 15px rgba(62, 207, 142, 0.3);
+}

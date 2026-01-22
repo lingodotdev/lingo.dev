@@ -1,0 +1,5 @@
+{
+  "locales": ["en", "hi", "es", "fr"],
+  "defaultLocale": "en",
+  "description": "urBackend is a BaaS platform. Maintain strict technical jargon for all locales (en, hi, es, fr)."
+}

@@ -1,0 +1,10 @@
+export default function DatabasePage() {
+  return (
+    <div className="space-y-6">
+      <h1 className="text-3xl font-bold text-[#EDEDED]">Database Collections</h1>
+      <div className="glass-panel p-12 flex items-center justify-center rounded-lg border-dashed">
+        <p className="text-[#888]">Table schema management and data explorer coming soon.</p>
+      </div>
+    </div>
+  );
+}
