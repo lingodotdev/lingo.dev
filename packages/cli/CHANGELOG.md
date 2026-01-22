@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.122.2
+
+### Patch Changes
+
+- [#1776](https://github.com/lingodotdev/lingo.dev/pull/1776) [`1a8786a`](https://github.com/lingodotdev/lingo.dev/commit/1a8786ad281d6f79d78379dd27fa3b174367eb3b) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Exclude previous translations from LLM reference when --force flag is used. The localization engine now receives an empty object instead of existing translations, ensuring truly fresh translations are generated without influence from previous versions.
+
 ## 0.122.1
 
 ### Patch Changes
