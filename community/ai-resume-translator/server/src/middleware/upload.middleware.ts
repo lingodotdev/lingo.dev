@@ -1,5 +1,8 @@
 import multer, { FileFilterCallback } from "multer";
 import { Request } from "express";
+import { ACCEPTED_FILE_TYPES } from "@/constants";
+import ApiError from "@/utils/ApiError";
+import { FileType } from "@/types/file.type";
 
 const storage = multer.diskStorage({
   destination: function (
@@ -23,8 +26,12 @@ const fileFilter = function (
   file: Express.Multer.File,
   cb: FileFilterCallback,
 ) {
-  if (file.mimetype !== "application/pdf") {
-    cb(new Error("Only PDF files are allowed!"));
+  if (!ACCEPTED_FILE_TYPES.includes(file.mimetype as FileType)) {
+    cb(
+      new ApiError(400, "Unsupported file type", undefined, [
+        `Accepted file types: ${ACCEPTED_FILE_TYPES.join(", ")}`,
+      ]),
+    );
   } else {
     cb(null, true);
   }
