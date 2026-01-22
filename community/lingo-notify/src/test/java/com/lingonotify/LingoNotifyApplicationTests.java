@@ -1,4 +1,4 @@
-package com.lingonotify.lingonotify;
+package com.lingonotify;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
