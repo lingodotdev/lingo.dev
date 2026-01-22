@@ -1,0 +1,39 @@
+{
+  "nav": {
+    "home": "Startseite",
+    "categories": "Kategorien",
+    "cart": "Warenkorb",
+    "settings": "Einstellungen"
+  },
+  "products": {
+    "title": "Haarfärbemittel",
+    "addToCart": "In den Warenkorb",
+    "viewDetails": "Details anzeigen"
+  },
+  "dyes": {
+    "midnight_black": {
+      "name": "Mitternachtsschwarz",
+      "description": "Tiefes, sattes Schwarz für dramatische Looks"
+    },
+    "chestnut_brown": {
+      "name": "Kastanienbraun",
+      "description": "Warmes, natürliches Braun mit roten Untertönen"
+    },
+    "golden_blonde": {
+      "name": "Goldblond",
+      "description": "Sonniges, helles Blond mit goldenen Highlights"
+    },
+    "auburn_red": {
+      "name": "Rotbraun",
+      "description": "Lebhaftes Rot mit Kupfertönen"
+    },
+    "platinum_blonde": {
+      "name": "Platinblond",
+      "description": "Kühles, eisiges Blond für mutige Statements"
+    },
+    "burgundy": {
+      "name": "Burgunderrot",
+      "description": "Tiefes Weinrot für einen stilvollen Look"
+    }
+  }
+}

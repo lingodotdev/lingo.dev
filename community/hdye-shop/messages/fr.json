@@ -1,0 +1,39 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "categories": "Catégories",
+    "cart": "Panier",
+    "settings": "Paramètres"
+  },
+  "products": {
+    "title": "Colorations capillaires",
+    "addToCart": "Ajouter au panier",
+    "viewDetails": "Voir les détails"
+  },
+  "dyes": {
+    "midnight_black": {
+      "name": "Noir minuit",
+      "description": "Noir profond et riche pour des looks dramatiques"
+    },
+    "chestnut_brown": {
+      "name": "Marron châtain",
+      "description": "Marron naturel et chaleureux aux nuances rouges"
+    },
+    "golden_blonde": {
+      "name": "Blond doré",
+      "description": "Blond lumineux et ensoleillé avec des reflets dorés"
+    },
+    "auburn_red": {
+      "name": "Roux auburn",
+      "description": "Rouge vibrant aux tons cuivrés"
+    },
+    "platinum_blonde": {
+      "name": "Blond platine",
+      "description": "Blond glacé et frais pour des déclarations audacieuses"
+    },
+    "burgundy": {
+      "name": "Bordeaux",
+      "description": "Rouge vin profond pour un style sophistiqué"
+    }
+  }
+}

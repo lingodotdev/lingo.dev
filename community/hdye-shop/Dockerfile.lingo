@@ -1,0 +1,19 @@
+FROM node:20-alpine
+
+RUN apk add --no-cache bash git
+
+WORKDIR /app
+
+# Install lingo.dev
+RUN npm install -g lingo.dev@0.115.0
+
+# Copy configuration and script
+COPY i18n.json /app/i18n.json
+COPY translate.sh /app/translate.sh
+
+# Fix line endings
+RUN sed -i 's/\r$//' /app/translate.sh && chmod +x /app/translate.sh
+
+RUN mkdir -p /app/messages
+
+CMD ["/bin/sh", "/app/translate.sh"]

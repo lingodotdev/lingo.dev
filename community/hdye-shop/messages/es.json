@@ -1,0 +1,39 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "categories": "Categorías",
+    "cart": "Carrito",
+    "settings": "Configuración"
+  },
+  "products": {
+    "title": "Tintes para el cabello",
+    "addToCart": "Añadir al carrito",
+    "viewDetails": "Ver detalles"
+  },
+  "dyes": {
+    "midnight_black": {
+      "name": "Negro medianoche",
+      "description": "Negro profundo y rico para looks dramáticos"
+    },
+    "chestnut_brown": {
+      "name": "Castaño",
+      "description": "Marrón cálido y natural con tonos rojizos"
+    },
+    "golden_blonde": {
+      "name": "Rubio dorado",
+      "description": "Rubio brillante y soleado con reflejos dorados"
+    },
+    "auburn_red": {
+      "name": "Rojo cobrizo",
+      "description": "Rojo vibrante con tonos cobrizos"
+    },
+    "platinum_blonde": {
+      "name": "Rubio platino",
+      "description": "Rubio frío y helado para declaraciones audaces"
+    },
+    "burgundy": {
+      "name": "Borgoña",
+      "description": "Rojo vino profundo para un estilo sofisticado"
+    }
+  }
+}

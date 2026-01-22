@@ -1,0 +1,11 @@
+services:
+  lingo-translate:
+    build:
+      context: .
+      dockerfile: Dockerfile.lingo
+    volumes:
+      - ./messages:/app/messages
+      - ./i18n.json:/app/i18n.json
+    environment:
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - LINGODOTDEV_API_KEY=${LINGODOTDEV_API_KEY}

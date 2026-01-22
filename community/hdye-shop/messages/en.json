@@ -1,0 +1,39 @@
+{
+    "nav": {
+      "home": "Home",
+      "categories": "Categories",
+      "cart": "Cart",
+      "settings": "Settings"
+    },
+    "products": {
+      "title": "Hair Color Dyes",
+      "addToCart": "Add to Cart",
+      "viewDetails": "View Details"
+    },
+    "dyes": {
+      "midnight_black": {
+        "name": "Midnight Black",
+        "description": "Deep, rich black for dramatic looks"
+      },
+      "chestnut_brown": {
+        "name": "Chestnut Brown",
+        "description": "Warm, natural brown with red undertones"
+      },
+      "golden_blonde": {
+        "name": "Golden Blonde",
+        "description": "Sunny, bright blonde with golden highlights"
+      },
+      "auburn_red": {
+        "name": "Auburn Red",
+        "description": "Vibrant red with copper tones"
+      },
+      "platinum_blonde": {
+        "name": "Platinum Blonde",
+        "description": "Cool, icy blonde for bold statements"
+      },
+      "burgundy": {
+        "name": "Burgundy",
+        "description": "Deep wine red for sophisticated style"
+      }
+    }
+  }

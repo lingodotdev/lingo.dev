@@ -1,0 +1,40 @@
+{
+  "name": "shop",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "lingo:pull": "lingo pull",
+    "lingo:push": "lingo push",
+    "translate:es": "npx lingo.dev@latest translate messages/en.json --to es --output messages/es.json",
+    "translate:fr": "npx lingo.dev@latest translate messages/en.json --to fr --output messages/fr.json",
+    "translate:de": "npx lingo.dev@latest translate messages/en.json --to de --output messages/de.json",
+    "translate:it": "npx lingo.dev@latest translate messages/en.json --to it --output messages/it.json",
+    "translate:all": "npm run translate:es && npm run translate:fr && npm run translate:de && npm run translate:it"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "lingo.dev": "^0.115.0",
+    "next": "^15.1.0",
+    "next-intl": "^3.23.0",
+    "react": "^19",
+    "react-dom": "^19"
+  },
+  "devDependencies": {
+    "@types/ejs": "^3.1.5",
+    "@types/node": "^20.19.25",
+    "@types/react": "^18.3.26",
+    "@types/react-dom": "^18.3.7",
+    "autoprefixer": "^10.4.22",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.0",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.18",
+    "typescript": "^5"
+  }
+}

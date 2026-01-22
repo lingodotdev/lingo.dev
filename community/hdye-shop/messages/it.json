@@ -1,0 +1,39 @@
+{
+  "nav": {
+    "home": "Home",
+    "categories": "Categorie",
+    "cart": "Carrello",
+    "settings": "Impostazioni"
+  },
+  "products": {
+    "title": "Coloranti per capelli",
+    "addToCart": "Aggiungi al carrello",
+    "viewDetails": "Visualizza dettagli"
+  },
+  "dyes": {
+    "midnight_black": {
+      "name": "Nero notte",
+      "description": "Nero profondo e intenso per look drammatici"
+    },
+    "chestnut_brown": {
+      "name": "Castano",
+      "description": "Marrone caldo e naturale con sfumature rosse"
+    },
+    "golden_blonde": {
+      "name": "Biondo dorato",
+      "description": "Biondo luminoso e solare con riflessi dorati"
+    },
+    "auburn_red": {
+      "name": "Rosso auburn",
+      "description": "Rosso vibrante con tonalità ramate"
+    },
+    "platinum_blonde": {
+      "name": "Biondo platino",
+      "description": "Biondo freddo e ghiacciato per dichiarazioni audaci"
+    },
+    "burgundy": {
+      "name": "Borgogna",
+      "description": "Rosso vinaccia profondo per uno stile sofisticato"
+    }
+  }
+}
