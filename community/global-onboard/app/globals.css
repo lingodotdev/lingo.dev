@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+:root {
+  --background: linear-gradient(135deg, #e3f2ff, #f9f1ff);
+  --foreground: #0f172a;
+  --muted: rgba(255, 255, 255, 0.8);
+  --muted-foreground: #475569;
+  --panel-start: #eef2ff;
+  --panel-end: #fdf2f8;
+}
+
+.dark {
+  --background: linear-gradient(145deg, #05010c, #0f172a 55%, #1f2937);
+  --foreground: #f8fafc;
+  --muted: rgba(15, 23, 42, 0.85);
+  --muted-foreground: #94a3b8;
+  --panel-start: rgba(15, 23, 42, 0.9);
+  --panel-end: rgba(79, 70, 229, 0.35);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --font-sans: "Inter", "Sohne", system-ui, -apple-system, blinkmacsystemfont,
+    "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  background-attachment: fixed;
+}
