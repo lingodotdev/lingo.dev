@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+::-webkit-scrollbar {
+    width: 20px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #d6dee1;
+    border-radius: 20px;
+    border: 6px solid transparent;
+    background-clip: content-box;
+}
+
+.css-13cymwt-control {
+
+    background-color: rgb(30 41 59) !important;
+    border: 0px !important;
+}
+
+.css-1p3m7a8-multiValue {
+    background-color: rgb(30 41 59) !important;
+
+
+}
+
+.css-1y7rh0y-MultiValueGeneric2 {
+    color: white !important;
+}
+
+.select__control .css-13cymwt-control {
+    background-color: rgb(30 41 59) !important;
+    border: 0px !important;
+}
+
+.css-1i837h3-ValueContainer2 {
+    color: rgb(30 41 59) !important;
+}
+
+.select__menu {
+    background-color: rgb(30 41 59) !important;
+    border: 0px !important;
+}
+
+
+.css-1nmdiq5-menu {
+    background-color: rgb(30 41 59) !important;
+    border: 0px !important;
+}
+
+.css-w9q2zk-Input2 {
+    color: white !important;
+}
+
+.select__control--is-focused .select__control--menu-is-open {
+    background-color: rgb(30 41 59) !important;
+    border: 0px !important;
+}
+
+.css-t3ipsp-control {
+    background-color: rgb(30 41 59) !important;
+    outline: none !important;
+    border: 0px !important;
+}
+
+.css-12a83d4-MultiValueRemove {
+    background-color: rgb(30 41 59) !important;
+    color: white !important;
+}
+
+.css-1xc3v61-indicatorContainer {
+    background-color: rgb(30 41 59) !important;
+    color: white !important;
+}
