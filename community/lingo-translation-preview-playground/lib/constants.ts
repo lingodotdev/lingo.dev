@@ -1,0 +1,66 @@
+export const SUPPORTED_LANGUAGES = [
+  { code: "en", name: "English", label: "English (en)" },
+  { code: "es", name: "Spanish", label: "Spanish (es)" },
+  { code: "fr", name: "French", label: "French (fr)" },
+  { code: "de", name: "German", label: "German (de)" },
+  { code: "it", name: "Italian", label: "Italian (it)" },
+  {
+    code: "pt-BR",
+    name: "Portuguese (Brazil)",
+    label: "Portuguese (Brazil) (pt-BR)",
+  },
+  { code: "ru", name: "Russian", label: "Russian (ru)" },
+  { code: "uk", name: "Ukrainian", label: "Ukrainian (uk)" },
+  { code: "pl", name: "Polish", label: "Polish (pl)" },
+  { code: "nl", name: "Dutch", label: "Dutch (nl)" },
+  { code: "sv", name: "Swedish", label: "Swedish (sv)" },
+  { code: "da", name: "Danish", label: "Danish (da)" },
+  { code: "fi", name: "Finnish", label: "Finnish (fi)" },
+  { code: "no", name: "Norwegian", label: "Norwegian (no)" },
+  { code: "cs", name: "Czech", label: "Czech (cs)" },
+  { code: "sk", name: "Slovak", label: "Slovak (sk)" },
+  { code: "ro", name: "Romanian", label: "Romanian (ro)" },
+  { code: "hu", name: "Hungarian", label: "Hungarian (hu)" },
+  { code: "bg", name: "Bulgarian", label: "Bulgarian (bg)" },
+  { code: "el", name: "Greek", label: "Greek (el)" },
+  { code: "tr", name: "Turkish", label: "Turkish (tr)" },
+
+  { code: "ar", name: "Arabic", label: "Arabic (ar)" },
+  { code: "he", name: "Hebrew", label: "Hebrew (he)" },
+  { code: "fa", name: "Persian", label: "Persian (fa)" },
+  { code: "ur", name: "Urdu", label: "Urdu (ur)" },
+
+  { code: "hi", name: "Hindi", label: "Hindi (hi)" },
+  { code: "bn", name: "Bengali", label: "Bengali (bn)" },
+  { code: "ta-IN", name: "Tamil (India)", label: "Tamil (India) (ta-IN)" },
+  { code: "te-IN", name: "Telugu (India)", label: "Telugu (India) (te-IN)" },
+  {
+    code: "ml-IN",
+    name: "Malayalam (India)",
+    label: "Malayalam (India) (ml-IN)",
+  },
+  { code: "pa-IN", name: "Punjabi (India)", label: "Punjabi (India) (pa-IN)" },
+
+  { code: "ja", name: "Japanese", label: "Japanese (ja)" },
+  { code: "ko", name: "Korean", label: "Korean (ko)" },
+
+  {
+    code: "zh-Hans",
+    name: "Chinese (Simplified)",
+    label: "Chinese (Simplified) (zh-Hans)",
+  },
+  {
+    code: "zh-Hant",
+    name: "Chinese (Traditional)",
+    label: "Chinese (Traditional) (zh-Hant)",
+  },
+
+  { code: "vi", name: "Vietnamese", label: "Vietnamese (vi)" },
+  { code: "th", name: "Thai", label: "Thai (th)" },
+  { code: "id", name: "Indonesian", label: "Indonesian (id)" },
+  { code: "ms", name: "Malay", label: "Malay (ms)" },
+  { code: "fil", name: "Filipino", label: "Filipino (fil)" },
+
+  { code: "sw", name: "Swahili", label: "Swahili (sw)" },
+  { code: "af", name: "Afrikaans", label: "Afrikaans (af)" },
+];
