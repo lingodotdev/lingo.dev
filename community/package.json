@@ -1,0 +1,21 @@
+{
+  "name": "ai_chatbot",
+  "version": "1.0.0",
+  "main": "back.js",
+  "scripts": {
+    "dev": "node gemeni-server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "@lingo-app/node": "^2.2.1"
+  }
+}
