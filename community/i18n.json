@@ -1,0 +1,20 @@
+{
+  "$schema": "https://lingo.dev/schema/i18n.json",
+  "version": "1.10",
+  "locale": {
+    "source": "en",
+    "targets": ["es"]
+  },
+  "buckets": {
+    "json": {
+      "include": ["locales/[locale].json"]
+    }
+  },
+  "provider": {
+    "id": "google",
+    "model": "gemini-3-flask",
+    "prompt": "Translate the provided text from {source} to {target}."
+  }
+
+
+}

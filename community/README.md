@@ -1,42 +1,188 @@
-# Lingo.dev Community Contributions
+# Lingo Chatbot
 
-Welcome to the official community space of Lingo.dev!
+A lightweight, multilingual chatbot demo built for the Lingo competition. Lingo Chatbot lets users send messages in English (or any supported language) and receive AI-generated responses that are translated on-the-fly into the selected language using Lingo.dev. The bot supports text input, image/file attachments, and emoji reactions for a modern, engaging chat experience.
 
-This directory is a dedicated space for community-driven projects, demo applications, and integrations that showcase what can be built with Lingo.dev.
+- Author: Yuvraj Nayak (Class 10)  
+- GitHub: https://github.com/YuvrajNayak19  
+- Demo: (Add a link here if you host a live demo)
 
-**Note:** The code in this directory is for examples and educational purposes. It exists separately from the core Lingo.dev product source code. If you want to contribute to the core product (like the CLI, compiler etc), you can go through our or open new one.
+---
 
-## 📂 What belongs here?
+## Table of contents
 
-We encourage you to submit projects that help others learn and build. Ideal contributions include:
+- [Key features](#key-features)
+- [How it works](#how-it-works)
+- [Project structure](#project-structure)
+- [Prerequisites](#prerequisites)
+- [Installation & running](#installation--running)
+- [Configuration](#configuration)
+- [Dependencies](#dependencies)
+- [Development notes](#development-notes)
+- [Future improvements](#future-improvements)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
 
-* **Demo Apps:** Full-stack or frontend applications (e.g., React, Next.js) demonstrating specific Lingo.dev features.
-* **Integrations:** Scripts or plugins that connect Lingo.dev with other tools in your stack.
-* **Starters/Boilerplates:** Minimal setups to help new users get up and running quickly.
-* **Tutorial Code:** Source code companion files for blogs or video tutorials.
+---
 
-## 🚀 How to Contribute
+## Key features
 
-We love seeing what you build! To contribute to this directory:
+- Real-time AI chat using Google Gemini for response generation
+- Multilingual support via Lingo.dev translations (automatic translation to the selected language)
+- File attachments — upload images to include in the conversation
+- Emoji picker & reactions
+- Responsive UI that works on desktop and mobile
+- Lightweight — runs in the browser; minimal setup required
 
-1. **Fork & Branch:** Fork the repository and create a new branch for your contribution.
-2. **Create a Directory:** Inside `community/`, create a new folder for your project. Please use `kebab-case` for naming (e.g., `community/react-todo-demo`).
-3. **Add Documentation:** Every contribution **must** have its own `README.md` inside its folder explaining:
-    * What the project does.
-    * Prerequisites (e.g., Node version, API keys).
-    * How to run it locally.
-4. **Submit a PR:** Open a Pull Request targeting the `main` branch. Please tag your PR with `community-submission` so our team can spot it easily.
-5. Don't forget to add a changeset in your PRs as mentioned in our [contributor's guide](https://github.com/lingodotdev/lingo.dev/blob/main/CONTRIBUTING.md).
+---
 
-## 💬 Join the Discussion
+## How it works
 
-If you have an idea for a contribution but aren't sure where to start, or if you want to show off your work:
+1. A user sends a message through the chat input.
+2. The message is forwarded to the AI backend (Google Gemini) which generates a response.
+3. The generated response is translated using Lingo.dev to the language selected by the user.
+4. The translated response is displayed in the chat UI. Attachments and emojis are handled alongside messages.
 
-* **Discord:** Join our [Discord server](https://lingo.dev/go/discord) to interact with our fellow community members.
-* **Issues:** You can also open a GitHub Issue with the tag `community-submission-idea` to discuss potential contributions.
+---
 
-## ⚖️ License & Disclaimer
+## Project structure
 
-Code in the `community/` directory is contributed by the community. While the Lingo.dev team reviews submissions, these projects are maintained by their respective authors.
+Root layout (example)
+```
+lingo-chatbot/
+├── index.html         # Main HTML file (chat UI)
+├── script.js          # Frontend logic, API calls and translation flow
+├── style.css          # Chat UI styles
+├── locales/           # Translation files / language resources
+│   ├── en.json        # English translations
+│   └── es.json        # Spanish translations (example)
+├── assets/            # Images, icons, emojis, etc.
+└── README.md          # This file
+```
 
-By contributing, you agree that your code will be licensed under the same terms as the repository.
+Adjust paths if your implementation differs.
+
+---
+
+## Prerequisites
+
+- Modern web browser (Chrome/Edge/Firefox)
+- Internet connection for API calls to Google Gemini and Lingo.dev
+- API keys for:
+  - Google Gemini (or your chosen AI backend)
+  - Lingo.dev (for translation)
+
+---
+
+## Installation & running
+
+1. Clone the repository:
+   ```
+   git clone https://github.com/YuvrajNayak19/lingo-chat-bot.git
+   cd lingo-chat-bot
+   ```
+
+2. Open `index.html` in your browser (for a simple static demo), or serve the folder using a local static server:
+   - Using Python 3:
+     ```
+     python -m http.server 8000
+     ```
+     Then open `http://localhost:8000`.
+
+3. Configure API keys as described below, then start interacting with the chatbot.
+
+---
+
+## Configuration
+
+This project expects API keys to be provided to the frontend (for demo purposes) or — preferably — to a backend service that proxies requests to the AI and translation APIs.
+
+Example: store keys in `script.js` only for local testing (DO NOT commit keys):
+
+```js
+// script.js (example)
+const GEMINI_API_KEY = "<YOUR_GOOGLE_GEMINI_API_KEY>";
+const LINGO_API_KEY   = "<YOUR_LINGO_DEV_API_KEY>";
+```
+
+Recommended (secure) approach:
+- Implement a small backend endpoint that stores the API keys in environment variables and proxies requests from the frontend.
+- Frontend calls your backend which then calls Google Gemini and Lingo.dev. This keeps keys secret.
+
+Environment example for a backend:
+```
+GEMINI_API_KEY=your_gemini_key_here
+LINGO_API_KEY=your_lingo_key_here
+PORT=3000
+```
+
+---
+
+## Dependencies
+
+- Lingo.dev SDK — used for translation (link: https://lingo.dev)
+- Emoji Mart — emoji picker component (link: https://github.com/missive/emoji-mart)
+- Google Gemini API — AI-generated responses (link: https://developers.google.com/)
+
+Note: Replace links above with the exact SDK or package pages you use. If the project is pure frontend and uses CDN links, list the CDN resources here.
+
+---
+
+## Development notes
+
+- Frontend entrypoint: `index.html`
+- Main logic: `script.js`
+- Styling: `style.css`
+- Languages: `locales/*.json` — add new language JSON files to extend supported languages.
+- Attachments: current demo supports single-image uploads. Add server-side handling for larger files or multiple types.
+
+Testing & linting:
+- Add your preferred test framework and linter if you expand the project (e.g., Jest, ESLint).
+
+Security:
+- Never commit API keys to source control.
+- For production usage, always proxy requests through a backend to protect secrets.
+
+---
+
+## Future improvements
+
+- Voice input/output (speech-to-text / text-to-speech)
+- Persistent chat history via cloud storage or a lightweight DB
+- Support for more file types and multiple attachments
+- Better error handling and offline fallback
+- Server-side implementation and authentication
+- WebSocket-based real-time updates for multi-user scenarios
+
+---
+
+## Contributing
+
+Contributions are welcome! Suggested workflow:
+
+1. Fork the repository
+2. Create a branch: `git checkout -b feature/your-feature`
+3. Commit your changes: `git commit -m "Add amazing feature"`
+4. Push and open a pull request
+
+Please include tests and update documentation when adding major features.
+
+---
+
+## License
+
+Add a license for your project (e.g., MIT). If you want to use MIT, create a `LICENSE` file with the full text and add:
+
+```
+Licensed under the MIT License. See LICENSE file for details.
+```
+
+---
+
+## Contact
+
+Yuvraj Nayak  
+GitHub: https://github.com/YuvrajNayak19  
+Email: yuvrajnayak3011@gmail.com
+
+---
