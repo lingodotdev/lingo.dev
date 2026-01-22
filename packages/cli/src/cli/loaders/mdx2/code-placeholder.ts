@@ -98,8 +98,8 @@ function extractCodePlaceholders(content: string): {
   const codeBlockMatches = finalContent.matchAll(fenceRegex);
   for (const match of codeBlockMatches) {
     const codeBlock = match[0];
-    const codeBlockHash = md5(codeBlock);
-    const placeholder = `{/* CODE_PLACEHOLDER_${codeBlockHash} */}`;
+    const codeBlockHash = md5(codeBlock).slice(0, 16);
+    const placeholder = `CODE_PLACEHOLDER_${codeBlockHash}_END`;
 
     codePlaceholders[placeholder] = codeBlock;
 
@@ -112,8 +112,8 @@ function extractCodePlaceholders(content: string): {
   const inlineCodeMatches = finalContent.matchAll(inlineCodeRegex);
   for (const match of inlineCodeMatches) {
     const inlineCode = match[0];
-    const inlineCodeHash = md5(inlineCode);
-    const placeholder = `{/* INLINE_CODE_PLACEHOLDER_${inlineCodeHash} */}`;
+    const inlineCodeHash = md5(inlineCode).slice(0, 16);
+    const placeholder = `INLINE_CODE_PLACEHOLDER_${inlineCodeHash}_END`;
     codePlaceholders[placeholder] = inlineCode;
     const replacement = placeholder;
     finalContent = finalContent.replace(inlineCode, () => replacement);
