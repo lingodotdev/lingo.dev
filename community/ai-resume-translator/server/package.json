@@ -22,17 +22,19 @@
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
-    "lingo.dev": "^0.122.1",
+    "lingo.dev": "^0.122.2",
     "mammoth": "^1.11.0",
     "mongoose": "^9.1.5",
     "multer": "^2.0.2",
-    "pdf-parse": "^2.4.5"
+    "pdf-parse": "^2.4.5",
+    "pdfkit": "^0.17.2"
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/multer": "^2.0.0",
     "@types/node": "^25.0.10",
+    "@types/pdfkit": "^0.17.4",
     "jest": "^30.2.0",
     "nodemon": "^3.1.11",
     "tsx": "^4.21.0",
