@@ -136,10 +136,3 @@ Demonstrates how Lingo.dev can be used safely with markdown by translating only 
 
 Most open-source projects are English-only, which limits adoption.
 This tool demonstrates how Lingo.dev enables effortless, production-ready localization for developers with minimal setup.
-
-
-### Why This Matters
-
-Most open-source projects are English-only, which limits adoption.
-This tool demonstrates how Lingo.dev enables effortless, production-ready localization for developers with minimal setup.
-
