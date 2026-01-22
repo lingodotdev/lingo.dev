@@ -1,0 +1,16 @@
+{
+    "pr": {
+        "title": "Benutzerauthentifizierung mit JWT-Tokens hinzufügen",
+        "description": "Dieser PR implementiert ein sicheres Authentifizierungssystem unter Verwendung von JSON Web Tokens (JWT). Die Implementierung umfasst Login-, Logout- und Token-Aktualisierungsfunktionen. Alle Endpunkte sind mit Middleware geschützt, die Tokens validiert, bevor der Zugriff auf geschützte Ressourcen gewährt wird.",
+        "comment": {
+            "review": "Großartige Arbeit bei der Authentifizierungsimplementierung! Die Token-Validierungslogik sieht solide aus. Ein Vorschlag: Erwägen Sie, eine Ratenbegrenzung zum Login-Endpunkt hinzuzufügen, um Brute-Force-Angriffe zu verhindern. Stellen Sie außerdem sicher, dass das JWT-Secret in der Produktion rotiert wird."
+        }
+    },
+    "pr_updated": {
+        "title": "Benutzerauthentifizierung mit JWT-Tokens und OAuth2-Unterstützung hinzufügen",
+        "description": "Dieser PR implementiert ein umfassendes Authentifizierungssystem, das sowohl JWT-Tokens als auch OAuth2-Anbieter (Google, GitHub) unterstützt. Die Implementierung umfasst Login-, Logout-, Token-Aktualisierungs- und Social-Authentication-Funktionen. Alle Endpunkte sind mit Middleware geschützt, die Tokens validiert, bevor der Zugriff auf geschützte Ressourcen gewährt wird. Unterstützung für rollenbasierte Zugriffskontrolle (RBAC) wurde hinzugefügt.",
+        "comment": {
+            "review": "Ausgezeichnete Arbeit bei der Authentifizierungsimplementierung! Die Token-Validierungslogik ist robust und die OAuth2-Integration ist sauber. Ein Vorschlag: Erwägen Sie, eine Ratenbegrenzung zum Login-Endpunkt hinzuzufügen, um Brute-Force-Angriffe zu verhindern. Stellen Sie außerdem sicher, dass JWT-Secrets in der Produktion regelmäßig rotiert und sicher in Umgebungsvariablen gespeichert werden."
+        }
+    }
+}

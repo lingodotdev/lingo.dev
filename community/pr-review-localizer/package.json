@@ -1,0 +1,26 @@
+{
+  "name": "pr-review-localizer",
+  "version": "1.0.0",
+  "description": "Demo app showing how Lingo.dev enables version-controlled, automated localization for GitHub Pull Request content",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsc && node dist/index.js"
+  },
+  "keywords": [
+    "lingo",
+    "localization",
+    "i18n",
+    "github",
+    "pull-request"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "typescript": "^5.3.0"
+  },
+  "dependencies": {}
+}

@@ -1,0 +1,16 @@
+{
+    "sourceLocale": "en",
+    "targetLocales": [
+        "es",
+        "fr",
+        "de"
+    ],
+    "files": {
+        "locales/{locale}.json": {
+            "format": "json"
+        }
+    },
+    "translation": {
+        "provider": "lingo"
+    }
+}

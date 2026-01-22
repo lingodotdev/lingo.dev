@@ -1,0 +1,16 @@
+{
+    "pr": {
+        "title": "Ajouter l'authentification utilisateur avec des jetons JWT",
+        "description": "Cette PR implémente un système d'authentification sécurisé utilisant des jetons web JSON (JWT). L'implémentation inclut les fonctionnalités de connexion, déconnexion et actualisation de jeton. Tous les endpoints sont protégés par un middleware qui valide les jetons avant d'autoriser l'accès aux ressources protégées.",
+        "comment": {
+            "review": "Excellent travail sur l'implémentation de l'authentification ! La logique de validation des jetons semble solide. Une suggestion : envisagez d'ajouter une limitation de débit au endpoint de connexion pour prévenir les attaques par force brute. Assurez-vous également de faire tourner le secret JWT en production."
+        }
+    },
+    "pr_updated": {
+        "title": "Ajouter l'authentification utilisateur avec des jetons JWT et le support OAuth2",
+        "description": "Cette PR implémente un système d'authentification complet prenant en charge à la fois les jetons JWT et les fournisseurs OAuth2 (Google, GitHub). L'implémentation inclut les fonctionnalités de connexion, déconnexion, actualisation de jeton et authentification sociale. Tous les endpoints sont protégés par un middleware qui valide les jetons avant d'autoriser l'accès aux ressources protégées. Ajout du support pour le contrôle d'accès basé sur les rôles (RBAC).",
+        "comment": {
+            "review": "Excellent travail sur l'implémentation de l'authentification ! La logique de validation des jetons est robuste et l'intégration OAuth2 est propre. Une suggestion : envisagez d'ajouter une limitation de débit au endpoint de connexion pour prévenir les attaques par force brute. Assurez-vous également que les secrets JWT sont régulièrement renouvelés en production et stockés en toute sécurité dans les variables d'environnement."
+        }
+    }
+}

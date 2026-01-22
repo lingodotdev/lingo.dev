@@ -1,0 +1,16 @@
+{
+    "pr": {
+        "title": "Add user authentication with JWT tokens",
+        "description": "This PR implements a secure authentication system using JSON Web Tokens (JWT). The implementation includes login, logout, and token refresh functionality. All endpoints are protected with middleware that validates tokens before allowing access to protected resources.",
+        "comment": {
+            "review": "Great work on the authentication implementation! The token validation logic looks solid. One suggestion: consider adding rate limiting to the login endpoint to prevent brute force attacks. Also, make sure to rotate the JWT secret in production."
+        }
+    },
+    "pr_updated": {
+        "title": "Add user authentication with JWT tokens and OAuth2 support",
+        "description": "This PR implements a comprehensive authentication system supporting both JWT tokens and OAuth2 providers (Google, GitHub). The implementation includes login, logout, token refresh, and social authentication functionality. All endpoints are protected with middleware that validates tokens before allowing access to protected resources. Added support for role-based access control (RBAC).",
+        "comment": {
+            "review": "Excellent work on the authentication implementation! The token validation logic is robust and the OAuth2 integration is clean. One suggestion: consider adding rate limiting to the login endpoint to prevent brute force attacks. Also, ensure JWT secrets are rotated regularly in production and stored securely in environment variables."
+        }
+    }
+}

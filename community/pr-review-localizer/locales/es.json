@@ -1,0 +1,16 @@
+{
+    "pr": {
+        "title": "Agregar autenticación de usuario con tokens JWT",
+        "description": "Este PR implementa un sistema de autenticación seguro utilizando tokens web JSON (JWT). La implementación incluye funcionalidad de inicio de sesión, cierre de sesión y actualización de tokens. Todos los endpoints están protegidos con middleware que valida los tokens antes de permitir el acceso a recursos protegidos.",
+        "comment": {
+            "review": "¡Excelente trabajo en la implementación de autenticación! La lógica de validación de tokens se ve sólida. Una sugerencia: considera agregar limitación de tasa al endpoint de inicio de sesión para prevenir ataques de fuerza bruta. Además, asegúrate de rotar el secreto JWT en producción."
+        }
+    },
+    "pr_updated": {
+        "title": "Agregar autenticación de usuario con tokens JWT y soporte OAuth2",
+        "description": "Este PR implementa un sistema de autenticación integral que admite tanto tokens JWT como proveedores OAuth2 (Google, GitHub). La implementación incluye funcionalidad de inicio de sesión, cierre de sesión, actualización de tokens y autenticación social. Todos los endpoints están protegidos con middleware que valida los tokens antes de permitir el acceso a recursos protegidos. Se agregó soporte para control de acceso basado en roles (RBAC).",
+        "comment": {
+            "review": "¡Excelente trabajo en la implementación de autenticación! La lógica de validación de tokens es robusta y la integración de OAuth2 está limpia. Una sugerencia: considera agregar limitación de tasa al endpoint de inicio de sesión para prevenir ataques de fuerza bruta. Además, asegúrate de que los secretos JWT se roten regularmente en producción y se almacenen de forma segura en variables de entorno."
+        }
+    }
+}
