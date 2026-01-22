@@ -1,0 +1,27 @@
+{
+  "name": "lingua-verse",
+  "version": "1.0.0",
+  "description": "Real-time multilingual collaboration platform",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "app",
+    "server"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:app\"",
+    "dev:server": "cd server && npm run dev",
+    "dev:app": "cd app && npm run dev",
+    "install:all": "npm install && cd server && npm install && cd ../app && npm install",
+    "build": "cd app && npm run build",
+    "start": "concurrently \"npm run start:server\" \"npm run start:app\"",
+    "start:server": "cd server && npm start",
+    "start:app": "cd app && npm start"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "lingua-verse-server",
+  "version": "1.0.0",
+  "description": "Backend server for LinguaVerse",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "lingo.dev": "^0.125.0",
+    "node-cache": "^5.1.2",
+    "socket.io": "^4.7.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}
