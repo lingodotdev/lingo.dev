@@ -1,0 +1,33 @@
+{
+  "welcome": "Welcome to our website",
+  "navigation": {
+    "home": "Home",
+    "about": "About Us",
+    "services": "Services",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "Transform Your Business",
+    "subtitle": "We help companies grow with innovative solutions",
+    "cta": "Get Started"
+  },
+  "features": {
+    "feature1": {
+      "title": "Fast & Reliable",
+      "description": "Our platform delivers exceptional performance"
+    },
+    "feature2": {
+      "title": "Secure",
+      "description": "Enterprise-grade security for your data"
+    },
+    "feature3": {
+      "title": "Scalable",
+      "description": "Grows with your business needs"
+    }
+  },
+  "footer": {
+    "copyright": "© 2024 Your Company. All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service"
+  }
+}
