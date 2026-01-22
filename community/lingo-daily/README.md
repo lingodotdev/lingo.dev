@@ -9,6 +9,12 @@ Built for the Lingo.dev Hackathon to showcase seamless internationalization and 
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38bdf8?logo=tailwind-css)
 
+## 🚀 Live Demo
+
+**[View Live Demo →](https://lingo-daily.vercel.app/)**
+
+Experience the app in action with real-time news translation across 15+ languages.
+
 ## ✨ Features
 
 - **📰 Real-Time News**: Fetches live breaking news from [NewsAPI](https://newsapi.org)
@@ -134,14 +140,6 @@ lingo-daily/
 4. Endpoint uses Lingo.dev SDK's `localizeObject` method
 5. Translations are mapped back to articles
 6. UI updates with translated content
-
-### Load More Functionality
-
-- Initially displays 6 articles
-- "Load More" button appears if more articles are available
-- Loads 6 additional articles per click
-- Automatically translates new content if language is selected
-- Smooth loading states for optimal UX
 
 ## 🌐 Supported Languages
 
