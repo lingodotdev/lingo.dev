@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "hono": "^4.11.5",
-    "lingo.dev": "^0.125.0"
+    "lingo.dev": "^0.125.0",
+    "postgres": "^3.4.8"
   }
 }

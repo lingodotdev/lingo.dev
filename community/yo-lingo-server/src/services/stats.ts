@@ -1,34 +1,41 @@
-import { existsSync, readFileSync, writeFileSync } from "fs";
-import { join } from "path";
+import postgres from "postgres";
 
-const STATS_FILE = join(process.cwd(), "stats.json");
+const connectionString = Bun.env.NEON_PG_URL;
 
-interface Stats {
-  count: number;
+if (!connectionString) {
+  throw new Error("NEON_PG_URL is missing in .env");
 }
 
-function getStats(): Stats {
-  if (!existsSync(STATS_FILE)) {
-    return { count: 0 };
-  }
-  try {
-    return JSON.parse(readFileSync(STATS_FILE, "utf-8"));
-  } catch {
-    return { count: 0 };
-  }
-}
+const sql = postgres(connectionString, { ssl: "require" });
 
-function saveStats(stats: Stats) {
-  writeFileSync(STATS_FILE, JSON.stringify(stats, null, 2));
-}
+// Initialize table if not exists
+await sql`
+  CREATE TABLE IF NOT EXISTS stats (
+    id SERIAL PRIMARY KEY,
+    count INTEGER DEFAULT 0
+  )
+`;
 
-export const incrementCounter = () => {
-  const stats = getStats();
-  stats.count += 1;
-  saveStats(stats);
-  return stats.count;
+// Ensure initial row exists
+await sql`
+  INSERT INTO stats (id, count)
+  VALUES (1, 0)
+  ON CONFLICT (id) DO NOTHING
+`;
+
+export const incrementCounter = async () => {
+  const [result] = await sql`
+    UPDATE stats
+    SET count = count + 1
+    WHERE id = 1
+    RETURNING count
+  `;
+  return result?.count || 0;
 };
 
-export const getCounter = () => {
-  return getStats().count;
+export const getCounter = async () => {
+  const [result] = await sql`
+    SELECT count FROM stats WHERE id = 1
+  `;
+  return result?.count || 0;
 };

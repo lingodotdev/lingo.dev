@@ -12,7 +12,7 @@ export default content;
 const TARGET_LOCALES = ["es", "fr", "de", "hi", "ja", "ru", "zh"];
 
 content.get("/joke", async (c) => {
-  incrementCounter();
+  await incrementCounter();
   const joke = await fetchRandomJoke();
   if (!joke) return c.json({ error: "Failed to fetch joke" }, 500);
   
@@ -24,7 +24,7 @@ content.get("/joke", async (c) => {
 });
 
 content.get("/quote", async (c) => {
-  incrementCounter();
+  await incrementCounter();
   const quote = await fetchRandomQuote();
   if (!quote) return c.json({ error: "Failed to fetch quote" }, 500);
 
@@ -39,6 +39,6 @@ content.get("/github", async (c) => {
   return c.json(await fetchGitHubStats());
 });
 
-content.get("/stats", (c) => {
-  return c.json({ count: getCounter() });
+content.get("/stats", async (c) => {
+  return c.json({ count: await getCounter() });
 });
