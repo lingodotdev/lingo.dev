@@ -1,0 +1,35 @@
+@import "tailwindcss";
+.root{
+    overflow: hidden;
+}
+
+
+@layer utilities {
+  @keyframes fadeInScale {
+    0% {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .animate-fadeInScale {
+    animation: fadeInScale 0.3s ease-out forwards;
+  }
+}
+
+
+@layer utilities{
+  .writing-vertical-rl {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+}
+
+.writing-vertical-lr {
+  writing-mode: vertical-lr;
+  text-orientation: upright;
+}
+}

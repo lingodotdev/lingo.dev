@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: studentnest-backend
+    env: node
+    rootDir: src
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_SECRATE_KEY
+        sync: false
+      - key: CLOUDNAME
+        sync: false
+      - key: API_KEY
+        sync: false
+      - key: SECERATE_API
+        sync: false
+    autoDeploy: true
