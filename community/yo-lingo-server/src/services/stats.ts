@@ -1,6 +1,6 @@
 import postgres from "postgres";
 
-const connectionString = Bun.env.NEON_PG_URL;
+const connectionString = process.env.NEON_PG_URL;
 
 if (!connectionString) {
   throw new Error("NEON_PG_URL is missing in .env");

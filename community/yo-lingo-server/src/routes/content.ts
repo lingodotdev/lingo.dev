@@ -1,10 +1,10 @@
 import { Hono } from "hono";
-import { fetchRandomJoke } from "../services/joke";
-import { fetchRandomQuote } from "../services/quote";
-import { fetchGitHubStats } from "../services/github";
-import { translateContent } from "../services/lingo";
+import { fetchRandomJoke } from "../services/joke.js";
+import { fetchRandomQuote } from "../services/quote.js";
+import { fetchGitHubStats } from "../services/github.js";
+import { translateContent } from "../services/lingo.js";
 
-import { incrementCounter, getCounter } from "../services/stats";
+import { incrementCounter, getCounter } from "../services/stats.js";
 
 const content = new Hono();
 export default content;

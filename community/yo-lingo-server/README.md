@@ -38,6 +38,7 @@ The backend service for the Yo Lingo application, built with [Hono](https://hono
     ```env
     LINGO_API_KEY=your_actual_api_key_here
     PORT=3001
+    NEON_PG_URL=your_actual_neon_pg_url_here
     ```
 
 5.  **Run the Development Server**:

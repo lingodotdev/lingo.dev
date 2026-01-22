@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
-import content from "./routes/content";
+import content from "./routes/content.js";
 
 const app = new Hono();
 
@@ -10,7 +10,7 @@ app.route("/api", content);
 
 app.get("/", (c) => c.text("Hono server running 🚀"));
 
-const port = Number(Bun.env.PORT) || 3001;
+const port = Number(process.env.PORT) || 3001;
 console.log(`Server is running on port ${port} 🚀`);
 
 export default {

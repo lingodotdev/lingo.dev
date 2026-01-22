@@ -1,6 +1,6 @@
 import { LingoDotDevEngine } from "lingo.dev/sdk";
 
-const apiKey = Bun.env.LINGO_API_KEY;
+const apiKey = process.env.LINGO_API_KEY;
 if (!apiKey) {
   console.error("❌ LINGO_API_KEY is missing in .env file");
 }
