@@ -38,5 +38,7 @@ export default defineConfig({
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),
     },
+    // Dedupe React to ensure a single instance is used across all dependencies
+    dedupe: ["react", "react-dom"],
   },
 });
