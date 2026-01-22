@@ -1,0 +1,20 @@
+{
+  "app": {
+    "name": "Translation Demo",
+    "description": "This is a sample JSON file for translation",
+    "version": "1.0.0"
+  },
+  "messages": {
+    "welcome": "Welcome to our application",
+    "goodbye": "Thank you for using our service",
+    "error": "An error occurred"
+  },
+  "features": ["Fast translation", "Multiple languages", "Easy to use"],
+  "settings": {
+    "theme": "dark",
+    "notifications": {
+      "enabled": true,
+      "message": "You have new notifications"
+    }
+  }
+}

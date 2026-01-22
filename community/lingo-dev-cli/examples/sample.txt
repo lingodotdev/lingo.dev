@@ -1,0 +1,12 @@
+Welcome to the Translation Service
+
+This is a plain text file that will be completely translated.
+
+All the content in this file will be processed and translated to the target language.
+
+Features:
+- Simple and straightforward
+- Complete content translation
+- No special formatting to preserve
+
+Thank you for using our translation service!

@@ -1,0 +1,43 @@
+{
+  "name": "@harshvz/lingodev-cli",
+  "version": "1.0.0",
+  "description": "CLI-based translation pipeline using lingo.dev SDK",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "translate": "./dist/bin/translate.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "tsc --watch",
+    "dev": "tsc && node dist/bin/translate.js",
+    "translate": "node dist/bin/translate.js",
+    "prepublishOnly": "npm run build"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "translation",
+    "cli",
+    "lingo",
+    "i18n"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "lingo.dev": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.30",
+    "typescript": "^5.3.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
