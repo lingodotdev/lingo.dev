@@ -21,6 +21,17 @@ const handleErrorResponse = (err: Error | ApiError | MulterError): ApiError => {
     }
   }
 
+  // EJS template rendering errors
+  if (err.name === "EJSError" || err.message?.includes("ejs:") || err.message?.includes("Could not find matching close tag")) {
+    return new ApiError(
+      500,
+      process.env.NODE_ENV === "development"
+        ? `Template rendering error: ${err.message}`
+        : "Error rendering page",
+      err.stack,
+    );
+  }
+
   // Default ApiError
   if (err instanceof ApiError) {
     return err;
