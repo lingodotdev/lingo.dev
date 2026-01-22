@@ -34,7 +34,7 @@ It converts **developer comments, error messages, and README lines** into **mult
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/<your-username>/Lingo.dev.git
+git clone https://github.com/Deep2005-ksdap/lingo.dev.git
 cd Lingo.dev
 
 
