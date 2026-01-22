@@ -1,6 +1,7 @@
 import _ from "lodash";
 import path from "path";
-import { glob } from "glob";
+import * as pkg from "glob";
+const { glob } = pkg;
 import { CLIError } from "./errors";
 import {
   I18nConfig,
@@ -159,11 +160,11 @@ function expandPlaceholderedGlob(
       const sourcePathChunk = sourcePathChunks[localeSegmentIndex];
       const regexp = new RegExp(
         "(" +
-          pathPatternChunk
-            .replaceAll(".", "\\.")
-            .replaceAll("*", ".*")
-            .replace("[locale]", `)${sourceLocale}(`) +
-          ")",
+        pathPatternChunk
+          .replaceAll(".", "\\.")
+          .replaceAll("*", ".*")
+          .replace("[locale]", `)${sourceLocale}(`) +
+        ")",
       );
       const match = sourcePathChunk.match(regexp);
       if (match) {
