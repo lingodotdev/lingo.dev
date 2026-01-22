@@ -15,10 +15,6 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 
-// Configure EJS
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "../views"));
-
 // Middleware
 app.use(
   cors({
@@ -35,10 +31,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "../public")));
 
 // Routes
-app.get("/", (_: Request, res: Response) => {
-  res.render("index", { title: "AI Resume Translator" });
-});
-
 app.get("/health", (_: Request, res: Response) => {
   res.status(200).json(
     new ApiResponse(200, "Server is running...", {

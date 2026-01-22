@@ -21,7 +21,6 @@
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
-    "ejs": "^4.0.1",
     "express": "^5.2.1",
     "lingo.dev": "^0.122.2",
     "mammoth": "^1.11.0",
