@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Lingo.dev auto-generated files (only cache files should be committed)
+app/.lingo/metadata*.json
+app/.lingo/*.log
+app/.lingo/metadata-build.json

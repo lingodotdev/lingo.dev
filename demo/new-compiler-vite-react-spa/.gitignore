@@ -8,3 +8,8 @@ count.txt
 .nitro
 .tanstack
 .wrangler
+
+# Lingo.dev auto-generated files (only cache files should be committed)
+.lingo/metadata*.json
+.lingo/*.log
+.lingo/metadata-build.json

@@ -166,14 +166,51 @@ export class MetadataManager {
       );
     }
 
-    const release = await lockfile.lock(this.filePath, {
-      retries: {
-        retries: 10,
-        minTimeout: 50,
-        maxTimeout: 1000,
-      },
-      stale: 2000,
-    });
+    let release: (() => Promise<void>) | undefined;
+    let retryCount = 0;
+    const maxRetries = 20; // Increased from 10 to handle high concurrency
+    const baseDelay = 50;
+    const maxDelay = 2000; // Increased from 1000ms
+
+    while (retryCount < maxRetries) {
+      try {
+        release = await lockfile.lock(this.filePath, {
+          retries: {
+            retries: 0, // We handle retries manually
+            minTimeout: baseDelay,
+            maxTimeout: maxDelay,
+          },
+          stale: 5000, // Increased from 2000ms to handle longer operations
+          update: 1000, // Update lock file every second to prevent stale detection
+        });
+        break; // Successfully acquired lock
+      } catch (error: any) {
+        retryCount++;
+        if (error.code === "ELOCKED" && retryCount < maxRetries) {
+          // Exponential backoff with jitter
+          const delay = Math.min(
+            baseDelay * Math.pow(2, retryCount) + Math.random() * 100,
+            maxDelay,
+          );
+          logger.debug(
+            `Lock acquisition failed (attempt ${retryCount}/${maxRetries}), retrying in ${delay.toFixed(0)}ms...`,
+          );
+          await new Promise((resolve) => setTimeout(resolve, delay));
+          continue;
+        }
+        // If it's not ELOCKED or we've exhausted retries, throw the error
+        logger.warn(
+          `Failed to acquire lock for metadata file after ${retryCount} attempts: ${error.message}`,
+        );
+        throw error;
+      }
+    }
+
+    if (!release) {
+      throw new Error(
+        `Failed to acquire lock for metadata file after ${maxRetries} attempts`,
+      );
+    }
 
     try {
       // Re-load metadata inside lock to get latest state
@@ -184,7 +221,10 @@ export class MetadataManager {
       await this.saveMetadata(currentMetadata);
       return currentMetadata;
     } finally {
-      await release();
+      await release().catch((error) => {
+        // Log but don't throw - lock release failure is non-critical
+        logger.debug(`Failed to release lock: ${error.message}`);
+      });
     }
   }
 }
