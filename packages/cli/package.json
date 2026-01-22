@@ -108,7 +108,7 @@
     }
   },
   "bin": {
-    "lingo": "./bin/cli.mjs"
+    "lingo.dev": "./bin/cli.mjs"
   },
   "files": [
     "bin",
