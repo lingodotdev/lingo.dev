@@ -1,5 +1,25 @@
 # lingo.dev
 
+## 0.124.0
+
+### Minor Changes
+
+- [#1793](https://github.com/lingodotdev/lingo.dev/pull/1793) [`29c598c`](https://github.com/lingodotdev/lingo.dev/commit/29c598caa1fc6b02693eafa12d245f8fbfdfe4b8) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Fix CLI command script for Windows 11 and Bash compatibility
+
+- [#1793](https://github.com/lingodotdev/lingo.dev/pull/1793) [`29c598c`](https://github.com/lingodotdev/lingo.dev/commit/29c598caa1fc6b02693eafa12d245f8fbfdfe4b8) Thanks [@cherkanovart](https://github.com/cherkanovart)! - roll back
+
+## 0.123.0
+
+### Minor Changes
+
+- [#1759](https://github.com/lingodotdev/lingo.dev/pull/1759) [`403bba9`](https://github.com/lingodotdev/lingo.dev/commit/403bba908d8abd9bb4c9cd58072e54f3f72e8e96) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Fix CLI command script for Windows 11 and Bash compatibility
+
+## 0.122.2
+
+### Patch Changes
+
+- [#1776](https://github.com/lingodotdev/lingo.dev/pull/1776) [`1a8786a`](https://github.com/lingodotdev/lingo.dev/commit/1a8786ad281d6f79d78379dd27fa3b174367eb3b) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Exclude previous translations from LLM reference when --force flag is used. The localization engine now receives an empty object instead of existing translations, ensuring truly fresh translations are generated without influence from previous versions.
+
 ## 0.122.1
 
 ### Patch Changes
