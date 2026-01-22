@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { X, Upload, ScanLine, Loader2, Camera } from 'lucide-react';
+import { X, ScanLine, Loader2, Camera } from 'lucide-react';
 import { Transaction } from '../types';
 
 interface ModalProps {
