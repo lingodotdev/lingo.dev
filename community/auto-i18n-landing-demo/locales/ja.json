@@ -1,0 +1,9 @@
+{
+  "hero_title": "一度作れば、すべての言語で話せる。",
+  "hero_subtitle": "モダンなプロダクトのためのAIローカリゼーション。",
+  "welcome_user": "おかえりなさい、{{name}}！",
+  "cta_trial": "{{days}}日間の無料トライアルを開始",
+  "feature_1": "文脈を理解した翻訳",
+  "feature_2": "GitHubネイティブなワークフロー",
+  "feature_3": "開発者のために設計"
+}

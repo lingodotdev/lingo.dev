@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Lingo.dev Auto Localization Demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    :root {
+      --bg: #0b0b0b;
+      --panel: #111111;
+      --text: #f5f5f5;
+      --muted: #9ca3af;
+      --border: #1f2937;
+      --accent: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 64px 24px;
+      max-width: 800px;
+      margin: auto;
+      line-height: 1.7;
+    }
+
+    .container {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 52px;
+      border-radius: 16px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      animation: fadeUp 0.6s ease forwards;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    select {
+      background: transparent;
+      border: 1px solid var(--border);
+      padding: 8px 14px;
+      font-size: 0.95rem;
+      border-radius: 999px;
+      color: var(--text);
+      margin-bottom: 40px;
+      cursor: pointer;
+      outline: none;
+    }
+
+    select:focus {
+      border-color: var(--accent);
+    }
+
+    select option {
+      background: var(--panel);
+      color: var(--text);
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 600;
+      letter-spacing: -0.025em;
+      margin-bottom: 14px;
+    }
+
+    p {
+      color: var(--muted);
+      font-size: 1.05rem;
+      margin-bottom: 14px;
+      max-width: 640px;
+    }
+
+    .welcome {
+      margin-top: 28px;
+      font-size: 1rem;
+      color: var(--text);
+    }
+
+    ul {
+      margin-top: 40px;
+      padding-left: 0;
+      list-style: none;
+    }
+
+    li {
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.95rem;
+    }
+
+    li:last-child {
+      border-bottom: none;
+    }
+
+    button {
+      margin-top: 44px;
+      background: var(--accent);
+      color: #000;
+      border: none;
+      padding: 13px 28px;
+      font-size: 0.95rem;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      opacity: 0.9;
+    }
+
+    button:focus {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    .fade {
+      animation: fadeUp 0.35s ease forwards;
+    }
+
+    footer {
+      margin-top: 52px;
+      font-size: 0.85rem;
+      color: var(--muted);
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container" id="app">
+
+    <label for="lang" class="sr-only">Select language</label>
+    <select id="lang" aria-label="Select language">
+      <option value="en">English</option>
+      <option value="hi">Hindi</option>
+      <option value="fr">French</option>
+      <option value="es">Spanish</option>
+      <option value="ja">Japanese</option>
+    </select>
+
+    <h1 id="hero_title"></h1>
+    <p id="hero_subtitle"></p>
+
+    <p class="welcome" id="welcome"></p>
+
+    <ul>
+      <li id="f1"></li>
+      <li id="f2"></li>
+      <li id="f3"></li>
+    </ul>
+
+    <button id="cta"></button>
+
+  </div>
+
+  <footer>
+    AI-powered localization demo built with Lingo.dev
+  </footer>
+
+  <script>
+    function interpolate(text, vars) {
+      return text.replace(/{{(.*?)}}/g, (_, key) => vars[key.trim()]);
+    }
+
+    async function loadLang(lang) {
+      const app = document.getElementById("app");
+      app.classList.remove("fade");
+      void app.offsetWidth; // restart animation
+      app.classList.add("fade");
+
+      const data = await fetch(`locales/${lang}.json`).then(r => r.json());
+
+      hero_title.innerText = data.hero_title;
+      hero_subtitle.innerText = data.hero_subtitle;
+      welcome.innerText = interpolate(data.welcome_user, { name: "Satyam" });
+
+      f1.innerText = data.feature_1;
+      f2.innerText = data.feature_2;
+      f3.innerText = data.feature_3;
+
+      cta.innerText = interpolate(data.cta_trial, { days: 7 });
+    }
+
+    lang.addEventListener("change", e => loadLang(e.target.value));
+
+    loadLang("en");
+  </script>
+
+</body>
+</html>

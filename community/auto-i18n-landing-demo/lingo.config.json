@@ -1,0 +1,6 @@
+{
+  "sourceLocale": "en",
+  "locales": ["hi", "fr", "es", "ja"],
+  "tone": "modern, confident, startup-friendly",
+  "instructions": "Use simple, friendly language. Avoid overly formal tone. Keep UI text concise."
+}

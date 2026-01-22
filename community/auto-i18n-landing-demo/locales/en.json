@@ -1,0 +1,9 @@
+{
+  "hero_title": "Build once. Speak every language.",
+  "hero_subtitle": "AI-powered localization for modern products.",
+  "welcome_user": "Welcome back, {{name}}!",
+  "cta_trial": "Start your {{days}}-day free trial",
+  "feature_1": "Context-aware translations",
+  "feature_2": "GitHub-native workflow",
+  "feature_3": "Built for developers"
+}
