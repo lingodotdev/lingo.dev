@@ -2,6 +2,7 @@
 
 import { Translation } from "@/store/useTranslationStore";
 import { motion } from "framer-motion";
+import { TextToSpeech } from "./TextToSpeech";
 
 interface TranslationCardProps {
   translation: Translation;
@@ -125,30 +126,35 @@ export function TranslationCard({ translation, index }: TranslationCardProps) {
         )}
       </div>
 
-      {/* Copy button */}
+      {/* Action buttons */}
       {text && !isLoading && (
-        <motion.button
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => navigator.clipboard.writeText(text)}
-          className="absolute bottom-4 right-4 p-2 rounded-lg bg-[var(--bg-tertiary)] hover:bg-[var(--accent-primary)]/20 transition-colors group/btn"
+          className="absolute bottom-4 right-4 flex items-center gap-2"
         >
-          <svg
-            className="w-4 h-4 text-[var(--text-muted)] group-hover/btn:text-[var(--accent-primary)]"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
+          <TextToSpeech text={text} languageCode={language.code} />
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => navigator.clipboard.writeText(text)}
+            className="p-2 rounded-lg bg-[var(--bg-tertiary)] hover:bg-[var(--accent-primary)]/20 transition-colors group/btn"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
-            />
-          </svg>
-        </motion.button>
+            <svg
+              className="w-4 h-4 text-[var(--text-muted)] group-hover/btn:text-[var(--accent-primary)]"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+              />
+            </svg>
+          </motion.button>
+        </motion.div>
       )}
 
       {/* Language code badge */}

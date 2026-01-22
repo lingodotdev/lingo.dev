@@ -4,7 +4,9 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap");
 
-:root {
+/* Dark theme (default) */
+:root,
+[data-theme="dark"] {
   /* Unique color palette - Cosmic Teal & Amber */
   --bg-primary: #0a0f14;
   --bg-secondary: #111921;
@@ -19,6 +21,29 @@
   --border-subtle: rgba(0, 212, 170, 0.15);
   --glow-primary: rgba(0, 212, 170, 0.4);
   --glow-warm: rgba(253, 203, 110, 0.4);
+  --glass-bg: rgba(17, 25, 33, 0.7);
+  --globe-color: #1a2530;
+  --globe-wireframe: #00d4aa;
+}
+
+/* Light theme */
+[data-theme="light"] {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #f1f5f9;
+  --bg-tertiary: #e2e8f0;
+  --accent-primary: #0d9488;
+  --accent-secondary: #14b8a6;
+  --accent-warm: #f59e0b;
+  --accent-hot: #ef4444;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --border-subtle: rgba(13, 148, 136, 0.2);
+  --glow-primary: rgba(13, 148, 136, 0.3);
+  --glow-warm: rgba(245, 158, 11, 0.3);
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --globe-color: #e2e8f0;
+  --globe-wireframe: #0d9488;
 }
 
 * {
@@ -178,9 +203,21 @@ body {
 
 /* Glass morphism effect */
 .glass {
-  background: rgba(17, 25, 33, 0.7);
+  background: var(--glass-bg);
   backdrop-filter: blur(12px);
   border: 1px solid var(--border-subtle);
+}
+
+/* Smooth theme transition */
+html {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.glass,
+button,
+input,
+textarea {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 
 /* Gradient text */

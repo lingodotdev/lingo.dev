@@ -16,6 +16,11 @@ export function TranslateButton() {
     setTranslations,
     updateTranslation,
     setShowApiKeyModal,
+    startTranslationTimer,
+    stopTranslationTimer,
+    translationContext,
+    translationHints,
+    translationTone,
   } = useTranslationStore();
 
   const handleTranslate = async () => {
@@ -29,6 +34,7 @@ export function TranslateButton() {
     }
 
     setIsTranslating(true);
+    startTranslationTimer();
 
     // Initialize translations as loading
     const initialTranslations: Translation[] = selectedTargetLanguages.map(
@@ -80,6 +86,9 @@ export function TranslateButton() {
               sourceLocale: sourceLanguage?.code,
               targetLocale: lang.code,
               action: "translate",
+              context: translationContext,
+              hints: translationHints,
+              tone: translationTone,
             }),
           });
           const data = await response.json();
@@ -112,6 +121,7 @@ export function TranslateButton() {
     } catch (error) {
       console.error("Translation error:", error);
     } finally {
+      stopTranslationTimer();
       setIsTranslating(false);
     }
   };
@@ -121,6 +131,7 @@ export function TranslateButton() {
 
   return (
     <motion.button
+      data-translate-btn
       whileHover={!isDisabled ? { scale: 1.02, y: -2 } : {}}
       whileTap={!isDisabled ? { scale: 0.98 } : {}}
       onClick={handleTranslate}

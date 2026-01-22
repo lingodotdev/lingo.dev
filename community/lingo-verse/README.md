@@ -2,8 +2,8 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Lingo.dev-SDK-00d4aa?style=for-the-badge" alt="Lingo.dev SDK"/>
-  <img src="https://img.shields.io/badge/Next.js-15-black?style=for-the-badge" alt="Next.js"/>
-  <img src="https://img.shields.io/badge/React-19-61dafb?style=for-the-badge" alt="React"/>
+  <img src="https://img.shields.io/badge/Next.js-14-black?style=for-the-badge" alt="Next.js"/>
+  <img src="https://img.shields.io/badge/React-18-61dafb?style=for-the-badge" alt="React"/>
   <img src="https://img.shields.io/badge/Three.js-3D-black?style=for-the-badge" alt="Three.js"/>
 </p>
 
@@ -11,28 +11,36 @@
 
 ## ✨ Features
 
+### Core Translation
 - **🌍 Interactive 3D Globe** - Visualize translation paths between source and target languages on a beautiful animated globe
 - **⚡ Real-time Translation** - Translate text to multiple languages simultaneously using Lingo.dev's AI-powered engine
 - **🔍 Language Detection** - Automatic source language detection when you're not sure what language your text is in
-- **🎨 Stunning UI** - A unique cosmic teal & amber aesthetic with glass morphism effects, smooth animations, and beautiful typography
-- **📱 Responsive Design** - Works beautifully on desktop and mobile devices
 - **🌏 16+ Languages** - Support for English, Spanish, French, German, Italian, Portuguese, Russian, Japanese, Korean, Chinese, Arabic, Hindi, Turkish, Dutch, Polish, Swedish, and more
 
-## 🖼️ Preview
+### User Experience
+- **🎨 Dark/Light Theme** - Beautiful theme toggle with smooth transitions and theme-aware 3D globe
+- **📝 Sample Text Presets** - Quick demo buttons for Business, Casual, Technical, Marketing, Legal, and Creative content
+- **📊 Translation Stats** - Real-time word count, character count, and translation timing
+- **🔊 Text-to-Speech** - Listen to translations in their native pronunciation
+- **⌨️ Keyboard Shortcuts** - Power user features (Ctrl+Enter to translate, Escape to clear, ? for help)
 
-The app features:
-- A mesmerizing 3D globe with orbiting language nodes
-- Connection lines showing translation paths during active translations
-- Glass-morphism UI elements with subtle animations
-- Typewriter-style word visualization
-- Beautiful translation cards with native script support
+### Export & Share
+- **📥 Export Options** - Download translations as JSON or CSV
+- **📋 Copy All** - Copy all translations to clipboard with one click
+- **🎯 Individual Copy** - Copy individual translations easily
+
+### Design
+- **🎨 Stunning UI** - Unique cosmic teal & amber aesthetic with glass morphism effects
+- **✨ Smooth Animations** - Framer Motion powered animations throughout
+- **📱 Responsive Design** - Works beautifully on desktop and mobile devices
+- **🌙 Theme Persistence** - Your theme preference is saved locally
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 
 - **Node.js** 18.x or higher
-- **pnpm** (recommended) or npm
+- **npm** or **pnpm**
 - A **Lingo.dev API Key** - Get yours at [lingo.dev](https://lingo.dev)
 
 ### Installation
@@ -44,15 +52,11 @@ The app features:
 
 2. Install dependencies:
    ```bash
-   pnpm install
-   # or
    npm install
    ```
 
 3. Start the development server:
    ```bash
-   pnpm dev
-   # or
    npm run dev
    ```
 
@@ -60,14 +64,23 @@ The app features:
 
 5. Enter your Lingo.dev API key when prompted (it's stored locally in your browser)
 
+## ⌨️ Keyboard Shortcuts
+
+| Shortcut | Action |
+|----------|--------|
+| `Ctrl + Enter` | Translate text |
+| `Escape` | Clear input |
+| `?` | Show keyboard shortcuts help |
+
 ## 🛠️ Tech Stack
 
-- **[Next.js 15](https://nextjs.org/)** - React framework with App Router
-- **[React 19](https://react.dev/)** - UI library
+- **[Next.js 14](https://nextjs.org/)** - React framework with App Router
+- **[React 18](https://react.dev/)** - UI library
 - **[Lingo.dev SDK](https://lingo.dev/sdk)** - AI-powered translation engine
 - **[Three.js](https://threejs.org/)** + **[@react-three/fiber](https://docs.pmnd.rs/react-three-fiber)** - 3D graphics
 - **[Framer Motion](https://www.framer.com/motion/)** - Animations
 - **[Zustand](https://zustand-demo.pmnd.rs/)** - State management
+- **[Tailwind CSS](https://tailwindcss.com/)** - Styling
 - **[TypeScript](https://www.typescriptlang.org/)** - Type safety
 
 ## 📁 Project Structure
@@ -76,49 +89,56 @@ The app features:
 lingo-verse/
 ├── src/
 │   ├── app/
-│   │   ├── layout.tsx      # Root layout with fonts
-│   │   ├── page.tsx        # Main page component
-│   │   └── globals.css     # Global styles & CSS variables
+│   │   ├── api/translate/     # Translation API route
+│   │   ├── layout.tsx         # Root layout with fonts
+│   │   ├── page.tsx           # Main page component
+│   │   └── globals.css        # Global styles & themes
 │   ├── components/
-│   │   ├── Globe.tsx           # 3D globe visualization
-│   │   ├── TranslationInput.tsx # Text input component
-│   │   ├── TranslationCard.tsx  # Translation result card
-│   │   ├── LanguageSelector.tsx # Language picker
-│   │   ├── TranslateButton.tsx  # Translate action button
-│   │   └── ApiKeyModal.tsx      # API key configuration
+│   │   ├── Globe.tsx          # 3D globe visualization
+│   │   ├── TranslationInput.tsx
+│   │   ├── TranslationCard.tsx
+│   │   ├── LanguageSelector.tsx
+│   │   ├── TranslateButton.tsx
+│   │   ├── ApiKeyModal.tsx
+│   │   ├── ThemeToggle.tsx    # Dark/Light mode toggle
+│   │   ├── SamplePresets.tsx  # Quick sample text buttons
+│   │   ├── TranslationStats.tsx
+│   │   ├── ExportButton.tsx   # Export translations
+│   │   ├── TextToSpeech.tsx   # TTS functionality
+│   │   └── KeyboardShortcuts.tsx
 │   └── store/
-│       └── useTranslationStore.ts # Zustand state management
+│       ├── useTranslationStore.ts
+│       └── useThemeStore.ts
 ├── package.json
-├── tsconfig.json
-└── next.config.ts
+├── tailwind.config.js
+└── next.config.mjs
 ```
 
-## 🎯 How It Works
+## 🎯 SDK Features Demonstrated
 
-1. **Select Languages** - Choose a source language (or let AI auto-detect) and pick target languages
-2. **Enter Text** - Type or paste the text you want to translate
-3. **Translate** - Click the translate button to send your text across the globe
-4. **Watch the Magic** - See the 3D globe animate as translations flow to different regions
-5. **View Results** - Beautiful translation cards appear with the translated text
+This demo showcases multiple Lingo.dev SDK capabilities:
 
-## 🔑 API Key
-
-Your Lingo.dev API key is:
-- Stored locally in your browser's localStorage
-- Never sent to any server other than Lingo.dev's official API
-- Required for translation functionality
-
-Get your API key at [lingo.dev](https://lingo.dev)
+1. **`localizeText()`** - Translate single text strings to target languages
+2. **`recognizeLocale()`** - Automatic language detection
+3. **Batch Translation** - Parallel translation to multiple languages
+4. **Error Handling** - Graceful error handling with user feedback
 
 ## 🎨 Design Philosophy
 
 Lingo Verse was designed with these principles:
 
-- **Cosmic Aesthetic** - A unique teal & amber color palette that avoids the typical "AI purple" cliché
+- **Cosmic Aesthetic** - Unique teal & amber color palette (avoiding typical "AI purple")
 - **Glass Morphism** - Subtle blur and transparency effects for depth
-- **Meaningful Animation** - Every animation serves a purpose and enhances understanding
+- **Meaningful Animation** - Every animation serves a purpose
 - **Typography Matters** - Native fonts for different scripts (Noto Sans for CJK, Arabic, etc.)
-- **Accessibility** - High contrast, clear hierarchy, and keyboard navigation support
+- **Accessibility** - High contrast, clear hierarchy, keyboard navigation
+
+## 🔑 API Key Security
+
+Your Lingo.dev API key is:
+- Stored locally in your browser's localStorage
+- Sent only to the local Next.js API route, which then communicates with Lingo.dev
+- Never exposed to the client-side code or third parties
 
 ## 🤝 Contributing
 

@@ -136,6 +136,8 @@ export interface Translation {
   error?: string;
 }
 
+export type TranslationTone = "default" | "formal" | "casual" | "technical" | "creative";
+
 interface TranslationState {
   sourceText: string;
   sourceLanguage: Language | null;
@@ -146,6 +148,12 @@ interface TranslationState {
   isDetecting: boolean;
   apiKey: string;
   showApiKeyModal: boolean;
+  translationTime: number | null;
+  translationStartTime: number | null;
+  // AI-powered features
+  translationContext: string;
+  translationHints: string[];
+  translationTone: TranslationTone;
 
   setSourceText: (text: string) => void;
   setSourceLanguage: (language: Language | null) => void;
@@ -158,6 +166,12 @@ interface TranslationState {
   setApiKey: (key: string) => void;
   setShowApiKeyModal: (show: boolean) => void;
   clearTranslations: () => void;
+  startTranslationTimer: () => void;
+  stopTranslationTimer: () => void;
+  // AI-powered features
+  setTranslationContext: (context: string) => void;
+  setTranslationHints: (hints: string[]) => void;
+  setTranslationTone: (tone: TranslationTone) => void;
 }
 
 export const useTranslationStore = create<TranslationState>((set) => ({
@@ -170,6 +184,12 @@ export const useTranslationStore = create<TranslationState>((set) => ({
   isDetecting: false,
   apiKey: "",
   showApiKeyModal: false,
+  translationTime: null,
+  translationStartTime: null,
+  // AI-powered features
+  translationContext: "",
+  translationHints: [],
+  translationTone: "default" as TranslationTone,
 
   setSourceText: (text) => set({ sourceText: text }),
   setSourceLanguage: (language) => set({ sourceLanguage: language }),
@@ -205,5 +225,17 @@ export const useTranslationStore = create<TranslationState>((set) => ({
   setIsDetecting: (isDetecting) => set({ isDetecting }),
   setApiKey: (key) => set({ apiKey: key }),
   setShowApiKeyModal: (show) => set({ showApiKeyModal: show }),
-  clearTranslations: () => set({ translations: [] }),
+  clearTranslations: () => set({ translations: [], translationTime: null }),
+  startTranslationTimer: () => set({ translationStartTime: Date.now(), translationTime: null }),
+  stopTranslationTimer: () =>
+    set((state) => ({
+      translationTime: state.translationStartTime
+        ? Date.now() - state.translationStartTime
+        : null,
+      translationStartTime: null,
+    })),
+  // AI-powered features
+  setTranslationContext: (context) => set({ translationContext: context }),
+  setTranslationHints: (hints) => set({ translationHints: hints }),
+  setTranslationTone: (tone) => set({ translationTone: tone }),
 }));

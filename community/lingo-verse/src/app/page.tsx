@@ -9,6 +9,14 @@ import { TranslationCard } from "@/components/TranslationCard";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import { TranslateButton } from "@/components/TranslateButton";
 import { ApiKeyModal } from "@/components/ApiKeyModal";
+import { ThemeToggle } from "@/components/ThemeToggle";
+import { SamplePresets } from "@/components/SamplePresets";
+import { TranslationStats } from "@/components/TranslationStats";
+import { ExportButton } from "@/components/ExportButton";
+import { KeyboardShortcuts } from "@/components/KeyboardShortcuts";
+import { TranslationHints } from "@/components/TranslationHints";
+import { ToneSelector } from "@/components/ToneSelector";
+import { FeatureShowcase } from "@/components/FeatureShowcase";
 
 // Dynamic import for 3D Globe to avoid SSR issues
 const Globe = dynamic(
@@ -26,7 +34,32 @@ const Globe = dynamic(
 );
 
 export default function Home() {
-  const { translations, setApiKey, setShowApiKeyModal } = useTranslationStore();
+  const { 
+    translations, 
+    setApiKey, 
+    setShowApiKeyModal, 
+    setSourceText, 
+    clearTranslations,
+    translationContext,
+    setTranslationContext,
+    translationHints,
+    setTranslationHints,
+    translationTone,
+    setTranslationTone,
+  } = useTranslationStore();
+
+  // Keyboard shortcut handlers
+  const handleTranslate = () => {
+    const translateBtn = document.querySelector('[data-translate-btn]') as HTMLButtonElement;
+    if (translateBtn && !translateBtn.disabled) {
+      translateBtn.click();
+    }
+  };
+
+  const handleClear = () => {
+    setSourceText("");
+    clearTranslations();
+  };
 
   // Load API key from localStorage on mount
   useEffect(() => {
@@ -97,6 +130,7 @@ export default function Home() {
               animate={{ opacity: 1, x: 0 }}
               className="flex items-center gap-4"
             >
+              <ThemeToggle />
               <button
                 onClick={() => setShowApiKeyModal(true)}
                 className="flex items-center gap-2 px-4 py-2 rounded-lg glass hover:border-[var(--accent-primary)]/30 transition-all text-sm"
@@ -198,25 +232,43 @@ export default function Home() {
 
         {/* Translation Section */}
         <section className="max-w-7xl mx-auto px-6 pb-12">
+          {/* Keyboard shortcuts handler */}
+          <KeyboardShortcuts onTranslate={handleTranslate} onClear={handleClear} />
+          
           <div className="grid lg:grid-cols-2 gap-8">
             {/* Input */}
             <div className="space-y-6">
+              <SamplePresets />
               <TranslationInput />
+              <ToneSelector 
+                selectedTone={translationTone} 
+                onToneChange={setTranslationTone} 
+              />
+              <TranslationHints
+                hints={translationHints}
+                onHintsChange={setTranslationHints}
+                context={translationContext}
+                onContextChange={setTranslationContext}
+              />
+              <TranslationStats />
               <TranslateButton />
             </div>
 
             {/* Results */}
             <div className="space-y-4">
-              <h3 className="text-sm font-medium text-[var(--text-secondary)] flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-[var(--accent-primary)]" />
-                TRANSLATIONS
-                {translations.length > 0 && (
-                  <span className="ml-auto text-xs text-[var(--text-muted)]">
-                    {translations.filter((t) => !t.isLoading && t.text).length}{" "}
-                    / {translations.length} complete
-                  </span>
-                )}
-              </h3>
+              <div className="flex items-center justify-between">
+                <h3 className="text-sm font-medium text-[var(--text-secondary)] flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-[var(--accent-primary)]" />
+                  TRANSLATIONS
+                  {translations.length > 0 && (
+                    <span className="ml-2 text-xs text-[var(--text-muted)]">
+                      {translations.filter((t) => !t.isLoading && t.text).length}{" "}
+                      / {translations.length} complete
+                    </span>
+                  )}
+                </h3>
+                <ExportButton />
+              </div>
 
               {translations.length === 0 ? (
                 <motion.div
@@ -260,6 +312,11 @@ export default function Home() {
               )}
             </div>
           </div>
+        </section>
+
+        {/* Feature Showcase */}
+        <section className="max-w-7xl mx-auto px-6 pb-12">
+          <FeatureShowcase />
         </section>
 
         {/* Footer */}
