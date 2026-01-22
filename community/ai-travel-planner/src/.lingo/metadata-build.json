@@ -1,0 +1,2903 @@
+{
+  "entries": {
+    "25d971698dfd": {
+      "type": "content",
+      "sourceText": "AI Trip Planner",
+      "context": {
+        "componentName": "PlannerPage",
+        "filePath": "routes/planner.tsx"
+      },
+      "hash": "25d971698dfd",
+      "location": {
+        "filePath": "routes/planner.tsx",
+        "line": 185,
+        "column": 12
+      }
+    },
+    "eec22b23c9f1": {
+      "type": "content",
+      "sourceText": "Create your perfect travel itinerary. Let AI suggest activities or build your own day-by-day plan.",
+      "context": {
+        "componentName": "PlannerPage",
+        "filePath": "routes/planner.tsx"
+      },
+      "hash": "eec22b23c9f1",
+      "location": {
+        "filePath": "routes/planner.tsx",
+        "line": 188,
+        "column": 12
+      }
+    },
+    "0739dc7980ec": {
+      "type": "content",
+      "sourceText": "Trip Details",
+      "context": {
+        "componentName": "PlannerPage",
+        "filePath": "routes/planner.tsx"
+      },
+      "hash": "0739dc7980ec",
+      "location": {
+        "filePath": "routes/planner.tsx",
+        "line": 202,
+        "column": 16
+      }
+    },
+    "1a35afc97522": {
+      "type": "content",
+      "sourceText": "Trip Name",
+      "context": {
+        "componentName": "PlannerPage",
+        "filePath": "routes/planner.tsx"
+      },
+      "hash": "1a35afc97522",
+      "location": {
+        "filePath": "routes/planner.tsx",
+        "line": 208,
+        "column": 20
+      }
+    },
+    "b544a9e74280": {
+      "type": "attribute",
+      "sourceText": "My Amazing Trip",
+      "context": {
+        "attributeName": "placeholder",
+        "componentName": "PlannerPage",
+        "filePath": "routes/planner.tsx"
+      },
+      "hash": "b544a9e74280",
+      "location": {
+        "filePath": "routes/planner.tsx",
+        "line": 210,
+        "column": 18
+      }
+    },
+    "9874ac076274": {
+      "type": "content",
+      "sourceText": "Destination",
+      "context": {
+        "componentName": "PlannerPage",
+        "filePath": "routes/planner.tsx"
+      },
+      "hash": "9874ac076274",
+      "location": {
+        "filePath": "routes/planner.tsx",
+        "line": 222,
+        "column": 20
+      }
+    },
+    "bb5110917f96": {
+      "type": "content",
+      "sourceText": "Select a destination",
+      "context": {
+        "componentName": "PlannerPage",
+        "filePath": "routes/planner.tsx"
+      },
+      "hash": "bb5110917f96",
+      "location": {
+        "filePath": "routes/planner.tsx",
+        "line": 229,
+        "column": 20
+      }
+    },
+    "06b949f22596": {
+      "type": "content",
+      "sourceText": "Start Date",
+      "context": {
+        "componentName": "PlannerPage",
+        "filePath": "routes/planner.tsx"
+      },
+      "hash": "06b949f22596",
+      "location": {
+        "filePath": "routes/planner.tsx",
+        "line": 241,
+        "column": 22
+      }
+    },
+    "e48ffd63d127": {
+      "type": "content",
+      "sourceText": "End Date",
+      "context": {
+        "componentName": "PlannerPage",
+        "filePath": "routes/planner.tsx"
+      },
+      "hash": "e48ffd63d127",
+      "location": {
+        "filePath": "routes/planner.tsx",
+        "line": 252,
+        "column": 22
+      }
+    },
+    "b871b43e3152": {
+      "type": "content",
+      "sourceText": "Travelers",
+      "context": {
+        "componentName": "PlannerPage",
+        "filePath": "routes/planner.tsx"
+      },
+      "hash": "b871b43e3152",
+      "location": {
+        "filePath": "routes/planner.tsx",
+        "line": 268,
+        "column": 22
+      }
+    },
+    "ad8c9a0a40bd": {
+      "type": "content",
+      "sourceText": "Budget",
+      "context": {
+        "componentName": "PlannerPage",
+        "filePath": "routes/planner.tsx"
+      },
+      "hash": "ad8c9a0a40bd",
+      "location": {
+        "filePath": "routes/planner.tsx",
+        "line": 282,
+        "column": 22
+      }
+    },
+    "ec686a17f0bf": {
+      "type": "content",
+      "sourceText": "day",
+      "context": {
+        "componentName": "PlannerPage",
+        "filePath": "routes/planner.tsx"
+      },
+      "hash": "ec686a17f0bf",
+      "location": {
+        "filePath": "routes/planner.tsx",
+        "line": 316,
+        "column": 49
+      }
+    },
+    "000a2f72ffb2": {
+      "type": "content",
+      "sourceText": "days",
+      "context": {
+        "componentName": "PlannerPage",
+        "filePath": "routes/planner.tsx"
+      },
+      "hash": "000a2f72ffb2",
+      "location": {
+        "filePath": "routes/planner.tsx",
+        "line": 316,
+        "column": 60
+      }
+    },
+    "faf764607612": {
+      "type": "content",
+      "sourceText": "of adventure",
+      "context": {
+        "componentName": "PlannerPage",
+        "filePath": "routes/planner.tsx"
+      },
+      "hash": "faf764607612",
+      "location": {
+        "filePath": "routes/planner.tsx",
+        "line": 319,
+        "column": 20
+      }
+    },
+    "f2a6b8fa5f27": {
+      "type": "content",
+      "sourceText": "Generating...",
+      "context": {
+        "componentName": "PlannerPage",
+        "filePath": "routes/planner.tsx"
+      },
+      "hash": "f2a6b8fa5f27",
+      "location": {
+        "filePath": "routes/planner.tsx",
+        "line": 335,
+        "column": 52
+      }
+    },
+    "c09f4e5582dc": {
+      "type": "content",
+      "sourceText": "Generate AI Itinerary",
+      "context": {
+        "componentName": "PlannerPage",
+        "filePath": "routes/planner.tsx"
+      },
+      "hash": "c09f4e5582dc",
+      "location": {
+        "filePath": "routes/planner.tsx",
+        "line": 340,
+        "column": 52
+      }
+    },
+    "77f6faf555f7": {
+      "type": "content",
+      "sourceText": "Activity Ideas",
+      "context": {
+        "componentName": "PlannerPage",
+        "filePath": "routes/planner.tsx"
+      },
+      "hash": "77f6faf555f7",
+      "location": {
+        "filePath": "routes/planner.tsx",
+        "line": 355,
+        "column": 20
+      }
+    },
+    "691e5467ae07": {
+      "type": "content",
+      "sourceText": "Add Activity",
+      "context": {
+        "componentName": "PlannerPage",
+        "filePath": "routes/planner.tsx"
+      },
+      "hash": "691e5467ae07",
+      "location": {
+        "filePath": "routes/planner.tsx",
+        "line": 386,
+        "column": 18
+      }
+    },
+    "c44ebe61f433": {
+      "type": "content",
+      "sourceText": "Day",
+      "context": {
+        "componentName": "PlannerPage",
+        "filePath": "routes/planner.tsx"
+      },
+      "hash": "c44ebe61f433",
+      "location": {
+        "filePath": "routes/planner.tsx",
+        "line": 393,
+        "column": 24
+      }
+    },
+    "340537ffb2ab": {
+      "type": "content",
+      "sourceText": "Time",
+      "context": {
+        "componentName": "PlannerPage",
+        "filePath": "routes/planner.tsx"
+      },
+      "hash": "340537ffb2ab",
+      "location": {
+        "filePath": "routes/planner.tsx",
+        "line": 410,
+        "column": 24
+      }
+    },
+    "18c81d2141c5": {
+      "type": "content",
+      "sourceText": "Activity",
+      "context": {
+        "componentName": "PlannerPage",
+        "filePath": "routes/planner.tsx"
+      },
+      "hash": "18c81d2141c5",
+      "location": {
+        "filePath": "routes/planner.tsx",
+        "line": 423,
+        "column": 22
+      }
+    },
+    "34ef3c6fb9d5": {
+      "type": "attribute",
+      "sourceText": "Visit the Eiffel Tower",
+      "context": {
+        "attributeName": "placeholder",
+        "componentName": "PlannerPage",
+        "filePath": "routes/planner.tsx"
+      },
+      "hash": "34ef3c6fb9d5",
+      "location": {
+        "filePath": "routes/planner.tsx",
+        "line": 425,
+        "column": 20
+      }
+    },
+    "e20123f2dacb": {
+      "type": "content",
+      "sourceText": "Location",
+      "context": {
+        "componentName": "PlannerPage",
+        "filePath": "routes/planner.tsx"
+      },
+      "hash": "e20123f2dacb",
+      "location": {
+        "filePath": "routes/planner.tsx",
+        "line": 436,
+        "column": 22
+      }
+    },
+    "36b07aa2c508": {
+      "type": "attribute",
+      "sourceText": "Champ de Mars, Paris",
+      "context": {
+        "attributeName": "placeholder",
+        "componentName": "PlannerPage",
+        "filePath": "routes/planner.tsx"
+      },
+      "hash": "36b07aa2c508",
+      "location": {
+        "filePath": "routes/planner.tsx",
+        "line": 438,
+        "column": 20
+      }
+    },
+    "7dfdc82a03d4": {
+      "type": "content",
+      "sourceText": "Add to Itinerary",
+      "context": {
+        "componentName": "PlannerPage",
+        "filePath": "routes/planner.tsx"
+      },
+      "hash": "7dfdc82a03d4",
+      "location": {
+        "filePath": "routes/planner.tsx",
+        "line": 453,
+        "column": 20
+      }
+    },
+    "01ddbf358103": {
+      "type": "content",
+      "sourceText": "Your itinerary is empty",
+      "context": {
+        "componentName": "PlannerPage",
+        "filePath": "routes/planner.tsx"
+      },
+      "hash": "01ddbf358103",
+      "location": {
+        "filePath": "routes/planner.tsx",
+        "line": 468,
+        "column": 18
+      }
+    },
+    "4385fcb32216": {
+      "type": "content",
+      "sourceText": "Fill in your trip details and click \"Generate AI Itinerary\" for instant suggestions, or add activities manually.",
+      "context": {
+        "componentName": "PlannerPage",
+        "filePath": "routes/planner.tsx"
+      },
+      "hash": "4385fcb32216",
+      "location": {
+        "filePath": "routes/planner.tsx",
+        "line": 471,
+        "column": 18
+      }
+    },
+    "6e8bbcea0dfc": {
+      "type": "content",
+      "sourceText": "Browse destinations for inspiration",
+      "context": {
+        "componentName": "PlannerPage",
+        "filePath": "routes/planner.tsx"
+      },
+      "hash": "6e8bbcea0dfc",
+      "location": {
+        "filePath": "routes/planner.tsx",
+        "line": 478,
+        "column": 20
+      }
+    },
+    "9606f1b6f3bb": {
+      "type": "content",
+      "sourceText": "Your Itinerary",
+      "context": {
+        "componentName": "PlannerPage",
+        "filePath": "routes/planner.tsx"
+      },
+      "hash": "9606f1b6f3bb",
+      "location": {
+        "filePath": "routes/planner.tsx",
+        "line": 487,
+        "column": 20
+      }
+    },
+    "a4a7e130347a": {
+      "type": "content",
+      "sourceText": "activity",
+      "context": {
+        "componentName": "PlannerPage",
+        "filePath": "routes/planner.tsx"
+      },
+      "hash": "a4a7e130347a",
+      "location": {
+        "filePath": "routes/planner.tsx",
+        "line": 491,
+        "column": 59
+      }
+    },
+    "4b8609f98d6b": {
+      "type": "content",
+      "sourceText": "activities",
+      "context": {
+        "componentName": "PlannerPage",
+        "filePath": "routes/planner.tsx"
+      },
+      "hash": "4b8609f98d6b",
+      "location": {
+        "filePath": "routes/planner.tsx",
+        "line": 491,
+        "column": 75
+      }
+    },
+    "82d7f4510862": {
+      "type": "content",
+      "sourceText": "Save Trip to Dashboard",
+      "context": {
+        "componentName": "PlannerPage",
+        "filePath": "routes/planner.tsx"
+      },
+      "hash": "82d7f4510862",
+      "location": {
+        "filePath": "routes/planner.tsx",
+        "line": 563,
+        "column": 52
+      }
+    },
+    "239d52bcab2f": {
+      "type": "content",
+      "sourceText": "Home",
+      "context": {
+        "componentName": "Header",
+        "filePath": "components/Header.tsx"
+      },
+      "hash": "239d52bcab2f",
+      "location": {
+        "filePath": "components/Header.tsx",
+        "line": 24,
+        "column": 22
+      }
+    },
+    "1cd29b577e2e": {
+      "type": "content",
+      "sourceText": "Destinations",
+      "context": {
+        "componentName": "Header",
+        "filePath": "components/Header.tsx"
+      },
+      "hash": "1cd29b577e2e",
+      "location": {
+        "filePath": "components/Header.tsx",
+        "line": 25,
+        "column": 34
+      }
+    },
+    "eacd2b38c74d": {
+      "type": "content",
+      "sourceText": "Trip Planner",
+      "context": {
+        "componentName": "Header",
+        "filePath": "components/Header.tsx"
+      },
+      "hash": "eacd2b38c74d",
+      "location": {
+        "filePath": "components/Header.tsx",
+        "line": 26,
+        "column": 29
+      }
+    },
+    "baedbd88927b": {
+      "type": "content",
+      "sourceText": "Dashboard",
+      "context": {
+        "componentName": "Header",
+        "filePath": "components/Header.tsx"
+      },
+      "hash": "baedbd88927b",
+      "location": {
+        "filePath": "components/Header.tsx",
+        "line": 27,
+        "column": 31
+      }
+    },
+    "d3243c374669": {
+      "type": "content",
+      "sourceText": "TravelAI",
+      "context": {
+        "componentName": "Header",
+        "filePath": "components/Header.tsx"
+      },
+      "hash": "d3243c374669",
+      "location": {
+        "filePath": "components/Header.tsx",
+        "line": 51,
+        "column": 14
+      }
+    },
+    "6ed06e3df7b8": {
+      "type": "content",
+      "sourceText": "Powered by Lingo.dev",
+      "context": {
+        "componentName": "Header",
+        "filePath": "components/Header.tsx"
+      },
+      "hash": "6ed06e3df7b8",
+      "location": {
+        "filePath": "components/Header.tsx",
+        "line": 53,
+        "column": 16
+      }
+    },
+    "b842fea26e3b": {
+      "type": "content",
+      "sourceText": "{expression0} Amazing Destinations",
+      "context": {
+        "componentName": "DestinationsPage",
+        "filePath": "routes/destinations.tsx"
+      },
+      "hash": "b842fea26e3b",
+      "location": {
+        "filePath": "routes/destinations.tsx",
+        "line": 48,
+        "column": 14
+      }
+    },
+    "73802edcc9a6": {
+      "type": "content",
+      "sourceText": "Explore Destinations",
+      "context": {
+        "componentName": "DestinationsPage",
+        "filePath": "routes/destinations.tsx"
+      },
+      "hash": "73802edcc9a6",
+      "location": {
+        "filePath": "routes/destinations.tsx",
+        "line": 54,
+        "column": 14
+      }
+    },
+    "05901e7a9514": {
+      "type": "content",
+      "sourceText": "Discover breathtaking places around the world. Find your perfect getaway from our curated collection of destinations.",
+      "context": {
+        "componentName": "DestinationsPage",
+        "filePath": "routes/destinations.tsx"
+      },
+      "hash": "05901e7a9514",
+      "location": {
+        "filePath": "routes/destinations.tsx",
+        "line": 58,
+        "column": 12
+      }
+    },
+    "9e50ac6ae392": {
+      "type": "attribute",
+      "sourceText": "Search destinations...",
+      "context": {
+        "attributeName": "placeholder",
+        "componentName": "DestinationsPage",
+        "filePath": "routes/destinations.tsx"
+      },
+      "hash": "9e50ac6ae392",
+      "location": {
+        "filePath": "routes/destinations.tsx",
+        "line": 70,
+        "column": 12
+      }
+    },
+    "3749344299d6": {
+      "type": "content",
+      "sourceText": "All",
+      "context": {
+        "componentName": "DestinationsPage",
+        "filePath": "routes/destinations.tsx"
+      },
+      "hash": "3749344299d6",
+      "location": {
+        "filePath": "routes/destinations.tsx",
+        "line": 90,
+        "column": 14
+      }
+    },
+    "5add5cdd5752": {
+      "type": "content",
+      "sourceText": "No destinations found matching your criteria.",
+      "context": {
+        "componentName": "DestinationsPage",
+        "filePath": "routes/destinations.tsx"
+      },
+      "hash": "5add5cdd5752",
+      "location": {
+        "filePath": "routes/destinations.tsx",
+        "line": 120,
+        "column": 16
+      }
+    },
+    "a104b7b7c916": {
+      "type": "content",
+      "sourceText": "Clear filters",
+      "context": {
+        "componentName": "DestinationsPage",
+        "filePath": "routes/destinations.tsx"
+      },
+      "hash": "a104b7b7c916",
+      "location": {
+        "filePath": "routes/destinations.tsx",
+        "line": 129,
+        "column": 16
+      }
+    },
+    "b65ef7d32416": {
+      "type": "content",
+      "sourceText": "Showing {expression0} of {expression1} destinations",
+      "context": {
+        "componentName": "DestinationsPage",
+        "filePath": "routes/destinations.tsx"
+      },
+      "hash": "b65ef7d32416",
+      "location": {
+        "filePath": "routes/destinations.tsx",
+        "line": 138,
+        "column": 12
+      }
+    },
+    "1a7c18cf3823": {
+      "type": "content",
+      "sourceText": "AI-Powered Travel Planning",
+      "context": {
+        "componentName": "HomePage",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "1a7c18cf3823",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 99,
+        "column": 16
+      }
+    },
+    "0177f9081583": {
+      "type": "content",
+      "sourceText": "Powered by Lingo.dev",
+      "context": {
+        "componentName": "HomePage",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "0177f9081583",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 102,
+        "column": 16
+      }
+    },
+    "ae5e9505aaae": {
+      "type": "content",
+      "sourceText": "Explore the World",
+      "context": {
+        "componentName": "HomePage",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "ae5e9505aaae",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 108,
+        "column": 16
+      }
+    },
+    "a676a481fc7f": {
+      "type": "content",
+      "sourceText": "Your Way",
+      "context": {
+        "componentName": "HomePage",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "a676a481fc7f",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 112,
+        "column": 16
+      }
+    },
+    "56e66e3f59aa": {
+      "type": "content",
+      "sourceText": "Plan epic adventures with AI-powered itineraries, real-time translations, and smart travel tools. Available in 6 languages.",
+      "context": {
+        "componentName": "HomePage",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "56e66e3f59aa",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 117,
+        "column": 14
+      }
+    },
+    "f244325401eb": {
+      "type": "content",
+      "sourceText": "Start Planning",
+      "context": {
+        "componentName": "HomePage",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "f244325401eb",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 126,
+        "column": 48
+      }
+    },
+    "7f820c45c472": {
+      "type": "content",
+      "sourceText": "Explore Destinations",
+      "context": {
+        "componentName": "HomePage",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "7f820c45c472",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 131,
+        "column": 16
+      }
+    },
+    "5e81f36825cd": {
+      "type": "content",
+      "sourceText": "{expression0}+",
+      "context": {
+        "componentName": "HomePage",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "5e81f36825cd",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 138,
+        "column": 16
+      }
+    },
+    "164c23678d11": {
+      "type": "content",
+      "sourceText": "Destinations",
+      "context": {
+        "componentName": "HomePage",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "164c23678d11",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 139,
+        "column": 60
+      }
+    },
+    "1c01219952de": {
+      "type": "content",
+      "sourceText": "6",
+      "context": {
+        "componentName": "HomePage",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "1c01219952de",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 142,
+        "column": 16
+      }
+    },
+    "c1d9cfff5797": {
+      "type": "content",
+      "sourceText": "Languages",
+      "context": {
+        "componentName": "HomePage",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "c1d9cfff5797",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 143,
+        "column": 60
+      }
+    },
+    "0ab9c465c380": {
+      "type": "content",
+      "sourceText": "Your Trips",
+      "context": {
+        "componentName": "HomePage",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "0ab9c465c380",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 147,
+        "column": 60
+      }
+    },
+    "101f49ea567b": {
+      "type": "content",
+      "sourceText": "Discover Global Destinations",
+      "context": {
+        "componentName": "HomePage",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "101f49ea567b",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 171,
+        "column": 14
+      }
+    },
+    "291d6e929652": {
+      "type": "content",
+      "sourceText": "Click on any destination to explore. Our AI will help you plan the perfect trip.",
+      "context": {
+        "componentName": "HomePage",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "291d6e929652",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 174,
+        "column": 14
+      }
+    },
+    "25c482381583": {
+      "type": "content",
+      "sourceText": "Smart Travel Planning",
+      "context": {
+        "componentName": "HomePage",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "25c482381583",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 186,
+        "column": 14
+      }
+    },
+    "604124920683": {
+      "type": "content",
+      "sourceText": "Everything you need to plan, book, and enjoy your perfect trip.",
+      "context": {
+        "componentName": "HomePage",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "604124920683",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 189,
+        "column": 14
+      }
+    },
+    "1bf007c3642a": {
+      "type": "content",
+      "sourceText": "AI Itinerary Generator",
+      "context": {
+        "componentName": "HomePage",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "1bf007c3642a",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 198,
+        "column": 21
+      }
+    },
+    "a92739ed9eca": {
+      "type": "content",
+      "sourceText": "Get personalized day-by-day plans based on your preferences and travel style.",
+      "context": {
+        "componentName": "HomePage",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "a92739ed9eca",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 199,
+        "column": 27
+      }
+    },
+    "6869a7a59989": {
+      "type": "content",
+      "sourceText": "6 Languages",
+      "context": {
+        "componentName": "HomePage",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "6869a7a59989",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 204,
+        "column": 21
+      }
+    },
+    "3709d3ee182f": {
+      "type": "content",
+      "sourceText": "Browse and plan in English, Spanish, French, German, Japanese, or Chinese.",
+      "context": {
+        "componentName": "HomePage",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "3709d3ee182f",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 205,
+        "column": 27
+      }
+    },
+    "c45c3c09f9cd": {
+      "type": "content",
+      "sourceText": "Budget Tracker",
+      "context": {
+        "componentName": "HomePage",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "c45c3c09f9cd",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 210,
+        "column": 21
+      }
+    },
+    "ba44c2b0e4a5": {
+      "type": "content",
+      "sourceText": "Track expenses, convert currencies, and stay within your travel budget.",
+      "context": {
+        "componentName": "HomePage",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "ba44c2b0e4a5",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 211,
+        "column": 27
+      }
+    },
+    "e80705ad0388": {
+      "type": "content",
+      "sourceText": "Trip Dashboard",
+      "context": {
+        "componentName": "HomePage",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "e80705ad0388",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 216,
+        "column": 21
+      }
+    },
+    "509c324511e9": {
+      "type": "content",
+      "sourceText": "Countdown timer, packing lists, and all your trip details in one place.",
+      "context": {
+        "componentName": "HomePage",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "509c324511e9",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 217,
+        "column": 27
+      }
+    },
+    "d0f2ca3bc7ab": {
+      "type": "content",
+      "sourceText": "Trending Destinations",
+      "context": {
+        "componentName": "HomePage",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "d0f2ca3bc7ab",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 230,
+        "column": 16
+      }
+    },
+    "751b79f76ebf": {
+      "type": "content",
+      "sourceText": "Most popular places loved by travelers worldwide",
+      "context": {
+        "componentName": "HomePage",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "751b79f76ebf",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 233,
+        "column": 16
+      }
+    },
+    "f73d3f21584a": {
+      "type": "content",
+      "sourceText": "View all",
+      "context": {
+        "componentName": "HomePage",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "f73d3f21584a",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 240,
+        "column": 14
+      }
+    },
+    "f863867427d7": {
+      "type": "content",
+      "sourceText": "View all destinations",
+      "context": {
+        "componentName": "HomePage",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "f863867427d7",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 256,
+        "column": 14
+      }
+    },
+    "366bf0815d5b": {
+      "type": "content",
+      "sourceText": "Ready for Your Next Adventure?",
+      "context": {
+        "componentName": "HomePage",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "366bf0815d5b",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 279,
+        "column": 14
+      }
+    },
+    "5866283d429e": {
+      "type": "content",
+      "sourceText": "Start planning your dream trip today. Our AI will create a personalized itinerary in seconds.",
+      "context": {
+        "componentName": "HomePage",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "5866283d429e",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 282,
+        "column": 14
+      }
+    },
+    "5bf7b4e130c8": {
+      "type": "content",
+      "sourceText": "Create Your Trip",
+      "context": {
+        "componentName": "HomePage",
+        "filePath": "routes/index.tsx"
+      },
+      "hash": "5bf7b4e130c8",
+      "location": {
+        "filePath": "routes/index.tsx",
+        "line": 292,
+        "column": 46
+      }
+    },
+    "19c1011f5647": {
+      "type": "content",
+      "sourceText": "{expression0}°C",
+      "context": {
+        "componentName": "DestinationCard",
+        "filePath": "components/DestinationCard.tsx"
+      },
+      "hash": "19c1011f5647",
+      "location": {
+        "filePath": "components/DestinationCard.tsx",
+        "line": 37,
+        "column": 14
+      }
+    },
+    "544df60628c5": {
+      "type": "attribute",
+      "sourceText": "Price level",
+      "context": {
+        "attributeName": "title",
+        "componentName": "DestinationCard",
+        "filePath": "components/DestinationCard.tsx"
+      },
+      "hash": "544df60628c5",
+      "location": {
+        "filePath": "components/DestinationCard.tsx",
+        "line": 83,
+        "column": 14
+      }
+    },
+    "a384b7537bc8": {
+      "type": "content",
+      "sourceText": "Learn More",
+      "context": {
+        "componentName": "WorldMap",
+        "filePath": "components/WorldMap.tsx"
+      },
+      "hash": "a384b7537bc8",
+      "location": {
+        "filePath": "components/WorldMap.tsx",
+        "line": 185,
+        "column": 18
+      }
+    },
+    "4c0caab332b7": {
+      "type": "content",
+      "sourceText": "Plan Trip",
+      "context": {
+        "componentName": "WorldMap",
+        "filePath": "components/WorldMap.tsx"
+      },
+      "hash": "4c0caab332b7",
+      "location": {
+        "filePath": "components/WorldMap.tsx",
+        "line": 192,
+        "column": 50
+      }
+    },
+    "6ea7eed76d79": {
+      "type": "content",
+      "sourceText": "Destination",
+      "context": {
+        "componentName": "WorldMap",
+        "filePath": "components/WorldMap.tsx"
+      },
+      "hash": "6ea7eed76d79",
+      "location": {
+        "filePath": "components/WorldMap.tsx",
+        "line": 205,
+        "column": 10
+      }
+    },
+    "fff43bf46843": {
+      "type": "content",
+      "sourceText": "Selected",
+      "context": {
+        "componentName": "WorldMap",
+        "filePath": "components/WorldMap.tsx"
+      },
+      "hash": "fff43bf46843",
+      "location": {
+        "filePath": "components/WorldMap.tsx",
+        "line": 209,
+        "column": 10
+      }
+    },
+    "258d14ab6102": {
+      "type": "content",
+      "sourceText": "Trip Dashboard",
+      "context": {
+        "componentName": "DashboardPage",
+        "filePath": "routes/dashboard.tsx"
+      },
+      "hash": "258d14ab6102",
+      "location": {
+        "filePath": "routes/dashboard.tsx",
+        "line": 52,
+        "column": 12
+      }
+    },
+    "1de924abbdb9": {
+      "type": "content",
+      "sourceText": "Manage your trips, track expenses, and prepare for your adventures.",
+      "context": {
+        "componentName": "DashboardPage",
+        "filePath": "routes/dashboard.tsx"
+      },
+      "hash": "1de924abbdb9",
+      "location": {
+        "filePath": "routes/dashboard.tsx",
+        "line": 55,
+        "column": 12
+      }
+    },
+    "ebb279f9ed94": {
+      "type": "content",
+      "sourceText": "({expression0})",
+      "context": {
+        "componentName": "DashboardPage",
+        "filePath": "routes/dashboard.tsx"
+      },
+      "hash": "ebb279f9ed94",
+      "location": {
+        "filePath": "routes/dashboard.tsx",
+        "line": 66,
+        "column": 16
+      }
+    },
+    "b0028eac5b84": {
+      "type": "content",
+      "sourceText": "Select a trip to view details",
+      "context": {
+        "componentName": "DashboardPage",
+        "filePath": "routes/dashboard.tsx"
+      },
+      "hash": "b0028eac5b84",
+      "location": {
+        "filePath": "routes/dashboard.tsx",
+        "line": 151,
+        "column": 20
+      }
+    },
+    "3add5905ab37": {
+      "type": "content",
+      "sourceText": "<MapPin0></MapPin0>{expression0}, {expression1}",
+      "context": {
+        "componentName": "TripDetails",
+        "filePath": "routes/dashboard.tsx"
+      },
+      "hash": "3add5905ab37",
+      "location": {
+        "filePath": "routes/dashboard.tsx",
+        "line": 213,
+        "column": 12
+      }
+    },
+    "7edd5656e9e0": {
+      "type": "content",
+      "sourceText": "Days Until",
+      "context": {
+        "componentName": "TripDetails",
+        "filePath": "routes/dashboard.tsx"
+      },
+      "hash": "7edd5656e9e0",
+      "location": {
+        "filePath": "routes/dashboard.tsx",
+        "line": 231,
+        "column": 17
+      }
+    },
+    "d6d9e32df1fb": {
+      "type": "content",
+      "sourceText": "Duration",
+      "context": {
+        "componentName": "TripDetails",
+        "filePath": "routes/dashboard.tsx"
+      },
+      "hash": "d6d9e32df1fb",
+      "location": {
+        "filePath": "routes/dashboard.tsx",
+        "line": 237,
+        "column": 17
+      }
+    },
+    "7bc8fed59d8c": {
+      "type": "content",
+      "sourceText": "Travelers",
+      "context": {
+        "componentName": "TripDetails",
+        "filePath": "routes/dashboard.tsx"
+      },
+      "hash": "7bc8fed59d8c",
+      "location": {
+        "filePath": "routes/dashboard.tsx",
+        "line": 243,
+        "column": 17
+      }
+    },
+    "58c87b81e8e3": {
+      "type": "content",
+      "sourceText": "Budget",
+      "context": {
+        "componentName": "TripDetails",
+        "filePath": "routes/dashboard.tsx"
+      },
+      "hash": "58c87b81e8e3",
+      "location": {
+        "filePath": "routes/dashboard.tsx",
+        "line": 249,
+        "column": 17
+      }
+    },
+    "d36040d4ba73": {
+      "type": "content",
+      "sourceText": "Budget Used",
+      "context": {
+        "componentName": "TripDetails",
+        "filePath": "routes/dashboard.tsx"
+      },
+      "hash": "d36040d4ba73",
+      "location": {
+        "filePath": "routes/dashboard.tsx",
+        "line": 259,
+        "column": 52
+      }
+    },
+    "1a60f00bfe74": {
+      "type": "content",
+      "sourceText": "{expression0}{expression1} / {expression2}",
+      "context": {
+        "componentName": "TripDetails",
+        "filePath": "routes/dashboard.tsx"
+      },
+      "hash": "1a60f00bfe74",
+      "location": {
+        "filePath": "routes/dashboard.tsx",
+        "line": 260,
+        "column": 12
+      }
+    },
+    "92b64f9f8d9d": {
+      "type": "content",
+      "sourceText": "{expression0}%",
+      "context": {
+        "componentName": "TripDetails",
+        "filePath": "routes/dashboard.tsx"
+      },
+      "hash": "92b64f9f8d9d",
+      "location": {
+        "filePath": "routes/dashboard.tsx",
+        "line": 277,
+        "column": 10
+      }
+    },
+    "4ce7bcfc4352": {
+      "type": "content",
+      "sourceText": "Packing List",
+      "context": {
+        "componentName": "TripDetails",
+        "filePath": "routes/dashboard.tsx"
+      },
+      "hash": "4ce7bcfc4352",
+      "location": {
+        "filePath": "routes/dashboard.tsx",
+        "line": 292,
+        "column": 12
+      }
+    },
+    "10d00d503ab1": {
+      "type": "content",
+      "sourceText": "{packedCount}/{expression0}",
+      "context": {
+        "componentName": "TripDetails",
+        "filePath": "routes/dashboard.tsx"
+      },
+      "hash": "10d00d503ab1",
+      "location": {
+        "filePath": "routes/dashboard.tsx",
+        "line": 293,
+        "column": 12
+      }
+    },
+    "fa5ffb4d53e8": {
+      "type": "content",
+      "sourceText": "No items yet",
+      "context": {
+        "componentName": "TripDetails",
+        "filePath": "routes/dashboard.tsx"
+      },
+      "hash": "fa5ffb4d53e8",
+      "location": {
+        "filePath": "routes/dashboard.tsx",
+        "line": 300,
+        "column": 51
+      }
+    },
+    "b95044eca068": {
+      "type": "attribute",
+      "sourceText": "Item name",
+      "context": {
+        "attributeName": "placeholder",
+        "componentName": "TripDetails",
+        "filePath": "routes/dashboard.tsx"
+      },
+      "hash": "b95044eca068",
+      "location": {
+        "filePath": "routes/dashboard.tsx",
+        "line": 332,
+        "column": 12
+      }
+    },
+    "7fddd3e64a99": {
+      "type": "content",
+      "sourceText": "Edit Itinerary",
+      "context": {
+        "componentName": "TripDetails",
+        "filePath": "routes/dashboard.tsx"
+      },
+      "hash": "7fddd3e64a99",
+      "location": {
+        "filePath": "routes/dashboard.tsx",
+        "line": 361,
+        "column": 10
+      }
+    },
+    "4387303996ea": {
+      "type": "content",
+      "sourceText": "View Destination",
+      "context": {
+        "componentName": "TripDetails",
+        "filePath": "routes/dashboard.tsx"
+      },
+      "hash": "4387303996ea",
+      "location": {
+        "filePath": "routes/dashboard.tsx",
+        "line": 368,
+        "column": 42
+      }
+    },
+    "cf95cc07b430": {
+      "type": "content",
+      "sourceText": "No Trips Yet",
+      "context": {
+        "componentName": "EmptyState",
+        "filePath": "routes/dashboard.tsx"
+      },
+      "hash": "cf95cc07b430",
+      "location": {
+        "filePath": "routes/dashboard.tsx",
+        "line": 412,
+        "column": 8
+      }
+    },
+    "25767215755c": {
+      "type": "content",
+      "sourceText": "Start planning your first adventure. Our AI will help you create the perfect itinerary.",
+      "context": {
+        "componentName": "EmptyState",
+        "filePath": "routes/dashboard.tsx"
+      },
+      "hash": "25767215755c",
+      "location": {
+        "filePath": "routes/dashboard.tsx",
+        "line": 415,
+        "column": 8
+      }
+    },
+    "17e5fd713db0": {
+      "type": "content",
+      "sourceText": "Create Your First Trip",
+      "context": {
+        "componentName": "EmptyState",
+        "filePath": "routes/dashboard.tsx"
+      },
+      "hash": "17e5fd713db0",
+      "location": {
+        "filePath": "routes/dashboard.tsx",
+        "line": 419,
+        "column": 40
+      }
+    },
+    "2cf3739a59cf": {
+      "type": "content",
+      "sourceText": "Share Your Trip",
+      "context": {
+        "componentName": "ShareTrip",
+        "filePath": "components/ShareTrip.tsx"
+      },
+      "hash": "2cf3739a59cf",
+      "location": {
+        "filePath": "components/ShareTrip.tsx",
+        "line": 93,
+        "column": 8
+      }
+    },
+    "953926d34f78": {
+      "type": "content",
+      "sourceText": "{expression0}, {expression1}",
+      "context": {
+        "componentName": "ShareTrip",
+        "filePath": "components/ShareTrip.tsx"
+      },
+      "hash": "953926d34f78",
+      "location": {
+        "filePath": "components/ShareTrip.tsx",
+        "line": 108,
+        "column": 12
+      }
+    },
+    "b0647dccd3a6": {
+      "type": "content",
+      "sourceText": "{expression0} - {expression1}",
+      "context": {
+        "componentName": "ShareTrip",
+        "filePath": "components/ShareTrip.tsx"
+      },
+      "hash": "b0647dccd3a6",
+      "location": {
+        "filePath": "components/ShareTrip.tsx",
+        "line": 109,
+        "column": 12
+      }
+    },
+    "18da9f81ca3a": {
+      "type": "content",
+      "sourceText": "activities planned",
+      "context": {
+        "componentName": "ShareTrip",
+        "filePath": "components/ShareTrip.tsx"
+      },
+      "hash": "18da9f81ca3a",
+      "location": {
+        "filePath": "components/ShareTrip.tsx",
+        "line": 112,
+        "column": 73
+      }
+    },
+    "3cb7685e1044": {
+      "type": "content",
+      "sourceText": "Twitter",
+      "context": {
+        "componentName": "ShareTrip",
+        "filePath": "components/ShareTrip.tsx"
+      },
+      "hash": "3cb7685e1044",
+      "location": {
+        "filePath": "components/ShareTrip.tsx",
+        "line": 124,
+        "column": 10
+      }
+    },
+    "1427645462ca": {
+      "type": "content",
+      "sourceText": "Facebook",
+      "context": {
+        "componentName": "ShareTrip",
+        "filePath": "components/ShareTrip.tsx"
+      },
+      "hash": "1427645462ca",
+      "location": {
+        "filePath": "components/ShareTrip.tsx",
+        "line": 131,
+        "column": 10
+      }
+    },
+    "ba7cd8cab381": {
+      "type": "content",
+      "sourceText": "Email",
+      "context": {
+        "componentName": "ShareTrip",
+        "filePath": "components/ShareTrip.tsx"
+      },
+      "hash": "ba7cd8cab381",
+      "location": {
+        "filePath": "components/ShareTrip.tsx",
+        "line": 138,
+        "column": 10
+      }
+    },
+    "808d820855b5": {
+      "type": "content",
+      "sourceText": "QR Code",
+      "context": {
+        "componentName": "ShareTrip",
+        "filePath": "components/ShareTrip.tsx"
+      },
+      "hash": "808d820855b5",
+      "location": {
+        "filePath": "components/ShareTrip.tsx",
+        "line": 145,
+        "column": 10
+      }
+    },
+    "41586d9e7aac": {
+      "type": "attribute",
+      "sourceText": "QR Code",
+      "context": {
+        "attributeName": "alt",
+        "componentName": "ShareTrip",
+        "filePath": "components/ShareTrip.tsx"
+      },
+      "hash": "41586d9e7aac",
+      "location": {
+        "filePath": "components/ShareTrip.tsx",
+        "line": 152,
+        "column": 10
+      }
+    },
+    "74f4277e2c7e": {
+      "type": "content",
+      "sourceText": "Copied!",
+      "context": {
+        "componentName": "ShareTrip",
+        "filePath": "components/ShareTrip.tsx"
+      },
+      "hash": "74f4277e2c7e",
+      "location": {
+        "filePath": "components/ShareTrip.tsx",
+        "line": 173,
+        "column": 40
+      }
+    },
+    "faf9d561e044": {
+      "type": "content",
+      "sourceText": "Copy",
+      "context": {
+        "componentName": "ShareTrip",
+        "filePath": "components/ShareTrip.tsx"
+      },
+      "hash": "faf9d561e044",
+      "location": {
+        "filePath": "components/ShareTrip.tsx",
+        "line": 178,
+        "column": 40
+      }
+    },
+    "2504a8279fcc": {
+      "type": "content",
+      "sourceText": "Download Itinerary",
+      "context": {
+        "componentName": "ShareTrip",
+        "filePath": "components/ShareTrip.tsx"
+      },
+      "hash": "2504a8279fcc",
+      "location": {
+        "filePath": "components/ShareTrip.tsx",
+        "line": 190,
+        "column": 46
+      }
+    },
+    "41fa93b6aae1": {
+      "type": "content",
+      "sourceText": "Pre-Trip Checklist",
+      "context": {
+        "componentName": "TravelChecklist",
+        "filePath": "components/TravelChecklist.tsx"
+      },
+      "hash": "41fa93b6aae1",
+      "location": {
+        "filePath": "components/TravelChecklist.tsx",
+        "line": 101,
+        "column": 10
+      }
+    },
+    "7d04ad45ef1a": {
+      "type": "content",
+      "sourceText": "Trip day!",
+      "context": {
+        "componentName": "TravelChecklist",
+        "filePath": "components/TravelChecklist.tsx"
+      },
+      "hash": "7d04ad45ef1a",
+      "location": {
+        "filePath": "components/TravelChecklist.tsx",
+        "line": 108,
+        "column": 34
+      }
+    },
+    "27ced19fff4d": {
+      "type": "content",
+      "sourceText": "{daysUntilTrip} days to go",
+      "context": {
+        "componentName": "TravelChecklist",
+        "filePath": "components/TravelChecklist.tsx"
+      },
+      "hash": "27ced19fff4d",
+      "location": {
+        "filePath": "components/TravelChecklist.tsx",
+        "line": 108,
+        "column": 51
+      }
+    },
+    "1f1eed307884": {
+      "type": "content",
+      "sourceText": "{completedCount} of {expression0}",
+      "context": {
+        "componentName": "TravelChecklist",
+        "filePath": "components/TravelChecklist.tsx"
+      },
+      "hash": "1f1eed307884",
+      "location": {
+        "filePath": "components/TravelChecklist.tsx",
+        "line": 116,
+        "column": 10
+      }
+    },
+    "9d20936befcd": {
+      "type": "content",
+      "sourceText": "{expression0}%",
+      "context": {
+        "componentName": "TravelChecklist",
+        "filePath": "components/TravelChecklist.tsx"
+      },
+      "hash": "9d20936befcd",
+      "location": {
+        "filePath": "components/TravelChecklist.tsx",
+        "line": 117,
+        "column": 10
+      }
+    },
+    "2229134575ae": {
+      "type": "content",
+      "sourceText": "Overdue",
+      "context": {
+        "componentName": "TravelChecklist",
+        "filePath": "components/TravelChecklist.tsx"
+      },
+      "hash": "2229134575ae",
+      "location": {
+        "filePath": "components/TravelChecklist.tsx",
+        "line": 133,
+        "column": 65
+      }
+    },
+    "ccd9a22f8c8e": {
+      "type": "content",
+      "sourceText": "Due Soon",
+      "context": {
+        "componentName": "TravelChecklist",
+        "filePath": "components/TravelChecklist.tsx"
+      },
+      "hash": "ccd9a22f8c8e",
+      "location": {
+        "filePath": "components/TravelChecklist.tsx",
+        "line": 148,
+        "column": 67
+      }
+    },
+    "8715d61857ed": {
+      "type": "content",
+      "sourceText": "Upcoming",
+      "context": {
+        "componentName": "TravelChecklist",
+        "filePath": "components/TravelChecklist.tsx"
+      },
+      "hash": "8715d61857ed",
+      "location": {
+        "filePath": "components/TravelChecklist.tsx",
+        "line": 163,
+        "column": 66
+      }
+    },
+    "91f43f2a38ce": {
+      "type": "content",
+      "sourceText": "Completed",
+      "context": {
+        "componentName": "TravelChecklist",
+        "filePath": "components/TravelChecklist.tsx"
+      },
+      "hash": "91f43f2a38ce",
+      "location": {
+        "filePath": "components/TravelChecklist.tsx",
+        "line": 178,
+        "column": 69
+      }
+    },
+    "53ccfef85d8e": {
+      "type": "content",
+      "sourceText": "Day of travel",
+      "context": {
+        "componentName": "ChecklistItemRow",
+        "filePath": "components/TravelChecklist.tsx"
+      },
+      "hash": "53ccfef85d8e",
+      "location": {
+        "filePath": "components/TravelChecklist.tsx",
+        "line": 227,
+        "column": 41
+      }
+    },
+    "af08461684b4": {
+      "type": "content",
+      "sourceText": "{expression0}+ days before",
+      "context": {
+        "componentName": "ChecklistItemRow",
+        "filePath": "components/TravelChecklist.tsx"
+      },
+      "hash": "af08461684b4",
+      "location": {
+        "filePath": "components/TravelChecklist.tsx",
+        "line": 227,
+        "column": 62
+      }
+    },
+    "7a81ae10d6a0": {
+      "type": "content",
+      "sourceText": "Expense Tracker",
+      "context": {
+        "componentName": "ExpenseTracker",
+        "filePath": "components/ExpenseTracker.tsx"
+      },
+      "hash": "7a81ae10d6a0",
+      "location": {
+        "filePath": "components/ExpenseTracker.tsx",
+        "line": 87,
+        "column": 10
+      }
+    },
+    "cafb75d0f10c": {
+      "type": "content",
+      "sourceText": "Total Budget",
+      "context": {
+        "componentName": "ExpenseTracker",
+        "filePath": "components/ExpenseTracker.tsx"
+      },
+      "hash": "cafb75d0f10c",
+      "location": {
+        "filePath": "components/ExpenseTracker.tsx",
+        "line": 101,
+        "column": 49
+      }
+    },
+    "683b0354f777": {
+      "type": "content",
+      "sourceText": "${expression0}",
+      "context": {
+        "componentName": "ExpenseTracker",
+        "filePath": "components/ExpenseTracker.tsx"
+      },
+      "hash": "683b0354f777",
+      "location": {
+        "filePath": "components/ExpenseTracker.tsx",
+        "line": 106,
+        "column": 12
+      }
+    },
+    "50e0a7b6515a": {
+      "type": "content",
+      "sourceText": "Remaining",
+      "context": {
+        "componentName": "ExpenseTracker",
+        "filePath": "components/ExpenseTracker.tsx"
+      },
+      "hash": "50e0a7b6515a",
+      "location": {
+        "filePath": "components/ExpenseTracker.tsx",
+        "line": 105,
+        "column": 49
+      }
+    },
+    "3c1fd531bb55": {
+      "type": "content",
+      "sourceText": "Spent: ${expression0}",
+      "context": {
+        "componentName": "ExpenseTracker",
+        "filePath": "components/ExpenseTracker.tsx"
+      },
+      "hash": "3c1fd531bb55",
+      "location": {
+        "filePath": "components/ExpenseTracker.tsx",
+        "line": 120,
+        "column": 16
+      }
+    },
+    "98298ea5fa8a": {
+      "type": "content",
+      "sourceText": "{expression0}%",
+      "context": {
+        "componentName": "ExpenseTracker",
+        "filePath": "components/ExpenseTracker.tsx"
+      },
+      "hash": "98298ea5fa8a",
+      "location": {
+        "filePath": "components/ExpenseTracker.tsx",
+        "line": 121,
+        "column": 10
+      }
+    },
+    "1a727801037e": {
+      "type": "attribute",
+      "sourceText": "Description",
+      "context": {
+        "attributeName": "placeholder",
+        "componentName": "ExpenseTracker",
+        "filePath": "components/ExpenseTracker.tsx"
+      },
+      "hash": "1a727801037e",
+      "location": {
+        "filePath": "components/ExpenseTracker.tsx",
+        "line": 128,
+        "column": 10
+      }
+    },
+    "66cdd62a48d8": {
+      "type": "attribute",
+      "sourceText": "Amount",
+      "context": {
+        "attributeName": "placeholder",
+        "componentName": "ExpenseTracker",
+        "filePath": "components/ExpenseTracker.tsx"
+      },
+      "hash": "66cdd62a48d8",
+      "location": {
+        "filePath": "components/ExpenseTracker.tsx",
+        "line": 136,
+        "column": 12
+      }
+    },
+    "f13effe41a4f": {
+      "type": "content",
+      "sourceText": "Add Expense",
+      "context": {
+        "componentName": "ExpenseTracker",
+        "filePath": "components/ExpenseTracker.tsx"
+      },
+      "hash": "f13effe41a4f",
+      "location": {
+        "filePath": "components/ExpenseTracker.tsx",
+        "line": 166,
+        "column": 44
+      }
+    },
+    "d58a7454c6be": {
+      "type": "content",
+      "sourceText": "By Category",
+      "context": {
+        "componentName": "ExpenseTracker",
+        "filePath": "components/ExpenseTracker.tsx"
+      },
+      "hash": "d58a7454c6be",
+      "location": {
+        "filePath": "components/ExpenseTracker.tsx",
+        "line": 176,
+        "column": 12
+      }
+    },
+    "91dddea1813a": {
+      "type": "content",
+      "sourceText": "No expenses yet",
+      "context": {
+        "componentName": "ExpenseTracker",
+        "filePath": "components/ExpenseTracker.tsx"
+      },
+      "hash": "91dddea1813a",
+      "location": {
+        "filePath": "components/ExpenseTracker.tsx",
+        "line": 211,
+        "column": 15
+      }
+    },
+    "4774e08e24b5": {
+      "type": "content",
+      "sourceText": "Click + to add your first expense",
+      "context": {
+        "componentName": "ExpenseTracker",
+        "filePath": "components/ExpenseTracker.tsx"
+      },
+      "hash": "4774e08e24b5",
+      "location": {
+        "filePath": "components/ExpenseTracker.tsx",
+        "line": 212,
+        "column": 40
+      }
+    },
+    "f46fd065a633": {
+      "type": "content",
+      "sourceText": "AI Travel Planner",
+      "context": {
+        "componentName": "Footer",
+        "filePath": "components/Footer.tsx"
+      },
+      "hash": "f46fd065a633",
+      "location": {
+        "filePath": "components/Footer.tsx",
+        "line": 17,
+        "column": 16
+      }
+    },
+    "c0d2d7670866": {
+      "type": "content",
+      "sourceText": "Lingo.dev Community Demo",
+      "context": {
+        "componentName": "Footer",
+        "filePath": "components/Footer.tsx"
+      },
+      "hash": "c0d2d7670866",
+      "location": {
+        "filePath": "components/Footer.tsx",
+        "line": 19,
+        "column": 18
+      }
+    },
+    "8518e578cb6e": {
+      "type": "content",
+      "sourceText": "A showcase application demonstrating Lingo.dev's AI-powered internationalization. Plan trips in 6 languages with zero-config translation.",
+      "context": {
+        "componentName": "Footer",
+        "filePath": "components/Footer.tsx"
+      },
+      "hash": "8518e578cb6e",
+      "location": {
+        "filePath": "components/Footer.tsx",
+        "line": 24,
+        "column": 14
+      }
+    },
+    "dc635cf55c8d": {
+      "type": "content",
+      "sourceText": "Lingo.dev Features",
+      "context": {
+        "componentName": "Footer",
+        "filePath": "components/Footer.tsx"
+      },
+      "hash": "dc635cf55c8d",
+      "location": {
+        "filePath": "components/Footer.tsx",
+        "line": 52,
+        "column": 14
+      }
+    },
+    "6f373186387e": {
+      "type": "content",
+      "sourceText": "Zero-config React translation",
+      "context": {
+        "componentName": "Footer",
+        "filePath": "components/Footer.tsx"
+      },
+      "hash": "6f373186387e",
+      "location": {
+        "filePath": "components/Footer.tsx",
+        "line": 56,
+        "column": 16
+      }
+    },
+    "00e6392c584e": {
+      "type": "content",
+      "sourceText": "Build-time optimization",
+      "context": {
+        "componentName": "Footer",
+        "filePath": "components/Footer.tsx"
+      },
+      "hash": "00e6392c584e",
+      "location": {
+        "filePath": "components/Footer.tsx",
+        "line": 59,
+        "column": 16
+      }
+    },
+    "44723ea85c75": {
+      "type": "content",
+      "sourceText": "AI-powered translations",
+      "context": {
+        "componentName": "Footer",
+        "filePath": "components/Footer.tsx"
+      },
+      "hash": "44723ea85c75",
+      "location": {
+        "filePath": "components/Footer.tsx",
+        "line": 62,
+        "column": 16
+      }
+    },
+    "f652317287e2": {
+      "type": "content",
+      "sourceText": "Multiple LLM providers",
+      "context": {
+        "componentName": "Footer",
+        "filePath": "components/Footer.tsx"
+      },
+      "hash": "f652317287e2",
+      "location": {
+        "filePath": "components/Footer.tsx",
+        "line": 65,
+        "column": 16
+      }
+    },
+    "253198f68349": {
+      "type": "content",
+      "sourceText": "ICU MessageFormat support",
+      "context": {
+        "componentName": "Footer",
+        "filePath": "components/Footer.tsx"
+      },
+      "hash": "253198f68349",
+      "location": {
+        "filePath": "components/Footer.tsx",
+        "line": 68,
+        "column": 16
+      }
+    },
+    "1a8062ec92c8": {
+      "type": "content",
+      "sourceText": "Resources",
+      "context": {
+        "componentName": "Footer",
+        "filePath": "components/Footer.tsx"
+      },
+      "hash": "1a8062ec92c8",
+      "location": {
+        "filePath": "components/Footer.tsx",
+        "line": 75,
+        "column": 14
+      }
+    },
+    "e64d1e6fcd81": {
+      "type": "content",
+      "sourceText": "Lingo.dev Website",
+      "context": {
+        "componentName": "Footer",
+        "filePath": "components/Footer.tsx"
+      },
+      "hash": "e64d1e6fcd81",
+      "location": {
+        "filePath": "components/Footer.tsx",
+        "line": 85,
+        "column": 18
+      }
+    },
+    "7d0dbf5011cf": {
+      "type": "content",
+      "sourceText": "Documentation",
+      "context": {
+        "componentName": "Footer",
+        "filePath": "components/Footer.tsx"
+      },
+      "hash": "7d0dbf5011cf",
+      "location": {
+        "filePath": "components/Footer.tsx",
+        "line": 95,
+        "column": 18
+      }
+    },
+    "e3e1ffcc8151": {
+      "type": "content",
+      "sourceText": "GitHub Repository",
+      "context": {
+        "componentName": "Footer",
+        "filePath": "components/Footer.tsx"
+      },
+      "hash": "e3e1ffcc8151",
+      "location": {
+        "filePath": "components/Footer.tsx",
+        "line": 105,
+        "column": 18
+      }
+    },
+    "916738e68328": {
+      "type": "content",
+      "sourceText": "Join Discord",
+      "context": {
+        "componentName": "Footer",
+        "filePath": "components/Footer.tsx"
+      },
+      "hash": "916738e68328",
+      "location": {
+        "filePath": "components/Footer.tsx",
+        "line": 115,
+        "column": 18
+      }
+    },
+    "66494bd7efa0": {
+      "type": "content",
+      "sourceText": "Made with",
+      "context": {
+        "componentName": "Footer",
+        "filePath": "components/Footer.tsx"
+      },
+      "hash": "66494bd7efa0",
+      "location": {
+        "filePath": "components/Footer.tsx",
+        "line": 125,
+        "column": 14
+      }
+    },
+    "57d179e0763a": {
+      "type": "content",
+      "sourceText": "for the Lingo.dev community",
+      "context": {
+        "componentName": "Footer",
+        "filePath": "components/Footer.tsx"
+      },
+      "hash": "57d179e0763a",
+      "location": {
+        "filePath": "components/Footer.tsx",
+        "line": 129,
+        "column": 14
+      }
+    },
+    "095d09b5446d": {
+      "type": "content",
+      "sourceText": "© {expression0} AI Travel Planner.",
+      "context": {
+        "componentName": "Footer",
+        "filePath": "components/Footer.tsx"
+      },
+      "hash": "095d09b5446d",
+      "location": {
+        "filePath": "components/Footer.tsx",
+        "line": 131,
+        "column": 12
+      }
+    },
+    "2448540ad614": {
+      "type": "content",
+      "sourceText": "Destination not found",
+      "context": {
+        "componentName": "DestinationDetailPage",
+        "filePath": "routes/destination.$destinationId.tsx"
+      },
+      "hash": "2448540ad614",
+      "location": {
+        "filePath": "routes/destination.$destinationId.tsx",
+        "line": 132,
+        "column": 12
+      }
+    },
+    "5e4ab8f52e2d": {
+      "type": "content",
+      "sourceText": "← Back to destinations",
+      "context": {
+        "componentName": "DestinationDetailPage",
+        "filePath": "routes/destination.$destinationId.tsx"
+      },
+      "hash": "5e4ab8f52e2d",
+      "location": {
+        "filePath": "routes/destination.$destinationId.tsx",
+        "line": 138,
+        "column": 12
+      }
+    },
+    "55be7019fcbc": {
+      "type": "content",
+      "sourceText": "Budget-friendly",
+      "context": {
+        "componentName": "DestinationDetailPage",
+        "filePath": "routes/destination.$destinationId.tsx"
+      },
+      "hash": "55be7019fcbc",
+      "location": {
+        "filePath": "routes/destination.$destinationId.tsx",
+        "line": 146,
+        "column": 7
+      }
+    },
+    "b014898dd5bc": {
+      "type": "content",
+      "sourceText": "Moderate",
+      "context": {
+        "componentName": "DestinationDetailPage",
+        "filePath": "routes/destination.$destinationId.tsx"
+      },
+      "hash": "b014898dd5bc",
+      "location": {
+        "filePath": "routes/destination.$destinationId.tsx",
+        "line": 147,
+        "column": 7
+      }
+    },
+    "6e6d8d3de430": {
+      "type": "content",
+      "sourceText": "Premium",
+      "context": {
+        "componentName": "DestinationDetailPage",
+        "filePath": "routes/destination.$destinationId.tsx"
+      },
+      "hash": "6e6d8d3de430",
+      "location": {
+        "filePath": "routes/destination.$destinationId.tsx",
+        "line": 148,
+        "column": 7
+      }
+    },
+    "cd67bc470f4f": {
+      "type": "content",
+      "sourceText": "Back",
+      "context": {
+        "componentName": "DestinationDetailPage",
+        "filePath": "routes/destination.$destinationId.tsx"
+      },
+      "hash": "cd67bc470f4f",
+      "location": {
+        "filePath": "routes/destination.$destinationId.tsx",
+        "line": 171,
+        "column": 12
+      }
+    },
+    "d9f0cd2ac838": {
+      "type": "content",
+      "sourceText": "About this destination",
+      "context": {
+        "componentName": "DestinationDetailPage",
+        "filePath": "routes/destination.$destinationId.tsx"
+      },
+      "hash": "d9f0cd2ac838",
+      "location": {
+        "filePath": "routes/destination.$destinationId.tsx",
+        "line": 208,
+        "column": 16
+      }
+    },
+    "089758e87c13": {
+      "type": "content",
+      "sourceText": "Photo Gallery",
+      "context": {
+        "componentName": "DestinationDetailPage",
+        "filePath": "routes/destination.$destinationId.tsx"
+      },
+      "hash": "089758e87c13",
+      "location": {
+        "filePath": "routes/destination.$destinationId.tsx",
+        "line": 220,
+        "column": 18
+      }
+    },
+    "d26ba6f44621": {
+      "type": "content",
+      "sourceText": "Top Highlights",
+      "context": {
+        "componentName": "DestinationDetailPage",
+        "filePath": "routes/destination.$destinationId.tsx"
+      },
+      "hash": "d26ba6f44621",
+      "location": {
+        "filePath": "routes/destination.$destinationId.tsx",
+        "line": 233,
+        "column": 16
+      }
+    },
+    "8dcb29812b12": {
+      "type": "content",
+      "sourceText": "Things to Do",
+      "context": {
+        "componentName": "DestinationDetailPage",
+        "filePath": "routes/destination.$destinationId.tsx"
+      },
+      "hash": "8dcb29812b12",
+      "location": {
+        "filePath": "routes/destination.$destinationId.tsx",
+        "line": 255,
+        "column": 18
+      }
+    },
+    "a8f948b92f2b": {
+      "type": "content",
+      "sourceText": "Tags",
+      "context": {
+        "componentName": "DestinationDetailPage",
+        "filePath": "routes/destination.$destinationId.tsx"
+      },
+      "hash": "a8f948b92f2b",
+      "location": {
+        "filePath": "routes/destination.$destinationId.tsx",
+        "line": 276,
+        "column": 16
+      }
+    },
+    "def99ac75b3f": {
+      "type": "content",
+      "sourceText": "Quick Info",
+      "context": {
+        "componentName": "DestinationDetailPage",
+        "filePath": "routes/destination.$destinationId.tsx"
+      },
+      "hash": "def99ac75b3f",
+      "location": {
+        "filePath": "routes/destination.$destinationId.tsx",
+        "line": 295,
+        "column": 16
+      }
+    },
+    "9c73c58971c5": {
+      "type": "content",
+      "sourceText": "Best time to visit",
+      "context": {
+        "componentName": "DestinationDetailPage",
+        "filePath": "routes/destination.$destinationId.tsx"
+      },
+      "hash": "9c73c58971c5",
+      "location": {
+        "filePath": "routes/destination.$destinationId.tsx",
+        "line": 300,
+        "column": 25
+      }
+    },
+    "c4bb57c603ab": {
+      "type": "content",
+      "sourceText": "Price level",
+      "context": {
+        "componentName": "DestinationDetailPage",
+        "filePath": "routes/destination.$destinationId.tsx"
+      },
+      "hash": "c4bb57c603ab",
+      "location": {
+        "filePath": "routes/destination.$destinationId.tsx",
+        "line": 305,
+        "column": 25
+      }
+    },
+    "437b67df250d": {
+      "type": "content",
+      "sourceText": "Language",
+      "context": {
+        "componentName": "DestinationDetailPage",
+        "filePath": "routes/destination.$destinationId.tsx"
+      },
+      "hash": "437b67df250d",
+      "location": {
+        "filePath": "routes/destination.$destinationId.tsx",
+        "line": 310,
+        "column": 25
+      }
+    },
+    "2f98200ac51a": {
+      "type": "content",
+      "sourceText": "Currency",
+      "context": {
+        "componentName": "DestinationDetailPage",
+        "filePath": "routes/destination.$destinationId.tsx"
+      },
+      "hash": "2f98200ac51a",
+      "location": {
+        "filePath": "routes/destination.$destinationId.tsx",
+        "line": 315,
+        "column": 25
+      }
+    },
+    "0070d7fa9d4c": {
+      "type": "content",
+      "sourceText": "Plan a trip here",
+      "context": {
+        "componentName": "DestinationDetailPage",
+        "filePath": "routes/destination.$destinationId.tsx"
+      },
+      "hash": "0070d7fa9d4c",
+      "location": {
+        "filePath": "routes/destination.$destinationId.tsx",
+        "line": 328,
+        "column": 20
+      }
+    },
+    "3fa2d7c521f9": {
+      "type": "content",
+      "sourceText": "{expression0} / {expression1}",
+      "context": {
+        "componentName": "PhotoGallery",
+        "filePath": "components/PhotoGallery.tsx"
+      },
+      "hash": "3fa2d7c521f9",
+      "location": {
+        "filePath": "components/PhotoGallery.tsx",
+        "line": 126,
+        "column": 12
+      }
+    },
+    "0b2ea03ae363": {
+      "type": "content",
+      "sourceText": "Currency Converter",
+      "context": {
+        "componentName": "CurrencyConverter",
+        "filePath": "components/CurrencyConverter.tsx"
+      },
+      "hash": "0b2ea03ae363",
+      "location": {
+        "filePath": "components/CurrencyConverter.tsx",
+        "line": 78,
+        "column": 8
+      }
+    },
+    "d908b9fad983": {
+      "type": "content",
+      "sourceText": "From",
+      "context": {
+        "componentName": "CurrencyConverter",
+        "filePath": "components/CurrencyConverter.tsx"
+      },
+      "hash": "d908b9fad983",
+      "location": {
+        "filePath": "components/CurrencyConverter.tsx",
+        "line": 84,
+        "column": 62
+      }
+    },
+    "7b9e9e72f46b": {
+      "type": "attribute",
+      "sourceText": "0",
+      "context": {
+        "attributeName": "placeholder",
+        "componentName": "CurrencyConverter",
+        "filePath": "components/CurrencyConverter.tsx"
+      },
+      "hash": "7b9e9e72f46b",
+      "location": {
+        "filePath": "components/CurrencyConverter.tsx",
+        "line": 86,
+        "column": 12
+      }
+    },
+    "2f7adb2b17a3": {
+      "type": "content",
+      "sourceText": "To",
+      "context": {
+        "componentName": "CurrencyConverter",
+        "filePath": "components/CurrencyConverter.tsx"
+      },
+      "hash": "2f7adb2b17a3",
+      "location": {
+        "filePath": "components/CurrencyConverter.tsx",
+        "line": 123,
+        "column": 62
+      }
+    },
+    "6dc3807b4645": {
+      "type": "content",
+      "sourceText": "Exchange Rate",
+      "context": {
+        "componentName": "CurrencyConverter",
+        "filePath": "components/CurrencyConverter.tsx"
+      },
+      "hash": "6dc3807b4645",
+      "location": {
+        "filePath": "components/CurrencyConverter.tsx",
+        "line": 151,
+        "column": 12
+      }
+    },
+    "19c46429889b": {
+      "type": "content",
+      "sourceText": "1 {fromCurrency} = {expression0}{toCurrency}",
+      "context": {
+        "componentName": "CurrencyConverter",
+        "filePath": "components/CurrencyConverter.tsx"
+      },
+      "hash": "19c46429889b",
+      "location": {
+        "filePath": "components/CurrencyConverter.tsx",
+        "line": 153,
+        "column": 10
+      }
+    },
+    "0850a216c0e1": {
+      "type": "content",
+      "sourceText": "Packing List",
+      "context": {
+        "componentName": "PackingList",
+        "filePath": "components/PackingList.tsx"
+      },
+      "hash": "0850a216c0e1",
+      "location": {
+        "filePath": "components/PackingList.tsx",
+        "line": 174,
+        "column": 10
+      }
+    },
+    "6c048683a385": {
+      "type": "content",
+      "sourceText": "{packedCount}/{expression0}",
+      "context": {
+        "componentName": "PackingList",
+        "filePath": "components/PackingList.tsx"
+      },
+      "hash": "6c048683a385",
+      "location": {
+        "filePath": "components/PackingList.tsx",
+        "line": 177,
+        "column": 10
+      }
+    },
+    "1bbafa2356d4": {
+      "type": "content",
+      "sourceText": "All packed! Ready to go!",
+      "context": {
+        "componentName": "PackingList",
+        "filePath": "components/PackingList.tsx"
+      },
+      "hash": "1bbafa2356d4",
+      "location": {
+        "filePath": "components/PackingList.tsx",
+        "line": 193,
+        "column": 32
+      }
+    },
+    "22a474ca02d7": {
+      "type": "content",
+      "sourceText": "{expression0}% complete",
+      "context": {
+        "componentName": "PackingList",
+        "filePath": "components/PackingList.tsx"
+      },
+      "hash": "22a474ca02d7",
+      "location": {
+        "filePath": "components/PackingList.tsx",
+        "line": 193,
+        "column": 64
+      }
+    },
+    "f6c30cc47b33": {
+      "type": "content",
+      "sourceText": "Generate a smart packing list based on your destination",
+      "context": {
+        "componentName": "PackingList",
+        "filePath": "components/PackingList.tsx"
+      },
+      "hash": "f6c30cc47b33",
+      "location": {
+        "filePath": "components/PackingList.tsx",
+        "line": 204,
+        "column": 12
+      }
+    },
+    "b09d64972226": {
+      "type": "content",
+      "sourceText": "Generating...",
+      "context": {
+        "componentName": "PackingList",
+        "filePath": "components/PackingList.tsx"
+      },
+      "hash": "b09d64972226",
+      "location": {
+        "filePath": "components/PackingList.tsx",
+        "line": 214,
+        "column": 48
+      }
+    },
+    "86f49a8e9a5d": {
+      "type": "content",
+      "sourceText": "Generate Packing List",
+      "context": {
+        "componentName": "PackingList",
+        "filePath": "components/PackingList.tsx"
+      },
+      "hash": "86f49a8e9a5d",
+      "location": {
+        "filePath": "components/PackingList.tsx",
+        "line": 219,
+        "column": 48
+      }
+    },
+    "eee1b7c34504": {
+      "type": "attribute",
+      "sourceText": "Add item...",
+      "context": {
+        "attributeName": "placeholder",
+        "componentName": "PackingList",
+        "filePath": "components/PackingList.tsx"
+      },
+      "hash": "eee1b7c34504",
+      "location": {
+        "filePath": "components/PackingList.tsx",
+        "line": 228,
+        "column": 12
+      }
+    },
+    "4e7be5ebbe7e": {
+      "type": "content",
+      "sourceText": "Clothing",
+      "context": {
+        "componentName": "PackingList",
+        "filePath": "components/PackingList.tsx"
+      },
+      "hash": "4e7be5ebbe7e",
+      "location": {
+        "filePath": "components/PackingList.tsx",
+        "line": 241,
+        "column": 14
+      }
+    },
+    "26ca32edab2c": {
+      "type": "content",
+      "sourceText": "Electronics",
+      "context": {
+        "componentName": "PackingList",
+        "filePath": "components/PackingList.tsx"
+      },
+      "hash": "26ca32edab2c",
+      "location": {
+        "filePath": "components/PackingList.tsx",
+        "line": 242,
+        "column": 14
+      }
+    },
+    "351b45153f32": {
+      "type": "content",
+      "sourceText": "Documents",
+      "context": {
+        "componentName": "PackingList",
+        "filePath": "components/PackingList.tsx"
+      },
+      "hash": "351b45153f32",
+      "location": {
+        "filePath": "components/PackingList.tsx",
+        "line": 243,
+        "column": 14
+      }
+    },
+    "3f7e02e3f046": {
+      "type": "content",
+      "sourceText": "Health",
+      "context": {
+        "componentName": "PackingList",
+        "filePath": "components/PackingList.tsx"
+      },
+      "hash": "3f7e02e3f046",
+      "location": {
+        "filePath": "components/PackingList.tsx",
+        "line": 244,
+        "column": 14
+      }
+    },
+    "dabb6f195daf": {
+      "type": "content",
+      "sourceText": "Accessories",
+      "context": {
+        "componentName": "PackingList",
+        "filePath": "components/PackingList.tsx"
+      },
+      "hash": "dabb6f195daf",
+      "location": {
+        "filePath": "components/PackingList.tsx",
+        "line": 245,
+        "column": 14
+      }
+    },
+    "a59dda309814": {
+      "type": "content",
+      "sourceText": "Footwear",
+      "context": {
+        "componentName": "PackingList",
+        "filePath": "components/PackingList.tsx"
+      },
+      "hash": "a59dda309814",
+      "location": {
+        "filePath": "components/PackingList.tsx",
+        "line": 246,
+        "column": 14
+      }
+    },
+    "ee83941e60fc": {
+      "type": "content",
+      "sourceText": "Gear",
+      "context": {
+        "componentName": "PackingList",
+        "filePath": "components/PackingList.tsx"
+      },
+      "hash": "ee83941e60fc",
+      "location": {
+        "filePath": "components/PackingList.tsx",
+        "line": 247,
+        "column": 14
+      }
+    },
+    "af5a39ad538f": {
+      "type": "content",
+      "sourceText": "Regenerate List",
+      "context": {
+        "componentName": "PackingList",
+        "filePath": "components/PackingList.tsx"
+      },
+      "hash": "af5a39ad538f",
+      "location": {
+        "filePath": "components/PackingList.tsx",
+        "line": 308,
+        "column": 12
+      }
+    },
+    "33bbab426500": {
+      "type": "content",
+      "sourceText": "{expression0}°C",
+      "context": {
+        "componentName": "WeatherWidget",
+        "filePath": "components/WeatherWidget.tsx"
+      },
+      "hash": "33bbab426500",
+      "location": {
+        "filePath": "components/WeatherWidget.tsx",
+        "line": 102,
+        "column": 10
+      }
+    },
+    "33afc854e022": {
+      "type": "content",
+      "sourceText": "Current Weather",
+      "context": {
+        "componentName": "WeatherWidget",
+        "filePath": "components/WeatherWidget.tsx"
+      },
+      "hash": "33afc854e022",
+      "location": {
+        "filePath": "components/WeatherWidget.tsx",
+        "line": 91,
+        "column": 8
+      }
+    },
+    "64105cf519f6": {
+      "type": "content",
+      "sourceText": "Humidity",
+      "context": {
+        "componentName": "WeatherWidget",
+        "filePath": "components/WeatherWidget.tsx"
+      },
+      "hash": "64105cf519f6",
+      "location": {
+        "filePath": "components/WeatherWidget.tsx",
+        "line": 110,
+        "column": 51
+      }
+    },
+    "d85d065e38b4": {
+      "type": "content",
+      "sourceText": "{expression0}%",
+      "context": {
+        "componentName": "WeatherWidget",
+        "filePath": "components/WeatherWidget.tsx"
+      },
+      "hash": "d85d065e38b4",
+      "location": {
+        "filePath": "components/WeatherWidget.tsx",
+        "line": 111,
+        "column": 12
+      }
+    },
+    "967d9d5c08ae": {
+      "type": "content",
+      "sourceText": "Wind",
+      "context": {
+        "componentName": "WeatherWidget",
+        "filePath": "components/WeatherWidget.tsx"
+      },
+      "hash": "967d9d5c08ae",
+      "location": {
+        "filePath": "components/WeatherWidget.tsx",
+        "line": 117,
+        "column": 51
+      }
+    },
+    "ca392e152130": {
+      "type": "content",
+      "sourceText": "{expression0} km/h",
+      "context": {
+        "componentName": "WeatherWidget",
+        "filePath": "components/WeatherWidget.tsx"
+      },
+      "hash": "ca392e152130",
+      "location": {
+        "filePath": "components/WeatherWidget.tsx",
+        "line": 118,
+        "column": 12
+      }
+    },
+    "9320880ff9a8": {
+      "type": "content",
+      "sourceText": "Seasonal Temperatures",
+      "context": {
+        "componentName": "WeatherWidget",
+        "filePath": "components/WeatherWidget.tsx"
+      },
+      "hash": "9320880ff9a8",
+      "location": {
+        "filePath": "components/WeatherWidget.tsx",
+        "line": 126,
+        "column": 65
+      }
+    },
+    "837476325f93": {
+      "type": "content",
+      "sourceText": "Local Phrases",
+      "context": {
+        "componentName": "LocalPhrases",
+        "filePath": "components/LocalPhrases.tsx"
+      },
+      "hash": "837476325f93",
+      "location": {
+        "filePath": "components/LocalPhrases.tsx",
+        "line": 175,
+        "column": 8
+      }
+    },
+    "aa1d53453877": {
+      "type": "content",
+      "sourceText": "Essential phrases in",
+      "context": {
+        "componentName": "LocalPhrases",
+        "filePath": "components/LocalPhrases.tsx"
+      },
+      "hash": "aa1d53453877",
+      "location": {
+        "filePath": "components/LocalPhrases.tsx",
+        "line": 178,
+        "column": 8
+      }
+    },
+    "c9abd3cd3582": {
+      "type": "content",
+      "sourceText": "Tip: Learning just a few local phrases can greatly enhance your travel experience and show respect for the local culture!",
+      "context": {
+        "componentName": "LocalPhrases",
+        "filePath": "components/LocalPhrases.tsx"
+      },
+      "hash": "c9abd3cd3582",
+      "location": {
+        "filePath": "components/LocalPhrases.tsx",
+        "line": 250,
+        "column": 10
+      }
+    }
+  },
+  "stats": {
+    "totalEntries": 206,
+    "lastUpdated": "2026-01-22T17:55:15.078Z"
+  }
+}

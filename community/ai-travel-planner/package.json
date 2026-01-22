@@ -1,0 +1,35 @@
+{
+  "name": "ai-travel-planner",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 3001",
+    "build": "vite build && tsc",
+    "serve": "vite preview",
+    "generate-routes": "tsr generate"
+  },
+  "dependencies": {
+    "@lingo.dev/compiler": "workspace:*",
+    "@tailwindcss/vite": "4.1.18",
+    "@tanstack/react-query": "5.80.6",
+    "@tanstack/react-query-devtools": "5.80.6",
+    "@tanstack/react-router": "1.132.0",
+    "@tanstack/react-router-devtools": "1.132.0",
+    "@tanstack/router-plugin": "1.132.0",
+    "framer-motion": "12.12.1",
+    "lucide-react": "0.545.0",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "tailwindcss": "4.1.18",
+    "zustand": "5.0.5"
+  },
+  "devDependencies": {
+    "@types/node": "22.10.2",
+    "@types/react": "19.2.0",
+    "@types/react-dom": "19.2.0",
+    "@vitejs/plugin-react": "5.0.4",
+    "typescript": "5.7.2",
+    "vite": "7.3.0"
+  }
+}
