@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+:root {
+  --background: #fdfdfc; /* Creamy beige/white */
+  --foreground: #1a1a1a;
+  
+  --color-beige-50: #f9f9f7;
+  --color-beige-100: #f0f0eb;
+  --color-beige-200: #e6e6e0;
+  
+  --color-primary: #1a1a1a;
+  --color-accent: #ffa500;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  
+  --color-beige-50: var(--color-beige-50);
+  --color-beige-100: var(--color-beige-100);
+  --color-beige-200: var(--color-beige-200);
+  
+  --color-primary: var(--color-primary);
+  --color-accent: var(--color-accent);
+
+  --font-sans: var(--font-outfit), ui-sans-serif, system-ui;
+  --font-serif: var(--font-playfair), ui-serif, Georgia;
+
+  /* Continuous Animations */
+  --animate-float: float 6s ease-in-out infinite;
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+/* Scroll Animation Utilities */
+.reveal-base {
+  opacity: 0;
+  transition-property: opacity, transform;
+  transition-duration: 0.8s;
+  transition-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-fade-up {
+  transform: translateY(30px);
+}
+.reveal-slide-right {
+  transform: translateX(30px);
+}
+.reveal-scale {
+  transform: scale(0.95);
+}
+
+.reveal-visible {
+  opacity: 1;
+  transform: translateY(0) translateX(0) scale(1);
+}
+
