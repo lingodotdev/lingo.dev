@@ -7,7 +7,7 @@ export const ACCEPTED_FILE_TYPES: readonly FileType[] = [
 ] as const;
 
 export const MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024; // 5MB
-export const MAX_EXTRACTED_TEXT_LENGTH = 600 as const; // 600 characters
+export const MAX_EXTRACTED_TEXT_LENGTH = 3600 as const; // 600 characters
 
 export const SUPPORTED_LANGUAGE_CODES: readonly LanguageCode[] = [
   ...Object.values(LanguageCode),
