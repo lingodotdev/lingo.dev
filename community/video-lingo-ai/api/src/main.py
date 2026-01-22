@@ -8,8 +8,19 @@ import shutil
 import tempfile
 
 from .models import whisper, generate_text 
-from .utils.utils import extract_audio           
+from .utils.utils import extract_audio          
+from fastapi.middleware.cors import CORSMiddleware
+
+
+
 app = FastAPI(title="Video Lingo AI API")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 UPLOAD_DIR = Path(tempfile.gettempdir()) / "video_lingo_ai"
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
