@@ -1,0 +1,35 @@
+{
+    "signup": {
+      "title": "アカウントを作成",
+      "username": "ユーザー名",
+      "email": "メールアドレス",
+      "password": "パスワード",
+      "button": "登録",
+      "haveAccount": "すでにアカウントをお持ちですか？",
+      "login": "ログイン"
+    },
+    "login": {
+      "title": "ログイン",
+      "email": "メールアドレス",
+      "password": "パスワード",
+      "button": "ログイン",
+      "noAccount": "アカウントをお持ちでないですか？",
+      "signup": "新規登録"
+    },
+    "auth": {
+      "signupError": "登録に失敗しました。もう一度お試しください。",
+      "loginError": "ログインに失敗しました。もう一度お試しください。"
+    },
+    "editor": {
+      "connected": "接続済み",
+      "disconnected": "切断されました",
+      "usersOnline": "オンラインユーザー",
+      "leaveRoom": "ルームを退出"
+    },
+    "localization": {
+      "update": "翻訳を更新",
+      "updating": "Lingo.dev を使用して翻訳を更新しています…",
+      "success": "Lingo.dev により翻訳が正常に更新されました"
+    }
+  }
+  

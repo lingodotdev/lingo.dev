@@ -1,0 +1,35 @@
+{
+    "signup": {
+      "title": "Create an Account",
+      "username": "Username",
+      "email": "Email",
+      "password": "Password",
+      "button": "Sign Up",
+      "haveAccount": "Already have an account?",
+      "login": "Log in"
+    },
+    "login": {
+      "title": "Log In",
+      "email": "Email",
+      "password": "Password",
+      "button": "Log In",
+      "noAccount": "Don't have an account?",
+      "signup": "Sign up"
+    },
+    "auth": {
+      "signupError": "Signup failed. Please try again.",
+      "loginError": "Login failed. Please try again."
+    },
+    "editor": {
+      "connected": "Connected",
+      "disconnected": "Disconnected",
+      "usersOnline": "Users online",
+      "leaveRoom": "Leave Room"
+    },
+    "localization": {
+      "update": "Update Translations",
+      "updating": "Updating translations using Lingo.dev...",
+      "success": "Translations updated successfully using Lingo.dev"
+    }
+  }
+  
