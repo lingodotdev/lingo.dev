@@ -7,6 +7,7 @@ import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { ollama } from "ai-sdk-ollama";
 import { createMistral } from "@ai-sdk/mistral";
+import { createOpenAI } from "@ai-sdk/openai";
 import type { LanguageModel } from "ai";
 import * as dotenv from "dotenv";
 import * as path from "path";
@@ -262,6 +263,15 @@ export function createAiModel(
 
     case "google":
       return createGoogleGenerativeAI({ apiKey: apiKey! })(model.name);
+
+    case "openai": {
+      // Support custom base URL for OpenAI-compatible providers (e.g., Nebius)
+      const baseURL = getKeyFromEnv("OPENAI_BASE_URL");
+      return createOpenAI({
+        apiKey: apiKey!,
+        ...(baseURL && { baseURL }),
+      })(model.name);
+    }
 
     case "openrouter":
       return createOpenRouter({ apiKey: apiKey! })(model.name);
