@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=Outfit:wght@500;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Font Family Variables */
+  --font-sans: 'Inter', sans-serif;
+  --font-display: 'Outfit', sans-serif;
+  --font-meme: 'Anton', sans-serif;
+
+  /* Color Palette - Vibrant & Fun */
+  --background: 260 20% 98%;
+  --foreground: 260 10% 10%;
+  
+  --card: 0 0% 100%;
+  --card-foreground: 260 10% 15%;
+  
+  --popover: 0 0% 100%;
+  --popover-foreground: 260 10% 15%;
+  
+  --primary: 262 83% 58%;
+  --primary-foreground: 210 40% 98%;
+  
+  --secondary: 290 80% 96%;
+  --secondary-foreground: 262 83% 30%;
+  
+  --muted: 260 10% 96%;
+  --muted-foreground: 260 10% 55%;
+  
+  --accent: 310 80% 60%;
+  --accent-foreground: 210 40% 98%;
+  
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 210 40% 98%;
+
+  --border: 260 15% 90%;
+  --input: 260 15% 90%;
+  --ring: 262 83% 58%;
+  
+  --radius: 1rem;
+}
+
+.dark {
+  --background: 260 20% 8%;
+  --foreground: 210 40% 98%;
+  
+  --card: 260 20% 12%;
+  --card-foreground: 210 40% 98%;
+  
+  --popover: 260 20% 12%;
+  --popover-foreground: 210 40% 98%;
+  
+  --primary: 262 83% 65%;
+  --primary-foreground: 210 40% 98%;
+  
+  --secondary: 260 20% 16%;
+  --secondary-foreground: 210 40% 98%;
+  
+  --muted: 260 20% 16%;
+  --muted-foreground: 215 20% 65%;
+  
+  --accent: 310 80% 65%;
+  --accent-foreground: 210 40% 98%;
+  
+  --destructive: 0 62% 30%;
+  --destructive-foreground: 210 40% 98%;
+  
+  --border: 260 20% 20%;
+  --input: 260 20% 20%;
+  --ring: 262 83% 65%;
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground antialiased selection:bg-primary/20 selection:text-primary;
+    font-family: var(--font-sans);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    @apply font-bold tracking-tight;
+  }
+}
+
+@layer utilities {
+  .text-meme {
+    font-family: var(--font-meme);
+    text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
+  }
+  
+  .glass-card {
+    @apply bg-white/70 dark:bg-black/50 backdrop-blur-lg border border-white/20 dark:border-white/10 shadow-xl;
+  }
+}
