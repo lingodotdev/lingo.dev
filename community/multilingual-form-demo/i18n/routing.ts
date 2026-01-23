@@ -1,7 +1,8 @@
+import { locales } from '@/app/components/LanguageSwitcher/types';
 import { defineRouting } from 'next-intl/routing';
 
 export const routing = defineRouting({
-    locales: ['en', 'es', 'fr', 'de'],
+    locales: locales.map((locale) => locale.code),
     defaultLocale: 'en',
     localePrefix: 'always'
 });
