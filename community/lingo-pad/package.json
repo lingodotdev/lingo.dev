@@ -1,0 +1,32 @@
+{
+  "name": "lingo-pad",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@monaco-editor/react": "^4.7.0",
+    "@types/diff": "^7.0.2",
+    "clsx": "^2.1.1",
+    "diff": "^8.0.3",
+    "lingo.dev": "^0.125.0",
+    "lucide-react": "^0.562.0",
+    "next": "16.1.4",
+    "react": "19.2.3",
+    "react-dom": "19.2.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.1.4",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
