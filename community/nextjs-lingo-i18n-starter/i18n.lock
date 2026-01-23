@@ -1,0 +1,26 @@
+version: 1
+checksums:
+  63f4c97e43b1d06779a7f553869f769a:
+    nav.about: 944521eeeed2511833d2299931273c71
+    nav.pricing: ce27f1aeacccc542a174c4b2bce022b0
+    hero.kicker: 8de62b92869df2131b180c1cda467df0
+    hero.title: 36cbbf8e5c66163d3c75ed35d8768c65
+    hero.subtitle: 9071cfa3ceacacc2cc0f6464b8d5036a
+    card1.title: 542b40aaa57fb03badd0ff4e167edf61
+    card1.desc: ac3ccb3deae7da788b876b3d1ee44863
+    card2.title: aa295e99527fc76472783149ef75d1d5
+    card2.desc: 967d55a18106f0a306af6170f110db3e
+    card3.title: d3794164ebbcf64128099e605ac9d291
+    card3.desc: 208237ce17aa07a45aa1b75f20dc39a3
+    about.title: 944521eeeed2511833d2299931273c71
+    about.desc: 5020c7eb984b33e3fcb0a25c1d6115a5
+    pricing.title: ce27f1aeacccc542a174c4b2bce022b0
+    pricing.starter: d57ceb9ca36fb941537a29beddee5026
+    pricing.starterDesc: 6df3846e2ef1ede03f1964fce494d5ef
+    pricing.free: 0326365539c004f6088656f692602078
+    pricing.pro: 682b3c9feab30112b4454cb5bb7974b1
+    pricing.proDesc: 4c1c57a86c61efcc4bb8a408d64438ac
+    pricing.proPrice: 4f79951c84f97c4c40d2db20d8aa431c
+    pricing.team: c621ea9404a37af289def443b309bf1b
+    pricing.teamDesc: 8323555c749c50a0d905c84e8de4d282
+    pricing.teamPrice: 2551600cc742f44fb0680d6b99911806

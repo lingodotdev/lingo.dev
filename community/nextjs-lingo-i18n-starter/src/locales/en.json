@@ -1,0 +1,33 @@
+{
+  "nav.about": "About",
+  "nav.pricing": "Pricing",
+
+  "hero.kicker": "Next.js + Lingo.dev",
+  "hero.title": "Build multilingual apps faster.",
+  "hero.subtitle": "This starter demonstrates how to structure language routes using the App Router and how Lingo.dev can help generate translations for UI content.",
+
+  "card1.title": "Language Routing",
+  "card1.desc": "Pages are available under /en, /hi, /es and more.",
+
+  "card2.title": "Lingo.dev Compiler",
+  "card2.desc": "Add Lingo.dev compiler to build pipeline for translation workflows.",
+
+  "card3.title": "Community Ready",
+  "card3.desc": "Minimal, easy setup + clean README for community submissions.",
+
+  "about.title": "About",
+  "about.desc": "This project demonstrates language routing in Next.js and automatic translation using Lingo.dev.",
+
+  "pricing.title": "Pricing",
+  "pricing.starter": "Starter",
+  "pricing.starterDesc": "For small demos and prototypes.",
+  "pricing.free": "Free",
+
+  "pricing.pro": "Pro",
+  "pricing.proDesc": "For production apps.",
+  "pricing.proPrice": "$19/mo",
+
+  "pricing.team": "Team",
+  "pricing.teamDesc": "For teams and workflows.",
+  "pricing.teamPrice": "$49/mo"
+}
