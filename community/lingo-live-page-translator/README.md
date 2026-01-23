@@ -34,7 +34,6 @@ This extension allows you to:
 - Google Chrome (Manifest V3 supported)
 - Node.js (v18+ recommended)
 - A Lingo.dev API key  
-  Get it from: https://lingo.dev
 
 ---
 
@@ -52,7 +51,7 @@ src/background.js
 
 Find:
 
-const LINGO_API_KEY = "YOUR_LINGO_API_KEY";
+const LINGO_API_KEY = "YOUR_LINGO_API_KEY";  #Replace your api key with this
 
 
 Replace it with your real key:
