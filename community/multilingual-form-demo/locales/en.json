@@ -1,0 +1,29 @@
+{
+  "title": "Support Form",
+  "fields": {
+    "name": {
+      "label": "Full Name",
+      "placeholder": "Enter your full name",
+      "requiredMessage": "Name is required"
+    },
+    "email": {
+      "label": "Email Address",
+      "placeholder": "Enter your email",
+      "requiredMessage": "Email is required"
+    },
+    "issueType": {
+      "label": "Issue Type",
+      "options": {
+        "billing": "Billing Issue",
+        "technical": "Technical Problem",
+        "general": "General Question"
+      }
+    },
+    "message": {
+      "label": "Message",
+      "placeholder": "Describe your issue",
+      "requiredMessage": "Message cannot be empty"
+    }
+  },
+  "submit": "Submit Request"
+}

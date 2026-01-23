@@ -1,0 +1,29 @@
+{
+  "title": "Formulario de soporte",
+  "fields": {
+    "name": {
+      "label": "Nombre completo",
+      "placeholder": "Introduce tu nombre completo",
+      "requiredMessage": "El nombre es obligatorio"
+    },
+    "email": {
+      "label": "Dirección de correo electrónico",
+      "placeholder": "Introduce tu correo electrónico",
+      "requiredMessage": "El correo electrónico es obligatorio"
+    },
+    "issueType": {
+      "label": "Tipo de problema",
+      "options": {
+        "billing": "Problema de facturación",
+        "technical": "Problema técnico",
+        "general": "Pregunta general"
+      }
+    },
+    "message": {
+      "label": "Mensaje",
+      "placeholder": "Describe tu problema",
+      "requiredMessage": "El mensaje no puede estar vacío"
+    }
+  },
+  "submit": "Enviar solicitud"
+}

@@ -1,0 +1,29 @@
+{
+  "title": "Support-Formular",
+  "fields": {
+    "name": {
+      "label": "Vollständiger Name",
+      "placeholder": "Geben Sie Ihren vollständigen Namen ein",
+      "requiredMessage": "Name ist erforderlich"
+    },
+    "email": {
+      "label": "E-Mail-Adresse",
+      "placeholder": "Geben Sie Ihre E-Mail-Adresse ein",
+      "requiredMessage": "E-Mail-Adresse ist erforderlich"
+    },
+    "issueType": {
+      "label": "Art des Problems",
+      "options": {
+        "billing": "Abrechnungsproblem",
+        "technical": "Technisches Problem",
+        "general": "Allgemeine Frage"
+      }
+    },
+    "message": {
+      "label": "Nachricht",
+      "placeholder": "Beschreiben Sie Ihr Problem",
+      "requiredMessage": "Nachricht darf nicht leer sein"
+    }
+  },
+  "submit": "Anfrage absenden"
+}
