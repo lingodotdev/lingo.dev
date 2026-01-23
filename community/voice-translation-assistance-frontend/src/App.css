@@ -1,0 +1,59 @@
+body {
+  font-family: Arial, sans-serif;
+  padding: 2rem;
+  background: #fafafa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+}
+
+.app {
+  max-width: 100%;
+  margin: auto;
+  text-align: center;
+  display: flex;
+  gap:5rem;
+  flex-direction: column;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 5px 2px 5px 2px;
+}
+
+
+.container {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px #0002;
+}
+
+.controls {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.record-btn {
+  background: red;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+}
+
+button,
+select {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+}
+
+.output {
+  text-align: left;
+  margin-top: 1rem;
+}
+
+.stop {
+  background: #444;
+  color: white;
+}
