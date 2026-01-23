@@ -1,0 +1,117 @@
+{
+  "Form": {
+    "title": "뉴스레터 구독",
+    "description": "최신 소식과 혜택을 받아보세요",
+    "validation": {
+      "demo": "폼 데모"
+    },
+    "fields": {
+      "name": {
+        "label": "이름",
+        "placeholder": "이름을 입력하세요",
+        "length": "2-50자"
+      },
+      "email": {
+        "label": "이메일 주소",
+        "placeholder": "your.email@example.com"
+      },
+      "phone": {
+        "label": "전화번호",
+        "placeholder": "(123) 456-7890",
+        "optional": "선택사항"
+      }
+    },
+    "preferences": {
+      "title": "이메일 설정",
+      "weekly": "주간 뉴스레터",
+      "weeklyDesc": "주간 업데이트 받기",
+      "promotions": "특별 프로모션",
+      "updates": "제품 업데이트",
+      "frequency": "빈도",
+      "daily": "매일",
+      "weeklyFrequency": "매주",
+      "monthly": "매월"
+    },
+    "privacy": "<terms>서비스 약관</terms> 및 <privacy>개인정보 처리방침</privacy>에 동의합니다",
+    "submit": "지금 구독하기",
+    "submitting": "제출 중...",
+    "security": "귀하의 정보는 안전하게 보호되며 공유되지 않습니다",
+    "success": {
+      "title": "감사합니다!",
+      "message": "뉴스레터 구독이 완료되었습니다. 커뮤니티에 오신 것을 환영합니다!",
+      "cta": "다른 이메일 구독하기",
+      "home": "홈으로 돌아가기"
+    },
+    "stats": {
+      "errors": "오류",
+      "dirty": "수정됨",
+      "valid": "유효함"
+    }
+  },
+  "Validation": {
+    "name": {
+      "required": "이름을 입력해주세요",
+      "minLength": "이름은 최소 2자 이상이어야 합니다",
+      "maxLength": "이름은 50자를 초과할 수 없습니다"
+    },
+    "email": {
+      "required": "이메일을 입력해주세요",
+      "invalid": "유효한 이메일 주소를 입력해주세요"
+    },
+    "phone": {
+      "invalid": "유효한 전화번호를 입력해주세요 (10-15자리)"
+    },
+    "privacy": {
+      "required": "약관 및 개인정보 처리방침에 동의해야 합니다"
+    }
+  },
+  "LocaleSwitcher": {
+    "label": "언어",
+    "search": "언어 검색...",
+    "close": "닫기",
+    "count": "{total}개 언어 중 {count}개 표시",
+    "noResults": "언어를 찾을 수 없습니다",
+    "tryDifferent": "다른 검색어를 시도해보세요",
+    "selectLanguage": "언어 선택",
+    "currentLanguage": "현재 언어",
+    "switchingInfo": "선택한 언어로 페이지가 새로고침됩니다",
+    "shortcut": "언어 전환기를 열려면",
+    "languages": {
+      "en": "영어",
+      "es": "스페인어",
+      "fr": "프랑스어",
+      "de": "독일어",
+      "ja": "일본어",
+      "zh": "중국어",
+      "ko": "한국어",
+      "ar": "아랍어"
+    }
+  },
+  "Home": {
+    "title": "다국어 폼 데모",
+    "subtitle": "Next.js, next-intl, React Hook Form으로 제작",
+    "features": {
+      "title": "기능",
+      "feature1": "next-intl을 사용한 완전한 국제화 지원",
+      "feature2": "Zod 및 React Hook Form을 사용한 폼 유효성 검사",
+      "feature3": "현지화된 오류 메시지와 함께 실시간 유효성 검사",
+      "feature4": "다크 모드를 지원하는 반응형 디자인"
+    },
+    "validation": {
+      "demo": "유효성 검사 데모",
+      "name": {
+        "required": "이름 유효성 검사 (2-50자)"
+      },
+      "email": {
+        "format": "이메일 형식 유효성 검사"
+      },
+      "phone": {
+        "format": "전화번호 형식 유효성 검사 (선택사항)"
+      },
+      "privacy": {
+        "required": "개인정보 처리방침 동의 필수"
+      }
+    },
+    "footer": "© 2026 Multilingual Form Demo. Next.js로 ❤️를 담아 제작"
+  }
+}

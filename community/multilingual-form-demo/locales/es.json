@@ -1,0 +1,117 @@
+{
+  "Form": {
+    "title": "Suscripción al boletín",
+    "description": "Mantente actualizado con nuestras últimas noticias y ofertas",
+    "validation": {
+      "demo": "Demostración del formulario"
+    },
+    "fields": {
+      "name": {
+        "label": "Nombre completo",
+        "placeholder": "Introduce tu nombre completo",
+        "length": "2-50 caracteres"
+      },
+      "email": {
+        "label": "Dirección de correo electrónico",
+        "placeholder": "tu.correo@ejemplo.com"
+      },
+      "phone": {
+        "label": "Número de teléfono",
+        "placeholder": "(123) 456-7890",
+        "optional": "Opcional"
+      }
+    },
+    "preferences": {
+      "title": "Preferencias de correo electrónico",
+      "weekly": "Boletín semanal",
+      "weeklyDesc": "Recibe actualizaciones semanales",
+      "promotions": "Promociones especiales",
+      "updates": "Actualizaciones de productos",
+      "frequency": "Frecuencia",
+      "daily": "Diaria",
+      "weeklyFrequency": "Semanal",
+      "monthly": "Mensual"
+    },
+    "privacy": "Acepto los <terms>Términos de servicio</terms> y la <privacy>Política de privacidad</privacy>",
+    "submit": "Suscribirse ahora",
+    "submitting": "Enviando...",
+    "security": "Tu información está segura y no será compartida",
+    "success": {
+      "title": "¡Gracias!",
+      "message": "Te has suscrito exitosamente a nuestro boletín. ¡Bienvenido a nuestra comunidad!",
+      "cta": "Suscribir otro correo electrónico",
+      "home": "Volver al inicio"
+    },
+    "stats": {
+      "errors": "Errores",
+      "dirty": "Editado",
+      "valid": "Válido"
+    }
+  },
+  "Validation": {
+    "name": {
+      "required": "El nombre es obligatorio",
+      "minLength": "El nombre debe tener al menos 2 caracteres",
+      "maxLength": "El nombre no puede superar los 50 caracteres"
+    },
+    "email": {
+      "required": "El correo electrónico es obligatorio",
+      "invalid": "Por favor, introduce una dirección de correo electrónico válida"
+    },
+    "phone": {
+      "invalid": "Por favor, introduce un número de teléfono válido (10-15 dígitos)"
+    },
+    "privacy": {
+      "required": "Debes aceptar los términos y la política de privacidad"
+    }
+  },
+  "LocaleSwitcher": {
+    "label": "Idioma",
+    "search": "Buscar idiomas...",
+    "close": "Cerrar",
+    "count": "Mostrando {count} de {total} idiomas",
+    "noResults": "No se encontraron idiomas",
+    "tryDifferent": "Prueba con un término de búsqueda diferente",
+    "selectLanguage": "Seleccionar idioma",
+    "currentLanguage": "Idioma actual",
+    "switchingInfo": "La página se recargará con el idioma seleccionado",
+    "shortcut": "para activar el selector de idioma",
+    "languages": {
+      "en": "Inglés",
+      "es": "Español",
+      "fr": "Francés",
+      "de": "Alemán",
+      "ja": "Japonés",
+      "zh": "Chino",
+      "ko": "Coreano",
+      "ar": "Árabe"
+    }
+  },
+  "Home": {
+    "title": "Demo de formulario multilingüe",
+    "subtitle": "Creado con Next.js, next-intl y React Hook Form",
+    "features": {
+      "title": "Características",
+      "feature1": "Soporte completo de internacionalización con next-intl",
+      "feature2": "Validación de formularios con Zod y React Hook Form",
+      "feature3": "Validación en tiempo real con mensajes de error localizados",
+      "feature4": "Diseño responsivo con soporte de modo oscuro"
+    },
+    "validation": {
+      "demo": "Demo de validación",
+      "name": {
+        "required": "Validación de nombre (2-50 caracteres)"
+      },
+      "email": {
+        "format": "Validación de formato de correo electrónico"
+      },
+      "phone": {
+        "format": "Validación de formato de número de teléfono (opcional)"
+      },
+      "privacy": {
+        "required": "Se requiere aceptación de la política de privacidad"
+      }
+    },
+    "footer": "© 2026 Demo de formulario multilingüe. Creado con ❤️ usando Next.js"
+  }
+}

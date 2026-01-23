@@ -1,0 +1,117 @@
+{
+  "Form": {
+    "title": "ニュースレター登録",
+    "description": "最新のニュースとオファーをお届けします",
+    "validation": {
+      "demo": "フォームデモ"
+    },
+    "fields": {
+      "name": {
+        "label": "氏名",
+        "placeholder": "氏名を入力してください",
+        "length": "2〜50文字"
+      },
+      "email": {
+        "label": "メールアドレス",
+        "placeholder": "your.email@example.com"
+      },
+      "phone": {
+        "label": "電話番号",
+        "placeholder": "(123) 456-7890",
+        "optional": "任意"
+      }
+    },
+    "preferences": {
+      "title": "メール設定",
+      "weekly": "週刊ニュースレター",
+      "weeklyDesc": "週次の更新情報を受け取る",
+      "promotions": "特別プロモーション",
+      "updates": "製品アップデート",
+      "frequency": "配信頻度",
+      "daily": "毎日",
+      "weeklyFrequency": "毎週",
+      "monthly": "毎月"
+    },
+    "privacy": "<terms>利用規約</terms>と<privacy>プライバシーポリシー</privacy>に同意します",
+    "submit": "今すぐ登録",
+    "submitting": "送信中...",
+    "security": "お客様の情報は安全に保護され、第三者と共有されることはありません",
+    "success": {
+      "title": "ありがとうございます！",
+      "message": "ニュースレターの購読が完了しました。コミュニティへようこそ！",
+      "cta": "別のメールアドレスを登録",
+      "home": "ホームに戻る"
+    },
+    "stats": {
+      "errors": "エラー",
+      "dirty": "編集済み",
+      "valid": "有効"
+    }
+  },
+  "Validation": {
+    "name": {
+      "required": "名前は必須です",
+      "minLength": "名前は2文字以上で入力してください",
+      "maxLength": "名前は50文字以内で入力してください"
+    },
+    "email": {
+      "required": "メールアドレスは必須です",
+      "invalid": "有効なメールアドレスを入力してください"
+    },
+    "phone": {
+      "invalid": "有効な電話番号を入力してください（10〜15桁）"
+    },
+    "privacy": {
+      "required": "利用規約とプライバシーポリシーに同意する必要があります"
+    }
+  },
+  "LocaleSwitcher": {
+    "label": "言語",
+    "search": "言語を検索...",
+    "close": "閉じる",
+    "count": "{total}言語中{count}言語を表示",
+    "noResults": "言語が見つかりません",
+    "tryDifferent": "別の検索キーワードをお試しください",
+    "selectLanguage": "言語を選択",
+    "currentLanguage": "現在の言語",
+    "switchingInfo": "選択した言語でページが再読み込みされます",
+    "shortcut": "言語切り替えを開く",
+    "languages": {
+      "en": "英語",
+      "es": "スペイン語",
+      "fr": "フランス語",
+      "de": "ドイツ語",
+      "ja": "日本語",
+      "zh": "中国語",
+      "ko": "韓国語",
+      "ar": "アラビア語"
+    }
+  },
+  "Home": {
+    "title": "多言語フォームデモ",
+    "subtitle": "Next.js、next-intl、React Hook Formで構築",
+    "features": {
+      "title": "機能",
+      "feature1": "next-intlによる完全な国際化対応",
+      "feature2": "ZodとReact Hook Formによるフォーム検証",
+      "feature3": "ローカライズされたエラーメッセージによるリアルタイム検証",
+      "feature4": "ダークモード対応のレスポンシブデザイン"
+    },
+    "validation": {
+      "demo": "検証デモ",
+      "name": {
+        "required": "名前の検証（2〜50文字）"
+      },
+      "email": {
+        "format": "メールアドレス形式の検証"
+      },
+      "phone": {
+        "format": "電話番号形式の検証（任意）"
+      },
+      "privacy": {
+        "required": "プライバシーポリシーへの同意が必要"
+      }
+    },
+    "footer": "© 2026 多言語フォームデモ。Next.jsで❤️を込めて構築"
+  }
+}
