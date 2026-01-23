@@ -1,0 +1,54 @@
+{
+  "hero": {
+    "title": "GourmetGlobe : Le réseau culinaire propulsé par l'IA",
+    "subtitle": "Découvrez des recettes authentiques du monde entier, parfaitement traduites dans votre langue grâce à Lingo.dev.",
+    "cta": "Explorer les recettes"
+  },
+  "sections": {
+    "trending": "Saveurs mondiales tendance",
+    "categories": "Parcourir par catégorie",
+    "how_it_works": "Propulsé par Lingo.dev AI",
+    "how_it_works_desc": "GourmetGlobe utilise Lingo.dev pour traduire en temps réel la terminologie culinaire complexe, le contexte culturel et les instructions."
+  },
+  "recipes": {
+    "pasta": {
+      "title": "Pâtes italiennes classiques",
+      "description": "Tagliatelles artisanales avec une riche sauce bolognaise mijotée et des herbes fraîches.",
+      "prep_time": "15 min",
+      "cook_time": "45 min",
+      "difficulty": "Moyen"
+    },
+    "biryani": {
+      "title": "Biryani au poulet authentique",
+      "description": "Riz basmati parfumé superposé à du poulet succulent et à un mélange aromatique d'épices indiennes.",
+      "prep_time": "30 min",
+      "cook_time": "1 heure",
+      "difficulty": "Difficile"
+    },
+    "sushi": {
+      "title": "Plateau de sushis premium",
+      "description": "Une sélection de Nigiri et de Maki frais préparés avec le meilleur saumon de l'Atlantique et thon rouge.",
+      "prep_time": "45 min",
+      "cook_time": "0 min",
+      "difficulty": "Expert"
+    },
+    "pastry": {
+      "title": "Pâtisserie française artisanale",
+      "description": "Croissants au beurre feuilletés et macarons délicats du cœur de Paris.",
+      "prep_time": "1 heure",
+      "cook_time": "30 min",
+      "difficulty": "Difficile"
+    }
+  },
+  "features": {
+    "ai_localized": "Localisé par l'IA",
+    "realtime_translation": "Traduction en temps réel pour les gourmets du monde entier.",
+    "view_recipe": "Voir la recette complète",
+    "ingredients": "Ingrédients",
+    "instructions": "Instructions"
+  },
+  "footer": {
+    "rights": "© 2026 GourmetGlobe. Construit avec Lingo.dev",
+    "mission": "Relier les cultures par le langage de la nourriture."
+  }
+}

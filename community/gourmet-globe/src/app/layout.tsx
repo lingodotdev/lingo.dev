@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "GourmetGlobe - AI-Powered Multi-lingual Recipes",
-  description: "Explore world-class recipes in your native language with GourmetGlobe.",
+  description: "Explore world-class recipes in your native language with GourmetGlobe. Powered by Lingo.dev.",
 };
 
 export default function RootLayout({
@@ -26,14 +26,16 @@ export default function RootLayout({
 }>) {
   return (
     <LingoProvider loadDictionary={(locale) => loadDictionary(locale)}>
-      <html>
+      <html lang="en" suppressHydrationWarning>
         <body
-          className={`${geistSans.variable} ${geistMono.variable} font-[family-name:var(--font-geist-sans)] antialiased`}
+          className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased bg-white dark:bg-black text-zinc-900 dark:text-zinc-100 transition-colors duration-300`}
         >
-          <div className="flex flex-col gap-8 items-center min-h-screen py-8 px-4 max-w-5xl mx-auto">
-            {children}
+          <div className="relative min-h-screen">
+            <main className="pb-24">
+              {children}
+            </main>
+            <AppLocaleSwitcher />
           </div>
-          <AppLocaleSwitcher />
         </body>
       </html>
     </LingoProvider>

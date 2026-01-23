@@ -1,13 +1,18 @@
 interface SectionProps {
   children: React.ReactNode;
   title?: React.ReactNode;
+  className?: string;
 }
 
-export default function Section({ children, title }: SectionProps) {
+export default function Section({ children, title, className = "" }: SectionProps) {
   return (
-    <div className="flex flex-col gap-4 bg-white px-4 py-4 rounded-lg border border-gray-200 w-full">
-      {title && <h2 className="text-xl font-bold text-gray-400">{title}</h2>}
+    <section className={`rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 p-8 shadow-sm ${className}`}>
+      {title && (
+        <h2 className="text-2xl font-bold mb-6 tracking-tight text-zinc-900 dark:text-zinc-100 border-l-4 border-orange-500 pl-4">
+          {title}
+        </h2>
+      )}
       {children}
-    </div>
+    </section>
   );
 }

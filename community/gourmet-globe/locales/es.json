@@ -1,0 +1,54 @@
+{
+  "hero": {
+    "title": "GourmetGlobe: La red de comida impulsada por IA",
+    "subtitle": "Descubre recetas auténticas de todo el mundo, traducidas perfectamente a tu idioma con Lingo.dev.",
+    "cta": "Explorar recetas"
+  },
+  "sections": {
+    "trending": "Sabores globales de tendencia",
+    "categories": "Explorar por categoría",
+    "how_it_works": "Impulsado por Lingo.dev AI",
+    "how_it_works_desc": "GourmetGlobe utiliza Lingo.dev para traducir en tiempo real terminología culinaria compleja, contexto cultural e instrucciones."
+  },
+  "recipes": {
+    "pasta": {
+      "title": "Pasta italiana clásica",
+      "description": "Tagliatelle artesanal con una rica salsa boloñesa de cocción lenta y hierbas frescas.",
+      "prep_time": "15 min",
+      "cook_time": "45 min",
+      "difficulty": "Medio"
+    },
+    "biryani": {
+      "title": "Auténtico Biryani de pollo",
+      "description": "Arroz basmati fragante con capas de pollo suculento y una mezcla aromática de especias indias.",
+      "prep_time": "30 min",
+      "cook_time": "1 hora",
+      "difficulty": "Difícil"
+    },
+    "sushi": {
+      "title": "Plato de sushi premium",
+      "description": "Una selección de Nigiri y Maki frescos elaborados con el mejor salmón del Atlántico y atún de aleta azul.",
+      "prep_time": "45 min",
+      "cook_time": "0 min",
+      "difficulty": "Experto"
+    },
+    "pastry": {
+      "title": "Pastelería francesa artesanal",
+      "description": "Croissants de mantequilla hojaldrados y delicados macarons del corazón de París.",
+      "prep_time": "1 hora",
+      "cook_time": "30 min",
+      "difficulty": "Difícil"
+    }
+  },
+  "features": {
+    "ai_localized": "Localizado por IA",
+    "realtime_translation": "Traducción en tiempo real para sibaritas globales.",
+    "view_recipe": "Ver receta completa",
+    "ingredients": "Ingredientes",
+    "instructions": "Instrucciones"
+  },
+  "footer": {
+    "rights": "© 2026 GourmetGlobe. Construido con Lingo.dev",
+    "mission": "Uniendo culturas a través del lenguaje de la comida."
+  }
+}

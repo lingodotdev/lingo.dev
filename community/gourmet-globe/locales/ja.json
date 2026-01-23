@@ -1,0 +1,54 @@
+{
+  "hero": {
+    "title": "GourmetGlobe: AI駆動のフードネットワーク",
+    "subtitle": "世界中の本物のレシピを、Lingo.devを使用してあなたの言語で完璧に翻訳して発見しましょう。",
+    "cta": "レシピを探索する"
+  },
+  "sections": {
+    "trending": "世界のトレンドフレーバー",
+    "categories": "カテゴリー別に探す",
+    "how_it_works": "Lingo.dev AI搭載",
+    "how_it_works_desc": "GourmetGlobeは、複雑な料理用語、文化的背景、手順をリアルタイムで翻訳するためにLingo.devを使用しています。"
+  },
+  "recipes": {
+    "pasta": {
+      "title": "クラシックイタリアンパスタ",
+      "description": "職人手作りのタリアテッレに、じっくり煮込んだボロネーゼソースとフレッシュハーブを添えて。",
+      "prep_time": "15分",
+      "cook_time": "45分",
+      "difficulty": "普通"
+    },
+    "biryani": {
+      "title": "本格チキンビリヤニ",
+      "description": "香り豊かなバスマティライスに、ジューシーなチキンと厳選されたインドのスパイスを重ねて。",
+      "prep_time": "30分",
+      "cook_time": "1時間",
+      "difficulty": "難しい"
+    },
+    "sushi": {
+      "title": "プレミアム寿司盛り合わせ",
+      "description": "最高級のアトランティックサーモンと本マグロを使用した握りと巻き寿司のセレクション。",
+      "prep_time": "45分",
+      "cook_time": "0分",
+      "difficulty": "上級"
+    },
+    "pastry": {
+      "title": "職人によるフランス菓子",
+      "description": "パリの中心地から届いた、バターたっぷりのクロワッサンと繊細なマカロン。",
+      "prep_time": "1時間",
+      "cook_time": "30分",
+      "difficulty": "難しい"
+    }
+  },
+  "features": {
+    "ai_localized": "AIによる現地語化",
+    "realtime_translation": "世界の食通のためのリアルタイム翻訳。",
+    "view_recipe": "レシピの詳細を見る",
+    "ingredients": "材料",
+    "instructions": "作り方"
+  },
+  "footer": {
+    "rights": "© 2026 GourmetGlobe. Lingo.dev で構築",
+    "mission": "食の言語を通じて文化を繋ぐ。"
+  }
+}

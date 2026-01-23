@@ -6,31 +6,49 @@
   },
   "sections": {
     "trending": "Trending Global Flavors",
-    "categories": "Browse by Category"
+    "categories": "Browse by Category",
+    "how_it_works": "Powered by Lingo.dev AI",
+    "how_it_works_desc": "GourmetGlobe uses Lingo.dev to translate complex culinary terminology, cultural context, and instructions in real-time."
   },
   "recipes": {
     "pasta": {
       "title": "Classic Italian Pasta",
-      "description": "Handcrafted tagliatelle with a rich, slow-cooked Bolognese sauce and fresh herbs."
+      "description": "Handcrafted tagliatelle with a rich, slow-cooked Bolognese sauce and fresh herbs.",
+      "prep_time": "15 mins",
+      "cook_time": "45 mins",
+      "difficulty": "Medium"
     },
     "biryani": {
       "title": "Authentic Chicken Biryani",
-      "description": "Fragrant basmati rice layered with succulent chicken and aromatic blend of Indian spices."
+      "description": "Fragrant basmati rice layered with succulent chicken and aromatic blend of Indian spices.",
+      "prep_time": "30 mins",
+      "cook_time": "1 hour",
+      "difficulty": "Hard"
     },
     "sushi": {
       "title": "Premium Sushi Platter",
-      "description": "A selection of fresh Nigiri and Maki rolls made with the finest Atlantic salmon and Bluefin tuna."
+      "description": "A selection of fresh Nigiri and Maki rolls made with the finest Atlantic salmon and Bluefin tuna.",
+      "prep_time": "45 mins",
+      "cook_time": "0 mins",
+      "difficulty": "Expert"
     },
     "pastry": {
       "title": "Artisan French Pastry",
-      "description": "Flaky buttery croissants and delicate macarons from the heart of Paris."
+      "description": "Flaky buttery croissants and delicate macarons from the heart of Paris.",
+      "prep_time": "1 hour",
+      "cook_time": "30 mins",
+      "difficulty": "Hard"
     }
   },
   "features": {
     "ai_localized": "Localized by AI",
-    "realtime_translation": "Real-time translation for global foodies."
+    "realtime_translation": "Real-time translation for global foodies.",
+    "view_recipe": "View Full Recipe",
+    "ingredients": "Ingredients",
+    "instructions": "Instructions"
   },
   "footer": {
-    "rights": "© 2026 GourmetGlobe. Built with Lingo.dev"
+    "rights": "© 2026 GourmetGlobe. Built with Lingo.dev",
+    "mission": "Bridging cultures through the language of food."
   }
 }
