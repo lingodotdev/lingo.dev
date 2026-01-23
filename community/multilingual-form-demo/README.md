@@ -1,36 +1,130 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Multilingual Form Demo
+
+A Next.js demo showcasing internationalized forms with [next-intl](https://next-intl-docs.vercel.app/) and [Lingo.dev](https://lingo.dev) for AI-powered translations.
+
+## How It Works
+
+This project demonstrates a multilingual newsletter signup form with:
+
+- **Internationalization (i18n)** - Uses `next-intl` for locale routing and translations
+- **Translations** - Uses Lingo.dev CLI to automatically translate content to multiple languages
+- **Language Switcher** - Keyboard-accessible dropdown with flags (press `⌘L` / `Ctrl+L` to toggle)
+- **Form Validation** - Translated error messages using `react-hook-form` + `zod`
+
+### Project Structure
+
+```
+├── locales/              # Translation JSON files (en.json, es.json, fr.json, etc.)
+├── i18n/
+│   ├── routing.ts        # Locale routing configuration
+│   └── request.ts        # Server-side i18n setup
+├── i18n.json             # Lingo.dev configuration
+└── app/
+    └── components/
+        └── LanguageSwitcher/
+            └── types.ts  # Supported locales with flags
+```
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18+
+- pnpm (recommended) or npm
+
+### Installation
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Install dependencies
+pnpm install
+
+# Copy environment file (if needed)
+cp .example.env .env
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Run Locally
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Open [http://localhost:3000](http://localhost:3000) - you'll be redirected to `/en` (default locale).
 
-## Learn More
+## Adding More Languages
 
-To learn more about Next.js, take a look at the following resources:
+Adding a new language requires 3 steps:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 1. Update `i18n.json`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Add your language code to the targets array:
 
-## Deploy on Vercel
+```json
+{
+  "locale": {
+    "source": "en",
+    "targets": ["es", "fr", "de", "ja", "zh", "ko", "ar", "pt"] // Added "pt" for Portuguese
+  }
+}
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 2. Generate Translations
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Run the Lingo.dev CLI to auto-translate:
+
+```bash
+npx lingo.dev@latest run
+```
+
+This creates `locales/pt.json` with AI-translated content from `locales/en.json`.
+
+### 3. Update Routing & UI
+
+**a) Add to `i18n/routing.ts`:**
+
+```typescript
+export const routing = defineRouting({
+  locales: ["en", "es", "fr", "de", "pt"], // Add new locale do add them in option dropdown also
+  defaultLocale: "en",
+  localePrefix: "always",
+});
+```
+
+**b) Add to `app/components/LanguageSwitcher/types.ts`:**
+
+```typescript
+export const locales: LocaleInfo[] = [
+  // ... existing locales
+  { code: "pt", name: "Português", flag: "🇧🇷" },
+];
+```
+
+### 4. Restart & Test
+
+```bash
+pnpm dev
+```
+
+Visit `http://localhost:3000/pt` to see your new language!
+
+## Keyboard Shortcuts
+
+| Shortcut        | Action                 |
+| --------------- | ---------------------- |
+| `⌘L` / `Ctrl+L` | Open language switcher |
+
+## Scripts
+
+```bash
+pnpm dev          # Start development server
+pnpm build        # Build for production
+pnpm start        # Start production server
+pnpm lint         # Run ESLint
+```
+
+## Tech Stack
+
+- [Next.js 16](https://nextjs.org/) - React framework
+- [next-intl](https://next-intl-docs.vercel.app/) - Internationalization
+- [Lingo.dev](https://lingo.dev) - AI-powered translations
+- [Tailwind CSS](https://tailwindcss.com/) - Styling
+- [React Hook Form](https://react-hook-form.com/) + [Zod](https://zod.dev/) - Form validation
