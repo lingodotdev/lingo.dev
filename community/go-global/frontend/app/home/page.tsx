@@ -19,10 +19,7 @@ import { CodeBlock } from "@/components/code-block"
 
 const LANGUAGES = [
     { label: "es", value: "es" },
-    { label: "es", value: "es1" },
-    { label: "es", value: "es2" },
-    { label: "es", value: "es43" },
-    { label: "es", value: "es3" },
+    { label: "fr", value: "fr" },
 ]
 
 export default function Home() {
@@ -45,16 +42,25 @@ export default function Home() {
             return
         }
 
+        const formData = new FormData()
+        formData.append("url", url)
+        formData.append("language", language)
+
         try {
-            await fetch("/api/submit-url", {
+            const result = await fetch("/api/submit-url", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ url, language }),
+                body: formData,
             })
+
+            const data = await result.json();
+            console.log(data.translated);
+            // console.log(data.language)
+            setHtml(data.translated);
 
             setStatus("URL sent successfully")
             resetState()
-        } catch {
+        } catch (error) {
+            console.log(error);
             setStatus("Failed to send URL")
         }
     }
