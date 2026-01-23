@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
-import { glob } from "glob";
+import * as pkg from "glob";
+const { glob } = pkg;
 import _ from "lodash";
 import { LocaleCode, resolveLocaleCode } from "@lingo.dev/_spec";
 
@@ -60,7 +61,7 @@ function findLocaleFilesWithExtension(ext: string) {
         try {
           resolveLocaleCode(locale as LocaleCode);
           return { locale, file };
-        } catch (e) {}
+        } catch (e) { }
       }
       return { file, locale: null };
     })
