@@ -1,0 +1,22 @@
+{
+  "LingoForge": "LingoForge",
+  "dashboard": {
+    "title": "LingoForgeツールキットへようこそ",
+    "description": "強力なAI駆動ツールを発見、使用、作成します。ツールキットを探索するか、AIに提案を依頼してください。"
+  },
+  "sidebar": {
+    "dashboard": "ダッシュボード",
+    "documentationGenerator": "ドキュメントジェネレーター",
+    "topicSummarizer": "トピックサマライザー",
+    "help": "ヘルプとサポート"
+  },
+  "search": {
+    "placeholder": "何がしたいか説明してください...",
+    "errorTitle": "エラー",
+    "suggestionsTitle": "推奨ツール",
+    "suggestionsDescription": "クエリに基づいて、これらのツールを確認することをお勧めします。"
+  },
+  "toolCard": {
+    "open": "ツールを開く"
+  }
+}

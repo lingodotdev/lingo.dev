@@ -1,0 +1,22 @@
+{
+  "LingoForge": "LingoForge",
+  "dashboard": {
+    "title": "Welcome to the LingoForge Toolkit",
+    "description": "Discover, use, and create powerful AI-driven tools. Start by exploring our toolkit or ask our AI for suggestions."
+  },
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "documentationGenerator": "Documentation Generator",
+    "topicSummarizer": "Topic Summarizer",
+    "help": "Help & Support"
+  },
+  "search": {
+    "placeholder": "Describe what you want to do...",
+    "errorTitle": "Error",
+    "suggestionsTitle": "Suggested Tools",
+    "suggestionsDescription": "Based on your query, we suggest looking at these tools:"
+  },
+  "toolCard": {
+    "open": "Open Tool"
+  }
+}

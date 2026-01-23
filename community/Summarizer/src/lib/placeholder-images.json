@@ -1,0 +1,16 @@
+{
+  "placeholderImages": [
+    {
+      "id": "documentation-generator",
+      "description": "A stylized image of code documentation being generated automatically.",
+      "imageUrl": "https://images.unsplash.com/photo-1570286424717-86d8a0082d0c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxkb2N1bWVudGF0aW9uJTIwY29kZXxlbnwwfHx8fDE3NjkxMDQwMzJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "documentation code"
+    },
+    {
+      "id": "topic-summarizer",
+      "description": "An abstract image representing the summarization of text.",
+      "imageUrl": "https://images.unsplash.com/photo-1683718522443-355f717f3b2a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxzdW1tYXJ5JTIwYWJzdHJhY3R8ZW58MHx8fHwxNzY5MTA0MDMyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "summary abstract"
+    }
+  ]
+}

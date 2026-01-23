@@ -1,0 +1,22 @@
+{
+  "LingoForge": "LingoForge",
+  "dashboard": {
+    "title": "Bienvenue dans la boîte à outils LingoForge",
+    "description": "Découvrez, utilisez et créez de puissants outils basés sur l'IA. Commencez par explorer notre boîte à outils ou demandez des suggestions à notre IA."
+  },
+  "sidebar": {
+    "dashboard": "Tableau de bord",
+    "documentationGenerator": "Générateur de documentation",
+    "topicSummarizer": "Résumeur de Sujet",
+    "help": "Aide et support"
+  },
+  "search": {
+    "placeholder": "Décrivez ce que vous voulez faire...",
+    "errorTitle": "Erreur",
+    "suggestionsTitle": "Outils suggérés",
+    "suggestionsDescription": "En fonction de votre requête, nous vous suggérons de consulter ces outils :"
+  },
+  "toolCard": {
+    "open": "Ouvrir l'outil"
+  }
+}

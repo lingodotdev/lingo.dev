@@ -1,0 +1,22 @@
+{
+  "LingoForge": "LingoForge",
+  "dashboard": {
+    "title": "Willkommen beim LingoForge-Toolkit",
+    "description": "Entdecken, verwenden und erstellen Sie leistungsstarke KI-gesteuerte Tools. Beginnen Sie mit der Erkundung unseres Toolkits oder fragen Sie unsere KI nach Vorschlägen."
+  },
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "documentationGenerator": "Dokumentationsgenerator",
+    "topicSummarizer": "Themen-Zusammenfasser",
+    "help": "Hilfe & Support"
+  },
+  "search": {
+    "placeholder": "Beschreiben Sie, was Sie tun möchten...",
+    "errorTitle": "Fehler",
+    "suggestionsTitle": "Vorgeschlagene Tools",
+    "suggestionsDescription": "Basierend auf Ihrer Anfrage empfehlen wir Ihnen, sich diese Tools anzusehen:"
+  },
+  "toolCard": {
+    "open": "Tool öffnen"
+  }
+}
