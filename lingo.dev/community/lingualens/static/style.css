@@ -1,0 +1,34 @@
+body {
+    background: #0b1220;
+    color: white;
+    font-family: Arial;
+}
+
+.container {
+    width: 500px;
+    margin: auto;
+    padding: 30px;
+}
+
+textarea {
+    width: 100%;
+    height: 100px;
+}
+
+select, button {
+    padding: 8px;
+    margin-top: 10px;
+}
+
+button {
+    background: #2563eb;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.output {
+    background: #111827;
+    margin-top: 20px;
+    padding: 15px;
+}
