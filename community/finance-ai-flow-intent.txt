@@ -1,0 +1,3 @@
+This project replaces the previous global-chat-demo as the primary contribution.
+It is a Finance Tracker that uses AI for categorization and Lingo.dev for instant localization,
+making personal finance accessible to a global audience.

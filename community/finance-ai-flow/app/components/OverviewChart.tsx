@@ -38,7 +38,7 @@ export function OverviewChart({ transactions, onAddTransaction }: OverviewChartP
 
     return (
         <div style={{ width: '100%', height: 300, position: 'relative' }}>
-            <ResponsiveContainer>
+            <ResponsiveContainer width="100%" height="100%" minWidth={0}>
                 <AreaChart
                     data={chartData}
                     margin={{
