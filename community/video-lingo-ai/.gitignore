@@ -27,3 +27,4 @@ dist-ssr
 .venv
 .venv-new
 __pycache__
+.vscode
