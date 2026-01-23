@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import NewsletterForm from "../components/NewsletterForm";
-import LanguageSwitcher from "../components/LanguageSwitcher";
+import LanguageSwitcher from "../components/languageSwitcher";
 
 export default async function HomePage({
   params,
