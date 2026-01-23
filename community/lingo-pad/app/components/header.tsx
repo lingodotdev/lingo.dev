@@ -19,7 +19,7 @@ export function Header() {
 
       <div className="flex items-center gap-1">
         <a
-          href="https://lingo.dev"
+          href="https://lingo.dev/en/sdk"
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center gap-1.5 text-xs font-medium text-gray-500 hover:text-white transition-colors px-3 py-2 rounded-lg hover:bg-gray-900/50"

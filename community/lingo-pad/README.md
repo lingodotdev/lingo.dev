@@ -2,7 +2,7 @@
 
 **Structure-Safe AI Translation for Developers**
 
-LingoPad is a developer-focused translation tool that preserves your data structure while translating content. Built with the [Lingo.dev SDK](https://lingo.dev), it intelligently handles JSON, HTML, and plain text — keeping keys, tags, and formatting intact.
+LingoPad is a developer-focused translation tool that preserves your data structure while translating content. Built with the [Lingo.dev SDK](https://lingo.dev/en/sdk), it intelligently handles JSON, HTML, and plain text — keeping keys, tags, and formatting intact.
 
 ![LingoPad Screenshot](./public/image.png)
 
@@ -26,7 +26,7 @@ LingoPad is a developer-focused translation tool that preserves your data struct
 
 ## 🛠️ Lingo.dev Highlights
 
-LingoPad serves as a practical implementation of the [Lingo.dev JavaScript SDK](https://lingo.dev/docs), highlighting several key features:
+LingoPad serves as a practical implementation of the [Lingo.dev JavaScript SDK](https://lingo.dev/en/sdk), highlighting several key features:
 
 - **Structural Preservation (`localizeObject`)**: Demonstrates how nested JSON objects can be translated without corrupting keys or layout.
 - **Markup Safety (`localizeHtml`)**: Showcases the ability to translate content within complex HTML without affecting tags or attributes.
@@ -73,7 +73,7 @@ Open [http://localhost:3000](http://localhost:3000) to use LingoPad.
 | [TypeScript](https://typescriptlang.org)                    | Type-safe development           |
 | [Tailwind CSS](https://tailwindcss.com)                     | Utility-first styling           |
 | [Monaco Editor](https://microsoft.github.io/monaco-editor/) | VS Code-like editor experience  |
-| [Lingo.dev SDK](https://lingo.dev)                          | AI-powered translation engine   |
+| [Lingo.dev SDK](https://lingo.dev/en/sdk)                   | AI-powered translation engine   |
 | [Lucide Icons](https://lucide.dev)                          | Beautiful icon library          |
 
 ---
@@ -164,7 +164,7 @@ This project is part of the [Lingo.dev](https://lingo.dev) ecosystem and is lice
 ## 🔗 Links
 
 - [Lingo.dev](https://lingo.dev) — AI Translation Platform
-- [Lingo.dev SDK Documentation](https://docs.lingo.dev)
+- [Lingo.dev SDK Documentation](https://lingo.dev/en/sdk)
 - [GitHub Repository](https://github.com/lingodotdev/lingo.dev)
 
 ---

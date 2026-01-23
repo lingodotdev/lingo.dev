@@ -259,7 +259,7 @@ export default function Home() {
               rel="noopener noreferrer"
               className="text-emerald-500/70 hover:text-emerald-400 transition-colors ml-1"
             >
-              Lingo.dev SDK
+              Lingo.dev
             </a>
           </div>
         </div>
