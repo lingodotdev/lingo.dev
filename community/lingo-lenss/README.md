@@ -81,5 +81,3 @@ Open the URL shown in the terminal: `(usually: http://localhost:5173)`
 4. **Translate** The **Lingo.dev SDK** analyzes the text content, infers the source language, and generates a context-aware translation.
 
 5. **Result** The original text and the translation appear instantly on the animated Glassmorphism interface.
-
-
