@@ -1,0 +1,17 @@
+{
+  "greeting": "Hello from Lingo.dev",
+  "meta": {
+    "title": "Lingo.dev - Ihinduranya ry'indimi rikoresheje ubwenge bwite bwa mudasobwa ku buhanga bwo ku rubuga na telefoni",
+    "description": "Ihinduranya ry'indimi ry'ikoranabuhanga rigezweho ku buhanga, mu buryo bwa CI/CD. Ohereza vuba, sohoramo kenshi, kandi ugire abakiriya benshi bashyura.",
+    "keywords": "",
+    "h1": "Ubaka. Emeza. Hindura."
+  },
+  "og": {
+    "title": "Lingo.dev - Ihinduranya ry'indimi rikoresheje ubwenge bwite bwa mudasobwa ku buhanga bwo ku rubuga na telefoni",
+    "description": "Ihinduranya ry'indimi ry'ikoranabuhanga rigezweho ku buhanga, mu buryo bwa CI/CD. Ohereza vuba, sohoramo kenshi, kandi ugire abakiriya benshi bashyura."
+  },
+  "twitter": {
+    "title": "Lingo.dev - Ihinduranya ry'indimi rikoresheje ubwenge bwite bwa mudasobwa ku buhanga bwo ku rubuga na telefoni",
+    "description": "Ihinduranya ry'indimi ry'ikoranabuhanga rigezweho ku buhanga, mu buryo bwa CI/CD. Ohereza vuba, sohoramo kenshi, kandi ugire abakiriya benshi bashyura."
+  }
+}

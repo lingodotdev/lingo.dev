@@ -1,0 +1,17 @@
+{
+  "greeting": "Lingo.dev에서 안녕하세요",
+  "meta": {
+    "title": "Lingo.dev - 웹 및 모바일 앱을 위한 자동화된 AI 현지화",
+    "description": "CI/CD에 바로 적용되는 최첨단 AI 앱 현지화. 더 빠른 배포, 더 자주 릴리스하고, 더 많은 유료 고객을 확보하세요.",
+    "keywords": "",
+    "h1": "빌드. 커밋. 번역."
+  },
+  "og": {
+    "title": "Lingo.dev - 웹 및 모바일 앱을 위한 자동화된 AI 현지화",
+    "description": "CI/CD에 바로 적용되는 최첨단 AI 앱 현지화. 더 빠른 배포, 더 자주 릴리스하고, 더 많은 유료 고객을 확보하세요."
+  },
+  "twitter": {
+    "title": "Lingo.dev - 웹 및 모바일 앱을 위한 자동화된 AI 현지화",
+    "description": "CI/CD에 바로 적용되는 최첨단 AI 앱 현지화. 더 빠른 배포, 더 자주 릴리스하고, 더 많은 유료 고객을 확보하세요."
+  }
+}

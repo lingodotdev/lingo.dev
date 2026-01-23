@@ -1,0 +1,17 @@
+{
+  "greeting": "Helo oddi wrth Lingo.dev",
+  "meta": {
+    "title": "Lingo.dev - Lleoleiddio AI awtomatig ar gyfer apiau gwe a symudol",
+    "description": "Lleoleiddio AI o'r radd flaenaf ar gyfer apiau, yn syth yn CI/CD. Lansiwch yn gyflymach, rhyddhewch yn amlach, a chael mwy o gwsmeriaid sy'n talu.",
+    "keywords": "",
+    "h1": "Adeiladu. Ymrwymo. Cyfieithu."
+  },
+  "og": {
+    "title": "Lingo.dev - Lleoleiddio AI awtomatig ar gyfer apiau gwe a symudol",
+    "description": "Lleoleiddio AI o'r radd flaenaf ar gyfer apiau, yn syth yn CI/CD. Lansiwch yn gyflymach, rhyddhewch yn amlach, a chael mwy o gwsmeriaid sy'n talu."
+  },
+  "twitter": {
+    "title": "Lingo.dev - Lleoleiddio AI awtomatig ar gyfer apiau gwe a symudol",
+    "description": "Lleoleiddio AI o'r radd flaenaf ar gyfer apiau, yn syth yn CI/CD. Lansiwch yn gyflymach, rhyddhewch yn amlach, a chael mwy o gwsmeriaid sy'n talu."
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "greeting": "Hello from Lingo.dev",
+  "meta": {
+    "title": "Lingo.dev - Automatizált AI lokalizáció web és mobil alkalmazásokhoz",
+    "description": "Csúcstechnológiás AI lokalizáció alkalmazásokhoz, közvetlenül a CI/CD folyamatban. Szállíts gyorsabban, adj ki gyakrabban frissítéseket, és szerezz több fizető ügyfelet.",
+    "keywords": "",
+    "h1": "Fejlessz. Commitolj. Fordíts."
+  },
+  "og": {
+    "title": "Lingo.dev - Automatizált AI lokalizáció web és mobil alkalmazásokhoz",
+    "description": "Csúcstechnológiás AI lokalizáció alkalmazásokhoz, közvetlenül a CI/CD folyamatban. Szállíts gyorsabban, adj ki gyakrabban frissítéseket, és szerezz több fizető ügyfelet."
+  },
+  "twitter": {
+    "title": "Lingo.dev - Automatizált AI lokalizáció web és mobil alkalmazásokhoz",
+    "description": "Csúcstechnológiás AI lokalizáció alkalmazásokhoz, közvetlenül a CI/CD folyamatban. Szállíts gyorsabban, adj ki gyakrabban frissítéseket, és szerezz több fizető ügyfelet."
+  }
+}

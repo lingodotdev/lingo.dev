@@ -1,0 +1,17 @@
+{
+  "greeting": "Halo dari Lingo.dev",
+  "meta": {
+    "title": "Lingo.dev - Lokalisasi AI otomatis untuk aplikasi web & mobile",
+    "description": "Lokalisasi AI mutakhir untuk aplikasi, langsung di CI/CD. Rilis lebih cepat, update lebih sering, dan dapatkan lebih banyak pelanggan berbayar.",
+    "keywords": "",
+    "h1": "Bangun. Commit. Terjemahkan."
+  },
+  "og": {
+    "title": "Lingo.dev - Lokalisasi AI otomatis untuk aplikasi web & mobile",
+    "description": "Lokalisasi AI mutakhir untuk aplikasi, langsung di CI/CD. Rilis lebih cepat, update lebih sering, dan dapatkan lebih banyak pelanggan berbayar."
+  },
+  "twitter": {
+    "title": "Lingo.dev - Lokalisasi AI otomatis untuk aplikasi web & mobile",
+    "description": "Lokalisasi AI mutakhir untuk aplikasi, langsung di CI/CD. Rilis lebih cepat, update lebih sering, dan dapatkan lebih banyak pelanggan berbayar."
+  }
+}

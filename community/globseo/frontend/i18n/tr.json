@@ -1,0 +1,17 @@
+{
+  "greeting": "Hello from Lingo.dev",
+  "meta": {
+    "title": "Örnek Alan Adı",
+    "description": "",
+    "keywords": "",
+    "h1": "Örnek Alan Adı"
+  },
+  "og": {
+    "title": "Örnek Alan Adı",
+    "description": ""
+  },
+  "twitter": {
+    "title": "Örnek Alan Adı",
+    "description": ""
+  }
+}

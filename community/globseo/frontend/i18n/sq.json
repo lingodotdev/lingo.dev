@@ -1,0 +1,17 @@
+{
+  "greeting": "Hello from Lingo.dev",
+  "meta": {
+    "title": "Lingo.dev - Lokalizim i automatizuar me AI për aplikacione web dhe mobile",
+    "description": "Lokalizim me AI i nivelit të lartë për aplikacione, direkt në CI/CD. Publikoni më shpejt, lëshoni versione më shpesh dhe keni më shumë klientë që paguajnë.",
+    "keywords": "",
+    "h1": "Ndërtoni. Commit-oni. Përktheni."
+  },
+  "og": {
+    "title": "Lingo.dev - Lokalizim i automatizuar me AI për aplikacione web dhe mobile",
+    "description": "Lokalizim me AI i nivelit të lartë për aplikacione, direkt në CI/CD. Publikoni më shpejt, lëshoni versione më shpesh dhe keni më shumë klientë që paguajnë."
+  },
+  "twitter": {
+    "title": "Lingo.dev - Lokalizim i automatizuar me AI për aplikacione web dhe mobile",
+    "description": "Lokalizim me AI i nivelit të lartë për aplikacione, direkt në CI/CD. Publikoni më shpejt, lëshoni versione më shpesh dhe keni më shumë klientë që paguajnë."
+  }
+}

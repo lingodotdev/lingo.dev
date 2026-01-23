@@ -1,0 +1,17 @@
+{
+  "greeting": "Sveiciens no Lingo.dev",
+  "meta": {
+    "title": "Lingo.dev - automatizēta AI lokalizācija tīmekļa un mobilajām lietotnēm",
+    "description": "Mūsdienīga AI lokalizācija lietotnēm, tieši CI/CD procesā. Izstrādājiet ātrāk, izlaidiet biežāk un iegūstiet vairāk maksājošu klientu.",
+    "keywords": "",
+    "h1": "Izstrādā. Komitē. Tulko."
+  },
+  "og": {
+    "title": "Lingo.dev - automatizēta AI lokalizācija tīmekļa un mobilajām lietotnēm",
+    "description": "Mūsdienīga AI lokalizācija lietotnēm, tieši CI/CD procesā. Izstrādājiet ātrāk, izlaidiet biežāk un iegūstiet vairāk maksājošu klientu."
+  },
+  "twitter": {
+    "title": "Lingo.dev - automatizēta AI lokalizācija tīmekļa un mobilajām lietotnēm",
+    "description": "Mūsdienīga AI lokalizācija lietotnēm, tieši CI/CD procesā. Izstrādājiet ātrāk, izlaidiet biežāk un iegūstiet vairāk maksājošu klientu."
+  }
+}

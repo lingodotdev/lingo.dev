@@ -1,0 +1,17 @@
+{
+  "greeting": "Hello from Lingo.dev",
+  "meta": {
+    "title": "Lingo.dev - Veb va mobil ilovalar uchun avtomatlashtirilgan AI lokalizatsiyasi",
+    "description": "Ilovalar uchun zamonaviy AI lokalizatsiyasi, toʻgʻridan-toʻgʻri CI/CD jarayonida. Tezroq yetkazib bering, ko‘proq yangilanishlarni chiqaring va ko‘proq to‘lovchi mijozlarga ega bo‘ling.",
+    "keywords": "",
+    "h1": "Quring. Majburiyat qiling. Tarjima qiling."
+  },
+  "og": {
+    "title": "Lingo.dev - Veb va mobil ilovalar uchun avtomatlashtirilgan AI lokalizatsiyasi",
+    "description": "Ilovalar uchun zamonaviy AI lokalizatsiyasi, toʻgʻridan-toʻgʻri CI/CD jarayonida. Tezroq yetkazib bering, ko‘proq yangilanishlarni chiqaring va ko‘proq to‘lovchi mijozlarga ega bo‘ling."
+  },
+  "twitter": {
+    "title": "Lingo.dev - Veb va mobil ilovalar uchun avtomatlashtirilgan AI lokalizatsiyasi",
+    "description": "Ilovalar uchun zamonaviy AI lokalizatsiyasi, toʻgʻridan-toʻgʻri CI/CD jarayonida. Tezroq yetkazib bering, ko‘proq yangilanishlarni chiqaring va ko‘proq to‘lovchi mijozlarga ega bo‘ling."
+  }
+}

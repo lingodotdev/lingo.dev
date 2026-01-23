@@ -1,0 +1,17 @@
+{
+  "greeting": "Hello from Lingo.dev",
+  "meta": {
+    "title": "Lingo.dev - Utafsiri wa kiotomatiki wa AI kwa programu za wavuti na simu",
+    "description": "Utafsiri wa AI wa kisasa kwa programu, moja kwa moja katika CI/CD. Toa bidhaa haraka, toa matoleo mara nyingi, na kuwa na wateja wengi wanaolipa.",
+    "keywords": "",
+    "h1": "Jenga. Weka. Tafsiri."
+  },
+  "og": {
+    "title": "Lingo.dev - Utafsiri wa kiotomatiki wa AI kwa programu za wavuti na simu",
+    "description": "Utafsiri wa AI wa kisasa kwa programu, moja kwa moja katika CI/CD. Toa bidhaa haraka, toa matoleo mara nyingi, na kuwa na wateja wengi wanaolipa."
+  },
+  "twitter": {
+    "title": "Lingo.dev - Utafsiri wa kiotomatiki wa AI kwa programu za wavuti na simu",
+    "description": "Utafsiri wa AI wa kisasa kwa programu, moja kwa moja katika CI/CD. Toa bidhaa haraka, toa matoleo mara nyingi, na kuwa na wateja wengi wanaolipa."
+  }
+}

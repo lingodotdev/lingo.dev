@@ -1,0 +1,17 @@
+{
+  "greeting": "Hello from Lingo.dev",
+  "meta": {
+    "title": "Lingo.dev - Geoutomatiseerde KI-lokalisering vir web- en mobiele toepassings",
+    "description": "Gevorderde KI-lokalisering vir toepassings, reg in CI/CD. Versprei vinniger, stel meer gereeld vry, en kry meer betalende kliënte.",
+    "keywords": "",
+    "h1": "Bou. Commit. Vertaal."
+  },
+  "og": {
+    "title": "Lingo.dev - Geoutomatiseerde KI-lokalisering vir web- en mobiele toepassings",
+    "description": "Gevorderde KI-lokalisering vir toepassings, reg in CI/CD. Versprei vinniger, stel meer gereeld vry, en kry meer betalende kliënte."
+  },
+  "twitter": {
+    "title": "Lingo.dev - Geoutomatiseerde KI-lokalisering vir web- en mobiele toepassings",
+    "description": "Gevorderde KI-lokalisering vir toepassings, reg in CI/CD. Versprei vinniger, stel meer gereeld vry, en kry meer betalende kliënte."
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "greeting": "Hello from Lingo.dev",
+  "meta": {
+    "title": "Portfolio Website",
+    "description": "",
+    "keywords": "",
+    "h1": "Loading"
+  },
+  "og": {
+    "title": "Portfolio Website",
+    "description": ""
+  },
+  "twitter": {
+    "title": "Portfolio Website",
+    "description": ""
+  },
+  "_sourceUrl": "https://crypticsaiyan.github.io",
+  "_sourceHost": "crypticsaiyan.github.io"
+}

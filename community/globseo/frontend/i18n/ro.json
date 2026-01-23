@@ -1,0 +1,17 @@
+{
+  "greeting": "Hello from Lingo.dev",
+  "meta": {
+    "title": "Lingo.dev - Localizare automată AI pentru aplicații web și mobile",
+    "description": "Localizare AI de ultimă generație pentru aplicații, direct în CI/CD. Lansați mai rapid, publicați mai des și atrageți mai mulți clienți plătitori.",
+    "keywords": "",
+    "h1": "Construiește. Comite. Traduce."
+  },
+  "og": {
+    "title": "Lingo.dev - Localizare automată AI pentru aplicații web și mobile",
+    "description": "Localizare AI de ultimă generație pentru aplicații, direct în CI/CD. Lansați mai rapid, publicați mai des și atrageți mai mulți clienți plătitori."
+  },
+  "twitter": {
+    "title": "Lingo.dev - Localizare automată AI pentru aplicații web și mobile",
+    "description": "Localizare AI de ultimă generație pentru aplicații, direct în CI/CD. Lansați mai rapid, publicați mai des și atrageți mai mulți clienți plătitori."
+  }
+}

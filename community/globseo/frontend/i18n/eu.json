@@ -1,0 +1,17 @@
+{
+  "greeting": "Kaixo Lingo.dev-etik",
+  "meta": {
+    "title": "Lingo.dev - Web eta mugikor aplikazioetarako AI lokalizazio automatizatua",
+    "description": "Puntako AI lokalizazioa aplikazioetarako, zuzenean CI/CD-n. Azkarrago bidali, maizago argitaratu, eta bezero ordaintzaile gehiago izan.",
+    "keywords": "",
+    "h1": "Eraiki. Commit egin. Itzuli."
+  },
+  "og": {
+    "title": "Lingo.dev - Web eta mugikor aplikazioetarako AI lokalizazio automatizatua",
+    "description": "Puntako AI lokalizazioa aplikazioetarako, zuzenean CI/CD-n. Azkarrago bidali, maizago argitaratu, eta bezero ordaintzaile gehiago izan."
+  },
+  "twitter": {
+    "title": "Lingo.dev - Web eta mugikor aplikazioetarako AI lokalizazio automatizatua",
+    "description": "Puntako AI lokalizazioa aplikazioetarako, zuzenean CI/CD-n. Azkarrago bidali, maizago argitaratu, eta bezero ordaintzaile gehiago izan."
+  }
+}

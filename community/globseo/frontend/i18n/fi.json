@@ -1,0 +1,17 @@
+{
+  "greeting": "Tervehdys Lingo.devistä",
+  "meta": {
+    "title": "Lingo.dev - Automatisoitu tekoälypaikallistaminen verkko- ja mobiilisovelluksille",
+    "description": "Huippuluokan tekoälypaikallistaminen sovelluksille suoraan CI/CD-putkessa. Julkaise nopeammin, päivitä useammin ja hanki enemmän maksavia asiakkaita.",
+    "keywords": "",
+    "h1": "Rakenna. Commitoi. Käännä."
+  },
+  "og": {
+    "title": "Lingo.dev - Automatisoitu tekoälypaikallistaminen verkko- ja mobiilisovelluksille",
+    "description": "Huippuluokan tekoälypaikallistaminen sovelluksille suoraan CI/CD-putkessa. Julkaise nopeammin, päivitä useammin ja hanki enemmän maksavia asiakkaita."
+  },
+  "twitter": {
+    "title": "Lingo.dev - Automatisoitu tekoälypaikallistaminen verkko- ja mobiilisovelluksille",
+    "description": "Huippuluokan tekoälypaikallistaminen sovelluksille suoraan CI/CD-putkessa. Julkaise nopeammin, päivitä useammin ja hanki enemmän maksavia asiakkaita."
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "greeting": "Hallo van Lingo.dev",
+  "meta": {
+    "title": "Lingo.dev - Geautomatiseerde AI-lokalisatie voor web & mobiele apps",
+    "description": "Geavanceerde AI-lokalisatie voor apps, direct in CI/CD. Lever sneller, release vaker en krijg meer betalende klanten.",
+    "keywords": "",
+    "h1": "Bouwen. Committen. Vertalen."
+  },
+  "og": {
+    "title": "Lingo.dev - Geautomatiseerde AI-lokalisatie voor web & mobiele apps",
+    "description": "Geavanceerde AI-lokalisatie voor apps, direct in CI/CD. Lever sneller, release vaker en krijg meer betalende klanten."
+  },
+  "twitter": {
+    "title": "Lingo.dev - Geautomatiseerde AI-lokalisatie voor web & mobiele apps",
+    "description": "Geavanceerde AI-lokalisatie voor apps, direct in CI/CD. Lever sneller, release vaker en krijg meer betalende klanten."
+  }
+}

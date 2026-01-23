@@ -1,0 +1,17 @@
+{
+  "greeting": "Pozdrav od Lingo.dev",
+  "meta": {
+    "title": "Lingo.dev - Automatizirana AI lokalizacija za web i mobilne aplikacije",
+    "description": "Najmodernija AI lokalizacija za aplikacije, izravno u CI/CD. Isporučujte brže, objavljujte češće i privucite više korisnika koji plaćaju.",
+    "keywords": "",
+    "h1": "Izgradite. Pošaljite. Prevedite."
+  },
+  "og": {
+    "title": "Lingo.dev - Automatizirana AI lokalizacija za web i mobilne aplikacije",
+    "description": "Najmodernija AI lokalizacija za aplikacije, izravno u CI/CD. Isporučujte brže, objavljujte češće i privucite više korisnika koji plaćaju."
+  },
+  "twitter": {
+    "title": "Lingo.dev - Automatizirana AI lokalizacija za web i mobilne aplikacije",
+    "description": "Najmodernija AI lokalizacija za aplikacije, izravno u CI/CD. Isporučujte brže, objavljujte češće i privucite više korisnika koji plaćaju."
+  }
+}

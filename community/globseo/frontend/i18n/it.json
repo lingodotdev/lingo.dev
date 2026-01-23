@@ -1,0 +1,19 @@
+{
+  "greeting": "Ciao da Lingo.dev",
+  "meta": {
+    "title": "Dominio di esempio",
+    "description": "",
+    "keywords": "",
+    "h1": "Costruisci. Commit. Traduci."
+  },
+  "og": {
+    "title": "Dominio di esempio",
+    "description": ""
+  },
+  "twitter": {
+    "title": "Dominio di esempio",
+    "description": ""
+  },
+  "_sourceUrl": "https://crypticsaiyan.github.io",
+  "_sourceHost": "example.com"
+}

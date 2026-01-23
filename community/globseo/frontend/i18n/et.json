@@ -1,0 +1,17 @@
+{
+  "greeting": "Hello from Lingo.dev",
+  "meta": {
+    "title": "Lingo.dev - automatiseeritud AI lokaliseerimine veebi- ja mobiilirakendustele",
+    "description": "Tipptasemel AI lokaliseerimine rakendustele otse CI/CD-s. Tarnige kiiremini, avaldage sagedamini ja hankige rohkem maksvaid kliente.",
+    "keywords": "",
+    "h1": "Ehita. Kommiti. Tõlgi."
+  },
+  "og": {
+    "title": "Lingo.dev - automatiseeritud AI lokaliseerimine veebi- ja mobiilirakendustele",
+    "description": "Tipptasemel AI lokaliseerimine rakendustele otse CI/CD-s. Tarnige kiiremini, avaldage sagedamini ja hankige rohkem maksvaid kliente."
+  },
+  "twitter": {
+    "title": "Lingo.dev - automatiseeritud AI lokaliseerimine veebi- ja mobiilirakendustele",
+    "description": "Tipptasemel AI lokaliseerimine rakendustele otse CI/CD-s. Tarnige kiiremini, avaldage sagedamini ja hankige rohkem maksvaid kliente."
+  }
+}

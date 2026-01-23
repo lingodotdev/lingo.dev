@@ -1,0 +1,17 @@
+{
+  "greeting": "Sveiki iš Lingo.dev",
+  "meta": {
+    "title": "Lingo.dev - automatizuotas AI lokalizavimas interneto ir mobilioms programėlėms",
+    "description": "Pažangiausias AI lokalizavimas programėlėms, tiesiog CI/CD aplinkoje. Pristatykite greičiau, išleiskite dažniau ir turėkite daugiau mokančių klientų.",
+    "keywords": "",
+    "h1": "Kurkite. Fiksuokite. Verčiame."
+  },
+  "og": {
+    "title": "Lingo.dev - automatizuotas AI lokalizavimas interneto ir mobilioms programėlėms",
+    "description": "Pažangiausias AI lokalizavimas programėlėms, tiesiog CI/CD aplinkoje. Pristatykite greičiau, išleiskite dažniau ir turėkite daugiau mokančių klientų."
+  },
+  "twitter": {
+    "title": "Lingo.dev - automatizuotas AI lokalizavimas interneto ir mobilioms programėlėms",
+    "description": "Pažangiausias AI lokalizavimas programėlėms, tiesiog CI/CD aplinkoje. Pristatykite greičiau, išleiskite dažniau ir turėkite daugiau mokančių klientų."
+  }
+}

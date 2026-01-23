@@ -1,0 +1,17 @@
+{
+  "greeting": "Hello from Lingo.dev",
+  "meta": {
+    "title": "Lingo.dev - Veb və mobil tətbiqlər üçün avtomatlaşdırılmış Sİ lokallaşdırma",
+    "description": "Tətbiqlər üçün ən müasir Sİ lokallaşdırma, birbaşa CI/CD-də. Daha sürətli göndərin, daha tez-tez buraxın və daha çox ödəniş edən müştərilərə sahib olun.",
+    "keywords": "",
+    "h1": "Qurun. Göndərin. Tərcümə edin."
+  },
+  "og": {
+    "title": "Lingo.dev - Veb və mobil tətbiqlər üçün avtomatlaşdırılmış Sİ lokallaşdırma",
+    "description": "Tətbiqlər üçün ən müasir Sİ lokallaşdırma, birbaşa CI/CD-də. Daha sürətli göndərin, daha tez-tez buraxın və daha çox ödəniş edən müştərilərə sahib olun."
+  },
+  "twitter": {
+    "title": "Lingo.dev - Veb və mobil tətbiqlər üçün avtomatlaşdırılmış Sİ lokallaşdırma",
+    "description": "Tətbiqlər üçün ən müasir Sİ lokallaşdırma, birbaşa CI/CD-də. Daha sürətli göndərin, daha tez-tez buraxın və daha çox ödəniş edən müştərilərə sahib olun."
+  }
+}

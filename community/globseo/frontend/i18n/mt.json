@@ -1,0 +1,17 @@
+{
+  "greeting": "Hello from Lingo.dev",
+  "meta": {
+    "title": "Lingo.dev - Lokalizzazzjoni awtomatizzata bl-AI għal apps tal-web u mobile",
+    "description": "Lokalizzazzjoni bl-AI tal-ogħla livell għall-apps, direttament fis-CI/CD. Iniedi aktar malajr, irrilaxxa aktar spiss, u ikseb aktar klijenti li jħallsu.",
+    "keywords": "",
+    "h1": "Ibni. Ikkommetti. Ittraduċi."
+  },
+  "og": {
+    "title": "Lingo.dev - Lokalizzazzjoni awtomatizzata bl-AI għal apps tal-web u mobile",
+    "description": "Lokalizzazzjoni bl-AI tal-ogħla livell għall-apps, direttament fis-CI/CD. Iniedi aktar malajr, irrilaxxa aktar spiss, u ikseb aktar klijenti li jħallsu."
+  },
+  "twitter": {
+    "title": "Lingo.dev - Lokalizzazzjoni awtomatizzata bl-AI għal apps tal-web u mobile",
+    "description": "Lokalizzazzjoni bl-AI tal-ogħla livell għall-apps, direttament fis-CI/CD. Iniedi aktar malajr, irrilaxxa aktar spiss, u ikseb aktar klijenti li jħallsu."
+  }
+}

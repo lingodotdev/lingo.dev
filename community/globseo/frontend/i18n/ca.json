@@ -1,0 +1,17 @@
+{
+  "greeting": "Hello from Lingo.dev",
+  "meta": {
+    "title": "Lingo.dev - Localització automàtica amb IA per a aplicacions web i mòbils",
+    "description": "Localització d'última generació amb IA per a aplicacions, directament en CI/CD. Llança més ràpid, publica amb més freqüència i aconsegueix més clients de pagament.",
+    "keywords": "",
+    "h1": "Construeix. Commit. Tradueix."
+  },
+  "og": {
+    "title": "Lingo.dev - Localització automàtica amb IA per a aplicacions web i mòbils",
+    "description": "Localització d'última generació amb IA per a aplicacions, directament en CI/CD. Llança més ràpid, publica amb més freqüència i aconsegueix més clients de pagament."
+  },
+  "twitter": {
+    "title": "Lingo.dev - Localització automàtica amb IA per a aplicacions web i mòbils",
+    "description": "Localització d'última generació amb IA per a aplicacions, directament en CI/CD. Llança més ràpid, publica amb més freqüència i aconsegueix més clients de pagament."
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "greeting": "Olá do Lingo.dev",
+  "meta": {
+    "title": "Lingo.dev - Localização automatizada com IA para apps web e mobile",
+    "description": "Localização de última geração com IA para apps, diretamente no CI/CD. Lance mais rápido, libere com mais frequência e tenha mais clientes pagantes.",
+    "keywords": "",
+    "h1": "Construa. Commit. Traduza."
+  },
+  "og": {
+    "title": "Lingo.dev - Localização automatizada com IA para apps web e mobile",
+    "description": "Localização de última geração com IA para apps, diretamente no CI/CD. Lance mais rápido, libere com mais frequência e tenha mais clientes pagantes."
+  },
+  "twitter": {
+    "title": "Lingo.dev - Localização automatizada com IA para apps web e mobile",
+    "description": "Localização de última geração com IA para apps, diretamente no CI/CD. Lance mais rápido, libere com mais frequência e tenha mais clientes pagantes."
+  }
+}

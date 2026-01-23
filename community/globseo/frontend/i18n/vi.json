@@ -1,0 +1,17 @@
+{
+  "greeting": "Hello from Lingo.dev",
+  "meta": {
+    "title": "Lingo.dev - Bản địa hóa AI tự động cho ứng dụng web & di động",
+    "description": "Bản địa hóa AI tiên tiến cho ứng dụng, ngay trong CI/CD. Phát hành nhanh hơn, cập nhật thường xuyên hơn và có nhiều khách hàng trả phí hơn.",
+    "keywords": "",
+    "h1": "Xây dựng. Commit. Dịch thuật."
+  },
+  "og": {
+    "title": "Lingo.dev - Bản địa hóa AI tự động cho ứng dụng web & di động",
+    "description": "Bản địa hóa AI tiên tiến cho ứng dụng, ngay trong CI/CD. Phát hành nhanh hơn, cập nhật thường xuyên hơn và có nhiều khách hàng trả phí hơn."
+  },
+  "twitter": {
+    "title": "Lingo.dev - Bản địa hóa AI tự động cho ứng dụng web & di động",
+    "description": "Bản địa hóa AI tiên tiến cho ứng dụng, ngay trong CI/CD. Phát hành nhanh hơn, cập nhật thường xuyên hơn và có nhiều khách hàng trả phí hơn."
+  }
+}

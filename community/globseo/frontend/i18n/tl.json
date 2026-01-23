@@ -1,0 +1,17 @@
+{
+  "greeting": "Hello from Lingo.dev",
+  "meta": {
+    "title": "Lingo.dev - Awtomatikong AI lokalisasyon para sa web at mobile apps",
+    "description": "State-of-the-art na AI lokalisasyon para sa apps, direkta sa CI/CD. Mag-ship nang mas mabilis, mag-release nang mas madalas, at magkaroon ng mas maraming nagbabayad na customer.",
+    "keywords": "",
+    "h1": "Bumuo. Mag-commit. Magsalin."
+  },
+  "og": {
+    "title": "Lingo.dev - Awtomatikong AI lokalisasyon para sa web at mobile apps",
+    "description": "State-of-the-art na AI lokalisasyon para sa apps, direkta sa CI/CD. Mag-ship nang mas mabilis, mag-release nang mas madalas, at magkaroon ng mas maraming nagbabayad na customer."
+  },
+  "twitter": {
+    "title": "Lingo.dev - Awtomatikong AI lokalisasyon para sa web at mobile apps",
+    "description": "State-of-the-art na AI lokalisasyon para sa apps, direkta sa CI/CD. Mag-ship nang mas mabilis, mag-release nang mas madalas, at magkaroon ng mas maraming nagbabayad na customer."
+  }
+}

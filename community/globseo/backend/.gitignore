@@ -1,0 +1,43 @@
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Output files
+output/
+*.log
+
+# Temporary files
+.temp-translations/
+.temp-lingo/
+.temp/
+
+# Generated metadata files
+metadata-*.json
+translations-*.json
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Playwright
+.playwright/
+playwright-report/
+test-results/
+
+# Cache
+.cache/
+*.cache

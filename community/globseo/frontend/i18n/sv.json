@@ -1,0 +1,17 @@
+{
+  "greeting": "Hello from Lingo.dev",
+  "meta": {
+    "title": "Lingo.dev - Automatiserad AI-lokalisering för webb- och mobilappar",
+    "description": "Avancerad AI-lokalisering för appar, direkt i CI/CD. Leverera snabbare, släpp oftare och få fler betalande kunder.",
+    "keywords": "",
+    "h1": "Bygg. Committa. Översätt."
+  },
+  "og": {
+    "title": "Lingo.dev - Automatiserad AI-lokalisering för webb- och mobilappar",
+    "description": "Avancerad AI-lokalisering för appar, direkt i CI/CD. Leverera snabbare, släpp oftare och få fler betalande kunder."
+  },
+  "twitter": {
+    "title": "Lingo.dev - Automatiserad AI-lokalisering för webb- och mobilappar",
+    "description": "Avancerad AI-lokalisering för appar, direkt i CI/CD. Leverera snabbare, släpp oftare och få fler betalande kunder."
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "defaultLanguages": ["es", "fr"],
+  "supportedLanguages": [
+    "es", "fr", "de", "it", "pt", 
+    "ja", "ko", "zh", "ar", "ru",
+    "nl", "pl", "tr", "sv", "da"
+  ],
+  "scraper": {
+    "timeout": 30000,
+    "waitUntil": "domcontentloaded",
+    "headless": true
+  },
+  "translation": {
+    "provider": "lingo",
+    "fallbackEnabled": true
+  },
+  "output": {
+    "directory": "./output",
+    "updateI18n": true,
+    "i18nDirectory": "../frontend/i18n"
+  },
+  "metadata": {
+    "fieldsToTranslate": [
+      "title",
+      "description",
+      "keywords",
+      "ogTitle",
+      "ogDescription",
+      "twitterTitle",
+      "twitterDescription",
+      "h1"
+    ]
+  },
+  "logging": {
+    "colors": {
+      "reset": "\u001b[0m",
+      "bright": "\u001b[1m",
+      "dim": "\u001b[2m",
+      "red": "\u001b[31m",
+      "green": "\u001b[32m",
+      "yellow": "\u001b[33m",
+      "blue": "\u001b[34m",
+      "magenta": "\u001b[35m",
+      "cyan": "\u001b[36m",
+      "white": "\u001b[37m"
+    },
+    "levels": {
+      "info": "blue",
+      "success": "green",
+      "warning": "yellow",
+      "error": "red",
+      "cache": "cyan",
+      "debug": "dim"
+    }
+  }
+}

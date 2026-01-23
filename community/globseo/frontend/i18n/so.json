@@ -1,0 +1,17 @@
+{
+  "greeting": "Hello from Lingo.dev",
+  "meta": {
+    "title": "Lingo.dev - Turjumaad AI oo automaatik ah oo loogu talagalay ablikeeshanada web & mobile",
+    "description": "Turjumaad AI oo casri ah oo loogu talagalay ablikeeshanada, si toos ah CI/CD. Dhoofso si dhakhso leh, soo saar marar badan, oo yeelo macaamiil badan oo bixiya lacag.",
+    "keywords": "",
+    "h1": "Dhis. Commit. Turjun."
+  },
+  "og": {
+    "title": "Lingo.dev - Turjumaad AI oo automaatik ah oo loogu talagalay ablikeeshanada web & mobile",
+    "description": "Turjumaad AI oo casri ah oo loogu talagalay ablikeeshanada, si toos ah CI/CD. Dhoofso si dhakhso leh, soo saar marar badan, oo yeelo macaamiil badan oo bixiya lacag."
+  },
+  "twitter": {
+    "title": "Lingo.dev - Turjumaad AI oo automaatik ah oo loogu talagalay ablikeeshanada web & mobile",
+    "description": "Turjumaad AI oo casri ah oo loogu talagalay ablikeeshanada, si toos ah CI/CD. Dhoofso si dhakhso leh, soo saar marar badan, oo yeelo macaamiil badan oo bixiya lacag."
+  }
+}

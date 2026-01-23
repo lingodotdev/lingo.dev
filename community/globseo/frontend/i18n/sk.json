@@ -1,0 +1,17 @@
+{
+  "greeting": "Hello from Lingo.dev",
+  "meta": {
+    "title": "Lingo.dev - Automatizovaná AI lokalizácia pre webové a mobilné aplikácie",
+    "description": "Špičková AI lokalizácia pre aplikácie, priamo v CI/CD. Dodávajte rýchlejšie, vydávajte častejšie a získajte viac platiacich zákazníkov.",
+    "keywords": "",
+    "h1": "Vytvorte. Commitnite. Preložte."
+  },
+  "og": {
+    "title": "Lingo.dev - Automatizovaná AI lokalizácia pre webové a mobilné aplikácie",
+    "description": "Špičková AI lokalizácia pre aplikácie, priamo v CI/CD. Dodávajte rýchlejšie, vydávajte častejšie a získajte viac platiacich zákazníkov."
+  },
+  "twitter": {
+    "title": "Lingo.dev - Automatizovaná AI lokalizácia pre webové a mobilné aplikácie",
+    "description": "Špičková AI lokalizácia pre aplikácie, priamo v CI/CD. Dodávajte rýchlejšie, vydávajte častejšie a získajte viac platiacich zákazníkov."
+  }
+}
