@@ -1,0 +1,45 @@
+{
+  "name": "multi-lang-errors",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Multi-language error handling module using lingo.dev",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "multi-lang-errors": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsup",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "i18n",
+    "error-handling",
+    "lingo.dev",
+    "multi-language"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.13.2",
+    "lingo.dev": "^0.125.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.0.10",
+    "@types/react": "^19.2.9",
+    "@types/react-dom": "^19.2.3",
+    "ts-node": "^10.9.2",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "peerDependencies": {
+    "react": "^18 || ^19"
+  }
+}

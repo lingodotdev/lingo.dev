@@ -1,0 +1,34 @@
+# Node modules
+node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE/editor files
+.vscode/
+.idea/
+
+# Coverage reports
+coverage/
+*.lcov
+
+# Build artifacts (except dist/)
+build/
+out/
+
+# Ignore temporary files
+*.tmp
+*.swp
