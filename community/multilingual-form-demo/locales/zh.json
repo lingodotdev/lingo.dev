@@ -3,7 +3,8 @@
     "title": "订阅新闻通讯",
     "description": "随时了解我们的最新消息和优惠",
     "validation": {
-      "demo": "表单演示"
+      "demo": "表单演示",
+      "requiredFields": "带 * 的所有字段为必填项"
     },
     "fields": {
       "name": {

@@ -45,8 +45,10 @@ export default function LanguageSwitcher({
   useKeyboardShortcut(
     "l",
     () => {
-      setIsOpen((prev) => !prev);
-      if (!isOpen) setFocusedIndex(0);
+      setIsOpen((prev) => {
+        if (!prev) setFocusedIndex(0);
+        return !prev;
+      });
     },
     [],
   );
@@ -58,8 +60,12 @@ export default function LanguageSwitcher({
         return;
       }
 
-      const pathWithoutLocale =
-        pathname.replace(`/${currentLocale}`, "") || "/";
+      const segments = pathname.split("/");
+      // Remove the locale segment (typically segments[1])
+      if (segments[1] === currentLocale) {
+        segments.splice(1, 1);
+      }
+      const pathWithoutLocale = segments.join("/") || "/";
       const newPath = `/${localeCode}${pathWithoutLocale}`;
 
       setIsOpen(false);

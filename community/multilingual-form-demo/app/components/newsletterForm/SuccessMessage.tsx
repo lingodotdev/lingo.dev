@@ -51,12 +51,14 @@ export function SuccessMessage({
 
       <div className="space-y-3 max-w-sm mx-auto">
         <button
+          type="button"
           onClick={onReset}
           className="w-full px-6 py-3 bg-linear-to-r from-blue-600 to-indigo-600 text-white font-medium rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all transform hover:scale-[1.02] shadow-lg hover:shadow-xl"
         >
           {ctaText}
         </button>
         <button
+          type="button"
           onClick={onHome}
           className="w-full px-6 py-3 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
         >

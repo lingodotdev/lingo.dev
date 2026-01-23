@@ -2,11 +2,10 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import "../globals.css";
-
-const locales = ["en", "es", "de", "fr"];
+import { locales } from "../components/languageSwitcher/types";
 
 export function generateStaticParams() {
-  return locales.map((locale) => ({ locale }));
+  return locales.map((locale) => ({ locale: locale.code }));
 }
 
 export default async function LocaleLayout({
@@ -20,7 +19,7 @@ export default async function LocaleLayout({
   const { locale } = await params;
 
   // Validate locale
-  if (!locales.includes(locale)) {
+  if (!locales.some((l) => l.code === locale)) {
     notFound();
   }
 

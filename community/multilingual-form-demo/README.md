@@ -79,17 +79,7 @@ This creates `locales/pt.json` with AI-translated content from `locales/en.json`
 
 ### 3. Update Routing & UI
 
-**a) Add to `i18n/routing.ts`:**
-
-```typescript
-export const routing = defineRouting({
-  locales: ["en", "es", "fr", "de", "pt"], // Add new locale do add them in option dropdown also
-  defaultLocale: "en",
-  localePrefix: "always",
-});
-```
-
-**b) Add to `app/components/LanguageSwitcher/types.ts`:**
+Add to `app/components/LanguageSwitcher/types.ts`:\*\*
 
 ```typescript
 export const locales: LocaleInfo[] = [

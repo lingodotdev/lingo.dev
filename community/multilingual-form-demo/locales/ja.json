@@ -3,7 +3,8 @@
     "title": "ニュースレター登録",
     "description": "最新のニュースとオファーをお届けします",
     "validation": {
-      "demo": "フォームデモ"
+      "demo": "フォームデモ",
+      "requiredFields": "*印の付いた項目は必須です"
     },
     "fields": {
       "name": {

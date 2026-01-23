@@ -3,7 +3,8 @@
     "title": "Newsletter Signup",
     "description": "Stay updated with our latest news and offers",
     "validation": {
-      "demo": "Form Demo"
+      "demo": "Form Demo",
+      "requiredFields": "All fields with * are required"
     },
     "fields": {
       "name": {

@@ -3,7 +3,8 @@
     "title": "Inscription à la newsletter",
     "description": "Restez informé de nos dernières actualités et offres",
     "validation": {
-      "demo": "Démo du formulaire"
+      "demo": "Démo du formulaire",
+      "requiredFields": "Tous les champs avec * sont obligatoires"
     },
     "fields": {
       "name": {

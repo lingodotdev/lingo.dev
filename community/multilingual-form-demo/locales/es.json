@@ -3,7 +3,8 @@
     "title": "Suscripción al boletín",
     "description": "Mantente actualizado con nuestras últimas noticias y ofertas",
     "validation": {
-      "demo": "Demostración del formulario"
+      "demo": "Demostración del formulario",
+      "requiredFields": "Todos los campos con * son obligatorios"
     },
     "fields": {
       "name": {

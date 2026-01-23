@@ -17,7 +17,7 @@ export function useFormHelpers(_form: UseFormReturn<NewsletterFormData>) {
         if (numbers.length <= 3) return numbers;
         if (numbers.length <= 6)
             return `(${numbers.slice(0, 3)}) ${numbers.slice(3)}`;
-        return `(${numbers.slice(0, 3)}) ${numbers.slice(3, 6)}-${numbers.slice(6, 10)}`;
+        return `(${numbers.slice(0, 3)}) ${numbers.slice(3, 6)}-${numbers.slice(6)}`;
     };
 
     return {

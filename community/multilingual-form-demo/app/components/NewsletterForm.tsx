@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { createValidationSchema } from "../../lib/validation";
 import type { NewsletterFormData } from "../types/form.types";
 import {
@@ -107,7 +107,7 @@ export default function NewsletterForm() {
         <div className="flex items-center gap-2 text-blue-700 dark:text-blue-300">
           <InfoIcon />
           <span className="text-sm font-medium">
-            {t("validation.demo")}: All fields with * are required
+            {t("validation.demo")}: {t("validation.requiredFields")}
           </span>
         </div>
       </div>

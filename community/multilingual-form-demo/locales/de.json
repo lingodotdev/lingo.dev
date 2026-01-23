@@ -3,7 +3,8 @@
     "title": "Newsletter-Anmeldung",
     "description": "Bleiben Sie über unsere neuesten Nachrichten und Angebote auf dem Laufenden",
     "validation": {
-      "demo": "Formular-Demo"
+      "demo": "Formular-Demo",
+      "requiredFields": "Alle Felder mit * sind Pflichtfelder"
     },
     "fields": {
       "name": {

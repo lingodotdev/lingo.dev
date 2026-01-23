@@ -3,7 +3,8 @@
     "title": "뉴스레터 구독",
     "description": "최신 소식과 혜택을 받아보세요",
     "validation": {
-      "demo": "폼 데모"
+      "demo": "폼 데모",
+      "requiredFields": "*가 표시된 모든 항목은 필수입니다"
     },
     "fields": {
       "name": {
