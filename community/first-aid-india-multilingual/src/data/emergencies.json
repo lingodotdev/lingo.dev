@@ -1,0 +1,554 @@
+{
+    "snake-bite": {
+        "title": "Snake Bite",
+        "slug": "snake-bite",
+        "severity": "critical",
+        "color": "red",
+        "icon": "Snake",
+        "timer": 1800,
+        "timerLabel": "Seeking Help Window",
+        "overview": "India has the 'Big 4' venomous snakes (Cobra, Krait, Russell's Viper, Saw-scaled Viper). Immediate medical attention is crucial.",
+        "steps": [
+            {
+                "time": "0 min",
+                "title": "Move to Safety",
+                "desc": "Move away from the snake. Do not try to catch it."
+            },
+            {
+                "time": "2 min",
+                "title": "Calm the Patient",
+                "desc": "Keep patient absolutely still to slow venom spread. Panic pumps venom faster."
+            },
+            {
+                "time": "5 min",
+                "title": "Immobilize Limb",
+                "desc": "Splint the limb like a broken bone. Keep it below heart level."
+            },
+            {
+                "time": "Now",
+                "title": "Call 108",
+                "desc": "Transport to nearest hospital with anti-venom (PHC/District Hospital)."
+            }
+        ],
+        "donts": [
+            "Do NOT cut the wound or suck out venom.",
+            "Do NOT apply ice or tourniquets.",
+            "Do NOT give alcohol or pain killers."
+        ],
+        "indiaNotes": "Common in rural/farm areas. Consult a doctor even for 'dry bites'. Snake stones are ineffective.",
+        "symptoms": [
+            "Puncture marks",
+            "Severe pain/swelling",
+            "Blurred vision",
+            "Difficulty breathing"
+        ]
+    },
+    "scorpion-sting": {
+        "title": "Scorpion Sting",
+        "slug": "scorpion-sting",
+        "severity": "high",
+        "color": "orange",
+        "icon": "Bug",
+        "steps": [
+            {
+                "time": "0 min",
+                "title": "Wash Area",
+                "desc": "Clean with soap and water."
+            },
+            {
+                "time": "5 min",
+                "title": "Cold Compress",
+                "desc": "Apply ice pack (10 min on, 10 min off) to reduce pain."
+            },
+            {
+                "time": "Observ",
+                "title": "Monitor Breathing",
+                "desc": "Watch for difficulty breathing or swallowing."
+            }
+        ],
+        "donts": [
+            "Do not consume alcohol.",
+            "Do not cut the sting site."
+        ],
+        "indiaNotes": "Red scorpions (Maharashtra/South India) are more dangerous. Children are at higher risk of cardiac complications.",
+        "symptoms": [
+            "Intense pain",
+            "Numbness",
+            "Sweating",
+            "Vomiting",
+            "Fast heartbeat"
+        ]
+    },
+    "heart-attack": {
+        "title": "Heart Attack",
+        "slug": "heart-attack",
+        "severity": "critical",
+        "color": "red",
+        "icon": "HeartPulse",
+        "timer": 600,
+        "timerLabel": "Golden Hour Action",
+        "steps": [
+            {
+                "time": "Now",
+                "title": "Call 108",
+                "desc": "Immediately call ambulance."
+            },
+            {
+                "time": "1 min",
+                "title": "Chew Aspirin",
+                "desc": "If not allergic, chew a 300mg Disprin/Aspirin."
+            },
+            {
+                "time": "Cont.",
+                "title": "Rest",
+                "desc": "Sit down, stay calm. Loosen tight clothing."
+            },
+            {
+                "time": "Cardio",
+                "title": "CPR",
+                "desc": "If unconscious and not breathing, start CPR immediately."
+            }
+        ],
+        "donts": [
+            "Do not drive yourself to hospital.",
+            "Do not ignore chest pain."
+        ],
+        "indiaNotes": "Heart disease is common in India. Sorbitrate 5mg under tongue can help if prescribed.",
+        "symptoms": [
+            "Chest pain/pressure",
+            "Pain in left arm/jaw",
+            "Sweating",
+            "Shortness of breath"
+        ]
+    },
+    "cpr": {
+        "title": "CPR (Adult)",
+        "slug": "cpr",
+        "severity": "critical",
+        "color": "red",
+        "icon": "Activity",
+        "timer": 120,
+        "timerLabel": "CPR Cycle",
+        "steps": [
+            {
+                "time": "Check",
+                "title": "Response",
+                "desc": "Shake shoulders, ask 'Are you okay?'."
+            },
+            {
+                "time": "Call",
+                "title": "Call 108",
+                "desc": "Get help/AED immediately."
+            },
+            {
+                "time": "Action",
+                "title": "Compressions",
+                "desc": "Push hard and fast in center of chest. 100-120 beats/min."
+            },
+            {
+                "time": "Action",
+                "title": "Breaths",
+                "desc": "30 compressions, then 2 breaths (if trained)."
+            }
+        ],
+        "donts": [
+            "Do not stop unless exhausted or help arrives.",
+            "Do not be afraid to push hard."
+        ],
+        "indiaNotes": "Good Samaritan Law protects you when helping.",
+        "symptoms": [
+            "Unconscious",
+            "No breathing",
+            "No pulse"
+        ]
+    },
+    "choking": {
+        "title": "Choking (Adult)",
+        "slug": "choking",
+        "severity": "critical",
+        "color": "red",
+        "icon": "User",
+        "steps": [
+            {
+                "time": "Action",
+                "title": "Encourage Coughing",
+                "desc": "If they can cough, let them try to clear it."
+            },
+            {
+                "time": "Action",
+                "title": "Back Blows",
+                "desc": "5 sharp blows between shoulder blades."
+            },
+            {
+                "time": "Action",
+                "title": "Heimlich Maneuver",
+                "desc": "5 abdominal thrusts. Pull inward and upward just above navel."
+            }
+        ],
+        "donts": [
+            "Do not give water if airway is blocked.",
+            "Do not slap back if they are upright and coughing effectively."
+        ],
+        "indiaNotes": "Common with dry foods or talking while eating.",
+        "symptoms": [
+            "Clutching throat",
+            "Cannot speak/breathe",
+            "Face turning blue"
+        ]
+    },
+    "road-accident": {
+        "title": "Road Accident",
+        "slug": "road-accident",
+        "severity": "critical",
+        "color": "red",
+        "icon": "Car",
+        "steps": [
+            {
+                "time": "Safety",
+                "title": "Secure Scene",
+                "desc": "Ensure no further danger (traffic). Turn off engines."
+            },
+            {
+                "time": "Call",
+                "title": "Call 108/100",
+                "desc": "Report location and number of injured."
+            },
+            {
+                "time": "Triag",
+                "title": "Check Injuries",
+                "desc": "Check quietest victims first (may be unconscious)."
+            },
+            {
+                "time": "Bleed",
+                "title": "Stop Bleeding",
+                "desc": "Apply direct pressure to wounds."
+            }
+        ],
+        "donts": [
+            "Do NOT remove helmets unless airway is blocked.",
+            "Do NOT move victim unless immediate danger (fire)."
+        ],
+        "indiaNotes": "Under Good Samaritan Law, you are not liable for police questioning/legal hassle.",
+        "symptoms": [
+            "Trauma",
+            "Bleeding",
+            "Shock"
+        ]
+    },
+    "burns": {
+        "title": "Burns (Thermal)",
+        "slug": "burns",
+        "severity": "high",
+        "color": "orange",
+        "icon": "Flame",
+        "steps": [
+            {
+                "time": "Now",
+                "title": "Cool Water",
+                "desc": "Run cool (not cold) tap water for 20 minutes."
+            },
+            {
+                "time": "Action",
+                "title": "Remove Items",
+                "desc": "Remove jewelry/clothing near burn (unless stuck)."
+            },
+            {
+                "time": "Cover",
+                "title": "Cover",
+                "desc": "Use cling film or clean plastic bag/cloth to cover."
+            }
+        ],
+        "donts": [
+            "Do NOT apply ice, butter, toothpaste, or ghee.",
+            "Do NOT burst blisters."
+        ],
+        "indiaNotes": "Common during Diwali (crackers) or kitchen accidents. Seek doctor for burns > palm size.",
+        "symptoms": [
+            "Red skin",
+            "Blisters",
+            "Peeling skin",
+            "Pain"
+        ]
+    },
+    "dengue": {
+        "title": "Dengue Fever",
+        "slug": "dengue",
+        "severity": "medium",
+        "color": "yellow",
+        "icon": "Thermometer",
+        "steps": [
+            {
+                "time": "Hydrat",
+                "title": "Fluids",
+                "desc": "ORS, coconut water, fruit juices to prevent dehydration."
+            },
+            {
+                "time": "Rest",
+                "title": "Complete Rest",
+                "desc": "Avoid physical exertion."
+            },
+            {
+                "time": "Meds",
+                "title": "Paracetamol",
+                "desc": "For fever/pain. Avoid Ibuprofen/Aspirin (bleeding risk)."
+            }
+        ],
+        "donts": [
+            "Do not take Aspirin or Ibuprofen.",
+            "Do not ignore bleeding gums/nose."
+        ],
+        "indiaNotes": "Peak season: Monsoon/Post-monsoon. Monitor platelets.",
+        "symptoms": [
+            "High fever",
+            "Eye pain",
+            "Joint pain",
+            "Rash",
+            "Nausea"
+        ]
+    },
+    "heatstroke": {
+        "title": "Heatstroke",
+        "slug": "heatstroke",
+        "severity": "high",
+        "color": "red",
+        "icon": "Sun",
+        "steps": [
+            {
+                "time": "Move",
+                "title": "Cool Place",
+                "desc": "Move to shade or AC immediately."
+            },
+            {
+                "time": "Cool",
+                "title": "Cool Down",
+                "desc": "Spray water, fan the person, place ice packs in armpits/groin."
+            },
+            {
+                "time": "Drink",
+                "title": "Sip Water",
+                "desc": "Only if conscious. Give ORS or water."
+            }
+        ],
+        "donts": [
+            "Do not give fluids if unconscious.",
+            "Do not give fever medication."
+        ],
+        "indiaNotes": "Common in Indian summers (April-June). Loo winds.",
+        "symptoms": [
+            "High temp (>104F)",
+            "Confusion",
+            "No sweating",
+            "Rapid pulse"
+        ]
+    },
+    "food-poisoning": {
+        "title": "Food Poisoning",
+        "slug": "food-poisoning",
+        "severity": "medium",
+        "color": "yellow",
+        "icon": "Utensils",
+        "steps": [
+            {
+                "time": "Hydrat",
+                "title": "Rehydrate",
+                "desc": "ORS (Oral Rehydration Solution) is key. Small sips frequently."
+            },
+            {
+                "time": "Diet",
+                "title": "Bland Diet",
+                "desc": "Khichdi, curd rice, bananas once vomiting stops."
+            },
+            {
+                "time": "Meds",
+                "title": "Medical Help",
+                "desc": "If bloody diarrhea or high fever, see doctor."
+            }
+        ],
+        "donts": [
+            "Do not take anti-diarrhea meds without consult.",
+            "Do not eat heavy/spicy food."
+        ],
+        "indiaNotes": "Common from street food/water. Use bottled water.",
+        "symptoms": [
+            "Vomiting",
+            "Diarrhea",
+            "Stomach cramps",
+            "Fever"
+        ]
+    },
+    "dog-bite": {
+        "title": "Dog Bite (Rabies)",
+        "slug": "dog-bite",
+        "severity": "high",
+        "color": "orange",
+        "icon": "Dog",
+        "steps": [
+            {
+                "time": "Immed",
+                "title": "Wash Wound",
+                "desc": "Wash with soap and running water for 15 MINUTES. Crucial."
+            },
+            {
+                "time": "Antise",
+                "title": "Antiseptic",
+                "desc": "Apply Betadine or alcohol."
+            },
+            {
+                "time": "Doctor",
+                "title": "Vaccination",
+                "desc": "Visit hospital immediately for Rabies vaccine schedule (0, 3, 7, 14, 28 days)."
+            }
+        ],
+        "donts": [
+            "Do not cover wound closely.",
+            "Do not ignore scratch even from pet."
+        ],
+        "indiaNotes": "India has high rabies burden. Stray dogs are common carriers.",
+        "symptoms": [
+            "Broken skin",
+            "Bleeding",
+            "Bite marks"
+        ]
+    },
+    "chemical-burn": {
+        "title": "Chemical Burn",
+        "slug": "chemical-burn",
+        "severity": "high",
+        "color": "red",
+        "icon": "FlaskConical",
+        "steps": [
+            {
+                "time": "Wash",
+                "title": "Flood with Water",
+                "desc": "Wash with running water for 20 mins. Remove contaminated clothes."
+            },
+            {
+                "time": "Eyes",
+                "title": "Eye Protect",
+                "desc": "If in eyes, hold eyelids open and wash continuously."
+            },
+            {
+                "time": "Call",
+                "title": "Call 108",
+                "desc": "Seek emergency help. Identify chemical if possible."
+            }
+        ],
+        "donts": [
+            "Do not use antidote chemicals on skin.",
+            "Do not rub eyes."
+        ],
+        "indiaNotes": "Industrial accidents or acid attacks. Also Holi colors sometimes cause reaction.",
+        "symptoms": [
+            "Burning pain",
+            "Discoloration",
+            "Swelling"
+        ]
+    },
+    "electrocution": {
+        "title": "Electric Shock",
+        "slug": "electrocution",
+        "severity": "critical",
+        "color": "red",
+        "icon": "Zap",
+        "steps": [
+            {
+                "time": "Safety",
+                "title": "Switch Off",
+                "desc": "Turn off main power source. Do not touch victim until power is off."
+            },
+            {
+                "time": "Separa",
+                "title": "Push Away",
+                "desc": "Use dry wood/plastic broom to push wire away if main switch inaccessible."
+            },
+            {
+                "time": "Check",
+                "title": "CPR",
+                "desc": "Check breathing. Start CPR if needed."
+            }
+        ],
+        "donts": [
+            "Do not touch with bare hands.",
+            "Do not use wet objects."
+        ],
+        "indiaNotes": "Common with water heaters, monsoon wires. Use rubber slippers.",
+        "symptoms": [
+            "Burns",
+            "Muscle spasms",
+            "Unconsciousness"
+        ]
+    },
+    "gas-leak": {
+        "title": "LPG Gas Leak",
+        "slug": "gas-leak",
+        "severity": "critical",
+        "color": "red",
+        "icon": "Flame",
+        "steps": [
+            {
+                "time": "Immed",
+                "title": "No Sparks",
+                "desc": "DO NOT switch on/off any lights or fans. No matches."
+            },
+            {
+                "time": "Ventil",
+                "title": "Open Windows",
+                "desc": "Open all doors and windows."
+            },
+            {
+                "time": "Close",
+                "title": "Regulator",
+                "desc": "Turn off gas regulator."
+            },
+            {
+                "time": "Evac",
+                "title": "Evacuate",
+                "desc": "Leave house. Call 1906 (LPG Emergency)."
+            }
+        ],
+        "donts": [
+            "Do NOT use phone inside.",
+            "Do NOT use electric switches."
+        ],
+        "indiaNotes": "LPG heavier than air, settles on floor. Smell is 'rotten cabbage' additive.",
+        "symptoms": [
+            "Smell of gas",
+            "Headache",
+            "Nausea"
+        ]
+    },
+    "drowning": {
+        "title": "Drowning",
+        "slug": "drowning",
+        "severity": "critical",
+        "color": "red",
+        "icon": "Waves",
+        "steps": [
+            {
+                "time": "Rescu",
+                "title": "Rescue",
+                "desc": "Throw rope or float (stick/wood/tube). Do not jump in unless trained."
+            },
+            {
+                "time": "Recov",
+                "title": "Recovery Pos",
+                "desc": "Place on side if breathing."
+            },
+            {
+                "time": "CPR",
+                "title": "CPR",
+                "desc": "Start CPR immediately if not breathing. Give rescue breaths first."
+            }
+        ],
+        "donts": [
+            "Do not put yourself in danger.",
+            "Do not try to remove water from lungs by shaking."
+        ],
+        "indiaNotes": "Common in monsoons, floods, and unauthorized swimming in rivers/dams.",
+        "symptoms": [
+            "Unconscious",
+            "No breathing",
+            "Blue skin"
+        ]
+    }
+}

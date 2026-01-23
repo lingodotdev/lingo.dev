@@ -1,0 +1,58 @@
+[
+    {
+        "id": "108",
+        "title": "National Ambulance",
+        "number": "108",
+        "description": "Medical, Fire, and Police Emergencies",
+        "icon": "Ambulance"
+    },
+    {
+        "id": "112",
+        "title": "All-in-One Emergency",
+        "number": "112",
+        "description": "Pan-India Emergency Helpline",
+        "icon": "PhoneAlert"
+    },
+    {
+        "id": "100",
+        "title": "Police",
+        "number": "100",
+        "description": "Police Assistance",
+        "icon": "ShieldAlert"
+    },
+    {
+        "id": "102",
+        "title": "Janani Express",
+        "number": "102",
+        "description": "Pregnancy & Child Safety (Ambulance)",
+        "icon": "Baby"
+    },
+    {
+        "id": "101",
+        "title": "Fire Brigade",
+        "number": "101",
+        "description": "Fire Emergencies",
+        "icon": "Flame"
+    },
+    {
+        "id": "1098",
+        "title": "Child Helpline",
+        "number": "1098",
+        "description": "Child Abuse & Distress",
+        "icon": "HeartHandshake"
+    },
+    {
+        "id": "1091",
+        "title": "Women Helpline",
+        "number": "1091",
+        "description": "Women in Distress",
+        "icon": "Shield"
+    },
+    {
+        "id": "poison",
+        "title": "Poison Control (AIIMS)",
+        "number": "1800-11-9393",
+        "description": "24/7 Poison Information Center",
+        "icon": "Skull"
+    }
+]

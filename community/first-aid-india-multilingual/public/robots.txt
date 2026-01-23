@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://india-first-aid.netlify.app/sitemap.xml
