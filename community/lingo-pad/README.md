@@ -4,6 +4,8 @@
 
 LingoPad is a developer-focused translation tool that preserves your data structure while translating content. Built with the [Lingo.dev SDK](https://lingo.dev), it intelligently handles JSON, HTML, and plain text — keeping keys, tags, and formatting intact.
 
+![LingoPad Screenshot](./public/image.png)
+
 ![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=next.js)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=flat-square&logo=typescript)
 ![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
@@ -19,6 +21,18 @@ LingoPad is a developer-focused translation tool that preserves your data struct
 - **✨ Quality Mode** — Nuanced, context-aware translations for production
 - **🔍 Diff View** — See exactly what changed between original and translated
 - **⌨️ Keyboard Shortcuts** — `⌘/Ctrl + Enter` for quick translation
+
+---
+
+## 🛠️ Lingo.dev Highlights
+
+LingoPad serves as a practical implementation of the [Lingo.dev JavaScript SDK](https://lingo.dev/docs), highlighting several key features:
+
+- **Structural Preservation (`localizeObject`)**: Demonstrates how nested JSON objects can be translated without corrupting keys or layout.
+- **Markup Safety (`localizeHtml`)**: Showcases the ability to translate content within complex HTML without affecting tags or attributes.
+- **Contextual Nuance (`localizeText`)**: Standard text translation using high-quality AI models.
+- **Translation Parameters**: Implementation of the `fast: true/false` toggle to balance speed and nuance.
+- **Automatic Detection**: Usage of the `sourceLocale: null` parameter to allow the SDK to automatically detect source languages.
 
 ---
 
