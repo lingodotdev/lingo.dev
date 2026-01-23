@@ -8,10 +8,8 @@ import shutil
 import tempfile
 
 from .models import whisper, generate_text 
-from .utils.utils import extract_audio          
+from .utils.utils import extract_audio, translate_text_with_lingo       
 from fastapi.middleware.cors import CORSMiddleware
-
-
 
 app = FastAPI(title="Video Lingo AI API")
 app.add_middleware(
@@ -21,39 +19,44 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+# for demo project above i have allowed all origins. 
 
 UPLOAD_DIR = Path(tempfile.gettempdir()) / "video_lingo_ai"
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
-
 @app.post("/process-video")
-async def process_video(file: UploadFile = File(...), issummarize: bool = False):
-    """
-    Process video:
-    - Extract audio
-    - Transcribe using Whisper
-    - Optionally summarize
-    """
+async def process_video(
+    file: UploadFile = File(...),
+    issummarize: bool = False,
+    lang: str = "en"
+):
     video_path = UPLOAD_DIR / file.filename
     with open(video_path, "wb") as f:
         shutil.copyfileobj(file.file, f)
 
-    audio_file = extract_audio(str(video_path)) 
+    audio_file = extract_audio(str(video_path))
 
     segments, info = whisper.transcribe(str(audio_file))
-    segments = list(segments) 
+    segments = list(segments)
+
+    full_text = " ".join(seg.text for seg in segments)
 
     if issummarize:
-        full_text = " ".join([seg.text for seg in segments])
         summary = generate_text(f"Summarize this video:\n{full_text}")
+        if lang != "en":
+            summary = await translate_text_with_lingo(summary, lang)
         return JSONResponse({"summary": summary})
 
     result = []
     for seg in segments:
+        text = seg.text
+        if lang != "en":
+            text = await translate_text_with_lingo(text, lang)
+
         result.append({
             "start": seg.start,
             "end": seg.end,
-            "text": seg.text
+            "text": text
         })
 
     return JSONResponse({"segments": result})
