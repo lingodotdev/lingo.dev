@@ -8,6 +8,8 @@
 * Extract audio and transcribe it using Whisper AI.
 * Optionally generate a summarized version of the transcript.
 * View the transcript with timestamps.
+* Due to limited resources please upload any english spoked video.
+
 
 This tool is built to demonstrate how AI can help automatically understand, summarize, and localize video content.
 
@@ -18,7 +20,7 @@ This tool is built to demonstrate how AI can help automatically understand, summ
 * **Video Processing & Transcription:** Uses Whisper AI to convert spoken content into text segments with timestamps.
 * **Summarization:** Generates concise summaries of video content (via a language model).
 * **Dynamic Transcript Display:** Shows each segment with start/end times for easy navigation.
-* **Multi-language Support (planned with Lingo.dev):** Designed to translate transcript and summary into other languages, demonstrating the power of Lingo.dev for localization.
+* **Multi-language Support :** Designed to translate transcript and summary into other languages, demonstrating the power of Lingo.dev for localization.
 * **Interactive Vue3 Frontend:** Drag-and-drop video uploads, toggles for summarization, and responsive results display.
 
 ---
@@ -60,6 +62,7 @@ Create a `.env` file
 
 ```env
 OPENAI_API_KEY=<your_openai_api_key>
+LINGODOTDEV_API_KEY=<your_lingo_api_key>
 ```
 
 5. **Run the backend:**
@@ -83,19 +86,17 @@ http://localhost:5173
 
 * Drag and drop a video file to upload.
 * Toggle summarization if needed.
-* View the transcript and summary in English.
+* View the transcript and summary in English/Hindi.
 
 ---
 
-## Lingo.dev Integration (Planned)
+## Lingo.dev Integration
 
 The app is designed to highlight Lingo.dev features:
 
 * Translating dynamic content such as transcripts and summaries.
 * Supporting multiple languages for global accessibility.
 * Easy integration with web apps for localization workflows.
-
-Currently, the dynamic translation uses OpenAI for hackathon demo purposes, but the structure is ready to integrate Lingo.dev when a REST endpoint is available.
 
 ---
 
