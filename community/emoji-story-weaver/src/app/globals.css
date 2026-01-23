@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+:root {
+    --background: #0a0a0a;
+    --surface: #121212;
+    --surface-hover: #1e1e1e;
+    --border: #2a2a2a;
+    --primary: #ededed;
+    --secondary: #a1a1aa;
+    --accent: #ff6b6b;
+    /* Coral red from reference */
+    --accent-glow: rgba(255, 107, 107, 0.15);
+    --success: #4ade80;
+    --font-mono: var(--font-jetbrains-mono);
+}
+
+body {
+    background-color: var(--background);
+    color: var(--primary);
+    font-family: var(--font-jetbrains-mono), monospace;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+}
+
+/* Custom terminal scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary);
+}
+
+/* Utilities */
+.glass-panel {
+    background: rgba(18, 18, 18, 0.8);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+}
+
+::selection {
+    background: var(--accent);
+    color: white;
+}
