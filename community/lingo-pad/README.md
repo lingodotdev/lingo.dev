@@ -4,6 +4,8 @@
 
 LingoPad is a developer-focused translation tool that preserves your data structure while translating content. Built with the [Lingo.dev SDK](https://lingo.dev/en/sdk), it intelligently handles JSON, HTML, and plain text — keeping keys, tags, and formatting intact.
 
+[**Live Demo →**](https://lingo-pad.anishroy.com/)
+
 ![LingoPad Screenshot](./public/image.png)
 
 ![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=next.js)
@@ -163,6 +165,7 @@ This project is part of the [Lingo.dev](https://lingo.dev) ecosystem and is lice
 
 ## 🔗 Links
 
+- [Live Demo](https://lingo-pad.anishroy.com/)
 - [Lingo.dev](https://lingo.dev) — AI Translation Platform
 - [Lingo.dev SDK Documentation](https://lingo.dev/en/sdk)
 - [GitHub Repository](https://github.com/lingodotdev/lingo.dev)
