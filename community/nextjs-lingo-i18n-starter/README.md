@@ -10,7 +10,7 @@ Lingo.dev.
 
 ---
 
-## ✨ Features
+##  Features
 
 - 🌍 Language-based routing using App Router (`/en`, `/hi`, `/es`)
 - 🔁 Language switcher component
@@ -20,7 +20,7 @@ Lingo.dev.
 
 ---
 
-## ✅ Prerequisites
+##  Prerequisites
 
 - Node.js 18+ (recommended: Node.js 20+)
 - npm or pnpm
