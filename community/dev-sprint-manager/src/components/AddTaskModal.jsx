@@ -101,7 +101,7 @@ const AddTaskModal = ({ isOpen, onClose, onSubmit, initialStatus, locale = 'en' 
                                             type="number"
                                             min="0"
                                             step="0.5"
-                                            value={estimate || ''}
+                                            value={estimate === null ? '' : estimate}
                                             onChange={(e) => {
                                                 const value = e.target.value;
                                                 setEstimate(value === '' ? null : parseFloat(value));
