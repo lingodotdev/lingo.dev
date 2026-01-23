@@ -51,5 +51,3 @@ Runs at `http://localhost:5173`.
 ![alt text](<Screenshot 2026-01-23 185408.png>) 
 ![alt text](<Screenshot 2026-01-23 184635.png>) 
 ![alt text](<Screenshot 2026-01-23 184733.png>)
-
-<video controls src="final.mp4" title="Title"></video>
