@@ -11,16 +11,26 @@ export async function translateText(
   fromLang: string,
   toLang: string,
 ) {
-  const result = await lingoDotDev.localizeText(text, {
-    sourceLocale: fromLang,
-    targetLocale: toLang,
-  });
+  try {
+    const result = await lingoDotDev.localizeText(text, {
+      sourceLocale: fromLang,
+      targetLocale: toLang,
+    });
 
-  return result;
+    return result;
+  } catch (error) {
+    console.error(error);
+    return "error translating the text";
+  }
 }
 
 export async function recognizeText(text: string) {
-  const detectedLang = await lingoDotDev.recognizeLocale(text);
+  try {
+    const detectedLang = await lingoDotDev.recognizeLocale(text);
 
-  return detectedLang;
+    return detectedLang;
+  } catch (error) {
+    console.error(error);
+    return "error detecting the language";
+  }
 }
