@@ -1,0 +1,8 @@
+{
+  "name": "ai-localization-quality-guard",
+  "version": "0.1.0",
+  "description": "Example CLI that checks localization quality on top of translations",
+  "bin": {
+    "lingo-lqg": "index.js"
+  }
+}
