@@ -24,6 +24,7 @@ jobs:
           fetch-depth: 0
       - uses: anthropics/claude-code-action@v1
         with:
+          allowed_bots: "*"
           anthropic_api_key: ${{ secrets.CLAUDE_CODE_API_KEY }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           show_full_output: true
