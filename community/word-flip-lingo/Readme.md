@@ -2,6 +2,8 @@
 
 A language learning game that helps users practice vocabulary by shuffling words and having them arrange the characters in the correct order while translating between languages.
 
+## Demo video
+https://github.com/user-attachments/assets/3e0ccf83-e614-4732-b665-0cca74af1bcd
 
 ## What the App Does
 
