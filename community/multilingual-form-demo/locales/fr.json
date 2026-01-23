@@ -1,29 +1,117 @@
 {
-  "title": "Formulaire de support",
-  "fields": {
-    "name": {
-      "label": "Nom complet",
-      "placeholder": "Saisissez votre nom complet",
-      "requiredMessage": "Le nom est requis"
+  "Form": {
+    "title": "Inscription à la Newsletter",
+    "description": "Restez informé de nos dernières nouvelles et offres",
+    "validation": {
+      "demo": "Démonstration de Formulaire"
     },
-    "email": {
-      "label": "Adresse e-mail",
-      "placeholder": "Saisissez votre e-mail",
-      "requiredMessage": "L'e-mail est requis"
-    },
-    "issueType": {
-      "label": "Type de problème",
-      "options": {
-        "billing": "Problème de facturation",
-        "technical": "Problème technique",
-        "general": "Question générale"
+    "fields": {
+      "name": {
+        "label": "Nom Complet",
+        "placeholder": "Entrez votre nom complet",
+        "length": "2-50 caractères"
+      },
+      "email": {
+        "label": "Adresse E-mail",
+        "placeholder": "votre.email@exemple.fr"
+      },
+      "phone": {
+        "label": "Numéro de Téléphone",
+        "placeholder": "(123) 456-7890",
+        "optional": "Optionnel"
       }
     },
-    "message": {
-      "label": "Message",
-      "placeholder": "Décrivez votre problème",
-      "requiredMessage": "Le message ne peut pas être vide"
+    "preferences": {
+      "title": "Préférences E-mail",
+      "weekly": "Newsletter hebdomadaire",
+      "weeklyDesc": "Recevoir des mises à jour hebdomadaires",
+      "promotions": "Promotions spéciales",
+      "updates": "Mises à jour des produits",
+      "frequency": "Fréquence",
+      "daily": "Quotidien",
+      "weeklyFrequency": "Hebdomadaire",
+      "monthly": "Mensuel"
+    },
+    "privacy": "J'accepte les <terms>Conditions d'Utilisation</terms> et la <privacy>Politique de Confidentialité</privacy>",
+    "submit": "S'inscrire Maintenant",
+    "submitting": "Envoi en cours...",
+    "security": "Vos informations sont sécurisées et ne seront pas partagées",
+    "success": {
+      "title": "Merci !",
+      "message": "Vous vous êtes inscrit avec succès à notre newsletter. Bienvenue dans notre communauté !",
+      "cta": "Inscrire un Autre E-mail",
+      "home": "Retour à l'Accueil"
+    },
+    "stats": {
+      "errors": "Erreurs",
+      "dirty": "Modifié",
+      "valid": "Valide"
     }
   },
-  "submit": "Envoyer la demande"
+  "Validation": {
+    "name": {
+      "required": "Le nom est requis",
+      "minLength": "Le nom doit contenir au moins 2 caractères",
+      "maxLength": "Le nom ne peut pas dépasser 50 caractères"
+    },
+    "email": {
+      "required": "L'e-mail est requis",
+      "invalid": "Veuillez entrer une adresse e-mail valide"
+    },
+    "phone": {
+      "invalid": "Veuillez entrer un numéro de téléphone valide (10-15 chiffres)"
+    },
+    "privacy": {
+      "required": "Vous devez accepter les conditions et la politique de confidentialité"
+    }
+  },
+  "LocaleSwitcher": {
+    "label": "Langue",
+    "search": "Rechercher des langues...",
+    "close": "Fermer",
+    "count": "Affichage de {count} sur {total} langues",
+    "noResults": "Aucune langue trouvée",
+    "tryDifferent": "Essayez un terme de recherche différent",
+    "selectLanguage": "Sélectionner la Langue",
+    "currentLanguage": "Langue Actuelle",
+    "switchingInfo": "La page se rechargera avec la langue sélectionnée",
+    "shortcut": "pour basculer le sélecteur de langue",
+    "languages": {
+      "en": "Anglais",
+      "es": "Espagnol",
+      "fr": "Français",
+      "de": "Allemand",
+      "ja": "Japonais",
+      "zh": "Chinois",
+      "ko": "Coréen",
+      "ar": "Arabe"
+    }
+  },
+  "Home": {
+    "title": "Démonstration de Formulaire Multilingue",
+    "subtitle": "Construit avec Next.js, next-intl et React Hook Form",
+    "features": {
+      "title": "Fonctionnalités",
+      "feature1": "Support complet d'internationalisation avec next-intl",
+      "feature2": "Validation de formulaire avec Zod et React Hook Form",
+      "feature3": "Validation en temps réel avec messages d'erreur localisés",
+      "feature4": "Design responsive avec support du mode sombre"
+    },
+    "validation": {
+      "demo": "Démonstration de Validation",
+      "name": {
+        "required": "Validation du nom (2-50 caractères)"
+      },
+      "email": {
+        "format": "Validation du format e-mail"
+      },
+      "phone": {
+        "format": "Validation du format du numéro de téléphone (optionnel)"
+      },
+      "privacy": {
+        "required": "Acceptation de la politique de confidentialité requise"
+      }
+    },
+    "footer": "© 2026 Démonstration de Formulaire Multilingue. Fait avec ❤️ en utilisant Next.js"
+  }
 }

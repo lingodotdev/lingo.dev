@@ -1,29 +1,117 @@
 {
-  "title": "Support Form",
-  "fields": {
-    "name": {
-      "label": "Full Name",
-      "placeholder": "Enter your full name",
-      "requiredMessage": "Name is required"
+  "Form": {
+    "title": "Newsletter Signup",
+    "description": "Stay updated with our latest news and offers",
+    "validation": {
+      "demo": "Form Demo"
     },
-    "email": {
-      "label": "Email Address",
-      "placeholder": "Enter your email",
-      "requiredMessage": "Email is required"
-    },
-    "issueType": {
-      "label": "Issue Type",
-      "options": {
-        "billing": "Billing Issue",
-        "technical": "Technical Problem",
-        "general": "General Question"
+    "fields": {
+      "name": {
+        "label": "Full Name",
+        "placeholder": "Enter your full name",
+        "length": "2-50 characters"
+      },
+      "email": {
+        "label": "Email Address",
+        "placeholder": "your.email@example.com"
+      },
+      "phone": {
+        "label": "Phone Number",
+        "placeholder": "(123) 456-7890",
+        "optional": "Optional"
       }
     },
-    "message": {
-      "label": "Message",
-      "placeholder": "Describe your issue",
-      "requiredMessage": "Message cannot be empty"
+    "preferences": {
+      "title": "Email Preferences",
+      "weekly": "Weekly newsletter",
+      "weeklyDesc": "Receive weekly updates",
+      "promotions": "Special promotions",
+      "updates": "Product updates",
+      "frequency": "Frequency",
+      "daily": "Daily",
+      "weeklyFrequency": "Weekly",
+      "monthly": "Monthly"
+    },
+    "privacy": "I agree to the <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>",
+    "submit": "Subscribe Now",
+    "submitting": "Submitting...",
+    "security": "Your information is secure and will not be shared",
+    "success": {
+      "title": "Thank You!",
+      "message": "You have successfully subscribed to our newsletter. Welcome to our community!",
+      "cta": "Subscribe Another Email",
+      "home": "Return to Home"
+    },
+    "stats": {
+      "errors": "Errors",
+      "dirty": "Edited",
+      "valid": "Valid"
     }
   },
-  "submit": "Submit Request"
+  "Validation": {
+    "name": {
+      "required": "Name is required",
+      "minLength": "Name must be at least 2 characters",
+      "maxLength": "Name cannot exceed 50 characters"
+    },
+    "email": {
+      "required": "Email is required",
+      "invalid": "Please enter a valid email address"
+    },
+    "phone": {
+      "invalid": "Please enter a valid phone number (10-15 digits)"
+    },
+    "privacy": {
+      "required": "You must accept the terms and privacy policy"
+    }
+  },
+  "LocaleSwitcher": {
+    "label": "Language",
+    "search": "Search languages...",
+    "close": "Close",
+    "count": "Showing {count} of {total} languages",
+    "noResults": "No languages found",
+    "tryDifferent": "Try a different search term",
+    "selectLanguage": "Select Language",
+    "currentLanguage": "Current Language",
+    "switchingInfo": "Page will reload with selected language",
+    "shortcut": "to toggle language switcher",
+    "languages": {
+      "en": "English",
+      "es": "Spanish",
+      "fr": "French",
+      "de": "German",
+      "ja": "Japanese",
+      "zh": "Chinese",
+      "ko": "Korean",
+      "ar": "Arabic"
+    }
+  },
+  "Home": {
+    "title": "Multilingual Form Demo",
+    "subtitle": "Built with Next.js, next-intl, and React Hook Form",
+    "features": {
+      "title": "Features",
+      "feature1": "Full internationalization support with next-intl",
+      "feature2": "Form validation with Zod and React Hook Form",
+      "feature3": "Real-time validation with localized error messages",
+      "feature4": "Responsive design with dark mode support"
+    },
+    "validation": {
+      "demo": "Validation Demo",
+      "name": {
+        "required": "Name validation (2-50 characters)"
+      },
+      "email": {
+        "format": "Email format validation"
+      },
+      "phone": {
+        "format": "Phone number format validation (optional)"
+      },
+      "privacy": {
+        "required": "Privacy policy acceptance required"
+      }
+    },
+    "footer": "© 2026 Multilingual Form Demo. Built with ❤️ using Next.js"
+  }
 }

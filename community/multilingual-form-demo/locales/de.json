@@ -1,29 +1,117 @@
 {
-  "title": "Support-Formular",
-  "fields": {
-    "name": {
-      "label": "Vollständiger Name",
-      "placeholder": "Geben Sie Ihren vollständigen Namen ein",
-      "requiredMessage": "Name ist erforderlich"
+  "Form": {
+    "title": "Newsletter-Anmeldung",
+    "description": "Bleiben Sie auf dem Laufenden über unsere neuesten Nachrichten und Angebote",
+    "validation": {
+      "demo": "Formular-Demo"
     },
-    "email": {
-      "label": "E-Mail-Adresse",
-      "placeholder": "Geben Sie Ihre E-Mail-Adresse ein",
-      "requiredMessage": "E-Mail-Adresse ist erforderlich"
-    },
-    "issueType": {
-      "label": "Art des Problems",
-      "options": {
-        "billing": "Abrechnungsproblem",
-        "technical": "Technisches Problem",
-        "general": "Allgemeine Frage"
+    "fields": {
+      "name": {
+        "label": "Vollständiger Name",
+        "placeholder": "Geben Sie Ihren vollständigen Namen ein",
+        "length": "2-50 Zeichen"
+      },
+      "email": {
+        "label": "E-Mail-Adresse",
+        "placeholder": "ihre.email@beispiel.de"
+      },
+      "phone": {
+        "label": "Telefonnummer",
+        "placeholder": "(123) 456-7890",
+        "optional": "Optional"
       }
     },
-    "message": {
-      "label": "Nachricht",
-      "placeholder": "Beschreiben Sie Ihr Problem",
-      "requiredMessage": "Nachricht darf nicht leer sein"
+    "preferences": {
+      "title": "E-Mail-Einstellungen",
+      "weekly": "Wöchentlicher Newsletter",
+      "weeklyDesc": "Wöchentliche Updates erhalten",
+      "promotions": "Sonderangebote",
+      "updates": "Produkt-Updates",
+      "frequency": "Häufigkeit",
+      "daily": "Täglich",
+      "weeklyFrequency": "Wöchentlich",
+      "monthly": "Monatlich"
+    },
+    "privacy": "Ich stimme den <terms>Nutzungsbedingungen</terms> und der <privacy>Datenschutzerklärung</privacy> zu",
+    "submit": "Jetzt Anmelden",
+    "submitting": "Wird gesendet...",
+    "security": "Ihre Daten sind sicher und werden nicht weitergegeben",
+    "success": {
+      "title": "Vielen Dank!",
+      "message": "Sie haben sich erfolgreich für unseren Newsletter angemeldet. Willkommen in unserer Community!",
+      "cta": "Weitere E-Mail Anmelden",
+      "home": "Zurück zur Startseite"
+    },
+    "stats": {
+      "errors": "Fehler",
+      "dirty": "Bearbeitet",
+      "valid": "Gültig"
     }
   },
-  "submit": "Anfrage absenden"
+  "Validation": {
+    "name": {
+      "required": "Name ist erforderlich",
+      "minLength": "Name muss mindestens 2 Zeichen lang sein",
+      "maxLength": "Name darf 50 Zeichen nicht überschreiten"
+    },
+    "email": {
+      "required": "E-Mail ist erforderlich",
+      "invalid": "Bitte geben Sie eine gültige E-Mail-Adresse ein"
+    },
+    "phone": {
+      "invalid": "Bitte geben Sie eine gültige Telefonnummer ein (10-15 Ziffern)"
+    },
+    "privacy": {
+      "required": "Sie müssen die Bedingungen und Datenschutzrichtlinien akzeptieren"
+    }
+  },
+  "LocaleSwitcher": {
+    "label": "Sprache",
+    "search": "Sprachen suchen...",
+    "close": "Schließen",
+    "count": "{count} von {total} Sprachen werden angezeigt",
+    "noResults": "Keine Sprachen gefunden",
+    "tryDifferent": "Versuchen Sie einen anderen Suchbegriff",
+    "selectLanguage": "Sprache Auswählen",
+    "currentLanguage": "Aktuelle Sprache",
+    "switchingInfo": "Die Seite wird mit der ausgewählten Sprache neu geladen",
+    "shortcut": "um den Sprachwähler umzuschalten",
+    "languages": {
+      "en": "Englisch",
+      "es": "Spanisch",
+      "fr": "Französisch",
+      "de": "Deutsch",
+      "ja": "Japanisch",
+      "zh": "Chinesisch",
+      "ko": "Koreanisch",
+      "ar": "Arabisch"
+    }
+  },
+  "Home": {
+    "title": "Mehrsprachige Formular-Demo",
+    "subtitle": "Erstellt mit Next.js, next-intl und React Hook Form",
+    "features": {
+      "title": "Funktionen",
+      "feature1": "Vollständige Internationalisierungsunterstützung mit next-intl",
+      "feature2": "Formularvalidierung mit Zod und React Hook Form",
+      "feature3": "Echtzeitvalidierung mit lokalisierten Fehlermeldungen",
+      "feature4": "Responsives Design mit Dark-Mode-Unterstützung"
+    },
+    "validation": {
+      "demo": "Validierungs-Demo",
+      "name": {
+        "required": "Namensvalidierung (2-50 Zeichen)"
+      },
+      "email": {
+        "format": "E-Mail-Format-Validierung"
+      },
+      "phone": {
+        "format": "Telefonnummer-Format-Validierung (optional)"
+      },
+      "privacy": {
+        "required": "Akzeptanz der Datenschutzerklärung erforderlich"
+      }
+    },
+    "footer": "© 2026 Mehrsprachige Formular-Demo. Mit ❤️ erstellt mit Next.js"
+  }
 }
