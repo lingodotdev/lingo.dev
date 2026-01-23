@@ -1,0 +1,44 @@
+{
+  "app": {
+    "header": {
+      "title": "CodeBridge",
+      "subtitle": "Brisez les barrières linguistiques dans le code"
+    },
+    "input": {
+      "title": "Explorer N'importe Quel Dépôt",
+      "description": "Entrez une URL de dépôt GitHub pour afficher et traduire son code",
+      "placeholder": "utilisateur/dépôt ou https://github.com/utilisateur/dépôt",
+      "button": "Explorer le Dépôt",
+      "loading": "Chargement...",
+      "error": {
+        "empty": "Veuillez entrer une URL de dépôt",
+        "notFound": "Dépôt introuvable",
+        "failed": "Échec de la récupération du dépôt"
+      },
+      "examples": "Essayez ceux-ci:"
+    },
+    "explorer": {
+      "title": "Fichiers",
+      "empty": "Aucun fichier trouvé"
+    },
+    "viewer": {
+      "empty": {
+        "title": "Aucun fichier sélectionné",
+        "description": "Sélectionnez un fichier dans l'explorateur pour afficher son contenu"
+      },
+      "actions": {
+        "translate": "Traduire",
+        "copy": "Copier",
+        "copied": "Copié!"
+      }
+    },
+    "repository": {
+      "backButton": "Retour à la recherche",
+      "noDescription": "Aucune description"
+    },
+    "errors": {
+      "general": "Une erreur s'est produite",
+      "loadFile": "Échec du chargement du fichier"
+    }
+  }
+}

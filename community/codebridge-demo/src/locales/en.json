@@ -1,0 +1,44 @@
+{
+  "app": {
+    "header": {
+      "title": "CodeBridge",
+      "subtitle": "Break language barriers in code"
+    },
+    "input": {
+      "title": "Explore Any Repository",
+      "description": "Enter a GitHub repository URL to view and translate its code",
+      "placeholder": "username/repository or https://github.com/username/repository",
+      "button": "Explore Repository",
+      "loading": "Loading...",
+      "error": {
+        "empty": "Please enter a repository URL",
+        "notFound": "Repository not found",
+        "failed": "Failed to fetch repository"
+      },
+      "examples": "Try these:"
+    },
+    "explorer": {
+      "title": "Files",
+      "empty": "No files found"
+    },
+    "viewer": {
+      "empty": {
+        "title": "No file selected",
+        "description": "Select a file from the file explorer to view its content"
+      },
+      "actions": {
+        "translate": "Translate",
+        "copy": "Copy",
+        "copied": "Copied!"
+      }
+    },
+    "repository": {
+      "backButton": "Back to Search",
+      "noDescription": "No description"
+    },
+    "errors": {
+      "general": "An error occurred",
+      "loadFile": "Failed to load file"
+    }
+  }
+}

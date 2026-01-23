@@ -1,0 +1,146 @@
+@import "tailwindcss";
+
+@theme {
+  /* Black & Orange SaaS Theme - Optimized for visibility */
+  --color-background: #0a0a0a;
+  --color-foreground: #f5f5f5;
+  --color-card: #1a1a1a;
+  --color-card-foreground: #f5f5f5;
+  --color-popover: #1a1a1a;
+  --color-popover-foreground: #f5f5f5;
+  --color-primary: #ff6b00;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #2a2a2a;
+  --color-secondary-foreground: #e5e5e5;
+  --color-muted: #2a2a2a;
+  --color-muted-foreground: #b8b8b8;
+  --color-accent: #ff6b00;
+  --color-accent-foreground: #ffffff;
+  --color-destructive: #ef4444;
+  --color-destructive-foreground: #ffffff;
+  --color-border: #3a3a3a;
+  --color-input: #2a2a2a;
+  --color-ring: #ff6b00;
+  --radius: 0.5rem;
+
+  /* Font families */
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", Consolas, monospace;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 0.5rem;
+  height: 0.5rem;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(163, 163, 163, 0.3);
+  border-radius: 0.25rem;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(163, 163, 163, 0.5);
+}
+
+/* Prism.js override for code highlighting */
+pre[class*="language-"] {
+  background: rgba(26, 26, 26, 0.8) !important;
+  color: #f5f5f5 !important;
+  text-shadow: none !important;
+}
+
+code[class*="language-"] {
+  background: transparent !important;
+  color: #f5f5f5 !important;
+  text-shadow: none !important;
+}
+
+/* Prism.js token colors - Orange accent theme */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #a3a3a3 !important;
+}
+
+.token.punctuation {
+  color: rgba(250, 250, 250, 0.7) !important;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  color: #fb923c !important;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+  color: #34d399 !important;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+  color: #22d3ee !important;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: #a78bfa !important;
+}
+
+.token.function,
+.token.class-name {
+  color: #fbbf24 !important;
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+  color: #fdba74 !important;
+}
+
+/* Custom animations */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
+
+.animate-slide-in {
+  animation: slide-in 0.3s ease-out;
+}

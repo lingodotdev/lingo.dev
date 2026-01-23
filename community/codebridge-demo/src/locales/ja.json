@@ -1,0 +1,44 @@
+{
+  "app": {
+    "header": {
+      "title": "CodeBridge",
+      "subtitle": "コードの言語障壁を打ち破る"
+    },
+    "input": {
+      "title": "任意のリポジトリを探索",
+      "description": "GitHubリポジトリのURLを入力して、コードを表示および翻訳します",
+      "placeholder": "ユーザー名/リポジトリ または https://github.com/ユーザー名/リポジトリ",
+      "button": "リポジトリを探索",
+      "loading": "読み込み中...",
+      "error": {
+        "empty": "リポジトリのURLを入力してください",
+        "notFound": "リポジトリが見つかりません",
+        "failed": "リポジトリの取得に失敗しました"
+      },
+      "examples": "これらを試してください:"
+    },
+    "explorer": {
+      "title": "ファイル",
+      "empty": "ファイルが見つかりません"
+    },
+    "viewer": {
+      "empty": {
+        "title": "ファイルが選択されていません",
+        "description": "ファイルエクスプローラーからファイルを選択して内容を表示します"
+      },
+      "actions": {
+        "translate": "翻訳",
+        "copy": "コピー",
+        "copied": "コピーしました!"
+      }
+    },
+    "repository": {
+      "backButton": "検索に戻る",
+      "noDescription": "説明なし"
+    },
+    "errors": {
+      "general": "エラーが発生しました",
+      "loadFile": "ファイルの読み込みに失敗しました"
+    }
+  }
+}
