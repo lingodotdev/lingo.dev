@@ -27,6 +27,7 @@
   "dependencies": {
     "@changesets/changelog-github": "0.5.1",
     "@changesets/cli": "2.29.7",
+    "lingo.dev": "^0.122.1",
     "minimatch": "10.1.1",
     "node-machine-id": "1.1.12"
   },
