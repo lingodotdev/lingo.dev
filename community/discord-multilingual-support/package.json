@@ -1,0 +1,23 @@
+{
+  "name": "discord",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@google/genai": "^1.10.0",
+    "cld3-asm": "^4.0.0",
+    "discord.js": "^14.20.0",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "franc-min": "^6.2.0",
+    "lingo.dev": "^0.122.2",
+    "mongoose": "^8.13.2",
+    "nodemon": "^3.1.10"
+  }
+}
