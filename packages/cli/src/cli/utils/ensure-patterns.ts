@@ -1,6 +1,5 @@
 import fs from "fs";
 import path from "path";
-import { glob } from "glob";
 import _ from "lodash";
 import { LocaleCode, resolveLocaleCode } from "@lingo.dev/_spec";
 
