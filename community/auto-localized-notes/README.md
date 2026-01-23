@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Auto-Localized Notes
 
-## Getting Started
+A demo Next.js application showcasing **lingo.dev SDK** usage for automatic language detection and translation.  
+Users can write notes in any language, and the app automatically detects the source language and translates the note into a target language.
 
-First, run the development server:
+This project is intentionally minimal to focus on demonstrating **SDK integration, server/client separation, and real-world usage**, rather than application complexity.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## What this project does
+
+- Accepts user input in **any language**
+- Detects the input language automatically
+- Translates the text into a selected target language
+- Displays both:
+  - Original text
+  - Translated text
+- Allows searching notes by translated content
+
+The lingo.dev SDK is used **server-side only** via Next.js Server Actions to ensure correct handling of Node-only dependencies and API keys.
+
+---
+
+## Tech Stack
+
+- **Next.js (App Router)**
+- **TypeScript**
+- **Tailwind CSS**
+- **lingo.dev SDK**
+
+---
+
+## Prerequisites
+
+Before running this project locally, ensure you have:
+
+- **Node.js** `>= 18`
+- **pnpm / npm / yarn**
+- A **lingo.dev API key**
+
+### Environment variables
+
+Create a `.env.local` file in the project root:
+
+```env
+LINGODOTDEV_API_KEY=your_api_key_here
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## How to run locally
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Clone the repository
 
-## Learn More
+```
+git clone <repo-url>
+cd auto-localized-notes
+```
 
-To learn more about Next.js, take a look at the following resources:
+2. Install dependencies
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+npm install
+# or
+pnpm install
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3. Start the development server
 
-## Deploy on Vercel
+```
+npm run dev
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+4. Open in browser
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+http://localhost:3000
+```
