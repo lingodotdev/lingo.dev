@@ -33,7 +33,7 @@ export default function Globe() {
         { location: [24.7136, 46.6753], size: 0.08 }, // Riyadh (AR)
         { location: [40.7128, -74.0060], size: 0.08 }, // New York (EN)
       ],
-      onRender: (state) => {
+      onRender: (state: any) => {
         state.phi = phi;
         phi += 0.01;
       },

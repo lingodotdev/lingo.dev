@@ -1,11 +1,11 @@
 import { AuroraText } from "@/components/magicui/aurora-text";
-import { loadDictionary } from "lingo.dev/react/rsc";
+import { loadDictionary, loadDictionaryFromRequest } from "lingo.dev/react/rsc";
 import Image from "next/image";
 import { ChefHat, Globe as GlobeIcon, Languages, Zap } from "lucide-react";
 import Globe from "@/components/magicui/globe";
 
 export default async function Home() {
-  const dictionary = await loadDictionary();
+  const dictionary = await loadDictionaryFromRequest(loadDictionary);
   
   const recipes = [
     { id: "pasta" as const, img: "/images/pasta.png", color: "from-orange-500/20", tag: "Italian" },
@@ -109,7 +109,7 @@ export default async function Home() {
         <div className="grid md:grid-cols-2 gap-16 items-center">
           <div className="space-y-6">
             <div className="h-12 w-12 rounded-2xl bg-orange-500/20 flex items-center justify-center text-orange-500">
-              <Globe size={24} />
+              <GlobeIcon size={24} />
             </div>
             <h2 className="text-4xl font-black text-white">
               {dictionary.sections.how_it_works}
