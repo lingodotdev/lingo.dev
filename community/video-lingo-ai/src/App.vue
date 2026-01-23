@@ -45,7 +45,7 @@ const handleUpload = async () => {
       "http://127.0.0.1:8000/process-video",
       formData,
       {
-        params: { issummarize: isSummarize.value },
+        params: { issummarize: isSummarize.value, lang: lang.value },
         headers: { "Content-Type": "multipart/form-data" }
       }
     )
