@@ -19,7 +19,7 @@ import {
   UserIcon,
   EmailIcon,
   InfoIcon,
-} from "./newsletter-form/index";
+} from "./newsletterForm/index";
 import { useFormHelpers } from "../hooks/useFormValidation";
 import {
   FORM_DEFAULT_VALUES,
