@@ -1,3 +1,8 @@
+# Discord Private Multilingual Support Bot
+
+> Community contribution showcasing Lingo.dev for AI-generated,
+> context-aware multilingual Discord support.
+
 ## Problem Statement
 
 In Discord communities:
