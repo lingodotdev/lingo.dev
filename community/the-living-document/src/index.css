@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #0d0d0d;
+
+  /* Custom Pastel Palette */
+  --pastel-pink: #ffd1dc;
+  --pastel-purple: #e0c3fc;
+  --pastel-blue: #caf0f8;
+  --pastel-green: #d8f3dc;
+  --pastel-yellow: #fcf6bd;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  background: radial-gradient(circle at 0% 0%, rgba(255, 209, 220, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 100% 100%, rgba(202, 240, 248, 0.05) 0%, transparent 50%),
+    #0d0d0d;
+}
+
+#root {
+  width: 100%;
+}
+
+@keyframes highlight {
+  0% {
+    background-color: rgba(253, 253, 150, 0.2);
+  }
+
+  100% {
+    background-color: transparent;
+  }
+}
+
+.animate-highlight {
+  animation: highlight 1.5s ease-out forwards;
+}
+
+@keyframes highlight-fade {
+  0% {
+    background-color: rgba(216, 243, 220, 0.4);
+    color: #d8f3dc;
+  }
+
+  100% {
+    background-color: transparent;
+    color: inherit;
+  }
+}
+
+.animate-highlight-fade {
+  animation: highlight-fade 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.1);
+}

@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/lingo/:path*",
+      "destination": "https://engine.lingo.dev/:path*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
