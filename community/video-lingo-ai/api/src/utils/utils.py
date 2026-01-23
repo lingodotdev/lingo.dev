@@ -1,5 +1,6 @@
 import subprocess
 import os
+from lingodotdev import LingoDotDevEngine
 
 def extract_audio(video_path, output_audio="temp_audio.wav"):
 
@@ -10,3 +11,12 @@ def extract_audio(video_path, output_audio="temp_audio.wav"):
         raise RuntimeError("Audio extraction failed")
 
     return output_audio
+
+
+async def translate_text_with_lingo(text: str, target_lang: str) -> str:
+    result = await LingoDotDevEngine.quick_translate(
+        text,
+        api_key=os.getenv("LINGODOTDEV_API_KEY"),
+        target_locale=target_lang
+    )
+    return result
