@@ -1,12 +1,12 @@
 export const translateText = async (text, sourceLang, targetLang) => {
   try {
-    // We map the OCR codes to standard codes here
     const langMap = {
       'eng': 'en', 'jpn': 'ja', 'chi_sim': 'zh',
-      'fra': 'fr', 'spa': 'es', 'hin': 'hi'
+      'fra': 'fr', 'spa': 'es', 'hin': 'hi',
+      'auto': 'auto' // Pass auto through
     };
     
-    
+    // If it's auto, keep it auto. Otherwise map it. Default to 'en' if unknown.
     const sourceCode = langMap[sourceLang] || 'en';
 
     // CALL YOUR LOCAL SERVER (The Bridge)

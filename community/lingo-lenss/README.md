@@ -1,6 +1,8 @@
 # LingoLens 📸
 
-**LingoLens** is a powerful OCR (Optical Character Recognition) and Translation tool built for the **Lingo.dev Community Sprint**. It allows users to upload images of text (receipts, signs, documents), extracts the text using Tesseract.js, and translates it using the **Lingo.dev SDK**.
+**LingoLens** is a powerful **AI Visual Translator** built for the **Lingo.dev Community Sprint**. 
+
+It upgrades standard OCR with **Intelligent Script Detection** and **Lingo.dev's AI Language Inference**. Wrapped in a stunning **Glassmorphism UI**, it allows users to upload images of text (receipts, signs, documents) and automatically detects the language script and translation context in real-time.
 
 ## 🎥 Demo & Testing
 We have provided resources to help you test the application quickly:
@@ -11,13 +13,14 @@ We have provided resources to help you test the application quickly:
 ### 2. Test with Sample Data
 I have included a sample receipt image in this repository for you to test with:
 * **File:** [`test.png`](./test.png)
-* **Usage:** You can upload this image in the app to see the OCR and Translation in action immediately.
+* **Usage:** Drag and drop this image into the app to see the Auto-Detection and Translation in action immediately.
 
 ## 🚀 Lingo.dev Features Highlighted
 This project demonstrates key capabilities of the Lingo.dev ecosystem:
-1.  **Lingo.dev SDK Integration:** Seamlessly integrates `lingo.dev/sdk` into a React environment.
-2.  **Real-time Localization:** Uses `lingo.localizeText` to provide accurate, context-aware translations for dynamic user content.
-3.  **Secure Backend Proxy:** Implements a robust Node.js/Express bridge (`server.js`) to handle API authentication securely, resolving browser CORS restrictions.
+1.  **AI Language Inference:** Uses the `sourceLocale: null` feature of the **Lingo.dev SDK** to automatically identify the source language from the text context.
+2.  **Smart Script Detection:** Implements **Tesseract OSD** (Orientation & Script Detection) to dynamically load the correct OCR alphabet (e.g., Japanese vs. Latin) before reading.
+3.  **Real-time Localization:** Uses `lingo.localizeText` to provide accurate, context-aware translations for dynamic user content.
+4.  **Secure Backend Proxy:** Implements a robust Node.js/Express bridge (`server.js`) to handle API authentication securely.
 
 ## 🛠️ Setup Instructions
 
@@ -69,30 +72,14 @@ Open the URL shown in the terminal: `(usually: http://localhost:5173)`
 
 ## 📖 How It Works
 
-1. **Upload**  
-   User uploads an image or clicks **"Try with Sample Receipt"**.
+1. **Upload & Detect** User uploads an image. The app first runs **Tesseract OSD** to detect the script (e.g., "Han" for Chinese, "Latin" for English).
 
-2. **Extract**  
-   Tesseract.js (running in the browser) extracts raw text from the image.
+2. **Extract (OCR)** Based on the script, the app loads the optimized OCR model (e.g., `chi_sim` or `eng`) and extracts the raw text from the image.
 
-3. **Translate**  
-   The frontend sends the extracted text to the local Express server.
+3. **Inference** The frontend sends the text to the server with `sourceLang: 'auto'`.
 
-4. **Process**  
-   The server authenticates with the Lingo.dev SDK and processes the translation.
+4. **Translate** The **Lingo.dev SDK** analyzes the text content, infers the source language, and generates a context-aware translation.
 
-5. **Result**  
-   The translated text appears instantly on the screen.
+5. **Result** The original text and the translation appear instantly on the animated Glassmorphism interface.
 
----
 
-## ✨ Summary of Changes in this README
-
-- **Added "Demo & Quick Test" Section**  
-  Explicitly highlights `demo.mp4` and the **One-Click Test** button for judges.
-
-- **Clarified Features**  
-  Emphasized the **Secure Backend Proxy** as a key technical and security feature.
-
-- **Simple Instructions**  
-  Setup steps are clear and minimal so the project can be run in seconds.

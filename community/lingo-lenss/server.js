@@ -6,12 +6,11 @@ import { LingoDotDevEngine } from "lingo.dev/sdk";
 dotenv.config();
 
 const app = express();
-const PORT = 3001; // We run this on port 3001 to avoid conflict with React (5173)
+const PORT = 3001; 
 
-app.use(cors()); // Allow React to talk to this server
+app.use(cors()); 
 app.use(express.json());
 
-// Initialize Lingo Engine here (Server-side is safe!)
 const apiKey = process.env.VITE_LINGO_API_KEY;
 if (!apiKey) console.warn("WARNING: VITE_LINGO_API_KEY is missing in .env file");
 
@@ -23,11 +22,19 @@ app.post('/api/translate', async (req, res) => {
     
     console.log(`Processing: ${sourceLang} -> ${targetLang}`);
 
-    // Map languages if necessary (API usually expects standard codes)
-    const translation = await engine.localizeText(text, {
-      sourceLocale: sourceLang,
-      targetLocale: targetLang
-    });
+    // CONFIGURATION:
+    // If sourceLang is 'auto', we pass null as per Lingo.dev SDK docs
+    // This tells the AI to infer the language from the text content.
+    const options = {
+      targetLocale: targetLang,
+      sourceLocale: sourceLang === 'auto' ? null : sourceLang
+    };
+
+    if (sourceLang === 'auto') {
+        console.log("Auto-detecting source language via Lingo.dev...");
+    }
+
+    const translation = await engine.localizeText(text, options);
 
     res.json({ translation });
 

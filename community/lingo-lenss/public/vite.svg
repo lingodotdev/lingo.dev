@@ -1,1 +1,36 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--logos" width="31.88" height="32" preserveAspectRatio="xMidYMid meet" viewBox="0 0 256 257"><defs><linearGradient id="IconifyId1813088fe1fbc01fb466" x1="-.828%" x2="57.636%" y1="7.652%" y2="78.411%"><stop offset="0%" stop-color="#41D1FF"></stop><stop offset="100%" stop-color="#BD34FE"></stop></linearGradient><linearGradient id="IconifyId1813088fe1fbc01fb467" x1="43.376%" x2="50.316%" y1="2.242%" y2="89.03%"><stop offset="0%" stop-color="#FFEA83"></stop><stop offset="8.333%" stop-color="#FFDD35"></stop><stop offset="100%" stop-color="#FFA800"></stop></linearGradient></defs><path fill="url(#IconifyId1813088fe1fbc01fb466)" d="M255.153 37.938L134.897 252.976c-2.483 4.44-8.862 4.466-11.382.048L.875 37.958c-2.746-4.814 1.371-10.646 6.827-9.67l120.385 21.517a6.537 6.537 0 0 0 2.322-.004l117.867-21.483c5.438-.991 9.574 4.796 6.877 9.62Z"></path><path fill="url(#IconifyId1813088fe1fbc01fb467)" d="M185.432.063L96.44 17.501a3.268 3.268 0 0 0-2.634 3.014l-5.474 92.456a3.268 3.268 0 0 0 3.997 3.378l24.777-5.718c2.318-.535 4.413 1.507 3.936 3.838l-7.361 36.047c-.495 2.426 1.782 4.5 4.151 3.78l15.304-4.649c2.372-.72 4.652 1.36 4.15 3.788l-11.698 56.621c-.732 3.542 3.979 5.473 5.943 2.437l1.313-2.028l72.516-144.72c1.215-2.423-.88-5.186-3.54-4.672l-25.505 4.922c-2.396.462-4.435-1.77-3.759-4.114l16.646-57.705c.677-2.35-1.37-4.583-3.769-4.113Z"></path></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <defs>
+    <linearGradient id="cyber-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22d3ee" /> <stop offset="50%" stop-color="#3b82f6" /> <stop offset="100%" stop-color="#a855f7" /> </linearGradient>
+    
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <rect x="25" y="25" width="150" height="150" rx="40" stroke="url(#cyber-grad)" stroke-width="8" fill="#0f172a" fill-opacity="0.8" />
+  
+  <circle cx="100" cy="100" r="45" stroke="#3b82f6" stroke-width="3" fill="#1e293b" fill-opacity="0.5" />
+  
+  <g transform="translate(75, 75)">
+    <rect x="0" y="0" width="50" height="50" rx="8" fill="#ffffff" fill-opacity="0.1" />
+    <path d="M12 18H38" stroke="#cbd5e1" stroke-width="3" stroke-linecap="round" />
+    <path d="M12 28H30" stroke="#cbd5e1" stroke-width="3" stroke-linecap="round" />
+    <path d="M12 38H38" stroke="#cbd5e1" stroke-width="3" stroke-linecap="round" />
+  </g>
+
+  <line x1="30" y1="100" x2="170" y2="100" stroke="#22d3ee" stroke-width="3" stroke-linecap="round" filter="url(#glow)">
+    <animate attributeName="y1" values="40;160;40" dur="4s" repeatCount="indefinite" />
+    <animate attributeName="y2" values="40;160;40" dur="4s" repeatCount="indefinite" />
+    <animate attributeName="opacity" values="0.4;1;0.4" dur="4s" repeatCount="indefinite" />
+  </line>
+
+  <path d="M100 55 A45 45 0 0 1 145 100" stroke="#22d3ee" stroke-width="3" stroke-linecap="round" opacity="0.8" />
+  <path d="M55 100 A45 45 0 0 0 100 145" stroke="#a855f7" stroke-width="3" stroke-linecap="round" opacity="0.8" />
+
+  <path d="M160 35 L164 25 L168 35 L178 39 L168 43 L164 53 L160 43 L150 39 Z" fill="#22d3ee">
+     <animate attributeName="opacity" values="0;1;0" dur="3s" repeatCount="indefinite" />
+     <animateTransform attributeName="transform" type="scale" values="0.5;1;0.5" dur="3s" repeatCount="indefinite" additive="sum" />
+  </path>
+</svg>
