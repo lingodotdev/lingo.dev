@@ -1,46 +1,46 @@
 {
   "Form": {
-    "title": "Suscripción al Boletín",
+    "title": "Suscripción al boletín",
     "description": "Mantente actualizado con nuestras últimas noticias y ofertas",
     "validation": {
-      "demo": "Demostración de Formulario"
+      "demo": "Demostración del formulario"
     },
     "fields": {
       "name": {
-        "label": "Nombre Completo",
-        "placeholder": "Ingresa tu nombre completo",
+        "label": "Nombre completo",
+        "placeholder": "Introduce tu nombre completo",
         "length": "2-50 caracteres"
       },
       "email": {
-        "label": "Correo Electrónico",
+        "label": "Dirección de correo electrónico",
         "placeholder": "tu.correo@ejemplo.com"
       },
       "phone": {
-        "label": "Número de Teléfono",
+        "label": "Número de teléfono",
         "placeholder": "(123) 456-7890",
         "optional": "Opcional"
       }
     },
     "preferences": {
-      "title": "Preferencias de Correo",
+      "title": "Preferencias de correo electrónico",
       "weekly": "Boletín semanal",
       "weeklyDesc": "Recibe actualizaciones semanales",
       "promotions": "Promociones especiales",
       "updates": "Actualizaciones de productos",
       "frequency": "Frecuencia",
-      "daily": "Diario",
+      "daily": "Diaria",
       "weeklyFrequency": "Semanal",
       "monthly": "Mensual"
     },
-    "privacy": "Acepto los <terms>Términos de Servicio</terms> y la <privacy>Política de Privacidad</privacy>",
-    "submit": "Suscribirse Ahora",
+    "privacy": "Acepto los <terms>Términos de servicio</terms> y la <privacy>Política de privacidad</privacy>",
+    "submit": "Suscribirse ahora",
     "submitting": "Enviando...",
     "security": "Tu información está segura y no será compartida",
     "success": {
       "title": "¡Gracias!",
       "message": "Te has suscrito exitosamente a nuestro boletín. ¡Bienvenido a nuestra comunidad!",
-      "cta": "Suscribir Otro Correo",
-      "home": "Volver al Inicio"
+      "cta": "Suscribir otro correo electrónico",
+      "home": "Volver al inicio"
     },
     "stats": {
       "errors": "Errores",
@@ -50,16 +50,16 @@
   },
   "Validation": {
     "name": {
-      "required": "El nombre es requerido",
+      "required": "El nombre es obligatorio",
       "minLength": "El nombre debe tener al menos 2 caracteres",
-      "maxLength": "El nombre no puede exceder 50 caracteres"
+      "maxLength": "El nombre no puede superar los 50 caracteres"
     },
     "email": {
-      "required": "El correo electrónico es requerido",
-      "invalid": "Por favor ingresa un correo electrónico válido"
+      "required": "El correo electrónico es obligatorio",
+      "invalid": "Por favor, introduce una dirección de correo electrónico válida"
     },
     "phone": {
-      "invalid": "Por favor ingresa un número de teléfono válido (10-15 dígitos)"
+      "invalid": "Por favor, introduce un número de teléfono válido (10-15 dígitos)"
     },
     "privacy": {
       "required": "Debes aceptar los términos y la política de privacidad"
@@ -71,11 +71,11 @@
     "close": "Cerrar",
     "count": "Mostrando {count} de {total} idiomas",
     "noResults": "No se encontraron idiomas",
-    "tryDifferent": "Intenta un término de búsqueda diferente",
-    "selectLanguage": "Seleccionar Idioma",
-    "currentLanguage": "Idioma Actual",
+    "tryDifferent": "Prueba con un término de búsqueda diferente",
+    "selectLanguage": "Seleccionar idioma",
+    "currentLanguage": "Idioma actual",
     "switchingInfo": "La página se recargará con el idioma seleccionado",
-    "shortcut": "para alternar el selector de idioma",
+    "shortcut": "para activar el selector de idioma",
     "languages": {
       "en": "Inglés",
       "es": "Español",
@@ -88,8 +88,8 @@
     }
   },
   "Home": {
-    "title": "Demostración de Formulario Multilingüe",
-    "subtitle": "Construido con Next.js, next-intl y React Hook Form",
+    "title": "Demo de formulario multilingüe",
+    "subtitle": "Creado con Next.js, next-intl y React Hook Form",
     "features": {
       "title": "Características",
       "feature1": "Soporte completo de internacionalización con next-intl",
@@ -98,7 +98,7 @@
       "feature4": "Diseño responsivo con soporte de modo oscuro"
     },
     "validation": {
-      "demo": "Demostración de Validación",
+      "demo": "Demo de validación",
       "name": {
         "required": "Validación de nombre (2-50 caracteres)"
       },
@@ -109,9 +109,9 @@
         "format": "Validación de formato de número de teléfono (opcional)"
       },
       "privacy": {
-        "required": "Aceptación de política de privacidad requerida"
+        "required": "Se requiere aceptación de la política de privacidad"
       }
     },
-    "footer": "© 2026 Demostración de Formulario Multilingüe. Hecho con ❤️ usando Next.js"
+    "footer": "© 2026 Demo de formulario multilingüe. Creado con ❤️ usando Next.js"
   }
 }

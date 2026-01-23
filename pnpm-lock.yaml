@@ -63,6 +63,9 @@ importers:
       framer-motion:
         specifier: ^12.29.0
         version: 12.29.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      lingo.dev:
+        specifier: ^0.125.0
+        version: 0.125.0(@types/node@20.19.25)(@types/react@19.2.7)(encoding@0.1.13)(next@16.1.4(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.57.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))
       lucide-react:
         specifier: 0.545.0
         version: 0.545.0(react@19.2.3)
@@ -2593,19 +2596,36 @@ packages:
   '@lingo.dev/_compiler@0.8.8':
     resolution: {integrity: sha512-gSqUFF6VxFAJCyjTJvCDqDIu+RBfmLEcRL1M8Z3tTtH9AHIXTTXUV+6t2udQJ1dTsytXPdFbpdNXknoMHMJvkQ==}
 
+  '@lingo.dev/_compiler@0.9.0':
+    resolution: {integrity: sha512-fidghgHhhaX64OMFaRdLF/mze88+h9l1n9tW5ILaIoSVN6lOHTBA4nBMVQJJBCeIOWrHrFFMoW/np+tYqX27BA==}
+
   '@lingo.dev/_locales@0.3.1':
     resolution: {integrity: sha512-9iTwe+14un1WnS/Ao2Mea5tmEV2IXSo41fJoV+FLOc4ZGfVcoGy4LgLf6QAUdYMuIpyitGu0qkPmUvAqoWoH9Q==}
+
+  '@lingo.dev/_locales@0.3.3':
+    resolution: {integrity: sha512-50blm6NdDEM9P/GtWmyrfuxILe+9s3g+wMmETQafV97Geh/OQeW8Ej/8XcozZBHNRLIrCsUn53RS+x5kczAM0Q==}
 
   '@lingo.dev/_react@0.7.5':
     resolution: {integrity: sha512-c6HkkgVdlUBkRBo4Atj4L9xGB4l2YdSejD14Uls0nb3S2KTLhD3OwnSHpeZHdOneO3+JDxqSJ7i0emJLiPXIvQ==}
     peerDependencies:
       next: 15.3.8
 
+  '@lingo.dev/_react@0.7.6':
+    resolution: {integrity: sha512-D7pk63tj4aOBBB0xOvM7KBo+mb0MobYQLNwkECeiRkxhjMKhjj4ANwb3Uj90XB4tjY1InW9V4Ho1jpYG5yZsnA==}
+    peerDependencies:
+      next: 15.3.8
+
   '@lingo.dev/_sdk@0.13.4':
     resolution: {integrity: sha512-K3Sk0cvnpV5AtaYlpimeAAweCxahOJGWIuNrTJyE7NQer3Nbb3keCUy8DfVlpthAX8dOe+A1UBAWJokuaf568A==}
 
+  '@lingo.dev/_sdk@0.13.7':
+    resolution: {integrity: sha512-qn+1I0wj5ZePC7VR2TIw+SZTrFF/aVpEg1gfF9IXRYueDgmtMyi9YGDQPpMkXhx7daFYH3YCSPYkkRDu6MEvLw==}
+
   '@lingo.dev/_spec@0.44.4':
     resolution: {integrity: sha512-SJifegtTD+VF0WUZtZVQytCX/YdOSLqCt9WTc0EXIx2t8arPnIgE2+rmPCJ84GYQhFc5BaTbYEo2pQhKQCOMNg==}
+
+  '@lingo.dev/_spec@0.46.0':
+    resolution: {integrity: sha512-XlZ7bdW10C51hpJnQObnI3GuCwssqWt0yksATB+RilxUpyyZMpAxm4MU/zdZUzgiLGXohmtn7UVROauQaFe9OA==}
 
   '@manypkg/find-root@1.1.0':
     resolution: {integrity: sha512-mki5uBvhHzO8kYYix/WRy2WX8S3B5wdVSc9D6KcU5lQNglP2yt58/VfLuAK49glRXChosY8ap2oJ1qgma3GUVA==}
@@ -7189,6 +7209,11 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
+  lingo.dev@0.125.0:
+    resolution: {integrity: sha512-nohv7SlRaQql5GKlqDiuRpK+XptagH2jpVgt1/B3xUW2Hddz+SPH38NwHhjMniJunCrT8wHsQ3K9f+ZX0LWjlQ==}
+    engines: {node: '>=18'}
+    hasBin: true
+
   listr2@8.3.2:
     resolution: {integrity: sha512-vsBzcU4oE+v0lj4FhVLzr9dBTv4/fHIa57l+GCwovP8MoFNZJTOhGU8PXd4v2VJCbECAaijBiHntiekFMLvo0g==}
     engines: {node: '>=18.0.0'}
@@ -9892,6 +9917,7 @@ packages:
   whatwg-encoding@3.1.1:
     resolution: {integrity: sha512-6qN4hJdMwfYBtE3YBTTHhoeuUrDBPZmbQaxWAqSALV/MeEnR5z1xd8UKud2RAkFoPkmB+hli1TZSnyi84xz1vQ==}
     engines: {node: '>=18'}
+    deprecated: Use @exodus/bytes instead for a more spec-conformant and faster implementation
 
   whatwg-fetch@3.6.20:
     resolution: {integrity: sha512-EqhiFU6daOA8kpjOWTL0olhVOF3i7OrFzSYiGsEMB8GcXS+RrzauAERX65xMeNWVqxA6HXH2m69Z9LaKKdisfg==}
@@ -11953,6 +11979,16 @@ snapshots:
 
   '@inquirer/ansi@1.0.2': {}
 
+  '@inquirer/checkbox@4.3.2(@types/node@20.19.25)':
+    dependencies:
+      '@inquirer/ansi': 1.0.2
+      '@inquirer/core': 10.3.2(@types/node@20.19.25)
+      '@inquirer/figures': 1.0.15
+      '@inquirer/type': 3.0.10(@types/node@20.19.25)
+      yoctocolors-cjs: 2.1.3
+    optionalDependencies:
+      '@types/node': 20.19.25
+
   '@inquirer/checkbox@4.3.2(@types/node@22.10.2)':
     dependencies:
       '@inquirer/ansi': 1.0.2
@@ -11973,6 +12009,13 @@ snapshots:
     optionalDependencies:
       '@types/node': 25.0.3
 
+  '@inquirer/confirm@5.1.21(@types/node@20.19.25)':
+    dependencies:
+      '@inquirer/core': 10.3.2(@types/node@20.19.25)
+      '@inquirer/type': 3.0.10(@types/node@20.19.25)
+    optionalDependencies:
+      '@types/node': 20.19.25
+
   '@inquirer/confirm@5.1.21(@types/node@22.10.2)':
     dependencies:
       '@inquirer/core': 10.3.2(@types/node@22.10.2)
@@ -11986,6 +12029,19 @@ snapshots:
       '@inquirer/type': 3.0.10(@types/node@25.0.3)
     optionalDependencies:
       '@types/node': 25.0.3
+
+  '@inquirer/core@10.3.2(@types/node@20.19.25)':
+    dependencies:
+      '@inquirer/ansi': 1.0.2
+      '@inquirer/figures': 1.0.15
+      '@inquirer/type': 3.0.10(@types/node@20.19.25)
+      cli-width: 4.1.0
+      mute-stream: 2.0.0
+      signal-exit: 4.1.0
+      wrap-ansi: 6.2.0
+      yoctocolors-cjs: 2.1.3
+    optionalDependencies:
+      '@types/node': 20.19.25
 
   '@inquirer/core@10.3.2(@types/node@22.10.2)':
     dependencies:
@@ -12013,6 +12069,14 @@ snapshots:
     optionalDependencies:
       '@types/node': 25.0.3
 
+  '@inquirer/editor@4.2.23(@types/node@20.19.25)':
+    dependencies:
+      '@inquirer/core': 10.3.2(@types/node@20.19.25)
+      '@inquirer/external-editor': 1.0.3(@types/node@20.19.25)
+      '@inquirer/type': 3.0.10(@types/node@20.19.25)
+    optionalDependencies:
+      '@types/node': 20.19.25
+
   '@inquirer/editor@4.2.23(@types/node@22.10.2)':
     dependencies:
       '@inquirer/core': 10.3.2(@types/node@22.10.2)
@@ -12028,6 +12092,14 @@ snapshots:
       '@inquirer/type': 3.0.10(@types/node@25.0.3)
     optionalDependencies:
       '@types/node': 25.0.3
+
+  '@inquirer/expand@4.0.23(@types/node@20.19.25)':
+    dependencies:
+      '@inquirer/core': 10.3.2(@types/node@20.19.25)
+      '@inquirer/type': 3.0.10(@types/node@20.19.25)
+      yoctocolors-cjs: 2.1.3
+    optionalDependencies:
+      '@types/node': 20.19.25
 
   '@inquirer/expand@4.0.23(@types/node@22.10.2)':
     dependencies:
@@ -12045,6 +12117,13 @@ snapshots:
     optionalDependencies:
       '@types/node': 25.0.3
 
+  '@inquirer/external-editor@1.0.3(@types/node@20.19.25)':
+    dependencies:
+      chardet: 2.1.1
+      iconv-lite: 0.7.1
+    optionalDependencies:
+      '@types/node': 20.19.25
+
   '@inquirer/external-editor@1.0.3(@types/node@22.10.2)':
     dependencies:
       chardet: 2.1.1
@@ -12061,6 +12140,13 @@ snapshots:
 
   '@inquirer/figures@1.0.15': {}
 
+  '@inquirer/input@4.3.1(@types/node@20.19.25)':
+    dependencies:
+      '@inquirer/core': 10.3.2(@types/node@20.19.25)
+      '@inquirer/type': 3.0.10(@types/node@20.19.25)
+    optionalDependencies:
+      '@types/node': 20.19.25
+
   '@inquirer/input@4.3.1(@types/node@22.10.2)':
     dependencies:
       '@inquirer/core': 10.3.2(@types/node@22.10.2)
@@ -12075,6 +12161,13 @@ snapshots:
     optionalDependencies:
       '@types/node': 25.0.3
 
+  '@inquirer/number@3.0.23(@types/node@20.19.25)':
+    dependencies:
+      '@inquirer/core': 10.3.2(@types/node@20.19.25)
+      '@inquirer/type': 3.0.10(@types/node@20.19.25)
+    optionalDependencies:
+      '@types/node': 20.19.25
+
   '@inquirer/number@3.0.23(@types/node@22.10.2)':
     dependencies:
       '@inquirer/core': 10.3.2(@types/node@22.10.2)
@@ -12088,6 +12181,14 @@ snapshots:
       '@inquirer/type': 3.0.10(@types/node@25.0.3)
     optionalDependencies:
       '@types/node': 25.0.3
+
+  '@inquirer/password@4.0.23(@types/node@20.19.25)':
+    dependencies:
+      '@inquirer/ansi': 1.0.2
+      '@inquirer/core': 10.3.2(@types/node@20.19.25)
+      '@inquirer/type': 3.0.10(@types/node@20.19.25)
+    optionalDependencies:
+      '@types/node': 20.19.25
 
   '@inquirer/password@4.0.23(@types/node@22.10.2)':
     dependencies:
@@ -12105,6 +12206,21 @@ snapshots:
     optionalDependencies:
       '@types/node': 25.0.3
 
+  '@inquirer/prompts@7.10.1(@types/node@20.19.25)':
+    dependencies:
+      '@inquirer/checkbox': 4.3.2(@types/node@20.19.25)
+      '@inquirer/confirm': 5.1.21(@types/node@20.19.25)
+      '@inquirer/editor': 4.2.23(@types/node@20.19.25)
+      '@inquirer/expand': 4.0.23(@types/node@20.19.25)
+      '@inquirer/input': 4.3.1(@types/node@20.19.25)
+      '@inquirer/number': 3.0.23(@types/node@20.19.25)
+      '@inquirer/password': 4.0.23(@types/node@20.19.25)
+      '@inquirer/rawlist': 4.1.11(@types/node@20.19.25)
+      '@inquirer/search': 3.2.2(@types/node@20.19.25)
+      '@inquirer/select': 4.4.2(@types/node@20.19.25)
+    optionalDependencies:
+      '@types/node': 20.19.25
+
   '@inquirer/prompts@7.10.1(@types/node@25.0.3)':
     dependencies:
       '@inquirer/checkbox': 4.3.2(@types/node@25.0.3)
@@ -12119,6 +12235,21 @@ snapshots:
       '@inquirer/select': 4.4.2(@types/node@25.0.3)
     optionalDependencies:
       '@types/node': 25.0.3
+
+  '@inquirer/prompts@7.8.0(@types/node@20.19.25)':
+    dependencies:
+      '@inquirer/checkbox': 4.3.2(@types/node@20.19.25)
+      '@inquirer/confirm': 5.1.21(@types/node@20.19.25)
+      '@inquirer/editor': 4.2.23(@types/node@20.19.25)
+      '@inquirer/expand': 4.0.23(@types/node@20.19.25)
+      '@inquirer/input': 4.3.1(@types/node@20.19.25)
+      '@inquirer/number': 3.0.23(@types/node@20.19.25)
+      '@inquirer/password': 4.0.23(@types/node@20.19.25)
+      '@inquirer/rawlist': 4.1.11(@types/node@20.19.25)
+      '@inquirer/search': 3.2.2(@types/node@20.19.25)
+      '@inquirer/select': 4.4.2(@types/node@20.19.25)
+    optionalDependencies:
+      '@types/node': 20.19.25
 
   '@inquirer/prompts@7.8.0(@types/node@22.10.2)':
     dependencies:
@@ -12150,6 +12281,14 @@ snapshots:
     optionalDependencies:
       '@types/node': 25.0.3
 
+  '@inquirer/rawlist@4.1.11(@types/node@20.19.25)':
+    dependencies:
+      '@inquirer/core': 10.3.2(@types/node@20.19.25)
+      '@inquirer/type': 3.0.10(@types/node@20.19.25)
+      yoctocolors-cjs: 2.1.3
+    optionalDependencies:
+      '@types/node': 20.19.25
+
   '@inquirer/rawlist@4.1.11(@types/node@22.10.2)':
     dependencies:
       '@inquirer/core': 10.3.2(@types/node@22.10.2)
@@ -12165,6 +12304,15 @@ snapshots:
       yoctocolors-cjs: 2.1.3
     optionalDependencies:
       '@types/node': 25.0.3
+
+  '@inquirer/search@3.2.2(@types/node@20.19.25)':
+    dependencies:
+      '@inquirer/core': 10.3.2(@types/node@20.19.25)
+      '@inquirer/figures': 1.0.15
+      '@inquirer/type': 3.0.10(@types/node@20.19.25)
+      yoctocolors-cjs: 2.1.3
+    optionalDependencies:
+      '@types/node': 20.19.25
 
   '@inquirer/search@3.2.2(@types/node@22.10.2)':
     dependencies:
@@ -12183,6 +12331,16 @@ snapshots:
       yoctocolors-cjs: 2.1.3
     optionalDependencies:
       '@types/node': 25.0.3
+
+  '@inquirer/select@4.4.2(@types/node@20.19.25)':
+    dependencies:
+      '@inquirer/ansi': 1.0.2
+      '@inquirer/core': 10.3.2(@types/node@20.19.25)
+      '@inquirer/figures': 1.0.15
+      '@inquirer/type': 3.0.10(@types/node@20.19.25)
+      yoctocolors-cjs: 2.1.3
+    optionalDependencies:
+      '@types/node': 20.19.25
 
   '@inquirer/select@4.4.2(@types/node@22.10.2)':
     dependencies:
@@ -12203,6 +12361,10 @@ snapshots:
       yoctocolors-cjs: 2.1.3
     optionalDependencies:
       '@types/node': 25.0.3
+
+  '@inquirer/type@3.0.10(@types/node@20.19.25)':
+    optionalDependencies:
+      '@types/node': 20.19.25
 
   '@inquirer/type@3.0.10(@types/node@22.10.2)':
     optionalDependencies:
@@ -12285,7 +12447,44 @@ snapshots:
       - supports-color
       - utf-8-validate
 
+  '@lingo.dev/_compiler@0.9.0':
+    dependencies:
+      '@ai-sdk/anthropic': 3.0.9(zod@4.1.12)
+      '@ai-sdk/google': 3.0.6(zod@4.1.12)
+      '@ai-sdk/groq': 3.0.4(zod@4.1.12)
+      '@ai-sdk/mistral': 3.0.5(zod@4.1.12)
+      '@ai-sdk/openai': 3.0.7(zod@4.1.12)
+      '@babel/generator': 7.28.5
+      '@babel/parser': 7.28.5
+      '@babel/traverse': 7.28.5
+      '@babel/types': 7.28.5
+      '@lingo.dev/_sdk': 0.13.7
+      '@lingo.dev/_spec': 0.46.0
+      '@openrouter/ai-sdk-provider': 6.0.0-alpha.1(zod@4.1.12)
+      ai: 6.0.25(zod@4.1.12)
+      dedent: 1.7.0
+      dotenv: 16.4.5
+      fast-xml-parser: 5.3.2
+      ini: 5.0.0
+      lodash: 4.17.21
+      node-machine-id: 1.1.12
+      object-hash: 3.0.0
+      ollama-ai-provider-v2: 2.0.0(ai@6.0.25(zod@4.3.6))(zod@4.1.12)
+      posthog-node: 5.14.0
+      unplugin: 2.3.11
+      zod: 4.1.12
+    transitivePeerDependencies:
+      - babel-plugin-macros
+      - bufferutil
+      - canvas
+      - supports-color
+      - utf-8-validate
+
   '@lingo.dev/_locales@0.3.1':
+    dependencies:
+      iso-639-3: 3.0.1
+
+  '@lingo.dev/_locales@0.3.3':
     dependencies:
       iso-639-3: 3.0.1
 
@@ -12294,6 +12493,12 @@ snapshots:
       js-cookie: 3.0.5
       lodash: 4.17.21
       next: 16.1.1(@opentelemetry/api@1.9.0)(@playwright/test@1.57.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+
+  '@lingo.dev/_react@0.7.6(next@16.1.4(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.57.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))':
+    dependencies:
+      js-cookie: 3.0.5
+      lodash: 4.17.21
+      next: 16.1.4(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.57.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
 
   '@lingo.dev/_sdk@0.13.4':
     dependencies:
@@ -12307,9 +12512,27 @@ snapshots:
       - supports-color
       - utf-8-validate
 
+  '@lingo.dev/_sdk@0.13.7':
+    dependencies:
+      '@lingo.dev/_spec': 0.46.0
+      '@paralleldrive/cuid2': 2.2.2
+      jsdom: 25.0.1
+      zod: 3.25.76
+    transitivePeerDependencies:
+      - bufferutil
+      - canvas
+      - supports-color
+      - utf-8-validate
+
   '@lingo.dev/_spec@0.44.4':
     dependencies:
       '@lingo.dev/_locales': 0.3.1
+      zod: 3.25.76
+      zod-to-json-schema: 3.25.0(zod@3.25.76)
+
+  '@lingo.dev/_spec@0.46.0':
+    dependencies:
+      '@lingo.dev/_locales': 0.3.3
       zod: 3.25.76
       zod-to-json-schema: 3.25.0(zod@3.25.76)
 
@@ -12759,8 +12982,8 @@ snapshots:
 
   '@openrouter/ai-sdk-provider@6.0.0-alpha.1(zod@4.1.12)':
     dependencies:
-      '@ai-sdk/provider': 3.0.0
-      '@ai-sdk/provider-utils': 4.0.1(zod@4.1.12)
+      '@ai-sdk/provider': 3.0.2
+      '@ai-sdk/provider-utils': 4.0.4(zod@4.1.12)
       '@openrouter/sdk': 0.3.15
       zod: 4.1.12
 
@@ -12770,7 +12993,7 @@ snapshots:
 
   '@openrouter/sdk@0.3.15':
     dependencies:
-      zod: 4.1.12
+      zod: 4.3.6
 
   '@opentelemetry/api@1.9.0': {}
 
@@ -16709,6 +16932,18 @@ snapshots:
     optionalDependencies:
       '@types/node': 25.0.3
 
+  inquirer@12.6.0(@types/node@20.19.25):
+    dependencies:
+      '@inquirer/core': 10.3.2(@types/node@20.19.25)
+      '@inquirer/prompts': 7.10.1(@types/node@20.19.25)
+      '@inquirer/type': 3.0.10(@types/node@20.19.25)
+      ansi-escapes: 4.3.2
+      mute-stream: 2.0.0
+      run-async: 3.0.0
+      rxjs: 7.8.2
+    optionalDependencies:
+      '@types/node': 20.19.25
+
   inquirer@12.6.0(@types/node@22.10.2):
     dependencies:
       '@inquirer/core': 10.3.2(@types/node@22.10.2)
@@ -16732,6 +16967,14 @@ snapshots:
       rxjs: 7.8.2
     optionalDependencies:
       '@types/node': 25.0.3
+
+  interactive-commander@0.5.194(@types/node@20.19.25):
+    dependencies:
+      '@inquirer/prompts': 7.10.1(@types/node@20.19.25)
+      commander: 12.1.0
+      parse-my-command: 0.3.31
+    transitivePeerDependencies:
+      - '@types/node'
 
   interactive-commander@0.5.194(@types/node@22.10.2):
     dependencies:
@@ -17361,6 +17604,122 @@ snapshots:
       xpath: 0.0.34
       yaml: 2.8.1
       zod: 3.25.76
+    transitivePeerDependencies:
+      - '@biomejs/wasm-bundler'
+      - '@biomejs/wasm-web'
+      - '@cfworker/json-schema'
+      - '@types/node'
+      - '@types/react'
+      - babel-plugin-macros
+      - bufferutil
+      - canvas
+      - encoding
+      - next
+      - react-devtools-core
+      - supports-color
+      - utf-8-validate
+
+  lingo.dev@0.125.0(@types/node@20.19.25)(@types/react@19.2.7)(encoding@0.1.13)(next@16.1.4(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.57.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)):
+    dependencies:
+      '@ai-sdk/anthropic': 3.0.9(zod@4.1.12)
+      '@ai-sdk/google': 3.0.6(zod@4.1.12)
+      '@ai-sdk/mistral': 3.0.5(zod@4.1.12)
+      '@ai-sdk/openai': 3.0.7(zod@4.1.12)
+      '@babel/generator': 7.28.5
+      '@babel/parser': 7.28.5
+      '@babel/traverse': 7.28.5
+      '@babel/types': 7.28.5
+      '@biomejs/js-api': 3.0.0(@biomejs/wasm-nodejs@2.3.7)
+      '@biomejs/wasm-nodejs': 2.3.7
+      '@datocms/cma-client-node': 4.0.1
+      '@gitbeaker/rest': 39.34.3
+      '@inkjs/ui': 2.0.0(ink@4.2.0(@types/react@19.2.7)(react@19.2.3))
+      '@inquirer/prompts': 7.8.0(@types/node@20.19.25)
+      '@lingo.dev/_compiler': 0.9.0
+      '@lingo.dev/_locales': 0.3.3
+      '@lingo.dev/_react': 0.7.6(next@16.1.4(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.57.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))
+      '@lingo.dev/_sdk': 0.13.7
+      '@lingo.dev/_spec': 0.46.0
+      '@markdoc/markdoc': 0.5.4(@types/react@19.2.7)(react@19.2.3)
+      '@modelcontextprotocol/sdk': 1.22.0
+      '@openrouter/ai-sdk-provider': 6.0.0-alpha.1(zod@4.1.12)
+      '@paralleldrive/cuid2': 2.2.2
+      '@types/ejs': 3.1.5
+      ai: 6.0.25(zod@4.1.12)
+      bitbucket: 2.12.0(encoding@0.1.13)
+      chalk: 5.6.2
+      chokidar: 4.0.3
+      cli-progress: 3.12.0
+      cli-table3: 0.6.5
+      cors: 2.8.5
+      csv-parse: 5.6.0
+      csv-stringify: 6.6.0
+      date-fns: 4.1.0
+      dedent: 1.7.0
+      diff: 7.0.0
+      dom-serializer: 2.0.0
+      domhandler: 5.0.3
+      domutils: 3.2.2
+      dotenv: 16.4.7
+      ejs: 3.1.10
+      express: 5.1.0
+      external-editor: 3.1.0
+      figlet: 1.9.4
+      flat: 6.0.1
+      gettext-parser: 8.0.0
+      glob: 11.1.0
+      gradient-string: 3.0.0
+      gray-matter: 4.0.3
+      htmlparser2: 10.0.0
+      ini: 5.0.0
+      ink: 4.2.0(@types/react@19.2.7)(react@19.2.3)
+      ink-progress-bar: 3.0.0
+      ink-spinner: 5.0.0(ink@4.2.0(@types/react@19.2.7)(react@19.2.3))(react@19.2.3)
+      inquirer: 12.6.0(@types/node@20.19.25)
+      interactive-commander: 0.5.194(@types/node@20.19.25)
+      is-url: 1.2.4
+      jsdom: 25.0.1
+      json5: 2.2.3
+      jsonc-parser: 3.3.1
+      jsonrepair: 3.13.1
+      listr2: 8.3.2
+      lodash: 4.17.21
+      marked: 15.0.6
+      mdast-util-from-markdown: 2.0.2
+      mdast-util-gfm: 3.1.0
+      micromark-extension-gfm: 3.0.0
+      node-machine-id: 1.1.12
+      node-webvtt: 1.9.4
+      object-hash: 3.0.0
+      octokit: 4.0.2
+      ollama-ai-provider-v2: 2.0.0(ai@6.0.25(zod@4.3.6))(zod@4.1.12)
+      open: 10.2.0
+      ora: 8.1.1
+      p-limit: 6.2.0
+      php-array-reader: 2.1.2
+      plist: 3.1.0
+      posthog-node: 5.14.0
+      prettier: 3.6.2
+      react: 19.2.3
+      rehype-stringify: 10.0.1
+      remark-disable-tokenizers: 1.1.1
+      remark-frontmatter: 5.0.0
+      remark-gfm: 4.0.1
+      remark-mdx: 3.1.1
+      remark-mdx-frontmatter: 5.2.0
+      remark-parse: 11.0.0
+      remark-rehype: 11.1.2
+      remark-stringify: 11.0.0
+      sax: 1.4.3
+      srt-parser-2: 1.2.3
+      unified: 11.0.5
+      unist-util-visit: 5.0.0
+      vfile: 6.0.3
+      xliff: 6.2.2
+      xml2js: 0.6.2
+      xpath: 0.0.34
+      yaml: 2.8.1
+      zod: 4.1.12
     transitivePeerDependencies:
       - '@biomejs/wasm-bundler'
       - '@biomejs/wasm-web'
@@ -18291,6 +18650,13 @@ snapshots:
       ai: 6.0.25(zod@4.1.12)
       zod: 4.1.12
 
+  ollama-ai-provider-v2@2.0.0(ai@6.0.25(zod@4.3.6))(zod@4.1.12):
+    dependencies:
+      '@ai-sdk/provider': 3.0.2
+      '@ai-sdk/provider-utils': 4.0.4(zod@4.1.12)
+      ai: 6.0.25(zod@4.1.12)
+      zod: 4.1.12
+
   ollama-ai-provider@1.2.0(zod@3.25.76):
     dependencies:
       '@ai-sdk/provider': 1.1.3
@@ -19018,7 +19384,7 @@ snapshots:
       toml: 3.0.0
       unified: 11.0.5
       unist-util-mdx-define: 1.1.2
-      yaml: 2.8.1
+      yaml: 2.8.2
 
   remark-mdx@3.1.1:
     dependencies:
@@ -21138,8 +21504,7 @@ snapshots:
 
   yaml@2.8.1: {}
 
-  yaml@2.8.2:
-    optional: true
+  yaml@2.8.2: {}
 
   yargs-parser@13.1.2:
     dependencies:
