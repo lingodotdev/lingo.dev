@@ -17,6 +17,7 @@ This project introduces a Discord bot that provides:
 - AI-generated responses for faster support
 - Accurate, context-aware multilingual replies using **Lingo.dev**
 - Admin access to private threads for oversight and assistance
+- Invite members in their private threads for collaborative support
 
 The result is a **private, multilingual, AI-assisted support system** designed for global Discord communities.
 
