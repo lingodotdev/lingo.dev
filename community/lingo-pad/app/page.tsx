@@ -191,6 +191,7 @@ export default function Home() {
                   language={inputType === "text" ? "plaintext" : inputType}
                   readOnly={diffMode}
                   decorations={inputDecorations}
+                  onTranslate={handleTranslate}
                 />
               </div>
             </div>

@@ -9,6 +9,7 @@ interface EditorPanelProps {
   language: string;
   readOnly?: boolean;
   decorations?: DecorationRange[];
+  onTranslate?: () => void;
 }
 
 export function EditorPanel({
@@ -17,10 +18,16 @@ export function EditorPanel({
   language,
   readOnly = false,
   decorations = [],
+  onTranslate,
 }: EditorPanelProps) {
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
   const decorationsRef = useRef<string[]>([]);
   const monacoRef = useRef<Monaco | null>(null);
+  const onTranslateRef = useRef(onTranslate);
+
+  useEffect(() => {
+    onTranslateRef.current = onTranslate;
+  }, [onTranslate]);
 
   const handleEditorDidMount: OnMount = (editor, monaco) => {
     editorRef.current = editor;
@@ -46,6 +53,18 @@ export function EditorPanel({
       readOnly,
       padding: { top: 48, bottom: 32 }, // Keep generous padding
     });
+
+    // Add keyboard shortcut for translation
+    if (onTranslate) {
+      editor.addAction({
+        id: "translate-shortcut",
+        label: "Translate",
+        keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter],
+        run: () => {
+          onTranslateRef.current?.();
+        },
+      });
+    }
   };
 
   useEffect(() => {
