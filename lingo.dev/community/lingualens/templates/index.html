@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LinguaLens</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>🌍 LinguaLens</h1>
+    <p>Python demo app using Lingo.dev</p>
+
+    <form method="POST">
+        <textarea name="text" placeholder="Enter text here..." required></textarea>
+
+        <div class="row">
+            <select name="source">
+                <option value="en">English</option>
+                <option value="ur">Urdu</option>
+                <option value="fr">French</option>
+            </select>
+
+            <select name="target">
+                <option value="ur">Urdu</option>
+                <option value="en">English</option>
+                <option value="fr">French</option>
+            </select>
+        </div>
+
+        <button type="submit">Translate</button>
+    </form>
+
+    {% if translated %}
+    <div class="output">
+        <h3>Translated Output:</h3>
+        <p>{{ translated }}</p>
+    </div>
+    {% endif %}
+</div>
+
+</body>
+</html>
