@@ -36,7 +36,11 @@ export function CurrencySelector({ currentLocale, onLocaleChange }: CurrencySele
     return (
         <div className="relative" ref={containerRef} style={{ position: 'relative', zIndex: 50 }}>
             <button
+                type="button"
                 onClick={() => setIsOpen(!isOpen)}
+                aria-haspopup="listbox"
+                aria-expanded={isOpen}
+                aria-controls="currency-options"
                 style={{
                     display: 'flex',
                     alignItems: 'center',
@@ -63,6 +67,8 @@ export function CurrencySelector({ currentLocale, onLocaleChange }: CurrencySele
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
+                        role="listbox"
+                        id="currency-options"
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 5 }}
                         exit={{ opacity: 0, y: -10 }}
@@ -81,7 +87,8 @@ export function CurrencySelector({ currentLocale, onLocaleChange }: CurrencySele
                         }}
                     >
                         {OPTIONS.map((option) => (
-                            <div
+                            <button
+                                type="button"
                                 key={option.locale}
                                 onClick={() => {
                                     onLocaleChange(option.locale);
@@ -93,11 +100,15 @@ export function CurrencySelector({ currentLocale, onLocaleChange }: CurrencySele
                                     gap: '0.75rem',
                                     padding: '0.625rem 0.75rem',
                                     cursor: 'pointer',
+                                    width: '100%',
+                                    textAlign: 'left',
+                                    border: 'none',
                                     borderRadius: '0.5rem',
                                     background: currentLocale === option.locale ? 'rgba(255, 255, 255, 0.1)' : 'transparent',
                                     color: currentLocale === option.locale ? 'white' : 'var(--text-muted)',
                                     transition: 'all 0.2s'
                                 }}
+                                aria-selected={currentLocale === option.locale}
                                 onMouseEnter={(e) => {
                                     if (currentLocale !== option.locale) {
                                         e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
@@ -113,7 +124,7 @@ export function CurrencySelector({ currentLocale, onLocaleChange }: CurrencySele
                             >
                                 <span style={{ fontSize: '1.25rem' }}>{option.flag}</span>
                                 <span style={{ fontSize: '0.875rem' }}>{option.label}</span>
-                            </div>
+                            </button>
                         ))}
                     </motion.div>
                 )}

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import {
     BarChart3,
     Wallet,
@@ -38,12 +38,18 @@ export default function Home() {
     const [aiLoading, setAiLoading] = useState(false);
 
     // Derived State
-    const totalBalance = accounts.reduce((acc, curr) => acc + curr.balance, 0)
-        + transactions.filter(t => t.type === 'income').reduce((acc, t) => acc + t.amount, 0)
-        - transactions.filter(t => t.type === 'expense').reduce((acc, t) => acc + t.amount, 0);
+    const totalAccountBalance = accounts.reduce((acc, curr) => acc + curr.balance, 0);
 
-    const monthlyIncome = transactions.filter(t => t.type === 'income').reduce((acc, t) => acc + t.amount, 0);
-    const monthlyExpense = transactions.filter(t => t.type === 'expense').reduce((acc, t) => acc + t.amount, 0);
+    const { monthlyIncome, monthlyExpense } = transactions.reduce(
+        (acc, t) => {
+            if (t.type === 'income') acc.monthlyIncome += t.amount;
+            else if (t.type === 'expense') acc.monthlyExpense += t.amount;
+            return acc;
+        },
+        { monthlyIncome: 0, monthlyExpense: 0 }
+    );
+
+    const totalBalance = totalAccountBalance + monthlyIncome - monthlyExpense;
 
     const formatCurrency = (amount: number) => {
         let currencyCode = 'USD';
@@ -70,7 +76,7 @@ export default function Home() {
             setEditingTransaction(null);
         } else {
             const newTrans: Transaction = {
-                id: Math.random().toString(),
+                id: crypto.randomUUID(),
                 ...data
             };
             setTransactions([newTrans, ...transactions]);
@@ -83,7 +89,7 @@ export default function Home() {
 
     const handleAddAccount = (data: Omit<Account, 'id'>) => {
         const newAccount: Account = {
-            id: Math.random().toString(),
+            id: crypto.randomUUID(),
             ...data
         };
         setAccounts([...accounts, newAccount]);
@@ -99,12 +105,21 @@ export default function Home() {
         setEditingTransaction(null);
     };
 
+    const aiTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
     const refreshAiInsights = () => {
         setAiLoading(true);
-        setTimeout(() => {
+        if (aiTimeoutRef.current) clearTimeout(aiTimeoutRef.current);
+        aiTimeoutRef.current = setTimeout(() => {
             setAiLoading(false);
         }, 1500);
     };
+
+    useEffect(() => {
+        return () => {
+            if (aiTimeoutRef.current) clearTimeout(aiTimeoutRef.current);
+        };
+    }, []);
 
     return (
         <div className="dashboard-grid">
@@ -274,7 +289,7 @@ export default function Home() {
                 </motion.div>
 
                 {/* Transactions & AI */}
-                <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '1.5rem' }}>
+                <div className="transactions-grid">
                     <motion.div
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}

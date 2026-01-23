@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import { Account } from '../types';
 
@@ -17,6 +17,12 @@ export function AccountModal({ isOpen, onClose, onSubmit }: ModalProps) {
         type: 'checking'
     });
 
+    useEffect(() => {
+        if (!isOpen) {
+            setFormData({ name: '', balance: '', type: 'checking' });
+        }
+    }, [isOpen]);
+
     if (!isOpen) return null;
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -27,20 +33,27 @@ export function AccountModal({ isOpen, onClose, onSubmit }: ModalProps) {
             type: formData.type as 'checking' | 'savings' | 'credit'
         });
         onClose();
-        setFormData({ name: '', balance: '', type: 'checking' });
+    };
+
+    const handleClose = () => {
+        onClose();
     };
 
     return (
-        <div style={{
-            position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
-            background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(5px)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            zIndex: 1000
-        }}>
+        <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="account-modal-title"
+            style={{
+                position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+                background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(5px)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                zIndex: 1000
+            }}>
             <div className="card" style={{ width: '100%', maxWidth: '400px', padding: '2rem', margin: '2rem', background: '#0a0a0b', border: '1px solid var(--border-color)' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
-                    <h2 style={{ margin: 0 }}>Add Account</h2>
-                    <button onClick={onClose} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer' }}>
+                    <h2 id="account-modal-title" style={{ margin: 0 }}>Add Account</h2>
+                    <button onClick={handleClose} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer' }}>
                         <X size={24} />
                     </button>
                 </div>

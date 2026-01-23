@@ -8,6 +8,8 @@
 // The SDK automatically uses LINGODOTDEV_API_KEY from environment variables
 // No need to manually pass the API key to the SDK
 
+import "server-only";
+
 export async function translateText(
     texts: string[],
     targetLocale: string,
@@ -15,7 +17,8 @@ export async function translateText(
 ): Promise<string[]> {
     // Verify API key is configured
     if (!process.env.LINGODOTDEV_API_KEY) {
-        throw new Error("LINGODOTDEV_API_KEY is not configured");
+        console.warn("LINGODOTDEV_API_KEY is not configured; returning source texts.");
+        return texts;
     }
 
     // In a real implementation, you would use:
@@ -24,7 +27,7 @@ export async function translateText(
     // return await lingo.localizeObject(texts, targetLocale, sourceLocale);
 
     // For now, return original texts (placeholder)
-    console.log("Lingo.dev SDK integration ready - add @lingodotdev/sdk to use");
+    console.log("Lingo.dev SDK integration ready - add `@lingodotdev/sdk` to use");
     return texts;
 }
 

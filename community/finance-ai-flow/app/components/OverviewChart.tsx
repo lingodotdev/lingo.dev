@@ -9,16 +9,6 @@ interface OverviewChartProps {
     onAddTransaction: () => void;
 }
 
-const MOCK_DATA = [
-    { name: 'Jan', amount: 4000 },
-    { name: 'Feb', amount: 3000 },
-    { name: 'Mar', amount: 5000 },
-    { name: 'Apr', amount: 2780 },
-    { name: 'May', amount: 1890 },
-    { name: 'Jun', amount: 2390 },
-    { name: 'Jul', amount: 3490 },
-];
-
 const EMPTY_DATA = [
     { name: 'Jan', amount: 0 },
     { name: 'Feb', amount: 0 },
@@ -29,12 +19,37 @@ const EMPTY_DATA = [
     { name: 'Jul', amount: 0 },
 ];
 
+const buildChartData = (transactions: Transaction[]) => {
+    if (transactions.length === 0) return EMPTY_DATA;
+    const totals = new Map<string, number>();
+    for (const tx of transactions) {
+        // Simple month extraction (assuming current year or generic year for demo)
+        // For a robust app, we'd handle years, but this matches the demo scope
+        const date = new Date(tx.date);
+        if (isNaN(date.getTime())) continue; // Skip invalid dates
+        const month = date.toLocaleString('en-US', { month: 'short' });
+
+        // Income adds to height, expense could reduce it or we just track "Net" or "Income"
+        // The original mock had positive values. Let's assume we want to show "Cash Flow" (Net) 
+        // or just "Income" vs "Expense". The AreaChart usually shows one value.
+        // The review suggested: "derive aggregated monthly amounts".
+        // Let's do Net Amount (Income - Expense).
+        const signedAmount = tx.type === 'expense' ? -tx.amount : tx.amount;
+        totals.set(month, (totals.get(month) ?? 0) + signedAmount);
+    }
+
+    // Map EMPTY_DATA names to the calculated totals to preserve order/labels
+    // We might want to ensure we don't have negative values if the chart doesn't support them well 
+    // (AreaChart base is usually 0).
+    return EMPTY_DATA.map(({ name }) => {
+        const val = totals.get(name) ?? 0;
+        return { name, amount: val };
+    });
+};
+
 export function OverviewChart({ transactions, onAddTransaction }: OverviewChartProps) {
-    // If no transactions, use the flat EMPTY_DATA
-    // If transactions exist, we *could* process them, but for visual demo, we switch to the "Alive" MOCK_DATA
-    // This satisfies the "straight line until user adds transaction" requirement simply.
     const hasData = transactions.length > 0;
-    const chartData = hasData ? MOCK_DATA : EMPTY_DATA;
+    const chartData = buildChartData(transactions);
 
     return (
         <div style={{ width: '100%', height: 300, position: 'relative' }}>

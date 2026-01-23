@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { X, ScanLine, Loader2, Camera } from 'lucide-react';
 import { Transaction } from '../types';
 
@@ -25,6 +25,15 @@ export function TransactionModal({ isOpen, onClose, onSubmit, initialData }: Mod
 
     const [isScanning, setIsScanning] = useState(false);
     const [dragActive, setDragActive] = useState(false);
+    const scanTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+    useEffect(() => {
+        return () => {
+            if (scanTimeoutRef.current) {
+                clearTimeout(scanTimeoutRef.current);
+            }
+        };
+    }, []);
 
     useEffect(() => {
         if (initialData) {
@@ -74,7 +83,8 @@ export function TransactionModal({ isOpen, onClose, onSubmit, initialData }: Mod
     const simulateScanning = () => {
         setIsScanning(true);
         // Simulate AI processing delay
-        setTimeout(() => {
+        if (scanTimeoutRef.current) clearTimeout(scanTimeoutRef.current);
+        scanTimeoutRef.current = setTimeout(() => {
             setIsScanning(false);
             setFormData(prev => ({
                 ...prev,

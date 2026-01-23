@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 
 :root {
   --bg-main: #030014;
@@ -164,4 +165,16 @@ h6 {
 
 .animate-spin {
   animation: spin 1s linear infinite;
+}
+
+.transactions-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .transactions-grid {
+    grid-template-columns: 2fr 1fr;
+  }
 }

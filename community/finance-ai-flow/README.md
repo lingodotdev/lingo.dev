@@ -115,7 +115,7 @@ Navigate to [http://localhost:3000](http://localhost:3000)
 
 ## 📁 Project Structure
 
-```
+```text
 finance-ai-flow/
 ├── app/
 │   ├── components/
@@ -209,7 +209,7 @@ This project is licensed under the same terms as the parent [Lingo.dev repositor
 
 ---
 
-**Built with ❤️ for the Lingo.dev Community Showcase**
+### Built with ❤️ for the Lingo.dev Community Showcase
 
 ---
 
