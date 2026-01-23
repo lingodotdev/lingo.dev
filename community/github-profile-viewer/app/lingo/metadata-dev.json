@@ -1,5 +1,61 @@
 {
   "entries": {
+    "b9d0a674a20b": {
+      "type": "content",
+      "sourceText": "English",
+      "context": {
+        "componentName": "LanguageSwitcher",
+        "filePath": "page.tsx"
+      },
+      "hash": "b9d0a674a20b",
+      "location": {
+        "filePath": "page.tsx",
+        "line": 12,
+        "column": 6
+      }
+    },
+    "3d06245a02e9": {
+      "type": "content",
+      "sourceText": "Español",
+      "context": {
+        "componentName": "LanguageSwitcher",
+        "filePath": "page.tsx"
+      },
+      "hash": "3d06245a02e9",
+      "location": {
+        "filePath": "page.tsx",
+        "line": 13,
+        "column": 6
+      }
+    },
+    "b531a4346af5": {
+      "type": "content",
+      "sourceText": "Deutsch",
+      "context": {
+        "componentName": "LanguageSwitcher",
+        "filePath": "page.tsx"
+      },
+      "hash": "b531a4346af5",
+      "location": {
+        "filePath": "page.tsx",
+        "line": 14,
+        "column": 6
+      }
+    },
+    "c8fefeaae114": {
+      "type": "content",
+      "sourceText": "Français",
+      "context": {
+        "componentName": "LanguageSwitcher",
+        "filePath": "page.tsx"
+      },
+      "hash": "c8fefeaae114",
+      "location": {
+        "filePath": "page.tsx",
+        "line": 15,
+        "column": 6
+      }
+    },
     "e3dec098bf39": {
       "type": "content",
       "sourceText": "GitHub Profile Finder",
@@ -10,7 +66,7 @@
       "hash": "e3dec098bf39",
       "location": {
         "filePath": "page.tsx",
-        "line": 72,
+        "line": 89,
         "column": 12
       }
     },
@@ -24,7 +80,7 @@
       "hash": "cf62a57e3502",
       "location": {
         "filePath": "page.tsx",
-        "line": 76,
+        "line": 93,
         "column": 10
       }
     },
@@ -38,51 +94,51 @@
       "hash": "f238ebbc69cc",
       "location": {
         "filePath": "page.tsx",
-        "line": 85,
+        "line": 102,
         "column": 14
       }
     },
-    "2ce119e30a58": {
+    "0d126fda13fd": {
       "type": "attribute",
-      "sourceText": "e.g., torvalds",
+      "sourceText": "e.g., prateek-wayne",
       "context": {
         "attributeName": "placeholder",
         "componentName": "Home",
         "filePath": "page.tsx"
       },
-      "hash": "2ce119e30a58",
+      "hash": "0d126fda13fd",
       "location": {
         "filePath": "page.tsx",
-        "line": 88,
+        "line": 108,
         "column": 14
       }
     },
-    "e8e7a38d5145": {
+    "79e8c1af3752": {
       "type": "content",
-      "sourceText": "<svg0><circle0></circle0><path0></path0></svg0> Loading...",
+      "sourceText": "Loading...",
       "context": {
         "componentName": "Home",
         "filePath": "page.tsx"
       },
-      "hash": "e8e7a38d5145",
+      "hash": "79e8c1af3752",
       "location": {
         "filePath": "page.tsx",
-        "line": 106,
-        "column": 16
+        "line": 125,
+        "column": 39
       }
     },
-    "3207a646ce0d": {
+    "d150ab571f8a": {
       "type": "content",
-      "sourceText": "<svg0><path0></path0></svg0> Fetch Profile",
+      "sourceText": "Fetch Profile",
       "context": {
         "componentName": "Home",
         "filePath": "page.tsx"
       },
-      "hash": "3207a646ce0d",
+      "hash": "d150ab571f8a",
       "location": {
         "filePath": "page.tsx",
-        "line": 114,
-        "column": 16
+        "line": 125,
+        "column": 57
       }
     },
     "80d1fbee9adc": {
@@ -95,7 +151,7 @@
       "hash": "80d1fbee9adc",
       "location": {
         "filePath": "page.tsx",
-        "line": 138,
+        "line": 158,
         "column": 14
       }
     },
@@ -109,7 +165,7 @@
       "hash": "b244699654ee",
       "location": {
         "filePath": "page.tsx",
-        "line": 159,
+        "line": 181,
         "column": 16
       }
     },
@@ -123,7 +179,7 @@
       "hash": "cebb7eb5c262",
       "location": {
         "filePath": "page.tsx",
-        "line": 180,
+        "line": 202,
         "column": 16
       }
     },
@@ -137,7 +193,7 @@
       "hash": "25aa85f3ddf7",
       "location": {
         "filePath": "page.tsx",
-        "line": 188,
+        "line": 210,
         "column": 16
       }
     },
@@ -151,7 +207,7 @@
       "hash": "be5bc08c0e39",
       "location": {
         "filePath": "page.tsx",
-        "line": 196,
+        "line": 218,
         "column": 16
       }
     },
@@ -165,69 +221,13 @@
       "hash": "24952443d0a8",
       "location": {
         "filePath": "page.tsx",
-        "line": 202,
+        "line": 224,
         "column": 12
-      }
-    },
-    "8818ca53e31c": {
-      "type": "metadata",
-      "sourceText": "Create Next App",
-      "context": {
-        "fieldPath": "title",
-        "filePath": "layout.tsx"
-      },
-      "hash": "8818ca53e31c",
-      "location": {
-        "filePath": "layout.tsx",
-        "line": 17,
-        "column": 9
-      }
-    },
-    "86dbb9f023f2": {
-      "type": "metadata",
-      "sourceText": "Generated by create next app",
-      "context": {
-        "fieldPath": "description",
-        "filePath": "layout.tsx"
-      },
-      "hash": "86dbb9f023f2",
-      "location": {
-        "filePath": "layout.tsx",
-        "line": 18,
-        "column": 15
-      }
-    },
-    "d150ab571f8a": {
-      "type": "content",
-      "sourceText": "Fetch Profile",
-      "context": {
-        "componentName": "Home",
-        "filePath": "page.tsx"
-      },
-      "hash": "d150ab571f8a",
-      "location": {
-        "filePath": "page.tsx",
-        "line": 111,
-        "column": 16
-      }
-    },
-    "79e8c1af3752": {
-      "type": "content",
-      "sourceText": "Loading...",
-      "context": {
-        "componentName": "Home",
-        "filePath": "page.tsx"
-      },
-      "hash": "79e8c1af3752",
-      "location": {
-        "filePath": "page.tsx",
-        "line": 106,
-        "column": 16
       }
     }
   },
   "stats": {
     "totalEntries": 16,
-    "lastUpdated": "2026-01-23T08:52:26.698Z"
+    "lastUpdated": "2026-01-23T12:43:56.687Z"
   }
 }
