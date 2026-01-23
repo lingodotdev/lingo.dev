@@ -64,6 +64,36 @@ export async function batchTranslate(texts, locale) {
     }
 }
 
+// Consolidated English UI text definitions
+const englishTexts = {
+    // Navigation
+    board: 'Board',
+    chat: 'Chat',
+    
+    // Board columns
+    todo: 'To Do',
+    inprogress: 'In Progress',
+    review: 'Review',
+    done: 'Done',
+    
+    // Page titles
+    sprintBoard: 'Sprint Board',
+    
+    // Common actions
+    save: 'Save',
+    cancel: 'Cancel',
+    delete: 'Delete',
+    edit: 'Edit',
+    loading: 'Loading...',
+    error: 'Error',
+    success: 'Success',
+    
+    // Task management
+    addTask: 'Add Task',
+    taskTitle: 'Task Title',
+    taskDescription: 'Task Description'
+};
+
 /**
  * Get translations for UI elements - ONLY via real Lingo.dev API
  * @param {string} locale - Target locale
@@ -71,67 +101,21 @@ export async function batchTranslate(texts, locale) {
  */
 export async function getUITranslations(locale) {
     if (locale === 'en') {
-        return {
-            // Navigation
-            board: 'Board',
-            chat: 'Chat',
-            
-            // Board columns
-            todo: 'To Do',
-            inprogress: 'In Progress',
-            review: 'Review',
-            done: 'Done',
-            
-            // Page titles
-            sprintBoard: 'Sprint Board',
-            
-            // Common actions
-            save: 'Save',
-            cancel: 'Cancel',
-            delete: 'Delete',
-            edit: 'Edit',
-            loading: 'Loading...',
-            error: 'Error',
-            success: 'Success',
-            
-            // Task management
-            addTask: 'Add Task',
-            taskTitle: 'Task Title',
-            taskDescription: 'Task Description'
-        };
+        return englishTexts;
     }
     
-    // For non-English locales, translate everything via API - NO HARDCODED FALLBACKS
-    const englishTexts = {
-        board: 'Board',
-        chat: 'Chat',
-        todo: 'To Do',
-        inprogress: 'In Progress',
-        review: 'Review',
-        done: 'Done',
-        sprintBoard: 'Sprint Board',
-        save: 'Save',
-        cancel: 'Cancel',
-        delete: 'Delete',
-        edit: 'Edit',
-        loading: 'Loading...',
-        error: 'Error',
-        success: 'Success',
-        addTask: 'Add Task',
-        taskTitle: 'Task Title',
-        taskDescription: 'Task Description'
-    };
-    
+    // For non-English locales, translate everything via API
     const translatedTexts = {};
     
-    // Translate each text via API - if any fail, throw error (no fallbacks)
+    // Translate each text via API with fallback to original text on error
     const translationPromises = Object.entries(englishTexts).map(async ([key, text]) => {
         try {
             const translated = await getTranslation(text, locale);
             return [key, translated];
         } catch (error) {
             console.error(`[Translation] Failed to translate "${text}" to ${locale}:`, error);
-            throw new Error(`Translation failed for ${key}: ${text}`);
+            // Return original text as fallback instead of throwing
+            return [key, text];
         }
     });
     
@@ -145,7 +129,8 @@ export async function getUITranslations(locale) {
         return translatedTexts;
     } catch (error) {
         console.error(`[Translation] Batch translation failed for locale ${locale}:`, error);
-        throw error; // Re-throw to let caller handle the failure
+        // Return English texts as fallback
+        return englishTexts;
     }
 }
 

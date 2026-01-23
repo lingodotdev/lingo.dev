@@ -144,4 +144,4 @@ npm install
 npm run dev:full
 ```
 
-**Open http://localhost:5173 and experience real-time translation magic!**
+**Open <http://localhost:5173> and experience real-time translation magic!**

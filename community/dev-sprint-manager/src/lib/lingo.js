@@ -29,7 +29,13 @@ export async function translateText(text, targetLocale) {
             const result = await response.json();
             return result.translatedText || text;
         } else {
-            const errorData = await response.json();
+            let errorData;
+            try {
+                errorData = await response.json();
+            } catch (parseError) {
+                errorData = await response.text();
+                console.log('[Lingo.dev] Server returned non-JSON response:', errorData);
+            }
             console.error('[Lingo.dev] Translation API error:', errorData);
             return text;
         }
@@ -41,9 +47,9 @@ export async function translateText(text, targetLocale) {
 
 /**
  * Translate chat messages via local proxy server
- * @param {Array} messages - Array of {name, text} objects
+ * @param {Array} messages - Array of message objects
  * @param {string} targetLocale - Target language code
- * @returns {Promise<Array>} Translated messages
+ * @returns {Promise<Array>} Translated messages with preserved structure
  */
 export async function translateChat(messages, targetLocale) {
     if (!messages || messages.length === 0 || targetLocale === 'en') {
@@ -52,10 +58,16 @@ export async function translateChat(messages, targetLocale) {
 
     try {
         const translatedMessages = await Promise.all(
-            messages.map(async (msg) => ({
-                name: msg.name || 'User',
-                text: await translateText(msg.content || msg.text, targetLocale)
-            }))
+            messages.map(async (msg) => {
+                // Preserve original message structure and only translate content/text
+                const translatedContent = await translateText(msg.content || msg.text, targetLocale);
+                return {
+                    ...msg, // Preserve all original properties
+                    text: translatedContent,
+                    content: translatedContent,
+                    name: msg.name || 'User'
+                };
+            })
         );
 
         return translatedMessages;
@@ -86,16 +98,16 @@ export async function batchTranslate(text, targetLocales) {
 }
 
 /**
- * Detect language of text (simplified implementation)
+ * Detect language of text using Unicode script ranges
  * @param {string} text - Text to analyze
  * @returns {Promise<string>} Detected language code
  */
 export async function detectLanguage(text) {
-    // Simple pattern-based detection for demo
-    if (/[हिन्दी]/.test(text)) return 'hi';
-    if (/[ñáéíóú]/.test(text)) return 'es';
-    if (/[àâäéèêëïîôöùûüÿç]/.test(text)) return 'fr';
-    if (/[ひらがなカタカナ漢字]/.test(text)) return 'ja';
+    // Use Unicode script/property regex with /u flag for proper detection
+    if (/\p{Devanagari}/u.test(text)) return 'hi';
+    if (/[ñáéíóúü]/i.test(text)) return 'es';
+    if (/[àâäéèêëïîôöùûüÿç]/i.test(text)) return 'fr';
+    if (/[\p{Hiragana}\p{Katakana}\p{Han}]/u.test(text)) return 'ja';
     return 'en';
 }
 

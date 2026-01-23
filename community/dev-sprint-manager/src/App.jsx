@@ -86,12 +86,15 @@ function App() {
       const newTranslations = await getUITranslations(locale);
       setTranslations(newTranslations);
       
-      setTimeout(() => {
+      const timeoutId = setTimeout(() => {
         setCompilerLogs(prev => [
           ...prev.slice(-4),
           { text: `✔ Interface translated via real-time Lingo.dev API.`, color: 'text-green-400' }
         ]);
       }, 800);
+
+      // Store timeout ID for cleanup
+      return () => clearTimeout(timeoutId);
     } catch (error) {
       console.error('Real-time translation failed:', error);
       setCompilerLogs(prev => [

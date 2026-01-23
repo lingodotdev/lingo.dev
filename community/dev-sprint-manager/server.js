@@ -43,7 +43,7 @@ app.post('/api/translate', async (req, res) => {
             return res.status(500).json({ error: 'Lingo.dev SDK not initialized' });
         }
 
-        console.log(`[Server] Translating "${text}" from ${sourceLocale} to ${targetLocale}`);
+        console.log(`[Server] Translating text (${text.length} chars) from ${sourceLocale} to ${targetLocale}`);
 
         const result = await lingoDotDev.localizeText(text, {
             sourceLocale: sourceLocale || 'en',

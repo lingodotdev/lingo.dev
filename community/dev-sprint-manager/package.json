@@ -19,12 +19,13 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-username/dev-sprint-manager.git"
+    "url": "https://github.com/lingodotdev/lingo.dev.git",
+    "directory": "community/dev-sprint-manager"
   },
   "bugs": {
-    "url": "https://github.com/your-username/dev-sprint-manager/issues"
+    "url": "https://github.com/lingodotdev/lingo.dev/issues"
   },
-  "homepage": "https://github.com/your-username/dev-sprint-manager#readme",
+  "homepage": "https://github.com/lingodotdev/lingo.dev/tree/main/community/dev-sprint-manager#readme",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -32,8 +33,6 @@
     "preview": "vite preview",
     "server": "node server.js",
     "dev:full": "concurrently \"npm run server\" \"npm run dev\"",
-    "setup": "node setup.js",
-    "verify": "node verify-setup.js",
     "test": "echo \"Tests coming soon\" && exit 0"
   },
   "dependencies": {

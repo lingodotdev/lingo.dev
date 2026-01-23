@@ -72,9 +72,6 @@ const Chat = ({ isWidget = true, locale = 'en' }) => {
             return (
                 <span>
                     {translatedText}
-                    <span className="block text-[9px] text-purple-400 mt-1.5 font-mono opacity-80 flex items-center gap-1.5">
-                      
-                    </span>
                 </span>
             );
         }

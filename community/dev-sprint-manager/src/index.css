@@ -55,8 +55,6 @@ body {
   background-color: var(--bg-dark);
   color: var(--text-primary);
   min-height: 100vh;
-  overflow: hidden;
-  /* App-like feel */
   /* Subtle luxurious gradient background */
   background-image:
     radial-gradient(circle at 10% 20%, rgba(139, 92, 246, 0.08) 0%, transparent 40%),
@@ -64,8 +62,10 @@ body {
 }
 
 #root {
-  height: 100%;
+  height: 100vh;
   width: 100%;
+  overflow: hidden;
+  /* App-like feel with controlled overflow */
 }
 
 /* -------------------------------------------------------------------------- */
