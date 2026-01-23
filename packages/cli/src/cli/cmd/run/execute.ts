@@ -254,7 +254,8 @@ function createWorkerTask(args: {
                 sourceLocale: assignedTask.sourceLocale,
                 targetLocale: assignedTask.targetLocale,
                 sourceData,
-                targetData,
+                // When --force is used, exclude previous translations from reference to ensure fresh translations
+                targetData: args.ctx.flags.force ? {} : targetData,
                 processableData,
                 hints: relevantHints,
               },
