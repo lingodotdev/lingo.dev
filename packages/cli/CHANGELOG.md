@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.125.0
+
+### Minor Changes
+
+- [#1799](https://github.com/lingodotdev/lingo.dev/pull/1799) [`e3a383b`](https://github.com/lingodotdev/lingo.dev/commit/e3a383b8a82110984cef1d1ce477d1e0bf65c488) Thanks [@cherkanovart](https://github.com/cherkanovart)! - roll back
+
 ## 0.124.0
 
 ### Minor Changes
