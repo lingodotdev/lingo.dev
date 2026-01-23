@@ -1,0 +1,117 @@
+{
+  "Form": {
+    "title": "Inscription à la newsletter",
+    "description": "Restez informé de nos dernières actualités et offres",
+    "validation": {
+      "demo": "Démo du formulaire"
+    },
+    "fields": {
+      "name": {
+        "label": "Nom complet",
+        "placeholder": "Saisissez votre nom complet",
+        "length": "2 à 50 caractères"
+      },
+      "email": {
+        "label": "Adresse e-mail",
+        "placeholder": "votre.email@exemple.com"
+      },
+      "phone": {
+        "label": "Numéro de téléphone",
+        "placeholder": "01 23 45 67 89",
+        "optional": "Facultatif"
+      }
+    },
+    "preferences": {
+      "title": "Préférences e-mail",
+      "weekly": "Newsletter hebdomadaire",
+      "weeklyDesc": "Recevez des mises à jour hebdomadaires",
+      "promotions": "Promotions spéciales",
+      "updates": "Mises à jour produits",
+      "frequency": "Fréquence",
+      "daily": "Quotidienne",
+      "weeklyFrequency": "Hebdomadaire",
+      "monthly": "Mensuelle"
+    },
+    "privacy": "J'accepte les <terms>conditions d'utilisation</terms> et la <privacy>politique de confidentialité</privacy>",
+    "submit": "S'abonner maintenant",
+    "submitting": "Envoi en cours...",
+    "security": "Vos informations sont sécurisées et ne seront pas partagées",
+    "success": {
+      "title": "Merci !",
+      "message": "Vous vous êtes inscrit avec succès à notre newsletter. Bienvenue dans notre communauté !",
+      "cta": "Inscrire une autre adresse e-mail",
+      "home": "Retour à l'accueil"
+    },
+    "stats": {
+      "errors": "Erreurs",
+      "dirty": "Modifié",
+      "valid": "Valide"
+    }
+  },
+  "Validation": {
+    "name": {
+      "required": "Le nom est requis",
+      "minLength": "Le nom doit contenir au moins 2 caractères",
+      "maxLength": "Le nom ne peut pas dépasser 50 caractères"
+    },
+    "email": {
+      "required": "L'adresse e-mail est requise",
+      "invalid": "Veuillez saisir une adresse e-mail valide"
+    },
+    "phone": {
+      "invalid": "Veuillez saisir un numéro de téléphone valide (10 à 15 chiffres)"
+    },
+    "privacy": {
+      "required": "Vous devez accepter les conditions générales et la politique de confidentialité"
+    }
+  },
+  "LocaleSwitcher": {
+    "label": "Langue",
+    "search": "Rechercher des langues...",
+    "close": "Fermer",
+    "count": "Affichage de {count} sur {total} langues",
+    "noResults": "Aucune langue trouvée",
+    "tryDifferent": "Essayez un autre terme de recherche",
+    "selectLanguage": "Sélectionner la langue",
+    "currentLanguage": "Langue actuelle",
+    "switchingInfo": "La page se rechargera avec la langue sélectionnée",
+    "shortcut": "pour activer le sélecteur de langue",
+    "languages": {
+      "en": "Anglais",
+      "es": "Espagnol",
+      "fr": "Français",
+      "de": "Allemand",
+      "ja": "Japonais",
+      "zh": "Chinois",
+      "ko": "Coréen",
+      "ar": "Arabe"
+    }
+  },
+  "Home": {
+    "title": "Démo de formulaire multilingue",
+    "subtitle": "Créé avec Next.js, next-intl et React Hook Form",
+    "features": {
+      "title": "Fonctionnalités",
+      "feature1": "Support complet de l'internationalisation avec next-intl",
+      "feature2": "Validation de formulaire avec Zod et React Hook Form",
+      "feature3": "Validation en temps réel avec messages d'erreur localisés",
+      "feature4": "Design responsive avec support du mode sombre"
+    },
+    "validation": {
+      "demo": "Démo de validation",
+      "name": {
+        "required": "Validation du nom (2 à 50 caractères)"
+      },
+      "email": {
+        "format": "Validation du format d'e-mail"
+      },
+      "phone": {
+        "format": "Validation du format de numéro de téléphone (facultatif)"
+      },
+      "privacy": {
+        "required": "Acceptation de la politique de confidentialité requise"
+      }
+    },
+    "footer": "© 2026 Multilingual Form Demo. Créé avec ❤️ en utilisant Next.js"
+  }
+}

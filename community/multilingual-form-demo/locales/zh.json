@@ -1,0 +1,117 @@
+{
+  "Form": {
+    "title": "订阅新闻通讯",
+    "description": "随时了解我们的最新消息和优惠",
+    "validation": {
+      "demo": "表单演示"
+    },
+    "fields": {
+      "name": {
+        "label": "全名",
+        "placeholder": "请输入您的全名",
+        "length": "2-50 个字符"
+      },
+      "email": {
+        "label": "邮箱地址",
+        "placeholder": "your.email@example.com"
+      },
+      "phone": {
+        "label": "电话号码",
+        "placeholder": "(123) 456-7890",
+        "optional": "可选"
+      }
+    },
+    "preferences": {
+      "title": "邮件偏好设置",
+      "weekly": "每周通讯",
+      "weeklyDesc": "每周接收更新",
+      "promotions": "特别优惠",
+      "updates": "产品更新",
+      "frequency": "频率",
+      "daily": "每日",
+      "weeklyFrequency": "每周",
+      "monthly": "每月"
+    },
+    "privacy": "我同意<terms>服务条款</terms>和<privacy>隐私政策</privacy>",
+    "submit": "立即订阅",
+    "submitting": "正在提交...",
+    "security": "您的信息将被安全保存且不会被分享",
+    "success": {
+      "title": "感谢您！",
+      "message": "您已成功订阅我们的新闻通讯，欢迎加入我们的社区！",
+      "cta": "订阅其他邮箱",
+      "home": "返回首页"
+    },
+    "stats": {
+      "errors": "错误",
+      "dirty": "已编辑",
+      "valid": "有效"
+    }
+  },
+  "Validation": {
+    "name": {
+      "required": "姓名为必填项",
+      "minLength": "姓名至少需要 2 个字符",
+      "maxLength": "姓名不能超过 50 个字符"
+    },
+    "email": {
+      "required": "邮箱为必填项",
+      "invalid": "请输入有效的邮箱地址"
+    },
+    "phone": {
+      "invalid": "请输入有效的电话号码（10-15 位数字）"
+    },
+    "privacy": {
+      "required": "您必须同意条款和隐私政策"
+    }
+  },
+  "LocaleSwitcher": {
+    "label": "语言",
+    "search": "搜索语言...",
+    "close": "关闭",
+    "count": "显示 {count} 种语言，共 {total} 种",
+    "noResults": "未找到相关语言",
+    "tryDifferent": "请尝试其他搜索词",
+    "selectLanguage": "选择语言",
+    "currentLanguage": "当前语言",
+    "switchingInfo": "页面将以所选语言重新加载",
+    "shortcut": "切换语言选择器",
+    "languages": {
+      "en": "English",
+      "es": "Spanish",
+      "fr": "法语",
+      "de": "德语",
+      "ja": "日语",
+      "zh": "中文",
+      "ko": "韩语",
+      "ar": "阿拉伯语"
+    }
+  },
+  "Home": {
+    "title": "多语言表单演示",
+    "subtitle": "基于 Next.js、next-intl 和 React Hook Form 构建",
+    "features": {
+      "title": "功能亮点",
+      "feature1": "通过 next-intl 实现完整的国际化支持",
+      "feature2": "使用 Zod 和 React Hook Form 进行表单校验",
+      "feature3": "实时校验并本地化错误信息",
+      "feature4": "响应式设计，支持深色模式"
+    },
+    "validation": {
+      "demo": "校验演示",
+      "name": {
+        "required": "姓名校验（2-50 个字符）"
+      },
+      "email": {
+        "format": "邮箱格式校验"
+      },
+      "phone": {
+        "format": "手机号格式校验（可选）"
+      },
+      "privacy": {
+        "required": "需同意隐私政策"
+      }
+    },
+    "footer": "© 2026 Multilingual Form Demo。由 Next.js 倾心打造 ❤️"
+  }
+}
