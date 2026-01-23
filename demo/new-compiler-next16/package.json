@@ -21,6 +21,7 @@
     "@types/react-dom": "19",
     "eslint": "9",
     "eslint-config-next": "16.0.3",
+    "prettier": "3.6.2",
     "tailwindcss": "4",
     "tsx": "4.20.6",
     "typescript": "5"

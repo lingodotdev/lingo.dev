@@ -4,8 +4,6 @@
 
 ![SchemeSaathi Banner](./public/bg-img.jpg)
 
-**SchemeSaathi** is an AI-powered Next.js application that helps Indian citizens discover and understand government schemes they're eligible for. Built with modern web technologies and multilingual support, it provides an intuitive interface for scheme discovery through an intelligent chatbot.
-
 [![Next.js](https://img.shields.io/badge/Next.js-16.1.4-black?style=flat-square&logo=next.js)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-19.2.3-blue?style=flat-square&logo=react)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)

@@ -30,8 +30,9 @@ export class LCP {
       fs.writeFileSync(filePath, "{}");
 
       try {
-        fs.rmdirSync(path.resolve(process.cwd(), ".next"), {
+        fs.rmSync(path.resolve(process.cwd(), ".next"), {
           recursive: true,
+          force: true,
         });
       } catch (error) {
         // Ignore errors if directory doesn't exist

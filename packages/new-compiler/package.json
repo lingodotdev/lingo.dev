@@ -19,18 +19,18 @@
   "module": "build/index.mjs",
   "exports": {
     ".": {
-      "types": "./build/plugin/index.d.cts",
+      "types": "./build/plugin/index.d.mts",
       "import": "./build/plugin/index.mjs",
       "require": "./build/plugin/index.cjs"
     },
     "./react": {
       "react-server": {
-        "types": "./build/react/server/index.d.ts",
+        "types": "./build/react/server/index.d.mts",
         "import": "./build/react/server/index.mjs",
         "default": "./build/react/server/index.cjs"
       },
       "default": {
-        "types": "./build/react/client/index.d.ts",
+        "types": "./build/react/client/index.d.mts",
         "import": "./build/react/client/index.mjs",
         "default": "./build/react/client/index.cjs"
       }
@@ -41,28 +41,28 @@
       "require": "./build/virtual/config.cjs"
     },
     "./virtual/locale/server": {
-      "types": "./build/virtual/locale/server.d.ts",
+      "types": "./build/virtual/locale/server.d.mts",
       "import": "./build/virtual/locale/server.mjs",
       "require": "./build/virtual/locale/server.cjs"
     },
     "./virtual/locale/client": {
-      "types": "./build/virtual/locale/client.d.ts",
+      "types": "./build/virtual/locale/client.d.mts",
       "import": "./build/virtual/locale/client.mjs",
       "require": "./build/virtual/locale/client.cjs"
     },
     "./react/client": {
-      "types": "./build/react/index.d.ts",
+      "types": "./build/react/index.d.mts",
       "import": "./build/react/index.mjs",
       "require": "./build/react/index.cjs"
     },
     "./react/next": {
       "react-server": {
-        "types": "./build/react/next/server.d.ts",
+        "types": "./build/react/next/server.d.mts",
         "import": "./build/react/next/server.mjs",
         "default": "./build/react/next/server.cjs"
       },
       "default": {
-        "types": "./build/react/next/client.d.ts",
+        "types": "./build/react/next/client.d.mts",
         "import": "./build/react/next/client.mjs",
         "default": "./build/react/next/client.cjs"
       }
@@ -73,42 +73,42 @@
       "require": "./build/react/config.cjs"
     },
     "./react/server": {
-      "types": "./build/react/server-only/index.d.ts",
+      "types": "./build/react/server-only/index.d.mts",
       "import": "./build/react/server-only/index.mjs",
       "require": "./build/react/server-only/index.cjs"
     },
     "./next": {
-      "types": "./build/plugin/next.d.ts",
+      "types": "./build/plugin/next.d.mts",
       "import": "./build/plugin/next.mjs",
       "require": "./build/plugin/next.cjs"
     },
     "./vite": {
-      "types": "./build/plugin/vite.d.ts",
+      "types": "./build/plugin/vite.d.mts",
       "import": "./build/plugin/vite.mjs",
       "require": "./build/plugin/vite.cjs"
     },
     "./webpack": {
-      "types": "./build/plugin/webpack.d.ts",
+      "types": "./build/plugin/webpack.d.mts",
       "import": "./build/plugin/webpack.mjs",
       "require": "./build/plugin/webpack.cjs"
     },
     "./next-compiler-loader": {
-      "types": "./build/plugin/next-compiler-loader.d.ts",
+      "types": "./build/plugin/next-compiler-loader.d.mts",
       "import": "./build/plugin/next-compiler-loader.mjs",
       "require": "./build/plugin/next-compiler-loader.cjs"
     },
     "./next-config-loader": {
-      "types": "./build/plugin/next-config-loader.d.ts",
+      "types": "./build/plugin/next-config-loader.d.mts",
       "import": "./build/plugin/next-config-loader.mjs",
       "require": "./build/plugin/next-config-loader.cjs"
     },
     "./next-locale-server-loader": {
-      "types": "./build/plugin/next-locale-server-loader.d.ts",
+      "types": "./build/plugin/next-locale-server-loader.d.mts",
       "import": "./build/plugin/next-locale-server-loader.mjs",
       "require": "./build/plugin/next-locale-server-loader.cjs"
     },
     "./next-locale-client-loader": {
-      "types": "./build/plugin/next-locale-client-loader.d.ts",
+      "types": "./build/plugin/next-locale-client-loader.d.mts",
       "import": "./build/plugin/next-locale-client-loader.mjs",
       "require": "./build/plugin/next-locale-client-loader.cjs"
     }
@@ -148,6 +148,7 @@
     "@types/react-dom": "19.2.3",
     "@types/ws": "8.18.1",
     "next": "16.1.0",
+    "prettier": "3.6.2",
     "tsdown": "0.18.2",
     "tsx": "4.21.0",
     "typescript": "5.9.3",
