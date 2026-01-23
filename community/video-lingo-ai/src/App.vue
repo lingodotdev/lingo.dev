@@ -65,18 +65,11 @@ const formatTime = (seconds) => {
   return `${mins}:${secs.toString().padStart(2, '0')}`
 }
 </script>
-
 <template>
   <div class="container">
     <!-- Header -->
     <div class="header">
-      <div class="title-wrapper">
-        <svg class="icon-video" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M23 7l-7 5 7 5V7z"></path>
-          <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
-        </svg>
-        <h1 class="title">{{ t("title") }}</h1>
-      </div>
+      <h1 class="title">{{ t("title") }}</h1>
       <p class="subtitle">{{ t("subtitle") }}</p>
 
       <!-- Language Switcher -->
@@ -90,7 +83,7 @@ const formatTime = (seconds) => {
     <div class="card">
       <!-- Upload Area -->
       <div 
-        :class="['upload-area', { 'drag-active': dragActive }]"
+        :class="['upload-area', { 'drag-active': dragActive, 'has-file': videoFile }]"
         @dragenter="handleDrag"
         @dragleave="handleDrag"
         @dragover="handleDrag"
@@ -104,24 +97,22 @@ const formatTime = (seconds) => {
         />
         
         <div class="upload-content">
-          <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-            <polyline points="17 8 12 3 7 8"></polyline>
-            <line x1="12" y1="3" x2="12" y2="15"></line>
-          </svg>
-          
           <div v-if="videoFile" class="file-selected">
-            <div class="file-info">
-              <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                <polyline points="22 4 12 14.01 9 11.01"></polyline>
-              </svg>
+            <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <div>
               <p class="file-name">{{ videoFile.name }}</p>
+              <p class="file-size">{{ (videoFile.size / 1024 / 1024).toFixed(2) }} MB</p>
             </div>
-            <p class="file-size">{{ (videoFile.size / 1024 / 1024).toFixed(2) }} MB</p>
           </div>
           
-          <div v-else>
+          <div v-else class="upload-placeholder">
+            <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="17 8 12 3 7 8"></polyline>
+              <line x1="12" y1="3" x2="12" y2="15"></line>
+            </svg>
             <p class="upload-text">{{ t("uploadText") }}</p>
             <p class="upload-subtext">{{ t("uploadSubtext") }}</p>
           </div>
@@ -129,23 +120,15 @@ const formatTime = (seconds) => {
       </div>
 
       <!-- Summary Toggle -->
-      <div class="toggle-wrapper">
+      <div class="options">
         <label class="toggle-label">
-          <div class="toggle-container">
-            <input 
-              type="checkbox" 
-              v-model="isSummarize"
-              class="toggle-input"
-            />
-            <div class="toggle-slider"></div>
-            <div class="toggle-knob"></div>
-          </div>
-          <span class="toggle-text">
-            <svg class="sparkle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M12 2v20M17 7l-5 5-5-5M7 17l5-5 5 5"></path>
-            </svg>
-            {{ t("generateSummary") }}
-          </span>
+          <input 
+            type="checkbox" 
+            v-model="isSummarize"
+            class="toggle-input"
+          />
+          <span class="toggle-switch"></span>
+          <span class="toggle-text">{{ t("generateSummary") }}</span>
         </label>
       </div>
 
@@ -159,42 +142,21 @@ const formatTime = (seconds) => {
           <span class="spinner"></span>
           {{ t("processing") }}
         </span>
-        <span v-else class="btn-content">
-          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-            <polyline points="17 8 12 3 7 8"></polyline>
-            <line x1="12" y1="3" x2="12" y2="15"></line>
-          </svg>
-          {{ t("uploadBtn") }}
-        </span>
+        <span v-else>{{ t("uploadBtn") }}</span>
       </button>
     </div>
 
     <!-- Results -->
     <div v-if="result" class="results">
       <!-- Summary Card -->
-      <div v-if="result.summary" class="summary-card">
-        <div class="summary-header">
-          <svg class="summary-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 2v20M17 7l-5 5-5-5M7 17l5-5 5 5"></path>
-          </svg>
-          <h3>{{ t("summaryTitle") }}</h3>
-        </div>
+      <div v-if="result.summary" class="result-card summary-card">
+        <h3 class="result-title">{{ t("summaryTitle") }}</h3>
         <p class="summary-text">{{ result.summary }}</p>
       </div>
 
       <!-- Transcript Card -->
-      <div class="transcript-card">
-        <div class="transcript-header">
-          <svg class="transcript-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-            <polyline points="14 2 14 8 20 8"></polyline>
-            <line x1="16" y1="13" x2="8" y2="13"></line>
-            <line x1="16" y1="17" x2="8" y2="17"></line>
-            <polyline points="10 9 9 9 8 9"></polyline>
-          </svg>
-          <h3>{{ t("transcriptTitle") }}</h3>
-        </div>
+      <div class="result-card" v-if="result.segments">
+        <h3 class="result-title">{{ t("transcriptTitle") }}</h3>
         
         <div class="transcript-list">
           <div 
@@ -202,13 +164,7 @@ const formatTime = (seconds) => {
             :key="i"
             class="transcript-item"
           >
-            <div class="timestamp">
-              <svg class="clock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="10"></circle>
-                <polyline points="12 6 12 12 16 14"></polyline>
-              </svg>
-              <span>{{ formatTime(seg.start) }} - {{ formatTime(seg.end) }}</span>
-            </div>
+            <span class="timestamp">{{ formatTime(seg.start) }}</span>
             <p class="transcript-text">{{ seg.text }}</p>
           </div>
         </div>
@@ -224,74 +180,87 @@ const formatTime = (seconds) => {
 
 .container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #eef2ff 0%, #fae8ff 50%, #fce7f3 100%);
-  padding: 3rem 1rem;
+  background: #f8f9fa;
+  padding: 2.5rem 1.25rem;
 }
 
 .header {
-  text-align: center;
-  margin-bottom: 3rem;
-  animation: fadeIn 0.6s ease-out;
-}
-
-.title-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
-}
-
-.icon-video {
-  width: 3rem;
-  height: 3rem;
-  color: #4f46e5;
+  max-width: 42rem;
+  margin: 0 auto 2.5rem;
 }
 
 .title {
-  font-size: 3rem;
-  font-weight: bold;
-  background: linear-gradient(to right, #4f46e5, #7c3aed, #ec4899);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin: 0;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0 0 0.5rem 0;
+  letter-spacing: -0.02em;
 }
 
 .subtitle {
-  color: #6b7280;
-  font-size: 1.125rem;
-  margin: 0;
+  color: #666;
+  font-size: 1rem;
+  margin: 0 0 1.25rem 0;
+  font-weight: 400;
+}
+
+.lang-switch {
+  display: inline-flex;
+  gap: 0.5rem;
+  background: #fff;
+  padding: 0.25rem;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e5e5;
+}
+
+.lang-switch button {
+  padding: 0.375rem 0.875rem;
+  border-radius: 0.375rem;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: #666;
+  transition: all 0.15s ease;
+}
+
+.lang-switch button.active {
+  background: #2563eb;
+  color: white;
 }
 
 .card {
-  max-width: 56rem;
+  max-width: 42rem;
   margin: 0 auto 2rem;
   background: white;
-  border-radius: 1.5rem;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  padding: 2rem;
-  border: 1px solid #f3f4f6;
+  border-radius: 0.75rem;
+  border: 1px solid #e5e5e5;
+  padding: 1.75rem;
 }
 
 .upload-area {
   position: relative;
-  border: 3px dashed #d1d5db;
-  border-radius: 1rem;
-  padding: 3rem;
-  transition: all 0.3s ease;
-  cursor: pointer;
+  border: 2px dashed #d4d4d8;
+  border-radius: 0.625rem;
+  padding: 2.5rem 1.5rem;
+  transition: all 0.2s ease;
+  background: #fafafa;
 }
 
 .upload-area:hover {
-  border-color: #818cf8;
-  background: #f9fafb;
+  border-color: #a1a1aa;
+  background: #f4f4f5;
 }
 
 .upload-area.drag-active {
-  border-color: #4f46e5;
-  background: #eef2ff;
-  transform: scale(1.02);
+  border-color: #2563eb;
+  background: #eff6ff;
+}
+
+.upload-area.has-file {
+  background: #f0fdf4;
+  border-color: #86efac;
 }
 
 .file-input {
@@ -308,74 +277,72 @@ const formatTime = (seconds) => {
   pointer-events: none;
 }
 
+.upload-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .upload-icon {
-  width: 4rem;
-  height: 4rem;
-  margin: 0 auto 1rem;
-  color: #6366f1;
+  width: 3rem;
+  height: 3rem;
+  margin-bottom: 1rem;
+  color: #71717a;
 }
 
 .file-selected {
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.file-info {
-  display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  color: #059669;
+  gap: 0.875rem;
 }
 
 .check-icon {
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 2rem;
+  height: 2rem;
+  color: #16a34a;
+  flex-shrink: 0;
 }
 
 .file-name {
-  font-weight: 600;
-  margin: 0;
+  font-weight: 500;
+  color: #1a1a1a;
+  margin: 0 0 0.25rem 0;
+  text-align: left;
 }
 
 .file-size {
   font-size: 0.875rem;
-  color: #6b7280;
+  color: #737373;
   margin: 0;
+  text-align: left;
 }
 
 .upload-text {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #374151;
-  margin: 0 0 0.5rem 0;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #262626;
+  margin: 0 0 0.375rem 0;
 }
 
 .upload-subtext {
   font-size: 0.875rem;
-  color: #6b7280;
+  color: #737373;
   margin: 0;
 }
 
-.toggle-wrapper {
-  display: flex;
-  justify-content: center;
-  margin-top: 2rem;
+.options {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #f4f4f5;
 }
 
 .toggle-label {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 0.75rem;
   cursor: pointer;
   user-select: none;
-}
-
-.toggle-container {
-  position: relative;
-  width: 3.5rem;
-  height: 1.75rem;
 }
 
 .toggle-input {
@@ -385,97 +352,62 @@ const formatTime = (seconds) => {
   height: 0;
 }
 
-.toggle-slider {
-  position: absolute;
-  inset: 0;
-  background: #d1d5db;
-  border-radius: 9999px;
-  transition: all 0.3s ease;
+.toggle-switch {
+  position: relative;
+  width: 2.75rem;
+  height: 1.5rem;
+  background: #e5e5e5;
+  border-radius: 0.75rem;
+  transition: background 0.2s ease;
 }
 
-.toggle-input:checked + .toggle-slider {
-  background: linear-gradient(to right, #6366f1, #a855f7);
-}
-
-.toggle-knob {
+.toggle-switch::after {
+  content: '';
   position: absolute;
-  left: 0.25rem;
-  top: 0.25rem;
+  left: 0.125rem;
+  top: 0.125rem;
   width: 1.25rem;
   height: 1.25rem;
   background: white;
-  border-radius: 9999px;
-  transition: all 0.3s ease;
+  border-radius: 50%;
+  transition: transform 0.2s ease;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.toggle-input:checked ~ .toggle-knob {
-  transform: translateX(1.75rem);
+.toggle-input:checked + .toggle-switch {
+  background: #2563eb;
 }
 
-.lang-switch {
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-top: 1rem;
-}
-
-.lang-switch button {
-  padding: 0.4rem 0.75rem;
-  border-radius: 9999px;
-  border: 1px solid #d1d5db;
-  background: white;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-.lang-switch button.active {
-  background: #4f46e5;
-  color: white;
+.toggle-input:checked + .toggle-switch::after {
+  transform: translateX(1.25rem);
 }
 
 .toggle-text {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 1.125rem;
+  font-size: 0.9375rem;
+  color: #404040;
   font-weight: 500;
-  color: #374151;
-  transition: color 0.3s ease;
-}
-
-.toggle-label:hover .toggle-text {
-  color: #4f46e5;
-}
-
-.sparkle-icon {
-  width: 1.25rem;
-  height: 1.25rem;
 }
 
 .upload-btn {
   width: 100%;
-  margin-top: 2rem;
-  padding: 1rem 1.5rem;
-  border-radius: 0.75rem;
-  font-weight: 600;
-  font-size: 1.125rem;
+  margin-top: 1.5rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  font-size: 0.9375rem;
   color: white;
-  background: linear-gradient(to right, #4f46e5, #7c3aed, #ec4899);
+  background: #2563eb;
   border: none;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  transition: background 0.2s ease;
 }
 
 .upload-btn:hover:not(:disabled) {
-  background: linear-gradient(to right, #4338ca, #6d28d9, #db2777);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-  transform: scale(1.02);
+  background: #1d4ed8;
 }
 
 .upload-btn:active:not(:disabled) {
-  transform: scale(0.98);
+  background: #1e40af;
 }
 
 .upload-btn:disabled {
@@ -490,18 +422,13 @@ const formatTime = (seconds) => {
   gap: 0.5rem;
 }
 
-.btn-icon {
-  width: 1.25rem;
-  height: 1.25rem;
-}
-
 .spinner {
-  width: 1.25rem;
-  height: 1.25rem;
-  border: 3px solid white;
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid white;
   border-top-color: transparent;
-  border-radius: 9999px;
-  animation: spin 1s linear infinite;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
 }
 
 @keyframes spin {
@@ -509,141 +436,87 @@ const formatTime = (seconds) => {
 }
 
 .results {
-  max-width: 56rem;
+  max-width: 42rem;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  animation: fadeIn 0.6s ease-out;
+  gap: 1.25rem;
+}
+
+.result-card {
+  background: white;
+  border-radius: 0.75rem;
+  border: 1px solid #e5e5e5;
+  padding: 1.5rem;
 }
 
 .summary-card {
-  background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-  border-radius: 1.5rem;
-  padding: 2rem;
-  color: white;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  background: #eff6ff;
+  border-color: #bfdbfe;
 }
 
-.summary-header {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
-}
-
-.summary-icon {
-  width: 2rem;
-  height: 2rem;
-}
-
-.summary-header h3 {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin: 0;
+.result-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0 0 1rem 0;
 }
 
 .summary-text {
-  font-size: 1.125rem;
-  line-height: 1.75;
-  opacity: 0.95;
-  margin: 0;
-}
-
-.transcript-card {
-  background: white;
-  border-radius: 1.5rem;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-  padding: 2rem;
-  border: 1px solid #f3f4f6;
-}
-
-.transcript-header {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 1.5rem;
-}
-
-.transcript-icon {
-  width: 2rem;
-  height: 2rem;
-  color: #4f46e5;
-}
-
-.transcript-header h3 {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #1f2937;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: #404040;
   margin: 0;
 }
 
 .transcript-list {
-  max-height: 24rem;
+  max-height: 28rem;
   overflow-y: auto;
-  padding-right: 1rem;
+  margin: -0.25rem;
+  padding: 0.25rem;
 }
 
 .transcript-list::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 .transcript-list::-webkit-scrollbar-track {
-  background: #f3f4f6;
-  border-radius: 10px;
+  background: transparent;
 }
 
 .transcript-list::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #6366f1, #a855f7);
-  border-radius: 10px;
+  background: #d4d4d8;
+  border-radius: 3px;
 }
 
 .transcript-list::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(to bottom, #4f46e5, #9333ea);
+  background: #a1a1aa;
 }
 
 .transcript-item {
-  display: flex;
+  display: grid;
+  grid-template-columns: 5rem 1fr;
   gap: 1rem;
-  padding: 1rem;
-  border-radius: 0.75rem;
-  transition: background 0.2s ease;
-  margin-bottom: 1rem;
+  padding: 0.875rem 0;
+  border-bottom: 1px solid #f4f4f5;
 }
 
-.transcript-item:hover {
-  background: #eef2ff;
+.transcript-item:last-child {
+  border-bottom: none;
 }
 
 .timestamp {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: #4f46e5;
-  font-weight: 600;
-  font-size: 0.875rem;
-  min-width: fit-content;
-}
-
-.clock-icon {
-  width: 1rem;
-  height: 1rem;
+  color: #71717a;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  padding-top: 0.125rem;
 }
 
 .transcript-text {
-  color: #374151;
-  line-height: 1.75;
+  color: #262626;
+  line-height: 1.6;
+  font-size: 0.9375rem;
   margin: 0;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 </style>
