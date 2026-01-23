@@ -13,10 +13,14 @@ export default function Home() {
   const [error, setError] = useState('');
   const [copied, setCopied] = useState<string | null>(null);
 
-  const handleCopy = (text: string, type: 'story' | 'translation') => {
-    navigator.clipboard.writeText(text);
-    setCopied(type);
-    setTimeout(() => setCopied(null), 2000);
+  const handleCopy = async (text: string, type: 'story' | 'translation') => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(type);
+      setTimeout(() => setCopied(null), 2000);
+    } catch {
+      setError('Failed to copy. Please try again.');
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {

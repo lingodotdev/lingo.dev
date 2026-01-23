@@ -24,27 +24,18 @@ Requirements:
 Return ONLY the story text, no explanations or additional commentary.`;
 
     try {
-        console.log('=== Generating story with Cloudflare AI (UPDATED CODE) ===');
-        console.log('Emojis:', emojis);
-        console.log('Tone:', tone);
-        console.log('Length:', length);
-
         const response = await ai.run(
             "@cf/openai/gpt-oss-120b",
             {
-                role: 'user',
-                input: prompt,
-                temperature: 0.7,
-                max_tokens: 500,
+                messages: [
+                    { role: 'user', content: prompt }
+                ],
                 reasoning: {
                     effort: "low",
                     summary: "auto"
                 }
             }
         ) as any;
-
-        // Debug: Log the full response structure
-        console.log('Cloudflare AI Response:', JSON.stringify(response, null, 2));
 
         // Extract the text from the response - try multiple paths
         let story = '';
@@ -67,7 +58,6 @@ Return ONLY the story text, no explanations or additional commentary.`;
             throw new Error('No story generated from Cloudflare AI');
         }
 
-        console.log('Successfully generated story with Cloudflare AI:', story);
         return story.trim();
     } catch (error) {
         console.error('Cloudflare AI story generation error:', error);

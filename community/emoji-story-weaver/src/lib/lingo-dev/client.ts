@@ -1,7 +1,7 @@
 import { LingoDotDevEngine } from 'lingo.dev/sdk';
 
 export const lingoDotDev = new LingoDotDevEngine({
-    apiKey: process.env.NEXT_PUBLIC_LINGODOTDEV_API_KEY
+    apiKey: process.env.LINGODOTDEV_API_KEY
 });
 
 /**

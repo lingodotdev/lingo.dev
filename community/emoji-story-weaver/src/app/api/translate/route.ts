@@ -51,6 +51,13 @@ export async function POST(request: NextRequest) {
             const { env } = await getCloudflareContext();
             const ai = env.AI;
 
+            if (!ai) {
+                return NextResponse.json(
+                    { error: 'AI service not configured' },
+                    { status: 503 }
+                );
+            }
+
             story = await emojiToStory(
                 ai,
                 emojis,

@@ -38,6 +38,7 @@
     "./legacy/*",
     "./action",
     "./php/*",
-    "./scripts/*"
+    "./scripts/*",
+    "./community/*"
   ]
 }

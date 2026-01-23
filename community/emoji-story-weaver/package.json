@@ -13,8 +13,6 @@
 		"cf-typegen": "wrangler types --env-interface CloudflareEnv ./cloudflare-env.d.ts"
 	},
 	"dependencies": {
-		"@google/genai": "^1.38.0",
-		"@google/generative-ai": "^0.24.1",
 		"@opennextjs/cloudflare": "^1.15.1",
 		"emoji-regex": "^10.6.0",
 		"framer-motion": "^12.29.0",
