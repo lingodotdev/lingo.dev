@@ -204,7 +204,31 @@ const LingoDevTranslationManager = () => {
                 <Download size={18} />
                 Export
               </button>
-              <button className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
+                     <input
+                type="file"
+                id="import-file"
+                accept=".json"
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                      try {
+                        const imported = JSON.parse(event.target.result);
+                        setTranslations(imported);
+                      } catch (err) {
+                        console.error('Invalid JSON file');
+                      }
+                    };
+                    reader.readAsText(file);
+                  }
+                }}
+              />
+                  <button
+                onClick={() => document.getElementById('import-file')?.click()}
+                className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+              >
                 <Upload size={18} />
                 Import
               </button>
