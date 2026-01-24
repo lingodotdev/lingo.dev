@@ -50,7 +50,7 @@ npm run build
 
 ## 📖 Documentation
 
-See [USAGE.md](./docs/USAGE.md) for detailed usage instructions.
+See [USAGE.md](./community/lingo-translation-manager/docs/USAGE.md) for detailed usage instructions.
 
 ## 🤝 Contributing
 
