@@ -36,7 +36,8 @@ export async function GET(request: Request) {
     const budgets = await Budget.find(query).sort({ category: 1 });
     return NextResponse.json({ success: true, data: budgets });
   } catch (error) {
-    return NextResponse.json({ success: false, error }, { status: 400 });
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    return NextResponse.json({ success: false, error: errorMessage }, { status: 400 });
   }
 }
 
@@ -87,6 +88,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: true, data: budget }, { status: 201 });
     }
   } catch (error) {
-    return NextResponse.json({ success: false, error }, { status: 400 });
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    return NextResponse.json({ success: false, error: errorMessage }, { status: 400 });
   }
 }
