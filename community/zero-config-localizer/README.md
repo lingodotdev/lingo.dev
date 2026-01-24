@@ -100,15 +100,6 @@ Switch languages using the dropdown in the header!
 
 In **development mode**, Lingo.dev uses **pseudotranslations** to demonstrate detection without requiring API calls:
 
-**Original Text:**
-```
-Welcome to our platform
-```
-
-**Pseudotranslation:**
-```
-[Ŵêƚçôɱê ţô ôûŕ þƚàţƒôŕɱ]
-```
 
 **What This Proves:**
 - Lingo.dev is detecting all translatable text automatically
@@ -124,7 +115,7 @@ Want to see actual translations instead of pseudotranslations?
 
 ### Step 1: Get a Free Groq API Key
 
-1. Visit https://console.groq.com
+1. Visit <https://console.groq.com>
 2. Sign up (free tier available)
 3. Navigate to "API Keys" section
 4. Create a new API key
@@ -175,7 +166,7 @@ npm run preview
 
 ## Project Structure
 
-```
+```text
 zero-config-localizer/
 ├── README.md
 ├── package.json
