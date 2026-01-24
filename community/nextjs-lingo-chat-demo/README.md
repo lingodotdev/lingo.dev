@@ -1,7 +1,7 @@
 # Next.js Multilingual Chat with Lingo.dev
 
 ## 1. Project Overview
-This project is a real-time, multilingual chat application built with Next.js 16 (App Router) and **Lingo.dev**. It demonstrates how to build applications that automatically break down language barriers between users, allowing them to communicate seamlessly in their native languages.
+This project is a real-time, multilingual chat application built with Next.js 14 (App Router) and **Lingo.dev**. It demonstrates how to build applications that automatically break down language barriers between users, allowing them to communicate seamlessly in their native languages.
 
 ## 2. Key Features
 - **Real-Time Translation**: Users see all messages in their preferred language, regardless of the original language they were sent in.
