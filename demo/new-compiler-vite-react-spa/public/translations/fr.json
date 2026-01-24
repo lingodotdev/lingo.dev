@@ -2,15 +2,6 @@
   "version": 0.1,
   "locale": "fr",
   "entries": {
-    "daa4d8839395": "Cliqué {counter} fois",
-    "52ed9ee761d8": "Bonjour le monde",
-    "f11fc78c3ac0": "<b0>Contenu</b0> mixte <i0>fragment</i0>",
-    "556f5956dca7": "Bienvenue dans la démo du compilateur Lingo.dev",
-    "02704ec4e52a": "Il extrait automatiquement le texte de votre JSX et le traduit dans d'autres langues.",
-    "de6bfb30be49": "Le texte inséré comme un <code0></code0> n'est pas traduit : {text}",
-    "5c15bd35e916": "Pour le traduire, vous devez l'envelopper dans le '<'>{translatableText} '<'/>",
-    "93b50fe805b7": "Le texte externe au composant n'est pas traduit : {externalText}",
-    "d756b03ffbf5": "Le contenu qui contient du texte et d'autres balises sera traduit comme une seule entité : {translatableMixedContextFragment}",
     "8492c53cfbaf": "À propos de Lingo.dev",
     "8aa4fe3f0590": "Ceci est une application de démonstration présentant le compilateur Lingo.dev pour les traductions automatiques dans les applications React.",
     "af76f667703b": "Fonctionnalités clés",
@@ -21,6 +12,15 @@
     "aca12d550fe2": "Prise en charge des composants serveur et client",
     "44a3311c3a4a": "Comment ça fonctionne",
     "0add30e37450": "Le compilateur analyse vos composants React au moment de la compilation et extrait automatiquement toutes les chaînes traduisibles. Il génère ensuite des traductions en utilisant votre fournisseur de traduction configuré.",
-    "07d84d34dd3a": "Ajoutez simplement la directive \"use i18n\" en haut de vos fichiers de composants, et le compilateur s'occupe du reste !"
+    "07d84d34dd3a": "Ajoutez simplement la directive \"use i18n\" en haut de vos fichiers de composants, et le compilateur s'occupe du reste !",
+    "daa4d8839395": "Cliqué {counter} fois",
+    "52ed9ee761d8": "Bonjour le monde",
+    "f11fc78c3ac0": "<b0>Contenu</b0> mixte <i0>fragment</i0>",
+    "556f5956dca7": "Bienvenue dans la démo du compilateur Lingo.dev",
+    "02704ec4e52a": "Il extrait automatiquement le texte de votre JSX et le traduit dans d'autres langues.",
+    "de6bfb30be49": "Le texte inséré comme un <code0></code0> n'est pas traduit : {text}",
+    "5c15bd35e916": "Pour le traduire, vous devez l'envelopper dans le '<'>{translatableText} '<'/>",
+    "93b50fe805b7": "Le texte externe au composant n'est pas traduit : {externalText}",
+    "d756b03ffbf5": "Le contenu qui contient du texte et d'autres balises sera traduit comme une seule entité : {translatableMixedContextFragment}"
   }
 }
