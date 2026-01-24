@@ -7,10 +7,24 @@ try {
     const envPath = path.resolve(process.cwd(), ".env.local");
     if (fs.existsSync(envPath)) {
         const envConfig = fs.readFileSync(envPath, "utf8");
-        envConfig.split("\n").forEach((line) => {
-            const [key, value] = line.split("=");
-            if (key && value) {
-                process.env[key.trim()] = value.trim();
+        envConfig.split(/\r?\n/).forEach((line) => {
+            const trimmedLine = line.trim();
+            if (!trimmedLine || trimmedLine.startsWith("#")) return;
+
+            const equalsIndex = trimmedLine.indexOf("=");
+            if (equalsIndex !== -1) {
+                const key = trimmedLine.substring(0, equalsIndex).trim();
+                let value = trimmedLine.substring(equalsIndex + 1).trim();
+
+                // Remove surrounding quotes if present
+                if ((value.startsWith('"') && value.endsWith('"')) ||
+                    (value.startsWith("'") && value.endsWith("'"))) {
+                    value = value.slice(1, -1);
+                }
+
+                if (key) {
+                    process.env[key] = value;
+                }
             }
         });
         console.log("Loaded .env.local");
@@ -32,7 +46,7 @@ const lingoDotDev = new LingoDotDevEngine({
     apiKey: apiKey,
 });
 
-console.log(`Testing API with Key: ${apiKey.substring(0, 5)}...`);
+console.log("Testing API with provided key...");
 
 try {
     const result = await lingoDotDev.localizeText("Hello, world!", {

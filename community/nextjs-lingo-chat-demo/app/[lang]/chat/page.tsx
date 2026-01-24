@@ -18,6 +18,12 @@ const LANGUAGES = [
     { code: "de", name: "Deutsch", flag: "🇩🇪" },
 ];
 
+/**
+ * Main chat page component.
+ * Displays the chat interface, handles message sending, and manages language switching.
+ *
+ * @returns {JSX.Element} The rendered chat page.
+ */
 export default function ChatPage() {
     const params = useParams();
     const router = useRouter();
@@ -40,11 +46,16 @@ export default function ChatPage() {
         if (!input.trim()) return;
         setIsSending(true);
         try {
-            await fetch("/api/messages", {
+            const res = await fetch("/api/messages", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ text: input, name: "You", language: lang })
             });
+
+            if (!res.ok) {
+                throw new Error(`Error sending message: ${res.status}`);
+            }
+
             setInput("");
             await refreshMessages();
         } catch (error) {
@@ -92,8 +103,8 @@ export default function ChatPage() {
                             key={l.code}
                             onClick={() => router.push(`/${l.code}/chat`)}
                             className={`w-full flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors ${lang === l.code
-                                    ? "bg-indigo-600 text-white shadow-lg"
-                                    : "text-gray-300 hover:bg-gray-700 hover:text-white"
+                                ? "bg-indigo-600 text-white shadow-lg"
+                                : "text-gray-300 hover:bg-gray-700 hover:text-white"
                                 }`}
                         >
                             <span className="mr-3 text-lg">{l.flag}</span>
@@ -121,6 +132,7 @@ export default function ChatPage() {
                 <header className="md:hidden bg-gray-800 border-b border-gray-700 p-4 flex justify-between items-center">
                     <h1 className="font-bold text-indigo-400">Lingo Chat</h1>
                     <select
+                        aria-label="Select language"
                         className="bg-gray-700 text-white text-sm rounded-lg p-2 border-none ring-1 ring-gray-600"
                         value={lang}
                         onChange={(e) => router.push(`/${e.target.value}/chat`)}
@@ -176,6 +188,7 @@ export default function ChatPage() {
                         <div className="flex-1 relative">
                             <input
                                 type="text"
+                                aria-label="Message input"
                                 className="w-full bg-gray-900 text-white placeholder-gray-500 border border-gray-600 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all shadow-inner"
                                 placeholder={`Message in ${LANGUAGES.find(l => l.code === lang)?.name || "English"}...`}
                                 value={input}
@@ -187,6 +200,7 @@ export default function ChatPage() {
                         <button
                             onClick={handleSend}
                             disabled={isSending || !input.trim()}
+                            aria-label="Send message"
                             className="bg-indigo-600 hover:bg-indigo-500 text-white p-3 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-indigo-500/20 active:scale-95 flex items-center justify-center w-14"
                         >
                             {isSending ? (

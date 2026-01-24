@@ -1,7 +1,7 @@
 # Next.js Multilingual Chat with Lingo.dev
 
 ## 1. Project Overview
-This project is a real-time, multilingual chat application built with Next.js 14 (App Router) and **Lingo.dev**. It demonstrates how to build applications that automatically break down language barriers between users, allowing them to communicate seamlessly in their native languages.
+This project is a real-time, multilingual chat application built with Next.js 16 (App Router) and **Lingo.dev**. It demonstrates how to build applications that automatically break down language barriers between users, allowing them to communicate seamlessly in their native languages.
 
 ## 2. Key Features
 - **Real-Time Translation**: Users see all messages in their preferred language, regardless of the original language they were sent in.
@@ -26,7 +26,7 @@ When a user sends a message, we verify which language they are writing in to ens
 - **Logic**: The API analyzes the input text (e.g., "Bonjour, comment ça va?") and identifies the correct locale code (`fr`). This `language` tag is saved with the message, serving as the source of truth for all future translations.
 
 ## 4. Project Structure
-```
+```text
 ├── app/
 │   ├── [lang]/chat/page.tsx  # Main Chat UI. Client Component that handles display & sending.
 │   ├── api/messages/route.ts # Backend API. Handles storage, translation, and auto-detection.
@@ -68,4 +68,5 @@ When a user sends a message, we verify which language they are writing in to ens
 5.  **Auto-Detect**: Try typing a French sentence like *"Merci beaucoup"* in the English tab. The system will detect it as French and translate it correctly for the Spanish user.
 
 ---
-*Powered by Next.js and Lingo.dev*
+
+#### Powered by Next.js and Lingo.dev

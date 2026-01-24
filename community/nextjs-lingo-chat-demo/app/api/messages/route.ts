@@ -8,15 +8,31 @@ let messages = [
     { id: "2", text: "Je vais bien, merci!", language: "fr", name: "Bob" }
 ];
 
+/**
+ * Handles posting of new messages.
+ * Detects the language of the message if not explicitly provided.
+ *
+ * @param {Request} request - The incoming request object containing the message payload.
+ * @returns {Promise<NextResponse>} The created message object.
+ */
 export async function POST(request: Request) {
     try {
         const body = await request.json();
         const { text, name, language: defaultLang } = body;
 
-        let detectedLang = defaultLang;
+        // Validation
+        if (!text || typeof text !== "string" || !text.trim()) {
+            return NextResponse.json({ error: "Text is required and must be a non-empty string" }, { status: 400 });
+        }
+
+        const cleanText = text.trim();
+        const cleanName = (typeof name === "string" && name.trim()) ? name.trim() : "User";
+        const cleanDefaultLang = (typeof defaultLang === "string" && defaultLang.trim()) ? defaultLang.trim() : "en";
+
+        let detectedLang = cleanDefaultLang;
         try {
-            const result = await lingoDotDev.recognizeLocale(text);
-            if (result) {
+            const result = await lingoDotDev.recognizeLocale(cleanText);
+            if (result && typeof result === "string") {
                 detectedLang = result;
             }
         } catch (e) {
@@ -25,9 +41,9 @@ export async function POST(request: Request) {
 
         const newMessage = {
             id: Date.now().toString(),
-            text,
-            name: name || "User",
-            language: detectedLang || "en"
+            text: cleanText,
+            name: cleanName,
+            language: detectedLang
         };
 
         messages.push(newMessage);
@@ -38,6 +54,12 @@ export async function POST(request: Request) {
     }
 }
 
+/**
+ * Retrieves messages, translating them to the requested language.
+ *
+ * @param {Request} request - The incoming request object.
+ * @returns {Promise<NextResponse>} A list of messages translated to the target language.
+ */
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const targetLang = searchParams.get("lang") || "en";
