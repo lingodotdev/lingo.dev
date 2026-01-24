@@ -1,0 +1,32 @@
+{
+  "name": "lingo-man",
+  "version": "1.0.0",
+  "description": "Translate man pages and command help using Lingo.dev AI",
+  "bin": {
+    "mani": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/cli.js",
+    "dev": "pnpx tsx src/cli.ts",
+    "mani": "./dist/cli.js"
+  },
+  "keywords": [
+    "man",
+    "translate",
+    "i18n",
+    "cli",
+    "lingo"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^12.1.0",
+    "dotenv": "^17.2.3",
+    "lingo.dev": "^0.125.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.0"
+  }
+}
