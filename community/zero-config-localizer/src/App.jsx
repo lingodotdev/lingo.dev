@@ -8,6 +8,12 @@ import BundleComparison from './components/BundleComparison';
 import CodeInspector from './components/CodeInspector';
 import OriginalCode from './components/OriginalCode';
 
+/**
+ * App
+ *
+ * Root demo application showcasing zero-config localization
+ * using lingo.dev in a React environment.
+ */
 function App() {
   const [activeTab, setActiveTab] = useState('overview');
   
