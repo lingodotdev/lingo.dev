@@ -352,6 +352,27 @@ const LingoDevTranslationManager = () => {
                             onChange={(e) => updateTranslation(selectedLang, key, e.target.value)}
                             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
                           />
+                          {aiSuggestions[`${selectedLang}-${key}`] && (
+  <div className="mt-2 p-2 bg-purple-50 border border-purple-200 rounded-lg">
+    <p className="text-sm text-purple-700">
+      🤖 Suggestion: {aiSuggestions[`${selectedLang}-${key}`]}
+    </p>
+
+    <button
+      onClick={() =>
+        updateTranslation(
+          selectedLang,
+          key,
+          aiSuggestions[`${selectedLang}-${key}`]
+        )
+      }
+      className="mt-1 text-xs text-purple-600 hover:underline"
+    >
+      Apply suggestion
+    </button>
+  </div>
+)}
+
                         </div>
                         <button
                           onClick={() => deleteTranslation(key)}
