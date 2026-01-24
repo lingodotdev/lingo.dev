@@ -43,6 +43,9 @@ const LingoDevTranslationManager = () => {
   const [aiSuggestions, setAiSuggestions] = useState({});
   const [showAiPanel, setShowAiPanel] = useState(false);
   const [exportFormat, setExportFormat] = useState('json');
+  const [importError, setImportError] = useState('');
+  const [importSuccess, setImportSuccess] = useState('');
+
 
   useEffect(() => {
     checkMissingTranslations();
@@ -57,7 +60,7 @@ const LingoDevTranslationManager = () => {
     const missing = [];
     Object.keys(translations).forEach(lang => {
       allKeys.forEach(key => {
-        if (!translations[lang][key] === undefined) {
+        if (translations[lang][key] === undefined) {
           missing.push({ lang, key });
         }
       });
@@ -213,14 +216,39 @@ const LingoDevTranslationManager = () => {
                   const file = e.target.files?.[0];
                   if (file) {
                     const reader = new FileReader();
-                    reader.onload = (event) => {
-                      try {
-                        const imported = JSON.parse(event.target.result);
-                        setTranslations(imported);
-                      } catch (err) {
-                        console.error('Invalid JSON file');
-                      }
-                    };
+                   reader.onload = (e) => {
+  try {
+    const imported = JSON.parse(e.target.result);
+
+    if (
+      typeof imported !== 'object' ||
+      imported === null ||
+      Array.isArray(imported)
+    ) {
+      throw new Error('Invalid translation format');
+    }
+
+    for (const lang in imported) {
+      if (typeof imported[lang] !== 'object') {
+        throw new Error(`Language ${lang} must be an object`);
+      }
+
+      for (const key in imported[lang]) {
+        if (typeof imported[lang][key] !== 'string') {
+          throw new Error(`Value for ${lang}.${key} must be a string`);
+        }
+      }
+    }
+
+    setTranslations(imported);
+    setImportSuccess('Translations imported successfully!');
+    setImportError('');
+  } catch (err) {
+    setImportError(err.message);
+    setImportSuccess('');
+  }
+};
+
                     reader.readAsText(file);
                   }
                 }}
@@ -504,7 +532,17 @@ const LingoDevTranslationManager = () => {
                 </div>
 
                 <div className="bg-gray-900 rounded-lg p-6 mb-6 text-white font-mono text-sm overflow-x-auto">
-                  <pre>{exportFormat === 'json' ? JSON.stringify(translations, null, 2) : 'Preview for other formats...'}</pre>
+                  <pre>{
+    exportFormat === 'json'
+      ? JSON.stringify(translations, null, 2)
+      : exportFormat === 'yaml'
+        ? Object.entries(translations).map(([lang, keys]) =>
+            `${lang}:\n${Object.entries(keys).map(([k, v]) => `  ${k}: "${v}"`).join('\n')}`
+          ).join('\n\n')
+        : Object.entries(translations).map(([lang, keys]) =>
+            `# ${lang.toUpperCase()}\n${Object.entries(keys).map(([k, v]) => `${k}=${v}`).join('\n')}`
+          ).join('\n\n')
+  }</pre>
                 </div>
 
                 <button

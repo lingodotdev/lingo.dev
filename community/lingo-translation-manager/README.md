@@ -66,8 +66,8 @@ npm run build
 
 ## 📖 Documentation
 
-See [USAGE.md](./docs/USAGE.md)
- for detailed usage instructions.
+See [USAGE.md](./docs/USAGE.md) for detailed usage instructions.
+
 
 ## 🤝 Contributing
 
@@ -75,4 +75,4 @@ This is a community project! Feel free to fork and improve.
 
 ## 📄 License
 
-MIT - Same as Lingo.dev repository
+Apache License 2.0
