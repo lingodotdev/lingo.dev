@@ -51,6 +51,7 @@ function Button({
     <Comp
       data-slot="button"
       className={cn(buttonVariants({ variant, size, className }))}
+      {...(Comp === "button" ? { type: props.type ?? "button" } : {})}
       {...props}
     />
   )

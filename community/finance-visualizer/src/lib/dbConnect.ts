@@ -32,10 +32,20 @@ async function dbConnect() {
 
     cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
       return mongoose;
+    }).catch((error) => {
+      cached.promise = null;
+      throw error;
     });
   }
-  cached.conn = await cached.promise;
-  return cached.conn;
+
+  try {
+    cached.conn = await cached.promise;
+    return cached.conn;
+  } catch (error) {
+    // Ensure promise is cleared on failure (may already be null from .catch above)
+    cached.promise = null;
+    throw error;
+  }
 }
 
 export default dbConnect;
