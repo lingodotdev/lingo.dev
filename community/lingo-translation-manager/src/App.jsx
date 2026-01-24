@@ -233,8 +233,17 @@ const LingoDevTranslationManager = () => {
               <div>
                 <p className="text-gray-500 text-sm">Complete</p>
                 <p className="text-2xl font-bold text-green-600">
-                  {Math.round((1 - missingTranslations.length / (Object.keys(translations).length * Object.keys(translations.en || {}).length)) * 100)}%
-                </p>
+  {(() => {
+    const total =
+      Object.keys(translations).length *
+      Object.keys(translations.en || {}).length;
+
+    return total > 0
+      ? Math.round((1 - missingTranslations.length / total) * 100)
+      : 0;
+  })()}%
+</p>
+
               </div>
               <CheckCircle className="text-green-500" size={32} />
             </div>
