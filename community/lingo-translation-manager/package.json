@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Visual translation management tool for Lingo.dev",
   "type": "module",
+
+   "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
