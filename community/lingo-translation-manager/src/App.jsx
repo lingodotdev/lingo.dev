@@ -89,10 +89,11 @@ const LingoDevTranslationManager = () => {
   };
 
   const deleteTranslation = (key) => {
-    const updated = { ...translations };
-    Object.keys(updated).forEach(lang => {
-      delete updated[lang][key];
-    });
+    const updated = {};
+  Object.keys(translations).forEach(lang => {
+    const { [key]: _, ...rest } = translations[lang];
+    updated[lang] = rest;
+  });
     setTranslations(updated);
   };
 
