@@ -57,7 +57,7 @@ const LingoDevTranslationManager = () => {
     const missing = [];
     Object.keys(translations).forEach(lang => {
       allKeys.forEach(key => {
-        if (!translations[lang][key]) {
+        if (!translations[lang][key] === undefined) {
           missing.push({ lang, key });
         }
       });
