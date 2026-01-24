@@ -30,7 +30,25 @@ export async function GET(request: Request) {
     
     let query = {};
     if (hasMonth && hasYear) {
-      query = { month: `${year}-${month.padStart(2, '0')}` };
+      // Parse and validate month and year values
+      const monthNum = parseInt(month, 10);
+      const yearNum = parseInt(year, 10);
+      
+      if (isNaN(monthNum) || monthNum < 1 || monthNum > 12) {
+        return NextResponse.json(
+          { success: false, error: 'Month must be an integer between 1 and 12' },
+          { status: 400 }
+        );
+      }
+      
+      if (isNaN(yearNum) || yearNum < 1000 || yearNum > 9999) {
+        return NextResponse.json(
+          { success: false, error: 'Year must be a valid 4-digit year' },
+          { status: 400 }
+        );
+      }
+      
+      query = { month: `${yearNum}-${String(monthNum).padStart(2, '0')}` };
     }
     
     const budgets = await Budget.find(query).sort({ category: 1 });
@@ -66,27 +84,30 @@ export async function POST(request: Request) {
     
     const formattedMonth = `${yearNum}-${String(monthNum).padStart(2, '0')}`;
     
-    // Check if budget already exists for this category and month
-    const existingBudget = await Budget.findOne({ 
-      category, 
-      month: formattedMonth 
-    });
+    // Use atomic findOneAndUpdate with upsert to prevent race conditions
+    const result = await Budget.findOneAndUpdate(
+      { category, month: formattedMonth },
+      { 
+        $set: { 
+          amount, 
+          year: yearNum, 
+          category, 
+          month: formattedMonth 
+        } 
+      },
+      { 
+        upsert: true, 
+        new: true, 
+        rawResult: true,
+        runValidators: true
+      }
+    );
     
-    if (existingBudget) {
-      // Update existing budget with validated amount
-      existingBudget.amount = amount;
-      await existingBudget.save();
-      return NextResponse.json({ success: true, data: existingBudget });
-    } else {
-      // Create new budget with validated values
-      const budget = await Budget.create({
-        category,
-        amount,
-        month: formattedMonth,
-        year: yearNum,
-      });
-      return NextResponse.json({ success: true, data: budget }, { status: 201 });
-    }
+    // Determine if this was an insert (201) or update (200) based on rawResult
+    const wasCreated = result.lastErrorObject?.upserted !== undefined;
+    const status = wasCreated ? 201 : 200;
+    
+    return NextResponse.json({ success: true, data: result.value }, { status });
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     return NextResponse.json({ success: false, error: errorMessage }, { status: 400 });
