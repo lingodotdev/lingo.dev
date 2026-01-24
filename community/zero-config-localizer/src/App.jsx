@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Code, Zap, Globe, ArrowRight, CheckCircle } from 'lucide-react';
 
-// ✅ CORRECT IMPORTS from lingo.dev
 import { useLingoLocale, setLingoLocale } from 'lingo.dev/react/client';
 
 import CompilerVisualization from './components/CompilerVisualization';
@@ -12,7 +11,6 @@ import OriginalCode from './components/OriginalCode';
 function App() {
   const [activeTab, setActiveTab] = useState('overview');
   
-  // ✅ Use correct hook
   const currentLocale = useLingoLocale();
 
   return (
@@ -48,7 +46,7 @@ function App() {
 
           {/* Language Switcher - Using setLingoLocale */}
           <select
-            value={currentLocale}
+             value={currentLocale ?? ''}
             onChange={(e) => setLingoLocale(e.target.value)}
             style={{
               padding: '12px 24px',
@@ -61,6 +59,7 @@ function App() {
               color: '#0f172a'
             }}
           >
+            {!currentLocale && <option value="" disabled>Loading locale…</option>}
             <option value="en">🇬🇧 English</option>
             <option value="es">🇪🇸 Español</option>
             <option value="fr">🇫🇷 Français</option>

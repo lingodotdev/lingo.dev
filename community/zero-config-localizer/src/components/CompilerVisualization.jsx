@@ -1,10 +1,18 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Play, CheckCircle, Loader } from 'lucide-react';
 
 export default function CompilerVisualization() {
   const [currentStep, setCurrentStep] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
-
+  const intervalRef = useRef(null);
+  
+    useEffect(() => {
+      return () => {
+        if (intervalRef.current) {
+          clearInterval(intervalRef.current);
+        }
+      };
+    }, []);
   const steps = [
     {
       id: 1,
@@ -54,10 +62,12 @@ export default function CompilerVisualization() {
     setIsAnimating(true);
     setCurrentStep(0);
     
-    const interval = setInterval(() => {
+  if (intervalRef.current) clearInterval(intervalRef.current);
+   intervalRef.current = setInterval(() => {
       setCurrentStep(prev => {
         if (prev >= steps.length - 1) {
-          clearInterval(interval);
+          clearInterval(intervalRef.current);
+          intervalRef.current = null;
           setIsAnimating(false);
           return prev;
         }

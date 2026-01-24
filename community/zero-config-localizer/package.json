@@ -11,11 +11,11 @@
     "translate": "vite build --mode translate"
   },
   "dependencies": {
-    "@lingo.dev/compiler": "latest",
     "lingo.dev": "^0.125.0",
-    "lucide-react": "^0.263.1",
+    "lucide-react": "^0.408.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-is": "^19.0.0",
     "recharts": "^2.15.4"
   },
   "devDependencies": {
