@@ -38,7 +38,7 @@ npm run build
 - **For Developers**: Quickly manage and export translations
 - **For Translators**: Visual interface for editing without touching code
 - **For Product Teams**: Live preview to see translations in context
-- **For AI Integration**: Shows how AI can assist with translation workflows
+- **For AI Integration**: Shows how an AI can assist with translation workflows
 
 ## 🛠️ Tech Stack
 
