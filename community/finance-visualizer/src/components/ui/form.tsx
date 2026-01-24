@@ -25,8 +25,8 @@ type FormFieldContextValue<
   name: TName
 }
 
-const FormFieldContext = React.createContext<FormFieldContextValue>(
-  {} as FormFieldContextValue
+const FormFieldContext = React.createContext<FormFieldContextValue | null>(
+  null
 )
 
 /**
@@ -51,18 +51,24 @@ const FormField = <
  * Hook to access form field state and IDs within a FormItem.
  * Must be used within a FormField component.
  * @returns Object containing field state, IDs for accessibility, and error state
- * @throws Error if used outside of FormField
+ * @throws Error if used outside of FormField or FormItem
  */
 const useFormField = () => {
   const fieldContext = React.useContext(FormFieldContext)
   const itemContext = React.useContext(FormItemContext)
+
+  // Check for null explicitly to ensure guards work properly
+  if (fieldContext === null) {
+    throw new Error("useFormField should be used within <FormField>")
+  }
+
+  if (itemContext === null) {
+    throw new Error("useFormField should be used within <FormItem>")
+  }
+
   const { getFieldState } = useFormContext()
   const formState = useFormState({ name: fieldContext.name })
   const fieldState = getFieldState(fieldContext.name, formState)
-
-  if (!fieldContext) {
-    throw new Error("useFormField should be used within <FormField>")
-  }
 
   const { id } = itemContext
 
@@ -80,8 +86,8 @@ type FormItemContextValue = {
   id: string
 }
 
-const FormItemContext = React.createContext<FormItemContextValue>(
-  {} as FormItemContextValue
+const FormItemContext = React.createContext<FormItemContextValue | null>(
+  null
 )
 
 /**

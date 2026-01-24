@@ -4,6 +4,18 @@ import type { NextRequest } from "next/server";
 const locales = ["en", "es", "fr", "de", "zh", "ja"];
 
 /**
+ * Checks if a pathname matches a locale path.
+ * A valid locale path is either exactly /{locale} or starts with /{locale}/.
+ * This prevents false positives like "/enroll" matching "/en".
+ * @param pathname - The URL pathname to check
+ * @param locale - The locale to check against
+ * @returns true if the pathname is a valid locale path
+ */
+function isLocalePath(pathname: string, locale: string): boolean {
+  return pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`;
+}
+
+/**
  * Next.js middleware for handling internationalization (i18n) routing.
  * Detects locale prefixes in URLs, rewrites paths, and sets locale cookies.
  * Defaults to 'en' for paths without explicit locale prefix.
@@ -13,10 +25,8 @@ const locales = ["en", "es", "fr", "de", "zh", "ja"];
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   
-  // Check if the path starts with a locale
-  const locale = locales.find(
-    (l) => pathname.startsWith(`/${l}/`) || pathname === `/${l}`
-  );
+  // Check if the path starts with a locale using the exact match helper
+  const locale = locales.find((l) => isLocalePath(pathname, l));
 
   if (locale) {
     // Rewrite the path to remove the locale
@@ -43,10 +53,9 @@ export function middleware(request: NextRequest) {
   // For default locale (root path), ensure locale is set to 'en' (or default)
   // to avoid stuck cookies from previous visits
   const response = NextResponse.next();
-  // Optional: Force 'en' cookie if at root? 
-  // If we don't, visiting / after /es might still show Spanish if cookie persists.
-  // Our LanguageSwitcher assumes / is English.
-  if (pathname === '/' || !locales.some(l => pathname.startsWith(`/${l}`))) {
+  // Use the same isLocalePath helper to check if the path is truly non-locale
+  // This prevents false positives like "/enroll" triggering the cookie reset
+  if (pathname === '/' || !locales.some((l) => isLocalePath(pathname, l))) {
      response.cookies.set("locale", "en");
   }
   

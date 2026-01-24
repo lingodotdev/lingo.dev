@@ -50,22 +50,34 @@ export function BudgetForm({ onSuccess }: BudgetFormProps) {
       const month = form.getValues('month');
       const year = form.getValues('year');
       const res = await fetch(`/api/budgets?month=${month}&year=${year}`);
+      
+      // Check response status before parsing JSON
+      if (!res.ok) {
+        console.error('Failed to fetch budgets: HTTP', res.status);
+        setExistingBudgets([]);
+        return;
+      }
+      
       const { data } = await res.json();
-      setExistingBudgets(data);
+      setExistingBudgets(data ?? []);
     } catch (err) {
       console.error('Failed to fetch budgets:', err);
+      setExistingBudgets([]);
     }
   }, [form]);
-
-  useEffect(() => {
-    fetchBudgets();
-  }, [fetchBudgets]);
 
   const watchMonth = form.watch('month');
   const watchYear = form.watch('year');
 
+  // Use a ref to track if initial fetch has been done to avoid double-fetch on mount
+  const initialFetchDone = React.useRef(false);
+
   useEffect(() => {
     if (watchMonth && watchYear) {
+      // Skip if this is triggered by the initial mount and we haven't fetched yet
+      if (!initialFetchDone.current) {
+        initialFetchDone.current = true;
+      }
       fetchBudgets();
     }
   }, [watchMonth, watchYear, fetchBudgets]);

@@ -25,8 +25,32 @@ export function TransactionList({ transactions, fetchTransactions }: Transaction
   const [selectedTransaction, setSelectedTransaction] = useState<ITransaction | null>(null);
 
   const handleDelete = async (id: string) => {
-    await fetch(`/api/transactions/${id}`, { method: 'DELETE' });
-    fetchTransactions();
+    try {
+      const response = await fetch(`/api/transactions/${id}`, { method: 'DELETE' });
+      
+      if (!response.ok) {
+        // Try to parse error body for more details
+        let errorMessage = `Failed to delete transaction (HTTP ${response.status})`;
+        try {
+          const errorData = await response.json();
+          if (errorData.error) {
+            errorMessage = typeof errorData.error === 'string' 
+              ? errorData.error 
+              : errorMessage;
+          }
+        } catch {
+          // Ignore JSON parsing errors for error response
+        }
+        alert(errorMessage);
+        return;
+      }
+      
+      // Only refresh the list on successful deletion
+      fetchTransactions();
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'An unexpected error occurred';
+      alert(`Failed to delete transaction: ${errorMessage}`);
+    }
   };
 
   return (

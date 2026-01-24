@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/dbConnect';
 import Budget from '@/models/Budget';
+import { validateBudgetPayload } from '@/lib/validators';
 
 /**
  * Handles GET requests to fetch budgets.
@@ -41,7 +42,7 @@ export async function GET(request: Request) {
 
 /**
  * Handles POST requests to create or update a budget.
- * Validates month (1-12) and year inputs before processing.
+ * Validates category, amount, month (1-12) and year inputs before processing.
  * Updates existing budget if one exists for the category/month, otherwise creates new.
  * @param request - The incoming HTTP request with budget data in body
  * @returns JSON response with created/updated budget or validation error
@@ -50,32 +51,17 @@ export async function POST(request: Request) {
   await dbConnect();
   try {
     const body = await request.json();
-    const { category, amount, month, year } = body;
     
-    // Input validation for month and year
-    if (month === undefined || month === null || year === undefined || year === null) {
+    // Validate category and amount using shared validator
+    const validation = validateBudgetPayload(body, true);
+    if (!validation.success) {
       return NextResponse.json(
-        { success: false, error: 'Both month and year are required' },
+        { success: false, errors: validation.errors },
         { status: 400 }
       );
     }
     
-    const monthNum = typeof month === 'string' ? parseInt(month, 10) : Number(month);
-    const yearNum = typeof year === 'string' ? parseInt(year, 10) : Number(year);
-    
-    if (isNaN(monthNum) || !Number.isInteger(monthNum) || monthNum < 1 || monthNum > 12) {
-      return NextResponse.json(
-        { success: false, error: 'Month must be an integer between 1 and 12' },
-        { status: 400 }
-      );
-    }
-    
-    if (isNaN(yearNum) || !Number.isInteger(yearNum) || yearNum < 1000 || yearNum > 9999) {
-      return NextResponse.json(
-        { success: false, error: 'Year must be a valid 4-digit year' },
-        { status: 400 }
-      );
-    }
+    const { category, amount, month: monthNum, year: yearNum } = validation.data!;
     
     const formattedMonth = `${yearNum}-${String(monthNum).padStart(2, '0')}`;
     
@@ -86,12 +72,12 @@ export async function POST(request: Request) {
     });
     
     if (existingBudget) {
-      // Update existing budget
+      // Update existing budget with validated amount
       existingBudget.amount = amount;
       await existingBudget.save();
       return NextResponse.json({ success: true, data: existingBudget });
     } else {
-      // Create new budget
+      // Create new budget with validated values
       const budget = await Budget.create({
         category,
         amount,
