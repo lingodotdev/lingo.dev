@@ -15,7 +15,7 @@ form.addEventListener('submit', async (e) => {
     responseDiv.className = 'response hidden';
     
     try {
-        const response = await fetch(`http://localhost:3000/api/auth/signup?lang=${language}`, {
+        const response = await fetch(`/api/auth/signup?lang=${language}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

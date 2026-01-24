@@ -39,6 +39,7 @@ router.post('/signup', async (req, res) => {
     }
 
     // Success
+    // NOTE: This is a demo. In production, use argon2id or bcrypt for password hashing
     users.push({ email, password });
     
     // Even success messages can be localized!
