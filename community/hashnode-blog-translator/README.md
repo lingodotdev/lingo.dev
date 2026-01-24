@@ -1,4 +1,4 @@
-# 🗣️ Hashnode Blog Scrapper and Convertor
+# 🗣️ Hashnode Blog Translator
 
 ![Logo](./static/hashnode-blog-translator.png)
 
@@ -35,13 +35,17 @@ Hashnode Blog Translator is a powerful tool designed for content creators who wa
 - **Hashnode Access Token**: Generate it at [hashnode.com/settings/developer](https://hashnode.com/settings/developer).
 - **Hashnode Publication Host**: The domain of your blog (e.g., `srinikethj.hashnode.dev`).
 
+## 🖼️ Output
+
+![App Output](./static/app.png)
+
 ## ⚙️ Setup & Installation
 
 ### 1. Clone the repository
 
 ```bash
-git clone <repository-url>
-cd hashnode-blog-translator
+git clone https://github.com/lingodotdev/lingo.dev.git
+cd lingo.dev/hashnode-blog-translator
 ```
 
 ### 2. Environment Configuration

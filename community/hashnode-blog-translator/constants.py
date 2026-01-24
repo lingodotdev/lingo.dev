@@ -5,6 +5,9 @@ DEFAULT_TIMEOUT = 30.0
 
 # Hashnode
 hashnode_default_url = os.environ["HASHNODE_BASE_URL"]
+if not hashnode_default_url:
+    raise ValueError("`HASHNODE_BASE_URL` environment variable is required")
+
 hashnode_query = """
         query Publication($pubName: String!, $slugName: String!) {
           publication(host: $pubName) {
@@ -20,6 +23,9 @@ hashnode_query = """
         }
         """
 hashnode_api_key = os.environ["HASHNODE_API_KEY"]
+if not hashnode_api_key:
+    raise ValueError("`HASHNODE_API_KEY` environment variable is required")
+
 hashnode_headers = {
     "Authorization": f"Bearer {hashnode_api_key}",
     "Content-Type": "application/json",

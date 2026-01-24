@@ -35,7 +35,13 @@ class HashnodeFetchContent:
                 headers=hashnode_headers,
             )
 
-            response.raise_for_status()
+            try:
+                response.raise_for_status()
+            except httpx.HTTPStatusError as e:
+                raise ValueError(
+                    f"Failed to fetch blog from Hashnode: {e.response.status_code}"
+                ) from e
+
             data = response.json()
 
             publication = data["data"]["publication"]
@@ -43,9 +49,14 @@ class HashnodeFetchContent:
                 raise ValueError("Post not found for given host and slug")
 
             blog_post = publication["post"]
+            content = blog_post.get("content") or {}
+            markdown_content = content.get("markdown")
+            if not markdown_content:
+                raise ValueError("Fetched blog post has no markdown content")
+
             blog_data = HashnodeBlogData(
                 title=blog_post["title"],
-                markdown_content=blog_post["content"]["markdown"],
+                markdown_content=markdown_content,
             )
 
             return blog_data

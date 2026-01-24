@@ -1,9 +1,9 @@
-FROM python:3.11-slim
+FROM python:3.12-slim
 
 WORKDIR /app
 
 # Install uv
-RUN pip install --no-cache-dir uv gradio
+RUN pip install --no-cache-dir uv
 
 # Copy dependency files
 COPY pyproject.toml uv.lock ./

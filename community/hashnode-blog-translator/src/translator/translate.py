@@ -13,6 +13,9 @@ class LingoContentTranslator:
         self.target_language = target_locale
         self.lingo_api_key = os.environ["LINGODOTDEV_API_KEY"]
 
+        if not self.lingo_api_key:
+            raise ValueError("`LINGODOTDEV_API_KEY` environment variable is required")
+
     async def _detect_language(self, content: str):
         async with LingoDotDevEngine({"api_key": self.lingo_api_key}) as engine:
             locale = await engine.recognize_locale(content)
@@ -72,7 +75,7 @@ class LingoContentTranslator:
             markdown_content=self.markdown_content,
             target_language=self.target_language,
             detected_title_language=self.detected_title_language,
-            detected_content_language=self.detected_title_language,
+            detected_content_language=self.detected_content_language,
         )
 
         output = Output(result=translated_result, metadata=translated_metadata)

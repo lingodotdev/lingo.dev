@@ -1,7 +1,7 @@
 [project]
 name = "hashnode-blog-translator"
 version = "0.1.0"
-description = "Add your description here"
+description = "An app to extract and translate blog content from Hashnode and translate through Lingo.dev."
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
