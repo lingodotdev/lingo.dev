@@ -107,19 +107,46 @@ const LingoDevTranslationManager = () => {
   };
 
   const exportTranslations = () => {
-    const dataStr = exportFormat === 'json' 
-      ? JSON.stringify(translations, null, 2)
-      : Object.entries(translations).map(([lang, keys]) => 
-          `// ${lang.toUpperCase()}\n${Object.entries(keys).map(([k, v]) => `${k}=${v}`).join('\n')}`
-        ).join('\n\n');
-    
-    const blob = new Blob([dataStr], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `translations.${exportFormat}`;
-    link.click();
-  };
+  let dataStr;
+
+  if (exportFormat === 'json') {
+    dataStr = JSON.stringify(translations, null, 2);
+  } else if (exportFormat === 'yaml') {
+    // Simple YAML-like output (safe for demo)
+    dataStr = Object.entries(translations)
+      .map(
+        ([lang, keys]) =>
+          `${lang}:\n${Object.entries(keys)
+            .map(([k, v]) => `  ${k}: "${v}"`)
+            .join('\n')}`
+      )
+      .join('\n\n');
+  } else {
+    // properties format
+    dataStr = Object.entries(translations)
+      .map(
+        ([lang, keys]) =>
+          `# ${lang.toUpperCase()}\n${Object.entries(keys)
+            .map(([k, v]) => `${k}=${v}`)
+            .join('\n')}`
+      )
+      .join('\n\n');
+  }
+
+  const blob = new Blob([dataStr], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = `translations.${exportFormat}`;
+  document.body.appendChild(link);
+  link.click();
+
+  // ✅ cleanup (IMPORTANT)
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+};
+
 
   const filteredKeys = Object.keys(translations[selectedLang] || {}).filter(key =>
     key.toLowerCase().includes(searchTerm.toLowerCase()) ||
