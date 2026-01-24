@@ -98,8 +98,8 @@ const LingoDevTranslationManager = () => {
   };
 
   const generateAiSuggestion = (key, sourceLang, targetLang) => {
-    // Simulated AI translation
     const sourceText = translations[sourceLang][key];
+     if (!sourceText) return;
     const suggestion = `[AI] ${sourceText} (${targetLang})`;
     setAiSuggestions(prev => ({
       ...prev,
