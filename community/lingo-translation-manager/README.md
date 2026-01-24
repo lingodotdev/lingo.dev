@@ -16,6 +16,18 @@ A powerful, visual translation management tool built with React that showcases L
 
 This demo showcases how Lingo.dev can be integrated into a visual workflow, making translation management accessible to non-technical team members while maintaining developer-friendly features.
 
+## 📸 Screenshots
+
+### Translation Editor
+![Editor](./demo/screenshots/Screenshot%202026-01-23%20220324.png)
+
+### AI Assistant
+![AI Assistant](./demo/screenshots/Screenshot%202026-01-23%20220348.png)
+
+### Live Preview
+![Preview](./demo/screenshots/Screenshot%202026-01-23%20220422.png)
+
+
 ## 🚀 Quick Start
 ```bash
 # Install dependencies
