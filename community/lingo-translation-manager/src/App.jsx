@@ -396,7 +396,10 @@ const LingoDevTranslationManager = () => {
                       <p className="text-gray-600 mb-4">
                         Get intelligent translation suggestions and automatically fill missing translations using AI.
                       </p>
-                      <button className="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 flex items-center gap-2">
+                      <button 
+  onClick={() => missingTranslations.forEach(item => generateAiSuggestion(item.key, 'en', item.lang))}
+ className="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 flex items-center gap-2"
+>
                         <RefreshCw size={18} />
                         Generate Missing Translations
                       </button>
