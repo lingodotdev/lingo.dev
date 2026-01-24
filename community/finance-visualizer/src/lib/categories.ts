@@ -20,15 +20,30 @@ export const categories: Category[] = [
   { value: 'Other', label: 'Other', icon: 'bi-box', color: '#AED6F1' }
 ];
 
+/**
+ * Retrieves a category object by its value identifier.
+ * @param value - The category value to search for
+ * @returns The matching Category object or undefined if not found
+ */
 export const getCategoryByValue = (value: string): Category | undefined => {
   return categories.find(cat => cat.value === value);
 };
 
+/**
+ * Gets the color associated with a category.
+ * @param value - The category value to look up
+ * @returns The hex color code for the category, or a default light blue if not found
+ */
 export const getCategoryColor = (value: string): string => {
   const category = getCategoryByValue(value);
   return category?.color || '#AED6F1';
 };
 
+/**
+ * Creates a React element for the category's Bootstrap icon.
+ * @param value - The category value to get the icon for
+ * @returns A React element representing the category icon
+ */
 export const getCategoryIcon = (value: string): React.ReactElement => {
   const category = getCategoryByValue(value);
   const iconClass = category?.icon || 'bi-box';

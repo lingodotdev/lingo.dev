@@ -14,6 +14,12 @@ interface TransactionListProps {
   fetchTransactions: () => void;
 }
 
+/**
+ * Displays a table of transactions with edit and delete actions.
+ * Supports inline editing via dialog and provides category-colored badges.
+ * @param props - Component props with transactions array and refresh callback
+ * @returns A table with transaction data and action buttons
+ */
 export function TransactionList({ transactions, fetchTransactions }: TransactionListProps) {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [selectedTransaction, setSelectedTransaction] = useState<ITransaction | null>(null);

@@ -25,6 +25,11 @@ import { PlusIcon, RotateCcw } from "lucide-react";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
+/**
+ * Main dashboard page component for the personal finance visualizer.
+ * Provides transaction management, budget tracking, and spending analytics.
+ * @returns The main application page with tabs for overview, transactions, and analytics
+ */
 export default function Home() {
   const [transactions, setTransactions] = useState<ITransaction[]>([]);
   const [budgets, setBudgets] = useState<IBudget[]>([]);

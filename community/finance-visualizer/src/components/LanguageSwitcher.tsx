@@ -19,6 +19,11 @@ const languages = [
   { label: "Japanese", value: "ja" },
 ]
 
+/**
+ * Dropdown component for switching application language/locale.
+ * Detects current locale from URL and handles navigation to new locale paths.
+ * @returns A select dropdown with available language options
+ */
 export function LanguageSwitcher() {
   const [value, setValue] = React.useState("en")
 

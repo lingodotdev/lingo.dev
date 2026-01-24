@@ -35,6 +35,13 @@ const buttonVariants = cva(
   }
 )
 
+/**
+ * A versatile button component with multiple visual variants and sizes.
+ * Supports rendering as a different element via asChild prop using Radix Slot.
+ * Defaults to type="button" for native buttons to prevent form submission.
+ * @param props - Button props including className, variant, size, and asChild
+ * @returns A styled button or custom element
+ */
 function Button({
   className,
   variant,

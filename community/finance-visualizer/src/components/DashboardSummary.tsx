@@ -15,6 +15,12 @@ interface DashboardSummaryProps {
   };
 }
 
+/**
+ * Displays a dashboard summary with key financial metrics.
+ * Shows total expenses, current month spending, average transaction, and top categories.
+ * @param props - Component props containing transactions and optional icon classes
+ * @returns A grid of summary cards with financial statistics
+ */
 export function DashboardSummary({ transactions, icons }: DashboardSummaryProps) {
   const totalExpenses = transactions.reduce((sum, transaction) => sum + transaction.amount, 0);
   

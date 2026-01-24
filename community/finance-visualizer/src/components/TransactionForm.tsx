@@ -23,6 +23,12 @@ interface TransactionFormProps {
   transaction?: ITransaction;
 }
 
+/**
+ * Form component for creating or editing transactions.
+ * Uses react-hook-form with zod validation for input handling.
+ * @param props - Component props with success callback and optional existing transaction
+ * @returns A form with inputs for description, amount, category, and date
+ */
 export function TransactionForm({ onSuccess, transaction }: TransactionFormProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);

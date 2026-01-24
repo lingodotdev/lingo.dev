@@ -1,14 +1,28 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
+/**
+ * Interface representing a Budget document in MongoDB.
+ * Stores monthly budget allocations per category.
+ */
 export interface IBudget extends Document {
+  /** The spending category (e.g., "Food & Dining", "Transportation") */
   category: string;
+  /** The budgeted amount for this category */
   amount: number;
-  month: string; // Format: "YYYY-MM"
+  /** Month in YYYY-MM format */
+  month: string;
+  /** Year derived from month field */
   year: number;
+  /** Timestamp when the budget was created */
   createdAt: Date;
+  /** Timestamp when the budget was last updated */
   updatedAt: Date;
 }
 
+/**
+ * Mongoose schema for Budget documents.
+ * Includes validation for month format and auto-derives year from month.
+ */
 const BudgetSchema: Schema = new Schema({
   category: { type: String, required: true },
   amount: { type: Number, required: true },

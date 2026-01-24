@@ -20,6 +20,13 @@ if (!cached) {
   cached = (global as unknown as { mongoose: MongooseCache }).mongoose = { conn: null, promise: null };
 }
 
+/**
+ * Establishes a connection to the MongoDB database.
+ * Uses connection caching to reuse existing connections across requests.
+ * Automatically retries on transient failures by clearing the cached promise.
+ * @returns A Promise that resolves to the Mongoose connection instance
+ * @throws Error if the connection fails after clearing the cache
+ */
 async function dbConnect() {
   if (cached.conn) {
     return cached.conn;

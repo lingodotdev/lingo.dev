@@ -4,6 +4,11 @@ import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
+/**
+ * Responsive table container with horizontal scrolling.
+ * @param props - Table props including className and children
+ * @returns A scrollable div containing a styled table element
+ */
 function Table({ className, ...props }: React.ComponentProps<"table">) {
   return (
     <div
@@ -19,6 +24,11 @@ function Table({ className, ...props }: React.ComponentProps<"table">) {
   )
 }
 
+/**
+ * Table header section with bottom border on rows.
+ * @param props - TableHeader props including className and children
+ * @returns A styled thead element
+ */
 function TableHeader({ className, ...props }: React.ComponentProps<"thead">) {
   return (
     <thead
@@ -29,6 +39,11 @@ function TableHeader({ className, ...props }: React.ComponentProps<"thead">) {
   )
 }
 
+/**
+ * Table body section with removed border on last row.
+ * @param props - TableBody props including className and children
+ * @returns A styled tbody element
+ */
 function TableBody({ className, ...props }: React.ComponentProps<"tbody">) {
   return (
     <tbody
@@ -39,6 +54,11 @@ function TableBody({ className, ...props }: React.ComponentProps<"tbody">) {
   )
 }
 
+/**
+ * Table footer section with top border and background.
+ * @param props - TableFooter props including className and children
+ * @returns A styled tfoot element
+ */
 function TableFooter({ className, ...props }: React.ComponentProps<"tfoot">) {
   return (
     <tfoot
@@ -52,6 +72,11 @@ function TableFooter({ className, ...props }: React.ComponentProps<"tfoot">) {
   )
 }
 
+/**
+ * Table row with hover and selection states.
+ * @param props - TableRow props including className and children
+ * @returns A styled tr element
+ */
 function TableRow({ className, ...props }: React.ComponentProps<"tr">) {
   return (
     <tr
@@ -65,6 +90,11 @@ function TableRow({ className, ...props }: React.ComponentProps<"tr">) {
   )
 }
 
+/**
+ * Table header cell with font styling and alignment.
+ * @param props - TableHead props including className and children
+ * @returns A styled th element
+ */
 function TableHead({ className, ...props }: React.ComponentProps<"th">) {
   return (
     <th
@@ -78,6 +108,11 @@ function TableHead({ className, ...props }: React.ComponentProps<"th">) {
   )
 }
 
+/**
+ * Table data cell with padding and alignment.
+ * @param props - TableCell props including className and children
+ * @returns A styled td element
+ */
 function TableCell({ className, ...props }: React.ComponentProps<"td">) {
   return (
     <td
@@ -91,6 +126,11 @@ function TableCell({ className, ...props }: React.ComponentProps<"td">) {
   )
 }
 
+/**
+ * Table caption element with muted styling.
+ * @param props - TableCaption props including className and children
+ * @returns A styled caption element
+ */
 function TableCaption({
   className,
   ...props

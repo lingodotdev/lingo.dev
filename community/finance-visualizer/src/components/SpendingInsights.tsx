@@ -18,6 +18,12 @@ interface SpendingInsightsProps {
   };
 }
 
+/**
+ * Displays spending insights and analytics for a selected period.
+ * Shows month-over-month comparisons, budget performance, and quick stats.
+ * @param props - Component props with transactions, budgets, and selected period
+ * @returns A card with spending analysis and insights
+ */
 export function SpendingInsights({ 
   transactions, 
   budgets, 

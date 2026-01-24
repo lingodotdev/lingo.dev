@@ -2,6 +2,11 @@ import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/dbConnect';
 import Transaction from '@/models/Transaction';
 
+/**
+ * Handles GET requests to fetch all transactions.
+ * Returns transactions sorted by date in descending order (newest first).
+ * @returns JSON response with transaction data or error
+ */
 export async function GET() {
   await dbConnect();
   try {
@@ -12,6 +17,11 @@ export async function GET() {
   }
 }
 
+/**
+ * Handles POST requests to create a new transaction.
+ * @param request - The incoming HTTP request with transaction data in body
+ * @returns JSON response with created transaction or error
+ */
 export async function POST(request: Request) {
   await dbConnect();
   try {

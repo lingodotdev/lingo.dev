@@ -2,6 +2,12 @@ import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/dbConnect';
 import Transaction from '@/models/Transaction';
 
+/**
+ * Handles PUT requests to update a specific transaction by ID.
+ * @param request - The incoming HTTP request with updated transaction data
+ * @param params - Route parameters containing the transaction ID
+ * @returns JSON response with updated transaction or 404 if not found
+ */
 export async function PUT(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
@@ -23,6 +29,12 @@ export async function PUT(
   }
 }
 
+/**
+ * Handles DELETE requests to remove a specific transaction by ID.
+ * @param request - The incoming HTTP request
+ * @param params - Route parameters containing the transaction ID
+ * @returns JSON response with success status or 404 if not found
+ */
 export async function DELETE(
   request: Request,
   { params }: { params: Promise<{ id: string }> }

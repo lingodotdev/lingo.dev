@@ -24,6 +24,12 @@ interface BudgetFormProps {
   onSuccess: () => void;
 }
 
+/**
+ * Form component for setting and managing monthly budgets by category.
+ * Displays existing budgets for the selected period with delete functionality.
+ * @param props - Component props with success callback
+ * @returns A form for budget entry and list of existing budgets
+ */
 export function BudgetForm({ onSuccess }: BudgetFormProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);

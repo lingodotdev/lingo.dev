@@ -6,12 +6,22 @@ import { XIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
+/**
+ * Root dialog component wrapping Radix Dialog primitive.
+ * @param props - Dialog props from Radix Dialog.Root
+ * @returns A Dialog root element
+ */
 function Dialog({
   ...props
 }: React.ComponentProps<typeof DialogPrimitive.Root>) {
   return <DialogPrimitive.Root data-slot="dialog" {...props} />
 }
 
+/**
+ * Trigger element that opens the dialog when clicked.
+ * @param props - DialogTrigger props from Radix Dialog.Trigger
+ * @returns A trigger element for the dialog
+ */
 function DialogTrigger({
   ...props
 }: React.ComponentProps<typeof DialogPrimitive.Trigger>) {
@@ -46,6 +56,11 @@ function DialogOverlay({
   )
 }
 
+/**
+ * Main content container for the dialog with close button.
+ * @param props - DialogContent props including showCloseButton option
+ * @returns A centered modal dialog with overlay
+ */
 function DialogContent({
   className,
   children,
@@ -80,6 +95,11 @@ function DialogContent({
   )
 }
 
+/**
+ * Container for dialog header with title and description.
+ * @param props - DialogHeader props including className
+ * @returns A flex container for dialog header content
+ */
 function DialogHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -103,6 +123,11 @@ function DialogFooter({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
+/**
+ * Title element for the dialog with semibold styling.
+ * @param props - DialogTitle props including className
+ * @returns A styled title element for the dialog
+ */
 function DialogTitle({
   className,
   ...props

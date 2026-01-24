@@ -29,6 +29,11 @@ const FormFieldContext = React.createContext<FormFieldContextValue>(
   {} as FormFieldContextValue
 )
 
+/**
+ * Wrapper for react-hook-form Controller that provides field context.
+ * @param props - Controller props including name and control
+ * @returns A Controller wrapped in FormFieldContext provider
+ */
 const FormField = <
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
@@ -42,6 +47,12 @@ const FormField = <
   )
 }
 
+/**
+ * Hook to access form field state and IDs within a FormItem.
+ * Must be used within a FormField component.
+ * @returns Object containing field state, IDs for accessibility, and error state
+ * @throws Error if used outside of FormField
+ */
 const useFormField = () => {
   const fieldContext = React.useContext(FormFieldContext)
   const itemContext = React.useContext(FormItemContext)
@@ -73,6 +84,11 @@ const FormItemContext = React.createContext<FormItemContextValue>(
   {} as FormItemContextValue
 )
 
+/**
+ * Container for a form field that provides unique IDs via context.
+ * @param props - FormItem props including className and children
+ * @returns A div wrapped in FormItemContext provider
+ */
 function FormItem({ className, ...props }: React.ComponentProps<"div">) {
   const id = React.useId()
 
@@ -87,6 +103,11 @@ function FormItem({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
+/**
+ * Label component for form fields with error state styling.
+ * @param props - FormLabel props including className
+ * @returns A Label component linked to the form field
+ */
 function FormLabel({
   className,
   ...props
@@ -104,6 +125,11 @@ function FormLabel({
   )
 }
 
+/**
+ * Wrapper for form controls that provides accessibility attributes.
+ * @param props - FormControl props
+ * @returns A Slot component with proper ARIA attributes
+ */
 function FormControl({ ...props }: React.ComponentProps<typeof Slot>) {
   const { error, formItemId, formDescriptionId, formMessageId } = useFormField()
 
@@ -122,6 +148,11 @@ function FormControl({ ...props }: React.ComponentProps<typeof Slot>) {
   )
 }
 
+/**
+ * Description text for form fields with muted styling.
+ * @param props - FormDescription props including className
+ * @returns A paragraph element with proper accessibility ID
+ */
 function FormDescription({ className, ...props }: React.ComponentProps<"p">) {
   const { formDescriptionId } = useFormField()
 
@@ -135,6 +166,11 @@ function FormDescription({ className, ...props }: React.ComponentProps<"p">) {
   )
 }
 
+/**
+ * Error message display for form fields with destructive styling.
+ * @param props - FormMessage props including className and children
+ * @returns A paragraph with error message or null if no error
+ */
 function FormMessage({ className, ...props }: React.ComponentProps<"p">) {
   const { error, formMessageId } = useFormField()
   const body = error ? String(error?.message ?? "") : props.children

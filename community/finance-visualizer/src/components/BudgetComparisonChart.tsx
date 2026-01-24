@@ -23,6 +23,12 @@ interface BudgetComparisonChartProps {
   selectedYear: number;
 }
 
+/**
+ * Displays a bar chart comparing budgeted vs actual spending by category.
+ * Shows budget utilization status with progress indicators and color coding.
+ * @param props - Component props containing transactions, budgets, and selected period
+ * @returns A card with bar chart and budget status indicators
+ */
 export function BudgetComparisonChart({ 
   transactions, 
   budgets, 

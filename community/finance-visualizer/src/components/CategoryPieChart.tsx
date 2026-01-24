@@ -17,6 +17,12 @@ interface CategoryPieChartProps {
   data: ITransaction[];
 }
 
+/**
+ * Displays a pie chart showing spending distribution across categories.
+ * Aggregates transactions by category and displays percentages.
+ * @param props - Component props containing transaction data
+ * @returns A card with interactive pie chart and custom legend
+ */
 export function CategoryPieChart({ data }: CategoryPieChartProps) {
   const categoryData: CategoryData[] = data.reduce((acc: CategoryData[], transaction: ITransaction) => {
     const existing = acc.find((item) => item.name === transaction.category);

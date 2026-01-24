@@ -2,6 +2,12 @@ import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/dbConnect';
 import Budget from '@/models/Budget';
 
+/**
+ * Handles PUT requests to update a specific budget by ID.
+ * @param request - The incoming HTTP request with updated budget data
+ * @param params - Route parameters containing the budget ID
+ * @returns JSON response with updated budget or 404 if not found
+ */
 export async function PUT(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
@@ -23,6 +29,12 @@ export async function PUT(
   }
 }
 
+/**
+ * Handles DELETE requests to remove a specific budget by ID.
+ * @param request - The incoming HTTP request
+ * @param params - Route parameters containing the budget ID
+ * @returns JSON response with success status or 404 if not found
+ */
 export async function DELETE(
   request: Request,
   { params }: { params: Promise<{ id: string }> }

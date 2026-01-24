@@ -2,6 +2,12 @@ import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
+/**
+ * A styled input component with consistent theming and accessibility features.
+ * Supports all native input types and handles focus/error states.
+ * @param props - Input props including className, type, and other native attributes
+ * @returns A styled input element
+ */
 function Input({ className, type, ...props }: React.ComponentProps<"input">) {
   return (
     <input

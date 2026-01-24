@@ -6,12 +6,19 @@ import { Check, ChevronDown, ChevronUp } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
+/** Root select component from Radix */
 const Select = SelectPrimitive.Root
 
+/** Group container for select items */
 const SelectGroup = SelectPrimitive.Group
 
+/** Displays the selected value */
 const SelectValue = SelectPrimitive.Value
 
+/**
+ * Trigger button that opens the select dropdown.
+ * Displays selected value and chevron icon.
+ */
 const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
@@ -67,6 +74,10 @@ const SelectScrollDownButton = React.forwardRef<
 SelectScrollDownButton.displayName =
   SelectPrimitive.ScrollDownButton.displayName
 
+/**
+ * Dropdown content container with scroll buttons and viewport.
+ * Renders in a portal with animations.
+ */
 const SelectContent = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content>
@@ -111,6 +122,10 @@ const SelectLabel = React.forwardRef<
 ))
 SelectLabel.displayName = SelectPrimitive.Label.displayName
 
+/**
+ * Individual selectable item with check indicator.
+ * Shows checkmark when selected.
+ */
 const SelectItem = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Item>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item>

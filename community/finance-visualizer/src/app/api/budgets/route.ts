@@ -2,6 +2,13 @@ import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/dbConnect';
 import Budget from '@/models/Budget';
 
+/**
+ * Handles GET requests to fetch budgets.
+ * Optionally filters by month and year query parameters.
+ * Both month and year must be provided together for filtering; returns 400 if only one is supplied.
+ * @param request - The incoming HTTP request
+ * @returns JSON response with budget data or error
+ */
 export async function GET(request: Request) {
   await dbConnect();
   try {
@@ -9,8 +16,19 @@ export async function GET(request: Request) {
     const month = searchParams.get('month');
     const year = searchParams.get('year');
     
+    // Validate: if one of month/year is provided, both must be provided
+    const hasMonth = month !== null && month !== '';
+    const hasYear = year !== null && year !== '';
+    
+    if (hasMonth !== hasYear) {
+      return NextResponse.json(
+        { success: false, error: 'Both month and year must be provided together for filtering' },
+        { status: 400 }
+      );
+    }
+    
     let query = {};
-    if (month && year) {
+    if (hasMonth && hasYear) {
       query = { month: `${year}-${month.padStart(2, '0')}` };
     }
     
@@ -21,6 +39,13 @@ export async function GET(request: Request) {
   }
 }
 
+/**
+ * Handles POST requests to create or update a budget.
+ * Validates month (1-12) and year inputs before processing.
+ * Updates existing budget if one exists for the category/month, otherwise creates new.
+ * @param request - The incoming HTTP request with budget data in body
+ * @returns JSON response with created/updated budget or validation error
+ */
 export async function POST(request: Request) {
   await dbConnect();
   try {

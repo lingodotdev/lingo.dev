@@ -14,6 +14,12 @@ interface MonthlyExpensesChartProps {
   data: ITransaction[];
 }
 
+/**
+ * Displays a bar chart of monthly expense totals over time.
+ * Aggregates transactions by month and sorts chronologically.
+ * @param props - Component props containing transaction data
+ * @returns A card with bar chart showing monthly spending trends
+ */
 export function MonthlyExpensesChart({ data }: MonthlyExpensesChartProps) {
   const monthlyData: MonthlyData[] = data.reduce((acc: MonthlyData[], transaction: ITransaction) => {
     const month = new Date(transaction.date).toLocaleString('default', { month: 'short', year: 'numeric' });

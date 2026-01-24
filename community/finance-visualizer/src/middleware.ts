@@ -3,6 +3,13 @@ import type { NextRequest } from "next/server";
 
 const locales = ["en", "es", "fr", "de", "zh", "ja"];
 
+/**
+ * Next.js middleware for handling internationalization (i18n) routing.
+ * Detects locale prefixes in URLs, rewrites paths, and sets locale cookies.
+ * Defaults to 'en' for paths without explicit locale prefix.
+ * @param request - The incoming Next.js request
+ * @returns NextResponse with appropriate rewrites and cookies set
+ */
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   
