@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error Localization Demo</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌍 Error Localization Engine</h1>
+            <p>See backend errors automatically translated to your language</p>
+        </div>
+
+        <div class="language-selector">
+            <label for="language">Select Language:</label>
+            <select id="language">
+                <option value="en">🇬🇧 English</option>
+                <option value="es">🇪🇸 Español</option>
+                <option value="fr">🇫🇷 Français</option>
+                <option value="de">🇩🇪 Deutsch</option>
+                <option value="hi">🇮🇳 हिन्दी</option>
+                <option value="ja">🇯🇵 日本語</option>
+            </select>
+        </div>
+
+        <div class="card">
+            <h2>Sign Up</h2>
+            <form id="signupForm">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="text" id="email" placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter your password">
+                </div>
+                <button type="submit">Sign Up</button>
+            </form>
+        </div>
+
+        <div id="response" class="response hidden"></div>
+
+        <div class="info-card">
+            <h3>💡 Try These Test Cases:</h3>
+            <ul>
+                <li><strong>Invalid Email:</strong> Type "invalid" → See localized error</li>
+                <li><strong>Short Password:</strong> Type "123" → See localized error</li>
+                <li><strong>Valid:</strong> Use "test@example.com" + "password123" → Success!</li>
+            </ul>
+            <p class="note">Switch languages and try again to see errors in different languages!</p>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
