@@ -26,6 +26,7 @@ jobs:
         with:
           anthropic_api_key: ${{ secrets.CLAUDE_CODE_API_KEY }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          allowed_bots: "coderabbitai[bot]"
           show_full_output: true
           prompt: |
             EXEMPT USERS: @maxprilutskiy, @vrcprl, @davidturnbull, @monicabe, @sumitsaurabh927, @AleksandrSl, @cherkanovart, @AndreyHirsa, @ohmoses  (skip all checks if PR author is one of these)
