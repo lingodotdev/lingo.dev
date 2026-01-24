@@ -18,14 +18,18 @@ This demo showcases how Lingo.dev can be integrated into a visual workflow, maki
 
 ## 📸 Screenshots
 
-### Translation Editor
-![Editor](./demo/screenshots/Screenshot%202026-01-23%20220324.png)
+### 1. Translation Editor
+![Translation Editor](./demo/screenshots/Screenshot%202026-01-23%20220244.png)
 
-### AI Assistant
-![AI Assistant](./demo/screenshots/Screenshot%202026-01-23%20220348.png)
+### 2. Live Preview
+![Live Preview](./demo/screenshots/Screenshot%202026-01-23%20220324.png)
 
-### Live Preview
-![Preview](./demo/screenshots/Screenshot%202026-01-23%20220422.png)
+### 3. AI Assistance
+![AI Assistance](./demo/screenshots/Screenshot%202026-01-23%20220348.png)
+
+### 4. Export Settings
+![Export Settings](./demo/screenshots/Screenshot%202026-01-23%20220422.png)
+
 
 
 ## 🚀 Quick Start
