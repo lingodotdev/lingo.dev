@@ -25,6 +25,7 @@ To ensure GourmetGlobe stands out as a premium, functional, and fully-localized 
 
 - Resolved warnings about incomplete Tailwind configuration.
 - Removed unused database connection logic and legacy auth placeholders that were flagged as problematic.
+- **Fixed Locale Extraction**: Implemented proper URL-decoding for locale cookies in `utils.ts` to prevent bugs with encoded values (as suggested by CodeRabbit).
 
 ## 🛠️ How to View
 

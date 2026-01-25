@@ -21,7 +21,13 @@ export function getCurrentLocale(): string {
   );
 
   if (localeCookie) {
-    return localeCookie.split("=")[1]?.trim() || "en";
+    try {
+      const rawValue = localeCookie.split("=")[1]?.trim();
+      return rawValue ? decodeURIComponent(rawValue) : "en";
+    } catch (e) {
+      console.error("Failed to decode locale cookie:", e);
+      return "en";
+    }
   }
 
   return "en";
