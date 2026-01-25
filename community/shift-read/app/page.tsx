@@ -12,19 +12,20 @@ export default function Home() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const trimmedUrl = url.trim();
 
-    if (!url.trim()) {
+    if (!trimmedUrl) {
       setError("Please enter a URL");
       return;
     }
 
-    if (!url.startsWith("https://")) {
+    if (!trimmedUrl.startsWith("https://")) {
       setError("Please enter a valid HTTPS URL");
       return;
     }
 
     setError("");
-    const encoded = encodeURIComponent(url);
+    const encoded = encodeURIComponent(trimmedUrl);
     router.push(`/read/${encoded}`);
   };
 
