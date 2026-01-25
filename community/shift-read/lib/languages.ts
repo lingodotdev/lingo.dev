@@ -27,7 +27,7 @@ export const SUPPORTED_LANGUAGES: Language[] = [
   { code: 'he', name: 'Hebrew', nativeName: 'עברית', region: 'Middle East' },
   { code: 'ar', name: 'Arabic', nativeName: 'العربية', region: 'Middle East' },
   { code: 'fa', name: 'Persian', nativeName: 'فارسی', region: 'Middle East' },
-  
+
   { code: 'zh', name: 'Chinese', nativeName: '中文', region: 'Asia' },
   { code: 'ja', name: 'Japanese', nativeName: '日本語', region: 'Asia' },
   { code: 'ko', name: 'Korean', nativeName: '한국어', region: 'Asia' },
@@ -41,7 +41,7 @@ export const SUPPORTED_LANGUAGES: Language[] = [
   { code: 'th', name: 'Thai', nativeName: 'ไทย', region: 'Asia' },
   { code: 'vi', name: 'Vietnamese', nativeName: 'Tiếng Việt', region: 'Asia' },
   { code: 'fil', name: 'Filipino', nativeName: 'Filipino', region: 'Asia' },
-  
+
   { code: 'en-GB', name: 'English (UK)', nativeName: 'English (UK)', region: 'Europe' },
   { code: 'en-AU', name: 'English (Australia)', nativeName: 'English (Australia)', region: 'Oceania' },
   { code: 'en-CA', name: 'English (Canada)', nativeName: 'English (Canada)', region: 'Americas' },
@@ -89,7 +89,6 @@ export const SUPPORTED_LANGUAGES: Language[] = [
   { code: 'my', name: 'Burmese', nativeName: 'မြန်မာ', region: 'Asia' },
   { code: 'km', name: 'Khmer', nativeName: 'ខ្មែរ', region: 'Asia' },
   { code: 'lo', name: 'Lao', nativeName: 'ລາວ', region: 'Asia' },
-  { code: 'mn', name: 'Mongolian', nativeName: 'Монгол', region: 'Asia' },
   { code: 'am', name: 'Amharic', nativeName: 'አማርኛ', region: 'Africa' },
   { code: 'so', name: 'Somali', nativeName: 'Soomaali', region: 'Africa' },
 ]
