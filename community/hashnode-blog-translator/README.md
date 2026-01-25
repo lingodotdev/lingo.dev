@@ -30,7 +30,7 @@ Hashnode Blog Translator is a powerful tool designed for content creators who wa
 
 ## 📋 Prerequisites
 
-- **Python 3.12** or higher.
+- **Python >=3.12**
 - **Lingo.dev API Key**: Get it from [lingo.dev](https://lingo.dev/en/cli/quick-start).
 - **Hashnode Access Token**: Generate it at [hashnode.com/settings/developer](https://hashnode.com/settings/developer).
 - **Hashnode Publication Host**: The domain of your blog (e.g., `srinikethj.hashnode.dev`).
