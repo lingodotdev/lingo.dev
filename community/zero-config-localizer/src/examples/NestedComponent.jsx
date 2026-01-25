@@ -1,26 +1,34 @@
 /**
  * React component example.
  *
+ * @param {Object} props - Component props
+ * @param {Object} props.product - Product object
+ * @param {string} props.locale - Locale string for formatting
+ * @param {string} props.currency - Currency code (e.g., 'USD', 'EUR')
  * @returns {JSX.Element}
  */
 
-export default function NestedComponent({ product }) {
+export default function NestedComponent({ product = {}, locale = 'en-US', currency = 'USD' }) {
+    const formattedPrice = product.price 
+      ? new Intl.NumberFormat(locale, { style: 'currency', currency }).format(product.price)
+      : '';
+
     return (
       <article>
         <header>
-          <h2>{product.name}</h2>
-          <span>SKU: {product.sku}</span>
+          <h2>{product?.name}</h2>
+          <span>SKU: {product?.sku}</span>
         </header>
         
         <div>
           <p>
-            <strong>Description:</strong> {product.description}
+            <strong>Description:</strong> {product?.description}
           </p>
           <p>
-            <strong>Price:</strong> ${product.price}
+            <strong>Price:</strong> {formattedPrice}
           </p>
           <p>
-            <strong>Stock:</strong> {product.stock} items available
+            <strong>Stock:</strong> {product?.stock} items available
           </p>
         </div>
   
