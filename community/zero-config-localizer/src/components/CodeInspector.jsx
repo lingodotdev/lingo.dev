@@ -1,3 +1,13 @@
+/**
+ * CodeInspector component
+ *
+ * Displays analysis of how user-facing text is transformed by Lingo.dev.
+ * Highlights key transformation points such as fingerprinting,
+ * variable preservation, and component structure integrity.
+ *
+ * @returns {JSX.Element} Visual explanation of code transformation
+ */
+
 import { useState } from 'react';
 import { Code, ArrowRight } from 'lucide-react';
 

@@ -1,3 +1,12 @@
+/**
+ * CompilerVisualization component
+ *
+ * Visualizes how the Lingo.dev compiler processes source code
+ * and replaces user-facing strings during build time.
+ *
+ * @returns {JSX.Element} Compiler flow visualization
+ */
+
 import { useEffect, useRef, useState } from 'react';
 import { Play, CheckCircle, Loader } from 'lucide-react';
 

@@ -1,3 +1,11 @@
+/**
+ * SimpleComponent example
+ *
+ * Demonstrates a minimal React component with user-facing text
+ * automatically localized using zero-config setup.
+ *
+ * @returns {JSX.Element} Example localized component
+ */
 export default function SimpleComponent() {
     return (
       <div>

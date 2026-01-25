@@ -1,3 +1,9 @@
+/**
+ * React component example.
+ *
+ * @returns {JSX.Element}
+ */
+
 import { useLingoLocale } from 'lingo.dev/react/client';
   
   export default function DynamicComponent({ userName, messageCount }) {

@@ -1,3 +1,13 @@
+/**
+ * BundleComparison component
+ *
+ * Compares bundle size before and after localization
+ * to demonstrate minimal overhead introduced by Lingo.dev.
+ *
+ * @returns {JSX.Element} Bundle size comparison visualization
+ */
+
+
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Package, TrendingDown } from 'lucide-react';
 

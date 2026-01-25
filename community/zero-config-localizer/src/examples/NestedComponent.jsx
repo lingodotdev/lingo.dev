@@ -1,3 +1,9 @@
+/**
+ * React component example.
+ *
+ * @returns {JSX.Element}
+ */
+
 export default function NestedComponent({ product }) {
     return (
       <article>

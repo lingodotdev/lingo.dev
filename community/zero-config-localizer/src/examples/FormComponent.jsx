@@ -1,3 +1,9 @@
+/**
+ * React component example.
+ *
+ * @returns {JSX.Element}
+ */
+
 import { useState } from 'react';
 
 export default function FormComponent() {
