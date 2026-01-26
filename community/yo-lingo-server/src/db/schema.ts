@@ -13,3 +13,10 @@ export const cachedContent = pgTable('cached_content', {
   accessCount: integer('access_count').default(0).notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 });
+
+export const githubStats = pgTable('github_stats', {
+  id: serial('id').primaryKey(),
+  stargazersCount: integer('stargazers_count').notNull(),
+  watchersCount: integer('watchers_count').notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+});

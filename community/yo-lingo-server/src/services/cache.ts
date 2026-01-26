@@ -74,7 +74,7 @@ export async function setCachedContent(
     contentType: type,
     translations,
     accessCount: 0,
-  });
+  }).onConflictDoNothing({ target: cachedContent.contentHash });
 }
 
 /**

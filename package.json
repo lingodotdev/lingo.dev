@@ -27,8 +27,18 @@
   "dependencies": {
     "@changesets/changelog-github": "0.5.1",
     "@changesets/cli": "2.29.7",
+    "@lingo.dev/compiler": "",
     "minimatch": "10.1.1",
     "node-machine-id": "1.1.12"
   },
-  "packageManager": "pnpm@9.12.3"
+  "packageManager": "pnpm@9.12.3",
+  "workspaces": [
+    "./packages/*",
+    "./demo/*",
+    "./integrations/*",
+    "./legacy/*",
+    "./action",
+    "./php/*",
+    "./scripts/*"
+  ]
 }

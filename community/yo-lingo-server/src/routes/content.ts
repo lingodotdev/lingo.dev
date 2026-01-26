@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { fetchRandomJoke } from "../services/joke.js";
 import { fetchRandomQuote } from "../services/quote.js";
-import { fetchGitHubStats } from "../services/github.js";
+import { fetchGitHubStats, getCachedGitHubStats, setCachedGitHubStats } from "../services/github.js";
 import { translateContent } from "../services/lingo.js";
 import { incrementCounter, getCounter } from "../services/stats.js";
 import { hashContent, getCachedContent, setCachedContent, incrementCacheHits, getRandomCachedContent } from "../services/cache.js";
@@ -125,7 +125,29 @@ content.get("/quote", async (c) => {
 });
 
 content.get("/github", async (c) => {
-  return c.json(await fetchGitHubStats());
+  try {
+    const stats = await fetchGitHubStats();
+    
+    // Cache the fresh stats in DB
+    await setCachedGitHubStats(stats);
+    
+    return c.json(stats);
+  } catch (error) {
+    console.error("GitHub API failed, serving from cache:", error);
+    
+    // Fallback to cached stats
+    const cached = await getCachedGitHubStats();
+    
+    if (cached) {
+      return c.json({
+        stargazers_count: cached.stargazersCount,
+        watchers_count: cached.watchersCount,
+      });
+    }
+    
+    // No cache available - return error
+    return c.json({ error: "Failed to fetch GitHub stats and no cached data available" }, 502);
+  }
 });
 
 content.get("/stats", async (c) => {

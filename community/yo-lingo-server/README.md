@@ -21,7 +21,7 @@ The backend service for the Yo Lingo application, built with [Hono](https://hono
 
 2.  **Navigate to the server directory**:
     ```bash
-    cd yo-lingo-server
+    cd community/yo-lingo-server
     ```
 
 3.  **Install dependencies**:
