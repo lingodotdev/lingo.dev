@@ -2,15 +2,6 @@
   "version": 0.1,
   "locale": "es",
   "entries": {
-    "daa4d8839395": "Clicado {counter} veces",
-    "52ed9ee761d8": "Hola Mundo",
-    "f11fc78c3ac0": "Contenido <b0>mixto</b0> <i0>fragmento</i0>",
-    "556f5956dca7": "Bienvenido a la demo de Lingo.dev compiler",
-    "02704ec4e52a": "Extrae automáticamente texto de tu JSX y lo traduce a otros idiomas.",
-    "de6bfb30be49": "El texto insertado como <code0></code0> no se traduce: {text}",
-    "5c15bd35e916": "Para traducirlo tienes que envolverlo en el '<'>{translatableText} '<'/>",
-    "93b50fe805b7": "El texto externo al componente no se traduce: {externalText}",
-    "d756b03ffbf5": "El contenido que tiene texto y otras etiquetas dentro se traducirá como una sola entidad: {translatableMixedContextFragment}",
     "8492c53cfbaf": "Acerca de Lingo.dev",
     "8aa4fe3f0590": "Esta es una aplicación de demostración que muestra el compilador Lingo.dev para traducciones automáticas en aplicaciones React.",
     "af76f667703b": "Características principales",
@@ -21,6 +12,15 @@
     "aca12d550fe2": "Soporte para componentes de servidor y cliente",
     "44a3311c3a4a": "Cómo funciona",
     "0add30e37450": "El compilador analiza tus componentes de React en tiempo de compilación y extrae automáticamente todas las cadenas traducibles. Luego genera traducciones utilizando tu proveedor de traducción configurado.",
-    "07d84d34dd3a": "¡Simplemente agrega la directiva \"use i18n\" en la parte superior de tus archivos de componentes, y el compilador se encarga del resto!"
+    "07d84d34dd3a": "¡Simplemente agrega la directiva \"use i18n\" en la parte superior de tus archivos de componentes, y el compilador se encarga del resto!",
+    "daa4d8839395": "Clicado {counter} veces",
+    "52ed9ee761d8": "Hola Mundo",
+    "f11fc78c3ac0": "Contenido <b0>mixto</b0> <i0>fragmento</i0>",
+    "556f5956dca7": "Bienvenido a la demo de Lingo.dev compiler",
+    "02704ec4e52a": "Extrae automáticamente texto de tu JSX y lo traduce a otros idiomas.",
+    "de6bfb30be49": "El texto insertado como <code0></code0> no se traduce: {text}",
+    "5c15bd35e916": "Para traducirlo tienes que envolverlo en el '<'>{translatableText} '<'/>",
+    "93b50fe805b7": "El texto externo al componente no se traduce: {externalText}",
+    "d756b03ffbf5": "El contenido que tiene texto y otras etiquetas dentro se traducirá como una sola entidad: {translatableMixedContextFragment}"
   }
 }

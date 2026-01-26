@@ -1,5 +1,14 @@
 # @lingo.dev/compiler
 
+## 0.1.13
+
+### Patch Changes
+
+- [#1874](https://github.com/lingodotdev/lingo.dev/pull/1874) [`5ca8439`](https://github.com/lingodotdev/lingo.dev/commit/5ca8439aedd2909e359652f8f3a1b33d4ccd9f6a) Thanks [@vrcprl](https://github.com/vrcprl)! - simplify observability
+
+- Updated dependencies [[`5ca8439`](https://github.com/lingodotdev/lingo.dev/commit/5ca8439aedd2909e359652f8f3a1b33d4ccd9f6a)]:
+  - lingo.dev@0.125.1
+
 ## 0.1.12
 
 ### Patch Changes
