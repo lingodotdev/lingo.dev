@@ -2,7 +2,7 @@ import { LingoDotDevEngine } from "lingo.dev/sdk";
 
 const apiKey = process.env.LINGO_API_KEY;
 if (!apiKey) {
-  console.error("❌ LINGO_API_KEY is missing in .env file");
+  console.error("LINGO_API_KEY is missing in .env file");
 }
 export const lingo = new LingoDotDevEngine({
   apiKey: apiKey!,

@@ -8,6 +8,13 @@
       "when": 1769431616807,
       "tag": "0000_ambitious_hedge_knight",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1769433500947,
+      "tag": "0001_furry_whizzer",
+      "breakpoints": true
     }
   ]
 }
