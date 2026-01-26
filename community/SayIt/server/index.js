@@ -9,7 +9,7 @@ app.use(cors());
 app.use(express.json());
 
 const lingo = new LingoDotDevEngine({
-  apiKey: process.env.LINGODOTDEV_API_KEY,
+  apiKey: process.env.LINGODEV_API_KEY,
 });
 
 app.post("/translate", async (req, res) => {
