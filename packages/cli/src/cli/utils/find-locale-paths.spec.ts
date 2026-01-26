@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { glob } from "glob";
+import * as pkg from "glob";
+const { glob } = pkg;
 import findLocaleFiles from "./find-locale-paths";
 
 vi.mock("glob", () => ({
