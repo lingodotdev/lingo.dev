@@ -1,5 +1,11 @@
+/**
+ * Content type discriminator for rate limiting
+ */
 type ContentType = 'joke' | 'quote';
 
+/**
+ * Rate limit entry tracking request counts and reset timestamps
+ */
 interface RateLimitEntry {
   count: number;
   resetAt: number;
@@ -8,12 +14,33 @@ interface RateLimitEntry {
 // In-memory store for rate limiting (IP -> ContentType -> Entry)
 const rateLimitStore = new Map<string, Map<ContentType, RateLimitEntry>>();
 
+/**
+ * Maximum number of fresh API requests allowed per IP per content type
+ */
 const MAX_REQUESTS = 2;
+
+/**
+ * Time interval in milliseconds before rate limit counters reset (1 hour)
+ */
 const RESET_INTERVAL_MS = 60 * 60 * 1000; // 1 hour
 
 /**
- * Checks if the IP is under the rate limit for the given content type
- * Returns true if under limit (can make fresh API calls), false otherwise
+ * Checks if the client IP is under the rate limit for the given content type
+ * 
+ * Returns true if the IP can make fresh API calls (under the 2-request limit),
+ * or false if they should be served from cache only.
+ * 
+ * @param ip - Client IP address
+ * @param contentType - Type of content being requested ('joke' or 'quote')
+ * @returns true if under limit (can make fresh API calls), false otherwise
+ * 
+ * @example
+ * ```typescript
+ * const canCallAPI = checkRateLimit('192.168.1.1', 'joke');
+ * if (!canCallAPI) {
+ *   // Serve from cache only
+ * }
+ * ```
  */
 export function checkRateLimit(ip: string, contentType: ContentType): boolean {
   const now = Date.now();
@@ -39,7 +66,19 @@ export function checkRateLimit(ip: string, contentType: ContentType): boolean {
 }
 
 /**
- * Increments the request count for tracking fresh content requests
+ * Increments the request count for tracking fresh content API calls
+ * 
+ * Should be called after successfully making a fresh translation API call
+ * to track usage against the rate limit threshold.
+ * 
+ * @param ip - Client IP address
+ * @param contentType - Type of content being requested ('joke' or 'quote')
+ * 
+ * @example
+ * ```typescript
+ * // After successful API call
+ * incrementRequestCount('192.168.1.1', 'joke');
+ * ```
  */
 export function incrementRequestCount(ip: string, contentType: ContentType): void {
   const now = Date.now();
@@ -67,6 +106,9 @@ export function incrementRequestCount(ip: string, contentType: ContentType): voi
 
 /**
  * Cleanup old entries periodically (runs every hour)
+ * 
+ * Automatically removes expired rate limit entries to prevent memory leaks
+ * in the in-memory store.
  */
 setInterval(() => {
   const now = Date.now();
