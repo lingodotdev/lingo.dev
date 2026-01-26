@@ -105,20 +105,6 @@ const LockfileSchema = Z.object({
   ).prefault({}),
 });
 
-/**
- * Removes duplicate entries from the lockfile YAML content that may occur after Git merges.
- *
- * A duplicate is defined as having the same pathPatternHash + translationKey.
- * When duplicates exist (including conflicting checksums), the last occurrence wins.
- *
- * This function operates on YAML content directly to detect real duplicates that
- * would be lost when parsing to JavaScript objects (since JS objects auto-deduplicate keys).
- *
- * This function is deterministic and idempotent.
- *
- * @param yamlContent - The lockfile YAML content as a string
- * @returns An object containing the deduplicated YAML content and the count of removed duplicates
- */
 export function deduplicateLockfileYaml(yamlContent: string): {
   deduplicatedContent: string;
   duplicatesRemoved: number;
