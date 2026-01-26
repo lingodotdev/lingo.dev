@@ -109,6 +109,30 @@ checksums:
     expect(parsed.checksums.pathHash2.key1).toBe("checksumA_duplicate");
   });
 
+  it("should preserve same key names across different path patterns (no cross-block deduplication)", () => {
+    const yamlContent = `version: 1
+checksums:
+  pathHash1:
+    greeting: checksum1
+    button: checksum2
+  pathHash2:
+    greeting: checksum3
+    button: checksum4
+`;
+
+    const result = deduplicateLockfileYaml(yamlContent);
+
+    expect(result.duplicatesRemoved).toBe(0);
+
+    const parsed = YAML.parse(result.deduplicatedContent);
+    expect(parsed.checksums.pathHash1.greeting).toBe("checksum1");
+    expect(parsed.checksums.pathHash1.button).toBe("checksum2");
+    expect(parsed.checksums.pathHash2.greeting).toBe("checksum3");
+    expect(parsed.checksums.pathHash2.button).toBe("checksum4");
+    expect(Object.keys(parsed.checksums.pathHash1)).toHaveLength(2);
+    expect(Object.keys(parsed.checksums.pathHash2)).toHaveLength(2);
+  });
+
   it("should handle empty lockfile", () => {
     const yamlContent = `version: 1
 checksums: {}
