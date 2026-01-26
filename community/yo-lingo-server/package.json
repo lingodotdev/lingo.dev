@@ -6,16 +6,22 @@
   "scripts": {
     "start": "bun run src/index.ts",
     "dev": "bun --watch src/index.ts",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:push": "drizzle-kit push"
   },
   "devDependencies": {
     "@types/bun": "latest",
-    "@types/node": "latest"
+    "@types/node": "latest",
+    "@types/pg": "^8.16.0",
+    "drizzle-kit": "^0.31.8"
   },
   "peerDependencies": {
     "typescript": "^5"
   },
   "dependencies": {
+    "drizzle-orm": "^0.45.1",
     "hono": "^4.11.5",
     "lingo.dev": "^0.125.0",
     "postgres": "^3.4.8"
