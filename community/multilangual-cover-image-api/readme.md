@@ -1,6 +1,7 @@
 # Cover Image API v2.0 🎨
 
 A production-ready API for generating beautiful, customizable cover images with multi-language support and advanced layout options.
+submission for community app/tool development!
 
 ## Features ✨
 
@@ -52,20 +53,20 @@ GET /api/cover
 
 ### Parameters
 
-| Parameter | Type | Required | Default | Description |
-|-----------|------|----------|---------|-------------|
-| `text` | string | ✅ Yes | - | Main text to display |
-| `subtitle` | string | ❌ No | - | Subtitle text |
-| `lang` | string | ❌ No | `en` | Language code (ISO 639-1) |
-| `theme` | string | ❌ No | `light` | `light` or `dark` |
-| `bgColor` | string | ❌ No | - | Background color (hex) |
-| `textColor` | string | ❌ No | - | Text color (hex) |
-| `width` | integer | ❌ No | `1200` | Width (200-4000) |
-| `height` | integer | ❌ No | `630` | Height (200-4000) |
-| `fontSize` | integer | ❌ No | auto | Font size (12-200) |
-| `fontWeight` | string | ❌ No | `600` | Font weight (300-900) |
-| `layout` | string | ❌ No | `center` | Layout type (see below) |
-| `padding` | integer | ❌ No | `60` | Padding (0-300) |
+| Parameter    | Type    | Required | Default  | Description               |
+| ------------ | ------- | -------- | -------- | ------------------------- |
+| `text`       | string  | ✅ Yes   | -        | Main text to display      |
+| `subtitle`   | string  | ❌ No    | -        | Subtitle text             |
+| `lang`       | string  | ❌ No    | `en`     | Language code (ISO 639-1) |
+| `theme`      | string  | ❌ No    | `light`  | `light` or `dark`         |
+| `bgColor`    | string  | ❌ No    | -        | Background color (hex)    |
+| `textColor`  | string  | ❌ No    | -        | Text color (hex)          |
+| `width`      | integer | ❌ No    | `1200`   | Width (200-4000)          |
+| `height`     | integer | ❌ No    | `630`    | Height (200-4000)         |
+| `fontSize`   | integer | ❌ No    | auto     | Font size (12-200)        |
+| `fontWeight` | string  | ❌ No    | `600`    | Font weight (300-900)     |
+| `layout`     | string  | ❌ No    | `center` | Layout type (see below)   |
+| `padding`    | integer | ❌ No    | `60`     | Padding (0-300)           |
 
 ### Available Layouts
 
@@ -143,18 +144,21 @@ GET /api/cover?text=Product%20Launch%202024&subtitle=Join%20us%20for%20the%20rev
 ## Other Endpoints 📍
 
 ### Documentation
+
 ```bash
 GET /api/docs
 # Returns full API documentation in JSON format
 ```
 
 ### Available Layouts
+
 ```bash
 GET /api/layouts
 # Returns list of all available layouts
 ```
 
 ### Health Check
+
 ```bash
 GET /health
 # Returns server status, cache size, and uptime
@@ -165,7 +169,10 @@ GET /health
 ### Open Graph Meta Tags
 
 ```html
-<meta property="og:image" content="https://your-api.com/api/cover?text=My%20Blog%20Post&theme=dark" />
+<meta
+  property="og:image"
+  content="https://your-api.com/api/cover?text=My%20Blog%20Post&theme=dark"
+/>
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 ```
@@ -174,7 +181,10 @@ GET /health
 
 ```html
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://your-api.com/api/cover?text=Check%20this%20out&layout=split" />
+<meta
+  name="twitter:image"
+  content="https://your-api.com/api/cover?text=Check%20this%20out&layout=split"
+/>
 ```
 
 ### Embedded Image
@@ -242,6 +252,7 @@ The API returns appropriate HTTP status codes:
 - `500` - Server error
 
 Example error response:
+
 ```json
 {
   "error": "Invalid parameters",
@@ -263,6 +274,7 @@ For production, consider implementing Redis-based rate limiting for better scala
 ## Best Practices 💡
 
 1. **URL Encoding**: Always encode text parameters
+
    ```javascript
    const text = encodeURIComponent("Hello, World!");
    const url = `/api/cover?text=${text}`;
@@ -271,6 +283,7 @@ For production, consider implementing Redis-based rate limiting for better scala
 2. **Caching**: Images are cached for 1 hour - identical requests return cached versions
 
 3. **Color Formats**: Use hex colors with # symbol (URL encode as `%23`)
+
    ```bash
    ?bgColor=%23000000&textColor=%23FFFFFF
    ```
@@ -286,11 +299,13 @@ For production, consider implementing Redis-based rate limiting for better scala
 
 ```javascript
 // Generate cover for each blog post
-app.get('/blog/:slug', async (req, res) => {
+app.get("/blog/:slug", async (req, res) => {
   const post = await getPost(req.params.slug);
-  const coverUrl = `https://api.example.com/api/cover?text=${encodeURIComponent(post.title)}&subtitle=${encodeURIComponent(post.category)}&layout=top-left&theme=dark`;
+  const coverUrl = `https://api.example.com/api/cover?text=${encodeURIComponent(
+    post.title,
+  )}&subtitle=${encodeURIComponent(post.category)}&layout=top-left&theme=dark`;
 
-  res.render('blog-post', { post, coverUrl });
+  res.render("blog-post", { post, coverUrl });
 });
 ```
 
@@ -306,7 +321,9 @@ const generateSocialCover = (text, platform) => {
   };
 
   const { width, height } = dimensions[platform];
-  return `/api/cover?text=${encodeURIComponent(text)}&width=${width}&height=${height}&theme=dark`;
+  return `/api/cover?text=${encodeURIComponent(
+    text,
+  )}&width=${width}&height=${height}&theme=dark`;
 };
 ```
 
@@ -315,7 +332,11 @@ const generateSocialCover = (text, platform) => {
 ```javascript
 // Generate product announcement covers
 const productCover = (product) => {
-  return `/api/cover?text=${encodeURIComponent(product.name)}&subtitle=${encodeURIComponent(`$${product.price}`)}&layout=split&bgColor=%23${product.brandColor}`;
+  return `/api/cover?text=${encodeURIComponent(
+    product.name,
+  )}&subtitle=${encodeURIComponent(
+    `$${product.price}`,
+  )}&layout=split&bgColor=%23${product.brandColor}`;
 };
 ```
 
@@ -337,15 +358,18 @@ curl http://localhost:3001/health
 ## Troubleshooting 🔧
 
 ### Translation not working
+
 - Verify `LINGODOTDEV_API_KEY` is set in `.env`
 - Check API key has sufficient quota
 - Falls back to original text on error
 
 ### Rate limit too restrictive
+
 - Modify `RATE_LIMIT_MAX` in the code
 - Implement Redis-based rate limiting for production
 
 ### Font rendering issues
+
 - System fonts are used by default
 - SVG fonts are limited - consider using web fonts in future versions
 
