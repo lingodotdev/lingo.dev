@@ -35,6 +35,7 @@ export default function Home() {
   const [budgets, setBudgets] = useState<IBudget[]>([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isBudgetDialogOpen, setIsBudgetDialogOpen] = useState(false);
+  const [isTransactionDialogOpen, setIsTransactionDialogOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [selectedMonth, setSelectedMonth] = useState((new Date().getMonth() + 1).toString());
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
@@ -241,7 +242,7 @@ export default function Home() {
                   <h2 className="text-xl font-semibold">
                     Transactions
                   </h2>
-                  <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                  <Dialog open={isTransactionDialogOpen} onOpenChange={setIsTransactionDialogOpen}>
                     <DialogTrigger asChild>
                       <Button>Add Transaction</Button>
                     </DialogTrigger>
@@ -252,7 +253,7 @@ export default function Home() {
                       <TransactionForm
                         onSuccess={() => {
                           fetchTransactions();
-                          setIsDialogOpen(false);
+                          setIsTransactionDialogOpen(false);
                         }}
                       />
                     </DialogContent>

@@ -6,7 +6,7 @@
     "bc9074e0190f": "Personal Finance Visualizer - Track expenses, set budgets, and visualize spending patterns",
     "6e15a14724e5": "Close",
     "8e51f83c3bae": "Total Expenses",
-    "9eb2defc9ced": "{expression0} transaction{expression1, plural, one {one} other {s}}",
+    "9eb2defc9ced": "{expression0} transaction{expression1, plural, one {} other {s}}",
     "35e20d46da1a": "This Month",
     "0dccfbf54c78": "Average Transaction",
     "0f7b0ce1f9b7": "Per transaction",

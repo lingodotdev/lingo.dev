@@ -85,6 +85,8 @@ export function BudgetForm({ onSuccess }: BudgetFormProps) {
   async function onSubmit(values: z.infer<typeof budgetSchema>) {
     setIsLoading(true);
     setError(null);
+    const preservedMonth = form.getValues('month');
+    const preservedYear = form.getValues('year');
 
     try {
       const res = await fetch('/api/budgets', {
@@ -98,6 +100,8 @@ export function BudgetForm({ onSuccess }: BudgetFormProps) {
       }
 
       form.reset();
+      form.setValue('month', preservedMonth);
+      form.setValue('year', preservedYear);
       onSuccess();
       fetchBudgets();
     } catch (err) {
