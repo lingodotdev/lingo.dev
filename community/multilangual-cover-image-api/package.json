@@ -1,0 +1,15 @@
+{
+    "name": "cover-image-api",
+    "version": "1.0.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "vercel dev"
+    },
+    "dependencies": {
+        "compression": "^1.8.1",
+        "dotenv": "^17.2.3",
+        "express": "^5.2.1",
+        "lingo.dev": "^0.125.1"
+    }
+}
