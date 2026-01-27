@@ -1,7 +1,7 @@
 # Cover Image API v2.0 🎨
 
 A production-ready API for generating beautiful, customizable cover images with multi-language support and advanced layout options.
-submission for community app/tool development
+submission for community app/tool development!
 
 ## Features ✨
 
