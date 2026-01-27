@@ -446,7 +446,8 @@ export default new Command()
                     sourceData,
                     processableData,
                     targetLocale,
-                    targetData,
+                    // When --force is used, exclude previous translations from reference to ensure fresh translations
+                    targetData: flags.force ? {} : targetData,
                   },
                   (progress, sourceChunk, processedChunk) => {
                     bucketOra.text = `[${sourceLocale} -> ${targetLocale}] [${
