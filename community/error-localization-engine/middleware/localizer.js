@@ -6,13 +6,25 @@
 function localizer(req, res, next) {
     // 1. Check query param ?lang=xx
     let lang = req.query.lang;
+    
+    // Normalize query param (handle arrays and objects)
+    if (Array.isArray(lang)) {
+        lang = lang[0];
+    }
+    if (typeof lang === 'string') {
+        lang = lang.trim();
+    }
+    if (!lang) {
+        lang = undefined;
+    }
 
     // 2. Check Accept-Language header
     if (!lang && req.headers['accept-language']) {
-        // Simple parse: take the first language code (e.g., 'en-US,en;q=0.9' -> 'en-US')
-        // And maybe just take the first 2 chars or the full code. 
-        // Lingo.dev likely supports standard BCP-47.
-        const acceptLang = req.headers['accept-language'].split(',')[0].trim();
+        // Parse Accept-Language: remove quality values (;q=0.9) and take first language
+        const acceptLang = req.headers['accept-language']
+            .split(',')[0]
+            .split(';')[0]
+            .trim();
         lang = acceptLang;
     }
 

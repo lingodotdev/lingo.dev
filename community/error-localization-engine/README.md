@@ -43,6 +43,9 @@ The API detects language preference via:
 1. `?lang=xx` query parameter (High priority)
 2. `Accept-Language` header (Low priority)
 
+> **Note:** If `LINGO_API_KEY` is not set, the demo uses mock localization and responses may be prefixed with `[xx]` (e.g., `[es]`, `[fr]`). Real translations are returned when `LINGO_API_KEY` is provided.
+
+
 ### 1. English (Default)
 **Request:**
 ```bash

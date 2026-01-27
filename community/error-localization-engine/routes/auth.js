@@ -71,9 +71,9 @@ router.post('/login', async (req, res) => {
     }
 
     const successMsg = await localizeError({ 
-        message: "Login successful.",
-        token: "fake-jwt-token-123456"
+        message: "Login successful."
     }, lang);
+    successMsg.token = "fake-jwt-token-123456";
 
     res.json(successMsg);
 });
