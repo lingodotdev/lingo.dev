@@ -1,4 +1,4 @@
-import { describe, expect, it, beforeEach, afterEach } from "vitest";
+import { describe, expect, it, beforeEach, afterEach, vi } from "vitest";
 import {
   parseModelString,
   getLocaleModel,
@@ -6,6 +6,10 @@ import {
   createAiModel,
   getKeyFromEnv,
 } from "./model-factory";
+
+vi.mock("dotenv", () => ({
+  config: vi.fn(() => ({ parsed: {} })),
+}));
 
 describe("model-factory", () => {
   describe("parseModelString", () => {

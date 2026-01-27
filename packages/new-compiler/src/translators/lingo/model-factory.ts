@@ -258,7 +258,7 @@ export function createAiModel(
   if (providerConfig.apiKeyEnvVar && !apiKey) {
     throw new Error(
       `⚠️  ${providerConfig.name} API key not found. Please set ${providerConfig.apiKeyEnvVar} environment variable.\n\n` +
-      `This should not happen if validateAndFetchApiKeys() was called. Please restart the service.`,
+      `This should not happen if validateAndGetApiKeys() was called. Please restart the service.`,
     );
   }
 
