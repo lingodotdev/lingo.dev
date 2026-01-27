@@ -40,6 +40,22 @@
       "difficulty": "कठिन"
     }
   },
+  "tags": {
+    "italian": "इतालवी",
+    "indian": "भारतीय",
+    "japanese": "जापानी",
+    "french": "फ्रेंच"
+  },
+  "categories": {
+    "international": "अंतर्राष्ट्रीय",
+    "healthy": "स्वस्थ",
+    "desserts": "डेसर्ट"
+  },
+  "footer_links": {
+    "privacy": "गोपनीयता",
+    "terms": "शर्तें",
+    "open_source": "ओपन सोर्स"
+  },
   "features": {
     "ai_localized": "AI द्वारा स्थानीयकृत",
     "realtime_translation": "वैश्विक खाद्य प्रेमियों के लिए वास्तविक समय अनुवाद।",

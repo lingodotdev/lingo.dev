@@ -47,6 +47,22 @@
     "ingredients": "Ingredientes",
     "instructions": "Instrucciones"
   },
+  "tags": {
+    "italian": "Italian",
+    "indian": "Indian",
+    "japanese": "Japanese",
+    "french": "French"
+  },
+  "categories": {
+    "international": "International",
+    "healthy": "Healthy",
+    "desserts": "Desserts"
+  },
+  "footer_links": {
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "open_source": "Open Source"
+  },
   "footer": {
     "rights": "© 2026 GourmetGlobe. Construido con Lingo.dev",
     "mission": "Uniendo culturas a través del lenguaje de la comida."
