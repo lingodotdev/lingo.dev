@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.125.3
+
+### Patch Changes
+
+- [#1898](https://github.com/lingodotdev/lingo.dev/pull/1898) [`c3481fb`](https://github.com/lingodotdev/lingo.dev/commit/c3481fb493430719767ee6f95b78635ae153e512) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Refactor HTML/Twig extraction to handle SVG content correctly using a strategy-based approach
+
 ## 0.125.2
 
 ### Patch Changes
