@@ -1,6 +1,6 @@
 import * as machineIdLib from "node-machine-id";
 import { getRc } from "./rc";
-import { getRepositoryId } from "./repository-id";
+import { getOrgId } from "./org-id";
 
 const TRACKING_VERSION = "2.0";
 
@@ -39,7 +39,7 @@ export default async function trackEvent(
         isByokMode: properties?.models !== "lingo.dev",
         tracking_version: TRACKING_VERSION,
         distinct_id_source: identityInfo.distinct_id_source,
-        project_id: identityInfo.project_id,
+        org_id: identityInfo.org_id,
         meta: {
           version: process.env.npm_package_version,
           isCi: process.env.CI === "true",
@@ -58,24 +58,24 @@ export default async function trackEvent(
 async function getDistinctId(): Promise<{
   distinct_id: string;
   distinct_id_source: string;
-  project_id: string | null;
+  org_id: string | null;
 }> {
+  const orgId = getOrgId();
   const email = await tryGetEmail();
+
   if (email) {
-    const projectId = getRepositoryId();
     return {
       distinct_id: email,
       distinct_id_source: "email",
-      project_id: projectId,
+      org_id: orgId,
     };
   }
 
-  const repoId = getRepositoryId();
-  if (repoId) {
+  if (orgId) {
     return {
-      distinct_id: repoId,
-      distinct_id_source: "git_repo",
-      project_id: repoId,
+      distinct_id: orgId,
+      distinct_id_source: "git_org",
+      org_id: orgId,
     };
   }
 
@@ -88,7 +88,7 @@ async function getDistinctId(): Promise<{
   return {
     distinct_id: deviceId,
     distinct_id_source: "device",
-    project_id: null,
+    org_id: null,
   };
 }
 
