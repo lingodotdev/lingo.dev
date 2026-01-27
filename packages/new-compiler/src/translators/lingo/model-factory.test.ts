@@ -15,6 +15,14 @@ describe("model-factory", () => {
     });
 
     it("should handle model names with colons", () => {
+      const result = parseModelString("openai:ft:gpt-4:my-org:custom:id");
+      expect(result).toEqual({
+        provider: "openai",
+        name: "ft:gpt-4:my-org:custom:id",
+      });
+    });
+
+    it("should handle simple model names with dashes", () => {
       const result = parseModelString("groq:llama3-8b-8192");
       expect(result).toEqual({ provider: "groq", name: "llama3-8b-8192" });
     });
@@ -36,7 +44,7 @@ describe("model-factory", () => {
       expect(result).toEqual({ provider: "openai", name: "gpt-4" });
     });
 
-    it("should fallback to wildcard patterns", () => {
+    it("should fallback to *:targetLocale wildcard pattern", () => {
       const config = {
         "*:fr": "openai:gpt-3.5-turbo",
         "*:*": "groq:llama3-8b-8192",
@@ -44,6 +52,16 @@ describe("model-factory", () => {
 
       const result = getLocaleModel(config, "en", "fr");
       expect(result).toEqual({ provider: "openai", name: "gpt-3.5-turbo" });
+    });
+
+    it("should fallback to sourceLocale:* wildcard pattern", () => {
+      const config = {
+        "en:*": "openai:gpt-4",
+        "*:*": "groq:llama3-8b-8192",
+      };
+
+      const result = getLocaleModel(config, "en", "de");
+      expect(result).toEqual({ provider: "openai", name: "gpt-4" });
     });
 
     it("should return undefined when no match found", () => {
@@ -109,39 +127,89 @@ describe("model-factory", () => {
         "lingo.dev": "test-lingo-key",
       });
     });
+
+    it("should throw error for unknown provider", () => {
+      const config = {
+        "*:*": "unknownprovider:model",
+      };
+
+      expect(() => validateAndGetApiKeys(config)).toThrow(
+        /Unknown provider "unknownprovider"/,
+      );
+    });
   });
 
   describe("createAiModel", () => {
-    it("should support OpenAI with custom baseURL from env", () => {
-      const originalEnv = process.env;
+    const originalEnv = process.env;
+
+    beforeEach(() => {
       process.env = { ...originalEnv };
+    });
+
+    afterEach(() => {
+      process.env = originalEnv;
+    });
+
+    it("should support OpenAI with custom baseURL from env", () => {
       process.env.OPENAI_BASE_URL = "https://api.studio.nebius.ai/v1/";
       process.env.OPENAI_API_KEY = "test-key";
 
       const model = { provider: "openai", name: "gpt-4" };
       const keys = { openai: "test-key" };
 
-      // This should not throw
       const result = createAiModel(model, keys);
       expect(result).toBeDefined();
-
-      process.env = originalEnv;
     });
 
     it("should create OpenAI model without baseURL when not set", () => {
-      const originalEnv = process.env;
-      process.env = { ...originalEnv };
       delete process.env.OPENAI_BASE_URL;
       process.env.OPENAI_API_KEY = "test-key";
 
       const model = { provider: "openai", name: "gpt-4" };
       const keys = { openai: "test-key" };
 
-      // This should not throw
       const result = createAiModel(model, keys);
       expect(result).toBeDefined();
+    });
 
-      process.env = originalEnv;
+    it("should create Groq model", () => {
+      const model = { provider: "groq", name: "llama3-8b-8192" };
+      const keys = { groq: "test-groq-key" };
+
+      const result = createAiModel(model, keys);
+      expect(result).toBeDefined();
+    });
+
+    it("should create Google model", () => {
+      const model = { provider: "google", name: "gemini-pro" };
+      const keys = { google: "test-google-key" };
+
+      const result = createAiModel(model, keys);
+      expect(result).toBeDefined();
+    });
+
+    it("should create OpenRouter model", () => {
+      const model = { provider: "openrouter", name: "anthropic/claude-3-opus" };
+      const keys = { openrouter: "test-openrouter-key" };
+
+      const result = createAiModel(model, keys);
+      expect(result).toBeDefined();
+    });
+
+    it("should create Ollama model without API key", () => {
+      const model = { provider: "ollama", name: "llama3" };
+      const keys = {};
+
+      const result = createAiModel(model, keys);
+      expect(result).toBeDefined();
+    });
+
+    it("should create Mistral model", () => {
+      const model = { provider: "mistral", name: "mistral-large-latest" };
+      const keys = { mistral: "test-mistral-key" };
+
+      const result = createAiModel(model, keys);
+      expect(result).toBeDefined();
     });
 
     it("should throw error for unsupported provider", () => {

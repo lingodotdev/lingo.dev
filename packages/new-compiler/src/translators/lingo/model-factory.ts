@@ -149,8 +149,14 @@ export function getLocaleModel(
  * @throws Error if format is invalid
  */
 export function parseModelString(modelString: string): LocaleModel | undefined {
-  // Split on first colon only
-  const [provider, name] = modelString.split(":", 2);
+  // Split on first colon only to allow colons in model names
+  const colonIndex = modelString.indexOf(":");
+  if (colonIndex === -1) {
+    return undefined;
+  }
+
+  const provider = modelString.substring(0, colonIndex);
+  const name = modelString.substring(colonIndex + 1);
 
   if (!provider || !name) {
     return undefined;
@@ -273,10 +279,7 @@ export function createAiModel(
         ...(baseURL && { baseURL }),
       });
 
-      if (baseURL) {
-        return provider.chat(model.name);
-      }
-      return provider(model.name);
+      return provider.chat(model.name);
     }
 
     case "openrouter":
