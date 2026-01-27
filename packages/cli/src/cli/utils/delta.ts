@@ -4,6 +4,7 @@ import { md5 } from "./md5";
 import { tryReadFile, writeFile, checkIfFileExists } from "../utils/fs";
 import * as path from "path";
 import YAML from "yaml";
+import { deduplicateLockfileYaml } from "./lockfile";
 
 const LockSchema = z.object({
   version: z.literal(1).prefault(1),
@@ -91,14 +92,28 @@ export function createDeltaProcessor(fileKey: string) {
     },
     async loadLock() {
       const lockfileContent = tryReadFile(lockfilePath, null);
-      const lockfileYaml = lockfileContent ? YAML.parse(lockfileContent) : null;
-      const lockfileData: z.infer<typeof LockSchema> = lockfileYaml
-        ? LockSchema.parse(lockfileYaml)
-        : {
-            version: 1,
-            checksums: {},
-          };
-      return lockfileData;
+
+      if (!lockfileContent) {
+        return {
+          version: 1,
+          checksums: {},
+        } as const;
+      }
+
+      // Deduplicate using the universal function
+      const { deduplicatedContent, duplicatesRemoved } = deduplicateLockfileYaml(lockfileContent);
+
+      // Write back to disk if duplicates were found
+      if (duplicatesRemoved > 0) {
+        writeFile(lockfilePath, deduplicatedContent);
+        console.log(
+          `Removed ${duplicatesRemoved} duplicate ${duplicatesRemoved === 1 ? "entry" : "entries"} from i18n.lock`,
+        );
+      }
+
+      // Parse to validated JavaScript object
+      const parsed = LockSchema.parse(YAML.parse(deduplicatedContent));
+      return parsed;
     },
     async saveLock(lockData: LockData) {
       const lockfileYaml = YAML.stringify(lockData);
@@ -107,12 +122,14 @@ export function createDeltaProcessor(fileKey: string) {
     async loadChecksums() {
       const id = md5(fileKey);
       const lockfileData = await this.loadLock();
-      return lockfileData.checksums[id] || {};
+      const checksums = lockfileData.checksums as Record<string, Record<string, string>>;
+      return checksums[id] || {};
     },
     async saveChecksums(checksums: Record<string, string>) {
       const id = md5(fileKey);
       const lockfileData = await this.loadLock();
-      lockfileData.checksums[id] = checksums;
+      const lockChecksums = lockfileData.checksums as Record<string, Record<string, string>>;
+      lockChecksums[id] = checksums;
       await this.saveLock(lockfileData);
     },
     async createChecksums(sourceData: Record<string, any>) {
