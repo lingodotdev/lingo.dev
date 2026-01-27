@@ -31,4 +31,4 @@ To ensure GourmetGlobe stands out as a premium, functional, and fully-localized 
 
 The platform is now ready for the final PR review. All files are clean, localized, and the UI is designed to WOW.
 
-**Built with ❤️ and Lingo.dev**
+## Built with ❤️ and Lingo.dev

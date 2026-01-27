@@ -40,6 +40,22 @@
       "difficulty": "صعب"
     }
   },
+  "tags": {
+    "italian": "إيطالي",
+    "indian": "هندي",
+    "japanese": "ياباني",
+    "french": "فرنسي"
+  },
+  "categories": {
+    "international": "عالمي",
+    "healthy": "صحي",
+    "desserts": "حلويات"
+  },
+  "footer_links": {
+    "privacy": "الخصوصية",
+    "terms": "الشروط",
+    "open_source": "مفتوح المصدر"
+  },
   "features": {
     "ai_localized": "مترجم بواسطة الذاء الاصطناعي",
     "realtime_translation": "ترجمة فورية لمحبي الطعام حول العالم.",
