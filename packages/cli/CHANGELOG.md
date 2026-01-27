@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.125.2
+
+### Patch Changes
+
+- [#1873](https://github.com/lingodotdev/lingo.dev/pull/1873) [`8c4f736`](https://github.com/lingodotdev/lingo.dev/commit/8c4f7366d86f91edb841cc51f5bf0a32db64a876) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Refactor lockfile deduplication logic to use a single universal function instead of three duplicate implementations. This improves code maintainability and ensures consistent behavior across all lockfile operations. The deduplication automatically handles Git merge conflicts in i18n.lock files.
+
 ## 0.125.1
 
 ### Patch Changes
