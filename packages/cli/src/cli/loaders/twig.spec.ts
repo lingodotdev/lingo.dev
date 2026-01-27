@@ -23,7 +23,9 @@ describe("twig loader", () => {
     loader.setDefaultLocale("en");
     const input = `<p>Text with <strong>emphasis</strong> and <span>spans</span></p>`;
     const result = await loader.pull("en", input);
-    expect(result["0"]).toBe("Text with <strong>emphasis</strong> and <span>spans</span>");
+    expect(result["0"]).toBe(
+      "Text with <strong>emphasis</strong> and <span>spans</span>",
+    );
   });
 
   test("should preserve Twig control blocks", async () => {
@@ -202,11 +204,15 @@ describe("twig loader", () => {
 
     expect(result["0/0"]).toBe("{{ up['name'] }}");
     expect(result["0/1"]).toBe("View changelog");
-    expect(result["0/2"]).toBe("SHA256 Checksum: <span>{{ value.checksum }}</span>");
+    expect(result["0/2"]).toBe(
+      "SHA256 Checksum: <span>{{ value.checksum }}</span>",
+    );
     expect(result["0/3#aria-label"]).toBe("Copy checksum");
     expect(result["0/3#title"]).toBe("Copy checksum");
     expect(result["0/3/0#alt"]).toBe("copy");
-    expect(result["0/4"]).toBe("BETA Version. Do not use in production environments");
+    expect(result["0/4"]).toBe(
+      "BETA Version. Do not use in production environments",
+    );
   });
 
   test("should push translations back to template", async () => {
@@ -253,12 +259,12 @@ describe("twig loader", () => {
 
     const translated = {
       "0": "Copiar",
-      "0#title": "Copiar"
+      "0#title": "Copiar",
     };
     const output = await loader.push("es", translated);
 
     expect(output).toContain('title="Copiar"');
-    expect(output).toContain('>Copiar</button>');
+    expect(output).toContain(">Copiar</button>");
   });
 
   test("should push translations preserving Twig blocks", async () => {
@@ -269,7 +275,7 @@ describe("twig loader", () => {
 
     const translated = {
       "0": "Hola {{ name }}",
-      "1": "Más"
+      "1": "Más",
     };
     const output = await loader.push("es", translated);
 
@@ -288,7 +294,7 @@ describe("twig loader", () => {
 
     const translated = {
       "head/0": "Prueba",
-      "body/0": "Contenido"
+      "body/0": "Contenido",
     };
     const output = await loader.push("es", translated);
 
@@ -313,7 +319,7 @@ describe("twig loader", () => {
       "0/1": "Primer párrafo",
       "0/2": "Segundo párrafo",
       "0/3": "Enviar",
-      "0/3#title": "Haz clic aquí"
+      "0/3#title": "Haz clic aquí",
     };
     const output = await loader.push("es", translated);
 
@@ -343,7 +349,9 @@ describe("twig loader", () => {
   {% endif %}
 </div>`;
     const result = await loader.pull("en", input);
-    expect(result["0/0"]).toBe("Show this <strong>text</strong> with {{ variable }}");
+    expect(result["0/0"]).toBe(
+      "Show this <strong>text</strong> with {{ variable }}",
+    );
     expect(result["0/1"]).toBe("Show that");
   });
 
@@ -407,7 +415,9 @@ describe("twig loader", () => {
     loader.setDefaultLocale("en");
     const input = `<p>The <abbr title="World Wide Web">WWW</abbr> is great</p>`;
     const result = await loader.pull("en", input);
-    expect(result["0"]).toBe("The <abbr title=\"World Wide Web\">WWW</abbr> is great");
+    expect(result["0"]).toBe(
+      'The <abbr title="World Wide Web">WWW</abbr> is great',
+    );
     expect(result["0/0#title"]).toBeUndefined(); // abbr is inline, title extracted from leaf block
   });
 
@@ -426,5 +436,190 @@ describe("twig loader", () => {
     const input = `<p>Text   with   spaces</p>`;
     const result = await loader.pull("en", input);
     expect(result["0"]).toBe("Text   with   spaces");
+  });
+
+  describe("SVG extraction", () => {
+    test("should extract SVG <title> element", async () => {
+      const loader = createTwigLoader();
+      loader.setDefaultLocale("en");
+      const input = `<svg><title>Chart Title</title></svg>`;
+      const result = await loader.pull("en", input);
+      expect(result["0/0"]).toBe("Chart Title");
+    });
+
+    test("should extract SVG <text> element", async () => {
+      const loader = createTwigLoader();
+      loader.setDefaultLocale("en");
+      const input = `<svg><text>Label Text</text></svg>`;
+      const result = await loader.pull("en", input);
+      expect(result["0/0"]).toBe("Label Text");
+    });
+
+    test("should extract SVG <desc> element", async () => {
+      const loader = createTwigLoader();
+      loader.setDefaultLocale("en");
+      const input = `<svg><desc>Chart Description</desc></svg>`;
+      const result = await loader.pull("en", input);
+      expect(result["0/0"]).toBe("Chart Description");
+    });
+
+    test("should skip non-translatable SVG elements", async () => {
+      const loader = createTwigLoader();
+      loader.setDefaultLocale("en");
+      const input = `<svg><rect x="0" y="0" width="100" height="100"/><circle cx="50" cy="50" r="40"/></svg>`;
+      const result = await loader.pull("en", input);
+      expect(Object.keys(result).length).toBe(0);
+    });
+
+    test("should extract only translatable elements from mixed SVG", async () => {
+      const loader = createTwigLoader();
+      loader.setDefaultLocale("en");
+      const input = `<svg><title>Chart</title><rect/><text>Label</text><circle/><desc>Info</desc></svg>`;
+      const result = await loader.pull("en", input);
+      // Non-translatable elements (rect, circle) still occupy child indices but don't extract content
+      expect(result["0/0"]).toBe("Chart");
+      expect(result["0/2"]).toBe("Label");
+      expect(result["0/4"]).toBe("Info");
+      expect(Object.keys(result).length).toBe(3);
+    });
+
+    test("should handle SVG with Twig variables", async () => {
+      const loader = createTwigLoader();
+      loader.setDefaultLocale("en");
+      const input = `<svg><title>{{ chart.title }}</title><text>{{ chart.label }}</text></svg>`;
+      const result = await loader.pull("en", input);
+      expect(result["0/0"]).toBe("{{ chart.title }}");
+      expect(result["0/1"]).toBe("{{ chart.label }}");
+    });
+
+    test("should handle nested SVG groups", async () => {
+      const loader = createTwigLoader();
+      loader.setDefaultLocale("en");
+      const input = `<svg><g><g><text>Nested Label</text></g></g></svg>`;
+      const result = await loader.pull("en", input);
+      expect(result["0/0/0/0"]).toBe("Nested Label");
+    });
+
+    test("should handle SVG inside regular HTML", async () => {
+      const loader = createTwigLoader();
+      loader.setDefaultLocale("en");
+      const input = `<div><p>Before</p><svg><title>Chart</title></svg><p>After</p></div>`;
+      const result = await loader.pull("en", input);
+      expect(result["0/0"]).toBe("Before");
+      expect(result["0/1/0"]).toBe("Chart");
+      expect(result["0/2"]).toBe("After");
+    });
+
+    test("should handle SVG inside block elements", async () => {
+      const loader = createTwigLoader();
+      loader.setDefaultLocale("en");
+      const input = `<div><svg><rect/><text>Hello <tspan>World</tspan></text></svg></div>`;
+      const result = await loader.pull("en", input);
+      expect(result["0/0/1"]).toBe("Hello <tspan>World</tspan>");
+      expect(result["0"]).toBeUndefined();
+    });
+
+    test("should handle SVG inside phrasing elements", async () => {
+      const loader = createTwigLoader();
+      loader.setDefaultLocale("en");
+      const input = `<button><svg><title>Download icon</title><path d="M0,0"/></svg> Download</button>`;
+      const result = await loader.pull("en", input);
+      expect(result["0/0/0"]).toBe("Download icon");
+    });
+
+    test("should handle SVG with Twig control blocks", async () => {
+      const loader = createTwigLoader();
+      loader.setDefaultLocale("en");
+      const input = `{% if showChart %}<svg><title>Sales Chart</title></svg>{% endif %}`;
+      const result = await loader.pull("en", input);
+      expect(result["0/0"]).toBe("Sales Chart");
+    });
+
+    test("should distinguish between HTML title and SVG title", async () => {
+      const loader = createTwigLoader();
+      loader.setDefaultLocale("en");
+      const input = `
+        <!DOCTYPE html>
+        <html>
+          <head><title>Page Title</title></head>
+          <body>
+            <svg><title>SVG Title</title></svg>
+          </body>
+        </html>
+      `;
+      const result = await loader.pull("en", input);
+      expect(result["head/0"]).toBe("Page Title");
+      expect(result["body/0/0"]).toBe("SVG Title");
+    });
+
+    test("should handle SVG with Twig loops", async () => {
+      const loader = createTwigLoader();
+      loader.setDefaultLocale("en");
+      const input = `<svg>{% for item in items %}<text>{{ item.label }}</text>{% endfor %}</svg>`;
+      const result = await loader.pull("en", input);
+      expect(result["0/0"]).toBe("{{ item.label }}");
+    });
+
+    test("should handle complex SVG with Twig and mixed elements", async () => {
+      const loader = createTwigLoader();
+      loader.setDefaultLocale("en");
+      const input = `
+        <svg viewBox="0 0 100 100">
+          <title>{{ chartTitle }}</title>
+          <desc>A chart showing {{ dataType }}</desc>
+          {% for bar in bars %}
+          <g>
+            <rect x="{{ bar.x }}" y="{{ bar.y }}" width="20" height="{{ bar.height }}"/>
+            <text x="{{ bar.x }}" y="95">{{ bar.label }}</text>
+          </g>
+          {% endfor %}
+        </svg>
+      `;
+      const result = await loader.pull("en", input);
+      expect(result["0/0"]).toBe("{{ chartTitle }}");
+      expect(result["0/1"]).toBe("A chart showing {{ dataType }}");
+      expect(result["0/2/1"]).toBe("{{ bar.label }}");
+    });
+
+    test("should reconstruct SVG with translated content", async () => {
+      const loader = createTwigLoader();
+      loader.setDefaultLocale("en");
+      const originalInput = `<svg><title>Chart</title><text>Label</text></svg>`;
+      await loader.pull("en", originalInput);
+
+      const translated = {
+        "0/0": "Gráfico",
+        "0/1": "Etiqueta",
+      };
+      const output = await loader.push("es", translated);
+
+      expect(output).toContain("<title>Gráfico</title>");
+      expect(output).toContain("<text>Etiqueta</text>");
+    });
+
+    test("should reconstruct SVG with Twig variables preserved", async () => {
+      const loader = createTwigLoader();
+      loader.setDefaultLocale("en");
+      const originalInput = `<svg><title>Chart: {{ name }}</title></svg>`;
+      await loader.pull("en", originalInput);
+
+      const translated = { "0/0": "Gráfico: {{ name }}" };
+      const output = await loader.push("es", translated);
+
+      expect(output).toContain("<title>Gráfico: {{ name }}</title>");
+    });
+
+    test("should preserve non-translatable SVG elements during push", async () => {
+      const loader = createTwigLoader();
+      loader.setDefaultLocale("en");
+      const originalInput = `<svg><title>Chart</title><rect x="0" y="0"/></svg>`;
+      await loader.pull("en", originalInput);
+
+      const translated = { "0/0": "Gráfico" };
+      const output = await loader.push("es", translated);
+
+      expect(output).toContain("<title>Gráfico</title>");
+      expect(output).toContain('<rect x="0" y="0"');
+    });
   });
 });

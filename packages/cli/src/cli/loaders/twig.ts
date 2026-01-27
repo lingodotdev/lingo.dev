@@ -1,135 +1,32 @@
 import * as htmlparser2 from "htmlparser2";
-import { DomHandler, Element, AnyNode, Text } from "domhandler";
+import { DomHandler, Element } from "domhandler";
 import * as domutils from "domutils";
 import * as DomSerializer from "dom-serializer";
 import { ILoader } from "./_types";
 import { createLoader } from "./_utils";
+import {
+  createElementExtractor,
+  BASE_LOCALIZABLE_ATTRIBUTES,
+} from "../utils/element-extraction";
 
 export default function createTwigLoader(): ILoader<
   string,
   Record<string, string>
 > {
-
-  // Based on WHATWG HTML spec: https://html.spec.whatwg.org/multipage/indices.html
-  // Phrasing content = inline elements that should be preserved within text
-  const PHRASING_ELEMENTS = new Set([
-    // Text-level semantics
-    "a",
-    "abbr",
-    "b",
-    "bdi",
-    "bdo",
-    "br",
-    "cite",
-    "code",
-    "data",
-    "dfn",
-    "em",
-    "i",
-    "kbd",
-    "mark",
-    "q",
-    "ruby",
-    "s",
-    "samp",
-    "small",
-    "span",
-    "strong",
-    "sub",
-    "sup",
-    "time",
-    "u",
-    "var",
-    "wbr",
-    // Media
-    "audio",
-    "img",
-    "video",
-    "picture",
-    // Interactive
-    "button",
-    "input",
-    "label",
-    "select",
-    "textarea",
-    // Embedded
-    "canvas",
-    "iframe",
-    "object",
-    "svg",
-    "math",
-    // Other
-    "del",
-    "ins",
-    "map",
-    "area",
-  ]);
-
-  // Block elements create translation boundaries
-  const BLOCK_ELEMENTS = new Set([
-    "div",
-    "p",
-    "h1",
-    "h2",
-    "h3",
-    "h4",
-    "h5",
-    "h6",
-    "ul",
-    "ol",
-    "li",
-    "dl",
-    "dt",
-    "dd",
-    "blockquote",
-    "pre",
-    "article",
-    "aside",
-    "nav",
-    "section",
-    "header",
-    "footer",
-    "main",
-    "figure",
-    "figcaption",
-    "table",
-    "thead",
-    "tbody",
-    "tfoot",
-    "tr",
-    "td",
-    "th",
-    "caption",
-    "form",
-    "fieldset",
-    "legend",
-    "details",
-    "summary",
-    "address",
-    "hr",
-    "search",
-    "dialog",
-    "noscript",
-    "title",
-  ]);
-
-  // Tags whose content should never be translated
-  const UNLOCALIZABLE_TAGS = new Set(["script", "style"]);
-
-  // Attributes that should be translated separately
+  // Extend base attributes with aria-label for Twig templates
   const LOCALIZABLE_ATTRIBUTES: Record<string, string[]> = {
-    meta: ["content"],
-    img: ["alt", "title"],
+    ...BASE_LOCALIZABLE_ATTRIBUTES,
     input: ["placeholder", "title", "aria-label"],
     textarea: ["placeholder", "title", "aria-label"],
     button: ["title", "aria-label"],
     a: ["title", "aria-label"],
-    abbr: ["title"],
-    link: ["title"],
   };
 
   // Preprocess Twig: Replace Twig control blocks with placeholders
-  function preprocessTwig(input: string): { processed: string; twigBlocks: string[] } {
+  function preprocessTwig(input: string): {
+    processed: string;
+    twigBlocks: string[];
+  } {
     const twigBlocks: string[] = [];
     let counter = 0;
 
@@ -146,7 +43,7 @@ export default function createTwigLoader(): ILoader<
         twigBlocks.push(match);
         return `__TWIG_BLOCK_${counter++}__`;
       }),
-      twigBlocks
+      twigBlocks,
     };
   }
 
@@ -175,49 +72,19 @@ export default function createTwigLoader(): ILoader<
 
       const dom = handler.dom;
 
-      // Check if element is inside an unlocalizable tag
-      function isInsideUnlocalizableTag(element: Element): boolean {
-        let current = element.parent;
-        while (current && current.type === "tag") {
-          if (UNLOCALIZABLE_TAGS.has((current as Element).name.toLowerCase())) {
-            return true;
-          }
-          current = current.parent;
-        }
-        return false;
-      }
-
-      // Check if element contains any translatable text (not just whitespace)
-      function hasTranslatableContent(element: Element): boolean {
-        const text = domutils.textContent(element);
-        return text.trim().length > 0;
-      }
-
-      // Check if element is a "leaf" block (contains text with inline elements, not nested blocks)
-      function isLeafBlock(element: Element): boolean {
-        // A leaf block contains text and/or phrasing elements, but no other block elements
-        const childElements = element.children.filter(
-          (child): child is Element => child.type === "tag"
-        );
-        for (const child of childElements) {
-          if (BLOCK_ELEMENTS.has(child.name.toLowerCase())) {
-            return false;
-          }
-        }
-        return hasTranslatableContent(element);
-      }
-
-      // Get innerHTML equivalent (serialize children)
+      // Get innerHTML equivalent (serialize children) - with Twig restoration
       function getInnerHTML(element: Element): string {
         const html = element.children
-          .map(child => DomSerializer.default(child, { encodeEntities: false }))
-          .join('');
+          .map((child) =>
+            DomSerializer.default(child, { encodeEntities: false }),
+          )
+          .join("");
 
         // Restore Twig blocks in the innerHTML
         return postprocessTwig(html, twigBlocks);
       }
 
-      // Extract localizable attributes from element
+      // Extract localizable attributes from element - with Twig restoration
       function extractAttributes(element: Element, path: string): void {
         const tagName = element.name.toLowerCase();
         const attrs = LOCALIZABLE_ATTRIBUTES[tagName];
@@ -234,78 +101,36 @@ export default function createTwigLoader(): ILoader<
       }
 
       // Recursively extract translation units from element tree
-      function extractFromElement(
-        element: Element,
-        pathParts: (string | number)[],
-      ): void {
-        const path = pathParts.join("/");
-
-        // Skip if inside unlocalizable tag
-        if (isInsideUnlocalizableTag(element)) {
-          return;
-        }
-
-        // Extract localizable attributes
-        extractAttributes(element, path);
-
-        const tagName = element.name.toLowerCase();
-
-        // If this is a leaf block element (contains text but no nested blocks), extract it
-        if (BLOCK_ELEMENTS.has(tagName) && isLeafBlock(element)) {
-          // Get innerHTML (preserves inline elements + Twig syntax)
-          const content = getInnerHTML(element).trim();
-          if (content) {
-            result[path] = content;
-          }
-          // Don't recurse into children - innerHTML captures everything
-          return;
-        }
-
-        // If this is a standalone phrasing element with text content, extract it
-        if (PHRASING_ELEMENTS.has(tagName) && hasTranslatableContent(element)) {
-          const content = getInnerHTML(element).trim();
-          if (content) {
-            result[path] = content;
-          }
-          // Don't recurse - innerHTML captures everything
-          return;
-        }
-
-        // For structural/container elements, recurse into children
-        let childIndex = 0;
-        const childElements = element.children.filter(
-          (child): child is Element => child.type === "tag"
-        );
-        for (const child of childElements) {
-          extractFromElement(child, [...pathParts, childIndex++]);
-        }
-      }
+      const extractFromElement = createElementExtractor(
+        { getInnerHTML, extractAttributes },
+        result,
+      );
 
       // Find head and body elements
       const html = domutils.findOne(
         (elem) => elem.type === "tag" && elem.name.toLowerCase() === "html",
         dom,
-        true
+        true,
       ) as Element | null;
 
       if (html) {
         const head = domutils.findOne(
           (elem) => elem.type === "tag" && elem.name.toLowerCase() === "head",
           html.children,
-          true
+          true,
         ) as Element | null;
 
         const body = domutils.findOne(
           (elem) => elem.type === "tag" && elem.name.toLowerCase() === "body",
           html.children,
-          true
+          true,
         ) as Element | null;
 
         // Process head children
         if (head) {
           let headIndex = 0;
           const headChildren = head.children.filter(
-            (child): child is Element => child.type === "tag"
+            (child): child is Element => child.type === "tag",
           );
           for (const child of headChildren) {
             extractFromElement(child, ["head", headIndex++]);
@@ -316,7 +141,7 @@ export default function createTwigLoader(): ILoader<
         if (body) {
           let bodyIndex = 0;
           const bodyChildren = body.children.filter(
-            (child): child is Element => child.type === "tag"
+            (child): child is Element => child.type === "tag",
           );
           for (const child of bodyChildren) {
             extractFromElement(child, ["body", bodyIndex++]);
@@ -326,7 +151,7 @@ export default function createTwigLoader(): ILoader<
         // Handle HTML fragments (no <html> element) - process root elements directly
         let rootIndex = 0;
         const rootElements = dom.filter(
-          (child): child is Element => child.type === "tag"
+          (child): child is Element => child.type === "tag",
         );
         for (const child of rootElements) {
           extractFromElement(child, [rootIndex++]);
@@ -346,7 +171,9 @@ export default function createTwigLoader(): ILoader<
         lowerCaseTags: false,
         lowerCaseAttributeNames: false,
       });
-      parser.write(processed || "<!DOCTYPE html><html><head></head><body></body></html>");
+      parser.write(
+        processed || "<!DOCTYPE html><html><head></head><body></body></html>",
+      );
       parser.end();
 
       const dom = handler.dom;
@@ -355,7 +182,7 @@ export default function createTwigLoader(): ILoader<
       const html = domutils.findOne(
         (elem) => elem.type === "tag" && elem.name.toLowerCase() === "html",
         dom,
-        true
+        true,
       ) as Element | null;
 
       if (html) {
@@ -366,7 +193,7 @@ export default function createTwigLoader(): ILoader<
       // Helper to traverse child elements by numeric indices
       function traverseByIndices(
         element: Element | null,
-        indices: string[]
+        indices: string[],
       ): Element | null {
         let current = element;
 
@@ -375,7 +202,7 @@ export default function createTwigLoader(): ILoader<
 
           const index = parseInt(indexStr, 10);
           const children: Element[] = current.children.filter(
-            (child): child is Element => child.type === "tag"
+            (child): child is Element => child.type === "tag",
           );
 
           if (index >= children.length) {
@@ -400,15 +227,17 @@ export default function createTwigLoader(): ILoader<
           // Find head or body
           if (rootTag === "head") {
             current = domutils.findOne(
-              (elem) => elem.type === "tag" && elem.name.toLowerCase() === "head",
+              (elem) =>
+                elem.type === "tag" && elem.name.toLowerCase() === "head",
               html.children,
-              true
+              true,
             ) as Element | null;
           } else if (rootTag === "body") {
             current = domutils.findOne(
-              (elem) => elem.type === "tag" && elem.name.toLowerCase() === "body",
+              (elem) =>
+                elem.type === "tag" && elem.name.toLowerCase() === "body",
               html.children,
-              true
+              true,
             ) as Element | null;
           }
 
@@ -420,7 +249,7 @@ export default function createTwigLoader(): ILoader<
           // HTML fragment - no <html> element
           // Path is just numeric indices from root
           const rootElements = dom.filter(
-            (child): child is Element => child.type === "tag"
+            (child): child is Element => child.type === "tag",
           );
 
           // First part is the root index
@@ -455,7 +284,8 @@ export default function createTwigLoader(): ILoader<
           // Value may contain Twig syntax ({{ }}) which we need to preserve
           if (value) {
             // Preprocess the translated value to handle any Twig blocks
-            const { processed: processedValue, twigBlocks: valueTwigBlocks } = preprocessTwig(value);
+            const { processed: processedValue, twigBlocks: valueTwigBlocks } =
+              preprocessTwig(value);
 
             const valueHandler = new DomHandler();
             const valueParser = new htmlparser2.Parser(valueHandler);
@@ -478,7 +308,9 @@ export default function createTwigLoader(): ILoader<
       }
 
       // Serialize back to HTML and restore Twig blocks
-      const serialized = DomSerializer.default(dom, { encodeEntities: false });
+      const serialized = DomSerializer.default(dom, {
+        encodeEntities: false,
+      });
       return postprocessTwig(serialized, twigBlocks);
     },
   });
