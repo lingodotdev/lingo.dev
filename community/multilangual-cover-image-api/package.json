@@ -4,7 +4,8 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "dev": "vercel dev"
+        "dev": "node api/index.js",
+        "start": "node index.js"
     },
     "dependencies": {
         "compression": "^1.8.1",

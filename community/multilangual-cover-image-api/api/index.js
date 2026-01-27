@@ -1,12 +1,12 @@
-import express from 'express';
-import { LingoDotDevEngine } from 'lingo.dev/sdk';
-import cors from 'cors';
-import compression from 'compression';
-import 'dotenv/config';
+import express from "express";
+import { LingoDotDevEngine } from "lingo.dev/sdk";
+import cors from "cors";
+import compression from "compression";
+import "dotenv/config";
 
 const app = express();
 const PORT = process.env.PORT || 3001;
-const NODE_ENV = process.env.NODE_ENV || 'development';
+const NODE_ENV = process.env.NODE_ENV || "development";
 
 // Middleware
 app.use(cors());
@@ -35,7 +35,9 @@ function checkRateLimit(ip) {
   const userRequests = requestCounts.get(ip) || [];
 
   // Filter out old requests
-  const recentRequests = userRequests.filter(time => now - time < RATE_LIMIT_WINDOW);
+  const recentRequests = userRequests.filter(
+    (time) => now - time < RATE_LIMIT_WINDOW,
+  );
 
   if (recentRequests.length >= RATE_LIMIT_MAX) {
     return false;
@@ -70,11 +72,11 @@ function addToCache(key, value) {
  */
 function escapeXml(text) {
   return text
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&apos;');
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;");
 }
 
 /**
@@ -110,9 +112,9 @@ async function translateText(text, targetLang = "en") {
  * Wraps text into multiple lines based on max width
  */
 function wrapText(text, maxCharsPerLine = 40) {
-  const words = text.split(' ');
+  const words = text.split(" ");
   const lines = [];
-  let currentLine = '';
+  let currentLine = "";
 
   for (const word of words) {
     const testLine = currentLine ? `${currentLine} ${word}` : word;
@@ -148,13 +150,13 @@ function generateTextElements(config) {
 
   const lines = wrapText(text, Math.floor(maxWidth / (fontSize * 0.6)));
   const totalHeight = lines.length * fontSize * lineHeight;
-  const startY = y - (totalHeight / 2) + fontSize / 2;
+  const startY = y - totalHeight / 2 + fontSize / 2;
 
-  let svgText = '';
+  let svgText = "";
 
   // Main text lines
   lines.forEach((line, index) => {
-    const lineY = startY + (index * fontSize * lineHeight);
+    const lineY = startY + index * fontSize * lineHeight;
     svgText += `
   <text
     x="${x}"
@@ -169,7 +171,8 @@ function generateTextElements(config) {
 
   // Subtitle
   if (subtitle) {
-    const subtitleY = startY + (lines.length * fontSize * lineHeight) + fontSize * 0.8;
+    const subtitleY =
+      startY + lines.length * fontSize * lineHeight + fontSize * 0.8;
     const subtitleFontSize = fontSize * 0.5;
     svgText += `
   <text
@@ -195,7 +198,7 @@ const LAYOUTS = {
     getPosition: (width, height) => ({
       x: width / 2,
       y: height / 2,
-      textAnchor: 'middle',
+      textAnchor: "middle",
       maxWidth: width * 0.8,
     }),
   },
@@ -203,7 +206,7 @@ const LAYOUTS = {
     getPosition: (width, height, padding) => ({
       x: width / 2,
       y: padding + 100,
-      textAnchor: 'middle',
+      textAnchor: "middle",
       maxWidth: width * 0.8,
     }),
   },
@@ -211,7 +214,7 @@ const LAYOUTS = {
     getPosition: (width, height, padding) => ({
       x: width / 2,
       y: height - padding - 100,
-      textAnchor: 'middle',
+      textAnchor: "middle",
       maxWidth: width * 0.8,
     }),
   },
@@ -219,7 +222,7 @@ const LAYOUTS = {
     getPosition: (width, height, padding) => ({
       x: padding + 80,
       y: height / 2,
-      textAnchor: 'start',
+      textAnchor: "start",
       maxWidth: width * 0.6,
     }),
   },
@@ -227,39 +230,39 @@ const LAYOUTS = {
     getPosition: (width, height, padding) => ({
       x: width - padding - 80,
       y: height / 2,
-      textAnchor: 'end',
+      textAnchor: "end",
       maxWidth: width * 0.6,
     }),
   },
-  'top-left': {
+  "top-left": {
     getPosition: (width, height, padding) => ({
       x: padding + 80,
       y: padding + 100,
-      textAnchor: 'start',
+      textAnchor: "start",
       maxWidth: width * 0.6,
     }),
   },
-  'top-right': {
+  "top-right": {
     getPosition: (width, height, padding) => ({
       x: width - padding - 80,
       y: padding + 100,
-      textAnchor: 'end',
+      textAnchor: "end",
       maxWidth: width * 0.6,
     }),
   },
-  'bottom-left': {
+  "bottom-left": {
     getPosition: (width, height, padding) => ({
       x: padding + 80,
       y: height - padding - 100,
-      textAnchor: 'start',
+      textAnchor: "start",
       maxWidth: width * 0.6,
     }),
   },
-  'bottom-right': {
+  "bottom-right": {
     getPosition: (width, height, padding) => ({
       x: width - padding - 80,
       y: height - padding - 100,
-      textAnchor: 'end',
+      textAnchor: "end",
       maxWidth: width * 0.6,
     }),
   },
@@ -267,7 +270,7 @@ const LAYOUTS = {
     getPosition: (width, height) => ({
       x: width / 2,
       y: height / 2,
-      textAnchor: 'middle',
+      textAnchor: "middle",
       maxWidth: width * 0.45,
       withDivider: true,
     }),
@@ -280,14 +283,14 @@ const LAYOUTS = {
 function generateSvgCover(options) {
   const {
     text,
-    subtitle = '',
+    subtitle = "",
     width = 1200,
     height = 630,
-    bgColor = '#FFFFFF',
-    textColor = '#000000',
+    bgColor = "#FFFFFF",
+    textColor = "#000000",
     fontSize: customFontSize,
-    fontWeight = '600',
-    layout = 'center',
+    fontWeight = "600",
+    layout = "center",
     padding = 60,
     fontFamily = "system-ui, -apple-system, 'Segoe UI', sans-serif",
   } = options;
@@ -307,7 +310,7 @@ function generateSvgCover(options) {
   const layoutConfig = LAYOUTS[layout] || LAYOUTS.center;
   const position = layoutConfig.getPosition(width, height, padding);
 
-  let decorativeElements = '';
+  let decorativeElements = "";
 
   // Add divider for split layout
   if (position.withDivider) {
@@ -354,27 +357,31 @@ function validateParams(query) {
   const params = {};
 
   // Required: text
-  if (!query.text || typeof query.text !== 'string' || query.text.trim() === '') {
+  if (
+    !query.text ||
+    typeof query.text !== "string" ||
+    query.text.trim() === ""
+  ) {
     errors.push('Missing or invalid "text" parameter');
   } else {
     params.text = query.text.trim();
   }
 
   // Optional: subtitle
-  if (query.subtitle && typeof query.subtitle === 'string') {
+  if (query.subtitle && typeof query.subtitle === "string") {
     params.subtitle = query.subtitle.trim();
   }
 
   // Optional: language
-  params.lang = query.lang || 'en';
+  params.lang = query.lang || "en";
 
   // Optional: theme or custom colors
-  if (query.theme === 'dark') {
-    params.bgColor = '#000000';
-    params.textColor = '#FFFFFF';
+  if (query.theme === "dark") {
+    params.bgColor = "#000000";
+    params.textColor = "#FFFFFF";
   } else {
-    params.bgColor = '#FFFFFF';
-    params.textColor = '#000000';
+    params.bgColor = "#FFFFFF";
+    params.textColor = "#000000";
   }
 
   // Custom colors override theme
@@ -382,7 +389,7 @@ function validateParams(query) {
     if (isValidHexColor(query.bgColor)) {
       params.bgColor = query.bgColor;
     } else {
-      errors.push('Invalid bgColor format (use hex: #000000)');
+      errors.push("Invalid bgColor format (use hex: #000000)");
     }
   }
 
@@ -390,7 +397,7 @@ function validateParams(query) {
     if (isValidHexColor(query.textColor)) {
       params.textColor = query.textColor;
     } else {
-      errors.push('Invalid textColor format (use hex: #FFFFFF)');
+      errors.push("Invalid textColor format (use hex: #FFFFFF)");
     }
   }
 
@@ -399,22 +406,22 @@ function validateParams(query) {
   params.height = parseInt(query.height) || 630;
 
   if (params.width < 200 || params.width > 4000) {
-    errors.push('Width must be between 200 and 4000');
+    errors.push("Width must be between 200 and 4000");
   }
   if (params.height < 200 || params.height > 4000) {
-    errors.push('Height must be between 200 and 4000');
+    errors.push("Height must be between 200 and 4000");
   }
 
   // Optional: fontSize
   if (query.fontSize) {
     params.fontSize = parseInt(query.fontSize);
     if (params.fontSize < 12 || params.fontSize > 200) {
-      errors.push('fontSize must be between 12 and 200');
+      errors.push("fontSize must be between 12 and 200");
     }
   }
 
   // Optional: fontWeight
-  const validWeights = ['300', '400', '500', '600', '700', '800', '900'];
+  const validWeights = ["300", "400", "500", "600", "700", "800", "900"];
   if (query.fontWeight && validWeights.includes(query.fontWeight)) {
     params.fontWeight = query.fontWeight;
   }
@@ -428,7 +435,7 @@ function validateParams(query) {
   if (query.padding) {
     params.padding = parseInt(query.padding);
     if (params.padding < 0 || params.padding > 300) {
-      errors.push('padding must be between 0 and 300');
+      errors.push("padding must be between 0 and 300");
     }
   }
 
@@ -453,14 +460,14 @@ function validateParams(query) {
  *   Available: center, top, bottom, left, right, top-left, top-right, bottom-left, bottom-right, split
  * - padding (optional): Padding in pixels (default: 60)
  */
-app.get('/api/cover', async (req, res) => {
+app.get("/api/cover", async (req, res) => {
   const clientIp = req.ip || req.connection.remoteAddress;
 
   // Rate limiting
   if (!checkRateLimit(clientIp)) {
     return res.status(429).json({
-      error: 'Rate limit exceeded',
-      message: 'Too many requests. Please try again later.',
+      error: "Rate limit exceeded",
+      message: "Too many requests. Please try again later.",
     });
   }
 
@@ -469,7 +476,7 @@ app.get('/api/cover', async (req, res) => {
 
   if (errors.length > 0) {
     return res.status(400).json({
-      error: 'Invalid parameters',
+      error: "Invalid parameters",
       details: errors,
     });
   }
@@ -480,13 +487,13 @@ app.get('/api/cover', async (req, res) => {
   if (cache.has(cacheKey)) {
     const { svg, timestamp } = cache.get(cacheKey);
 
-    if (NODE_ENV === 'development') {
+    if (NODE_ENV === "development") {
       console.log(`Cache hit for: ${params.text.substring(0, 30)}...`);
     }
 
-    res.setHeader('Content-Type', 'image/svg+xml');
-    res.setHeader('Cache-Control', 'public, max-age=3600');
-    res.setHeader('X-Cache', 'HIT');
+    res.setHeader("Content-Type", "image/svg+xml");
+    res.setHeader("Cache-Control", "public, max-age=3600");
+    res.setHeader("X-Cache", "HIT");
     return res.send(svg);
   }
 
@@ -495,7 +502,7 @@ app.get('/api/cover', async (req, res) => {
     const translatedText = await translateText(params.text, params.lang);
     const translatedSubtitle = params.subtitle
       ? await translateText(params.subtitle, params.lang)
-      : '';
+      : "";
 
     // Generate SVG
     const svg = generateSvgCover({
@@ -510,19 +517,22 @@ app.get('/api/cover', async (req, res) => {
       timestamp: new Date().toISOString(),
     });
 
-    if (NODE_ENV === 'development') {
-      console.log(`Generated new cover for: ${params.text.substring(0, 30)}...`);
+    if (NODE_ENV === "development") {
+      console.log(
+        `Generated new cover for: ${params.text.substring(0, 30)}...`,
+      );
     }
 
-    res.setHeader('Content-Type', 'image/svg+xml');
-    res.setHeader('Cache-Control', 'public, max-age=3600');
-    res.setHeader('X-Cache', 'MISS');
+    res.setHeader("Content-Type", "image/svg+xml");
+    res.setHeader("Cache-Control", "public, max-age=3600");
+    res.setHeader("X-Cache", "MISS");
     res.send(svg);
   } catch (error) {
-    console.error('Error generating cover:', error);
+    console.error("Error generating cover:", error);
     res.status(500).json({
-      error: 'Failed to generate cover image',
-      message: NODE_ENV === 'development' ? error.message : 'Internal server error',
+      error: "Failed to generate cover image",
+      message:
+        NODE_ENV === "development" ? error.message : "Internal server error",
     });
   }
 });
@@ -530,19 +540,19 @@ app.get('/api/cover', async (req, res) => {
 /**
  * GET /api/layouts - List available layouts
  */
-app.get('/api/layouts', (req, res) => {
+app.get("/api/layouts", (req, res) => {
   res.json({
     layouts: Object.keys(LAYOUTS),
-    default: 'center',
+    default: "center",
   });
 });
 
 /**
  * Health check endpoint
  */
-app.get('/health', (req, res) => {
+app.get("/health", (req, res) => {
   res.json({
-    status: 'ok',
+    status: "ok",
     environment: NODE_ENV,
     cacheSize: cache.size,
     maxCacheSize: MAX_CACHE_SIZE,
@@ -554,97 +564,97 @@ app.get('/health', (req, res) => {
 /**
  * Documentation endpoint
  */
-app.get('/api/docs', (req, res) => {
+app.get("/api/docs", (req, res) => {
   res.json({
-    endpoint: '/api/cover',
-    method: 'GET',
-    description: 'Generate customizable cover images',
+    endpoint: "/api/cover",
+    method: "GET",
+    description: "Generate customizable cover images",
     parameters: {
       text: {
-        type: 'string',
+        type: "string",
         required: true,
-        description: 'Main text to display',
+        description: "Main text to display",
       },
       subtitle: {
-        type: 'string',
+        type: "string",
         required: false,
-        description: 'Subtitle text',
+        description: "Subtitle text",
       },
       lang: {
-        type: 'string',
+        type: "string",
         required: false,
-        default: 'en',
-        description: 'Language code for translation',
+        default: "en",
+        description: "Language code for translation",
       },
       theme: {
-        type: 'string',
+        type: "string",
         required: false,
-        default: 'light',
-        options: ['light', 'dark'],
-        description: 'Color theme',
+        default: "light",
+        options: ["light", "dark"],
+        description: "Color theme",
       },
       bgColor: {
-        type: 'string',
+        type: "string",
         required: false,
-        description: 'Background color (hex format, e.g., #000000)',
+        description: "Background color (hex format, e.g., #000000)",
       },
       textColor: {
-        type: 'string',
+        type: "string",
         required: false,
-        description: 'Text color (hex format, e.g., #FFFFFF)',
+        description: "Text color (hex format, e.g., #FFFFFF)",
       },
       width: {
-        type: 'integer',
+        type: "integer",
         required: false,
         default: 1200,
         min: 200,
         max: 4000,
-        description: 'Image width in pixels',
+        description: "Image width in pixels",
       },
       height: {
-        type: 'integer',
+        type: "integer",
         required: false,
         default: 630,
         min: 200,
         max: 4000,
-        description: 'Image height in pixels',
+        description: "Image height in pixels",
       },
       fontSize: {
-        type: 'integer',
+        type: "integer",
         required: false,
         min: 12,
         max: 200,
-        description: 'Font size in pixels (auto-calculated if not provided)',
+        description: "Font size in pixels (auto-calculated if not provided)",
       },
       fontWeight: {
-        type: 'string',
+        type: "string",
         required: false,
-        default: '600',
-        options: ['300', '400', '500', '600', '700', '800', '900'],
-        description: 'Font weight',
+        default: "600",
+        options: ["300", "400", "500", "600", "700", "800", "900"],
+        description: "Font weight",
       },
       layout: {
-        type: 'string',
+        type: "string",
         required: false,
-        default: 'center',
+        default: "center",
         options: Object.keys(LAYOUTS),
-        description: 'Text layout position',
+        description: "Text layout position",
       },
       padding: {
-        type: 'integer',
+        type: "integer",
         required: false,
         default: 60,
         min: 0,
         max: 300,
-        description: 'Padding in pixels',
+        description: "Padding in pixels",
       },
     },
     examples: [
-      '/api/cover?text=Hello%20World',
-      '/api/cover?text=Hello%20World&theme=dark',
-      '/api/cover?text=Hello%20World&subtitle=A%20greeting&layout=top-left',
-      '/api/cover?text=Hello&bgColor=%23FF5733&textColor=%23FFFFFF&fontSize=72',
-      '/api/cover?text=Hello&layout=split&width=1920&height=1080',
+      "/api/cover?text=Hello%20World",
+      "/api/cover?text=Hello%20World&theme=dark",
+      "/api/cover?text=Hello%20World&subtitle=A%20greeting&layout=top-left",
+      "/api/cover?text=Hello&bgColor=%23FF5733&textColor=%23FFFFFF&fontSize=72",
+      "/api/cover?text=Hello&layout=split&width=1920&height=1080",
     ],
   });
 });
@@ -652,14 +662,14 @@ app.get('/api/docs', (req, res) => {
 /**
  * Root endpoint
  */
-app.get('/', (req, res) => {
+app.get("/", (req, res) => {
   res.json({
-    name: 'Cover Image API',
-    version: '2.0.0',
-    status: 'running',
-    documentation: '/api/docs',
-    layouts: '/api/layouts',
-    health: '/health',
+    name: "Cover Image API",
+    version: "2.0.0",
+    status: "running",
+    documentation: "/api/docs",
+    layouts: "/api/layouts",
+    health: "/health",
   });
 });
 
@@ -668,9 +678,9 @@ app.get('/', (req, res) => {
  */
 app.use((req, res) => {
   res.status(404).json({
-    error: 'Not found',
-    message: 'The requested endpoint does not exist',
-    documentation: '/api/docs',
+    error: "Not found",
+    message: "The requested endpoint does not exist",
+    documentation: "/api/docs",
   });
 });
 
@@ -678,40 +688,38 @@ app.use((req, res) => {
  * Error handler
  */
 app.use((err, req, res, next) => {
-  console.error('Unhandled error:', err);
+  console.error("Unhandled error:", err);
   res.status(500).json({
-    error: 'Internal server error',
-    message: NODE_ENV === 'development' ? err.message : 'Something went wrong',
+    error: "Internal server error",
+    message: NODE_ENV === "development" ? err.message : "Something went wrong",
   });
 });
 
-export default app;
+/**
+ * Start the server
+ */
+app.listen(PORT, () => {
+  console.log(`
+╔════════════════════════════════════════════════════════╗
+║         Cover Image API v2.0.0                         ║
+╚════════════════════════════════════════════════════════╝
 
-// /**
-//  * Start the server
-//  */
-// app.listen(PORT, () => {
-//   console.log(`
-// ╔════════════════════════════════════════════════════════╗
-// ║         Cover Image API v2.0.0                         ║
-// ╚════════════════════════════════════════════════════════╝
+🚀 Server running on: http://localhost:${PORT}
+📚 Documentation:     http://localhost:${PORT}/api/docs
+🎨 Available layouts: http://localhost:${PORT}/api/layouts
+❤️  Health check:     http://localhost:${PORT}/health
 
-// 🚀 Server running on: http://localhost:${PORT}
-// 📚 Documentation:     http://localhost:${PORT}/api/docs
-// 🎨 Available layouts: http://localhost:${PORT}/api/layouts
-// ❤️  Health check:     http://localhost:${PORT}/health
+Environment: ${NODE_ENV}
+Cache size limit: ${MAX_CACHE_SIZE}
+Rate limit: ${RATE_LIMIT_MAX} requests per minute
+  `);
+});
 
-// Environment: ${NODE_ENV}
-// Cache size limit: ${MAX_CACHE_SIZE}
-// Rate limit: ${RATE_LIMIT_MAX} requests per minute
-//   `);
-// });
-
-// // Graceful shutdown
-// process.on('SIGTERM', () => {
-//   console.log('SIGTERM signal received: closing HTTP server');
-//   server.close(() => {
-//     console.log('HTTP server closed');
-//     process.exit(0);
-//   });
-// });
+// Graceful shutdown
+process.on("SIGTERM", () => {
+  console.log("SIGTERM signal received: closing HTTP server");
+  server.close(() => {
+    console.log("HTTP server closed");
+    process.exit(0);
+  });
+});
