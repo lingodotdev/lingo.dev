@@ -104,4 +104,6 @@ The app is designed to highlight Lingo.dev features:
 
 * The summarization feature may take a few seconds depending on video length.
 
+Thank you for Organizing this
+
 ---
