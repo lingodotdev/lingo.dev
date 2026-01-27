@@ -323,6 +323,9 @@ export function createElementExtractor(
       return;
     }
 
+    // Extract localizable attributes
+    context.extractAttributes(element, path);
+
     // Handle SVG elements using strategy pattern
     const svgStrategy = getSvgExtractionStrategy(element);
 
@@ -348,9 +351,6 @@ export function createElementExtractor(
     }
 
     // svgStrategy === "process-normal" - use normal extraction logic
-
-    // Extract localizable attributes
-    context.extractAttributes(element, path);
 
     // If this is a leaf block element (contains text but no nested blocks), extract it
     // But NOT if it contains SVG - in that case, recurse to handle SVG separately
