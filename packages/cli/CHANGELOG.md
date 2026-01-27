@@ -1,5 +1,52 @@
 # lingo.dev
 
+## 0.125.3
+
+### Patch Changes
+
+- [#1898](https://github.com/lingodotdev/lingo.dev/pull/1898) [`c3481fb`](https://github.com/lingodotdev/lingo.dev/commit/c3481fb493430719767ee6f95b78635ae153e512) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Refactor HTML/Twig extraction to handle SVG content correctly using a strategy-based approach
+
+## 0.125.2
+
+### Patch Changes
+
+- [#1873](https://github.com/lingodotdev/lingo.dev/pull/1873) [`8c4f736`](https://github.com/lingodotdev/lingo.dev/commit/8c4f7366d86f91edb841cc51f5bf0a32db64a876) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Refactor lockfile deduplication logic to use a single universal function instead of three duplicate implementations. This improves code maintainability and ensures consistent behavior across all lockfile operations. The deduplication automatically handles Git merge conflicts in i18n.lock files.
+
+## 0.125.1
+
+### Patch Changes
+
+- [#1874](https://github.com/lingodotdev/lingo.dev/pull/1874) [`5ca8439`](https://github.com/lingodotdev/lingo.dev/commit/5ca8439aedd2909e359652f8f3a1b33d4ccd9f6a) Thanks [@vrcprl](https://github.com/vrcprl)! - simplify observability
+
+- Updated dependencies [[`5ca8439`](https://github.com/lingodotdev/lingo.dev/commit/5ca8439aedd2909e359652f8f3a1b33d4ccd9f6a)]:
+  - @lingo.dev/_compiler@0.9.1
+
+## 0.125.0
+
+### Minor Changes
+
+- [#1799](https://github.com/lingodotdev/lingo.dev/pull/1799) [`e3a383b`](https://github.com/lingodotdev/lingo.dev/commit/e3a383b8a82110984cef1d1ce477d1e0bf65c488) Thanks [@cherkanovart](https://github.com/cherkanovart)! - roll back
+
+## 0.124.0
+
+### Minor Changes
+
+- [#1793](https://github.com/lingodotdev/lingo.dev/pull/1793) [`29c598c`](https://github.com/lingodotdev/lingo.dev/commit/29c598caa1fc6b02693eafa12d245f8fbfdfe4b8) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Fix CLI command script for Windows 11 and Bash compatibility
+
+- [#1793](https://github.com/lingodotdev/lingo.dev/pull/1793) [`29c598c`](https://github.com/lingodotdev/lingo.dev/commit/29c598caa1fc6b02693eafa12d245f8fbfdfe4b8) Thanks [@cherkanovart](https://github.com/cherkanovart)! - roll back
+
+## 0.123.0
+
+### Minor Changes
+
+- [#1759](https://github.com/lingodotdev/lingo.dev/pull/1759) [`403bba9`](https://github.com/lingodotdev/lingo.dev/commit/403bba908d8abd9bb4c9cd58072e54f3f72e8e96) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Fix CLI command script for Windows 11 and Bash compatibility
+
+## 0.122.2
+
+### Patch Changes
+
+- [#1776](https://github.com/lingodotdev/lingo.dev/pull/1776) [`1a8786a`](https://github.com/lingodotdev/lingo.dev/commit/1a8786ad281d6f79d78379dd27fa3b174367eb3b) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Exclude previous translations from LLM reference when --force flag is used. The localization engine now receives an empty object instead of existing translations, ensuring truly fresh translations are generated without influence from previous versions.
+
 ## 0.122.1
 
 ### Patch Changes
