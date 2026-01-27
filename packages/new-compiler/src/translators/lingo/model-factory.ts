@@ -252,7 +252,7 @@ export function createAiModel(
   if (providerConfig.apiKeyEnvVar && !apiKey) {
     throw new Error(
       `⚠️  ${providerConfig.name} API key not found. Please set ${providerConfig.apiKeyEnvVar} environment variable.\n\n` +
-        `This should not happen if validateAndFetchApiKeys() was called. Please restart the service.`,
+      `This should not happen if validateAndFetchApiKeys() was called. Please restart the service.`,
     );
   }
 
@@ -267,10 +267,16 @@ export function createAiModel(
     case "openai": {
       // Support custom base URL for OpenAI-compatible providers (e.g., Nebius)
       const baseURL = getKeyFromEnv("OPENAI_BASE_URL");
-      return createOpenAI({
+
+      const provider = createOpenAI({
         apiKey: apiKey!,
         ...(baseURL && { baseURL }),
-      })(model.name);
+      });
+
+      if (baseURL) {
+        return provider.chat(model.name);
+      }
+      return provider(model.name);
     }
 
     case "openrouter":
