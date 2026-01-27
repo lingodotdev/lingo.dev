@@ -1,7 +1,7 @@
 function Pagination({ pagination, onPageChange }) {
-  const { currentPage, totalPages, hasNext, hasPrev, nextPage, prevPage } = pagination;
+  if (!pagination || pagination.totalPages <= 1) return null;
 
-  if (!pagination || totalPages <= 1) return null;
+  const { currentPage, totalPages, hasNext, hasPrev, nextPage, prevPage } = pagination;
 
   const handlePageChange = (page) => {
     if (page >= 1 && page <= totalPages) {

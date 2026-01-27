@@ -1,17 +1,12 @@
 import { useState, useEffect } from 'react';
 
 function Timer({ durationInMinutes, startTime, onTimeUp }) {
-  if (!durationInMinutes || !startTime) {
-    return (
-      <div className="flex items-center justify-center py-2">
-        <div className="animate-spin rounded-full h-5 w-5 sm:h-6 sm:w-6 border-b-2 border-blue-600"></div>
-      </div>
-    );
-  }
-
-  const endTime = new Date(new Date(startTime).getTime() + durationInMinutes * 60 * 1000);
+  const endTime = durationInMinutes && startTime
+    ? new Date(new Date(startTime).getTime() + durationInMinutes * 60 * 1000)
+    : null;
 
   const calculateRemainingTime = () => {
+    if (!endTime) return 0;
     const now = new Date();
     const difference = endTime.getTime() - now.getTime();
     return difference > 0 ? difference : 0;
@@ -20,16 +15,35 @@ function Timer({ durationInMinutes, startTime, onTimeUp }) {
   const [remainingTime, setRemainingTime] = useState(calculateRemainingTime);
 
   useEffect(() => {
+    if (!endTime) return;
     const intervalId = setInterval(() => {
       setRemainingTime(calculateRemainingTime());
     }, 1000);
-    
-    if (remainingTime <= 0) {
-      clearInterval(intervalId);
-    }
-
     return () => clearInterval(intervalId);
-  }, [remainingTime]);
+  }, [endTime]);
+
+  useEffect(() => {
+    if (remainingTime <= 0 && onTimeUp) {
+      onTimeUp();
+    }
+  }, [remainingTime, onTimeUp]);
+  if (!durationInMinutes || !startTime) {
+    return (
+      <div className="flex items-center justify-center py-2">
+        <div className="animate-spin rounded-full h-5 w-5 sm:h-6 sm:w-6 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      const now = new Date();
+      const difference = endTime.getTime() - now.getTime();
+      setRemainingTime(difference > 0 ? difference : 0);
+     }, 1000);
+    
+    return () => clearInterval(intervalId);
+  }, [endTime]);
 
   useEffect(() => {
     if (remainingTime > 0 && remainingTime < 1000) {

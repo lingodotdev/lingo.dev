@@ -17,17 +17,4 @@ router.patch('/reset-password/:token', authController.resetPassword);
 
 router.patch('/updateMyPassword', authController.protect, authController.updatePassword);
 
-// ONLY FOR one time use to create admin: remove after first use!
-/*router.post('/signup-admin', async (req, res, next) => {
-    const User = require(`${__dirname}/../Models/user_model`);
-    const user = await User.create({
-        name: "Md Zaki Afzal",
-        email: "mdzakiahmed2005@gmail.com",
-        password: "Afzal@3288",
-        confirmPassword: "Afzal@3288",
-        role: 'admin'
-    });
-    res.status(201).json({ status: 'success', data: user });
-});*/
-
 module.exports = router;

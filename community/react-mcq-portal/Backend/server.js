@@ -11,8 +11,16 @@ dotenv.config();
 const app = require('./app');
 
 // DB connection
-const DB = process.env.DATABASE.replace('<db_password>', process.env.DATABASE_PASSWORD);
-mongoose.connect(DB).then(() => console.log('DB connection successful'));
+if (!process.env.DATABASE || !process.env.DATABASE_PASSWORD) {
+  console.error('Missing DATABASE or DATABASE_PASSWORD environment variable');
+  process.exit(1);
+}
+mongoose.connect(DB)
+  .then(() => console.log('DB connection successful'))
+  .catch(err => {
+    console.error('DB connection failed:', err.message);
+    process.exit(1);
+  });
 
 // Start server 
 const port = process.env.PORT || 3000;

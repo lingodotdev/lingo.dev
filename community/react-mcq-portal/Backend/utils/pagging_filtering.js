@@ -4,7 +4,13 @@ class SimplePaginationFilteration {
     this.queryString = queryString;
     this.baseFilter = baseFilter;
     this.pagination = {};
-    this.sortField = '';
+    this.sortField = queryString.sort || '-createdAt';
+    this.data = null;
+  }
+
+  sort(field) {
+    this.sortField = field;
+    return this;
   }
 
   // Build date filter for date-only (no time) filtering

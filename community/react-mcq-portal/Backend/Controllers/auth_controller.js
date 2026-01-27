@@ -246,5 +246,5 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
     //user.findByIdAndUpdate(password); //you should never use it here because it won't trigger the document middlewares.
 
     //log the user in, send JWT
-    createSendToken(user, 200, res);
+    await createSendToken(user, 200, res);
 });

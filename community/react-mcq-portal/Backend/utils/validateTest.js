@@ -1,6 +1,9 @@
 const AppError = require('./appErrors');
 
 exports.validateTestInput = (body) => {
+  if (!body || typeof body !== 'object') {
+    throw new AppError('Test payload is required', 400);
+  }
   if (!body.title || typeof body.title !== 'string') {
     throw new AppError('Test must have a valid title', 400);
   }

@@ -12,13 +12,13 @@ function ResultsPage() {
   const results = location.state?.results;
   const [showAnswers, setShowAnswers] = useState(false);
 
-  if (!results) {
-    return <Navigate to="/" replace />;
-  }
-
   useEffect(() => {
     sessionStorage.removeItem('justFinishedAttempt');
   }, []);
+
+  if (!results) {
+    return <Navigate to="/" replace />;
+  }
 
   const getAnswerStyle = (question, optionIndex) => {
     const isCorrect = optionIndex === question.correctAnswer;
