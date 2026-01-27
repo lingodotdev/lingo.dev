@@ -36,12 +36,9 @@ cp .env.example .env
 ```bash
 # Development
 npm run dev
-
-# Production
-npm run prod
 ```
 
-The API will be available at `http://localhost:3001`
+The API will be available at `http://localhost:3000`
 
 ## API Documentation 📚
 
@@ -204,20 +201,7 @@ GET /health
 
 ```bash
 PORT=3001
-NODE_ENV=production
 LINGODOTDEV_API_KEY=your_production_key
-```
-
-### Docker Deployment
-
-```dockerfile
-FROM node:18-alpine
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci --only=production
-COPY . .
-EXPOSE 3001
-CMD ["npm", "run", "prod"]
 ```
 
 ### Performance Considerations
