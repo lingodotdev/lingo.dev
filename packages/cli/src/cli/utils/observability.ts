@@ -1,7 +1,7 @@
 import pkg from "node-machine-id";
 const { machineIdSync } = pkg;
 import https from "https";
-import { getRepositoryId } from "./repository-id";
+import { getOrgId } from "./org-id";
 
 const POSTHOG_API_KEY = "phc_eR0iSoQufBxNY36k0f0T15UvHJdTfHlh8rJcxsfhfXk";
 const POSTHOG_HOST = "eu.i.posthog.com";
@@ -12,23 +12,23 @@ const TRACKING_VERSION = "2.0";
 function determineDistinctId(email: string | null | undefined): {
   distinct_id: string;
   distinct_id_source: string;
-  project_id: string | null;
+  org_id: string | null;
 } {
+  const orgId = getOrgId();
+
   if (email) {
-    const projectId = getRepositoryId();
     return {
       distinct_id: email,
       distinct_id_source: "email",
-      project_id: projectId,
+      org_id: orgId,
     };
   }
 
-  const repoId = getRepositoryId();
-  if (repoId) {
+  if (orgId) {
     return {
-      distinct_id: repoId,
-      distinct_id_source: "git_repo",
-      project_id: repoId,
+      distinct_id: orgId,
+      distinct_id_source: "git_org",
+      org_id: orgId,
     };
   }
 
@@ -41,7 +41,7 @@ function determineDistinctId(email: string | null | undefined): {
   return {
     distinct_id: deviceId,
     distinct_id_source: "device",
-    project_id: null,
+    org_id: null,
   };
 }
 
@@ -74,7 +74,7 @@ export default function trackEvent(
           $lib_version: process.env.npm_package_version || "unknown",
           tracking_version: TRACKING_VERSION,
           distinct_id_source: identityInfo.distinct_id_source,
-          project_id: identityInfo.project_id,
+          org_id: identityInfo.org_id,
           node_version: process.version,
           is_ci: !!process.env.CI,
           debug_enabled: process.env.DEBUG === "true",
