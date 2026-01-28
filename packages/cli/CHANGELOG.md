@@ -1,5 +1,24 @@
 # lingo.dev
 
+## 0.125.4
+
+### Patch Changes
+
+- Updated dependencies [[`f30b4b3`](https://github.com/lingodotdev/lingo.dev/commit/f30b4b305cde3f02d4af4eafe4d01eb0c3aa336b)]:
+  - @lingo.dev/_compiler@0.10.0
+
+## 0.125.3
+
+### Patch Changes
+
+- [#1898](https://github.com/lingodotdev/lingo.dev/pull/1898) [`c3481fb`](https://github.com/lingodotdev/lingo.dev/commit/c3481fb493430719767ee6f95b78635ae153e512) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Refactor HTML/Twig extraction to handle SVG content correctly using a strategy-based approach
+
+## 0.125.2
+
+### Patch Changes
+
+- [#1873](https://github.com/lingodotdev/lingo.dev/pull/1873) [`8c4f736`](https://github.com/lingodotdev/lingo.dev/commit/8c4f7366d86f91edb841cc51f5bf0a32db64a876) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Refactor lockfile deduplication logic to use a single universal function instead of three duplicate implementations. This improves code maintainability and ensures consistent behavior across all lockfile operations. The deduplication automatically handles Git merge conflicts in i18n.lock files.
+
 ## 0.125.1
 
 ### Patch Changes
