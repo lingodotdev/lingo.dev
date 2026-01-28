@@ -53,8 +53,8 @@ HR inputs ──▶ English JSON templates ──▶ Lingo CLI generates data/ui
 ## 🧪 Getting Started (Local Dev)
 
 ```bash
-git clone https://github.com/Maulik176/LingoHack25-GlobalOnboard.git
-cd LingoHack25-GlobalOnboard
+git clone https://github.com/lingodotdev/lingo.dev.git
+cd lingo.dev/community/global-onboard
 npm install
 
 # Provide your API key so CLI + SDK can translate

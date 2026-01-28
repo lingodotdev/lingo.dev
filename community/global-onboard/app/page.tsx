@@ -119,7 +119,18 @@ const LOCALE_BADGE_LABELS: Record<Locale, string> = {
 type TaskSource = "template" | "custom";
 type HrTask = Task & { source: TaskSource };
 type CustomTranslationCache = Partial<
-  Record<Locale, Record<string, { title?: string; description?: string }>>
+  Record<
+    Locale,
+    Record<
+      string,
+      {
+        title?: string;
+        description?: string;
+        titleSource?: string;
+        descriptionSource?: string;
+      }
+    >
+  >
 >;
 
 function buildFieldKey(field: TranslatableFieldId) {
@@ -313,10 +324,13 @@ export default function Home() {
         }
 
         const cache = localeCustomTranslations[task.id];
+        const cachedTitle = cache?.titleSource === task.title ? cache.title : undefined;
+        const cachedDescription =
+          cache?.descriptionSource === task.description ? cache.description : undefined;
         return {
           id: task.id,
-          title: cache?.title ?? task.title,
-          description: cache?.description ?? task.description,
+          title: cachedTitle ?? task.title,
+          description: cachedDescription ?? task.description,
         };
       }),
     };
@@ -363,8 +377,11 @@ export default function Home() {
 
       const localeCache = customTranslations[selectedLocale] ?? {};
       const cached = localeCache[task.id];
-      const needsTitle = trimmedTitle.length > 0 && !cached?.title;
-      const needsDescription = trimmedDescription.length > 0 && !cached?.description;
+      const cachedTitle = cached?.titleSource === task.title ? cached.title : undefined;
+      const cachedDescription =
+        cached?.descriptionSource === task.description ? cached.description : undefined;
+      const needsTitle = trimmedTitle.length > 0 && !cachedTitle;
+      const needsDescription = trimmedDescription.length > 0 && !cachedDescription;
       if (!needsTitle && !needsDescription) return;
 
       const key = `${selectedLocale}-${task.id}`;
@@ -375,18 +392,43 @@ export default function Home() {
       (async () => {
         try {
           const [titleTranslation, descriptionTranslation] = await Promise.all([
-            needsTitle ? translateWelcomeNote(task.title, selectedLocale) : Promise.resolve(cached?.title ?? ""),
+            needsTitle
+              ? translateWelcomeNote(task.title, selectedLocale)
+              : Promise.resolve(cachedTitle ?? ""),
             needsDescription
               ? translateWelcomeNote(task.description, selectedLocale)
-              : Promise.resolve(cached?.description ?? ""),
+              : Promise.resolve(cachedDescription ?? ""),
           ]);
           setCustomTranslations((prev) => {
             const localeMap = { ...(prev[selectedLocale] ?? {}) };
             const existing = localeMap[task.id] ?? {};
-            localeMap[task.id] = {
-              title: needsTitle ? titleTranslation : existing.title,
-              description: needsDescription ? descriptionTranslation : existing.description,
+            const nextTitle =
+              needsTitle
+                ? titleTranslation
+                : existing.titleSource === task.title
+                  ? existing.title
+                  : undefined;
+            const nextDescription =
+              needsDescription
+                ? descriptionTranslation
+                : existing.descriptionSource === task.description
+                  ? existing.description
+                  : undefined;
+            const nextEntry = {
+              ...(nextTitle ? { title: nextTitle, titleSource: task.title } : {}),
+              ...(nextDescription
+                ? { description: nextDescription, descriptionSource: task.description }
+                : {}),
             };
+
+            if (Object.keys(nextEntry).length === 0) {
+              delete localeMap[task.id];
+            } else {
+              localeMap[task.id] = {
+                ...existing,
+                ...nextEntry,
+              };
+            }
             return { ...prev, [selectedLocale]: localeMap };
           });
         } catch (error) {
@@ -454,6 +496,7 @@ export default function Home() {
 
   useEffect(() => {
     if (!shouldTranslate) {
+      setIsTranslating(false);
       return;
     }
 
@@ -461,6 +504,7 @@ export default function Home() {
     const cached = welcomeCache.current[selectedLocale];
     if (cached && cached.source === welcomeNote) {
       setTranslatedWelcome(cached.value);
+      setIsTranslating(false);
       return;
     }
 
