@@ -1,5 +1,18 @@
 # @lingo.dev/compiler
 
+## 0.2.0
+
+### Minor Changes
+
+- [#1900](https://github.com/lingodotdev/lingo.dev/pull/1900) [`f30b4b3`](https://github.com/lingodotdev/lingo.dev/commit/f30b4b305cde3f02d4af4eafe4d01eb0c3aa336b) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Add support for OpenAI-compatible providers (Nebius, Together AI, etc.) by using Chat Completions API when OPENAI_BASE_URL is set
+
+- [#1900](https://github.com/lingodotdev/lingo.dev/pull/1900) [`f30b4b3`](https://github.com/lingodotdev/lingo.dev/commit/f30b4b305cde3f02d4af4eafe4d01eb0c3aa336b) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Add support for OpenAI-compatible providers (e.g., Nebius) via OPENAI_BASE_URL environment variable
+
+### Patch Changes
+
+- Updated dependencies []:
+  - lingo.dev@0.125.4
+
 ## 0.1.13
 
 ### Patch Changes
