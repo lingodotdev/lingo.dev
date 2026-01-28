@@ -7,6 +7,7 @@ import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { ollama } from "ai-sdk-ollama";
 import { createMistral } from "@ai-sdk/mistral";
+import { createOpenAI } from "@ai-sdk/openai";
 import type { LanguageModel } from "ai";
 import * as dotenv from "dotenv";
 import * as path from "path";
@@ -148,8 +149,14 @@ export function getLocaleModel(
  * @throws Error if format is invalid
  */
 export function parseModelString(modelString: string): LocaleModel | undefined {
-  // Split on first colon only
-  const [provider, name] = modelString.split(":", 2);
+  // Split on first colon only to allow colons in model names
+  const colonIndex = modelString.indexOf(":");
+  if (colonIndex === -1) {
+    return undefined;
+  }
+
+  const provider = modelString.substring(0, colonIndex);
+  const name = modelString.substring(colonIndex + 1);
 
   if (!provider || !name) {
     return undefined;
@@ -251,7 +258,7 @@ export function createAiModel(
   if (providerConfig.apiKeyEnvVar && !apiKey) {
     throw new Error(
       `⚠️  ${providerConfig.name} API key not found. Please set ${providerConfig.apiKeyEnvVar} environment variable.\n\n` +
-        `This should not happen if validateAndFetchApiKeys() was called. Please restart the service.`,
+      `This should not happen if validateAndGetApiKeys() was called. Please restart the service.`,
     );
   }
 
@@ -262,6 +269,18 @@ export function createAiModel(
 
     case "google":
       return createGoogleGenerativeAI({ apiKey: apiKey! })(model.name);
+
+    case "openai": {
+      // Support custom base URL for OpenAI-compatible providers (e.g., Nebius)
+      const baseURL = getKeyFromEnv("OPENAI_BASE_URL");
+
+      const provider = createOpenAI({
+        apiKey: apiKey!,
+        ...(baseURL && { baseURL }),
+      });
+
+      return provider.chat(model.name);
+    }
 
     case "openrouter":
       return createOpenRouter({ apiKey: apiKey! })(model.name);
