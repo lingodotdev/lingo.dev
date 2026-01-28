@@ -17,6 +17,29 @@
         </div>
         
         <img src="/avatar.jpg" alt="User avatar" title="Click to edit profile">
+
+        <div>
+            <svg width="340" height="130" xmlns="http://www.w3.org/2000/svg">
+                <title><%= user.name %> Tarjeta del panel</title>
+                <desc>Panel de actividad de cuenta y notificaciones</desc>
+                <defs>
+                    <linearGradient id="dashGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#0891b2;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                <rect width="340" height="130" fill="url(#dashGrad)" rx="10"/>
+                <circle cx="55" cy="65" r="32" fill="rgba(255,255,255,0.2)"/>
+                <path d="M 45 65 L 50 72 L 65 55" stroke="white" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                <g fill="white">
+                    <text x="105" y="48" font-size="22" font-weight="bold">Todos los sistemas activos</text>
+                    <text x="105" y="72" font-size="14">Tienes <tspan font-weight="bold">5</tspan> notificaciones nuevas</text>
+                </g>
+                <rect x="105" y="85" width="210" height="30" fill="rgba(255,255,255,0.15)" rx="6"/>
+                <text x="210" y="105" text-anchor="middle" fill="white" font-size="13" font-weight="600">Ver notificaciones</text>
+            </svg>
+        </div>
+
         <button type="button" aria-label="Close notification" title="Close">×</button>
     <% } else { %>
         <h1>Por favor, inicia sesión</h1>
@@ -49,7 +72,7 @@
     
     <script>
         function showForgotPassword() {
-            alert("Contacta con soporte para obtener ayuda.");
+            alert("Contact support for help.");
         }
     </script>
 </body>
