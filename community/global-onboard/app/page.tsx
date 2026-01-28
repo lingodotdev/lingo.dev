@@ -1355,7 +1355,7 @@ export default function Home() {
               </div>
             )}
             {hasTranslationsInFlight && (
-              <div className="pointer-events-none absolute inset-0 z-10 flex flex-col items-center justify-center rounded-4xl bg-background/70 backdrop-blur-sm dark:bg-background/60">
+              <div className="pointer-events-none absolute inset-0 z-10 flex flex-col items-center justify-center rounded-[30px] bg-background/70 backdrop-blur-sm dark:bg-background/60">
                 <div className="mb-2 h-8 w-8 animate-spin rounded-full border-2 border-muted-foreground border-t-transparent" />
                 <p className="text-sm text-muted-foreground">Translating content…</p>
               </div>
