@@ -1,0 +1,34 @@
+{
+  "name": "cover-image-api",
+  "version": "1.0.0",
+  "description": "Production-ready API for generating beautiful, customizable cover images with multi-language support and advanced layout options",
+  "private": true,
+  "type": "module",
+  "main": "api/index.js",
+  "scripts": {
+    "dev": "node api/index.js",
+    "start": "node api/index.js"
+  },
+  "keywords": [
+    "cover-image",
+    "svg",
+    "image-generation",
+    "translation",
+    "lingo.dev",
+    "api",
+    "og-image",
+    "social-media"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "compression": "^1.8.1",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "lingo.dev": "^0.125.1"
+  }
+}
