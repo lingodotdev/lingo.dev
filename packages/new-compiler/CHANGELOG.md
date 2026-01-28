@@ -1,5 +1,11 @@
 # @lingo.dev/compiler
 
+## 0.3.0
+
+### Minor Changes
+
+- [#1888](https://github.com/lingodotdev/lingo.dev/pull/1888) [`8cd5c6b`](https://github.com/lingodotdev/lingo.dev/commit/8cd5c6b80d6fd17f698674ec39c3f010bc8359ec) Thanks [@yashrajpatilll](https://github.com/yashrajpatilll)! - Make pluralization opt-in by default and infer the pluralization model from translation config.
+
 ## 0.2.0
 
 ### Minor Changes
