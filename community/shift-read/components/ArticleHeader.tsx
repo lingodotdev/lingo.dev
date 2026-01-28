@@ -1,3 +1,4 @@
+import { parsedDate } from '@/lib/utils'
 import Image from 'next/image'
 
 interface ArticleHeaderProps {
@@ -34,15 +35,7 @@ export default function ArticleHeader({
         <div className="flex items-center gap-4 text-muted-foreground text-sm">
           {author && <span>By {author}</span>}
           {author && date && <span>•</span>}
-          {date && (
-            <span>
-              {new Date(date).toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-              })}
-            </span>
-          )}
+          {date && <span>{parsedDate(date)}</span>}
         </div>
       )}
     </header>

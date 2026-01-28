@@ -130,7 +130,7 @@ The source language is automatically detected and filtered from the translation 
 
 ## Project Structure
 
-```
+```text
 shift-read/
 ├── app/
 │   ├── page.tsx                    # Homepage with URL input

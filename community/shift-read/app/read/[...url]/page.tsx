@@ -34,7 +34,7 @@ export default function ReadPage() {
       try {
         if (cancelled) return
 
-        const resolvedParams = await params
+        const resolvedParams = await params;
         const decodedUrl = reconstructUrl(resolvedParams.url as string | string[])
 
         setLoading(true)
@@ -156,6 +156,10 @@ export default function ReadPage() {
         },
         timestamp: Date.now()
       })
+    } else {
+      setShowOriginal(true)
+      setSelectedLanguage(null)
+      console.error('Translation failed:', result.error)
     }
 
     setTranslating(false)

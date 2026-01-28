@@ -67,6 +67,8 @@ export function MDXRender({
 						<a
 							href={href}
 							className="text-primary underline hover:text-primary/80"
+							target="_blank"
+							rel="noopener noreferrer"
 						>
 							{children}
 						</a>

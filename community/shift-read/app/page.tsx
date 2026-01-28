@@ -42,13 +42,18 @@ export default function Home() {
             Read any blog on the internet in your language
           </p>
           <p className="text-md text-muted-foreground">
-            Paste url below or append <span className="font-semibold">shift-read.vercel.app/read/</span> in front of any
-            blog to enable read and translate.
+            Paste url below or append{" "}
+            <span className="font-semibold">shift-read.vercel.app/read/</span>{" "}
+            in front of any blog to enable read and translate.
           </p>
         </div>
         <form onSubmit={handleSubmit} className="space-y-4 w-full">
           <div className="space-y-2">
+            <label htmlFor="article-url" className="sr-only">
+              Article URL
+            </label>
             <input
+              id="article-url"
               type="url"
               value={url}
               onChange={(e) => {

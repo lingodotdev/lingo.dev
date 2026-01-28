@@ -1,50 +1,57 @@
-'use client'
+"use client";
 
-import { useState, useRef, useEffect } from 'react'
-import { SUPPORTED_LANGUAGES, REGIONS, getLanguageByCode, type Language } from '@/lib/languages'
+import { useState, useRef, useEffect } from "react";
+import {
+  SUPPORTED_LANGUAGES,
+  REGIONS,
+  getLanguageByCode,
+  type Language,
+} from "@/lib/languages";
 
 interface LanguageSelectorProps {
-  sourceLanguage?: string
-  selectedLanguage?: string | null
-  onLanguageChange: (language: string | null) => void
-  disabled?: boolean
+  sourceLanguage?: string;
+  selectedLanguage?: string | null;
+  onLanguageChange: (language: string | null) => void;
+  disabled?: boolean;
 }
 
 export default function LanguageSelector({
   sourceLanguage,
   selectedLanguage: selectedLanguageProp,
   onLanguageChange,
-  disabled = false
+  disabled = false,
 }: LanguageSelectorProps) {
-  const [isOpen, setIsOpen] = useState(false)
-  const [selectedLanguage, setSelectedLanguage] = useState<string | null>(selectedLanguageProp || null)
-  const [searchQuery, setSearchQuery] = useState('')
-  const [activeRegion, setActiveRegion] = useState<string | null>(null)
-  const dropdownRef = useRef<HTMLDivElement>(null)
-  const buttonRef = useRef<HTMLButtonElement>(null)
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] = useState<string | null>(
+    selectedLanguageProp || null,
+  );
+  const [searchQuery, setSearchQuery] = useState("");
+  const [activeRegion, setActiveRegion] = useState<string | null>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   const filteredLanguages = searchQuery
     ? SUPPORTED_LANGUAGES.filter(
-        lang =>
+        (lang) =>
           lang.code !== sourceLanguage &&
           (lang.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
             lang.nativeName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            lang.code.toLowerCase().includes(searchQuery.toLowerCase()))
+            lang.code.toLowerCase().includes(searchQuery.toLowerCase())),
       )
-    : []
+    : [];
 
   const languagesByRegion = REGIONS.reduce(
     (acc, region) => {
       const languages = SUPPORTED_LANGUAGES.filter(
-        lang => lang.region === region && lang.code !== sourceLanguage
-      )
+        (lang) => lang.region === region && lang.code !== sourceLanguage,
+      );
       if (languages.length > 0) {
-        acc[region] = languages
+        acc[region] = languages;
       }
-      return acc
+      return acc;
     },
-    {} as Record<string, Language[]>
-  )
+    {} as Record<string, Language[]>,
+  );
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -54,36 +61,36 @@ export default function LanguageSelector({
         buttonRef.current &&
         !buttonRef.current.contains(event.target as Node)
       ) {
-        setIsOpen(false)
+        setIsOpen(false);
       }
     }
 
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [])
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   useEffect(() => {
     if (isOpen && Object.keys(languagesByRegion).length > 0 && !activeRegion) {
-      setActiveRegion(Object.keys(languagesByRegion)[0])
+      setActiveRegion(Object.keys(languagesByRegion)[0]);
     }
-  }, [isOpen, languagesByRegion, activeRegion])
+  }, [isOpen, languagesByRegion, activeRegion]);
 
   const handleSelect = (languageCode: string | null) => {
-    setSelectedLanguage(languageCode)
-    setIsOpen(false)
-    setSearchQuery('')
-    onLanguageChange(languageCode)
-  }
+    setSelectedLanguage(languageCode);
+    setIsOpen(false);
+    setSearchQuery("");
+    onLanguageChange(languageCode);
+  };
 
   useEffect(() => {
-    setSelectedLanguage(selectedLanguageProp || null)
-  }, [selectedLanguageProp])
+    setSelectedLanguage(selectedLanguageProp || null);
+  }, [selectedLanguageProp]);
 
   const getSelectedDisplayText = () => {
-    if (!selectedLanguage) return 'Translate'
-    const lang = getLanguageByCode(selectedLanguage)
-    return lang ? lang.name : 'Translate'
-  }
+    if (!selectedLanguage) return "Translate";
+    const lang = getLanguageByCode(selectedLanguage);
+    return lang ? lang.name : "Translate";
+  };
 
   return (
     <div className="relative" ref={dropdownRef}>
@@ -95,12 +102,17 @@ export default function LanguageSelector({
       >
         <span>{getSelectedDisplayText()}</span>
         <svg
-          className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`}
+          className={`w-4 h-4 transition-transform ${isOpen ? "rotate-180" : ""}`}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
         >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M19 9l-7 7-7-7"
+          />
         </svg>
       </button>
 
@@ -109,24 +121,24 @@ export default function LanguageSelector({
           <div className="w-28 border-r flex flex-col">
             <button
               onClick={() => {
-                setSearchQuery('')
-                setActiveRegion(null)
+                setSearchQuery("");
+                setActiveRegion(null);
               }}
               className={`px-3 py-2 text-sm text-left hover:bg-muted transition-colors ${
-                !activeRegion && !searchQuery ? 'bg-muted font-medium' : ''
+                !activeRegion && !searchQuery ? "bg-muted font-medium" : ""
               }`}
             >
               All
             </button>
-            {Object.keys(languagesByRegion).map(region => (
+            {Object.keys(languagesByRegion).map((region) => (
               <button
                 key={region}
                 onClick={() => {
-                  setSearchQuery('')
-                  setActiveRegion(region)
+                  setSearchQuery("");
+                  setActiveRegion(region);
                 }}
                 className={`px-3 py-2 text-sm text-left hover:bg-muted transition-colors ${
-                  activeRegion === region ? 'bg-muted font-medium' : ''
+                  activeRegion === region ? "bg-muted font-medium" : ""
                 }`}
               >
                 {region}
@@ -140,9 +152,9 @@ export default function LanguageSelector({
                 type="text"
                 placeholder="Search languages..."
                 value={searchQuery}
-                onChange={e => {
-                  setSearchQuery(e.target.value)
-                  setActiveRegion(null)
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                  setActiveRegion(null);
                 }}
                 className="w-full px-3 py-2 text-sm border rounded-md bg-background focus:outline-none focus:ring-2 focus:ring-primary"
                 autoFocus
@@ -156,14 +168,16 @@ export default function LanguageSelector({
                     No languages found
                   </div>
                 ) : (
-                  filteredLanguages.map(lang => (
+                  filteredLanguages.map((lang) => (
                     <button
                       key={lang.code}
                       onClick={() => handleSelect(lang.code)}
                       className="w-full px-4 py-2 text-sm text-left hover:bg-muted transition-colors"
                     >
                       <span className="font-medium">{lang.nativeName}</span>
-                      <span className="text-muted-foreground ml-2">({lang.name})</span>
+                      <span className="text-muted-foreground ml-2">
+                        ({lang.name})
+                      </span>
                     </button>
                   ))
                 )
@@ -175,22 +189,47 @@ export default function LanguageSelector({
                   >
                     Original
                   </button>
-                  {languagesByRegion[activeRegion]?.map(lang => (
+                  {languagesByRegion[activeRegion]?.map((lang) => (
                     <button
                       key={lang.code}
                       onClick={() => handleSelect(lang.code)}
                       className="w-full px-4 py-2 text-sm text-left hover:bg-muted transition-colors"
                     >
                       <span className="font-medium">{lang.nativeName}</span>
-                      <span className="text-muted-foreground ml-2">({lang.name})</span>
+                      <span className="text-muted-foreground ml-2">
+                        ({lang.name})
+                      </span>
                     </button>
                   ))}
                 </>
-              ) : null}
+              ) : (
+                <>
+                  <button
+                    onClick={() => handleSelect(null)}
+                    className="w-full px-4 py-2 text-sm text-left hover:bg-muted transition-colors border-b font-medium"
+                  >
+                    Original
+                  </button>
+                  {SUPPORTED_LANGUAGES.filter(
+                    (lang) => lang.code !== sourceLanguage,
+                  ).map((lang) => (
+                    <button
+                      key={lang.code}
+                      onClick={() => handleSelect(lang.code)}
+                      className="w-full px-4 py-2 text-sm text-left hover:bg-muted transition-colors"
+                    >
+                      <span className="font-medium">{lang.nativeName}</span>
+                      <span className="text-muted-foreground ml-2">
+                        ({lang.name})
+                      </span>
+                    </button>
+                  ))}
+                </>
+              )}
             </div>
           </div>
         </div>
       )}
     </div>
-  )
+  );
 }
