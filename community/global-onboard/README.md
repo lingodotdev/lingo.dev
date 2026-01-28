@@ -11,8 +11,9 @@
 - **Full Lingo toolchain:** Static JSON via CLI, runtime personalization via SDK, and CI automation so translations stay fresh.
 - **Enterprise-ready touches:** Translation QA mode, localization health warnings, onboarding pack export, and translation spinners that prove we’re production aware.
 
- ### 🏅 Lingo Product Scorecard
- | Lingo product | How GlobalOnboard uses it | Why it matters |
+### 🏅 Lingo Product Scorecard
+
+| Lingo product | How GlobalOnboard uses it | Why it matters |
  | --- | --- | --- |
  | **Lingo CLI** | Generates `data/ui.{locale}.json` and `data/onboarding_template.{locale}.json` from English sources via `npx lingo.dev@latest run`. | Demonstrates the official static localization workflow. |
  | **Lingo JavaScript SDK** | Translates the welcome note and every custom task at runtime with caching, spinners, and graceful fallbacks. | Shows dynamic personalization for each employee preview. |
@@ -35,7 +36,7 @@
 
 ## 🧩 Architecture At-a-Glance
 
-```
+```text
 HR inputs ──▶ English JSON templates ──▶ Lingo CLI generates data/ui.{locale}.json
               │                               │
               │                               └─▶ Lingo CI keeps translations up to date
@@ -64,7 +65,7 @@ export LINGODOTDEV_API_KEY="$LINGO_DOT_DEV_API_KEY"
 npm run dev
 ```
 
-Visit **http://localhost:3000** — left panel is HR Workspace, right panel is the localized Employee preview.
+Visit **<http://localhost:3000>** — left panel is HR Workspace, right panel is the localized Employee preview.
 
 ---
 
@@ -119,7 +120,7 @@ Perfect for HRIS uploads, emails, or sharing with managers.
 
 ## 📁 Project Structure
 
-```
+```text
 app/
   layout.tsx        # Root metadata + ThemeProvider
   page.tsx          # HR + Employee panels, QA, overrides, spinner

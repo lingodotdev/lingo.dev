@@ -570,11 +570,13 @@ export default function Home() {
       next[index] = {
         ...next[index],
         [field]: value,
+        ...(currentTask?.source === "template" ? { source: "custom" } : {}),
       };
       return next;
     });
-    if (currentTask && currentTask.source === "custom" && currentTask[field] !== value) {
+    if (currentTask && currentTask[field] !== value) {
       clearCustomTranslationsForTask(currentTask.id);
+      removeTaskOverrides(currentTask.id);
     }
   };
 
@@ -643,20 +645,43 @@ export default function Home() {
     });
   };
 
+  const escapeHtml = (value: string) =>
+    value.replace(/[&<>"']/g, (char) => {
+      switch (char) {
+        case "&":
+          return "&amp;";
+        case "<":
+          return "&lt;";
+        case ">":
+          return "&gt;";
+        case '"':
+          return "&quot;";
+        case "'":
+          return "&#39;";
+        default:
+          return char;
+      }
+    });
+
   const handleDownloadPack = () => {
-    const docWelcome = selectedLocale === "en" ? welcomeNote : previewWelcome;
+    const docWelcome = escapeHtml(selectedLocale === "en" ? welcomeNote : previewWelcome);
+    const docLocaleLabel = escapeHtml(localeLabel);
+    const docLocaleCode = escapeHtml(selectedLocale);
+    const docCompanyName = escapeHtml(effectiveTemplate.companyName);
+    const docRole = escapeHtml(effectiveTemplate.role);
     const docTasks = effectiveTemplate.tasks
-      .map(
-        (task, index) =>
-          `<p><strong>Task ${index + 1}: ${task.title}</strong><br/>${task.description}</p>`,
-      )
+      .map((task, index) => {
+        const taskTitle = escapeHtml(task.title);
+        const taskDescription = escapeHtml(task.description);
+        return `<p><strong>Task ${index + 1}: ${taskTitle}</strong><br/>${taskDescription}</p>`;
+      })
       .join("");
 
     const docHtml = `<!DOCTYPE html>
       <html>
         <head>
           <meta charset="UTF-8" />
-          <title>Onboarding Pack - ${localeLabel}</title>
+          <title>Onboarding Pack - ${docLocaleLabel}</title>
           <style>
             body { font-family: Arial, sans-serif; line-height: 1.5; color: #0f172a; }
             h1 { font-size: 24px; margin-bottom: 0; }
@@ -665,10 +690,10 @@ export default function Home() {
           </style>
         </head>
         <body>
-          <h1>Onboarding Pack – ${localeLabel}</h1>
-          <p><strong>Locale:</strong> ${selectedLocale}</p>
-          <p><strong>Company:</strong> ${effectiveTemplate.companyName}</p>
-          <p><strong>Role:</strong> ${effectiveTemplate.role}</p>
+          <h1>Onboarding Pack – ${docLocaleLabel}</h1>
+          <p><strong>Locale:</strong> ${docLocaleCode}</p>
+          <p><strong>Company:</strong> ${docCompanyName}</p>
+          <p><strong>Role:</strong> ${docRole}</p>
           <h2>Welcome Note</h2>
           <p>${docWelcome}</p>
           <h2>Onboarding Checklist</h2>

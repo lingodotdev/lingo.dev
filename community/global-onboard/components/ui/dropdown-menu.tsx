@@ -32,9 +32,9 @@ const DropdownMenuSubTrigger = React.forwardRef<
     {...props}
   >
     {children}
-    <DropdownMenuPrimitive.ItemIndicator className="ml-auto">
-      <span>›</span>
-    </DropdownMenuPrimitive.ItemIndicator>
+    <span aria-hidden="true" className="ml-auto">
+      ›
+    </span>
   </DropdownMenuPrimitive.SubTrigger>
 ));
 DropdownMenuSubTrigger.displayName =
