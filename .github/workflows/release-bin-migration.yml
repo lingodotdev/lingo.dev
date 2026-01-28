@@ -1,0 +1,50 @@
+name: One-off Release (bin migration)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write # required for npm Trusted Publishing (OIDC)
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Upgrade npm for OIDC support
+        run: npm install -g npm@11.5.1
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.12.3
+          run_install: false
+
+      - name: Install dependencies
+        run: pnpm install
+
+      # 🔹 Publish with `next` tag only
+      - name: Publish packages with next tag
+        run: pnpm changeset publish --tag next
+        env:
+          NPM_CONFIG_PROVENANCE: true
+
+      # 🔹 Wait for npm registry / CDN propagation
+      - name: Wait for npm propagation
+        run: sleep 900 # 15 minutes
+
+      # 🔹 Promote published versions to `latest`
+      - name: Promote to latest
+        run: |
+          for pkg in $(jq -r '.[] | .name + "@" + .version' .changeset/published-packages.json); do
+            echo "Promoting $pkg to latest"
+            npm dist-tag add $pkg latest
+          done

@@ -17,7 +17,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-      id-token: write  # Required for npm Trusted Publishing with OIDC
+      id-token: write # Required for npm Trusted Publishing with OIDC
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -100,7 +100,7 @@ jobs:
         with:
           title: "chore: bump package versions"
           version: pnpm changeset version
-          publish: pnpm changeset publish
+          # publish: pnpm changeset publish
           commit: "chore: bump package version"
           setupGitUser: false
         env:
