@@ -36,7 +36,7 @@ async def process_video(
 
     audio_file = extract_audio(str(video_path))
 
-    segments, info = whisper.transcribe(str(audio_file))
+    segments, _info = whisper.transcribe(str(audio_file))
     segments = list(segments)
 
     full_text = " ".join(seg.text for seg in segments)
