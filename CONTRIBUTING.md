@@ -22,6 +22,10 @@ Thank you for contributing! We maintain high standards for code quality and desi
 - **Tests** - Unit tests for main code paths
 - **Changeset** - Run `pnpm new` from repo root
 - **Passing checks** - All CI checks must pass
+- **Get assigned first** - Please raise PRs only after you're assigned to an issue first. If no issue exists, create one and get assigned to it before raising your PR.
+- **Signed commits** - Please ensure that your commits are signed.
+
+Failing these pre-requisites, your PR stands to be closed.
 
 ### Standards
 
