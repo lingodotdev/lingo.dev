@@ -38,13 +38,18 @@ jobs:
           NPM_CONFIG_PROVENANCE: true
 
       # 🔹 Wait for npm registry / CDN propagation
-      - name: Wait for npm propagation
-        run: sleep 900 # 15 minutes
+      # - name: Wait for npm propagation
+      #   run: sleep 900 # 15 minutes
 
-      # 🔹 Promote published versions to `latest`
-      - name: Promote to latest
-        run: |
-          for pkg in $(jq -r '.[] | .name + "@" + .version' .changeset/published-packages.json); do
-            echo "Promoting $pkg to latest"
-            npm dist-tag add $pkg latest
-          done
+      # # 🔹 Promote published versions to `latest`
+      # - name: Promote to latest
+      #   run: |
+      #     set -e
+      #     if [ -f .changeset/published-packages.json ]; then
+      #       for pkg in $(jq -r '.[] | .name + "@" + .version' .changeset/published-packages.json); do
+      #         echo "Promoting $pkg to latest"
+      #         npm dist-tag add "$pkg" latest
+      #       done
+      #     else
+      #       echo "No published-packages.json found, skipping promotion"
+      #     fi
