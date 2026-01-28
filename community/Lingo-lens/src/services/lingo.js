@@ -2,14 +2,12 @@ export const translateText = async (text, sourceLang, targetLang) => {
   try {
     const langMap = {
       'eng': 'en', 'jpn': 'ja', 'chi_sim': 'zh',
-      'fra': 'fr', 'spa': 'es', 'hin': 'hi',
-      'auto': 'auto' // Pass auto through
+      'fra': 'fr', 'spa': 'es', 'hin': 'hi'
     };
     
-    // If it's auto, keep it auto. Otherwise map it. Default to 'en' if unknown.
-    const sourceCode = langMap[sourceLang] || 'en';
+    // Map script to language code; default to 'auto' if unknown to allow Lingo.dev to infer
+    const sourceCode = langMap[sourceLang] || 'auto';
 
-    // CALL YOUR LOCAL SERVER (The Bridge)
     const response = await fetch('http://localhost:3001/api/translate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

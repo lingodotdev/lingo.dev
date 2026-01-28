@@ -1,42 +1,80 @@
-# Lingo.dev Community Contributions
+# LingoLens 📸
 
-Welcome to the official community space of Lingo.dev!
+**LingoLens** is a powerful **AI Visual Translator** built for the **Lingo.dev Community Sprint**. 
 
-This directory is a dedicated space for community-driven projects, demo applications, and integrations that showcase what can be built with Lingo.dev.
+It upgrades standard OCR with **Intelligent Script Detection** and **Lingo.dev's AI Language Inference**. Wrapped in a stunning **Glassmorphism UI**, it allows users to upload images of text (receipts, signs, documents) and automatically detects the language script and translation context in real-time.
 
-**Note:** The code in this directory is for examples and educational purposes. It exists separately from the core Lingo.dev product source code. If you want to contribute to the core product (like the CLI, compiler etc), you can go through our or open new one.
+## 🎥 Demo & Testing
+We have provided resources to help you test the application quickly:
 
-## 📂 What belongs here?
+### 1. Watch the Demo
+> **[Click here to watch the Demo Video on YouTube 📺](https://youtu.be/UK_GkEOumnI)**
 
-We encourage you to submit projects that help others learn and build. Ideal contributions include:
+### 2. Test with Sample Data
+I have included a sample receipt image in this repository for you to test with:
+* **File:** [`test.png`](./test.png)
+* **Usage:** Drag and drop this image into the app to see the Auto-Detection and Translation in action immediately.
 
-* **Demo Apps:** Full-stack or frontend applications (e.g., React, Next.js) demonstrating specific Lingo.dev features.
-* **Integrations:** Scripts or plugins that connect Lingo.dev with other tools in your stack.
-* **Starters/Boilerplates:** Minimal setups to help new users get up and running quickly.
-* **Tutorial Code:** Source code companion files for blogs or video tutorials.
+## 🚀 Lingo.dev Features Highlighted
+This project demonstrates key capabilities of the Lingo.dev ecosystem:
+1.  **AI Language Inference:** Uses the `sourceLocale: null` feature of the **Lingo.dev SDK** to automatically identify the source language from the text context.
+2.  **Smart Script Detection:** Implements **Tesseract OSD** (Orientation & Script Detection) to dynamically load the correct OCR alphabet (e.g., Japanese vs. Latin) before reading.
+3.  **Real-time Localization:** Uses `lingo.localizeText` to provide accurate, context-aware translations for dynamic user content.
+4.  **Secure Backend Proxy:** Implements a robust Node.js/Express bridge (`server.js`) to handle API authentication securely.
 
-## 🚀 How to Contribute
+## 🛠️ Setup Instructions
 
-We love seeing what you build! To contribute to this directory:
+### Prerequisites
+* Node.js (v18 or higher)
+* A Lingo.dev API Key
 
-1. **Fork & Branch:** Fork the repository and create a new branch for your contribution.
-2. **Create a Directory:** Inside `community/`, create a new folder for your project. Please use `kebab-case` for naming (e.g., `community/react-todo-demo`).
-3. **Add Documentation:** Every contribution **must** have its own `README.md` inside its folder explaining:
-    * What the project does.
-    * Prerequisites (e.g., Node version, API keys).
-    * How to run it locally.
-4. **Submit a PR:** Open a Pull Request targeting the `main` branch. Please tag your PR with `community-submission` so our team can spot it easily.
-5. Don't forget to add a changeset in your PRs as mentioned in our [contributor's guide](https://github.com/lingodotdev/lingo.dev/blob/main/CONTRIBUTING.md).
 
-## 💬 Join the Discussion
+### 1. Installation
+Navigate to the project directory and install dependencies:
+```bash
+cd community/lingo-lens
+npm install
+```
 
-If you have an idea for a contribution but aren't sure where to start, or if you want to show off your work:
+### 2. Configuration
+Create a .env file in the root of the lingo-lens directory and add your API key:
+```bash
+VITE_LINGO_API_KEY=lin_your_actual_api_key_here
+```
 
-* **Discord:** Join our [Discord server](https://lingo.dev/go/discord) to interact with our fellow community members.
-* **Issues:** You can also open a GitHub Issue with the tag `community-submission-idea` to discuss potential contributions.
+## 3. Running the App
 
-## ⚖️ License & Disclaimer
+This application requires **both the backend server** (to communicate with Lingo.dev) and the **frontend client** (React) to run simultaneously.
 
-Code in the `community/` directory is contributed by the community. While the Lingo.dev team reviews submissions, these projects are maintained by their respective authors.
+---
 
-By contributing, you agree that your code will be licensed under the same terms as the repository.
+### Terminal 1 — Backend Server
+
+```bash
+node server.js
+```
+
+You should see: `✅ Proxy Server running on http://localhost:3001`
+
+
+### Terminal 2 — Frontend Client
+
+```bash
+npm run dev
+```
+
+Open the URL shown in the terminal: `(usually: http://localhost:5173)`
+
+## 📖 How It Works
+
+1. **Upload & Detect** User uploads an image. The app first runs **Tesseract OSD** to detect the script (e.g., "Han" for Chinese, "Latin" for English).
+
+2. **Extract (OCR)** Based on the script, the app loads the optimized OCR model (e.g., `chi_sim` or `eng`) and extracts the raw text from the image.
+
+3. **Inference** The frontend sends the text to the server with `sourceLang: 'auto'`.
+
+4. **Translate** The **Lingo.dev SDK** analyzes the text content, infers the source language, and generates a context-aware translation.
+
+5. **Result** The original text and the translation appear instantly on the animated Glassmorphism interface.
+
+

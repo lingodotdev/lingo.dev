@@ -14,7 +14,7 @@ function App() {
   const [sourceLang, setSourceLang] = useState("auto"); 
   const [targetLang, setTargetLang] = useState("en");
 
-  // Cleanup object URL to prevent memory leaks
+  // Cleanup object URL to prevent memory leaks when component unmounts
   useEffect(() => {
     return () => {
       if (image) URL.revokeObjectURL(image);
@@ -23,6 +23,9 @@ function App() {
 
   const handleImageUpload = (e) => {
     if (e.target.files && e.target.files[0]) {
+      // Revoke previous URL before creating a new one to prevent memory leaks
+      if (image) URL.revokeObjectURL(image);
+      
       setImage(URL.createObjectURL(e.target.files[0]));
       setExtractedText(""); 
       setTranslatedText("");
@@ -43,15 +46,13 @@ function App() {
       // PHASE 1: Auto-Detect Script (if 'auto' is selected)
       if (sourceLang === 'auto') {
         setProgress("Detecting Script...");
+        const detector = await Tesseract.createWorker('osd', 1, {
+            legacyCore: true,
+            legacyLang: true
+        });
+        
         try {
-            // FIX: Load Legacy Core for 'detect' to work
-            const detector = await Tesseract.createWorker('osd', 1, {
-                legacyCore: true,
-                legacyLang: true
-            });
             const detectResult = await detector.detect(image);
-            await detector.terminate();
-
             const script = detectResult.data.script;
             console.log("Detected Script:", script);
 
@@ -59,19 +60,23 @@ function App() {
             else if (script === 'Han') ocrLang = 'chi_sim'; 
             else if (script === 'Devanagari') ocrLang = 'hin';
             else ocrLang = 'eng'; 
-            
-        } catch (detectError) {
-            console.warn("Auto-detect failed, defaulting to English:", detectError);
-            ocrLang = 'eng'; 
+        } finally {
+            // Ensure detector is always terminated to prevent resource leaks
+            await detector.terminate();
         }
       }
 
       // PHASE 2: OCR
       setProgress(`Reading Text (${ocrLang === 'chi_sim' ? 'Chinese' : ocrLang})...`);
       const worker = await Tesseract.createWorker(ocrLang); 
-      const result = await worker.recognize(image);
-      currentText = result.data.text;
-      await worker.terminate();
+      
+      try {
+        const result = await worker.recognize(image);
+        currentText = result.data.text;
+      } finally {
+        // Ensure worker is always terminated to prevent resource leaks
+        await worker.terminate();
+      }
 
       if (!currentText.trim()) throw new Error("No text found. Try a clearer image.");
       setExtractedText(currentText);
