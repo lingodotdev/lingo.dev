@@ -1,5 +1,17 @@
 # @lingo.dev/\_compiler
 
+## 0.10.0
+
+### Minor Changes
+
+- [#1900](https://github.com/lingodotdev/lingo.dev/pull/1900) [`f30b4b3`](https://github.com/lingodotdev/lingo.dev/commit/f30b4b305cde3f02d4af4eafe4d01eb0c3aa336b) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Add support for OpenAI-compatible providers (e.g., Nebius) via OPENAI_BASE_URL environment variable
+
+## 0.9.1
+
+### Patch Changes
+
+- [#1874](https://github.com/lingodotdev/lingo.dev/pull/1874) [`5ca8439`](https://github.com/lingodotdev/lingo.dev/commit/5ca8439aedd2909e359652f8f3a1b33d4ccd9f6a) Thanks [@vrcprl](https://github.com/vrcprl)! - simplify observability
+
 ## 0.9.0
 
 ### Minor Changes
