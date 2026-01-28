@@ -31,8 +31,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       images: "https://lingo-video.vercel.app/desktop.png",
       creator: "dev Shubham oulkar",
       creatorId: "@shubhuoulkar",
-      site: `https://lingo-video.vercel.app/${locale}`,
-      siteId: "Lingo.video",
     },
     openGraph: {
       type: "website",

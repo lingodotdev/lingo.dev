@@ -23,6 +23,10 @@ const nextConfig: NextConfig = {
         rule.test?.test?.(".svg"),
     );
 
+    if (!fileLoaderRule) {
+      return config;
+    }
+
     config.module.rules.push(
       // Reapply the existing rule, but only for svg imports ending in ?url
       {
@@ -43,10 +47,6 @@ const nextConfig: NextConfig = {
     fileLoaderRule.exclude = /\.svg$/i;
 
     return config;
-  },
-  env: {
-    GOOGLE_API_KEY: process.env.GOOGLE_API_KEY,
-    LINGODOTDEV_API_KEY: process.env.LINGODOTDEV_API_KEY,
   },
 };
 

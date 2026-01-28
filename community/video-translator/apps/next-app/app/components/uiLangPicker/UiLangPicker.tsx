@@ -20,13 +20,18 @@ export default function UiLangPicker({ paramLocale }: Props) {
       .find((row) => row.startsWith("lingo-locale="))
       ?.split("=")[1];
 
-    route.replace(cookieLang ? `/${cookieLang}` : "/en");
-  }, [route]);
+    // Validate cookie locale against supported locales
+    const isValidCookieLang =
+      cookieLang && SUPPORTED_LOCALES.includes(cookieLang);
 
-  const changeLocale = (code: string) => {
-    setLingoLocale(code);
-    route.push(`/${code}`);
-  };
+    // Only redirect when:
+    // 1. cookieLang is valid
+    // 2. cookieLang differs from explicit URL locale
+    if (isValidCookieLang && cookieLang !== paramLocale) {
+      route.replace(`/${cookieLang}`);
+    }
+  }, [route, paramLocale]);
 
-  return <LangPicker currentLocale={resolveLocale} callback={changeLocale} />;
+
+  return <LangPicker currentLocale={ resolveLocale } callback = { changeLocale } />;
 }
