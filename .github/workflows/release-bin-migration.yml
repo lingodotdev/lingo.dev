@@ -53,3 +53,4 @@ jobs:
       #     else
       #       echo "No published-packages.json found, skipping promotion"
       #     fi
+# need to have npm token in github secrets
