@@ -1,5 +1,54 @@
 # @lingo.dev/compiler
 
+## 0.3.0
+
+### Minor Changes
+
+- [#1888](https://github.com/lingodotdev/lingo.dev/pull/1888) [`8cd5c6b`](https://github.com/lingodotdev/lingo.dev/commit/8cd5c6b80d6fd17f698674ec39c3f010bc8359ec) Thanks [@yashrajpatilll](https://github.com/yashrajpatilll)! - Make pluralization opt-in by default and infer the pluralization model from translation config.
+
+## 0.2.0
+
+### Minor Changes
+
+- [#1900](https://github.com/lingodotdev/lingo.dev/pull/1900) [`f30b4b3`](https://github.com/lingodotdev/lingo.dev/commit/f30b4b305cde3f02d4af4eafe4d01eb0c3aa336b) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Add support for OpenAI-compatible providers (Nebius, Together AI, etc.) by using Chat Completions API when OPENAI_BASE_URL is set
+
+- [#1900](https://github.com/lingodotdev/lingo.dev/pull/1900) [`f30b4b3`](https://github.com/lingodotdev/lingo.dev/commit/f30b4b305cde3f02d4af4eafe4d01eb0c3aa336b) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Add support for OpenAI-compatible providers (e.g., Nebius) via OPENAI_BASE_URL environment variable
+
+### Patch Changes
+
+- Updated dependencies []:
+  - lingo.dev@0.125.4
+
+## 0.1.13
+
+### Patch Changes
+
+- [#1874](https://github.com/lingodotdev/lingo.dev/pull/1874) [`5ca8439`](https://github.com/lingodotdev/lingo.dev/commit/5ca8439aedd2909e359652f8f3a1b33d4ccd9f6a) Thanks [@vrcprl](https://github.com/vrcprl)! - simplify observability
+
+- Updated dependencies [[`5ca8439`](https://github.com/lingodotdev/lingo.dev/commit/5ca8439aedd2909e359652f8f3a1b33d4ccd9f6a)]:
+  - lingo.dev@0.125.1
+
+## 0.1.12
+
+### Patch Changes
+
+- Updated dependencies [[`e3a383b`](https://github.com/lingodotdev/lingo.dev/commit/e3a383b8a82110984cef1d1ce477d1e0bf65c488)]:
+  - lingo.dev@0.125.0
+
+## 0.1.11
+
+### Patch Changes
+
+- Updated dependencies [[`29c598c`](https://github.com/lingodotdev/lingo.dev/commit/29c598caa1fc6b02693eafa12d245f8fbfdfe4b8), [`29c598c`](https://github.com/lingodotdev/lingo.dev/commit/29c598caa1fc6b02693eafa12d245f8fbfdfe4b8)]:
+  - lingo.dev@0.124.0
+
+## 0.1.10
+
+### Patch Changes
+
+- Updated dependencies [[`403bba9`](https://github.com/lingodotdev/lingo.dev/commit/403bba908d8abd9bb4c9cd58072e54f3f72e8e96)]:
+  - lingo.dev@0.123.0
+
 ## 0.1.9
 
 ### Patch Changes
