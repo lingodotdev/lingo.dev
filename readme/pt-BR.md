@@ -197,7 +197,7 @@ Somos orientados pela comunidade e adoramos contribuições!
 
 ## ⭐ Histórico de estrelas
 
-Se você gosta do que estamos fazendo, nos dê uma ⭐ e nos ajude a alcançar 6.000 estrelas! 🌟
+Se você gosta do que estamos fazendo, nos dê uma ⭐ e nos ajude a alcançar 10.000 estrelas! 🌟
 
 [
 
