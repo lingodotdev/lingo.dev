@@ -753,7 +753,7 @@ export default function Home() {
     link.href = url;
     link.download = `onboarding-pack-${selectedLocale}.doc`;
     link.click();
-    URL.revokeObjectURL(url);
+    setTimeout(() => URL.revokeObjectURL(url), 0);
   };
 
   return (
