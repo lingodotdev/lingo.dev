@@ -1,0 +1,260 @@
+{
+  "files": {
+    "[lang]/page.tsx": {
+      "scopes": {
+        "9/declaration/body/1/argument/1/1": {
+          "type": "element",
+          "hash": "6dc03bb918adda9a9696bcda3e89affd",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Lingo.video"
+        },
+        "9/declaration/body/1/argument/3/1": {
+          "type": "element",
+          "hash": "80babc657291e3a9477a5d2d5fcc4dd1",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Real time video subtitle translations"
+        }
+      }
+    },
+    "components/cards/ImpactGrid.tsx": {
+      "scopes": {
+        "7/declaration/body/0/argument/1": {
+          "type": "element",
+          "hash": "a4be51d7f65f54f0d0fb87c97e6cccff",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Impact & Benefits for Global Companies"
+        },
+        "7/declaration/body/0/argument/3/11/1/3": {
+          "type": "element",
+          "hash": "a7c0cde82544ec4b1f3fe72360ab8362",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Minimizes developer workload"
+        },
+        "7/declaration/body/0/argument/3/11/3": {
+          "type": "element",
+          "hash": "c76c2511ee795f2304fe543bfb0cc956",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "No extra development effort is required to maintain multilingual video content."
+        },
+        "7/declaration/body/0/argument/3/15/1/3": {
+          "type": "element",
+          "hash": "7539b6bc3687fc89939f2a2ef569c711",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Faster time-to-market"
+        },
+        "7/declaration/body/0/argument/3/15/3": {
+          "type": "element",
+          "hash": "30cfdd28160fb31d9a1563745b198a25",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Videos can be shipped in days instead of months, accelerating global reach."
+        },
+        "7/declaration/body/0/argument/3/19/1/3": {
+          "type": "element",
+          "hash": "d3c4620a7b01b2ec1e4d2ce20ffe6c92",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Unlimited language support"
+        },
+        "7/declaration/body/0/argument/3/19/3": {
+          "type": "element",
+          "hash": "db2afaa644c0f47967e1a7a38f4cc426",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "AI-driven translation opens the door to reaching any country in the world."
+        },
+        "7/declaration/body/0/argument/3/23/1/3": {
+          "type": "element",
+          "hash": "d02b5f5f3fe36e8a72035a4741c6164f",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Focus on product, not translation"
+        },
+        "7/declaration/body/0/argument/3/23/3": {
+          "type": "element",
+          "hash": "025ccaa34f07d86ce5e6c89ccc22a76a",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Teams can concentrate on improving the core product while the system handles multilingual content automatically."
+        },
+        "7/declaration/body/0/argument/3/3/1/3": {
+          "type": "element",
+          "hash": "b64a458da845c30afb921ec448766173",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Eliminates maintenance of transcripts and audio files"
+        },
+        "7/declaration/body/0/argument/3/3/3": {
+          "type": "element",
+          "hash": "c6e4af30d0b2e000f1a1529cecd26aea",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "No need to manually create or store .vtt subtitle files and audio tracks for each language."
+        },
+        "7/declaration/body/0/argument/3/7/1/3": {
+          "type": "element",
+          "hash": "122e543c2ef5b8f7fc7e51aae2c1bfa2",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Reduces database and storage costs"
+        },
+        "7/declaration/body/0/argument/3/7/3": {
+          "type": "element",
+          "hash": "fb5644a60eda10ddfa5ff003d62e26cd",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Subtitles are generated and translated on the fly, so companies don’t pay for storing multiple language files."
+        }
+      }
+    },
+    "components/common/LangPicker.tsx": {
+      "scopes": {
+        "4/declaration/body/3/argument/1/1/expression/0/body": {
+          "type": "element",
+          "hash": "9fa0344cd55fc839f479bb31b9e8150b",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<expression/> (<function:code.toUpperCase/> )"
+        }
+      }
+    },
+    "components/footer/Footer.tsx": {
+      "scopes": {
+        "1/declaration/body/0/argument/1/1": {
+          "type": "element",
+          "hash": "6dc03bb918adda9a9696bcda3e89affd",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Lingo.video"
+        },
+        "1/declaration/body/0/argument/1/3/1/1": {
+          "type": "element",
+          "hash": "23652182b331c1a420b4de8cb45f71d5",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "LinkedIn"
+        },
+        "1/declaration/body/0/argument/1/3/3/1": {
+          "type": "element",
+          "hash": "4dce9d0cd70d5ff021737def04bdcc6c",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Frontend Mentor"
+        },
+        "1/declaration/body/0/argument/1/3/5/1": {
+          "type": "element",
+          "hash": "9f6e9cc35d30953df77a5d1a52b8281b",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "X"
+        },
+        "1/declaration/body/0/argument/1/3/7/1": {
+          "type": "element",
+          "hash": "96567c7530b607a2ff10d1ae3ee3ce40",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "GitHub – lingo.video"
+        },
+        "1/declaration/body/0/argument/1/5": {
+          "type": "element",
+          "hash": "141aa18b8611959639a0dfc4403c0825",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "© 2025 Shubham Oulkar. All rights reserved."
+        }
+      }
+    },
+    "components/transcript/Transcript.tsx": {
+      "scopes": {
+        "5/declaration/body/15/argument/1": {
+          "type": "element",
+          "hash": "b51c8af9fc5b45a32be1b0809df2ab3a",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:svg><element:path></element:path></element:svg> Real-Time Transcript"
+        },
+        "5/declaration/body/15/argument/3/1/1": {
+          "type": "element",
+          "hash": "70b76d83e02186b80f0bd35725f880d5",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Original (<element:span>en</element:span>):"
+        },
+        "5/declaration/body/15/argument/3/3/1/1": {
+          "type": "element",
+          "hash": "07f2843202d65a7e2e93e6082bd2d951",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Translated to (<element:span>{resolveLocale}</element:span>) using Lingo Engine"
+        },
+        "5/declaration/body/15/argument/5/1": {
+          "type": "element",
+          "hash": "fba71dbdef10f12fd3735d9497619b8b",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "*Note: Change the language in the Lingo engine to receive real-time translated audio. Due to streaming and decoding, audio may start a few seconds later."
+        },
+        "5/declaration/body/15/argument/5/3": {
+          "type": "element",
+          "hash": "17dedff0a6f58c0cbc4eb068c1ccb92d",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "WS Status: <element:span>{status}</element:span>"
+        }
+      }
+    },
+    "components/video/Video.tsx": {
+      "scopes": {
+        "4/declaration/body/3/argument/1/1/3-label": {
+          "type": "attribute",
+          "hash": "e1eeeb379f86a015d6e581fcbc4af7f3",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "English"
+        },
+        "4/declaration/body/3/argument/1/3": {
+          "type": "element",
+          "hash": "f03dfb8b14d7cb1f4b986525ac296091",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "*Note: Press play to start the cue changes and trigger translations with audio. Original audio is muted by default."
+        }
+      }
+    }
+  }
+}

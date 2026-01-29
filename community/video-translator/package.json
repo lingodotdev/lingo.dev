@@ -1,0 +1,28 @@
+{
+  "name": "lingo.video",
+  "version": "0.0.0",
+  "description": "Real time video subtitles translation",
+  "private": "true",
+  "scripts": {
+    "dev": "turbo dev",
+    "lint": "biome check",
+    "format": "biome format --write"
+  },
+  "keywords": [
+    "Lingo.dev",
+    "i18n",
+    "AI",
+    "video translation"
+  ],
+  "author": "oulkarshubhu@gmail.com",
+  "license": "CC-BY-4.0",
+  "packageManager": "pnpm@10.20.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "devDependencies": {
+    "turbo": "latest",
+    "@biomejs/biome": "^2.3.5"
+  }
+}
