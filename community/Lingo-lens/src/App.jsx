@@ -118,9 +118,9 @@ function App() {
         <header className="mb-12 text-center space-y-4">
           <div className="inline-flex items-center justify-center p-3 mb-4 rounded-2xl bg-slate-800/50 backdrop-blur-md border border-slate-700/50 shadow-xl">
              <ScanLine className="w-8 h-8 text-cyan-400 mr-3" />
-             <h1 className="text-5xl font-extrabold tracking-tight bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 text-transparent bg-clip-text">
-               LingoLens
-             </h1>
+             <h1 className="text-5xl font-extrabold tracking-tight leading-relaxed pb-2 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 text-transparent bg-clip-text">
+              LingoLens
+            </h1>
           </div>
           <p className="text-slate-400 text-lg max-w-lg mx-auto leading-relaxed">
             AI-Powered visual translation engine. <br/>

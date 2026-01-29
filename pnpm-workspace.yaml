@@ -6,4 +6,3 @@ packages:
   - "./action"
   - "./php/*"
   - "./scripts/*"
-  - "./community/Lingo-lens"
