@@ -11,9 +11,12 @@ const PORT = 3001;
 app.use(cors()); 
 app.use(express.json());
 
-const apiKey = process.env.VITE_LINGO_API_KEY;
+// Security: Renamed to LINGO_API_KEY to distinguish it as a server-side secret
+const apiKey = process.env.LINGO_API_KEY;
+
+// Fail-fast: Stop the server immediately if the API key is missing
 if (!apiKey) {
-  console.error("ERROR: VITE_LINGO_API_KEY is missing in .env file. Server exiting.");
+  console.error("ERROR: LINGO_API_KEY is missing in .env file. Server exiting.");
   process.exit(1);
 }
 
@@ -23,7 +26,7 @@ app.post('/api/translate', async (req, res) => {
   try {
     const { text, sourceLang, targetLang } = req.body;
     
-    // Input validation
+    // Input Validation: Ensure all required parameters are present and valid
     if (!text || typeof text !== 'string') {
       return res.status(400).json({ error: 'Missing or invalid "text" parameter' });
     }
@@ -33,6 +36,8 @@ app.post('/api/translate', async (req, res) => {
 
     console.log(`Processing: ${sourceLang} -> ${targetLang}`);
 
+    // Configuration: Pass null for sourceLocale if 'auto' is selected 
+    // to trigger Lingo.dev AI inference
     const options = {
       targetLocale: targetLang,
       sourceLocale: sourceLang === 'auto' ? null : sourceLang
@@ -48,7 +53,7 @@ app.post('/api/translate', async (req, res) => {
 
   } catch (error) {
     console.error("Server Error:", error);
-    // Return generic error to client for security
+    // Security: Avoid exposing raw SDK error messages to the client
     res.status(500).json({ error: 'Translation failed. Please try again.' });
   }
 });

@@ -28,7 +28,6 @@ This project demonstrates key capabilities of the Lingo.dev ecosystem:
 * Node.js (v18 or higher)
 * A Lingo.dev API Key
 
-
 ### 1. Installation
 Navigate to the project directory and install dependencies:
 ```bash
@@ -39,7 +38,7 @@ npm install
 ### 2. Configuration
 Create a .env file in the root of the lingo-lens directory and add your API key:
 ```bash
-VITE_LINGO_API_KEY=lin_your_actual_api_key_here
+LINGO_API_KEY=link_your_actual_api_key_here
 ```
 
 ## 3. Running the App
