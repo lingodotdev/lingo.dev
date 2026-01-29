@@ -168,11 +168,11 @@ export class MetadataManager {
 
     const release = await lockfile.lock(this.filePath, {
       retries: {
-        retries: 10,
+        retries: 20,
         minTimeout: 50,
-        maxTimeout: 1000,
+        maxTimeout: 2000,
       },
-      stale: 2000,
+      stale: 5000,
     });
 
     try {
