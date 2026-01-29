@@ -76,7 +76,7 @@ export const SUPPORTED_LANGUAGES: Language[] = [
   { code: 'sq', name: 'Albanian', nativeName: 'Shqip', region: 'Europe' },
   { code: 'mk', name: 'Macedonian', nativeName: 'Македонски', region: 'Europe' },
   { code: 'bs', name: 'Bosnian', nativeName: 'Bosanski', region: 'Europe' },
-  { code: 'me', name: 'Montenegrin', nativeName: 'Crnogorski', region: 'Europe' },
+  { code: 'cnr', name: 'Montenegrin', nativeName: 'Crnogorski', region: 'Europe' },
   { code: 'ka', name: 'Georgian', nativeName: 'ქართული', region: 'Asia' },
   { code: 'hy', name: 'Armenian', nativeName: 'Հայերեն', region: 'Asia' },
   { code: 'az', name: 'Azerbaijani', nativeName: 'Azərbaycan', region: 'Asia' },

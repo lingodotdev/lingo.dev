@@ -26,7 +26,7 @@ export default function LanguageSelector({
     selectedLanguageProp || null,
   );
   const [searchQuery, setSearchQuery] = useState("");
-  const [activeRegion, setActiveRegion] = useState<string | null>(null);
+  const [activeRegion, setActiveRegion] = useState<string | null | undefined>(undefined);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -70,7 +70,7 @@ export default function LanguageSelector({
   }, []);
 
   useEffect(() => {
-    if (isOpen && Object.keys(languagesByRegion).length > 0 && !activeRegion) {
+    if (isOpen && Object.keys(languagesByRegion).length > 0 && activeRegion === undefined) {
       setActiveRegion(Object.keys(languagesByRegion)[0]);
     }
   }, [isOpen, languagesByRegion, activeRegion]);

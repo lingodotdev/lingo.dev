@@ -26,6 +26,7 @@ export default function ReadPage() {
   const [selectedLanguage, setSelectedLanguage] = useState<string | null>(null)
   const [translating, setTranslating] = useState(false)
   const [showOriginal, setShowOriginal] = useState(true)
+  const [resolvedUrl, setResolvedUrl] = useState<string | null>(null)
 
   useEffect(() => {
     let cancelled = false
@@ -36,6 +37,7 @@ export default function ReadPage() {
 
         const resolvedParams = await params;
         const decodedUrl = reconstructUrl(resolvedParams.url as string | string[])
+        setResolvedUrl(decodedUrl)
 
         setLoading(true)
         setCleanupStatus('')
@@ -119,7 +121,7 @@ export default function ReadPage() {
   }, [params])
 
   async function handleLanguageChange(language: string | null) {
-    if (!article) return
+    if (!article || !resolvedUrl) return
 
     if (language === null) {
       setShowOriginal(true)
@@ -139,9 +141,7 @@ export default function ReadPage() {
       setShowOriginal(false)
       setSelectedLanguage(language)
 
-      const resolvedParams = await params
-      const decodedUrl = reconstructUrl(resolvedParams.url as string | string[])
-      saveToStorage(decodedUrl, {
+      saveToStorage(resolvedUrl, {
         article: {
           content: article.markdown,
           title: article.metadata.title,
