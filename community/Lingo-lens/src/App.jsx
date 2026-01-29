@@ -91,16 +91,18 @@ function App() {
 
     // PHASE 3: TRANSLATE
     try {
-      setProgress(`Translating to ${targetLang.toUpperCase()}...`);
-      const translation = await translateText(currentText, sourceLang, targetLang);
-      setTranslatedText(translation);
-    } catch (transError) {
-      console.error(transError);
-      setTranslatedText("Translation Failed: " + transError.message);
-    } finally {
-      setIsProcessing(false);
-      setProgress("Done!");
-    }
+  setProgress(`Translating to ${targetLang.toUpperCase()}...`);
+  const translation = await translateText(currentText, sourceLang, targetLang);
+  setTranslatedText(translation);
+  setProgress("Done!"); // Move this here from the finally block
+} catch (transError) {
+  console.error(transError);
+  setTranslatedText("Translation Failed: " + transError.message);
+  setProgress("Failed"); // Add this line
+} finally {
+  setIsProcessing(false);
+  // Remove setProgress("Done!") from here
+}
   };
 
   return (
@@ -192,7 +194,7 @@ function App() {
             <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-3xl blur opacity-20 group-hover:opacity-40 transition-opacity duration-500"></div>
             <div className="relative flex flex-col items-center justify-center min-h-[300px] border-2 border-dashed border-slate-600/50 rounded-3xl bg-slate-900/50 backdrop-blur-sm transition-all group-hover:border-cyan-400/50 group-hover:bg-slate-800/50 cursor-pointer overflow-hidden">
               
-              <input type="file" accept="image/*" onChange={handleImageUpload} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20" />
+              <input type="file" accept="image/*" disabled={isProcessing} onChange={handleImageUpload} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20" />
               
               {!image ? (
                 <div className="text-center space-y-6 p-10 transition-transform group-hover:scale-105 duration-300">

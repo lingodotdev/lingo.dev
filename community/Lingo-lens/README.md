@@ -31,7 +31,7 @@ This project demonstrates key capabilities of the Lingo.dev ecosystem:
 ### 1. Installation
 Navigate to the project directory and install dependencies:
 ```bash
-cd community/lingo-lens
+cd community/Lingo-lens
 npm install
 ```
 
@@ -41,7 +41,7 @@ Create a .env file in the root of the lingo-lens directory and add your API key:
 LINGO_API_KEY=link_your_actual_api_key_here
 ```
 
-## 3. Running the App
+### 3. Running the App
 
 This application requires **both the backend server** (to communicate with Lingo.dev) and the **frontend client** (React) to run simultaneously.
 
