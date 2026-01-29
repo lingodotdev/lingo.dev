@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.125.5
+
+### Patch Changes
+
+- [#1919](https://github.com/lingodotdev/lingo.dev/pull/1919) [`f1a64a6`](https://github.com/lingodotdev/lingo.dev/commit/f1a64a6f0f2d2a24734f22d1ca835a4c2774b855) Thanks [@sumitsaurabh927](https://github.com/sumitsaurabh927)! - updated contribution guide and star count
+
 ## 0.125.4
 
 ### Patch Changes
