@@ -1,0 +1,11 @@
+{
+  "title": "Video Lingo AI",
+  "subtitle": "Transforma tus vídeos en texto con transcripción impulsada por IA",
+  "uploadText": "Suelta tu vídeo aquí o haz clic para explorar",
+  "uploadSubtext": "Compatible con MP4, AVI, MOV y más",
+  "generateSummary": "Generar resumen con IA",
+  "processing": "Procesando tu vídeo...",
+  "uploadBtn": "Subir y transcribir",
+  "summaryTitle": "Resumen generado con IA",
+  "transcriptTitle": "Transcripción completa"
+}
