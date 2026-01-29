@@ -197,7 +197,7 @@ Wir sind community-getrieben und lieben Beiträge!
 
 ## ⭐ Star-Verlauf
 
-Wenn dir gefällt, was wir tun, gib uns einen ⭐ und hilf uns, 6.000 Sterne zu erreichen! 🌟
+Wenn Ihnen gefällt, was wir tun, geben Sie uns einen ⭐ und helfen Sie uns, 10.000 Sterne zu erreichen! 🌟
 
 [
 
