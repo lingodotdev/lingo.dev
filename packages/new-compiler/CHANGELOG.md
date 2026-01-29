@@ -1,5 +1,11 @@
 # @lingo.dev/compiler
 
+## 0.3.1
+
+### Patch Changes
+
+- [#1932](https://github.com/lingodotdev/lingo.dev/pull/1932) [`2c1246e`](https://github.com/lingodotdev/lingo.dev/commit/2c1246e0d640c8dd88ef6c81683d4c6556ec5110) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Fixed metadata file lock contention errors (ELOCKED) during parallel builds by increasing lock retry count and timeouts
+
 ## 0.3.0
 
 ### Minor Changes
