@@ -42,7 +42,7 @@ export async function translateWithLingo(
   })) as LingoResponse;
 
   if (typeof result === "string") {
-    return result;
+    return result || text;
   }
 
   if (result && typeof result === "object" && "outputText" in result) {

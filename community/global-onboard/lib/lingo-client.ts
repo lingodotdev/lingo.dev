@@ -26,7 +26,7 @@ export async function translateWelcomeNote(
     throw new Error(payload.error || "Translation request failed");
   }
 
-  const payload = (await response.json()) as TranslationResponse;
+  const payload = (await response.json().catch(() => ({}))) as TranslationResponse;
   if (!payload.translated) {
     throw new Error(payload.error || "Translation unavailable");
   }
