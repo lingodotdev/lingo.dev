@@ -1,0 +1,39 @@
+.video_player {
+  display: grid;
+  gap: 2rem;
+  max-width: 1000px;
+  grid-template-columns: 1fr;
+}
+
+.video_container {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--card-background);
+}
+
+.video_container > video {
+  width: 100%;
+  height: auto;
+}
+
+.video_note {
+  padding: 0.3rem;
+  font-size: 0.75rem;
+  color: var(--foreground);
+  background-color: var(--card-background);
+}
+
+@media (max-width: 600px) {
+  .video_container {
+    flex-direction: column;
+  }
+}
+
+@media (min-width: 768px) {
+  .video_player {
+    grid-template-columns: 1fr 1fr;
+  }
+}

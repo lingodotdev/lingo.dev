@@ -35,6 +35,10 @@ export type LingoConfigRequiredFields = "sourceLocale" | "targetLocales";
 
 export type LingoInternalFields = "environment" | "cacheType";
 
+export type PartialPluralizationConfig = Partial<
+  Omit<PluralizationConfig, "sourceLocale">
+>;
+
 /**
  * Configuration for the Lingo compiler
  */
@@ -42,9 +46,10 @@ export type PartialLingoConfig = Pick<LingoConfig, LingoConfigRequiredFields> &
   Partial<
     Omit<
       LingoConfig,
-      LingoConfigRequiredFields | "dev" | LingoInternalFields
+      LingoConfigRequiredFields | "dev" | LingoInternalFields | "pluralization"
     > & {
       dev: Partial<LingoConfig["dev"]>;
+      pluralization: PartialPluralizationConfig;
     }
   >;
 
