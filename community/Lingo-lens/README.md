@@ -36,7 +36,7 @@ npm install
 ```
 
 ### 2. Configuration
-Create a .env file in the root of the lingo-lens directory and add your API key:
+Create a .env file in the root of the Lingo-lens directory and add your API key:
 ```bash
 LINGO_API_KEY=link_your_actual_api_key_here
 ```
