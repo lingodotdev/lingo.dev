@@ -1,0 +1,17 @@
+{
+  "name": "ws-server",
+  "private": true,
+  "type": "module",
+  "main": "ws-server.js",
+  "scripts": {
+    "dev": "node --watch ws-server.js"
+  },
+  "dependencies": {
+    "@google/genai": "^1.30.0",
+    "dotenv": "^17.2.3",
+    "express": "latest",
+    "lingo.dev": "^0.115.0",
+    "redis": "^5.10.0",
+    "ws": "^8.18.3"
+  }
+}
