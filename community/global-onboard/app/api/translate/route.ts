@@ -8,6 +8,8 @@ type TranslationPayload = {
   targetLocale?: Locale;
 };
 
+const MAX_TEXT_LENGTH = 2000;
+
 export async function POST(request: Request) {
   let payload: TranslationPayload;
 
@@ -22,6 +24,10 @@ export async function POST(request: Request) {
 
   if (!text || typeof text !== "string") {
     return NextResponse.json({ error: "Missing welcome note" }, { status: 400 });
+  }
+
+  if (text.length > MAX_TEXT_LENGTH) {
+    return NextResponse.json({ error: "Welcome note is too long" }, { status: 413 });
   }
 
   if (!targetLocale || !SUPPORTED_LOCALES.includes(targetLocale)) {
