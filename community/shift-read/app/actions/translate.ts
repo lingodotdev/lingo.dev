@@ -8,9 +8,12 @@ export async function translateMarkdown(
   targetLanguage: string
 ): Promise<{ success: boolean; data?: string; error?: string }> {
   try {
-    const lingoDotDev = new LingoDotDevEngine({
-      apiKey: process.env.LINGODOTDEV_API_KEY
-    })
+    const apiKey = process.env.LINGODOTDEV_API_KEY
+    if (!apiKey) {
+      return { success: false, error: 'Lingo.dev API key is not configured' }
+    }
+
+    const lingoDotDev = new LingoDotDevEngine({ apiKey })
 
     const translated = await lingoDotDev.localizeText(markdown, {
       sourceLocale: sourceLanguage ?? null,
