@@ -6,4 +6,3 @@ packages:
   - "./action"
   - "./php/*"
   - "./scripts/*"
-  
