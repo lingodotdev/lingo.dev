@@ -1,0 +1,86 @@
+.transcriptCard {
+  padding: 1rem;
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  max-width: 42rem;
+  margin: 0 auto;
+}
+
+.cardTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.cardIcon {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.5rem;
+  color: #3b82f6;
+}
+
+.spaceY > * + * {
+  margin-top: 1rem;
+}
+
+.originalBox {
+  padding: 0.75rem;
+  background-color: #fff;
+  border: 1px solid #f3f4f6;
+  border-radius: 0.5rem;
+}
+
+.labelOriginal {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #4b5563;
+  margin-bottom: 0.25rem;
+}
+
+.textContent {
+  color: #111827;
+  font-weight: 500;
+  min-height: 1.5rem;
+}
+
+.translatedBox {
+  padding: 0.75rem;
+  background-color: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 0.5rem;
+}
+
+.labelTranslated {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #2563eb;
+  margin-bottom: 0.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.statusFooter {
+  margin-top: 1rem;
+  font-size: 0.75rem;
+  color: #4d545e;
+  display: flex;
+  justify-content: space-between;
+
+  > :nth-child(1) {
+    max-width: 250px;
+  }
+}
+
+.statusOk {
+  font-weight: 600;
+  color: #10b981;
+}
