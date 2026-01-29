@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue"
+import { ref, computed } from "vue"
 import axios from "axios"
 import { useI18n } from "./composables/useI18n"
 
@@ -10,6 +10,25 @@ const isSummarize = ref(false)
 const loading = ref(false)
 const result = ref(null)
 const dragActive = ref(false)
+
+const safeSegments = computed(() => {
+  if (Array.isArray(result.value?.segments)) {
+    return result.value.segments.filter(
+      seg =>
+        seg &&
+        typeof seg.start === 'number' &&
+        typeof seg.text === 'string'
+    )
+  }
+
+  // Optional fallback if API returns plain text
+  if (typeof result.value === 'string') {
+    return [{ start: 0, text: result.value }]
+  }
+
+  return []
+})
+
 
 const handleDrag = (e) => {
   e.preventDefault()
@@ -155,20 +174,22 @@ const formatTime = (seconds) => {
       </div>
 
       <!-- Transcript Card -->
-      <div class="result-card" v-if="result.segments">
-        <h3 class="result-title">{{ t("transcriptTitle") }}</h3>
-        
-        <div class="transcript-list">
-          <div 
-            v-for="(seg, i) in result.segments || result" 
-            :key="i"
-            class="transcript-item"
-          >
-            <span class="timestamp">{{ formatTime(seg.start) }}</span>
-            <p class="transcript-text">{{ seg.text }}</p>
-          </div>
+    <div class="result-card" v-if="safeSegments.length">
+      <h3 class="result-title">{{ t('transcriptTitle') }}</h3>
+
+      <div class="transcript-list">
+        <div
+          v-for="(seg, i) in safeSegments"
+          :key="i"
+          class="transcript-item"
+        >
+          <span class="timestamp">
+            {{ formatTime(seg.start) }}
+          </span>
+          <p class="transcript-text">{{ seg.text }}</p>
         </div>
       </div>
+    </div>
     </div>
   </div>
 </template>
