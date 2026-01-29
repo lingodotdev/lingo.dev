@@ -197,7 +197,7 @@ Somos una comunidad impulsada por sus miembros y nos encantan las contribuciones
 
 ## ⭐ Historial de estrellas
 
-Si te gusta lo que hacemos, danos una ⭐ y ayúdanos a alcanzar las 6000 estrellas. 🌟
+Si te gusta lo que hacemos, danos una ⭐ y ayúdanos a alcanzar las 10 000 estrellas. 🌟
 
 [
 

@@ -197,7 +197,7 @@ Siamo guidati dalla community e amiamo i contributi!
 
 ## ⭐ Cronologia delle stelle
 
-Se ti piace quello che facciamo, dacci una ⭐ e aiutaci a raggiungere le 6.000 stelle! 🌟
+Se ti piace quello che stiamo facendo, lasciaci una ⭐ e aiutaci a raggiungere 10.000 stelle! 🌟
 
 [
 
