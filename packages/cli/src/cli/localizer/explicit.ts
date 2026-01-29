@@ -213,7 +213,30 @@ function createAiSdkLocalizer(params: {
         ],
       });
 
-      const result = JSON.parse(response.text);
+      // Extract JSON payload from potentially chatty response
+      let text = response.text;
+      const firstBrace = text.indexOf("{");
+      const lastBrace = text.lastIndexOf("}");
+
+      // If valid braces found, extract the JSON substring
+      if (firstBrace !== -1 && lastBrace !== -1 && lastBrace >= firstBrace) {
+        text = text.substring(firstBrace, lastBrace + 1);
+      }
+
+      // Parse with fallback to jsonrepair
+      let result;
+      try {
+        result = JSON.parse(text);
+      } catch (parseError) {
+        try {
+          const repaired = jsonrepair(text);
+          result = JSON.parse(repaired);
+        } catch (repairError) {
+          throw new Error(
+            `Failed to parse LLM response. Raw response: ${response.text.substring(0, 200)}...`,
+          );
+        }
+      }
 
       // Handle both object and string responses
       if (typeof result.data === "object" && result.data !== null) {
