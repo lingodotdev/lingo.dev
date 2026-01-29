@@ -1,0 +1,35 @@
+version: 1
+checksums:
+  702e833a6ac95d345fb343bab4963211:
+    app.title: 0a2320a48b94d281aca49bf4602b38ed
+    app.subtitle: aab5adfd23d86ab0670c1fdd1e643aae
+    hr.panel_title: 67d223270661b15bb5b55333a8c6e233
+    employee.panel_title: 00cf30ff4c195715f737c6ffe8adb23a
+    field.company_name: 75fdab82041c5d5d58a0a2c21d19017e
+    field.role: 53743bbb6ca938f5b893552e839d067f
+    field.language: 05e5958f15e46a107cccd68a9b70365c
+    section.checklist: 1a4ca5ac1813b5e8db461df1013680b9
+    section.welcome_note: eedcc13e3a8ee4f97c0433bbe476f309
+    section.template: 2857009d8e10faded1d65a2536474eec
+    field.base_language: 7fb1a950c2e441855ba80b456b382ef3
+    field.base_language_value: dc22133c729f2733dedd499db903b25a
+    label.tasks: efde951ded884b7dbf0f81e45d93a8f9
+    label.language_switcher: 7fa8806eeb911aa9ba9f013b274a2e47
+    status.translating: ea828fc0d2018d1a721cc01363dfdf0f
+    status.translation_error: dbe1930e087c74a3f88ad4385f8e5566
+    welcome.placeholder: c8f9cdb563c2187680d6d7072529b399
+  fd3573e09503a808322e454b3953abbb:
+    template/companyName: 61b4a5680e3ebafd594f029cef2124cf
+    template/role: 38538cebb2b443528b82e29ab74f7f62
+    template/tasks/0/id: 6c99c169a2bb29ea598f7a507680d409
+    template/tasks/0/title: 30ffd90cd49a547a9db15a3742e17e1a
+    template/tasks/0/description: 85f896fa16c7bb4e71de63db6f848532
+    template/tasks/1/id: 85a873fc661ff0a0d2e712678a0b79e8
+    template/tasks/1/title: 0108057523f1e3f9e16851700afb9263
+    template/tasks/1/description: f57f890883d9598998f1ffef7e984865
+    template/tasks/2/id: fb873b51f48235fb677436ed0206a3de
+    template/tasks/2/title: bb155742b9f5773025b475521b0b9641
+    template/tasks/2/description: 25edaaf33fcafb332341002ef6c779a1
+    template/tasks/3/id: 2e83083f7ef7f8b80ac7153ade9b054b
+    template/tasks/3/title: 5cd720c2a7ffed223744a610246a770d
+    template/tasks/3/description: eeabcd4fbcaa92dd899aaad93daedef3
