@@ -882,14 +882,22 @@ export default function Home() {
                         </button>
                       </div>
                       <div className="space-y-2">
+                        <label htmlFor={`task-${task.id}-title`} className="sr-only">
+                          Task title
+                        </label>
                         <input
+                          id={`task-${task.id}-title`}
                           className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm font-medium text-slate-900 focus:border-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-200 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:focus:border-white dark:focus:ring-white/20"
                           value={task.title}
                           onChange={(event) =>
                             handleTaskChange(index, "title", event.target.value)
                           }
                         />
+                        <label htmlFor={`task-${task.id}-description`} className="sr-only">
+                          Task description
+                        </label>
                         <textarea
+                          id={`task-${task.id}-description`}
                           className="h-24 w-full resize-none rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-900 focus:border-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-200 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:focus:border-white dark:focus:ring-white/20"
                           value={task.description}
                           onChange={(event) =>
@@ -911,10 +919,14 @@ export default function Home() {
               </div>
 
               <div>
-                <label className="text-xs font-semibold uppercase text-slate-500 dark:text-slate-300">
+                <label
+                  htmlFor="welcomeNote"
+                  className="text-xs font-semibold uppercase text-slate-500 dark:text-slate-300"
+                >
                   Your welcome note to the new hire
                 </label>
                 <textarea
+                  id="welcomeNote"
                   className="mt-2 h-28 w-full resize-none rounded-xl border border-slate-200 px-3 py-2 text-sm text-slate-900 focus:border-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-200 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:focus:border-white dark:focus:ring-white/20"
                   placeholder={hrStrings["welcome.placeholder"]}
                   value={welcomeNote}

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
@@ -21,21 +20,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
           "min-h-screen bg-background text-foreground antialiased transition-colors",
         )}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          forcedTheme="dark"
-          enableSystem={false}
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
+        {children}
       </body>
     </html>
   );
