@@ -196,7 +196,7 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 ## ⭐ Star 历史
 
-如果你喜欢我们的项目，欢迎给我们一个 ⭐，帮助我们达到 6,000 颗星！🌟
+如果你喜欢我们的项目，请为我们点个⭐，帮助我们达成 10,000 颗星的目标！🌟
 
 [
 

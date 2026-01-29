@@ -197,7 +197,7 @@ Jesteśmy napędzani przez społeczność i uwielbiamy Wasze wkłady!
 
 ## ⭐ Historia gwiazdek
 
-Jeśli podoba Ci się to, co robimy, daj nam ⭐ i pomóż nam osiągnąć 6 000 gwiazdek! 🌟
+Jeśli podoba Ci się to, co robimy, daj nam ⭐ i pomóż nam osiągnąć 10 000 gwiazdek! 🌟
 
 [
 
