@@ -1,5 +1,20 @@
 # @lingo.dev/\_compiler
 
+## 0.10.1
+
+### Patch Changes
+
+- [#1934](https://github.com/lingodotdev/lingo.dev/pull/1934) [`7db90c8`](https://github.com/lingodotdev/lingo.dev/commit/7db90c82b146da10db7c659c02580b3657d0b872) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Add deprecation warnings throughout legacy compiler
+
+  The legacy compiler (`@lingo.dev/_compiler`) now shows deprecation warnings when used.
+  Users are encouraged to migrate to the new compiler (`@lingo.dev/compiler`).
+
+  Changes:
+  - Added runtime deprecation warnings in `next()`, `vite()`, and the Turbopack loader
+  - Added `@deprecated` JSDoc tags to all public APIs
+  - Updated package README with migration guide and examples
+  - The deprecation warning includes information about new compiler features and migration guide link
+
 ## 0.10.0
 
 ### Minor Changes
