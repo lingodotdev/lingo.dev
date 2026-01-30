@@ -76,6 +76,8 @@
 
 **Lingo.dev Compiler**は、無料のオープンソースコンパイラミドルウェアで、既存のReactコンポーネントに変更を加えることなく、ビルド時にあらゆるReactアプリを多言語対応にすることができます。
 
+> **注意:** レガシーコンパイラ（`@lingo.dev/_compiler`）を使用している場合は、`@lingo.dev/compiler`に移行してください。レガシーコンパイラは非推奨であり、将来のリリースで削除される予定です。
+
 一度インストール:
 
 ```bash
@@ -101,26 +103,26 @@ export default async function (): Promise<NextConfig> {
 
 `next build`を実行すると、スペイン語とフランス語のバンドルが生成されます✨
 
-[ドキュメントを読む →](https://lingo.dev/compiler)で完全なガイドを確認し、[Discordに参加](https://lingo.dev/go/discord)してセットアップのサポートを受けましょう。
+[ドキュメントを読む →](https://lingo.dev/compiler)で完全なガイドを確認し、[Discordに参加](https://lingo.dev/go/discord)してセットアップのサポートを受けてください。
 
 ---
 
 ### このリポジトリには何が含まれていますか?
 
-| ツール       | 概要                                                                                | ドキュメント                            |
-| ------------ | ----------------------------------------------------------------------------------- | --------------------------------------- |
-| **Compiler** | ビルド時のReactローカライゼーション                                                 | [/compiler](https://lingo.dev/compiler) |
-| **CLI**      | Webおよびモバイルアプリ、JSON、YAML、markdownなどのワンコマンドローカライゼーション | [/cli](https://lingo.dev/cli)           |
-| **CI/CD**    | プッシュごとに翻訳を自動コミット + 必要に応じてプルリクエストを作成                 | [/ci](https://lingo.dev/ci)             |
-| **SDK**      | ユーザー生成コンテンツのリアルタイム翻訳                                            | [/sdk](https://lingo.dev/sdk)           |
+| ツール       | 概要                                                                         | ドキュメント                            |
+| ------------ | ---------------------------------------------------------------------------- | --------------------------------------- |
+| **Compiler** | ビルド時のReactローカライゼーション                                          | [/compiler](https://lingo.dev/compiler) |
+| **CLI**      | ワンコマンドでウェブ・モバイルアプリ、JSON、YAML、markdownなどをローカライズ | [/cli](https://lingo.dev/cli)           |
+| **CI/CD**    | プッシュごとに翻訳を自動コミット、必要に応じてプルリクエストを作成           | [/ci](https://lingo.dev/ci)             |
+| **SDK**      | ユーザー生成コンテンツのリアルタイム翻訳                                     | [/sdk](https://lingo.dev/sdk)           |
 
-以下は各機能の概要です 👇
+以下、各ツールの要点です👇
 
 ---
 
 ### ⚡️ Lingo.dev CLI
 
-ターミナルから直接コードとコンテンツを翻訳できます。
+ターミナルから直接コードとコンテンツを翻訳します。
 
 ```bash
 npx lingo.dev@latest run
@@ -128,13 +130,13 @@ npx lingo.dev@latest run
 
 すべての文字列をフィンガープリント化し、結果をキャッシュし、変更された部分のみを再翻訳します。
 
-セットアップ方法については[ドキュメントを参照 →](https://lingo.dev/cli)してください。
+[ドキュメントを読む →](https://lingo.dev/cli)でセットアップ方法を確認してください。
 
 ---
 
 ### 🔄 Lingo.dev CI/CD
 
-完璧な翻訳を自動的にデプロイできます。
+完璧な翻訳を自動的に配信します。
 
 ```yaml
 # .github/workflows/i18n.yml
@@ -181,7 +183,7 @@ const translated = await lingoDotDev.localizeObject(content, {
 // Returns: { greeting: "Hola", farewell: "Adiós", message: "Bienvenido a nuestra plataforma" }
 ```
 
-チャット、ユーザーコメント、その他のリアルタイムフローに最適です。
+チャット、ユーザーコメント、その他のリアルタイムフローに最適。
 
 [ドキュメントを読む →](https://lingo.dev/sdk)
 
@@ -189,15 +191,15 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 ## 🤝 コミュニティ
 
-私たちはコミュニティ主導で、貢献を歓迎しています！
+私たちはコミュニティ主導で、貢献を歓迎しています!
 
-- アイデアがありますか？[issueを開く](https://github.com/lingodotdev/lingo.dev/issues)
-- 何か修正したいですか？[PRを送る](https://github.com/lingodotdev/lingo.dev/pulls)
-- サポートが必要ですか？[Discordに参加](https://lingo.dev/go/discord)
+- アイデアがありますか? [issueを開く](https://github.com/lingodotdev/lingo.dev/issues)
+- 何か修正したいですか? [PRを送る](https://github.com/lingodotdev/lingo.dev/pulls)
+- ヘルプが必要ですか? [Discordに参加](https://lingo.dev/go/discord)
 
 ## ⭐ スター履歴
 
-私たちの取り組みが気に入ったら、⭐をつけて6,000スター達成にご協力ください！🌟
+私たちの取り組みが気に入ったら、⭐をつけて10,000スター達成にご協力ください! 🌟
 
 [
 
@@ -209,11 +211,11 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 [English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [Português (Brasil)](/readme/pt-BR.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Polski](/readme/pl.md) • [Türkçe](/readme/tr.md) • [اردو](/readme/ur.md) • [भोजपुरी](/readme/bho.md) • [অসমীয়া](/readme/as-IN.md) • [ગુજરાતી](/readme/gu-IN.md) • [മലയാളം (IN)](/readme/ml-IN.md) • [मराठी](/readme/mr-IN.md) • [ଓଡ଼ିଆ](/readme/or-IN.md) • [ਪੰਜਾਬੀ](/readme/pa-IN.md) • [සිංහල](/readme/si-LK.md) • [தமிழ்](/readme/ta-IN.md) • [తెలుగు](/readme/te-IN.md)
 
-お使いの言語が見つかりませんか？[`i18n.json`](./i18n.json)に追加してPRを開いてください！
+お使いの言語が見つかりませんか? [`i18n.json`](./i18n.json)に追加してPRを開いてください!
 
-**ロケール形式:** [BCP-47](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale)コードを使用してください: `language[-Script][-REGION]`
+**ロケール形式:** [BCP-47](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale)コードを使用: `language[-Script][-REGION]`
 
-- 言語: ISO 639-1/2/3 小文字 (`en`、`zh`、`bho`)
-- 文字体系: ISO 15924 タイトルケース (`Hans`、`Hant`、`Latn`)
-- 地域: ISO 3166-1 alpha-2 大文字 (`US`、`CN`、`IN`)
-- 例: `en`、`pt-BR`、`zh-Hans`、`sr-Cyrl-RS`
+- 言語: ISO 639-1/2/3小文字 (`en`, `zh`, `bho`)
+- 文字体系: ISO 15924タイトルケース (`Hans`, `Hant`, `Latn`)
+- 地域: ISO 3166-1 alpha-2大文字 (`US`, `CN`, `IN`)
+- 例: `en`, `pt-BR`, `zh-Hans`, {/_ INLINE_CODE_PLACEHOLDER_6e553bb40a655db7be211ded60744c98 _/

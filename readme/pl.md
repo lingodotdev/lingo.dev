@@ -76,6 +76,8 @@
 
 **Lingo.dev Compiler** to darmowe, otwartoźródłowe oprogramowanie pośredniczące (middleware), które umożliwia każdej aplikacji React obsługę wielu języków już na etapie budowania, bez konieczności modyfikowania istniejących komponentów React.
 
+> **Uwaga:** Jeśli używasz starszego kompilatora (`@lingo.dev/_compiler`), przejdź na `@lingo.dev/compiler`. Starszy kompilator jest przestarzały i zostanie usunięty w przyszłych wydaniach.
+
 Zainstaluj raz:
 
 ```bash
@@ -101,20 +103,20 @@ export default async function (): Promise<NextConfig> {
 
 Uruchom `next build` i zobacz, jak pojawiają się paczki hiszpańskie i francuskie ✨
 
-[Przeczytaj dokumentację →](https://lingo.dev/compiler), aby poznać pełny przewodnik, oraz [dołącz do naszego Discorda](https://lingo.dev/go/discord), by uzyskać pomoc przy konfiguracji.
+[Przeczytaj dokumentację →](https://lingo.dev/compiler), aby uzyskać pełny przewodnik, oraz [Dołącz do naszego Discorda](https://lingo.dev/go/discord), aby uzyskać pomoc przy konfiguracji.
 
 ---
 
-### Co znajdziesz w tym repozytorium?
+### Co znajduje się w tym repozytorium?
 
-| Narzędzie    | TL;DR                                                                                       | Dokumentacja                            |
-| ------------ | ------------------------------------------------------------------------------------------- | --------------------------------------- |
-| **Compiler** | Lokalizacja Reacta na etapie budowania                                                      | [/compiler](https://lingo.dev/compiler) |
-| **CLI**      | Lokalizacja webowych i mobilnych aplikacji, JSON, YAML, markdown i więcej jednym poleceniem | [/cli](https://lingo.dev/cli)           |
-| **CI/CD**    | Auto-commit tłumaczeń przy każdym pushu + tworzenie pull requestów w razie potrzeby         | [/ci](https://lingo.dev/ci)             |
-| **SDK**      | Tłumaczenie w czasie rzeczywistym treści generowanych przez użytkowników                    | [/sdk](https://lingo.dev/sdk)           |
+| Narzędzie    | TL;DR                                                                                           | Dokumentacja                            |
+| ------------ | ----------------------------------------------------------------------------------------------- | --------------------------------------- |
+| **Compiler** | Lokalizacja Reacta na etapie builda                                                             | [/compiler](https://lingo.dev/compiler) |
+| **CLI**      | Lokalizacja jednym poleceniem dla aplikacji webowych i mobilnych, JSON, YAML, markdown i więcej | [/cli](https://lingo.dev/cli)           |
+| **CI/CD**    | Auto-commit tłumaczeń przy każdym pushu + tworzenie pull requestów w razie potrzeby             | [/ci](https://lingo.dev/ci)             |
+| **SDK**      | Tłumaczenie w czasie rzeczywistym dla treści generowanych przez użytkowników                    | [/sdk](https://lingo.dev/sdk)           |
 
-Poniżej znajdziesz szybkie podsumowanie dla każdego z nich 👇
+Poniżej szybkie podsumowanie dla każdego 👇
 
 ---
 
@@ -126,15 +128,15 @@ Tłumacz kod i treści bezpośrednio z terminala.
 npx lingo.dev@latest run
 ```
 
-Tworzy odcisk palca każdej frazy, zapisuje wyniki w pamięci podręcznej i tłumaczy ponownie tylko to, co się zmieniło.
+Tworzy odcisk palca każdej frazy, buforuje wyniki i tłumaczy ponownie tylko to, co się zmieniło.
 
-[Przejdź do dokumentacji →](https://lingo.dev/cli), aby dowiedzieć się, jak to skonfigurować.
+[Postępuj według dokumentacji →](https://lingo.dev/cli), aby dowiedzieć się, jak skonfigurować.
 
 ---
 
 ### 🔄 Lingo.dev CI/CD
 
-Wysyłaj idealne tłumaczenia automatycznie.
+Wysyłaj perfekcyjne tłumaczenia automatycznie.
 
 ```yaml
 # .github/workflows/i18n.yml
@@ -151,7 +153,7 @@ jobs:
           api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
 ```
 
-Utrzymuje Twój repozytorium w dobrej kondycji i sprawia, że Twój produkt jest wielojęzyczny bez ręcznych kroków.
+Utrzymuje Twój repozytorium w dobrym stanie i produkt wielojęzyczny bez ręcznych kroków.
 
 [Przeczytaj dokumentację →](https://lingo.dev/ci)
 
@@ -159,7 +161,7 @@ Utrzymuje Twój repozytorium w dobrej kondycji i sprawia, że Twój produkt jest
 
 ### 🧩 Lingo.dev SDK
 
-Błyskawiczne tłumaczenie na żądanie dla dynamicznych treści.
+Natychmiastowe tłumaczenie na żądanie dla treści dynamicznych.
 
 ```ts
 import { LingoDotDevEngine } from "lingo.dev/sdk";
@@ -181,7 +183,7 @@ const translated = await lingoDotDev.localizeObject(content, {
 // Returns: { greeting: "Hola", farewell: "Adiós", message: "Bienvenido a nuestra plataforma" }
 ```
 
-Idealnie do czatów, komentarzy użytkowników i innych przepływów w czasie rzeczywistym.
+Idealne do czatów, komentarzy użytkowników i innych przepływów w czasie rzeczywistym.
 
 [Przeczytaj dokumentację →](https://lingo.dev/sdk)
 
@@ -189,7 +191,7 @@ Idealnie do czatów, komentarzy użytkowników i innych przepływów w czasie rz
 
 ## 🤝 Społeczność
 
-Jesteśmy napędzani przez społeczność i uwielbiamy Wasze wkłady!
+Jesteśmy napędzani przez społeczność i uwielbiamy wkład!
 
 - Masz pomysł? [Otwórz zgłoszenie](https://github.com/lingodotdev/lingo.dev/issues)
 - Chcesz coś poprawić? [Wyślij PR](https://github.com/lingodotdev/lingo.dev/pulls)
@@ -197,7 +199,7 @@ Jesteśmy napędzani przez społeczność i uwielbiamy Wasze wkłady!
 
 ## ⭐ Historia gwiazdek
 
-Jeśli podoba Ci się to, co robimy, daj nam ⭐ i pomóż nam osiągnąć 6 000 gwiazdek! 🌟
+Jeśli podoba Ci się to, co robimy, daj nam ⭐ i pomóż nam osiągnąć 10 000 gwiazdek! 🌟
 
 [
 

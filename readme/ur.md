@@ -76,13 +76,15 @@
 
 **Lingo.dev Compiler** ایک مفت، اوپن سورس کمپائلر middleware ہے، جو کسی بھی React ایپ کو build کے وقت کثیر لسانی بنانے کے لیے ڈیزائن کیا گیا ہے بغیر موجودہ React components میں کوئی تبدیلی کیے۔
 
-ایک بار انسٹال کریں:
+> **نوٹ:** اگر آپ legacy compiler (`@lingo.dev/_compiler`) استعمال کر رہے ہیں، تو براہ کرم `@lingo.dev/compiler` میں منتقل ہو جائیں۔ Legacy compiler deprecated ہے اور مستقبل کی release میں ہٹا دیا جائے گا۔
+
+ایک بار install کریں:
 
 ```bash
 npm install @lingo.dev/compiler
 ```
 
-اپنی build config میں فعال کریں:
+اپنی build config میں enable کریں:
 
 ```ts
 import type { NextConfig } from "next";
@@ -99,42 +101,42 @@ export default async function (): Promise<NextConfig> {
 }
 ```
 
-`next build` چلائیں اور دیکھیں کہ ہسپانوی اور فرانسیسی bundles کیسے سامنے آتے ہیں ✨
+`next build` چلائیں اور Spanish اور French bundles کو نکلتے ہوئے دیکھیں ✨
 
-مکمل گائیڈ کے لیے [دستاویزات پڑھیں →](https://lingo.dev/compiler)، اور اپنے سیٹ اپ میں مدد کے لیے [ہماری Discord میں شامل ہوں](https://lingo.dev/go/discord)۔
+[دستاویزات پڑھیں →](https://lingo.dev/compiler) مکمل guide کے لیے، اور [ہماری Discord میں شامل ہوں](https://lingo.dev/go/discord) اپنے setup میں مدد حاصل کرنے کے لیے۔
 
 ---
 
 ### اس repo میں کیا ہے؟
 
-| Tool         | خلاصہ                                                                             | دستاویزات                               |
+| Tool         | TL;DR                                                                             | Docs                                    |
 | ------------ | --------------------------------------------------------------------------------- | --------------------------------------- |
-| **Compiler** | Build کے وقت React کی لوکلائزیشن                                                  | [/compiler](https://lingo.dev/compiler) |
-| **CLI**      | ویب اور موبائل ایپس، JSON، YAML، markdown وغیرہ کے لیے ایک کمانڈ لوکلائزیشن       | [/cli](https://lingo.dev/cli)           |
-| **CI/CD**    | ہر push پر خودکار طور پر تراجم commit کریں اور ضرورت پڑنے پر pull requests بنائیں | [/ci](https://lingo.dev/ci)             |
-| **SDK**      | یوزر-جنریٹڈ مواد کے لیے ریئل ٹائم ترجمہ                                           | [/sdk](https://lingo.dev/sdk)           |
+| **Compiler** | Build-time React localization                                                     | [/compiler](https://lingo.dev/compiler) |
+| **CLI**      | Web اور mobile apps، JSON، YAML، markdown، + مزید کے لیے one-command localization | [/cli](https://lingo.dev/cli)           |
+| **CI/CD**    | ہر push پر translations کو auto-commit کریں + ضرورت پڑنے پر pull requests بنائیں  | [/ci](https://lingo.dev/ci)             |
+| **SDK**      | User-generated content کے لیے realtime translation                                | [/sdk](https://lingo.dev/sdk)           |
 
-ذیل میں ہر ایک کے لیے فوری نکات ہیں 👇
+ذیل میں ہر ایک کے لیے quick hits ہیں 👇
 
 ---
 
 ### ⚡️ Lingo.dev CLI
 
-اپنے ٹرمینل سے براہ راست کوڈ اور مواد کا ترجمہ کریں۔
+اپنے terminal سے براہ راست code اور content کا ترجمہ کریں۔
 
 ```bash
 npx lingo.dev@latest run
 ```
 
-یہ ہر سٹرنگ کو فنگر پرنٹ کرتا ہے، نتائج کو کیش کرتا ہے، اور صرف تبدیل شدہ چیزوں کا دوبارہ ترجمہ کرتا ہے۔
+یہ ہر string کو fingerprint کرتا ہے، results کو cache کرتا ہے، اور صرف وہی دوبارہ translate کرتا ہے جو تبدیل ہوا ہو۔
 
-[دستاویزات دیکھیں →](https://lingo.dev/cli) تاکہ جان سکیں کہ اسے کیسے سیٹ اپ کریں۔
+[دستاویزات کی پیروی کریں →](https://lingo.dev/cli) یہ جاننے کے لیے کہ اسے کیسے set up کریں۔
 
 ---
 
 ### 🔄 Lingo.dev CI/CD
 
-خودکار طریقے سے بہترین ترجمے فراہم کریں۔
+بہترین translations خودکار طور پر ship کریں۔
 
 ```yaml
 # .github/workflows/i18n.yml
@@ -151,7 +153,7 @@ jobs:
           api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
 ```
 
-آپ کے repo کو سبز اور آپ کی پروڈکٹ کو کسی دستی مرحلے کے بغیر کثیر لسانی رکھتا ہے۔
+آپ کے repo کو green اور آپ کے product کو multilingual رکھتا ہے بغیر manual steps کے۔
 
 [دستاویزات پڑھیں →](https://lingo.dev/ci)
 
@@ -191,13 +193,13 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 ہم کمیونٹی پر مبنی ہیں اور شراکتوں کو پسند کرتے ہیں!
 
-- کوئی خیال ہے؟ [ایک issue کھولیں](https://github.com/lingodotdev/lingo.dev/issues)
+- کوئی خیال ہے؟ [issue کھولیں](https://github.com/lingodotdev/lingo.dev/issues)
 - کچھ ٹھیک کرنا چاہتے ہیں؟ [PR بھیجیں](https://github.com/lingodotdev/lingo.dev/pulls)
 - مدد چاہیے؟ [ہماری Discord میں شامل ہوں](https://lingo.dev/go/discord)
 
 ## ⭐ Star History
 
-اگر آپ کو ہمارا کام پسند ہے، تو ہمیں ⭐ دیں اور 6,000 ستاروں تک پہنچنے میں ہماری مدد کریں! 🌟
+اگر آپ کو ہمارا کام پسند ہے، تو ہمیں ⭐ دیں اور 10,000 stars تک پہنچنے میں ہماری مدد کریں! 🌟
 
 [
 
@@ -211,9 +213,9 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 اپنی زبان نظر نہیں آ رہی؟ اسے [`i18n.json`](./i18n.json) میں شامل کریں اور PR کھولیں!
 
-**لوکیل فارمیٹ:** [BCP-47](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) کوڈز استعمال کریں: `language[-Script][-REGION]`
+**Locale format:** [BCP-47](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) codes استعمال کریں: `language[-Script][-REGION]`
 
-- زبان: ISO 639-1/2/3 چھوٹے حروف (`en`, `zh`, `bho`)
-- رسم الخط: ISO 15924 ٹائٹل کیس (`Hans`, `Hant`, `Latn`)
-- خطہ: ISO 3166-1 alpha-2 بڑے حروف (`US`, `CN`, `IN`)
+- زبان: ISO 639-1/2/3 lowercase (`en`, `zh`, `bho`)
+- رسم الخط: ISO 15924 title case (`Hans`, `Hant`, `Latn`)
+- خطہ: ISO 3166-1 alpha-2 uppercase (`US`, `CN`, `IN`)
 - مثالیں: `en`, `pt-BR`, `zh-Hans`, `sr-Cyrl-RS`
