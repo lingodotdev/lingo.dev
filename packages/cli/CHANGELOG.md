@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.126.0
+
+### Minor Changes
+
+- [#1927](https://github.com/lingodotdev/lingo.dev/pull/1927) [`fa69822`](https://github.com/lingodotdev/lingo.dev/commit/fa698227c49eda4a4727f3fa0c3343fc6279730d) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Fix Windows test failures
+
 ## 0.125.5
 
 ### Patch Changes
