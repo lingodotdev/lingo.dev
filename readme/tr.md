@@ -197,7 +197,7 @@ Topluluk odaklıyız ve katkıları seviyoruz!
 
 ## ⭐ Yıldız geçmişi
 
-Yaptıklarımızı beğeniyorsanız, bize bir ⭐ verin ve 6.000 yıldıza ulaşmamıza yardımcı olun! 🌟
+Yaptıklarımızı beğendiyseniz, bize bir ⭐ verin ve 10.000 yıldıza ulaşmamıza yardımcı olun! 🌟
 
 [
 

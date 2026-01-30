@@ -197,7 +197,7 @@ Nous sommes portés par la communauté et adorons les contributions !
 
 ## ⭐ Historique des étoiles
 
-Si vous aimez ce que nous faisons, donnez-nous une ⭐ et aidez-nous à atteindre 6 000 étoiles ! 🌟
+Si vous aimez ce que nous faisons, donnez-nous une ⭐ et aidez-nous à atteindre 10 000 étoiles ! 🌟
 
 [
 

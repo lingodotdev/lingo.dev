@@ -197,7 +197,7 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 ## ⭐ スター履歴
 
-私たちの取り組みが気に入ったら、⭐をつけて6,000スター達成にご協力ください！🌟
+私たちの取り組みが気に入ったら、⭐を付けて10,000スター達成にご協力ください！🌟
 
 [
 
