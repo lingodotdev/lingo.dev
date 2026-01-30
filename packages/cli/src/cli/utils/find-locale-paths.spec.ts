@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import * as pkg from "glob";
 const { glob } = pkg;
 import findLocaleFiles from "./find-locale-paths";
+import { normalizePaths } from "./test-helpers";
 
 vi.mock("glob", () => ({
   glob: {
@@ -29,7 +30,7 @@ describe("findLocaleFiles", () => {
 
     const result = findLocaleFiles("json");
 
-    expect(result).toEqual({
+    expect(normalizePaths(result)).toEqual({
       patterns: ["src/i18n/[locale].json", "src/translations/[locale].json"],
       defaultPatterns: ["i18n/[locale].json"],
     });
@@ -44,7 +45,7 @@ describe("findLocaleFiles", () => {
 
     const result = findLocaleFiles("yaml");
 
-    expect(result).toEqual({
+    expect(normalizePaths(result)).toEqual({
       patterns: ["locales/[locale].yml", "translations/[locale].yml"],
       defaultPatterns: ["i18n/[locale].yml"],
     });
@@ -59,7 +60,7 @@ describe("findLocaleFiles", () => {
 
     const result = findLocaleFiles("flutter");
 
-    expect(result).toEqual({
+    expect(normalizePaths(result)).toEqual({
       patterns: ["lib/l10n/[locale].arb", "lib/translations/[locale].arb"],
       defaultPatterns: ["i18n/[locale].arb"],
     });
@@ -88,7 +89,7 @@ describe("findLocaleFiles", () => {
 
     const result = findLocaleFiles("json");
 
-    expect(result).toEqual({
+    expect(normalizePaths(result)).toEqual({
       patterns: [
         "src/locales/[locale]/messages.json",
         "src/i18n/[locale]/strings.json",
@@ -111,7 +112,7 @@ describe("findLocaleFiles", () => {
 
     const result = findLocaleFiles("json");
 
-    expect(result).toEqual({
+    expect(normalizePaths(result)).toEqual({
       patterns: [],
       defaultPatterns: ["i18n/[locale].json"],
     });
@@ -127,7 +128,7 @@ describe("findLocaleFiles", () => {
 
     const result = findLocaleFiles("xcode-xcstrings");
 
-    expect(result).toEqual({
+    expect(normalizePaths(result)).toEqual({
       patterns: [
         "ios/MyApp/Localizable.xcstrings",
         "ios/MyApp/Onboarding/Localizable.xcstrings",
@@ -142,7 +143,7 @@ describe("findLocaleFiles", () => {
 
     const result = findLocaleFiles("xcode-xcstrings");
 
-    expect(result).toEqual({
+    expect(normalizePaths(result)).toEqual({
       patterns: [],
       defaultPatterns: ["Localizable.xcstrings"],
     });
