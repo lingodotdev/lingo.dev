@@ -92,9 +92,12 @@ function App() {
     // PHASE 3: TRANSLATE
     try {
   setProgress(`Translating to ${targetLang.toUpperCase()}...`);
-  const translation = await translateText(currentText, sourceLang, targetLang);
+  
+  // FIX: Pass ocrLang instead of sourceLang to ensure the detected language is used
+  const translation = await translateText(currentText, ocrLang, targetLang);
+  
   setTranslatedText(translation);
-  setProgress("Done!"); // Move this here from the finally block
+  setProgress("Done!");
 } catch (transError) {
   console.error(transError);
   setTranslatedText("Translation Failed: " + transError.message);

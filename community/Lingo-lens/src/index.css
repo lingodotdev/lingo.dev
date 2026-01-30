@@ -1,5 +1,8 @@
+/* biome-ignore lint/suspicious/noUnknownAtRules: Tailwind directives */
 @tailwind base;
+/* biome-ignore lint/suspicious/noUnknownAtRules: Tailwind directives */
 @tailwind components;
+/* biome-ignore lint/suspicious/noUnknownAtRules: Tailwind directives */
 @tailwind utilities;
 
 /* Custom Scrollbar for text areas */
