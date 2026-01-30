@@ -48,6 +48,8 @@
 
 **Lingo.dev Compiler** is a free, open-source compiler middleware, designed to make any React app multilingual at build time without requiring any changes to the existing React components.
 
+> **Note:** If you're using the legacy compiler (`@lingo.dev/_compiler`), please migrate to `@lingo.dev/compiler`. The legacy compiler is deprecated and will be removed in a future release.
+
 Install once:
 
 ```bash
