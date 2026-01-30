@@ -23,6 +23,9 @@ import { parseParametrizedModuleId } from "./utils/module-params";
 
 /**
  * Loads a dictionary for a specific locale
+ *
+ * @deprecated This function is part of the legacy compiler (@lingo.dev/_compiler).
+ * Please migrate to @lingo.dev/compiler. See https://lingo.dev/compiler
  */
 export async function loadDictionary(options: {
   resourcePath: string;
@@ -79,6 +82,9 @@ export async function loadDictionary(options: {
 
 /**
  * Transforms component code
+ *
+ * @deprecated This function is part of the legacy compiler (@lingo.dev/_compiler).
+ * Please migrate to @lingo.dev/compiler. See https://lingo.dev/compiler
  */
 export function transformComponent(options: {
   code: string;
