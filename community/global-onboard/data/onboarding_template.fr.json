@@ -1,0 +1,28 @@
+{
+  "template": {
+    "companyName": "Acme Corp",
+    "role": "Ingénieur Frontend",
+    "tasks": [
+      {
+        "id": "day1-intro",
+        "title": "Jour 1 : accueil et poste de travail",
+        "description": "Rencontrez votre manager, configurez votre ordinateur portable et connectez-vous au portail RH."
+      },
+      {
+        "id": "security-training",
+        "title": "Formation sécurité",
+        "description": "Terminez les modules obligatoires de sécurité et de conformité."
+      },
+      {
+        "id": "buddy-meet",
+        "title": "Rencontrez votre buddy d'onboarding",
+        "description": "Planifiez un appel de 30 minutes avec votre buddy pour connaître les usages de l'équipe."
+      },
+      {
+        "id": "first-sprint",
+        "title": "Objectifs du premier sprint",
+        "description": "Passez en revue le plan du sprint avec votre manager et faites du pair programming sur votre premier ticket."
+      }
+    ]
+  }
+}
