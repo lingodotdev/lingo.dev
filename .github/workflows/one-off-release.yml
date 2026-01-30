@@ -20,6 +20,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "22"
+          registry-url: https://registry.npmjs.org
 
       - name: Upgrade npm for OIDC support
         run: npm install -g npm@11.5.1
