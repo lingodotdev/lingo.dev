@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.127.0
+
+### Minor Changes
+
+- [#1939](https://github.com/lingodotdev/lingo.dev/pull/1939) [`2d60662`](https://github.com/lingodotdev/lingo.dev/commit/2d60662b8a7e2c60eeef357550ca9190c56048b5) Thanks [@cherkanovart](https://github.com/cherkanovart)! - modify bin to fix windows issue
+
 ## 0.126.1
 
 ### Patch Changes

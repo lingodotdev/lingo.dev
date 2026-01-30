@@ -1,6 +1,6 @@
 {
   "name": "lingo.dev",
-  "version": "0.126.1",
+  "version": "0.127.0",
   "description": "Lingo.dev CLI",
   "private": false,
   "repository": {
@@ -108,6 +108,7 @@
     }
   },
   "bin": {
+    "lingo": "./bin/cli.mjs",
     "lingo.dev": "./bin/cli.mjs"
   },
   "files": [
