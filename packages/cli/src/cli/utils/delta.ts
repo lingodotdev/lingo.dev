@@ -111,7 +111,6 @@ export function createDeltaProcessor(fileKey: string) {
         );
       }
 
-      // Parse to validated JavaScript object
       const parsed = LockSchema.parse(YAML.parse(deduplicatedContent));
       return parsed;
     },
