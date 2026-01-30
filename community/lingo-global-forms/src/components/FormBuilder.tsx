@@ -52,7 +52,7 @@ export const FormBuilder: React.FC<FormBuilderProps> = ({
         {/* General Settings */}
         <section>
           <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">Form Settings</h3>
-          
+
           <div className="space-y-4">
             <div>
               <label htmlFor="form-title" className="block text-sm font-medium text-slate-700 mb-1.5">Form Title</label>
@@ -97,43 +97,43 @@ export const FormBuilder: React.FC<FormBuilderProps> = ({
           <div className="mb-4">
             <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Add Fields</h3>
             <div className="grid grid-cols-2 gap-2">
-              <button 
-                type="button" 
+              <button
+                type="button"
                 onClick={() => addField('text')}
                 className="flex items-center justify-center px-3 py-2 text-xs font-medium text-slate-700 bg-white border border-slate-200 rounded-md hover:bg-slate-50 hover:border-slate-300 transition-all shadow-sm"
               >
                 <span className="mr-2">📝</span> Text
               </button>
-              <button 
-                type="button" 
+              <button
+                type="button"
                 onClick={() => addField('textarea')}
                 className="flex items-center justify-center px-3 py-2 text-xs font-medium text-slate-700 bg-white border border-slate-200 rounded-md hover:bg-slate-50 hover:border-slate-300 transition-all shadow-sm"
               >
                 <span className="mr-2">📃</span> TextArea
               </button>
-              <button 
-                type="button" 
+              <button
+                type="button"
                 onClick={() => addField('radio')}
                 className="flex items-center justify-center px-3 py-2 text-xs font-medium text-slate-700 bg-white border border-slate-200 rounded-md hover:bg-slate-50 hover:border-slate-300 transition-all shadow-sm"
               >
                 <span className="mr-2">⭕</span> Radio
               </button>
-              <button 
-                type="button" 
+              <button
+                type="button"
                 onClick={() => addField('checkbox')}
                 className="flex items-center justify-center px-3 py-2 text-xs font-medium text-slate-700 bg-white border border-slate-200 rounded-md hover:bg-slate-50 hover:border-slate-300 transition-all shadow-sm"
               >
-                <span className="mr-2">ballot_check</span> Checkbox
+                <span className="mr-2">☑️</span> Checkbox
               </button>
-              <button 
-                type="button" 
+              <button
+                type="button"
                 onClick={() => addField('select')}
                 className="flex items-center justify-center px-3 py-2 text-xs font-medium text-slate-700 bg-white border border-slate-200 rounded-md hover:bg-slate-50 hover:border-slate-300 transition-all shadow-sm"
               >
                 <span className="mr-2">▼</span> Select
               </button>
-              <button 
-                type="button" 
+              <button
+                type="button"
                 onClick={() => addField('date')}
                 className="flex items-center justify-center px-3 py-2 text-xs font-medium text-slate-700 bg-white border border-slate-200 rounded-md hover:bg-slate-50 hover:border-slate-300 transition-all shadow-sm"
               >
@@ -227,7 +227,7 @@ export const FormBuilder: React.FC<FormBuilderProps> = ({
                   </div>
 
                   <div className="col-span-1 flex items-end">
-                     <label className="flex items-center gap-2 cursor-pointer pb-2 select-none">
+                    <label className="flex items-center gap-2 cursor-pointer pb-2 select-none">
                       <div className="relative flex items-center">
                         <input
                           type="checkbox"

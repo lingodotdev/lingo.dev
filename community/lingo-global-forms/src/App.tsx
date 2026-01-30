@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { FormBuilder } from './components/FormBuilder';
 import { FormPreview } from './components/FormPreview';
 import './index.css';
-import { isLingoConfigured } from './lib/lingo';
+import { lingoEngine } from './lib/lingo';
 import { clearTranslationCache, translateFormContent } from './lib/translateForm';
 import type { FormContent, SupportedLocale } from './types/form';
 import { DEFAULT_FORM_CONTENT } from './types/form';
@@ -21,7 +21,7 @@ function App() {
       return;
     }
 
-    if (!isLingoConfigured()) {
+    if (!lingoEngine) {
       setTranslationError('API key not configured. Add VITE_LINGO_API_KEY to your .env file.');
       return;
     }
@@ -53,7 +53,7 @@ function App() {
 
   const handleFormChange = (newContent: FormContent) => {
     setFormContent(newContent);
-  
+
     clearTranslationCache();
     if (currentLocale !== 'en') {
       setTranslatedContent(null);

@@ -1,5 +1,5 @@
 import type { FormContent, SupportedLocale, TranslatableFormContent } from '../types/form';
-import { isLingoConfigured, lingoEngine } from './lingo';
+import { lingoEngine } from './lingo';
 
 // In-memory translation cache
 const translationCache = new Map<string, FormContent>();
@@ -76,7 +76,7 @@ export async function translateFormContent(
   }
 
   // Check if Lingo is configured
-  if (!isLingoConfigured()) {
+  if (!lingoEngine) {
     console.warn('Lingo.dev is not configured. Returning original content.');
     return content;
   }

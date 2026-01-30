@@ -1,7 +1,6 @@
 import { LingoDotDevEngine } from '@lingo.dev/_sdk';
 
-const apiKey = import.meta.env.VITE_LINGO_API_KEY;
-
+const apiKey = import.meta.env.VITE_LINGO_API_KEY?.trim();
 if (!apiKey) {
   console.warn(
     '⚠️ VITE_LINGO_API_KEY is not set. Translations will not work.\n' +
@@ -9,13 +8,15 @@ if (!apiKey) {
   );
 }
 
-export const lingoEngine = new LingoDotDevEngine({
-  apiKey: apiKey || '',
-  apiUrl: typeof window !== 'undefined' 
-    ? `${window.location.origin}/api/lingo`
-    : 'https://engine.lingo.dev',
-});
-
-export const isLingoConfigured = (): boolean => {
-  return Boolean(apiKey);
-};
+/**
+ * Lingo.dev engine instance for translations.
+ * Null if API key is not configured.
+ */
+export const lingoEngine: LingoDotDevEngine | null = apiKey
+  ? new LingoDotDevEngine({
+      apiKey,
+      apiUrl: typeof window !== 'undefined'
+        ? `${window.location.origin}/api/lingo`
+        : 'https://engine.lingo.dev',
+    })
+  : null;
