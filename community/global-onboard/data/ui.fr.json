@@ -1,0 +1,19 @@
+{
+  "app.title": "GlobalOnboard",
+  "app.subtitle": "Une seule checklist d'intégration. Toutes les langues.",
+  "hr.panel_title": "Configuration RH",
+  "employee.panel_title": "Aperçu employé",
+  "field.company_name": "Nom de l'entreprise",
+  "field.role": "Poste",
+  "field.language": "Langue de l'employé",
+  "section.checklist": "Checklist d'intégration",
+  "section.welcome_note": "Message de bienvenue des RH",
+  "section.template": "Modèle de base",
+  "field.base_language": "Langue source",
+  "field.base_language_value": "Anglais (en)",
+  "label.tasks": "Tâches",
+  "label.language_switcher": "Choisir une langue",
+  "status.translating": "Traduction du message de bienvenue...",
+  "status.translation_error": "Traduction indisponible. Affichage en anglais.",
+  "welcome.placeholder": "Bienvenue dans l'équipe ! Partagez un mot chaleureux pour la nouvelle recrue."
+}

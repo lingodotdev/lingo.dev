@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+@source "../app/**/*.{js,ts,jsx,tsx}";
+@source "../components/**/*.{js,ts,jsx,tsx}";
+@source "../lib/**/*.{js,ts,jsx,tsx}";
+
+:root {
+  --background: linear-gradient(135deg, #e3f2ff, #f9f1ff);
+  --foreground: #0f172a;
+  --muted: rgba(255, 255, 255, 0.8);
+  --muted-foreground: #475569;
+  --panel-start: #eef2ff;
+  --panel-end: #fdf2f8;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --font-sans: "Inter", "Sohne", system-ui, -apple-system, blinkmacsystemfont,
+    "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  transition: color 0.3s ease;
+  background-attachment: fixed;
+}
