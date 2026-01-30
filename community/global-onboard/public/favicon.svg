@@ -1,0 +1,29 @@
+<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="globalonboard-favicon">
+  <title id="globalonboard-favicon">GlobalOnboard logo</title>
+  <defs>
+    <linearGradient
+      id="globalonboard-logo-orbit"
+      x1="10"
+      y1="54"
+      x2="54"
+      y2="10"
+      gradientUnits="userSpaceOnUse"
+    >
+      <stop offset="0" stop-color="#0f172a" />
+      <stop offset="1" stop-color="#34d399" />
+    </linearGradient>
+  </defs>
+  <circle cx="32" cy="32" r="16" stroke="url(#globalonboard-logo-orbit)" stroke-width="2.4" />
+  <path
+    d="M12.5 35.5c9.2-2.8 21.8-2.5 30.3 0 8.5 2.5 14.5 7.2 8 11-6 3.5-17.4 4.8-26.2 2.8-8.8-2-15.2-6.8-16.1-9.6-.8-2.7 1.1-4 4-4.2Z"
+    stroke="#34d399"
+    stroke-width="2.2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <circle cx="32" cy="32" r="6.5" fill="#34d399" fill-opacity="0.15" />
+  <path
+    d="M32 27c2 1.5 3.6 4.3 3.6 6.9 0 2.6-1.6 4.7-3.6 4.7s-3.6-2-3.6-4.7c0-2.6 1.6-5.4 3.6-6.9Z"
+    fill="#34d399"
+  />
+</svg>

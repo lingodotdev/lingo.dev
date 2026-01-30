@@ -1,0 +1,19 @@
+{
+  "app.title": "GlobalOnboard",
+  "app.subtitle": "One onboarding checklist. Any language.",
+  "hr.panel_title": "HR Setup",
+  "employee.panel_title": "Employee Preview",
+  "field.company_name": "Company name",
+  "field.role": "Role",
+  "field.language": "Employee language",
+  "section.checklist": "Onboarding checklist",
+  "section.welcome_note": "Welcome note from HR",
+  "section.template": "Base template",
+  "field.base_language": "Base language",
+  "field.base_language_value": "English (en)",
+  "label.tasks": "Tasks",
+  "label.language_switcher": "Select language",
+  "status.translating": "Translating welcome note...",
+  "status.translation_error": "Translation unavailable. Showing English.",
+  "welcome.placeholder": "Welcome to the team! Share a warm note for the new hire."
+}
