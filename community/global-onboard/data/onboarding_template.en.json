@@ -1,0 +1,28 @@
+{
+  "template": {
+    "companyName": "Acme Corp",
+    "role": "Frontend Engineer",
+    "tasks": [
+      {
+        "id": "day1-intro",
+        "title": "Day 1: Welcome & Workspace",
+        "description": "Meet your manager, get your laptop set up, and log into the HR portal."
+      },
+      {
+        "id": "security-training",
+        "title": "Security training",
+        "description": "Complete mandatory security and compliance training modules."
+      },
+      {
+        "id": "buddy-meet",
+        "title": "Meet your onboarding buddy",
+        "description": "Have a 30-minute call with your buddy to understand team norms."
+      },
+      {
+        "id": "first-sprint",
+        "title": "First sprint goals",
+        "description": "Review sprint plan with your manager and pair on your first ticket."
+      }
+    ]
+  }
+}
