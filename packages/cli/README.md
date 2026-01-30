@@ -169,7 +169,7 @@ We're community-driven and love contributions!
 
 ## ⭐ Star History
 
-If you like what we're doing, give us a ⭐ and help us reach 6,000 stars! 🌟
+If you like what we're doing, give us a ⭐ and help us reach 10,000 stars! 🌟
 
 [![Star History Chart](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
 
@@ -180,6 +180,7 @@ If you like what we're doing, give us a ⭐ and help us reach 6,000 stars! 🌟
 Don't see your language? Add it to [`i18n.json`](./i18n.json) and open a PR!
 
 **Locale format:** Use [BCP-47](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) codes: `language[-Script][-REGION]`
+
 - Language: ISO 639-1/2/3 lowercase (`en`, `zh`, `bho`)
 - Script: ISO 15924 title case (`Hans`, `Hant`, `Latn`)
 - Region: ISO 3166-1 alpha-2 uppercase (`US`, `CN`, `IN`)
