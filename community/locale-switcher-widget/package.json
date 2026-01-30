@@ -1,0 +1,70 @@
+{
+  "name": "@lingo-community/locale-switcher",
+  "version": "0.1.0",
+  "description": "Drop-in locale switcher component for Lingo.dev Compiler projects",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./styles.css": "./dist/styles.css"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "echo 'See demo/ folder for development'",
+    "build": "echo 'Build configured for library bundler'",
+    "preview": "echo 'See demo/ folder for preview'",
+    "typecheck": "echo 'TypeScript check - configure as needed'"
+  },
+  "keywords": [
+    "lingo.dev",
+    "i18n",
+    "locale-switcher",
+    "react",
+    "internationalization",
+    "localization"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lingodotdev/lingo.dev.git",
+    "directory": "community/locale-switcher-widget"
+  },
+  "author": "Lingo.dev Community",
+  "license": "ISC",
+  "peerDependencies": {
+    "@lingo.dev/compiler": "^0.3.0",
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.1.0",
+    "@types/node": "^22.10.5",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@typescript-eslint/eslint-plugin": "^8.19.1",
+    "@typescript-eslint/parser": "^8.19.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "@vitest/ui": "^2.1.8",
+    "eslint": "^9.18.0",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "eslint-plugin-react-refresh": "^0.4.16",
+    "jsdom": "^25.0.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "typescript": "^5.7.3",
+    "vite": "^6.0.7",
+    "vite-plugin-dts": "^4.3.0",
+    "vitest": "^2.1.8"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1"
+  }
+}

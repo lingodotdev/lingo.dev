@@ -1,0 +1,196 @@
+/* Base styles for all switcher variants */
+.lingo-switcher-dropdown,
+.lingo-switcher-flags,
+.lingo-switcher-minimal {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  position: relative;
+}
+
+/* Dropdown variant */
+.lingo-switcher-dropdown {
+  display: inline-block;
+}
+
+.lingo-switcher-trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: all 0.15s ease;
+}
+
+.lingo-switcher-trigger:hover {
+  background: #f9fafb;
+  border-color: #d1d5db;
+}
+
+.lingo-switcher-trigger:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+.lingo-switcher-menu {
+  position: absolute;
+  z-index: 50;
+  min-width: 100%;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  margin-top: 0.25rem;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.lingo-position-top {
+  bottom: 100%;
+  margin-top: 0;
+  margin-bottom: 0.25rem;
+}
+
+.lingo-switcher-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+  text-align: left;
+  transition: background 0.15s ease;
+}
+
+.lingo-switcher-option:hover {
+  background: #f3f4f6;
+}
+
+.lingo-switcher-option.lingo-active {
+  background: #eff6ff;
+  color: #2563eb;
+  font-weight: 500;
+}
+
+/* Flags variant */
+.lingo-switcher-flags {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.lingo-flag-button {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem;
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  font-size: 1.25rem;
+  transition: all 0.15s ease;
+}
+
+.lingo-flag-button:hover {
+  border-color: #d1d5db;
+  transform: scale(1.05);
+}
+
+.lingo-flag-button.lingo-active {
+  border-color: #3b82f6;
+  background: #eff6ff;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.lingo-flag-button:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Minimal variant */
+.lingo-switcher-minimal {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem 0.625rem;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 9999px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: 500;
+  transition: all 0.15s ease;
+}
+
+.lingo-switcher-minimal:hover {
+  background: #f9fafb;
+  border-color: #3b82f6;
+}
+
+.lingo-switcher-minimal:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Common elements */
+.lingo-flag {
+  font-size: 1.25em;
+  line-height: 1;
+}
+
+.lingo-label {
+  white-space: nowrap;
+}
+
+.lingo-code {
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.lingo-arrow {
+  margin-left: auto;
+  font-size: 0.75em;
+  opacity: 0.6;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .lingo-switcher-trigger,
+  .lingo-switcher-menu,
+  .lingo-flag-button,
+  .lingo-switcher-minimal {
+    background: #1f2937;
+    border-color: #374151;
+    color: #f3f4f6;
+  }
+
+  .lingo-switcher-trigger:hover,
+  .lingo-switcher-minimal:hover {
+    background: #374151;
+    border-color: #4b5563;
+  }
+
+  .lingo-switcher-option:hover {
+    background: #374151;
+  }
+
+  .lingo-switcher-option.lingo-active {
+    background: #1e3a8a;
+    color: #93c5fd;
+  }
+
+  .lingo-flag-button:hover {
+    border-color: #4b5563;
+  }
+
+  .lingo-flag-button.lingo-active {
+    border-color: #3b82f6;
+    background: #1e3a8a;
+  }
+}
