@@ -1,0 +1,19 @@
+{
+  "app.title": "GlobalOnboard",
+  "app.subtitle": "एक ही ऑनबोर्डिंग चेकलिस्ट. हर भाषा में।",
+  "hr.panel_title": "एचआर सेटअप",
+  "employee.panel_title": "कर्मचारी पूर्वावलोकन",
+  "field.company_name": "कंपनी का नाम",
+  "field.role": "भूमिका",
+  "field.language": "कर्मचारी भाषा",
+  "section.checklist": "ऑनबोर्डिंग चेकलिस्ट",
+  "section.welcome_note": "एचआर का स्वागत संदेश",
+  "section.template": "बेस टेम्पलेट",
+  "field.base_language": "मूल भाषा",
+  "field.base_language_value": "अंग्रेज़ी (en)",
+  "label.tasks": "कार्य",
+  "label.language_switcher": "भाषा चुनें",
+  "status.translating": "स्वागत संदेश का अनुवाद किया जा रहा है...",
+  "status.translation_error": "अनुवाद उपलब्ध नहीं है। अंग्रेज़ी दिखा रहे हैं।",
+  "welcome.placeholder": "टीम में आपका स्वागत है! नए सहयोगी के लिए एक गर्मजोशी भरा संदेश लिखें।"
+}
