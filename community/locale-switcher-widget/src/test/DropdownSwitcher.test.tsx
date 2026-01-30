@@ -7,6 +7,10 @@ describe('DropdownSwitcher', () => {
   const mockOnLocaleChange = vi.fn();
   const locales = buildLocaleOptions(['en', 'es', 'fr']);
 
+  beforeEach(() => {
+    mockOnLocaleChange.mockClear();
+  });
+
   it('renders current locale', () => {
     render(
       <DropdownSwitcher

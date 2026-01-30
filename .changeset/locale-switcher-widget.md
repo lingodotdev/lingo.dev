@@ -1,4 +1,5 @@
 ---
+"locale-switcher-widget": patch
 ---
 
 Add locale-switcher-widget community contribution.

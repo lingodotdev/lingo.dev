@@ -36,6 +36,7 @@ export function DropdownSwitcher({
   return (
     <div ref={dropdownRef} className={clsx('lingo-switcher-dropdown', className)}>
       <button
+        type="button"
         onClick={() => setIsOpen(!isOpen)}
         className="lingo-switcher-trigger"
         aria-label="Select language"

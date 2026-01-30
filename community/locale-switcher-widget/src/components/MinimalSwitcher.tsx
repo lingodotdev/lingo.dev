@@ -11,8 +11,13 @@ export function MinimalSwitcher({
   const currentIndex = locales.findIndex(l => l.code === currentLocale);
   const nextLocale = locales[(currentIndex + 1) % locales.length];
 
+  if (!locales.length || !nextLocale) {
+    return null;
+  }
+
   return (
     <button
+      type="button"
       onClick={() => onLocaleChange(nextLocale.code)}
       className={clsx('lingo-switcher-minimal', className)}
       aria-label={`Switch to ${nextLocale.label}`}

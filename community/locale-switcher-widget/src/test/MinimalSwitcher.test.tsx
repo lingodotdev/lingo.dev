@@ -7,6 +7,10 @@ describe('MinimalSwitcher', () => {
   const mockOnLocaleChange = vi.fn();
   const locales = buildLocaleOptions(['en', 'es', 'fr']);
 
+  beforeEach(() => {
+    mockOnLocaleChange.mockClear();
+  });
+
   it('renders next locale code', () => {
     render(
       <MinimalSwitcher

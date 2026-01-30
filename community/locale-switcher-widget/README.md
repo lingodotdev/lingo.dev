@@ -96,7 +96,7 @@ function App() {
 ### Props
 
 | Prop | Type | Default | Description |
-|------|------|---------|-------------|
+| ---- | ---- | ------- | ----------- |
 | `currentLocale` | `string` | **required** | Current active locale code |
 | `locales` | `LocaleOption[]` | **required** | Array of available locales |
 | `onLocaleChange` | `(locale: string) => void` | **required** | Callback fired on locale change |
@@ -173,7 +173,7 @@ Override CSS classes or variables:
 
 ## Project Structure
 
-```
+```text
 locale-switcher-widget/
 ├── src/
 │   ├── components/

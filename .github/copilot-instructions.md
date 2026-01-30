@@ -72,7 +72,7 @@ See [CONTRIBUTING.md](../CONTRIBUTING.md) for complete requirements.
 
 ### Workspace Structure
 
-```
+```text
 packages/         # Core product packages
   cli/           # Main CLI (lingo.dev)
   new-compiler/  # Modern compiler (@lingo.dev/compiler)

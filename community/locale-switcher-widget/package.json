@@ -18,10 +18,10 @@
     "dist"
   ],
   "scripts": {
-    "dev": "echo 'See demo/ folder for development'",
-    "build": "echo 'Build configured for library bundler'",
-    "preview": "echo 'See demo/ folder for preview'",
-    "typecheck": "echo 'TypeScript check - configure as needed'"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit"
   },
   "keywords": [
     "lingo.dev",

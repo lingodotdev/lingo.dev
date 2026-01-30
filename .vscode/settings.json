@@ -3,5 +3,8 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.codeActionsOnSave": {
     "source.fixAll": "always"
+  },
+  "chat.tools.terminal.autoApprove": {
+    "pnpm": true
   }
 }

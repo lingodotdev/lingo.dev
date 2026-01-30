@@ -10,17 +10,17 @@ export function FlagsSwitcher({
   showLabels = false
 }: LocaleSwitcherProps) {
   return (
-    <div className={clsx('lingo-switcher-flags', className)} role="radiogroup">
+    <div className={clsx('lingo-switcher-flags', className)} role="group" aria-label="Select language">
       {locales.map((locale) => (
         <button
+          type="button"
           key={locale.code}
           onClick={() => onLocaleChange(locale.code)}
           className={clsx(
             'lingo-flag-button',
             locale.code === currentLocale && 'lingo-active'
           )}
-          role="radio"
-          aria-checked={locale.code === currentLocale}
+          aria-pressed={locale.code === currentLocale}
           aria-label={locale.label}
           title={locale.label}
         >
