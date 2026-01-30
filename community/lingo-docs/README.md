@@ -27,14 +27,14 @@ lingo-docs translate example/SAMPLE.md --langs es,ja
 **Features:**
 - Translates markdown files while preserving code blocks
 - Generates language selector badges for your README
-- Supports 20+ languages
+- Supports many languages (see table below)
 - Clean, focused CLI with beautiful output
 
 ## Prerequisites
 
 - Python 3.11+
 - [uv](https://docs.astral.sh/uv/) (recommended) or pip
-- Lingo.dev API key (free tier: 10,000 tokens/month)
+- Lingo.dev API key (free tier: 10,000 translated words/month)
 
 ## Setup
 
@@ -53,8 +53,9 @@ lingo-docs translate example/SAMPLE.md --langs es,ja
    ```
 
 3. Get your Lingo.dev API key:
-   - Sign up at https://lingo.dev/en/auth
-   - Go to Projects → API key → Copy
+   - Sign up or log in at https://lingo.dev/en/auth?redirect=%2Fen%2Fapp
+   - Navigate to Project Settings → API Keys
+   - Click "Create API Key" and copy the generated key
 
 4. Set up environment:
    ```bash

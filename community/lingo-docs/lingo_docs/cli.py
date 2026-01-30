@@ -88,6 +88,14 @@ def generate_badge(original_file: Path, languages: list[str], source_lang: str) 
     return " | ".join(badges)
 
 
+def validate_placeholders(translated: str, code_blocks: list[str]) -> bool:
+    """Validate that all code block placeholders are present in translated content."""
+    for i in range(len(code_blocks)):
+        if f"__CODE_BLOCK_{i}__" not in translated:
+            return False
+    return True
+
+
 async def translate_to_languages(
     content: str,
     source_locale: str,
@@ -110,6 +118,9 @@ async def translate_to_languages(
                     processed_content,
                     {"source_locale": source_locale, "target_locale": locale},
                 )
+                # Validate that all placeholders are preserved
+                if not validate_placeholders(translated, code_blocks):
+                    raise ValueError("Translation corrupted code block placeholders")
                 results[locale] = restore_code_blocks(translated, code_blocks)
                 if on_progress:
                     on_progress(locale, "done")
@@ -122,8 +133,15 @@ async def translate_to_languages(
 
 
 def parse_languages(langs: str) -> list[str]:
-    """Parse comma-separated language codes."""
-    return [lang.strip() for lang in langs.split(",") if lang.strip()]
+    """Parse comma-separated language codes, removing duplicates while preserving order."""
+    seen = set()
+    result = []
+    for lang in langs.split(","):
+        lang = lang.strip()
+        if lang and lang not in seen:
+            seen.add(lang)
+            result.append(lang)
+    return result
 
 
 def format_error(e: Exception) -> str:
@@ -227,10 +245,17 @@ def translate(
             border_style="green",
         ))
 
-        # Inject badge at top of original file
-        badge_comment = f"<!-- lingo-docs-badge -->\n{badge}\n<!-- /lingo-docs-badge -->\n\n"
-        if "<!-- lingo-docs-badge -->" not in content:
-            updated_content = badge_comment + content
+        # Inject or update badge at top of original file
+        badge_comment = f"<!-- lingo-docs-badge -->\n{badge}\n<!-- /lingo-docs-badge -->"
+        badge_pattern = r"<!-- lingo-docs-badge -->.*?<!-- /lingo-docs-badge -->"
+        if re.search(badge_pattern, content, re.DOTALL):
+            # Update existing badge
+            updated_content = re.sub(badge_pattern, badge_comment, content, flags=re.DOTALL)
+            file.write_text(updated_content, encoding="utf-8")
+            console.print(f"[green]✓[/green] Badge updated in {file.name}")
+        else:
+            # Insert new badge
+            updated_content = badge_comment + "\n\n" + content
             file.write_text(updated_content, encoding="utf-8")
             console.print(f"[green]✓[/green] Badge added to {file.name}")
 

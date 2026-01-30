@@ -5,10 +5,10 @@ description = "Translate markdown documentation to multiple languages using Ling
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-    "lingodotdev>=1.0.0",
-    "typer>=0.21.0",
-    "rich>=13.9.0",
-    "python-dotenv>=1.2.0",
+    "lingodotdev~=1.0.0",
+    "typer~=0.21.0",
+    "rich~=13.9.0",
+    "python-dotenv~=1.2.0",
 ]
 
 [project.scripts]
