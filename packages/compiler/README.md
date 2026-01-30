@@ -89,4 +89,4 @@ The new compiler (`@lingo.dev/compiler`) offers:
 
 ## Documentation
 
-Full documentation: https://lingo.dev/compiler
+Full documentation: [lingo.dev/compiler](https://lingo.dev/compiler)
