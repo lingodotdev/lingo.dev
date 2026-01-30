@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.128.0
+
+### Minor Changes
+
+- [#1942](https://github.com/lingodotdev/lingo.dev/pull/1942) [`1194a30`](https://github.com/lingodotdev/lingo.dev/commit/1194a301d6477bc5d7e6f037fc597eeea8a19f2f) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Remove waste comment
+
 ## 0.127.0
 
 ### Minor Changes
