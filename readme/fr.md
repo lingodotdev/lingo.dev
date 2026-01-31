@@ -65,7 +65,7 @@
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/GitHub-Trending-blue?logo=github&style=flat-square"
-      alt="Tendances GitHub"
+      alt="Tendances Github"
     />
   </a>
 </p>
@@ -76,7 +76,7 @@
 
 **Lingo.dev Compiler** est un middleware de compilation gratuit et open-source, conçu pour rendre n'importe quelle application React multilingue au moment de la compilation sans nécessiter de modifications des composants React existants.
 
-> **Remarque :** Si vous utilisez le compilateur historique (`@lingo.dev/_compiler`), veuillez migrer vers `@lingo.dev/compiler`. Le compilateur historique est obsolète et sera supprimé dans une version future.
+> **Note :** si vous utilisez l'ancien compilateur (`@lingo.dev/_compiler`), veuillez migrer vers `@lingo.dev/compiler`. L'ancien compilateur est obsolète et sera supprimé dans une version future.
 
 Installez une seule fois :
 
@@ -101,7 +101,7 @@ export default async function (): Promise<NextConfig> {
 }
 ```
 
-Exécutez `next build` et regardez les bundles espagnols et français apparaître ✨
+Exécutez `next build` et regardez les bundles espagnol et français apparaître ✨
 
 [Consultez la documentation →](https://lingo.dev/compiler) pour le guide complet, et [rejoignez notre Discord](https://lingo.dev/go/discord) pour obtenir de l'aide avec votre configuration.
 
@@ -109,18 +109,18 @@ Exécutez `next build` et regardez les bundles espagnols et français apparaîtr
 
 ### Que contient ce dépôt ?
 
-| Outil        | En bref                                                                                    | Documentation                           |
-| ------------ | ------------------------------------------------------------------------------------------ | --------------------------------------- |
-| **Compiler** | Localisation React au moment du build                                                      | [/compiler](https://lingo.dev/compiler) |
-| **CLI**      | Localisation en une commande pour applications web et mobiles, JSON, YAML, markdown, etc.  | [/cli](https://lingo.dev/cli)           |
-| **CI/CD**    | Commit automatique des traductions à chaque push + création de pull requests si nécessaire | [/ci](https://lingo.dev/ci)             |
-| **SDK**      | Traduction en temps réel pour le contenu généré par les utilisateurs                       | [/sdk](https://lingo.dev/sdk)           |
+| Outil        | En bref                                                                                      | Documentation                           |
+| ------------ | -------------------------------------------------------------------------------------------- | --------------------------------------- |
+| **Compiler** | Localisation React au moment de la compilation                                               | [/compiler](https://lingo.dev/compiler) |
+| **CLI**      | Localisation en une commande pour applications web et mobiles, JSON, YAML, markdown, et plus | [/cli](https://lingo.dev/cli)           |
+| **CI/CD**    | Commit automatique des traductions à chaque push + création de pull requests si nécessaire   | [/ci](https://lingo.dev/ci)             |
+| **SDK**      | Traduction en temps réel pour le contenu généré par les utilisateurs                         | [/sdk](https://lingo.dev/sdk)           |
 
 Voici les points essentiels pour chacun 👇
 
 ---
 
-### ⚡️ Lingo.dev CLI
+### ⚡️ CLI Lingo.dev
 
 Traduisez le code et le contenu directement depuis votre terminal.
 
@@ -130,11 +130,11 @@ npx lingo.dev@latest run
 
 Il empreinte chaque chaîne, met en cache les résultats et ne retraduit que ce qui a changé.
 
-[Suivez la documentation →](https://lingo.dev/cli) pour apprendre à le configurer.
+[Consultez la documentation →](https://lingo.dev/cli) pour apprendre à le configurer.
 
 ---
 
-### 🔄 Lingo.dev CI/CD
+### 🔄 CI/CD Lingo.dev
 
 Livrez des traductions parfaites automatiquement.
 
@@ -159,7 +159,7 @@ Garde votre dépôt au vert et votre produit multilingue sans les étapes manuel
 
 ---
 
-### 🧩 Lingo.dev SDK
+### 🧩 SDK Lingo.dev
 
 Traduction instantanée par requête pour le contenu dynamique.
 
@@ -185,7 +185,7 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 Parfait pour le chat, les commentaires utilisateurs et autres flux en temps réel.
 
-[Lire la documentation →](https://lingo.dev/sdk)
+[Consultez la documentation →](https://lingo.dev/sdk)
 
 ---
 
@@ -216,6 +216,6 @@ Vous ne voyez pas votre langue ? Ajoutez-la à [`i18n.json`](./i18n.json) et ouv
 **Format de locale :** utilisez les codes [BCP-47](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) : `language[-Script][-REGION]`
 
 - Langue : ISO 639-1/2/3 en minuscules (`en`, `zh`, `bho`)
-- Script : ISO 15924 en casse de titre (`Hans`, `Hant`, `Latn`)
+- Écriture : ISO 15924 en casse de titre (`Hans`, `Hant`, `Latn`)
 - Région : ISO 3166-1 alpha-2 en majuscules (`US`, `CN`, `IN`)
-- Exemples : `en`, `pt-BR`, `zh-Hans`, {/_ INLINE_CODE_PLACEHOLDER_6e553bb40a655db7be211ded60744c98 _/
+- Exemples : `en`, `pt-BR`, `zh-Hans`, `sr-Cyrl-RS`

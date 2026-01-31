@@ -47,25 +47,25 @@
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #1 DevTool of the Month"
+      alt="Product Hunt #1 DevTool del mes"
     />
   </a>
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Week-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #1 DevTool of the Week"
+      alt="Product Hunt #1 DevTool de la semana"
     />
   </a>
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/Product%20Hunt-%232%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #2 Product of the Day"
+      alt="Product Hunt #2 producto del día"
     />
   </a>
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/GitHub-Trending-blue?logo=github&style=flat-square"
-      alt="Github trending"
+      alt="Tendencia en Github"
     />
   </a>
 </p>
@@ -101,7 +101,7 @@ export default async function (): Promise<NextConfig> {
 }
 ```
 
-Ejecuta `next build` y observa cómo aparecen los paquetes en español y francés ✨
+Ejecuta `next build` y observa cómo aparecen los bundles en español y francés ✨
 
 [Lee la documentación →](https://lingo.dev/compiler) para la guía completa, y [únete a nuestro Discord](https://lingo.dev/go/discord) para obtener ayuda con tu configuración.
 
@@ -113,7 +113,7 @@ Ejecuta `next build` y observa cómo aparecen los paquetes en español y francé
 | ------------ | -------------------------------------------------------------------------------------------- | --------------------------------------- |
 | **Compiler** | Localización de React en tiempo de compilación                                               | [/compiler](https://lingo.dev/compiler) |
 | **CLI**      | Localización con un solo comando para aplicaciones web y móviles, JSON, YAML, markdown y más | [/cli](https://lingo.dev/cli)           |
-| **CI/CD**    | Auto-commit de traducciones en cada push + crea pull requests si es necesario                | [/ci](https://lingo.dev/ci)             |
+| **CI/CD**    | Auto-commit de traducciones en cada push + creación de pull requests si es necesario         | [/ci](https://lingo.dev/ci)             |
 | **SDK**      | Traducción en tiempo real para contenido generado por usuarios                               | [/sdk](https://lingo.dev/sdk)           |
 
 A continuación, los puntos clave de cada uno 👇
@@ -128,9 +128,9 @@ Traduce código y contenido directamente desde tu terminal.
 npx lingo.dev@latest run
 ```
 
-Genera una huella digital de cada cadena, almacena resultados en caché y solo vuelve a traducir lo que cambió.
+Genera una huella digital de cada cadena, almacena los resultados en caché y solo vuelve a traducir lo que ha cambiado.
 
-[Sigue la documentación →](https://lingo.dev/cli) para aprender cómo configurarlo.
+[Consulta la documentación →](https://lingo.dev/cli) para aprender cómo configurarlo.
 
 ---
 
@@ -153,7 +153,7 @@ jobs:
           api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
 ```
 
-Mantiene tu repositorio limpio y tu producto multilingüe sin pasos manuales.
+Mantiene tu repositorio en verde y tu producto multilingüe sin pasos manuales.
 
 [Lee la documentación →](https://lingo.dev/ci)
 
@@ -191,7 +191,7 @@ Perfecto para chat, comentarios de usuarios y otros flujos en tiempo real.
 
 ## 🤝 Comunidad
 
-Somos impulsados por la comunidad y nos encantan las contribuciones.
+Somos una comunidad impulsada por sus miembros y nos encantan las contribuciones.
 
 - ¿Tienes una idea? [Abre un issue](https://github.com/lingodotdev/lingo.dev/issues)
 - ¿Quieres arreglar algo? [Envía un PR](https://github.com/lingodotdev/lingo.dev/pulls)
@@ -203,7 +203,7 @@ Si te gusta lo que hacemos, danos una ⭐ y ayúdanos a alcanzar las 10 000 estr
 
 [
 
-![Gráfico del historial de estrellas](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+![Gráfico de historial de estrellas](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
 
 ](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
 
@@ -211,11 +211,11 @@ Si te gusta lo que hacemos, danos una ⭐ y ayúdanos a alcanzar las 10 000 estr
 
 [English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [Português (Brasil)](/readme/pt-BR.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Polski](/readme/pl.md) • [Türkçe](/readme/tr.md) • [اردو](/readme/ur.md) • [भोजपुरी](/readme/bho.md) • [অসমীয়া](/readme/as-IN.md) • [ગુજરાતી](/readme/gu-IN.md) • [മലയാളം (IN)](/readme/ml-IN.md) • [मराठी](/readme/mr-IN.md) • [ଓଡ଼ିଆ](/readme/or-IN.md) • [ਪੰਜਾਬੀ](/readme/pa-IN.md) • [සිංහල](/readme/si-LK.md) • [தமிழ்](/readme/ta-IN.md) • [తెలుగు](/readme/te-IN.md)
 
-¿No ves tu idioma? Agrégalo a [`i18n.json`](./i18n.json) y abre un PR.
+¿No ves tu idioma? Añádelo a [`i18n.json`](./i18n.json) y abre un PR.
 
-**Formato de locale:** Usa códigos [BCP-47](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale): `language[-Script][-REGION]`
+**Formato de locale:** Usa códigos [BCP-47](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale): `language[-Script][-REGION]`
 
 - Idioma: ISO 639-1/2/3 en minúsculas (`en`, `zh`, `bho`)
-- Script: ISO 15924 en mayúscula inicial (`Hans`, `Hant`, `Latn`)
+- Script: ISO 15924 en mayúsculas y minúsculas (`Hans`, `Hant`, `Latn`)
 - Región: ISO 3166-1 alpha-2 en mayúsculas (`US`, `CN`, `IN`)
-- Ejemplos: `en`, `pt-BR`, `zh-Hans`, {/_ INLINE_CODE_PLACEHOLDER_6e553bb40a655db7be211ded60744c98 _/
+- Ejemplos: `en`, `pt-BR`, `zh-Hans`, `sr-Cyrl-RS`

@@ -10,8 +10,8 @@
 
 <p align="center">
   <strong>
-    ⚡ Lingo.dev - kit de ferramentas i18n de código aberto, com IA, para
-    localização instantânea com LLMs.
+    ⚡ Lingo.dev - kit de ferramentas i18n de código aberto, alimentado por IA,
+    para localização instantânea com LLMs.
   </strong>
 </p>
 
@@ -74,9 +74,9 @@
 
 ## Conheça o Compiler 🆕
 
-**Lingo.dev Compiler** é um middleware de compilação gratuito e de código aberto, projetado para tornar qualquer aplicativo React multilíngue em tempo de build sem exigir alterações nos componentes React existentes.
+**Lingo.dev Compiler** é um middleware de compilação gratuito e de código aberto, projetado para tornar qualquer aplicativo React multilíngue em tempo de compilação sem exigir alterações nos componentes React existentes.
 
-> **Nota:** Se você está usando o compilador legado (`@lingo.dev/_compiler`), por favor migre para `@lingo.dev/compiler`. O compilador legado está obsoleto e será removido em uma versão futura.
+> **Nota:** Se você está usando o compiler legado (`@lingo.dev/_compiler`), por favor migre para `@lingo.dev/compiler`. O compiler legado está obsoleto e será removido em uma versão futura.
 
 Instale uma vez:
 
@@ -107,14 +107,14 @@ Execute `next build` e veja os bundles em espanhol e francês aparecerem ✨
 
 ---
 
-### O que há dentro deste repositório?
+### O que tem dentro deste repositório?
 
-| Ferramenta   | Resumo                                                                                | Documentação                            |
-| ------------ | ------------------------------------------------------------------------------------- | --------------------------------------- |
-| **Compiler** | Localização React em tempo de build                                                   | [/compiler](https://lingo.dev/compiler) |
-| **CLI**      | Localização com um comando para aplicativos web e mobile, JSON, YAML, markdown e mais | [/cli](https://lingo.dev/cli)           |
-| **CI/CD**    | Auto-commit de traduções a cada push + criação de pull requests quando necessário     | [/ci](https://lingo.dev/ci)             |
-| **SDK**      | Tradução em tempo real para conteúdo gerado por usuários                              | [/sdk](https://lingo.dev/sdk)           |
+| Ferramenta   | Resumo                                                                                      | Documentação                            |
+| ------------ | ------------------------------------------------------------------------------------------- | --------------------------------------- |
+| **Compiler** | Localização React em tempo de compilação                                                    | [/compiler](https://lingo.dev/compiler) |
+| **CLI**      | Localização com um único comando para aplicativos web e mobile, JSON, YAML, markdown e mais | [/cli](https://lingo.dev/cli)           |
+| **CI/CD**    | Auto-commit de traduções a cada push + criação de pull requests quando necessário           | [/ci](https://lingo.dev/ci)             |
+| **SDK**      | Tradução em tempo real para conteúdo gerado por usuários                                    | [/sdk](https://lingo.dev/sdk)           |
 
 Abaixo estão os destaques de cada um 👇
 
@@ -130,7 +130,7 @@ npx lingo.dev@latest run
 
 Ele cria uma impressão digital de cada string, armazena resultados em cache e só retraduz o que mudou.
 
-[Siga a documentação →](https://lingo.dev/cli) para aprender como configurá-lo.
+[Siga a documentação →](https://lingo.dev/cli) para aprender como configurar.
 
 ---
 
@@ -153,7 +153,7 @@ jobs:
           api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
 ```
 
-Mantém seu repositório verde e seu produto multilíngue sem as etapas manuais.
+Mantém seu repositório funcionando e seu produto multilíngue sem etapas manuais.
 
 [Leia a documentação →](https://lingo.dev/ci)
 
@@ -218,4 +218,4 @@ Não vê seu idioma? Adicione-o em [`i18n.json`](./i18n.json) e abra um PR!
 - Idioma: ISO 639-1/2/3 minúsculas (`en`, `zh`, `bho`)
 - Script: ISO 15924 title case (`Hans`, `Hant`, `Latn`)
 - Região: ISO 3166-1 alpha-2 maiúsculas (`US`, `CN`, `IN`)
-- Exemplos: `en`, `pt-BR`, `zh-Hans`, {/_ INLINE_CODE_PLACEHOLDER_6e553bb40a655db7be211ded60744c98 _/
+- Exemplos: `en`, `pt-BR`, `zh-Hans`, `sr-Cyrl-RS`

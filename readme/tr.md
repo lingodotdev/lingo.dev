@@ -47,25 +47,25 @@
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #1 DevTool of the Month"
+      alt="Product Hunt ayın 1 numaralı geliştirici aracı"
     />
   </a>
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Week-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #1 DevTool of the Week"
+      alt="Product Hunt haftanın 1 numaralı ürünü"
     />
   </a>
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/Product%20Hunt-%232%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #2 Product of the Day"
+      alt="Product Hunt günün 2 numaralı ürünü"
     />
   </a>
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/GitHub-Trending-blue?logo=github&style=flat-square"
-      alt="Github trending"
+      alt="Github trendleri"
     />
   </a>
 </p>
@@ -74,7 +74,7 @@
 
 ## Compiler ile tanışın 🆕
 
-**Lingo.dev Compiler**, mevcut React bileşenlerinde herhangi bir değişiklik gerektirmeden, herhangi bir React uygulamasını derleme zamanında çok dilli hale getirmek için tasarlanmış ücretsiz, açık kaynaklı bir derleyici ara yazılımıdır.
+**Lingo.dev Compiler**, mevcut React bileşenlerinde herhangi bir değişiklik gerektirmeden herhangi bir React uygulamasını derleme zamanında çok dilli hale getirmek için tasarlanmış ücretsiz, açık kaynaklı bir derleyici ara yazılımıdır.
 
 > **Not:** Eski derleyiciyi (`@lingo.dev/_compiler`) kullanıyorsanız, lütfen `@lingo.dev/compiler` sürümüne geçiş yapın. Eski derleyici kullanımdan kaldırılmıştır ve gelecekteki bir sürümde kaldırılacaktır.
 
@@ -101,9 +101,9 @@ export default async function (): Promise<NextConfig> {
 }
 ```
 
-`next build` komutunu çalıştırın ve İspanyolca ile Fransızca paketlerin ortaya çıkışını izleyin ✨
+`next build` komutunu çalıştırın ve İspanyolca ve Fransızca paketlerin ortaya çıkışını izleyin ✨
 
-Tam kılavuz için [dokümantasyonu okuyun →](https://lingo.dev/compiler) ve kurulumunuzla ilgili yardım almak için [Discord sunucumuza katılın](https://lingo.dev/go/discord).
+[Dokümantasyonu okuyun →](https://lingo.dev/compiler) tam kılavuz için ve kurulumunuzla ilgili yardım almak için [Discord sunucumuza katılın](https://lingo.dev/go/discord).
 
 ---
 
@@ -111,18 +111,18 @@ Tam kılavuz için [dokümantasyonu okuyun →](https://lingo.dev/compiler) ve k
 
 | Araç         | Kısaca                                                                                        | Dokümanlar                              |
 | ------------ | --------------------------------------------------------------------------------------------- | --------------------------------------- |
-| **Compiler** | Derleme zamanı React yerelleştirmesi                                                          | [/compiler](https://lingo.dev/compiler) |
+| **Compiler** | Derleme zamanında React yerelleştirme                                                         | [/compiler](https://lingo.dev/compiler) |
 | **CLI**      | Web ve mobil uygulamalar, JSON, YAML, markdown ve daha fazlası için tek komutla yerelleştirme | [/cli](https://lingo.dev/cli)           |
-| **CI/CD**    | Her push'ta otomatik çeviri commit'i + gerektiğinde pull request oluşturma                    | [/ci](https://lingo.dev/ci)             |
+| **CI/CD**    | Her push'ta otomatik çeviri commit'i + gerekirse pull request oluşturma                       | [/ci](https://lingo.dev/ci)             |
 | **SDK**      | Kullanıcı tarafından oluşturulan içerik için gerçek zamanlı çeviri                            | [/sdk](https://lingo.dev/sdk)           |
 
-Aşağıda her biri için hızlı özetler bulunmaktadır 👇
+Her biri için hızlı özetler aşağıda 👇
 
 ---
 
 ### ⚡️ Lingo.dev CLI
 
-Kod ve içeriği doğrudan terminalinizden çevirin.
+Kodu ve içeriği doğrudan terminalinizden çevirin.
 
 ```bash
 npx lingo.dev@latest run
@@ -130,7 +130,7 @@ npx lingo.dev@latest run
 
 Her string'i parmak iziyle işaretler, sonuçları önbelleğe alır ve yalnızca değişenleri yeniden çevirir.
 
-Nasıl kurulacağını öğrenmek için [dokümantasyonu takip edin →](https://lingo.dev/cli).
+[Dokümanlara göz atın →](https://lingo.dev/cli) ve nasıl kurulacağını öğrenin.
 
 ---
 
@@ -153,9 +153,9 @@ jobs:
           api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
 ```
 
-Deponuzu yeşil ve ürününüzü manuel adımlar olmadan çok dilli tutar.
+Repo'nuzu yeşil tutar ve ürününüzü manuel adımlar olmadan çok dilli hale getirir.
 
-[Dokümantasyonu okuyun →](https://lingo.dev/ci)
+[Dokümanlara göz atın →](https://lingo.dev/ci)
 
 ---
 
@@ -185,7 +185,7 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 Sohbet, kullanıcı yorumları ve diğer gerçek zamanlı akışlar için mükemmel.
 
-[Dokümantasyonu okuyun →](https://lingo.dev/sdk)
+[Dokümanlara göz atın →](https://lingo.dev/sdk)
 
 ---
 
@@ -193,13 +193,13 @@ Sohbet, kullanıcı yorumları ve diğer gerçek zamanlı akışlar için mükem
 
 Topluluk odaklıyız ve katkıları seviyoruz!
 
-- Bir fikriniz mi var? [Bir issue açın](https://github.com/lingodotdev/lingo.dev/issues)
+- Bir fikriniz mi var? [Issue açın](https://github.com/lingodotdev/lingo.dev/issues)
 - Bir şeyi düzeltmek mi istiyorsunuz? [PR gönderin](https://github.com/lingodotdev/lingo.dev/pulls)
-- Yardıma mı ihtiyacınız var? [Discord sunucumuza katılın](https://lingo.dev/go/discord)
+- Yardıma mı ihtiyacınız var? [Discord'umuza katılın](https://lingo.dev/go/discord)
 
 ## ⭐ Yıldız geçmişi
 
-Yaptıklarımızı beğendiyseniz, bize bir ⭐ verin ve 10.000 yıldıza ulaşmamıza yardımcı olun! 🌟
+Yaptıklarımızı beğeniyorsanız, bize bir ⭐ verin ve 10.000 yıldıza ulaşmamıza yardımcı olun! 🌟
 
 [
 
@@ -218,4 +218,4 @@ Dilinizi görmüyor musunuz? [`i18n.json`](./i18n.json) dosyasına ekleyin ve bi
 - Dil: ISO 639-1/2/3 küçük harf (`en`, `zh`, `bho`)
 - Yazı sistemi: ISO 15924 başlık harfi (`Hans`, `Hant`, `Latn`)
 - Bölge: ISO 3166-1 alpha-2 büyük harf (`US`, `CN`, `IN`)
-- Örnekler: `en`, `pt-BR`, `zh-Hans`, {/_ INLINE_CODE_PLACEHOLDER_6e553bb40a655db7be211ded60744c98 _/
+- Örnekler: `en`, `pt-BR`, `zh-Hans`, `sr-Cyrl-RS`
