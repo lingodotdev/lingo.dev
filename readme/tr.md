@@ -76,7 +76,9 @@
 
 **Lingo.dev Compiler**, mevcut React bileşenlerinde herhangi bir değişiklik gerektirmeden, herhangi bir React uygulamasını derleme zamanında çok dilli hale getirmek için tasarlanmış ücretsiz, açık kaynaklı bir derleyici ara yazılımıdır.
 
-Bir kez kurun:
+> **Not:** Eski derleyiciyi (`@lingo.dev/_compiler`) kullanıyorsanız, lütfen `@lingo.dev/compiler` sürümüne geçiş yapın. Eski derleyici kullanımdan kaldırılmıştır ve gelecekteki bir sürümde kaldırılacaktır.
+
+Bir kez yükleyin:
 
 ```bash
 npm install @lingo.dev/compiler
@@ -99,36 +101,36 @@ export default async function (): Promise<NextConfig> {
 }
 ```
 
-`next build` komutunu çalıştırın ve İspanyolca ve Fransızca paketlerin ortaya çıkışını izleyin ✨
+`next build` komutunu çalıştırın ve İspanyolca ile Fransızca paketlerin ortaya çıkışını izleyin ✨
 
-Tam kılavuz için [belgeleri okuyun →](https://lingo.dev/compiler) ve kurulumunuzla ilgili yardım almak için [Discord'umuza katılın](https://lingo.dev/go/discord).
+Tam kılavuz için [dokümantasyonu okuyun →](https://lingo.dev/compiler) ve kurulumunuzla ilgili yardım almak için [Discord sunucumuza katılın](https://lingo.dev/go/discord).
 
 ---
 
-### Bu repo'nun içinde neler var?
+### Bu depoda neler var?
 
-| Araç         | Kısaca                                                                                        | Belgeler                                |
+| Araç         | Kısaca                                                                                        | Dokümanlar                              |
 | ------------ | --------------------------------------------------------------------------------------------- | --------------------------------------- |
-| **Compiler** | Derleme zamanında React yerelleştirme                                                         | [/compiler](https://lingo.dev/compiler) |
+| **Compiler** | Derleme zamanı React yerelleştirmesi                                                          | [/compiler](https://lingo.dev/compiler) |
 | **CLI**      | Web ve mobil uygulamalar, JSON, YAML, markdown ve daha fazlası için tek komutla yerelleştirme | [/cli](https://lingo.dev/cli)           |
-| **CI/CD**    | Her push'ta otomatik çeviri commit'i + gerekirse pull request oluşturma                       | [/ci](https://lingo.dev/ci)             |
+| **CI/CD**    | Her push'ta otomatik çeviri commit'i + gerektiğinde pull request oluşturma                    | [/ci](https://lingo.dev/ci)             |
 | **SDK**      | Kullanıcı tarafından oluşturulan içerik için gerçek zamanlı çeviri                            | [/sdk](https://lingo.dev/sdk)           |
 
-Aşağıda her biri için hızlı özetler bulunuyor 👇
+Aşağıda her biri için hızlı özetler bulunmaktadır 👇
 
 ---
 
 ### ⚡️ Lingo.dev CLI
 
-Kodu ve içeriği doğrudan terminalinizden çevirin.
+Kod ve içeriği doğrudan terminalinizden çevirin.
 
 ```bash
 npx lingo.dev@latest run
 ```
 
-Her dizeyi parmak iziyle tanımlar, sonuçları önbelleğe alır ve yalnızca değişenleri yeniden çevirir.
+Her string'i parmak iziyle işaretler, sonuçları önbelleğe alır ve yalnızca değişenleri yeniden çevirir.
 
-Nasıl kurulacağını öğrenmek için [belgeleri takip edin →](https://lingo.dev/cli).
+Nasıl kurulacağını öğrenmek için [dokümantasyonu takip edin →](https://lingo.dev/cli).
 
 ---
 
@@ -151,15 +153,15 @@ jobs:
           api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
 ```
 
-Deponuzu yeşil tutar ve ürününüzü manuel adımlar olmadan çok dilli hale getirir.
+Deponuzu yeşil ve ürününüzü manuel adımlar olmadan çok dilli tutar.
 
-[Belgeleri okuyun →](https://lingo.dev/ci)
+[Dokümantasyonu okuyun →](https://lingo.dev/ci)
 
 ---
 
 ### 🧩 Lingo.dev SDK
 
-Dinamik içerik için istek başına anında çeviri.
+Dinamik içerik için istek başına anlık çeviri.
 
 ```ts
 import { LingoDotDevEngine } from "lingo.dev/sdk";
@@ -183,7 +185,7 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 Sohbet, kullanıcı yorumları ve diğer gerçek zamanlı akışlar için mükemmel.
 
-[Belgeleri okuyun →](https://lingo.dev/sdk)
+[Dokümantasyonu okuyun →](https://lingo.dev/sdk)
 
 ---
 
@@ -191,17 +193,17 @@ Sohbet, kullanıcı yorumları ve diğer gerçek zamanlı akışlar için mükem
 
 Topluluk odaklıyız ve katkıları seviyoruz!
 
-- Bir fikriniz mi var? [Bir sorun açın](https://github.com/lingodotdev/lingo.dev/issues)
-- Bir şeyi düzeltmek mi istiyorsunuz? [Bir PR gönderin](https://github.com/lingodotdev/lingo.dev/pulls)
-- Yardıma mı ihtiyacınız var? [Discord'umuza katılın](https://lingo.dev/go/discord)
+- Bir fikriniz mi var? [Bir issue açın](https://github.com/lingodotdev/lingo.dev/issues)
+- Bir şeyi düzeltmek mi istiyorsunuz? [PR gönderin](https://github.com/lingodotdev/lingo.dev/pulls)
+- Yardıma mı ihtiyacınız var? [Discord sunucumuza katılın](https://lingo.dev/go/discord)
 
 ## ⭐ Yıldız geçmişi
 
-Yaptıklarımızı beğeniyorsanız, bize bir ⭐ verin ve 6.000 yıldıza ulaşmamıza yardımcı olun! 🌟
+Yaptıklarımızı beğendiyseniz, bize bir ⭐ verin ve 10.000 yıldıza ulaşmamıza yardımcı olun! 🌟
 
 [
 
-![Yıldız Geçmişi Grafiği](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+![Star History Chart](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
 
 ](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
 
@@ -214,6 +216,6 @@ Dilinizi görmüyor musunuz? [`i18n.json`](./i18n.json) dosyasına ekleyin ve bi
 **Yerel ayar formatı:** [BCP-47](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) kodlarını kullanın: `language[-Script][-REGION]`
 
 - Dil: ISO 639-1/2/3 küçük harf (`en`, `zh`, `bho`)
-- Alfabe: ISO 15924 baş harfi büyük (`Hans`, `Hant`, `Latn`)
+- Yazı sistemi: ISO 15924 başlık harfi (`Hans`, `Hant`, `Latn`)
 - Bölge: ISO 3166-1 alpha-2 büyük harf (`US`, `CN`, `IN`)
-- Örnekler: `en`, `pt-BR`, `zh-Hans`, `sr-Cyrl-RS`
+- Örnekler: `en`, `pt-BR`, `zh-Hans`, {/_ INLINE_CODE_PLACEHOLDER_6e553bb40a655db7be211ded60744c98 _/
