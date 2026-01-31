@@ -1,7 +1,7 @@
 <p align="center">
   <a href="https://lingo.dev">
     <img
-      src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.compiler.png"
+      src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.png"
       width="100%"
       alt="Lingo.dev"
     />
@@ -10,19 +10,16 @@
 
 <p align="center">
   <strong>
-    ⚡ Lingo.dev - ଓପନ-ସୋର୍ସ, AI-ଚାଳିତ i18n ଟୁଲକିଟ୍ LLMs ସହିତ ତୁରନ୍ତ
-    ଲୋକାଲାଇଜେସନ୍ ପାଇଁ।
+    Lingo.dev - LLM-ଚାଳିତ ଲୋକାଲାଇଜେସନ୍ ପାଇଁ ଓପନ୍-ସୋର୍ସ i18n ଟୁଲକିଟ୍
   </strong>
 </p>
 
 <br />
 
 <p align="center">
-  <a href="https://lingo.dev/compiler">Lingo.dev Compiler</a> •
-  <a href="https://lingo.dev/mcp">Lingo.dev MCP</a> •
-  <a href="https://lingo.dev/cli">Lingo.dev CLI</a> •
-  <a href="https://lingo.dev/ci">Lingo.dev CI/CD</a> •
-  <a href="https://lingo.dev/sdk">Lingo.dev SDK</a>
+  <a href="#lingodev-mcp">MCP</a> •<a href="#lingodev-cli">CLI</a> •
+  <a href="#lingodev-cicd">CI/CD</a> •<a href="#lingodev-sdk">SDK</a> •
+  <a href="#lingodev-compiler">Compiler</a>
 </p>
 
 <p align="center">
@@ -72,21 +69,289 @@
 
 ---
 
-## Compiler ସହିତ ପରିଚୟ 🆕
+## ଶୀଘ୍ର ଆରମ୍ଭ
 
-**Lingo.dev Compiler** ହେଉଛି ଏକ ମାଗଣା, ଓପନ-ସୋର୍ସ କମ୍ପାଇଲର୍ ମିଡଲୱେର୍, ଯାହା ବିଲ୍ଡ ସମୟରେ ଯେକୌଣସି React ଆପ୍‌କୁ ବହୁଭାଷୀ କରିବା ପାଇଁ ଡିଜାଇନ୍ କରାଯାଇଛି, ବିଦ୍ୟମାନ React କମ୍ପୋନେଣ୍ଟଗୁଡ଼ିକରେ କୌଣସି ପରିବର୍ତ୍ତନ ଆବଶ୍ୟକ ନକରି।
+| ଟୁଲ୍                               | ବ୍ୟବହାର କେସ୍                                      | ଶୀଘ୍ର କମାଣ୍ଡ                       |
+| ---------------------------------- | ------------------------------------------------- | ---------------------------------- |
+| [**MCP**](#lingodev-mcp)           | React ଆପ୍ ପାଇଁ AI-ସହାୟକ i18n ସେଟଅପ୍               | Prompt: `Set up i18n`              |
+| [**CLI**](#lingodev-cli)           | JSON, YAML, markdown, CSV, PO ଫାଇଲ୍ ଅନୁବାଦ କରନ୍ତୁ | `npx lingo.dev@latest run`         |
+| [**CI/CD**](#lingodev-cicd)        | GitHub Actions ରେ ସ୍ୱୟଂଚାଳିତ ଅନୁବାଦ ପାଇପଲାଇନ୍     | `uses: lingodotdev/lingo.dev@main` |
+| [**SDK**](#lingodev-sdk)           | ଡାଇନାମିକ୍ କଣ୍ଟେଣ୍ଟ ପାଇଁ ରନଟାଇମ୍ ଅନୁବାଦ            | `npm install lingo.dev`            |
+| [**Compiler**](#lingodev-compiler) | i18n ରାପର୍ ବିନା ବିଲ୍ଡ-ଟାଇମ୍ React ଲୋକାଲାଇଜେସନ୍    | `withLingo()` plugin               |
 
-> **ନୋଟ୍:** ଯଦି ଆପଣ ଲିଗେସି କମ୍ପାଇଲର୍ (`@lingo.dev/_compiler`) ବ୍ୟବହାର କରୁଛନ୍ତି, ଦୟାକରି `@lingo.dev/compiler`କୁ ମାଇଗ୍ରେଟ୍ କରନ୍ତୁ। ଲିଗେସି କମ୍ପାଇଲର୍ ଡେପ୍ରିକେଟେଡ୍ ହୋଇଛି ଏବଂ ଭବିଷ୍ୟତର ରିଲିଜ୍‌ରେ ଅପସାରିତ ହେବ।
+---
 
-ଥରେ ଇନଷ୍ଟଲ୍ କରନ୍ତୁ:
+### Lingo.dev MCP
 
-```bash
-npm install @lingo.dev/compiler
+Model Context Protocol ସର୍ଭର ଯାହା AI କୋଡିଂ ଆସିଷ୍ଟାଣ୍ଟମାନଙ୍କୁ ପ୍ରାକୃତିକ ଭାଷା ପ୍ରମ୍ପଟ୍ ମାଧ୍ୟମରେ React ଆପ୍ଲିକେସନ୍ରେ i18n ଇନଫ୍ରାଷ୍ଟ୍ରକଚର୍ ସେଟଅପ୍ କରିବାକୁ ସକ୍ଷମ କରେ।
+
+**ସମର୍ଥିତ IDEs:**
+
+- Claude Code
+- Cursor
+- GitHub Copilot Agents
+- Codex (OpenAI)
+
+**ସମର୍ଥିତ ଫ୍ରେମୱାର୍କଗୁଡ଼ିକ:**
+
+- Next.js (App Router & Pages Router v13-16)
+- TanStack Start (v1)
+- React Router (v7)
+
+**ବ୍ୟବହାର:**
+
+ଆପଣଙ୍କ IDE ରେ MCP ସର୍ଭର କନଫିଗର୍ କରିବା ପରେ ([quickstart guides ଦେଖନ୍ତୁ](https://lingo.dev/en/mcp)), ଆପଣଙ୍କ ସହାୟକଙ୍କୁ ପ୍ରମ୍ପ୍ଟ କରନ୍ତୁ:
+
+```
+Set up i18n with the following locales: en, es, and pt-BR. The default locale is 'en'.
 ```
 
-ଆପଣଙ୍କ ବିଲ୍ଡ କନଫିଗ୍‌ରେ ସକ୍ଷମ କରନ୍ତୁ:
+ସହାୟକ କରିବ:
+
+1. Locale-based routing କନଫିଗର୍ କରିବା (ଯେମିତି `/en`, `/es`, `/pt-BR`)
+2. ଭାଷା ସୁଇଚିଂ କମ୍ପୋନେଣ୍ଟ ସେଟଅପ୍ କରିବା
+3. ସ୍ୱୟଂଚାଳିତ locale ଚିହ୍ନଟ ପ୍ରୟୋଗ କରିବା
+4. ଆବଶ୍ୟକ configuration ଫାଇଲ ଜେନେରେଟ୍ କରିବା
+
+**ଧ୍ୟାନ ଦିଅନ୍ତୁ:** AI-assisted କୋଡ୍ ଜେନେରେସନ୍ non-deterministic ଅଟେ। କମିଟ୍ କରିବା ପୂର୍ବରୁ ଜେନେରେଟ୍ ହୋଇଥିବା କୋଡ୍ ସମୀକ୍ଷା କରନ୍ତୁ।
+
+[ଡକ୍ସ ପଢ଼ନ୍ତୁ →](https://lingo.dev/en/mcp)
+
+---
+
+### Lingo.dev CLI
+
+AI ସହିତ ଆପ୍ ଏବଂ କଣ୍ଟେଣ୍ଟ ଅନୁବାଦ କରିବା ପାଇଁ open-source CLI। JSON, YAML, CSV, PO ଫାଇଲ, ଏବଂ markdown ସମେତ ସମସ୍ତ industry-standard ଫର୍ମାଟ୍ ସପୋର୍ଟ କରେ।
+
+**ସେଟଅପ୍:**
+
+```bash
+# Initialize project
+npx lingo.dev@latest init
+
+# Run translations
+npx lingo.dev@latest run
+```
+
+**ଏହା କିପରି କାମ କରେ:**
+
+1. କନଫିଗର୍ ହୋଇଥିବା ଫାଇଲରୁ ଅନୁବାଦଯୋଗ୍ୟ କଣ୍ଟେଣ୍ଟ ଏକ୍ସଟ୍ରାକ୍ଟ କରେ
+2. ଅନୁବାଦ ପାଇଁ LLM provider କୁ କଣ୍ଟେଣ୍ଟ ପଠାଏ
+3. ଅନୁବାଦିତ କଣ୍ଟେଣ୍ଟକୁ filesystem ରେ ଲେଖେ
+4. ସମ୍ପୂର୍ଣ୍ଣ ହୋଇଥିବା ଅନୁବାଦ ଟ୍ରାକ୍ କରିବା ପାଇଁ `i18n.lock` ଫାଇଲ ସୃଷ୍ଟି କରେ (ଅନାବଶ୍ୟକ ପ୍ରକ୍ରିୟାକରଣରୁ ଦୂରେଇ ରହେ)
+
+**କନଫିଗରେସନ୍:**
+
+`init` କମାଣ୍ଡ ଏକ `i18n.json` ଫାଇଲ ଜେନେରେଟ୍ କରେ। Locales ଏବଂ buckets କନଫିଗର୍ କରନ୍ତୁ:
+
+```json
+{
+  "$schema": "https://lingo.dev/schema/i18n.json",
+  "version": "1.10",
+  "locale": {
+    "source": "en",
+    "targets": ["es", "fr", "de"]
+  },
+  "buckets": {
+    "json": {
+      "include": ["locales/[locale].json"]
+    }
+  }
+}
+```
+
+`provider` ଫିଲ୍ଡ ଇଚ୍ଛାଧୀନ (Lingo.dev Engine କୁ default କରେ)। କଷ୍ଟମ୍ LLM providers ପାଇଁ:
+
+```json
+{
+  "provider": {
+    "id": "openai",
+    "model": "gpt-4o-mini",
+    "prompt": "Translate from {source} to {target}"
+  }
+}
+```
+
+**ସପୋର୍ଟ ହୋଇଥିବା LLM providers:**
+
+- Lingo.dev Engine (ସୁପାରିଶ କରାଯାଇଛି)
+- OpenAI
+- Anthropic
+- Google
+- Mistral
+- OpenRouter
+- Ollama
+
+[ଡକ୍ସ ପଢ଼ନ୍ତୁ →](https://lingo.dev/en/cli)
+
+---
+
+### Lingo.dev CI/CD
+
+CI/CD pipelines ପାଇଁ ସ୍ୱୟଂଚାଳିତ ଅନୁବାଦ workflows। ଅସମ୍ପୂର୍ଣ୍ଣ ଅନୁବାଦକୁ production ରେ ପହଞ୍ଚିବାରୁ ପ୍ରତିରୋଧ କରେ।
+
+**ସମର୍ଥିତ ପ୍ଲାଟଫର୍ମଗୁଡ଼ିକ:**
+
+- GitHub Actions
+- GitLab CI/CD
+- Bitbucket Pipelines
+
+**GitHub Actions ସେଟଅପ୍:**
+
+`.github/workflows/translate.yml` ସୃଷ୍ଟି କରନ୍ତୁ:
+
+```yaml
+name: Translate
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: write
+jobs:
+  translate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Lingo.dev
+        uses: lingodotdev/lingo.dev@main
+        with:
+          api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
+```
+
+**ସେଟଅପ୍ ଆବଶ୍ୟକତା:**
+
+1. ରିପୋଜିଟୋରୀ ସିକ୍ରେଟ୍ସରେ `LINGODOTDEV_API_KEY` ଯୋଗ କରନ୍ତୁ (Settings > Secrets and variables > Actions)
+2. PR ୱର୍କଫ୍ଲୋ ପାଇଁ: Settings > Actions > General ରେ "Allow GitHub Actions to create and approve pull requests" ସକ୍ଷମ କରନ୍ତୁ
+
+**ୱର୍କଫ୍ଲୋ ବିକଳ୍ପଗୁଡ଼ିକ:**
+
+ଅନୁବାଦଗୁଡ଼ିକୁ ସିଧାସଳଖ କମିଟ୍ କରନ୍ତୁ:
+
+```yaml
+uses: lingodotdev/lingo.dev@main
+with:
+  api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
+```
+
+ଅନୁବାଦ ସହିତ pull request ସୃଷ୍ଟି କରନ୍ତୁ:
+
+```yaml
+uses: lingodotdev/lingo.dev@main
+with:
+  api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
+  pull-request: true
+env:
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
+**ଉପଲବ୍ଧ ଇନପୁଟ୍ସ:**
+
+| Input                | Default                                        | Description                                     |
+| -------------------- | ---------------------------------------------- | ----------------------------------------------- |
+| `api-key`            | (required)                                     | Lingo.dev API key                               |
+| `pull-request`       | `false`                                        | ସିଧାସଳଖ କମିଟ୍ କରିବା ପରିବର୍ତ୍ତେ PR ସୃଷ୍ଟି କରନ୍ତୁ |
+| `commit-message`     | `"feat: update translations via @LingoDotDev"` | କଷ୍ଟମ୍ କମିଟ୍ ମେସେଜ୍                             |
+| `pull-request-title` | `"feat: update translations via @LingoDotDev"` | କଷ୍ଟମ୍ PR ଟାଇଟଲ୍                                |
+| `working-directory`  | `"."`                                          | ଚଲାଇବାକୁ ଥିବା ଡିରେକ୍ଟୋରୀ                        |
+| `parallel`           | `false`                                        | ସମାନ୍ତରାଳ ପ୍ରକ୍ରିୟାକରଣ ସକ୍ଷମ କରନ୍ତୁ             |
+
+[ଡକ୍ସ ପଢ଼ନ୍ତୁ →](https://lingo.dev/en/ci/github)
+
+---
+
+### Lingo.dev SDK
+
+ଡାଇନାମିକ୍ କଣ୍ଟେଣ୍ଟ ପାଇଁ ରନଟାଇମ୍ ଅନୁବାଦ ଲାଇବ୍ରେରୀ। JavaScript, PHP, Python, ଏବଂ Ruby ପାଇଁ ଉପଲବ୍ଧ।
+
+**ଇନଷ୍ଟଲେସନ୍:**
+
+```bash
+npm install lingo.dev
+```
+
+**ବ୍ୟବହାର:**
 
 ```ts
+import { LingoDotDevEngine } from "lingo.dev/sdk";
+
+const lingoDotDev = new LingoDotDevEngine({
+  apiKey: process.env.LINGODOTDEV_API_KEY,
+});
+
+// Translate objects (preserves structure)
+const translated = await lingoDotDev.localizeObject(
+  { greeting: "Hello", farewell: "Goodbye" },
+  { sourceLocale: "en", targetLocale: "es" },
+);
+// { greeting: "Hola", farewell: "Adiós" }
+
+// Translate text
+const text = await lingoDotDev.localizeText("Hello!", {
+  sourceLocale: "en",
+  targetLocale: "fr",
+});
+
+// Translate to multiple languages at once
+const results = await lingoDotDev.batchLocalizeText("Hello!", {
+  sourceLocale: "en",
+  targetLocales: ["es", "fr", "de"],
+});
+
+// Translate chat (preserves speaker names)
+const chat = await lingoDotDev.localizeChat(
+  [{ name: "Alice", text: "Hello!" }],
+  { sourceLocale: "en", targetLocale: "es" },
+);
+
+// Translate HTML (preserves markup)
+const html = await lingoDotDev.localizeHtml("<h1>Welcome</h1>", {
+  sourceLocale: "en",
+  targetLocale: "de",
+});
+
+// Detect language
+const locale = await lingoDotDev.recognizeLocale("Bonjour le monde");
+// "fr"
+```
+
+**ଉପଲବ୍ଧ SDKs:**
+
+- [JavaScript SDK](https://lingo.dev/en/sdk/javascript) - Web apps, Node.js
+- [PHP SDK](https://lingo.dev/en/sdk/php) - PHP, Laravel
+- [Python SDK](https://lingo.dev/en/sdk/python) - Django, Flask
+- [Ruby SDK](https://lingo.dev/en/sdk/ruby) - Rails
+
+[ଡକ୍ସ ପଢ଼ନ୍ତୁ →](https://lingo.dev/en/sdk)
+
+---
+
+### Lingo.dev କମ୍ପାଇଲର୍
+
+ବିଲ୍ଡ-ଟାଇମ୍ ଅନୁବାଦ ସିଷ୍ଟମ୍ ଯାହା କମ୍ପୋନେଣ୍ଟଗୁଡ଼ିକୁ ପରିବର୍ତ୍ତନ ନକରି React ଆପ୍‌ଗୁଡ଼ିକୁ ବହୁଭାଷିକ କରିଥାଏ। ରନଟାଇମ୍ ପରିବର୍ତ୍ତେ ବିଲ୍ଡ ସମୟରେ କାର୍ଯ୍ୟ କରେ।
+
+**ଇନଷ୍ଟଲେସନ୍:**
+
+```bash
+pnpm install @lingo.dev/compiler
+```
+
+**ପ୍ରମାଣୀକରଣ:**
+
+```bash
+# Recommended: Sign up at lingo.dev and login
+npx lingo.dev@latest login
+
+# Alternative: Add API key to .env
+LINGODOTDEV_API_KEY=your_key_here
+
+# Or use direct LLM providers (Groq, OpenAI, Anthropic, Google)
+GROQ_API_KEY=your_key
+```
+
+**କନଫିଗରେସନ୍ (Next.js):**
+
+```ts
+// next.config.ts
 import type { NextConfig } from "next";
 import { withLingo } from "@lingo.dev/compiler/next";
 
@@ -94,112 +359,120 @@ const nextConfig: NextConfig = {};
 
 export default async function (): Promise<NextConfig> {
   return await withLingo(nextConfig, {
+    sourceRoot: "./app",
     sourceLocale: "en",
-    targetLocales: ["es", "fr"],
+    targetLocales: ["es", "fr", "de"],
     models: "lingo.dev",
+    dev: { usePseudotranslator: true },
   });
 }
 ```
 
-`next build` ଚଲାନ୍ତୁ ଏବଂ ସ୍ପାନିସ୍ ଓ ଫ୍ରେଞ୍ଚ ବଣ୍ଡଲ୍‌ଗୁଡ଼ିକ ବାହାରକୁ ଆସିବା ଦେଖନ୍ତୁ ✨
-
-ସମ୍ପୂର୍ଣ୍ଣ ଗାଇଡ୍ ପାଇଁ [ଡକ୍ସ ପଢ଼ନ୍ତୁ →](https://lingo.dev/compiler), ଏବଂ ଆପଣଙ୍କ ସେଟଅପ୍‌ରେ ସାହାଯ୍ୟ ପାଇବାକୁ [ଆମର Discord ରେ ଯୋଗ ଦିଅନ୍ତୁ](https://lingo.dev/go/discord)।
-
----
-
-### ଏହି ରେପୋ ଭିତରେ କ'ଣ ଅଛି?
-
-| ଟୁଲ୍         | TL;DR                                                                           | ଡକ୍ସ                                    |
-| ------------ | ------------------------------------------------------------------------------- | --------------------------------------- |
-| **Compiler** | ବିଲ୍ଡ-ଟାଇମ୍ React ଲୋକାଲାଇଜେସନ୍                                                  | [/compiler](https://lingo.dev/compiler) |
-| **CLI**      | ୱେବ୍ ଏବଂ ମୋବାଇଲ୍ ଆପ୍ସ, JSON, YAML, markdown, + ଅଧିକ ପାଇଁ ଏକ-କମାଣ୍ଡ ଲୋକାଲାଇଜେସନ୍ | [/cli](https://lingo.dev/cli)           |
-| **CI/CD**    | ପ୍ରତ୍ୟେକ ପୁସ୍‌ରେ ଅଟୋ-କମିଟ୍ ଅନୁବାଦ + ଆବଶ୍ୟକ ହେଲେ ପୁଲ୍ ରିକ୍ୱେଷ୍ଟ ସୃଷ୍ଟି କରନ୍ତୁ    | [/ci](https://lingo.dev/ci)             |
-| **SDK**      | ୟୁଜର୍-ଜେନେରେଟେଡ୍ କଣ୍ଟେଣ୍ଟ ପାଇଁ ରିଅଲଟାଇମ୍ ଅନୁବାଦ                                 | [/sdk](https://lingo.dev/sdk)           |
-
-ପ୍ରତ୍ୟେକ ପାଇଁ ଦ୍ରୁତ ସୂଚନା ନିମ୍ନରେ ଅଛି 👇
-
----
-
-### ⚡️ Lingo.dev CLI
-
-ଆପଣଙ୍କ ଟର୍ମିନାଲରୁ ସିଧାସଳଖ କୋଡ୍ ଏବଂ ବିଷୟବସ୍ତୁ ଅନୁବାଦ କରନ୍ତୁ।
-
-```bash
-npx lingo.dev@latest run
-```
-
-ଏହା ପ୍ରତ୍ୟେକ ଷ୍ଟ୍ରିଙ୍ଗକୁ ଫିଙ୍ଗରପ୍ରିଣ୍ଟ କରେ, ଫଳାଫଳକୁ କ୍ୟାଶ୍ କରେ, ଏବଂ କେବଳ ପରିବର୍ତ୍ତିତ ବିଷୟକୁ ପୁନଃ ଅନୁବାଦ କରେ।
-
-ଏହାକୁ କିପରି ସେଟଅପ୍ କରିବେ ଜାଣିବା ପାଇଁ [ଡକ୍ସ ଅନୁସରଣ କରନ୍ତୁ →](https://lingo.dev/cli)।
-
----
-
-### 🔄 Lingo.dev CI/CD
-
-ସ୍ୱୟଂଚାଳିତ ଭାବରେ ସମ୍ପୂର୍ଣ୍ଣ ଅନୁବାଦ ପ୍ରଦାନ କରନ୍ତୁ।
-
-```yaml
-# .github/workflows/i18n.yml
-name: Lingo.dev i18n
-on: [push]
-
-jobs:
-  i18n:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: lingodotdev/lingo.dev@main
-        with:
-          api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
-```
-
-ମାନୁଆଲ ପଦକ୍ଷେପ ବିନା ଆପଣଙ୍କ ରେପୋକୁ ସବୁଜ ଏବଂ ଆପଣଙ୍କ ଉତ୍ପାଦକୁ ବହୁଭାଷୀ ରଖେ।
-
-[ଡକ୍ସ ପଢ଼ନ୍ତୁ →](https://lingo.dev/ci)
-
----
-
-### 🧩 Lingo.dev SDK
-
-ଗତିଶୀଳ ବିଷୟବସ୍ତୁ ପାଇଁ ତୁରନ୍ତ ପ୍ରତି-ଅନୁରୋଧ ଅନୁବାଦ।
+**କନଫିଗରେସନ୍ (Vite):**
 
 ```ts
-import { LingoDotDevEngine } from "lingo.dev/sdk";
+// vite.config.ts
+import { lingoCompilerPlugin } from "@lingo.dev/compiler/vite";
 
-const lingoDotDev = new LingoDotDevEngine({
-  apiKey: "your-api-key-here",
+export default defineConfig({
+  plugins: [
+    lingoCompilerPlugin({
+      sourceRoot: "src",
+      sourceLocale: "en",
+      targetLocales: ["es", "fr", "de"],
+      models: "lingo.dev",
+      dev: { usePseudotranslator: true },
+    }),
+    react(),
+  ],
 });
-
-const content = {
-  greeting: "Hello",
-  farewell: "Goodbye",
-  message: "Welcome to our platform",
-};
-
-const translated = await lingoDotDev.localizeObject(content, {
-  sourceLocale: "en",
-  targetLocale: "es",
-});
-// Returns: { greeting: "Hola", farewell: "Adiós", message: "Bienvenido a nuestra plataforma" }
 ```
 
-ଚାଟ୍, ଉପଯୋଗକର୍ତ୍ତା ମନ୍ତବ୍ୟ ଏବଂ ଅନ୍ୟାନ୍ୟ ରିଅଲ-ଟାଇମ୍ ଫ୍ଲୋ ପାଇଁ ଉପଯୁକ୍ତ।
+**Provider ସେଟଅପ୍:**
 
-[ଡକ୍ସ ପଢ଼ନ୍ତୁ →](https://lingo.dev/sdk)
+```tsx
+// app/layout.tsx (Next.js)
+import { LingoProvider } from "@lingo.dev/compiler/react";
+
+export default function RootLayout({ children }) {
+  return (
+    <LingoProvider>
+      <html>
+        <body>{children}</body>
+      </html>
+    </LingoProvider>
+  );
+}
+```
+
+**ଭାଷା ସୁଇଚର୍:**
+
+```tsx
+import { useLocale, setLocale } from "@lingo.dev/compiler/react";
+
+export function LanguageSwitcher() {
+  const locale = useLocale();
+  return (
+    <select value={locale} onChange={(e) => setLocale(e.target.value)}>
+      <option value="en">English</option>
+      <option value="es">Español</option>
+    </select>
+  );
+}
+```
+
+**ଡେଭଲପମେଣ୍ଟ:** `npm run dev` (pseudotranslator ବ୍ୟବହାର କରେ, କୌଣସି API କଲ୍ ନାହିଁ)
+
+**ପ୍ରଡକ୍ସନ୍:** `usePseudotranslator: false` ସେଟ୍ କରନ୍ତୁ, ତାପରେ `next build`
+
+`.lingo/` ଡିରେକ୍ଟୋରୀକୁ version control ରେ commit କରନ୍ତୁ।
+
+**ମୁଖ୍ୟ ବୈଶିଷ୍ଟ୍ୟଗୁଡ଼ିକ:**
+
+- ଶୂନ୍ୟ runtime performance cost
+- କୌଣସି translation keys କିମ୍ବା JSON ଫାଇଲ୍ ନାହିଁ
+- କୌଣସି `t()` functions କିମ୍ବା `<T>` wrapper components ନାହିଁ
+- JSX ରେ ଅନୁବାଦଯୋଗ୍ୟ ଟେକ୍ସଟ୍‌ର ସ୍ୱୟଂଚାଳିତ ଚିହ୍ନଟ
+- TypeScript ସପୋର୍ଟ
+- ବହୁବଚନ ପାଇଁ ICU MessageFormat
+- `data-lingo-override` attribute ମାଧ୍ୟମରେ manual overrides
+- ବିଲ୍ଟ-ଇନ୍ translation editor widget
+
+**ବିଲ୍ଡ ମୋଡ୍‌ଗୁଡ଼ିକ:**
+
+- `pseudotranslator`: placeholder translations ସହିତ development mode (କୌଣସି API costs ନାହିଁ)
+- `real`: LLMs ବ୍ୟବହାର କରି ପ୍ରକୃତ ଅନୁବାଦ ସୃଷ୍ଟି କରନ୍ତୁ
+- `cache-only`: CI ରୁ ପୂର୍ବ-ସୃଷ୍ଟ ଅନୁବାଦ ବ୍ୟବହାର କରି production mode (କୌଣସି API calls ନାହିଁ)
+
+**ସପୋର୍ଟେଡ୍ frameworks:**
+
+- Next.js (React Server Components ସହିତ App Router)
+- Vite + React (SPA ଏବଂ SSR)
+
+ଅତିରିକ୍ତ framework ସପୋର୍ଟ ଯୋଜନା କରାଯାଇଛି।
+
+[ଡକ୍ସ ପଢ଼ନ୍ତୁ →](https://lingo.dev/en/compiler)
 
 ---
 
-## 🤝 ସମ୍ପ୍ରଦାୟ
+## ଅବଦାନ
 
-ଆମେ ସମ୍ପ୍ରଦାୟ-ଚାଳିତ ଏବଂ ଅବଦାନକୁ ଭଲପାଉ!
+ଅବଦାନ ସ୍ୱାଗତଯୋଗ୍ୟ। ଦୟାକରି ଏହି ନିର୍ଦ୍ଦେଶାବଳୀ ଅନୁସରଣ କରନ୍ତୁ:
 
-- କୌଣସି ଧାରଣା ଅଛି କି? [ଏକ ଇସ୍ୟୁ ଖୋଲନ୍ତୁ](https://github.com/lingodotdev/lingo.dev/issues)
-- କିଛି ଠିକ୍ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି? [ଏକ PR ପଠାନ୍ତୁ](https://github.com/lingodotdev/lingo.dev/pulls)
-- ସାହାଯ୍ୟ ଦରକାର? [ଆମର Discord ରେ ଯୋଗ ଦିଅନ୍ତୁ](https://lingo.dev/go/discord)
+1. **ସମସ୍ୟା:** [ବଗ୍ ରିପୋର୍ଟ କରନ୍ତୁ କିମ୍ବା ଫିଚର୍ ଅନୁରୋଧ କରନ୍ତୁ](https://github.com/lingodotdev/lingo.dev/issues)
+2. **ପୁଲ୍ ରିକ୍ୱେଷ୍ଟ:** [ପରିବର୍ତ୍ତନ ସବମିଟ୍ କରନ୍ତୁ](https://github.com/lingodotdev/lingo.dev/pulls)
+   - ପ୍ରତ୍ୟେକ PR ପାଇଁ ଏକ changeset ଆବଶ୍ୟକ: `pnpm new` (କିମ୍ବା ନନ୍-ରିଲିଜ୍ ପରିବର୍ତ୍ତନ ପାଇଁ `pnpm new:empty`)
+   - ସବମିଟ୍ କରିବା ପୂର୍ବରୁ ଟେଷ୍ଟ ପାସ୍ ହେବା ନିଶ୍ଚିତ କରନ୍ତୁ
+3. **ଡେଭଲପମେଣ୍ଟ:** ଏହା ଏକ pnpm + turborepo monorepo
+   - ଡିପେଣ୍ଡେନ୍ସି ଇନଷ୍ଟଲ୍ କରନ୍ତୁ: `pnpm install`
+   - ଟେଷ୍ଟ ଚଲାନ୍ତୁ: `pnpm test`
+   - ବିଲ୍ଡ: `pnpm build`
 
-## ⭐ ଷ୍ଟାର ଇତିହାସ
+**ସପୋର୍ଟ:** [Discord କମ୍ୟୁନିଟି](https://lingo.dev/go/discord)
 
-ଯଦି ଆପଣ ଆମେ କରୁଥିବା କାମ ପସନ୍ଦ କରନ୍ତି, ତେବେ ଆମକୁ ଏକ ⭐ ଦିଅନ୍ତୁ ଏବଂ 10,000 ଷ୍ଟାର ପହଞ୍ଚିବାରେ ସାହାଯ୍ୟ କରନ୍ତୁ! 🌟
+## ଷ୍ଟାର୍ ହିଷ୍ଟୋରୀ
+
+ଯଦି ଆପଣ Lingo.dev କୁ ଉପଯୋଗୀ ମନେ କରନ୍ତି, ଆମକୁ ଏକ ଷ୍ଟାର୍ ଦିଅନ୍ତୁ ଏବଂ 10,000 ଷ୍ଟାର୍ ପହଞ୍ଚିବାରେ ସାହାଯ୍ୟ କରନ୍ତୁ!
 
 [
 
@@ -207,15 +480,20 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 ](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
 
-## 🌐 ଅନ୍ୟ ଭାଷାରେ Readme
+## ଲୋକାଲାଇଜ୍ଡ ଡକ୍ୟୁମେଣ୍ଟେସନ୍
 
-[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [Português (Brasil)](/readme/pt-BR.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Polski](/readme/pl.md) • [Türkçe](/readme/tr.md) • [اردو](/readme/ur.md) • [भोजपुरी](/readme/bho.md) • [অসমীয়া](/readme/as-IN.md) • [ગુજરાતી](/readme/gu-IN.md) • [മലയാളം (IN)](/readme/ml-IN.md) • [मराठी](/readme/mr-IN.md) • [ଓଡ଼ିଆ](/readme/or-IN.md) • [ਪੰਜਾਬੀ](/readme/pa-IN.md) • [සිංහල](/readme/si-LK.md) • [தமிழ்](/readme/ta-IN.md) • [తెలుగు](/readme/te-IN.md)
+**ଉପଲବ୍ଧ ଅନୁବାଦ:**
 
-ଆପଣଙ୍କ ଭାଷା ଦେଖୁନାହାଁନ୍ତି? ଏହାକୁ [`i18n.json`](./i18n.json) ରେ ଯୋଡ଼ନ୍ତୁ ଏବଂ ଏକ PR ଖୋଲନ୍ତୁ!
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [Português (Brasil)](/readme/pt-BR.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Polski](/readme/pl.md) • [Türkçe](/readme/tr.md) • [اردو](/readme/ur.md) • [भोजपुरी](/readme/bho.md) • [অসমীয়া](/readme/as-IN.md) • [ગુજરાતી](/readme/gu-IN.md) • [मराठी](/readme/mr-IN.md) • [ଓଡ଼ିଆ](/readme/or-IN.md) • [ਪੰਜਾਬੀ](/readme/pa-IN.md) • [සිංහල](/readme/si-LK.md) • [தமிழ்](/readme/ta-IN.md) • [తెలుగు](/readme/te-IN.md)
 
-**Locale ଫର୍ମାଟ୍:** [BCP-47](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) କୋଡ୍ ବ୍ୟବହାର କରନ୍ତୁ: `language[-Script][-REGION]`
+**ନୂତନ ଭାଷା ଯୋଡ଼ିବା:**
 
-- ଭାଷା: ISO 639-1/2/3 ଛୋଟ ଅକ୍ଷର (`en`, `zh`, `bho`)
-- ଲିପି: ISO 15924 ଟାଇଟଲ୍ କେସ୍ (`Hans`, `Hant`, `Latn`)
-- ଅଞ୍ଚଳ: ISO 3166-1 alpha-2 ବଡ଼ ଅକ୍ଷର (`US`, `CN`, `IN`)
+1. [BCP-47 ଫର୍ମାଟ](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) ବ୍ୟବହାର କରି [`i18n.json`](./i18n.json) ରେ ଲୋକେଲ୍ କୋଡ୍ ଯୋଡ଼ନ୍ତୁ
+2. ଏକ pull request ସବମିଟ୍ କରନ୍ତୁ
+
+**BCP-47 ଲୋକେଲ୍ ଫର୍ମାଟ:** `language[-Script][-REGION]`
+
+- `language`: ISO 639-1/2/3 (lowercase): `en`, `zh`, `bho`
+- `Script`: ISO 15924 (title case): `Hans`, `Hant`, `Latn`
+- `REGION`: ISO 3166-1 alpha-2 (uppercase): `US`, `CN`, `IN`
 - ଉଦାହରଣ: `en`, `pt-BR`, `zh-Hans`, `sr-Cyrl-RS`

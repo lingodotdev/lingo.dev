@@ -1,7 +1,7 @@
 <p align="center">
   <a href="https://lingo.dev">
     <img
-      src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.compiler.png"
+      src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.png"
       width="100%"
       alt="Lingo.dev"
     />
@@ -10,83 +10,348 @@
 
 <p align="center">
   <strong>
-    ⚡ Lingo.dev - ابزار i18n متن‌باز و مبتنی بر هوش مصنوعی برای بومی‌سازی فوری
-    با LLM‌ها.
+    Lingo.dev - جعبه‌ابزار i18n متن‌باز برای بومی‌سازی مبتنی بر LLM
   </strong>
 </p>
 
 <br />
 
 <p align="center">
-  <a href="https://lingo.dev/compiler">کامپایلر Lingo.dev</a> •
-  <a href="https://lingo.dev/mcp">MCP Lingo.dev</a> •
-  <a href="https://lingo.dev/cli">CLI Lingo.dev</a> •
-  <a href="https://lingo.dev/ci">CI/CD Lingo.dev</a> •
-  <a href="https://lingo.dev/sdk">SDK Lingo.dev</a>
+  <a href="#lingodev-mcp">MCP</a> •<a href="#lingodev-cli">CLI</a> •
+  <a href="#lingodev-cicd">CI/CD</a> •<a href="#lingodev-sdk">SDK</a> •
+  <a href="#lingodev-compiler">Compiler</a>
 </p>
 
 <p align="center">
   <a href="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml">
     <img
       src="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml/badge.svg"
-      alt="انتشار"
+      alt="Release"
     />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md">
     <img
       src="https://img.shields.io/github/license/lingodotdev/lingo.dev"
-      alt="مجوز"
+      alt="License"
     />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/commits/main">
     <img
       src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev"
-      alt="آخرین تغییر"
+      alt="Last Commit"
     />
   </a>
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square"
-      alt="ابزار توسعه شماره ۱ ماه در Product Hunt"
+      alt="Product Hunt #1 DevTool of the Month"
     />
   </a>
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Week-orange?logo=producthunt&style=flat-square"
-      alt="محصول شماره ۱ هفته در Product Hunt"
+      alt="Product Hunt #1 DevTool of the Week"
     />
   </a>
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/Product%20Hunt-%232%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
-      alt="محصول شماره ۲ روز در Product Hunt"
+      alt="Product Hunt #2 Product of the Day"
     />
   </a>
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/GitHub-Trending-blue?logo=github&style=flat-square"
-      alt="پرطرفدار در Github"
+      alt="Github trending"
     />
   </a>
 </p>
 
 ---
 
-## با کامپایلر آشنا شوید 🆕
+## شروع سریع
 
-**کامپایلر Lingo.dev** یک میان‌افزار کامپایلر رایگان و متن‌باز است که برای چندزبانه کردن هر برنامه React در زمان ساخت، بدون نیاز به تغییر در کامپوننت‌های موجود React طراحی شده است.
+| ابزار                              | مورد استفاده                                              | دستور سریع                         |
+| ---------------------------------- | --------------------------------------------------------- | ---------------------------------- |
+| [**MCP**](#lingodev-mcp)           | راه‌اندازی i18n با کمک هوش مصنوعی برای اپلیکیشن‌های React | Prompt: `Set up i18n`              |
+| [**CLI**](#lingodev-cli)           | ترجمه فایل‌های JSON، YAML، markdown، CSV، PO              | `npx lingo.dev@latest run`         |
+| [**CI/CD**](#lingodev-cicd)        | پایپلاین ترجمه خودکار در GitHub Actions                   | `uses: lingodotdev/lingo.dev@main` |
+| [**SDK**](#lingodev-sdk)           | ترجمه زمان اجرا برای محتوای پویا                          | `npm install lingo.dev`            |
+| [**Compiler**](#lingodev-compiler) | بومی‌سازی React در زمان build بدون wrapper های i18n       | افزونه `withLingo()`               |
 
-> **توجه:** اگر از کامپایلر قدیمی (`@lingo.dev/_compiler`) استفاده می‌کنید، لطفاً به `@lingo.dev/compiler` مهاجرت کنید. کامپایلر قدیمی منسوخ شده و در نسخه‌های آینده حذف خواهد شد.
+---
 
-یک‌بار نصب کنید:
+### Lingo.dev MCP
 
-```bash
-npm install @lingo.dev/compiler
+سرور Model Context Protocol که به دستیارهای کدنویسی هوش مصنوعی امکان می‌دهد زیرساخت i18n را در اپلیکیشن‌های React از طریق prompt های زبان طبیعی راه‌اندازی کنند.
+
+**IDE های پشتیبانی‌شده:**
+
+- Claude Code
+- Cursor
+- GitHub Copilot Agents
+- Codex (OpenAI)
+
+**فریم‌ورک‌های پشتیبانی‌شده:**
+
+- Next.js (App Router و Pages Router نسخه‌های 13-16)
+- TanStack Start (نسخه 1)
+- React Router (نسخه 7)
+
+**استفاده:**
+
+پس از پیکربندی سرور MCP در IDE خود ([راهنماهای شروع سریع را ببینید](https://lingo.dev/en/mcp))، به دستیار خود دستور دهید:
+
+```
+Set up i18n with the following locales: en, es, and pt-BR. The default locale is 'en'.
 ```
 
-در تنظیمات ساخت خود فعال کنید:
+دستیار موارد زیر را انجام می‌دهد:
+
+1. پیکربندی مسیریابی مبتنی بر locale (مانند `/en`، `/es`، `/pt-BR`)
+2. راه‌اندازی کامپوننت‌های تغییر زبان
+3. پیاده‌سازی تشخیص خودکار locale
+4. تولید فایل‌های پیکربندی لازم
+
+**توجه:** تولید کد با کمک AI غیرقطعی است. کد تولید شده را قبل از commit بررسی کنید.
+
+[مستندات را بخوانید ←](https://lingo.dev/en/mcp)
+
+---
+
+### Lingo.dev CLI
+
+CLI متن‌باز برای ترجمه اپلیکیشن‌ها و محتوا با AI. از تمام فرمت‌های استاندارد صنعت از جمله JSON، YAML، CSV، فایل‌های PO و markdown پشتیبانی می‌کند.
+
+**راه‌اندازی:**
+
+```bash
+# Initialize project
+npx lingo.dev@latest init
+
+# Run translations
+npx lingo.dev@latest run
+```
+
+**نحوه کار:**
+
+1. استخراج محتوای قابل ترجمه از فایل‌های پیکربندی شده
+2. ارسال محتوا به ارائه‌دهنده LLM برای ترجمه
+3. نوشتن محتوای ترجمه شده به filesystem
+4. ایجاد فایل `i18n.lock` برای پیگیری ترجمه‌های تکمیل شده (از پردازش تکراری جلوگیری می‌کند)
+
+**پیکربندی:**
+
+دستور `init` یک فایل `i18n.json` تولید می‌کند. locale‌ها و bucket‌ها را پیکربندی کنید:
+
+```json
+{
+  "$schema": "https://lingo.dev/schema/i18n.json",
+  "version": "1.10",
+  "locale": {
+    "source": "en",
+    "targets": ["es", "fr", "de"]
+  },
+  "buckets": {
+    "json": {
+      "include": ["locales/[locale].json"]
+    }
+  }
+}
+```
+
+فیلد `provider` اختیاری است (پیش‌فرض Lingo.dev Engine). برای ارائه‌دهندگان سفارشی LLM:
+
+```json
+{
+  "provider": {
+    "id": "openai",
+    "model": "gpt-4o-mini",
+    "prompt": "Translate from {source} to {target}"
+  }
+}
+```
+
+**ارائه‌دهندگان پشتیبانی شده LLM:**
+
+- Lingo.dev Engine (توصیه می‌شود)
+- OpenAI
+- Anthropic
+- Google
+- Mistral
+- OpenRouter
+- Ollama
+
+[مستندات را بخوانید ←](https://lingo.dev/en/cli)
+
+---
+
+### Lingo.dev CI/CD
+
+گردش‌کارهای ترجمه خودکار برای پایپلاین‌های CI/CD. از رسیدن ترجمه‌های ناقص به محیط production جلوگیری می‌کند.
+
+**پلتفرم‌های پشتیبانی‌شده:**
+
+- GitHub Actions
+- GitLab CI/CD
+- Bitbucket Pipelines
+
+**راه‌اندازی GitHub Actions:**
+
+ایجاد `.github/workflows/translate.yml`:
+
+```yaml
+name: Translate
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: write
+jobs:
+  translate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Lingo.dev
+        uses: lingodotdev/lingo.dev@main
+        with:
+          api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
+```
+
+**الزامات راه‌اندازی:**
+
+1. `LINGODOTDEV_API_KEY` را به secrets مخزن اضافه کنید (Settings > Secrets and variables > Actions)
+2. برای workflow های PR: گزینه‌ی "Allow GitHub Actions to create and approve pull requests" را در Settings > Actions > General فعال کنید
+
+**گزینه‌های workflow:**
+
+commit مستقیم ترجمه‌ها:
+
+```yaml
+uses: lingodotdev/lingo.dev@main
+with:
+  api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
+```
+
+ایجاد pull request با ترجمه‌ها:
+
+```yaml
+uses: lingodotdev/lingo.dev@main
+with:
+  api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
+  pull-request: true
+env:
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
+**ورودی‌های موجود:**
+
+| ورودی                | پیش‌فرض                                        | توضیحات                       |
+| -------------------- | ---------------------------------------------- | ----------------------------- |
+| `api-key`            | (الزامی)                                       | کلید API سرویس Lingo.dev      |
+| `pull-request`       | `false`                                        | ایجاد PR به‌جای commit مستقیم |
+| `commit-message`     | `"feat: update translations via @LingoDotDev"` | پیام commit سفارشی            |
+| `pull-request-title` | `"feat: update translations via @LingoDotDev"` | عنوان PR سفارشی               |
+| `working-directory`  | `"."`                                          | دایرکتوری اجرا                |
+| `parallel`           | `false`                                        | فعال‌سازی پردازش موازی        |
+
+[مطالعه‌ی مستندات ←](https://lingo.dev/en/ci/github)
+
+---
+
+### Lingo.dev SDK
+
+کتابخانه‌ی ترجمه‌ی runtime برای محتوای پویا. برای JavaScript، PHP، Python و Ruby در دسترس است.
+
+**نصب:**
+
+```bash
+npm install lingo.dev
+```
+
+**استفاده:**
 
 ```ts
+import { LingoDotDevEngine } from "lingo.dev/sdk";
+
+const lingoDotDev = new LingoDotDevEngine({
+  apiKey: process.env.LINGODOTDEV_API_KEY,
+});
+
+// Translate objects (preserves structure)
+const translated = await lingoDotDev.localizeObject(
+  { greeting: "Hello", farewell: "Goodbye" },
+  { sourceLocale: "en", targetLocale: "es" },
+);
+// { greeting: "Hola", farewell: "Adiós" }
+
+// Translate text
+const text = await lingoDotDev.localizeText("Hello!", {
+  sourceLocale: "en",
+  targetLocale: "fr",
+});
+
+// Translate to multiple languages at once
+const results = await lingoDotDev.batchLocalizeText("Hello!", {
+  sourceLocale: "en",
+  targetLocales: ["es", "fr", "de"],
+});
+
+// Translate chat (preserves speaker names)
+const chat = await lingoDotDev.localizeChat(
+  [{ name: "Alice", text: "Hello!" }],
+  { sourceLocale: "en", targetLocale: "es" },
+);
+
+// Translate HTML (preserves markup)
+const html = await lingoDotDev.localizeHtml("<h1>Welcome</h1>", {
+  sourceLocale: "en",
+  targetLocale: "de",
+});
+
+// Detect language
+const locale = await lingoDotDev.recognizeLocale("Bonjour le monde");
+// "fr"
+```
+
+**SDK های موجود:**
+
+- [JavaScript SDK](https://lingo.dev/en/sdk/javascript) - برنامه‌های وب، Node.js
+- [PHP SDK](https://lingo.dev/en/sdk/php) - PHP، Laravel
+- [Python SDK](https://lingo.dev/en/sdk/python) - Django، Flask
+- [Ruby SDK](https://lingo.dev/en/sdk/ruby) - Rails
+
+[مطالعه‌ی مستندات ←](https://lingo.dev/en/sdk)
+
+---
+
+### کامپایلر Lingo.dev
+
+سیستم ترجمه زمان ساخت که اپلیکیشن‌های React را بدون تغییر کامپوننت‌ها چندزبانه می‌کند. در زمان ساخت عمل می‌کند نه زمان اجرا.
+
+**نصب:**
+
+```bash
+pnpm install @lingo.dev/compiler
+```
+
+**احراز هویت:**
+
+```bash
+# Recommended: Sign up at lingo.dev and login
+npx lingo.dev@latest login
+
+# Alternative: Add API key to .env
+LINGODOTDEV_API_KEY=your_key_here
+
+# Or use direct LLM providers (Groq, OpenAI, Anthropic, Google)
+GROQ_API_KEY=your_key
+```
+
+**پیکربندی (Next.js):**
+
+```ts
+// next.config.ts
 import type { NextConfig } from "next";
 import { withLingo } from "@lingo.dev/compiler/next";
 
@@ -94,128 +359,141 @@ const nextConfig: NextConfig = {};
 
 export default async function (): Promise<NextConfig> {
   return await withLingo(nextConfig, {
+    sourceRoot: "./app",
     sourceLocale: "en",
-    targetLocales: ["es", "fr"],
+    targetLocales: ["es", "fr", "de"],
     models: "lingo.dev",
+    dev: { usePseudotranslator: true },
   });
 }
 ```
 
-`next build` را اجرا کنید و شاهد ظاهر شدن بسته‌های اسپانیایی و فرانسوی باشید ✨
-
-[مستندات را بخوانید ←](https://lingo.dev/compiler) برای راهنمای کامل، و [به Discord ما بپیوندید](https://lingo.dev/go/discord) تا در راه‌اندازی کمک بگیرید.
-
----
-
-### داخل این مخزن چه چیزی است؟
-
-| ابزار        | خلاصه                                                                           | مستندات                                 |
-| ------------ | ------------------------------------------------------------------------------- | --------------------------------------- |
-| **Compiler** | بومی‌سازی React در زمان ساخت                                                    | [/compiler](https://lingo.dev/compiler) |
-| **CLI**      | بومی‌سازی با یک دستور برای برنامه‌های وب و موبایل، JSON، YAML، markdown و بیشتر | [/cli](https://lingo.dev/cli)           |
-| **CI/CD**    | ثبت خودکار ترجمه‌ها در هر push و ایجاد pull request در صورت نیاز                | [/ci](https://lingo.dev/ci)             |
-| **SDK**      | ترجمه لحظه‌ای برای محتوای تولید شده توسط کاربر                                  | [/sdk](https://lingo.dev/sdk)           |
-
-در زیر نکات کلیدی برای هر کدام آمده است 👇
-
----
-
-### ⚡️ Lingo.dev CLI
-
-کد و محتوا را مستقیماً از ترمینال خود ترجمه کنید.
-
-```bash
-npx lingo.dev@latest run
-```
-
-این ابزار اثر انگشت هر رشته را ثبت می‌کند، نتایج را کش می‌کند و فقط آنچه تغییر کرده است را دوباره ترجمه می‌کند.
-
-[مستندات را دنبال کنید ←](https://lingo.dev/cli) تا نحوه راه‌اندازی آن را بیاموزید.
-
----
-
-### 🔄 Lingo.dev CI/CD
-
-ترجمه‌های بی‌نقص را به‌طور خودکار ارسال کنید.
-
-```yaml
-# .github/workflows/i18n.yml
-name: Lingo.dev i18n
-on: [push]
-
-jobs:
-  i18n:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: lingodotdev/lingo.dev@main
-        with:
-          api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
-```
-
-مخزن شما را سبز و محصول شما را چندزبانه نگه می‌دارد بدون نیاز به مراحل دستی.
-
-[مستندات را بخوانید ←](https://lingo.dev/ci)
-
----
-
-### 🧩 Lingo.dev SDK
-
-ترجمه فوری برای هر درخواست برای محتوای پویا.
+**پیکربندی (Vite):**
 
 ```ts
-import { LingoDotDevEngine } from "lingo.dev/sdk";
+// vite.config.ts
+import { lingoCompilerPlugin } from "@lingo.dev/compiler/vite";
 
-const lingoDotDev = new LingoDotDevEngine({
-  apiKey: "your-api-key-here",
+export default defineConfig({
+  plugins: [
+    lingoCompilerPlugin({
+      sourceRoot: "src",
+      sourceLocale: "en",
+      targetLocales: ["es", "fr", "de"],
+      models: "lingo.dev",
+      dev: { usePseudotranslator: true },
+    }),
+    react(),
+  ],
 });
-
-const content = {
-  greeting: "Hello",
-  farewell: "Goodbye",
-  message: "Welcome to our platform",
-};
-
-const translated = await lingoDotDev.localizeObject(content, {
-  sourceLocale: "en",
-  targetLocale: "es",
-});
-// Returns: { greeting: "Hola", farewell: "Adiós", message: "Bienvenido a nuestra plataforma" }
 ```
 
-مناسب برای چت، نظرات کاربران و سایر جریان‌های بلادرنگ.
+**راه‌اندازی Provider:**
 
-[مستندات را بخوانید ←](https://lingo.dev/sdk)
+```tsx
+// app/layout.tsx (Next.js)
+import { LingoProvider } from "@lingo.dev/compiler/react";
+
+export default function RootLayout({ children }) {
+  return (
+    <LingoProvider>
+      <html>
+        <body>{children}</body>
+      </html>
+    </LingoProvider>
+  );
+}
+```
+
+**تعویض‌کننده زبان:**
+
+```tsx
+import { useLocale, setLocale } from "@lingo.dev/compiler/react";
+
+export function LanguageSwitcher() {
+  const locale = useLocale();
+  return (
+    <select value={locale} onChange={(e) => setLocale(e.target.value)}>
+      <option value="en">English</option>
+      <option value="es">Español</option>
+    </select>
+  );
+}
+```
+
+**توسعه:** `npm run dev` (از pseudotranslator استفاده می‌کند، بدون فراخوانی API)
+
+**تولید:** `usePseudotranslator: false` را تنظیم کنید، سپس `next build`
+
+دایرکتوری `.lingo/` را در version control کامیت کنید.
+
+**ویژگی‌های کلیدی:**
+
+- بدون هزینه عملکرد در زمان اجرا
+- بدون کلیدهای ترجمه یا فایل‌های JSON
+- بدون توابع `t()` یا کامپوننت‌های wrapper `<T>`
+- تشخیص خودکار متن قابل ترجمه در JSX
+- پشتیبانی از TypeScript
+- ICU MessageFormat برای جمع‌ها
+- بازنویسی دستی از طریق attribute `data-lingo-override`
+- ویجت ویرایشگر ترجمه داخلی
+
+**حالت‌های ساخت:**
+
+- `pseudotranslator`: حالت توسعه با ترجمه‌های placeholder (بدون هزینه API)
+- `real`: تولید ترجمه‌های واقعی با استفاده از LLM‌ها
+- `cache-only`: حالت تولید با استفاده از ترجمه‌های از پیش تولید شده از CI (بدون فراخوانی API)
+
+**فریم‌ورک‌های پشتیبانی شده:**
+
+- Next.js (App Router با React Server Components)
+- Vite + React (SPA و SSR)
+
+پشتیبانی از فریم‌ورک‌های اضافی برنامه‌ریزی شده است.
+
+[مستندات را بخوانید ←](https://lingo.dev/en/compiler)
 
 ---
 
-## 🤝 انجمن
+## مشارکت
 
-ما جامعه‌محور هستیم و مشارکت‌ها را دوست داریم!
+مشارکت‌ها خوش‌آمد هستند. لطفاً این دستورالعمل‌ها را دنبال کنید:
 
-- ایده‌ای دارید؟ [یک issue باز کنید](https://github.com/lingodotdev/lingo.dev/issues)
-- می‌خواهید چیزی را اصلاح کنید؟ [یک PR ارسال کنید](https://github.com/lingodotdev/lingo.dev/pulls)
-- به کمک نیاز دارید؟ [به Discord ما بپیوندید](https://lingo.dev/go/discord)
+1. **مسائل:** [گزارش باگ یا درخواست ویژگی](https://github.com/lingodotdev/lingo.dev/issues)
+2. **Pull Requestها:** [ارسال تغییرات](https://github.com/lingodotdev/lingo.dev/pulls)
+   - هر PR نیاز به یک changeset دارد: `pnpm new` (یا `pnpm new:empty` برای تغییرات غیر-انتشار)
+   - قبل از ارسال اطمینان حاصل کنید که تست‌ها پاس می‌شوند
+3. **توسعه:** این یک monorepo با pnpm + turborepo است
+   - نصب وابستگی‌ها: `pnpm install`
+   - اجرای تست‌ها: `pnpm test`
+   - Build: `pnpm build`
 
-## ⭐ تاریخچه ستاره‌ها
+**پشتیبانی:** [انجمن Discord](https://lingo.dev/go/discord)
 
-اگر کاری که انجام می‌دهیم را دوست دارید، به ما یک ⭐ بدهید و به ما کمک کنید به ۱۰٬۰۰۰ ستاره برسیم! 🌟
+## تاریخچه ستاره‌ها
+
+اگر Lingo.dev را مفید می‌دانید، به ما ستاره بدهید و به ما کمک کنید به 10,000 ستاره برسیم!
 
 [
 
-![نمودار تاریخچه ستاره](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+![نمودار تاریخچه ستاره‌ها](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
 
 ](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
 
-## 🌐 راهنما به زبان‌های دیگر
+## مستندات محلی‌سازی شده
 
-[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [Português (Brasil)](/readme/pt-BR.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Polski](/readme/pl.md) • [Türkçe](/readme/tr.md) • [اردو](/readme/ur.md) • [भोजपुरी](/readme/bho.md) • [অসমীয়া](/readme/as-IN.md) • [ગુજરાતી](/readme/gu-IN.md) • [മലയാളം (IN)](/readme/ml-IN.md) • [मराठी](/readme/mr-IN.md) • [ଓଡ଼ିଆ](/readme/or-IN.md) • [ਪੰਜਾਬੀ](/readme/pa-IN.md) • [සිංහල](/readme/si-LK.md) • [தமிழ்](/readme/ta-IN.md) • [తెలుగు](/readme/te-IN.md)
+**ترجمه‌های موجود:**
 
-زبان خود را نمی‌بینید؟ آن را به `i18n.json` اضافه کنید و یک PR باز کنید!
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [Português (Brasil)](/readme/pt-BR.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Polski](/readme/pl.md) • [Türkçe](/readme/tr.md) • [اردو](/readme/ur.md) • [भोजपुरी](/readme/bho.md) • [অসমীয়া](/readme/as-IN.md) • [ગુજરાતી](/readme/gu-IN.md) • [मराठी](/readme/mr-IN.md) • [ଓଡ଼ିଆ](/readme/or-IN.md) • [ਪੰਜਾਬੀ](/readme/pa-IN.md) • [සිංහල](/readme/si-LK.md) • [தமிழ்](/readme/ta-IN.md) • [తెలుగు](/readme/te-IN.md)
 
-**قالب محلی:** از کدهای [BCP-47](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) استفاده کنید: `language[-Script][-REGION]`
+**اضافه کردن زبان جدید:**
 
-- زبان: ISO 639-1/2/3 حروف کوچک (`en`، `zh`، `bho`)
-- خط: ISO 15924 حروف بزرگ ابتدایی (`Hans`، `Hant`، `Latn`)
-- منطقه: ISO 3166-1 alpha-2 حروف بزرگ (`US`، `CN`، `IN`)
-- نمونه‌ها: `en`، `pt-BR`، `zh-Hans`، `sr-Cyrl-RS`
+1. کد locale را به [`i18n.json`](./i18n.json) با استفاده از [فرمت BCP-47](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) اضافه کنید
+2. یک pull request ارسال کنید
+
+**فرمت locale BCP-47:** `language[-Script][-REGION]`
+
+- `language`: ISO 639-1/2/3 (حروف کوچک): `en`, `zh`, `bho`
+- `Script`: ISO 15924 (حرف اول بزرگ): `Hans`, `Hant`, `Latn`
+- `REGION`: ISO 3166-1 alpha-2 (حروف بزرگ): `US`, `CN`, `IN`
+- مثال‌ها: `en`, `pt-BR`, `zh-Hans`, `sr-Cyrl-RS`
