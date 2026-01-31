@@ -213,3 +213,8 @@ const translated = await lingoDotDev.localizeObject(content, {
 - ലിപി: ISO 15924 ടൈറ്റിൽ കേസ് (`Hans`, `Hant`, `Latn`)
 - പ്രദേശം: ISO 3166-1 alpha-2 വലിയക്ഷരത്തിൽ (`US`, `CN`, `IN`)
 - ഉദാഹരണങ്ങൾ: `en`, `pt-BR`, `zh-Hans`, `sr-Cyrl-RS`
+
+- ഭാഷ: ISO 639-1/2/3 ലോവർകേസ് (`en`, `zh`, `bho`)
+- ലിപി: ISO 15924 ടൈറ്റിൽ കേസ് (`Hans`, `Hant`, `Latn`)
+- പ്രദേശം: ISO 3166-1 alpha-2 അപ്പർകേസ് (`US`, `CN`, `IN`)
+- ഉദാഹരണങ്ങൾ: `en`, `pt-BR`, `zh-Hans`, `sr-Cyrl-RS`
