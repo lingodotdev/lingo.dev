@@ -84,7 +84,9 @@
 
 ### Lingo.dev MCP
 
-AIコーディングアシスタントが自然言語プロンプトを通じてReactアプリケーションにi18nインフラストラクチャをセットアップできるようにするModel Context Protocolサーバー。
+Reactアプリでi18nを設定することは、経験豊富な開発者にとってもエラーが発生しやすいことで知られています。AIコーディングアシスタントはこれをさらに悪化させます。存在しないAPIを幻覚し、ミドルウェア設定を忘れ、ルーティングを壊したり、迷子になる前に半分の解決策を実装したりします。問題は、i18nのセットアップには複数のファイル(ルーティング、ミドルウェア、コンポーネント、設定)にわたる正確な一連の協調的な変更が必要であり、LLMがそのコンテキストを維持するのに苦労することです。
+
+Lingo.dev MCPは、AIアシスタントにフレームワーク固有のi18n知識への構造化されたアクセスを提供することで、この問題を解決します。推測する代わりに、アシスタントはNext.js、React Router、TanStack Start向けの検証済み実装パターンに従います。
 
 **対応IDE:**
 
@@ -101,7 +103,7 @@ AIコーディングアシスタントが自然言語プロンプトを通じて
 
 **使用方法:**
 
-IDE で MCP サーバーを設定した後（[クイックスタートガイドを参照](https://lingo.dev/en/mcp)）、アシスタントに次のようにプロンプトします:
+IDE でMCPサーバーを設定した後([クイックスタートガイドを参照](https://lingo.dev/en/mcp))、アシスタントに次のようにプロンプトします:
 
 ```
 Set up i18n with the following locales: en, es, and pt-BR. The default locale is 'en'.
@@ -109,12 +111,12 @@ Set up i18n with the following locales: en, es, and pt-BR. The default locale is
 
 アシスタントは以下を実行します:
 
-1. ロケールベースのルーティングを設定（例: `/en`、`/es`、`/pt-BR`）
+1. ロケールベースのルーティングを設定(例: `/en`、`/es`、`/pt-BR`)
 2. 言語切り替えコンポーネントをセットアップ
 3. 自動ロケール検出を実装
 4. 必要な設定ファイルを生成
 
-**注意:** AI アシストによるコード生成は非決定的です。コミット前に生成されたコードを確認してください。
+**注意:** AI支援によるコード生成は非決定的です。コミット前に生成されたコードを確認してください。
 
 [ドキュメントを読む →](https://lingo.dev/en/mcp)
 
@@ -122,7 +124,9 @@ Set up i18n with the following locales: en, es, and pt-BR. The default locale is
 
 ### Lingo.dev CLI
 
-AI を使用してアプリとコンテンツを翻訳するためのオープンソース CLI。JSON、YAML、CSV、PO ファイル、markdown など、業界標準のすべてのフォーマットをサポートしています。
+翻訳を同期し続けることは面倒です。新しい文字列を追加し、翻訳を忘れ、国際ユーザーに壊れたUIを提供してしまいます。または、JSONファイルを翻訳者に送り、数日待ってから、手動で彼らの作業をマージし直します。10以上の言語にスケールすることは、常に同期がずれる数百のファイルを管理することを意味します。
+
+Lingo.dev CLIはこれを自動化します。翻訳ファイルを指定し、1つのコマンドを実行すると、すべてのロケールが更新されます。ロックファイルが既に翻訳されたものを追跡するため、新しいコンテンツまたは変更されたコンテンツに対してのみ支払います。JSON、YAML、CSV、POファイル、およびマークダウンに対応しています。
 
 **セットアップ:**
 
@@ -137,13 +141,13 @@ npx lingo.dev@latest run
 **仕組み:**
 
 1. 設定されたファイルから翻訳可能なコンテンツを抽出
-2. 翻訳のためにコンテンツを LLM プロバイダーに送信
+2. LLMプロバイダーにコンテンツを送信して翻訳
 3. 翻訳されたコンテンツをファイルシステムに書き戻し
-4. 完了した翻訳を追跡するために `i18n.lock` ファイルを作成（冗長な処理を回避）
+4. `i18n.lock`ファイルを作成して完了した翻訳を追跡(冗長な処理を回避)
 
 **設定:**
 
-`init` コマンドは `i18n.json` ファイルを生成します。ロケールとバケットを設定します:
+`init`コマンドは`i18n.json`ファイルを生成します。ロケールとバケットを設定してください:
 
 ```json
 {
@@ -161,7 +165,7 @@ npx lingo.dev@latest run
 }
 ```
 
-`provider` フィールドはオプションです（デフォルトは Lingo.dev Engine）。カスタム LLM プロバイダーの場合:
+`provider`フィールドはオプションです(デフォルトはLingo.dev Engine)。カスタムLLMプロバイダーの場合:
 
 ```json
 {
@@ -173,9 +177,9 @@ npx lingo.dev@latest run
 }
 ```
 
-**サポートされている LLM プロバイダー:**
+**サポートされているLLMプロバイダー:**
 
-- Lingo.dev Engine（推奨）
+- Lingo.dev Engine(推奨)
 - OpenAI
 - Anthropic
 - Google
@@ -189,9 +193,11 @@ npx lingo.dev@latest run
 
 ### Lingo.dev CI/CD
 
-CI/CD パイプライン用の自動翻訳ワークフロー。不完全な翻訳が本番環境に到達するのを防ぎます。
+翻訳は常に「もうすぐ完成」の機能です。エンジニアはロケールを更新せずにコードをマージします。QAはステージング環境で翻訳の欠落を発見します。さらに悪い場合は、ユーザーが本番環境で発見します。根本原因は、翻訳が締め切りのプレッシャー下でスキップしやすい手動ステップであることです。
 
-**対応プラットフォーム:**
+Lingo.dev CI/CDは翻訳を自動化します。すべてのプッシュが翻訳をトリガーします。欠落している文字列はコードが本番環境に到達する前に補完されます。規律は不要です。パイプラインが処理します。
+
+**サポートされているプラットフォーム:**
 
 - GitHub Actions
 - GitLab CI/CD
@@ -221,8 +227,8 @@ jobs:
 
 **セットアップ要件:**
 
-1. `LINGODOTDEV_API_KEY`をリポジトリシークレットに追加(Settings > Secrets and variables > Actions)
-2. PRワークフローの場合:Settings > Actions > Generalで「Allow GitHub Actions to create and approve pull requests」を有効化
+1. リポジトリシークレットに`LINGODOTDEV_API_KEY`を追加(Settings > Secrets and variables > Actions)
+2. PRワークフローの場合: Settings > Actions > Generalで「Allow GitHub Actions to create and approve pull requests」を有効化
 
 **ワークフローオプション:**
 
@@ -234,7 +240,7 @@ with:
   api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
 ```
 
-翻訳付きのプルリクエストを作成:
+翻訳を含むプルリクエストを作成:
 
 ```yaml
 uses: lingodotdev/lingo.dev@main
@@ -262,7 +268,9 @@ env:
 
 ### Lingo.dev SDK
 
-動的コンテンツ用のランタイム翻訳ライブラリ。JavaScript、PHP、Python、Rubyに対応。
+静的な翻訳ファイルはUIラベルには有効ですが、ユーザー生成コンテンツはどうでしょうか?チャットメッセージ、商品説明、サポートチケットなど、ビルド時に存在しないコンテンツは事前翻訳できません。未翻訳のテキストを表示するか、カスタム翻訳パイプラインを構築するしかありません。
+
+Lingo.dev SDKは実行時にコンテンツを翻訳します。任意のテキスト、オブジェクト、HTMLを渡すと、ローカライズされたバージョンが返されます。リアルタイムチャット、動的通知、またはデプロイ後に到着するあらゆるコンテンツに対応します。JavaScript、PHP、Python、Rubyで利用可能です。
 
 **インストール:**
 
@@ -328,7 +336,9 @@ const locale = await lingoDotDev.recognizeLocale("Bonjour le monde");
 
 ### Lingo.dev Compiler
 
-ビルド時翻訳システムで、コンポーネントを変更せずにReactアプリを多言語化します。ランタイムではなくビルド時に動作します。
+従来のi18nは侵襲的です。すべての文字列を`t()`関数でラップし、翻訳キー(`home.hero.title.v2`)を考案し、並列JSONファイルを維持し、コンポーネントがローカライゼーションの定型コードで肥大化するのを見守ります。あまりにも面倒なため、チームは国際化を遅らせ、最終的に大規模なリファクタリングになってしまいます。
+
+Lingo.devコンパイラーは煩雑な作業を排除します。プレーンな英語テキストでReactコンポーネントを記述できます。コンパイラーはビルド時に翻訳可能な文字列を検出し、ローカライズされたバリアントを自動的に生成します。キー、JSONファイル、ラッパー関数は不要です。複数の言語で動作するReactコードを記述するだけです。
 
 **インストール:**
 
@@ -349,7 +359,7 @@ LINGODOTDEV_API_KEY=your_key_here
 GROQ_API_KEY=your_key
 ```
 
-**設定 (Next.js):**
+**設定（Next.js）:**
 
 ```ts
 // next.config.ts
@@ -369,7 +379,7 @@ export default async function (): Promise<NextConfig> {
 }
 ```
 
-**設定 (Vite):**
+**設定（Vite）:**
 
 ```ts
 // vite.config.ts
@@ -422,7 +432,7 @@ export function LanguageSwitcher() {
 }
 ```
 
-**開発:** `npm run dev` (疑似翻訳を使用、API呼び出しなし)
+**開発:** `npm run dev`（疑似翻訳を使用、API呼び出しなし）
 
 **本番:** `usePseudotranslator: false`を設定し、`next build`を実行
 
@@ -433,22 +443,22 @@ export function LanguageSwitcher() {
 - ランタイムパフォーマンスコストゼロ
 - 翻訳キーやJSONファイル不要
 - `t()`関数や`<T>`ラッパーコンポーネント不要
-- JSX内の翻訳可能テキストの自動検出
+- JSX内の翻訳可能なテキストの自動検出
 - TypeScriptサポート
-- 複数形対応のICU MessageFormat
+- 複数形のためのICU MessageFormat
 - `data-lingo-override`属性による手動オーバーライド
 - 組み込み翻訳エディターウィジェット
 
 **ビルドモード:**
 
-- `pseudotranslator`: プレースホルダー翻訳を使用する開発モード (APIコストなし)
+- `pseudotranslator`: プレースホルダー翻訳を使用する開発モード（APIコストなし）
 - `real`: LLMを使用して実際の翻訳を生成
-- `cache-only`: CIで事前生成された翻訳を使用する本番モード (API呼び出しなし)
+- `cache-only`: CIから事前生成された翻訳を使用する本番モード（API呼び出しなし）
 
-**サポートされているフレームワーク:**
+**対応フレームワーク:**
 
-- Next.js (React Server ComponentsのApp Router)
-- Vite + React (SPAおよびSSR)
+- Next.js（React Server ComponentsのApp Router）
+- Vite + React（SPAおよびSSR）
 
 追加のフレームワークサポートを予定しています。
 
@@ -458,7 +468,7 @@ export function LanguageSwitcher() {
 
 ## コントリビューション
 
-コントリビューションを歓迎します。以下のガイドラインに従ってください:
+コントリビューションを歓迎します。以下のガイドラインに従ってください。
 
 1. **Issue:** [バグ報告や機能リクエスト](https://github.com/lingodotdev/lingo.dev/issues)
 2. **プルリクエスト:** [変更を送信](https://github.com/lingodotdev/lingo.dev/pulls)
@@ -489,8 +499,8 @@ Lingo.devが役に立つと思ったら、スターを付けて10,000スター�
 
 **新しい言語の追加:**
 
-1. [`i18n.json`](./i18n.json)に[BCP-47形式](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale)でロケールコードを追加
-2. プルリクエストを送信
+1. [BCP-47形式](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale)を使用して、ロケールコードを [`i18n.json`](./i18n.json) に追加してください
+2. プルリクエストを送信してください
 
 **BCP-47ロケール形式:** `language[-Script][-REGION]`
 

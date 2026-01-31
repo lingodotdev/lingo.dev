@@ -58,7 +58,9 @@
 
 ### Lingo.dev MCP
 
-Model Context Protocol server that enables AI coding assistants to set up i18n infrastructure in React applications through natural language prompts.
+Setting up i18n in React apps is notoriously error-prone - even for experienced developers. AI coding assistants make it worse: they hallucinate non-existent APIs, forget middleware configurations, break routing, or implement half a solution before getting lost. The problem is that i18n setup requires a precise sequence of coordinated changes across multiple files (routing, middleware, components, configuration), and LLMs struggle to maintain that context.
+
+Lingo.dev MCP solves this by giving AI assistants structured access to framework-specific i18n knowledge. Instead of guessing, your assistant follows verified implementation patterns for Next.js, React Router, and TanStack Start.
 
 **Supported IDEs:**
 
@@ -96,7 +98,9 @@ The assistant will:
 
 ### Lingo.dev CLI
 
-Open-source CLI for translating apps and content with AI. Supports all industry-standard formats including JSON, YAML, CSV, PO files, and markdown.
+Keeping translations in sync is tedious. You add a new string, forget to translate it, ship broken UI to international users. Or you send JSON files to translators, wait days, then manually merge their work back. Scaling to 10+ languages means managing hundreds of files that constantly drift out of sync.
+
+Lingo.dev CLI automates this. Point it at your translation files, run one command, and every locale updates. A lockfile tracks what's already translated, so you only pay for new or changed content. Supports JSON, YAML, CSV, PO files, and markdown.
 
 **Setup:**
 
@@ -163,7 +167,9 @@ The `provider` field is optional (defaults to Lingo.dev Engine). For custom LLM 
 
 ### Lingo.dev CI/CD
 
-Automated translation workflows for CI/CD pipelines. Prevents incomplete translations from reaching production.
+Translations are the feature that's always "almost done." Engineers merge code without updating locales. QA catches missing translations in staging - or worse, users catch them in production. The root cause: translation is a manual step that's easy to skip under deadline pressure.
+
+Lingo.dev CI/CD makes translations automatic. Every push triggers translation. Missing strings get filled before code reaches production. No discipline required - the pipeline handles it.
 
 **Supported platforms:**
 
@@ -236,7 +242,9 @@ env:
 
 ### Lingo.dev SDK
 
-Runtime translation library for dynamic content. Available for JavaScript, PHP, Python, and Ruby.
+Static translation files work for UI labels, but what about user-generated content? Chat messages, product descriptions, support tickets - content that doesn't exist at build time can't be pre-translated. You're stuck showing untranslated text or building a custom translation pipeline.
+
+Lingo.dev SDK translates content at runtime. Pass any text, object, or HTML and get back a localized version. Works for real-time chat, dynamic notifications, or any content that arrives after deployment. Available for JavaScript, PHP, Python, and Ruby.
 
 **Installation:**
 
@@ -302,7 +310,9 @@ const locale = await lingoDotDev.recognizeLocale("Bonjour le monde");
 
 ### Lingo.dev Compiler
 
-Build-time translation system that makes React apps multilingual without modifying components. Operates during build rather than runtime.
+Traditional i18n is invasive. You wrap every string in `t()` functions, invent translation keys (`home.hero.title.v2`), maintain parallel JSON files, and watch your components bloat with localization boilerplate. It's so tedious that teams delay internationalization until it becomes a massive refactor.
+
+Lingo.dev Compiler eliminates the ceremony. Write React components with plain English text. The compiler detects translatable strings at build time and generates localized variants automatically. No keys, no JSON files, no wrapper functions - just React code that happens to work in multiple languages.
 
 **Installation:**
 

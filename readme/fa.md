@@ -83,16 +83,18 @@
 
 ### Lingo.dev MCP
 
-سرور Model Context Protocol که به دستیارهای کدنویسی هوش مصنوعی امکان می‌دهد زیرساخت i18n را در اپلیکیشن‌های React از طریق prompt های زبان طبیعی راه‌اندازی کنند.
+راه‌اندازی i18n در برنامه‌های React به‌طور شناخته‌شده‌ای مستعد خطا است - حتی برای توسعه‌دهندگان با تجربه. دستیاران کدنویسی AI وضعیت را بدتر می‌کنند: آن‌ها APIهای غیرموجود را توهم می‌بینند، پیکربندی‌های middleware را فراموش می‌کنند، مسیریابی را خراب می‌کنند، یا نیمی از راه‌حل را پیاده‌سازی می‌کنند و سپس گم می‌شوند. مشکل این است که راه‌اندازی i18n نیازمند یک توالی دقیق از تغییرات هماهنگ در چندین فایل (مسیریابی، middleware، کامپوننت‌ها، پیکربندی) است و LLMها در حفظ آن context دچار مشکل می‌شوند.
 
-**IDE های پشتیبانی‌شده:**
+Lingo.dev MCP این مشکل را با دادن دسترسی ساختاریافته به دانش i18n خاص framework به دستیاران AI حل می‌کند. به‌جای حدس زدن، دستیار شما الگوهای پیاده‌سازی تأیید شده برای Next.js، React Router و TanStack Start را دنبال می‌کند.
+
+**IDEهای پشتیبانی‌شده:**
 
 - Claude Code
 - Cursor
 - GitHub Copilot Agents
 - Codex (OpenAI)
 
-**فریم‌ورک‌های پشتیبانی‌شده:**
+**frameworkهای پشتیبانی‌شده:**
 
 - Next.js (App Router و Pages Router نسخه‌های 13-16)
 - TanStack Start (نسخه 1)
@@ -106,22 +108,24 @@
 Set up i18n with the following locales: en, es, and pt-BR. The default locale is 'en'.
 ```
 
-دستیار موارد زیر را انجام می‌دهد:
+دستیار این کارها را انجام می‌دهد:
 
-1. پیکربندی مسیریابی مبتنی بر locale (مانند `/en`، `/es`، `/pt-BR`)
-2. راه‌اندازی کامپوننت‌های تغییر زبان
+1. پیکربندی مسیریابی مبتنی بر locale (مثلاً `/en`، `/es`، `/pt-BR`)
+2. راه‌اندازی کامپوننت‌های تعویض زبان
 3. پیاده‌سازی تشخیص خودکار locale
 4. تولید فایل‌های پیکربندی لازم
 
-**توجه:** تولید کد با کمک AI غیرقطعی است. کد تولید شده را قبل از commit بررسی کنید.
+**توجه:** تولید کد به کمک AI غیرقطعی است. کد تولید شده را قبل از commit بررسی کنید.
 
-[مستندات را بخوانید ←](https://lingo.dev/en/mcp)
+[مطالعه‌ی مستندات ←](https://lingo.dev/en/mcp)
 
 ---
 
 ### Lingo.dev CLI
 
-CLI متن‌باز برای ترجمه اپلیکیشن‌ها و محتوا با AI. از تمام فرمت‌های استاندارد صنعت از جمله JSON، YAML، CSV، فایل‌های PO و markdown پشتیبانی می‌کند.
+همگام نگه‌داشتن ترجمه‌ها خسته‌کننده است. شما یک رشته‌ی جدید اضافه می‌کنید، فراموش می‌کنید آن را ترجمه کنید، UI خراب را برای کاربران بین‌المللی ارسال می‌کنید. یا فایل‌های JSON را برای مترجمان ارسال می‌کنید، چند روز منتظر می‌مانید، سپس کار آن‌ها را به‌صورت دستی ادغام می‌کنید. مقیاس‌بندی به بیش از 10 زبان به معنای مدیریت صدها فایل است که دائماً از همگام‌سازی خارج می‌شوند.
+
+Lingo.dev CLI این فرآیند را خودکار می‌کند. آن را به فایل‌های ترجمه‌ی خود اشاره دهید، یک دستور اجرا کنید و هر locale به‌روزرسانی می‌شود. یک lockfile پیگیری می‌کند که چه چیزی قبلاً ترجمه شده است، بنابراین فقط برای محتوای جدید یا تغییر یافته هزینه می‌پردازید. از JSON، YAML، CSV، فایل‌های PO و markdown پشتیبانی می‌کند.
 
 **راه‌اندازی:**
 
@@ -133,12 +137,12 @@ npx lingo.dev@latest init
 npx lingo.dev@latest run
 ```
 
-**نحوه کار:**
+**نحوه‌ی عملکرد:**
 
-1. استخراج محتوای قابل ترجمه از فایل‌های پیکربندی شده
-2. ارسال محتوا به ارائه‌دهنده LLM برای ترجمه
-3. نوشتن محتوای ترجمه شده به filesystem
-4. ایجاد فایل `i18n.lock` برای پیگیری ترجمه‌های تکمیل شده (از پردازش تکراری جلوگیری می‌کند)
+1. محتوای قابل ترجمه را از فایل‌های پیکربندی‌شده استخراج می‌کند
+2. محتوا را برای ترجمه به ارائه‌دهنده‌ی LLM ارسال می‌کند
+3. محتوای ترجمه‌شده را به filesystem بازمی‌نویسد
+4. فایل `i18n.lock` را برای ردیابی ترجمه‌های تکمیل‌شده ایجاد می‌کند (از پردازش تکراری جلوگیری می‌کند)
 
 **پیکربندی:**
 
@@ -160,7 +164,7 @@ npx lingo.dev@latest run
 }
 ```
 
-فیلد `provider` اختیاری است (پیش‌فرض Lingo.dev Engine). برای ارائه‌دهندگان سفارشی LLM:
+فیلد `provider` اختیاری است (به‌طور پیش‌فرض Lingo.dev Engine). برای ارائه‌دهندگان LLM سفارشی:
 
 ```json
 {
@@ -172,9 +176,9 @@ npx lingo.dev@latest run
 }
 ```
 
-**ارائه‌دهندگان پشتیبانی شده LLM:**
+**ارائه‌دهندگان LLM پشتیبانی‌شده:**
 
-- Lingo.dev Engine (توصیه می‌شود)
+- Lingo.dev Engine (توصیه‌شده)
 - OpenAI
 - Anthropic
 - Google
@@ -182,13 +186,15 @@ npx lingo.dev@latest run
 - OpenRouter
 - Ollama
 
-[مستندات را بخوانید ←](https://lingo.dev/en/cli)
+[مطالعه‌ی مستندات ←](https://lingo.dev/en/cli)
 
 ---
 
 ### Lingo.dev CI/CD
 
-گردش‌کارهای ترجمه خودکار برای پایپلاین‌های CI/CD. از رسیدن ترجمه‌های ناقص به محیط production جلوگیری می‌کند.
+ترجمه‌ها ویژگی‌ای هستند که همیشه «تقریباً تمام» شده‌اند. مهندسان کد را بدون به‌روزرسانی locale‌ها merge می‌کنند. QA ترجمه‌های گم‌شده را در staging می‌یابد - یا بدتر، کاربران آن‌ها را در production می‌یابند. علت اصلی: ترجمه یک مرحله‌ی دستی است که تحت فشار deadline به‌راحتی قابل نادیده‌گرفتن است.
+
+Lingo.dev CI/CD ترجمه‌ها را خودکار می‌کند. هر push ترجمه را فعال می‌کند. رشته‌های گم‌شده قبل از رسیدن کد به production پر می‌شوند. نیازی به انضباط نیست - pipeline آن را مدیریت می‌کند.
 
 **پلتفرم‌های پشتیبانی‌شده:**
 
@@ -198,7 +204,7 @@ npx lingo.dev@latest run
 
 **راه‌اندازی GitHub Actions:**
 
-ایجاد `.github/workflows/translate.yml`:
+فایل `.github/workflows/translate.yml` را ایجاد کنید:
 
 ```yaml
 name: Translate
@@ -220,12 +226,12 @@ jobs:
 
 **الزامات راه‌اندازی:**
 
-1. `LINGODOTDEV_API_KEY` را به secrets مخزن اضافه کنید (Settings > Secrets and variables > Actions)
-2. برای workflow های PR: گزینه‌ی "Allow GitHub Actions to create and approve pull requests" را در Settings > Actions > General فعال کنید
+1. `LINGODOTDEV_API_KEY` را به secret‌های repository اضافه کنید (Settings > Secrets and variables > Actions)
+2. برای workflow‌های PR: گزینه‌ی "Allow GitHub Actions to create and approve pull requests" را در Settings > Actions > General فعال کنید
 
 **گزینه‌های workflow:**
 
-commit مستقیم ترجمه‌ها:
+ترجمه‌ها را مستقیماً commit کنید:
 
 ```yaml
 uses: lingodotdev/lingo.dev@main
@@ -249,19 +255,21 @@ env:
 | ورودی                | پیش‌فرض                                        | توضیحات                       |
 | -------------------- | ---------------------------------------------- | ----------------------------- |
 | `api-key`            | (الزامی)                                       | کلید API سرویس Lingo.dev      |
-| `pull-request`       | `false`                                        | ایجاد PR به‌جای commit مستقیم |
+| `pull-request`       | `false`                                        | ایجاد PR به جای commit مستقیم |
 | `commit-message`     | `"feat: update translations via @LingoDotDev"` | پیام commit سفارشی            |
 | `pull-request-title` | `"feat: update translations via @LingoDotDev"` | عنوان PR سفارشی               |
-| `working-directory`  | `"."`                                          | دایرکتوری اجرا                |
+| `working-directory`  | `"."`                                          | دایرکتوری برای اجرا           |
 | `parallel`           | `false`                                        | فعال‌سازی پردازش موازی        |
 
-[مطالعه‌ی مستندات ←](https://lingo.dev/en/ci/github)
+[مطالعه مستندات ←](https://lingo.dev/en/ci/github)
 
 ---
 
 ### Lingo.dev SDK
 
-کتابخانه‌ی ترجمه‌ی runtime برای محتوای پویا. برای JavaScript، PHP، Python و Ruby در دسترس است.
+فایل‌های ترجمه استاتیک برای برچسب‌های UI کار می‌کنند، اما محتوای تولید شده توسط کاربر چطور؟ پیام‌های چت، توضیحات محصول، تیکت‌های پشتیبانی - محتوایی که در زمان build وجود ندارد نمی‌تواند از پیش ترجمه شود. شما مجبورید متن ترجمه نشده را نمایش دهید یا یک pipeline ترجمه سفارشی بسازید.
+
+SDK سرویس Lingo.dev محتوا را در زمان اجرا ترجمه می‌کند. هر متن، شیء یا HTML را ارسال کنید و نسخه محلی‌سازی شده را دریافت کنید. برای چت real-time، اعلان‌های پویا، یا هر محتوایی که پس از deployment می‌رسد کار می‌کند. برای JavaScript، PHP، Python و Ruby در دسترس است.
 
 **نصب:**
 
@@ -316,18 +324,20 @@ const locale = await lingoDotDev.recognizeLocale("Bonjour le monde");
 
 **SDK های موجود:**
 
-- [JavaScript SDK](https://lingo.dev/en/sdk/javascript) - برنامه‌های وب، Node.js
+- [JavaScript SDK](https://lingo.dev/en/sdk/javascript) - اپلیکیشن‌های وب، Node.js
 - [PHP SDK](https://lingo.dev/en/sdk/php) - PHP، Laravel
 - [Python SDK](https://lingo.dev/en/sdk/python) - Django، Flask
 - [Ruby SDK](https://lingo.dev/en/sdk/ruby) - Rails
 
-[مطالعه‌ی مستندات ←](https://lingo.dev/en/sdk)
+[مطالعه مستندات ←](https://lingo.dev/en/sdk)
 
 ---
 
-### کامپایلر Lingo.dev
+### Lingo.dev Compiler
 
-سیستم ترجمه زمان ساخت که اپلیکیشن‌های React را بدون تغییر کامپوننت‌ها چندزبانه می‌کند. در زمان ساخت عمل می‌کند نه زمان اجرا.
+i18n سنتی مزاحم است. شما هر رشته را در توابع `t()` می‌پیچید، کلیدهای ترجمه اختراع می‌کنید (`home.hero.title.v2`)، فایل‌های JSON موازی نگهداری می‌کنید، و شاهد متورم شدن کامپوننت‌های خود با boilerplate محلی‌سازی هستید. آنقدر خسته‌کننده است که تیم‌ها بین‌المللی‌سازی را به تعویق می‌اندازند تا زمانی که به یک refactor عظیم تبدیل شود.
+
+کامپایلر Lingo.dev تشریفات را حذف می‌کند. کامپوننت‌های React را با متن ساده انگلیسی بنویسید. کامپایلر رشته‌های قابل ترجمه را در زمان build شناسایی کرده و نسخه‌های محلی‌سازی شده را به صورت خودکار تولید می‌کند. بدون کلید، بدون فایل JSON، بدون تابع wrapper - فقط کد React که اتفاقاً به چندین زبان کار می‌کند.
 
 **نصب:**
 
@@ -388,7 +398,7 @@ export default defineConfig({
 });
 ```
 
-**راه‌اندازی Provider:**
+**راه‌اندازی provider:**
 
 ```tsx
 // app/layout.tsx (Next.js)
@@ -405,7 +415,7 @@ export default function RootLayout({ children }) {
 }
 ```
 
-**تعویض‌کننده زبان:**
+**تعویض‌کننده‌ی زبان:**
 
 ```tsx
 import { useLocale, setLocale } from "@lingo.dev/compiler/react";
@@ -425,23 +435,23 @@ export function LanguageSwitcher() {
 
 **تولید:** `usePseudotranslator: false` را تنظیم کنید، سپس `next build`
 
-دایرکتوری `.lingo/` را در version control کامیت کنید.
+دایرکتوری `.lingo/` را در version control ثبت کنید.
 
 **ویژگی‌های کلیدی:**
 
-- بدون هزینه عملکرد در زمان اجرا
-- بدون کلیدهای ترجمه یا فایل‌های JSON
-- بدون توابع `t()` یا کامپوننت‌های wrapper `<T>`
-- تشخیص خودکار متن قابل ترجمه در JSX
+- بدون هزینه‌ی عملکرد runtime
+- بدون کلید ترجمه یا فایل JSON
+- بدون تابع `t()` یا کامپوننت wrapper `<T>`
+- شناسایی خودکار متن قابل ترجمه در JSX
 - پشتیبانی از TypeScript
 - ICU MessageFormat برای جمع‌ها
 - بازنویسی دستی از طریق attribute `data-lingo-override`
-- ویجت ویرایشگر ترجمه داخلی
+- ویجت ویرایشگر ترجمه‌ی داخلی
 
-**حالت‌های ساخت:**
+**حالت‌های build:**
 
-- `pseudotranslator`: حالت توسعه با ترجمه‌های placeholder (بدون هزینه API)
-- `real`: تولید ترجمه‌های واقعی با استفاده از LLM‌ها
+- `pseudotranslator`: حالت توسعه با ترجمه‌های placeholder (بدون هزینه‌ی API)
+- `real`: تولید ترجمه‌های واقعی با استفاده از LLM ها
 - `cache-only`: حالت تولید با استفاده از ترجمه‌های از پیش تولید شده از CI (بدون فراخوانی API)
 
 **فریم‌ورک‌های پشتیبانی شده:**
@@ -451,7 +461,7 @@ export function LanguageSwitcher() {
 
 پشتیبانی از فریم‌ورک‌های اضافی برنامه‌ریزی شده است.
 
-[مستندات را بخوانید ←](https://lingo.dev/en/compiler)
+[مطالعه‌ی مستندات ←](https://lingo.dev/en/compiler)
 
 ---
 
@@ -460,23 +470,23 @@ export function LanguageSwitcher() {
 مشارکت‌ها خوش‌آمد هستند. لطفاً این دستورالعمل‌ها را دنبال کنید:
 
 1. **مسائل:** [گزارش باگ یا درخواست ویژگی](https://github.com/lingodotdev/lingo.dev/issues)
-2. **Pull Requestها:** [ارسال تغییرات](https://github.com/lingodotdev/lingo.dev/pulls)
-   - هر PR نیاز به یک changeset دارد: `pnpm new` (یا `pnpm new:empty` برای تغییرات غیر-انتشار)
-   - قبل از ارسال اطمینان حاصل کنید که تست‌ها پاس می‌شوند
+2. **درخواست‌های Pull:** [ارسال تغییرات](https://github.com/lingodotdev/lingo.dev/pulls)
+   - هر PR نیاز به یک changeset دارد: `pnpm new` (یا `pnpm new:empty` برای تغییرات بدون انتشار)
+   - قبل از ارسال اطمینان حاصل کنید که تست‌ها موفق هستند
 3. **توسعه:** این یک monorepo با pnpm + turborepo است
    - نصب وابستگی‌ها: `pnpm install`
    - اجرای تست‌ها: `pnpm test`
-   - Build: `pnpm build`
+   - ساخت: `pnpm build`
 
 **پشتیبانی:** [انجمن Discord](https://lingo.dev/go/discord)
 
-## تاریخچه ستاره‌ها
+## تاریخچه ستاره
 
 اگر Lingo.dev را مفید می‌دانید، به ما ستاره بدهید و به ما کمک کنید به 10,000 ستاره برسیم!
 
 [
 
-![نمودار تاریخچه ستاره‌ها](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+![نمودار تاریخچه ستاره](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
 
 ](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
 
@@ -486,14 +496,14 @@ export function LanguageSwitcher() {
 
 [English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [Português (Brasil)](/readme/pt-BR.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Polski](/readme/pl.md) • [Türkçe](/readme/tr.md) • [اردو](/readme/ur.md) • [भोजपुरी](/readme/bho.md) • [অসমীয়া](/readme/as-IN.md) • [ગુજરાતી](/readme/gu-IN.md) • [मराठी](/readme/mr-IN.md) • [ଓଡ଼ିଆ](/readme/or-IN.md) • [ਪੰਜਾਬੀ](/readme/pa-IN.md) • [සිංහල](/readme/si-LK.md) • [தமிழ்](/readme/ta-IN.md) • [తెలుగు](/readme/te-IN.md)
 
-**اضافه کردن زبان جدید:**
+**افزودن زبان جدید:**
 
 1. کد locale را به [`i18n.json`](./i18n.json) با استفاده از [فرمت BCP-47](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) اضافه کنید
-2. یک pull request ارسال کنید
+2. یک درخواست pull ارسال کنید
 
 **فرمت locale BCP-47:** `language[-Script][-REGION]`
 
-- `language`: ISO 639-1/2/3 (حروف کوچک): `en`, `zh`, `bho`
-- `Script`: ISO 15924 (حرف اول بزرگ): `Hans`, `Hant`, `Latn`
-- `REGION`: ISO 3166-1 alpha-2 (حروف بزرگ): `US`, `CN`, `IN`
-- مثال‌ها: `en`, `pt-BR`, `zh-Hans`, `sr-Cyrl-RS`
+- `language`: ISO 639-1/2/3 (حروف کوچک): `en`، `zh`، `bho`
+- `Script`: ISO 15924 (حروف بزرگ در ابتدا): `Hans`، `Hant`، `Latn`
+- `REGION`: ISO 3166-1 alpha-2 (حروف بزرگ): `US`، `CN`، `IN`
+- مثال‌ها: `en`، `pt-BR`، `zh-Hans`، `sr-Cyrl-RS`

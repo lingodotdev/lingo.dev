@@ -81,24 +81,26 @@
 
 ### Lingo.dev MCP
 
-AI 코딩 어시스턴트가 자연어 프롬프트를 통해 React 애플리케이션에서 i18n 인프라를 설정할 수 있도록 하는 Model Context Protocol 서버입니다.
+React 앱에서 i18n을 설정하는 것은 경험 많은 개발자에게도 오류가 발생하기 쉬운 것으로 악명 높습니다. AI 코딩 어시스턴트는 이를 더 악화시킵니다. 존재하지 않는 API를 환각하고, 미들웨어 구성을 잊고, 라우팅을 망가뜨리거나, 길을 잃기 전에 절반의 솔루션만 구현합니다. 문제는 i18n 설정이 여러 파일(라우팅, 미들웨어, 컴포넌트, 구성)에 걸쳐 정확한 순서의 조정된 변경을 요구하는데, LLM이 그 컨텍스트를 유지하는 데 어려움을 겪는다는 것입니다.
 
-**지원되는 IDE:**
+Lingo.dev MCP는 AI 어시스턴트에게 프레임워크별 i18n 지식에 대한 구조화된 액세스를 제공하여 이 문제를 해결합니다. 추측하는 대신, 어시스턴트는 Next.js, React Router, TanStack Start에 대해 검증된 구현 패턴을 따릅니다.
+
+**지원 IDE:**
 
 - Claude Code
 - Cursor
 - GitHub Copilot Agents
 - Codex (OpenAI)
 
-**지원되는 프레임워크:**
+**지원 프레임워크:**
 
-- Next.js (App Router 및 Pages Router v13-16)
+- Next.js (App Router & Pages Router v13-16)
 - TanStack Start (v1)
 - React Router (v7)
 
 **사용법:**
 
-IDE에서 MCP 서버를 구성한 후([빠른 시작 가이드 참조](https://lingo.dev/en/mcp)), 어시스턴트에게 다음과 같이 요청하세요:
+IDE에서 MCP 서버를 구성한 후([빠른 시작 가이드 참조](https://lingo.dev/en/mcp)), 어시스턴트에게 다음과 같이 프롬프트하세요:
 
 ```
 Set up i18n with the following locales: en, es, and pt-BR. The default locale is 'en'.
@@ -106,12 +108,12 @@ Set up i18n with the following locales: en, es, and pt-BR. The default locale is
 
 어시스턴트는 다음을 수행합니다:
 
-1. 로케일 기반 라우팅 구성(예: `/en`, `/es`, `/pt-BR`)
+1. 로케일 기반 라우팅 구성 (예: `/en`, `/es`, `/pt-BR`)
 2. 언어 전환 컴포넌트 설정
 3. 자동 로케일 감지 구현
 4. 필요한 구성 파일 생성
 
-**참고:** AI 기반 코드 생성은 비결정적입니다. 커밋하기 전에 생성된 코드를 검토하세요.
+**참고:** AI 지원 코드 생성은 비결정적입니다. 커밋하기 전에 생성된 코드를 검토하세요.
 
 [문서 읽기 →](https://lingo.dev/en/mcp)
 
@@ -119,7 +121,9 @@ Set up i18n with the following locales: en, es, and pt-BR. The default locale is
 
 ### Lingo.dev CLI
 
-AI를 사용하여 앱과 콘텐츠를 번역하는 오픈소스 CLI입니다. JSON, YAML, CSV, PO 파일, 마크다운을 포함한 모든 업계 표준 형식을 지원합니다.
+번역을 동기화 상태로 유지하는 것은 지루한 작업입니다. 새 문자열을 추가하고, 번역을 잊고, 국제 사용자에게 망가진 UI를 배포합니다. 또는 번역가에게 JSON 파일을 보내고, 며칠을 기다린 다음, 그들의 작업을 수동으로 다시 병합합니다. 10개 이상의 언어로 확장한다는 것은 지속적으로 동기화가 어긋나는 수백 개의 파일을 관리한다는 의미입니다.
+
+Lingo.dev CLI는 이를 자동화합니다. 번역 파일을 가리키고, 하나의 명령을 실행하면 모든 로케일이 업데이트됩니다. 잠금 파일이 이미 번역된 내용을 추적하므로 새롭거나 변경된 콘텐츠에 대해서만 비용을 지불합니다. JSON, YAML, CSV, PO 파일 및 마크다운을 지원합니다.
 
 **설정:**
 
@@ -134,9 +138,9 @@ npx lingo.dev@latest run
 **작동 방식:**
 
 1. 구성된 파일에서 번역 가능한 콘텐츠 추출
-2. 번역을 위해 LLM 제공업체로 콘텐츠 전송
+2. 번역을 위해 LLM 제공자에게 콘텐츠 전송
 3. 번역된 콘텐츠를 파일 시스템에 다시 작성
-4. 완료된 번역을 추적하기 위해 `i18n.lock` 파일 생성(중복 처리 방지)
+4. 완료된 번역을 추적하기 위해 `i18n.lock` 파일 생성 (중복 처리 방지)
 
 **구성:**
 
@@ -158,7 +162,7 @@ npx lingo.dev@latest run
 }
 ```
 
-`provider` 필드는 선택 사항입니다(기본값은 Lingo.dev Engine). 커스텀 LLM 제공업체의 경우:
+`provider` 필드는 선택 사항입니다 (기본값은 Lingo.dev Engine). 사용자 정의 LLM 제공자의 경우:
 
 ```json
 {
@@ -170,9 +174,9 @@ npx lingo.dev@latest run
 }
 ```
 
-**지원되는 LLM 제공업체:**
+**지원되는 LLM 제공자:**
 
-- Lingo.dev Engine(권장)
+- Lingo.dev Engine (권장)
 - OpenAI
 - Anthropic
 - Google
@@ -186,9 +190,11 @@ npx lingo.dev@latest run
 
 ### Lingo.dev CI/CD
 
-CI/CD 파이프라인을 위한 자동화된 번역 워크플로우입니다. 불완전한 번역이 프로덕션에 도달하는 것을 방지합니다.
+번역은 항상 "거의 완료된" 기능입니다. 엔지니어들은 로케일을 업데이트하지 않고 코드를 병합합니다. QA는 스테이징에서 누락된 번역을 발견하거나, 더 나쁜 경우 사용자가 프로덕션에서 발견합니다. 근본 원인: 번역은 마감 압박 속에서 쉽게 건너뛸 수 있는 수동 단계입니다.
 
-**지원 플랫폼:**
+Lingo.dev CI/CD는 번역을 자동화합니다. 모든 푸시가 번역을 트리거합니다. 누락된 문자열은 코드가 프로덕션에 도달하기 전에 채워집니다. 규율이 필요 없습니다 - 파이프라인이 처리합니다.
+
+**지원되는 플랫폼:**
 
 - GitHub Actions
 - GitLab CI/CD
@@ -218,7 +224,7 @@ jobs:
 
 **설정 요구사항:**
 
-1. 저장소 시크릿에 `LINGODOTDEV_API_KEY` 추가 (Settings > Secrets and variables > Actions)
+1. 리포지토리 시크릿에 `LINGODOTDEV_API_KEY` 추가 (Settings > Secrets and variables > Actions)
 2. PR 워크플로우의 경우: Settings > Actions > General에서 "Allow GitHub Actions to create and approve pull requests" 활성화
 
 **워크플로우 옵션:**
@@ -231,7 +237,7 @@ with:
   api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
 ```
 
-번역과 함께 풀 리퀘스트 생성:
+번역이 포함된 풀 리퀘스트 생성:
 
 ```yaml
 uses: lingodotdev/lingo.dev@main
@@ -259,7 +265,9 @@ env:
 
 ### Lingo.dev SDK
 
-동적 콘텐츠를 위한 런타임 번역 라이브러리. JavaScript, PHP, Python, Ruby에서 사용 가능.
+정적 번역 파일은 UI 레이블에는 적합하지만 사용자 생성 콘텐츠는 어떻게 할까요? 채팅 메시지, 제품 설명, 지원 티켓 등 빌드 시점에 존재하지 않는 콘텐츠는 사전 번역할 수 없습니다. 번역되지 않은 텍스트를 표시하거나 사용자 정의 번역 파이프라인을 구축해야 합니다.
+
+Lingo.dev SDK는 런타임에 콘텐츠를 번역합니다. 텍스트, 객체 또는 HTML을 전달하면 현지화된 버전을 받습니다. 실시간 채팅, 동적 알림 또는 배포 후 도착하는 모든 콘텐츠에 사용할 수 있습니다. JavaScript, PHP, Python, Ruby에서 사용 가능합니다.
 
 **설치:**
 
@@ -323,9 +331,11 @@ const locale = await lingoDotDev.recognizeLocale("Bonjour le monde");
 
 ---
 
-### Lingo.dev 컴파일러
+### Lingo.dev Compiler
 
-컴포넌트를 수정하지 않고 React 앱을 다국어로 만드는 빌드 타임 번역 시스템입니다. 런타임이 아닌 빌드 중에 작동합니다.
+기존 i18n은 침습적입니다. 모든 문자열을 `t()` 함수로 래핑하고, 번역 키를 만들고(`home.hero.title.v2`), 병렬 JSON 파일을 유지 관리하며, 현지화 보일러플레이트로 컴포넌트가 비대해지는 것을 지켜봐야 합니다. 너무 지루해서 팀들은 국제화를 대규모 리팩토링이 될 때까지 미루게 됩니다.
+
+Lingo.dev Compiler는 복잡한 절차를 제거합니다. 일반 영어 텍스트로 React 컴포넌트를 작성하세요. 컴파일러는 빌드 시점에 번역 가능한 문자열을 감지하고 자동으로 현지화된 변형을 생성합니다. 키도, JSON 파일도, 래퍼 함수도 필요 없습니다 - 그저 여러 언어로 작동하는 React 코드일 뿐입니다.
 
 **설치:**
 
@@ -386,7 +396,7 @@ export default defineConfig({
 });
 ```
 
-**프로바이더 설정:**
+**Provider 설정:**
 
 ```tsx
 // app/layout.tsx (Next.js)
@@ -428,8 +438,8 @@ export function LanguageSwitcher() {
 **주요 기능:**
 
 - 런타임 성능 비용 제로
-- 번역 키나 JSON 파일 불필요
-- `t()` 함수나 `<T>` 래퍼 컴포넌트 불필요
+- 번역 키 또는 JSON 파일 불필요
+- `t()` 함수 또는 `<T>` 래퍼 컴포넌트 불필요
 - JSX 내 번역 가능한 텍스트 자동 감지
 - TypeScript 지원
 - 복수형을 위한 ICU MessageFormat
@@ -440,7 +450,7 @@ export function LanguageSwitcher() {
 
 - `pseudotranslator`: 플레이스홀더 번역을 사용하는 개발 모드 (API 비용 없음)
 - `real`: LLM을 사용하여 실제 번역 생성
-- `cache-only`: CI에서 미리 생성된 번역을 사용하는 프로덕션 모드 (API 호출 없음)
+- `cache-only`: CI에서 사전 생성된 번역을 사용하는 프로덕션 모드 (API 호출 없음)
 
 **지원 프레임워크:**
 
@@ -457,7 +467,7 @@ export function LanguageSwitcher() {
 
 기여를 환영합니다. 다음 가이드라인을 따라주세요:
 
-1. **이슈:** [버그 신고 또는 기능 요청](https://github.com/lingodotdev/lingo.dev/issues)
+1. **이슈:** [버그 보고 또는 기능 요청](https://github.com/lingodotdev/lingo.dev/issues)
 2. **풀 리퀘스트:** [변경 사항 제출](https://github.com/lingodotdev/lingo.dev/pulls)
    - 모든 PR에는 changeset이 필요합니다: `pnpm new` (또는 릴리스하지 않는 변경 사항의 경우 `pnpm new:empty`)
    - 제출 전에 테스트가 통과하는지 확인하세요
@@ -474,7 +484,7 @@ Lingo.dev가 유용하다면 스타를 주시고 10,000개의 스타를 달성�
 
 [
 
-![Star History Chart](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+![스타 히스토리 차트](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
 
 ](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
 

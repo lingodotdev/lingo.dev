@@ -83,7 +83,9 @@
 
 ### Lingo.dev MCP
 
-Model Context Protocol Server, der KI-Coding-Assistenten ermöglicht, i18n-Infrastruktur in React-Anwendungen durch natürlichsprachige Prompts einzurichten.
+Die Einrichtung von i18n in React-Apps ist notorisch fehleranfällig – selbst für erfahrene Entwickler. KI-Coding-Assistenten verschlimmern die Situation: Sie halluzinieren nicht existierende APIs, vergessen Middleware-Konfigurationen, brechen das Routing oder implementieren eine halbe Lösung, bevor sie den Faden verlieren. Das Problem ist, dass die i18n-Einrichtung eine präzise Abfolge koordinierter Änderungen über mehrere Dateien hinweg erfordert (Routing, Middleware, Komponenten, Konfiguration), und LLMs haben Schwierigkeiten, diesen Kontext aufrechtzuerhalten.
+
+Lingo.dev MCP löst dies, indem es KI-Assistenten strukturierten Zugriff auf framework-spezifisches i18n-Wissen gibt. Anstatt zu raten, folgt Ihr Assistent verifizierten Implementierungsmustern für Next.js, React Router und TanStack Start.
 
 **Unterstützte IDEs:**
 
@@ -100,7 +102,7 @@ Model Context Protocol Server, der KI-Coding-Assistenten ermöglicht, i18n-Infra
 
 **Verwendung:**
 
-Nachdem Sie den MCP-Server in Ihrer IDE konfiguriert haben ([siehe Schnellstart-Anleitungen](https://lingo.dev/en/mcp)), fordern Sie Ihren Assistenten auf:
+Nach der Konfiguration des MCP-Servers in Ihrer IDE ([siehe Schnellstart-Anleitungen](https://lingo.dev/en/mcp)) fordern Sie Ihren Assistenten auf:
 
 ```
 Set up i18n with the following locales: en, es, and pt-BR. The default locale is 'en'.
@@ -109,11 +111,11 @@ Set up i18n with the following locales: en, es, and pt-BR. The default locale is
 Der Assistent wird:
 
 1. Locale-basiertes Routing konfigurieren (z. B. `/en`, `/es`, `/pt-BR`)
-2. Sprachumschaltungs-Komponenten einrichten
+2. Sprachwechsel-Komponenten einrichten
 3. Automatische Locale-Erkennung implementieren
-4. Erforderliche Konfigurationsdateien generieren
+4. Notwendige Konfigurationsdateien generieren
 
-**Hinweis:** KI-gestützte Code-Generierung ist nicht-deterministisch. Überprüfen Sie generierten Code vor dem Commit.
+**Hinweis:** KI-gestützte Code-Generierung ist nicht-deterministisch. Überprüfen Sie generierten Code vor dem Committen.
 
 [Dokumentation lesen →](https://lingo.dev/en/mcp)
 
@@ -121,7 +123,9 @@ Der Assistent wird:
 
 ### Lingo.dev CLI
 
-Open-Source-CLI zur Übersetzung von Apps und Inhalten mit KI. Unterstützt alle branchenüblichen Formate einschließlich JSON, YAML, CSV, PO-Dateien und Markdown.
+Übersetzungen synchron zu halten ist mühsam. Sie fügen einen neuen String hinzu, vergessen ihn zu übersetzen und liefern fehlerhafte UI an internationale Nutzer aus. Oder Sie senden JSON-Dateien an Übersetzer, warten tagelang und führen deren Arbeit dann manuell zusammen. Die Skalierung auf über 10 Sprachen bedeutet die Verwaltung hunderter Dateien, die ständig auseinanderdriften.
+
+Lingo.dev CLI automatisiert dies. Richten Sie es auf Ihre Übersetzungsdateien aus, führen Sie einen Befehl aus, und jede Locale wird aktualisiert. Eine Lockfile verfolgt, was bereits übersetzt wurde, sodass Sie nur für neue oder geänderte Inhalte zahlen. Unterstützt JSON, YAML, CSV, PO-Dateien und Markdown.
 
 **Einrichtung:**
 
@@ -136,7 +140,7 @@ npx lingo.dev@latest run
 **Funktionsweise:**
 
 1. Extrahiert übersetzbare Inhalte aus konfigurierten Dateien
-2. Sendet Inhalte an LLM-Provider zur Übersetzung
+2. Sendet Inhalte an LLM-Anbieter zur Übersetzung
 3. Schreibt übersetzte Inhalte zurück ins Dateisystem
 4. Erstellt `i18n.lock`-Datei zur Nachverfolgung abgeschlossener Übersetzungen (vermeidet redundante Verarbeitung)
 
@@ -160,7 +164,7 @@ Der Befehl `init` generiert eine `i18n.json`-Datei. Konfigurieren Sie Locales un
 }
 ```
 
-Das Feld `provider` ist optional (Standard ist Lingo.dev Engine). Für benutzerdefinierte LLM-Provider:
+Das Feld `provider` ist optional (Standard ist Lingo.dev Engine). Für benutzerdefinierte LLM-Anbieter:
 
 ```json
 {
@@ -172,7 +176,7 @@ Das Feld `provider` ist optional (Standard ist Lingo.dev Engine). Für benutzerd
 }
 ```
 
-**Unterstützte LLM-Provider:**
+**Unterstützte LLM-Anbieter:**
 
 - Lingo.dev Engine (empfohlen)
 - OpenAI
@@ -188,7 +192,9 @@ Das Feld `provider` ist optional (Standard ist Lingo.dev Engine). Für benutzerd
 
 ### Lingo.dev CI/CD
 
-Automatisierte Übersetzungs-Workflows für CI/CD-Pipelines. Verhindert, dass unvollständige Übersetzungen in die Produktion gelangen.
+Übersetzungen sind das Feature, das immer "fast fertig" ist. Entwickler mergen Code, ohne die Locales zu aktualisieren. QA entdeckt fehlende Übersetzungen im Staging – oder schlimmer noch, Nutzer entdecken sie in der Produktion. Die Grundursache: Übersetzung ist ein manueller Schritt, der unter Termindruck leicht übersprungen wird.
+
+Lingo.dev CI/CD macht Übersetzungen automatisch. Jeder Push löst die Übersetzung aus. Fehlende Strings werden ausgefüllt, bevor Code die Produktion erreicht. Keine Disziplin erforderlich – die Pipeline übernimmt das.
 
 **Unterstützte Plattformen:**
 
@@ -220,8 +226,8 @@ jobs:
 
 **Einrichtungsanforderungen:**
 
-1. Fügen Sie `LINGODOTDEV_API_KEY` zu den Repository-Secrets hinzu (Settings > Secrets and variables > Actions)
-2. Für PR-Workflows: Aktivieren Sie "Allow GitHub Actions to create and approve pull requests" unter Settings > Actions > General
+1. Fügen Sie `LINGODOTDEV_API_KEY` zu den Repository-Secrets hinzu (Einstellungen > Secrets and variables > Actions)
+2. Für PR-Workflows: Aktivieren Sie „Allow GitHub Actions to create and approve pull requests" unter Einstellungen > Actions > General
 
 **Workflow-Optionen:**
 
@@ -246,14 +252,14 @@ env:
 
 **Verfügbare Eingaben:**
 
-| Eingabe              | Standard                                       | Beschreibung                               |
-| -------------------- | ---------------------------------------------- | ------------------------------------------ |
-| `api-key`            | (erforderlich)                                 | Lingo.dev-API-Schlüssel                    |
-| `pull-request`       | `false`                                        | PR erstellen statt direkt zu committen     |
-| `commit-message`     | `"feat: update translations via @LingoDotDev"` | Benutzerdefinierte Commit-Nachricht        |
-| `pull-request-title` | `"feat: update translations via @LingoDotDev"` | Benutzerdefinierter PR-Titel               |
-| `working-directory`  | `"."`                                          | Verzeichnis, in dem ausgeführt werden soll |
-| `parallel`           | `false`                                        | Parallele Verarbeitung aktivieren          |
+| Eingabe              | Standard                                       | Beschreibung                           |
+| -------------------- | ---------------------------------------------- | -------------------------------------- |
+| `api-key`            | (erforderlich)                                 | Lingo.dev API-Schlüssel                |
+| `pull-request`       | `false`                                        | PR erstellen statt direkt zu committen |
+| `commit-message`     | `"feat: update translations via @LingoDotDev"` | Benutzerdefinierte Commit-Nachricht    |
+| `pull-request-title` | `"feat: update translations via @LingoDotDev"` | Benutzerdefinierter PR-Titel           |
+| `working-directory`  | `"."`                                          | Verzeichnis für Ausführung             |
+| `parallel`           | `false`                                        | Parallele Verarbeitung aktivieren      |
 
 [Dokumentation lesen →](https://lingo.dev/en/ci/github)
 
@@ -261,7 +267,9 @@ env:
 
 ### Lingo.dev SDK
 
-Runtime-Übersetzungsbibliothek für dynamische Inhalte. Verfügbar für JavaScript, PHP, Python und Ruby.
+Statische Übersetzungsdateien funktionieren für UI-Labels, aber was ist mit nutzergenerierten Inhalten? Chat-Nachrichten, Produktbeschreibungen, Support-Tickets – Inhalte, die zur Build-Zeit nicht existieren, können nicht vorübersetzt werden. Sie müssen unübersetzte Texte anzeigen oder eine eigene Übersetzungs-Pipeline aufbauen.
+
+Das Lingo.dev SDK übersetzt Inhalte zur Laufzeit. Übergeben Sie beliebigen Text, Objekte oder HTML und erhalten Sie eine lokalisierte Version zurück. Funktioniert für Echtzeit-Chat, dynamische Benachrichtigungen oder beliebige Inhalte, die nach dem Deployment eintreffen. Verfügbar für JavaScript, PHP, Python und Ruby.
 
 **Installation:**
 
@@ -316,10 +324,10 @@ const locale = await lingoDotDev.recognizeLocale("Bonjour le monde");
 
 **Verfügbare SDKs:**
 
-- [JavaScript SDK](https://lingo.dev/en/sdk/javascript) - Web-Apps, Node.js
-- [PHP SDK](https://lingo.dev/en/sdk/php) - PHP, Laravel
-- [Python SDK](https://lingo.dev/en/sdk/python) - Django, Flask
-- [Ruby SDK](https://lingo.dev/en/sdk/ruby) - Rails
+- [JavaScript SDK](https://lingo.dev/en/sdk/javascript) – Web-Apps, Node.js
+- [PHP SDK](https://lingo.dev/en/sdk/php) – PHP, Laravel
+- [Python SDK](https://lingo.dev/en/sdk/python) – Django, Flask
+- [Ruby SDK](https://lingo.dev/en/sdk/ruby) – Rails
 
 [Dokumentation lesen →](https://lingo.dev/en/sdk)
 
@@ -327,7 +335,9 @@ const locale = await lingoDotDev.recognizeLocale("Bonjour le monde");
 
 ### Lingo.dev Compiler
 
-Build-Zeit-Übersetzungssystem, das React-Apps mehrsprachig macht, ohne Komponenten zu ändern. Arbeitet während des Builds statt zur Laufzeit.
+Traditionelle i18n ist invasiv. Sie umschließen jeden String mit `t()`-Funktionen, erfinden Übersetzungsschlüssel (`home.hero.title.v2`), pflegen parallele JSON-Dateien und beobachten, wie Ihre Komponenten mit Lokalisierungs-Boilerplate aufgebläht werden. Es ist so mühsam, dass Teams die Internationalisierung hinauszögern, bis sie zu einem massiven Refactoring wird.
+
+Lingo.dev Compiler eliminiert die Zeremonie. Schreiben Sie React-Komponenten mit einfachem englischem Text. Der Compiler erkennt übersetzbare Zeichenketten zur Build-Zeit und generiert automatisch lokalisierte Varianten. Keine Schlüssel, keine JSON-Dateien, keine Wrapper-Funktionen – nur React-Code, der zufällig in mehreren Sprachen funktioniert.
 
 **Installation:**
 
@@ -388,7 +398,7 @@ export default defineConfig({
 });
 ```
 
-**Provider-Einrichtung:**
+**Provider-Setup:**
 
 ```tsx
 // app/layout.tsx (Next.js)
@@ -427,7 +437,7 @@ export function LanguageSwitcher() {
 
 Committen Sie das `.lingo/`-Verzeichnis in die Versionskontrolle.
 
-**Hauptfunktionen:**
+**Hauptmerkmale:**
 
 - Keine Laufzeit-Performance-Kosten
 - Keine Übersetzungsschlüssel oder JSON-Dateien
@@ -435,14 +445,14 @@ Committen Sie das `.lingo/`-Verzeichnis in die Versionskontrolle.
 - Automatische Erkennung von übersetzbarem Text in JSX
 - TypeScript-Unterstützung
 - ICU MessageFormat für Plurale
-- Manuelle Überschreibungen über `data-lingo-override`-Attribut
+- Manuelle Überschreibungen via `data-lingo-override`-Attribut
 - Integriertes Übersetzungs-Editor-Widget
 
 **Build-Modi:**
 
 - `pseudotranslator`: Entwicklungsmodus mit Platzhalter-Übersetzungen (keine API-Kosten)
 - `real`: Generierung tatsächlicher Übersetzungen mittels LLMs
-- `cache-only`: Produktionsmodus mit vorgenerierter Übersetzungen aus CI (keine API-Aufrufe)
+- `cache-only`: Produktionsmodus mit vorgenerierten Übersetzungen aus CI (keine API-Aufrufe)
 
 **Unterstützte Frameworks:**
 
@@ -459,7 +469,7 @@ Unterstützung weiterer Frameworks geplant.
 
 Beiträge sind willkommen. Bitte befolgen Sie diese Richtlinien:
 
-1. **Issues:** [Fehler melden oder Features anfragen](https://github.com/lingodotdev/lingo.dev/issues)
+1. **Issues:** [Fehler melden oder Funktionen anfordern](https://github.com/lingodotdev/lingo.dev/issues)
 2. **Pull Requests:** [Änderungen einreichen](https://github.com/lingodotdev/lingo.dev/pulls)
    - Jeder PR erfordert ein Changeset: `pnpm new` (oder `pnpm new:empty` für Änderungen ohne Release)
    - Stellen Sie sicher, dass die Tests vor dem Einreichen bestehen
@@ -476,7 +486,7 @@ Wenn Sie Lingo.dev nützlich finden, geben Sie uns einen Stern und helfen Sie un
 
 [
 
-![Star History Chart](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+![Star-Verlaufsdiagramm](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
 
 ](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
 

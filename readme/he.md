@@ -81,7 +81,9 @@
 
 ### Lingo.dev MCP
 
-שרת Model Context Protocol המאפשר לעוזרי קידוד AI להגדיר תשתית i18n באפליקציות React באמצעות הנחיות בשפה טבעית.
+הגדרת i18n באפליקציות React ידועה לשמצה כמועדת לשגיאות - אפילו עבור מפתחים מנוסים. עוזרי קידוד AI מחמירים את המצב: הם מזיות APIs לא קיימים, שוכחים הגדרות middleware, שוברים routing, או מיישמים חצי פתרון לפני שהם מאבדים את ההקשר. הבעיה היא שהגדרת i18n דורשת רצף מדויק של שינויים מתואמים על פני קבצים מרובים (routing, middleware, קומפוננטות, הגדרות), ו-LLMs מתקשים לשמור על ההקשר הזה.
+
+Lingo.dev MCP פותר זאת על ידי מתן גישה מובנית לעוזרי AI לידע i18n ספציפי לפריימוורק. במקום לנחש, העוזר שלך עוקב אחר דפוסי יישום מאומתים עבור Next.js, React Router ו-TanStack Start.
 
 **סביבות פיתוח נתמכות:**
 
@@ -92,13 +94,13 @@
 
 **פריימוורקים נתמכים:**
 
-- Next.js (App Router & Pages Router v13-16)
+- Next.js (App Router ו-Pages Router v13-16)
 - TanStack Start (v1)
 - React Router (v7)
 
 **שימוש:**
 
-לאחר הגדרת שרת MCP בסביבת הפיתוח שלך ([ראה מדריכי התחלה מהירה](https://lingo.dev/en/mcp)), בקש מהעוזר שלך:
+לאחר הגדרת שרת ה-MCP בסביבת הפיתוח שלך ([ראה מדריכי התחלה מהירה](https://lingo.dev/en/mcp)), בקש מהעוזר שלך:
 
 ```
 Set up i18n with the following locales: en, es, and pt-BR. The default locale is 'en'.
@@ -106,12 +108,12 @@ Set up i18n with the following locales: en, es, and pt-BR. The default locale is
 
 העוזר יבצע:
 
-1. הגדרת ניתוב מבוסס locale (לדוגמה, `/en`, `/es`, `/pt-BR`)
-2. הגדרת רכיבי החלפת שפה
-3. יישום זיהוי locale אוטומטי
+1. הגדרת routing מבוסס locale (לדוגמה, `/en`, `/es`, `/pt-BR`)
+2. הגדרת קומפוננטות להחלפת שפה
+3. יישום זיהוי אוטומטי של locale
 4. יצירת קבצי הגדרות נדרשים
 
-**שים לב:** יצירת קוד בעזרת AI אינה דטרמיניסטית. יש לבדוק את הקוד שנוצר לפני ביצוע commit.
+**שים לב:** יצירת קוד בעזרת AI אינה דטרמיניסטית. בדוק את הקוד שנוצר לפני ביצוע commit.
 
 [קרא את התיעוד ←](https://lingo.dev/en/mcp)
 
@@ -119,9 +121,11 @@ Set up i18n with the following locales: en, es, and pt-BR. The default locale is
 
 ### Lingo.dev CLI
 
-כלי CLI בקוד פתוח לתרגום אפליקציות ותוכן באמצעות AI. תומך בכל הפורמטים הסטנדרטיים בתעשייה כולל JSON, YAML, CSV, קבצי PO ו-markdown.
+שמירה על סנכרון תרגומים היא מייגעת. אתה מוסיף מחרוזת חדשה, שוכח לתרגם אותה, משגר UI שבור למשתמשים בינלאומיים. או שאתה שולח קבצי JSON למתרגמים, ממתין ימים, ואז ממזג ידנית את עבודתם בחזרה. הרחבה ל-10+ שפות משמעותה ניהול מאות קבצים שסוטים כל הזמן מסנכרון.
 
-**התקנה:**
+Lingo.dev CLI מבצע אוטומציה של זה. הפנה אותו לקבצי התרגום שלך, הרץ פקודה אחת, וכל locale מתעדכן. קובץ lockfile עוקב אחר מה כבר תורגם, כך שאתה משלם רק עבור תוכן חדש או ששונה. תומך ב-JSON, YAML, CSV, קבצי PO ו-markdown.
+
+**הגדרה:**
 
 ```bash
 # Initialize project
@@ -136,7 +140,7 @@ npx lingo.dev@latest run
 1. מחלץ תוכן הניתן לתרגום מקבצים מוגדרים
 2. שולח תוכן לספק LLM לתרגום
 3. כותב תוכן מתורגם חזרה למערכת הקבצים
-4. יוצר קובץ `i18n.lock` למעקב אחר תרגומים שהושלמו (מונע עיבוד מיותר)
+4. יוצר קובץ `i18n.lock` למעקב אחר תרגומים שהושלמו (נמנע מעיבוד מיותר)
 
 **הגדרות:**
 
@@ -158,7 +162,7 @@ npx lingo.dev@latest run
 }
 ```
 
-השדה `provider` הוא אופציונלי (ברירת המחדל היא Lingo.dev Engine). עבור ספקי LLM מותאמים אישית:
+השדה `provider` הוא אופציונלי (ברירת מחדל: Lingo.dev Engine). עבור ספקי LLM מותאמים אישית:
 
 ```json
 {
@@ -186,7 +190,9 @@ npx lingo.dev@latest run
 
 ### Lingo.dev CI/CD
 
-תהליכי עבודה אוטומטיים לתרגום עבור צינורות CI/CD. מונע הגעת תרגומים לא שלמים לסביבת הייצור.
+תרגומים הם התכונה שתמיד "כמעט מוכנה". מהנדסים מבצעים merge לקוד מבלי לעדכן locales. QA מגלה תרגומים חסרים ב-staging - או גרוע מכך, משתמשים מגלים אותם ב-production. הסיבה העיקרית: תרגום הוא שלב ידני שקל לדלג עליו תחת לחץ של דדליינים.
+
+Lingo.dev CI/CD הופך תרגומים לאוטומטיים. כל push מפעיל תרגום. מחרוזות חסרות מתמלאות לפני שהקוד מגיע ל-production. אין צורך במשמעת - ה-pipeline מטפל בזה.
 
 **פלטפורמות נתמכות:**
 
@@ -218,12 +224,12 @@ jobs:
 
 **דרישות הגדרה:**
 
-1. הוסף `LINGODOTDEV_API_KEY` ל-secrets של המאגר (Settings > Secrets and variables > Actions)
-2. עבור workflows של PR: הפעל "Allow GitHub Actions to create and approve pull requests" ב-Settings > Actions > General
+1. הוסף `LINGODOTDEV_API_KEY` ל-secrets של ה-repository (Settings > Secrets and variables > Actions)
+2. עבור workflows של PR: אפשר "Allow GitHub Actions to create and approve pull requests" ב-Settings > Actions > General
 
 **אפשרויות workflow:**
 
-בצע commit של תרגומים ישירות:
+בצע commit לתרגומים ישירות:
 
 ```yaml
 uses: lingodotdev/lingo.dev@main
@@ -231,7 +237,7 @@ with:
   api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
 ```
 
-צור pull requests עם תרגומים:
+יצירת pull requests עם תרגומים:
 
 ```yaml
 uses: lingodotdev/lingo.dev@main
@@ -242,16 +248,16 @@ env:
   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-**פרמטרי קלט זמינים:**
+**פרמטרים זמינים:**
 
-| Input                | Default                                        | Description                     |
-| -------------------- | ---------------------------------------------- | ------------------------------- |
-| `api-key`            | (required)                                     | מפתח API של Lingo.dev           |
-| `pull-request`       | `false`                                        | צור PR במקום לבצע commit ישירות |
-| `commit-message`     | `"feat: update translations via @LingoDotDev"` | הודעת commit מותאמת אישית       |
-| `pull-request-title` | `"feat: update translations via @LingoDotDev"` | כותרת PR מותאמת אישית           |
-| `working-directory`  | `"."`                                          | ספרייה להרצה                    |
-| `parallel`           | `false`                                        | הפעל עיבוד מקבילי               |
+| פרמטר                | ברירת מחדל                                     | תיאור                      |
+| -------------------- | ---------------------------------------------- | -------------------------- |
+| `api-key`            | (נדרש)                                         | מפתח API של Lingo.dev      |
+| `pull-request`       | `false`                                        | יצירת PR במקום commit ישיר |
+| `commit-message`     | `"feat: update translations via @LingoDotDev"` | הודעת commit מותאמת אישית  |
+| `pull-request-title` | `"feat: update translations via @LingoDotDev"` | כותרת PR מותאמת אישית      |
+| `working-directory`  | `"."`                                          | תיקייה להרצה               |
+| `parallel`           | `false`                                        | הפעלת עיבוד מקבילי         |
 
 [קרא את התיעוד ←](https://lingo.dev/en/ci/github)
 
@@ -259,7 +265,9 @@ env:
 
 ### Lingo.dev SDK
 
-ספריית תרגום בזמן ריצה לתוכן דינמי. זמינה עבור JavaScript, PHP, Python ו-Ruby.
+קבצי תרגום סטטיים עובדים עבור תוויות UI, אבל מה לגבי תוכן שנוצר על ידי משתמשים? הודעות צ'אט, תיאורי מוצרים, פניות תמיכה - תוכן שלא קיים בזמן build לא ניתן לתרגם מראש. אתה נתקע בהצגת טקסט לא מתורגם או בבניית pipeline תרגום מותאם אישית.
+
+Lingo.dev SDK מתרגם תוכן ב-runtime. העבר כל טקסט, אובייקט או HTML וקבל בחזרה גרסה מלוקלזת. עובד עבור צ'אט בזמן אמת, התראות דינמיות או כל תוכן שמגיע לאחר deployment. זמין עבור JavaScript, PHP, Python ו-Ruby.
 
 **התקנה:**
 
@@ -325,7 +333,9 @@ const locale = await lingoDotDev.recognizeLocale("Bonjour le monde");
 
 ### Lingo.dev Compiler
 
-מערכת תרגום בזמן build שהופכת אפליקציות React לרב-לשוניות ללא שינוי קומפוננטות. פועלת במהלך ה-build ולא ב-runtime.
+i18n מסורתי הוא פולשני. אתה עוטף כל מחרוזת בפונקציות `t()`, ממציא מפתחות תרגום (`home.hero.title.v2`), מתחזק קבצי JSON מקבילים, וצופה בקומפוננטות שלך מתנפחות עם boilerplate של לוקליזציה. זה כל כך מייגע שצוותים מדחים בינאום עד שזה הופך ל-refactor מסיבי.
+
+Lingo.dev Compiler מבטל את הטקסיות. כתוב קומפוננטות React עם טקסט באנגלית פשוטה. הקומפיילר מזהה מחרוזות הניתנות לתרגום בזמן build ומייצר גרסאות מתורגמות באופן אוטומטי. ללא מפתחות, ללא קבצי JSON, ללא פונקציות עטיפה - רק קוד React שפשוט עובד במספר שפות.
 
 **התקנה:**
 
@@ -386,7 +396,7 @@ export default defineConfig({
 });
 ```
 
-**הגדרת Provider:**
+**הגדרת provider:**
 
 ```tsx
 // app/layout.tsx (Next.js)
@@ -423,18 +433,18 @@ export function LanguageSwitcher() {
 
 **ייצור:** הגדר `usePseudotranslator: false`, ואז `next build`
 
-בצע commit לתיקיית `.lingo/` ל-version control.
+בצע commit לתיקיית `.lingo/` לבקרת גרסאות.
 
 **תכונות עיקריות:**
 
-- ללא עלות ביצועים ב-runtime
+- ללא עלות ביצועים בזמן ריצה
 - ללא מפתחות תרגום או קבצי JSON
-- ללא פונקציות `t()` או קומפוננטות wrapper מסוג `<T>`
+- ללא פונקציות `t()` או קומפוננטות עטיפה `<T>`
 - זיהוי אוטומטי של טקסט הניתן לתרגום ב-JSX
 - תמיכה ב-TypeScript
-- ICU MessageFormat עבור רבים
-- עקיפות ידניות באמצעות attribute `data-lingo-override`
-- widget מובנה לעריכת תרגומים
+- ICU MessageFormat לריבוי
+- עקיפות ידניות באמצעות תכונת `data-lingo-override`
+- widget מובנה לעורך תרגומים
 
 **מצבי build:**
 
@@ -442,12 +452,12 @@ export function LanguageSwitcher() {
 - `real`: יצירת תרגומים אמיתיים באמצעות LLMs
 - `cache-only`: מצב ייצור המשתמש בתרגומים שנוצרו מראש מ-CI (ללא קריאות API)
 
-**frameworks נתמכים:**
+**פריימוורקים נתמכים:**
 
 - Next.js (App Router עם React Server Components)
 - Vite + React (SPA ו-SSR)
 
-תמיכה ב-frameworks נוספים מתוכננת.
+תמיכה בפריימוורקים נוספים מתוכננת.
 
 [קרא את התיעוד ←](https://lingo.dev/en/compiler)
 
@@ -455,22 +465,22 @@ export function LanguageSwitcher() {
 
 ## תרומה לפרויקט
 
-תרומות מתקבלות בברכה. אנא עקוב אחר ההנחיות הבאות:
+תרומות מתקבלות בברכה. אנא עקבו אחר ההנחיות הבאות:
 
-1. **בעיות:** [דווח על באגים או בקש תכונות](https://github.com/lingodotdev/lingo.dev/issues)
-2. **Pull Requests:** [שלח שינויים](https://github.com/lingodotdev/lingo.dev/pulls)
+1. **בעיות:** [דיווח על באגים או בקשת תכונות](https://github.com/lingodotdev/lingo.dev/issues)
+2. **Pull Requests:** [שליחת שינויים](https://github.com/lingodotdev/lingo.dev/pulls)
    - כל PR דורש changeset: `pnpm new` (או `pnpm new:empty` עבור שינויים שאינם לשחרור)
-   - ודא שהבדיקות עוברות לפני השליחה
+   - יש לוודא שהבדיקות עוברות לפני השליחה
 3. **פיתוח:** זהו monorepo של pnpm + turborepo
-   - התקן תלויות: `pnpm install`
-   - הרץ בדיקות: `pnpm test`
-   - בנה: `pnpm build`
+   - התקנת תלויות: `pnpm install`
+   - הרצת בדיקות: `pnpm test`
+   - בנייה: `pnpm build`
 
 **תמיכה:** [קהילת Discord](https://lingo.dev/go/discord)
 
 ## היסטוריית כוכבים
 
-אם אתה מוצא את Lingo.dev שימושי, תן לנו כוכב ועזור לנו להגיע ל-10,000 כוכבים!
+אם אתם מוצאים את Lingo.dev שימושי, תנו לנו כוכב ועזרו לנו להגיע ל-10,000 כוכבים!
 
 [
 
@@ -486,8 +496,8 @@ export function LanguageSwitcher() {
 
 **הוספת שפה חדשה:**
 
-1. הוסף קוד locale ל-[`i18n.json`](./i18n.json) באמצעות [פורמט BCP-47](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale)
-2. שלח pull request
+1. הוסיפו קוד locale ל-[`i18n.json`](./i18n.json) באמצעות [פורמט BCP-47](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale)
+2. שלחו pull request
 
 **פורמט locale BCP-47:** `language[-Script][-REGION]`
 

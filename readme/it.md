@@ -83,7 +83,9 @@
 
 ### Lingo.dev MCP
 
-Server Model Context Protocol che consente agli assistenti di codifica AI di configurare l'infrastruttura i18n nelle applicazioni React tramite prompt in linguaggio naturale.
+Configurare l'i18n nelle app React è notoriamente soggetto a errori, anche per sviluppatori esperti. Gli assistenti di codifica AI peggiorano la situazione: allucinano API inesistenti, dimenticano configurazioni middleware, rompono il routing o implementano metà soluzione prima di perdersi. Il problema è che la configurazione i18n richiede una sequenza precisa di modifiche coordinate su più file (routing, middleware, componenti, configurazione) e gli LLM faticano a mantenere quel contesto.
+
+Lingo.dev MCP risolve questo problema fornendo agli assistenti AI accesso strutturato alla conoscenza i18n specifica per framework. Invece di indovinare, il tuo assistente segue pattern di implementazione verificati per Next.js, React Router e TanStack Start.
 
 **IDE supportati:**
 
@@ -108,12 +110,12 @@ Set up i18n with the following locales: en, es, and pt-BR. The default locale is
 
 L'assistente:
 
-1. Configurerà il routing basato sulla locale (es. `/en`, `/es`, `/pt-BR`)
+1. Configurerà il routing basato su locale (es. `/en`, `/es`, `/pt-BR`)
 2. Configurerà i componenti per il cambio lingua
-3. Implementerà il rilevamento automatico della locale
+3. Implementerà il rilevamento automatico del locale
 4. Genererà i file di configurazione necessari
 
-**Nota:** la generazione di codice assistita da AI è non deterministica. Rivedi il codice generato prima di effettuare il commit.
+**Nota:** la generazione di codice assistita da AI è non deterministica. Rivedi il codice generato prima di committare.
 
 [Leggi la documentazione →](https://lingo.dev/en/mcp)
 
@@ -121,9 +123,11 @@ L'assistente:
 
 ### Lingo.dev CLI
 
-CLI open-source per tradurre app e contenuti con AI. Supporta tutti i formati standard del settore inclusi JSON, YAML, CSV, file PO e markdown.
+Mantenere le traduzioni sincronizzate è tedioso. Aggiungi una nuova stringa, dimentichi di tradurla, rilasci un'interfaccia rotta agli utenti internazionali. Oppure invii file JSON ai traduttori, aspetti giorni, poi unisci manualmente il loro lavoro. Scalare a oltre 10 lingue significa gestire centinaia di file che costantemente vanno fuori sincronia.
 
-**Configurazione:**
+Lingo.dev CLI automatizza questo processo. Puntalo ai tuoi file di traduzione, esegui un comando e ogni locale si aggiorna. Un lockfile traccia ciò che è già tradotto, quindi paghi solo per contenuti nuovi o modificati. Supporta file JSON, YAML, CSV, PO e markdown.
+
+**Setup:**
 
 ```bash
 # Initialize project
@@ -188,7 +192,9 @@ Il campo `provider` è facoltativo (predefinito: Lingo.dev Engine). Per provider
 
 ### Lingo.dev CI/CD
 
-Workflow di traduzione automatizzati per pipeline CI/CD. Previene che traduzioni incomplete raggiungano la produzione.
+Le traduzioni sono la funzionalità che è sempre "quasi pronta". Gli sviluppatori fanno il merge del codice senza aggiornare le locale. Il QA scopre le traduzioni mancanti in staging - o peggio, gli utenti le scoprono in produzione. La causa principale: la traduzione è un passaggio manuale facile da saltare sotto la pressione delle scadenze.
+
+Lingo.dev CI/CD rende le traduzioni automatiche. Ogni push attiva la traduzione. Le stringhe mancanti vengono completate prima che il codice raggiunga la produzione. Non serve disciplina - la pipeline se ne occupa.
 
 **Piattaforme supportate:**
 
@@ -196,7 +202,7 @@ Workflow di traduzione automatizzati per pipeline CI/CD. Previene che traduzioni
 - GitLab CI/CD
 - Bitbucket Pipelines
 
-**Configurazione GitHub Actions:**
+**Setup GitHub Actions:**
 
 Crea `.github/workflows/translate.yml`:
 
@@ -218,14 +224,14 @@ jobs:
           api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
 ```
 
-**Requisiti di configurazione:**
+**Requisiti di setup:**
 
 1. Aggiungi `LINGODOTDEV_API_KEY` ai secret del repository (Settings > Secrets and variables > Actions)
-2. Per i workflow PR: abilita "Allow GitHub Actions to create and approve pull requests" in Settings > Actions > General
+2. Per i workflow PR: Abilita "Allow GitHub Actions to create and approve pull requests" in Settings > Actions > General
 
-**Opzioni del workflow:**
+**Opzioni workflow:**
 
-Commit delle traduzioni direttamente:
+Committa le traduzioni direttamente:
 
 ```yaml
 uses: lingodotdev/lingo.dev@main
@@ -248,7 +254,7 @@ env:
 
 | Input                | Default                                        | Descrizione                               |
 | -------------------- | ---------------------------------------------- | ----------------------------------------- |
-| `api-key`            | (richiesto)                                    | Chiave API Lingo.dev                      |
+| `api-key`            | (obbligatorio)                                 | Chiave API Lingo.dev                      |
 | `pull-request`       | `false`                                        | Crea PR invece di committare direttamente |
 | `commit-message`     | `"feat: update translations via @LingoDotDev"` | Messaggio di commit personalizzato        |
 | `pull-request-title` | `"feat: update translations via @LingoDotDev"` | Titolo PR personalizzato                  |
@@ -261,7 +267,9 @@ env:
 
 ### Lingo.dev SDK
 
-Libreria di traduzione runtime per contenuti dinamici. Disponibile per JavaScript, PHP, Python e Ruby.
+I file di traduzione statici funzionano per le etichette UI, ma cosa succede con i contenuti generati dagli utenti? Messaggi di chat, descrizioni di prodotti, ticket di supporto - contenuti che non esistono al momento della build non possono essere pre-tradotti. Rimani bloccato mostrando testo non tradotto o costruendo una pipeline di traduzione personalizzata.
+
+Lingo.dev SDK traduce i contenuti a runtime. Passa qualsiasi testo, oggetto o HTML e ottieni una versione localizzata. Funziona per chat in tempo reale, notifiche dinamiche o qualsiasi contenuto che arriva dopo il deployment. Disponibile per JavaScript, PHP, Python e Ruby.
 
 **Installazione:**
 
@@ -316,7 +324,7 @@ const locale = await lingoDotDev.recognizeLocale("Bonjour le monde");
 
 **SDK disponibili:**
 
-- [JavaScript SDK](https://lingo.dev/en/sdk/javascript) - Web app, Node.js
+- [JavaScript SDK](https://lingo.dev/en/sdk/javascript) - App web, Node.js
 - [PHP SDK](https://lingo.dev/en/sdk/php) - PHP, Laravel
 - [Python SDK](https://lingo.dev/en/sdk/python) - Django, Flask
 - [Ruby SDK](https://lingo.dev/en/sdk/ruby) - Rails
@@ -327,7 +335,9 @@ const locale = await lingoDotDev.recognizeLocale("Bonjour le monde");
 
 ### Lingo.dev Compiler
 
-Sistema di traduzione in fase di build che rende le app React multilingue senza modificare i componenti. Opera durante il build anziché a runtime.
+L'i18n tradizionale è invasivo. Avvolgi ogni stringa in funzioni `t()`, inventi chiavi di traduzione (`home.hero.title.v2`), mantieni file JSON paralleli e guardi i tuoi componenti gonfiarsi con boilerplate di localizzazione. È così tedioso che i team ritardano l'internazionalizzazione finché non diventa un refactoring massiccio.
+
+Lingo.dev Compiler elimina le cerimonie. Scrivi componenti React con testo in inglese semplice. Il compiler rileva le stringhe traducibili al momento della build e genera automaticamente le varianti localizzate. Niente chiavi, niente file JSON, niente funzioni wrapper - solo codice React che funziona in più lingue.
 
 **Installazione:**
 
@@ -441,7 +451,7 @@ Committa la directory `.lingo/` nel version control.
 **Modalità di build:**
 
 - `pseudotranslator`: Modalità sviluppo con traduzioni placeholder (nessun costo API)
-- `real`: Genera traduzioni effettive utilizzando LLM
+- `real`: Genera traduzioni reali utilizzando LLM
 - `cache-only`: Modalità produzione utilizzando traduzioni pre-generate da CI (nessuna chiamata API)
 
 **Framework supportati:**
@@ -470,7 +480,7 @@ I contributi sono benvenuti. Si prega di seguire queste linee guida:
 
 **Supporto:** [Community Discord](https://lingo.dev/go/discord)
 
-## Cronologia delle stelle
+## Cronologia stelle
 
 Se trovi Lingo.dev utile, lasciaci una stella e aiutaci a raggiungere 10.000 stelle!
 

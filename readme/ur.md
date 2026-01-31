@@ -83,16 +83,18 @@
 
 ### Lingo.dev MCP
 
-Model Context Protocol سرور جو AI کوڈنگ اسسٹنٹس کو قدرتی زبان کے prompts کے ذریعے React ایپلیکیشنز میں i18n انفراسٹرکچر سیٹ اپ کرنے کی سہولت فراہم کرتا ہے۔
+React apps میں i18n سیٹ اپ کرنا بدنام زمانہ طور پر خطا کا شکار ہے - یہاں تک کہ تجربہ کار ڈیولپرز کے لیے بھی۔ AI کوڈنگ اسسٹنٹس اسے مزید خراب کر دیتے ہیں: وہ غیر موجود APIs کے بارے میں فرضی باتیں کرتے ہیں، middleware configurations بھول جاتے ہیں، routing توڑ دیتے ہیں، یا گم ہونے سے پہلے آدھا حل implement کر دیتے ہیں۔ مسئلہ یہ ہے کہ i18n سیٹ اپ کے لیے متعدد فائلوں (routing، middleware، components، configuration) میں مربوط تبدیلیوں کی ایک درست ترتیب درکار ہوتی ہے، اور LLMs اس context کو برقرار رکھنے میں مشکل کا سامنا کرتے ہیں۔
 
-**معاون IDEs:**
+Lingo.dev MCP اس مسئلے کو AI assistants کو framework-specific i18n علم تک structured رسائی فراہم کر کے حل کرتا ہے۔ اندازہ لگانے کی بجائے، آپ کا assistant Next.js، React Router، اور TanStack Start کے لیے تصدیق شدہ implementation patterns کی پیروی کرتا ہے۔
+
+**تعاون یافتہ IDEs:**
 
 - Claude Code
 - Cursor
 - GitHub Copilot Agents
 - Codex (OpenAI)
 
-**معاون frameworks:**
+**تعاون یافتہ frameworks:**
 
 - Next.js (App Router & Pages Router v13-16)
 - TanStack Start (v1)
@@ -100,28 +102,30 @@ Model Context Protocol سرور جو AI کوڈنگ اسسٹنٹس کو قدرت�
 
 **استعمال:**
 
-اپنے IDE میں MCP سرور کو کنفیگر کرنے کے بعد ([فوری شروعات کی گائیڈز دیکھیں](https://lingo.dev/en/mcp))، اپنے اسسٹنٹ کو پرامپٹ کریں:
+اپنے IDE میں MCP server کو configure کرنے کے بعد ([quickstart guides دیکھیں](https://lingo.dev/en/mcp))، اپنے assistant کو prompt کریں:
 
 ```
 Set up i18n with the following locales: en, es, and pt-BR. The default locale is 'en'.
 ```
 
-اسسٹنٹ یہ کام کرے گا:
+Assistant یہ کام کرے گا:
 
-1. لوکیل پر مبنی روٹنگ کو کنفیگر کریں (مثلاً `/en`، `/es`، `/pt-BR`)
-2. زبان سوئچنگ کمپوننٹس سیٹ اپ کریں
-3. خودکار لوکیل ڈیٹیکشن کو نافذ کریں
-4. ضروری کنفیگریشن فائلیں جنریٹ کریں
+1. Locale-based routing configure کرے گا (مثلاً `/en`، `/es`، `/pt-BR`)
+2. Language switching components سیٹ اپ کرے گا
+3. Automatic locale detection implement کرے گا
+4. ضروری configuration files generate کرے گا
 
-**نوٹ:** AI کی مدد سے کوڈ جنریشن نان ڈیٹرمنسٹک ہے۔ کمٹ کرنے سے پہلے جنریٹ شدہ کوڈ کا جائزہ لیں۔
+**نوٹ:** AI-assisted code generation non-deterministic ہے۔ commit کرنے سے پہلے generated code کا جائزہ لیں۔
 
-[دستاویزات پڑھیں ←](https://lingo.dev/en/mcp)
+[دستاویزات پڑھیں →](https://lingo.dev/en/mcp)
 
 ---
 
 ### Lingo.dev CLI
 
-AI کے ساتھ ایپس اور مواد کا ترجمہ کرنے کے لیے اوپن سورس CLI۔ JSON، YAML، CSV، PO فائلوں، اور markdown سمیت تمام انڈسٹری اسٹینڈرڈ فارمیٹس کو سپورٹ کرتا ہے۔
+تراجم کو synchronized رکھنا تھکا دینے والا ہے۔ آپ ایک نئی string شامل کرتے ہیں، اسے translate کرنا بھول جاتے ہیں، بین الاقوامی صارفین کو ٹوٹا ہوا UI بھیج دیتے ہیں۔ یا آپ مترجمین کو JSON فائلیں بھیجتے ہیں، دنوں انتظار کرتے ہیں، پھر ان کے کام کو دستی طور پر واپس merge کرتے ہیں۔ 10+ زبانوں تک scale کرنے کا مطلب سینکڑوں فائلوں کا انتظام ہے جو مسلسل sync سے باہر ہو جاتی ہیں۔
+
+Lingo.dev CLI اسے خودکار بناتا ہے۔ اسے اپنی translation فائلوں کی طرف point کریں، ایک command چلائیں، اور ہر locale update ہو جاتا ہے۔ ایک lockfile track کرتی ہے کہ کیا پہلے سے translate ہو چکا ہے، تاکہ آپ صرف نئے یا تبدیل شدہ content کے لیے ادائیگی کریں۔ JSON، YAML، CSV، PO فائلوں، اور markdown کو support کرتا ہے۔
 
 **سیٹ اپ:**
 
@@ -136,13 +140,13 @@ npx lingo.dev@latest run
 **یہ کیسے کام کرتا ہے:**
 
 1. کنفیگر شدہ فائلوں سے قابل ترجمہ مواد نکالتا ہے
-2. ترجمے کے لیے مواد کو LLM پرووائیڈر کو بھیجتا ہے
-3. ترجمہ شدہ مواد کو فائل سسٹم میں واپس لکھتا ہے
+2. ترجمے کے لیے مواد LLM فراہم کنندہ کو بھیجتا ہے
+3. ترجمہ شدہ مواد واپس filesystem میں لکھتا ہے
 4. مکمل شدہ تراجم کو ٹریک کرنے کے لیے `i18n.lock` فائل بناتا ہے (غیر ضروری پروسیسنگ سے بچتا ہے)
 
 **کنفیگریشن:**
 
-`init` کمانڈ ایک `i18n.json` فائل جنریٹ کرتی ہے۔ لوکیلز اور بکٹس کو کنفیگر کریں:
+`init` کمانڈ ایک `i18n.json` فائل بناتی ہے۔ locales اور buckets کنفیگر کریں:
 
 ```json
 {
@@ -160,7 +164,7 @@ npx lingo.dev@latest run
 }
 ```
 
-`provider` فیلڈ اختیاری ہے (ڈیفالٹ Lingo.dev Engine ہے)۔ کسٹم LLM پرووائیڈرز کے لیے:
+`provider` فیلڈ اختیاری ہے (ڈیفالٹ Lingo.dev Engine ہے)۔ حسب ضرورت LLM فراہم کنندگان کے لیے:
 
 ```json
 {
@@ -172,7 +176,7 @@ npx lingo.dev@latest run
 }
 ```
 
-**سپورٹ شدہ LLM پرووائیڈرز:**
+**معاون LLM فراہم کنندگان:**
 
 - Lingo.dev Engine (تجویز کردہ)
 - OpenAI
@@ -182,15 +186,17 @@ npx lingo.dev@latest run
 - OpenRouter
 - Ollama
 
-[دستاویزات پڑھیں ←](https://lingo.dev/en/cli)
+[دستاویزات پڑھیں →](https://lingo.dev/en/cli)
 
 ---
 
 ### Lingo.dev CI/CD
 
-CI/CD پائپ لائنز کے لیے خودکار ترجمہ ورک فلوز۔ نامکمل تراجم کو پروڈکشن تک پہنچنے سے روکتا ہے۔
+تراجم وہ فیچر ہیں جو ہمیشہ "تقریباً مکمل" ہوتے ہیں۔ انجینئرز locales کو اپ ڈیٹ کیے بغیر کوڈ merge کر دیتے ہیں۔ QA staging میں غائب تراجم پکڑتا ہے - یا بدتر، صارفین انہیں production میں پکڑتے ہیں۔ بنیادی وجہ: ترجمہ ایک دستی مرحلہ ہے جسے ڈیڈ لائن کے دباؤ میں چھوڑنا آسان ہے۔
 
-**تعاون یافتہ پلیٹ فارمز:**
+Lingo.dev CI/CD تراجم کو خودکار بناتا ہے۔ ہر push ترجمہ شروع کرتا ہے۔ غائب strings کوڈ کے production تک پہنچنے سے پہلے بھر جاتی ہیں۔ کسی نظم و ضبط کی ضرورت نہیں - pipeline اسے سنبھالتا ہے۔
+
+**معاون پلیٹ فارمز:**
 
 - GitHub Actions
 - GitLab CI/CD
@@ -220,20 +226,16 @@ jobs:
 
 **سیٹ اپ کی ضروریات:**
 
-1. `LINGODOTDEV_API_KEY` کو repository secrets میں شامل کریں (Settings > Secrets and variables > Actions)
-2. PR workflows کے لیے: Settings > Actions > General میں "Allow GitHub Actions to create and approve pull requests" کو فعال کریں
+1. repository secrets میں `LINGODOTDEV_API_KEY` شامل کریں (Settings > Secrets and variables > Actions)
+2. PR workflows کے لیے: Settings > Actions > General میں "Allow GitHub Actions to create and approve pull requests" فعال کریں
 
 **Workflow کے اختیارات:**
 
-ترجمے براہ راست commit کریں:
+تراجم براہ راست commit کریں:
 
-```yaml
-uses: lingodotdev/lingo.dev@main
-with:
-  api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
-```
+GitHub Actions workflow میں شامل کریں:
 
-ترجموں کے ساتھ pull requests بنائیں:
+تراجم کے ساتھ pull requests بنائیں:
 
 ```yaml
 uses: lingodotdev/lingo.dev@main
@@ -252,8 +254,8 @@ env:
 | `pull-request`       | `false`                                        | براہ راست commit کرنے کی بجائے PR بنائیں |
 | `commit-message`     | `"feat: update translations via @LingoDotDev"` | حسب ضرورت commit message                 |
 | `pull-request-title` | `"feat: update translations via @LingoDotDev"` | حسب ضرورت PR title                       |
-| `working-directory`  | `"."`                                          | جس directory میں چلانا ہے                |
-| `parallel`           | `false`                                        | parallel processing فعال کریں            |
+| `working-directory`  | `"."`                                          | جس ڈائریکٹری میں چلانا ہے                |
+| `parallel`           | `false`                                        | متوازی پروسیسنگ فعال کریں                |
 
 [دستاویزات پڑھیں →](https://lingo.dev/en/ci/github)
 
@@ -261,7 +263,9 @@ env:
 
 ### Lingo.dev SDK
 
-متحرک مواد کے لیے runtime translation library۔ JavaScript، PHP، Python، اور Ruby کے لیے دستیاب۔
+Static ترجمہ فائلیں UI labels کے لیے کام کرتی ہیں، لیکن صارف کے تیار کردہ مواد کا کیا؟ چیٹ پیغامات، پروڈکٹ کی تفصیلات، سپورٹ ٹکٹس - وہ مواد جو build time پر موجود نہیں ہوتا اس کا پہلے سے ترجمہ نہیں کیا جا سکتا۔ آپ غیر ترجمہ شدہ متن دکھانے یا حسب ضرورت ترجمہ pipeline بنانے پر مجبور ہیں۔
+
+Lingo.dev SDK runtime پر مواد کا ترجمہ کرتا ہے۔ کوئی بھی متن، object، یا HTML پاس کریں اور مقامی ورژن واپس حاصل کریں۔ real-time چیٹ، dynamic notifications، یا کسی بھی مواد کے لیے کام کرتا ہے جو deployment کے بعد آتا ہے۔ JavaScript، PHP، Python، اور Ruby کے لیے دستیاب ہے۔
 
 **انسٹالیشن:**
 
@@ -325,9 +329,11 @@ const locale = await lingoDotDev.recognizeLocale("Bonjour le monde");
 
 ---
 
-### Lingo.dev کمپائلر
+### Lingo.dev Compiler
 
-بلڈ ٹائم ترجمہ کا نظام جو React ایپس کو کمپوننٹس میں تبدیلی کیے بغیر کثیر لسانی بناتا ہے۔ رن ٹائم کی بجائے بلڈ کے دوران کام کرتا ہے۔
+روایتی i18n مداخلت آمیز ہے۔ آپ ہر string کو `t()` functions میں wrap کرتے ہیں، ترجمہ keys ایجاد کرتے ہیں (`home.hero.title.v2`)، متوازی JSON فائلیں برقرار رکھتے ہیں، اور اپنے components کو localization boilerplate سے بھرا ہوا دیکھتے ہیں۔ یہ اتنا تکلیف دہ ہے کہ ٹیمیں internationalization کو اس وقت تک ملتوی کرتی ہیں جب تک یہ ایک بڑا refactor نہ بن جائے۔
+
+Lingo.dev Compiler رسمی کاموں کو ختم کرتا ہے۔ سادہ انگریزی متن کے ساتھ React components لکھیں۔ Compiler build time پر قابل ترجمہ strings کا پتہ لگاتا ہے اور خودکار طور پر مقامی variants تیار کرتا ہے۔ کوئی keys نہیں، کوئی JSON فائلیں نہیں، کوئی wrapper functions نہیں - صرف React code جو متعدد زبانوں میں کام کرتا ہے۔
 
 **انسٹالیشن:**
 
@@ -388,7 +394,7 @@ export default defineConfig({
 });
 ```
 
-**پرووائیڈر سیٹ اپ:**
+**Provider سیٹ اپ:**
 
 ```tsx
 // app/layout.tsx (Next.js)
@@ -405,7 +411,7 @@ export default function RootLayout({ children }) {
 }
 ```
 
-**زبان سوئچر:**
+**زبان switcher:**
 
 ```tsx
 import { useLocale, setLocale } from "@lingo.dev/compiler/react";
@@ -421,43 +427,43 @@ export function LanguageSwitcher() {
 }
 ```
 
-**ڈیولپمنٹ:** `npm run dev` (pseudotranslator استعمال کرتا ہے، کوئی API کالز نہیں)
+**Development:** `npm run dev` (pseudotranslator استعمال کرتا ہے، کوئی API calls نہیں)
 
-**پروڈکشن:** `usePseudotranslator: false` سیٹ کریں، پھر `next build`
+**Production:** `usePseudotranslator: false` سیٹ کریں، پھر `next build`
 
-`.lingo/` ڈائریکٹری کو version control میں کمٹ کریں۔
+`.lingo/` directory کو version control میں commit کریں۔
 
 **اہم خصوصیات:**
 
-- رن ٹائم پرفارمنس کی صفر لاگت
-- کوئی ترجمہ کیز یا JSON فائلیں نہیں
-- کوئی `t()` فنکشنز یا `<T>` wrapper کمپوننٹس نہیں
+- صفر runtime performance cost
+- کوئی translation keys یا JSON فائلیں نہیں
+- کوئی `t()` functions یا `<T>` wrapper components نہیں
 - JSX میں قابل ترجمہ متن کی خودکار شناخت
 - TypeScript سپورٹ
-- جمع کے لیے ICU MessageFormat
+- plurals کے لیے ICU MessageFormat
 - `data-lingo-override` attribute کے ذریعے دستی overrides
-- بلٹ ان ترجمہ ایڈیٹر widget
+- Built-in translation editor widget
 
-**بلڈ موڈز:**
+**Build modes:**
 
-- `pseudotranslator`: placeholder ترجموں کے ساتھ ڈیولپمنٹ موڈ (کوئی API اخراجات نہیں)
-- `real`: LLMs استعمال کرتے ہوئے حقیقی ترجمے تیار کریں
-- `cache-only`: CI سے پہلے سے تیار شدہ ترجمے استعمال کرتے ہوئے پروڈکشن موڈ (کوئی API کالز نہیں)
+- `pseudotranslator`: placeholder translations کے ساتھ development mode (کوئی API costs نہیں)
+- `real`: LLMs استعمال کرتے ہوئے حقیقی تراجم تیار کریں
+- `cache-only`: CI سے پہلے سے تیار شدہ تراجم استعمال کرتے ہوئے production mode (کوئی API calls نہیں)
 
-**معاون فریم ورکس:**
+**معاون frameworks:**
 
 - Next.js (React Server Components کے ساتھ App Router)
 - Vite + React (SPA اور SSR)
 
-اضافی فریم ورک سپورٹ کی منصوبہ بندی ہے۔
+اضافی framework سپورٹ منصوبہ بند ہے۔
 
-[دستاویزات پڑھیں ←](https://lingo.dev/en/compiler)
+[دستاویزات پڑھیں →](https://lingo.dev/en/compiler)
 
 ---
 
 ## تعاون
 
-تعاون کا خیرمقدم ہے۔ براہ کرم ان رہنما خطوط پر عمل کریں:
+تعاون کی خوش آمدید۔ براہ کرم ان رہنما خطوط پر عمل کریں:
 
 1. **مسائل:** [bugs کی اطلاع دیں یا features کی درخواست کریں](https://github.com/lingodotdev/lingo.dev/issues)
 2. **Pull Requests:** [تبدیلیاں جمع کروائیں](https://github.com/lingodotdev/lingo.dev/pulls)
@@ -468,7 +474,7 @@ export function LanguageSwitcher() {
    - tests چلائیں: `pnpm test`
    - Build کریں: `pnpm build`
 
-**سپورٹ:** [Discord کمیونٹی](https://lingo.dev/go/discord)
+**سپورٹ:** [Discord community](https://lingo.dev/go/discord)
 
 ## Star History
 
