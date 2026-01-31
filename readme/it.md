@@ -74,9 +74,9 @@
 
 ## Scopri il Compiler 🆕
 
-**Lingo.dev Compiler** è un middleware di compilazione gratuito e open-source, progettato per rendere multilingue qualsiasi app React in fase di build senza richiedere modifiche ai componenti React esistenti.
+**Lingo.dev Compiler** è un middleware compiler gratuito e open-source, progettato per rendere multilingue qualsiasi app React in fase di build senza richiedere modifiche ai componenti React esistenti.
 
-> **Nota:** se stai utilizzando il compilatore legacy (`@lingo.dev/_compiler`), ti preghiamo di migrare a `@lingo.dev/compiler`. Il compilatore legacy è deprecato e verrà rimosso in una versione futura.
+> **Nota:** se stai utilizzando il compiler legacy (`@lingo.dev/_compiler`), ti preghiamo di migrare a `@lingo.dev/compiler`. Il compiler legacy è deprecato e verrà rimosso in una versione futura.
 
 Installa una volta:
 
@@ -103,20 +103,20 @@ export default async function (): Promise<NextConfig> {
 
 Esegui `next build` e guarda apparire i bundle in spagnolo e francese ✨
 
-[Leggi la documentazione →](https://lingo.dev/compiler) per la guida completa e [Unisciti al nostro Discord](https://lingo.dev/go/discord) per ricevere aiuto con la tua configurazione.
+[Leggi la documentazione →](https://lingo.dev/compiler) per la guida completa e [unisciti al nostro Discord](https://lingo.dev/go/discord) per ricevere aiuto con la tua configurazione.
 
 ---
 
-### Cosa contiene questa repository?
+### Cosa c'è in questa repo?
 
-| Strumento    | In breve                                                                                  | Documentazione                          |
-| ------------ | ----------------------------------------------------------------------------------------- | --------------------------------------- |
-| **Compiler** | Localizzazione React in fase di build                                                     | [/compiler](https://lingo.dev/compiler) |
-| **CLI**      | Localizzazione con un solo comando per app web e mobile, JSON, YAML, markdown e altro     | [/cli](https://lingo.dev/cli)           |
-| **CI/CD**    | Commit automatico delle traduzioni ad ogni push + creazione di pull request se necessario | [/ci](https://lingo.dev/ci)             |
-| **SDK**      | Traduzione in tempo reale per contenuti generati dagli utenti                             | [/sdk](https://lingo.dev/sdk)           |
+| Tool         | TL;DR                                                                                 | Documentazione                          |
+| ------------ | ------------------------------------------------------------------------------------- | --------------------------------------- |
+| **Compiler** | Localizzazione React in fase di build                                                 | [/compiler](https://lingo.dev/compiler) |
+| **CLI**      | Localizzazione con un solo comando per app web e mobile, JSON, YAML, markdown e altro | [/cli](https://lingo.dev/cli)           |
+| **CI/CD**    | Commit automatico delle traduzioni ad ogni push + creazione di pull request se serve  | [/ci](https://lingo.dev/ci)             |
+| **SDK**      | Traduzione in tempo reale per contenuti generati dagli utenti                         | [/sdk](https://lingo.dev/sdk)           |
 
-Di seguito i punti chiave per ciascuno 👇
+Ecco i punti salienti per ciascuno 👇
 
 ---
 
@@ -128,7 +128,7 @@ Traduci codice e contenuti direttamente dal tuo terminale.
 npx lingo.dev@latest run
 ```
 
-Crea un'impronta digitale di ogni stringa, memorizza i risultati in cache e ritraduce solo ciò che è cambiato.
+Crea un'impronta digitale di ogni stringa, memorizza i risultati nella cache e ritraduce solo ciò che è cambiato.
 
 [Segui la documentazione →](https://lingo.dev/cli) per scoprire come configurarlo.
 
@@ -153,7 +153,7 @@ jobs:
           api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
 ```
 
-Mantiene la tua repository pulita e il tuo prodotto multilingue senza passaggi manuali.
+Mantiene il tuo repository pulito e il tuo prodotto multilingue senza passaggi manuali.
 
 [Leggi la documentazione →](https://lingo.dev/ci)
 
@@ -203,7 +203,7 @@ Se ti piace quello che facciamo, dacci una ⭐ e aiutaci a raggiungere 10.000 st
 
 [
 
-![Grafico cronologia stelle](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+![Grafico Star History](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
 
 ](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
 
@@ -218,4 +218,4 @@ Non vedi la tua lingua? Aggiungila a [`i18n.json`](./i18n.json) e apri una PR!
 - Lingua: ISO 639-1/2/3 minuscolo (`en`, `zh`, `bho`)
 - Script: ISO 15924 maiuscolo iniziale (`Hans`, `Hant`, `Latn`)
 - Regione: ISO 3166-1 alpha-2 maiuscolo (`US`, `CN`, `IN`)
-- Esempi: `en`, `pt-BR`, `zh-Hans`, {/_ INLINE_CODE_PLACEHOLDER_6e553bb40a655db7be211ded60744c98 _/)
+- Esempi: `en`, `pt-BR`, `zh-Hans`, `sr-Cyrl-RS`

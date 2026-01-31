@@ -46,25 +46,25 @@
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #1 DevTool of the Month"
+      alt="Product Hunt 이달의 개발 도구 1위"
     />
   </a>
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Week-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #1 DevTool of the Week"
+      alt="Product Hunt 이주의 제품 1위"
     />
   </a>
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/Product%20Hunt-%232%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #2 Product of the Day"
+      alt="Product Hunt 오늘의 제품 2위"
     />
   </a>
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/GitHub-Trending-blue?logo=github&style=flat-square"
-      alt="Github trending"
+      alt="Github 트렌딩"
     />
   </a>
 </p>
@@ -77,13 +77,13 @@
 
 > **참고:** 레거시 컴파일러(`@lingo.dev/_compiler`)를 사용 중이라면 `@lingo.dev/compiler`로 마이그레이션하세요. 레거시 컴파일러는 더 이상 사용되지 않으며 향후 릴리스에서 제거될 예정입니다.
 
-한 번만 설치:
+한 번만 설치하세요:
 
 ```bash
 npm install @lingo.dev/compiler
 ```
 
-빌드 설정에서 활성화:
+빌드 설정에서 활성화하세요:
 
 ```ts
 import type { NextConfig } from "next";
@@ -102,20 +102,20 @@ export default async function (): Promise<NextConfig> {
 
 `next build`를 실행하면 스페인어와 프랑스어 번들이 생성됩니다 ✨
 
-전체 가이드는 [문서 보기 →](https://lingo.dev/compiler)에서 확인하고, 설정에 도움이 필요하면 [Discord에 참여](https://lingo.dev/go/discord)하세요.
+[문서 보기 →](https://lingo.dev/compiler)에서 전체 가이드를 확인하고, [Discord에 참여](https://lingo.dev/go/discord)하여 설정에 대한 도움을 받으세요.
 
 ---
 
 ### 이 저장소에는 무엇이 있나요?
 
-| 도구         | 요약                                                                  | 문서                                    |
-| ------------ | --------------------------------------------------------------------- | --------------------------------------- |
-| **컴파일러** | 빌드 타임 React 로컬라이제이션                                        | [/compiler](https://lingo.dev/compiler) |
-| **CLI**      | 웹 및 모바일 앱, JSON, YAML, 마크다운 등을 위한 원클릭 로컬라이제이션 | [/cli](https://lingo.dev/cli)           |
-| **CI/CD**    | 모든 푸시마다 번역을 자동 커밋하고 필요시 풀 리퀘스트 생성            | [/ci](https://lingo.dev/ci)             |
-| **SDK**      | 사용자 생성 콘텐츠를 위한 실시간 번역                                 | [/sdk](https://lingo.dev/sdk)           |
+| 도구         | 요약                                                          | 문서                                    |
+| ------------ | ------------------------------------------------------------- | --------------------------------------- |
+| **Compiler** | 빌드 시점 React 현지화                                        | [/compiler](https://lingo.dev/compiler) |
+| **CLI**      | 웹 및 모바일 앱, JSON, YAML, 마크다운 등을 위한 원클릭 현지화 | [/cli](https://lingo.dev/cli)           |
+| **CI/CD**    | 모든 푸시마다 번역 자동 커밋 + 필요시 풀 리퀘스트 생성        | [/ci](https://lingo.dev/ci)             |
+| **SDK**      | 사용자 생성 콘텐츠를 위한 실시간 번역                         | [/sdk](https://lingo.dev/sdk)           |
 
-각 도구의 핵심 내용은 아래와 같습니다 👇
+각 항목에 대한 빠른 요약은 다음과 같습니다 👇
 
 ---
 
@@ -127,9 +127,9 @@ export default async function (): Promise<NextConfig> {
 npx lingo.dev@latest run
 ```
 
-모든 문자열을 핑거프린팅하고 결과를 캐싱하며 변경된 부분만 재번역합니다.
+모든 문자열을 지문화하고, 결과를 캐시하며, 변경된 내용만 다시 번역합니다.
 
-설정 방법은 [문서 보기 →](https://lingo.dev/cli)에서 확인하세요.
+[문서 보기 →](https://lingo.dev/cli)에서 설정 방법을 확인하세요.
 
 ---
 
@@ -152,7 +152,7 @@ jobs:
           api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
 ```
 
-수동 작업 없이 저장소를 깔끔하게 유지하고 제품을 다국어로 만듭니다.
+수동 작업 없이 저장소를 안정적으로 유지하고 제품을 다국어로 만듭니다.
 
 [문서 보기 →](https://lingo.dev/ci)
 
@@ -182,9 +182,9 @@ const translated = await lingoDotDev.localizeObject(content, {
 // Returns: { greeting: "Hola", farewell: "Adiós", message: "Bienvenido a nuestra plataforma" }
 ```
 
-채팅, 사용자 댓글 및 기타 실시간 플로우에 적합합니다.
+채팅, 사용자 댓글 및 기타 실시간 흐름에 완벽합니다.
 
-[문서 읽기 →](https://lingo.dev/sdk)
+[문서 보기 →](https://lingo.dev/sdk)
 
 ---
 
@@ -202,7 +202,7 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 [
 
-![스타 히스토리 차트](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+![Star History Chart](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
 
 ](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
 
@@ -212,9 +212,9 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 원하는 언어가 보이지 않나요? [`i18n.json`](./i18n.json)에 추가하고 PR을 열어주세요!
 
-**로케일 형식:** [BCP-47](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) 코드 사용: `language[-Script][-REGION]`
+**로케일 형식:** [BCP-47](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) 코드를 사용하세요: `language[-Script][-REGION]`
 
 - 언어: ISO 639-1/2/3 소문자 (`en`, `zh`, `bho`)
-- 문자: ISO 15924 타이틀 케이스 (`Hans`, `Hant`, `Latn`)
+- 문자 체계: ISO 15924 타이틀 케이스 (`Hans`, `Hant`, `Latn`)
 - 지역: ISO 3166-1 alpha-2 대문자 (`US`, `CN`, `IN`)
 - 예시: `en`, `pt-BR`, `zh-Hans`, `sr-Cyrl-RS`

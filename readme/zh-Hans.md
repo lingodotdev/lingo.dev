@@ -10,7 +10,7 @@
 
 <p align="center">
   <strong>
-    ⚡ Lingo.dev - 开源、AI 驱动的 i18n 工具包，借助 LLM 实现即时本地化。
+    ⚡ Lingo.dev - 开源、AI 驱动的 i18n 工具包，利用 LLM 实现即时本地化。
   </strong>
 </p>
 
@@ -73,9 +73,9 @@
 
 ## 认识 Compiler 🆕
 
-**Lingo.dev Compiler** 是一款免费开源的编译中间件，旨在让任何 React 应用在构建时实现多语言支持，无需更改现有 React 组件。
+**Lingo.dev Compiler** 是一款免费开源的编译中间件，旨在让任何 React 应用在构建时实现多语言支持，无需修改现有 React 组件。
 
-> **注意：**如果你正在使用旧版编译器（`@lingo.dev/_compiler`），请迁移到`@lingo.dev/compiler`。旧版编译器已弃用，并将在未来的版本中移除。
+> **注意：**如果你正在使用旧版编译器（`@lingo.dev/_compiler`），请迁移到 `@lingo.dev/compiler`。旧版编译器已弃用，未来版本将被移除。
 
 只需安装一次：
 
@@ -83,7 +83,7 @@
 npm install @lingo.dev/compiler
 ```
 
-在你的构建配置中启用：
+在构建配置中启用：
 
 ```ts
 import type { NextConfig } from "next";
@@ -100,22 +100,22 @@ export default async function (): Promise<NextConfig> {
 }
 ```
 
-运行`next build`，即可自动生成西班牙语和法语包 ✨
+运行 `next build`，即可看到西班牙语和法语的构建包自动生成 ✨
 
-[阅读完整指南 →](https://lingo.dev/compiler)，如需帮助可[加入我们的 Discord](https://lingo.dev/go/discord)。
+[阅读文档 →](https://lingo.dev/compiler) 获取完整指南，或 [加入我们的 Discord](https://lingo.dev/go/discord) 获取设置帮助。
 
 ---
 
-### 本仓库包含哪些内容？
+### 这个仓库包含什么？
 
-| 工具         | 简要说明                                                   | 文档链接                                |
-| ------------ | ---------------------------------------------------------- | --------------------------------------- |
-| **Compiler** | 构建时 React 本地化                                        | [/compiler](https://lingo.dev/compiler) |
-| **CLI**      | 一条命令本地化网页和移动应用，支持 JSON、YAML、Markdown 等 | [/cli](https://lingo.dev/cli)           |
-| **CI/CD**    | 每次推送时自动提交翻译，如有需要自动创建 Pull Request      | [/ci](https://lingo.dev/ci)             |
-| **SDK**      | 用户生成内容的实时翻译                                     | [/sdk](https://lingo.dev/sdk)           |
+| 工具         | 简要说明                                           | 文档                                    |
+| ------------ | -------------------------------------------------- | --------------------------------------- |
+| **Compiler** | 构建时 React 本地化                                | [/compiler](https://lingo.dev/compiler) |
+| **CLI**      | 一键本地化 Web 和移动应用、JSON、YAML、Markdown 等 | [/cli](https://lingo.dev/cli)           |
+| **CI/CD**    | 每次推送时自动提交翻译，如有需要自动创建拉取请求   | [/ci](https://lingo.dev/ci)             |
+| **SDK**      | 用户生成内容的实时翻译                             | [/sdk](https://lingo.dev/sdk)           |
 
-以下是每个工具的快速介绍 👇
+以下是每个功能的快速介绍👇
 
 ---
 
@@ -127,15 +127,15 @@ export default async function (): Promise<NextConfig> {
 npx lingo.dev@latest run
 ```
 
-它会为每个字符串生成指纹，缓存结果，仅重新翻译有变动的内容。
+它会为每个字符串生成指纹，缓存结果，只重新翻译有变动的内容。
 
-[查看文档 →](https://lingo.dev/cli) 了解如何配置。
+[查看文档 →](https://lingo.dev/cli) 了解如何设置。
 
 ---
 
 ### 🔄 Lingo.dev CI/CD
 
-自动交付高质量翻译。
+自动交付完美翻译。
 
 ```yaml
 # .github/workflows/i18n.yml
@@ -182,7 +182,7 @@ const translated = await lingoDotDev.localizeObject(content, {
 // Returns: { greeting: "Hola", farewell: "Adiós", message: "Bienvenido a nuestra plataforma" }
 ```
 
-非常适合聊天、用户评论及其他实时场景。
+非常适合聊天、用户评论和其他实时场景。
 
 [阅读文档 →](https://lingo.dev/sdk)
 
@@ -190,7 +190,7 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 ## 🤝 社区
 
-我们以社区为驱动，欢迎各类贡献！
+我们以社区为驱动，欢迎大家贡献！
 
 - 有想法？[提交 issue](https://github.com/lingodotdev/lingo.dev/issues)
 - 想修复问题？[发送 PR](https://github.com/lingodotdev/lingo.dev/pulls)
@@ -198,7 +198,7 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 ## ⭐ Star 历史
 
-如果你喜欢我们的项目，请为我们点个 ⭐，助力我们达成 10,000 stars！🌟
+如果你喜欢我们的项目，欢迎给我们一个 ⭐，助力我们冲刺 10,000 stars！🌟
 
 [
 
@@ -206,15 +206,15 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 ](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
 
-## 🌐 其他语言的 Readme
+## 🌐 其他语言版本的 Readme
 
 [English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [Português (Brasil)](/readme/pt-BR.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Polski](/readme/pl.md) • [Türkçe](/readme/tr.md) • [اردو](/readme/ur.md) • [भोजपुरी](/readme/bho.md) • [অসমীয়া](/readme/as-IN.md) • [ગુજરાતી](/readme/gu-IN.md) • [മലയാളം (IN)](/readme/ml-IN.md) • [मराठी](/readme/mr-IN.md) • [ଓଡ଼ିଆ](/readme/or-IN.md) • [ਪੰਜਾਬੀ](/readme/pa-IN.md) • [සිංහල](/readme/si-LK.md) • [தமிழ்](/readme/ta-IN.md) • [తెలుగు](/readme/te-IN.md)
 
-没有看到你的语言？请将其添加到 [`i18n.json`](./i18n.json) 并提交 PR！
+没有找到你的语言？请将其添加到 [`i18n.json`](./i18n.json) 并提交 PR！
 
-**语言格式：** 使用 [BCP-47](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) 代码：`language[-Script][-REGION]`
+**语言区域格式：** 请使用 [BCP-47](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) 代码：`language[-Script][-REGION]`
 
 - 语言：ISO 639-1/2/3 小写（`en`、`zh`、`bho`）
-- 脚本：ISO 15924 首字母大写（`Hans`、`Hant`、`Latn`）
-- 区域：ISO 3166-1 alpha-2 大写（`US`、`CN`、`IN`）
+- 字母书写系统：ISO 15924 首字母大写（`Hans`、`Hant`、`Latn`）
+- 地区：ISO 3166-1 alpha-2 大写（`US`、`CN`、`IN`）
 - 示例：`en`、`pt-BR`、`zh-Hans`、`sr-Cyrl-RS`

@@ -29,43 +29,43 @@
   <a href="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml">
     <img
       src="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml/badge.svg"
-      alt="Release"
+      alt="انتشار"
     />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md">
     <img
       src="https://img.shields.io/github/license/lingodotdev/lingo.dev"
-      alt="License"
+      alt="مجوز"
     />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/commits/main">
     <img
       src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev"
-      alt="Last Commit"
+      alt="آخرین تغییر"
     />
   </a>
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #1 DevTool of the Month"
+      alt="ابزار توسعه شماره ۱ ماه در Product Hunt"
     />
   </a>
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Week-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #1 DevTool of the Week"
+      alt="محصول شماره ۱ هفته در Product Hunt"
     />
   </a>
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/Product%20Hunt-%232%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #2 Product of the Day"
+      alt="محصول شماره ۲ روز در Product Hunt"
     />
   </a>
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/GitHub-Trending-blue?logo=github&style=flat-square"
-      alt="Github trending"
+      alt="پرطرفدار در Github"
     />
   </a>
 </p>
@@ -76,7 +76,7 @@
 
 **کامپایلر Lingo.dev** یک میان‌افزار کامپایلر رایگان و متن‌باز است که برای چندزبانه کردن هر برنامه React در زمان ساخت، بدون نیاز به تغییر در کامپوننت‌های موجود React طراحی شده است.
 
-> **نکته:** اگر از کامپایلر قدیمی (`@lingo.dev/_compiler`) استفاده می‌کنید، لطفاً به `@lingo.dev/compiler` مهاجرت کنید. کامپایلر قدیمی منسوخ شده و در نسخه‌های آینده حذف خواهد شد.
+> **توجه:** اگر از کامپایلر قدیمی (`@lingo.dev/_compiler`) استفاده می‌کنید، لطفاً به `@lingo.dev/compiler` مهاجرت کنید. کامپایلر قدیمی منسوخ شده و در نسخه‌های آینده حذف خواهد شد.
 
 یک‌بار نصب کنید:
 
@@ -84,7 +84,7 @@
 npm install @lingo.dev/compiler
 ```
 
-در پیکربندی بیلد خود فعال کنید:
+در تنظیمات ساخت خود فعال کنید:
 
 ```ts
 import type { NextConfig } from "next";
@@ -101,22 +101,22 @@ export default async function (): Promise<NextConfig> {
 }
 ```
 
-دستور `next build` را اجرا کنید و بسته‌های اسپانیایی و فرانسوی را ببینید که ظاهر می‌شوند ✨
+`next build` را اجرا کنید و شاهد ظاهر شدن بسته‌های اسپانیایی و فرانسوی باشید ✨
 
-[مستندات را بخوانید ←](https://lingo.dev/compiler) برای راهنمای کامل، و [به Discord ما بپیوندید](https://lingo.dev/go/discord) تا در تنظیمات خود کمک بگیرید.
+[مستندات را بخوانید ←](https://lingo.dev/compiler) برای راهنمای کامل، و [به Discord ما بپیوندید](https://lingo.dev/go/discord) تا در راه‌اندازی کمک بگیرید.
 
 ---
 
 ### داخل این مخزن چه چیزی است؟
 
-| ابزار        | خلاصه                                                                             | مستندات                                 |
-| ------------ | --------------------------------------------------------------------------------- | --------------------------------------- |
-| **Compiler** | بومی‌سازی React در زمان بیلد                                                      | [/compiler](https://lingo.dev/compiler) |
-| **CLI**      | بومی‌سازی با یک دستور برای اپلیکیشن‌های وب و موبایل، JSON، YAML، markdown و بیشتر | [/cli](https://lingo.dev/cli)           |
-| **CI/CD**    | کامیت خودکار ترجمه‌ها در هر push و ایجاد pull request در صورت نیاز                | [/ci](https://lingo.dev/ci)             |
-| **SDK**      | ترجمه بلادرنگ برای محتوای تولید شده توسط کاربر                                    | [/sdk](https://lingo.dev/sdk)           |
+| ابزار        | خلاصه                                                                           | مستندات                                 |
+| ------------ | ------------------------------------------------------------------------------- | --------------------------------------- |
+| **Compiler** | بومی‌سازی React در زمان ساخت                                                    | [/compiler](https://lingo.dev/compiler) |
+| **CLI**      | بومی‌سازی با یک دستور برای برنامه‌های وب و موبایل، JSON، YAML، markdown و بیشتر | [/cli](https://lingo.dev/cli)           |
+| **CI/CD**    | ثبت خودکار ترجمه‌ها در هر push و ایجاد pull request در صورت نیاز                | [/ci](https://lingo.dev/ci)             |
+| **SDK**      | ترجمه لحظه‌ای برای محتوای تولید شده توسط کاربر                                  | [/sdk](https://lingo.dev/sdk)           |
 
-در زیر نکات سریع برای هر کدام آمده است 👇
+در زیر نکات کلیدی برای هر کدام آمده است 👇
 
 ---
 
@@ -128,15 +128,15 @@ export default async function (): Promise<NextConfig> {
 npx lingo.dev@latest run
 ```
 
-این ابزار اثر انگشت هر رشته را می‌گیرد، نتایج را کش می‌کند و فقط آنچه را که تغییر کرده دوباره ترجمه می‌کند.
+این ابزار اثر انگشت هر رشته را ثبت می‌کند، نتایج را کش می‌کند و فقط آنچه تغییر کرده است را دوباره ترجمه می‌کند.
 
-[مستندات را دنبال کنید ←](https://lingo.dev/cli) تا یاد بگیرید چگونه آن را راه‌اندازی کنید.
+[مستندات را دنبال کنید ←](https://lingo.dev/cli) تا نحوه راه‌اندازی آن را بیاموزید.
 
 ---
 
 ### 🔄 Lingo.dev CI/CD
 
-ترجمه‌های عالی را به‌طور خودکار ارسال کنید.
+ترجمه‌های بی‌نقص را به‌طور خودکار ارسال کنید.
 
 ```yaml
 # .github/workflows/i18n.yml
@@ -153,7 +153,7 @@ jobs:
           api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
 ```
 
-مخزن شما را سبز و محصول شما را چندزبانه نگه می‌دارد بدون مراحل دستی.
+مخزن شما را سبز و محصول شما را چندزبانه نگه می‌دارد بدون نیاز به مراحل دستی.
 
 [مستندات را بخوانید ←](https://lingo.dev/ci)
 
@@ -161,7 +161,7 @@ jobs:
 
 ### 🧩 Lingo.dev SDK
 
-ترجمه فوری برای هر درخواست جهت محتوای پویا.
+ترجمه فوری برای هر درخواست برای محتوای پویا.
 
 ```ts
 import { LingoDotDevEngine } from "lingo.dev/sdk";
@@ -191,7 +191,7 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 ## 🤝 انجمن
 
-ما توسط انجمن هدایت می‌شویم و مشارکت‌ها را دوست داریم!
+ما جامعه‌محور هستیم و مشارکت‌ها را دوست داریم!
 
 - ایده‌ای دارید؟ [یک issue باز کنید](https://github.com/lingodotdev/lingo.dev/issues)
 - می‌خواهید چیزی را اصلاح کنید؟ [یک PR ارسال کنید](https://github.com/lingodotdev/lingo.dev/pulls)
@@ -199,23 +199,23 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 ## ⭐ تاریخچه ستاره‌ها
 
-اگر کاری که انجام می‌دهیم را دوست دارید، به ما یک ⭐ بدهید و به ما کمک کنید به 10,000 ستاره برسیم! 🌟
+اگر کاری که انجام می‌دهیم را دوست دارید، به ما یک ⭐ بدهید و به ما کمک کنید به ۱۰٬۰۰۰ ستاره برسیم! 🌟
 
 [
 
-![نمودار تاریخچه ستاره‌ها](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+![نمودار تاریخچه ستاره](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
 
 ](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
 
-## 🌐 Readme به زبان‌های دیگر
+## 🌐 راهنما به زبان‌های دیگر
 
 [English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [Português (Brasil)](/readme/pt-BR.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Polski](/readme/pl.md) • [Türkçe](/readme/tr.md) • [اردو](/readme/ur.md) • [भोजपुरी](/readme/bho.md) • [অসমীয়া](/readme/as-IN.md) • [ગુજરાતી](/readme/gu-IN.md) • [മലയാളം (IN)](/readme/ml-IN.md) • [मराठी](/readme/mr-IN.md) • [ଓଡ଼ିଆ](/readme/or-IN.md) • [ਪੰਜਾਬੀ](/readme/pa-IN.md) • [සිංහල](/readme/si-LK.md) • [தமிழ்](/readme/ta-IN.md) • [తెలుగు](/readme/te-IN.md)
 
-زبان خود را نمی‌بینید؟ آن را به [`i18n.json`](./i18n.json) اضافه کنید و یک PR باز کنید!
+زبان خود را نمی‌بینید؟ آن را به `i18n.json` اضافه کنید و یک PR باز کنید!
 
-**فرمت locale:** از کدهای [BCP-47](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) استفاده کنید: `language[-Script][-REGION]`
+**قالب محلی:** از کدهای [BCP-47](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) استفاده کنید: `language[-Script][-REGION]`
 
-- زبان: ISO 639-1/2/3 حروف کوچک (`en`, `zh`, `bho`)
-- خط: ISO 15924 حروف بزرگ ابتدایی (`Hans`, `Hant`, `Latn`)
-- منطقه: ISO 3166-1 alpha-2 حروف بزرگ (`US`, `CN`, `IN`)
-- مثال‌ها: `en`, `pt-BR`, `zh-Hans`, `sr-Cyrl-RS`
+- زبان: ISO 639-1/2/3 حروف کوچک (`en`، `zh`، `bho`)
+- خط: ISO 15924 حروف بزرگ ابتدایی (`Hans`، `Hant`، `Latn`)
+- منطقه: ISO 3166-1 alpha-2 حروف بزرگ (`US`، `CN`، `IN`)
+- نمونه‌ها: `en`، `pt-BR`، `zh-Hans`، `sr-Cyrl-RS`
