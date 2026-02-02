@@ -9,6 +9,7 @@ export default defineConfig({
   dts: true,
   cjsInterop: true,
   splitting: true,
+  external: ["zod"],
   outExtension: (ctx) => ({
     js: ctx.format === "cjs" ? ".cjs" : ".mjs",
   }),
