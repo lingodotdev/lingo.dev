@@ -72,8 +72,6 @@ export default new Command()
   .action(async (options: CIOptions) => {
     const settings = getSettings(options.apiKey);
 
-    console.log(options);
-
     if (!settings.auth.apiKey) {
       console.error("No API key provided");
       return;
