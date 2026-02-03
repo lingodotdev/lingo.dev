@@ -381,7 +381,10 @@ export const lingoUnplugin = createUnplugin<
             trackEvent(TRACKING_EVENTS.BUILD_ERROR, {
               framework: currentFramework,
               errorType: "transform",
-              errorMessage: error instanceof Error ? error.message : "Unknown transform error",
+              errorMessage:
+                error instanceof Error
+                  ? error.message
+                  : "Unknown transform error",
               filePath: id,
               environment: config.environment,
             });

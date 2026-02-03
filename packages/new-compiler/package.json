@@ -143,7 +143,6 @@
     "@types/babel__traverse": "7.28.0",
     "@types/ini": "4.1.1",
     "@types/node": "25.0.3",
-    "@types/proper-lockfile": "4.1.4",
     "@types/react": "19.2.7",
     "@types/react-dom": "19.2.3",
     "@types/ws": "8.18.1",
@@ -178,7 +177,7 @@
     "lodash": "4.17.21",
     "node-machine-id": "1.1.12",
     "posthog-node": "5.14.0",
-    "proper-lockfile": "4.1.2",
+    "lmdb": "3.2.6",
     "ws": "8.18.3"
   },
   "peerDependencies": {

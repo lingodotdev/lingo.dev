@@ -238,9 +238,7 @@ export async function withLingo(
     cleanupExistingMetadata(metadataFilePath);
 
     registerCleanupOnCurrentProcess({
-      cleanup: () => {
-        cleanupExistingMetadata(metadataFilePath);
-      },
+      cleanup: () => cleanupExistingMetadata(metadataFilePath),
     });
   }
 

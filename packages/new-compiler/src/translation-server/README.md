@@ -309,7 +309,7 @@ See commit history and `utils/timeout.ts` for implementation.
 
 1. Start your dev server
 2. Files get transformed by the bundler
-3. Metadata is generated in `.lingo/metadata.json`
+3. Metadata is stored in `.lingo/metadata-dev/` (LMDB database)
 
 ## Migration Guide
 

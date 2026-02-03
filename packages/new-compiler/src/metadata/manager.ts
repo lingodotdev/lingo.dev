@@ -1,11 +1,82 @@
-import fsPromises from "fs/promises";
 import fs from "fs";
 import path from "path";
-import lockfile from "proper-lockfile";
+import { open, type RootDatabase } from "lmdb";
 import type { MetadataSchema, PathConfig, TranslationEntry } from "../types";
-import { DEFAULT_TIMEOUTS, withTimeout } from "../utils/timeout";
 import { getLingoDir } from "../utils/path-helpers";
 import { logger } from "../utils/logger";
+
+// Special key for storing stats
+const STATS_KEY = "__stats__";
+
+// Metadata directory names for each environment
+const METADATA_DIR_DEV = "metadata-dev";
+const METADATA_DIR_BUILD = "metadata-build";
+
+/**
+ * Singleton class managing the LMDB database connection.
+ * Only one database is ever open at a time (either dev or build).
+ *
+ * Note: In multi-process bundler environments (e.g., Webpack workers),
+ * each process has its own singleton instance. LMDB handles concurrent
+ * access across processes safely via OS-level locking (MVCC).
+ */
+class DatabaseConnection {
+  private static instance: { db: RootDatabase; path: string } | null = null;
+
+  static get(dbPath: string): RootDatabase {
+    // Return existing db if same path
+    if (this.instance?.path === dbPath) {
+      return this.instance.db;
+    }
+
+    // Close previous db if different path
+    if (this.instance) {
+      try {
+        this.instance.db.close();
+      } catch (e) {
+        logger.debug(`Error closing previous database: ${e}`);
+      }
+      this.instance = null;
+    }
+
+    fs.mkdirSync(dbPath, { recursive: true });
+
+    // Build mode: disable fsync - metadata is deleted immediately after build,
+    // so durability is not needed and this avoids delay on close.
+    // Dev mode: keep sync enabled for consistency during long-running sessions.
+    const isBuildMode = dbPath.endsWith(METADATA_DIR_BUILD);
+
+    try {
+      const db = open({
+        path: dbPath,
+        compression: true,
+        noSync: isBuildMode,
+      });
+
+      this.instance = { db, path: dbPath };
+      return db;
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      throw new Error(
+        `Failed to open LMDB metadata database at ${dbPath}. ` +
+          `This may be caused by disk space issues, permission problems, or database corruption. ` +
+          `Try deleting the ${dbPath} directory and rebuilding. ` +
+          `Original error: ${message}`,
+      );
+    }
+  }
+
+  static close(dbPath: string): void {
+    if (this.instance?.path === dbPath) {
+      try {
+        this.instance.db.close();
+      } catch (e) {
+        logger.debug(`Error closing database at ${dbPath}: ${e}`);
+      }
+      this.instance = null;
+    }
+  }
+}
 
 export function createEmptyMetadata(): MetadataSchema {
   return {
@@ -17,134 +88,116 @@ export function createEmptyMetadata(): MetadataSchema {
   };
 }
 
-export function loadMetadata(path: string) {
-  return new MetadataManager(path).loadMetadata();
+export function loadMetadata(dbPath: string): MetadataSchema {
+  return new MetadataManager(dbPath).loadMetadata();
 }
 
-export function cleanupExistingMetadata(metadataFilePath: string) {
-  // General cleanup. Delete metadata and stop the server if any was started.
-  logger.debug(`Attempting to cleanup metadata file: ${metadataFilePath}`);
+/**
+ * Synchronous sleep using Atomics.wait().
+ * Blocks the thread without consuming CPU cycles.
+ */
+function sleepSync(ms: number): void {
+  const sharedBuffer = new SharedArrayBuffer(4);
+  const int32 = new Int32Array(sharedBuffer);
+  Atomics.wait(int32, 0, 0, ms);
+}
 
-  try {
-    fs.unlinkSync(metadataFilePath);
-    logger.info(`🧹 Cleaned up build metadata file: ${metadataFilePath}`);
-  } catch (error: any) {
-    // Ignore if file doesn't exist
-    if (error.code === "ENOENT") {
-      logger.debug(
-        `Metadata file already deleted or doesn't exist: ${metadataFilePath}`,
-      );
-    } else {
-      logger.warn(`Failed to cleanup metadata file: ${error.message}`);
+/**
+ * Clean up the metadata database directory.
+ * Synchronous to work with process exit handlers.
+ * Uses Atomics.wait() for non-busy-wait blocking during retries on Windows.
+ */
+export function cleanupExistingMetadata(metadataDbPath: string): void {
+  logger.debug(`Attempting to cleanup metadata database: ${metadataDbPath}`);
+
+  // Close database if open to release locks
+  DatabaseConnection.close(metadataDbPath);
+
+  // Retry a few times - on Windows, memory-mapped files may be held briefly by other processes
+  const maxRetries = 5;
+
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      fs.rmSync(metadataDbPath, { recursive: true, force: true });
+      logger.info(`🧹 Cleaned up metadata database: ${metadataDbPath}`);
+      return;
+    } catch (error) {
+      const code =
+        error instanceof Error && "code" in error
+          ? (error as NodeJS.ErrnoException).code
+          : undefined;
+      const message = error instanceof Error ? error.message : String(error);
+
+      if (code === "ENOENT") {
+        // Ignore if file doesn't exist
+        logger.debug(
+          `Metadata database already deleted or doesn't exist: ${metadataDbPath}`,
+        );
+        return;
+      }
+
+      const isRetryable = code === "EBUSY" || code === "EPERM";
+      if (isRetryable && attempt < maxRetries) {
+        logger.debug(`Cleanup attempt ${attempt} failed, retrying...`);
+        sleepSync(200);
+        continue;
+      }
+
+      logger.warn(`Failed to cleanup metadata database: ${message}`);
     }
   }
 }
 
 /**
- * Get the absolute path to the metadata file
+ * Get the absolute path to the metadata database directory
  *
  * @param config - Config with sourceRoot, lingoDir, and environment
- * @returns Absolute path to metadata file
+ * @returns Absolute path to metadata database directory
  */
 export function getMetadataPath(config: PathConfig): string {
-  const filename =
-    // Similar to next keeping dev build separate, let's keep the build metadata clean of any dev mode additions
+  const dirname =
     config.environment === "development"
-      ? "metadata-dev.json"
-      : "metadata-build.json";
-  return path.join(getLingoDir(config), filename);
+      ? METADATA_DIR_DEV
+      : METADATA_DIR_BUILD;
+  return path.join(getLingoDir(config), dirname);
 }
 
 export class MetadataManager {
-  constructor(private readonly filePath: string) {}
+  private db: RootDatabase;
 
-  /**
-   * Load metadata from disk
-   * Creates empty metadata if file doesn't exist
-   * Times out after 15 seconds to prevent indefinite hangs
-   */
-  async loadMetadata(): Promise<MetadataSchema> {
-    try {
-      const content = await withTimeout(
-        fsPromises.readFile(this.filePath, "utf-8"),
-        DEFAULT_TIMEOUTS.METADATA,
-        "Load metadata",
-      );
-      return JSON.parse(content) as MetadataSchema;
-    } catch (error: any) {
-      if (error.code === "ENOENT") {
-        // File doesn't exist, create new metadata
-        return createEmptyMetadata();
-      }
-      throw error;
-    }
+  constructor(dbPath: string) {
+    this.db = DatabaseConnection.get(dbPath);
   }
 
   /**
-   * Save metadata to disk
-   * Times out after 15 seconds to prevent indefinite hangs
+   * Load metadata from LMDB database.
+   * Returns empty metadata if database is empty.
    */
-  private async saveMetadata(metadata: MetadataSchema): Promise<void> {
-    await withTimeout(
-      fsPromises.mkdir(path.dirname(this.filePath), { recursive: true }),
-      DEFAULT_TIMEOUTS.FILE_IO,
-      "Create metadata directory",
-    );
+  loadMetadata(): MetadataSchema {
+    const entries: Record<string, TranslationEntry> = {};
 
-    metadata.stats = {
-      totalEntries: Object.keys(metadata.entries).length,
-      lastUpdated: new Date().toISOString(),
+    for (const { key, value } of this.db.getRange()) {
+      const keyStr = key as string;
+      if (keyStr !== STATS_KEY) {
+        entries[keyStr] = value as TranslationEntry;
+      }
+    }
+
+    const stats = this.db.get(STATS_KEY) as MetadataSchema["stats"] | undefined;
+    if (Object.keys(entries).length === 0 && !stats) {
+      return createEmptyMetadata();
+    }
+    return {
+      entries,
+      stats: stats || {
+        totalEntries: Object.keys(entries).length,
+        lastUpdated: new Date().toISOString(),
+      },
     };
-
-    // Per LLM writing to a file is not an atomic operation while rename is, so nobody should get partial content.
-    // Sounds reasonable.
-    const dir = path.dirname(this.filePath);
-    const base = path.basename(this.filePath);
-
-    // Keep temp file in the same directory to maximize chance that rename is atomic
-    const tmpPath = path.join(dir, `.${base}.tmp-${process.pid}-${Date.now()}`);
-
-    const json = JSON.stringify(metadata, null, 2);
-
-    await withTimeout(
-      fsPromises.writeFile(tmpPath, json, "utf-8"),
-      DEFAULT_TIMEOUTS.METADATA,
-      "Save metadata (tmp write)",
-    );
-
-    try {
-      // TODO (AleksandrSl 14/12/2025): LLM says that we may want to remove older file first for windows, but it seems lo work fine as is.
-      await withTimeout(
-        fsPromises.rename(tmpPath, this.filePath),
-        DEFAULT_TIMEOUTS.METADATA,
-        "Save metadata (atomic rename)",
-      );
-    } catch (error) {
-      // On Windows, rename() can fail with EPERM if something briefly holds the file.
-      // As a fallback, try writing directly to the destination (not atomic).
-      if (
-        error &&
-        typeof error === "object" &&
-        "code" in error &&
-        error.code === "EPERM"
-      ) {
-        await withTimeout(
-          fsPromises.writeFile(this.filePath, json, "utf-8"),
-          DEFAULT_TIMEOUTS.METADATA,
-          "Save metadata (EPERM fallback direct write)",
-        );
-        return;
-      }
-      throw error;
-    } finally {
-      // Best-effort cleanup if rename failed for some reason
-      await fsPromises.unlink(tmpPath).catch(() => {});
-    }
   }
 
   /**
-   * Thread-safe save operation that atomically updates metadata with new entries
-   * Uses file locking to prevent concurrent write corruption
+   * Save entries to database - LMDB handles concurrency via MVCC.
    *
    * @param entries - Translation entries to add/update
    * @returns The updated metadata schema
@@ -152,39 +205,26 @@ export class MetadataManager {
   async saveMetadataWithEntries(
     entries: TranslationEntry[],
   ): Promise<MetadataSchema> {
-    const lockDir = path.dirname(this.filePath);
+    await this.db.transaction(() => {
+      for (const entry of entries) {
+        this.db.put(entry.hash, entry);
+      }
 
-    await fsPromises.mkdir(lockDir, { recursive: true });
+      // Count entries explicitly (excluding stats key) for clarity
+      let entryCount = 0;
+      for (const { key } of this.db.getRange()) {
+        if (key !== STATS_KEY) {
+          entryCount++;
+        }
+      }
 
-    try {
-      await fsPromises.access(this.filePath);
-    } catch {
-      await fsPromises.writeFile(
-        this.filePath,
-        JSON.stringify(createEmptyMetadata(), null, 2),
-        "utf-8",
-      );
-    }
-
-    const release = await lockfile.lock(this.filePath, {
-      retries: {
-        retries: 20,
-        minTimeout: 50,
-        maxTimeout: 2000,
-      },
-      stale: 5000,
+      const stats = {
+        totalEntries: entryCount,
+        lastUpdated: new Date().toISOString(),
+      };
+      this.db.put(STATS_KEY, stats);
     });
 
-    try {
-      // Re-load metadata inside lock to get latest state
-      const currentMetadata = await this.loadMetadata();
-      for (const entry of entries) {
-        currentMetadata.entries[entry.hash] = entry;
-      }
-      await this.saveMetadata(currentMetadata);
-      return currentMetadata;
-    } finally {
-      await release();
-    }
+    return this.loadMetadata();
   }
 }

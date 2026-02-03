@@ -64,7 +64,7 @@ export async function processBuildTranslations(
 
   logger.info(`🌍 Build mode: ${buildMode}`);
 
-  const metadata = await loadMetadata(metadataFilePath);
+  const metadata = loadMetadata(metadataFilePath);
 
   if (!metadata || Object.keys(metadata.entries).length === 0) {
     logger.info("No translations to process (metadata is empty)");

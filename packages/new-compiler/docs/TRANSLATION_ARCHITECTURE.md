@@ -7,8 +7,8 @@ metadata management, translation execution, and caching.
 
 ## Architectural Principles
 
-1. **Metadata file structure** is only known by:
-   - Metadata Manager (reads/writes metadata.json)
+1. **Metadata storage** is only known by:
+   - Metadata Manager (reads/writes LMDB database)
    - Translation Service (orchestrator that coordinates everything)
 
 2. **Translators are stateless** and work with abstract `TranslatableEntry` types
@@ -37,7 +37,7 @@ metadata management, translation execution, and caching.
                  ↓
 ┌──────────────────────────────────────────────────┐
 │ MetadataManager                                  │
-│  - ONLY component that reads/writes metadata.json│
+│  - ONLY component that reads/writes LMDB database│
 │  - Provides metadata loading/saving              │
 │  - Returns TranslationEntry[]                    │
 └────────────────┬─────────────────────────────────┘
