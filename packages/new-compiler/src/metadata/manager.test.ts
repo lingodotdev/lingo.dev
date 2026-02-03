@@ -63,7 +63,10 @@ function sendToWorker(
   message: WorkerMessage,
 ): Promise<WorkerResponse> {
   return new Promise((resolve, reject) => {
-    const timeout = setTimeout(() => reject(new Error("Worker timeout")), 10000);
+    const timeout = setTimeout(
+      () => reject(new Error("Worker timeout")),
+      10000,
+    );
     worker.once("message", (response: WorkerResponse) => {
       clearTimeout(timeout);
       resolve(response);
@@ -103,8 +106,8 @@ describe("MetadataManager", () => {
     testDbPath = createUniqueDbPath();
   });
 
-  afterEach(async () => {
-    await cleanupExistingMetadata(testDbPath);
+  afterEach(() => {
+    cleanupExistingMetadata(testDbPath);
   });
 
   describe("createEmptyMetadata", () => {
@@ -200,7 +203,10 @@ describe("MetadataManager", () => {
       // Many saves with overlapping keys
       for (let i = 0; i < 50; i++) {
         await manager.saveMetadataWithEntries([
-          createTestEntry({ hash: `persistent-${i % 10}`, sourceText: `v${i}` }),
+          createTestEntry({
+            hash: `persistent-${i % 10}`,
+            sourceText: `v${i}`,
+          }),
           createTestEntry({ hash: `unique-${i}` }),
         ]);
       }
@@ -237,10 +243,12 @@ describe("MetadataManager", () => {
   describe("cleanupExistingMetadata", () => {
     it("should remove database and allow reopening with fresh state", async () => {
       const manager1 = new MetadataManager(testDbPath);
-      await manager1.saveMetadataWithEntries([createTestEntry({ hash: "before" })]);
+      await manager1.saveMetadataWithEntries([
+        createTestEntry({ hash: "before" }),
+      ]);
       expect(fs.existsSync(testDbPath)).toBe(true);
 
-      await cleanupExistingMetadata(testDbPath);
+      cleanupExistingMetadata(testDbPath);
       expect(fs.existsSync(testDbPath)).toBe(false);
 
       // Should work with fresh state after cleanup
@@ -290,18 +298,22 @@ describe("MetadataManager", () => {
 
       try {
         const manager1 = new MetadataManager(path1);
-        await manager1.saveMetadataWithEntries([createTestEntry({ hash: "in-path1" })]);
+        await manager1.saveMetadataWithEntries([
+          createTestEntry({ hash: "in-path1" }),
+        ]);
 
         const manager2 = new MetadataManager(path2);
-        await manager2.saveMetadataWithEntries([createTestEntry({ hash: "in-path2" })]);
+        await manager2.saveMetadataWithEntries([
+          createTestEntry({ hash: "in-path2" }),
+        ]);
 
         // Each database has its own data
         const result2 = manager2.loadMetadata();
         expect(result2.entries["in-path2"]).toBeDefined();
         expect(result2.entries["in-path1"]).toBeUndefined();
       } finally {
-        await cleanupExistingMetadata(path1);
-        await cleanupExistingMetadata(path2);
+        cleanupExistingMetadata(path1);
+        cleanupExistingMetadata(path2);
       }
     });
   });
@@ -335,7 +347,10 @@ describe("MetadataManager", () => {
           entries: [{ hash: "from-process-2" }],
         });
 
-        const read = await sendToWorker(worker1, { type: "read", dbPath: testDbPath });
+        const read = await sendToWorker(worker1, {
+          type: "read",
+          dbPath: testDbPath,
+        });
         expect(read.totalEntries).toBe(2);
         expect(read.entries?.["from-process-1"]).toBeDefined();
         expect(read.entries?.["from-process-2"]).toBeDefined();
@@ -354,10 +369,14 @@ describe("MetadataManager", () => {
       ]);
 
       // Main runner cleans up (simulates Next.js build start)
-      await cleanupExistingMetadata(testDbPath);
+      cleanupExistingMetadata(testDbPath);
 
       // Spawn workers (simulates Next.js build workers)
-      const workers = await Promise.all([spawnWorker(), spawnWorker(), spawnWorker()]);
+      const workers = await Promise.all([
+        spawnWorker(),
+        spawnWorker(),
+        spawnWorker(),
+      ]);
 
       try {
         // Workers write concurrently
