@@ -1,5 +1,19 @@
 # @lingo.dev/\_compiler
 
+## 0.11.0
+
+### Minor Changes
+
+- [#1950](https://github.com/lingodotdev/lingo.dev/pull/1950) [`ce47cf3`](https://github.com/lingodotdev/lingo.dev/commit/ce47cf34760b9377517b1204e4e84b6f1d908d6c) Thanks [@cherkanovart](https://github.com/cherkanovart)! - add zod to external depth
+
+### Patch Changes
+
+- [#1951](https://github.com/lingodotdev/lingo.dev/pull/1951) [`330ee4e`](https://github.com/lingodotdev/lingo.dev/commit/330ee4e77d3f698b6f038e58e2ac8e5509cc14fe) Thanks [@cherkanovart](https://github.com/cherkanovart)! - chore: add zod to external dependencies
+
+- Updated dependencies [[`330ee4e`](https://github.com/lingodotdev/lingo.dev/commit/330ee4e77d3f698b6f038e58e2ac8e5509cc14fe), [`ce47cf3`](https://github.com/lingodotdev/lingo.dev/commit/ce47cf34760b9377517b1204e4e84b6f1d908d6c)]:
+  - @lingo.dev/_sdk@0.14.0
+  - @lingo.dev/_spec@0.47.0
+
 ## 0.10.1
 
 ### Patch Changes
