@@ -12,7 +12,7 @@ import {
 import {
   cleanupExistingMetadata,
   getMetadataPath as rawGetMetadataPath,
-  MetadataManager,
+  saveMetadata,
 } from "../metadata/manager";
 import { createLingoConfig } from "../utils/config-factory";
 import { logger } from "../utils/logger";
@@ -353,11 +353,9 @@ export const lingoUnplugin = createUnplugin<
             logger.debug(`No transformation needed for ${id}`);
             return null;
           }
-          const metadataManager = new MetadataManager(getMetadataPath());
-
           // Update metadata with new entries (thread-safe)
           if (result.newEntries && result.newEntries.length > 0) {
-            await metadataManager.saveMetadataWithEntries(result.newEntries);
+            await saveMetadata(getMetadataPath(), result.newEntries);
 
             // Track stats for observability
             totalEntriesCount += result.newEntries.length;

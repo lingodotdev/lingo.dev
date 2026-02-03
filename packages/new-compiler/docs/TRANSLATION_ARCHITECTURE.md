@@ -8,7 +8,7 @@ metadata management, translation execution, and caching.
 ## Architectural Principles
 
 1. **Metadata storage** is only known by:
-   - Metadata Manager (reads/writes LMDB database)
+   - Metadata functions (reads/writes LMDB database)
    - Translation Service (orchestrator that coordinates everything)
 
 2. **Translators are stateless** and work with abstract `TranslatableEntry` types
@@ -36,9 +36,9 @@ metadata management, translation execution, and caching.
                  │ writes
                  ↓
 ┌──────────────────────────────────────────────────┐
-│ MetadataManager                                  │
-│  - ONLY component that reads/writes LMDB database│
-│  - Provides metadata loading/saving              │
+│ Metadata Functions (saveMetadata/loadMetadata)   │
+│  - Pure functions for LMDB database access       │
+│  - Short-lived connections (multi-worker safe)   │
 │  - Returns TranslationEntry[]                    │
 └────────────────┬─────────────────────────────────┘
                  │ reads from

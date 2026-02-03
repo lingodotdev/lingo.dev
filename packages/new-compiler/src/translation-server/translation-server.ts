@@ -313,9 +313,9 @@ export class TranslationServer {
    * Reload metadata from disk
    * Useful when metadata has been updated during runtime (e.g., new transformations)
    */
-  reloadMetadata(): void {
+  async reloadMetadata(): Promise<void> {
     try {
-      this.metadata = loadMetadata(getMetadataPath(this.config));
+      this.metadata = await loadMetadata(getMetadataPath(this.config));
       this.logger.debug(
         `Reloaded metadata: ${Object.keys(this.metadata.entries).length} entries`,
       );
@@ -344,7 +344,7 @@ export class TranslationServer {
     // Always reload metadata to get the latest entries
     // This is critical for build-time translation where metadata is updated
     // continuously as files are transformed
-    this.reloadMetadata();
+    await this.reloadMetadata();
 
     if (!this.metadata) {
       throw new Error("Failed to load metadata");
@@ -651,7 +651,7 @@ export class TranslationServer {
       }
       // Reload metadata to ensure we have the latest entries
       // (new entries may have been added since server started)
-      this.reloadMetadata();
+      await this.reloadMetadata();
 
       if (!this.metadata) {
         throw new Error("Failed to load metadata");
@@ -713,7 +713,7 @@ export class TranslationServer {
 
       // Reload metadata to ensure we have the latest entries
       // (new entries may have been added since server started)
-      this.reloadMetadata();
+      await this.reloadMetadata();
 
       if (!this.metadata) {
         throw new Error("Failed to load metadata");
