@@ -20,8 +20,7 @@ runs:
           --commit-author-email "${{ inputs.commit-author-email }}" \
           --working-directory "${{ inputs.working-directory }}" \
           --process-own-commits "${{ inputs.process-own-commits }}" \
-          --parallel ${{ inputs.parallel }} \
-          --gpg-sign "${{ inputs.gpg-sign }}"
+          --parallel ${{ inputs.parallel }}
       shell: bash
 inputs:
   version:
@@ -61,9 +60,5 @@ inputs:
     required: false
   parallel:
     description: "Run in parallel mode"
-    default: false
-    required: false
-  gpg-sign:
-    description: "Sign commits with GPG. Requires GPG key to be configured (e.g., via crazy-max/ghaction-import-gpg)"
     default: false
     required: false
