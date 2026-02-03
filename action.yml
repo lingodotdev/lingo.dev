@@ -62,7 +62,3 @@ inputs:
     description: "Run in parallel mode"
     default: false
     required: false
-  gpg-sign:
-    description: "Sign commits with GPG. Requires GPG key to be configured (e.g., via crazy-max/ghaction-import-gpg)"
-    default: false
-    required: false
