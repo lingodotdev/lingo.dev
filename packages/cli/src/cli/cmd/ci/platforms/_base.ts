@@ -61,6 +61,10 @@ export abstract class PlatformKit<
         (val) => val === "true" || val === true,
         Z.boolean(),
       ).optional(),
+      LINGODOTDEV_GPG_SIGN: Z.preprocess(
+        (val) => val === "true" || val === true,
+        Z.boolean(),
+      ).optional(),
     }).parse(process.env);
 
     return {
@@ -73,6 +77,7 @@ export abstract class PlatformKit<
         env.LINGODOTDEV_COMMIT_AUTHOR_EMAIL || "support@lingo.dev",
       workingDir: env.LINGODOTDEV_WORKING_DIRECTORY || ".",
       processOwnCommits: env.LINGODOTDEV_PROCESS_OWN_COMMITS || false,
+      gpgSign: env.LINGODOTDEV_GPG_SIGN || false,
     };
   }
 }
