@@ -20,8 +20,7 @@ runs:
           --commit-author-email "${{ inputs.commit-author-email }}" \
           --working-directory "${{ inputs.working-directory }}" \
           --process-own-commits "${{ inputs.process-own-commits }}" \
-          --parallel ${{ inputs.parallel }} \
-          --gpg-sign "${{ inputs.gpg-sign }}"
+          --parallel ${{ inputs.parallel }}
       shell: bash
 inputs:
   version:
