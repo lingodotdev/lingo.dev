@@ -31,8 +31,8 @@ export default defineConfig({
     "@lingo.dev/_react",
     "@lingo.dev/_locales",
     "@lingo.dev/_logging",
-    "glob",
     "zod",
+    "glob",
   ],
   outExtension: (ctx) => ({
     js: ctx.format === "cjs" ? ".cjs" : ".mjs",
