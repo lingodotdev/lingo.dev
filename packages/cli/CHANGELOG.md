@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.130.1
+
+### Patch Changes
+
+- [#1958](https://github.com/lingodotdev/lingo.dev/pull/1958) [`054132f`](https://github.com/lingodotdev/lingo.dev/commit/054132f42841175fb2bdcd8025683130ec128eba) Thanks [@cherkanovart](https://github.com/cherkanovart)! - remove unused imports cli
+
 ## 0.130.0
 
 ### Minor Changes
