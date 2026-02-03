@@ -309,7 +309,7 @@ describe("MetadataManager", () => {
   describe("error handling", () => {
     it("should throw descriptive error for invalid path", async () => {
       const invalidPath = "/root/definitely/cannot/create/this/path";
-      await expect(async () => new MetadataManager(invalidPath)).rejects.toThrow();
+      expect(() => new MetadataManager(invalidPath)).toThrow();
     });
   });
 
