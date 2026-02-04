@@ -226,6 +226,7 @@ export default new Command()
               bucket.lockedKeys,
               bucket.lockedPatterns,
               bucket.ignoredKeys,
+              bucket.preservedKeys,
             );
             bucketLoader.setDefaultLocale(sourceLocale);
             await bucketLoader.init();
@@ -265,6 +266,7 @@ export default new Command()
               bucket.lockedKeys,
               bucket.lockedPatterns,
               bucket.ignoredKeys,
+              bucket.preservedKeys,
             );
             bucketLoader.setDefaultLocale(sourceLocale);
             await bucketLoader.init();
@@ -377,6 +379,7 @@ export default new Command()
               bucket.lockedKeys,
               bucket.lockedPatterns,
               bucket.ignoredKeys,
+              bucket.preservedKeys,
             );
             bucketLoader.setDefaultLocale(sourceLocale);
             await bucketLoader.init();

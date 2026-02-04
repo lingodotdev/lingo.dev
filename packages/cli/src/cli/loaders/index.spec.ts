@@ -1027,6 +1027,7 @@ describe("bucket loaders", () => {
         undefined, // lockedKeys
         undefined, // lockedPatterns
         ["ignored.key", "nested/ignored"], // ignoredKeys
+        undefined, // preservedKeys
       );
 
       jsonLoader.setDefaultLocale("en");
@@ -1078,6 +1079,7 @@ describe("bucket loaders", () => {
         undefined, // lockedKeys
         undefined, // lockedPatterns
         ["wildcard_*"], // ignoredKeys with wildcard
+        undefined, // preservedKeys
       );
 
       jsonLoader.setDefaultLocale("en");
@@ -4266,13 +4268,14 @@ Línea 3`;
       // Locked keys should be filtered out (they get flattened and encoded)
       // After flat loader, keys become "hello%20world/stringUnit" and "%25lld%20unit_days/variations/plural"
       expect(dataForTranslation).not.toHaveProperty("hello%20world/stringUnit");
-      expect(dataForTranslation).not.toHaveProperty("%25lld%20unit_days/variations/plural");
+      expect(dataForTranslation).not.toHaveProperty(
+        "%25lld%20unit_days/variations/plural",
+      );
 
       // Non-locked keys should remain (flattened)
       expect(dataForTranslation).toHaveProperty("regular_key/stringUnit");
       expect(dataForTranslation["regular_key/stringUnit"]).toBe("Regular");
     });
-
   });
 
   describe("typescript bucket loader", () => {
