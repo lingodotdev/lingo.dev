@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.131.0
+
+### Minor Changes
+
+- [#1962](https://github.com/lingodotdev/lingo.dev/pull/1962) [`27a6419`](https://github.com/lingodotdev/lingo.dev/commit/27a6419911ffbecdc8052d053a42269d00b7ea75) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Add preservedKeys support to all CLI commands (purge, cleanup, status, lockfile, i18n) and create `show preserved-keys` command
+
 ## 0.130.2
 
 ### Patch Changes
