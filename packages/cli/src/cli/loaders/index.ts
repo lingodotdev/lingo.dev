@@ -44,6 +44,7 @@ import createLocalizableMdxDocumentLoader from "./mdx2/localizable-document";
 import createMdxSectionsSplit2Loader from "./mdx2/sections-split-2";
 import createLockedPatternsLoader from "./locked-patterns";
 import createIgnoredKeysLoader from "./ignored-keys";
+import createPreservedKeysLoader from "./preserved-keys";
 import createEjsLoader from "./ejs";
 import createTwigLoader from "./twig";
 import createEnsureKeyOrderLoader from "./ensure-key-order";
@@ -90,6 +91,7 @@ export default function createBucketLoader(
   lockedKeys?: string[],
   lockedPatterns?: string[],
   ignoredKeys?: string[],
+  preservedKeys?: string[],
 ): ILoader<void, Record<string, any>> {
   switch (bucketType) {
     default:
@@ -103,6 +105,7 @@ export default function createBucketLoader(
         createFlatLoader(),
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
+        createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -115,6 +118,7 @@ export default function createBucketLoader(
         createFlatLoader(),
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
+        createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -127,6 +131,7 @@ export default function createBucketLoader(
         createFlatLoader(),
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
+        createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -139,6 +144,7 @@ export default function createBucketLoader(
         createFlatLoader(),
         createLockedKeysLoader(normalizeCsvPatterns(lockedKeys || [])),
         createIgnoredKeysLoader(normalizeCsvPatterns(ignoredKeys || [])),
+        createPreservedKeysLoader(normalizeCsvPatterns(preservedKeys || [])),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -150,6 +156,7 @@ export default function createBucketLoader(
         createHtmlLoader(),
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
+        createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -160,6 +167,7 @@ export default function createBucketLoader(
         createEjsLoader(),
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
+        createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -174,6 +182,7 @@ export default function createBucketLoader(
         createInjectLocaleLoader(options.injectLocale),
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
+        createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -187,6 +196,7 @@ export default function createBucketLoader(
         createInjectLocaleLoader(options.injectLocale),
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
+        createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -200,6 +210,7 @@ export default function createBucketLoader(
         createInjectLocaleLoader(options.injectLocale),
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
+        createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -211,6 +222,7 @@ export default function createBucketLoader(
         createMarkdownLoader(),
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
+        createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -223,6 +235,7 @@ export default function createBucketLoader(
         createEnsureKeyOrderLoader(),
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
+        createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -239,6 +252,7 @@ export default function createBucketLoader(
         createEnsureKeyOrderLoader(),
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
+        createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -250,6 +264,7 @@ export default function createBucketLoader(
         createMjmlLoader(),
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
+        createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -262,6 +277,7 @@ export default function createBucketLoader(
         createEnsureKeyOrderLoader(),
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
+        createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
         createVariableLoader({ type: "python" }),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
@@ -273,6 +289,7 @@ export default function createBucketLoader(
         createPropertiesLoader(),
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
+        createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -283,6 +300,7 @@ export default function createBucketLoader(
         createXcodeStringsLoader(),
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
+        createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -295,6 +313,7 @@ export default function createBucketLoader(
         createEnsureKeyOrderLoader(),
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
+        createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -309,6 +328,7 @@ export default function createBucketLoader(
         createEnsureKeyOrderLoader(),
         createLockedKeysLoader(encodeKeys(lockedKeys || [])),
         createIgnoredKeysLoader(encodeKeys(ignoredKeys || [])),
+        createPreservedKeysLoader(encodeKeys(preservedKeys || [])),
         createSyncLoader(),
         createVariableLoader({ type: "ieee" }),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
@@ -324,6 +344,7 @@ export default function createBucketLoader(
         createEnsureKeyOrderLoader(),
         createLockedKeysLoader(encodeKeys(lockedKeys || [])),
         createIgnoredKeysLoader(encodeKeys(ignoredKeys || [])),
+        createPreservedKeysLoader(encodeKeys(preservedKeys || [])),
         createSyncLoader(),
         createVariableLoader({ type: "ieee" }),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
@@ -338,6 +359,7 @@ export default function createBucketLoader(
         createEnsureKeyOrderLoader(),
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
+        createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -352,6 +374,7 @@ export default function createBucketLoader(
         createEnsureKeyOrderLoader(),
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
+        createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -366,6 +389,7 @@ export default function createBucketLoader(
         createFlatLoader(),
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
+        createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -378,6 +402,7 @@ export default function createBucketLoader(
         createEnsureKeyOrderLoader(),
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
+        createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -390,6 +415,7 @@ export default function createBucketLoader(
         createEnsureKeyOrderLoader(),
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
+        createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -400,6 +426,7 @@ export default function createBucketLoader(
         createSrtLoader(),
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
+        createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -411,6 +438,7 @@ export default function createBucketLoader(
         createEnsureKeyOrderLoader(),
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
+        createPreservedKeysLoader(preservedKeys || []),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
     case "vtt":
@@ -420,6 +448,7 @@ export default function createBucketLoader(
         createVttLoader(),
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
+        createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -433,6 +462,7 @@ export default function createBucketLoader(
         createEnsureKeyOrderLoader(),
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
+        createPreservedKeysLoader(preservedKeys || []),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
     case "vue-json":
@@ -445,6 +475,7 @@ export default function createBucketLoader(
         createEnsureKeyOrderLoader(),
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
+        createPreservedKeysLoader(preservedKeys || []),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
     case "typescript":
@@ -462,6 +493,7 @@ export default function createBucketLoader(
         createSyncLoader(),
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
+        createPreservedKeysLoader(preservedKeys || []),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
     case "twig":
@@ -471,6 +503,7 @@ export default function createBucketLoader(
         createTwigLoader(),
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
+        createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -481,6 +514,7 @@ export default function createBucketLoader(
         createTxtLoader(),
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
+        createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );
@@ -496,6 +530,7 @@ export default function createBucketLoader(
         createInjectLocaleLoader(options.injectLocale),
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
+        createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
         createUnlocalizableLoader(options.returnUnlocalizedKeys),
       );

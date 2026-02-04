@@ -32,5 +32,9 @@
       "nested_message": "Texto anidado"
     }
   ],
-  "locked_key_1": "This value is locked and should not be changed"
+  "locked_key_1": "This value is locked and should not be changed",
+  "preserved_key_1": "this value is preserved and should not be overwritten",
+  "legal": {
+    "preserved_nested": "this value is preserved and should not be overwritten"
+  }
 }

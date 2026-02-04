@@ -1,5 +1,5 @@
 {
-  "version": "1.10",
+  "version": "1.12",
   "locale": {
     "source": "en",
     "targets": ["es"]
@@ -34,7 +34,8 @@
     "json": {
       "include": ["demo/json/[locale]/example.json"],
       "lockedKeys": ["locked_key_1"],
-      "ignoredKeys": ["ignored_key_1"]
+      "ignoredKeys": ["ignored_key_1"],
+      "preservedKeys": ["preserved_key_1", "legal/preserved_nested"]
     },
     "jsonc": {
       "include": ["demo/jsonc/[locale]/example.jsonc"],
