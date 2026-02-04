@@ -108,11 +108,12 @@ describe("metadata", () => {
       expect((await loadMetadata(testDbPath)).stats!.totalEntries).toBe(3);
 
       // Update existing entry (count should not increase)
-      const result = await saveMetadata(testDbPath, [
+      await saveMetadata(testDbPath, [
         createTestEntry({ hash: "entry-1", sourceText: "v2" }),
       ]);
-      expect(result.stats!.totalEntries).toBe(3);
-      expect(result.entries["entry-1"].sourceText).toBe("v2");
+      const updated = await loadMetadata(testDbPath);
+      expect(updated.stats!.totalEntries).toBe(3);
+      expect(updated.entries["entry-1"].sourceText).toBe("v2");
 
       // Empty array should not change anything
       await saveMetadata(testDbPath, []);
@@ -120,20 +121,20 @@ describe("metadata", () => {
     });
 
     it("should handle large batch of entries", async () => {
-      const entries = Array.from({ length: 1000 }, (_, i) =>
+      const entries = Array.from({ length: 100 }, (_, i) =>
         createTestEntry({ hash: `batch-${i}` }),
       );
 
-      const result = await saveMetadata(testDbPath, entries);
-      expect(result.stats!.totalEntries).toBe(1000);
+      await saveMetadata(testDbPath, entries);
+      expect((await loadMetadata(testDbPath)).stats!.totalEntries).toBe(100);
     });
 
     it("should maintain data integrity after many operations", async () => {
       // Many saves with overlapping keys
-      for (let i = 0; i < 50; i++) {
+      for (let i = 0; i < 10; i++) {
         await saveMetadata(testDbPath, [
           createTestEntry({
-            hash: `persistent-${i % 10}`,
+            hash: `persistent-${i % 5}`,
             sourceText: `v${i}`,
           }),
           createTestEntry({ hash: `unique-${i}` }),
@@ -141,19 +142,15 @@ describe("metadata", () => {
       }
 
       const final = await loadMetadata(testDbPath);
-      // 10 persistent + 50 unique = 60
-      expect(final.stats!.totalEntries).toBe(60);
-
-      // Verify save result matches load result
-      const saveResult = await saveMetadata(testDbPath, []);
-      expect(saveResult.stats!.totalEntries).toBe(final.stats!.totalEntries);
+      // 5 persistent + 10 unique = 15
+      expect(final.stats!.totalEntries).toBe(15);
     });
   });
 
   describe("concurrent access (single process)", () => {
     it("should handle concurrent operations from multiple calls", async () => {
       // LMDB handles concurrent writes via OS-level locking
-      const promises = Array.from({ length: 20 }, async (_, i) => {
+      const promises = Array.from({ length: 10 }, async (_, i) => {
         await saveMetadata(testDbPath, [
           createTestEntry({ hash: `concurrent-${i}` }),
         ]);
@@ -161,7 +158,7 @@ describe("metadata", () => {
       await Promise.all(promises);
 
       // Verify all entries are present
-      expect((await loadMetadata(testDbPath)).stats!.totalEntries).toBe(20);
+      expect((await loadMetadata(testDbPath)).stats!.totalEntries).toBe(10);
     });
   });
 

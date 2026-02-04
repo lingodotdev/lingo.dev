@@ -5,41 +5,41 @@ import type { MetadataSchema, PathConfig, TranslationEntry } from "../types";
 import { getLingoDir } from "../utils/path-helpers";
 import { logger } from "../utils/logger";
 
-// Special key for storing stats
 const STATS_KEY = "__stats__";
-
-// Metadata directory names for each environment
 const METADATA_DIR_DEV = "metadata-dev";
 const METADATA_DIR_BUILD = "metadata-build";
 
 /**
- * Opens an LMDB database connection at the given path.
+ * Opens a short-lived LMDB connection.
+ *
+ * Short-lived over singleton: bundlers (Webpack/Next.js) spawn isolated workers
+ * that can't share a single connection. LMDB's MVCC handles concurrent access.
  */
-function openDatabase(dbPath: string): RootDatabase {
+function openDatabaseConnection(dbPath: string): RootDatabase {
   fs.mkdirSync(dbPath, { recursive: true });
 
-  // Build mode: disable fsync - metadata is deleted immediately after build, so durability is not needed.
-  // Dev mode: keep sync enabled for consistency during long-running sessions.
   const isBuildMode = dbPath.endsWith(METADATA_DIR_BUILD);
 
   try {
     return open({
       path: dbPath,
       compression: true,
+      // Build: skip fsync (data is ephemeral). Dev: sync for durability.
       noSync: isBuildMode,
     });
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
-    throw new Error(
-      `Failed to open LMDB metadata database at ${dbPath}. Error: ${message}`,
-    );
+    throw new Error(`Failed to open LMDB at ${dbPath}: ${message}`);
   }
 }
 
 /**
- * Safely close database connection.
+ * Releases file handles to allow directory cleanup (avoids EBUSY/EPERM on Windows).
  */
-async function closeDatabase(db: RootDatabase, dbPath: string): Promise<void> {
+async function closeDatabaseConnection(
+  db: RootDatabase,
+  dbPath: string,
+): Promise<void> {
   try {
     await db.close();
   } catch (e) {
@@ -47,10 +47,6 @@ async function closeDatabase(db: RootDatabase, dbPath: string): Promise<void> {
   }
 }
 
-/**
- * Read all entries from an open database.
- * Internal helper - does not manage connection lifecycle.
- */
 function readEntriesFromDb(db: RootDatabase): MetadataSchema {
   const entries: Record<string, TranslationEntry> = {};
 
@@ -84,62 +80,46 @@ export function createEmptyMetadata(): MetadataSchema {
   };
 }
 
-/**
- * Load metadata from LMDB database.
- */
 export async function loadMetadata(dbPath: string): Promise<MetadataSchema> {
-  const db = openDatabase(dbPath);
+  const db = openDatabaseConnection(dbPath);
   try {
     return readEntriesFromDb(db);
   } finally {
-    await closeDatabase(db, dbPath);
+    await closeDatabaseConnection(db, dbPath);
   }
 }
 
 /**
- * Save translation entries to the metadata database.
+ * Persists translation entries to LMDB.
  *
- * LMDB handles concurrency via MVCC, so multiple processes can write safely.
- *
- * @param dbPath - Path to the LMDB database directory
- * @param entries - Translation entries to add/update
- * @returns The updated metadata schema
+ * Uses transactionSync to batch all writes into a single commit.
+ * Async transactions are slow in Vite (~80-100ms) due to setImmediate scheduling.
  */
 export async function saveMetadata(
   dbPath: string,
   entries: TranslationEntry[],
-): Promise<MetadataSchema> {
-  const db = openDatabase(dbPath);
+): Promise<void> {
+  const db = openDatabaseConnection(dbPath);
+
   try {
-    await db.transaction(() => {
+    db.transactionSync(() => {
       for (const entry of entries) {
-        db.put(entry.hash, entry);
+        db.putSync(entry.hash, entry);
       }
 
-      // Count entries explicitly (excluding stats key) for clarity
-      let entryCount = 0;
-      for (const { key } of db.getRange()) {
-        if (key !== STATS_KEY) {
-          entryCount++;
-        }
-      }
-
-      const stats = {
+      const totalKeys = db.getKeysCount();
+      const entryCount =
+        db.get(STATS_KEY) !== undefined ? totalKeys - 1 : totalKeys;
+      db.putSync(STATS_KEY, {
         totalEntries: entryCount,
         lastUpdated: new Date().toISOString(),
-      };
-      db.put(STATS_KEY, stats);
+      });
     });
-
-    return readEntriesFromDb(db);
   } finally {
-    await closeDatabase(db, dbPath);
+    await closeDatabaseConnection(db, dbPath);
   }
 }
 
-/**
- * Clean up the metadata database directory.
- */
 export function cleanupExistingMetadata(metadataDbPath: string): void {
   logger.debug(`Cleaning up metadata database: ${metadataDbPath}`);
 
@@ -164,12 +144,6 @@ export function cleanupExistingMetadata(metadataDbPath: string): void {
   }
 }
 
-/**
- * Get the absolute path to the metadata database directory
- *
- * @param config - Config with sourceRoot, lingoDir, and environment
- * @returns Absolute path to metadata database directory
- */
 export function getMetadataPath(config: PathConfig): string {
   const dirname =
     config.environment === "development"
