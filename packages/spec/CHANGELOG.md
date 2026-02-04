@@ -1,5 +1,11 @@
 # @lingo.dev/\_spec
 
+## 0.47.1
+
+### Patch Changes
+
+- [#1960](https://github.com/lingodotdev/lingo.dev/pull/1960) [`5a4e516`](https://github.com/lingodotdev/lingo.dev/commit/5a4e51618d9b3148358f140f6bcd0fe9aa1c213c) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Add `preservedKeys` configuration option to buckets. Preserved keys are added to targets using source values as placeholders, but once present in the target file, they are never overwritten by the CLI. This is useful for values like URLs or emails that should be copied initially but then customized per locale.
+
 ## 0.47.0
 
 ### Minor Changes
