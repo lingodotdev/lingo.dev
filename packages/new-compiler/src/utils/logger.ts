@@ -38,9 +38,30 @@ export class Logger {
 
   private formatMessage(...args: any[]): string {
     return args
-      .map((arg) =>
-        typeof arg === "object" ? JSON.stringify(arg, null, 2) : String(arg),
-      )
+      .map((arg) => {
+        // Handle Error objects specially since JSON.stringify returns "{}" for them
+        if (arg instanceof Error) {
+          const errorParts = [`${arg.name}: ${arg.message}`];
+          // Include stack trace for debugging (skip the first line which is the error message)
+          if (arg.stack) {
+            const stackLines = arg.stack.split("\n").slice(1);
+            if (stackLines.length > 0) {
+              errorParts.push(stackLines.join("\n"));
+            }
+          }
+          // Include cause if present (for chained errors)
+          if (arg.cause) {
+            errorParts.push(
+              `Caused by: ${arg.cause instanceof Error ? `${arg.cause.name}: ${arg.cause.message}` : String(arg.cause)}`,
+            );
+          }
+          return errorParts.join("\n");
+        }
+        if (typeof arg === "object" && arg !== null) {
+          return JSON.stringify(arg, null, 2);
+        }
+        return String(arg);
+      })
       .join(" ");
   }
 
