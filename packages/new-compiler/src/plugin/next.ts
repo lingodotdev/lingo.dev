@@ -135,31 +135,16 @@ function loaders({
 }
 
 /**
- * Get Next.js major version
- */
-function getNextMajorVersion(): number | null {
-  try {
-    const nextPackage = require("next/package.json");
-    return parseInt(nextPackage.version.split(".")[0], 10);
-  } catch {
-    return null;
-  }
-}
-
-/**
  * Check if Next.js supports stable turbopack config (Next.js 16+)
  */
 function hasStableTurboConfig(): boolean {
-  const majorVersion = getNextMajorVersion();
-  return majorVersion !== null && majorVersion >= 16;
-}
-
-/**
- * Check if Next.js version is supported (15+)
- */
-function isNextVersionSupported(): boolean {
-  const majorVersion = getNextMajorVersion();
-  return majorVersion !== null && majorVersion >= 15;
+  try {
+    const nextPackage = require("next/package.json");
+    const majorVersion = parseInt(nextPackage.version.split(".")[0], 10);
+    return majorVersion >= 16;
+  } catch {
+    return false;
+  }
 }
 
 function getTurbopackConfig(userConfig: NextConfig): TurbopackOptions {
@@ -213,16 +198,6 @@ export async function withLingo(
   nextConfig: NextConfig = {},
   lingoOptions: LingoNextPluginOptions,
 ): Promise<NextConfig> {
-  // Check Next.js version compatibility
-  if (!isNextVersionSupported()) {
-    const majorVersion = getNextMajorVersion();
-    logger.warn(
-      `@lingo.dev/compiler requires Next.js 15 or later. ` +
-        `Detected Next.js ${majorVersion ?? "unknown"}. ` +
-        `Please upgrade Next.js to use the compiler.`,
-    );
-  }
-
   const lingoConfig = createLingoConfig(lingoOptions);
   let metadataFilePath = getMetadataPath(lingoConfig);
   const isDev = lingoConfig.environment === "development";
