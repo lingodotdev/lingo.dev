@@ -33,8 +33,9 @@ export class InBranchFlow extends IntegrationFlow {
       this.ora.start("Committing changes");
       execSync(`git add .`, { stdio: "inherit" });
       execSync(`git status --porcelain`, { stdio: "inherit" });
+      const signFlag = this.platformKit.config.gpgSign ? "-S " : "";
       execSync(
-        `git commit -m ${escapeShellArg(
+        `git commit ${signFlag}-m ${escapeShellArg(
           this.platformKit.config.commitMessage,
         )} --no-verify`,
         {
@@ -100,6 +101,26 @@ export class InBranchFlow extends IntegrationFlow {
 
     execSync(`git config user.name "${gitConfig.userName}"`);
     execSync(`git config user.email "${gitConfig.userEmail}"`);
+
+    // Configure GPG signing if enabled
+    if (this.platformKit.config.gpgSign) {
+      // Preflight check: verify signing key is configured
+      try {
+        const signingKey = execSync(`git config user.signingkey`, {
+          encoding: "utf8",
+        }).trim();
+        if (!signingKey) {
+          throw new Error("No signing key configured");
+        }
+      } catch {
+        throw new Error(
+          "GPG signing is enabled but no signing key is configured. " +
+            "Import a GPG key (e.g., using crazy-max/ghaction-import-gpg) before running this action, " +
+            "or set gpg-sign to false.",
+        );
+      }
+      execSync(`git config commit.gpgsign true`);
+    }
 
     // perform platform-specific configuration before fetching or pushing to the remote
     this.platformKit?.gitConfig();

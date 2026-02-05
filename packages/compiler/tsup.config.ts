@@ -6,6 +6,7 @@ export default defineConfig({
   entry: ["src/index.ts", "src/lingo-turbopack-loader.ts"],
   outDir: "build",
   format: ["cjs", "esm"],
+  external: ["zod"],
   dts: true,
   splitting: true,
   shims: true,

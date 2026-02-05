@@ -1,17 +1,14 @@
 {
-  "version": "1.10",
+  "version": "1.12",
   "locale": {
     "source": "en",
-    "targets": [
-      "es"
-    ]
+    "targets": ["es"]
   },
   "buckets": {
     "json": {
-      "include": [
-        "./[locale]/example.json"
-      ],
-      "lockedKeys": ["locked_key_1"]
+      "include": ["./[locale]/example.json"],
+      "lockedKeys": ["locked_key_1"],
+      "preservedKeys": ["preserved_key_1", "legal/preserved_nested"]
     }
   },
   "$schema": "https://lingo.dev/schema/i18n.json"

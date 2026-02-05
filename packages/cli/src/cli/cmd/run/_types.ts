@@ -32,6 +32,7 @@ export type CmdRunTask = {
   lockedKeys: string[];
   lockedPatterns: string[];
   ignoredKeys: string[];
+  preservedKeys: string[];
   onlyKeys: string[];
   formatter?: "prettier" | "biome";
 };

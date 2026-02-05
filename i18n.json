@@ -17,7 +17,6 @@
       "it",
       "ja",
       "ko",
-      "ml-IN",
       "mr-IN",
       "or-IN",
       "pa-IN",
@@ -35,7 +34,9 @@
   },
   "buckets": {
     "mdx": {
-      "include": ["readme/[locale].md"]
+      "include": [
+        "readme/[locale].md"
+      ]
     }
   },
   "$schema": "https://lingo.dev/schema/i18n.json"

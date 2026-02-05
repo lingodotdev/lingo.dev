@@ -110,7 +110,7 @@ export async function processBuildTranslations(
 
     // When pluralization is enabled, we need to generate the source locale file too
     // because pluralization modifies the sourceText
-    const needsSourceLocale = config.pluralization?.enabled !== false;
+    const needsSourceLocale = config.pluralization?.enabled === true;
     const allLocales = needsSourceLocale
       ? [config.sourceLocale, ...config.targetLocales]
       : config.targetLocales;
@@ -199,7 +199,7 @@ async function validateCache(
   }> = [];
 
   // Include source locale if pluralization is enabled
-  const needsSourceLocale = config.pluralization?.enabled !== false;
+  const needsSourceLocale = config.pluralization?.enabled === true;
   const allLocales = needsSourceLocale
     ? [config.sourceLocale, ...config.targetLocales]
     : config.targetLocales;
@@ -254,7 +254,7 @@ function buildCacheStats(
   const stats: BuildTranslationResult["stats"] = {};
 
   // Include source locale if pluralization is enabled
-  const needsSourceLocale = config.pluralization?.enabled !== false;
+  const needsSourceLocale = config.pluralization?.enabled === true;
   const allLocales = needsSourceLocale
     ? [config.sourceLocale, ...config.targetLocales]
     : config.targetLocales;
@@ -284,7 +284,7 @@ async function copyStaticFiles(
   logger.info(`📊 Filtering translations to ${usedHashes.size} used hash(es)`);
 
   // Include source locale if pluralization is enabled
-  const needsSourceLocale = config.pluralization?.enabled !== false;
+  const needsSourceLocale = config.pluralization?.enabled === true;
   const allLocales = needsSourceLocale
     ? [config.sourceLocale, ...config.targetLocales]
     : config.targetLocales;

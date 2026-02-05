@@ -1,5 +1,21 @@
 # @lingo.dev/\_spec
 
+## 0.47.1
+
+### Patch Changes
+
+- [#1960](https://github.com/lingodotdev/lingo.dev/pull/1960) [`5a4e516`](https://github.com/lingodotdev/lingo.dev/commit/5a4e51618d9b3148358f140f6bcd0fe9aa1c213c) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Add `preservedKeys` configuration option to buckets. Preserved keys are added to targets using source values as placeholders, but once present in the target file, they are never overwritten by the CLI. This is useful for values like URLs or emails that should be copied initially but then customized per locale.
+
+## 0.47.0
+
+### Minor Changes
+
+- [#1950](https://github.com/lingodotdev/lingo.dev/pull/1950) [`ce47cf3`](https://github.com/lingodotdev/lingo.dev/commit/ce47cf34760b9377517b1204e4e84b6f1d908d6c) Thanks [@cherkanovart](https://github.com/cherkanovart)! - add zod to external depth
+
+### Patch Changes
+
+- [#1951](https://github.com/lingodotdev/lingo.dev/pull/1951) [`330ee4e`](https://github.com/lingodotdev/lingo.dev/commit/330ee4e77d3f698b6f038e58e2ac8e5509cc14fe) Thanks [@cherkanovart](https://github.com/cherkanovart)! - chore: add zod to external dependencies
+
 ## 0.46.0
 
 ### Minor Changes

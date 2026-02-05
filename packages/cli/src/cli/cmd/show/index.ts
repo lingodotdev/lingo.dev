@@ -5,6 +5,7 @@ import localeCmd from "./locale";
 import filesCmd from "./files";
 import lockedKeysCmd from "./locked-keys";
 import ignoredKeysCmd from "./ignored-keys";
+import preservedKeysCmd from "./preserved-keys";
 
 export default new Command()
   .command("show")
@@ -14,4 +15,5 @@ export default new Command()
   .addCommand(localeCmd)
   .addCommand(filesCmd)
   .addCommand(lockedKeysCmd)
-  .addCommand(ignoredKeysCmd);
+  .addCommand(ignoredKeysCmd)
+  .addCommand(preservedKeysCmd);
