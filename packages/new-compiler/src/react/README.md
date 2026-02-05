@@ -19,7 +19,7 @@ Context provider that manages translations and locale switching for your entire 
 
 ```tsx
 // app/layout.tsx
-import { LingoProvider } from "@lingo.dev/compiler-beta/react";
+import { LingoProvider } from "@lingo.dev/compiler/react";
 
 export default function RootLayout({ children }) {
   return (
@@ -52,7 +52,7 @@ A dropdown component for switching between locales.
 // Client Component with Next.js integration
 "use client";
 import { useRouter } from "next/navigation";
-import { LocaleSwitcher } from "@lingo.dev/compiler-beta/react";
+import { LocaleSwitcher } from "@lingo.dev/compiler/react";
 
 export function Header() {
   const router = useRouter();
@@ -74,6 +74,22 @@ export function Header() {
 
 ## Hooks
 
+### `useLocale()`
+
+Returns the current locale (reactive - re-renders on change).
+
+**Example:**
+
+```tsx
+"use client";
+import { useLocale } from "@lingo.dev/compiler/react";
+
+function MyComponent() {
+  const locale = useLocale();
+  return <span>Current locale: {locale}</span>;
+}
+```
+
 ### `useTranslation()`
 
 Returns a translation function `t(hash)` for translating text in Client Components.
@@ -84,7 +100,7 @@ Returns a translation function `t(hash)` for translating text in Client Componen
 
 ```tsx
 "use client";
-import { useTranslation } from "@lingo.dev/compiler-beta/react";
+import { useTranslation } from "@lingo.dev/compiler/react";
 
 export function Welcome() {
   const t = useTranslation();
@@ -98,37 +114,63 @@ export function Welcome() {
 }
 ```
 
-### `useTranslationContext()`
+### `useLingoContext()`
 
-Access the translation context directly.
+Access the full translation context directly.
 
 **Returns:**
 
 - `locale` (string): Current locale
 - `setLocale` (function): Change locale
 - `translations` (object): Translation dictionary
-- `requestTranslation` (function): Request a translation
+- `registerHashes` (function): Register translation hashes
 - `isLoading` (boolean): Loading state
 
 ## Utility Functions
 
-### `getLocaleFromCookies()`
+### `setLocale(locale)`
 
-Get the current locale from cookies (client-side).
+Changes the current locale. Can be called from anywhere (event handlers, callbacks, etc.)
+as long as `LingoProvider` is mounted.
 
 **Parameters:**
 
-- `cookieName` (string, optional): Cookie name, default: 'locale'
-- `defaultLocale` (string, optional): Default if not found, default: 'en'
+- `locale` (string): The locale code to switch to (e.g., 'en', 'es', 'de')
+
+**Returns:** `Promise<void>`
+
+**Example:**
+
+```tsx
+"use client";
+import { useLocale, setLocale } from "@lingo.dev/compiler/react";
+
+export function LanguageSwitcher() {
+  const locale = useLocale();
+
+  return (
+    <select value={locale} onChange={(e) => setLocale(e.target.value)}>
+      <option value="en">English</option>
+      <option value="es">Español</option>
+      <option value="de">Deutsch</option>
+    </select>
+  );
+}
+```
+
+### `getLocale()`
+
+Gets the current locale (non-reactive). For reactive updates in React components, use the `useLocale()` hook instead.
+This function is useful for non-React code or utility functions.
 
 **Returns:** Current locale string
 
 **Example:**
 
 ```tsx
-import { getLocaleFromCookies } from "@lingo.dev/compiler-beta/react";
+import { getLocale } from "@lingo.dev/compiler/react";
 
-const locale = getLocaleFromCookies(); // e.g., 'en'
+const currentLocale = getLocale();
 ```
 
 ## How It Works
@@ -196,7 +238,7 @@ import type {
   LocaleConfig,
   TranslationFunction,
   TranslationContextType,
-} from "@lingo.dev/compiler-beta/react";
+} from "@lingo.dev/compiler/react";
 ```
 
 ## Testing
@@ -204,7 +246,7 @@ import type {
 When testing components that use translations:
 
 ```tsx
-import { LingoProvider } from "@lingo.dev/compiler-beta/react";
+import { LingoProvider } from "@lingo.dev/compiler/react";
 
 test("my component", () => {
   render(

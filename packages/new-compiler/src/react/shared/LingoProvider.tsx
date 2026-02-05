@@ -16,6 +16,10 @@ import {
   persistLocale,
 } from "@lingo.dev/compiler/virtual/locale/client";
 import { LingoContext } from "./LingoContext";
+import {
+  _registerLocaleHandlers,
+  _unregisterLocaleHandlers,
+} from "./locale";
 import type { LocaleCode } from "lingo.dev/spec";
 
 const noop = () => {};
@@ -200,6 +204,18 @@ function LingoProvider__Prod({
     },
     [router, loadTranslations],
   );
+
+  /**
+   * Register module-level handlers for setLocale/getLocale
+   * This enables the standalone setLocale() and getLocale() functions
+   */
+  useEffect(() => {
+    _registerLocaleHandlers(() => locale, setLocale);
+
+    return () => {
+      _unregisterLocaleHandlers();
+    };
+  }, [locale, setLocale]);
 
   return (
     <LingoContext.Provider
@@ -447,6 +463,18 @@ function LingoProvider__Dev({
     },
     [router],
   );
+
+  /**
+   * Register module-level handlers for setLocale/getLocale
+   * This enables the standalone setLocale() and getLocale() functions
+   */
+  useEffect(() => {
+    _registerLocaleHandlers(() => locale, setLocale);
+
+    return () => {
+      _unregisterLocaleHandlers();
+    };
+  }, [locale, setLocale]);
 
   // Load widget on client-side only (avoids SSR issues with HTMLElement)
   useEffect(() => {
