@@ -332,32 +332,24 @@ LINGO_BUILD_MODE=cache-only npm run build
 
 ## React Client API
 
-The compiler provides hooks and functions for managing locale in your React components.
+The compiler provides hooks and components for managing locale in your React components.
 
-### `useLocale()`
+### `useLingoContext()`
 
-Returns the current locale (reactive - re-renders on change).
+Access the translation context to get the current locale and change it.
 
-```tsx
-"use client";
-import { useLocale } from "@lingo.dev/compiler/react";
-
-function MyComponent() {
-  const locale = useLocale();
-  return <span>Current: {locale}</span>;
-}
-```
-
-### `setLocale(locale)`
-
-Changes the current locale. Can be called from anywhere (event handlers, callbacks, etc.).
+**Returns:**
+- `locale` (string): Current locale code
+- `setLocale` (function): Change the locale
+- `translations` (object): Translation dictionary
+- `isLoading` (boolean): Whether translations are loading
 
 ```tsx
 "use client";
-import { useLocale, setLocale } from "@lingo.dev/compiler/react";
+import { useLingoContext } from "@lingo.dev/compiler/react";
 
 export function LanguageSwitcher() {
-  const locale = useLocale();
+  const { locale, setLocale } = useLingoContext();
 
   return (
     <select value={locale} onChange={(e) => setLocale(e.target.value)}>
@@ -371,7 +363,7 @@ export function LanguageSwitcher() {
 
 ### `LocaleSwitcher` Component
 
-A pre-built dropdown component for switching locales:
+A pre-built dropdown component for switching locales (no hooks needed):
 
 ```tsx
 "use client";

@@ -74,22 +74,6 @@ export function Header() {
 
 ## Hooks
 
-### `useLocale()`
-
-Returns the current locale (reactive - re-renders on change).
-
-**Example:**
-
-```tsx
-"use client";
-import { useLocale } from "@lingo.dev/compiler/react";
-
-function MyComponent() {
-  const locale = useLocale();
-  return <span>Current locale: {locale}</span>;
-}
-```
-
 ### `useTranslation()`
 
 Returns a translation function `t(hash)` for translating text in Client Components.
@@ -116,7 +100,7 @@ export function Welcome() {
 
 ### `useLingoContext()`
 
-Access the full translation context directly.
+Access the full translation context directly. Use this for custom locale switching components.
 
 **Returns:**
 
@@ -126,27 +110,14 @@ Access the full translation context directly.
 - `registerHashes` (function): Register translation hashes
 - `isLoading` (boolean): Loading state
 
-## Utility Functions
-
-### `setLocale(locale)`
-
-Changes the current locale. Can be called from anywhere (event handlers, callbacks, etc.)
-as long as `LingoProvider` is mounted.
-
-**Parameters:**
-
-- `locale` (string): The locale code to switch to (e.g., 'en', 'es', 'de')
-
-**Returns:** `Promise<void>`
-
 **Example:**
 
 ```tsx
 "use client";
-import { useLocale, setLocale } from "@lingo.dev/compiler/react";
+import { useLingoContext } from "@lingo.dev/compiler/react";
 
 export function LanguageSwitcher() {
-  const locale = useLocale();
+  const { locale, setLocale } = useLingoContext();
 
   return (
     <select value={locale} onChange={(e) => setLocale(e.target.value)}>
@@ -156,21 +127,6 @@ export function LanguageSwitcher() {
     </select>
   );
 }
-```
-
-### `getLocale()`
-
-Gets the current locale (non-reactive). For reactive updates in React components, use the `useLocale()` hook instead.
-This function is useful for non-React code or utility functions.
-
-**Returns:** Current locale string
-
-**Example:**
-
-```tsx
-import { getLocale } from "@lingo.dev/compiler/react";
-
-const currentLocale = getLocale();
 ```
 
 ## How It Works

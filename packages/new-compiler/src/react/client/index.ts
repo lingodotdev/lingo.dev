@@ -16,7 +16,3 @@ export { useLingoContext } from "../shared/LingoContext";
 export { useTranslation } from "./useTranslation";
 
 export { LocaleSwitcher } from "../shared/LocaleSwitcher";
-
-// Locale utilities
-export { useLocale } from "./useLocale";
-export { setLocale, getLocale } from "../shared/locale";
