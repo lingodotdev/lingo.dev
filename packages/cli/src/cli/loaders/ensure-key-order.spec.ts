@@ -98,12 +98,12 @@ describe("ensure-key-order loader", () => {
     });
   });
 
-  it("should append new keys at the end", async () => {
+  it("should skip keys not in original input of source locale", async () => {
     const originalInput = { a: 1, b: 2 };
     await loader.pull("en", originalInput);
     const data = { a: 11, b: 22, c: 33 };
     const result = await loader.push("en", data);
-    expect(result).toEqual({ a: 11, b: 22, c: 33 });
+    expect(result).toEqual({ a: 11, b: 22 });
   });
 
   it("should skip keys not in the target locale data", async () => {

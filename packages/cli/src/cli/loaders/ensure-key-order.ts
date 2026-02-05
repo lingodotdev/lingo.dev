@@ -42,9 +42,5 @@ function reorderKeys(
     }
   }
 
-  for (const key of dataKeys) {
-    orderedData[key] = data[key];
-  }
-
   return orderedData;
 }
