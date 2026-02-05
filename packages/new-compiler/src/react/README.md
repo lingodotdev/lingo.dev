@@ -100,7 +100,7 @@ export function Welcome() {
 
 ### `useLingoContext()`
 
-Access the full translation context directly. Use this for custom locale switching components.
+Access the full translation context directly. Use this for custom locale-switching components.
 
 **Returns:**
 
