@@ -10,10 +10,12 @@ const METADATA_DIR_DEV = "metadata-dev";
 const METADATA_DIR_BUILD = "metadata-build";
 
 /**
- * Opens a short-lived LMDB connection.
+ * Opens an LMDB connection for a single operation.
  *
- * Short-lived over singleton: bundlers (Webpack/Next.js) spawn isolated workers
- * that can't share a single connection. LMDB's MVCC handles concurrent access.
+ * lmdb-js deduplicates open() calls to the same path (ref-counted at C++ level),
+ * so this is cheap. Each open() also clears stale readers from terminated workers.
+ * Closing before the loader returns ensures the handle is released even if the
+ * worker is killed right after.
  */
 function openDatabaseConnection(dbPath: string): RootDatabase {
   fs.mkdirSync(dbPath, { recursive: true });
@@ -34,7 +36,8 @@ function openDatabaseConnection(dbPath: string): RootDatabase {
 }
 
 /**
- * Releases file handles to allow directory cleanup (avoids EBUSY/EPERM on Windows).
+ * Closes the LMDB connection. Also prevents EBUSY/EPERM on Windows during
+ * directory cleanup.
  */
 async function closeDatabaseConnection(
   db: RootDatabase,
@@ -92,8 +95,9 @@ export async function loadMetadata(dbPath: string): Promise<MetadataSchema> {
 /**
  * Persists translation entries to LMDB.
  *
- * Uses transactionSync to batch all writes into a single commit.
- * Async transactions are slow in Vite (~80-100ms) due to setImmediate scheduling.
+ * Uses transactionSync to batch all writes into a single commit. Async puts
+ * require a full event-loop round-trip (setImmediate → write thread → promise
+ * resolution) which adds noticeable latency in a busy bundler event loop.
  */
 export async function saveMetadata(
   dbPath: string,

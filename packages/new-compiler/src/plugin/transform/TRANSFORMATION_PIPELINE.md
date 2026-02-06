@@ -160,6 +160,7 @@ export async function Welcome() {
 **Storage**: LMDB key-value database in `.lingo/metadata-dev/` or `.lingo/metadata-build/`
 
 **Why LMDB?**
+
 - ~1M ops/sec write speed vs ~50K for SQLite
 - Zero-copy reads from memory-mapped files
 - Built-in LZ4 compression
@@ -197,7 +198,7 @@ Stats are stored under a special `__stats__` key:
 **Operations**:
 
 - `loadMetadata()`: Read all entries from LMDB database
-- `saveMetadataWithEntries()`: Atomically write entries using LMDB transactions
+- `saveMetadata()`: Atomically write entries using LMDB transactions
 - `cleanupExistingMetadata()`: Remove the database directory
 
 **Concurrency**: LMDB handles concurrent access internally (multi-reader, single-writer)
@@ -256,9 +257,9 @@ After transformation, the runtime provides the actual translation functionality:
 
 ```tsx
 const { t, locale, translations } = await getServerTranslations({
-  hashes: ["hash1", "hash2"],  // Injected at build time
-  locale: "es",               // Optional: auto-detected if omitted
-  basePath: process.cwd(),    // Optional: defaults to cwd
+  hashes: ["hash1", "hash2"], // Injected at build time
+  locale: "es", // Optional: auto-detected if omitted
+  basePath: process.cwd(), // Optional: defaults to cwd
 });
 ```
 

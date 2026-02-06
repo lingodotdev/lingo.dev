@@ -35,12 +35,12 @@ metadata management, translation execution, and caching.
 └────────────────┬────────────────────────────────┘
                  │ writes
                  ↓
-┌──────────────────────────────────────────────────┐
-│ Metadata Functions (saveMetadata/loadMetadata)   │
-│  - Pure functions for LMDB database access       │
-│  - Short-lived connections (multi-worker safe)   │
-│  - Returns TranslationEntry[]                    │
-└────────────────┬─────────────────────────────────┘
+┌─────────────────────────────────────────────────┐
+│ Metadata Functions (saveMetadata/loadMetadata)  │
+│  - Pure functions for LMDB database access      │
+│  - Per-operation connections (see manager.ts)   │
+│  - Returns TranslationEntry[]                   │
+└────────────────┬────────────────────────────────┘
                  │ reads from
                  ↓
 ┌─────────────────────────────────────────────────┐
