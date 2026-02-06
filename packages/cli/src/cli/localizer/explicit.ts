@@ -257,13 +257,27 @@ function createAiSdkLocalizer(params: {
           ],
         });
 
-        const result = JSON.parse(response.text);
+        let result: any;
+        try {
+          result = JSON.parse(response.text);
+        } catch (e) {
+          try {
+            const repaired = jsonrepair(response.text);
+            result = JSON.parse(repaired);
+          } catch (e2) {
+            console.error(
+              `Failed to parse response from Lingo.dev. Response: ${response.text}`,
+            );
+            throw new Error(`Failed to parse response from Lingo.dev: ${e2}`);
+          }
+        }
+
         let finalResult: Record<string, any> = {};
 
         // Handle both object and string responses
-        if (typeof result.data === "object" && result.data !== null) {
+        if (typeof result?.data === "object" && result.data !== null) {
           finalResult = result.data;
-        } else {
+        } else if (result?.data) {
           // Handle string responses - extract and repair JSON
           const index = result.data.indexOf("{");
           const lastIndex = result.data.lastIndexOf("}");
@@ -271,7 +285,7 @@ function createAiSdkLocalizer(params: {
             const trimmed = result.data.slice(index, lastIndex + 1);
             const repaired = jsonrepair(trimmed);
             const parsed = JSON.parse(repaired);
-            finalResult = parsed.data || {};
+            finalResult = parsed.data || parsed || {};
           }
         }
 
