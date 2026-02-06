@@ -124,7 +124,7 @@ export default new Command()
   )
   .option(
     "--batch-size <number>",
-    "Number of translations to process in a single batch",
+    "Number of translations to process in a single batch (not applicable when using lingo.dev provider)",
     (val: string) => parseInt(val),
   )
   .action(async (args) => {

@@ -65,7 +65,7 @@ export default async function setup(input: CmdRunContext) {
           }
           task.title =
             ctx.localizer.id === "Lingo.dev" ||
-            ctx.localizer.id === "Lingo.dev vNext"
+              ctx.localizer.id === "Lingo.dev vNext"
               ? `Using ${chalk.hex(colors.green)(ctx.localizer.id)} provider`
               : ctx.localizer.id === "pseudo"
                 ? `Using ${chalk.hex(colors.blue)("pseudo")} mode for testing`

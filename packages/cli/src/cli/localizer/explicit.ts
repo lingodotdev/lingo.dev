@@ -265,10 +265,16 @@ function createAiSdkLocalizer(params: {
             const repaired = jsonrepair(response.text);
             result = JSON.parse(repaired);
           } catch (e2) {
+            const snippet =
+              response.text.length > 500
+                ? `${response.text.slice(0, 500)}…`
+                : response.text;
             console.error(
-              `Failed to parse response from Lingo.dev. Response: ${response.text}`,
+              `Failed to parse response from Lingo.dev. Response snippet: ${snippet}`,
             );
-            throw new Error(`Failed to parse response from Lingo.dev: ${e2}`);
+            throw new Error(
+              `Failed to parse response from Lingo.dev: ${e2} (Snippet: ${snippet})`,
+            );
           }
         }
 
@@ -309,7 +315,7 @@ function createAiSdkLocalizer(params: {
  */
 function extractPayloadChunks(
   payload: Record<string, string>,
-  batchSize: number = 25,
+  batchSize?: number,
 ): Record<string, string>[] {
   const idealBatchItemSize = 250;
   const result: Record<string, string>[] = [];
@@ -323,9 +329,11 @@ function extractPayloadChunks(
     currentChunkItemCount++;
 
     const currentChunkSize = countWordsInRecord(currentChunk);
+    const effectiveBatchSize =
+      batchSize && batchSize > 0 ? batchSize : payloadEntries.length || 1;
     if (
       currentChunkSize > idealBatchItemSize ||
-      currentChunkItemCount >= batchSize ||
+      currentChunkItemCount >= effectiveBatchSize ||
       i === payloadEntries.length - 1
     ) {
       result.push(currentChunk);
