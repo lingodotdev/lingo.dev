@@ -26,7 +26,7 @@ export function createBasicTranslator(
         processableData: chunk,
       });
       subResults.push(result);
-      onProgress((i / chunks.length) * 100, chunk, result);
+      onProgress(((i + 1) / chunks.length) * 100, chunk, result);
     }
 
     const result = _.merge({}, ...subResults);

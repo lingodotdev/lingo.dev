@@ -277,7 +277,7 @@ function createAiSdkLocalizer(params: {
 
         subResults.push(finalResult);
         if (onProgress) {
-          onProgress((i / chunks.length) * 100, chunk, finalResult);
+          onProgress(((i + 1) / chunks.length) * 100, chunk, finalResult);
         }
       }
 
