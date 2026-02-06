@@ -288,10 +288,17 @@ function createAiSdkLocalizer(params: {
           const index = result.data.indexOf("{");
           const lastIndex = result.data.lastIndexOf("}");
           if (index !== -1 && lastIndex !== -1) {
-            const trimmed = result.data.slice(index, lastIndex + 1);
-            const repaired = jsonrepair(trimmed);
-            const parsed = JSON.parse(repaired);
-            finalResult = parsed.data || parsed || {};
+            try {
+              const trimmed = result.data.slice(index, lastIndex + 1);
+              const repaired = jsonrepair(trimmed);
+              const parsed = JSON.parse(repaired);
+              finalResult = parsed.data || parsed || {};
+            } catch (e) {
+              console.error(
+                `Failed to parse nested JSON response. Snippet: ${result.data.slice(0, 100)}...`,
+              );
+              // Fallback to empty object or continue
+            }
           }
         }
 
