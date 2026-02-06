@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.131.1
+
+### Patch Changes
+
+- [#1968](https://github.com/lingodotdev/lingo.dev/pull/1968) [`4562425`](https://github.com/lingodotdev/lingo.dev/commit/4562425ed3b26f56fb16e25da25341087f6d6936) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Fixed vNext provider showing incorrect status messages ("Skipping glossary", etc.) during setup
+
 ## 0.131.0
 
 ### Minor Changes
