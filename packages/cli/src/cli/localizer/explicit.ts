@@ -297,7 +297,9 @@ function createAiSdkLocalizer(params: {
               console.error(
                 `Failed to parse nested JSON response. Snippet: ${result.data.slice(0, 100)}...`,
               );
-              // Fallback to empty object or continue
+              throw new Error(
+                `Failed to parse nested JSON response: ${e} (Snippet: ${result.data.slice(0, 100)}...)`,
+              );
             }
           }
         }
