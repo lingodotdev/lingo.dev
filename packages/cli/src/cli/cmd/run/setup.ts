@@ -59,7 +59,8 @@ export default async function setup(input: CmdRunContext) {
             );
           }
           task.title =
-            ctx.localizer.id === "Lingo.dev" || ctx.localizer.id === "Lingo.dev vNext"
+            ctx.localizer.id === "Lingo.dev" ||
+            ctx.localizer.id === "Lingo.dev vNext"
               ? `Using ${chalk.hex(colors.green)(ctx.localizer.id)} provider`
               : ctx.localizer.id === "pseudo"
                 ? `Using ${chalk.hex(colors.blue)("pseudo")} mode for testing`
@@ -69,7 +70,9 @@ export default async function setup(input: CmdRunContext) {
       {
         title: "Checking authentication",
         enabled: (ctx) =>
-          (ctx.localizer?.id === "Lingo.dev" || ctx.localizer?.id === "Lingo.dev vNext") && !ctx.flags.pseudo,
+          (ctx.localizer?.id === "Lingo.dev" ||
+            ctx.localizer?.id === "Lingo.dev vNext") &&
+          !ctx.flags.pseudo,
         task: async (ctx, task) => {
           const authStatus = await ctx.localizer!.checkAuth();
           if (!authStatus.authenticated) {
@@ -82,7 +85,9 @@ export default async function setup(input: CmdRunContext) {
       },
       {
         title: "Validating configuration",
-        enabled: (ctx) => ctx.localizer?.id !== "Lingo.dev" && ctx.localizer?.id !== "Lingo.dev vNext",
+        enabled: (ctx) =>
+          ctx.localizer?.id !== "Lingo.dev" &&
+          ctx.localizer?.id !== "Lingo.dev vNext",
         task: async (ctx, task) => {
           const validationStatus = await ctx.localizer!.validateSettings!();
           if (!validationStatus.valid) {
@@ -96,7 +101,9 @@ export default async function setup(input: CmdRunContext) {
       {
         title: "Initializing localization provider",
         async task(ctx, task) {
-          const isLingoDotDev = ctx.localizer!.id === "Lingo.dev";
+          const isLingoDotDev =
+            ctx.localizer!.id === "Lingo.dev" ||
+            ctx.localizer!.id === "Lingo.dev vNext";
           const isPseudo = ctx.localizer!.id === "pseudo";
 
           const subTasks = isLingoDotDev
