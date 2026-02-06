@@ -52,7 +52,12 @@ export default async function setup(input: CmdRunContext) {
         task: async (ctx, task) => {
           const provider = ctx.flags.pseudo ? "pseudo" : ctx.config?.provider;
           const vNext = ctx.config?.vNext;
-          ctx.localizer = createLocalizer(provider, ctx.flags.apiKey, vNext);
+          ctx.localizer = createLocalizer(
+            provider,
+            ctx.flags.apiKey,
+            vNext,
+            ctx.flags.batchSize,
+          );
           if (!ctx.localizer) {
             throw new Error(
               "Could not create localization provider. Please check your i18n.json configuration.",
@@ -101,23 +106,23 @@ export default async function setup(input: CmdRunContext) {
 
           const subTasks = isLingoDotDev
             ? [
-                "Brand voice enabled",
-                "Translation memory connected",
-                "Glossary enabled",
-                "Quality assurance enabled",
-              ].map((title) => ({ title, task: () => {} }))
+              "Brand voice enabled",
+              "Translation memory connected",
+              "Glossary enabled",
+              "Quality assurance enabled",
+            ].map((title) => ({ title, task: () => { } }))
             : isPseudo
               ? [
-                  "Pseudo-localization mode active",
-                  "Character replacement configured",
-                  "No external API calls",
-                ].map((title) => ({ title, task: () => {} }))
+                "Pseudo-localization mode active",
+                "Character replacement configured",
+                "No external API calls",
+              ].map((title) => ({ title, task: () => { } }))
               : [
-                  "Skipping brand voice",
-                  "Skipping glossary",
-                  "Skipping translation memory",
-                  "Skipping quality assurance",
-                ].map((title) => ({ title, task: () => {}, skip: true }));
+                "Skipping brand voice",
+                "Skipping glossary",
+                "Skipping translation memory",
+                "Skipping quality assurance",
+              ].map((title) => ({ title, task: () => { }, skip: true }));
 
           return task.newListr(subTasks, {
             concurrent: true,
