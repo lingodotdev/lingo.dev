@@ -97,7 +97,7 @@ export function createBasicTranslator(
  */
 function extractPayloadChunks(
   payload: Record<string, string>,
-  batchSize: number = 25,
+  batchSize?: number,
 ): Record<string, string>[] {
   const idealBatchItemSize = 250;
   const result: Record<string, string>[] = [];
@@ -111,9 +111,11 @@ function extractPayloadChunks(
     currentChunkItemCount++;
 
     const currentChunkSize = countWordsInRecord(currentChunk);
+    const effectiveBatchSize =
+      batchSize && batchSize > 0 ? batchSize : payloadEntries.length || 1;
     if (
       currentChunkSize > idealBatchItemSize ||
-      currentChunkItemCount >= batchSize ||
+      currentChunkItemCount >= effectiveBatchSize ||
       i === payloadEntries.length - 1
     ) {
       result.push(currentChunk);

@@ -59,6 +59,31 @@ describe("createBasicTranslator", () => {
         );
     });
 
+    it("should process >25 keys in a single batch by default (infinite batch size)", async () => {
+        const inputData: Record<string, string> = {};
+        for (let i = 0; i < 30; i++) {
+            inputData[`key${i}`] = `value${i}`;
+        }
+
+        const input = {
+            sourceLocale: "en",
+            targetLocale: "fr",
+            processableData: inputData,
+        };
+
+        (generateText as any).mockResolvedValue({
+            text: JSON.stringify({ data: {} }),
+        });
+
+        const onProgress = vi.fn();
+        const translator = createBasicTranslator(mockModel, mockSystemPrompt);
+
+        await translator(input, onProgress);
+
+        // Should be 1 call, not 2 (which would happen if default was 25)
+        expect(generateText).toHaveBeenCalledTimes(1);
+    });
+
     it("should respect batchSize parameter", async () => {
         const input = {
             sourceLocale: "en",
