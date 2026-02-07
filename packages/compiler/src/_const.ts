@@ -4,4 +4,4 @@ export const ModuleId = {
   ReactRouter: ["lingo.dev/react/react-router", "lingo.dev/react-router"],
 };
 
-export const LCP_DICTIONARY_FILE_NAME = "dictionary.js";
+export const LCP_DICTIONARY_FILE_NAME = "dictionary.json";
