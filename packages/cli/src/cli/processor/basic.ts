@@ -4,6 +4,7 @@ import _ from "lodash";
 
 type ModelSettings = {
   temperature?: number;
+  batchSize?: number;
 };
 
 export function createBasicTranslator(
@@ -12,7 +13,10 @@ export function createBasicTranslator(
   settings: ModelSettings = {},
 ) {
   return async (input: LocalizerInput, onProgress: LocalizerProgressFn) => {
-    const chunks = extractPayloadChunks(input.processableData);
+    const chunks = extractPayloadChunks(
+      input.processableData,
+      settings.batchSize,
+    );
 
     const subResults: Record<string, any>[] = [];
     for (let i = 0; i < chunks.length; i++) {
@@ -22,7 +26,7 @@ export function createBasicTranslator(
         processableData: chunk,
       });
       subResults.push(result);
-      onProgress((i / chunks.length) * 100, chunk, result);
+      onProgress(((i + 1) / chunks.length) * 100, chunk, result);
     }
 
     const result = _.merge({}, ...subResults);
@@ -88,13 +92,14 @@ export function createBasicTranslator(
 /**
  * Extract payload chunks based on the ideal chunk size
  * @param payload - The payload to be chunked
+ * @param batchSize - Max number of keys per chunk (default: 25)
  * @returns An array of payload chunks
  */
 function extractPayloadChunks(
   payload: Record<string, string>,
+  batchSize?: number,
 ): Record<string, string>[] {
   const idealBatchItemSize = 250;
-  const batchSize = 25;
   const result: Record<string, string>[] = [];
   let currentChunk: Record<string, string> = {};
   let currentChunkItemCount = 0;
@@ -106,9 +111,11 @@ function extractPayloadChunks(
     currentChunkItemCount++;
 
     const currentChunkSize = countWordsInRecord(currentChunk);
+    const effectiveBatchSize =
+      batchSize && batchSize > 0 ? batchSize : payloadEntries.length || 1;
     if (
       currentChunkSize > idealBatchItemSize ||
-      currentChunkItemCount >= batchSize ||
+      currentChunkItemCount >= effectiveBatchSize ||
       i === payloadEntries.length - 1
     ) {
       result.push(currentChunk);

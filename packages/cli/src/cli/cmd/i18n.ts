@@ -90,6 +90,11 @@ export default new Command()
     "--strict",
     "Stop immediately on first error instead of continuing to process remaining buckets and locales (fail-fast mode)",
   )
+  .option(
+    "--batch-size <number>",
+    "Number of translations to process in a single batch",
+    parseInt,
+  )
   .action(async function (options) {
     updateGitignore();
 
@@ -429,13 +434,13 @@ export default new Command()
                 }
 
                 bucketOra.start(
-                  `[${sourceLocale} -> ${targetLocale}] [${
-                    Object.keys(processableData).length
+                  `[${sourceLocale} -> ${targetLocale}] [${Object.keys(processableData).length
                   } entries] (0%) AI localization in progress...`,
                 );
                 let processPayload = createProcessor(i18nConfig!.provider, {
                   apiKey: settings.auth.apiKey,
                   apiUrl: settings.auth.apiUrl,
+                  batchSize: flags.batchSize,
                 });
                 processPayload = withExponentialBackoff(
                   processPayload,
@@ -453,9 +458,8 @@ export default new Command()
                     targetData: flags.force ? {} : targetData,
                   },
                   (progress, sourceChunk, processedChunk) => {
-                    bucketOra.text = `[${sourceLocale} -> ${targetLocale}] [${
-                      Object.keys(processableData).length
-                    } entries] (${progress}%) AI localization in progress...`;
+                    bucketOra.text = `[${sourceLocale} -> ${targetLocale}] [${Object.keys(processableData).length
+                      } entries] (${progress}%) AI localization in progress...`;
                   },
                 );
 
@@ -657,6 +661,7 @@ function parseFlags(options: any) {
     file: Z.array(Z.string()).optional(),
     interactive: Z.boolean().prefault(false),
     debug: Z.boolean().prefault(false),
+    batchSize: Z.number().min(1).optional(),
   }).parse(options);
 }
 

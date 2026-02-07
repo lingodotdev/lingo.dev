@@ -14,7 +14,7 @@ import { createOllama } from "ollama-ai-provider-v2";
 
 export default function createProcessor(
   provider: I18nConfig["provider"],
-  params: { apiKey?: string; apiUrl: string },
+  params: { apiKey?: string; apiUrl: string; batchSize?: number },
 ): LocalizerFn {
   if (!provider) {
     const result = createLingoLocalizer(params);
@@ -22,7 +22,10 @@ export default function createProcessor(
   } else {
     const model = getPureModelProvider(provider);
     const settings = provider.settings || {};
-    const result = createBasicTranslator(model, provider.prompt, settings);
+    const result = createBasicTranslator(model, provider.prompt, {
+      ...settings,
+      batchSize: params.batchSize,
+    });
     return result;
   }
 }
@@ -32,23 +35,21 @@ function getPureModelProvider(provider: I18nConfig["provider"]) {
     providerId: string,
     envVar?: string,
   ) => dedent`
-  You're trying to use raw ${chalk.dim(providerId)} API for translation. ${
-    envVar
+  You're trying to use raw ${chalk.dim(providerId)} API for translation. ${envVar
       ? `However, ${chalk.dim(envVar)} environment variable is not set.`
       : "However, that provider is unavailable."
-  }
+    }
 
   To fix this issue:
-  1. ${
-    envVar
+  1. ${envVar
       ? `Set ${chalk.dim(envVar)} in your environment variables`
       : "Set the environment variable for your provider (if required)"
-  }, or
+    }, or
   2. Remove the ${chalk.italic(
-    "provider",
-  )} node from your i18n.json configuration to switch to ${chalk.hex(
-    colors.green,
-  )("Lingo.dev")}
+      "provider",
+    )} node from your i18n.json configuration to switch to ${chalk.hex(
+      colors.green,
+    )("Lingo.dev")}
 
   ${chalk.hex(colors.blue)("Docs: https://lingo.dev/go/docs")}
 `;
@@ -60,10 +61,10 @@ function getPureModelProvider(provider: I18nConfig["provider"]) {
   To fix this issue:
   1. Switch to one of the supported providers, or
   2. Remove the ${chalk.italic(
-    "provider",
-  )} node from your i18n.json configuration to switch to ${chalk.hex(
-    colors.green,
-  )("Lingo.dev")}
+      "provider",
+    )} node from your i18n.json configuration to switch to ${chalk.hex(
+      colors.green,
+    )("Lingo.dev")}
 
   ${chalk.hex(colors.blue)("Docs: https://lingo.dev/go/docs")}
   `;

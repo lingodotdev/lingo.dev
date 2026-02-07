@@ -10,6 +10,7 @@ export default function createLocalizer(
   provider: I18nConfig["provider"] | "pseudo" | null | undefined,
   apiKey?: string,
   vNext?: string,
+  batchSize?: number,
 ): ILocalizer {
   if (provider === "pseudo") {
     return createPseudoLocalizer();
@@ -23,6 +24,6 @@ export default function createLocalizer(
   if (!provider) {
     return createLingoDotDevLocalizer(apiKey);
   } else {
-    return createExplicitLocalizer(provider);
+    return createExplicitLocalizer(provider, batchSize);
   }
 }
