@@ -186,15 +186,6 @@ Each translation entry is stored with its hash as the key:
 }
 ```
 
-Stats are stored under a special `__stats__` key:
-
-```typescript
-{
-  totalEntries: 1,
-  lastUpdated: "2025-01-20T10:00:00.000Z"
-}
-```
-
 **Operations**:
 
 - `loadMetadata()`: Read all entries from LMDB database

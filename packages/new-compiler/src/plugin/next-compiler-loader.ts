@@ -44,7 +44,11 @@ export default async function nextCompilerLoader(
 
     // Update metadata with new entries
     if (result.newEntries && result.newEntries.length > 0) {
-      await saveMetadata(config.metadataFilePath, result.newEntries);
+      await saveMetadata(
+        config.metadataFilePath,
+        result.newEntries,
+        config.environment !== "development",
+      );
 
       logger.debug(
         `[Turbopack Loader] Found ${result.newEntries.length} translatable text(s) in ${this.resourcePath}`,

@@ -355,7 +355,7 @@ export const lingoUnplugin = createUnplugin<
           }
           // Update metadata with new entries (thread-safe)
           if (result.newEntries && result.newEntries.length > 0) {
-            await saveMetadata(getMetadataPath(), result.newEntries);
+            await saveMetadata(getMetadataPath(), result.newEntries, !isDev);
 
             // Track stats for observability
             totalEntriesCount += result.newEntries.length;

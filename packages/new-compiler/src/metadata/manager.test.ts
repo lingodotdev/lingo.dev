@@ -3,29 +3,23 @@ import fs from "fs";
 import path from "path";
 import os from "os";
 import {
-  createEmptyMetadata,
   loadMetadata,
   saveMetadata,
   cleanupExistingMetadata,
   getMetadataPath,
 } from "./manager";
-import type { TranslationEntry } from "../types";
+import type { ContentTranslationEntry } from "../types";
+import { generateTranslationHash } from "../utils/hash";
 
-function createTestEntry(
-  overrides: Partial<TranslationEntry> & {
-    hash?: string;
-    sourceText?: string;
-  } = {},
-): TranslationEntry {
-  const hash = overrides.hash ?? `hash_${Math.random().toString(36).slice(2)}`;
+function createTestEntry(sourceText: string): ContentTranslationEntry {
+  const context = { filePath: "test.tsx", componentName: "TestComponent" };
   return {
     type: "content",
-    hash,
-    sourceText: overrides.sourceText ?? `Source text for ${hash}`,
-    context: { filePath: "test.tsx", componentName: "TestComponent" },
+    sourceText,
+    context,
     location: { filePath: "test.tsx", line: 1, column: 1 },
-    ...overrides,
-  } as TranslationEntry;
+    hash: generateTranslationHash(sourceText, context),
+  };
 }
 
 function createUniqueDbPath(): string {
@@ -46,125 +40,96 @@ describe("metadata", () => {
     cleanupExistingMetadata(testDbPath);
   });
 
-  describe("createEmptyMetadata", () => {
-    it("should return valid empty metadata structure", () => {
-      const metadata = createEmptyMetadata();
-
-      expect(metadata.entries).toEqual({});
-      expect(metadata.stats!.totalEntries).toBe(0);
-      // Verify valid ISO date
-      const date = new Date(metadata.stats!.lastUpdated);
-      expect(date.getTime()).not.toBeNaN();
-    });
-  });
-
   describe("loadMetadata", () => {
     it("should return empty metadata for new database", async () => {
       const metadata = await loadMetadata(testDbPath);
-      expect(metadata.entries).toEqual({});
-      expect(metadata.stats!.totalEntries).toBe(0);
+      expect(metadata).toEqual({});
     });
 
     it("should load and preserve all entry fields", async () => {
-      const entry: TranslationEntry = {
-        type: "content",
-        hash: "full-entry",
-        sourceText: "Hello world",
-        context: { filePath: "app.tsx", componentName: "AppComponent" },
-        location: { filePath: "app.tsx", line: 42, column: 10 },
-      };
+      const entry = createTestEntry("Hello world");
 
       await saveMetadata(testDbPath, [entry]);
       const metadata = await loadMetadata(testDbPath);
 
-      expect(metadata.entries["full-entry"]).toEqual(entry);
-      expect(metadata.stats!.totalEntries).toBe(1);
+      expect(metadata[entry.hash]).toEqual(entry);
+      expect(Object.keys(metadata).length).toBe(1);
     });
 
     it("should handle entries with very long sourceText", async () => {
       const longText = "A".repeat(100000);
-      await saveMetadata(testDbPath, [
-        createTestEntry({ hash: "long-text", sourceText: longText }),
-      ]);
+      const entry = createTestEntry(longText);
+      await saveMetadata(testDbPath, [entry]);
 
       const metadata = await loadMetadata(testDbPath);
-      expect(metadata.entries["long-text"].sourceText).toBe(longText);
+      expect(metadata[entry.hash].sourceText).toBe(longText);
     });
   });
 
   describe("saveMetadata", () => {
-    it("should save, accumulate, and update entries correctly", async () => {
-      // Save single entry
-      await saveMetadata(testDbPath, [
-        createTestEntry({ hash: "entry-1", sourceText: "v1" }),
-      ]);
-      expect((await loadMetadata(testDbPath)).stats!.totalEntries).toBe(1);
+    it("should save a single entry", async () => {
+      const entry = createTestEntry("v1");
+      await saveMetadata(testDbPath, [entry]);
+      const metadata = await loadMetadata(testDbPath);
+      expect(Object.keys(metadata).length).toBe(1);
+      expect(metadata[entry.hash].sourceText).toBe("v1");
+    });
 
-      // Accumulate multiple entries
+    it("should accumulate entries across saves", async () => {
+      await saveMetadata(testDbPath, [createTestEntry("text-1")]);
       await saveMetadata(testDbPath, [
-        createTestEntry({ hash: "entry-2" }),
-        createTestEntry({ hash: "entry-3" }),
+        createTestEntry("text-2"),
+        createTestEntry("text-3"),
       ]);
-      expect((await loadMetadata(testDbPath)).stats!.totalEntries).toBe(3);
+      const metadata = await loadMetadata(testDbPath);
+      expect(Object.keys(metadata).length).toBe(3);
+    });
 
-      // Update existing entry (count should not increase)
-      await saveMetadata(testDbPath, [
-        createTestEntry({ hash: "entry-1", sourceText: "v2" }),
-      ]);
+    it("should overwrite existing entry on re-save", async () => {
+      const entry = createTestEntry("text-1");
+      await saveMetadata(testDbPath, [entry]);
+
+      const updatedEntry = createTestEntry("text-1");
+      updatedEntry.location = { filePath: "moved.tsx", line: 99, column: 5 };
+      await saveMetadata(testDbPath, [updatedEntry]);
+
       const updated = await loadMetadata(testDbPath);
-      expect(updated.stats!.totalEntries).toBe(3);
-      expect(updated.entries["entry-1"].sourceText).toBe("v2");
+      expect(Object.keys(updated).length).toBe(1);
+      expect(updated[entry.hash].location.filePath).toBe("moved.tsx");
+    });
 
-      // Empty array should not change anything
+    it("should handle empty array save", async () => {
       await saveMetadata(testDbPath, []);
-      expect((await loadMetadata(testDbPath)).stats!.totalEntries).toBe(3);
+      const metadata = await loadMetadata(testDbPath);
+      expect(Object.keys(metadata).length).toBe(0);
     });
 
     it("should handle large batch of entries", async () => {
       const entries = Array.from({ length: 100 }, (_, i) =>
-        createTestEntry({ hash: `batch-${i}` }),
+        createTestEntry(`batch-${i}`),
       );
 
       await saveMetadata(testDbPath, entries);
-      expect((await loadMetadata(testDbPath)).stats!.totalEntries).toBe(100);
-    });
-
-    it("should maintain data integrity after many operations", async () => {
-      // Many saves with overlapping keys
-      for (let i = 0; i < 10; i++) {
-        await saveMetadata(testDbPath, [
-          createTestEntry({
-            hash: `persistent-${i % 5}`,
-            sourceText: `v${i}`,
-          }),
-          createTestEntry({ hash: `unique-${i}` }),
-        ]);
-      }
-
-      const final = await loadMetadata(testDbPath);
-      // 5 persistent + 10 unique = 15
-      expect(final.stats!.totalEntries).toBe(15);
+      expect(Object.keys(await loadMetadata(testDbPath)).length).toBe(100);
     });
   });
 
   describe("concurrent access (single process)", () => {
-    it("should handle concurrent operations from multiple calls", async () => {
-      // LMDB handles concurrent writes via OS-level locking
-      const promises = Array.from({ length: 10 }, async (_, i) => {
-        await saveMetadata(testDbPath, [
-          createTestEntry({ hash: `concurrent-${i}` }),
-        ]);
+    it("should handle 1000 concurrent operations", async () => {
+      const promises = Array.from({ length: 1000 }, async (_, i) => {
+        await saveMetadata(testDbPath, [createTestEntry(`entry-${i}`)]);
       });
       await Promise.all(promises);
 
-      // Verify all entries are present
-      expect((await loadMetadata(testDbPath)).stats!.totalEntries).toBe(10);
+      const final = await loadMetadata(testDbPath);
+      expect(Object.keys(final).length).toBe(1000);
     });
   });
 
   describe("cleanupExistingMetadata", () => {
     it("should remove database and allow reopening with fresh state", async () => {
-      await saveMetadata(testDbPath, [createTestEntry({ hash: "before" })]);
+      const entry = createTestEntry("before");
+      await saveMetadata(testDbPath, [entry]);
       expect(fs.existsSync(testDbPath)).toBe(true);
 
       // Cleanup should succeed because saveMetadata closes the DB
@@ -173,8 +138,8 @@ describe("metadata", () => {
 
       // Should work with fresh state after cleanup
       const metadata = await loadMetadata(testDbPath);
-      expect(metadata.entries["before"]).toBeUndefined();
-      expect(metadata.stats!.totalEntries).toBe(0);
+      expect(metadata[entry.hash]).toBeUndefined();
+      expect(Object.keys(metadata).length).toBe(0);
     });
 
     it("should handle non-existent path and multiple calls gracefully", () => {
@@ -211,9 +176,11 @@ describe("metadata", () => {
   });
 
   describe("error handling", () => {
-    it("should throw descriptive error for invalid path", async () => {
+    it("should throw error for invalid path", async () => {
       const invalidPath = "/root/definitely/cannot/create/this/path";
-      await expect(loadMetadata(invalidPath)).rejects.toThrow();
+      await expect(loadMetadata(invalidPath)).rejects.toThrow(
+        `Failed to open LMDB at ${invalidPath}`,
+      );
     });
   });
 });

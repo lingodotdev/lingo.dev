@@ -5,7 +5,6 @@ import type { MetadataSchema, PathConfig, TranslationEntry } from "../types";
 import { getLingoDir } from "../utils/path-helpers";
 import { logger } from "../utils/logger";
 
-const STATS_KEY = "__stats__";
 const METADATA_DIR_DEV = "metadata-dev";
 const METADATA_DIR_BUILD = "metadata-build";
 
@@ -14,20 +13,14 @@ const METADATA_DIR_BUILD = "metadata-build";
  *
  * lmdb-js deduplicates open() calls to the same path (ref-counted at C++ level),
  * so this is cheap. Each open() also clears stale readers from terminated workers.
- * Closing before the loader returns ensures the handle is released even if the
- * worker is killed right after.
  */
-function openDatabaseConnection(dbPath: string): RootDatabase {
-  fs.mkdirSync(dbPath, { recursive: true });
-
-  const isBuildMode = dbPath.endsWith(METADATA_DIR_BUILD);
-
+function openDatabaseConnection(dbPath: string, noSync: boolean): RootDatabase {
   try {
+    fs.mkdirSync(dbPath, { recursive: true });
     return open({
       path: dbPath,
       compression: true,
-      // Build: skip fsync (data is ephemeral). Dev: sync for durability.
-      noSync: isBuildMode,
+      noSync,
     });
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
@@ -50,78 +43,55 @@ async function closeDatabaseConnection(
   }
 }
 
-function readEntriesFromDb(db: RootDatabase): MetadataSchema {
-  const entries: Record<string, TranslationEntry> = {};
-
-  for (const { key, value } of db.getRange()) {
-    const keyStr = key as string;
-    if (keyStr !== STATS_KEY) {
-      entries[keyStr] = value as TranslationEntry;
-    }
-  }
-
-  const stats = db.get(STATS_KEY) as MetadataSchema["stats"] | undefined;
-  if (Object.keys(entries).length === 0 && !stats) {
-    return createEmptyMetadata();
-  }
-  return {
-    entries,
-    stats: stats || {
-      totalEntries: Object.keys(entries).length,
-      lastUpdated: new Date().toISOString(),
-    },
-  };
-}
-
-export function createEmptyMetadata(): MetadataSchema {
-  return {
-    entries: {},
-    stats: {
-      totalEntries: 0,
-      lastUpdated: new Date().toISOString(),
-    },
-  };
-}
-
-export async function loadMetadata(dbPath: string): Promise<MetadataSchema> {
-  const db = openDatabaseConnection(dbPath);
+/**
+ * Opens a database connection, runs the callback, and ensures the connection
+ * is closed afterwards.
+ */
+async function runWithDbConnection<T>(
+  dbPath: string,
+  noSync: boolean,
+  fn: (db: RootDatabase) => T,
+): Promise<T> {
+  const db = openDatabaseConnection(dbPath, noSync);
   try {
-    return readEntriesFromDb(db);
+    return fn(db);
   } finally {
     await closeDatabaseConnection(db, dbPath);
   }
 }
 
+function readEntriesFromDb(db: RootDatabase): MetadataSchema {
+  const entries: MetadataSchema = {};
+
+  for (const { key, value } of db.getRange()) {
+    entries[key as string] = value as TranslationEntry;
+  }
+
+  return entries;
+}
+
+export async function loadMetadata(
+  dbPath: string,
+  noSync = false,
+): Promise<MetadataSchema> {
+  return runWithDbConnection(dbPath, noSync, readEntriesFromDb);
+}
+
 /**
- * Persists translation entries to LMDB.
- *
- * Uses transactionSync to batch all writes into a single commit. Async puts
- * require a full event-loop round-trip (setImmediate → write thread → promise
- * resolution) which adds noticeable latency in a busy bundler event loop.
+ * Persists translation entries to LMDB in a single atomic transaction.
  */
 export async function saveMetadata(
   dbPath: string,
   entries: TranslationEntry[],
+  noSync = false,
 ): Promise<void> {
-  const db = openDatabaseConnection(dbPath);
-
-  try {
+  return runWithDbConnection(dbPath, noSync, (db) => {
     db.transactionSync(() => {
       for (const entry of entries) {
         db.putSync(entry.hash, entry);
       }
-
-      const totalKeys = db.getKeysCount();
-      const entryCount =
-        db.get(STATS_KEY) !== undefined ? totalKeys - 1 : totalKeys;
-      db.putSync(STATS_KEY, {
-        totalEntries: entryCount,
-        lastUpdated: new Date().toISOString(),
-      });
     });
-  } finally {
-    await closeDatabaseConnection(db, dbPath);
-  }
+  });
 }
 
 export function cleanupExistingMetadata(metadataDbPath: string): void {

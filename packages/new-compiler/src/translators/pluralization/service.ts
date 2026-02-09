@@ -41,7 +41,9 @@ export class PluralizationService {
   ) {
     const localeModel = parseModelString(config.model);
     if (!localeModel) {
-      throw new Error(`Invalid model format in pluralization service: "${config.model}"`);
+      throw new Error(
+        `Invalid model format in pluralization service: "${config.model}"`,
+      );
     }
 
     // Validate and fetch API keys for the pluralization provider
@@ -250,7 +252,7 @@ export class PluralizationService {
    */
   async process(metadata: MetadataSchema): Promise<PluralizationStats> {
     const startTime = performance.now();
-    const totalEntries = Object.keys(metadata.entries).length;
+    const totalEntries = Object.keys(metadata).length;
 
     if (totalEntries === 0) {
       return {
@@ -269,10 +271,7 @@ export class PluralizationService {
 
     // Step 1: Detect plural candidates using pattern matching
     const entriesMap: Record<string, string> = Object.fromEntries(
-      Object.entries(metadata.entries).map(([hash, entry]) => [
-        hash,
-        entry.sourceText,
-      ]),
+      Object.entries(metadata).map(([hash, entry]) => [hash, entry.sourceText]),
     );
 
     const candidates = detectPluralCandidates(entriesMap, this.logger);
@@ -305,7 +304,7 @@ export class PluralizationService {
 
     for (const candidate of candidates) {
       const result = icuResults.get(candidate.hash);
-      const entry = metadata.entries[candidate.hash];
+      const entry = metadata[candidate.hash];
       this.logger.debug(`Processing candidate: ${candidate.sourceText}`);
       if (!entry) {
         this.logger.warn(`Entry not found for hash: ${candidate.hash}`);
