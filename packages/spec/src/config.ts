@@ -499,8 +499,7 @@ export const configV1_11Definition = extendConfigDefinition(
   {
     createSchema: (baseSchema) =>
       baseSchema.extend({
-        vNext: Z.string()
-          .optional(),
+        vNext: Z.string().optional(),
       }),
     createDefaultValue: (baseDefaultValue) => ({
       ...baseDefaultValue,
@@ -513,8 +512,39 @@ export const configV1_11Definition = extendConfigDefinition(
   },
 );
 
+// v1.11 -> v1.12
+// Changes: Add "preservedKeys" string array to bucket config
+export const bucketValueSchemaV1_12 = bucketValueSchemaV1_8.extend({
+  preservedKeys: Z.array(Z.string())
+    .optional()
+    .describe(
+      "Keys that are added to targets using source values as placeholders, but once present, are never overwritten by the CLI.",
+    ),
+});
+
+export const configV1_12Definition = extendConfigDefinition(
+  configV1_11Definition,
+  {
+    createSchema: (baseSchema) =>
+      baseSchema.extend({
+        buckets: Z.partialRecord(
+          bucketTypeSchema,
+          bucketValueSchemaV1_12,
+        ).default({}),
+      }),
+    createDefaultValue: (baseDefaultValue) => ({
+      ...baseDefaultValue,
+      version: "1.12",
+    }),
+    createUpgrader: (oldConfig) => ({
+      ...oldConfig,
+      version: "1.12",
+    }),
+  },
+);
+
 // exports
-export const LATEST_CONFIG_DEFINITION = configV1_11Definition;
+export const LATEST_CONFIG_DEFINITION = configV1_12Definition;
 
 export type I18nConfig = Z.infer<(typeof LATEST_CONFIG_DEFINITION)["schema"]>;
 

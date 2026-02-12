@@ -18,6 +18,7 @@ interface CIOptions {
   commitAuthorEmail?: string;
   workingDirectory?: string;
   processOwnCommits?: boolean;
+  gpgSign?: boolean;
 }
 
 export default new Command()
@@ -63,10 +64,13 @@ export default new Command()
     "Allow processing commits made by this CI user (bypasses infinite loop prevention)",
     parseBooleanArg,
   )
+  .option(
+    "--gpg-sign [boolean]",
+    "Sign commits with GPG. Requires GPG to be configured in the environment",
+    parseBooleanArg,
+  )
   .action(async (options: CIOptions) => {
     const settings = getSettings(options.apiKey);
-
-    console.log(options);
 
     if (!settings.auth.apiKey) {
       console.error("No API key provided");
@@ -104,6 +108,9 @@ export default new Command()
       }),
       ...(options.processOwnCommits && {
         LINGODOTDEV_PROCESS_OWN_COMMITS: options.processOwnCommits.toString(),
+      }),
+      ...(options.gpgSign && {
+        LINGODOTDEV_GPG_SIGN: options.gpgSign.toString(),
       }),
     };
 

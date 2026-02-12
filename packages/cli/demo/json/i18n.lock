@@ -14,3 +14,5 @@ checksums:
     config/theme/primary: 7535a3779d6934ea8ecf18f5cb5b93fd
     mixed_array/0: 001b5b003d96c133534f5907abffdf77
     mixed_array/3/nested_message: 5f0782dfc5993e99890c0475bc295a30
+    ignored_key_1: 386cb6c3c496982b059671768905d66e
+    legal/preserved_nested: 1f22d279b6be8d261e125e54c5a6cb64

@@ -203,6 +203,7 @@ export default new Command()
               bucket.lockedKeys,
               bucket.lockedPatterns,
               bucket.ignoredKeys,
+              bucket.preservedKeys,
             );
 
             bucketLoader.setDefaultLocale(sourceLocale);
@@ -354,11 +355,10 @@ export default new Command()
                   )} (${completeKeys.length}/${totalKeysInFile} keys)`,
                 );
               } else {
-                const message = `[${sourceLocale} -> ${targetLocale}] ${
-                  parseFloat(completionPercent) > 50
+                const message = `[${sourceLocale} -> ${targetLocale}] ${parseFloat(completionPercent) > 50
                     ? chalk.yellow(`${completionPercent}% complete`)
                     : chalk.red(`${completionPercent}% complete`)
-                } (${completeKeys.length}/${totalKeysInFile} keys)`;
+                  } (${completeKeys.length}/${totalKeysInFile} keys)`;
 
                 bucketOra.succeed(message);
 
@@ -368,8 +368,7 @@ export default new Command()
                       `    ${chalk.red(`Missing:`)} ${missingKeys.length} keys, ~${wordsToTranslate} words`,
                     );
                     console.log(
-                      `    ${chalk.red(`Missing:`)} ${
-                        missingKeys.length
+                      `    ${chalk.red(`Missing:`)} ${missingKeys.length
                       } keys, ~${wordsToTranslate} words`,
                     );
                     console.log(
@@ -382,8 +381,7 @@ export default new Command()
                   }
                   if (updatedKeys.length > 0) {
                     console.log(
-                      `    ${chalk.yellow(`Updated:`)} ${
-                        updatedKeys.length
+                      `    ${chalk.yellow(`Updated:`)} ${updatedKeys.length
                       } keys that changed in source`,
                     );
                   }
@@ -533,13 +531,11 @@ export default new Command()
         Object.entries(fileStats)
           .sort((a, b) => b[1].wordCount - a[1].wordCount) // Sort by word count
           .forEach(([path, stats]) => {
-            // Skip files with no source keys
             if (stats.sourceKeys === 0) return;
 
             console.log(chalk.bold(`\n• ${path}:`));
             console.log(
-              `  ${
-                stats.sourceKeys
+              `  ${stats.sourceKeys
               } source keys, ~${stats.wordCount.toLocaleString()} source words`,
             );
 
@@ -606,16 +602,14 @@ export default new Command()
 
       if (missingLanguages.length > 0) {
         console.log(
-          `• ${chalk.yellow(missingLanguages.join(", "))} ${
-            missingLanguages.length === 1 ? "has" : "have"
+          `• ${chalk.yellow(missingLanguages.join(", "))} ${missingLanguages.length === 1 ? "has" : "have"
           } no translations yet`,
         );
       }
 
       if (completeLanguages.length > 0) {
         console.log(
-          `• ${chalk.green(completeLanguages.join(", "))} ${
-            completeLanguages.length === 1 ? "is" : "are"
+          `• ${chalk.green(completeLanguages.join(", "))} ${completeLanguages.length === 1 ? "is" : "are"
           } completely translated`,
         );
       }

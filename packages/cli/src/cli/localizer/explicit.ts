@@ -188,12 +188,34 @@ function createAiSdkLocalizer(params: {
             },
           },
         ],
+        [
+          {
+            sourceLocale: "en",
+            targetLocale: "es",
+            data: {
+              spring: "Spring",
+            },
+            hints: {
+              spring: ["A source of water"],
+            },
+          },
+          {
+            sourceLocale: "en",
+            targetLocale: "es",
+            data: {
+              spring: "Manantial",
+            },
+          },
+        ],
       ];
+
+      const hasHints = input.hints && Object.keys(input.hints).length > 0;
 
       const payload = {
         sourceLocale: input.sourceLocale,
         targetLocale: input.targetLocale,
         data: input.processableData,
+        ...(hasHints && { hints: input.hints }),
       };
 
       const response = await generateText({
@@ -201,7 +223,6 @@ function createAiSdkLocalizer(params: {
         ...params.settings,
         messages: [
           { role: "system", content: systemPrompt },
-          { role: "user", content: "OK" },
           ...shots.flatMap(
             ([userShot, assistantShot]) =>
               [

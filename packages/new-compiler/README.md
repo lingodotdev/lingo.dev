@@ -330,6 +330,58 @@ LINGO_BUILD_MODE=cache-only npm run build
 2. **CI**: Generate real translations with `buildMode: "translate"` and real API keys
 3. **Production Build**: Use `buildMode: "cache-only"` (no API keys needed)
 
+## React Client API
+
+The compiler provides hooks and components for managing locale in your React components.
+
+### `useLingoContext()`
+
+Access the translation context to get the current locale and change it.
+
+**Returns:**
+- `locale` (string): Current locale code
+- `setLocale` (function): Change the locale
+- `translations` (object): Translation dictionary
+- `isLoading` (boolean): Whether translations are loading
+
+```tsx
+"use client";
+import { useLingoContext } from "@lingo.dev/compiler/react";
+
+export function LanguageSwitcher() {
+  const { locale, setLocale } = useLingoContext();
+
+  return (
+    <select value={locale} onChange={(e) => setLocale(e.target.value)}>
+      <option value="en">English</option>
+      <option value="es">Español</option>
+      <option value="de">Deutsch</option>
+    </select>
+  );
+}
+```
+
+### `LocaleSwitcher` Component
+
+A pre-built dropdown component for switching locales (no hooks needed):
+
+```tsx
+"use client";
+import { LocaleSwitcher } from "@lingo.dev/compiler/react";
+
+export function Header() {
+  return (
+    <LocaleSwitcher
+      locales={[
+        { code: "en", label: "English" },
+        { code: "es", label: "Español" },
+        { code: "de", label: "Deutsch" },
+      ]}
+    />
+  );
+}
+```
+
 ## Custom Locale Resolvers
 
 Customize how locales are detected and persisted by providing custom resolver files:

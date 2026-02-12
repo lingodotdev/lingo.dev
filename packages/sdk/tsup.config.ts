@@ -6,6 +6,7 @@ export default defineConfig({
   entry: ["src/index.ts"],
   outDir: "build",
   format: ["cjs", "esm"],
+  external: ["zod"],
   dts: true,
   cjsInterop: true,
   splitting: true,

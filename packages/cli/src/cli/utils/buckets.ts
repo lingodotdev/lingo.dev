@@ -19,6 +19,7 @@ type BucketConfig = {
   lockedKeys?: string[];
   lockedPatterns?: string[];
   ignoredKeys?: string[];
+  preservedKeys?: string[];
 };
 
 export function getBuckets(i18nConfig: I18nConfig) {
@@ -49,6 +50,9 @@ export function getBuckets(i18nConfig: I18nConfig) {
       }
       if (bucketEntry.ignoredKeys) {
         config.ignoredKeys = bucketEntry.ignoredKeys;
+      }
+      if (bucketEntry.preservedKeys) {
+        config.preservedKeys = bucketEntry.preservedKeys;
       }
       return config;
     },
@@ -160,11 +164,11 @@ function expandPlaceholderedGlob(
       const sourcePathChunk = sourcePathChunks[localeSegmentIndex];
       const regexp = new RegExp(
         "(" +
-        pathPatternChunk
-          .replaceAll(".", "\\.")
-          .replaceAll("*", ".*")
-          .replace("[locale]", `)${sourceLocale}(`) +
-        ")",
+          pathPatternChunk
+            .replaceAll(".", "\\.")
+            .replaceAll("*", ".*")
+            .replace("[locale]", `)${sourceLocale}(`) +
+          ")",
       );
       const match = sourcePathChunk.match(regexp);
       if (match) {

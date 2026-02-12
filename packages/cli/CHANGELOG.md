@@ -1,5 +1,79 @@
 # lingo.dev
 
+## 0.131.1
+
+### Patch Changes
+
+- [#1968](https://github.com/lingodotdev/lingo.dev/pull/1968) [`4562425`](https://github.com/lingodotdev/lingo.dev/commit/4562425ed3b26f56fb16e25da25341087f6d6936) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Fixed vNext provider showing incorrect status messages ("Skipping glossary", etc.) during setup
+
+## 0.131.0
+
+### Minor Changes
+
+- [#1962](https://github.com/lingodotdev/lingo.dev/pull/1962) [`27a6419`](https://github.com/lingodotdev/lingo.dev/commit/27a6419911ffbecdc8052d053a42269d00b7ea75) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Add preservedKeys support to all CLI commands (purge, cleanup, status, lockfile, i18n) and create `show preserved-keys` command
+
+## 0.130.2
+
+### Patch Changes
+
+- [#1960](https://github.com/lingodotdev/lingo.dev/pull/1960) [`5a4e516`](https://github.com/lingodotdev/lingo.dev/commit/5a4e51618d9b3148358f140f6bcd0fe9aa1c213c) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Add `preservedKeys` configuration option to buckets. Preserved keys are added to targets using source values as placeholders, but once present in the target file, they are never overwritten by the CLI. This is useful for values like URLs or emails that should be copied initially but then customized per locale.
+
+- Updated dependencies [[`5a4e516`](https://github.com/lingodotdev/lingo.dev/commit/5a4e51618d9b3148358f140f6bcd0fe9aa1c213c)]:
+  - @lingo.dev/_spec@0.47.1
+  - @lingo.dev/_compiler@0.11.1
+  - @lingo.dev/_sdk@0.14.1
+
+## 0.130.1
+
+### Patch Changes
+
+- [#1958](https://github.com/lingodotdev/lingo.dev/pull/1958) [`054132f`](https://github.com/lingodotdev/lingo.dev/commit/054132f42841175fb2bdcd8025683130ec128eba) Thanks [@cherkanovart](https://github.com/cherkanovart)! - remove unused imports cli
+
+## 0.130.0
+
+### Minor Changes
+
+- [#1954](https://github.com/lingodotdev/lingo.dev/pull/1954) [`ef9fcbd`](https://github.com/lingodotdev/lingo.dev/commit/ef9fcbda434a1f29d69de8b3f5faa13e3cb4921a) Thanks [@cherkanovart](https://github.com/cherkanovart)! - feat: add GPG commit signing support to GitHub Action
+  - Added `gpg-sign` input to action.yml for enabling GPG commit signing
+  - Added `--gpg-sign` CLI option for the `ci` command
+  - Added preflight check to verify GPG signing key is configured before committing
+  - Commits are signed with `-S` flag when GPG signing is enabled
+  - Works with both in-branch and pull-request modes
+
+  Usage:
+
+  ```yaml
+  - uses: crazy-max/ghaction-import-gpg@v6
+    with:
+      gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+      git_user_signingkey: true
+      git_commit_gpgsign: true
+
+  - uses: lingodotdev/lingo.dev@main
+    with:
+      api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
+      gpg-sign: true
+  ```
+
+### Patch Changes
+
+- [#1947](https://github.com/lingodotdev/lingo.dev/pull/1947) [`09ac536`](https://github.com/lingodotdev/lingo.dev/commit/09ac536e0106946a8f1d1b8e80f981bc689786d0) Thanks [@thomasaull](https://github.com/thomasaull)! - Include hints in payload to LLMs
+
+## 0.129.0
+
+### Minor Changes
+
+- [#1950](https://github.com/lingodotdev/lingo.dev/pull/1950) [`ce47cf3`](https://github.com/lingodotdev/lingo.dev/commit/ce47cf34760b9377517b1204e4e84b6f1d908d6c) Thanks [@cherkanovart](https://github.com/cherkanovart)! - add zod to external depth
+
+### Patch Changes
+
+- [#1951](https://github.com/lingodotdev/lingo.dev/pull/1951) [`330ee4e`](https://github.com/lingodotdev/lingo.dev/commit/330ee4e77d3f698b6f038e58e2ac8e5509cc14fe) Thanks [@cherkanovart](https://github.com/cherkanovart)! - chore: add zod to external dependencies
+
+- Updated dependencies [[`330ee4e`](https://github.com/lingodotdev/lingo.dev/commit/330ee4e77d3f698b6f038e58e2ac8e5509cc14fe), [`ce47cf3`](https://github.com/lingodotdev/lingo.dev/commit/ce47cf34760b9377517b1204e4e84b6f1d908d6c)]:
+  - @lingo.dev/_compiler@0.11.0
+  - @lingo.dev/_sdk@0.14.0
+  - @lingo.dev/_spec@0.47.0
+
 ## 0.128.0
 
 ### Minor Changes

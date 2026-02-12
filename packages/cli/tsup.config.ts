@@ -31,6 +31,7 @@ export default defineConfig({
     "@lingo.dev/_react",
     "@lingo.dev/_locales",
     "@lingo.dev/_logging",
+    "zod",
     "glob",
   ],
   outExtension: (ctx) => ({

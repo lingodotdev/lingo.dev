@@ -198,8 +198,9 @@ export class PullRequestFlow extends InBranchFlow {
     const hasChanges = this.checkCommitableChanges();
     if (hasChanges) {
       execSync("git add .", { stdio: "inherit" });
+      const signFlag = this.platformKit.config.gpgSign ? "-S " : "";
       execSync(
-        `git commit -m "chore: sync with ${this.platformKit.platformConfig.baseBranchName}" --no-verify`,
+        `git commit ${signFlag}-m "chore: sync with ${this.platformKit.platformConfig.baseBranchName}" --no-verify`,
         {
           stdio: "inherit",
         },
