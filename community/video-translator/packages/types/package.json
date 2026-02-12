@@ -1,0 +1,6 @@
+{
+  "name": "@lingo/shared-types",
+  "version": "1.0.0",
+  "main": "types.ts",
+  "license": "MIT"
+}

@@ -226,6 +226,7 @@ export default new Command()
               bucket.lockedKeys,
               bucket.lockedPatterns,
               bucket.ignoredKeys,
+              bucket.preservedKeys,
             );
             bucketLoader.setDefaultLocale(sourceLocale);
             await bucketLoader.init();
@@ -265,6 +266,7 @@ export default new Command()
               bucket.lockedKeys,
               bucket.lockedPatterns,
               bucket.ignoredKeys,
+              bucket.preservedKeys,
             );
             bucketLoader.setDefaultLocale(sourceLocale);
             await bucketLoader.init();
@@ -377,6 +379,7 @@ export default new Command()
               bucket.lockedKeys,
               bucket.lockedPatterns,
               bucket.ignoredKeys,
+              bucket.preservedKeys,
             );
             bucketLoader.setDefaultLocale(sourceLocale);
             await bucketLoader.init();
@@ -446,7 +449,8 @@ export default new Command()
                     sourceData,
                     processableData,
                     targetLocale,
-                    targetData,
+                    // When --force is used, exclude previous translations from reference to ensure fresh translations
+                    targetData: flags.force ? {} : targetData,
                   },
                   (progress, sourceChunk, processedChunk) => {
                     bucketOra.text = `[${sourceLocale} -> ${targetLocale}] [${

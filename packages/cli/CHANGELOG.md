@@ -1,5 +1,164 @@
 # lingo.dev
 
+## 0.131.1
+
+### Patch Changes
+
+- [#1968](https://github.com/lingodotdev/lingo.dev/pull/1968) [`4562425`](https://github.com/lingodotdev/lingo.dev/commit/4562425ed3b26f56fb16e25da25341087f6d6936) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Fixed vNext provider showing incorrect status messages ("Skipping glossary", etc.) during setup
+
+## 0.131.0
+
+### Minor Changes
+
+- [#1962](https://github.com/lingodotdev/lingo.dev/pull/1962) [`27a6419`](https://github.com/lingodotdev/lingo.dev/commit/27a6419911ffbecdc8052d053a42269d00b7ea75) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Add preservedKeys support to all CLI commands (purge, cleanup, status, lockfile, i18n) and create `show preserved-keys` command
+
+## 0.130.2
+
+### Patch Changes
+
+- [#1960](https://github.com/lingodotdev/lingo.dev/pull/1960) [`5a4e516`](https://github.com/lingodotdev/lingo.dev/commit/5a4e51618d9b3148358f140f6bcd0fe9aa1c213c) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Add `preservedKeys` configuration option to buckets. Preserved keys are added to targets using source values as placeholders, but once present in the target file, they are never overwritten by the CLI. This is useful for values like URLs or emails that should be copied initially but then customized per locale.
+
+- Updated dependencies [[`5a4e516`](https://github.com/lingodotdev/lingo.dev/commit/5a4e51618d9b3148358f140f6bcd0fe9aa1c213c)]:
+  - @lingo.dev/_spec@0.47.1
+  - @lingo.dev/_compiler@0.11.1
+  - @lingo.dev/_sdk@0.14.1
+
+## 0.130.1
+
+### Patch Changes
+
+- [#1958](https://github.com/lingodotdev/lingo.dev/pull/1958) [`054132f`](https://github.com/lingodotdev/lingo.dev/commit/054132f42841175fb2bdcd8025683130ec128eba) Thanks [@cherkanovart](https://github.com/cherkanovart)! - remove unused imports cli
+
+## 0.130.0
+
+### Minor Changes
+
+- [#1954](https://github.com/lingodotdev/lingo.dev/pull/1954) [`ef9fcbd`](https://github.com/lingodotdev/lingo.dev/commit/ef9fcbda434a1f29d69de8b3f5faa13e3cb4921a) Thanks [@cherkanovart](https://github.com/cherkanovart)! - feat: add GPG commit signing support to GitHub Action
+  - Added `gpg-sign` input to action.yml for enabling GPG commit signing
+  - Added `--gpg-sign` CLI option for the `ci` command
+  - Added preflight check to verify GPG signing key is configured before committing
+  - Commits are signed with `-S` flag when GPG signing is enabled
+  - Works with both in-branch and pull-request modes
+
+  Usage:
+
+  ```yaml
+  - uses: crazy-max/ghaction-import-gpg@v6
+    with:
+      gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+      git_user_signingkey: true
+      git_commit_gpgsign: true
+
+  - uses: lingodotdev/lingo.dev@main
+    with:
+      api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
+      gpg-sign: true
+  ```
+
+### Patch Changes
+
+- [#1947](https://github.com/lingodotdev/lingo.dev/pull/1947) [`09ac536`](https://github.com/lingodotdev/lingo.dev/commit/09ac536e0106946a8f1d1b8e80f981bc689786d0) Thanks [@thomasaull](https://github.com/thomasaull)! - Include hints in payload to LLMs
+
+## 0.129.0
+
+### Minor Changes
+
+- [#1950](https://github.com/lingodotdev/lingo.dev/pull/1950) [`ce47cf3`](https://github.com/lingodotdev/lingo.dev/commit/ce47cf34760b9377517b1204e4e84b6f1d908d6c) Thanks [@cherkanovart](https://github.com/cherkanovart)! - add zod to external depth
+
+### Patch Changes
+
+- [#1951](https://github.com/lingodotdev/lingo.dev/pull/1951) [`330ee4e`](https://github.com/lingodotdev/lingo.dev/commit/330ee4e77d3f698b6f038e58e2ac8e5509cc14fe) Thanks [@cherkanovart](https://github.com/cherkanovart)! - chore: add zod to external dependencies
+
+- Updated dependencies [[`330ee4e`](https://github.com/lingodotdev/lingo.dev/commit/330ee4e77d3f698b6f038e58e2ac8e5509cc14fe), [`ce47cf3`](https://github.com/lingodotdev/lingo.dev/commit/ce47cf34760b9377517b1204e4e84b6f1d908d6c)]:
+  - @lingo.dev/_compiler@0.11.0
+  - @lingo.dev/_sdk@0.14.0
+  - @lingo.dev/_spec@0.47.0
+
+## 0.128.0
+
+### Minor Changes
+
+- [#1942](https://github.com/lingodotdev/lingo.dev/pull/1942) [`1194a30`](https://github.com/lingodotdev/lingo.dev/commit/1194a301d6477bc5d7e6f037fc597eeea8a19f2f) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Remove waste comment
+
+## 0.127.0
+
+### Minor Changes
+
+- [#1939](https://github.com/lingodotdev/lingo.dev/pull/1939) [`2d60662`](https://github.com/lingodotdev/lingo.dev/commit/2d60662b8a7e2c60eeef357550ca9190c56048b5) Thanks [@cherkanovart](https://github.com/cherkanovart)! - modify bin to fix windows issue
+
+## 0.126.1
+
+### Patch Changes
+
+- Updated dependencies [[`7db90c8`](https://github.com/lingodotdev/lingo.dev/commit/7db90c82b146da10db7c659c02580b3657d0b872)]:
+  - @lingo.dev/_compiler@0.10.1
+
+## 0.126.0
+
+### Minor Changes
+
+- [#1927](https://github.com/lingodotdev/lingo.dev/pull/1927) [`fa69822`](https://github.com/lingodotdev/lingo.dev/commit/fa698227c49eda4a4727f3fa0c3343fc6279730d) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Fix Windows test failures
+
+## 0.125.5
+
+### Patch Changes
+
+- [#1919](https://github.com/lingodotdev/lingo.dev/pull/1919) [`f1a64a6`](https://github.com/lingodotdev/lingo.dev/commit/f1a64a6f0f2d2a24734f22d1ca835a4c2774b855) Thanks [@sumitsaurabh927](https://github.com/sumitsaurabh927)! - updated contribution guide and star count
+
+## 0.125.4
+
+### Patch Changes
+
+- Updated dependencies [[`f30b4b3`](https://github.com/lingodotdev/lingo.dev/commit/f30b4b305cde3f02d4af4eafe4d01eb0c3aa336b)]:
+  - @lingo.dev/_compiler@0.10.0
+
+## 0.125.3
+
+### Patch Changes
+
+- [#1898](https://github.com/lingodotdev/lingo.dev/pull/1898) [`c3481fb`](https://github.com/lingodotdev/lingo.dev/commit/c3481fb493430719767ee6f95b78635ae153e512) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Refactor HTML/Twig extraction to handle SVG content correctly using a strategy-based approach
+
+## 0.125.2
+
+### Patch Changes
+
+- [#1873](https://github.com/lingodotdev/lingo.dev/pull/1873) [`8c4f736`](https://github.com/lingodotdev/lingo.dev/commit/8c4f7366d86f91edb841cc51f5bf0a32db64a876) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Refactor lockfile deduplication logic to use a single universal function instead of three duplicate implementations. This improves code maintainability and ensures consistent behavior across all lockfile operations. The deduplication automatically handles Git merge conflicts in i18n.lock files.
+
+## 0.125.1
+
+### Patch Changes
+
+- [#1874](https://github.com/lingodotdev/lingo.dev/pull/1874) [`5ca8439`](https://github.com/lingodotdev/lingo.dev/commit/5ca8439aedd2909e359652f8f3a1b33d4ccd9f6a) Thanks [@vrcprl](https://github.com/vrcprl)! - simplify observability
+
+- Updated dependencies [[`5ca8439`](https://github.com/lingodotdev/lingo.dev/commit/5ca8439aedd2909e359652f8f3a1b33d4ccd9f6a)]:
+  - @lingo.dev/_compiler@0.9.1
+
+## 0.125.0
+
+### Minor Changes
+
+- [#1799](https://github.com/lingodotdev/lingo.dev/pull/1799) [`e3a383b`](https://github.com/lingodotdev/lingo.dev/commit/e3a383b8a82110984cef1d1ce477d1e0bf65c488) Thanks [@cherkanovart](https://github.com/cherkanovart)! - roll back
+
+## 0.124.0
+
+### Minor Changes
+
+- [#1793](https://github.com/lingodotdev/lingo.dev/pull/1793) [`29c598c`](https://github.com/lingodotdev/lingo.dev/commit/29c598caa1fc6b02693eafa12d245f8fbfdfe4b8) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Fix CLI command script for Windows 11 and Bash compatibility
+
+- [#1793](https://github.com/lingodotdev/lingo.dev/pull/1793) [`29c598c`](https://github.com/lingodotdev/lingo.dev/commit/29c598caa1fc6b02693eafa12d245f8fbfdfe4b8) Thanks [@cherkanovart](https://github.com/cherkanovart)! - roll back
+
+## 0.123.0
+
+### Minor Changes
+
+- [#1759](https://github.com/lingodotdev/lingo.dev/pull/1759) [`403bba9`](https://github.com/lingodotdev/lingo.dev/commit/403bba908d8abd9bb4c9cd58072e54f3f72e8e96) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Fix CLI command script for Windows 11 and Bash compatibility
+
+## 0.122.2
+
+### Patch Changes
+
+- [#1776](https://github.com/lingodotdev/lingo.dev/pull/1776) [`1a8786a`](https://github.com/lingodotdev/lingo.dev/commit/1a8786ad281d6f79d78379dd27fa3b174367eb3b) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Exclude previous translations from LLM reference when --force flag is used. The localization engine now receives an empty object instead of existing translations, ensuring truly fresh translations are generated without influence from previous versions.
+
 ## 0.122.1
 
 ### Patch Changes

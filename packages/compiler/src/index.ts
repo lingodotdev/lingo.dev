@@ -19,6 +19,7 @@ import {
 } from "./utils/llm-api-key";
 import { isRunningInCIOrDocker } from "./utils/env";
 import { providerDetails } from "./lib/lcp/api/provider-details";
+import { showDeprecationWarning } from "./_deprecation";
 import { loadDictionary, transformComponent } from "./_loader-utils";
 import trackEvent from "./utils/observability";
 
@@ -61,6 +62,7 @@ function sendBuildEvent(framework: string, config: any, isDev: boolean) {
 
 const unplugin = createUnplugin<Partial<typeof defaultParams> | undefined>(
   (_params, _meta) => {
+    showDeprecationWarning();
     console.log("ℹ️  Starting Lingo.dev compiler...");
 
     const params = _.defaults(_params, defaultParams);
@@ -155,13 +157,32 @@ export default {
   /**
    * Initializes Lingo.dev Compiler for Next.js (App Router).
    *
+   * @deprecated This legacy compiler is deprecated. Please migrate to `@lingo.dev/compiler`.
+   * See migration guide at https://lingo.dev/compiler
+   *
    * @param compilerParams - The compiler parameters.
    *
    * @returns The Next.js configuration.
    *
-   * @example Configuration for Next.js's default template
+   * @example New compiler usage (recommended):
    * ```ts
-   * import lingoCompiler from "lingo.dev/compiler";
+   * import type { NextConfig } from "next";
+   * import { withLingo } from "@lingo.dev/compiler/next";
+   *
+   * const nextConfig: NextConfig = {};
+   *
+   * export default async function (): Promise<NextConfig> {
+   *   return await withLingo(nextConfig, {
+   *     sourceLocale: "en",
+   *     targetLocales: ["es", "fr"],
+   *     models: "lingo.dev",
+   *   });
+   * }
+   * ```
+   *
+   * @example Legacy compiler usage (deprecated):
+   * ```ts
+   * import lingoCompiler from "@lingo.dev/_compiler";
    * import type { NextConfig } from "next";
    *
    * const nextConfig: NextConfig = {
@@ -184,6 +205,7 @@ export default {
       },
     ) =>
     (nextConfig: any = {}): NextConfig => {
+      showDeprecationWarning();
       const mergedParams = _.merge(
         {},
         defaultParams,
@@ -272,17 +294,38 @@ export default {
   /**
    * Initializes Lingo.dev Compiler for Vite.
    *
+   * @deprecated This legacy compiler is deprecated. Please migrate to `@lingo.dev/compiler`.
+   * See migration guide at https://lingo.dev/compiler
+   *
    * @param compilerParams - The compiler parameters.
    *
    * @returns The Vite configuration.
    *
-   * @example Configuration for Vite's "react-ts" template
+   * @example New compiler usage (recommended):
    * ```ts
    * import { defineConfig, type UserConfig } from "vite";
    * import react from "@vitejs/plugin-react";
-   * import lingoCompiler from "lingo.dev/compiler";
+   * import { withLingo } from "@lingo.dev/compiler/vite";
    *
-   * // https://vite.dev/config/
+   * const viteConfig: UserConfig = {
+   *   plugins: [react()],
+   * };
+   *
+   * export default defineConfig(async () =>
+   *   await withLingo(viteConfig, {
+   *     sourceLocale: "en",
+   *     targetLocales: ["es", "fr"],
+   *     models: "lingo.dev",
+   *   })
+   * );
+   * ```
+   *
+   * @example Legacy Vite configuration (deprecated):
+   * ```ts
+   * import { defineConfig, type UserConfig } from "vite";
+   * import react from "@vitejs/plugin-react";
+   * import lingoCompiler from "@lingo.dev/_compiler";
+   *
    * const viteConfig: UserConfig = {
    *   plugins: [react()],
    * };
@@ -294,11 +337,11 @@ export default {
    * );
    * ```
    *
-   * @example Configuration for React Router's default template
+   * @example Legacy React Router configuration (deprecated):
    * ```ts
    * import { reactRouter } from "@react-router/dev/vite";
    * import tailwindcss from "@tailwindcss/vite";
-   * import lingoCompiler from "lingo.dev/compiler";
+   * import lingoCompiler from "@lingo.dev/_compiler";
    * import { defineConfig, type UserConfig } from "vite";
    * import tsconfigPaths from "vite-tsconfig-paths";
    *
@@ -315,6 +358,7 @@ export default {
    * ```
    */
   vite: (compilerParams?: Partial<typeof defaultParams>) => (config: any) => {
+    showDeprecationWarning();
     const mergedParams = _.merge(
       {},
       defaultParams,

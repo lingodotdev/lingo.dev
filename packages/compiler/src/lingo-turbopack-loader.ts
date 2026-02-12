@@ -1,7 +1,13 @@
+import { showDeprecationWarning } from "./_deprecation";
 import { loadDictionary, transformComponent } from "./_loader-utils";
 
+/**
+ * @deprecated This loader is part of the legacy compiler. Please migrate to @lingo.dev/compiler.
+ * See migration guide at https://lingo.dev/compiler
+ */
 // This loader handles component transformations and dictionary generation
 export default async function (this: any, source: string) {
+  showDeprecationWarning();
   const callback = this.async();
   const params = this.getOptions();
   const isDev = process.env.NODE_ENV !== "production";

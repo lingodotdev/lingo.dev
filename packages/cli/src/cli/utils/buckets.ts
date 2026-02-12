@@ -1,6 +1,7 @@
 import _ from "lodash";
 import path from "path";
-import { glob } from "glob";
+import * as pkg from "glob";
+const { glob } = pkg;
 import { CLIError } from "./errors";
 import {
   I18nConfig,
@@ -18,6 +19,7 @@ type BucketConfig = {
   lockedKeys?: string[];
   lockedPatterns?: string[];
   ignoredKeys?: string[];
+  preservedKeys?: string[];
 };
 
 export function getBuckets(i18nConfig: I18nConfig) {
@@ -48,6 +50,9 @@ export function getBuckets(i18nConfig: I18nConfig) {
       }
       if (bucketEntry.ignoredKeys) {
         config.ignoredKeys = bucketEntry.ignoredKeys;
+      }
+      if (bucketEntry.preservedKeys) {
+        config.preservedKeys = bucketEntry.preservedKeys;
       }
       return config;
     },

@@ -1,5 +1,54 @@
 # @lingo.dev/\_compiler
 
+## 0.11.1
+
+### Patch Changes
+
+- Updated dependencies [[`5a4e516`](https://github.com/lingodotdev/lingo.dev/commit/5a4e51618d9b3148358f140f6bcd0fe9aa1c213c)]:
+  - @lingo.dev/_spec@0.47.1
+  - @lingo.dev/_sdk@0.14.1
+
+## 0.11.0
+
+### Minor Changes
+
+- [#1950](https://github.com/lingodotdev/lingo.dev/pull/1950) [`ce47cf3`](https://github.com/lingodotdev/lingo.dev/commit/ce47cf34760b9377517b1204e4e84b6f1d908d6c) Thanks [@cherkanovart](https://github.com/cherkanovart)! - add zod to external depth
+
+### Patch Changes
+
+- [#1951](https://github.com/lingodotdev/lingo.dev/pull/1951) [`330ee4e`](https://github.com/lingodotdev/lingo.dev/commit/330ee4e77d3f698b6f038e58e2ac8e5509cc14fe) Thanks [@cherkanovart](https://github.com/cherkanovart)! - chore: add zod to external dependencies
+
+- Updated dependencies [[`330ee4e`](https://github.com/lingodotdev/lingo.dev/commit/330ee4e77d3f698b6f038e58e2ac8e5509cc14fe), [`ce47cf3`](https://github.com/lingodotdev/lingo.dev/commit/ce47cf34760b9377517b1204e4e84b6f1d908d6c)]:
+  - @lingo.dev/_sdk@0.14.0
+  - @lingo.dev/_spec@0.47.0
+
+## 0.10.1
+
+### Patch Changes
+
+- [#1934](https://github.com/lingodotdev/lingo.dev/pull/1934) [`7db90c8`](https://github.com/lingodotdev/lingo.dev/commit/7db90c82b146da10db7c659c02580b3657d0b872) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Add deprecation warnings throughout legacy compiler
+
+  The legacy compiler (`@lingo.dev/_compiler`) now shows deprecation warnings when used.
+  Users are encouraged to migrate to the new compiler (`@lingo.dev/compiler`).
+
+  Changes:
+  - Added runtime deprecation warnings in `next()`, `vite()`, and the Turbopack loader
+  - Added `@deprecated` JSDoc tags to all public APIs
+  - Updated package README with migration guide and examples
+  - The deprecation warning includes information about new compiler features and migration guide link
+
+## 0.10.0
+
+### Minor Changes
+
+- [#1900](https://github.com/lingodotdev/lingo.dev/pull/1900) [`f30b4b3`](https://github.com/lingodotdev/lingo.dev/commit/f30b4b305cde3f02d4af4eafe4d01eb0c3aa336b) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Add support for OpenAI-compatible providers (e.g., Nebius) via OPENAI_BASE_URL environment variable
+
+## 0.9.1
+
+### Patch Changes
+
+- [#1874](https://github.com/lingodotdev/lingo.dev/pull/1874) [`5ca8439`](https://github.com/lingodotdev/lingo.dev/commit/5ca8439aedd2909e359652f8f3a1b33d4ccd9f6a) Thanks [@vrcprl](https://github.com/vrcprl)! - simplify observability
+
 ## 0.9.0
 
 ### Minor Changes

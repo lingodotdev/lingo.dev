@@ -911,9 +911,9 @@ describe("placeholder format edge cases (regression)", () => {
     const pulled = await loader.pull("en", mdContent);
 
     // Simulate Markdown parsing
-    const { unified } = require('unified');
-    const remarkParse = require('remark-parse').default;
-    const remarkStringify = require('remark-stringify').default;
+    const { unified } = await import('unified');
+    const remarkParse = (await import('remark-parse')).default;
+    const remarkStringify = (await import('remark-stringify')).default;
 
     const processor = unified().use(remarkParse).use(remarkStringify);
     const parsed = processor.stringify(processor.parse(pulled));

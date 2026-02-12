@@ -10,14 +10,8 @@
   "author": {
     "name": "John Doe"
   },
-  "contributors": [
-    { "name": "Alice" },
-    { "name": "Bob" }
-  ],
-  "messages": [
-    "Welcome to MyApp",
-    "Hello, world!"
-  ],
+  "contributors": [{ "name": "Alice" }, { "name": "Bob" }],
+  "messages": ["Welcome to MyApp", "Hello, world!"],
   "config": {
     "theme": {
       "primary": "Blue theme"
@@ -32,6 +26,9 @@
     }
   ],
   "locked_key_1": "This value is locked and should not be changed",
-  "ignored_key_1": "This value is ignored and should not appear in target locales"
-
+  "ignored_key_1": "This value is ignored and should not appear in target locales",
+  "preserved_key_1": "this value is preserved and should not be overwritten",
+  "legal": {
+    "preserved_nested": "this value is preserved and should not be overwritten"
+  }
 }
