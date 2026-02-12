@@ -9,7 +9,7 @@ Source JSX → Babel Parser → AST Transformation → Code Generation → Trans
                                      ↓
                               Metadata Extraction
                                      ↓
-                              .lingo/metadata.json
+                              .lingo/metadata-{env}/ (LMDB database)
 ```
 
 ## Pipeline Stages
@@ -111,12 +111,14 @@ export function Welcome() {
 
 // AFTER (Server Component)
 import { getServerTranslations } from "@lingo.dev/compiler/react/server";
-import __lingoMetadata from "./.lingo/metadata.json";
 
 export async function Welcome() {
-  const t = await getServerTranslations({
-    metadata: __lingoMetadata,
-    sourceLocale: "en",
+  // getServerTranslations options:
+  // - hashes: string[] - Translation hashes needed (injected at build time)
+  // - locale?: LocaleCode - Target locale (auto-detected if not provided)
+  // - basePath?: string - Base path for translation files (default: cwd)
+  const { t } = await getServerTranslations({
+    hashes: ["a1b2c3d4e5f6"],
   });
   return <div>{t("a1b2c3d4e5f6", "Hello World")}</div>;
 }
@@ -155,38 +157,42 @@ export async function Welcome() {
 
 **Purpose**: Track all translatable strings across the application
 
-**Metadata Structure**:
+**Storage**: LMDB key-value database in `.lingo/metadata-dev/` or `.lingo/metadata-build/`
 
-```json
+**Why LMDB?**
+
+- ~1M ops/sec write speed vs ~50K for SQLite
+- Zero-copy reads from memory-mapped files
+- Built-in LZ4 compression
+- Simple key-value API without SQL overhead
+
+**Data Structure**:
+
+Each translation entry is stored with its hash as the key:
+
+```typescript
+// Key: "a1b2c3d4e5f6"
+// Value:
 {
-  "version": "0.1",
-  "entries": {
-    "a1b2c3d4e5f6": {
-      "sourceText": "Hello World",
-      "context": {
-        "componentName": "Welcome",
-        "filePath": "components/Welcome.tsx",
-        "line": 3,
-        "column": 10
-      },
-      "hash": "a1b2c3d4e5f6",
-      "addedAt": "2025-01-20T10:00:00.000Z"
-    }
+  sourceText: "Hello World",
+  context: {
+    componentName: "Welcome",
+    filePath: "components/Welcome.tsx",
+    line: 3,
+    column: 10
   },
-  "stats": {
-    "totalEntries": 1,
-    "lastUpdated": "2025-01-20T10:00:00.000Z"
-  }
+  hash: "a1b2c3d4e5f6",
+  addedAt: "2025-01-20T10:00:00.000Z"
 }
 ```
 
 **Operations**:
 
-- `loadMetadata()`: Read existing metadata
-- `upsertEntries()`: Add or update translation entries
-- `saveMetadata()`: Write metadata to disk
+- `loadMetadata()`: Read all entries from LMDB database
+- `saveMetadata()`: Atomically write entries using LMDB transactions
+- `cleanupExistingMetadata()`: Remove the database directory
 
-**Storage**: `{sourceRoot}/.lingo/metadata.json`
+**Concurrency**: LMDB handles concurrent access internally (multi-reader, single-writer)
 
 ---
 
@@ -241,16 +247,17 @@ After transformation, the runtime provides the actual translation functionality:
 ### Server Components
 
 ```tsx
-const t = await getServerTranslations({
-  metadata: __lingoMetadata,
-  sourceLocale: "en",
+const { t, locale, translations } = await getServerTranslations({
+  hashes: ["hash1", "hash2"], // Injected at build time
+  locale: "es", // Optional: auto-detected if omitted
+  basePath: process.cwd(), // Optional: defaults to cwd
 });
 ```
 
 **How it works**:
 
-1. Reads metadata to know what translations are needed
-2. Loads translation file for current locale from `.lingo/{locale}.json`
+1. Fetches translations for the specified hashes from `.lingo/cache/{locale}.json`
+2. Auto-detects locale via configured locale resolver if not provided
 3. Returns `t()` function that maps hashes to translated strings
 4. Falls back to source text if translation missing
 
@@ -299,7 +306,7 @@ Request locale → Check cache → Generate if missing → Return translations
 
 4. **Fallback Safety**: Transformed code includes original text as fallback, so missing translations don't break the app
 
-5. **Metadata-Driven**: Single source of truth (`metadata.json`) tracks all translatable content
+5. **Metadata-Driven**: Single source of truth (LMDB database) tracks all translatable content
 
 6. **Universal Compatibility**: Same transformation logic works across Vite, Webpack, Rollup, esbuild, and Next.js
 
@@ -328,12 +335,10 @@ export function Greeting({ name }) {
 
 // 4. TRANSFORMED OUTPUT
 import { getServerTranslations } from "@lingo.dev/compiler/react/server";
-import __lingoMetadata from "./.lingo/metadata.json";
 
 export async function Greeting({ name }) {
-  const t = await getServerTranslations({
-    metadata: __lingoMetadata,
-    sourceLocale: "en"
+  const { t } = await getServerTranslations({
+    hashes: ["a1b2c3d4e5f6"],
   });
   return <h1>{t("a1b2c3d4e5f6", "Hello, ")}{name}!</h1>;
 }

@@ -150,7 +150,7 @@ Set the required API keys for real translations.`);
     const startTime = performance.now();
 
     // Step 1: Determine which hashes we need to work with
-    const workingHashes = requestedHashes || Object.keys(metadata.entries);
+    const workingHashes = requestedHashes || Object.keys(metadata);
 
     this.logger.debug(
       `Translation requested for ${workingHashes.length} hashes in locale: ${locale}`,
@@ -187,19 +187,16 @@ Set the required API keys for real translations.`);
     );
 
     // Step 4: Filter metadata to only uncached entries
-    const filteredMetadata: MetadataSchema = {
-      ...metadata,
-      entries: Object.fromEntries(
-        uncachedHashes
-          .map((hash) => [hash, metadata.entries[hash]])
-          .filter(([_, entry]) => entry !== undefined),
-      ),
-    };
+    const filteredMetadata: MetadataSchema = Object.fromEntries(
+      uncachedHashes
+        .map((hash) => [hash, metadata[hash]])
+        .filter(([_, entry]) => entry !== undefined),
+    );
 
     // Step 5: Process pluralization for filtered entries
     if (this.pluralizationService) {
       this.logger.debug(
-        `Processing pluralization for ${Object.keys(filteredMetadata.entries).length} entries...`,
+        `Processing pluralization for ${Object.keys(filteredMetadata).length} entries...`,
       );
       const pluralStats =
         await this.pluralizationService.process(filteredMetadata);
@@ -217,7 +214,7 @@ Set the required API keys for real translations.`);
     );
 
     for (const hash of uncachedHashes) {
-      const entry = filteredMetadata.entries[hash];
+      const entry = filteredMetadata[hash];
       if (!entry) continue;
 
       // Check if this entry has an override for the current locale
@@ -230,8 +227,6 @@ Set the required API keys for real translations.`);
         hashesNeedingTranslation.push(hash);
       }
     }
-
-    const overrideCount = Object.keys(overriddenTranslations).length;
 
     // Step 7: Prepare entries for translation (excluding overridden ones)
     const entriesToTranslate = this.prepareEntries(
@@ -293,7 +288,7 @@ Set the required API keys for real translations.`);
       // Check for partial failures (some hashes didn't get translated)
       for (const hash of uncachedHashes) {
         if (!newTranslations[hash]) {
-          const entry = filteredMetadata.entries[hash];
+          const entry = filteredMetadata[hash];
           errors.push({
             hash,
             sourceText: entry?.sourceText || "",
@@ -344,7 +339,7 @@ Set the required API keys for real translations.`);
     const entries: Record<string, TranslatableEntry> = {};
 
     for (const hash of hashes) {
-      const entry = metadata.entries[hash];
+      const entry = metadata[hash];
       if (entry) {
         entries[hash] = {
           text: entry.sourceText,
