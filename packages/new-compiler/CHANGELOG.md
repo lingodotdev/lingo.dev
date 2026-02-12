@@ -1,5 +1,14 @@
 # @lingo.dev/compiler
 
+## 0.3.7
+
+### Patch Changes
+
+- [#1955](https://github.com/lingodotdev/lingo.dev/pull/1955) [`3c40593`](https://github.com/lingodotdev/lingo.dev/commit/3c40593dfa4c4303795e7032936b31441a0b7e02) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - - Migrate metadata storage from JSON files to LMDB
+  - New storage locations: .lingo/metadata-dev/ and .lingo/metadata-build/
+  - Update new-compiler docs
+  - Remove proper-lockfile dependency
+
 ## 0.3.6
 
 ### Patch Changes
