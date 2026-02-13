@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.131.2
+
+### Patch Changes
+
+- [#1760](https://github.com/lingodotdev/lingo.dev/pull/1760) [`c68b34b`](https://github.com/lingodotdev/lingo.dev/commit/c68b34b061a0409cf90c5635a652e7040314d5f6) Thanks [@vrcprl](https://github.com/vrcprl)! - fix MDX code placeholder
+
 ## 0.131.1
 
 ### Patch Changes
