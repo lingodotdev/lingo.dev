@@ -66,5 +66,6 @@ After running tests, verify no files were created:
 ```bash
 # Should return 0
 find compiler/src -name ".lingo" -type d | wc -l
-find compiler/src -name "metadata.json" | wc -l
+find compiler/src -name "metadata-dev" -type d | wc -l
+find compiler/src -name "metadata-build" -type d | wc -l
 ```

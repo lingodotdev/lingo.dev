@@ -1,5 +1,12 @@
 # @compiler/demo-next
 
+## 0.1.21
+
+### Patch Changes
+
+- Updated dependencies [[`3c40593`](https://github.com/lingodotdev/lingo.dev/commit/3c40593dfa4c4303795e7032936b31441a0b7e02)]:
+  - @lingo.dev/compiler@0.3.7
+
 ## 0.1.20
 
 ### Patch Changes

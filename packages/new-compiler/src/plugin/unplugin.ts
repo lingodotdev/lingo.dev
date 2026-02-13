@@ -12,7 +12,7 @@ import {
 import {
   cleanupExistingMetadata,
   getMetadataPath as rawGetMetadataPath,
-  MetadataManager,
+  saveMetadata,
 } from "../metadata/manager";
 import { createLingoConfig } from "../utils/config-factory";
 import { logger } from "../utils/logger";
@@ -353,11 +353,9 @@ export const lingoUnplugin = createUnplugin<
             logger.debug(`No transformation needed for ${id}`);
             return null;
           }
-          const metadataManager = new MetadataManager(getMetadataPath());
-
           // Update metadata with new entries (thread-safe)
           if (result.newEntries && result.newEntries.length > 0) {
-            await metadataManager.saveMetadataWithEntries(result.newEntries);
+            await saveMetadata(getMetadataPath(), result.newEntries, !isDev);
 
             // Track stats for observability
             totalEntriesCount += result.newEntries.length;
@@ -381,7 +379,10 @@ export const lingoUnplugin = createUnplugin<
             trackEvent(TRACKING_EVENTS.BUILD_ERROR, {
               framework: currentFramework,
               errorType: "transform",
-              errorMessage: error instanceof Error ? error.message : "Unknown transform error",
+              errorMessage:
+                error instanceof Error
+                  ? error.message
+                  : "Unknown transform error",
               filePath: id,
               environment: config.environment,
             });

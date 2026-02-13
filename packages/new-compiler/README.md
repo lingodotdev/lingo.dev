@@ -447,9 +447,10 @@ The compiler is organized into several key modules:
 
 #### `src/metadata/` - Translation metadata management
 
-- **`manager.ts`** - CRUD operations for `.lingo/metadata.json`
-- Thread-safe metadata file operations with file locking
+- **`manager.ts`** - CRUD operations for LMDB metadata database
+- Uses LMDB for high-performance key-value storage with built-in concurrency
 - Manages translation entries with hash-based identifiers
+- Stores metadata in `.lingo/metadata-dev/` (development) or `.lingo/metadata-build/` (production)
 
 #### `src/translators/` - Translation provider abstraction
 
