@@ -27,40 +27,71 @@ import { detectPluralCandidates } from "./pattern-detector";
 import { validateICU } from "./icu-validator";
 
 /**
- * Pluralization service with batching and model reuse
+ * Pluralization service with batching and lazy model initialization
  */
 export class PluralizationService {
-  private readonly languageModel: LanguageModel;
+  private languageModel?: LanguageModel;
   private cache = new Map<string, ICUGenerationResult>();
   private readonly prompt: string;
   private readonly sourceLocale: string;
+  private readonly modelConfig?: string;
 
   constructor(
     config: PluralizationConfig,
     private logger: Logger,
   ) {
-    const localeModel = parseModelString(config.model);
-    if (!localeModel) {
+    // Runtime validation: model is required when pluralization is enabled
+    if (!config.model) {
       throw new Error(
-        `Invalid model format in pluralization service: "${config.model}"`,
+        `Pluralization model is required when pluralization is enabled. ` +
+        `Please provide a model in the format "provider:model" (e.g., "groq:llama3-8b-8192")`,
       );
     }
 
-    // Validate and fetch API keys for the pluralization provider
-    // We need to create a models config that validateAndFetchApiKeys can use
-    const modelsConfig: Record<string, string> = {
-      "*:*": config.model,
-    };
-
-    const validatedKeys = validateAndGetApiKeys(modelsConfig);
-
-    this.languageModel = createAiModel(localeModel, validatedKeys);
+    this.modelConfig = config.model;
     this.sourceLocale = config.sourceLocale;
     this.prompt = getSystemPrompt({ sourceLocale: config.sourceLocale });
 
     this.logger.debug(
-      `Initialized pluralization service with ${localeModel.provider}:${localeModel.name}`,
+      `Initialized pluralization service (model will be lazy-loaded when needed)`,
     );
+  }
+
+  /**
+   * Lazy initialization of the language model
+   * Only creates the model when it's actually needed (first batch processing)
+   */
+  private getOrCreateLanguageModel(): LanguageModel {
+    if (!this.languageModel) {
+      if (!this.modelConfig) {
+        throw new Error(
+          `Pluralization model not configured. ` +
+          `Please provide a model in the format "provider:model"`,
+        );
+      }
+
+      const localeModel = parseModelString(this.modelConfig);
+      if (!localeModel) {
+        throw new Error(
+          `Invalid model format in pluralization service: "${this.modelConfig}"`,
+        );
+      }
+
+      // Validate and fetch API keys for the pluralization provider
+      const modelsConfig: Record<string, string> = {
+        "*:*": this.modelConfig,
+      };
+
+      const validatedKeys = validateAndGetApiKeys(modelsConfig);
+
+      this.languageModel = createAiModel(localeModel, validatedKeys);
+
+      this.logger.debug(
+        `Lazy-initialized pluralization model: ${localeModel.provider}:${localeModel.name}`,
+      );
+    }
+
+    return this.languageModel;
   }
 
   /**
@@ -142,7 +173,7 @@ export class PluralizationService {
       // Call LLM with XML format and few-shot examples
       const response = await withTimeout(
         generateText({
-          model: this.languageModel,
+          model: this.getOrCreateLanguageModel(),
           messages: [
             {
               role: "system",

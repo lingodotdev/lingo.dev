@@ -23,9 +23,9 @@ export type PluralizationConfig = {
   /**
    * LLM provider for pluralization detection
    * Format: "provider:model" (e.g., "groq:llama3-8b-8192")
-   * If omitted in user config, the compiler can infer it from translation models.
+   * Required when enabled: true, optional when enabled: false
    */
-  model: string;
+  model?: string;
 };
 
 /**
