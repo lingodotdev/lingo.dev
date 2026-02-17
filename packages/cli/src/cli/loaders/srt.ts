@@ -24,7 +24,15 @@ export default function createSrtLoader(): ILoader<
 
     async push(locale, payload) {
       const output = Object.entries(payload)
-        .filter(([, text]) => text !== undefined && text !== null)
+        .filter(([key, text]) => {
+          if (text === undefined || text === null) {
+            console.warn(
+              `⚠️  [SRT] Skipping subtitle entry ${key} - text is ${text === undefined ? "undefined" : "null"}`,
+            );
+            return false;
+          }
+          return true;
+        })
         .map(([key, text]) => {
           const [id, timeRange] = key.split("#");
           const [startTime, endTime] = timeRange.split("-");

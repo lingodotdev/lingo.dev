@@ -2927,6 +2927,7 @@ Test!`;
       expect(data).toHaveProperty("1#00:00:00,000-00:00:01,000");
       expect(data).toHaveProperty("3#00:00:02,000-00:00:03,000");
       // Entry #2 should be filtered out if parser returns undefined text
+      expect(data).not.toHaveProperty("2#00:00:01,000-00:00:02,000");
     });
   });
 
