@@ -13,27 +13,31 @@ export default function createSrtLoader(): ILoader<
       const result: Record<string, string> = {};
 
       parsed.forEach((entry) => {
-        const key = `${entry.id}#${entry.startTime}-${entry.endTime}`;
-        result[key] = entry.text;
+        if (entry.text !== undefined && entry.text !== null) {
+          const key = `${entry.id}#${entry.startTime}-${entry.endTime}`;
+          result[key] = entry.text;
+        }
       });
 
       return result;
     },
 
     async push(locale, payload) {
-      const output = Object.entries(payload).map(([key, text]) => {
-        const [id, timeRange] = key.split("#");
-        const [startTime, endTime] = timeRange.split("-");
+      const output = Object.entries(payload)
+        .filter(([, text]) => text !== undefined && text !== null)
+        .map(([key, text]) => {
+          const [id, timeRange] = key.split("#");
+          const [startTime, endTime] = timeRange.split("-");
 
-        return {
-          id: id,
-          startTime: startTime,
-          startSeconds: 0,
-          endTime: endTime,
-          endSeconds: 0,
-          text: text,
-        };
-      });
+          return {
+            id: id,
+            startTime: startTime,
+            startSeconds: 0,
+            endTime: endTime,
+            endSeconds: 0,
+            text: text,
+          };
+        });
 
       const srtContent = parser.toSrt(output).trim().replace(/\r?\n/g, "\n");
       return srtContent;

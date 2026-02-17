@@ -331,7 +331,7 @@ export class TranslationServer {
    */
   async translateAll(locale: LocaleCode): Promise<{
     translations: Record<string, string>;
-    errors: Array<{ hash: string; error: string }>;
+    errors: Array<{ hash: string; sourceText: string; error: string }>;
   }> {
     if (!this.translationService) {
       throw new Error("Translation server not initialized");
@@ -367,6 +367,27 @@ export class TranslationServer {
       this.metadata,
       allHashes,
     );
+
+    // Log detailed error information to server log file
+    if (result.errors.length > 0) {
+      this.logger.error(
+        `${result.errors.length} translation error(s) for ${locale}:`,
+      );
+      for (const err of result.errors) {
+        const prefix = `  [${locale}]`;
+        if (err.hash === "all") {
+          this.logger.error(`${prefix} ${err.error}`);
+          continue;
+        }
+        const source =
+          err.sourceText.length > 200
+            ? err.sourceText.slice(0, 200) + "..."
+            : err.sourceText;
+        this.logger.error(
+          `${prefix} hash=${err.hash} source="${source}" error="${err.error}"`,
+        );
+      }
+    }
 
     // Broadcast batch complete event
     const duration = Date.now() - startTime;
