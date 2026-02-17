@@ -2851,6 +2851,84 @@ World!
 
       expect(data).toEqual({ "2#00:00:01,000-00:00:02,000": "World!" });
     });
+
+    it("should handle undefined text values in payload", async () => {
+      setupFileMocks();
+
+      const input = `
+1
+00:00:00,000 --> 00:00:01,000
+Hello!
+
+2
+00:00:01,000 --> 00:00:02,000
+World!
+
+3
+00:00:02,000 --> 00:00:03,000
+Test!
+  `.trim();
+
+      const payload = {
+        "1#00:00:00,000-00:00:01,000": "¡Hola!",
+        "2#00:00:01,000-00:00:02,000": undefined as any,
+        "3#00:00:02,000-00:00:03,000": "¡Prueba!",
+      };
+
+      const expectedOutput = `1
+00:00:00,000 --> 00:00:01,000
+¡Hola!
+
+3
+00:00:02,000 --> 00:00:03,000
+¡Prueba!`;
+
+      mockFileOperations(input);
+
+      const srtLoader = createBucketLoader("srt", "i18n/[locale].srt", {
+        defaultLocale: "en",
+      });
+      srtLoader.setDefaultLocale("en");
+      await srtLoader.pull("en");
+
+      await srtLoader.push("es", payload);
+
+      expect(fs.writeFile).toHaveBeenCalledWith("i18n/es.srt", expectedOutput, {
+        encoding: "utf-8",
+        flag: "w",
+      });
+    });
+
+    it("should handle malformed SRT entries with undefined text during pull", async () => {
+      setupFileMocks();
+
+      // Simulating malformed SRT that causes parser to return undefined text
+      const malformedInput = `1
+00:00:00,000 --> 00:00:01,000
+Hello!
+
+2
+00:00:01,000 -- 00:00:02,000
+World!
+
+3
+00:00:02,000 --> 00:00:03,000
+Test!`;
+
+      mockFileOperations(malformedInput);
+
+      const srtLoader = createBucketLoader("srt", "i18n/[locale].srt", {
+        defaultLocale: "en",
+      });
+      srtLoader.setDefaultLocale("en");
+      const data = await srtLoader.pull("en");
+
+      // Should only include entries with valid text, skipping malformed entry #2
+      expect(data).toHaveProperty("1#00:00:00,000-00:00:01,000");
+      expect(data).toHaveProperty("3#00:00:02,000-00:00:03,000");
+      // Entry #2 should be filtered out if parser returns undefined text
+      expect(data).not.toHaveProperty("2#00:00:01,000-00:00:02,000");
+    });
   });
 
   describe("xliff bucket loader", () => {
