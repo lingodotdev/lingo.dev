@@ -259,7 +259,14 @@ Set the required API keys for real translations.`);
         // Merge translated texts with overridden translations
         newTranslations = { ...overriddenTranslations, ...translatedTexts };
       } catch (error) {
-        this.logger.error(`Translation failed:`, error);
+        const errorMessage =
+          error instanceof Error ? error.message : String(error);
+        this.logger.error(
+          `Translation failed for locale "${locale}": ${errorMessage}`,
+        );
+        if (error instanceof Error && error.stack) {
+          this.logger.debug(`Stack trace: ${error.stack}`);
+        }
 
         return {
           translations: this.pickTranslations(
@@ -270,10 +277,7 @@ Set the required API keys for real translations.`);
             {
               hash: "all",
               sourceText: "all",
-              error:
-                error instanceof Error
-                  ? error.message
-                  : "Unknown translation error",
+              error: errorMessage,
             },
           ],
           stats: {
