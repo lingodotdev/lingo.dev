@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.131.3
+
+### Patch Changes
+
+- [#1986](https://github.com/lingodotdev/lingo.dev/pull/1986) [`f8c22c1`](https://github.com/lingodotdev/lingo.dev/commit/f8c22c1e77b0739ef7423e572429b9eb6615afb8) Thanks [@cherkanovart](https://github.com/cherkanovart)! - fix(srt): filter undefined/null subtitle entries during push
+
 ## 0.131.2
 
 ### Patch Changes
