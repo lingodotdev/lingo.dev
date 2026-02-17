@@ -1,5 +1,11 @@
 # @lingo.dev/compiler
 
+## 0.3.8
+
+### Patch Changes
+
+- [#1991](https://github.com/lingodotdev/lingo.dev/pull/1991) [`debcb6e`](https://github.com/lingodotdev/lingo.dev/commit/debcb6e0396bec2088e54c35f74c97d4dcda84ff) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Improve translation error logging by writing detailed errors to .lingo/translation-server.log
+
 ## 0.3.7
 
 ### Patch Changes
