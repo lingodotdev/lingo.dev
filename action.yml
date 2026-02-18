@@ -29,7 +29,8 @@ inputs:
     required: false
   api-key:
     description: "Lingo.dev Platform API Key"
-    required: true
+    default: ""
+    required: false
   pull-request:
     description: "Create a pull request with the changes"
     default: false

@@ -1,3 +1,4 @@
+import path from "path";
 import { Command } from "interactive-commander";
 import createOra from "ora";
 import { getSettings } from "../../utils/settings";
@@ -6,6 +7,7 @@ import { IIntegrationFlow } from "./flows/_base";
 import { PullRequestFlow } from "./flows/pull-request";
 import { InBranchFlow } from "./flows/in-branch";
 import { getPlatformKit } from "./platforms";
+import { getConfig } from "../../utils/config";
 
 interface CIOptions {
   parallel?: boolean;
@@ -70,26 +72,54 @@ export default new Command()
     parseBooleanArg,
   )
   .action(async (options: CIOptions) => {
-    const settings = getSettings(options.apiKey);
-
-    if (!settings.auth.apiKey) {
-      console.error("No API key provided");
-      return;
+    const configDir = options.workingDirectory
+      ? path.resolve(process.cwd(), options.workingDirectory)
+      : process.cwd();
+    const originalCwd = process.cwd();
+    let config;
+    try {
+      process.chdir(configDir);
+      config = getConfig(false);
+    } finally {
+      process.chdir(originalCwd);
     }
 
-    const authenticator = createAuthenticator({
-      apiUrl: settings.auth.apiUrl,
-      apiKey: settings.auth.apiKey,
-    });
-    const auth = await authenticator.whoami();
+    const isVNext = !!config?.vNext;
 
-    if (!auth) {
-      console.error("Not authenticated");
-      return;
+    const settings = getSettings(options.apiKey);
+
+    if (isVNext) {
+      if (!settings.auth.vnext?.apiKey) {
+        console.error(
+          "No LINGO_API_KEY provided. vNext requires LINGO_API_KEY environment variable.",
+        );
+        return;
+      }
+    } else {
+      if (!settings.auth.apiKey) {
+        console.error("No API key provided");
+        return;
+      }
+
+      const authenticator = createAuthenticator({
+        apiUrl: settings.auth.apiUrl,
+        apiKey: settings.auth.apiKey,
+      });
+
+      const auth = await authenticator.whoami();
+      if (!auth) {
+        console.error("Not authenticated");
+        return;
+      }
     }
 
     const env = {
-      LINGODOTDEV_API_KEY: settings.auth.apiKey,
+      ...(settings.auth.apiKey && {
+        LINGODOTDEV_API_KEY: settings.auth.apiKey,
+      }),
+      ...(settings.auth.vnext?.apiKey && {
+        LINGO_API_KEY: settings.auth.vnext.apiKey,
+      }),
       LINGODOTDEV_PULL_REQUEST: options.pullRequest?.toString() || "false",
       ...(options.commitMessage && {
         LINGODOTDEV_COMMIT_MESSAGE: options.commitMessage,
@@ -132,7 +162,7 @@ export default new Command()
     }
 
     const hasChanges = await flow.run({
-      parallel: options.parallel,
+      parallel: isVNext || options.parallel,
     });
     if (!hasChanges) {
       return;
