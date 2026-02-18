@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.131.6
+
+### Patch Changes
+
+- [#1995](https://github.com/lingodotdev/lingo.dev/pull/1995) [`a91ad24`](https://github.com/lingodotdev/lingo.dev/commit/a91ad2427879c561ec4c2a587710b00340104948) Thanks [@Nixxx19](https://github.com/Nixxx19)! - Fix Content-Type header in auth.ts whoami request
+
 ## 0.131.5
 
 ### Patch Changes
