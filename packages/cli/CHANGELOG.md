@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.131.5
+
+### Patch Changes
+
+- [#1996](https://github.com/lingodotdev/lingo.dev/pull/1996) [`b9ae384`](https://github.com/lingodotdev/lingo.dev/commit/b9ae38436a8feda3c637d8cdb0cc8039e7448019) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - When vNext is configured in i18n.json, the CI command no longer requires LINGODOTDEV_API_KEY or validates against the legacy endpoint. Only LINGO_API_KEY is needed. Parallel mode is automatically enabled for vNext projects.
+
 ## 0.131.4
 
 ### Patch Changes
