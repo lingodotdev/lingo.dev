@@ -22,7 +22,7 @@ export function createAuthenticator(params: AuthenticatorParams) {
           method: "POST",
           headers: {
             Authorization: `Bearer ${params.apiKey}`,
-            ContentType: "application/json",
+            "Content-Type": "application/json",
           },
         });
 
