@@ -33,6 +33,7 @@
     "@lingo.dev/_spec": "workspace:*",
     "@paralleldrive/cuid2": "2.2.2",
     "jsdom": "25.0.1",
+    "posthog-node": "5.14.0",
     "zod": "4.1.12"
   },
   "devDependencies": {
