@@ -1,6 +1,7 @@
 import pkg from "node-machine-id";
 const { machineIdSync } = pkg;
 import https from "https";
+import crypto from "crypto";
 import { getOrgId } from "./org-id";
 
 const POSTHOG_API_KEY = "phc_eR0iSoQufBxNY36k0f0T15UvHJdTfHlh8rJcxsfhfXk";
@@ -17,8 +18,9 @@ function determineDistinctId(email: string | null | undefined): {
   const orgId = getOrgId();
 
   if (email) {
+    const hashedEmail = crypto.createHash("sha256").update(email).digest("hex");
     return {
-      distinct_id: email,
+      distinct_id: hashedEmail,
       distinct_id_source: "email",
       org_id: orgId,
     };
