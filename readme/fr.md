@@ -72,13 +72,13 @@
 
 ## Démarrage rapide
 
-| Outil                                 | Cas d'usage                                                       | Commande rapide                    |
-| ------------------------------------- | ----------------------------------------------------------------- | ---------------------------------- |
-| [**MCP**](#lingodev-mcp)              | Configuration i18n assistée par IA pour apps React                | Prompt : `Set up i18n`             |
-| [**CLI**](#lingodev-cli)              | Traduction de fichiers JSON, YAML, markdown, CSV, PO              | `npx lingo.dev@latest run`         |
-| [**CI/CD**](#lingodev-cicd)           | Pipeline de traduction automatisé dans GitHub Actions             | `uses: lingodotdev/lingo.dev@main` |
-| [**SDK**](#lingodev-sdk)              | Traduction à l'exécution pour contenu dynamique                   | `npm install lingo.dev`            |
-| [**Compilateur**](#lingodev-compiler) | Localisation React au moment de la compilation sans wrappers i18n | Plugin `withLingo()`               |
+| Outil                              | Cas d'usage                                           | Commande rapide                    |
+| ---------------------------------- | ----------------------------------------------------- | ---------------------------------- |
+| [**MCP**](#lingodev-mcp)           | Configuration i18n assistée par IA pour apps React    | Prompt : `Set up i18n`             |
+| [**CLI**](#lingodev-cli)           | Traduire fichiers JSON, YAML, markdown, CSV, PO       | `npx lingo.dev@latest run`         |
+| [**CI/CD**](#lingodev-cicd)        | Pipeline de traduction automatisé dans GitHub Actions | `uses: lingodotdev/lingo.dev@main` |
+| [**SDK**](#lingodev-sdk)           | Traduction à l'exécution pour contenu dynamique       | `npm install lingo.dev`            |
+| [**Compiler**](#lingodev-compiler) | Localisation React au build sans wrappers i18n        | Plugin `withLingo()`               |
 
 ---
 
@@ -111,8 +111,8 @@ Set up i18n with the following locales: en, es, and pt-BR. The default locale is
 
 L'assistant va :
 
-1. Configurer le routage basé sur les locales (par ex. `/en`, `/es`, `/pt-BR`)
-2. Mettre en place des composants de changement de langue
+1. Configurer le routage basé sur les locales (ex. `/en`, `/es`, `/pt-BR`)
+2. Mettre en place les composants de changement de langue
 3. Implémenter la détection automatique de locale
 4. Générer les fichiers de configuration nécessaires
 
@@ -147,7 +147,7 @@ npx lingo.dev@latest run
 
 **Configuration :**
 
-La commande `init` génère un fichier `i18n.json`. Configurez les locales et les buckets :
+La commande `init` génère un fichier `i18n.json`. Configurez les locales et buckets :
 
 ```json
 {
@@ -227,8 +227,8 @@ jobs:
 
 **Prérequis de configuration :**
 
-1. Ajoutez `LINGODOTDEV_API_KEY` aux secrets du dépôt (Settings > Secrets and variables > Actions)
-2. Pour les workflows PR : activez "Allow GitHub Actions to create and approve pull requests" dans Settings > Actions > General
+1. Ajoutez `LINGODOTDEV_API_KEY` aux secrets du dépôt (Paramètres > Secrets and variables > Actions)
+2. Pour les workflows PR : Activez « Allow GitHub Actions to create and approve pull requests » dans Paramètres > Actions > General
 
 **Options de workflow :**
 
@@ -434,24 +434,24 @@ export function LanguageSwitcher() {
 
 **Développement :** `npm run dev` (utilise le pseudotraducteur, aucun appel API)
 
-**Production :** définissez `usePseudotranslator: false`, puis `next build`
+**Production :** Définissez `usePseudotranslator: false`, puis `next build`
 
 Commitez le répertoire `.lingo/` dans le contrôle de version.
 
 **Fonctionnalités clés :**
 
 - Aucun coût de performance à l'exécution
-- Pas de clés de traduction ni de fichiers JSON
-- Pas de fonctions `t()` ni de composants wrapper `<T>`
+- Aucune clé de traduction ni fichier JSON
+- Aucune fonction `t()` ni composant wrapper `<T>`
 - Détection automatique du texte traduisible dans JSX
 - Support TypeScript
-- ICU MessageFormat pour les pluriels
+- Format ICU MessageFormat pour les pluriels
 - Remplacements manuels via l'attribut `data-lingo-override`
-- Widget d'éditeur de traduction intégré
+- Widget éditeur de traduction intégré
 
 **Modes de compilation :**
 
-- `pseudotranslator` : mode développement avec traductions placeholder (aucun coût API)
+- `pseudotranslator` : mode développement avec traductions de substitution (aucun coût API)
 - `real` : génère les traductions réelles en utilisant les LLM
 - `cache-only` : mode production utilisant les traductions pré-générées depuis la CI (aucun appel API)
 
@@ -470,13 +470,13 @@ Support de frameworks supplémentaires prévu.
 
 Les contributions sont les bienvenues. Veuillez suivre ces directives :
 
-1. **Issues :** [Signaler des bugs ou demander des fonctionnalités](https://github.com/lingodotdev/lingo.dev/issues)
-2. **Pull Requests :** [Soumettre des modifications](https://github.com/lingodotdev/lingo.dev/pulls)
+1. **Issues :** [Signalez des bugs ou demandez des fonctionnalités](https://github.com/lingodotdev/lingo.dev/issues)
+2. **Pull requests :** [Soumettez des modifications](https://github.com/lingodotdev/lingo.dev/pulls)
    - Chaque PR nécessite un changeset : `pnpm new` (ou `pnpm new:empty` pour les modifications sans release)
    - Assurez-vous que les tests passent avant de soumettre
 3. **Développement :** Il s'agit d'un monorepo pnpm + turborepo
-   - Installer les dépendances : `pnpm install`
-   - Exécuter les tests : `pnpm test`
+   - Installez les dépendances : `pnpm install`
+   - Exécutez les tests : `pnpm test`
    - Build : `pnpm build`
 
 **Support :** [Communauté Discord](https://lingo.dev/go/discord)
@@ -499,12 +499,12 @@ Si vous trouvez Lingo.dev utile, donnez-nous une étoile et aidez-nous à attein
 
 **Ajouter une nouvelle langue :**
 
-1. Ajouter le code de locale à [`i18n.json`](./i18n.json) en utilisant le [format BCP-47](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale)
-2. Soumettre une pull request
+1. Ajoutez le code de locale à [`i18n.json`](./i18n.json) en utilisant le [format BCP-47](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale)
+2. Soumettez une pull request
 
 **Format de locale BCP-47 :** `language[-Script][-REGION]`
 
 - `language` : ISO 639-1/2/3 (minuscules) : `en`, `zh`, `bho`
-- `Script` : ISO 15924 (casse de titre) : `Hans`, `Hant`, `Latn`
+- `Script` : ISO 15924 (casse titre) : `Hans`, `Hant`, `Latn`
 - `REGION` : ISO 3166-1 alpha-2 (majuscules) : `US`, `CN`, `IN`
 - Exemples : `en`, `pt-BR`, `zh-Hans`, `sr-Cyrl-RS`
