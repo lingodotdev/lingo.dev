@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.131.7
+
+### Patch Changes
+
+- [#2000](https://github.com/lingodotdev/lingo.dev/pull/2000) [`56d0a47`](https://github.com/lingodotdev/lingo.dev/commit/56d0a478ccd9b164e266848dc089146bf7632161) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Fix crash in PO loader when current section has no translations
+
 ## 0.131.6
 
 ### Patch Changes
