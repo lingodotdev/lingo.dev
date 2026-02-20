@@ -55,6 +55,46 @@ importers:
         specifier: 2.6.1
         version: 2.6.1
 
+  community/launch-lingo:
+    dependencies:
+      '@lingo.dev/compiler':
+        specifier: ^0.3.6
+        version: 0.3.6(@types/node@20.19.25)(@types/react@19.2.7)(encoding@0.1.13)(next@16.1.6(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.57.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(zod@4.1.12)
+      next:
+        specifier: 16.1.6
+        version: 16.1.6(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.57.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      react:
+        specifier: 19.2.3
+        version: 19.2.3
+      react-dom:
+        specifier: 19.2.3
+        version: 19.2.3(react@19.2.3)
+    devDependencies:
+      '@tailwindcss/postcss':
+        specifier: ^4
+        version: 4.1.17
+      '@types/node':
+        specifier: ^20
+        version: 20.19.25
+      '@types/react':
+        specifier: ^19
+        version: 19.2.7
+      '@types/react-dom':
+        specifier: ^19
+        version: 19.2.3(@types/react@19.2.7)
+      eslint:
+        specifier: ^9
+        version: 9.39.1(jiti@2.6.1)
+      eslint-config-next:
+        specifier: 16.1.6
+        version: 16.1.6(@typescript-eslint/parser@8.48.0(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3)
+      tailwindcss:
+        specifier: ^4
+        version: 4.1.18
+      typescript:
+        specifier: ^5
+        version: 5.9.3
+
   demo/new-compiler-next16:
     dependencies:
       '@lingo.dev/compiler':
@@ -2521,22 +2561,49 @@ packages:
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
+  '@lingo.dev/_compiler@0.11.1':
+    resolution: {integrity: sha512-G2xourXU4Gc+kHnzjQlxD/QS6VP0+Za+4QtaKv/G0UBcwQelqHoSvx0mVQ5NZbNxH1DRF/9YArw9nzzv/i9Zqw==}
+
   '@lingo.dev/_compiler@0.8.8':
     resolution: {integrity: sha512-gSqUFF6VxFAJCyjTJvCDqDIu+RBfmLEcRL1M8Z3tTtH9AHIXTTXUV+6t2udQJ1dTsytXPdFbpdNXknoMHMJvkQ==}
 
   '@lingo.dev/_locales@0.3.1':
     resolution: {integrity: sha512-9iTwe+14un1WnS/Ao2Mea5tmEV2IXSo41fJoV+FLOc4ZGfVcoGy4LgLf6QAUdYMuIpyitGu0qkPmUvAqoWoH9Q==}
 
+  '@lingo.dev/_locales@0.3.3':
+    resolution: {integrity: sha512-50blm6NdDEM9P/GtWmyrfuxILe+9s3g+wMmETQafV97Geh/OQeW8Ej/8XcozZBHNRLIrCsUn53RS+x5kczAM0Q==}
+
   '@lingo.dev/_react@0.7.5':
     resolution: {integrity: sha512-c6HkkgVdlUBkRBo4Atj4L9xGB4l2YdSejD14Uls0nb3S2KTLhD3OwnSHpeZHdOneO3+JDxqSJ7i0emJLiPXIvQ==}
+    peerDependencies:
+      next: 15.3.8
+
+  '@lingo.dev/_react@0.7.6':
+    resolution: {integrity: sha512-D7pk63tj4aOBBB0xOvM7KBo+mb0MobYQLNwkECeiRkxhjMKhjj4ANwb3Uj90XB4tjY1InW9V4Ho1jpYG5yZsnA==}
     peerDependencies:
       next: 15.3.8
 
   '@lingo.dev/_sdk@0.13.4':
     resolution: {integrity: sha512-K3Sk0cvnpV5AtaYlpimeAAweCxahOJGWIuNrTJyE7NQer3Nbb3keCUy8DfVlpthAX8dOe+A1UBAWJokuaf568A==}
 
+  '@lingo.dev/_sdk@0.14.1':
+    resolution: {integrity: sha512-oC2MTtM8LZ7dUtC4ArJxJ6VySAk6ryZ8aAamCNP+9yAtthWPyRUq8xfzr31faYKgw/QTcuHSzw2dpxpUhShN6Q==}
+
   '@lingo.dev/_spec@0.44.4':
     resolution: {integrity: sha512-SJifegtTD+VF0WUZtZVQytCX/YdOSLqCt9WTc0EXIx2t8arPnIgE2+rmPCJ84GYQhFc5BaTbYEo2pQhKQCOMNg==}
+
+  '@lingo.dev/_spec@0.47.1':
+    resolution: {integrity: sha512-heBlHvo9OypK2q3pfpUBjuhDZwkWWnD3qSo1w1G5zXK6UYgmyuNnAcKb8shiuundC0SzF5llEAruQaANKpwHvw==}
+
+  '@lingo.dev/compiler@0.3.6':
+    resolution: {integrity: sha512-17o++JkIABU9ygVGoexBF0fYf9TXF3rkNgGN6Y1BMMvCf4AnWuI5b7CSC8Hy3FNEYQlSSvt8KAPUzblTaFvPMg==}
+    peerDependencies:
+      next: ^15.0.0 || ^16.0.4
+      react: ^19.0.0
+      react-dom: ' ^19.0.0'
+    peerDependenciesMeta:
+      next:
+        optional: true
 
   '@manypkg/find-root@1.1.0':
     resolution: {integrity: sha512-mki5uBvhHzO8kYYix/WRy2WX8S3B5wdVSc9D6KcU5lQNglP2yt58/VfLuAK49glRXChosY8ap2oJ1qgma3GUVA==}
@@ -2583,8 +2650,14 @@ packages:
   '@next/env@16.1.1':
     resolution: {integrity: sha512-3oxyM97Sr2PqiVyMyrZUtrtM3jqqFxOQJVuKclDsgj/L728iZt/GyslkN4NwarledZATCenbk4Offjk1hQmaAA==}
 
+  '@next/env@16.1.6':
+    resolution: {integrity: sha512-N1ySLuZjnAtN3kFnwhAwPvZah8RJxKasD7x1f8shFqhncnWZn4JMfg37diLNuoHsLAlrDfM3g4mawVdtAG8XLQ==}
+
   '@next/eslint-plugin-next@16.0.3':
     resolution: {integrity: sha512-6sPWmZetzFWMsz7Dhuxsdmbu3fK+/AxKRtj7OB0/3OZAI2MHB/v2FeYh271LZ9abvnM1WIwWc/5umYjx0jo5sQ==}
+
+  '@next/eslint-plugin-next@16.1.6':
+    resolution: {integrity: sha512-/Qq3PTagA6+nYVfryAtQ7/9FEr/6YVyvOtl6rZnGsbReGLf0jZU6gkpr1FuChAQpvV46a78p4cmHOVP8mbfSMQ==}
 
   '@next/swc-darwin-arm64@15.3.5':
     resolution: {integrity: sha512-lM/8tilIsqBq+2nq9kbTW19vfwFve0NR7MxfkuSUbRSgXlMQoJYg+31+++XwKVSXk4uT23G2eF/7BRIKdn8t8w==}
@@ -2606,6 +2679,12 @@ packages:
 
   '@next/swc-darwin-arm64@16.1.1':
     resolution: {integrity: sha512-JS3m42ifsVSJjSTzh27nW+Igfha3NdBOFScr9C80hHGrWx55pTrVL23RJbqir7k7/15SKlrLHhh/MQzqBBYrQA==}
+    engines: {node: '>= 10'}
+    cpu: [arm64]
+    os: [darwin]
+
+  '@next/swc-darwin-arm64@16.1.6':
+    resolution: {integrity: sha512-wTzYulosJr/6nFnqGW7FrG3jfUUlEf8UjGA0/pyypJl42ExdVgC6xJgcXQ+V8QFn6niSG2Pb8+MIG1mZr2vczw==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [darwin]
@@ -2634,6 +2713,12 @@ packages:
     cpu: [x64]
     os: [darwin]
 
+  '@next/swc-darwin-x64@16.1.6':
+    resolution: {integrity: sha512-BLFPYPDO+MNJsiDWbeVzqvYd4NyuRrEYVB5k2N3JfWncuHAy2IVwMAOlVQDFjj+krkWzhY2apvmekMkfQR0CUQ==}
+    engines: {node: '>= 10'}
+    cpu: [x64]
+    os: [darwin]
+
   '@next/swc-linux-arm64-gnu@15.3.5':
     resolution: {integrity: sha512-LVD6uMOZ7XePg3KWYdGuzuvVboxujGjbcuP2jsPAN3MnLdLoZUXKRc6ixxfs03RH7qBdEHCZjyLP/jBdCJVRJQ==}
     engines: {node: '>= 10'}
@@ -2654,6 +2739,12 @@ packages:
 
   '@next/swc-linux-arm64-gnu@16.1.1':
     resolution: {integrity: sha512-/fvHet+EYckFvRLQ0jPHJCUI5/B56+2DpI1xDSvi80r/3Ez+Eaa2Yq4tJcRTaB1kqj/HrYKn8Yplm9bNoMJpwQ==}
+    engines: {node: '>= 10'}
+    cpu: [arm64]
+    os: [linux]
+
+  '@next/swc-linux-arm64-gnu@16.1.6':
+    resolution: {integrity: sha512-OJYkCd5pj/QloBvoEcJ2XiMnlJkRv9idWA/j0ugSuA34gMT6f5b7vOiCQHVRpvStoZUknhl6/UxOXL4OwtdaBw==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
@@ -2682,6 +2773,12 @@ packages:
     cpu: [arm64]
     os: [linux]
 
+  '@next/swc-linux-arm64-musl@16.1.6':
+    resolution: {integrity: sha512-S4J2v+8tT3NIO9u2q+S0G5KdvNDjXfAv06OhfOzNDaBn5rw84DGXWndOEB7d5/x852A20sW1M56vhC/tRVbccQ==}
+    engines: {node: '>= 10'}
+    cpu: [arm64]
+    os: [linux]
+
   '@next/swc-linux-x64-gnu@15.3.5':
     resolution: {integrity: sha512-2xYU0DI9DGN/bAHzVwADid22ba5d/xrbrQlr2U+/Q5WkFUzeL0TDR963BdrtLS/4bMmKZGptLeg6282H/S2i8A==}
     engines: {node: '>= 10'}
@@ -2702,6 +2799,12 @@ packages:
 
   '@next/swc-linux-x64-gnu@16.1.1':
     resolution: {integrity: sha512-20bYDfgOQAPUkkKBnyP9PTuHiJGM7HzNBbuqmD0jiFVZ0aOldz+VnJhbxzjcSabYsnNjMPsE0cyzEudpYxsrUQ==}
+    engines: {node: '>= 10'}
+    cpu: [x64]
+    os: [linux]
+
+  '@next/swc-linux-x64-gnu@16.1.6':
+    resolution: {integrity: sha512-2eEBDkFlMMNQnkTyPBhQOAyn2qMxyG2eE7GPH2WIDGEpEILcBPI/jdSv4t6xupSP+ot/jkfrCShLAa7+ZUPcJQ==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
@@ -2730,6 +2833,12 @@ packages:
     cpu: [x64]
     os: [linux]
 
+  '@next/swc-linux-x64-musl@16.1.6':
+    resolution: {integrity: sha512-oicJwRlyOoZXVlxmIMaTq7f8pN9QNbdes0q2FXfRsPhfCi8n8JmOZJm5oo1pwDaFbnnD421rVU409M3evFbIqg==}
+    engines: {node: '>= 10'}
+    cpu: [x64]
+    os: [linux]
+
   '@next/swc-win32-arm64-msvc@15.3.5':
     resolution: {integrity: sha512-h04/7iMEUSMY6fDGCvdanKqlO1qYvzNxntZlCzfE8i5P0uqzVQWQquU1TIhlz0VqGQGXLrFDuTJVONpqGqjGKQ==}
     engines: {node: '>= 10'}
@@ -2754,6 +2863,12 @@ packages:
     cpu: [arm64]
     os: [win32]
 
+  '@next/swc-win32-arm64-msvc@16.1.6':
+    resolution: {integrity: sha512-gQmm8izDTPgs+DCWH22kcDmuUp7NyiJgEl18bcr8irXA5N2m2O+JQIr6f3ct42GOs9c0h8QF3L5SzIxcYAAXXw==}
+    engines: {node: '>= 10'}
+    cpu: [arm64]
+    os: [win32]
+
   '@next/swc-win32-x64-msvc@15.3.5':
     resolution: {integrity: sha512-5fhH6fccXxnX2KhllnGhkYMndhOiLOLEiVGYjP2nizqeGWkN10sA9taATlXwake2E2XMvYZjjz0Uj7T0y+z1yw==}
     engines: {node: '>= 10'}
@@ -2774,6 +2889,12 @@ packages:
 
   '@next/swc-win32-x64-msvc@16.1.1':
     resolution: {integrity: sha512-Ncwbw2WJ57Al5OX0k4chM68DKhEPlrXBaSXDCi2kPi5f4d8b3ejr3RRJGfKBLrn2YJL5ezNS7w2TZLHSti8CMw==}
+    engines: {node: '>= 10'}
+    cpu: [x64]
+    os: [win32]
+
+  '@next/swc-win32-x64-msvc@16.1.6':
+    resolution: {integrity: sha512-NRfO39AIrzBnixKbjuo2YiYhB6o9d8v/ymU9m/Xk8cyVk+k7XylniXkHwjs4s70wedVffc6bQNbufk5v0xEm0A==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
@@ -5754,6 +5875,15 @@ packages:
       typescript:
         optional: true
 
+  eslint-config-next@16.1.6:
+    resolution: {integrity: sha512-vKq40io2B0XtkkNDYyleATwblNt8xuh3FWp8SpSz3pt7P01OkBFlKsJZ2mWt5WsCySlDQLckb1zMY9yE9Qy0LA==}
+    peerDependencies:
+      eslint: '>=9.0.0'
+      typescript: '>=3.3.1'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+
   eslint-import-resolver-node@0.3.9:
     resolution: {integrity: sha512-WFj2isz22JahUv+B788TlO3N6zL3nNJGU8CcZbPZvVEkBPaJdCV4vy5wyghty5ROFbCRnm132v8BScu5/1BQ8g==}
 
@@ -6196,6 +6326,7 @@ packages:
   glob@11.1.0:
     resolution: {integrity: sha512-vuNwKSaKiqm7g0THUBu2x7ckSs3XJLXE+2ssL7/MfTGPLLcrJQ/4Uq1CjPTtO5cCIiRxqvN6Twy1qOwhL0Xjcw==}
     engines: {node: 20 || >=22}
+    deprecated: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
     hasBin: true
 
   global-directory@4.0.1:
@@ -6952,6 +7083,11 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
+  lingo.dev@0.131.1:
+    resolution: {integrity: sha512-IVqqS1kVG6zWzWIbm0H0pGA/yGO88VI2HHlyyZNAnT+rtg2vB/+8KAMEIvF6yJQ9zqpNnY7FBSCIhfVy+VU5Ng==}
+    engines: {node: '>=18'}
+    hasBin: true
+
   listr2@8.3.2:
     resolution: {integrity: sha512-vsBzcU4oE+v0lj4FhVLzr9dBTv4/fHIa57l+GCwovP8MoFNZJTOhGU8PXd4v2VJCbECAaijBiHntiekFMLvo0g==}
     engines: {node: '>=18.0.0'}
@@ -7442,6 +7578,27 @@ packages:
 
   next@16.1.1:
     resolution: {integrity: sha512-QI+T7xrxt1pF6SQ/JYFz95ro/mg/1Znk5vBebsWwbpejj1T0A23hO7GYEaVac9QUOT2BIMiuzm0L99ooq7k0/w==}
+    engines: {node: '>=20.9.0'}
+    hasBin: true
+    peerDependencies:
+      '@opentelemetry/api': ^1.1.0
+      '@playwright/test': ^1.51.1
+      babel-plugin-react-compiler: '*'
+      react: ^18.2.0 || 19.0.0-rc-de68d2f4-20241204 || ^19.0.0
+      react-dom: ^18.2.0 || 19.0.0-rc-de68d2f4-20241204 || ^19.0.0
+      sass: ^1.3.0
+    peerDependenciesMeta:
+      '@opentelemetry/api':
+        optional: true
+      '@playwright/test':
+        optional: true
+      babel-plugin-react-compiler:
+        optional: true
+      sass:
+        optional: true
+
+  next@16.1.6:
+    resolution: {integrity: sha512-hkyRkcu5x/41KoqnROkfTm2pZVbKxvbZRuNvKXLRXxs3VfyO0WhY50TQS40EuKO9SW3rBj/sF3WbVwDACeMZyw==}
     engines: {node: '>=20.9.0'}
     hasBin: true
     peerDependencies:
@@ -9598,6 +9755,7 @@ packages:
   whatwg-encoding@3.1.1:
     resolution: {integrity: sha512-6qN4hJdMwfYBtE3YBTTHhoeuUrDBPZmbQaxWAqSALV/MeEnR5z1xd8UKud2RAkFoPkmB+hli1TZSnyi84xz1vQ==}
     engines: {node: '>=18'}
+    deprecated: Use @exodus/bytes instead for a more spec-conformant and faster implementation
 
   whatwg-fetch@3.6.20:
     resolution: {integrity: sha512-EqhiFU6daOA8kpjOWTL0olhVOF3i7OrFzSYiGsEMB8GcXS+RrzauAERX65xMeNWVqxA6HXH2m69Z9LaKKdisfg==}
@@ -11627,6 +11785,16 @@ snapshots:
 
   '@inquirer/ansi@1.0.2': {}
 
+  '@inquirer/checkbox@4.3.2(@types/node@20.19.25)':
+    dependencies:
+      '@inquirer/ansi': 1.0.2
+      '@inquirer/core': 10.3.2(@types/node@20.19.25)
+      '@inquirer/figures': 1.0.15
+      '@inquirer/type': 3.0.10(@types/node@20.19.25)
+      yoctocolors-cjs: 2.1.3
+    optionalDependencies:
+      '@types/node': 20.19.25
+
   '@inquirer/checkbox@4.3.2(@types/node@22.10.2)':
     dependencies:
       '@inquirer/ansi': 1.0.2
@@ -11647,6 +11815,13 @@ snapshots:
     optionalDependencies:
       '@types/node': 25.0.3
 
+  '@inquirer/confirm@5.1.21(@types/node@20.19.25)':
+    dependencies:
+      '@inquirer/core': 10.3.2(@types/node@20.19.25)
+      '@inquirer/type': 3.0.10(@types/node@20.19.25)
+    optionalDependencies:
+      '@types/node': 20.19.25
+
   '@inquirer/confirm@5.1.21(@types/node@22.10.2)':
     dependencies:
       '@inquirer/core': 10.3.2(@types/node@22.10.2)
@@ -11660,6 +11835,19 @@ snapshots:
       '@inquirer/type': 3.0.10(@types/node@25.0.3)
     optionalDependencies:
       '@types/node': 25.0.3
+
+  '@inquirer/core@10.3.2(@types/node@20.19.25)':
+    dependencies:
+      '@inquirer/ansi': 1.0.2
+      '@inquirer/figures': 1.0.15
+      '@inquirer/type': 3.0.10(@types/node@20.19.25)
+      cli-width: 4.1.0
+      mute-stream: 2.0.0
+      signal-exit: 4.1.0
+      wrap-ansi: 6.2.0
+      yoctocolors-cjs: 2.1.3
+    optionalDependencies:
+      '@types/node': 20.19.25
 
   '@inquirer/core@10.3.2(@types/node@22.10.2)':
     dependencies:
@@ -11687,6 +11875,14 @@ snapshots:
     optionalDependencies:
       '@types/node': 25.0.3
 
+  '@inquirer/editor@4.2.23(@types/node@20.19.25)':
+    dependencies:
+      '@inquirer/core': 10.3.2(@types/node@20.19.25)
+      '@inquirer/external-editor': 1.0.3(@types/node@20.19.25)
+      '@inquirer/type': 3.0.10(@types/node@20.19.25)
+    optionalDependencies:
+      '@types/node': 20.19.25
+
   '@inquirer/editor@4.2.23(@types/node@22.10.2)':
     dependencies:
       '@inquirer/core': 10.3.2(@types/node@22.10.2)
@@ -11702,6 +11898,14 @@ snapshots:
       '@inquirer/type': 3.0.10(@types/node@25.0.3)
     optionalDependencies:
       '@types/node': 25.0.3
+
+  '@inquirer/expand@4.0.23(@types/node@20.19.25)':
+    dependencies:
+      '@inquirer/core': 10.3.2(@types/node@20.19.25)
+      '@inquirer/type': 3.0.10(@types/node@20.19.25)
+      yoctocolors-cjs: 2.1.3
+    optionalDependencies:
+      '@types/node': 20.19.25
 
   '@inquirer/expand@4.0.23(@types/node@22.10.2)':
     dependencies:
@@ -11719,6 +11923,13 @@ snapshots:
     optionalDependencies:
       '@types/node': 25.0.3
 
+  '@inquirer/external-editor@1.0.3(@types/node@20.19.25)':
+    dependencies:
+      chardet: 2.1.1
+      iconv-lite: 0.7.1
+    optionalDependencies:
+      '@types/node': 20.19.25
+
   '@inquirer/external-editor@1.0.3(@types/node@22.10.2)':
     dependencies:
       chardet: 2.1.1
@@ -11735,6 +11946,13 @@ snapshots:
 
   '@inquirer/figures@1.0.15': {}
 
+  '@inquirer/input@4.3.1(@types/node@20.19.25)':
+    dependencies:
+      '@inquirer/core': 10.3.2(@types/node@20.19.25)
+      '@inquirer/type': 3.0.10(@types/node@20.19.25)
+    optionalDependencies:
+      '@types/node': 20.19.25
+
   '@inquirer/input@4.3.1(@types/node@22.10.2)':
     dependencies:
       '@inquirer/core': 10.3.2(@types/node@22.10.2)
@@ -11749,6 +11967,13 @@ snapshots:
     optionalDependencies:
       '@types/node': 25.0.3
 
+  '@inquirer/number@3.0.23(@types/node@20.19.25)':
+    dependencies:
+      '@inquirer/core': 10.3.2(@types/node@20.19.25)
+      '@inquirer/type': 3.0.10(@types/node@20.19.25)
+    optionalDependencies:
+      '@types/node': 20.19.25
+
   '@inquirer/number@3.0.23(@types/node@22.10.2)':
     dependencies:
       '@inquirer/core': 10.3.2(@types/node@22.10.2)
@@ -11762,6 +11987,14 @@ snapshots:
       '@inquirer/type': 3.0.10(@types/node@25.0.3)
     optionalDependencies:
       '@types/node': 25.0.3
+
+  '@inquirer/password@4.0.23(@types/node@20.19.25)':
+    dependencies:
+      '@inquirer/ansi': 1.0.2
+      '@inquirer/core': 10.3.2(@types/node@20.19.25)
+      '@inquirer/type': 3.0.10(@types/node@20.19.25)
+    optionalDependencies:
+      '@types/node': 20.19.25
 
   '@inquirer/password@4.0.23(@types/node@22.10.2)':
     dependencies:
@@ -11779,6 +12012,21 @@ snapshots:
     optionalDependencies:
       '@types/node': 25.0.3
 
+  '@inquirer/prompts@7.10.1(@types/node@20.19.25)':
+    dependencies:
+      '@inquirer/checkbox': 4.3.2(@types/node@20.19.25)
+      '@inquirer/confirm': 5.1.21(@types/node@20.19.25)
+      '@inquirer/editor': 4.2.23(@types/node@20.19.25)
+      '@inquirer/expand': 4.0.23(@types/node@20.19.25)
+      '@inquirer/input': 4.3.1(@types/node@20.19.25)
+      '@inquirer/number': 3.0.23(@types/node@20.19.25)
+      '@inquirer/password': 4.0.23(@types/node@20.19.25)
+      '@inquirer/rawlist': 4.1.11(@types/node@20.19.25)
+      '@inquirer/search': 3.2.2(@types/node@20.19.25)
+      '@inquirer/select': 4.4.2(@types/node@20.19.25)
+    optionalDependencies:
+      '@types/node': 20.19.25
+
   '@inquirer/prompts@7.10.1(@types/node@25.0.3)':
     dependencies:
       '@inquirer/checkbox': 4.3.2(@types/node@25.0.3)
@@ -11793,6 +12041,21 @@ snapshots:
       '@inquirer/select': 4.4.2(@types/node@25.0.3)
     optionalDependencies:
       '@types/node': 25.0.3
+
+  '@inquirer/prompts@7.8.0(@types/node@20.19.25)':
+    dependencies:
+      '@inquirer/checkbox': 4.3.2(@types/node@20.19.25)
+      '@inquirer/confirm': 5.1.21(@types/node@20.19.25)
+      '@inquirer/editor': 4.2.23(@types/node@20.19.25)
+      '@inquirer/expand': 4.0.23(@types/node@20.19.25)
+      '@inquirer/input': 4.3.1(@types/node@20.19.25)
+      '@inquirer/number': 3.0.23(@types/node@20.19.25)
+      '@inquirer/password': 4.0.23(@types/node@20.19.25)
+      '@inquirer/rawlist': 4.1.11(@types/node@20.19.25)
+      '@inquirer/search': 3.2.2(@types/node@20.19.25)
+      '@inquirer/select': 4.4.2(@types/node@20.19.25)
+    optionalDependencies:
+      '@types/node': 20.19.25
 
   '@inquirer/prompts@7.8.0(@types/node@22.10.2)':
     dependencies:
@@ -11824,6 +12087,14 @@ snapshots:
     optionalDependencies:
       '@types/node': 25.0.3
 
+  '@inquirer/rawlist@4.1.11(@types/node@20.19.25)':
+    dependencies:
+      '@inquirer/core': 10.3.2(@types/node@20.19.25)
+      '@inquirer/type': 3.0.10(@types/node@20.19.25)
+      yoctocolors-cjs: 2.1.3
+    optionalDependencies:
+      '@types/node': 20.19.25
+
   '@inquirer/rawlist@4.1.11(@types/node@22.10.2)':
     dependencies:
       '@inquirer/core': 10.3.2(@types/node@22.10.2)
@@ -11839,6 +12110,15 @@ snapshots:
       yoctocolors-cjs: 2.1.3
     optionalDependencies:
       '@types/node': 25.0.3
+
+  '@inquirer/search@3.2.2(@types/node@20.19.25)':
+    dependencies:
+      '@inquirer/core': 10.3.2(@types/node@20.19.25)
+      '@inquirer/figures': 1.0.15
+      '@inquirer/type': 3.0.10(@types/node@20.19.25)
+      yoctocolors-cjs: 2.1.3
+    optionalDependencies:
+      '@types/node': 20.19.25
 
   '@inquirer/search@3.2.2(@types/node@22.10.2)':
     dependencies:
@@ -11857,6 +12137,16 @@ snapshots:
       yoctocolors-cjs: 2.1.3
     optionalDependencies:
       '@types/node': 25.0.3
+
+  '@inquirer/select@4.4.2(@types/node@20.19.25)':
+    dependencies:
+      '@inquirer/ansi': 1.0.2
+      '@inquirer/core': 10.3.2(@types/node@20.19.25)
+      '@inquirer/figures': 1.0.15
+      '@inquirer/type': 3.0.10(@types/node@20.19.25)
+      yoctocolors-cjs: 2.1.3
+    optionalDependencies:
+      '@types/node': 20.19.25
 
   '@inquirer/select@4.4.2(@types/node@22.10.2)':
     dependencies:
@@ -11877,6 +12167,10 @@ snapshots:
       yoctocolors-cjs: 2.1.3
     optionalDependencies:
       '@types/node': 25.0.3
+
+  '@inquirer/type@3.0.10(@types/node@20.19.25)':
+    optionalDependencies:
+      '@types/node': 20.19.25
 
   '@inquirer/type@3.0.10(@types/node@22.10.2)':
     optionalDependencies:
@@ -11925,6 +12219,39 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
 
+  '@lingo.dev/_compiler@0.11.1':
+    dependencies:
+      '@ai-sdk/anthropic': 3.0.9(zod@4.1.12)
+      '@ai-sdk/google': 3.0.6(zod@4.1.12)
+      '@ai-sdk/groq': 3.0.4(zod@4.1.12)
+      '@ai-sdk/mistral': 3.0.5(zod@4.1.12)
+      '@ai-sdk/openai': 3.0.7(zod@4.1.12)
+      '@babel/generator': 7.28.5
+      '@babel/parser': 7.28.5
+      '@babel/traverse': 7.28.5
+      '@babel/types': 7.28.5
+      '@lingo.dev/_sdk': 0.14.1
+      '@lingo.dev/_spec': 0.47.1
+      '@openrouter/ai-sdk-provider': 6.0.0-alpha.1(zod@4.1.12)
+      ai: 6.0.25(zod@4.1.12)
+      dedent: 1.7.0
+      dotenv: 16.4.5
+      fast-xml-parser: 5.3.2
+      ini: 5.0.0
+      lodash: 4.17.21
+      node-machine-id: 1.1.12
+      object-hash: 3.0.0
+      ollama-ai-provider-v2: 2.0.0(ai@6.0.25(zod@4.1.12))(zod@4.1.12)
+      posthog-node: 5.14.0
+      unplugin: 2.3.11
+      zod: 4.1.12
+    transitivePeerDependencies:
+      - babel-plugin-macros
+      - bufferutil
+      - canvas
+      - supports-color
+      - utf-8-validate
+
   '@lingo.dev/_compiler@0.8.8(react@19.2.3)':
     dependencies:
       '@ai-sdk/anthropic': 1.2.11(zod@3.25.76)
@@ -11963,11 +12290,21 @@ snapshots:
     dependencies:
       iso-639-3: 3.0.1
 
+  '@lingo.dev/_locales@0.3.3':
+    dependencies:
+      iso-639-3: 3.0.1
+
   '@lingo.dev/_react@0.7.5(next@16.1.1(@opentelemetry/api@1.9.0)(@playwright/test@1.57.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))':
     dependencies:
       js-cookie: 3.0.5
       lodash: 4.17.21
       next: 16.1.1(@opentelemetry/api@1.9.0)(@playwright/test@1.57.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+
+  '@lingo.dev/_react@0.7.6(next@16.1.6(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.57.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))':
+    dependencies:
+      js-cookie: 3.0.5
+      lodash: 4.17.21
+      next: 16.1.6(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.57.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
 
   '@lingo.dev/_sdk@0.13.4':
     dependencies:
@@ -11981,11 +12318,74 @@ snapshots:
       - supports-color
       - utf-8-validate
 
+  '@lingo.dev/_sdk@0.14.1':
+    dependencies:
+      '@lingo.dev/_spec': 0.47.1
+      '@paralleldrive/cuid2': 2.2.2
+      jsdom: 25.0.1
+      zod: 4.1.12
+    transitivePeerDependencies:
+      - bufferutil
+      - canvas
+      - supports-color
+      - utf-8-validate
+
   '@lingo.dev/_spec@0.44.4':
     dependencies:
       '@lingo.dev/_locales': 0.3.1
       zod: 3.25.76
       zod-to-json-schema: 3.25.0(zod@3.25.76)
+
+  '@lingo.dev/_spec@0.47.1':
+    dependencies:
+      '@lingo.dev/_locales': 0.3.3
+      zod: 4.1.12
+
+  '@lingo.dev/compiler@0.3.6(@types/node@20.19.25)(@types/react@19.2.7)(encoding@0.1.13)(next@16.1.6(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.57.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(zod@4.1.12)':
+    dependencies:
+      '@ai-sdk/google': 3.0.1(zod@4.1.12)
+      '@ai-sdk/groq': 3.0.1(zod@4.1.12)
+      '@ai-sdk/mistral': 3.0.1(zod@4.1.12)
+      '@ai-sdk/openai': 3.0.1(zod@4.1.12)
+      '@babel/core': 7.26.0
+      '@babel/generator': 7.28.5
+      '@babel/parser': 7.28.5
+      '@babel/preset-react': 7.26.3(@babel/core@7.26.0)
+      '@babel/preset-typescript': 7.26.0(@babel/core@7.26.0)
+      '@babel/traverse': 7.28.5
+      '@babel/types': 7.28.5
+      '@formatjs/icu-messageformat-parser': 3.1.1
+      '@openrouter/ai-sdk-provider': 1.5.4(ai@6.0.3(zod@4.1.12))(zod@4.1.12)
+      ai: 6.0.3(zod@4.1.12)
+      ai-sdk-ollama: 3.0.0(ai@6.0.3(zod@4.1.12))(zod@4.1.12)
+      dotenv: 17.2.3
+      fast-xml-parser: 5.3.3
+      ini: 5.0.0
+      intl-messageformat: 11.0.6
+      lingo.dev: 0.131.1(@types/node@20.19.25)(@types/react@19.2.7)(encoding@0.1.13)(next@16.1.6(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.57.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))
+      lodash: 4.17.21
+      node-machine-id: 1.1.12
+      posthog-node: 5.14.0
+      proper-lockfile: 4.1.2
+      react: 19.2.3
+      react-dom: 19.2.3(react@19.2.3)
+      ws: 8.18.3
+    optionalDependencies:
+      next: 16.1.6(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.57.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+    transitivePeerDependencies:
+      - '@biomejs/wasm-bundler'
+      - '@biomejs/wasm-web'
+      - '@cfworker/json-schema'
+      - '@types/node'
+      - '@types/react'
+      - babel-plugin-macros
+      - bufferutil
+      - canvas
+      - encoding
+      - react-devtools-core
+      - supports-color
+      - utf-8-validate
+      - zod
 
   '@manypkg/find-root@1.1.0':
     dependencies:
@@ -12050,7 +12450,13 @@ snapshots:
 
   '@next/env@16.1.1': {}
 
+  '@next/env@16.1.6': {}
+
   '@next/eslint-plugin-next@16.0.3':
+    dependencies:
+      fast-glob: 3.3.1
+
+  '@next/eslint-plugin-next@16.1.6':
     dependencies:
       fast-glob: 3.3.1
 
@@ -12066,6 +12472,9 @@ snapshots:
   '@next/swc-darwin-arm64@16.1.1':
     optional: true
 
+  '@next/swc-darwin-arm64@16.1.6':
+    optional: true
+
   '@next/swc-darwin-x64@15.3.5':
     optional: true
 
@@ -12076,6 +12485,9 @@ snapshots:
     optional: true
 
   '@next/swc-darwin-x64@16.1.1':
+    optional: true
+
+  '@next/swc-darwin-x64@16.1.6':
     optional: true
 
   '@next/swc-linux-arm64-gnu@15.3.5':
@@ -12090,6 +12502,9 @@ snapshots:
   '@next/swc-linux-arm64-gnu@16.1.1':
     optional: true
 
+  '@next/swc-linux-arm64-gnu@16.1.6':
+    optional: true
+
   '@next/swc-linux-arm64-musl@15.3.5':
     optional: true
 
@@ -12100,6 +12515,9 @@ snapshots:
     optional: true
 
   '@next/swc-linux-arm64-musl@16.1.1':
+    optional: true
+
+  '@next/swc-linux-arm64-musl@16.1.6':
     optional: true
 
   '@next/swc-linux-x64-gnu@15.3.5':
@@ -12114,6 +12532,9 @@ snapshots:
   '@next/swc-linux-x64-gnu@16.1.1':
     optional: true
 
+  '@next/swc-linux-x64-gnu@16.1.6':
+    optional: true
+
   '@next/swc-linux-x64-musl@15.3.5':
     optional: true
 
@@ -12124,6 +12545,9 @@ snapshots:
     optional: true
 
   '@next/swc-linux-x64-musl@16.1.1':
+    optional: true
+
+  '@next/swc-linux-x64-musl@16.1.6':
     optional: true
 
   '@next/swc-win32-arm64-msvc@15.3.5':
@@ -12138,6 +12562,9 @@ snapshots:
   '@next/swc-win32-arm64-msvc@16.1.1':
     optional: true
 
+  '@next/swc-win32-arm64-msvc@16.1.6':
+    optional: true
+
   '@next/swc-win32-x64-msvc@15.3.5':
     optional: true
 
@@ -12148,6 +12575,9 @@ snapshots:
     optional: true
 
   '@next/swc-win32-x64-msvc@16.1.1':
+    optional: true
+
+  '@next/swc-win32-x64-msvc@16.1.6':
     optional: true
 
   '@noble/hashes@1.8.0': {}
@@ -12403,8 +12833,8 @@ snapshots:
 
   '@openrouter/ai-sdk-provider@6.0.0-alpha.1(zod@4.1.12)':
     dependencies:
-      '@ai-sdk/provider': 3.0.0
-      '@ai-sdk/provider-utils': 4.0.1(zod@4.1.12)
+      '@ai-sdk/provider': 3.0.2
+      '@ai-sdk/provider-utils': 4.0.4(zod@4.1.12)
       '@openrouter/sdk': 0.3.15
       zod: 4.1.12
 
@@ -14327,8 +14757,8 @@ snapshots:
 
   ai-sdk-ollama@3.0.0(ai@6.0.3(zod@4.1.12))(zod@4.1.12):
     dependencies:
-      '@ai-sdk/provider': 3.0.0
-      '@ai-sdk/provider-utils': 4.0.1(zod@4.1.12)
+      '@ai-sdk/provider': 3.0.2
+      '@ai-sdk/provider-utils': 4.0.4(zod@4.1.12)
       ai: 6.0.3(zod@4.1.12)
       ollama: 0.6.3
     transitivePeerDependencies:
@@ -15460,6 +15890,26 @@ snapshots:
       - eslint-plugin-import-x
       - supports-color
 
+  eslint-config-next@16.1.6(@typescript-eslint/parser@8.48.0(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3):
+    dependencies:
+      '@next/eslint-plugin-next': 16.1.6
+      eslint: 9.39.1(jiti@2.6.1)
+      eslint-import-resolver-node: 0.3.9
+      eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0)(eslint@9.39.1(jiti@2.6.1))
+      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@8.48.0(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.1(jiti@2.6.1))
+      eslint-plugin-jsx-a11y: 6.10.2(eslint@9.39.1(jiti@2.6.1))
+      eslint-plugin-react: 7.37.5(eslint@9.39.1(jiti@2.6.1))
+      eslint-plugin-react-hooks: 7.0.1(eslint@9.39.1(jiti@2.6.1))
+      globals: 16.4.0
+      typescript-eslint: 8.48.0(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3)
+    optionalDependencies:
+      typescript: 5.9.3
+    transitivePeerDependencies:
+      - '@typescript-eslint/parser'
+      - eslint-import-resolver-webpack
+      - eslint-plugin-import-x
+      - supports-color
+
   eslint-import-resolver-node@0.3.9:
     dependencies:
       debug: 3.2.7
@@ -15544,7 +15994,7 @@ snapshots:
 
   eslint-plugin-react-hooks@7.0.1(eslint@9.39.1(jiti@2.6.1)):
     dependencies:
-      '@babel/core': 7.26.0
+      '@babel/core': 7.28.5
       '@babel/parser': 7.28.5
       eslint: 9.39.1(jiti@2.6.1)
       hermes-parser: 0.25.1
@@ -16262,6 +16712,18 @@ snapshots:
     optionalDependencies:
       '@types/node': 25.0.3
 
+  inquirer@12.6.0(@types/node@20.19.25):
+    dependencies:
+      '@inquirer/core': 10.3.2(@types/node@20.19.25)
+      '@inquirer/prompts': 7.10.1(@types/node@20.19.25)
+      '@inquirer/type': 3.0.10(@types/node@20.19.25)
+      ansi-escapes: 4.3.2
+      mute-stream: 2.0.0
+      run-async: 3.0.0
+      rxjs: 7.8.2
+    optionalDependencies:
+      '@types/node': 20.19.25
+
   inquirer@12.6.0(@types/node@22.10.2):
     dependencies:
       '@inquirer/core': 10.3.2(@types/node@22.10.2)
@@ -16285,6 +16747,14 @@ snapshots:
       rxjs: 7.8.2
     optionalDependencies:
       '@types/node': 25.0.3
+
+  interactive-commander@0.5.194(@types/node@20.19.25):
+    dependencies:
+      '@inquirer/prompts': 7.10.1(@types/node@20.19.25)
+      commander: 12.1.0
+      parse-my-command: 0.3.31
+    transitivePeerDependencies:
+      - '@types/node'
 
   interactive-commander@0.5.194(@types/node@22.10.2):
     dependencies:
@@ -16907,6 +17377,122 @@ snapshots:
       xpath: 0.0.34
       yaml: 2.8.1
       zod: 3.25.76
+    transitivePeerDependencies:
+      - '@biomejs/wasm-bundler'
+      - '@biomejs/wasm-web'
+      - '@cfworker/json-schema'
+      - '@types/node'
+      - '@types/react'
+      - babel-plugin-macros
+      - bufferutil
+      - canvas
+      - encoding
+      - next
+      - react-devtools-core
+      - supports-color
+      - utf-8-validate
+
+  lingo.dev@0.131.1(@types/node@20.19.25)(@types/react@19.2.7)(encoding@0.1.13)(next@16.1.6(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.57.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)):
+    dependencies:
+      '@ai-sdk/anthropic': 3.0.9(zod@4.1.12)
+      '@ai-sdk/google': 3.0.6(zod@4.1.12)
+      '@ai-sdk/mistral': 3.0.5(zod@4.1.12)
+      '@ai-sdk/openai': 3.0.7(zod@4.1.12)
+      '@babel/generator': 7.28.5
+      '@babel/parser': 7.28.5
+      '@babel/traverse': 7.28.5
+      '@babel/types': 7.28.5
+      '@biomejs/js-api': 3.0.0(@biomejs/wasm-nodejs@2.3.7)
+      '@biomejs/wasm-nodejs': 2.3.7
+      '@datocms/cma-client-node': 4.0.1
+      '@gitbeaker/rest': 39.34.3
+      '@inkjs/ui': 2.0.0(ink@4.2.0(@types/react@19.2.7)(react@19.2.3))
+      '@inquirer/prompts': 7.8.0(@types/node@20.19.25)
+      '@lingo.dev/_compiler': 0.11.1
+      '@lingo.dev/_locales': 0.3.3
+      '@lingo.dev/_react': 0.7.6(next@16.1.6(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.57.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))
+      '@lingo.dev/_sdk': 0.14.1
+      '@lingo.dev/_spec': 0.47.1
+      '@markdoc/markdoc': 0.5.4(@types/react@19.2.7)(react@19.2.3)
+      '@modelcontextprotocol/sdk': 1.22.0
+      '@openrouter/ai-sdk-provider': 6.0.0-alpha.1(zod@4.1.12)
+      '@paralleldrive/cuid2': 2.2.2
+      '@types/ejs': 3.1.5
+      ai: 6.0.25(zod@4.1.12)
+      bitbucket: 2.12.0(encoding@0.1.13)
+      chalk: 5.6.2
+      chokidar: 4.0.3
+      cli-progress: 3.12.0
+      cli-table3: 0.6.5
+      cors: 2.8.5
+      csv-parse: 5.6.0
+      csv-stringify: 6.6.0
+      date-fns: 4.1.0
+      dedent: 1.7.0
+      diff: 7.0.0
+      dom-serializer: 2.0.0
+      domhandler: 5.0.3
+      domutils: 3.2.2
+      dotenv: 16.4.7
+      ejs: 3.1.10
+      express: 5.1.0
+      external-editor: 3.1.0
+      figlet: 1.9.4
+      flat: 6.0.1
+      gettext-parser: 8.0.0
+      glob: 11.1.0
+      gradient-string: 3.0.0
+      gray-matter: 4.0.3
+      htmlparser2: 10.0.0
+      ini: 5.0.0
+      ink: 4.2.0(@types/react@19.2.7)(react@19.2.3)
+      ink-progress-bar: 3.0.0
+      ink-spinner: 5.0.0(ink@4.2.0(@types/react@19.2.7)(react@19.2.3))(react@19.2.3)
+      inquirer: 12.6.0(@types/node@20.19.25)
+      interactive-commander: 0.5.194(@types/node@20.19.25)
+      is-url: 1.2.4
+      jsdom: 25.0.1
+      json5: 2.2.3
+      jsonc-parser: 3.3.1
+      jsonrepair: 3.13.1
+      listr2: 8.3.2
+      lodash: 4.17.21
+      marked: 15.0.6
+      mdast-util-from-markdown: 2.0.2
+      mdast-util-gfm: 3.1.0
+      micromark-extension-gfm: 3.0.0
+      node-machine-id: 1.1.12
+      node-webvtt: 1.9.4
+      object-hash: 3.0.0
+      octokit: 4.0.2
+      ollama-ai-provider-v2: 2.0.0(ai@6.0.25(zod@4.1.12))(zod@4.1.12)
+      open: 10.2.0
+      ora: 8.1.1
+      p-limit: 6.2.0
+      php-array-reader: 2.1.2
+      plist: 3.1.0
+      posthog-node: 5.14.0
+      prettier: 3.6.2
+      react: 19.2.3
+      rehype-stringify: 10.0.1
+      remark-disable-tokenizers: 1.1.1
+      remark-frontmatter: 5.0.0
+      remark-gfm: 4.0.1
+      remark-mdx: 3.1.1
+      remark-mdx-frontmatter: 5.2.0
+      remark-parse: 11.0.0
+      remark-rehype: 11.1.2
+      remark-stringify: 11.0.0
+      sax: 1.4.3
+      srt-parser-2: 1.2.3
+      unified: 11.0.5
+      unist-util-visit: 5.0.0
+      vfile: 6.0.3
+      xliff: 6.2.2
+      xml2js: 0.6.2
+      xpath: 0.0.34
+      yaml: 2.8.1
+      zod: 4.1.12
     transitivePeerDependencies:
       - '@biomejs/wasm-bundler'
       - '@biomejs/wasm-web'
@@ -17681,6 +18267,32 @@ snapshots:
       - '@babel/core'
       - babel-plugin-macros
 
+  next@16.1.6(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.57.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3):
+    dependencies:
+      '@next/env': 16.1.6
+      '@swc/helpers': 0.5.15
+      baseline-browser-mapping: 2.9.11
+      caniuse-lite: 1.0.30001761
+      postcss: 8.4.31
+      react: 19.2.3
+      react-dom: 19.2.3(react@19.2.3)
+      styled-jsx: 5.1.6(@babel/core@7.28.5)(react@19.2.3)
+    optionalDependencies:
+      '@next/swc-darwin-arm64': 16.1.6
+      '@next/swc-darwin-x64': 16.1.6
+      '@next/swc-linux-arm64-gnu': 16.1.6
+      '@next/swc-linux-arm64-musl': 16.1.6
+      '@next/swc-linux-x64-gnu': 16.1.6
+      '@next/swc-linux-x64-musl': 16.1.6
+      '@next/swc-win32-arm64-msvc': 16.1.6
+      '@next/swc-win32-x64-msvc': 16.1.6
+      '@opentelemetry/api': 1.9.0
+      '@playwright/test': 1.57.0
+      sharp: 0.34.5
+    transitivePeerDependencies:
+      - '@babel/core'
+      - babel-plugin-macros
+
   node-fetch@2.7.0(encoding@0.1.13):
     dependencies:
       whatwg-url: 5.0.0
@@ -17776,8 +18388,8 @@ snapshots:
 
   ollama-ai-provider-v2@2.0.0(ai@6.0.25(zod@4.1.12))(zod@4.1.12):
     dependencies:
-      '@ai-sdk/provider': 3.0.0
-      '@ai-sdk/provider-utils': 4.0.1(zod@4.1.12)
+      '@ai-sdk/provider': 3.0.2
+      '@ai-sdk/provider-utils': 4.0.4(zod@4.1.12)
       ai: 6.0.25(zod@4.1.12)
       zod: 4.1.12
 
@@ -18502,7 +19114,7 @@ snapshots:
       toml: 3.0.0
       unified: 11.0.5
       unist-util-mdx-define: 1.1.2
-      yaml: 2.8.1
+      yaml: 2.8.2
 
   remark-mdx@3.1.1:
     dependencies:
@@ -20615,8 +21227,7 @@ snapshots:
 
   yaml@2.8.1: {}
 
-  yaml@2.8.2:
-    optional: true
+  yaml@2.8.2: {}
 
   yargs-parser@13.1.2:
     dependencies:

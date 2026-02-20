@@ -1,5 +1,5 @@
 {
-  "name": "launch-lingo",
+  "name": "lingo-launch",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -11,6 +11,7 @@
   "dependencies": {
     "@lingo.dev/compiler": "^0.3.6",
     "lingo.dev": "^0.131.1",
+    "lucide-react": "^0.574.0",
     "next": "16.1.6",
     "react": "19.2.3",
     "react-dom": "19.2.3"
