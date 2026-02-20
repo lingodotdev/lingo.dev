@@ -67,8 +67,14 @@ export function createPoDataLoader(
           // If the section is empty, try to find it in the current sections
           const currentSection = currentSections.find((cs) => {
             const csPo = gettextParser.po.parse(cs);
+            if (Object.keys(csPo.translations).length === 0) {
+              return false;
+            }
             const csContextKey = _.keys(csPo.translations)[0];
             const csEntries = csPo.translations[csContextKey];
+            if (!csEntries) {
+              return false;
+            }
             const csMsgid = Object.keys(csEntries).find(
               (key) => csEntries[key].msgid,
             );
