@@ -2,6 +2,15 @@
   "version": 0.1,
   "locale": "de",
   "entries": {
+    "daa4d8839395": "{counter} mal geklickt",
+    "52ed9ee761d8": "Hallo Welt",
+    "f11fc78c3ac0": "<b0>Gemischter</b0> Inhalt <i0>Fragment</i0>",
+    "556f5956dca7": "Willkommen zur Lingo.dev Compiler Demo",
+    "02704ec4e52a": "Es extrahiert automatisch Text aus Ihrem JSX und übersetzt ihn in andere Sprachen.",
+    "de6bfb30be49": "Text, der als <code0></code0> eingefügt wird, wird nicht übersetzt: {text}",
+    "5c15bd35e916": "Um es zu übersetzen, müssen Sie es in '<'>{translatableText} '<'/> einschließen",
+    "93b50fe805b7": "Text außerhalb der Komponente wird nicht übersetzt: {externalText}",
+    "d756b03ffbf5": "Inhalte, die Text und andere Tags enthalten, werden als eine Einheit übersetzt: {translatableMixedContextFragment}",
     "8492c53cfbaf": "Über Lingo.dev",
     "8aa4fe3f0590": "Dies ist eine Demo-Anwendung, die den Lingo.dev-Compiler für automatische Übersetzungen in React-Anwendungen präsentiert.",
     "af76f667703b": "Hauptfunktionen",
@@ -12,15 +21,6 @@
     "aca12d550fe2": "Unterstützung für Server- und Client-Komponenten",
     "44a3311c3a4a": "Wie es funktioniert",
     "0add30e37450": "Der Compiler analysiert Ihre React-Komponenten zur Build-Zeit und extrahiert automatisch alle übersetzbaren Strings. Anschließend generiert er Übersetzungen mit Ihrem konfigurierten Übersetzungsanbieter.",
-    "07d84d34dd3a": "Fügen Sie einfach die Direktive \"use i18n\" am Anfang Ihrer Komponentendateien hinzu, und der Compiler erledigt den Rest!",
-    "daa4d8839395": "{counter} mal geklickt",
-    "52ed9ee761d8": "Hallo Welt",
-    "f11fc78c3ac0": "<b0>Gemischter</b0> Inhalt <i0>Fragment</i0>",
-    "556f5956dca7": "Willkommen zur Lingo.dev Compiler Demo",
-    "02704ec4e52a": "Es extrahiert automatisch Text aus Ihrem JSX und übersetzt ihn in andere Sprachen.",
-    "de6bfb30be49": "Text, der als <code0></code0> eingefügt wird, wird nicht übersetzt: {text}",
-    "5c15bd35e916": "Um es zu übersetzen, müssen Sie es in '<'>{translatableText} '<'/> einschließen",
-    "93b50fe805b7": "Text außerhalb der Komponente wird nicht übersetzt: {externalText}",
-    "d756b03ffbf5": "Inhalte, die Text und andere Tags enthalten, werden als eine Einheit übersetzt: {translatableMixedContextFragment}"
+    "07d84d34dd3a": "Fügen Sie einfach die Direktive \"use i18n\" am Anfang Ihrer Komponentendateien hinzu, und der Compiler erledigt den Rest!"
   }
 }

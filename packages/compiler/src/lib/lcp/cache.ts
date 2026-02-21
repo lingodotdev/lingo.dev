@@ -23,7 +23,7 @@ export class LCPCache {
       if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir, { recursive: true });
       }
-      fs.writeFileSync(cachePath, "export default {};");
+      fs.writeFileSync(cachePath, "{}");
     }
   }
 
@@ -153,7 +153,7 @@ export class LCPCache {
       const config = await prettier.resolveConfig(cachePath);
       const prettierOptions = {
         ...(config ?? {}),
-        parser: config?.parser ? config.parser : "typescript",
+        parser: config?.parser ? config.parser : "json",
       };
       return await prettier.format(cachedContent, prettierOptions);
     } catch (error) {
@@ -168,7 +168,7 @@ export class LCPCache {
     params: LCPCacheParams,
   ) {
     const cachePath = this._getCachePath(params);
-    const cache = `export default ${JSON.stringify(dictionaryCache, null, 2)};`;
+    const cache = JSON.stringify(dictionaryCache, null, 2);
     const formattedCache = await this._format(cache, cachePath);
     fs.writeFileSync(cachePath, formattedCache);
   }
@@ -182,17 +182,30 @@ export class LCPCache {
         files: {},
       };
     }
-    const jsObjectString = fs.readFileSync(cachePath, "utf8");
+    const fileContent = fs.readFileSync(cachePath, "utf8");
 
-    // Remove 'export default' and trailing semicolon before parsing
-    const cache = jsObjectString
-      .replace(/^export default/, "")
-      .replace(/;\s*$/, "");
+    // Detect legacy format (export default {...};) and migrate to JSON
+    const isLegacyFormat = fileContent.trim().startsWith("export default");
+    
+    if (isLegacyFormat) {
+      // Strip 'export default' and trailing semicolon, then parse as JSON
+      const jsonContent = fileContent
+        .replace(/^export default/, "")
+        .replace(/;\s*$/, "")
+        .trim();
+      
+      const obj = JSON.parse(jsonContent);
+      
+      // Migrate: immediately rewrite in new JSON format
+      // This is a synchronous write to ensure migration happens atomically
+      const newContent = JSON.stringify(obj, null, 2);
+      fs.writeFileSync(cachePath, newContent);
+      
+      return obj;
+    }
 
-    // Use Function constructor to safely evaluate the object
-    // eslint-disable-next-line no-new-func
-    const obj = new Function(`return (${cache})`)();
-    return obj;
+    // New format: parse directly as JSON
+    return JSON.parse(fileContent);
   }
 
   // get cache file path
