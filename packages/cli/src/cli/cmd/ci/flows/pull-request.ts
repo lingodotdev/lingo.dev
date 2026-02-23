@@ -156,9 +156,13 @@ export class PullRequestFlow extends InBranchFlow {
     } catch (error) {
       this.ora.warn("Rebase failed, falling back to alternative sync method");
 
-      this.ora.start("Aborting failed rebase");
-      execSync("git rebase --abort", { stdio: "inherit" });
-      this.ora.succeed("Aborted failed rebase");
+      try {
+        this.ora.start("Aborting failed rebase");
+        execSync("git rebase --abort", { stdio: "inherit" });
+        this.ora.succeed("Aborted failed rebase");
+      } catch {
+        this.ora.warn("No rebase in progress to abort");
+      }
 
       this.ora.start(
         `Resetting to ${this.platformKit.platformConfig.baseBranchName}`,
