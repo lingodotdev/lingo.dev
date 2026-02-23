@@ -1,4 +1,5 @@
 import * as machineIdLib from "node-machine-id";
+import crypto from "crypto";
 import { getRc } from "./rc";
 import { getOrgId } from "./org-id";
 import { TRACKING_VERSION, COMPILER_PACKAGE } from "./tracking-events";
@@ -64,8 +65,9 @@ async function getDistinctId(): Promise<{
   const email = await tryGetEmail();
 
   if (email) {
+    const hashedEmail = crypto.createHash("sha256").update(email).digest("hex");
     return {
-      distinct_id: email,
+      distinct_id: hashedEmail,
       distinct_id_source: "email",
       org_id: orgId,
     };
