@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.132.4
+
+### Patch Changes
+
+- [#2012](https://github.com/lingodotdev/lingo.dev/pull/2012) [`7bb465c`](https://github.com/lingodotdev/lingo.dev/commit/7bb465c2308949459bfbb083ffcde41be018358e) Thanks [@cherkanovart](https://github.com/cherkanovart)! - fix(cli): handle rebase abort gracefully when no rebase is in progress
+
 ## 0.132.3
 
 ### Patch Changes
