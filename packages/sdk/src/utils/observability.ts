@@ -77,7 +77,7 @@ async function getDistinctId(
       method: "POST",
       headers: {
         Authorization: `Bearer ${apiKey}`,
-        ContentType: "application/json",
+        "Content-Type": "application/json",
       },
     });
     if (res.ok) {

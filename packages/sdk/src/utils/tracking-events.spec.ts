@@ -14,7 +14,7 @@ describe("tracking-events", () => {
 
   it("exports expected constants", () => {
     expect(TRACKING_VERSION).toBe("1.0");
-    expect(SDK_PACKAGE).toBe("@lingo.dev/sdk");
+    expect(SDK_PACKAGE).toBe("@lingo.dev/_sdk");
   });
 
   it("has localize and recognize event groups", () => {

@@ -738,7 +738,7 @@ export class LingoDotDevEngine {
         method: "POST",
         headers: {
           Authorization: `Bearer ${this.config.apiKey}`,
-          ContentType: "application/json",
+          "Content-Type": "application/json",
         },
         signal,
       });

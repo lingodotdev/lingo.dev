@@ -49,7 +49,7 @@ describe("trackEvent", () => {
           method: "localizeText",
           distinct_id_source: "email",
           tracking_version: "1.0",
-          sdk_package: "@lingo.dev/sdk",
+          sdk_package: "@lingo.dev/_sdk",
         }),
       }),
     );

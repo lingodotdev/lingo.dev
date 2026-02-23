@@ -9,4 +9,4 @@ export const TRACKING_EVENTS = {
 
 export const TRACKING_VERSION = "1.0";
 
-export const SDK_PACKAGE = "@lingo.dev/sdk";
+export const SDK_PACKAGE = "@lingo.dev/_sdk";
