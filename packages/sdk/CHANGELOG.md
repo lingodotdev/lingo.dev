@@ -1,5 +1,11 @@
 # @lingo.dev/\_sdk
 
+## 0.15.0
+
+### Minor Changes
+
+- [#1999](https://github.com/lingodotdev/lingo.dev/pull/1999) [`8b12cc3`](https://github.com/lingodotdev/lingo.dev/commit/8b12cc3e7cf54a9a4695fe5fd2c986d30be219f3) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Add PostHog usage tracking for SDK method calls
+
 ## 0.14.2
 
 ### Patch Changes
