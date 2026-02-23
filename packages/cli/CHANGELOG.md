@@ -1,5 +1,18 @@
 # lingo.dev
 
+## 0.132.0
+
+### Minor Changes
+
+- [#2004](https://github.com/lingodotdev/lingo.dev/pull/2004) [`45c9437`](https://github.com/lingodotdev/lingo.dev/commit/45c94372f443cc54eb4ae8885f15caf19b931610) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Add localizableKeys bucket config option to force-translate values that would otherwise be skipped by the untranslatable filter (e.g. pure numbers, URLs, ISO dates).
+
+### Patch Changes
+
+- Updated dependencies [[`45c9437`](https://github.com/lingodotdev/lingo.dev/commit/45c94372f443cc54eb4ae8885f15caf19b931610)]:
+  - @lingo.dev/_spec@0.48.0
+  - @lingo.dev/_compiler@0.11.2
+  - @lingo.dev/_sdk@0.14.2
+
 ## 0.131.7
 
 ### Patch Changes
