@@ -71,13 +71,13 @@
 
 ## ଶୀଘ୍ର ଆରମ୍ଭ
 
-| ଟୁଲ୍                               | ବ୍ୟବହାର କେସ୍                                      | ଶୀଘ୍ର କମାଣ୍ଡ                       |
+| ଉପକରଣ                              | ବ୍ୟବହାର କ୍ଷେତ୍ର                                   | ଶୀଘ୍ର କମାଣ୍ଡ                       |
 | ---------------------------------- | ------------------------------------------------- | ---------------------------------- |
-| [**MCP**](#lingodev-mcp)           | React ଆପ୍ ପାଇଁ AI-ସହାୟକ i18n ସେଟଅପ୍               | Prompt: `Set up i18n`              |
+| [**MCP**](#lingodev-mcp)           | React ଆପ୍ ପାଇଁ AI-ସହାୟକ i18n ସେଟଅପ୍               | ପ୍ରମ୍ପ୍ଟ: `Set up i18n`            |
 | [**CLI**](#lingodev-cli)           | JSON, YAML, markdown, CSV, PO ଫାଇଲ୍ ଅନୁବାଦ କରନ୍ତୁ | `npx lingo.dev@latest run`         |
 | [**CI/CD**](#lingodev-cicd)        | GitHub Actions ରେ ସ୍ୱୟଂଚାଳିତ ଅନୁବାଦ ପାଇପଲାଇନ୍     | `uses: lingodotdev/lingo.dev@main` |
-| [**SDK**](#lingodev-sdk)           | ଡାଇନାମିକ୍ କଣ୍ଟେଣ୍ଟ ପାଇଁ ରନଟାଇମ୍ ଅନୁବାଦ            | `npm install lingo.dev`            |
-| [**Compiler**](#lingodev-compiler) | i18n ରାପର୍ ବିନା ବିଲ୍ଡ-ଟାଇମ୍ React ଲୋକାଲାଇଜେସନ୍    | `withLingo()` plugin               |
+| [**SDK**](#lingodev-sdk)           | ଗତିଶୀଳ ବିଷୟବସ୍ତୁ ପାଇଁ ରନଟାଇମ୍ ଅନୁବାଦ              | `npm install lingo.dev`            |
+| [**Compiler**](#lingodev-compiler) | i18n ରାପର୍ ବିନା ବିଲ୍ଡ-ଟାଇମ୍ React ଲୋକାଲାଇଜେସନ୍    | `withLingo()` ପ୍ଲଗଇନ୍              |
 
 ---
 
@@ -110,10 +110,10 @@ Set up i18n with the following locales: en, es, and pt-BR. The default locale is
 
 ଆସିଷ୍ଟାଣ୍ଟ କରିବ:
 
-1. Locale-based routing କନଫିଗର୍ କରିବ (ଯଥା, `/en`, `/es`, `/pt-BR`)
-2. Language switching components ସେଟଅପ୍ କରିବ
-3. Automatic locale detection implement କରିବ
-4. ଆବଶ୍ୟକ configuration ଫାଇଲ୍ generate କରିବ
+1. ଲୋକେଲ୍-ଆଧାରିତ ରାଉଟିଂ କନଫିଗର୍ କରନ୍ତୁ (ଯଥା, `/en`, `/es`, `/pt-BR`)
+2. ଭାଷା ସୁଇଚିଂ କମ୍ପୋନେଣ୍ଟ୍ ସେଟଅପ୍ କରନ୍ତୁ
+3. ସ୍ୱୟଂଚାଳିତ ଲୋକେଲ୍ ଚିହ୍ନଟ କାର୍ଯ୍ୟକାରୀ କରନ୍ତୁ
+4. ଆବଶ୍ୟକ କନଫିଗରେସନ୍ ଫାଇଲ୍ ଜେନେରେଟ୍ କରନ୍ତୁ
 
 **ଧ୍ୟାନ ଦିଅନ୍ତୁ:** AI-assisted କୋଡ୍ generation non-deterministic ଅଟେ। Commit କରିବା ପୂର୍ବରୁ generated କୋଡ୍ review କରନ୍ତୁ।
 
@@ -139,14 +139,14 @@ npx lingo.dev@latest run
 
 **ଏହା କିପରି କାମ କରେ:**
 
-1. କନଫିଗର୍ କରାଯାଇଥିବା ଫାଇଲଗୁଡ଼ିକରୁ ଅନୁବାଦଯୋଗ୍ୟ କଣ୍ଟେଣ୍ଟ ବାହାର କରେ
-2. ଅନୁବାଦ ପାଇଁ LLM provider କୁ କଣ୍ଟେଣ୍ଟ ପଠାଏ
-3. ଅନୁବାଦିତ କଣ୍ଟେଣ୍ଟକୁ filesystem ରେ ଲେଖେ
-4. ସମ୍ପୂର୍ଣ୍ଣ ହୋଇଥିବା ଅନୁବାଦଗୁଡ଼ିକୁ ଟ୍ରାକ୍ କରିବା ପାଇଁ `i18n.lock` ଫାଇଲ୍ ସୃଷ୍ଟି କରେ (ଅନାବଶ୍ୟକ ପ୍ରକ୍ରିୟାକରଣରୁ ଦୂରେଇ ରହେ)
+1. କନଫିଗର୍ ହୋଇଥିବା ଫାଇଲରୁ ଅନୁବାଦଯୋଗ୍ୟ ବିଷୟବସ୍ତୁ ଏକ୍ସଟ୍ରାକ୍ଟ କରେ
+2. ଅନୁବାଦ ପାଇଁ LLM ପ୍ରଦାତାଙ୍କୁ ବିଷୟବସ୍ତୁ ପଠାଏ
+3. ଅନୁବାଦିତ ବିଷୟବସ୍ତୁକୁ ଫାଇଲସିସ୍ଟମକୁ ଫେରାଇ ଲେଖେ
+4. ସମ୍ପୂର୍ଣ୍ଣ ଅନୁବାଦଗୁଡ଼ିକୁ ଟ୍ରାକ୍ କରିବା ପାଇଁ `i18n.lock` ଫାଇଲ୍ ସୃଷ୍ଟି କରେ (ଅନାବଶ୍ୟକ ପ୍ରକ୍ରିୟାକରଣକୁ ଏଡାଏ)
 
 **କନଫିଗରେସନ୍:**
 
-`init` କମାଣ୍ଡ ଏକ `i18n.json` ଫାଇଲ୍ ସୃଷ୍ଟି କରେ। locales ଏବଂ buckets କନଫିଗର୍ କରନ୍ତୁ:
+`init` କମାଣ୍ଡ ଏକ `i18n.json` ଫାଇଲ୍ ଜେନେରେଟ୍ କରେ। ଲୋକେଲ୍ ଏବଂ ବକେଟ୍ କନଫିଗର୍ କରନ୍ତୁ:
 
 ```json
 {
@@ -164,7 +164,7 @@ npx lingo.dev@latest run
 }
 ```
 
-`provider` ଫିଲ୍ଡ ଇଚ୍ଛାଧୀନ (ଡିଫଲ୍ଟ Lingo.dev Engine)। କଷ୍ଟମ୍ LLM providers ପାଇଁ:
+`provider` ଫିଲ୍ଡ ଇଚ୍ଛାଧୀନ (ଡିଫଲ୍ଟ Lingo.dev Engine)। କଷ୍ଟମ୍ LLM ପ୍ରଦାତାଙ୍କ ପାଇଁ:
 
 ```json
 {
@@ -226,8 +226,8 @@ jobs:
 
 **ସେଟଅପ୍ ଆବଶ୍ୟକତା:**
 
-1. repository secrets ରେ `LINGODOTDEV_API_KEY` ଯୋଡ଼ନ୍ତୁ (Settings > Secrets and variables > Actions)
-2. PR workflows ପାଇଁ: Settings > Actions > General ରେ "Allow GitHub Actions to create and approve pull requests" ସକ୍ଷମ କରନ୍ତୁ
+1. ରିପୋଜିଟୋରୀ ସିକ୍ରେଟ୍ସରେ `LINGODOTDEV_API_KEY` ଯୋଡ଼ନ୍ତୁ (Settings > Secrets and variables > Actions)
+2. PR ୱର୍କଫ୍ଲୋ ପାଇଁ: Settings > Actions > General ରେ "Allow GitHub Actions to create and approve pull requests" ସକ୍ଷମ କରନ୍ତୁ
 
 **Workflow ବିକଳ୍ପଗୁଡ଼ିକ:**
 
@@ -252,14 +252,14 @@ env:
 
 **ଉପଲବ୍ଧ input ଗୁଡ଼ିକ:**
 
-| Input                | Default                                        | Description                                      |
-| -------------------- | ---------------------------------------------- | ------------------------------------------------ |
-| `api-key`            | (ଆବଶ୍ୟକ)                                       | Lingo.dev API key                                |
-| `pull-request`       | `false`                                        | ସିଧାସଳଖ commit କରିବା ପରିବର୍ତ୍ତେ PR ସୃଷ୍ଟି କରନ୍ତୁ |
-| `commit-message`     | `"feat: update translations via @LingoDotDev"` | କଷ୍ଟମ୍ commit message                            |
-| `pull-request-title` | `"feat: update translations via @LingoDotDev"` | କଷ୍ଟମ୍ PR title                                  |
-| `working-directory`  | `"."`                                          | ଚଲାଇବା ପାଇଁ ଡିରେକ୍ଟୋରୀ                           |
-| `parallel`           | `false`                                        | ସମାନ୍ତରାଳ ପ୍ରକ୍ରିୟାକରଣ ସକ୍ଷମ କରନ୍ତୁ              |
+| ଇନପୁଟ୍               | ଡିଫଲ୍ଟ                                         | ବର୍ଣ୍ଣନା                                        |
+| -------------------- | ---------------------------------------------- | ----------------------------------------------- |
+| `api-key`            | (ଆବଶ୍ୟକ)                                       | Lingo.dev API କି                                |
+| `pull-request`       | `false`                                        | ସିଧାସଳଖ କମିଟ୍ କରିବା ପରିବର୍ତ୍ତେ PR ସୃଷ୍ଟି କରନ୍ତୁ |
+| `commit-message`     | `"feat: update translations via @LingoDotDev"` | କଷ୍ଟମ୍ କମିଟ୍ ମେସେଜ୍                             |
+| `pull-request-title` | `"feat: update translations via @LingoDotDev"` | କଷ୍ଟମ୍ PR ଟାଇଟଲ୍                                |
+| `working-directory`  | `"."`                                          | ଚଲାଇବାକୁ ଥିବା ଡିରେକ୍ଟୋରୀ                        |
+| `parallel`           | `false`                                        | ସମାନ୍ତରାଳ ପ୍ରକ୍ରିୟାକରଣ ସକ୍ଷମ କରନ୍ତୁ             |
 
 [ଡକ୍ସ ପଢ଼ନ୍ତୁ →](https://lingo.dev/en/ci/github)
 
@@ -335,7 +335,7 @@ const locale = await lingoDotDev.recognizeLocale("Bonjour le monde");
 
 ### Lingo.dev Compiler
 
-ପାରମ୍ପରିକ i18n ଆକ୍ରମଣାତ୍ମକ। ଆପଣ ପ୍ରତ୍ୟେକ string କୁ `t()` function ରେ wrap କରନ୍ତି, ଅନୁବାଦ key ଉଦ୍ଭାବନ କରନ୍ତି (`home.hero.title.v2`), ସମାନ୍ତରାଳ JSON ଫାଇଲ୍ ରକ୍ଷଣାବେକ୍ଷଣ କରନ୍ତି, ଏବଂ ଆପଣଙ୍କ component ଗୁଡ଼ିକୁ localization boilerplate ସହିତ ଫୁଲିବାର ଦେଖନ୍ତି। ଏହା ଏତେ କ୍ଲାନ୍ତିକର ଯେ ଦଳଗୁଡ଼ିକ internationalization କୁ ବିଳମ୍ବ କରନ୍ତି ଯେପର୍ଯ୍ୟନ୍ତ ଏହା ଏକ ବିରାଟ refactor ହୋଇଯାଏ।
+ପାରମ୍ପରିକ i18n ଆକ୍ରମଣାତ୍ମକ ଅଟେ। ଆପଣ ପ୍ରତ୍ୟେକ ଷ୍ଟ୍ରିଂକୁ `t()` ଫଙ୍କସନରେ ଗୁଡ଼ାନ୍ତି, ଅନୁବାଦ କି (`home.hero.title.v2`) ଉଦ୍ଭାବନ କରନ୍ତି, ସମାନ୍ତରାଳ JSON ଫାଇଲଗୁଡ଼ିକ ରକ୍ଷଣାବେକ୍ଷଣ କରନ୍ତି, ଏବଂ ଆପଣଙ୍କ କମ୍ପୋନେଣ୍ଟଗୁଡ଼ିକ ଲୋକାଲାଇଜେସନ ବଏଲରପ୍ଲେଟରେ ଫୁଲିଯିବା ଦେଖନ୍ତି। ଏହା ଏତେ କ୍ଲାନ୍ତିକର ଯେ ଟିମଗୁଡ଼ିକ ଆନ୍ତର୍ଜାତୀକରଣକୁ ବିଳମ୍ବ କରନ୍ତି ଯେପର୍ଯ୍ୟନ୍ତ ଏହା ଏକ ବୃହତ୍ ରିଫ୍ୟାକ୍ଟରରେ ପରିଣତ ହୁଏ।
 
 Lingo.dev Compiler ଆନୁଷ୍ଠାନିକତାକୁ ହଟାଇଥାଏ। ସାଧା ଇଂରାଜୀ ଟେକ୍ସଟ୍ ସହିତ React components ଲେଖନ୍ତୁ। Compiler ବିଲ୍ଡ ସମୟରେ ଅନୁବାଦଯୋଗ୍ୟ strings ଚିହ୍ନଟ କରେ ଏବଂ ସ୍ୱୟଂଚାଳିତ ଭାବରେ ଲୋକାଲାଇଜ୍ଡ variants ସୃଷ୍ଟି କରେ। କୌଣସି keys ନାହିଁ, କୌଣସି JSON ଫାଇଲ୍ ନାହିଁ, କୌଣସି wrapper functions ନାହିଁ - କେବଳ React code ଯାହା ଏକାଧିକ ଭାଷାରେ କାମ କରେ।
 
@@ -431,28 +431,28 @@ export function LanguageSwitcher() {
 }
 ```
 
-**ଡେଭଲପମେଣ୍ଟ:** `npm run dev` (pseudotranslator ବ୍ୟବହାର କରେ, କୌଣସି API calls ନାହିଁ)
+**ଡେଭଲପମେଣ୍ଟ:** `npm run dev` (ସୁଡୋଟ୍ରାନ୍ସଲେଟର ବ୍ୟବହାର କରେ, କୌଣସି API କଲ ନାହିଁ)
 
-**ପ୍ରଡକ୍ସନ୍:** `usePseudotranslator: false` ସେଟ୍ କରନ୍ତୁ, ତାପରେ `next build`
+**ପ୍ରଡକସନ:** `usePseudotranslator: false` ସେଟ କରନ୍ତୁ, ତାପରେ `next build`
 
-`.lingo/` ଡିରେକ୍ଟୋରୀକୁ version control ରେ commit କରନ୍ତୁ।
+`.lingo/` ଡିରେକ୍ଟୋରୀକୁ ଭର୍ସନ କଣ୍ଟ୍ରୋଲରେ କମିଟ କରନ୍ତୁ।
 
 **ମୁଖ୍ୟ ବୈଶିଷ୍ଟ୍ୟଗୁଡ଼ିକ:**
 
-- ଶୂନ୍ୟ runtime performance cost
-- କୌଣସି translation keys କିମ୍ବା JSON ଫାଇଲ୍ ନାହିଁ
-- କୌଣସି `t()` functions କିମ୍ବା `<T>` wrapper components ନାହିଁ
-- JSX ରେ ଅନୁବାଦଯୋଗ୍ୟ ଟେକ୍ସଟ୍ର ସ୍ୱୟଂଚାଳିତ ଚିହ୍ନଟ
-- TypeScript ସପୋର୍ଟ
+- ଶୂନ୍ୟ ରନଟାଇମ ପରଫରମାନ୍ସ ଖର୍ଚ୍ଚ
+- କୌଣସି ଅନୁବାଦ କି କିମ୍ବା JSON ଫାଇଲ ନାହିଁ
+- କୌଣସି `t()` ଫଙ୍କସନ କିମ୍ବା `<T>` ରାପର କମ୍ପୋନେଣ୍ଟ ନାହିଁ
+- JSXରେ ଅନୁବାଦଯୋଗ୍ୟ ଟେକ୍ସଟର ସ୍ୱୟଂଚାଳିତ ଚିହ୍ନଟ
+- TypeScript ସମର୍ଥନ
 - ବହୁବଚନ ପାଇଁ ICU MessageFormat
-- `data-lingo-override` attribute ମାଧ୍ୟମରେ manual overrides
-- ବିଲ୍ଟ-ଇନ୍ translation editor widget
+- `data-lingo-override` ଆଟ୍ରିବ୍ୟୁଟ ମାଧ୍ୟମରେ ମାନୁଆଲ ଓଭରାଇଡ
+- ବିଲ୍ଟ-ଇନ ଅନୁବାଦ ଏଡିଟର ୱିଜେଟ
 
 **ବିଲ୍ଡ modes:**
 
-- `pseudotranslator`: placeholder translations ସହିତ development mode (କୌଣସି API costs ନାହିଁ)
-- `real`: LLMs ବ୍ୟବହାର କରି ପ୍ରକୃତ translations ସୃଷ୍ଟି କରେ
-- `cache-only`: CI ରୁ pre-generated translations ବ୍ୟବହାର କରି production mode (କୌଣସି API calls ନାହିଁ)
+- `pseudotranslator`: ପ୍ଲେସହୋଲ୍ଡର ଅନୁବାଦ ସହିତ ଡେଭଲପମେଣ୍ଟ ମୋଡ (କୌଣସି API ଖର୍ଚ୍ଚ ନାହିଁ)
+- `real`: LLM ବ୍ୟବହାର କରି ପ୍ରକୃତ ଅନୁବାଦ ଜେନେରେଟ କରନ୍ତୁ
+- `cache-only`: CIରୁ ପୂର୍ବ-ଜେନେରେଟ ହୋଇଥିବା ଅନୁବାଦ ବ୍ୟବହାର କରି ପ୍ରଡକସନ ମୋଡ (କୌଣସି API କଲ ନାହିଁ)
 
 **ସପୋର୍ଟେଡ୍ frameworks:**
 
@@ -469,12 +469,12 @@ export function LanguageSwitcher() {
 
 ଅବଦାନକୁ ସ୍ୱାଗତ। ଦୟାକରି ଏହି ନିର୍ଦ୍ଦେଶାବଳୀ ଅନୁସରଣ କରନ୍ତୁ:
 
-1. **ସମସ୍ୟା:** [ବଗ୍ ରିପୋର୍ଟ କରନ୍ତୁ କିମ୍ବା ଫିଚର୍ ଅନୁରୋଧ କରନ୍ତୁ](https://github.com/lingodotdev/lingo.dev/issues)
-2. **ପୁଲ୍ ରିକ୍ୱେଷ୍ଟ:** [ପରିବର୍ତ୍ତନ ସବମିଟ୍ କରନ୍ତୁ](https://github.com/lingodotdev/lingo.dev/pulls)
-   - ପ୍ରତ୍ୟେକ PR ପାଇଁ ଏକ changeset ଆବଶ୍ୟକ: `pnpm new` (କିମ୍ବା ନନ୍-ରିଲିଜ୍ ପରିବର୍ତ୍ତନ ପାଇଁ `pnpm new:empty`)
-   - ସବମିଟ୍ କରିବା ପୂର୍ବରୁ ଟେଷ୍ଟ ପାସ୍ ହେବା ନିଶ୍ଚିତ କରନ୍ତୁ
-3. **ଡେଭଲପମେଣ୍ଟ:** ଏହା ଏକ pnpm + turborepo monorepo
-   - ଡିପେଣ୍ଡେନ୍ସି ଇନଷ୍ଟଲ୍ କରନ୍ତୁ: `pnpm install`
+1. **ଇସୁ:** [ବଗ ରିପୋର୍ଟ କରନ୍ତୁ କିମ୍ବା ଫିଚର ଅନୁରୋଧ କରନ୍ତୁ](https://github.com/lingodotdev/lingo.dev/issues)
+2. **ପୁଲ ରିକ୍ୱେଷ୍ଟ:** [ପରିବର୍ତ୍ତନ ସବମିଟ କରନ୍ତୁ](https://github.com/lingodotdev/lingo.dev/pulls)
+   - ପ୍ରତ୍ୟେକ PR ପାଇଁ ଏକ ଚେଞ୍ଜସେଟ ଆବଶ୍ୟକ: `pnpm new` (କିମ୍ବା ନନ-ରିଲିଜ ପରିବର୍ତ୍ତନ ପାଇଁ `pnpm new:empty`)
+   - ସବମିଟ କରିବା ପୂର୍ବରୁ ଟେଷ୍ଟ ପାସ ହେବା ନିଶ୍ଚିତ କରନ୍ତୁ
+3. **ଡେଭଲପମେଣ୍ଟ:** ଏହା ଏକ pnpm + turborepo ମୋନୋରେପୋ
+   - ଡିପେଣ୍ଡେନ୍ସି ଇନଷ୍ଟଲ କରନ୍ତୁ: `pnpm install`
    - ଟେଷ୍ଟ ଚଲାନ୍ତୁ: `pnpm test`
    - ବିଲ୍ଡ: `pnpm build`
 
@@ -498,12 +498,12 @@ export function LanguageSwitcher() {
 
 **ନୂତନ ଭାଷା ଯୋଡ଼ିବା:**
 
-1. [`i18n.json`](./i18n.json) ରେ [BCP-47 ଫର୍ମାଟ](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) ବ୍ୟବହାର କରି ଲୋକେଲ୍ କୋଡ୍ ଯୋଡ଼ନ୍ତୁ
-2. ଏକ pull request ସବମିଟ୍ କରନ୍ତୁ
+1. [BCP-47 ଫର୍ମାଟ](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) ବ୍ୟବହାର କରି [`i18n.json`](./i18n.json)ରେ ଲୋକେଲ କୋଡ ଯୋଡ଼ନ୍ତୁ
+2. ଏକ ପୁଲ ରିକ୍ୱେଷ୍ଟ ସବମିଟ କରନ୍ତୁ
 
-**BCP-47 ଲୋକେଲ୍ ଫର୍ମାଟ:** `language[-Script][-REGION]`
+**BCP-47 ଲୋକେଲ ଫର୍ମାଟ:** `language[-Script][-REGION]`
 
-- `language`: ISO 639-1/2/3 (lowercase): `en`, `zh`, `bho`
-- `Script`: ISO 15924 (title case): `Hans`, `Hant`, `Latn`
-- `REGION`: ISO 3166-1 alpha-2 (uppercase): `US`, `CN`, `IN`
+- `language`: ISO 639-1/2/3 (ଲୋୟରକେସ): `en`, `zh`, `bho`
+- `Script`: ISO 15924 (ଟାଇଟଲ କେସ): `Hans`, `Hant`, `Latn`
+- `REGION`: ISO 3166-1 alpha-2 (ଅପରକେସ): `US`, `CN`, `IN`
 - ଉଦାହରଣ: `en`, `pt-BR`, `zh-Hans`, `sr-Cyrl-RS`
