@@ -1,5 +1,32 @@
 # lingo.dev
 
+## 0.132.1
+
+### Patch Changes
+
+- Updated dependencies [[`8b12cc3`](https://github.com/lingodotdev/lingo.dev/commit/8b12cc3e7cf54a9a4695fe5fd2c986d30be219f3)]:
+  - @lingo.dev/_sdk@0.15.0
+  - @lingo.dev/_compiler@0.11.3
+
+## 0.132.0
+
+### Minor Changes
+
+- [#2004](https://github.com/lingodotdev/lingo.dev/pull/2004) [`45c9437`](https://github.com/lingodotdev/lingo.dev/commit/45c94372f443cc54eb4ae8885f15caf19b931610) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Add localizableKeys bucket config option to force-translate values that would otherwise be skipped by the untranslatable filter (e.g. pure numbers, URLs, ISO dates).
+
+### Patch Changes
+
+- Updated dependencies [[`45c9437`](https://github.com/lingodotdev/lingo.dev/commit/45c94372f443cc54eb4ae8885f15caf19b931610)]:
+  - @lingo.dev/_spec@0.48.0
+  - @lingo.dev/_compiler@0.11.2
+  - @lingo.dev/_sdk@0.14.2
+
+## 0.131.7
+
+### Patch Changes
+
+- [#2000](https://github.com/lingodotdev/lingo.dev/pull/2000) [`56d0a47`](https://github.com/lingodotdev/lingo.dev/commit/56d0a478ccd9b164e266848dc089146bf7632161) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Fix crash in PO loader when current section has no translations
+
 ## 0.131.6
 
 ### Patch Changes

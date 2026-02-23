@@ -543,8 +543,39 @@ export const configV1_12Definition = extendConfigDefinition(
   },
 );
 
+// v1.12 -> v1.13
+// Changes: Add "localizableKeys" string array to bucket config
+export const bucketValueSchemaV1_13 = bucketValueSchemaV1_12.extend({
+  localizableKeys: Z.array(Z.string())
+    .optional()
+    .describe(
+      "Keys whose values should always be sent for translation, even if they would normally be skipped as untranslatable (e.g. pure numbers, URLs, dates). Use this to force-translate values that have custom glossary rules.",
+    ),
+});
+
+export const configV1_13Definition = extendConfigDefinition(
+  configV1_12Definition,
+  {
+    createSchema: (baseSchema) =>
+      baseSchema.extend({
+        buckets: Z.partialRecord(
+          bucketTypeSchema,
+          bucketValueSchemaV1_13,
+        ).default({}),
+      }),
+    createDefaultValue: (baseDefaultValue) => ({
+      ...baseDefaultValue,
+      version: "1.13",
+    }),
+    createUpgrader: (oldConfig) => ({
+      ...oldConfig,
+      version: "1.13",
+    }),
+  },
+);
+
 // exports
-export const LATEST_CONFIG_DEFINITION = configV1_12Definition;
+export const LATEST_CONFIG_DEFINITION = configV1_13Definition;
 
 export type I18nConfig = Z.infer<(typeof LATEST_CONFIG_DEFINITION)["schema"]>;
 
