@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.132.5
+
+### Patch Changes
+
+- [#2010](https://github.com/lingodotdev/lingo.dev/pull/2010) [`bd71fd3`](https://github.com/lingodotdev/lingo.dev/commit/bd71fd3208c7f4555a4beb43a63f39fd3010da34) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - fix(cli): use exact and separator-bounded matching for lockedKeys, ignoredKeys, preservedKeys, and localizableKeys instead of substring prefix matching
+
 ## 0.132.4
 
 ### Patch Changes
