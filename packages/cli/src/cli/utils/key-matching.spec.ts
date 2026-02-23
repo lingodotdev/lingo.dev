@@ -32,11 +32,12 @@ describe("matchesKeyPattern", () => {
     expect(matchesKeyPattern("inboxes", patterns)).toBe(false);
   });
 
-  it("should match keys with dot or slash separator after pattern", () => {
+  it("should match keys with dot, slash, or dash separator after pattern", () => {
     const patterns = ["inbox"];
 
     expect(matchesKeyPattern("inbox.title", patterns)).toBe(true);
     expect(matchesKeyPattern("inbox/details", patterns)).toBe(true);
+    expect(matchesKeyPattern("inbox-0", patterns)).toBe(true);
     expect(matchesKeyPattern("inbox.nested.key", patterns)).toBe(true);
   });
 
