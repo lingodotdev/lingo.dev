@@ -72,7 +72,7 @@
 
 ## クイックスタート
 
-| ツール                             | ユースケース                                        | クイックコマンド                   |
+| ツール                             | 使用例                                              | クイックコマンド                   |
 | ---------------------------------- | --------------------------------------------------- | ---------------------------------- |
 | [**MCP**](#lingodev-mcp)           | ReactアプリのAI支援i18nセットアップ                 | プロンプト: `Set up i18n`          |
 | [**CLI**](#lingodev-cli)           | JSON、YAML、Markdown、CSV、POファイルの翻訳         | `npx lingo.dev@latest run`         |
@@ -227,7 +227,7 @@ jobs:
 
 **セットアップ要件:**
 
-1. リポジトリシークレットに`LINGODOTDEV_API_KEY`を追加(Settings > Secrets and variables > Actions)
+1. `LINGODOTDEV_API_KEY`をリポジトリシークレットに追加(Settings > Secrets and variables > Actions)
 2. PRワークフローの場合: Settings > Actions > Generalで「Allow GitHub Actions to create and approve pull requests」を有効化
 
 **ワークフローオプション:**
@@ -336,7 +336,7 @@ const locale = await lingoDotDev.recognizeLocale("Bonjour le monde");
 
 ### Lingo.dev Compiler
 
-従来のi18nは侵襲的です。すべての文字列を`t()`関数でラップし、翻訳キー(`home.hero.title.v2`)を考案し、並列JSONファイルを維持し、コンポーネントがローカライゼーションの定型コードで肥大化するのを見守ります。あまりにも面倒なため、チームは国際化を遅らせ、最終的に大規模なリファクタリングになってしまいます。
+従来のi18nは侵襲的です。すべての文字列を`t()`関数でラップし、翻訳キー(`home.hero.title.v2`)を考案し、並行するJSONファイルを保守し、コンポーネントがローカライゼーションの定型コードで肥大化するのを見守ることになります。あまりにも面倒なため、チームは国際化を遅らせ、最終的には大規模なリファクタリングになってしまいます。
 
 Lingo.devコンパイラーは煩雑な作業を排除します。プレーンな英語テキストでReactコンポーネントを記述できます。コンパイラーはビルド時に翻訳可能な文字列を検出し、ローカライズされたバリアントを自動的に生成します。キー、JSONファイル、ラッパー関数は不要です。複数の言語で動作するReactコードを記述するだけです。
 
@@ -432,9 +432,9 @@ export function LanguageSwitcher() {
 }
 ```
 
-**開発:** `npm run dev`（疑似翻訳を使用、API呼び出しなし）
+**開発環境:** `npm run dev`(疑似翻訳を使用、API呼び出しなし)
 
-**本番:** `usePseudotranslator: false`を設定し、`next build`を実行
+**本番環境:** `usePseudotranslator: false`を設定し、`next build`を実行
 
 `.lingo/`ディレクトリをバージョン管理にコミットします。
 
@@ -442,18 +442,18 @@ export function LanguageSwitcher() {
 
 - ランタイムパフォーマンスコストゼロ
 - 翻訳キーやJSONファイル不要
-- `t()`関数や`<T>`ラッパーコンポーネント不要
-- JSX内の翻訳可能なテキストの自動検出
+- `t()`関数やINLINE_CODE_PLACEHOLDER_84cd12aa71f0670_ENDラッパーコンポーネント不要
+- JSX内の翻訳可能テキストの自動検出
 - TypeScriptサポート
-- 複数形のためのICU MessageFormat
+- 複数形対応のICU MessageFormat
 - `data-lingo-override`属性による手動オーバーライド
-- 組み込み翻訳エディターウィジェット
+- 組み込み翻訳エディタウィジェット
 
 **ビルドモード:**
 
-- `pseudotranslator`: プレースホルダー翻訳を使用する開発モード（APIコストなし）
+- `pseudotranslator`: プレースホルダー翻訳を使用する開発モード(APIコストなし)
 - `real`: LLMを使用して実際の翻訳を生成
-- `cache-only`: CIから事前生成された翻訳を使用する本番モード（API呼び出しなし）
+- `cache-only`: CIで事前生成された翻訳を使用する本番モード(API呼び出しなし)
 
 **対応フレームワーク:**
 
@@ -470,13 +470,13 @@ export function LanguageSwitcher() {
 
 コントリビューションを歓迎します。以下のガイドラインに従ってください。
 
-1. **Issue:** [バグ報告や機能リクエスト](https://github.com/lingodotdev/lingo.dev/issues)
-2. **プルリクエスト:** [変更を送信](https://github.com/lingodotdev/lingo.dev/pulls)
-   - すべてのPRにはchangesetが必要です: `pnpm new` (リリース対象外の変更の場合は `pnpm new:empty`)
+1. **Issues:** [バグ報告や機能リクエスト](https://github.com/lingodotdev/lingo.dev/issues)
+2. **Pull Requests:** [変更を送信](https://github.com/lingodotdev/lingo.dev/pulls)
+   - すべてのPRにはchangesetが必要です: `pnpm new`(リリース対象外の変更の場合は`pnpm new:empty`)
    - 送信前にテストが通過することを確認してください
-3. **開発:** これはpnpm + turborepoのモノレポです
+3. **開発:** これはpnpm + turborepoモノレポです
    - 依存関係のインストール: `pnpm install`
-   - テストの実行: `pnpm test`
+   - テスト実行: `pnpm test`
    - ビルド: `pnpm build`
 
 **サポート:** [Discordコミュニティ](https://lingo.dev/go/discord)
@@ -499,12 +499,12 @@ Lingo.devが役に立つと思ったら、スターを付けて10,000スター�
 
 **新しい言語の追加:**
 
-1. [BCP-47形式](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale)を使用して、ロケールコードを [`i18n.json`](./i18n.json) に追加してください
-2. プルリクエストを送信してください
+1. [BCP-47形式](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale)を使用して、ロケールコードを[`i18n.json`](./i18n.json)に追加
+2. プルリクエストを送信
 
 **BCP-47ロケール形式:** `language[-Script][-REGION]`
 
-- `language`: ISO 639-1/2/3 (小文字): `en`、`zh`、`bho`
-- `Script`: ISO 15924 (タイトルケース): `Hans`、`Hant`、`Latn`
-- `REGION`: ISO 3166-1 alpha-2 (大文字): `US`、`CN`、`IN`
+- `language`: ISO 639-1/2/3(小文字): `en`、`zh`、`bho`
+- `Script`: ISO 15924(タイトルケース): `Hans`、`Hant`、`Latn`
+- `REGION`: ISO 3166-1 alpha-2(大文字): `US`、`CN`、`IN`
 - 例: `en`、`pt-BR`、`zh-Hans`、`sr-Cyrl-RS`
