@@ -6,13 +6,39 @@ import {
 } from "./key-matching";
 
 describe("matchesKeyPattern", () => {
-  it("should match keys with prefix matching", () => {
+  it("should match keys with separator-bounded prefix matching", () => {
     const patterns = ["api", "settings"];
 
     expect(matchesKeyPattern("api/users", patterns)).toBe(true);
     expect(matchesKeyPattern("api/posts", patterns)).toBe(true);
+    expect(matchesKeyPattern("api.users", patterns)).toBe(true);
     expect(matchesKeyPattern("settings/theme", patterns)).toBe(true);
+    expect(matchesKeyPattern("settings.theme", patterns)).toBe(true);
     expect(matchesKeyPattern("other/key", patterns)).toBe(false);
+  });
+
+  it("should match exact keys", () => {
+    const patterns = ["inbox"];
+
+    expect(matchesKeyPattern("inbox", patterns)).toBe(true);
+  });
+
+  it("should not match keys that share a prefix but lack a separator", () => {
+    const patterns = ["inbox"];
+
+    expect(matchesKeyPattern("inbox_url", patterns)).toBe(false);
+    expect(matchesKeyPattern("inbox_empty_title", patterns)).toBe(false);
+    expect(matchesKeyPattern("inbox_empty_body", patterns)).toBe(false);
+    expect(matchesKeyPattern("inboxes", patterns)).toBe(false);
+  });
+
+  it("should match keys with dot, slash, or dash separator after pattern", () => {
+    const patterns = ["inbox"];
+
+    expect(matchesKeyPattern("inbox.title", patterns)).toBe(true);
+    expect(matchesKeyPattern("inbox/details", patterns)).toBe(true);
+    expect(matchesKeyPattern("inbox-0", patterns)).toBe(true);
+    expect(matchesKeyPattern("inbox.nested.key", patterns)).toBe(true);
   });
 
   it("should match keys with glob patterns", () => {
