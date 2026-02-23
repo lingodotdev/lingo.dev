@@ -71,13 +71,13 @@
 
 ## Szybki start
 
-| Narzędzie                            | Zastosowanie                                              | Szybka komenda                     |
-| ------------------------------------ | --------------------------------------------------------- | ---------------------------------- |
-| [**MCP**](#lingodev-mcp)             | Asystowane przez AI wdrożenie i18n dla aplikacji React    | Prompt: `Set up i18n`              |
-| [**CLI**](#lingodev-cli)             | Tłumaczenie plików JSON, YAML, markdown, CSV, PO          | `npx lingo.dev@latest run`         |
-| [**CI/CD**](#lingodev-cicd)          | Automatyczny pipeline tłumaczeń w GitHub Actions          | `uses: lingodotdev/lingo.dev@main` |
-| [**SDK**](#lingodev-sdk)             | Tłumaczenie w czasie rzeczywistym dla dynamicznych treści | `npm install lingo.dev`            |
-| [**Kompilator**](#lingodev-compiler) | Lokalizacja React na etapie budowania bez wrapperów i18n  | `withLingo()` plugin               |
+| Narzędzie                          | Zastosowanie                                              | Szybkie polecenie                  |
+| ---------------------------------- | --------------------------------------------------------- | ---------------------------------- |
+| [**MCP**](#lingodev-mcp)           | Wspomagane przez AI wdrożenie i18n dla aplikacji React    | Prompt: `Set up i18n`              |
+| [**CLI**](#lingodev-cli)           | Tłumaczenie plików JSON, YAML, markdown, CSV, PO          | `npx lingo.dev@latest run`         |
+| [**CI/CD**](#lingodev-cicd)        | Automatyczny pipeline tłumaczeń w GitHub Actions          | `uses: lingodotdev/lingo.dev@main` |
+| [**SDK**](#lingodev-sdk)           | Tłumaczenie w czasie rzeczywistym dla dynamicznych treści | `npm install lingo.dev`            |
+| [**Compiler**](#lingodev-compiler) | Lokalizacja React na etapie budowania bez wrapperów i18n  | `withLingo()` plugin               |
 
 ---
 
@@ -110,10 +110,10 @@ Set up i18n with the following locales: en, es, and pt-BR. The default locale is
 
 Asystent wykona następujące kroki:
 
-1. Skonfiguruje routing oparty na lokalizacji (np. `/en`, `/es`, `/pt-BR`)
-2. Skonfiguruje komponenty do przełączania języka
-3. Wdroży automatyczne wykrywanie lokalizacji
-4. Wygeneruje niezbędne pliki konfiguracyjne
+1. Skonfiguruj routing oparty na lokalizacji (np. `/en`, `/es`, `/pt-BR`)
+2. Skonfiguruj komponenty do zmiany języka
+3. Wdróż automatyczne wykrywanie lokalizacji
+4. Wygeneruj niezbędne pliki konfiguracyjne
 
 **Uwaga:** Generowanie kodu przez AI jest niedeterministyczne. Przejrzyj wygenerowany kod przed zatwierdzeniem.
 
@@ -139,10 +139,10 @@ npx lingo.dev@latest run
 
 **Jak to działa:**
 
-1. Ekstrahuje treści do tłumaczenia z skonfigurowanych plików
+1. Ekstrahuje treści do tłumaczenia z wybranych plików
 2. Wysyła treści do dostawcy LLM w celu tłumaczenia
 3. Zapisuje przetłumaczone treści z powrotem do systemu plików
-4. Tworzy plik `i18n.lock` do śledzenia ukończonych tłumaczeń (eliminuje zbędne przetwarzanie)
+4. Tworzy plik `i18n.lock` do śledzenia ukończonych tłumaczeń (zapobiega powtórnemu przetwarzaniu)
 
 **Konfiguracja:**
 
@@ -164,7 +164,7 @@ Polecenie `init` generuje plik `i18n.json`. Skonfiguruj lokalizacje i buckety:
 }
 ```
 
-Pole `provider` jest opcjonalne (domyślnie Lingo.dev Engine). Dla niestandardowych dostawców LLM:
+Pole `provider` jest opcjonalne (domyślnie: Lingo.dev Engine). Dla własnych dostawców LLM:
 
 ```json
 {
@@ -204,7 +204,7 @@ Lingo.dev CI/CD automatyzuje tłumaczenia. Każdy push uruchamia proces tłumacz
 
 **Konfiguracja GitHub Actions:**
 
-Utwórz plik `.github/workflows/translate.yml`:
+Utwórz `.github/workflows/translate.yml`:
 
 ```yaml
 name: Translate
@@ -226,8 +226,8 @@ jobs:
 
 **Wymagania wstępne:**
 
-1. Dodaj `LINGODOTDEV_API_KEY` do sekcji secrets repozytorium (Ustawienia > Secrets and variables > Actions)
-2. Dla workflow PR: Włącz "Zezwól GitHub Actions na tworzenie i zatwierdzanie pull requestów" w Ustawienia > Actions > General
+1. Dodaj `LINGODOTDEV_API_KEY` do sekretów repozytorium (Ustawienia > Sekrety i zmienne > Actions)
+2. Dla workflow PR: Włącz "Zezwól GitHub Actions na tworzenie i zatwierdzanie pull requestów" w Ustawienia > Actions > Ogólne
 
 **Opcje workflow:**
 
@@ -258,7 +258,7 @@ env:
 | `pull-request`       | `false`                                        | Tworzy PR zamiast bezpośredniego commitowania |
 | `commit-message`     | `"feat: update translations via @LingoDotDev"` | Niestandardowa wiadomość commita              |
 | `pull-request-title` | `"feat: update translations via @LingoDotDev"` | Niestandardowy tytuł PR                       |
-| `working-directory`  | `"."`                                          | Katalog, w którym uruchomić                   |
+| `working-directory`  | `"."`                                          | Katalog roboczy                               |
 | `parallel`           | `false`                                        | Włącz przetwarzanie równoległe                |
 
 [Przeczytaj dokumentację →](https://lingo.dev/en/ci/github)
@@ -335,7 +335,7 @@ const locale = await lingoDotDev.recognizeLocale("Bonjour le monde");
 
 ### Lingo.dev Compiler
 
-Tradycyjne i18n jest inwazyjne. Każdy string opakowujesz w funkcje `t()`, wymyślasz klucze tłumaczeń (`home.hero.title.v2`), utrzymujesz równoległe pliki JSON i obserwujesz, jak komponenty puchną od boilerplate'u lokalizacyjnego. To tak żmudne, że zespoły odwlekają internacjonalizację, aż staje się to ogromnym refaktoringiem.
+Tradycyjne i18n jest inwazyjne. Każdy string opakowujesz w funkcje `t()`, wymyślasz klucze tłumaczeń (`home.hero.title.v2`), utrzymujesz równoległe pliki JSON i obserwujesz, jak komponenty puchną od boilerplate'u lokalizacyjnego. To tak żmudne, że zespoły odkładają internacjonalizację, aż staje się to ogromnym refaktoringiem.
 
 Kompilator Lingo.dev eliminuje zbędną złożoność. Pisz komponenty React z tekstem w prostym angielskim. Kompilator wykrywa teksty do tłumaczenia podczas budowania i automatycznie generuje ich zlokalizowane warianty. Bez kluczy, plików JSON, funkcji wrapperów – po prostu kod React, który działa w wielu językach.
 
@@ -431,28 +431,28 @@ export function LanguageSwitcher() {
 }
 ```
 
-**Development:** `npm run dev` (używa pseudotranslatora, bez wywołań API)
+**Development:** `npm run dev` (używa pseudotranslatora, brak wywołań API)
 
 **Production:** Ustaw `usePseudotranslator: false`, następnie `next build`
 
-Dodaj katalog `.lingo/` do kontroli wersji.
+Zacommituj katalog `.lingo/` do kontroli wersji.
 
 **Kluczowe funkcje:**
 
-- Brak kosztów wydajności w runtime
-- Bez kluczy tłumaczeń i plików JSON
-- Bez funkcji `t()` ani wrapperów `<T>`
-- Automatyczne wykrywanie tekstów do tłumaczenia w JSX
+- Zerowy koszt wydajnościowy w runtime
+- Brak kluczy tłumaczeń i plików JSON
+- Brak funkcji `t()` ani wrapperów `<T>`
+- Automatyczne wykrywanie tekstu do tłumaczenia w JSX
 - Wsparcie dla TypeScript
 - ICU MessageFormat dla liczby mnogiej
-- Ręczne nadpisywanie przez atrybut `data-lingo-override`
+- Ręczne nadpisy przez atrybut `data-lingo-override`
 - Wbudowany edytor tłumaczeń
 
 **Tryby budowania:**
 
-- `pseudotranslator`: Tryb deweloperski z tłumaczeniami zastępczymi (bez kosztów API)
+- `pseudotranslator`: Tryb deweloperski z tłumaczeniami zastępczymi (brak kosztów API)
 - `real`: Generowanie rzeczywistych tłumaczeń przy użyciu LLM
-- `cache-only`: Tryb produkcyjny z użyciem wygenerowanych tłumaczeń z CI (bez wywołań API)
+- `cache-only`: Tryb produkcyjny z użyciem wygenerowanych tłumaczeń z CI (brak wywołań API)
 
 **Obsługiwane frameworki:**
 
@@ -469,14 +469,14 @@ Planowane wsparcie dla kolejnych frameworków.
 
 Zapraszamy do współpracy. Prosimy o przestrzeganie poniższych wytycznych:
 
-1. **Zgłoszenia:** [Zgłaszaj błędy lub prośby o funkcje](https://github.com/lingodotdev/lingo.dev/issues)
-2. **Pull Requesty:** [Przesyłaj zmiany](https://github.com/lingodotdev/lingo.dev/pulls)
-   - Każdy PR wymaga changesetu: `pnpm new` (lub `pnpm new:empty` dla zmian niewydaniowych)
-   - Przed wysłaniem upewnij się, że testy przechodzą poprawnie
+1. **Zgłoszenia:** [Zgłoś błąd lub poproś o funkcję](https://github.com/lingodotdev/lingo.dev/issues)
+2. **Pull Requesty:** [Prześlij zmiany](https://github.com/lingodotdev/lingo.dev/pulls)
+   - Każdy PR wymaga changeset: `pnpm new` (lub `pnpm new:empty` dla zmian nie wydawniczych)
+   - Upewnij się, że testy przechodzą przed wysłaniem
 3. **Development:** To monorepo pnpm + turborepo
    - Instalacja zależności: `pnpm install`
-   - Uruchamianie testów: `pnpm test`
-   - Budowanie: `pnpm build`
+   - Uruchom testy: `pnpm test`
+   - Build: `pnpm build`
 
 **Wsparcie:** [Społeczność Discord](https://lingo.dev/go/discord)
 
@@ -498,12 +498,12 @@ Jeśli Lingo.dev jest dla Ciebie przydatne, daj nam gwiazdkę i pomóż osiągn�
 
 **Dodawanie nowego języka:**
 
-1. Dodaj kod języka do [`i18n.json`](./i18n.json) używając [formatu BCP-47](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale)
-2. Prześlij pull request
+1. Dodaj kod języka do [`i18n.json`](./i18n.json) używając formatu [BCP-47](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale)
+2. Wyślij pull request
 
-**Format lokalizacji BCP-47:** `language[-Script][-REGION]`
+**Format języka BCP-47:** `language[-Script][-REGION]`
 
 - `language`: ISO 639-1/2/3 (małe litery): `en`, `zh`, `bho`
-- `Script`: ISO 15924 (wielka litera na początku): `Hans`, `Hant`, `Latn`
+- `Script`: ISO 15924 (pierwsza wielka litera): `Hans`, `Hant`, `Latn`
 - `REGION`: ISO 3166-1 alpha-2 (wielkie litery): `US`, `CN`, `IN`
 - Przykłady: `en`, `pt-BR`, `zh-Hans`, `sr-Cyrl-RS`

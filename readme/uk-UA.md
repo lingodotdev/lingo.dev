@@ -77,8 +77,8 @@
 | [**MCP**](#lingodev-mcp)           | Налаштування i18n з допомогою AI для React-додатків | Промпт: `Set up i18n`              |
 | [**CLI**](#lingodev-cli)           | Переклад JSON, YAML, markdown, CSV, PO файлів       | `npx lingo.dev@latest run`         |
 | [**CI/CD**](#lingodev-cicd)        | Автоматизований конвеєр перекладу в GitHub Actions  | `uses: lingodotdev/lingo.dev@main` |
-| [**SDK**](#lingodev-sdk)           | Переклад у runtime для динамічного контенту         | `npm install lingo.dev`            |
-| [**Compiler**](#lingodev-compiler) | Локалізація React на етапі збірки без i18n-обгорток | плагін `withLingo()`               |
+| [**SDK**](#lingodev-sdk)           | Runtime-переклад для динамічного контенту           | `npm install lingo.dev`            |
+| [**Compiler**](#lingodev-compiler) | Build-time локалізація React без i18n-обгорток      | `withLingo()` плагін               |
 
 ---
 
@@ -111,10 +111,10 @@ Set up i18n with the following locales: en, es, and pt-BR. The default locale is
 
 Асистент:
 
-1. Налаштує маршрутизацію на основі локалі (наприклад, `/en`, `/es`, `/pt-BR`)
-2. Налаштує компоненти перемикання мови
-3. Реалізує автоматичне визначення локалі
-4. Згенерує необхідні конфігураційні файли
+1. Налаштуйте маршрутизацію на основі локалі (наприклад, `/en`, `/es`, `/pt-BR`)
+2. Налаштуйте компоненти перемикання мови
+3. Реалізуйте автоматичне визначення локалі
+4. Згенерируйте необхідні конфігураційні файли
 
 **Примітка:** генерація коду за допомогою AI є недетермінованою. Перевіряйте згенерований код перед комітом.
 
@@ -141,13 +141,13 @@ npx lingo.dev@latest run
 **Як це працює:**
 
 1. Витягує контент для перекладу з налаштованих файлів
-2. Надсилає контент до провайдера LLM для перекладу
+2. Надсилає контент до LLM-провайдера для перекладу
 3. Записує перекладений контент назад у файлову систему
 4. Створює файл `i18n.lock` для відстеження завершених перекладів (уникає надмірної обробки)
 
 **Конфігурація:**
 
-Команда `init` генерує файл `i18n.json`. Налаштуйте локалі та групи:
+Команда `init` генерує файл `i18n.json`. Налаштуйте локалі та бакети:
 
 ```json
 {
@@ -165,7 +165,7 @@ npx lingo.dev@latest run
 }
 ```
 
-Поле `provider` є необов'язковим (за замовчуванням використовується Lingo.dev Engine). Для власних провайдерів LLM:
+Поле `provider` є опціональним (за замовчуванням Lingo.dev Engine). Для кастомних LLM-провайдерів:
 
 ```json
 {
@@ -228,7 +228,7 @@ jobs:
 **Вимоги до налаштування:**
 
 1. Додайте `LINGODOTDEV_API_KEY` до секретів репозиторію (Settings > Secrets and variables > Actions)
-2. Для робочих процесів PR: увімкніть «Allow GitHub Actions to create and approve pull requests» у Settings > Actions > General
+2. Для PR-воркфлоу: увімкніть "Allow GitHub Actions to create and approve pull requests" у Settings > Actions > General
 
 **Опції робочого процесу:**
 
@@ -253,12 +253,12 @@ env:
 
 **Доступні параметри:**
 
-| Параметр             | Значення за замовчуванням                      | Опис                               |
+| Вхідний параметр     | За замовчуванням                               | Опис                               |
 | -------------------- | ---------------------------------------------- | ---------------------------------- |
-| `api-key`            | (обов'язковий)                                 | API-ключ Lingo.dev                 |
+| `api-key`            | (обов'язково)                                  | API-ключ Lingo.dev                 |
 | `pull-request`       | `false`                                        | Створити PR замість прямого коміту |
-| `commit-message`     | `"feat: update translations via @LingoDotDev"` | Власне повідомлення коміту         |
-| `pull-request-title` | `"feat: update translations via @LingoDotDev"` | Власний заголовок PR               |
+| `commit-message`     | `"feat: update translations via @LingoDotDev"` | Кастомне повідомлення коміту       |
+| `pull-request-title` | `"feat: update translations via @LingoDotDev"` | Кастомний заголовок PR             |
 | `working-directory`  | `"."`                                          | Директорія для виконання           |
 | `parallel`           | `false`                                        | Увімкнути паралельну обробку       |
 
@@ -432,7 +432,7 @@ export function LanguageSwitcher() {
 }
 ```
 
-**Розробка:** `npm run dev` (використовує псевдоперекладач, без API-викликів)
+**Розробка:** `npm run dev` (використовує псевдоперекладач, без викликів API)
 
 **Продакшн:** Встановіть `usePseudotranslator: false`, потім `next build`
 
@@ -453,7 +453,7 @@ export function LanguageSwitcher() {
 
 - `pseudotranslator`: режим розробки з перекладами-заповнювачами (без витрат на API)
 - `real`: генерація справжніх перекладів за допомогою LLM
-- `cache-only`: продакшн-режим із використанням попередньо згенерованих перекладів з CI (без API-викликів)
+- `cache-only`: продакшн-режим з використанням попередньо згенерованих перекладів з CI (без викликів API)
 
 **Підтримувані фреймворки:**
 
@@ -470,14 +470,14 @@ export function LanguageSwitcher() {
 
 Ми вітаємо ваш внесок. Будь ласка, дотримуйтесь цих рекомендацій:
 
-1. **Проблеми:** [Повідомте про помилки або запропонуйте функції](https://github.com/lingodotdev/lingo.dev/issues)
-2. **Pull Request'и:** [Надішліть зміни](https://github.com/lingodotdev/lingo.dev/pulls)
-   - Кожен PR потребує changeset: `pnpm new` (або `pnpm new:empty` для змін без релізу)
+1. **Issues:** [повідомляйте про баги або запитуйте функції](https://github.com/lingodotdev/lingo.dev/issues)
+2. **Pull Requests:** [надсилайте зміни](https://github.com/lingodotdev/lingo.dev/pulls)
+   - Кожен PR вимагає changeset: `pnpm new` (або `pnpm new:empty` для змін без релізу)
    - Переконайтеся, що тести проходять перед надсиланням
-3. **Розробка:** Це pnpm + turborepo монорепозиторій
+3. **Розробка:** це монорепозиторій pnpm + turborepo
    - Встановіть залежності: `pnpm install`
    - Запустіть тести: `pnpm test`
-   - Зберіть проєкт: `pnpm build`
+   - Зберіть: `pnpm build`
 
 **Підтримка:** [Спільнота Discord](https://lingo.dev/go/discord)
 
@@ -499,12 +499,12 @@ export function LanguageSwitcher() {
 
 **Додавання нової мови:**
 
-1. Додайте код локалі до [`i18n.json`](./i18n.json), використовуючи [формат BCP-47](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale)
+1. Додайте код локалі до [`i18n.json`](./i18n.json) у [форматі BCP-47](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale)
 2. Надішліть pull request
 
 **Формат локалі BCP-47:** `language[-Script][-REGION]`
 
 - `language`: ISO 639-1/2/3 (нижній регістр): `en`, `zh`, `bho`
-- `Script`: ISO 15924 (регістр заголовка): `Hans`, `Hant`, `Latn`
+- `Script`: ISO 15924 (з великої літери): `Hans`, `Hant`, `Latn`
 - `REGION`: ISO 3166-1 alpha-2 (верхній регістр): `US`, `CN`, `IN`
-- Приклади: `en`, `pt-BR`, `zh-Hans`, {/_ INLINE_CODE_PLACEHOLDER_6e553bb40a655db7be211ded60744c98 _/
+- Приклади: `en`, `pt-BR`, `zh-Hans`, `sr-Cyrl-RS`

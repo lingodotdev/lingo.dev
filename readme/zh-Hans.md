@@ -69,13 +69,13 @@
 
 ## 快速开始
 
-| 工具                               | 使用场景                                | 快速命令                           |
+| 工具                               | 用例                                    | 快捷命令                           |
 | ---------------------------------- | --------------------------------------- | ---------------------------------- |
-| [**MCP**](#lingodev-mcp)           | React 应用的 AI 辅助 i18n 配置          | Prompt: `Set up i18n`              |
-| [**CLI**](#lingodev-cli)           | 翻译 JSON、YAML、markdown、CSV、PO 文件 | `npx lingo.dev@latest run`         |
-| [**CI/CD**](#lingodev-cicd)        | GitHub Actions 自动化翻译流程           | `uses: lingodotdev/lingo.dev@main` |
+| [**MCP**](#lingodev-mcp)           | 针对 React 应用的 AI 辅助 i18n 设置     | 提示：`Set up i18n`                |
+| [**CLI**](#lingodev-cli)           | 翻译 JSON、YAML、Markdown、CSV、PO 文件 | `npx lingo.dev@latest run`         |
+| [**CI/CD**](#lingodev-cicd)        | 在 GitHub Actions 中实现自动化翻译流程  | `uses: lingodotdev/lingo.dev@main` |
 | [**SDK**](#lingodev-sdk)           | 动态内容的运行时翻译                    | `npm install lingo.dev`            |
-| [**Compiler**](#lingodev-compiler) | 无需 i18n 包装器的 React 构建时本地化   | `withLingo()` plugin               |
+| [**Compiler**](#lingodev-compiler) | 无需 i18n 包裹器的 React 构建时本地化   | `withLingo()` 插件                 |
 
 ---
 
@@ -108,10 +108,10 @@ Set up i18n with the following locales: en, es, and pt-BR. The default locale is
 
 助手将会：
 
-1. 配置基于语言的路由（如 `/en`、`/es`、`/pt-BR`）
+1. 配置基于语言环境的路由（如：`/en`、`/es`、`/pt-BR`）
 2. 设置语言切换组件
-3. 实现自动语言检测
-4. 生成所需配置文件
+3. 实现自动语言环境检测
+4. 生成必要的配置文件
 
 **注意：** AI 辅助代码生成具有不确定性。请在提交前仔细审核生成的代码。
 
@@ -137,9 +137,9 @@ npx lingo.dev@latest run
 
 **工作原理：**
 
-1. 从已配置的文件中提取可翻译内容
-2. 将内容发送到 LLM 提供商进行翻译
-3. 将翻译后的内容写回文件系统
+1. 从已配置文件中提取可翻译内容
+2. 将内容发送到 LLM 提供方进行翻译
+3. 将翻译内容写回文件系统
 4. 创建 `i18n.lock` 文件以跟踪已完成的翻译（避免重复处理）
 
 **配置：**
@@ -162,7 +162,7 @@ npx lingo.dev@latest run
 }
 ```
 
-`provider` 字段为可选项（默认为 Lingo.dev Engine）。如需自定义 LLM 提供商：
+`provider` 字段为可选项（默认为 Lingo.dev Engine）。如需自定义 LLM 提供方：
 
 ```json
 {
@@ -333,7 +333,7 @@ const locale = await lingoDotDev.recognizeLocale("Bonjour le monde");
 
 ### Lingo.dev Compiler
 
-传统 i18n 方式非常繁琐。你需要用 `t()` 函数包裹每个字符串，创建翻译 key（`home.hero.title.v2`），维护多份 JSON 文件，还要忍受组件被本地化样板代码拖慢。如此繁琐，团队往往拖延国际化，直到变成一次大规模重构。
+传统的 i18n 方式具有侵入性。你需要将每个字符串包裹在 `t()` 函数中，手动创建翻译键（`home.hero.title.v2`），维护多份 JSON 文件，并且你的组件会因为本地化样板代码而变得臃肿。这个过程非常繁琐，以至于团队往往会拖延国际化，直到最后变成一次大规模重构。
 
 **配置（Next.js）：**
 
@@ -355,7 +355,9 @@ export default async function (): Promise<NextConfig> {
 }
 ```
 
-**配置（Vite）：**
+```bash
+pnpm install @lingo.dev/compiler
+```
 
 ```ts
 // vite.config.ts
@@ -375,7 +377,16 @@ export default defineConfig({
 });
 ```
 
-**Provider 设置：**
+```bash
+# Recommended: Sign up at lingo.dev and login
+npx lingo.dev@latest login
+
+# Alternative: Add API key to .env
+LINGODOTDEV_API_KEY=your_key_here
+
+# Or use direct LLM providers (Groq, OpenAI, Anthropic, Google)
+GROQ_API_KEY=your_key
+```
 
 ```tsx
 // app/layout.tsx (Next.js)
@@ -392,7 +403,23 @@ export default function RootLayout({ children }) {
 }
 ```
 
-**语言切换器：**
+```ts
+// next.config.ts
+import type { NextConfig } from "next";
+import { withLingo } from "@lingo.dev/compiler/next";
+
+const nextConfig: NextConfig = {};
+
+export default async function (): Promise<NextConfig> {
+  return await withLingo(nextConfig, {
+    sourceRoot: "./app",
+    sourceLocale: "en",
+    targetLocales: ["es", "fr", "de"],
+    models: "lingo.dev",
+    dev: { usePseudotranslator: true },
+  });
+}
+```
 
 ```tsx
 import { useLocale, setLocale } from "@lingo.dev/compiler/react";
@@ -408,39 +435,80 @@ export function LanguageSwitcher() {
 }
 ```
 
-**开发环境：** `npm run dev`（使用伪翻译器，无需 API 调用）
+```ts
+// vite.config.ts
+import { lingoCompilerPlugin } from "@lingo.dev/compiler/vite";
+
+export default defineConfig({
+  plugins: [
+    lingoCompilerPlugin({
+      sourceRoot: "src",
+      sourceLocale: "en",
+      targetLocales: ["es", "fr", "de"],
+      models: "lingo.dev",
+      dev: { usePseudotranslator: true },
+    }),
+    react(),
+  ],
+});
+```
+
+**生产环境：** 设置 `usePseudotranslator: false`，然后 `next build`
+
+```tsx
+// app/layout.tsx (Next.js)
+import { LingoProvider } from "@lingo.dev/compiler/react";
+
+export default function RootLayout({ children }) {
+  return (
+    <LingoProvider>
+      <html>
+        <body>{children}</body>
+      </html>
+    </LingoProvider>
+  );
+}
+```
+
+**主要特性：**
+
+```tsx
+import { useLocale, setLocale } from "@lingo.dev/compiler/react";
+
+export function LanguageSwitcher() {
+  const locale = useLocale();
+  return (
+    <select value={locale} onChange={(e) => setLocale(e.target.value)}>
+      <option value="en">English</option>
+      <option value="es">Español</option>
+    </select>
+  );
+}
+```
+
+**开发环境：** `npm run dev`（使用伪翻译，无需 API 调用）
 
 **生产环境：** 设置 `usePseudotranslator: false`，然后 `next build`
 
 将 `.lingo/` 目录提交到版本控制。
 
-**主要特性：**
+- Next.js（App Router，支持 React Server Components）
+- Vite + React（SPA 和 SSR）
 
 - 零运行时性能损耗
-- 无需翻译 key 或 JSON 文件
-- 无 `t()` 函数或 `<T>` 包裹组件
+- 无需翻译键或 JSON 文件
+- 无需 `t()` 函数或 `<T>` 包裹组件
 - 自动检测 JSX 中可翻译文本
 - 支持 TypeScript
 - 支持 ICU MessageFormat 复数
-- 通过 `data-lingo-override` 属性手动覆盖
+- 可通过 `data-lingo-override` 属性手动覆盖
 - 内置翻译编辑器小部件
 
-**构建模式：**
+[阅读文档 →](https://lingo.dev/en/compiler)
 
 - `pseudotranslator`：开发模式，使用占位翻译（无 API 成本）
 - `real`：使用 LLM 生成实际翻译
 - `cache-only`：生产模式，使用 CI 预生成的翻译（无 API 调用）
-
-**支持的框架：**
-
-- Next.js（App Router，支持 React Server Components）
-- Vite + React（SPA 和 SSR）
-
-计划支持更多框架。
-
-[阅读文档 →](https://lingo.dev/en/compiler)
-
----
 
 ## 参与贡献
 
@@ -463,7 +531,14 @@ export function LanguageSwitcher() {
 
 [
 
-![Star 历史图表](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+1. **问题反馈：** [报告 bug 或请求新功能](https://github.com/lingodotdev/lingo.dev/issues)
+2. **拉取请求：** [提交更改](https://github.com/lingodotdev/lingo.dev/pulls)
+   - 每个 PR 需要一个 changeset：`pnpm new`（或非发布更改用 `pnpm new:empty`）
+   - 提交前请确保测试通过
+3. **开发环境：** 本项目为 pnpm + turborepo 单体仓库
+   - 安装依赖：`pnpm install`
+   - 运行测试：`pnpm test`
+   - 构建：`pnpm build`
 
 ](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
 
@@ -489,8 +564,8 @@ export function LanguageSwitcher() {
 
 **添加新语言：**
 
-1. 使用 [BCP-47 格式](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale)将语言代码添加到 [`i18n.json`](./i18n.json)
-2. 提交 pull request
+1. 在 [`i18n.json`](./i18n.json) 中添加语言代码，格式为 [BCP-47](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale)
+2. 提交拉取请求
 
 **BCP-47 语言代码格式：** `language[-Script][-REGION]`
 
