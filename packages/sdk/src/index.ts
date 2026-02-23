@@ -1,6 +1,8 @@
 import Z from "zod";
 import { LocaleCode, localeCodeSchema } from "@lingo.dev/_spec";
 import { createId } from "@paralleldrive/cuid2";
+import { trackEvent } from "./utils/observability";
+import { TRACKING_EVENTS } from "./utils/tracking-events";
 
 const engineParamsSchema = Z.object({
   apiKey: Z.string(),
@@ -236,7 +238,43 @@ export class LingoDotDevEngine {
     ) => void,
     signal?: AbortSignal,
   ): Promise<Record<string, any>> {
-    return this._localizeRaw(obj, params, progressCallback, signal);
+    const trackProps = {
+      method: "localizeObject",
+      sourceLocale: params.sourceLocale,
+      targetLocale: params.targetLocale,
+    };
+    trackEvent(
+      this.config.apiKey,
+      this.config.apiUrl,
+      TRACKING_EVENTS.LOCALIZE_START,
+      trackProps,
+    );
+    try {
+      const result = await this._localizeRaw(
+        obj,
+        params,
+        progressCallback,
+        signal,
+      );
+      trackEvent(
+        this.config.apiKey,
+        this.config.apiUrl,
+        TRACKING_EVENTS.LOCALIZE_SUCCESS,
+        trackProps,
+      );
+      return result;
+    } catch (error) {
+      trackEvent(
+        this.config.apiKey,
+        this.config.apiUrl,
+        TRACKING_EVENTS.LOCALIZE_ERROR,
+        {
+          ...trackProps,
+          errorMessage: error instanceof Error ? error.message : String(error),
+        },
+      );
+      throw error;
+    }
   }
 
   /**
@@ -256,13 +294,44 @@ export class LingoDotDevEngine {
     progressCallback?: (progress: number) => void,
     signal?: AbortSignal,
   ): Promise<string> {
-    const response = await this._localizeRaw(
-      { text },
-      params,
-      progressCallback,
-      signal,
+    const trackProps = {
+      method: "localizeText",
+      sourceLocale: params.sourceLocale,
+      targetLocale: params.targetLocale,
+    };
+    trackEvent(
+      this.config.apiKey,
+      this.config.apiUrl,
+      TRACKING_EVENTS.LOCALIZE_START,
+      trackProps,
     );
-    return response.text || "";
+    try {
+      const response = await this._localizeRaw(
+        { text },
+        params,
+        progressCallback,
+        signal,
+      );
+      const result = response.text || "";
+      trackEvent(
+        this.config.apiKey,
+        this.config.apiUrl,
+        TRACKING_EVENTS.LOCALIZE_SUCCESS,
+        trackProps,
+      );
+      return result;
+    } catch (error) {
+      trackEvent(
+        this.config.apiKey,
+        this.config.apiUrl,
+        TRACKING_EVENTS.LOCALIZE_ERROR,
+        {
+          ...trackProps,
+          errorMessage: error instanceof Error ? error.message : String(error),
+        },
+      );
+      throw error;
+    }
   }
 
   /**
@@ -315,16 +384,46 @@ export class LingoDotDevEngine {
     strings: string[],
     params: Z.infer<typeof localizationParamsSchema>,
   ): Promise<string[]> {
-    const mapped = strings.reduce(
-      (acc, str, i) => {
-        acc[`item_${i}`] = str;
-        return acc;
-      },
-      {} as Record<string, string>,
+    const trackProps = {
+      method: "localizeStringArray",
+      sourceLocale: params.sourceLocale,
+      targetLocale: params.targetLocale,
+    };
+    trackEvent(
+      this.config.apiKey,
+      this.config.apiUrl,
+      TRACKING_EVENTS.LOCALIZE_START,
+      trackProps,
     );
+    try {
+      const mapped = strings.reduce(
+        (acc, str, i) => {
+          acc[`item_${i}`] = str;
+          return acc;
+        },
+        {} as Record<string, string>,
+      );
 
-    const result = await this.localizeObject(mapped, params);
-    return Object.values(result);
+      const result = await this._localizeRaw(mapped, params);
+      trackEvent(
+        this.config.apiKey,
+        this.config.apiUrl,
+        TRACKING_EVENTS.LOCALIZE_SUCCESS,
+        trackProps,
+      );
+      return Object.values(result);
+    } catch (error) {
+      trackEvent(
+        this.config.apiKey,
+        this.config.apiUrl,
+        TRACKING_EVENTS.LOCALIZE_ERROR,
+        {
+          ...trackProps,
+          errorMessage: error instanceof Error ? error.message : String(error),
+        },
+      );
+      throw error;
+    }
   }
 
   /**
@@ -344,17 +443,48 @@ export class LingoDotDevEngine {
     progressCallback?: (progress: number) => void,
     signal?: AbortSignal,
   ): Promise<Array<{ name: string; text: string }>> {
-    const localized = await this._localizeRaw(
-      { chat },
-      params,
-      progressCallback,
-      signal,
+    const trackProps = {
+      method: "localizeChat",
+      sourceLocale: params.sourceLocale,
+      targetLocale: params.targetLocale,
+    };
+    trackEvent(
+      this.config.apiKey,
+      this.config.apiUrl,
+      TRACKING_EVENTS.LOCALIZE_START,
+      trackProps,
     );
+    try {
+      const localized = await this._localizeRaw(
+        { chat },
+        params,
+        progressCallback,
+        signal,
+      );
 
-    return Object.entries(localized).map(([key, value]) => ({
-      name: chat[parseInt(key.split("_")[1])].name,
-      text: value,
-    }));
+      const result = Object.entries(localized).map(([key, value]) => ({
+        name: chat[parseInt(key.split("_")[1])].name,
+        text: value,
+      }));
+      trackEvent(
+        this.config.apiKey,
+        this.config.apiUrl,
+        TRACKING_EVENTS.LOCALIZE_SUCCESS,
+        trackProps,
+      );
+      return result;
+    } catch (error) {
+      trackEvent(
+        this.config.apiKey,
+        this.config.apiUrl,
+        TRACKING_EVENTS.LOCALIZE_ERROR,
+        {
+          ...trackProps,
+          errorMessage: error instanceof Error ? error.message : String(error),
+        },
+      );
+      throw error;
+    }
   }
 
   /**
@@ -375,136 +505,170 @@ export class LingoDotDevEngine {
     progressCallback?: (progress: number) => void,
     signal?: AbortSignal,
   ): Promise<string> {
-    const jsdomPackage = await import("jsdom");
-    const { JSDOM } = jsdomPackage;
-    const dom = new JSDOM(html);
-    const document = dom.window.document;
-
-    const LOCALIZABLE_ATTRIBUTES: Record<string, string[]> = {
-      meta: ["content"],
-      img: ["alt"],
-      input: ["placeholder"],
-      a: ["title"],
+    const trackProps = {
+      method: "localizeHtml",
+      sourceLocale: params.sourceLocale,
+      targetLocale: params.targetLocale,
     };
-    const UNLOCALIZABLE_TAGS = ["script", "style"];
+    trackEvent(
+      this.config.apiKey,
+      this.config.apiUrl,
+      TRACKING_EVENTS.LOCALIZE_START,
+      trackProps,
+    );
+    try {
+      const jsdomPackage = await import("jsdom");
+      const { JSDOM } = jsdomPackage;
+      const dom = new JSDOM(html);
+      const document = dom.window.document;
 
-    const extractedContent: Record<string, string> = {};
+      const LOCALIZABLE_ATTRIBUTES: Record<string, string[]> = {
+        meta: ["content"],
+        img: ["alt"],
+        input: ["placeholder"],
+        a: ["title"],
+      };
+      const UNLOCALIZABLE_TAGS = ["script", "style"];
 
-    const getPath = (node: Node, attribute?: string): string => {
-      const indices: number[] = [];
-      let current = node as ChildNode;
-      let rootParent = "";
+      const extractedContent: Record<string, string> = {};
 
-      while (current) {
-        const parent = current.parentElement as Element;
-        if (!parent) break;
+      const getPath = (node: Node, attribute?: string): string => {
+        const indices: number[] = [];
+        let current = node as ChildNode;
+        let rootParent = "";
 
-        if (parent === document.documentElement) {
-          rootParent = current.nodeName.toLowerCase();
-          break;
-        }
+        while (current) {
+          const parent = current.parentElement as Element;
+          if (!parent) break;
 
-        const siblings = Array.from(parent.childNodes).filter(
-          (n) =>
-            n.nodeType === 1 || (n.nodeType === 3 && n.textContent?.trim()),
-        );
-        const index = siblings.indexOf(current);
-        if (index !== -1) {
-          indices.unshift(index);
-        }
-        current = parent;
-      }
-
-      const basePath = rootParent
-        ? `${rootParent}/${indices.join("/")}`
-        : indices.join("/");
-      return attribute ? `${basePath}#${attribute}` : basePath;
-    };
-
-    const processNode = (node: Node) => {
-      let parent = node.parentElement;
-      while (parent) {
-        if (UNLOCALIZABLE_TAGS.includes(parent.tagName.toLowerCase())) {
-          return;
-        }
-        parent = parent.parentElement;
-      }
-
-      if (node.nodeType === 3) {
-        const text = node.textContent?.trim() || "";
-        if (text) {
-          extractedContent[getPath(node)] = text;
-        }
-      } else if (node.nodeType === 1) {
-        const element = node as Element;
-        const tagName = element.tagName.toLowerCase();
-
-        const attributes = LOCALIZABLE_ATTRIBUTES[tagName] || [];
-        attributes.forEach((attr) => {
-          const value = element.getAttribute(attr);
-          if (value) {
-            extractedContent[getPath(element, attr)] = value;
+          if (parent === document.documentElement) {
+            rootParent = current.nodeName.toLowerCase();
+            break;
           }
-        });
 
-        Array.from(element.childNodes)
-          .filter(
+          const siblings = Array.from(parent.childNodes).filter(
             (n) =>
               n.nodeType === 1 || (n.nodeType === 3 && n.textContent?.trim()),
-          )
-          .forEach(processNode);
-      }
-    };
+          );
+          const index = siblings.indexOf(current);
+          if (index !== -1) {
+            indices.unshift(index);
+          }
+          current = parent;
+        }
 
-    Array.from(document.head.childNodes)
-      .filter(
-        (n) => n.nodeType === 1 || (n.nodeType === 3 && n.textContent?.trim()),
-      )
-      .forEach(processNode);
-    Array.from(document.body.childNodes)
-      .filter(
-        (n) => n.nodeType === 1 || (n.nodeType === 3 && n.textContent?.trim()),
-      )
-      .forEach(processNode);
+        const basePath = rootParent
+          ? `${rootParent}/${indices.join("/")}`
+          : indices.join("/");
+        return attribute ? `${basePath}#${attribute}` : basePath;
+      };
 
-    const localizedContent = await this._localizeRaw(
-      extractedContent,
-      params,
-      progressCallback,
-      signal,
-    );
+      const processNode = (node: Node) => {
+        let parent = node.parentElement;
+        while (parent) {
+          if (UNLOCALIZABLE_TAGS.includes(parent.tagName.toLowerCase())) {
+            return;
+          }
+          parent = parent.parentElement;
+        }
 
-    // Update the DOM with localized content
-    document.documentElement.setAttribute("lang", params.targetLocale);
+        if (node.nodeType === 3) {
+          const text = node.textContent?.trim() || "";
+          if (text) {
+            extractedContent[getPath(node)] = text;
+          }
+        } else if (node.nodeType === 1) {
+          const element = node as Element;
+          const tagName = element.tagName.toLowerCase();
 
-    Object.entries(localizedContent).forEach(([path, value]) => {
-      const [nodePath, attribute] = path.split("#");
-      const [rootTag, ...indices] = nodePath.split("/");
+          const attributes = LOCALIZABLE_ATTRIBUTES[tagName] || [];
+          attributes.forEach((attr) => {
+            const value = element.getAttribute(attr);
+            if (value) {
+              extractedContent[getPath(element, attr)] = value;
+            }
+          });
 
-      let parent: Element = rootTag === "head" ? document.head : document.body;
-      let current: Node | null = parent;
+          Array.from(element.childNodes)
+            .filter(
+              (n) =>
+                n.nodeType === 1 || (n.nodeType === 3 && n.textContent?.trim()),
+            )
+            .forEach(processNode);
+        }
+      };
 
-      for (const index of indices) {
-        const siblings = Array.from(parent.childNodes).filter(
+      Array.from(document.head.childNodes)
+        .filter(
           (n) =>
             n.nodeType === 1 || (n.nodeType === 3 && n.textContent?.trim()),
-        );
-        current = siblings[parseInt(index)] || null;
-        if (current?.nodeType === 1) {
-          parent = current as Element;
-        }
-      }
+        )
+        .forEach(processNode);
+      Array.from(document.body.childNodes)
+        .filter(
+          (n) =>
+            n.nodeType === 1 || (n.nodeType === 3 && n.textContent?.trim()),
+        )
+        .forEach(processNode);
 
-      if (current) {
-        if (attribute) {
-          (current as Element).setAttribute(attribute, value);
-        } else {
-          current.textContent = value;
-        }
-      }
-    });
+      const localizedContent = await this._localizeRaw(
+        extractedContent,
+        params,
+        progressCallback,
+        signal,
+      );
 
-    return dom.serialize();
+      // Update the DOM with localized content
+      document.documentElement.setAttribute("lang", params.targetLocale);
+
+      Object.entries(localizedContent).forEach(([path, value]) => {
+        const [nodePath, attribute] = path.split("#");
+        const [rootTag, ...indices] = nodePath.split("/");
+
+        let parent: Element =
+          rootTag === "head" ? document.head : document.body;
+        let current: Node | null = parent;
+
+        for (const index of indices) {
+          const siblings = Array.from(parent.childNodes).filter(
+            (n) =>
+              n.nodeType === 1 || (n.nodeType === 3 && n.textContent?.trim()),
+          );
+          current = siblings[parseInt(index)] || null;
+          if (current?.nodeType === 1) {
+            parent = current as Element;
+          }
+        }
+
+        if (current) {
+          if (attribute) {
+            (current as Element).setAttribute(attribute, value);
+          } else {
+            current.textContent = value;
+          }
+        }
+      });
+
+      const result = dom.serialize();
+      trackEvent(
+        this.config.apiKey,
+        this.config.apiUrl,
+        TRACKING_EVENTS.LOCALIZE_SUCCESS,
+        trackProps,
+      );
+      return result;
+    } catch (error) {
+      trackEvent(
+        this.config.apiKey,
+        this.config.apiUrl,
+        TRACKING_EVENTS.LOCALIZE_ERROR,
+        {
+          ...trackProps,
+          errorMessage: error instanceof Error ? error.message : String(error),
+        },
+      );
+      throw error;
+    }
   }
 
   /**
@@ -517,27 +681,53 @@ export class LingoDotDevEngine {
     text: string,
     signal?: AbortSignal,
   ): Promise<LocaleCode> {
-    const response = await fetch(`${this.config.apiUrl}/recognize`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-        Authorization: `Bearer ${this.config.apiKey}`,
-      },
-      body: JSON.stringify({ text }),
-      signal,
-    });
+    const trackProps = { method: "recognizeLocale" };
+    trackEvent(
+      this.config.apiKey,
+      this.config.apiUrl,
+      TRACKING_EVENTS.RECOGNIZE_START,
+      trackProps,
+    );
+    try {
+      const response = await fetch(`${this.config.apiUrl}/recognize`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${this.config.apiKey}`,
+        },
+        body: JSON.stringify({ text }),
+        signal,
+      });
 
-    if (!response.ok) {
-      if (response.status >= 500 && response.status < 600) {
-        throw new Error(
-          `Server error (${response.status}): ${response.statusText}. This may be due to temporary service issues.`,
-        );
+      if (!response.ok) {
+        if (response.status >= 500 && response.status < 600) {
+          throw new Error(
+            `Server error (${response.status}): ${response.statusText}. This may be due to temporary service issues.`,
+          );
+        }
+        throw new Error(`Error recognizing locale: ${response.statusText}`);
       }
-      throw new Error(`Error recognizing locale: ${response.statusText}`);
-    }
 
-    const jsonResponse = await response.json();
-    return jsonResponse.locale;
+      const jsonResponse = await response.json();
+      trackEvent(
+        this.config.apiKey,
+        this.config.apiUrl,
+        TRACKING_EVENTS.RECOGNIZE_SUCCESS,
+        trackProps,
+      );
+      return jsonResponse.locale;
+    } catch (error) {
+      trackEvent(
+        this.config.apiKey,
+        this.config.apiUrl,
+        TRACKING_EVENTS.RECOGNIZE_ERROR,
+        {
+          ...trackProps,
+          errorMessage: error instanceof Error ? error.message : String(error),
+        },
+      );
+      throw error;
+    }
   }
 
   async whoami(
@@ -548,7 +738,7 @@ export class LingoDotDevEngine {
         method: "POST",
         headers: {
           Authorization: `Bearer ${this.config.apiKey}`,
-          ContentType: "application/json",
+          "Content-Type": "application/json",
         },
         signal,
       });

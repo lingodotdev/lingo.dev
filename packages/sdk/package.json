@@ -1,6 +1,6 @@
 {
   "name": "@lingo.dev/_sdk",
-  "version": "0.14.2",
+  "version": "0.15.0",
   "description": "Lingo.dev JS SDK",
   "private": false,
   "repository": {
@@ -33,6 +33,7 @@
     "@lingo.dev/_spec": "workspace:*",
     "@paralleldrive/cuid2": "2.2.2",
     "jsdom": "25.0.1",
+    "posthog-node": "5.14.0",
     "zod": "4.1.12"
   },
   "devDependencies": {
