@@ -20,6 +20,7 @@ type BucketConfig = {
   lockedPatterns?: string[];
   ignoredKeys?: string[];
   preservedKeys?: string[];
+  localizableKeys?: string[];
 };
 
 export function getBuckets(i18nConfig: I18nConfig) {
@@ -53,6 +54,9 @@ export function getBuckets(i18nConfig: I18nConfig) {
       }
       if (bucketEntry.preservedKeys) {
         config.preservedKeys = bucketEntry.preservedKeys;
+      }
+      if (bucketEntry.localizableKeys) {
+        config.localizableKeys = bucketEntry.localizableKeys;
       }
       return config;
     },

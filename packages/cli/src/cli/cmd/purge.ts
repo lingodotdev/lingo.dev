@@ -106,6 +106,7 @@ export default new Command()
                 bucket.lockedPatterns,
                 bucket.ignoredKeys,
                 bucket.preservedKeys,
+                bucket.localizableKeys,
               );
               await bucketLoader.init();
               bucketLoader.setDefaultLocale(sourceLocale);

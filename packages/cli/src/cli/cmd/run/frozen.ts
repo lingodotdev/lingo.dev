@@ -65,6 +65,7 @@ export default async function frozen(input: CmdRunContext) {
                   bucket.lockedPatterns,
                   bucket.ignoredKeys,
                   bucket.preservedKeys,
+                  bucket.localizableKeys,
                 );
                 loader.setDefaultLocale(resolvedSourceLocale);
                 await loader.init();
@@ -105,6 +106,7 @@ export default async function frozen(input: CmdRunContext) {
                 bucket.lockedPatterns,
                 bucket.ignoredKeys,
                 bucket.preservedKeys,
+                bucket.localizableKeys,
               );
               loader.setDefaultLocale(resolvedSourceLocale);
               await loader.init();

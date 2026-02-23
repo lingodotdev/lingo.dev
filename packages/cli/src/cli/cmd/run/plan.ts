@@ -134,6 +134,7 @@ export default async function plan(
                   lockedPatterns: bucket.lockedPatterns || [],
                   ignoredKeys: bucket.ignoredKeys || [],
                   preservedKeys: bucket.preservedKeys || [],
+                  localizableKeys: bucket.localizableKeys || [],
                   onlyKeys: input.flags.key || [],
                   formatter: input.config!.formatter,
                 });
