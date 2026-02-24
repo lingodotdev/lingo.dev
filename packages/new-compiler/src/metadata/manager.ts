@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { open, type RootDatabase } from "lmdb";
+import type { RootDatabase } from "lmdb";
 import type { MetadataSchema, PathConfig, TranslationEntry } from "../types";
 import { getLingoDir } from "../utils/path-helpers";
 import { logger } from "../utils/logger";
@@ -13,10 +13,14 @@ const METADATA_DIR_BUILD = "metadata-build";
  *
  * lmdb-js deduplicates open() calls to the same path (ref-counted at C++ level),
  * so this is cheap. Each open() also clears stale readers from terminated workers.
+ *
+ * lmdb is loaded via dynamic import() to prevent bundlers and require hooks
+ * from transforming its CJS bundle, which contains syntax they can't handle.
  */
-function openDatabaseConnection(dbPath: string, noSync: boolean): RootDatabase {
+async function openDatabaseConnection(dbPath: string, noSync: boolean): Promise<RootDatabase> {
   try {
     fs.mkdirSync(dbPath, { recursive: true });
+    const { open } = await import("lmdb");
     return open({
       path: dbPath,
       compression: true,
@@ -52,7 +56,7 @@ async function runWithDbConnection<T>(
   noSync: boolean,
   fn: (db: RootDatabase) => T,
 ): Promise<T> {
-  const db = openDatabaseConnection(dbPath, noSync);
+  const db = await openDatabaseConnection(dbPath, noSync);
   try {
     return fn(db);
   } finally {
