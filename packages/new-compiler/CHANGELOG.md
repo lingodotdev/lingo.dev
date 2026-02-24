@@ -1,5 +1,11 @@
 # @lingo.dev/compiler
 
+## 0.3.11
+
+### Patch Changes
+
+- [#2015](https://github.com/lingodotdev/lingo.dev/pull/2015) [`13aeb36`](https://github.com/lingodotdev/lingo.dev/commit/13aeb360805ca4fe8ccff9370ea1e11327c3b2df) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Fixed SyntaxError caused by bundlers/require hooks transforming lmdb's CJS bundle
+
 ## 0.3.10
 
 ### Patch Changes
