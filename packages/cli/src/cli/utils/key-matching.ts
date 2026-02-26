@@ -1,6 +1,17 @@
 import { minimatch } from "minimatch";
 
 /**
+ * Safely decodes a URI component, returning the original string if decoding fails.
+ */
+export function safeDecode(value: string): string {
+  try {
+    return decodeURIComponent(value);
+  } catch {
+    return value;
+  }
+}
+
+/**
  * Checks if a key matches any of the provided patterns using exact, separator-bounded prefix, or glob matching.
  * Separator-bounded means the key must equal the pattern exactly, or continue with a ".", "/", or "-" separator.
  * This prevents "inbox" from matching "inbox_url" while still matching "inbox.title", "inbox/details", or "inbox-0".
