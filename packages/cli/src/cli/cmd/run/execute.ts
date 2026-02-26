@@ -231,7 +231,10 @@ function createWorkerTask(args: {
                 ([key]) =>
                   !assignedTask.onlyKeys.length ||
                   assignedTask.onlyKeys?.some((pattern) =>
-                    minimatch(key, pattern),
+                    minimatch(
+                      decodeURIComponent(key),
+                      decodeURIComponent(pattern),
+                    ),
                   ),
               )
               .fromPairs()
