@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.132.6
+
+### Patch Changes
+
+- [#2017](https://github.com/lingodotdev/lingo.dev/pull/2017) [`c51d92f`](https://github.com/lingodotdev/lingo.dev/commit/c51d92f66893eda88b7acdbf9eff7b12bff1ddaf) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Fixed --key pattern matching in run and purge commands by decoding URL-encoded keys before minimatch comparison
+
 ## 0.132.5
 
 ### Patch Changes
