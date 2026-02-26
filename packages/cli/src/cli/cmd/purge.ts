@@ -6,6 +6,7 @@ import { getBuckets } from "../utils/buckets";
 import { resolveOverriddenLocale } from "@lingo.dev/_spec";
 import createBucketLoader from "../loaders";
 import { minimatch } from "minimatch";
+import { safeDecode } from "../utils/key-matching";
 import { confirm } from "@inquirer/prompts";
 
 interface PurgeOptions {
@@ -123,7 +124,7 @@ export default new Command()
               if (options.key) {
                 // minimatch for key patterns
                 keysToRemove = Object.keys(newData).filter((k) =>
-                  minimatch(k, options.key!),
+                  minimatch(safeDecode(k), safeDecode(options.key!)),
                 );
               } else {
                 // No key specified: remove all keys
@@ -133,7 +134,7 @@ export default new Command()
                 // Show what will be deleted
                 if (options.key) {
                   bucketOra.info(
-                    `About to delete ${keysToRemove.length} key(s) matching '${options.key}' from ${bucketPath.pathPattern} [${targetLocale}]:\n  ${keysToRemove.slice(0, 10).join(", ")}${keysToRemove.length > 10 ? ", ..." : ""}`,
+                    `About to delete ${keysToRemove.length} key(s) matching '${safeDecode(options.key)}' from ${bucketPath.pathPattern} [${targetLocale}]:\n  ${keysToRemove.slice(0, 10).join(", ")}${keysToRemove.length > 10 ? ", ..." : ""}`,
                   );
                 } else {
                   bucketOra.info(
@@ -161,7 +162,7 @@ export default new Command()
                 await bucketLoader.push(targetLocale, newData);
                 if (options.key) {
                   bucketOra.succeed(
-                    `Removed ${keysToRemove.length} key(s) matching '${options.key}' from ${bucketPath.pathPattern} [${targetLocale}]`,
+                    `Removed ${keysToRemove.length} key(s) matching '${safeDecode(options.key)}' from ${bucketPath.pathPattern} [${targetLocale}]`,
                   );
                 } else {
                   bucketOra.succeed(
@@ -170,7 +171,7 @@ export default new Command()
                 }
               } else if (options.key) {
                 bucketOra.info(
-                  `No keys matching '${options.key}' found in ${bucketPath.pathPattern} [${targetLocale}]`,
+                  `No keys matching '${safeDecode(options.key)}' found in ${bucketPath.pathPattern} [${targetLocale}]`,
                 );
               } else {
                 bucketOra.info("No keys to remove.");

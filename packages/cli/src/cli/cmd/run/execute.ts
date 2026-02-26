@@ -4,6 +4,7 @@ import pLimit, { LimitFunction } from "p-limit";
 import _ from "lodash";
 import { minimatch } from "minimatch";
 
+import { safeDecode } from "../../utils/key-matching";
 import { colors } from "../../constants";
 import { CmdRunContext, CmdRunTask, CmdRunTaskResult } from "./_types";
 import { commonTaskRendererOptions } from "./_const";
@@ -231,7 +232,7 @@ function createWorkerTask(args: {
                 ([key]) =>
                   !assignedTask.onlyKeys.length ||
                   assignedTask.onlyKeys?.some((pattern) =>
-                    minimatch(key, pattern),
+                    minimatch(safeDecode(key), safeDecode(pattern)),
                   ),
               )
               .fromPairs()
