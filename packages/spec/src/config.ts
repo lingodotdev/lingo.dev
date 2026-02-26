@@ -574,8 +574,36 @@ export const configV1_13Definition = extendConfigDefinition(
   },
 );
 
+// v1.13 -> v1.14
+// Changes: Add "dev" field for development-specific settings
+const devSettingsSchema = Z.object({
+  usePseudotranslator: Z.boolean()
+    .optional()
+    .describe(
+      "Use pseudotranslator instead of real translation provider. Useful for testing i18n without API calls.",
+    ),
+}).describe("Development-specific settings.");
+
+export const configV1_14Definition = extendConfigDefinition(
+  configV1_13Definition,
+  {
+    createSchema: (baseSchema) =>
+      baseSchema.extend({
+        dev: devSettingsSchema.optional(),
+      }),
+    createDefaultValue: (baseDefaultValue) => ({
+      ...baseDefaultValue,
+      version: "1.14",
+    }),
+    createUpgrader: (oldConfig) => ({
+      ...oldConfig,
+      version: "1.14",
+    }),
+  },
+);
+
 // exports
-export const LATEST_CONFIG_DEFINITION = configV1_13Definition;
+export const LATEST_CONFIG_DEFINITION = configV1_14Definition;
 
 export type I18nConfig = Z.infer<(typeof LATEST_CONFIG_DEFINITION)["schema"]>;
 
