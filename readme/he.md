@@ -74,7 +74,7 @@
 | [**MCP**](#lingodev-mcp)           | הגדרת i18n בסיוע AI עבור אפליקציות React           | Prompt: `Set up i18n`              |
 | [**CLI**](#lingodev-cli)           | תרגום קבצי JSON, YAML, markdown, CSV, PO           | `npx lingo.dev@latest run`         |
 | [**CI/CD**](#lingodev-cicd)        | צינור תרגום אוטומטי ב-GitHub Actions               | `uses: lingodotdev/lingo.dev@main` |
-| [**SDK**](#lingodev-sdk)           | תרגום בזמן ריצה לתוכן דינמי                        | `npm install lingo.dev`            |
+| [**SDK**](#lingodev-sdk)           | תרגום בזמן ריצה עבור תוכן דינמי                    | `npm install lingo.dev`            |
 | [**Compiler**](#lingodev-compiler) | לוקליזציה של React בזמן build ללא wrappers של i18n | תוסף `withLingo()`                 |
 
 ---
@@ -108,10 +108,10 @@ Set up i18n with the following locales: en, es, and pt-BR. The default locale is
 
 העוזר יבצע:
 
-1. הגדרת routing מבוסס locale (לדוגמה, `/en`, `/es`, `/pt-BR`)
-2. הגדרת קומפוננטות להחלפת שפה
+1. הגדרת ניתוב מבוסס locale (לדוגמה, `/en`, `/es`, `/pt-BR`)
+2. הגדרת רכיבי החלפת שפה
 3. יישום זיהוי אוטומטי של locale
-4. יצירת קבצי הגדרות נדרשים
+4. יצירת קבצי תצורה נדרשים
 
 **שים לב:** יצירת קוד בעזרת AI אינה דטרמיניסטית. בדוק את הקוד שנוצר לפני ביצוע commit.
 
@@ -144,7 +144,7 @@ npx lingo.dev@latest run
 
 **הגדרות:**
 
-הפקודה `init` מייצרת קובץ `i18n.json`. הגדר locales ו-buckets:
+הפקודה `init` יוצרת קובץ `i18n.json`. הגדר locales ו-buckets:
 
 ```json
 {
@@ -162,7 +162,7 @@ npx lingo.dev@latest run
 }
 ```
 
-השדה `provider` הוא אופציונלי (ברירת מחדל: Lingo.dev Engine). עבור ספקי LLM מותאמים אישית:
+השדה `provider` הוא אופציונלי (ברירת המחדל היא Lingo.dev Engine). עבור ספקי LLM מותאמים אישית:
 
 ```json
 {
@@ -224,7 +224,7 @@ jobs:
 
 **דרישות הגדרה:**
 
-1. הוסף `LINGODOTDEV_API_KEY` ל-secrets של ה-repository (Settings > Secrets and variables > Actions)
+1. הוסף `LINGODOTDEV_API_KEY` ל-secrets של המאגר (Settings > Secrets and variables > Actions)
 2. עבור workflows של PR: אפשר "Allow GitHub Actions to create and approve pull requests" ב-Settings > Actions > General
 
 **אפשרויות workflow:**
@@ -250,14 +250,14 @@ env:
 
 **פרמטרים זמינים:**
 
-| פרמטר                | ברירת מחדל                                     | תיאור                      |
-| -------------------- | ---------------------------------------------- | -------------------------- |
-| `api-key`            | (נדרש)                                         | מפתח API של Lingo.dev      |
-| `pull-request`       | `false`                                        | יצירת PR במקום commit ישיר |
-| `commit-message`     | `"feat: update translations via @LingoDotDev"` | הודעת commit מותאמת אישית  |
-| `pull-request-title` | `"feat: update translations via @LingoDotDev"` | כותרת PR מותאמת אישית      |
-| `working-directory`  | `"."`                                          | תיקייה להרצה               |
-| `parallel`           | `false`                                        | הפעלת עיבוד מקבילי         |
+| קלט                  | ברירת מחדל                                     | תיאור                     |
+| -------------------- | ---------------------------------------------- | ------------------------- |
+| `api-key`            | (נדרש)                                         | מפתח API של Lingo.dev     |
+| `pull-request`       | `false`                                        | צור PR במקום commit ישיר  |
+| `commit-message`     | `"feat: update translations via @LingoDotDev"` | הודעת commit מותאמת אישית |
+| `pull-request-title` | `"feat: update translations via @LingoDotDev"` | כותרת PR מותאמת אישית     |
+| `working-directory`  | `"."`                                          | ספרייה להרצה              |
+| `parallel`           | `false`                                        | אפשר עיבוד מקבילי         |
 
 [קרא את התיעוד ←](https://lingo.dev/en/ci/github)
 
@@ -333,7 +333,7 @@ const locale = await lingoDotDev.recognizeLocale("Bonjour le monde");
 
 ### Lingo.dev Compiler
 
-i18n מסורתי הוא פולשני. אתה עוטף כל מחרוזת בפונקציות `t()`, ממציא מפתחות תרגום (`home.hero.title.v2`), מתחזק קבצי JSON מקבילים, וצופה בקומפוננטות שלך מתנפחות עם boilerplate של לוקליזציה. זה כל כך מייגע שצוותים מדחים בינאום עד שזה הופך ל-refactor מסיבי.
+i18n מסורתי הוא פולשני. עוטפים כל מחרוזת בפונקציות `t()`, ממציאים מפתחות תרגום (`home.hero.title.v2`), מתחזקים קבצי JSON מקבילים, וצופים בקומפוננטות מתנפחות עם קוד עזר של לוקליזציה. זה כל כך מייגע שצוותים דוחים בינלאום עד שזה הופך לרפקטור מסיבי.
 
 Lingo.dev Compiler מבטל את הטקסיות. כתוב קומפוננטות React עם טקסט באנגלית פשוטה. הקומפיילר מזהה מחרוזות הניתנות לתרגום בזמן build ומייצר גרסאות מתורגמות באופן אוטומטי. ללא מפתחות, ללא קבצי JSON, ללא פונקציות עטיפה - רק קוד React שפשוט עובד במספר שפות.
 
@@ -431,9 +431,9 @@ export function LanguageSwitcher() {
 
 **פיתוח:** `npm run dev` (משתמש ב-pseudotranslator, ללא קריאות API)
 
-**ייצור:** הגדר `usePseudotranslator: false`, ואז `next build`
+**ייצור:** הגדירו `usePseudotranslator: false`, ואז `next build`
 
-בצע commit לתיקיית `.lingo/` לבקרת גרסאות.
+בצעו commit לתיקיית `.lingo/` לבקרת גרסאות.
 
 **תכונות עיקריות:**
 
@@ -442,14 +442,14 @@ export function LanguageSwitcher() {
 - ללא פונקציות `t()` או קומפוננטות עטיפה `<T>`
 - זיהוי אוטומטי של טקסט הניתן לתרגום ב-JSX
 - תמיכה ב-TypeScript
-- ICU MessageFormat לריבוי
+- ICU MessageFormat לרבים
 - עקיפות ידניות באמצעות תכונת `data-lingo-override`
-- widget מובנה לעורך תרגומים
+- ווידג'ט מובנה לעריכת תרגומים
 
 **מצבי build:**
 
 - `pseudotranslator`: מצב פיתוח עם תרגומי placeholder (ללא עלויות API)
-- `real`: יצירת תרגומים אמיתיים באמצעות LLMs
+- `real`: יצירת תרגומים בפועל באמצעות LLMs
 - `cache-only`: מצב ייצור המשתמש בתרגומים שנוצרו מראש מ-CI (ללא קריאות API)
 
 **פריימוורקים נתמכים:**
@@ -467,10 +467,10 @@ export function LanguageSwitcher() {
 
 תרומות מתקבלות בברכה. אנא עקבו אחר ההנחיות הבאות:
 
-1. **בעיות:** [דיווח על באגים או בקשת תכונות](https://github.com/lingodotdev/lingo.dev/issues)
+1. **בעיות:** [דיווח על באגים או בקשת פיצ'רים](https://github.com/lingodotdev/lingo.dev/issues)
 2. **Pull Requests:** [שליחת שינויים](https://github.com/lingodotdev/lingo.dev/pulls)
-   - כל PR דורש changeset: `pnpm new` (או `pnpm new:empty` עבור שינויים שאינם לשחרור)
-   - יש לוודא שהבדיקות עוברות לפני השליחה
+   - כל PR דורש changeset: `pnpm new` (או `pnpm new:empty` לשינויים ללא שחרור)
+   - ודאו שהבדיקות עוברות לפני השליחה
 3. **פיתוח:** זהו monorepo של pnpm + turborepo
    - התקנת תלויות: `pnpm install`
    - הרצת בדיקות: `pnpm test`

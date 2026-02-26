@@ -71,9 +71,9 @@
 
 ## فوری آغاز
 
-| ٹول                                | استعمال کا معاملہ                               | فوری کمانڈ                         |
+| ٹول                                | استعمال کی صورت                                 | فوری کمانڈ                         |
 | ---------------------------------- | ----------------------------------------------- | ---------------------------------- |
-| [**MCP**](#lingodev-mcp)           | React ایپس کے لیے AI کی مدد سے i18n سیٹ اپ      | Prompt: `Set up i18n`              |
+| [**MCP**](#lingodev-mcp)           | React ایپس کے لیے AI کی مدد سے i18n سیٹ اپ      | پرامپٹ: `Set up i18n`              |
 | [**CLI**](#lingodev-cli)           | JSON، YAML، markdown، CSV، PO فائلوں کا ترجمہ   | `npx lingo.dev@latest run`         |
 | [**CI/CD**](#lingodev-cicd)        | GitHub Actions میں خودکار ترجمہ پائپ لائن       | `uses: lingodotdev/lingo.dev@main` |
 | [**SDK**](#lingodev-sdk)           | متحرک مواد کے لیے رن ٹائم ترجمہ                 | `npm install lingo.dev`            |
@@ -110,10 +110,10 @@ Set up i18n with the following locales: en, es, and pt-BR. The default locale is
 
 Assistant یہ کام کرے گا:
 
-1. Locale-based routing configure کرے گا (مثلاً `/en`، `/es`، `/pt-BR`)
-2. Language switching components سیٹ اپ کرے گا
-3. Automatic locale detection implement کرے گا
-4. ضروری configuration files generate کرے گا
+1. locale پر مبنی routing کو کنفیگر کریں (مثلاً، `/en`، `/es`، `/pt-BR`)
+2. زبان سوئچنگ components سیٹ اپ کریں
+3. خودکار locale کی شناخت کو نافذ کریں
+4. ضروری configuration فائلیں تیار کریں
 
 **نوٹ:** AI-assisted code generation non-deterministic ہے۔ commit کرنے سے پہلے generated code کا جائزہ لیں۔
 
@@ -140,13 +140,13 @@ npx lingo.dev@latest run
 **یہ کیسے کام کرتا ہے:**
 
 1. کنفیگر شدہ فائلوں سے قابل ترجمہ مواد نکالتا ہے
-2. ترجمے کے لیے مواد LLM فراہم کنندہ کو بھیجتا ہے
-3. ترجمہ شدہ مواد واپس filesystem میں لکھتا ہے
+2. ترجمے کے لیے مواد کو LLM provider کو بھیجتا ہے
+3. ترجمہ شدہ مواد کو filesystem میں واپس لکھتا ہے
 4. مکمل شدہ تراجم کو ٹریک کرنے کے لیے `i18n.lock` فائل بناتا ہے (غیر ضروری پروسیسنگ سے بچتا ہے)
 
 **کنفیگریشن:**
 
-`init` کمانڈ ایک `i18n.json` فائل بناتی ہے۔ locales اور buckets کنفیگر کریں:
+`init` کمانڈ ایک `i18n.json` فائل تیار کرتی ہے۔ locales اور buckets کو کنفیگر کریں:
 
 ```json
 {
@@ -164,7 +164,7 @@ npx lingo.dev@latest run
 }
 ```
 
-`provider` فیلڈ اختیاری ہے (ڈیفالٹ Lingo.dev Engine ہے)۔ حسب ضرورت LLM فراہم کنندگان کے لیے:
+`provider` فیلڈ اختیاری ہے (ڈیفالٹ Lingo.dev Engine)۔ حسب ضرورت LLM providers کے لیے:
 
 ```json
 {
@@ -227,13 +227,17 @@ jobs:
 **سیٹ اپ کی ضروریات:**
 
 1. repository secrets میں `LINGODOTDEV_API_KEY` شامل کریں (Settings > Secrets and variables > Actions)
-2. PR workflows کے لیے: Settings > Actions > General میں "Allow GitHub Actions to create and approve pull requests" فعال کریں
+2. PR workflows کے لیے: Settings > Actions > General میں "Allow GitHub Actions to create and approve pull requests" کو فعال کریں
 
 **Workflow کے اختیارات:**
 
 تراجم براہ راست commit کریں:
 
-GitHub Actions workflow میں شامل کریں:
+```yaml
+uses: lingodotdev/lingo.dev@main
+with:
+  api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
+```
 
 تراجم کے ساتھ pull requests بنائیں:
 
@@ -248,14 +252,14 @@ env:
 
 **دستیاب inputs:**
 
-| Input                | Default                                        | Description                              |
+| ان پٹ                | ڈیفالٹ                                         | تفصیل                                    |
 | -------------------- | ---------------------------------------------- | ---------------------------------------- |
 | `api-key`            | (ضروری)                                        | Lingo.dev API key                        |
 | `pull-request`       | `false`                                        | براہ راست commit کرنے کی بجائے PR بنائیں |
-| `commit-message`     | `"feat: update translations via @LingoDotDev"` | حسب ضرورت commit message                 |
-| `pull-request-title` | `"feat: update translations via @LingoDotDev"` | حسب ضرورت PR title                       |
+| `commit-message`     | `"feat: update translations via @LingoDotDev"` | حسب ضرورت commit پیغام                   |
+| `pull-request-title` | `"feat: update translations via @LingoDotDev"` | حسب ضرورت PR عنوان                       |
 | `working-directory`  | `"."`                                          | جس ڈائریکٹری میں چلانا ہے                |
-| `parallel`           | `false`                                        | متوازی پروسیسنگ فعال کریں                |
+| `parallel`           | `false`                                        | متوازی پروسیسنگ کو فعال کریں             |
 
 [دستاویزات پڑھیں →](https://lingo.dev/en/ci/github)
 
@@ -331,7 +335,7 @@ const locale = await lingoDotDev.recognizeLocale("Bonjour le monde");
 
 ### Lingo.dev Compiler
 
-روایتی i18n مداخلت آمیز ہے۔ آپ ہر string کو `t()` functions میں wrap کرتے ہیں، ترجمہ keys ایجاد کرتے ہیں (`home.hero.title.v2`)، متوازی JSON فائلیں برقرار رکھتے ہیں، اور اپنے components کو localization boilerplate سے بھرا ہوا دیکھتے ہیں۔ یہ اتنا تکلیف دہ ہے کہ ٹیمیں internationalization کو اس وقت تک ملتوی کرتی ہیں جب تک یہ ایک بڑا refactor نہ بن جائے۔
+روایتی i18n مداخلت آمیز ہے۔ آپ ہر string کو `t()` functions میں wrap کرتے ہیں، translation keys ایجاد کرتے ہیں (`home.hero.title.v2`)، متوازی JSON files maintain کرتے ہیں، اور اپنے components کو localization boilerplate سے بھرا ہوا دیکھتے ہیں۔ یہ اتنا تکلیف دہ ہے کہ teams internationalization کو اس وقت تک ملتوی کر دیتی ہیں جب تک یہ ایک بڑا refactor نہ بن جائے۔
 
 Lingo.dev Compiler رسمی کاموں کو ختم کرتا ہے۔ سادہ انگریزی متن کے ساتھ React components لکھیں۔ Compiler build time پر قابل ترجمہ strings کا پتہ لگاتا ہے اور خودکار طور پر مقامی variants تیار کرتا ہے۔ کوئی keys نہیں، کوئی JSON فائلیں نہیں، کوئی wrapper functions نہیں - صرف React code جو متعدد زبانوں میں کام کرتا ہے۔
 
@@ -429,26 +433,26 @@ export function LanguageSwitcher() {
 
 **Development:** `npm run dev` (pseudotranslator استعمال کرتا ہے، کوئی API calls نہیں)
 
-**Production:** `usePseudotranslator: false` سیٹ کریں، پھر `next build`
+**Production:** `usePseudotranslator: false` set کریں، پھر `next build`
 
 `.lingo/` directory کو version control میں commit کریں۔
 
 **اہم خصوصیات:**
 
 - صفر runtime performance cost
-- کوئی translation keys یا JSON فائلیں نہیں
+- کوئی translation keys یا JSON files نہیں
 - کوئی `t()` functions یا `<T>` wrapper components نہیں
-- JSX میں قابل ترجمہ متن کی خودکار شناخت
-- TypeScript سپورٹ
+- JSX میں translatable text کی خودکار شناخت
+- TypeScript support
 - plurals کے لیے ICU MessageFormat
-- `data-lingo-override` attribute کے ذریعے دستی overrides
+- `data-lingo-override` attribute کے ذریعے manual overrides
 - Built-in translation editor widget
 
 **Build modes:**
 
 - `pseudotranslator`: placeholder translations کے ساتھ development mode (کوئی API costs نہیں)
-- `real`: LLMs استعمال کرتے ہوئے حقیقی تراجم تیار کریں
-- `cache-only`: CI سے پہلے سے تیار شدہ تراجم استعمال کرتے ہوئے production mode (کوئی API calls نہیں)
+- `real`: LLMs استعمال کرتے ہوئے actual translations generate کریں
+- `cache-only`: CI سے pre-generated translations استعمال کرتے ہوئے production mode (کوئی API calls نہیں)
 
 **معاون frameworks:**
 
@@ -465,14 +469,14 @@ export function LanguageSwitcher() {
 
 تعاون کی خوش آمدید۔ براہ کرم ان رہنما خطوط پر عمل کریں:
 
-1. **مسائل:** [bugs کی اطلاع دیں یا features کی درخواست کریں](https://github.com/lingodotdev/lingo.dev/issues)
-2. **Pull Requests:** [تبدیلیاں جمع کروائیں](https://github.com/lingodotdev/lingo.dev/pulls)
-   - ہر PR کے لیے changeset ضروری ہے: `pnpm new` (یا `pnpm new:empty` non-release تبدیلیوں کے لیے)
-   - جمع کروانے سے پہلے یقینی بنائیں کہ tests پاس ہو جائیں
-3. **Development:** یہ pnpm + turborepo monorepo ہے
-   - dependencies انسٹال کریں: `pnpm install`
-   - tests چلائیں: `pnpm test`
-   - Build کریں: `pnpm build`
+1. **Issues:** [bugs report کریں یا features request کریں](https://github.com/lingodotdev/lingo.dev/issues)
+2. **Pull Requests:** [تبدیلیاں submit کریں](https://github.com/lingodotdev/lingo.dev/pulls)
+   - ہر PR کو changeset کی ضرورت ہے: `pnpm new` (یا non-release changes کے لیے `pnpm new:empty`)
+   - Submit کرنے سے پہلے یقینی بنائیں کہ tests pass ہوں
+3. **Development:** یہ ایک pnpm + turborepo monorepo ہے
+   - Dependencies install کریں: `pnpm install`
+   - Tests run کریں: `pnpm test`
+   - Build: `pnpm build`
 
 **سپورٹ:** [Discord community](https://lingo.dev/go/discord)
 
@@ -494,12 +498,12 @@ export function LanguageSwitcher() {
 
 **نئی زبان شامل کرنا:**
 
-1. [`i18n.json`](./i18n.json) میں [BCP-47 format](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) استعمال کرتے ہوئے locale code شامل کریں
-2. pull request جمع کروائیں
+1. [BCP-47 format](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) استعمال کرتے ہوئے [`i18n.json`](./i18n.json) میں locale code شامل کریں
+2. Pull request submit کریں
 
 **BCP-47 locale format:** `language[-Script][-REGION]`
 
-- `language`: ISO 639-1/2/3 (lowercase): `en`, `zh`, `bho`
-- `Script`: ISO 15924 (title case): `Hans`, `Hant`, `Latn`
-- `REGION`: ISO 3166-1 alpha-2 (uppercase): `US`, `CN`, `IN`
-- مثالیں: `en`, `pt-BR`, `zh-Hans`, `sr-Cyrl-RS`
+- `language`: ISO 639-1/2/3 (lowercase): `en`، `zh`، `bho`
+- `Script`: ISO 15924 (title case): `Hans`، `Hant`، `Latn`
+- `REGION`: ISO 3166-1 alpha-2 (uppercase): `US`، `CN`، `IN`
+- مثالیں: `en`، `pt-BR`، `zh-Hans`، `sr-Cyrl-RS`

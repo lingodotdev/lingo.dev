@@ -77,7 +77,7 @@
 | [**CLI**](#lingodev-cli)           | ترجمه فایل‌های JSON، YAML، markdown، CSV، PO              | `npx lingo.dev@latest run`         |
 | [**CI/CD**](#lingodev-cicd)        | پایپلاین ترجمه خودکار در GitHub Actions                   | `uses: lingodotdev/lingo.dev@main` |
 | [**SDK**](#lingodev-sdk)           | ترجمه زمان اجرا برای محتوای پویا                          | `npm install lingo.dev`            |
-| [**Compiler**](#lingodev-compiler) | بومی‌سازی React در زمان build بدون wrapper های i18n       | افزونه `withLingo()`               |
+| [**Compiler**](#lingodev-compiler) | بومی‌سازی React در زمان build بدون wrapper های i18n       | پلاگین `withLingo()`               |
 
 ---
 
@@ -111,7 +111,7 @@ Set up i18n with the following locales: en, es, and pt-BR. The default locale is
 دستیار این کارها را انجام می‌دهد:
 
 1. پیکربندی مسیریابی مبتنی بر locale (مثلاً `/en`، `/es`، `/pt-BR`)
-2. راه‌اندازی کامپوننت‌های تعویض زبان
+2. راه‌اندازی کامپوننت‌های تغییر زبان
 3. پیاده‌سازی تشخیص خودکار locale
 4. تولید فایل‌های پیکربندی لازم
 
@@ -139,14 +139,14 @@ npx lingo.dev@latest run
 
 **نحوه‌ی عملکرد:**
 
-1. محتوای قابل ترجمه را از فایل‌های پیکربندی‌شده استخراج می‌کند
-2. محتوا را برای ترجمه به ارائه‌دهنده‌ی LLM ارسال می‌کند
-3. محتوای ترجمه‌شده را به filesystem بازمی‌نویسد
-4. فایل `i18n.lock` را برای ردیابی ترجمه‌های تکمیل‌شده ایجاد می‌کند (از پردازش تکراری جلوگیری می‌کند)
+1. محتوای قابل ترجمه را از فایل‌های پیکربندی شده استخراج می‌کند
+2. محتوا را برای ترجمه به ارائه‌دهنده LLM ارسال می‌کند
+3. محتوای ترجمه شده را به filesystem بازمی‌نویسد
+4. فایل `i18n.lock` را برای پیگیری ترجمه‌های تکمیل شده ایجاد می‌کند (از پردازش تکراری جلوگیری می‌کند)
 
 **پیکربندی:**
 
-دستور `init` یک فایل `i18n.json` تولید می‌کند. locale‌ها و bucket‌ها را پیکربندی کنید:
+دستور `init` یک فایل `i18n.json` تولید می‌کند. locale ها و bucket ها را پیکربندی کنید:
 
 ```json
 {
@@ -164,7 +164,7 @@ npx lingo.dev@latest run
 }
 ```
 
-فیلد `provider` اختیاری است (به‌طور پیش‌فرض Lingo.dev Engine). برای ارائه‌دهندگان LLM سفارشی:
+فیلد `provider` اختیاری است (پیش‌فرض Lingo.dev Engine). برای ارائه‌دهندگان LLM سفارشی:
 
 ```json
 {
@@ -226,8 +226,8 @@ jobs:
 
 **الزامات راه‌اندازی:**
 
-1. `LINGODOTDEV_API_KEY` را به secret‌های repository اضافه کنید (Settings > Secrets and variables > Actions)
-2. برای workflow‌های PR: گزینه‌ی "Allow GitHub Actions to create and approve pull requests" را در Settings > Actions > General فعال کنید
+1. `LINGODOTDEV_API_KEY` را به secret های مخزن اضافه کنید (Settings > Secrets and variables > Actions)
+2. برای workflow های PR: گزینه "Allow GitHub Actions to create and approve pull requests" را در Settings > Actions > General فعال کنید
 
 **گزینه‌های workflow:**
 
@@ -335,7 +335,7 @@ const locale = await lingoDotDev.recognizeLocale("Bonjour le monde");
 
 ### Lingo.dev Compiler
 
-i18n سنتی مزاحم است. شما هر رشته را در توابع `t()` می‌پیچید، کلیدهای ترجمه اختراع می‌کنید (`home.hero.title.v2`)، فایل‌های JSON موازی نگهداری می‌کنید، و شاهد متورم شدن کامپوننت‌های خود با boilerplate محلی‌سازی هستید. آنقدر خسته‌کننده است که تیم‌ها بین‌المللی‌سازی را به تعویق می‌اندازند تا زمانی که به یک refactor عظیم تبدیل شود.
+i18n سنتی مزاحم است. شما هر رشته را در توابع `t()` می‌پیچید، کلیدهای ترجمه را اختراع می‌کنید (`home.hero.title.v2`)، فایل‌های JSON موازی را نگهداری می‌کنید و شاهد باد شدن کامپوننت‌هایتان با کدهای اضافی محلی‌سازی هستید. این کار آنقدر خسته‌کننده است که تیم‌ها بین‌المللی‌سازی را تا زمانی که به یک بازسازی عظیم تبدیل شود، به تعویق می‌اندازند.
 
 کامپایلر Lingo.dev تشریفات را حذف می‌کند. کامپوننت‌های React را با متن ساده انگلیسی بنویسید. کامپایلر رشته‌های قابل ترجمه را در زمان build شناسایی کرده و نسخه‌های محلی‌سازی شده را به صورت خودکار تولید می‌کند. بدون کلید، بدون فایل JSON، بدون تابع wrapper - فقط کد React که اتفاقاً به چندین زبان کار می‌کند.
 
@@ -435,23 +435,23 @@ export function LanguageSwitcher() {
 
 **تولید:** `usePseudotranslator: false` را تنظیم کنید، سپس `next build`
 
-دایرکتوری `.lingo/` را در version control ثبت کنید.
+دایرکتوری `.lingo/` را در version control کامیت کنید.
 
 **ویژگی‌های کلیدی:**
 
-- بدون هزینه‌ی عملکرد runtime
+- هیچ هزینه عملکردی در زمان اجرا
 - بدون کلید ترجمه یا فایل JSON
-- بدون تابع `t()` یا کامپوننت wrapper `<T>`
-- شناسایی خودکار متن قابل ترجمه در JSX
+- بدون توابع `t()` یا کامپوننت‌های wrapper `<T>`
+- تشخیص خودکار متن قابل ترجمه در JSX
 - پشتیبانی از TypeScript
 - ICU MessageFormat برای جمع‌ها
 - بازنویسی دستی از طریق attribute `data-lingo-override`
-- ویجت ویرایشگر ترجمه‌ی داخلی
+- ویجت ویرایشگر ترجمه داخلی
 
 **حالت‌های build:**
 
-- `pseudotranslator`: حالت توسعه با ترجمه‌های placeholder (بدون هزینه‌ی API)
-- `real`: تولید ترجمه‌های واقعی با استفاده از LLM ها
+- `pseudotranslator`: حالت توسعه با ترجمه‌های placeholder (بدون هزینه API)
+- `real`: تولید ترجمه‌های واقعی با استفاده از LLM‌ها
 - `cache-only`: حالت تولید با استفاده از ترجمه‌های از پیش تولید شده از CI (بدون فراخوانی API)
 
 **فریم‌ورک‌های پشتیبانی شده:**
@@ -470,10 +470,10 @@ export function LanguageSwitcher() {
 مشارکت‌ها خوش‌آمد هستند. لطفاً این دستورالعمل‌ها را دنبال کنید:
 
 1. **مسائل:** [گزارش باگ یا درخواست ویژگی](https://github.com/lingodotdev/lingo.dev/issues)
-2. **درخواست‌های Pull:** [ارسال تغییرات](https://github.com/lingodotdev/lingo.dev/pulls)
-   - هر PR نیاز به یک changeset دارد: `pnpm new` (یا `pnpm new:empty` برای تغییرات بدون انتشار)
+2. **Pull Request‌ها:** [ارسال تغییرات](https://github.com/lingodotdev/lingo.dev/pulls)
+   - هر PR نیاز به changeset دارد: `pnpm new` (یا `pnpm new:empty` برای تغییرات بدون انتشار)
    - قبل از ارسال اطمینان حاصل کنید که تست‌ها موفق هستند
-3. **توسعه:** این یک monorepo با pnpm + turborepo است
+3. **توسعه:** این یک monorepo pnpm + turborepo است
    - نصب وابستگی‌ها: `pnpm install`
    - اجرای تست‌ها: `pnpm test`
    - ساخت: `pnpm build`
@@ -499,11 +499,11 @@ export function LanguageSwitcher() {
 **افزودن زبان جدید:**
 
 1. کد locale را به [`i18n.json`](./i18n.json) با استفاده از [فرمت BCP-47](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) اضافه کنید
-2. یک درخواست pull ارسال کنید
+2. یک pull request ارسال کنید
 
 **فرمت locale BCP-47:** `language[-Script][-REGION]`
 
 - `language`: ISO 639-1/2/3 (حروف کوچک): `en`، `zh`، `bho`
-- `Script`: ISO 15924 (حروف بزرگ در ابتدا): `Hans`، `Hant`، `Latn`
+- `Script`: ISO 15924 (حروف بزرگ اول): `Hans`، `Hant`، `Latn`
 - `REGION`: ISO 3166-1 alpha-2 (حروف بزرگ): `US`، `CN`، `IN`
 - مثال‌ها: `en`، `pt-BR`، `zh-Hans`، `sr-Cyrl-RS`
