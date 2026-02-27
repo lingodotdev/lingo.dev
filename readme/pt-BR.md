@@ -111,10 +111,10 @@ Set up i18n with the following locales: en, es, and pt-BR. The default locale is
 
 O assistente irá:
 
-1. Configurar roteamento baseado em locale (por exemplo, `/en`, `/es`, `/pt-BR`)
-2. Configurar componentes de troca de idioma
-3. Implementar detecção automática de locale
-4. Gerar arquivos de configuração necessários
+1. Configure roteamento baseado em locale (ex.: `/en`, `/es`, `/pt-BR`)
+2. Configure componentes de troca de idioma
+3. Implemente detecção automática de locale
+4. Gere os arquivos de configuração necessários
 
 **Observação:** a geração de código assistida por IA é não-determinística. Revise o código gerado antes de fazer commit.
 
@@ -141,9 +141,9 @@ npx lingo.dev@latest run
 **Como funciona:**
 
 1. Extrai conteúdo traduzível dos arquivos configurados
-2. Envia o conteúdo para o provedor LLM para tradução
-3. Grava o conteúdo traduzido de volta no sistema de arquivos
-4. Cria o arquivo `i18n.lock` para rastrear traduções concluídas (evita processamento redundante)
+2. Envia conteúdo para o provedor LLM para tradução
+3. Escreve conteúdo traduzido de volta no sistema de arquivos
+4. Cria arquivo `i18n.lock` para rastrear traduções concluídas (evita processamento redundante)
 
 **Configuração:**
 
@@ -253,14 +253,14 @@ env:
 
 **Inputs disponíveis:**
 
-| Input                | Padrão                                         | Descrição                              |
-| -------------------- | ---------------------------------------------- | -------------------------------------- |
-| `api-key`            | (obrigatório)                                  | Chave de API do Lingo.dev              |
-| `pull-request`       | `false`                                        | Criar PR em vez de fazer commit direto |
-| `commit-message`     | `"feat: update translations via @LingoDotDev"` | Mensagem de commit personalizada       |
-| `pull-request-title` | `"feat: update translations via @LingoDotDev"` | Título de PR personalizado             |
-| `working-directory`  | `"."`                                          | Diretório para executar                |
-| `parallel`           | `false`                                        | Habilitar processamento paralelo       |
+| Input                | Padrão                                         | Descrição                               |
+| -------------------- | ---------------------------------------------- | --------------------------------------- |
+| `api-key`            | (obrigatório)                                  | Chave de API Lingo.dev                  |
+| `pull-request`       | `false`                                        | Criar PR em vez de commitar diretamente |
+| `commit-message`     | `"feat: update translations via @LingoDotDev"` | Mensagem de commit personalizada        |
+| `pull-request-title` | `"feat: update translations via @LingoDotDev"` | Título de PR personalizado              |
+| `working-directory`  | `"."`                                          | Diretório para executar                 |
+| `parallel`           | `false`                                        | Habilitar processamento paralelo        |
 
 [Leia a documentação →](https://lingo.dev/en/ci/github)
 
@@ -336,7 +336,7 @@ const locale = await lingoDotDev.recognizeLocale("Bonjour le monde");
 
 ### Lingo.dev Compiler
 
-A i18n tradicional é invasiva. Você envolve cada string em funções `t()`, inventa chaves de tradução (`home.hero.title.v2`), mantém arquivos JSON paralelos e vê seus componentes incharem com boilerplate de localização. É tão tedioso que as equipes adiam a internacionalização até que ela se torne uma refatoração massiva.
+A i18n tradicional é invasiva. Você envolve cada string em funções `t()`, inventa chaves de tradução (`home.hero.title.v2`), mantém arquivos JSON paralelos e vê seus componentes incharem com código boilerplate de localização. É tão tedioso que as equipes adiam a internacionalização até que ela se torne uma refatoração massiva.
 
 O Lingo.dev Compiler elimina a cerimônia. Escreva componentes React com texto em inglês simples. O compilador detecta strings traduzíveis em tempo de build e gera variantes localizadas automaticamente. Sem chaves, sem arquivos JSON, sem funções wrapper - apenas código React que funciona em vários idiomas.
 
@@ -447,13 +447,13 @@ Faça commit do diretório `.lingo/` no controle de versão.
 - Suporte a TypeScript
 - ICU MessageFormat para plurais
 - Substituições manuais via atributo `data-lingo-override`
-- Widget integrado de editor de traduções
+- Widget editor de tradução integrado
 
 **Modos de build:**
 
-- `pseudotranslator`: Modo de desenvolvimento com traduções placeholder (sem custos de API)
-- `real`: Gera traduções reais usando LLMs
-- `cache-only`: Modo de produção usando traduções pré-geradas do CI (sem chamadas de API)
+- `pseudotranslator`: modo de desenvolvimento com traduções placeholder (sem custos de API)
+- `real`: gera traduções reais usando LLMs
+- `cache-only`: modo de produção usando traduções pré-geradas do CI (sem chamadas de API)
 
 **Frameworks suportados:**
 
@@ -471,8 +471,8 @@ Suporte a frameworks adicionais planejado.
 Contribuições são bem-vindas. Siga estas diretrizes:
 
 1. **Issues:** [Reporte bugs ou solicite recursos](https://github.com/lingodotdev/lingo.dev/issues)
-2. **Pull Requests:** [Envie alterações](https://github.com/lingodotdev/lingo.dev/pulls)
-   - Todo PR requer um changeset: `pnpm new` (ou `pnpm new:empty` para alterações que não geram release)
+2. **Pull requests:** [Envie alterações](https://github.com/lingodotdev/lingo.dev/pulls)
+   - Todo PR requer um changeset: `pnpm new` (ou `pnpm new:empty` para alterações sem release)
    - Certifique-se de que os testes passem antes de enviar
 3. **Desenvolvimento:** Este é um monorepo pnpm + turborepo
    - Instale as dependências: `pnpm install`
@@ -505,6 +505,6 @@ Se você acha o Lingo.dev útil, nos dê uma estrela e nos ajude a alcançar 10.
 **Formato de locale BCP-47:** `language[-Script][-REGION]`
 
 - `language`: ISO 639-1/2/3 (minúsculas): `en`, `zh`, `bho`
-- `Script`: ISO 15924 (primeira letra maiúscula): `Hans`, `Hant`, `Latn`
+- `Script`: ISO 15924 (title case): `Hans`, `Hant`, `Latn`
 - `REGION`: ISO 3166-1 alpha-2 (maiúsculas): `US`, `CN`, `IN`
 - Exemplos: `en`, `pt-BR`, `zh-Hans`, `sr-Cyrl-RS`

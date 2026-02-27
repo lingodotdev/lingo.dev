@@ -75,9 +75,9 @@
 | ---------------------------------- | --------------------------------------------------------- | ---------------------------------- |
 | [**MCP**](#lingodev-mcp)           | KI-gestützte i18n-Einrichtung für React-Apps              | Prompt: `Set up i18n`              |
 | [**CLI**](#lingodev-cli)           | Übersetzung von JSON-, YAML-, Markdown-, CSV-, PO-Dateien | `npx lingo.dev@latest run`         |
-| [**CI/CD**](#lingodev-cicd)        | Automatisierte Übersetzungs-Pipeline in GitHub Actions    | `uses: lingodotdev/lingo.dev@main` |
-| [**SDK**](#lingodev-sdk)           | Laufzeit-Übersetzung für dynamische Inhalte               | `npm install lingo.dev`            |
-| [**Compiler**](#lingodev-compiler) | Build-Time-React-Lokalisierung ohne i18n-Wrapper          | `withLingo()`-Plugin               |
+| [**CI/CD**](#lingodev-cicd)        | Automatisierte Übersetzungspipeline in GitHub Actions     | `uses: lingodotdev/lingo.dev@main` |
+| [**SDK**](#lingodev-sdk)           | Laufzeitübersetzung für dynamische Inhalte                | `npm install lingo.dev`            |
+| [**Compiler**](#lingodev-compiler) | Build-Zeit-React-Lokalisierung ohne i18n-Wrapper          | `withLingo()`-Plugin               |
 
 ---
 
@@ -113,7 +113,7 @@ Der Assistent wird:
 1. Locale-basiertes Routing konfigurieren (z. B. `/en`, `/es`, `/pt-BR`)
 2. Sprachwechsel-Komponenten einrichten
 3. Automatische Locale-Erkennung implementieren
-4. Notwendige Konfigurationsdateien generieren
+4. Erforderliche Konfigurationsdateien generieren
 
 **Hinweis:** KI-gestützte Code-Generierung ist nicht-deterministisch. Überprüfen Sie generierten Code vor dem Committen.
 
@@ -140,13 +140,13 @@ npx lingo.dev@latest run
 **Funktionsweise:**
 
 1. Extrahiert übersetzbare Inhalte aus konfigurierten Dateien
-2. Sendet Inhalte an LLM-Anbieter zur Übersetzung
+2. Sendet Inhalte an LLM-Provider zur Übersetzung
 3. Schreibt übersetzte Inhalte zurück ins Dateisystem
 4. Erstellt `i18n.lock`-Datei zur Nachverfolgung abgeschlossener Übersetzungen (vermeidet redundante Verarbeitung)
 
 **Konfiguration:**
 
-Der Befehl `init` generiert eine `i18n.json`-Datei. Konfigurieren Sie Locales und Buckets:
+Der Befehl `init` generiert eine `i18n.json`-Datei. Locales und Buckets konfigurieren:
 
 ```json
 {
@@ -164,7 +164,7 @@ Der Befehl `init` generiert eine `i18n.json`-Datei. Konfigurieren Sie Locales un
 }
 ```
 
-Das Feld `provider` ist optional (Standard ist Lingo.dev Engine). Für benutzerdefinierte LLM-Anbieter:
+Das Feld `provider` ist optional (Standard ist Lingo.dev Engine). Für benutzerdefinierte LLM-Provider:
 
 ```json
 {
@@ -204,7 +204,7 @@ Lingo.dev CI/CD macht Übersetzungen automatisch. Jeder Push löst die Übersetz
 
 **GitHub Actions-Einrichtung:**
 
-Erstellen Sie `.github/workflows/translate.yml`:
+`.github/workflows/translate.yml` erstellen:
 
 ```yaml
 name: Translate
@@ -226,8 +226,8 @@ jobs:
 
 **Einrichtungsanforderungen:**
 
-1. Fügen Sie `LINGODOTDEV_API_KEY` zu den Repository-Secrets hinzu (Einstellungen > Secrets and variables > Actions)
-2. Für PR-Workflows: Aktivieren Sie „Allow GitHub Actions to create and approve pull requests" unter Einstellungen > Actions > General
+1. `LINGODOTDEV_API_KEY` zu Repository-Secrets hinzufügen (Settings > Secrets and variables > Actions)
+2. Für PR-Workflows: "Allow GitHub Actions to create and approve pull requests" in Settings > Actions > General aktivieren
 
 **Workflow-Optionen:**
 
@@ -252,14 +252,14 @@ env:
 
 **Verfügbare Eingaben:**
 
-| Eingabe              | Standard                                       | Beschreibung                           |
-| -------------------- | ---------------------------------------------- | -------------------------------------- |
-| `api-key`            | (erforderlich)                                 | Lingo.dev API-Schlüssel                |
-| `pull-request`       | `false`                                        | PR erstellen statt direkt zu committen |
-| `commit-message`     | `"feat: update translations via @LingoDotDev"` | Benutzerdefinierte Commit-Nachricht    |
-| `pull-request-title` | `"feat: update translations via @LingoDotDev"` | Benutzerdefinierter PR-Titel           |
-| `working-directory`  | `"."`                                          | Verzeichnis für Ausführung             |
-| `parallel`           | `false`                                        | Parallele Verarbeitung aktivieren      |
+| Input                | Standard                                       | Beschreibung                               |
+| -------------------- | ---------------------------------------------- | ------------------------------------------ |
+| `api-key`            | (erforderlich)                                 | Lingo.dev-API-Schlüssel                    |
+| `pull-request`       | `false`                                        | PR erstellen statt direkt zu committen     |
+| `commit-message`     | `"feat: update translations via @LingoDotDev"` | Benutzerdefinierte Commit-Nachricht        |
+| `pull-request-title` | `"feat: update translations via @LingoDotDev"` | Benutzerdefinierter PR-Titel               |
+| `working-directory`  | `"."`                                          | Verzeichnis, in dem ausgeführt werden soll |
+| `parallel`           | `false`                                        | Parallele Verarbeitung aktivieren          |
 
 [Dokumentation lesen →](https://lingo.dev/en/ci/github)
 
@@ -431,7 +431,7 @@ export function LanguageSwitcher() {
 }
 ```
 
-**Entwicklung:** `npm run dev` (verwendet Pseudoübersetzer, keine API-Aufrufe)
+**Entwicklung:** `npm run dev` (verwendet Pseudotranslator, keine API-Aufrufe)
 
 **Produktion:** Setzen Sie `usePseudotranslator: false`, dann `next build`
 
@@ -452,7 +452,7 @@ Committen Sie das `.lingo/`-Verzeichnis in die Versionskontrolle.
 
 - `pseudotranslator`: Entwicklungsmodus mit Platzhalter-Übersetzungen (keine API-Kosten)
 - `real`: Generierung tatsächlicher Übersetzungen mittels LLMs
-- `cache-only`: Produktionsmodus mit vorgenerierten Übersetzungen aus CI (keine API-Aufrufe)
+- `cache-only`: Produktionsmodus mit vorgenerierter Übersetzungen aus CI (keine API-Aufrufe)
 
 **Unterstützte Frameworks:**
 
@@ -469,14 +469,14 @@ Unterstützung weiterer Frameworks geplant.
 
 Beiträge sind willkommen. Bitte befolgen Sie diese Richtlinien:
 
-1. **Issues:** [Fehler melden oder Funktionen anfordern](https://github.com/lingodotdev/lingo.dev/issues)
+1. **Issues:** [Bugs melden oder Features anfordern](https://github.com/lingodotdev/lingo.dev/issues)
 2. **Pull Requests:** [Änderungen einreichen](https://github.com/lingodotdev/lingo.dev/pulls)
    - Jeder PR erfordert ein Changeset: `pnpm new` (oder `pnpm new:empty` für Änderungen ohne Release)
-   - Stellen Sie sicher, dass die Tests vor dem Einreichen bestehen
+   - Stellen Sie sicher, dass Tests bestehen, bevor Sie einreichen
 3. **Entwicklung:** Dies ist ein pnpm + turborepo Monorepo
    - Abhängigkeiten installieren: `pnpm install`
    - Tests ausführen: `pnpm test`
-   - Build erstellen: `pnpm build`
+   - Build: `pnpm build`
 
 **Support:** [Discord-Community](https://lingo.dev/go/discord)
 
@@ -498,8 +498,8 @@ Wenn Sie Lingo.dev nützlich finden, geben Sie uns einen Stern und helfen Sie un
 
 **Neue Sprache hinzufügen:**
 
-1. Locale-Code zu [`i18n.json`](./i18n.json) im [BCP-47-Format](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) hinzufügen
-2. Pull Request einreichen
+1. Fügen Sie den Locale-Code zu [`i18n.json`](./i18n.json) im [BCP-47-Format](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) hinzu
+2. Reichen Sie einen Pull Request ein
 
 **BCP-47-Locale-Format:** `language[-Script][-REGION]`
 
