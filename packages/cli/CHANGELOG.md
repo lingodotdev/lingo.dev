@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.132.8
+
+### Patch Changes
+
+- [#2020](https://github.com/lingodotdev/lingo.dev/pull/2020) [`69484fa`](https://github.com/lingodotdev/lingo.dev/commit/69484fae34f9eb723b6345d952ba8843da2c506c) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Send sessionId, triggerType, and file path metadata to the vNext localization endpoint
+
 ## 0.132.7
 
 ### Patch Changes
