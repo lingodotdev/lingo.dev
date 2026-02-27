@@ -115,6 +115,30 @@ describe("I18n Config Parser", () => {
     expect(result).toEqual(createV1_4Config());
   });
 
+  it("should parse config with dev.usePseudotranslator", () => {
+    const configWithDev = {
+      ...createV1_4Config(),
+      version: "1.14",
+      dev: {
+        usePseudotranslator: true,
+      },
+    };
+    const result = parseI18nConfig(configWithDev);
+
+    expect(result.dev?.usePseudotranslator).toBe(true);
+    expect(result.version).toBe("1.14");
+  });
+
+  it("should parse config without dev field", () => {
+    const configWithoutDev = {
+      ...createV1_4Config(),
+      version: "1.14",
+    };
+    const result = parseI18nConfig(configWithoutDev);
+
+    expect(result.dev).toBeUndefined();
+  });
+
   it("should throw an error for unsupported locales", () => {
     const invalidLocaleConfig = createInvalidLocaleConfig();
     expect(() => parseI18nConfig(invalidLocaleConfig)).toThrow(

@@ -50,7 +50,8 @@ export default async function setup(input: CmdRunContext) {
       {
         title: "Selecting localization provider",
         task: async (ctx, task) => {
-          const provider = ctx.flags.pseudo ? "pseudo" : ctx.config?.provider;
+          const isPseudo = ctx.flags.pseudo || ctx.config?.dev?.usePseudotranslator;
+          const provider = isPseudo ? "pseudo" : ctx.config?.provider;
           const vNext = ctx.config?.vNext;
           ctx.localizer = createLocalizer(provider, ctx.flags.apiKey, vNext);
           if (!ctx.localizer) {
@@ -72,7 +73,8 @@ export default async function setup(input: CmdRunContext) {
         enabled: (ctx) =>
           (ctx.localizer?.id === "Lingo.dev" ||
             ctx.localizer?.id === "Lingo.dev vNext") &&
-          !ctx.flags.pseudo,
+          !ctx.flags.pseudo &&
+          !ctx.config?.dev?.usePseudotranslator,
         task: async (ctx, task) => {
           const authStatus = await ctx.localizer!.checkAuth();
           if (!authStatus.authenticated) {

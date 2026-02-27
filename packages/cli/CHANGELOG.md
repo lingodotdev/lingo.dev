@@ -1,5 +1,16 @@
 # lingo.dev
 
+## 0.132.7
+
+### Patch Changes
+
+- [#2019](https://github.com/lingodotdev/lingo.dev/pull/2019) [`e0a1bb3`](https://github.com/lingodotdev/lingo.dev/commit/e0a1bb3cd0e27416c2e5fc60a8fad2161e5736c7) Thanks [@cherkanovart](https://github.com/cherkanovart)! - fix(cli): add dev.usePseudotranslator to config schema and respect it in CLI setup
+
+- Updated dependencies [[`e0a1bb3`](https://github.com/lingodotdev/lingo.dev/commit/e0a1bb3cd0e27416c2e5fc60a8fad2161e5736c7)]:
+  - @lingo.dev/_spec@0.48.1
+  - @lingo.dev/_compiler@0.11.5
+  - @lingo.dev/_sdk@0.15.1
+
 ## 0.132.6
 
 ### Patch Changes
