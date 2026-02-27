@@ -7,6 +7,7 @@ export type LocalizerData = {
   targetLocale: string;
   targetData: Record<string, any>;
   hints: Record<string, string[]>;
+  filePath?: string;
 };
 
 export type LocalizerProgressFn = (
@@ -16,7 +17,11 @@ export type LocalizerProgressFn = (
 ) => void;
 
 export interface ILocalizer {
-  id: "Lingo.dev" | "Lingo.dev vNext" | "pseudo" | NonNullable<I18nConfig["provider"]>["id"];
+  id:
+    | "Lingo.dev"
+    | "Lingo.dev vNext"
+    | "pseudo"
+    | NonNullable<I18nConfig["provider"]>["id"];
   checkAuth: () => Promise<{
     authenticated: boolean;
     username?: string;
