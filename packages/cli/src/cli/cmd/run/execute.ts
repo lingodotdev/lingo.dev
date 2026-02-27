@@ -261,6 +261,7 @@ function createWorkerTask(args: {
                 targetData: args.ctx.flags.force ? {} : targetData,
                 processableData,
                 hints: relevantHints,
+                filePath: assignedTask.bucketPathPattern,
               },
               async (progress, _sourceChunk, processedChunk) => {
                 // write translated chunks as they are received from LLM

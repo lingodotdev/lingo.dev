@@ -9,7 +9,13 @@ import { createId } from "@paralleldrive/cuid2";
  * Creates a custom engine for Lingo.dev vNext that sends requests to:
  * https://api.lingo.dev/process/<processId>/localize
  */
-function createVNextEngine(config: { apiKey: string; apiUrl: string; processId: string }) {
+function createVNextEngine(config: {
+  apiKey: string;
+  apiUrl: string;
+  processId: string;
+  sessionId: string;
+  triggerType: "cli" | "ci";
+}) {
   const endpoint = `${config.apiUrl}/process/${config.processId}/localize`;
 
   return {
@@ -21,8 +27,8 @@ function createVNextEngine(config: { apiKey: string; apiUrl: string; processId: 
         reference?: Record<string, Record<string, any>>;
         hints?: Record<string, string[]>;
       },
-      workflowId: string,
       fast: boolean,
+      filePath?: string,
       signal?: AbortSignal,
     ): Promise<Record<string, string>> {
       const res = await fetch(endpoint, {
@@ -33,12 +39,15 @@ function createVNextEngine(config: { apiKey: string; apiUrl: string; processId: 
         },
         body: JSON.stringify(
           {
-            params: { workflowId, fast },
+            params: { fast },
             sourceLocale,
             targetLocale,
             data: payload.data,
             reference: payload.reference,
             hints: payload.hints,
+            sessionId: config.sessionId,
+            triggerType: config.triggerType,
+            metadata: filePath ? { filePath } : undefined,
           },
           null,
           2,
@@ -69,7 +78,9 @@ function createVNextEngine(config: { apiKey: string; apiUrl: string; processId: 
       return jsonResponse.data || {};
     },
 
-    async whoami(signal?: AbortSignal): Promise<{ email: string; id: string } | null> {
+    async whoami(
+      signal?: AbortSignal,
+    ): Promise<{ email: string; id: string } | null> {
       // vNext uses a simple response for whoami
       return { email: "vnext-user", id: config.processId };
     },
@@ -82,6 +93,7 @@ function createVNextEngine(config: { apiKey: string; apiUrl: string; processId: 
         fast?: boolean;
         reference?: Record<string, Record<string, any>>;
         hints?: Record<string, string[]>;
+        filePath?: string;
       },
       progressCallback?: (
         progress: number,
@@ -93,7 +105,6 @@ function createVNextEngine(config: { apiKey: string; apiUrl: string; processId: 
       const chunkedPayload = extractPayloadChunks(obj);
       const processedPayloadChunks: Record<string, string>[] = [];
 
-      const workflowId = createId();
       for (let i = 0; i < chunkedPayload.length; i++) {
         const chunk = chunkedPayload[i];
         const percentageCompleted = Math.round(
@@ -104,8 +115,8 @@ function createVNextEngine(config: { apiKey: string; apiUrl: string; processId: 
           params.sourceLocale,
           params.targetLocale,
           { data: chunk, reference: params.reference, hints: params.hints },
-          workflowId,
           params.fast || false,
+          params.filePath,
           signal,
         );
 
@@ -158,10 +169,7 @@ function countWordsInRecord(
   payload: any | Record<string, any> | Array<any>,
 ): number {
   if (Array.isArray(payload)) {
-    return payload.reduce(
-      (acc, item) => acc + countWordsInRecord(item),
-      0,
-    );
+    return payload.reduce((acc, item) => acc + countWordsInRecord(item), 0);
   } else if (typeof payload === "object" && payload !== null) {
     return Object.values(payload).reduce(
       (acc: number, item) => acc + countWordsInRecord(item),
@@ -186,8 +194,8 @@ export default function createLingoDotDevVNextLocalizer(
     throw new Error(
       dedent`
         You're trying to use ${chalk.hex(colors.green)(
-        "Lingo.dev vNext",
-      )} provider, however, no API key is configured.
+          "Lingo.dev vNext",
+        )} provider, however, no API key is configured.
 
         To fix this issue:
         1. Set ${chalk.dim("LINGO_API_KEY")} environment variable, or
@@ -199,10 +207,15 @@ export default function createLingoDotDevVNextLocalizer(
   // Use LINGO_API_URL from environment or default to api.lingo.dev
   const apiUrl = process.env.LINGO_API_URL || "https://api.lingo.dev";
 
+  const sessionId = createId();
+  const triggerType = process.env.CI ? "ci" : "cli";
+
   const engine = createVNextEngine({
     apiKey,
     apiUrl,
     processId,
+    sessionId,
+    triggerType,
   });
 
   return {
@@ -236,6 +249,7 @@ export default function createLingoDotDevVNextLocalizer(
             [input.targetLocale]: input.targetData,
           },
           hints: input.hints,
+          filePath: input.filePath,
         },
         onProgress,
       );
