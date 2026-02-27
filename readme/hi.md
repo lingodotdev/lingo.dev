@@ -71,7 +71,7 @@
 
 ## त्वरित शुरुआत
 
-| टूल                                | उपयोग का मामला                                       | त्वरित कमांड                       |
+| उपकरण                              | उपयोग का मामला                                       | त्वरित कमांड                       |
 | ---------------------------------- | ---------------------------------------------------- | ---------------------------------- |
 | [**MCP**](#lingodev-mcp)           | React ऐप्स के लिए AI-सहायता प्राप्त i18n सेटअप       | प्रॉम्प्ट: `Set up i18n`           |
 | [**CLI**](#lingodev-cli)           | JSON, YAML, markdown, CSV, PO फ़ाइलों का अनुवाद करें | `npx lingo.dev@latest run`         |
@@ -111,7 +111,7 @@ Set up i18n with the following locales: en, es, and pt-BR. The default locale is
 असिस्टेंट करेगा:
 
 1. लोकेल-आधारित राउटिंग कॉन्फ़िगर करें (जैसे, `/en`, `/es`, `/pt-BR`)
-2. भाषा स्विचिंग कंपोनेंट सेटअप करें
+2. भाषा स्विचिंग कंपोनेंट्स सेट अप करें
 3. स्वचालित लोकेल डिटेक्शन लागू करें
 4. आवश्यक कॉन्फ़िगरेशन फ़ाइलें जेनरेट करें
 
@@ -140,7 +140,7 @@ npx lingo.dev@latest run
 **यह कैसे काम करता है:**
 
 1. कॉन्फ़िगर की गई फ़ाइलों से अनुवाद योग्य कंटेंट निकालता है
-2. अनुवाद के लिए कंटेंट को LLM प्रोवाइडर को भेजता है
+2. अनुवाद के लिए LLM प्रदाता को कंटेंट भेजता है
 3. अनुवादित कंटेंट को फ़ाइल सिस्टम में वापस लिखता है
 4. पूर्ण किए गए अनुवादों को ट्रैक करने के लिए `i18n.lock` फ़ाइल बनाता है (अनावश्यक प्रोसेसिंग से बचाता है)
 
@@ -164,7 +164,7 @@ npx lingo.dev@latest run
 }
 ```
 
-`provider` फ़ील्ड वैकल्पिक है (डिफ़ॉल्ट रूप से Lingo.dev Engine)। कस्टम LLM प्रोवाइडर के लिए:
+`provider` फ़ील्ड वैकल्पिक है (डिफ़ॉल्ट Lingo.dev Engine)। कस्टम LLM प्रदाताओं के लिए:
 
 ```json
 {
@@ -256,10 +256,10 @@ env:
 | -------------------- | ---------------------------------------------- | ------------------------------- |
 | `api-key`            | (आवश्यक)                                       | Lingo.dev API key               |
 | `pull-request`       | `false`                                        | सीधे कमिट करने के बजाय PR बनाएं |
-| `commit-message`     | `"feat: update translations via @LingoDotDev"` | कस्टम कमिट मैसेज                |
-| `pull-request-title` | `"feat: update translations via @LingoDotDev"` | कस्टम PR टाइटल                  |
-| `working-directory`  | `"."`                                          | जिस डायरेक्टरी में रन करना है   |
-| `parallel`           | `false`                                        | पैरेलल प्रोसेसिंग सक्षम करें    |
+| `commit-message`     | `"feat: update translations via @LingoDotDev"` | कस्टम कमिट संदेश                |
+| `pull-request-title` | `"feat: update translations via @LingoDotDev"` | कस्टम PR शीर्षक                 |
+| `working-directory`  | `"."`                                          | जिस डायरेक्टरी में चलाना है     |
+| `parallel`           | `false`                                        | समानांतर प्रोसेसिंग सक्षम करें  |
 
 [डॉक्स पढ़ें →](https://lingo.dev/en/ci/github)
 
@@ -335,7 +335,7 @@ const locale = await lingoDotDev.recognizeLocale("Bonjour le monde");
 
 ### Lingo.dev Compiler
 
-पारंपरिक i18n इनवेसिव है। आप हर स्ट्रिंग को `t()` फंक्शन में रैप करते हैं, ट्रांसलेशन कुंजियां बनाते हैं (`home.hero.title.v2`), पैरेलल JSON फ़ाइलें मेंटेन करते हैं, और अपने कंपोनेंट को लोकलाइज़ेशन बॉयलरप्लेट से भरा हुआ देखते हैं। यह इतना थकाऊ है कि टीमें इंटरनेशनलाइज़ेशन को तब तक टालती हैं जब तक यह एक बड़ा रिफ़ैक्टर नहीं बन जाता।
+पारंपरिक i18n आक्रामक है। आप हर स्ट्रिंग को `t()` फ़ंक्शन में लपेटते हैं, अनुवाद कुंजियाँ (`home.hero.title.v2`) बनाते हैं, समानांतर JSON फ़ाइलें मेंटेन करते हैं, और अपने कंपोनेंट्स को लोकलाइज़ेशन बॉयलरप्लेट से फूलते हुए देखते हैं। यह इतना थकाऊ है कि टीमें अंतर्राष्ट्रीयकरण को तब तक टालती हैं जब तक यह एक विशाल रिफ़ैक्टर नहीं बन जाता।
 
 Lingo.dev Compiler औपचारिकता को समाप्त करता है। सादे अंग्रेजी टेक्स्ट के साथ React components लिखें। Compiler बिल्ड टाइम पर अनुवाद योग्य स्ट्रिंग्स का पता लगाता है और स्वचालित रूप से स्थानीयकृत वेरिएंट जेनरेट करता है। कोई keys नहीं, कोई JSON फ़ाइलें नहीं, कोई wrapper functions नहीं - बस React कोड जो कई भाषाओं में काम करता है।
 
@@ -431,28 +431,28 @@ export function LanguageSwitcher() {
 }
 ```
 
-**Development:** `npm run dev` (pseudotranslator का उपयोग करता है, कोई API कॉल नहीं)
+**डेवलपमेंट:** `npm run dev` (स्यूडोट्रांसलेटर का उपयोग करता है, कोई API कॉल नहीं)
 
-**Production:** `usePseudotranslator: false` सेट करें, फिर `next build`
+**प्रोडक्शन:** `usePseudotranslator: false` सेट करें, फिर `next build`
 
-`.lingo/` डायरेक्टरी को version control में commit करें।
+`.lingo/` डायरेक्टरी को वर्ज़न कंट्रोल में कमिट करें।
 
 **मुख्य विशेषताएं:**
 
-- शून्य runtime performance cost
-- कोई translation keys या JSON फ़ाइलें नहीं
-- कोई `t()` functions या `<T>` wrapper components नहीं
-- JSX में अनुवाद योग्य टेक्स्ट का स्वचालित पता लगाना
-- TypeScript समर्थन
-- बहुवचन के लिए ICU MessageFormat
-- `data-lingo-override` attribute के माध्यम से मैनुअल overrides
-- बिल्ट-इन translation editor widget
+- शून्य रनटाइम परफ़ॉर्मेंस कॉस्ट
+- कोई अनुवाद कुंजियाँ या JSON फ़ाइलें नहीं
+- कोई `t()` फ़ंक्शन या `<T>` रैपर कंपोनेंट नहीं
+- JSX में अनुवाद योग्य टेक्स्ट की स्वचालित पहचान
+- TypeScript सपोर्ट
+- प्लूरल्स के लिए ICU MessageFormat
+- `data-lingo-override` एट्रिब्यूट के माध्यम से मैनुअल ओवरराइड
+- बिल्ट-इन अनुवाद एडिटर विजेट
 
 **बिल्ड मोड:**
 
-- `pseudotranslator`: प्लेसहोल्डर अनुवादों के साथ development मोड (कोई API लागत नहीं)
-- `real`: LLMs का उपयोग करके वास्तविक अनुवाद जेनरेट करें
-- `cache-only`: CI से पूर्व-जेनरेट किए गए अनुवादों का उपयोग करके production मोड (कोई API कॉल नहीं)
+- `pseudotranslator`: प्लेसहोल्डर अनुवादों के साथ डेवलपमेंट मोड (कोई API कॉस्ट नहीं)
+- `real`: LLM का उपयोग करके वास्तविक अनुवाद जेनरेट करें
+- `cache-only`: CI से पूर्व-जेनरेट किए गए अनुवादों का उपयोग करते हुए प्रोडक्शन मोड (कोई API कॉल नहीं)
 
 **समर्थित frameworks:**
 
@@ -469,13 +469,13 @@ export function LanguageSwitcher() {
 
 योगदान का स्वागत है। कृपया इन दिशानिर्देशों का पालन करें:
 
-1. **इश्यूज़:** [बग रिपोर्ट करें या फीचर का अनुरोध करें](https://github.com/lingodotdev/lingo.dev/issues)
+1. **इश्यूज़:** [बग रिपोर्ट करें या फ़ीचर रिक्वेस्ट करें](https://github.com/lingodotdev/lingo.dev/issues)
 2. **पुल रिक्वेस्ट:** [परिवर्तन सबमिट करें](https://github.com/lingodotdev/lingo.dev/pulls)
-   - प्रत्येक PR के लिए चेंजसेट आवश्यक है: `pnpm new` (या `pnpm new:empty` नॉन-रिलीज़ परिवर्तनों के लिए)
-   - सबमिट करने से पहले सुनिश्चित करें कि टेस्ट पास हो जाएं
+   - हर PR के लिए चेंजसेट आवश्यक है: `pnpm new` (या नॉन-रिलीज़ परिवर्तनों के लिए `pnpm new:empty`)
+   - सबमिट करने से पहले सुनिश्चित करें कि टेस्ट पास हों
 3. **डेवलपमेंट:** यह एक pnpm + turborepo मोनोरेपो है
-   - डिपेंडेंसीज़ इंस्टॉल करें: `pnpm install`
-   - टेस्ट चलाएं: `pnpm test`
+   - डिपेंडेंसी इंस्टॉल करें: `pnpm install`
+   - टेस्ट रन करें: `pnpm test`
    - बिल्ड करें: `pnpm build`
 
 **सपोर्ट:** [Discord कम्युनिटी](https://lingo.dev/go/discord)
@@ -498,10 +498,10 @@ export function LanguageSwitcher() {
 
 **नई भाषा जोड़ना:**
 
-1. [`i18n.json`](./i18n.json) में [BCP-47 फॉर्मेट](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) का उपयोग करके लोकेल कोड जोड़ें
-2. एक पुल रिक्वेस्ट सबमिट करें
+1. [BCP-47 फ़ॉर्मेट](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) का उपयोग करके [`i18n.json`](./i18n.json) में लोकेल कोड जोड़ें
+2. पुल रिक्वेस्ट सबमिट करें
 
-**BCP-47 लोकेल फॉर्मेट:** `language[-Script][-REGION]`
+**BCP-47 लोकेल फ़ॉर्मेट:** `language[-Script][-REGION]`
 
 - `language`: ISO 639-1/2/3 (लोअरकेस): `en`, `zh`, `bho`
 - `Script`: ISO 15924 (टाइटल केस): `Hans`, `Hant`, `Latn`

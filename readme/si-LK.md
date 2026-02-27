@@ -74,10 +74,10 @@
 
 | මෙවලම                              | භාවිත අවස්ථාව                                         | ඉක්මන් විධානය                      |
 | ---------------------------------- | ----------------------------------------------------- | ---------------------------------- |
-| [**MCP**](#lingodev-mcp)           | React යෙදුම් සඳහා AI-සහාය i18n සැකසුම                 | Prompt: `Set up i18n`              |
-| [**CLI**](#lingodev-cli)           | JSON, YAML, markdown, CSV, PO ගොනු පරිවර්තනය කරන්න    | `npx lingo.dev@latest run`         |
-| [**CI/CD**](#lingodev-cicd)        | GitHub Actions හි ස්වයංක්‍රීය පරිවර්තන pipeline       | `uses: lingodotdev/lingo.dev@main` |
-| [**SDK**](#lingodev-sdk)           | ගතික අන්තර්ගතය සඳහා runtime පරිවර්තනය                 | `npm install lingo.dev`            |
+| [**MCP**](#lingodev-mcp)           | React යෙදුම් සඳහා AI-සහාය i18n පිහිටුවීම              | විමසුම: `Set up i18n`              |
+| [**CLI**](#lingodev-cli)           | JSON, YAML, markdown, CSV, PO ගොනු පරිවර්තනය කිරීම    | `npx lingo.dev@latest run`         |
+| [**CI/CD**](#lingodev-cicd)        | GitHub Actions හි ස්වයංක්‍රීය පරිවර්තන නල මාර්ගය      | `uses: lingodotdev/lingo.dev@main` |
+| [**SDK**](#lingodev-sdk)           | ගතික අන්තර්ගතය සඳහා ධාවන කාල පරිවර්තනය                | `npm install lingo.dev`            |
 | [**Compiler**](#lingodev-compiler) | i18n wrappers නොමැතිව build-time React ප්‍රාදේශීයකරණය | `withLingo()` plugin               |
 
 ---
@@ -111,10 +111,10 @@ Set up i18n with the following locales: en, es, and pt-BR. The default locale is
 
 සහායක:
 
-1. Locale-පාදක routing වින්‍යාස කරයි (උදා., `/en`, `/es`, `/pt-BR`)
-2. භාෂා මාරු components පිහිටුවයි
-3. ස්වයංක්‍රීය locale හඳුනාගැනීම ක්‍රියාත්මක කරයි
-4. අවශ්‍ය වින්‍යාස ගොනු ජනනය කරයි
+1. locale-පාදක මාර්ගගත කිරීම වින්‍යාස කරන්න (උදා., `/en`, `/es`, `/pt-BR`)
+2. භාෂා මාරු කිරීමේ සංරචක පිහිටුවන්න
+3. ස්වයංක්‍රීය locale හඳුනාගැනීම ක්‍රියාත්මක කරන්න
+4. අවශ්‍ය වින්‍යාස ගොනු උත්පාදනය කරන්න
 
 **සටහන:** AI-සහාය කේත ජනනය අ-නිර්ණායක වේ. commit කිරීමට පෙර ජනනය කළ කේතය සමාලෝචනය කරන්න.
 
@@ -140,14 +140,14 @@ npx lingo.dev@latest run
 
 **එය ක්‍රියා කරන ආකාරය:**
 
-1. වින්‍යාසගත ගොනු වලින් පරිවර්තනය කළ හැකි අන්තර්ගතය උකහා ගනී
-2. පරිවර්තනය සඳහා අන්තර්ගතය LLM සපයන්නා වෙත යවයි
+1. වින්‍යාස කළ ගොනු වලින් පරිවර්තනය කළ හැකි අන්තර්ගතය උපුටා ගනී
+2. පරිවර්තනය සඳහා LLM සපයන්නා වෙත අන්තර්ගතය යවයි
 3. පරිවර්තනය කළ අන්තර්ගතය ගොනු පද්ධතියට නැවත ලියයි
-4. සම්පූර්ණ කළ පරිවර්තන නිරීක්ෂණය කිරීමට `i18n.lock` ගොනුව නිර්මාණය කරයි (අතිරික්ත සැකසීම වළක්වයි)
+4. සම්පූර්ණ කළ පරිවර්තන ලුහුබැඳීමට `i18n.lock` ගොනුව නිර්මාණය කරයි (අතිරික්ත සැකසීම වළක්වයි)
 
 **වින්‍යාසය:**
 
-`init` විධානය `i18n.json` ගොනුවක් ජනනය කරයි. locales සහ buckets වින්‍යාස කරන්න:
+`init` විධානය `i18n.json` ගොනුවක් උත්පාදනය කරයි. locales සහ buckets වින්‍යාස කරන්න:
 
 ```json
 {
@@ -165,7 +165,7 @@ npx lingo.dev@latest run
 }
 ```
 
-`provider` ක්ෂේත්‍රය විකල්ප වේ (පෙරනිමියෙන් Lingo.dev Engine වෙත). අභිරුචි LLM සපයන්නන් සඳහා:
+`provider` ක්ෂේත්‍රය විකල්ප වේ (පෙරනිමිය Lingo.dev Engine වේ). අභිරුචි LLM සපයන්නන් සඳහා:
 
 ```json
 {
@@ -227,8 +227,8 @@ jobs:
 
 **ස්ථාපන අවශ්‍යතා:**
 
-1. repository secrets වෙත `LINGODOTDEV_API_KEY` එක් කරන්න (Settings > Secrets and variables > Actions)
-2. PR workflows සඳහා: Settings > Actions > General හි "Allow GitHub Actions to create and approve pull requests" සබල කරන්න
+1. ගබඩා රහස් වෙත `LINGODOTDEV_API_KEY` එක් කරන්න (Settings > Secrets and variables > Actions)
+2. PR workflows සඳහා: Settings > Actions > General හි "Allow GitHub Actions to create and approve pull requests" සක්‍රීය කරන්න
 
 **Workflow විකල්ප:**
 
@@ -253,14 +253,14 @@ env:
 
 **ලබා ගත හැකි inputs:**
 
-| Input                | පෙරනිමි                                        | විස්තරය                              |
-| -------------------- | ---------------------------------------------- | ------------------------------------ |
-| `api-key`            | (අවශ්‍යයි)                                     | Lingo.dev API යතුර                   |
-| `pull-request`       | `false`                                        | සෘජුවම commit කිරීම වෙනුවට PR සාදන්න |
-| `commit-message`     | `"feat: update translations via @LingoDotDev"` | අභිරුචි commit පණිවිඩය               |
-| `pull-request-title` | `"feat: update translations via @LingoDotDev"` | අභිරුචි PR මාතෘකාව                   |
-| `working-directory`  | `"."`                                          | ධාවනය කිරීමට directory එක            |
-| `parallel`           | `false`                                        | සමාන්තර සැකසීම සක්‍රීය කරන්න         |
+| ආදානය                | පෙරනිමිය                                       | විස්තරය                                      |
+| -------------------- | ---------------------------------------------- | -------------------------------------------- |
+| `api-key`            | (අවශ්‍යයි)                                     | Lingo.dev API යතුර                           |
+| `pull-request`       | `false`                                        | සෘජුවම commit කිරීම වෙනුවට PR නිර්මාණය කරන්න |
+| `commit-message`     | `"feat: update translations via @LingoDotDev"` | අභිරුචි commit පණිවිඩය                       |
+| `pull-request-title` | `"feat: update translations via @LingoDotDev"` | අභිරුචි PR මාතෘකාව                           |
+| `working-directory`  | `"."`                                          | ධාවනය කිරීමට නාමාවලිය                        |
+| `parallel`           | `false`                                        | සමාන්තර සැකසීම සක්‍රීය කරන්න                 |
 
 [ලේඛන කියවන්න →](https://lingo.dev/en/ci/github)
 
@@ -336,7 +336,7 @@ const locale = await lingoDotDev.recognizeLocale("Bonjour le monde");
 
 ### Lingo.dev Compiler
 
-සාම්ප්‍රදායික i18n ආක්‍රමණශීලී වේ. ඔබ සෑම string එකක්ම `t()` functions වලින් ඔතා, පරිවර්තන යතුරු නිර්මාණය කර (`home.hero.title.v2`), සමාන්තර JSON ගොනු නඩත්තු කර, ඔබේ components දේශීයකරණ boilerplate සමඟ විශාල වන ආකාරය නරඹයි. එය කෙතරම් කම්මැලි කාර්යයක්ද යත්, කණ්ඩායම් ජාත්‍යන්තරකරණය එය විශාල refactor එකක් බවට පත්වන තෙක් ප්‍රමාද කරයි.
+සාම්ප්‍රදායික i18n ආක්‍රමණශීලී වේ. ඔබ සෑම තන්තුවක්ම `t()` ශ්‍රිතවල ඔතා, පරිවර්තන යතුරු (`home.hero.title.v2`) නිර්මාණය කර, සමාන්තර JSON ගොනු නඩත්තු කර, ඔබේ සංරචක ස්ථානීයකරණ boilerplate සමඟ පිම්බීම නරඹයි. එය කණ්ඩායම් ජාත්‍යන්තරකරණය විශාල ප්‍රතිව්‍යුහගත කිරීමක් බවට පත්වන තෙක් ප්‍රමාද කරන තරමට කම්මැලි වේ.
 
 Lingo.dev Compiler උත්සවය ඉවත් කරයි. සරල ඉංග්‍රීසි පාඨයෙන් React සංරචක ලියන්න. සම්පාදකය ගොඩනැගීමේ කාලයේදී පරිවර්තනය කළ හැකි තන්තු හඳුනාගෙන ස්වයංක්‍රීයව දේශීයකරණය කළ ප්‍රභේද ජනනය කරයි. යතුරු නැත, JSON ගොනු නැත, ආවරණ ශ්‍රිත නැත - බහු භාෂාවලින් ක්‍රියා කරන React කේතය පමණි.
 
@@ -432,7 +432,7 @@ export function LanguageSwitcher() {
 }
 ```
 
-**සංවර්ධනය:** `npm run dev` (ව්‍යාජ පරිවර්තකය භාවිතා කරයි, API ඇමතුම් නැත)
+**සංවර්ධනය:** `npm run dev` (pseudotranslator භාවිතා කරයි, API ඇමතුම් නැත)
 
 **නිෂ්පාදනය:** `usePseudotranslator: false` සකසන්න, පසුව `next build`
 
@@ -440,20 +440,20 @@ export function LanguageSwitcher() {
 
 **ප්‍රධාන විශේෂාංග:**
 
-- ධාවන කාල කාර්ය සාධන පිරිවැය ශුන්‍යයි
+- ශුන්‍ය ධාවන කාල කාර්ය සාධන පිරිවැය
 - පරිවර්තන යතුරු හෝ JSON ගොනු නැත
-- `t()` ශ්‍රිත හෝ `<T>` ආවරණ සංරචක නැත
-- JSX හි පරිවර්තනය කළ හැකි පාඨයේ ස්වයංක්‍රීය හඳුනාගැනීම
+- `t()` ශ්‍රිත හෝ `<T>` wrapper සංරචක නැත
+- JSX හි පරිවර්තනය කළ හැකි පෙළ ස්වයංක්‍රීයව හඳුනාගැනීම
 - TypeScript සහාය
-- බහු වචන සඳහා ICU MessageFormat
+- බහුවචන සඳහා ICU MessageFormat
 - `data-lingo-override` ගුණාංගය හරහා අතින් අභිබවා යාම
 - ඇතුළත් පරිවර්තන සංස්කාරක විජට්
 
 **ගොඩනැගීමේ ප්‍රකාරයන්:**
 
-- `pseudotranslator`: ස්ථාන දරණ පරිවර්තන සහිත සංවර්ධන ප්‍රකාරය (API පිරිවැය නැත)
-- `real`: LLM භාවිතයෙන් සැබෑ පරිවර්තන ජනනය කරන්න
-- `cache-only`: CI වෙතින් පෙර-ජනනය කළ පරිවර්තන භාවිතා කරන නිෂ්පාදන ප්‍රකාරය (API ඇමතුම් නැත)
+- `pseudotranslator`: ස්ථාන දරණ පරිවර්තන සමඟ සංවර්ධන මාදිලිය (API පිරිවැය නැත)
+- `real`: LLMs භාවිතයෙන් සැබෑ පරිවර්තන උත්පාදනය කරන්න
+- `cache-only`: CI වෙතින් පෙර-උත්පාදිත පරිවර්තන භාවිතා කරන නිෂ්පාදන මාදිලිය (API ඇමතුම් නැත)
 
 **සහාය දක්වන රාමු:**
 
@@ -472,12 +472,12 @@ export function LanguageSwitcher() {
 
 1. **ගැටළු:** [දෝෂ වාර්තා කරන්න හෝ විශේෂාංග ඉල්ලන්න](https://github.com/lingodotdev/lingo.dev/issues)
 2. **Pull Requests:** [වෙනස්කම් ඉදිරිපත් කරන්න](https://github.com/lingodotdev/lingo.dev/pulls)
-   - සෑම PR එකකටම changeset එකක් අවශ්‍යයි: `pnpm new` (හෝ නිකුතුවට අදාළ නොවන වෙනස්කම් සඳහා `pnpm new:empty`)
-   - ඉදිරිපත් කිරීමට පෙර පරීක්ෂණ සාර්ථක වන බව සහතික කරන්න
+   - සෑම PR එකකටම changeset අවශ්‍යයි: `pnpm new` (හෝ නිකුතු නොවන වෙනස්කම් සඳහා `pnpm new:empty`)
+   - ඉදිරිපත් කිරීමට පෙර පරීක්ෂණ සමත් වන බව සහතික කරන්න
 3. **සංවර්ධනය:** මෙය pnpm + turborepo monorepo එකකි
-   - dependencies ස්ථාපනය කරන්න: `pnpm install`
+   - යැපීම් ස්ථාපනය කරන්න: `pnpm install`
    - පරීක්ෂණ ධාවනය කරන්න: `pnpm test`
-   - Build කරන්න: `pnpm build`
+   - ගොඩනැගීම: `pnpm build`
 
 **සහාය:** [Discord ප්‍රජාව](https://lingo.dev/go/discord)
 
@@ -499,12 +499,12 @@ Lingo.dev ප්‍රයෝජනවත් නම්, අපට තරුවක
 
 **නව භාෂාවක් එකතු කිරීම:**
 
-1. [BCP-47 ආකෘතිය](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) භාවිතයෙන් [`i18n.json`](./i18n.json) වෙත locale කේතය එකතු කරන්න
+1. [BCP-47 ආකෘතිය](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) භාවිතයෙන් [`i18n.json`](./i18n.json) වෙත ස්ථාන කේතය එක් කරන්න
 2. Pull request එකක් ඉදිරිපත් කරන්න
 
-**BCP-47 locale ආකෘතිය:** `language[-Script][-REGION]`
+**BCP-47 ස්ථාන ආකෘතිය:** `language[-Script][-REGION]`
 
-- `language`: ISO 639-1/2/3 (lowercase): `en`, `zh`, `bho`
-- `Script`: ISO 15924 (title case): `Hans`, `Hant`, `Latn`
-- `REGION`: ISO 3166-1 alpha-2 (uppercase): `US`, `CN`, `IN`
+- `language`: ISO 639-1/2/3 (කුඩා අකුරු): `en`, `zh`, `bho`
+- `Script`: ISO 15924 (ශීර්ෂ අකුරු): `Hans`, `Hant`, `Latn`
+- `REGION`: ISO 3166-1 alpha-2 (ලොකු අකුරු): `US`, `CN`, `IN`
 - උදාහරණ: `en`, `pt-BR`, `zh-Hans`, `sr-Cyrl-RS`
