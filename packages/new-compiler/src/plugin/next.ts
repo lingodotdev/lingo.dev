@@ -210,31 +210,39 @@ export async function withLingo(
   // We have two barriers, a simple one here and a more complex one inside the startTranslationServer which doesn't start the server if it can find one running.
   // We do not use isMainRunner here, because we need to start the server as early as possible, so the loaders get the translation server url. The main runner in dev mode runs after a dev server process is started.
   if (isDev && !process.env.LINGO_TRANSLATION_SERVER_URL) {
-    const translationServer = await startOrGetTranslationServer({
-      translationService: new TranslationService(lingoConfig, logger),
-      onError: (err) => {
-        logger.error("Translation server error:", err);
-      },
-      onReady: (port) => {
-        logger.info(`Translation server started successfully on port: ${port}`);
-      },
-      config: lingoConfig,
-    });
-    process.env.LINGO_TRANSLATION_SERVER_URL = translationServer.url;
-    if (translationServer.server) {
-      // We start the server in the same process, so we should be fine without any sync cleanup. Server should be killed with the process.
-      registerCleanupOnCurrentProcess({
-        asyncCleanup: async () => {
-          await translationServer.server.stop();
+    if (lingoConfig.dev.translationServerUrl) {
+      logger.info(`Using existing translation server URL (${lingoConfig.dev.translationServerUrl}) from config`);
+      process.env.LINGO_TRANSLATION_SERVER_URL =
+        lingoConfig.dev.translationServerUrl;
+    } else {
+      const translationServer = await startOrGetTranslationServer({
+        translationService: new TranslationService(lingoConfig, logger),
+        onError: (err) => {
+          logger.error("Translation server error:", err);
         },
+        onReady: (port) => {
+          logger.info(
+            `Translation server started successfully on port: ${port}`,
+          );
+        },
+        config: lingoConfig,
       });
+      process.env.LINGO_TRANSLATION_SERVER_URL = translationServer.url;
+      if (translationServer.server) {
+        // We start the server in the same process, so we should be fine without any sync cleanup. Server should be killed with the process.
+        registerCleanupOnCurrentProcess({
+          asyncCleanup: async () => {
+            await translationServer.server.stop();
+          },
+        });
+      }
     }
   }
 
   const translationServerUrl = process.env.LINGO_TRANSLATION_SERVER_URL;
 
   if (isMainRunner()) {
-    // We need to cleaup the file only once, to avoid having extra translation introduced into the build, or old translation to pile up.
+    // We need to clean up the file only once to avoid having extra translation introduced into the build, or old translation to pile up.
     cleanupExistingMetadata(metadataFilePath);
 
     registerCleanupOnCurrentProcess({

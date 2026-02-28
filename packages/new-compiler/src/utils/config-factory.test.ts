@@ -84,4 +84,18 @@ describe("createLingoConfig pluralization defaults", () => {
       }),
     ).toThrow(/pluralization\.model/);
   });
+
+  it("removes undefined keys and preserves defaults", () => {
+    const config = createLingoConfig({
+      sourceLocale: "en",
+      targetLocales: ["es"],
+      models: undefined,
+      dev: {
+        translationServerStartPort: undefined,
+      },
+    } as any);
+
+    expect(config.models).toBe("lingo.dev"); // default value from DEFAULT_CONFIG
+    expect(config.dev.translationServerStartPort).toBe(60000); // default value from DEFAULT_CONFIG
+  });
 });
