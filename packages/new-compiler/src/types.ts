@@ -24,9 +24,11 @@ export interface CookieConfig {
 
 /**
  * Locale persistence configuration
- * Currently only supports cookie-based persistence
+ * Supports cookie-based persistence or custom resolvers
  */
-export type LocalePersistenceConfig = { type: "cookie"; config: CookieConfig };
+export type LocalePersistenceConfig =
+  | { type: "cookie"; config: CookieConfig }
+  | { type: "custom"; };
 
 /**
  * Field that we require users to fill in the config. The rest could be taken from defaults.

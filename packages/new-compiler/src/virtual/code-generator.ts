@@ -28,6 +28,13 @@ export const sourceLocale = ${JSON.stringify(config.sourceLocale)};
  * Exports async getServerLocale() function
  */
 export function generateServerLocaleModule(config: LingoConfig): string {
+  if (config.localePersistence.type === "custom") {
+    // For custom resolvers, import from an abstract path that will be
+    // resolved by Turbopack's resolveAlias to the actual user file
+    return `export { getServerLocale } from '@lingo.dev/compiler/virtual/locale-server';`;
+  }
+
+  // Default cookie-based resolver
   return `
 import { createNextCookieLocaleResolver } from '@lingo.dev/compiler/react/next';
 export const getServerLocale = createNextCookieLocaleResolver({ cookieConfig: ${JSON.stringify(config.localePersistence.config)}, defaultLocale: ${JSON.stringify(config.sourceLocale)} });
@@ -39,6 +46,13 @@ export const getServerLocale = createNextCookieLocaleResolver({ cookieConfig: ${
  * Exports getClientLocale() and persistLocale() functions
  */
 export function generateClientLocaleModule(config: LingoConfig): string {
+  if (config.localePersistence.type === "custom") {
+    // For custom resolvers, import from an abstract path that will be
+    // resolved by Turbopack's resolveAlias to the actual user file
+    return `export { getClientLocale, persistLocale, getLocalePathname } from '@lingo.dev/compiler/virtual/locale-client';`;
+  }
+
+  // Default cookie-based resolver
   const cookieName = config.localePersistence.config.name;
   const maxAge = config.localePersistence.config.maxAge;
 
@@ -56,6 +70,10 @@ export function persistLocale(locale) {
   if (typeof document !== 'undefined') {
     document.cookie = \`${cookieName}=\${locale}; path=/; max-age=${maxAge}\`;
   }
+}
+
+export function getLocalePathname(locale) {
+  return null; // Not used for cookie-based routing
 }
 `;
 }

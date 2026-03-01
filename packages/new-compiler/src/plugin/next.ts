@@ -13,6 +13,7 @@ import { cleanupExistingMetadata, getMetadataPath } from "../metadata/manager";
 import { registerCleanupOnCurrentProcess } from "./cleanup";
 import { useI18nRegex } from "./transform/use-i18n";
 import { TranslationService } from "../translators";
+import { resolveCustomResolverPaths } from "./resolve-locale-resolver";
 
 export type LingoNextPluginOptions = PartialLingoConfig;
 
@@ -259,9 +260,31 @@ export async function withLingo(
   );
 
   const existingResolveAlias = existingTurbopackConfig.resolveAlias;
+  let customResolverAliases = {};
+
+  // Custom locale resolvers:
+  // When using custom resolvers (localePersistence.type === "custom"),
+  // we map abstract module paths to the user's actual files via Turbopack resolveAlias.
+  // This allows virtual modules to import from '@lingo.dev/compiler/virtual/locale-*'
+  // which Turbopack resolves to the user's actual locale resolver files.
+  //
+  // Convention: Resolver files must be at <sourceRoot>/<lingoDir>/locale-resolver-{server|client}.ts
+  if (lingoConfig.localePersistence.type === "custom") {
+    const resolvedPaths = resolveCustomResolverPaths(
+      lingoConfig.sourceRoot,
+      lingoConfig.lingoDir,
+      process.cwd(),
+    );
+
+    customResolverAliases = {
+      "@lingo.dev/compiler/virtual/locale-server": resolvedPaths.serverResolver,
+      "@lingo.dev/compiler/virtual/locale-client": resolvedPaths.clientResolver,
+    };
+  }
+
   const mergedResolveAlias = {
     ...existingResolveAlias,
-    // TODO (AleksandrSl 08/12/2025): Describe what have to be done to support custom resolvers
+    ...customResolverAliases,
   };
 
   let turbopackConfig: Partial<NextConfig>;

@@ -38,8 +38,9 @@ export type LingoProviderProps = PropsWithChildren<{
    * Optional router instance for Next.js integration
    * If provided, calls router.refresh() after locale change
    * This ensures Server Components re-render with new locale
+   * For path-based routing, also needs push() for navigation
    */
-  router?: { refresh: () => void };
+  router?: { refresh: () => void; push: (path: string) => void };
 
   /**
    * Development widget configuration
@@ -178,22 +179,26 @@ function LingoProvider__Prod({
 
   /**
    * Change locale
-   * - For Next.js SSR: triggers server re-render via router.refresh()
+   * - For path-based routing: uses router.push() to navigate
+   * - For cookie-based routing: uses persistLocale() + router.refresh()
    * - For SPAs: lazy loads translations from /translations/{locale}.json
    */
   const setLocale = useCallback(
     async (newLocale: LocaleCode) => {
-      // 1. Persist to cookie so server can read it on next render
-      persistLocale(newLocale);
+      const newUrl = persistLocale(newLocale);
 
-      // 2. Update local state for immediate UI feedback
+      // Update local state for immediate UI feedback
       setLocaleState(newLocale);
 
-      // 3a. Next.js pattern: Trigger server re-render
+      // Next.js pattern: Trigger server re-render
       if (router) {
-        router.refresh();
+        if (newUrl) {
+          router.push(newUrl);
+        } else {
+          router.refresh();
+        }
       }
-      // 3b. SPA pattern: Lazy load translations
+      // SPA pattern: Lazy load translations
       else {
         await loadTranslations(newLocale);
       }
@@ -399,15 +404,17 @@ function LingoProvider__Dev({
    */
   const setLocale = useCallback(
     async (newLocale: LocaleCode) => {
-      // 1. Persist to cookie (unless disabled)
-      persistLocale(newLocale);
+      const newUrl = persistLocale(newLocale);
 
-      // 2. Update state
       setLocaleState(newLocale);
 
-      // 3. Reload Server Components (if router provided)
+      // Reload Server Components (if router provided)
       if (router) {
-        router.refresh();
+        if (newUrl) {
+          router.push(newUrl);
+        } else {
+          router.refresh();
+        }
       }
 
       // Fetch translations from API endpoint
