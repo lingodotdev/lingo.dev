@@ -147,6 +147,18 @@ pnpm tsx ../../packages/new-compiler/src/translation-server/cli.ts --port 3456 -
 
 Make sure there the `--lingo-dir` option is set to the same directory as in the project settings, and the same for the `--source-root` option.
 
+Set the url returned in logs to the lingo config
+
+```js
+export const config = {
+  // Other config options...
+  dev: {
+    usePseudotranslator: true,
+    translationServerUrl: "http://127.0.0.1:3456"
+  }
+}
+```
+
 ### Server Logs
 
 The translation server writes logs to both:
