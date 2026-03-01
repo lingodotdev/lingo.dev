@@ -165,6 +165,9 @@ export type LingoConfig = {
      */
     translationServerStartPort: number;
 
+    /**
+     * URL of the translation server in development mode if you manually start it
+     */
     translationServerUrl?: string;
   };
 
