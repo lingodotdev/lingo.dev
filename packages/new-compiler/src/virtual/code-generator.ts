@@ -49,7 +49,7 @@ export function generateClientLocaleModule(config: LingoConfig): string {
   if (config.localePersistence.type === "custom") {
     // For custom resolvers, import from an abstract path that will be
     // resolved by Turbopack's resolveAlias to the actual user file
-    return `export { getClientLocale, persistLocale, getLocalePathname } from '@lingo.dev/compiler/virtual/locale-client';`;
+    return `export { getClientLocale, persistLocale } from '@lingo.dev/compiler/virtual/locale-client';`;
   }
 
   // Default cookie-based resolver
