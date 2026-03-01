@@ -314,7 +314,6 @@ export class TranslationServer {
       this.metadata = await loadMetadata(getMetadataPath(this.config));
       this.logger.debug(
         `Reloaded metadata: ${Object.keys(this.metadata).length} entries`,
-        );
     } catch (error) {
       this.logger.warn("Failed to reload metadata:", error);
       this.metadata = {};
