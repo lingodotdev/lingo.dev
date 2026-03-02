@@ -163,9 +163,17 @@ export default new Command()
       await renderSummary(ctx.results);
       await renderSpacer();
 
+      const hasErrors = Array.from(ctx.results.values()).some(
+        (r) => r.status === "error",
+      );
+
       // Play sound after main tasks complete if sound flag is enabled
       if (ctx.flags.sound) {
-        await playSound("success");
+        await playSound(hasErrors ? "failure" : "success");
+      }
+
+      if (hasErrors) {
+        process.exitCode = 1;
       }
 
       // If watch mode is enabled, start watching for changes
