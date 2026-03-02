@@ -4,6 +4,7 @@ import pLimit, { LimitFunction } from "p-limit";
 import _ from "lodash";
 import { minimatch } from "minimatch";
 
+import { safeDecode } from "../../utils/key-matching";
 import { colors } from "../../constants";
 import { CmdRunContext, CmdRunTask, CmdRunTaskResult } from "./_types";
 import { commonTaskRendererOptions } from "./_const";
@@ -164,6 +165,7 @@ function createLoaderForTask(assignedTask: CmdRunTask) {
     assignedTask.lockedPatterns,
     assignedTask.ignoredKeys,
     assignedTask.preservedKeys,
+    assignedTask.localizableKeys,
   );
   bucketLoader.setDefaultLocale(assignedTask.sourceLocale);
 
@@ -230,7 +232,7 @@ function createWorkerTask(args: {
                 ([key]) =>
                   !assignedTask.onlyKeys.length ||
                   assignedTask.onlyKeys?.some((pattern) =>
-                    minimatch(key, pattern),
+                    minimatch(safeDecode(key), safeDecode(pattern)),
                   ),
               )
               .fromPairs()
@@ -259,6 +261,7 @@ function createWorkerTask(args: {
                 targetData: args.ctx.flags.force ? {} : targetData,
                 processableData,
                 hints: relevantHints,
+                filePath: assignedTask.bucketPathPattern,
               },
               async (progress, _sourceChunk, processedChunk) => {
                 // write translated chunks as they are received from LLM

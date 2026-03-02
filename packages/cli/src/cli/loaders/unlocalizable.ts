@@ -4,13 +4,15 @@ import { isValid, parseISO } from "date-fns";
 
 import { ILoader } from "./_types";
 import { createLoader } from "./_utils";
+import { matchesKeyPattern } from "../utils/key-matching";
 
 export default function createUnlocalizableLoader(
   returnUnlocalizedKeys: boolean = false,
+  localizableKeys: string[] = [],
 ): ILoader<Record<string, any>, Record<string, any>> {
   return createLoader({
     async pull(locale, input) {
-      const unlocalizableKeys = _getUnlocalizableKeys(input);
+      const unlocalizableKeys = _getUnlocalizableKeys(input, localizableKeys);
 
       const result = _.omitBy(input, (_, key) =>
         unlocalizableKeys.includes(key),
@@ -26,7 +28,10 @@ export default function createUnlocalizableLoader(
       return result;
     },
     async push(locale, data, originalInput) {
-      const unlocalizableKeys = _getUnlocalizableKeys(originalInput);
+      const unlocalizableKeys = _getUnlocalizableKeys(
+        originalInput,
+        localizableKeys,
+      );
 
       const result = _.merge(
         {},
@@ -47,7 +52,10 @@ function _isIsoDate(v: string) {
   return isValid(parseISO(v));
 }
 
-function _getUnlocalizableKeys(input?: Record<string, any> | null) {
+function _getUnlocalizableKeys(
+  input?: Record<string, any> | null,
+  localizableKeys: string[] = [],
+) {
   const rules = {
     isEmpty: (v: any) => _.isEmpty(v),
     isNumber: (v: any) => typeof v === "number" || /^[0-9]+$/.test(v),
@@ -63,6 +71,13 @@ function _getUnlocalizableKeys(input?: Record<string, any> | null) {
 
   return Object.entries(input)
     .filter(([key, value]) => {
+      if (
+        localizableKeys.length > 0 &&
+        matchesKeyPattern(key, localizableKeys) &&
+        value !== undefined
+      ) {
+        return false;
+      }
       for (const [ruleName, rule] of Object.entries(rules)) {
         if (rule(value)) {
           return true;

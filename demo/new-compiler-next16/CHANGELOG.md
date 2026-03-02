@@ -1,5 +1,40 @@
 # @compiler/demo-next
 
+## 0.1.25
+
+### Patch Changes
+
+- Updated dependencies [[`13aeb36`](https://github.com/lingodotdev/lingo.dev/commit/13aeb360805ca4fe8ccff9370ea1e11327c3b2df)]:
+  - @lingo.dev/compiler@0.3.11
+
+## 0.1.24
+
+### Patch Changes
+
+- Updated dependencies [[`8dff5c1`](https://github.com/lingodotdev/lingo.dev/commit/8dff5c123d0a8219b984ec5c80042666e1374105)]:
+  - @lingo.dev/compiler@0.3.10
+
+## 0.1.23
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @lingo.dev/compiler@0.3.9
+
+## 0.1.22
+
+### Patch Changes
+
+- Updated dependencies [[`debcb6e`](https://github.com/lingodotdev/lingo.dev/commit/debcb6e0396bec2088e54c35f74c97d4dcda84ff)]:
+  - @lingo.dev/compiler@0.3.8
+
+## 0.1.21
+
+### Patch Changes
+
+- Updated dependencies [[`3c40593`](https://github.com/lingodotdev/lingo.dev/commit/3c40593dfa4c4303795e7032936b31441a0b7e02)]:
+  - @lingo.dev/compiler@0.3.7
+
 ## 0.1.20
 
 ### Patch Changes

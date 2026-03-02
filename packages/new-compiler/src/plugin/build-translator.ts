@@ -11,9 +11,16 @@ import fs from "fs/promises";
 import path from "path";
 import type { LingoConfig, MetadataSchema } from "../types";
 import { logger } from "../utils/logger";
-import { startTranslationServer, type TranslationServer, } from "../translation-server";
+import {
+  startTranslationServer,
+  type TranslationServer,
+} from "../translation-server";
 import { loadMetadata } from "../metadata/manager";
-import { createCache, type TranslationCache, TranslationService, } from "../translators";
+import {
+  createCache,
+  type TranslationCache,
+  TranslationService,
+} from "../translators";
 import { dictionaryFrom } from "../translators/api";
 import type { LocaleCode } from "lingo.dev/spec";
 
@@ -64,9 +71,9 @@ export async function processBuildTranslations(
 
   logger.info(`🌍 Build mode: ${buildMode}`);
 
-  const metadata = await loadMetadata(metadataFilePath);
+  const metadata = await loadMetadata(metadataFilePath, true);
 
-  if (!metadata || Object.keys(metadata.entries).length === 0) {
+  if (!metadata || Object.keys(metadata).length === 0) {
     logger.info("No translations to process (metadata is empty)");
     return {
       success: true,
@@ -74,7 +81,7 @@ export async function processBuildTranslations(
     };
   }
 
-  const totalEntries = Object.keys(metadata.entries).length;
+  const totalEntries = Object.keys(metadata).length;
   logger.info(`📊 Found ${totalEntries} translatable entries`);
 
   const cache = createCache(config);
@@ -190,7 +197,7 @@ async function validateCache(
   metadata: MetadataSchema,
   cache: TranslationCache,
 ): Promise<void> {
-  const allHashes = Object.keys(metadata.entries);
+  const allHashes = Object.keys(metadata);
   const missingLocales: string[] = [];
   const incompleteLocales: Array<{
     locale: LocaleCode;
@@ -250,7 +257,7 @@ function buildCacheStats(
   config: LingoConfig,
   metadata: MetadataSchema,
 ): BuildTranslationResult["stats"] {
-  const totalEntries = Object.keys(metadata.entries).length;
+  const totalEntries = Object.keys(metadata).length;
   const stats: BuildTranslationResult["stats"] = {};
 
   // Include source locale if pluralization is enabled
@@ -280,7 +287,7 @@ async function copyStaticFiles(
 
   await fs.mkdir(publicOutputPath, { recursive: true });
 
-  const usedHashes = new Set(Object.keys(metadata.entries));
+  const usedHashes = new Set(Object.keys(metadata));
   logger.info(`📊 Filtering translations to ${usedHashes.size} used hash(es)`);
 
   // Include source locale if pluralization is enabled

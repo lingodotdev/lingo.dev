@@ -92,6 +92,7 @@ export default function createBucketLoader(
   lockedPatterns?: string[],
   ignoredKeys?: string[],
   preservedKeys?: string[],
+  localizableKeys?: string[],
 ): ILoader<void, Record<string, any>> {
   switch (bucketType) {
     default:
@@ -107,7 +108,10 @@ export default function createBucketLoader(
         createIgnoredKeysLoader(ignoredKeys || []),
         createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+        createUnlocalizableLoader(
+          options.returnUnlocalizedKeys,
+          localizableKeys,
+        ),
       );
     case "android":
       return composeLoaders(
@@ -120,7 +124,10 @@ export default function createBucketLoader(
         createIgnoredKeysLoader(ignoredKeys || []),
         createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+        createUnlocalizableLoader(
+          options.returnUnlocalizedKeys,
+          localizableKeys,
+        ),
       );
     case "csv":
       return composeLoaders(
@@ -133,7 +140,10 @@ export default function createBucketLoader(
         createIgnoredKeysLoader(ignoredKeys || []),
         createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+        createUnlocalizableLoader(
+          options.returnUnlocalizedKeys,
+          localizableKeys,
+        ),
       );
     case "csv-per-locale":
       return composeLoaders(
@@ -146,7 +156,10 @@ export default function createBucketLoader(
         createIgnoredKeysLoader(normalizeCsvPatterns(ignoredKeys || [])),
         createPreservedKeysLoader(normalizeCsvPatterns(preservedKeys || [])),
         createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+        createUnlocalizableLoader(
+          options.returnUnlocalizedKeys,
+          normalizeCsvPatterns(localizableKeys || []),
+        ),
       );
     case "html":
       return composeLoaders(
@@ -158,7 +171,10 @@ export default function createBucketLoader(
         createIgnoredKeysLoader(ignoredKeys || []),
         createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+        createUnlocalizableLoader(
+          options.returnUnlocalizedKeys,
+          localizableKeys,
+        ),
       );
     case "ejs":
       return composeLoaders(
@@ -169,7 +185,10 @@ export default function createBucketLoader(
         createIgnoredKeysLoader(ignoredKeys || []),
         createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+        createUnlocalizableLoader(
+          options.returnUnlocalizedKeys,
+          localizableKeys,
+        ),
       );
     case "json":
       return composeLoaders(
@@ -184,7 +203,10 @@ export default function createBucketLoader(
         createIgnoredKeysLoader(ignoredKeys || []),
         createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+        createUnlocalizableLoader(
+          options.returnUnlocalizedKeys,
+          localizableKeys,
+        ),
       );
     case "json5":
       return composeLoaders(
@@ -198,7 +220,10 @@ export default function createBucketLoader(
         createIgnoredKeysLoader(ignoredKeys || []),
         createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+        createUnlocalizableLoader(
+          options.returnUnlocalizedKeys,
+          localizableKeys,
+        ),
       );
     case "jsonc":
       return composeLoaders(
@@ -212,7 +237,10 @@ export default function createBucketLoader(
         createIgnoredKeysLoader(ignoredKeys || []),
         createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+        createUnlocalizableLoader(
+          options.returnUnlocalizedKeys,
+          localizableKeys,
+        ),
       );
     case "markdown":
       return composeLoaders(
@@ -224,7 +252,10 @@ export default function createBucketLoader(
         createIgnoredKeysLoader(ignoredKeys || []),
         createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+        createUnlocalizableLoader(
+          options.returnUnlocalizedKeys,
+          localizableKeys,
+        ),
       );
     case "markdoc":
       return composeLoaders(
@@ -237,7 +268,10 @@ export default function createBucketLoader(
         createIgnoredKeysLoader(ignoredKeys || []),
         createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+        createUnlocalizableLoader(
+          options.returnUnlocalizedKeys,
+          localizableKeys,
+        ),
       );
     case "mdx":
       return composeLoaders(
@@ -254,7 +288,10 @@ export default function createBucketLoader(
         createIgnoredKeysLoader(ignoredKeys || []),
         createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+        createUnlocalizableLoader(
+          options.returnUnlocalizedKeys,
+          localizableKeys,
+        ),
       );
     case "mjml":
       return composeLoaders(
@@ -266,7 +303,10 @@ export default function createBucketLoader(
         createIgnoredKeysLoader(ignoredKeys || []),
         createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+        createUnlocalizableLoader(
+          options.returnUnlocalizedKeys,
+          localizableKeys,
+        ),
       );
     case "po":
       return composeLoaders(
@@ -280,7 +320,10 @@ export default function createBucketLoader(
         createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
         createVariableLoader({ type: "python" }),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+        createUnlocalizableLoader(
+          options.returnUnlocalizedKeys,
+          localizableKeys,
+        ),
       );
     case "properties":
       return composeLoaders(
@@ -291,7 +334,10 @@ export default function createBucketLoader(
         createIgnoredKeysLoader(ignoredKeys || []),
         createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+        createUnlocalizableLoader(
+          options.returnUnlocalizedKeys,
+          localizableKeys,
+        ),
       );
     case "xcode-strings":
       return composeLoaders(
@@ -302,7 +348,10 @@ export default function createBucketLoader(
         createIgnoredKeysLoader(ignoredKeys || []),
         createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+        createUnlocalizableLoader(
+          options.returnUnlocalizedKeys,
+          localizableKeys,
+        ),
       );
     case "xcode-stringsdict":
       return composeLoaders(
@@ -315,7 +364,10 @@ export default function createBucketLoader(
         createIgnoredKeysLoader(ignoredKeys || []),
         createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+        createUnlocalizableLoader(
+          options.returnUnlocalizedKeys,
+          localizableKeys,
+        ),
       );
     case "xcode-xcstrings":
       return composeLoaders(
@@ -331,7 +383,10 @@ export default function createBucketLoader(
         createPreservedKeysLoader(encodeKeys(preservedKeys || [])),
         createSyncLoader(),
         createVariableLoader({ type: "ieee" }),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+        createUnlocalizableLoader(
+          options.returnUnlocalizedKeys,
+          encodeKeys(localizableKeys || []),
+        ),
       );
     case "xcode-xcstrings-v2":
       return composeLoaders(
@@ -347,7 +402,10 @@ export default function createBucketLoader(
         createPreservedKeysLoader(encodeKeys(preservedKeys || [])),
         createSyncLoader(),
         createVariableLoader({ type: "ieee" }),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+        createUnlocalizableLoader(
+          options.returnUnlocalizedKeys,
+          encodeKeys(localizableKeys || []),
+        ),
       );
     case "yaml":
       return composeLoaders(
@@ -361,7 +419,10 @@ export default function createBucketLoader(
         createIgnoredKeysLoader(ignoredKeys || []),
         createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+        createUnlocalizableLoader(
+          options.returnUnlocalizedKeys,
+          localizableKeys,
+        ),
       );
     case "yaml-root-key":
       return composeLoaders(
@@ -376,7 +437,10 @@ export default function createBucketLoader(
         createIgnoredKeysLoader(ignoredKeys || []),
         createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+        createUnlocalizableLoader(
+          options.returnUnlocalizedKeys,
+          localizableKeys,
+        ),
       );
     case "flutter":
       return composeLoaders(
@@ -391,7 +455,10 @@ export default function createBucketLoader(
         createIgnoredKeysLoader(ignoredKeys || []),
         createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+        createUnlocalizableLoader(
+          options.returnUnlocalizedKeys,
+          localizableKeys,
+        ),
       );
     case "xliff":
       return composeLoaders(
@@ -404,7 +471,10 @@ export default function createBucketLoader(
         createIgnoredKeysLoader(ignoredKeys || []),
         createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+        createUnlocalizableLoader(
+          options.returnUnlocalizedKeys,
+          localizableKeys,
+        ),
       );
     case "xml":
       return composeLoaders(
@@ -417,7 +487,10 @@ export default function createBucketLoader(
         createIgnoredKeysLoader(ignoredKeys || []),
         createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+        createUnlocalizableLoader(
+          options.returnUnlocalizedKeys,
+          localizableKeys,
+        ),
       );
     case "srt":
       return composeLoaders(
@@ -428,7 +501,10 @@ export default function createBucketLoader(
         createIgnoredKeysLoader(ignoredKeys || []),
         createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+        createUnlocalizableLoader(
+          options.returnUnlocalizedKeys,
+          localizableKeys,
+        ),
       );
     case "dato":
       return composeLoaders(
@@ -439,7 +515,10 @@ export default function createBucketLoader(
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
         createPreservedKeysLoader(preservedKeys || []),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+        createUnlocalizableLoader(
+          options.returnUnlocalizedKeys,
+          localizableKeys,
+        ),
       );
     case "vtt":
       return composeLoaders(
@@ -450,7 +529,10 @@ export default function createBucketLoader(
         createIgnoredKeysLoader(ignoredKeys || []),
         createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+        createUnlocalizableLoader(
+          options.returnUnlocalizedKeys,
+          localizableKeys,
+        ),
       );
     case "php":
       return composeLoaders(
@@ -463,7 +545,10 @@ export default function createBucketLoader(
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
         createPreservedKeysLoader(preservedKeys || []),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+        createUnlocalizableLoader(
+          options.returnUnlocalizedKeys,
+          localizableKeys,
+        ),
       );
     case "vue-json":
       return composeLoaders(
@@ -476,7 +561,10 @@ export default function createBucketLoader(
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
         createPreservedKeysLoader(preservedKeys || []),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+        createUnlocalizableLoader(
+          options.returnUnlocalizedKeys,
+          localizableKeys,
+        ),
       );
     case "typescript":
       return composeLoaders(
@@ -494,7 +582,10 @@ export default function createBucketLoader(
         createLockedKeysLoader(lockedKeys || []),
         createIgnoredKeysLoader(ignoredKeys || []),
         createPreservedKeysLoader(preservedKeys || []),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+        createUnlocalizableLoader(
+          options.returnUnlocalizedKeys,
+          localizableKeys,
+        ),
       );
     case "twig":
       return composeLoaders(
@@ -505,7 +596,10 @@ export default function createBucketLoader(
         createIgnoredKeysLoader(ignoredKeys || []),
         createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+        createUnlocalizableLoader(
+          options.returnUnlocalizedKeys,
+          localizableKeys,
+        ),
       );
     case "txt":
       return composeLoaders(
@@ -516,7 +610,10 @@ export default function createBucketLoader(
         createIgnoredKeysLoader(ignoredKeys || []),
         createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+        createUnlocalizableLoader(
+          options.returnUnlocalizedKeys,
+          localizableKeys,
+        ),
       );
     case "json-dictionary":
       return composeLoaders(
@@ -532,7 +629,10 @@ export default function createBucketLoader(
         createIgnoredKeysLoader(ignoredKeys || []),
         createPreservedKeysLoader(preservedKeys || []),
         createSyncLoader(),
-        createUnlocalizableLoader(options.returnUnlocalizedKeys),
+        createUnlocalizableLoader(
+          options.returnUnlocalizedKeys,
+          localizableKeys,
+        ),
       );
   }
 }

@@ -1,5 +1,34 @@
 # @lingo.dev/\_compiler
 
+## 0.11.5
+
+### Patch Changes
+
+- Updated dependencies [[`e0a1bb3`](https://github.com/lingodotdev/lingo.dev/commit/e0a1bb3cd0e27416c2e5fc60a8fad2161e5736c7)]:
+  - @lingo.dev/_spec@0.48.1
+  - @lingo.dev/_sdk@0.15.1
+
+## 0.11.4
+
+### Patch Changes
+
+- [#2002](https://github.com/lingodotdev/lingo.dev/pull/2002) [`8dff5c1`](https://github.com/lingodotdev/lingo.dev/commit/8dff5c123d0a8219b984ec5c80042666e1374105) Thanks [@cherkanovart](https://github.com/cherkanovart)! - fix: hash emails before sending as PostHog distinct_id
+
+## 0.11.3
+
+### Patch Changes
+
+- Updated dependencies [[`8b12cc3`](https://github.com/lingodotdev/lingo.dev/commit/8b12cc3e7cf54a9a4695fe5fd2c986d30be219f3)]:
+  - @lingo.dev/_sdk@0.15.0
+
+## 0.11.2
+
+### Patch Changes
+
+- Updated dependencies [[`45c9437`](https://github.com/lingodotdev/lingo.dev/commit/45c94372f443cc54eb4ae8885f15caf19b931610)]:
+  - @lingo.dev/_spec@0.48.0
+  - @lingo.dev/_sdk@0.14.2
+
 ## 0.11.1
 
 ### Patch Changes

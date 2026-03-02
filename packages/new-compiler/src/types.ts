@@ -269,19 +269,6 @@ export type BaseTranslationEntry<Type, Context> = {
 };
 
 /**
- * Metadata file schema
+ * Metadata: all translation entries indexed by hash
  */
-export interface MetadataSchema {
-  /**
-   * All translation entries indexed by hash
-   */
-  entries: Record<string, TranslationEntry>;
-
-  /**
-   * Statistics about the metadata
-   */
-  stats?: {
-    totalEntries: number;
-    lastUpdated: string;
-  };
-}
+export type MetadataSchema = Record<string, TranslationEntry>;

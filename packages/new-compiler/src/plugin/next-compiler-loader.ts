@@ -1,7 +1,7 @@
 import type { LingoConfig } from "../types";
 import { transformComponent } from "./transform";
 import { logger } from "../utils/logger";
-import { MetadataManager } from "../metadata/manager";
+import { saveMetadata } from "../metadata/manager";
 
 /**
  * Turbopack/Webpack loader for automatic translation
@@ -28,8 +28,6 @@ export default async function nextCompilerLoader(
     const config: LingoConfig & { metadataFilePath: string } =
       this.getOptions();
 
-    const metadataManager = new MetadataManager(config.metadataFilePath);
-
     logger.debug(`[Turbopack Loader] Processing: ${this.resourcePath}`);
 
     // Transform the component
@@ -46,7 +44,11 @@ export default async function nextCompilerLoader(
 
     // Update metadata with new entries
     if (result.newEntries && result.newEntries.length > 0) {
-      await metadataManager.saveMetadataWithEntries(result.newEntries);
+      await saveMetadata(
+        config.metadataFilePath,
+        result.newEntries,
+        config.environment !== "development",
+      );
 
       logger.debug(
         `[Turbopack Loader] Found ${result.newEntries.length} translatable text(s) in ${this.resourcePath}`,

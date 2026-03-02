@@ -1,5 +1,114 @@
 # lingo.dev
 
+## 0.132.8
+
+### Patch Changes
+
+- [#2020](https://github.com/lingodotdev/lingo.dev/pull/2020) [`69484fa`](https://github.com/lingodotdev/lingo.dev/commit/69484fae34f9eb723b6345d952ba8843da2c506c) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Send sessionId, triggerType, and file path metadata to the vNext localization endpoint
+
+## 0.132.7
+
+### Patch Changes
+
+- [#2019](https://github.com/lingodotdev/lingo.dev/pull/2019) [`e0a1bb3`](https://github.com/lingodotdev/lingo.dev/commit/e0a1bb3cd0e27416c2e5fc60a8fad2161e5736c7) Thanks [@cherkanovart](https://github.com/cherkanovart)! - fix(cli): add dev.usePseudotranslator to config schema and respect it in CLI setup
+
+- Updated dependencies [[`e0a1bb3`](https://github.com/lingodotdev/lingo.dev/commit/e0a1bb3cd0e27416c2e5fc60a8fad2161e5736c7)]:
+  - @lingo.dev/_spec@0.48.1
+  - @lingo.dev/_compiler@0.11.5
+  - @lingo.dev/_sdk@0.15.1
+
+## 0.132.6
+
+### Patch Changes
+
+- [#2017](https://github.com/lingodotdev/lingo.dev/pull/2017) [`c51d92f`](https://github.com/lingodotdev/lingo.dev/commit/c51d92f66893eda88b7acdbf9eff7b12bff1ddaf) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Fixed --key pattern matching in run and purge commands by decoding URL-encoded keys before minimatch comparison
+
+## 0.132.5
+
+### Patch Changes
+
+- [#2010](https://github.com/lingodotdev/lingo.dev/pull/2010) [`bd71fd3`](https://github.com/lingodotdev/lingo.dev/commit/bd71fd3208c7f4555a4beb43a63f39fd3010da34) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - fix(cli): use exact and separator-bounded matching for lockedKeys, ignoredKeys, preservedKeys, and localizableKeys instead of substring prefix matching
+
+## 0.132.4
+
+### Patch Changes
+
+- [#2012](https://github.com/lingodotdev/lingo.dev/pull/2012) [`7bb465c`](https://github.com/lingodotdev/lingo.dev/commit/7bb465c2308949459bfbb083ffcde41be018358e) Thanks [@cherkanovart](https://github.com/cherkanovart)! - fix(cli): handle rebase abort gracefully when no rebase is in progress
+
+## 0.132.3
+
+### Patch Changes
+
+- [#2006](https://github.com/lingodotdev/lingo.dev/pull/2006) [`4e4bea8`](https://github.com/lingodotdev/lingo.dev/commit/4e4bea8ee52ac97473b8edfc5489d15d551d68f6) Thanks [@cherkanovart](https://github.com/cherkanovart)! - fix: strip conversational preamble from LLM responses before JSON parsing
+
+  Some models (e.g. Gemini 2.5 Flash Lite) prepend filler text like "OK" to their responses, causing JSON.parse to fail. Now structurally extracts the outermost JSON object using indexOf/lastIndexOf before parsing, with jsonrepair as fallback.
+
+## 0.132.2
+
+### Patch Changes
+
+- [#2002](https://github.com/lingodotdev/lingo.dev/pull/2002) [`8dff5c1`](https://github.com/lingodotdev/lingo.dev/commit/8dff5c123d0a8219b984ec5c80042666e1374105) Thanks [@cherkanovart](https://github.com/cherkanovart)! - fix: hash emails before sending as PostHog distinct_id
+
+- Updated dependencies [[`8dff5c1`](https://github.com/lingodotdev/lingo.dev/commit/8dff5c123d0a8219b984ec5c80042666e1374105)]:
+  - @lingo.dev/_compiler@0.11.4
+
+## 0.132.1
+
+### Patch Changes
+
+- Updated dependencies [[`8b12cc3`](https://github.com/lingodotdev/lingo.dev/commit/8b12cc3e7cf54a9a4695fe5fd2c986d30be219f3)]:
+  - @lingo.dev/_sdk@0.15.0
+  - @lingo.dev/_compiler@0.11.3
+
+## 0.132.0
+
+### Minor Changes
+
+- [#2004](https://github.com/lingodotdev/lingo.dev/pull/2004) [`45c9437`](https://github.com/lingodotdev/lingo.dev/commit/45c94372f443cc54eb4ae8885f15caf19b931610) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Add localizableKeys bucket config option to force-translate values that would otherwise be skipped by the untranslatable filter (e.g. pure numbers, URLs, ISO dates).
+
+### Patch Changes
+
+- Updated dependencies [[`45c9437`](https://github.com/lingodotdev/lingo.dev/commit/45c94372f443cc54eb4ae8885f15caf19b931610)]:
+  - @lingo.dev/_spec@0.48.0
+  - @lingo.dev/_compiler@0.11.2
+  - @lingo.dev/_sdk@0.14.2
+
+## 0.131.7
+
+### Patch Changes
+
+- [#2000](https://github.com/lingodotdev/lingo.dev/pull/2000) [`56d0a47`](https://github.com/lingodotdev/lingo.dev/commit/56d0a478ccd9b164e266848dc089146bf7632161) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Fix crash in PO loader when current section has no translations
+
+## 0.131.6
+
+### Patch Changes
+
+- [#1995](https://github.com/lingodotdev/lingo.dev/pull/1995) [`a91ad24`](https://github.com/lingodotdev/lingo.dev/commit/a91ad2427879c561ec4c2a587710b00340104948) Thanks [@Nixxx19](https://github.com/Nixxx19)! - Fix Content-Type header in auth.ts whoami request
+
+## 0.131.5
+
+### Patch Changes
+
+- [#1996](https://github.com/lingodotdev/lingo.dev/pull/1996) [`b9ae384`](https://github.com/lingodotdev/lingo.dev/commit/b9ae38436a8feda3c637d8cdb0cc8039e7448019) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - When vNext is configured in i18n.json, the CI command no longer requires LINGODOTDEV_API_KEY or validates against the legacy endpoint. Only LINGO_API_KEY is needed. Parallel mode is automatically enabled for vNext projects.
+
+## 0.131.4
+
+### Patch Changes
+
+- [#1990](https://github.com/lingodotdev/lingo.dev/pull/1990) [`aa4033c`](https://github.com/lingodotdev/lingo.dev/commit/aa4033cfaa07cf1df673c1965d6921c2a8a99d98) Thanks [@cherkanovart](https://github.com/cherkanovart)! - fix(srt): filter undefined/null subtitle entries during push
+
+## 0.131.3
+
+### Patch Changes
+
+- [#1986](https://github.com/lingodotdev/lingo.dev/pull/1986) [`f8c22c1`](https://github.com/lingodotdev/lingo.dev/commit/f8c22c1e77b0739ef7423e572429b9eb6615afb8) Thanks [@cherkanovart](https://github.com/cherkanovart)! - fix(srt): filter undefined/null subtitle entries during push
+
+## 0.131.2
+
+### Patch Changes
+
+- [#1760](https://github.com/lingodotdev/lingo.dev/pull/1760) [`c68b34b`](https://github.com/lingodotdev/lingo.dev/commit/c68b34b061a0409cf90c5635a652e7040314d5f6) Thanks [@vrcprl](https://github.com/vrcprl)! - fix MDX code placeholder
+
 ## 0.131.1
 
 ### Patch Changes

@@ -1,5 +1,42 @@
 # @lingo.dev/compiler
 
+## 0.3.11
+
+### Patch Changes
+
+- [#2015](https://github.com/lingodotdev/lingo.dev/pull/2015) [`13aeb36`](https://github.com/lingodotdev/lingo.dev/commit/13aeb360805ca4fe8ccff9370ea1e11327c3b2df) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Fixed SyntaxError caused by bundlers/require hooks transforming lmdb's CJS bundle
+
+## 0.3.10
+
+### Patch Changes
+
+- [#2002](https://github.com/lingodotdev/lingo.dev/pull/2002) [`8dff5c1`](https://github.com/lingodotdev/lingo.dev/commit/8dff5c123d0a8219b984ec5c80042666e1374105) Thanks [@cherkanovart](https://github.com/cherkanovart)! - fix: hash emails before sending as PostHog distinct_id
+
+- Updated dependencies [[`8dff5c1`](https://github.com/lingodotdev/lingo.dev/commit/8dff5c123d0a8219b984ec5c80042666e1374105)]:
+  - lingo.dev@0.132.2
+
+## 0.3.9
+
+### Patch Changes
+
+- Updated dependencies [[`45c9437`](https://github.com/lingodotdev/lingo.dev/commit/45c94372f443cc54eb4ae8885f15caf19b931610)]:
+  - lingo.dev@0.132.0
+
+## 0.3.8
+
+### Patch Changes
+
+- [#1991](https://github.com/lingodotdev/lingo.dev/pull/1991) [`debcb6e`](https://github.com/lingodotdev/lingo.dev/commit/debcb6e0396bec2088e54c35f74c97d4dcda84ff) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Improve translation error logging by writing detailed errors to .lingo/translation-server.log
+
+## 0.3.7
+
+### Patch Changes
+
+- [#1955](https://github.com/lingodotdev/lingo.dev/pull/1955) [`3c40593`](https://github.com/lingodotdev/lingo.dev/commit/3c40593dfa4c4303795e7032936b31441a0b7e02) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - - Migrate metadata storage from JSON files to LMDB
+  - New storage locations: .lingo/metadata-dev/ and .lingo/metadata-build/
+  - Update new-compiler docs
+  - Remove proper-lockfile dependency
+
 ## 0.3.6
 
 ### Patch Changes

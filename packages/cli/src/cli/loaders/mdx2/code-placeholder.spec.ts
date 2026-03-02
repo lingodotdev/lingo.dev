@@ -3,7 +3,7 @@ import createMdxCodePlaceholderLoader from "./code-placeholder";
 import dedent from "dedent";
 import { md5 } from "../../utils/md5";
 
-const PLACEHOLDER_REGEX = /\{\/\* CODE_PLACEHOLDER_[0-9a-f]+\s*\*\/\}/g;
+const PLACEHOLDER_REGEX = /CODE_PLACEHOLDER_[0-9a-f]+_END/g;
 
 const sampleContent = dedent`
 Paragraph with some code:
@@ -19,8 +19,8 @@ describe("MDX Code Placeholder Loader", () => {
 
   it("should replace fenced code with placeholder on pull", async () => {
     const result = await loader.pull("en", sampleContent);
-    const hash = md5('```js\nconsole.log("foo");\n```');
-    const expected = `Paragraph with some code:\n\n{/* CODE_PLACEHOLDER_${hash} */}`;
+    const hash = md5('```js\nconsole.log("foo");\n```').slice(0, 16);
+    const expected = `Paragraph with some code:\n\nCODE_PLACEHOLDER_${hash}_END`;
     expect(result.trim()).toBe(expected);
   });
 
@@ -406,8 +406,8 @@ describe("MDX Code Placeholder Loader", () => {
     it("should replace inline code with placeholder on pull", async () => {
       const md = "This is some `inline()` code.";
       const pulled = await loader.pull("en", md);
-      const hash = md5("`inline()`");
-      const expected = `This is some {/* INLINE_CODE_PLACEHOLDER_${hash} */} code.`;
+      const hash = md5("`inline()`").slice(0, 16);
+      const expected = `This is some INLINE_CODE_PLACEHOLDER_${hash}_END code.`;
       expect(pulled).toBe(expected);
     });
 
@@ -535,7 +535,7 @@ describe("MDX Code Placeholder Loader", () => {
       const pushed = await loader.push("en", translated);
 
       // Should not contain any placeholders
-      expect(pushed).not.toMatch(/\{\/\* CODE_PLACEHOLDER_[0-9a-f]+\s*\*\/\}/);
+      expect(pushed).not.toMatch(/CODE_PLACEHOLDER_[0-9a-f]+_END/);
 
       // Should preserve all special $ characters exactly as they were
       expect(pushed).toContain('const price = "$100";');
@@ -556,7 +556,7 @@ describe("MDX Code Placeholder Loader", () => {
       const pushed = await loader.push("en", translated);
 
       // Should not contain any placeholders
-      expect(pushed).not.toMatch(/\{\/\* INLINE_CODE_PLACEHOLDER_[0-9a-f]+\s*\*\/\}/);
+      expect(pushed).not.toMatch(/INLINE_CODE_PLACEHOLDER_[0-9a-f]+_END/);
 
       // Should preserve all special $ characters
       expect(pushed).toContain("`$price`");
@@ -577,8 +577,8 @@ describe("MDX Code Placeholder Loader", () => {
       const pushed = await loader.push("en", translated);
 
       // Should not contain any placeholders
-      expect(pushed).not.toMatch(/\{\/\* INLINE_CODE_PLACEHOLDER_[0-9a-f]+\s*\*\/\}/);
-      expect(pushed).not.toMatch(/\{\/\* CODE_PLACEHOLDER_[0-9a-f]+\s*\*\/\}/);
+      expect(pushed).not.toMatch(/INLINE_CODE_PLACEHOLDER_[0-9a-f]+_END/);
+      expect(pushed).not.toMatch(/CODE_PLACEHOLDER_[0-9a-f]+_END/);
       expect(pushed).toContain("`getData()`");
       expect(pushed).toContain("Utilize");
     });
@@ -605,7 +605,7 @@ describe("MDX Code Placeholder Loader", () => {
 
       // The fix: ALL placeholders should be replaced, including Arabic ones
       expect(pushedResult).not.toMatch(
-        /\{\/\* INLINE_CODE_PLACEHOLDER_[0-9a-f]+\s*\*\/\}/,
+        /INLINE_CODE_PLACEHOLDER_[0-9a-f]+_END/,
       );
       expect(pushedResult).not.toMatch(/\{\/\* CODE_PLACEHOLDER_[0-9a-f]+\s*\*\/\}/);
 
@@ -639,7 +639,7 @@ describe("MDX Code Placeholder Loader", () => {
 
       // All placeholders should be replaced, even when not in current pullInput
       expect(pushedResult).not.toMatch(
-        /\{\/\* INLINE_CODE_PLACEHOLDER_[0-9a-f]+\s*\*\/\}/,
+        /INLINE_CODE_PLACEHOLDER_[0-9a-f]+_END/,
       );
       expect(pushedResult).not.toMatch(/\{\/\* CODE_PLACEHOLDER_[0-9a-f]+\s*\*\/\}/);
       expect(pushedResult).toContain("`الحصول_على_البيانات()`");
@@ -737,7 +737,7 @@ describe("MDX Code Placeholder Loader", () => {
       // The code block should be present and not replaced with placeholder
       expect(dePushed).toContain("```bash");
       expect(dePushed).toContain("npm install");
-      expect(dePushed).not.toMatch(/\{\/\* CODE_PLACEHOLDER_/);
+      expect(dePushed).not.toMatch(/CODE_PLACEHOLDER_/);
     });
 
     it("should preserve double newlines around placeholders for section splitting", async () => {
@@ -764,7 +764,7 @@ describe("MDX Code Placeholder Loader", () => {
       const pulled = await loader.pull("en", md);
 
       // Verify placeholders are surrounded by double newlines for proper section splitting
-      const placeholders = pulled.match(/\{\/\* CODE_PLACEHOLDER_[a-f0-9]+\s*\*\/\}/g);
+      const placeholders = pulled.match(/CODE_PLACEHOLDER_[a-f0-9]+_END/g);
       expect(placeholders).toHaveLength(2);
 
       // Check that each placeholder has double newlines around it
@@ -814,12 +814,12 @@ describe("adjacent code blocks bug", () => {
     console.log("___");
 
     // The bug: placeholder is concatenated with "typescript" from next block
-    const bugPattern = /\{\/\* CODE_PLACEHOLDER_[a-f0-9]+\s*\*\/\}typescript/;
+    const bugPattern = /CODE_PLACEHOLDER_[a-f0-9]+\_ENDtypescript/;
     expect(pulled).not.toMatch(bugPattern);
 
     // Should have proper separation
     expect(pulled).toMatch(
-      /\{\/\* CODE_PLACEHOLDER_[a-f0-9]+\s*\*\/\}\n\n\{\/\* CODE_PLACEHOLDER_[a-f0-9]+\s*\*\/\}/,
+      /CODE_PLACEHOLDER_[a-f0-9]+_END\n\nCODE_PLACEHOLDER_[a-f0-9]+_END/,
     );
   });
 });
@@ -885,13 +885,13 @@ describe("placeholder format edge cases (regression)", () => {
     const koreanMdx = `\`코드\` 디렉토리와 그 내용을 이해합니다.`;
     const pulled = await loader.pull("ko", koreanMdx);
 
-    expect(pulled).toMatch(/^\{\/\* INLINE_CODE_PLACEHOLDER/);
+    expect(pulled).toMatch(/^INLINE_CODE_PLACEHOLDER/);
 
     // Simulate frontmatter-split: matter.stringify with placeholder at start
     const matter = require('gray-matter');
     const mdxDocument = matter.stringify(pulled, { title: 'Test' });
 
-    expect(mdxDocument).toContain('{/*');
+    expect(mdxDocument).toContain('INLINE_CODE_PLACEHOLDER');
 
     const restored = await loader.push("ko", pulled, koreanMdx, "en", koreanMdx);
     expect(restored).toBe(koreanMdx);
@@ -918,8 +918,8 @@ describe("placeholder format edge cases (regression)", () => {
     const processor = unified().use(remarkParse).use(remarkStringify);
     const parsed = processor.stringify(processor.parse(pulled));
 
-    // JSX comments get escaped by Markdown but structure is preserved
-    // Underscores in placeholder names get escaped: INLINE\_CODE\_PLACEHOLDER
+    // Tag-style placeholders are preserved through markdown parsing
+    // Underscores in placeholder names may get escaped: INLINE\_CODE\_PLACEHOLDER
     expect(parsed).toMatch(/INLINE[_\\]*CODE[_\\]*PLACEHOLDER/);
     expect(parsed).not.toContain('***'); // Not parsed as bold-italic
     expect(parsed).not.toMatch(/___CODE.*___/); // Not using underscore format
@@ -942,7 +942,7 @@ describe("placeholder format edge cases (regression)", () => {
     `;
 
     const pulled = await loader.pull("en", mdContent);
-    const placeholders = pulled.match(/\{\/\* INLINE_CODE_PLACEHOLDER_[a-f0-9]+\s*\*\/\}/g);
+    const placeholders = pulled.match(/INLINE_CODE_PLACEHOLDER_[a-f0-9]+_END/g);
     expect(placeholders).toHaveLength(3);
 
     const matter = require('gray-matter');
@@ -950,7 +950,7 @@ describe("placeholder format edge cases (regression)", () => {
       title: 'Multiple Placeholders'
     });
 
-    expect(mdxDoc).toContain('{/*');
+    expect(mdxDoc).toContain('INLINE_CODE_PLACEHOLDER');
 
     const restored = await loader.push("en", pulled, mdContent, "en", mdContent);
     expect(restored).toBe(mdContent);
@@ -970,13 +970,13 @@ describe("placeholder format edge cases (regression)", () => {
     `;
 
     const pulled = await loader.pull("en", mdContent);
-    expect(pulled).toMatch(/^\{\/\* CODE_PLACEHOLDER/);
+    expect(pulled).toMatch(/^CODE_PLACEHOLDER/);
 
     const matter = require('gray-matter');
     const mdxDoc = matter.stringify(pulled, { title: 'Code First' });
 
     expect(mdxDoc).toContain('title: Code First');
-    expect(mdxDoc).toContain('{/*');
+    expect(mdxDoc).toContain('CODE_PLACEHOLDER');
 
     const restored = await loader.push("en", pulled, mdContent, "en", mdContent);
     expect(restored).toBe(mdContent);

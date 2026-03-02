@@ -18,11 +18,7 @@ import { WebSocket, WebSocketServer } from "ws";
 import type { MetadataSchema, TranslationMiddlewareConfig } from "../types";
 import { getLogger } from "./logger";
 import { TranslationService } from "../translators";
-import {
-  createEmptyMetadata,
-  getMetadataPath,
-  loadMetadata,
-} from "../metadata/manager";
+import { getMetadataPath, loadMetadata } from "../metadata/manager";
 import type { TranslationServerEvent } from "./ws-events";
 import { createEvent } from "./ws-events";
 import type { LocaleCode } from "lingo.dev/spec";
@@ -317,11 +313,11 @@ export class TranslationServer {
     try {
       this.metadata = await loadMetadata(getMetadataPath(this.config));
       this.logger.debug(
-        `Reloaded metadata: ${Object.keys(this.metadata.entries).length} entries`,
+        `Reloaded metadata: ${Object.keys(this.metadata).length} entries`,
       );
     } catch (error) {
       this.logger.warn("Failed to reload metadata:", error);
-      this.metadata = createEmptyMetadata();
+      this.metadata = {};
     }
   }
 
@@ -335,7 +331,7 @@ export class TranslationServer {
    */
   async translateAll(locale: LocaleCode): Promise<{
     translations: Record<string, string>;
-    errors: Array<{ hash: string; error: string }>;
+    errors: Array<{ hash: string; sourceText: string; error: string }>;
   }> {
     if (!this.translationService) {
       throw new Error("Translation server not initialized");
@@ -350,7 +346,7 @@ export class TranslationServer {
       throw new Error("Failed to load metadata");
     }
 
-    const allHashes = Object.keys(this.metadata.entries);
+    const allHashes = Object.keys(this.metadata);
 
     this.logger.info(
       `Translating all ${allHashes.length} entries to ${locale}`,
@@ -371,6 +367,27 @@ export class TranslationServer {
       this.metadata,
       allHashes,
     );
+
+    // Log detailed error information to server log file
+    if (result.errors.length > 0) {
+      this.logger.error(
+        `${result.errors.length} translation error(s) for ${locale}:`,
+      );
+      for (const err of result.errors) {
+        const prefix = `  [${locale}]`;
+        if (err.hash === "all") {
+          this.logger.error(`${prefix} ${err.error}`);
+          continue;
+        }
+        const source =
+          err.sourceText.length > 200
+            ? err.sourceText.slice(0, 200) + "..."
+            : err.sourceText;
+        this.logger.error(
+          `${prefix} hash=${err.hash} source="${source}" error="${err.error}"`,
+        );
+      }
+    }
 
     // Broadcast batch complete event
     const duration = Date.now() - startTime;
@@ -721,7 +738,7 @@ export class TranslationServer {
 
       this.logger.info(`🌐 Requesting full dictionary for ${locale}`);
 
-      const allHashes = Object.keys(this.metadata.entries);
+      const allHashes = Object.keys(this.metadata);
 
       // Translate all hashes
       const result = await this.translationService.translate(
