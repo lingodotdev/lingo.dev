@@ -4,11 +4,12 @@ import { LCPCache, LCPCacheParams } from "./cache";
 import { LCPSchema } from "./schema";
 import { LCP_DICTIONARY_FILE_NAME } from "../../_const";
 
-const { mockExistsSync, mockReadFileSync, mockWriteFileSync, mockPrettierFormat, mockPrettierResolveConfig } = vi.hoisted(() => {
+const { mockExistsSync, mockReadFileSync, mockWriteFileSync, mockMkdirSync, mockPrettierFormat, mockPrettierResolveConfig } = vi.hoisted(() => {
   return {
     mockExistsSync: vi.fn(),
     mockReadFileSync: vi.fn(),
     mockWriteFileSync: vi.fn(),
+    mockMkdirSync: vi.fn(),
     mockPrettierFormat: vi.fn(),
     mockPrettierResolveConfig: vi.fn(),
   };
@@ -18,6 +19,7 @@ vi.mock("fs", () => ({
   existsSync: mockExistsSync,
   readFileSync: mockReadFileSync,
   writeFileSync: mockWriteFileSync,
+  mkdirSync: mockMkdirSync,
 }));
 
 vi.mock("prettier", () => ({
@@ -25,8 +27,13 @@ vi.mock("prettier", () => ({
   resolveConfig: mockPrettierResolveConfig,
 }));
 
-// cached JSON is stored in JS file, we need to add export default to make it valid JS file
+// cached JSON is stored as plain JSON (new format)
 function toCachedString(cache: any) {
+  return JSON.stringify(cache, null, 2);
+}
+
+// helper to create legacy format cache (for migration tests)
+function toLegacyCachedString(cache: any) {
   return `export default ${JSON.stringify(cache, null, 2)};`;
 }
 
@@ -451,6 +458,187 @@ describe("LCPCache", () => {
       expect(mockPrettierResolveConfig).toHaveBeenCalledTimes(1);
       expect(mockPrettierFormat).toHaveBeenCalledTimes(1);
       expect(mockWriteFileSync).toHaveBeenCalledWith(cachePath, "formatted");
+    });
+  });
+
+  describe("ensureDictionaryFile", () => {
+    it("creates empty JSON cache when file does not exist", () => {
+      mockExistsSync.mockReturnValue(false);
+      mockWriteFileSync.mockImplementation(() => {});
+
+      LCPCache.ensureDictionaryFile({
+        sourceRoot: params.sourceRoot,
+        lingoDir: params.lingoDir,
+      });
+
+      expect(mockWriteFileSync).toHaveBeenCalledWith(cachePath, "{}");
+    });
+
+    it("does not overwrite existing cache file", () => {
+      mockExistsSync.mockReturnValue(true);
+      mockWriteFileSync.mockImplementation(() => {});
+
+      LCPCache.ensureDictionaryFile({
+        sourceRoot: params.sourceRoot,
+        lingoDir: params.lingoDir,
+      });
+
+      expect(mockWriteFileSync).not.toHaveBeenCalled();
+    });
+  });
+
+  describe("legacy format migration", () => {
+    it("reads and migrates legacy export default format to JSON", () => {
+      mockExistsSync.mockReturnValue(true);
+      mockReadFileSync.mockReturnValue(
+        toLegacyCachedString({
+          version: 0.1,
+          files: {
+            "test.ts": {
+              entries: {
+                key1: {
+                  content: {
+                    en: "Hello",
+                  },
+                  hash: "123",
+                },
+              },
+            },
+          },
+        }),
+      );
+      mockWriteFileSync.mockImplementation(() => {});
+
+      const dictionary = LCPCache.readLocaleDictionary("en", params);
+
+      // Verify data was read correctly
+      expect(dictionary).toEqual({
+        version: 0.1,
+        locale: "en",
+        files: {
+          "test.ts": {
+            entries: {
+              key1: "Hello",
+            },
+          },
+        },
+      });
+
+      // Verify file was migrated to new JSON format
+      expect(mockWriteFileSync).toHaveBeenCalledWith(
+        cachePath,
+        toCachedString({
+          version: 0.1,
+          files: {
+            "test.ts": {
+              entries: {
+                key1: {
+                  content: {
+                    en: "Hello",
+                  },
+                  hash: "123",
+                },
+              },
+            },
+          },
+        }),
+      );
+    });
+
+    it("preserves all data during migration from legacy format", () => {
+      mockExistsSync.mockReturnValue(true);
+      const complexCache = {
+        version: 0.1,
+        files: {
+          "test.ts": {
+            entries: {
+              key1: {
+                content: {
+                  en: "Hello",
+                  fr: "Bonjour",
+                  es: "Hola",
+                },
+                hash: "123",
+              },
+              newKey: {
+                content: {
+                  en: "New",
+                  fr: "Nouveau",
+                },
+                hash: "111",
+              },
+            },
+          },
+          "old.ts": {
+            entries: {
+              oldKey: {
+                content: {
+                  en: "Old",
+                  fr: "Vieux",
+                },
+                hash: "456",
+              },
+            },
+          },
+
+        },
+      };
+      mockReadFileSync.mockReturnValue(toLegacyCachedString(complexCache));
+      mockWriteFileSync.mockImplementation(() => {});
+
+      const dictionary = LCPCache.readLocaleDictionary("fr", params);
+
+      // Verify all French translations were preserved
+      expect(dictionary.files["test.ts"].entries.key1).toBe("Bonjour");
+      expect(dictionary.files["test.ts"].entries.newKey).toBe("Nouveau");
+      expect(dictionary.files["old.ts"].entries.oldKey).toBe("Vieux");
+
+      // Verify migrated cache contains all original data
+      expect(mockWriteFileSync).toHaveBeenCalledWith(
+        cachePath,
+        toCachedString(complexCache),
+      );
+    });
+
+    it("reads new JSON format without migration", () => {
+      mockExistsSync.mockReturnValue(true);
+      // Mock new JSON format (no export default)
+      mockReadFileSync.mockReturnValue(
+        toCachedString({
+          version: 0.1,
+          files: {
+            "test.ts": {
+              entries: {
+                key1: {
+                  content: {
+                    en: "Hello",
+                  },
+                  hash: "123",
+                },
+              },
+            },
+          },
+        }),
+      );
+      mockWriteFileSync.mockImplementation(() => {});
+
+      const dictionary = LCPCache.readLocaleDictionary("en", params);
+
+      // Verify data was read correctly
+      expect(dictionary).toEqual({
+        version: 0.1,
+        locale: "en",
+        files: {
+          "test.ts": {
+            entries: {
+              key1: "Hello",
+            },
+          },
+        },
+      });
+
+      // Verify NO migration write occurred
+      expect(mockWriteFileSync).not.toHaveBeenCalled();
     });
   });
 });
