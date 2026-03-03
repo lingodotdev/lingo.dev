@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
-import { CmdRunContext, CmdRunTask, CmdRunTaskResult } from "./_types";
+import { CmdRunTask, CmdRunTaskResult } from "./_types";
+import { applyRunExitCode } from "./exit-code";
 
 /**
  * Tests that the CLI exits with non-zero code when localization tasks fail.
@@ -34,16 +35,6 @@ describe("run command - exit code on errors", () => {
     };
   }
 
-  function simulateExitCodeCheck(results: Map<CmdRunTask, CmdRunTaskResult>) {
-    // This is the exact logic from run/index.ts after renderSummary
-    const hasErrors = Array.from(results.values()).some(
-      (r) => r.status === "error",
-    );
-    if (hasErrors) {
-      process.exitCode = 1;
-    }
-  }
-
   it("should set exitCode=1 when any task has error status", () => {
     const results = new Map<CmdRunTask, CmdRunTaskResult>();
     results.set(createTask({ targetLocale: "es" }), { status: "success" });
@@ -53,8 +44,9 @@ describe("run command - exit code on errors", () => {
     });
     results.set(createTask({ targetLocale: "de" }), { status: "success" });
 
-    simulateExitCodeCheck(results);
+    const hasErrors = applyRunExitCode(results);
 
+    expect(hasErrors).toBe(true);
     expect(process.exitCode).toBe(1);
   });
 
@@ -63,8 +55,9 @@ describe("run command - exit code on errors", () => {
     results.set(createTask({ targetLocale: "es" }), { status: "success" });
     results.set(createTask({ targetLocale: "fr" }), { status: "success" });
 
-    simulateExitCodeCheck(results);
+    const hasErrors = applyRunExitCode(results);
 
+    expect(hasErrors).toBe(false);
     expect(process.exitCode).toBeUndefined();
   });
 
@@ -73,8 +66,9 @@ describe("run command - exit code on errors", () => {
     results.set(createTask({ targetLocale: "es" }), { status: "skipped" });
     results.set(createTask({ targetLocale: "fr" }), { status: "success" });
 
-    simulateExitCodeCheck(results);
+    const hasErrors = applyRunExitCode(results);
 
+    expect(hasErrors).toBe(false);
     expect(process.exitCode).toBeUndefined();
   });
 
@@ -89,8 +83,9 @@ describe("run command - exit code on errors", () => {
       error: new Error("fail 2"),
     });
 
-    simulateExitCodeCheck(results);
+    const hasErrors = applyRunExitCode(results);
 
+    expect(hasErrors).toBe(true);
     expect(process.exitCode).toBe(1);
   });
 
@@ -103,16 +98,18 @@ describe("run command - exit code on errors", () => {
       error: new Error("one failure"),
     });
 
-    simulateExitCodeCheck(results);
+    const hasErrors = applyRunExitCode(results);
 
+    expect(hasErrors).toBe(true);
     expect(process.exitCode).toBe(1);
   });
 
   it("should NOT set exitCode when results map is empty", () => {
     const results = new Map<CmdRunTask, CmdRunTaskResult>();
 
-    simulateExitCodeCheck(results);
+    const hasErrors = applyRunExitCode(results);
 
+    expect(hasErrors).toBe(false);
     expect(process.exitCode).toBeUndefined();
   });
 });
