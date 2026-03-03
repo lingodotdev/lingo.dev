@@ -1,5 +1,11 @@
 # @lingo.dev/\_sdk
 
+## 0.15.2
+
+### Patch Changes
+
+- [#2027](https://github.com/lingodotdev/lingo.dev/pull/2027) [`bb3ec79`](https://github.com/lingodotdev/lingo.dev/commit/bb3ec797ad0379d99f84f20731f37ab03f759b00) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Add vNext API support to LingoDotDevEngine. When engineId is provided, the engine routes requests to the vNext API. Refactor vNext localizer to use LingoDotDevEngine from SDK instead of custom inline implementation
+
 ## 0.15.1
 
 ### Patch Changes
