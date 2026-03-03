@@ -9,6 +9,7 @@ import execute from "./execute";
 import watch from "./watch";
 import { CmdRunContext, flagsSchema } from "./_types";
 import frozen from "./frozen";
+import { applyRunExitCode } from "./exit-code";
 import {
   renderClear,
   renderSpacer,
@@ -163,9 +164,11 @@ export default new Command()
       await renderSummary(ctx.results);
       await renderSpacer();
 
+      const hasErrors = applyRunExitCode(ctx.results);
+
       // Play sound after main tasks complete if sound flag is enabled
       if (ctx.flags.sound) {
-        await playSound("success");
+        await playSound(hasErrors ? "failure" : "success");
       }
 
       // If watch mode is enabled, start watching for changes
