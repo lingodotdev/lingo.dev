@@ -9,6 +9,7 @@ const engineParamsSchema = Z.object({
   apiUrl: Z.string().url().default("https://engine.lingo.dev"),
   batchSize: Z.number().int().gt(0).lte(250).default(25),
   idealBatchItemSize: Z.number().int().gt(0).lte(2500).default(250),
+  engineId: Z.string().optional(),
 }).passthrough();
 
 const payloadSchema = Z.record(Z.string(), Z.any());
@@ -21,6 +22,8 @@ const localizationParamsSchema = Z.object({
   fast: Z.boolean().optional(),
   reference: referenceSchema.optional(),
   hints: hintsSchema.optional(),
+  filePath: Z.string().optional(),
+  triggerType: Z.enum(["cli", "ci"]).optional(),
 });
 
 /**
@@ -31,12 +34,34 @@ const localizationParamsSchema = Z.object({
 export class LingoDotDevEngine {
   protected config: Z.infer<typeof engineParamsSchema>;
 
+  private readonly sessionId = createId();
+
+  private get isVNext(): boolean {
+    return !!this.config.engineId;
+  }
+
+  private get headers(): Record<string, string> {
+    return this.isVNext
+      ? {
+          "Content-Type": "application/json; charset=utf-8",
+          "X-API-Key": this.config.apiKey,
+        }
+      : {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${this.config.apiKey}`,
+        };
+  }
+
   /**
    * Create a new LingoDotDevEngine instance
    * @param config - Configuration options for the Engine
    */
   constructor(config: Partial<Z.infer<typeof engineParamsSchema>>) {
-    this.config = engineParamsSchema.parse(config);
+    const parsed = engineParamsSchema.parse(config);
+    if (!config.apiUrl && parsed.engineId) {
+      parsed.apiUrl = "https://api.lingo.dev";
+    }
+    this.config = parsed;
   }
 
   /**
@@ -77,6 +102,8 @@ export class LingoDotDevEngine {
         { data: chunk, reference: params.reference, hints: params.hints },
         workflowId,
         params.fast || false,
+        params.filePath,
+        params.triggerType,
         signal,
       );
 
@@ -97,6 +124,8 @@ export class LingoDotDevEngine {
    * @param payload - Payload containing the chunk to be localized
    * @param workflowId - Workflow ID for tracking
    * @param fast - Whether to use fast mode
+   * @param filePath - Optional file path for metadata
+   * @param triggerType - Optional trigger type for vNext requests
    * @param signal - Optional AbortSignal to cancel the operation
    * @returns Localized chunk
    */
@@ -110,16 +139,27 @@ export class LingoDotDevEngine {
     },
     workflowId: string,
     fast: boolean,
+    filePath?: string,
+    triggerType?: "cli" | "ci",
     signal?: AbortSignal,
   ): Promise<Record<string, string>> {
-    const res = await fetch(`${this.config.apiUrl}/i18n`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-        Authorization: `Bearer ${this.config.apiKey}`,
-      },
-      body: JSON.stringify(
-        {
+    const url = this.isVNext
+      ? `${this.config.apiUrl}/process/${this.config.engineId}/localize`
+      : `${this.config.apiUrl}/i18n`;
+
+    const body = this.isVNext
+      ? {
+          params: { fast },
+          sourceLocale,
+          targetLocale,
+          data: payload.data,
+          reference: payload.reference,
+          hints: payload.hints,
+          sessionId: this.sessionId,
+          triggerType,
+          metadata: filePath ? { filePath } : undefined,
+        }
+      : {
           params: { workflowId, fast },
           locale: {
             source: sourceLocale,
@@ -128,10 +168,12 @@ export class LingoDotDevEngine {
           data: payload.data,
           reference: payload.reference,
           hints: payload.hints,
-        },
-        null,
-        2,
-      ),
+        };
+
+    const res = await fetch(url, {
+      method: "POST",
+      headers: this.headers,
+      body: JSON.stringify(body, null, 2),
       signal,
     });
 
@@ -455,8 +497,16 @@ export class LingoDotDevEngine {
       trackProps,
     );
     try {
+      const mapped = chat.reduce(
+        (acc, msg, i) => {
+          acc[`chat_${i}`] = msg.text;
+          return acc;
+        },
+        {} as Record<string, string>,
+      );
+
       const localized = await this._localizeRaw(
-        { chat },
+        mapped,
         params,
         progressCallback,
         signal,
@@ -689,12 +739,13 @@ export class LingoDotDevEngine {
       trackProps,
     );
     try {
-      const response = await fetch(`${this.config.apiUrl}/recognize`, {
+      const url = this.isVNext
+        ? `${this.config.apiUrl}/process/recognize`
+        : `${this.config.apiUrl}/recognize`;
+
+      const response = await fetch(url, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${this.config.apiKey}`,
-        },
+        headers: this.headers,
         body: JSON.stringify({ text }),
         signal,
       });
@@ -733,6 +784,10 @@ export class LingoDotDevEngine {
   async whoami(
     signal?: AbortSignal,
   ): Promise<{ email: string; id: string } | null> {
+    if (this.isVNext) {
+      return { email: "vnext-user", id: this.config.engineId! };
+    }
+
     try {
       const res = await fetch(`${this.config.apiUrl}/whoami`, {
         method: "POST",

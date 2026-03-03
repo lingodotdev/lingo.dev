@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 
 vi.mock("./utils/observability");
 
@@ -150,6 +150,187 @@ describe("ReplexicaEngine", () => {
       );
 
       expect(result).toEqual([]);
+    });
+  });
+
+  describe("localizeChat", () => {
+    it("should flatten chat texts and preserve speaker names", async () => {
+      const engine = new LingoDotDevEngine({ apiKey: "test" });
+      const mockLocalizeRaw = vi.spyOn(engine as any, "_localizeRaw");
+      mockLocalizeRaw.mockImplementation(async (obj: any) => {
+        return Object.fromEntries(
+          Object.entries(obj).map(([key, value]) => [key, `ES:${value}`]),
+        );
+      });
+
+      const input = [
+        { name: "Alice", text: "Hello! How are you?" },
+        { name: "Bob", text: "I'm doing great, thanks!" },
+      ];
+
+      const result = await engine.localizeChat(input, {
+        sourceLocale: "en",
+        targetLocale: "es",
+      });
+
+      // Verify only texts are sent, keyed by index
+      expect(mockLocalizeRaw).toHaveBeenCalledWith(
+        {
+          chat_0: "Hello! How are you?",
+          chat_1: "I'm doing great, thanks!",
+        },
+        { sourceLocale: "en", targetLocale: "es" },
+        undefined,
+        undefined,
+      );
+
+      // Verify names are preserved and texts are translated
+      expect(result).toEqual([
+        { name: "Alice", text: "ES:Hello! How are you?" },
+        { name: "Bob", text: "ES:I'm doing great, thanks!" },
+      ]);
+    });
+  });
+
+  describe("LingoDotDevEngine with engineId (vNext)", () => {
+    let mockFetch: ReturnType<typeof vi.fn>;
+
+    beforeEach(() => {
+      mockFetch = vi.fn();
+      global.fetch = mockFetch as any;
+    });
+
+    it("should use vNext endpoint and X-API-Key header", async () => {
+      mockFetch.mockResolvedValue({
+        ok: true,
+        json: async () => ({ data: { greeting: "Hola" } }),
+      });
+
+      const engine = new LingoDotDevEngine({
+        apiKey: "test-vnext-key",
+        engineId: "eng_123",
+      });
+
+      await engine.localizeObject(
+        { greeting: "Hello" },
+        { sourceLocale: "en", targetLocale: "es" },
+      );
+
+      const [url, options] = mockFetch.mock.calls[0];
+      expect(url).toMatch(/\/process\/eng_123\/localize$/);
+      expect(options.headers["X-API-Key"]).toBe("test-vnext-key");
+      expect(options.headers["Authorization"]).toBeUndefined();
+    });
+
+    it("should send flat locale fields (not nested)", async () => {
+      mockFetch.mockResolvedValue({
+        ok: true,
+        json: async () => ({ data: { greeting: "Hola" } }),
+      });
+
+      const engine = new LingoDotDevEngine({
+        apiKey: "test-key",
+        engineId: "eng_123",
+      });
+
+      await engine.localizeObject(
+        { greeting: "Hello" },
+        { sourceLocale: "en", targetLocale: "es" },
+      );
+
+      const body = JSON.parse(mockFetch.mock.calls[0][1].body);
+      expect(body.sourceLocale).toBe("en");
+      expect(body.targetLocale).toBe("es");
+      expect(body.locale).toBeUndefined();
+    });
+
+    it("should include sessionId and triggerType in request body", async () => {
+      mockFetch.mockResolvedValue({
+        ok: true,
+        json: async () => ({ data: { greeting: "Hola" } }),
+      });
+
+      const engine = new LingoDotDevEngine({
+        apiKey: "test-key",
+        engineId: "eng_123",
+      });
+
+      await engine.localizeObject(
+        { greeting: "Hello" },
+        { sourceLocale: "en", targetLocale: "es", triggerType: "ci" },
+      );
+
+      const body = JSON.parse(mockFetch.mock.calls[0][1].body);
+      expect(body.sessionId).toBeDefined();
+      expect(body.triggerType).toBe("ci");
+    });
+
+    it("should generate a consistent sessionId across multiple requests", async () => {
+      mockFetch.mockResolvedValue({
+        ok: true,
+        json: async () => ({ data: { a: "Hola", b: "Adios" } }),
+      });
+
+      const engine = new LingoDotDevEngine({
+        apiKey: "test-key",
+        engineId: "eng_123",
+      });
+
+      await engine.localizeObject(
+        { a: "Hello" },
+        { sourceLocale: "en", targetLocale: "es" },
+      );
+      await engine.localizeObject(
+        { b: "Goodbye" },
+        { sourceLocale: "en", targetLocale: "es" },
+      );
+
+      const sessionId1 = JSON.parse(mockFetch.mock.calls[0][1].body).sessionId;
+      const sessionId2 = JSON.parse(mockFetch.mock.calls[1][1].body).sessionId;
+      expect(sessionId1).toBe(sessionId2);
+    });
+
+    it("should include filePath in metadata when provided", async () => {
+      mockFetch.mockResolvedValue({
+        ok: true,
+        json: async () => ({ data: { greeting: "Hola" } }),
+      });
+
+      const engine = new LingoDotDevEngine({
+        apiKey: "test-key",
+        engineId: "eng_123",
+      });
+
+      await engine.localizeObject(
+        { greeting: "Hello" },
+        {
+          sourceLocale: "en",
+          targetLocale: "es",
+          filePath: "src/messages.json",
+        },
+      );
+
+      const body = JSON.parse(mockFetch.mock.calls[0][1].body);
+      expect(body.metadata).toEqual({ filePath: "src/messages.json" });
+    });
+
+    it("should use /process/recognize endpoint for recognizeLocale", async () => {
+      mockFetch.mockResolvedValue({
+        ok: true,
+        json: async () => ({ locale: "fr" }),
+      });
+
+      const engine = new LingoDotDevEngine({
+        apiKey: "test-key",
+        engineId: "eng_123",
+      });
+
+      const result = await engine.recognizeLocale("Bonjour le monde");
+
+      const [url, options] = mockFetch.mock.calls[0];
+      expect(url).toMatch(/\/process\/recognize$/);
+      expect(options.headers["X-API-Key"]).toBe("test-key");
+      expect(result).toBe("fr");
     });
   });
 
