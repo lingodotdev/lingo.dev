@@ -90,33 +90,52 @@ function inferPluralizationModel(
 export function createLingoConfig(
   options: PartialLingoConfig & Partial<Pick<LingoConfig, LingoInternalFields>>,
 ): LingoConfig {
+  const cleanOptions = { ...options };
+
+  const cleanObject = (obj: any) => {
+    if (!obj || typeof obj !== "object") return;
+    Object.keys(obj).forEach((key) => {
+      if (obj[key] === undefined) {
+        delete obj[key];
+      } else if (
+        obj[key] &&
+        typeof obj[key] === "object" &&
+        !Array.isArray(obj[key])
+      ) {
+        cleanObject(obj[key]);
+      }
+    });
+  };
+
+  cleanObject(cleanOptions);
+
   const config: LingoConfig = {
     ...DEFAULT_CONFIG,
-    ...options,
+    ...cleanOptions,
     environment:
-      options.environment ??
+      cleanOptions.environment ??
       (process.env.NODE_ENV === "development" ? "development" : "production"),
-    cacheType: options.cacheType ?? "local",
+    cacheType: cleanOptions.cacheType ?? "local",
     dev: {
       ...DEFAULT_CONFIG.dev,
-      ...options.dev,
+      ...cleanOptions.dev,
     },
     pluralization: {
       ...DEFAULT_CONFIG.pluralization,
-      ...options.pluralization,
+      ...cleanOptions.pluralization,
     },
     localePersistence: {
       ...DEFAULT_CONFIG.localePersistence,
-      ...options.localePersistence,
+      ...cleanOptions.localePersistence,
       config: {
         ...DEFAULT_CONFIG.localePersistence.config,
-        ...options.localePersistence?.config,
+        ...cleanOptions.localePersistence?.config,
       },
     },
   };
 
-  const explicitEnabled = options.pluralization?.enabled;
-  const explicitModel = options.pluralization?.model;
+  const explicitEnabled = cleanOptions.pluralization?.enabled;
+  const explicitModel = cleanOptions.pluralization?.model;
   const hasExplicitModel =
     typeof explicitModel === "string" && explicitModel.trim().length > 0;
   const hasExplicitEnabled = typeof explicitEnabled === "boolean";
