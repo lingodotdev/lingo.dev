@@ -1,5 +1,11 @@
 # @lingo.dev/\_sdk
 
+## 0.15.3
+
+### Patch Changes
+
+- [#2031](https://github.com/lingodotdev/lingo.dev/pull/2031) [`1cfcf73`](https://github.com/lingodotdev/lingo.dev/commit/1cfcf736b0c6494bf66aa2478b2e7c194bdd5b92) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Add whoami support for vNext API
+
 ## 0.15.2
 
 ### Patch Changes
