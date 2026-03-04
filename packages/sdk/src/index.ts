@@ -784,17 +784,14 @@ export class LingoDotDevEngine {
   async whoami(
     signal?: AbortSignal,
   ): Promise<{ email: string; id: string } | null> {
-    if (this.isVNext) {
-      return { email: "vnext-user", id: this.config.engineId! };
-    }
+    const url = this.isVNext
+      ? `${this.config.apiUrl}/users/me`
+      : `${this.config.apiUrl}/whoami`;
 
     try {
-      const res = await fetch(`${this.config.apiUrl}/whoami`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${this.config.apiKey}`,
-          "Content-Type": "application/json",
-        },
+      const res = await fetch(url, {
+        method: this.isVNext ? "GET" : "POST",
+        headers: this.headers,
         signal,
       });
 

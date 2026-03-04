@@ -332,6 +332,27 @@ describe("ReplexicaEngine", () => {
       expect(options.headers["X-API-Key"]).toBe("test-key");
       expect(result).toBe("fr");
     });
+
+    it("whoami should call /users/me with GET and X-API-Key header", async () => {
+      mockFetch.mockResolvedValue({
+        ok: true,
+        json: async () => ({ id: "usr_abc", email: "user@example.com" }),
+      });
+
+      const engine = new LingoDotDevEngine({
+        apiKey: "test-key",
+        engineId: "eng_123",
+      });
+
+      const result = await engine.whoami();
+
+      const [url, options] = mockFetch.mock.calls[0];
+      expect(url).toMatch(/\/users\/me$/);
+      expect(options.method).toBe("GET");
+      expect(options.headers["X-API-Key"]).toBe("test-key");
+      expect(options.headers["Authorization"]).toBeUndefined();
+      expect(result).toEqual({ id: "usr_abc", email: "user@example.com" });
+    });
   });
 
   describe("hints support", () => {
