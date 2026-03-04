@@ -1,5 +1,11 @@
 # @lingo.dev/compiler
 
+## 0.3.12
+
+### Patch Changes
+
+- [#2023](https://github.com/lingodotdev/lingo.dev/pull/2023) [`15f361e`](https://github.com/lingodotdev/lingo.dev/commit/15f361e7335fc4200da25b324894b0f1fd38b7e2) Thanks [@AleksandrSl](https://github.com/AleksandrSl)! - Cleanup stale code in the translation server cli and update docs
+
 ## 0.3.11
 
 ### Patch Changes
