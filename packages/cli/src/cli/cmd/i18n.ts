@@ -600,6 +600,7 @@ export default new Command()
         await new Promise((resolve) => setTimeout(resolve, 50));
       } else {
         ora.warn("Localization completed with errors.");
+        process.exitCode = 1;
         await trackEvent(email, "cmd.i18n.error", {
           flags,
           ...aggregateErrorAnalytics(

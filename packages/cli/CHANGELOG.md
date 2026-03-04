@@ -1,5 +1,17 @@
 # lingo.dev
 
+## 0.132.9
+
+### Patch Changes
+
+- [#2027](https://github.com/lingodotdev/lingo.dev/pull/2027) [`bb3ec79`](https://github.com/lingodotdev/lingo.dev/commit/bb3ec797ad0379d99f84f20731f37ab03f759b00) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Add vNext API support to LingoDotDevEngine. When engineId is provided, the engine routes requests to the vNext API. Refactor vNext localizer to use LingoDotDevEngine from SDK instead of custom inline implementation
+
+- [#2026](https://github.com/lingodotdev/lingo.dev/pull/2026) [`a6aa9f2`](https://github.com/lingodotdev/lingo.dev/commit/a6aa9f2df134de2de706246847dcbeef83b13eec) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Exit with non-zero code when localization tasks fail, so CI/CD pipelines correctly detect partial errors
+
+- Updated dependencies [[`bb3ec79`](https://github.com/lingodotdev/lingo.dev/commit/bb3ec797ad0379d99f84f20731f37ab03f759b00)]:
+  - @lingo.dev/_sdk@0.15.2
+  - @lingo.dev/_compiler@0.11.6
+
 ## 0.132.8
 
 ### Patch Changes
