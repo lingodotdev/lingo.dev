@@ -1,4 +1,3 @@
-import path from "path";
 import { Command } from "interactive-commander";
 import createOra from "ora";
 import { getSettings } from "../../utils/settings";
@@ -7,7 +6,6 @@ import { IIntegrationFlow } from "./flows/_base";
 import { PullRequestFlow } from "./flows/pull-request";
 import { InBranchFlow } from "./flows/in-branch";
 import { getPlatformKit } from "./platforms";
-import { getConfig } from "../../utils/config";
 
 interface CIOptions {
   parallel?: boolean;
@@ -72,18 +70,6 @@ export default new Command()
     parseBooleanArg,
   )
   .action(async (options: CIOptions) => {
-    const configDir = options.workingDirectory
-      ? path.resolve(process.cwd(), options.workingDirectory)
-      : process.cwd();
-    const originalCwd = process.cwd();
-    let config;
-    try {
-      process.chdir(configDir);
-      config = getConfig(false);
-    } finally {
-      process.chdir(originalCwd);
-    }
-
     const settings = getSettings(options.apiKey);
 
     if (!settings.auth.apiKey) {
