@@ -105,7 +105,9 @@ export default new Command()
     }
 
     const env = {
-      LINGODOTDEV_API_KEY: settings.auth.apiKey,
+      ...(settings.auth.apiKey && {
+        LINGODOTDEV_API_KEY: settings.auth.apiKey,
+      }),
       LINGODOTDEV_PULL_REQUEST: options.pullRequest?.toString() || "false",
       ...(options.commitMessage && {
         LINGODOTDEV_COMMIT_MESSAGE: options.commitMessage,

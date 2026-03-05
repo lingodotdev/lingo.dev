@@ -16,7 +16,7 @@ export default function createLingoDotDevLocalizer(
       dedent`
         You're trying to use ${chalk.hex(colors.green)(
           "Lingo.dev",
-        )} provider, however, no API key is configured.
+        )} provider, however, you are not authenticated.
 
         To fix this issue:
         1. Run ${chalk.dim("lingo.dev login")} to authenticate, or
