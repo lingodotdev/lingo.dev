@@ -47,6 +47,7 @@ export abstract class PlatformKit<
 
   get config() {
     const env = Z.object({
+      LINGO_API_KEY: Z.string().optional(),
       LINGODOTDEV_API_KEY: Z.string().optional(),
       LINGODOTDEV_PULL_REQUEST: Z.preprocess(
         (val) => val === "true" || val === true,
@@ -68,7 +69,7 @@ export abstract class PlatformKit<
     }).parse(process.env);
 
     return {
-      replexicaApiKey: env.LINGODOTDEV_API_KEY || "",
+      replexicaApiKey: env.LINGO_API_KEY || env.LINGODOTDEV_API_KEY || "",
       isPullRequestMode: env.LINGODOTDEV_PULL_REQUEST,
       commitMessage: env.LINGODOTDEV_COMMIT_MESSAGE || defaultMessage,
       pullRequestTitle: env.LINGODOTDEV_PULL_REQUEST_TITLE || defaultMessage,

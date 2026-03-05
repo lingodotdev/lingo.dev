@@ -84,41 +84,29 @@ export default new Command()
       process.chdir(originalCwd);
     }
 
-    const isVNext = !!config?.vNext;
-
     const settings = getSettings(options.apiKey);
 
-    if (isVNext) {
-      if (!settings.auth.vnext?.apiKey) {
-        console.error(
-          "No LINGO_API_KEY provided. vNext requires LINGO_API_KEY environment variable.",
-        );
-        return;
-      }
-    } else {
-      if (!settings.auth.apiKey) {
-        console.error("No API key provided");
-        return;
-      }
+    if (!settings.auth.apiKey) {
+      console.error(
+        "No API key provided. Set LINGO_API_KEY environment variable or use --api-key flag.",
+      );
+      return;
+    }
 
-      const authenticator = createAuthenticator({
-        apiUrl: settings.auth.apiUrl,
-        apiKey: settings.auth.apiKey,
-      });
+    const authenticator = createAuthenticator({
+      apiUrl: settings.auth.apiUrl,
+      apiKey: settings.auth.apiKey,
+    });
 
-      const auth = await authenticator.whoami();
-      if (!auth) {
-        console.error("Not authenticated");
-        return;
-      }
+    const auth = await authenticator.whoami();
+    if (!auth) {
+      console.error("Not authenticated");
+      return;
     }
 
     const env = {
       ...(settings.auth.apiKey && {
-        LINGODOTDEV_API_KEY: settings.auth.apiKey,
-      }),
-      ...(settings.auth.vnext?.apiKey && {
-        LINGO_API_KEY: settings.auth.vnext.apiKey,
+        LINGO_API_KEY: settings.auth.apiKey,
       }),
       LINGODOTDEV_PULL_REQUEST: options.pullRequest?.toString() || "false",
       ...(options.commitMessage && {
@@ -162,7 +150,7 @@ export default new Command()
     }
 
     const hasChanges = await flow.run({
-      parallel: isVNext || options.parallel,
+      parallel: options.parallel,
     });
     if (!hasChanges) {
       return;

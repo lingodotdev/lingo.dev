@@ -96,22 +96,26 @@ async function getDistinctId(): Promise<{
 
 async function tryGetEmail(): Promise<string | null> {
   const rc = getRc();
-  const apiKey = process.env.LINGODOTDEV_API_KEY || rc?.auth?.apiKey;
+  const apiKey =
+    process.env.LINGO_API_KEY ||
+    process.env.LINGODOTDEV_API_KEY ||
+    rc?.auth?.apiKey;
   const apiUrl =
+    process.env.LINGO_API_URL ||
     process.env.LINGODOTDEV_API_URL ||
     rc?.auth?.apiUrl ||
-    "https://engine.lingo.dev";
+    "https://api.lingo.dev";
 
   if (!apiKey) {
     return null;
   }
 
   try {
-    const res = await fetch(`${apiUrl}/whoami`, {
-      method: "POST",
+    const res = await fetch(`${apiUrl}/users/me`, {
+      method: "GET",
       headers: {
-        Authorization: `Bearer ${apiKey}`,
-        ContentType: "application/json",
+        "X-API-Key": apiKey,
+        "Content-Type": "application/json",
       },
     });
     if (res.ok) {

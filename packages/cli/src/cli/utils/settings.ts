@@ -20,10 +20,12 @@ export function getSettings(explicitApiKey: string | undefined): CliSettings {
     auth: {
       apiKey:
         explicitApiKey ||
+        env.LINGO_API_KEY ||
         env.LINGODOTDEV_API_KEY ||
         systemFile.auth?.apiKey ||
         defaults.auth.apiKey,
       apiUrl:
+        env.LINGO_API_URL ||
         env.LINGODOTDEV_API_URL ||
         systemFile.auth?.apiUrl ||
         defaults.auth.apiUrl,
@@ -31,11 +33,6 @@ export function getSettings(explicitApiKey: string | undefined): CliSettings {
         env.LINGODOTDEV_WEB_URL ||
         systemFile.auth?.webUrl ||
         defaults.auth.webUrl,
-      vnext: {
-        apiKey:
-          env.LINGO_API_KEY ||
-          systemFile.auth?.vnext?.apiKey,
-      },
     },
     llm: {
       openaiApiKey: env.OPENAI_API_KEY || systemFile.llm?.openaiApiKey,
@@ -72,9 +69,6 @@ const SettingsSchema = Z.object({
     apiKey: Z.string(),
     apiUrl: Z.string(),
     webUrl: Z.string(),
-    vnext: Z.object({
-      apiKey: Z.string().optional(),
-    }).optional(),
   }),
   llm: Z.object({
     openaiApiKey: Z.string().optional(),
@@ -96,7 +90,7 @@ function _loadDefaults(): CliSettings {
   return {
     auth: {
       apiKey: "",
-      apiUrl: "https://engine.lingo.dev",
+      apiUrl: "https://api.lingo.dev",
       webUrl: "https://lingo.dev",
     },
     llm: {},
@@ -105,10 +99,11 @@ function _loadDefaults(): CliSettings {
 
 function _loadEnv() {
   return Z.looseObject({
+    LINGO_API_KEY: Z.string().optional(),
+    LINGO_API_URL: Z.string().optional(),
     LINGODOTDEV_API_KEY: Z.string().optional(),
     LINGODOTDEV_API_URL: Z.string().optional(),
     LINGODOTDEV_WEB_URL: Z.string().optional(),
-    LINGO_API_KEY: Z.string().optional(),
     OPENAI_API_KEY: Z.string().optional(),
     ANTHROPIC_API_KEY: Z.string().optional(),
     GROQ_API_KEY: Z.string().optional(),
@@ -130,9 +125,6 @@ function _loadSystemFile() {
       apiKey: Z.string().optional(),
       apiUrl: Z.string().optional(),
       webUrl: Z.string().optional(),
-      vnext: Z.object({
-        apiKey: Z.string().optional(),
-      }).optional(),
     }).optional(),
     llm: Z.looseObject({
       openaiApiKey: Z.string().optional(),
@@ -161,14 +153,40 @@ function _getSettingsFilePath(): string {
 function _legacyEnvVarWarning() {
   const env = _loadEnv();
 
-  if (env.REPLEXICA_API_KEY && !env.LINGODOTDEV_API_KEY) {
+  if (env.REPLEXICA_API_KEY && !env.LINGO_API_KEY && !env.LINGODOTDEV_API_KEY) {
     console.warn(
       "\x1b[33m%s\x1b[0m",
       `
 ⚠️  WARNING: REPLEXICA_API_KEY env var is deprecated ⚠️
 ===========================================================
 
-Please use LINGODOTDEV_API_KEY instead.
+Please use LINGO_API_KEY instead.
+===========================================================
+`,
+    );
+  }
+
+  if (env.LINGODOTDEV_API_KEY && !env.LINGO_API_KEY) {
+    console.warn(
+      "\x1b[33m%s\x1b[0m",
+      `
+⚠️  WARNING: LINGODOTDEV_API_KEY env var is deprecated ⚠️
+===========================================================
+
+Please use LINGO_API_KEY instead.
+===========================================================
+`,
+    );
+  }
+
+  if (env.LINGODOTDEV_API_URL && !env.LINGO_API_URL) {
+    console.warn(
+      "\x1b[33m%s\x1b[0m",
+      `
+⚠️  WARNING: LINGODOTDEV_API_URL env var is deprecated ⚠️
+===========================================================
+
+Please use LINGO_API_URL instead.
 ===========================================================
 `,
     );
@@ -179,10 +197,13 @@ function _envVarsInfo() {
   const env = _loadEnv();
   const systemFile = _loadSystemFile();
 
-  if (env.LINGODOTDEV_API_KEY && systemFile.auth?.apiKey) {
+  if (
+    (env.LINGO_API_KEY || env.LINGODOTDEV_API_KEY) &&
+    systemFile.auth?.apiKey
+  ) {
     console.info(
       "\x1b[36m%s\x1b[0m",
-      `ℹ️  Using LINGODOTDEV_API_KEY env var instead of credentials from user config`,
+      `ℹ️  Using API key from env var instead of credentials from user config`,
     );
   }
   if (env.OPENAI_API_KEY && systemFile.llm?.openaiApiKey) {
@@ -221,22 +242,16 @@ function _envVarsInfo() {
       `ℹ️  Using MISTRAL_API_KEY env var instead of key from user config`,
     );
   }
-  if (env.LINGODOTDEV_API_URL) {
+  if (env.LINGO_API_URL || env.LINGODOTDEV_API_URL) {
     console.info(
       "\x1b[36m%s\x1b[0m",
-      `ℹ️  Using LINGODOTDEV_API_URL: ${env.LINGODOTDEV_API_URL}`,
+      `ℹ️  Using custom API URL: ${env.LINGO_API_URL || env.LINGODOTDEV_API_URL}`,
     );
   }
   if (env.LINGODOTDEV_WEB_URL) {
     console.info(
       "\x1b[36m%s\x1b[0m",
       `ℹ️  Using LINGODOTDEV_WEB_URL: ${env.LINGODOTDEV_WEB_URL}`,
-    );
-  }
-  if (env.LINGO_API_KEY && systemFile.auth?.vnext?.apiKey) {
-    console.info(
-      "\x1b[36m%s\x1b[0m",
-      `ℹ️  Using LINGO_API_KEY env var instead of key from user config`,
     );
   }
 }

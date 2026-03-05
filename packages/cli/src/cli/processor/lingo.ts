@@ -4,6 +4,7 @@ import { LocalizerInput, LocalizerProgressFn } from "./_base";
 export function createLingoLocalizer(params: {
   apiKey?: string;
   apiUrl: string;
+  engineId?: string;
 }) {
   return async (input: LocalizerInput, onProgress: LocalizerProgressFn) => {
     if (!Object.keys(input.processableData).length) {
@@ -13,6 +14,7 @@ export function createLingoLocalizer(params: {
     const lingo = new LingoDotDevEngine({
       apiKey: params.apiKey,
       apiUrl: params.apiUrl,
+      ...(params.engineId && { engineId: params.engineId }),
     });
 
     const result = await lingo.localizeObject(

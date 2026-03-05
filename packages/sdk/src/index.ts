@@ -6,7 +6,7 @@ import { TRACKING_EVENTS } from "./utils/tracking-events";
 
 const engineParamsSchema = Z.object({
   apiKey: Z.string(),
-  apiUrl: Z.string().url().default("https://engine.lingo.dev"),
+  apiUrl: Z.string().url().default("https://api.lingo.dev"),
   batchSize: Z.number().int().gt(0).lte(250).default(25),
   idealBatchItemSize: Z.number().int().gt(0).lte(2500).default(250),
   engineId: Z.string().optional(),
@@ -36,20 +36,11 @@ export class LingoDotDevEngine {
 
   private readonly sessionId = createId();
 
-  private get isVNext(): boolean {
-    return !!this.config.engineId;
-  }
-
   private get headers(): Record<string, string> {
-    return this.isVNext
-      ? {
-          "Content-Type": "application/json; charset=utf-8",
-          "X-API-Key": this.config.apiKey,
-        }
-      : {
-          "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${this.config.apiKey}`,
-        };
+    return {
+      "Content-Type": "application/json; charset=utf-8",
+      "X-API-Key": this.config.apiKey,
+    };
   }
 
   /**
@@ -57,11 +48,7 @@ export class LingoDotDevEngine {
    * @param config - Configuration options for the Engine
    */
   constructor(config: Partial<Z.infer<typeof engineParamsSchema>>) {
-    const parsed = engineParamsSchema.parse(config);
-    if (!config.apiUrl && parsed.engineId) {
-      parsed.apiUrl = "https://api.lingo.dev";
-    }
-    this.config = parsed;
+    this.config = engineParamsSchema.parse(config);
   }
 
   /**
@@ -125,7 +112,7 @@ export class LingoDotDevEngine {
    * @param workflowId - Workflow ID for tracking
    * @param fast - Whether to use fast mode
    * @param filePath - Optional file path for metadata
-   * @param triggerType - Optional trigger type for vNext requests
+   * @param triggerType - Optional trigger type
    * @param signal - Optional AbortSignal to cancel the operation
    * @returns Localized chunk
    */
@@ -143,32 +130,20 @@ export class LingoDotDevEngine {
     triggerType?: "cli" | "ci",
     signal?: AbortSignal,
   ): Promise<Record<string, string>> {
-    const url = this.isVNext
-      ? `${this.config.apiUrl}/process/${this.config.engineId}/localize`
-      : `${this.config.apiUrl}/i18n`;
+    const url = `${this.config.apiUrl}/process/localize`;
 
-    const body = this.isVNext
-      ? {
-          params: { fast },
-          sourceLocale,
-          targetLocale,
-          data: payload.data,
-          reference: payload.reference,
-          hints: payload.hints,
-          sessionId: this.sessionId,
-          triggerType,
-          metadata: filePath ? { filePath } : undefined,
-        }
-      : {
-          params: { workflowId, fast },
-          locale: {
-            source: sourceLocale,
-            target: targetLocale,
-          },
-          data: payload.data,
-          reference: payload.reference,
-          hints: payload.hints,
-        };
+    const body = {
+      params: { fast },
+      sourceLocale,
+      targetLocale,
+      data: payload.data,
+      reference: payload.reference,
+      hints: payload.hints,
+      sessionId: this.sessionId,
+      triggerType,
+      metadata: filePath ? { filePath } : undefined,
+      ...(this.config.engineId && { engineId: this.config.engineId }),
+    };
 
     const res = await fetch(url, {
       method: "POST",
@@ -739,9 +714,7 @@ export class LingoDotDevEngine {
       trackProps,
     );
     try {
-      const url = this.isVNext
-        ? `${this.config.apiUrl}/process/recognize`
-        : `${this.config.apiUrl}/recognize`;
+      const url = `${this.config.apiUrl}/process/recognize`;
 
       const response = await fetch(url, {
         method: "POST",
@@ -784,13 +757,11 @@ export class LingoDotDevEngine {
   async whoami(
     signal?: AbortSignal,
   ): Promise<{ email: string; id: string } | null> {
-    const url = this.isVNext
-      ? `${this.config.apiUrl}/users/me`
-      : `${this.config.apiUrl}/whoami`;
+    const url = `${this.config.apiUrl}/users/me`;
 
     try {
       const res = await fetch(url, {
-        method: this.isVNext ? "GET" : "POST",
+        method: "GET",
         headers: this.headers,
         signal,
       });

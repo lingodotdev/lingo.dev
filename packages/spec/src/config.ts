@@ -602,8 +602,32 @@ export const configV1_14Definition = extendConfigDefinition(
   },
 );
 
+// v1.14 -> v1.15
+// Changes: Add "engineId" field, deprecate "vNext"
+export const configV1_15Definition = extendConfigDefinition(
+  configV1_14Definition,
+  {
+    createSchema: (baseSchema) =>
+      baseSchema.extend({
+        engineId: Z.string().optional(),
+      }),
+    createDefaultValue: (baseDefaultValue) => ({
+      ...baseDefaultValue,
+      version: "1.15",
+    }),
+    createUpgrader: (oldConfig) => {
+      const { vNext, ...rest } = oldConfig as any;
+      return {
+        ...rest,
+        version: "1.15",
+        ...(vNext && !rest.engineId ? { engineId: vNext } : {}),
+      };
+    },
+  },
+);
+
 // exports
-export const LATEST_CONFIG_DEFINITION = configV1_14Definition;
+export const LATEST_CONFIG_DEFINITION = configV1_15Definition;
 
 export type I18nConfig = Z.infer<(typeof LATEST_CONFIG_DEFINITION)["schema"]>;
 

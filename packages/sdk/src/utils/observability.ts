@@ -73,10 +73,10 @@ async function getDistinctId(
   if (cached) return cached;
 
   try {
-    const res = await fetch(`${apiUrl}/whoami`, {
-      method: "POST",
+    const res = await fetch(`${apiUrl}/users/me`, {
+      method: "GET",
       headers: {
-        Authorization: `Bearer ${apiKey}`,
+        "X-API-Key": apiKey,
         "Content-Type": "application/json",
       },
     });
