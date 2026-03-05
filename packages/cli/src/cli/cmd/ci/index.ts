@@ -88,7 +88,7 @@ export default new Command()
 
     if (!settings.auth.apiKey) {
       console.error(
-        "No API key provided. Set LINGO_API_KEY environment variable or use --api-key flag.",
+        "No API key provided. Set LINGODOTDEV_API_KEY environment variable or use --api-key flag.",
       );
       return;
     }
@@ -105,9 +105,7 @@ export default new Command()
     }
 
     const env = {
-      ...(settings.auth.apiKey && {
-        LINGO_API_KEY: settings.auth.apiKey,
-      }),
+      LINGODOTDEV_API_KEY: settings.auth.apiKey,
       LINGODOTDEV_PULL_REQUEST: options.pullRequest?.toString() || "false",
       ...(options.commitMessage && {
         LINGODOTDEV_COMMIT_MESSAGE: options.commitMessage,

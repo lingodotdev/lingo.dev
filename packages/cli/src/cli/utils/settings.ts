@@ -160,33 +160,7 @@ function _legacyEnvVarWarning() {
 ⚠️  WARNING: REPLEXICA_API_KEY env var is deprecated ⚠️
 ===========================================================
 
-Please use LINGO_API_KEY instead.
-===========================================================
-`,
-    );
-  }
-
-  if (env.LINGODOTDEV_API_KEY && !env.LINGO_API_KEY) {
-    console.warn(
-      "\x1b[33m%s\x1b[0m",
-      `
-⚠️  WARNING: LINGODOTDEV_API_KEY env var is deprecated ⚠️
-===========================================================
-
-Please use LINGO_API_KEY instead.
-===========================================================
-`,
-    );
-  }
-
-  if (env.LINGODOTDEV_API_URL && !env.LINGO_API_URL) {
-    console.warn(
-      "\x1b[33m%s\x1b[0m",
-      `
-⚠️  WARNING: LINGODOTDEV_API_URL env var is deprecated ⚠️
-===========================================================
-
-Please use LINGO_API_URL instead.
+Please use LINGODOTDEV_API_KEY instead.
 ===========================================================
 `,
     );

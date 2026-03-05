@@ -96,12 +96,8 @@ async function getDistinctId(): Promise<{
 
 async function tryGetEmail(): Promise<string | null> {
   const rc = getRc();
-  const apiKey =
-    process.env.LINGO_API_KEY ||
-    process.env.LINGODOTDEV_API_KEY ||
-    rc?.auth?.apiKey;
+  const apiKey = process.env.LINGODOTDEV_API_KEY || rc?.auth?.apiKey;
   const apiUrl =
-    process.env.LINGO_API_URL ||
     process.env.LINGODOTDEV_API_URL ||
     rc?.auth?.apiUrl ||
     "https://api.lingo.dev";
