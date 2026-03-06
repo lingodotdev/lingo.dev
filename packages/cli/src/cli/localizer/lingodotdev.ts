@@ -21,7 +21,7 @@ export default function createLingoDotDevLocalizer(
         To fix this issue:
         1. Run ${chalk.dim("lingo.dev login")} to authenticate, or
         2. Use the ${chalk.dim("--api-key")} flag to provide an API key.
-        3. Set ${chalk.dim("LINGODOTDEV_API_KEY")} environment variable.
+        3. Set ${chalk.dim("LINGO_API_KEY")} environment variable.
       `,
     );
   }
