@@ -4,7 +4,7 @@ vi.mock("./utils/observability");
 
 import { LingoDotDevEngine } from "./index";
 
-describe("ReplexicaEngine", () => {
+describe("LingoDotDevEngine", () => {
   it("should pass", () => {
     expect(1).toBe(1);
   });
@@ -39,7 +39,10 @@ describe("ReplexicaEngine", () => {
 </html>`.trim();
 
       // Mock the internal localization method
-      const engine = new LingoDotDevEngine({ apiKey: "test" });
+      const engine = new LingoDotDevEngine({
+        apiKey: "test",
+        engineId: "eng_test",
+      });
       const mockLocalizeRaw = vi.spyOn(engine as any, "_localizeRaw");
       mockLocalizeRaw.mockImplementation(async (content: any) => {
         // Simulate translation by adding 'ES:' prefix to all strings
@@ -97,7 +100,10 @@ describe("ReplexicaEngine", () => {
 
   describe("localizeStringArray", () => {
     it("should localize an array of strings and maintain order", async () => {
-      const engine = new LingoDotDevEngine({ apiKey: "test" });
+      const engine = new LingoDotDevEngine({
+        apiKey: "test",
+        engineId: "eng_test",
+      });
       const mockLocalizeRaw = vi.spyOn(engine as any, "_localizeRaw");
       mockLocalizeRaw.mockImplementation(async (obj: any) => {
         // Simulate translation by adding 'ES:' prefix to all string values
@@ -132,7 +138,10 @@ describe("ReplexicaEngine", () => {
     });
 
     it("should handle empty array", async () => {
-      const engine = new LingoDotDevEngine({ apiKey: "test" });
+      const engine = new LingoDotDevEngine({
+        apiKey: "test",
+        engineId: "eng_test",
+      });
       const mockLocalizeRaw = vi.spyOn(engine as any, "_localizeRaw");
       mockLocalizeRaw.mockImplementation(async () => ({}));
 
@@ -155,7 +164,10 @@ describe("ReplexicaEngine", () => {
 
   describe("localizeChat", () => {
     it("should flatten chat texts and preserve speaker names", async () => {
-      const engine = new LingoDotDevEngine({ apiKey: "test" });
+      const engine = new LingoDotDevEngine({
+        apiKey: "test",
+        engineId: "eng_test",
+      });
       const mockLocalizeRaw = vi.spyOn(engine as any, "_localizeRaw");
       mockLocalizeRaw.mockImplementation(async (obj: any) => {
         return Object.fromEntries(
@@ -192,7 +204,7 @@ describe("ReplexicaEngine", () => {
     });
   });
 
-  describe("LingoDotDevEngine with engineId (vNext)", () => {
+  describe("with engineId", () => {
     let mockFetch: ReturnType<typeof vi.fn>;
 
     beforeEach(() => {
@@ -200,29 +212,7 @@ describe("ReplexicaEngine", () => {
       global.fetch = mockFetch as any;
     });
 
-    it("should use vNext endpoint and X-API-Key header", async () => {
-      mockFetch.mockResolvedValue({
-        ok: true,
-        json: async () => ({ data: { greeting: "Hola" } }),
-      });
-
-      const engine = new LingoDotDevEngine({
-        apiKey: "test-vnext-key",
-        engineId: "eng_123",
-      });
-
-      await engine.localizeObject(
-        { greeting: "Hello" },
-        { sourceLocale: "en", targetLocale: "es" },
-      );
-
-      const [url, options] = mockFetch.mock.calls[0];
-      expect(url).toMatch(/\/process\/eng_123\/localize$/);
-      expect(options.headers["X-API-Key"]).toBe("test-vnext-key");
-      expect(options.headers["Authorization"]).toBeUndefined();
-    });
-
-    it("should send flat locale fields (not nested)", async () => {
+    it("should include engineId in request body", async () => {
       mockFetch.mockResolvedValue({
         ok: true,
         json: async () => ({ data: { greeting: "Hola" } }),
@@ -238,10 +228,11 @@ describe("ReplexicaEngine", () => {
         { sourceLocale: "en", targetLocale: "es" },
       );
 
-      const body = JSON.parse(mockFetch.mock.calls[0][1].body);
-      expect(body.sourceLocale).toBe("en");
-      expect(body.targetLocale).toBe("es");
-      expect(body.locale).toBeUndefined();
+      const [url, options] = mockFetch.mock.calls[0];
+      expect(url).toMatch(/\/process\/localize$/);
+      expect(options.headers["X-API-Key"]).toBe("test-key");
+      const body = JSON.parse(options.body);
+      expect(body.engineId).toBe("eng_123");
     });
 
     it("should include sessionId and triggerType in request body", async () => {
@@ -313,8 +304,37 @@ describe("ReplexicaEngine", () => {
       const body = JSON.parse(mockFetch.mock.calls[0][1].body);
       expect(body.metadata).toEqual({ filePath: "src/messages.json" });
     });
+  });
 
-    it("should use /process/recognize endpoint for recognizeLocale", async () => {
+  describe("without engineId", () => {
+    let mockFetch: ReturnType<typeof vi.fn>;
+
+    beforeEach(() => {
+      mockFetch = vi.fn();
+      global.fetch = mockFetch as any;
+    });
+
+    it("should use /process/localize endpoint", async () => {
+      mockFetch.mockResolvedValue({
+        ok: true,
+        json: async () => ({ data: { greeting: "Hola" } }),
+      });
+
+      const engine = new LingoDotDevEngine({
+        apiKey: "test-key",
+      });
+
+      await engine.localizeObject(
+        { greeting: "Hello" },
+        { sourceLocale: "en", targetLocale: "es" },
+      );
+
+      const [url, options] = mockFetch.mock.calls[0];
+      expect(url).toBe("https://api.lingo.dev/process/localize");
+      expect(options.headers["X-API-Key"]).toBe("test-key");
+    });
+
+    it("should use /process/recognize endpoint", async () => {
       mockFetch.mockResolvedValue({
         ok: true,
         json: async () => ({ locale: "fr" }),
@@ -322,18 +342,17 @@ describe("ReplexicaEngine", () => {
 
       const engine = new LingoDotDevEngine({
         apiKey: "test-key",
-        engineId: "eng_123",
       });
 
       const result = await engine.recognizeLocale("Bonjour le monde");
 
       const [url, options] = mockFetch.mock.calls[0];
-      expect(url).toMatch(/\/process\/recognize$/);
+      expect(url).toBe("https://api.lingo.dev/process/recognize");
       expect(options.headers["X-API-Key"]).toBe("test-key");
       expect(result).toBe("fr");
     });
 
-    it("whoami should call /users/me with GET and X-API-Key header", async () => {
+    it("should use /users/me with GET and X-API-Key header", async () => {
       mockFetch.mockResolvedValue({
         ok: true,
         json: async () => ({ id: "usr_abc", email: "user@example.com" }),
@@ -341,23 +360,42 @@ describe("ReplexicaEngine", () => {
 
       const engine = new LingoDotDevEngine({
         apiKey: "test-key",
-        engineId: "eng_123",
       });
 
       const result = await engine.whoami();
 
       const [url, options] = mockFetch.mock.calls[0];
-      expect(url).toMatch(/\/users\/me$/);
+      expect(url).toBe("https://api.lingo.dev/users/me");
       expect(options.method).toBe("GET");
       expect(options.headers["X-API-Key"]).toBe("test-key");
-      expect(options.headers["Authorization"]).toBeUndefined();
       expect(result).toEqual({ id: "usr_abc", email: "user@example.com" });
+    });
+
+    it("should not include engineId in request body", async () => {
+      mockFetch.mockResolvedValue({
+        ok: true,
+        json: async () => ({ data: { greeting: "Hola" } }),
+      });
+
+      const engine = new LingoDotDevEngine({
+        apiKey: "test-key",
+      });
+
+      await engine.localizeObject(
+        { greeting: "Hello" },
+        { sourceLocale: "en", targetLocale: "es" },
+      );
+
+      const body = JSON.parse(mockFetch.mock.calls[0][1].body);
+      expect(body.sourceLocale).toBe("en");
+      expect(body.targetLocale).toBe("es");
+      expect(body.sessionId).toBeDefined();
+      expect(body.engineId).toBeUndefined();
     });
   });
 
   describe("hints support", () => {
     it("should send hints to the backend API", async () => {
-      // Mock global fetch
       const mockFetch = vi.fn();
       global.fetch = mockFetch as any;
 
@@ -374,6 +412,7 @@ describe("ReplexicaEngine", () => {
       const engine = new LingoDotDevEngine({
         apiKey: "test-api-key",
         apiUrl: "https://test.api.url",
+        engineId: "eng_test",
       });
 
       const hints = {
@@ -393,22 +432,19 @@ describe("ReplexicaEngine", () => {
         },
       );
 
-      // Verify fetch was called with correct parameters
       expect(mockFetch).toHaveBeenCalledTimes(1);
       const fetchCall = mockFetch.mock.calls[0];
-      expect(fetchCall[0]).toBe("https://test.api.url/i18n");
+      expect(fetchCall[0]).toBe("https://test.api.url/process/localize");
 
-      // Parse the request body to verify hints are included
       const requestBody = JSON.parse(fetchCall[1].body);
+      expect(requestBody.engineId).toBe("eng_test");
       expect(requestBody.hints).toEqual(hints);
       expect(requestBody.data).toEqual({
         "brand-name": "Optimum",
         "team-label": "NHL Team",
       });
-      expect(requestBody.locale).toEqual({
-        source: "en",
-        target: "es",
-      });
+      expect(requestBody.sourceLocale).toBe("en");
+      expect(requestBody.targetLocale).toBe("es");
     });
 
     it("should handle localizeObject without hints", async () => {
@@ -427,6 +463,7 @@ describe("ReplexicaEngine", () => {
       const engine = new LingoDotDevEngine({
         apiKey: "test-api-key",
         apiUrl: "https://test.api.url",
+        engineId: "eng_test",
       });
 
       await engine.localizeObject(

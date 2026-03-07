@@ -105,7 +105,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: lingodotdev/lingo.dev@main
         with:
-          api-key: \${{ secrets.LINGODOTDEV_API_KEY }}
+          api-key: \${{ secrets.LINGO_API_KEY }}
 `,
     },
     spinner,

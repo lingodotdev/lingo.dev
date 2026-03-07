@@ -49,7 +49,7 @@ Press Enter to open the browser for authentication.
 
 ---
 
-Having issues? Put LINGODOTDEV_API_KEY in your .env file instead.
+Having issues? Put LINGO_API_KEY in your .env file instead.
     `.trim() + "\n",
     );
 
