@@ -76,7 +76,6 @@ export class LingoDotDevEngine {
     const chunkedPayload = this.extractPayloadChunks(finalPayload);
     const processedPayloadChunks: Record<string, string>[] = [];
 
-    const workflowId = createId();
     for (let i = 0; i < chunkedPayload.length; i++) {
       const chunk = chunkedPayload[i];
       const percentageCompleted = Math.round(
@@ -87,7 +86,6 @@ export class LingoDotDevEngine {
         finalParams.sourceLocale,
         finalParams.targetLocale,
         { data: chunk, reference: params.reference, hints: params.hints },
-        workflowId,
         params.fast || false,
         params.filePath,
         params.triggerType,
@@ -109,7 +107,6 @@ export class LingoDotDevEngine {
    * @param sourceLocale - Source locale
    * @param targetLocale - Target locale
    * @param payload - Payload containing the chunk to be localized
-   * @param workflowId - Workflow ID for tracking
    * @param fast - Whether to use fast mode
    * @param filePath - Optional file path for metadata
    * @param triggerType - Optional trigger type
@@ -124,7 +121,6 @@ export class LingoDotDevEngine {
       reference?: Z.infer<typeof referenceSchema>;
       hints?: Z.infer<typeof hintsSchema>;
     },
-    workflowId: string,
     fast: boolean,
     filePath?: string,
     triggerType?: "cli" | "ci",
