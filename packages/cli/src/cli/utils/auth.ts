@@ -18,10 +18,10 @@ export function createAuthenticator(params: AuthenticatorParams) {
   return {
     async whoami(): Promise<AuthPayload | null> {
       try {
-        const res = await fetch(`${params.apiUrl}/whoami`, {
-          method: "POST",
+        const res = await fetch(`${params.apiUrl}/users/me`, {
+          method: "GET",
           headers: {
-            Authorization: `Bearer ${params.apiKey}`,
+            "X-API-Key": params.apiKey,
             "Content-Type": "application/json",
           },
         });

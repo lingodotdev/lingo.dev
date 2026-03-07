@@ -439,6 +439,7 @@ export default new Command()
                 let processPayload = createProcessor(i18nConfig!.provider, {
                   apiKey: settings.auth.apiKey,
                   apiUrl: settings.auth.apiUrl,
+                  engineId: i18nConfig!.engineId,
                 });
                 processPayload = withExponentialBackoff(
                   processPayload,

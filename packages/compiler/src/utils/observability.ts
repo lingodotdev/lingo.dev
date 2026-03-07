@@ -100,18 +100,18 @@ async function tryGetEmail(): Promise<string | null> {
   const apiUrl =
     process.env.LINGODOTDEV_API_URL ||
     rc?.auth?.apiUrl ||
-    "https://engine.lingo.dev";
+    "https://api.lingo.dev";
 
   if (!apiKey) {
     return null;
   }
 
   try {
-    const res = await fetch(`${apiUrl}/whoami`, {
-      method: "POST",
+    const res = await fetch(`${apiUrl}/users/me`, {
+      method: "GET",
       headers: {
-        Authorization: `Bearer ${apiKey}`,
-        ContentType: "application/json",
+        "X-API-Key": apiKey,
+        "Content-Type": "application/json",
       },
     });
     if (res.ok) {

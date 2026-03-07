@@ -50,18 +50,18 @@ export default async function setup(input: CmdRunContext) {
       {
         title: "Selecting localization provider",
         task: async (ctx, task) => {
-          const isPseudo = ctx.flags.pseudo || ctx.config?.dev?.usePseudotranslator;
+          const isPseudo =
+            ctx.flags.pseudo || ctx.config?.dev?.usePseudotranslator;
           const provider = isPseudo ? "pseudo" : ctx.config?.provider;
-          const vNext = ctx.config?.vNext;
-          ctx.localizer = createLocalizer(provider, ctx.flags.apiKey, vNext);
+          const engineId = ctx.config?.engineId;
+          ctx.localizer = createLocalizer(provider, engineId, ctx.flags.apiKey);
           if (!ctx.localizer) {
             throw new Error(
               "Could not create localization provider. Please check your i18n.json configuration.",
             );
           }
           task.title =
-            ctx.localizer.id === "Lingo.dev" ||
-            ctx.localizer.id === "Lingo.dev vNext"
+            ctx.localizer.id === "Lingo.dev"
               ? `Using ${chalk.hex(colors.green)(ctx.localizer.id)} provider`
               : ctx.localizer.id === "pseudo"
                 ? `Using ${chalk.hex(colors.blue)("pseudo")} mode for testing`
@@ -71,8 +71,7 @@ export default async function setup(input: CmdRunContext) {
       {
         title: "Checking authentication",
         enabled: (ctx) =>
-          (ctx.localizer?.id === "Lingo.dev" ||
-            ctx.localizer?.id === "Lingo.dev vNext") &&
+          ctx.localizer?.id === "Lingo.dev" &&
           !ctx.flags.pseudo &&
           !ctx.config?.dev?.usePseudotranslator,
         task: async (ctx, task) => {
@@ -87,9 +86,7 @@ export default async function setup(input: CmdRunContext) {
       },
       {
         title: "Validating configuration",
-        enabled: (ctx) =>
-          ctx.localizer?.id !== "Lingo.dev" &&
-          ctx.localizer?.id !== "Lingo.dev vNext",
+        enabled: (ctx) => ctx.localizer?.id !== "Lingo.dev",
         task: async (ctx, task) => {
           const validationStatus = await ctx.localizer!.validateSettings!();
           if (!validationStatus.valid) {
@@ -103,9 +100,7 @@ export default async function setup(input: CmdRunContext) {
       {
         title: "Initializing localization provider",
         async task(ctx, task) {
-          const isLingoDotDev =
-            ctx.localizer!.id === "Lingo.dev" ||
-            ctx.localizer!.id === "Lingo.dev vNext";
+          const isLingoDotDev = ctx.localizer!.id === "Lingo.dev";
           const isPseudo = ctx.localizer!.id === "pseudo";
 
           const subTasks = isLingoDotDev
