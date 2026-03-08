@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.133.1
+
+### Patch Changes
+
+- [#2036](https://github.com/lingodotdev/lingo.dev/pull/2036) [`a73abec`](https://github.com/lingodotdev/lingo.dev/commit/a73abec7040fcc9146907861360c63bbb3223547) Thanks [@tjazsilovsek](https://github.com/tjazsilovsek)! - Bump @biomejs/js-api and @biomejs/wasm-nodejs to latest versions
+
 ## 0.133.0
 
 ### Minor Changes
