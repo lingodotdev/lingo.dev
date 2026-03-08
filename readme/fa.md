@@ -112,7 +112,7 @@ Set up i18n with the following locales: en, es, and pt-BR. The default locale is
 
 1. پیکربندی مسیریابی مبتنی بر locale (مثلاً `/en`، `/es`، `/pt-BR`)
 2. راه‌اندازی کامپوننت‌های تعویض زبان
-3. پیاده‌سازی تشخیص خودکار locale
+3. پیاده‌سازی شناسایی خودکار locale
 4. تولید فایل‌های پیکربندی لازم
 
 **توجه:** تولید کد به کمک AI غیرقطعی است. کد تولید شده را قبل از commit بررسی کنید.
@@ -140,13 +140,13 @@ npx lingo.dev@latest run
 **نحوه‌ی عملکرد:**
 
 1. محتوای قابل ترجمه را از فایل‌های پیکربندی‌شده استخراج می‌کند
-2. محتوا را برای ترجمه به ارائه‌دهنده‌ی LLM ارسال می‌کند
-3. محتوای ترجمه‌شده را به filesystem بازمی‌نویسد
-4. فایل `i18n.lock` را برای ردیابی ترجمه‌های تکمیل‌شده ایجاد می‌کند (از پردازش تکراری جلوگیری می‌کند)
+2. محتوا را برای ترجمه به ارائه‌دهنده LLM ارسال می‌کند
+3. محتوای ترجمه‌شده را به سیستم فایل بازمی‌نویسد
+4. فایل `i18n.lock` را برای ردیابی ترجمه‌های کامل‌شده ایجاد می‌کند (از پردازش تکراری جلوگیری می‌شود)
 
 **پیکربندی:**
 
-دستور `init` یک فایل `i18n.json` تولید می‌کند. locale‌ها و bucket‌ها را پیکربندی کنید:
+دستور `init` یک فایل `i18n.json` تولید می‌کند. localeها و bucketها را پیکربندی کنید:
 
 ```json
 {
@@ -164,7 +164,7 @@ npx lingo.dev@latest run
 }
 ```
 
-فیلد `provider` اختیاری است (به‌طور پیش‌فرض Lingo.dev Engine). برای ارائه‌دهندگان LLM سفارشی:
+فیلد `provider` اختیاری است (به طور پیش‌فرض Lingo.dev Engine). برای ارائه‌دهندگان LLM سفارشی:
 
 ```json
 {
@@ -226,8 +226,8 @@ jobs:
 
 **الزامات راه‌اندازی:**
 
-1. `LINGODOTDEV_API_KEY` را به secret‌های repository اضافه کنید (Settings > Secrets and variables > Actions)
-2. برای workflow‌های PR: گزینه‌ی "Allow GitHub Actions to create and approve pull requests" را در Settings > Actions > General فعال کنید
+1. مقدار `LINGODOTDEV_API_KEY` را به secrets مخزن اضافه کنید (Settings > Secrets and variables > Actions)
+2. برای workflowهای PR: گزینه "Allow GitHub Actions to create and approve pull requests" را در Settings > Actions > General فعال کنید
 
 **گزینه‌های workflow:**
 
@@ -258,7 +258,7 @@ env:
 | `pull-request`       | `false`                                        | ایجاد PR به جای commit مستقیم |
 | `commit-message`     | `"feat: update translations via @LingoDotDev"` | پیام commit سفارشی            |
 | `pull-request-title` | `"feat: update translations via @LingoDotDev"` | عنوان PR سفارشی               |
-| `working-directory`  | `"."`                                          | دایرکتوری برای اجرا           |
+| `working-directory`  | `"."`                                          | مسیر اجرای دستور              |
 | `parallel`           | `false`                                        | فعال‌سازی پردازش موازی        |
 
 [مطالعه مستندات ←](https://lingo.dev/en/ci/github)
@@ -335,7 +335,7 @@ const locale = await lingoDotDev.recognizeLocale("Bonjour le monde");
 
 ### Lingo.dev Compiler
 
-i18n سنتی مزاحم است. شما هر رشته را در توابع `t()` می‌پیچید، کلیدهای ترجمه اختراع می‌کنید (`home.hero.title.v2`)، فایل‌های JSON موازی نگهداری می‌کنید، و شاهد متورم شدن کامپوننت‌های خود با boilerplate محلی‌سازی هستید. آنقدر خسته‌کننده است که تیم‌ها بین‌المللی‌سازی را به تعویق می‌اندازند تا زمانی که به یک refactor عظیم تبدیل شود.
+i18n سنتی مزاحم است. شما هر رشته را در توابع `t()` قرار می‌دهید، کلیدهای ترجمه (`home.hero.title.v2`) می‌سازید، فایل‌های JSON موازی نگهداری می‌کنید و مشاهده می‌کنید که کامپوننت‌های شما با boilerplate مربوط به بومی‌سازی حجیم می‌شود. این روند آنقدر زمان‌بر و طاقت‌فرسا است که تیم‌ها بین‌المللی‌سازی را تا زمان نیاز به یک بازسازی بزرگ به تعویق می‌اندازند.
 
 کامپایلر Lingo.dev تشریفات را حذف می‌کند. کامپوننت‌های React را با متن ساده انگلیسی بنویسید. کامپایلر رشته‌های قابل ترجمه را در زمان build شناسایی کرده و نسخه‌های محلی‌سازی شده را به صورت خودکار تولید می‌کند. بدون کلید، بدون فایل JSON، بدون تابع wrapper - فقط کد React که اتفاقاً به چندین زبان کار می‌کند.
 
@@ -431,28 +431,28 @@ export function LanguageSwitcher() {
 }
 ```
 
-**توسعه:** `npm run dev` (از pseudotranslator استفاده می‌کند، بدون فراخوانی API)
+**توسعه:** `npm run dev` (استفاده از pseudotranslator، بدون فراخوانی API)
 
-**تولید:** `usePseudotranslator: false` را تنظیم کنید، سپس `next build`
+**تولید:** متغیر `usePseudotranslator: false` را تنظیم کنید سپس `next build`
 
-دایرکتوری `.lingo/` را در version control ثبت کنید.
+دایرکتوری `.lingo/` را در کنترل نسخه ثبت کنید.
 
 **ویژگی‌های کلیدی:**
 
-- بدون هزینه‌ی عملکرد runtime
+- بدون هزینه عملکرد زمان اجرا
 - بدون کلید ترجمه یا فایل JSON
-- بدون تابع `t()` یا کامپوننت wrapper `<T>`
+- بدون توابع `t()` یا کامپوننت‌های wrapper `<T>`
 - شناسایی خودکار متن قابل ترجمه در JSX
 - پشتیبانی از TypeScript
 - ICU MessageFormat برای جمع‌ها
-- بازنویسی دستی از طریق attribute `data-lingo-override`
-- ویجت ویرایشگر ترجمه‌ی داخلی
+- بازنویسی دستی از طریق صفت `data-lingo-override`
+- ویرایشگر داخلی ترجمه
 
 **حالت‌های build:**
 
-- `pseudotranslator`: حالت توسعه با ترجمه‌های placeholder (بدون هزینه‌ی API)
-- `real`: تولید ترجمه‌های واقعی با استفاده از LLM ها
-- `cache-only`: حالت تولید با استفاده از ترجمه‌های از پیش تولید شده از CI (بدون فراخوانی API)
+- `pseudotranslator`: حالت توسعه با ترجمه‌های placeholder (بدون هزینه API)
+- `real`: تولید ترجمه واقعی با استفاده از LLM
+- `cache-only`: حالت تولید با ترجمه‌های از پیش تولید شده از CI (بدون فراخوانی API)
 
 **فریم‌ورک‌های پشتیبانی شده:**
 
@@ -469,14 +469,14 @@ export function LanguageSwitcher() {
 
 مشارکت‌ها خوش‌آمد هستند. لطفاً این دستورالعمل‌ها را دنبال کنید:
 
-1. **مسائل:** [گزارش باگ یا درخواست ویژگی](https://github.com/lingodotdev/lingo.dev/issues)
-2. **درخواست‌های Pull:** [ارسال تغییرات](https://github.com/lingodotdev/lingo.dev/pulls)
-   - هر PR نیاز به یک changeset دارد: `pnpm new` (یا `pnpm new:empty` برای تغییرات بدون انتشار)
-   - قبل از ارسال اطمینان حاصل کنید که تست‌ها موفق هستند
-3. **توسعه:** این یک monorepo با pnpm + turborepo است
+1. **ایرادها:** [گزارش باگ یا درخواست ویژگی](https://github.com/lingodotdev/lingo.dev/issues)
+2. **Pull Requestها:** [ارسال تغییرات](https://github.com/lingodotdev/lingo.dev/pulls)
+   - هر PR نیازمند changeset است: `pnpm new` (یا برای تغییرات غیرمنتشر، `pnpm new:empty`)
+   - قبل از ارسال مطمئن شوید که تست‌ها موفق هستند
+3. **توسعه:** این مخزن مونو (monorepo) مبتنی بر pnpm و turborepo است
    - نصب وابستگی‌ها: `pnpm install`
    - اجرای تست‌ها: `pnpm test`
-   - ساخت: `pnpm build`
+   - build: `pnpm build`
 
 **پشتیبانی:** [انجمن Discord](https://lingo.dev/go/discord)
 
@@ -499,11 +499,11 @@ export function LanguageSwitcher() {
 **افزودن زبان جدید:**
 
 1. کد locale را به [`i18n.json`](./i18n.json) با استفاده از [فرمت BCP-47](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) اضافه کنید
-2. یک درخواست pull ارسال کنید
+2. یک pull request ارسال کنید
 
 **فرمت locale BCP-47:** `language[-Script][-REGION]`
 
 - `language`: ISO 639-1/2/3 (حروف کوچک): `en`، `zh`، `bho`
-- `Script`: ISO 15924 (حروف بزرگ در ابتدا): `Hans`، `Hant`، `Latn`
+- `Script`: ISO 15924 (حروف بزرگ اول): `Hans`، `Hant`، `Latn`
 - `REGION`: ISO 3166-1 alpha-2 (حروف بزرگ): `US`، `CN`، `IN`
 - مثال‌ها: `en`، `pt-BR`، `zh-Hans`، `sr-Cyrl-RS`

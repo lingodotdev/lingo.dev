@@ -74,7 +74,7 @@
 | टूल                                | उपयोग केस                                            | त्वरित कमांड                       |
 | ---------------------------------- | ---------------------------------------------------- | ---------------------------------- |
 | [**MCP**](#lingodev-mcp)           | React ऐप्स खातिर AI-सहायता प्राप्त i18n सेटअप        | प्रॉम्प्ट: `Set up i18n`           |
-| [**CLI**](#lingodev-cli)           | JSON, YAML, markdown, CSV, PO फाइल सभ के अनुवाद करीं | `npx lingo.dev@latest run`         |
+| [**CLI**](#lingodev-cli)           | JSON, YAML, markdown, CSV, PO फाइल सब के अनुवाद करीं | `npx lingo.dev@latest run`         |
 | [**CI/CD**](#lingodev-cicd)        | GitHub Actions में स्वचालित अनुवाद पाइपलाइन          | `uses: lingodotdev/lingo.dev@main` |
 | [**SDK**](#lingodev-sdk)           | डायनामिक कंटेंट खातिर रनटाइम अनुवाद                  | `npm install lingo.dev`            |
 | [**Compiler**](#lingodev-compiler) | i18n रैपर बिना बिल्ड-टाइम React स्थानीयकरण           | `withLingo()` प्लगइन               |
@@ -110,10 +110,10 @@ Set up i18n with the following locales: en, es, and pt-BR. The default locale is
 
 असिस्टेंट करी:
 
-1. लोकेल-आधारित राउटिंग कॉन्फ़िगर करी (जइसे, `/en`, `/es`, `/pt-BR`)
-2. भाषा स्विचिंग कंपोनेंट सेटअप करी
-3. ऑटोमैटिक लोकेल डिटेक्शन लागू करी
-4. जरूरी कॉन्फ़िगरेशन फाइल जेनरेट करी
+1. लोकेल-आधारित राउटिंग के कॉन्फ़िगर करीं (जइसे, `/en`, `/es`, `/pt-BR`)
+2. भाषा बदले वाला कंपोनेंट सेटअप करीं
+3. ऑटोमैटिक लोकेल डिटेक्शन लागू करीं
+4. जरूरी कॉन्फ़िगरेशन फाइल बनाईं
 
 **नोट:** AI-सहायता प्राप्त कोड जेनरेशन गैर-निर्धारक बा। कमिट करे से पहिले जेनरेट कइल कोड के समीक्षा करीं।
 
@@ -139,14 +139,14 @@ npx lingo.dev@latest run
 
 **ई कइसे काम करेला:**
 
-1. कॉन्फ़िगर कइल फाइल सभ से अनुवाद योग्य सामग्री निकालेला
-2. अनुवाद खातिर सामग्री के LLM प्रोवाइडर के भेजेला
-3. अनुवादित सामग्री के वापस फाइलसिस्टम में लिखेला
-4. पूरा भइल अनुवाद के ट्रैक करे खातिर `i18n.lock` फाइल बनावेला (अनावश्यक प्रोसेसिंग से बचावेला)
+1. कॉन्फ़िगर कइल फाइल सभ से अनुवाद योग्य सामग्री निकालीं
+2. अनुवाद खातिर कंटेंट के LLM प्रोवाइडर के पास भेजीं
+3. अनुवादित कंटेंट वापस फाइल सिस्टम में लिखीं
+4. पूरा भइल अनुवाद के ट्रैक रखे खातिर `i18n.lock` फाइल बनाई (अनावश्यक प्रोसेसिंग से बचावेला)
 
 **कॉन्फ़िगरेशन:**
 
-`init` कमांड एगो `i18n.json` फाइल जेनरेट करेला। लोकेल आ बकेट कॉन्फ़िगर करीं:
+`init` कमांड एगो `i18n.json` फाइल जेनरेट करेला। लोकेल आ बकेट के कॉन्फ़िगर करीं:
 
 ```json
 {
@@ -164,7 +164,7 @@ npx lingo.dev@latest run
 }
 ```
 
-`provider` फील्ड वैकल्पिक बा (डिफ़ॉल्ट रूप से Lingo.dev Engine)। कस्टम LLM प्रोवाइडर खातिर:
+`provider` फील्ड वैकल्पिक बा (डिफ़ॉल्ट Lingo.dev Engine बा)। कस्टम LLM प्रोवाइडर खातिर:
 
 ```json
 {
@@ -204,7 +204,7 @@ Lingo.dev CI/CD अनुवाद के ऑटोमैटिक बना द
 
 **GitHub Actions सेटअप:**
 
-`.github/workflows/translate.yml` बनाईं:
+`.github/workflows/translate.yml` बनाई:
 
 ```yaml
 name: Translate
@@ -226,8 +226,8 @@ jobs:
 
 **सेटअप आवश्यकता:**
 
-1. रिपॉजिटरी सीक्रेट में `LINGODOTDEV_API_KEY` जोड़ीं (Settings > Secrets and variables > Actions)
-2. PR वर्कफ़्लो खातिर: Settings > Actions > General में "Allow GitHub Actions to create and approve pull requests" सक्षम करीं
+1. रिपॉजिटरी सीक्रेट में `LINGODOTDEV_API_KEY` जोड़ दीं (Settings > Secrets and variables > Actions)
+2. PR वर्कफ्लो खातिर: Settings > Actions > General में "Allow GitHub Actions to create and approve pull requests" सक्षम करीं
 
 **वर्कफ़्लो विकल्प:**
 
@@ -252,14 +252,14 @@ env:
 
 **उपलब्ध इनपुट:**
 
-| इनपुट                | डिफ़ॉल्ट                                       | विवरण                           |
-| -------------------- | ---------------------------------------------- | ------------------------------- |
-| `api-key`            | (जरूरी)                                        | Lingo.dev API की                |
-| `pull-request`       | `false`                                        | सीधे कमिट करे के बजाय PR बनाईं  |
-| `commit-message`     | `"feat: update translations via @LingoDotDev"` | कस्टम कमिट संदेश                |
-| `pull-request-title` | `"feat: update translations via @LingoDotDev"` | कस्टम PR शीर्षक                 |
-| `working-directory`  | `"."`                                          | जवना डायरेक्टरी में चलावे के बा |
-| `parallel`           | `false`                                        | समानांतर प्रोसेसिंग सक्षम करीं  |
+| इनपुट                | डिफ़ॉल्ट                                       | विवरण                          |
+| -------------------- | ---------------------------------------------- | ------------------------------ |
+| `api-key`            | (जरूरी)                                        | Lingo.dev API की               |
+| `pull-request`       | `false`                                        | सीधे कमिट करे के बजाय PR बनाईं |
+| `commit-message`     | `"feat: update translations via @LingoDotDev"` | कस्टम कमिट संदेश               |
+| `pull-request-title` | `"feat: update translations via @LingoDotDev"` | कस्टम PR शीर्षक                |
+| `working-directory`  | `"."`                                          | जवना डायरेक्टरी में चले के बा  |
+| `parallel`           | `false`                                        | समानांतर प्रोसेसिंग सक्षम करीं |
 
 [डॉक्स पढ़ीं →](https://lingo.dev/en/ci/github)
 
@@ -335,7 +335,7 @@ const locale = await lingoDotDev.recognizeLocale("Bonjour le monde");
 
 ### Lingo.dev Compiler
 
-पारंपरिक i18n आक्रामक बा। रउआ हर स्ट्रिंग के `t()` फंक्शन में लपेटीला, अनुवाद की (`home.hero.title.v2`) के आविष्कार करीला, समानांतर JSON फाइल के मेंटेन करीला, आ अपना कंपोनेंट के लोकलाइजेशन बॉयलरप्लेट से फूलल देखीला। ई एतना थकाऊ बा कि टीम अंतर्राष्ट्रीयकरण के तब तक टाल देवेला जब तक ई एगो बहुत बड़ रिफैक्टर ना बन जाला।
+पारंपरिक i18n दखलअंदाज करे वाला बा। हर स्ट्रिंग के रउआ `t()` फंक्शन में लपेटले, अनुवाद कुंजी (`home.hero.title.v2`) गढ़ेनी, समांतर JSON फाइल बनाएनी, आ देखत बानी कि रउआ के कंपोनेंट स्थानीयकरण बायलरप्लेट से फूल गइल बा। ई अतना थकाऊ बा कि टीम इंटरनेशनलाइजेशन के तब तक टारेले जब तक ऊ एगो विशाल रिफैक्टरिंग नइखे बन जाला।
 
 Lingo.dev Compiler औपचारिकता के खत्म क देला। सादा अंग्रेजी टेक्स्ट के साथ React कंपोनेंट लिखीं। कंपाइलर बिल्ड टाइम पर अनुवाद योग्य स्ट्रिंग के पहचान लेला आ स्वचालित रूप से स्थानीयकृत वेरिएंट जेनरेट क देला। ना कुंजी, ना JSON फाइल, ना रैपर फंक्शन - बस React कोड जवन कई भाषा में काम करेला।
 
@@ -431,28 +431,28 @@ export function LanguageSwitcher() {
 }
 ```
 
-**डेवलपमेंट:** `npm run dev` (स्यूडोट्रांसलेटर के उपयोग करेला, कवनो API कॉल नइखे)
+**डेवलपमेंट:** `npm run dev` (पस्यूडोट्रांसलेटर के इस्तेमाल, कवनो API कॉल नइखे)
 
-**प्रोडक्शन:** `usePseudotranslator: false` सेट करीं, फिर `next build`
+**प्रोडक्शन:** पहिले `usePseudotranslator: false` सेट करीं, फिर `next build`
 
-`.lingo/` डायरेक्टरी के वर्जन कंट्रोल में कमिट करीं।
+`.lingo/` डायरेक्टरी के version control में कमिट करीं।
 
 **मुख्य विशेषता:**
 
-- शून्य रनटाइम परफॉर्मेंस लागत
-- ना अनुवाद कुंजी ना JSON फाइल
-- ना `t()` फंक्शन ना `<T>` रैपर कंपोनेंट
-- JSX में अनुवाद योग्य टेक्स्ट के स्वचालित पहचान
-- TypeScript समर्थन
+- शून्य रनटाइम प्रदर्शन लागत
+- ना अनुवाद कुंजी, ना JSON फाइल
+- ना `t()` फंक्शन या `<T>` रैपर कंपोनेंट
+- JSX में अनुवाद योग्य टेक्स्ट के अपने आप पता करेला
+- TypeScript के समर्थन
 - बहुवचन खातिर ICU MessageFormat
-- `data-lingo-override` एट्रिब्यूट के माध्यम से मैनुअल ओवरराइड
+- `data-lingo-override` एट्रिब्यूट से मैन्युअल ओवरराइड
 - बिल्ट-इन अनुवाद एडिटर विजेट
 
 **बिल्ड मोड:**
 
 - `pseudotranslator`: प्लेसहोल्डर अनुवाद के साथ डेवलपमेंट मोड (कवनो API लागत नइखे)
-- `real`: LLM के उपयोग करके वास्तविक अनुवाद जेनरेट करीं
-- `cache-only`: CI से पहिले से जेनरेट कइल अनुवाद के उपयोग करके प्रोडक्शन मोड (कवनो API कॉल नइखे)
+- `real`: LLM के इस्तेमाल से असली अनुवाद बनाईं
+- `cache-only`: CI से पहिले से बनल अनुवाद के साथ प्रोडक्शन मोड (कवनो API कॉल नइखे)
 
 **समर्थित फ्रेमवर्क:**
 
@@ -469,11 +469,11 @@ export function LanguageSwitcher() {
 
 योगदान के स्वागत बा। कृपया एह दिशा-निर्देशन के पालन करीं:
 
-1. **समस्या:** [बग रिपोर्ट करीं या फीचर के अनुरोध करीं](https://github.com/lingodotdev/lingo.dev/issues)
-2. **पुल रिक्वेस्ट:** [बदलाव सबमिट करीं](https://github.com/lingodotdev/lingo.dev/pulls)
-   - हर PR खातिर एगो changeset जरूरी बा: `pnpm new` (या `pnpm new:empty` गैर-रिलीज बदलाव खातिर)
-   - सबमिट करे से पहिले सुनिश्चित करीं कि टेस्ट पास हो जाला
-3. **डेवलपमेंट:** ई एगो pnpm + turborepo monorepo बा
+1. **समस्या:** [बग रिपोर्ट करीं या फीचर मागीं](https://github.com/lingodotdev/lingo.dev/issues)
+2. **पुल रिक्वेस्ट:** [परिवर्तन सबमिट करीं](https://github.com/lingodotdev/lingo.dev/pulls)
+   - हर PR खातिर एक changeset चाहीं: `pnpm new` (नॉन-रिलीज बदलाव खातिर `pnpm new:empty`)
+   - सबमिट करे से पहिले टेस्ट पास होखे के ध्यान दीं
+3. **डेवलपमेंट:** ई pnpm + turborepo मोनोरेपो ह
    - डिपेंडेंसी इंस्टॉल करीं: `pnpm install`
    - टेस्ट चलाईं: `pnpm test`
    - बिल्ड करीं: `pnpm build`
@@ -498,12 +498,12 @@ export function LanguageSwitcher() {
 
 **नया भाषा जोड़ल:**
 
-1. [`i18n.json`](./i18n.json) में [BCP-47 फॉर्मेट](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) के इस्तेमाल करके locale code जोड़ीं
+1. [`i18n.json`](./i18n.json) में [BCP-47 फॉर्मेट](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) से locale code जोड़ि दीं
 2. एगो pull request सबमिट करीं
 
 **BCP-47 locale फॉर्मेट:** `language[-Script][-REGION]`
 
-- `language`: ISO 639-1/2/3 (lowercase): `en`, `zh`, `bho`
-- `Script`: ISO 15924 (title case): `Hans`, `Hant`, `Latn`
-- `REGION`: ISO 3166-1 alpha-2 (uppercase): `US`, `CN`, `IN`
+- `language`: ISO 639-1/2/3 (छोट अक्षर): `en`, `zh`, `bho`
+- `Script`: ISO 15924 (पहिला अक्षर बड़, बाकी छोट): `Hans`, `Hant`, `Latn`
+- `REGION`: ISO 3166-1 alpha-2 (सगरी बड़ अक्षर): `US`, `CN`, `IN`
 - उदाहरण: `en`, `pt-BR`, `zh-Hans`, `sr-Cyrl-RS`

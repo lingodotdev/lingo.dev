@@ -110,10 +110,10 @@ Set up i18n with the following locales: en, es, and pt-BR. The default locale is
 
 ଆସିଷ୍ଟାଣ୍ଟ କରିବ:
 
-1. Locale-based routing କନଫିଗର୍ କରିବ (ଯଥା, `/en`, `/es`, `/pt-BR`)
-2. Language switching components ସେଟଅପ୍ କରିବ
-3. Automatic locale detection implement କରିବ
-4. ଆବଶ୍ୟକ configuration ଫାଇଲ୍ generate କରିବ
+1. Locale-based routing କନଫିଗର୍ କରନ୍ତୁ (ଯଥା, `/en`, `/es`, `/pt-BR`)
+2. Language switching components ସେଟଅପ୍ କରନ୍ତୁ
+3. Automatic locale detection implement କରନ୍ତୁ
+4. ଆବଶ୍ୟକ configuration ଫାଇଲ୍ generate କରନ୍ତୁ
 
 **ଧ୍ୟାନ ଦିଅନ୍ତୁ:** AI-assisted କୋଡ୍ generation non-deterministic ଅଟେ। Commit କରିବା ପୂର୍ବରୁ generated କୋଡ୍ review କରନ୍ତୁ।
 
@@ -139,10 +139,10 @@ npx lingo.dev@latest run
 
 **ଏହା କିପରି କାମ କରେ:**
 
-1. କନଫିଗର୍ କରାଯାଇଥିବା ଫାଇଲଗୁଡ଼ିକରୁ ଅନୁବାଦଯୋଗ୍ୟ କଣ୍ଟେଣ୍ଟ ବାହାର କରେ
-2. ଅନୁବାଦ ପାଇଁ LLM provider କୁ କଣ୍ଟେଣ୍ଟ ପଠାଏ
-3. ଅନୁବାଦିତ କଣ୍ଟେଣ୍ଟକୁ filesystem ରେ ଲେଖେ
-4. ସମ୍ପୂର୍ଣ୍ଣ ହୋଇଥିବା ଅନୁବାଦଗୁଡ଼ିକୁ ଟ୍ରାକ୍ କରିବା ପାଇଁ `i18n.lock` ଫାଇଲ୍ ସୃଷ୍ଟି କରେ (ଅନାବଶ୍ୟକ ପ୍ରକ୍ରିୟାକରଣରୁ ଦୂରେଇ ରହେ)
+1. କନଫିଗର୍ କରାଯାଇଥିବା ଫାଇଲଗୁଡ଼ିକରୁ ଅନୁବାଦଯୋଗ୍ୟ କଣ୍ଟେଣ୍ଟ ବାହାର କରନ୍ତି
+2. ଅନୁବାଦ ପାଇଁ LLM provider କୁ କଣ୍ଟେଣ୍ଟ ପଠାନ୍ତି
+3. ଅନୁବାଦିତ କଣ୍ଟେଣ୍ଟକୁ filesystem ରେ ଲେଖନ୍ତି
+4. ସମ୍ପୂର୍ଣ୍ଣ ହୋଇଥିବା ଅନୁବାଦଗୁଡ଼ିକୁ ଟ୍ରାକ୍ କରିବା ପାଇଁ `i18n.lock` ଫାଇଲ୍ ସୃଷ୍ଟି କରନ୍ତି (ଅନାବଶ୍ୟକ ପ୍ରକ୍ରିୟାକରଣକୁ ଏଡ଼ାଇଥାଏ)
 
 **କନଫିଗରେସନ୍:**
 
@@ -164,7 +164,7 @@ npx lingo.dev@latest run
 }
 ```
 
-`provider` ଫିଲ୍ଡ ଇଚ୍ଛାଧୀନ (ଡିଫଲ୍ଟ Lingo.dev Engine)। କଷ୍ଟମ୍ LLM providers ପାଇଁ:
+`provider` ଫିଲ୍ଡ ଇଚ୍ଛାଧୀନ (ଡିଫଲ୍ଟ Lingo.dev Engine)। କଷ୍ଟମ୍ LLM provider ପାଇଁ:
 
 ```json
 {
@@ -335,7 +335,7 @@ const locale = await lingoDotDev.recognizeLocale("Bonjour le monde");
 
 ### Lingo.dev Compiler
 
-ପାରମ୍ପରିକ i18n ଆକ୍ରମଣାତ୍ମକ। ଆପଣ ପ୍ରତ୍ୟେକ string କୁ `t()` function ରେ wrap କରନ୍ତି, ଅନୁବାଦ key ଉଦ୍ଭାବନ କରନ୍ତି (`home.hero.title.v2`), ସମାନ୍ତରାଳ JSON ଫାଇଲ୍ ରକ୍ଷଣାବେକ୍ଷଣ କରନ୍ତି, ଏବଂ ଆପଣଙ୍କ component ଗୁଡ଼ିକୁ localization boilerplate ସହିତ ଫୁଲିବାର ଦେଖନ୍ତି। ଏହା ଏତେ କ୍ଲାନ୍ତିକର ଯେ ଦଳଗୁଡ଼ିକ internationalization କୁ ବିଳମ୍ବ କରନ୍ତି ଯେପର୍ଯ୍ୟନ୍ତ ଏହା ଏକ ବିରାଟ refactor ହୋଇଯାଏ।
+ପାରମ୍ପରିକ i18n ଅତ୍ୟନ୍ତ ଆକ୍ରମଣାତ୍ମକ। ଆପଣ ପ୍ରତ୍ୟେକ string କୁ `t()` function ରେ wrap କରନ୍ତି, ଅନୁବାଦ କୀ (`home.hero.title.v2`) ତିଆରି କରନ୍ତି, ସମାନ୍ତରାଳ JSON ଫାଇଲ୍ ସଂରକ୍ଷଣ କରନ୍ତି, ଏବଂ ଆପଣଙ୍କ component ଗୁଡ଼ିକୁ localization boilerplate ଦ୍ୱାରା ପରିପୂର୍ଣ୍ଣ ହେଉଥିବା ଦେଖନ୍ତି। ଏହା ଏତେ ଦ୍ୱୟଙ୍କର ଯେ ଦଳଗୁଡ଼ିକ internationalization ବିଳମ୍ବ କରନ୍ତି ଯେପର୍ଯ୍ୟନ୍ତ ଏହା ବଡ଼ ରିଫ୍ୟାକ୍ଟର୍ ଭଲି ନ ହୋଇ।
 
 Lingo.dev Compiler ଆନୁଷ୍ଠାନିକତାକୁ ହଟାଇଥାଏ। ସାଧା ଇଂରାଜୀ ଟେକ୍ସଟ୍ ସହିତ React components ଲେଖନ୍ତୁ। Compiler ବିଲ୍ଡ ସମୟରେ ଅନୁବାଦଯୋଗ୍ୟ strings ଚିହ୍ନଟ କରେ ଏବଂ ସ୍ୱୟଂଚାଳିତ ଭାବରେ ଲୋକାଲାଇଜ୍ଡ variants ସୃଷ୍ଟି କରେ। କୌଣସି keys ନାହିଁ, କୌଣସି JSON ଫାଇଲ୍ ନାହିଁ, କୌଣସି wrapper functions ନାହିଁ - କେବଳ React code ଯାହା ଏକାଧିକ ଭାଷାରେ କାମ କରେ।
 
@@ -431,7 +431,7 @@ export function LanguageSwitcher() {
 }
 ```
 
-**ଡେଭଲପମେଣ୍ଟ:** `npm run dev` (pseudotranslator ବ୍ୟବହାର କରେ, କୌଣସି API calls ନାହିଁ)
+**ଡେଭଲପମେଣ୍ଟ:** `npm run dev` (pseudotranslator ବ୍ୟବହାର କରେ, କୌଣସି API call ନାହିଁ)
 
 **ପ୍ରଡକ୍ସନ୍:** `usePseudotranslator: false` ସେଟ୍ କରନ୍ତୁ, ତାପରେ `next build`
 
@@ -440,19 +440,19 @@ export function LanguageSwitcher() {
 **ମୁଖ୍ୟ ବୈଶିଷ୍ଟ୍ୟଗୁଡ଼ିକ:**
 
 - ଶୂନ୍ୟ runtime performance cost
-- କୌଣସି translation keys କିମ୍ବା JSON ଫାଇଲ୍ ନାହିଁ
-- କୌଣସି `t()` functions କିମ୍ବା `<T>` wrapper components ନାହିଁ
+- କୌଣସି translation key କିମ୍ବା JSON ଫାଇଲ୍ ନାହିଁ
+- କୌଣସି `t()` function କିମ୍ବା `<T>` wrapper component ନାହିଁ
 - JSX ରେ ଅନୁବାଦଯୋଗ୍ୟ ଟେକ୍ସଟ୍ର ସ୍ୱୟଂଚାଳିତ ଚିହ୍ନଟ
 - TypeScript ସପୋର୍ଟ
-- ବହୁବଚନ ପାଇଁ ICU MessageFormat
-- `data-lingo-override` attribute ମାଧ୍ୟମରେ manual overrides
-- ବିଲ୍ଟ-ଇନ୍ translation editor widget
+- ଗଣନାରେ ସହିତ ICU MessageFormat
+- `data-lingo-override` attribute ମାଧ୍ୟମରେ manual override
+- ବିଲ୍ଟ-ଇନ୍ ଅନୁବାଦ ସ୍ପଷ୍ଟ ସମ୍ପାଦନ ସାଧନ
 
 **ବିଲ୍ଡ modes:**
 
-- `pseudotranslator`: placeholder translations ସହିତ development mode (କୌଣସି API costs ନାହିଁ)
-- `real`: LLMs ବ୍ୟବହାର କରି ପ୍ରକୃତ translations ସୃଷ୍ଟି କରେ
-- `cache-only`: CI ରୁ pre-generated translations ବ୍ୟବହାର କରି production mode (କୌଣସି API calls ନାହିଁ)
+- `pseudotranslator`: placeholder translation ସହିତ development mode (API ଖର୍ଚ୍ଚ ନାହିଁ)
+- `real`: LLM ବ୍ୟବହାର କରି ପ୍ରକୃତ ଅନୁବାଦ ଉତ୍ପାଦନ କରନ୍ତୁ
+- `cache-only`: CI ରୁ pre-generated translation ସହିତ production mode (API call ନାହିଁ)
 
 **ସପୋର୍ଟେଡ୍ frameworks:**
 
@@ -471,12 +471,12 @@ export function LanguageSwitcher() {
 
 1. **ସମସ୍ୟା:** [ବଗ୍ ରିପୋର୍ଟ କରନ୍ତୁ କିମ୍ବା ଫିଚର୍ ଅନୁରୋଧ କରନ୍ତୁ](https://github.com/lingodotdev/lingo.dev/issues)
 2. **ପୁଲ୍ ରିକ୍ୱେଷ୍ଟ:** [ପରିବର୍ତ୍ତନ ସବମିଟ୍ କରନ୍ତୁ](https://github.com/lingodotdev/lingo.dev/pulls)
-   - ପ୍ରତ୍ୟେକ PR ପାଇଁ ଏକ changeset ଆବଶ୍ୟକ: `pnpm new` (କିମ୍ବା ନନ୍-ରିଲିଜ୍ ପରିବର୍ତ୍ତନ ପାଇଁ `pnpm new:empty`)
-   - ସବମିଟ୍ କରିବା ପୂର୍ବରୁ ଟେଷ୍ଟ ପାସ୍ ହେବା ନିଶ୍ଚିତ କରନ୍ତୁ
-3. **ଡେଭଲପମେଣ୍ଟ:** ଏହା ଏକ pnpm + turborepo monorepo
-   - ଡିପେଣ୍ଡେନ୍ସି ଇନଷ୍ଟଲ୍ କରନ୍ତୁ: `pnpm install`
-   - ଟେଷ୍ଟ ଚଲାନ୍ତୁ: `pnpm test`
-   - ବିଲ୍ଡ: `pnpm build`
+   - ପ୍ରତ୍ୟେକ PR ପାଇଁ changeset ଆବଶ୍ୟକ: `pnpm new` (କିମ୍ବା non-release changes ପାଇଁ `pnpm new:empty`)
+   - ସବମିଟ୍ କରିବା ପୂର୍ବରୁ test ଉତ୍ତୀର୍ଣ୍ଣ ହେବା ନିଶ୍ଚିତ କରନ୍ତୁ
+3. **ଡେଭଲପମେଣ୍ଟ:** ଏହା pnpm + turborepo monorepo
+   - dependency install କରନ୍ତୁ: `pnpm install`
+   - test ଚଲାନ୍ତୁ: `pnpm test`
+   - build କରନ୍ତୁ: `pnpm build`
 
 **ସପୋର୍ଟ:** [Discord କମ୍ୟୁନିଟି](https://lingo.dev/go/discord)
 
@@ -498,12 +498,12 @@ export function LanguageSwitcher() {
 
 **ନୂତନ ଭାଷା ଯୋଡ଼ିବା:**
 
-1. [`i18n.json`](./i18n.json) ରେ [BCP-47 ଫର୍ମାଟ](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) ବ୍ୟବହାର କରି ଲୋକେଲ୍ କୋଡ୍ ଯୋଡ଼ନ୍ତୁ
-2. ଏକ pull request ସବମିଟ୍ କରନ୍ତୁ
+1. [`i18n.json`](./i18n.json) ରେ [BCP-47 ଫର୍ମାଟ](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) ବ୍ୟବହାର କରି locale code ଯୋଡ଼ନ୍ତୁ
+2. Pull request ସବମିଟ୍ କରନ୍ତୁ
 
-**BCP-47 ଲୋକେଲ୍ ଫର୍ମାଟ:** `language[-Script][-REGION]`
+**BCP-47 locale format:** `language[-Script][-REGION]`
 
-- `language`: ISO 639-1/2/3 (lowercase): `en`, `zh`, `bho`
+- `language`: ISO 639-1/2/3 (ସମସ୍ତେଉପରି ଛୋଟ): `en`, `zh`, `bho`
 - `Script`: ISO 15924 (title case): `Hans`, `Hant`, `Latn`
-- `REGION`: ISO 3166-1 alpha-2 (uppercase): `US`, `CN`, `IN`
+- `REGION`: ISO 3166-1 alpha-2 (ବଡ଼): `US`, `CN`, `IN`
 - ଉଦାହରଣ: `en`, `pt-BR`, `zh-Hans`, `sr-Cyrl-RS`

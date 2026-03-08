@@ -335,7 +335,7 @@ const locale = await lingoDotDev.recognizeLocale("Bonjour le monde");
 
 ### Lingo.dev Compiler
 
-Traditionelle i18n ist invasiv. Sie umschließen jeden String mit `t()`-Funktionen, erfinden Übersetzungsschlüssel (`home.hero.title.v2`), pflegen parallele JSON-Dateien und beobachten, wie Ihre Komponenten mit Lokalisierungs-Boilerplate aufgebläht werden. Es ist so mühsam, dass Teams die Internationalisierung hinauszögern, bis sie zu einem massiven Refactoring wird.
+Traditionelle i18n ist invasiv. Sie umschließen jede Zeichenkette mit `t()`-Funktionen, erfinden Übersetzungsschlüssel (`home.hero.title.v2`), pflegen parallele JSON-Dateien und beobachten, wie Ihre Komponenten mit Lokalisierungs-Boilerplate aufgebläht werden. Es ist so mühsam, dass Teams die Internationalisierung hinauszögern, bis sie zu einem massiven Refactoring wird.
 
 Lingo.dev Compiler eliminiert die Zeremonie. Schreiben Sie React-Komponenten mit einfachem englischem Text. Der Compiler erkennt übersetzbare Zeichenketten zur Build-Zeit und generiert automatisch lokalisierte Varianten. Keine Schlüssel, keine JSON-Dateien, keine Wrapper-Funktionen – nur React-Code, der zufällig in mehreren Sprachen funktioniert.
 
@@ -435,7 +435,7 @@ export function LanguageSwitcher() {
 
 **Produktion:** Setzen Sie `usePseudotranslator: false`, dann `next build`
 
-Committen Sie das `.lingo/`-Verzeichnis in die Versionskontrolle.
+Committen Sie das `.lingo/`-Verzeichnis zur Versionskontrolle.
 
 **Hauptmerkmale:**
 
@@ -446,12 +446,12 @@ Committen Sie das `.lingo/`-Verzeichnis in die Versionskontrolle.
 - TypeScript-Unterstützung
 - ICU MessageFormat für Plurale
 - Manuelle Überschreibungen via `data-lingo-override`-Attribut
-- Integriertes Übersetzungs-Editor-Widget
+- Integriertes Übersetzungseditor-Widget
 
 **Build-Modi:**
 
-- `pseudotranslator`: Entwicklungsmodus mit Platzhalter-Übersetzungen (keine API-Kosten)
-- `real`: Generierung tatsächlicher Übersetzungen mittels LLMs
+- `pseudotranslator`: Entwicklungsmodus mit Platzhalterübersetzungen (keine API-Kosten)
+- `real`: Generierung tatsächlicher Übersetzungen unter Verwendung von LLMs
 - `cache-only`: Produktionsmodus mit vorgenerierten Übersetzungen aus CI (keine API-Aufrufe)
 
 **Unterstützte Frameworks:**
@@ -469,14 +469,14 @@ Unterstützung weiterer Frameworks geplant.
 
 Beiträge sind willkommen. Bitte befolgen Sie diese Richtlinien:
 
-1. **Issues:** [Fehler melden oder Funktionen anfordern](https://github.com/lingodotdev/lingo.dev/issues)
+1. **Issues:** [Fehler melden oder Features anfordern](https://github.com/lingodotdev/lingo.dev/issues)
 2. **Pull Requests:** [Änderungen einreichen](https://github.com/lingodotdev/lingo.dev/pulls)
-   - Jeder PR erfordert ein Changeset: `pnpm new` (oder `pnpm new:empty` für Änderungen ohne Release)
+   - Jeder PR erfordert ein Changeset: `pnpm new` (oder `pnpm new:empty` für nicht-Release-Änderungen)
    - Stellen Sie sicher, dass die Tests vor dem Einreichen bestehen
 3. **Entwicklung:** Dies ist ein pnpm + turborepo Monorepo
    - Abhängigkeiten installieren: `pnpm install`
    - Tests ausführen: `pnpm test`
-   - Build erstellen: `pnpm build`
+   - Build: `pnpm build`
 
 **Support:** [Discord-Community](https://lingo.dev/go/discord)
 
@@ -498,12 +498,12 @@ Wenn Sie Lingo.dev nützlich finden, geben Sie uns einen Stern und helfen Sie un
 
 **Neue Sprache hinzufügen:**
 
-1. Locale-Code zu [`i18n.json`](./i18n.json) im [BCP-47-Format](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) hinzufügen
-2. Pull Request einreichen
+1. Fügen Sie den Locale-Code zu [`i18n.json`](./i18n.json) im [BCP-47-Format](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) hinzu
+2. Senden Sie eine Pull Request
 
 **BCP-47-Locale-Format:** `language[-Script][-REGION]`
 
 - `language`: ISO 639-1/2/3 (Kleinbuchstaben): `en`, `zh`, `bho`
-- `Script`: ISO 15924 (Großschreibung am Anfang): `Hans`, `Hant`, `Latn`
+- `Script`: ISO 15924 (Titel-Schreibweise): `Hans`, `Hant`, `Latn`
 - `REGION`: ISO 3166-1 alpha-2 (Großbuchstaben): `US`, `CN`, `IN`
 - Beispiele: `en`, `pt-BR`, `zh-Hans`, `sr-Cyrl-RS`
