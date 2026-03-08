@@ -72,8 +72,8 @@
 | ਟੂਲ                                | ਵਰਤੋਂ ਦਾ ਮਾਮਲਾ                                       | ਤੁਰੰਤ ਕਮਾਂਡ                        |
 | ---------------------------------- | ---------------------------------------------------- | ---------------------------------- |
 | [**MCP**](#lingodev-mcp)           | React ਐਪਸ ਲਈ AI-ਸਹਾਇਤਾ ਪ੍ਰਾਪਤ i18n ਸੈੱਟਅੱਪ           | Prompt: `Set up i18n`              |
-| [**CLI**](#lingodev-cli)           | JSON, YAML, markdown, CSV, PO ਫਾਈਲਾਂ ਦਾ ਅਨੁਵਾਦ ਕਰੋ   | `npx lingo.dev@latest run`         |
-| [**CI/CD**](#lingodev-cicd)        | GitHub Actions ਵਿੱਚ ਸਵੈਚਲਿਤ ਅਨੁਵਾਦ ਪਾਈਪਲਾਈਨ          | `uses: lingodotdev/lingo.dev@main` |
+| [**CLI**](#lingodev-cli)           | JSON, YAML, markdown, CSV, PO ਫਾਈਲਾਂ ਦਾ ਅਨੁਵਾਦ       | `npx lingo.dev@latest run`         |
+| [**CI/CD**](#lingodev-cicd)        | GitHub Actions ਵਿੱਚ ਆਟੋਮੇਟਿਕ ਅਨੁਵਾਦ ਪਾਈਪਲਾਈਨ         | `uses: lingodotdev/lingo.dev@main` |
 | [**SDK**](#lingodev-sdk)           | ਡਾਇਨਾਮਿਕ ਸਮੱਗਰੀ ਲਈ ਰਨਟਾਈਮ ਅਨੁਵਾਦ                     | `npm install lingo.dev`            |
 | [**Compiler**](#lingodev-compiler) | i18n wrappers ਤੋਂ ਬਿਨਾਂ ਬਿਲਡ-ਟਾਈਮ React ਲੋਕਲਾਈਜ਼ੇਸ਼ਨ | `withLingo()` plugin               |
 
@@ -108,10 +108,10 @@ Set up i18n with the following locales: en, es, and pt-BR. The default locale is
 
 ਸਹਾਇਕ ਇਹ ਕਰੇਗਾ:
 
-1. ਲੋਕੇਲ-ਅਧਾਰਿਤ ਰਾਊਟਿੰਗ ਕੌਂਫਿਗਰ ਕਰੇਗਾ (ਜਿਵੇਂ ਕਿ `/en`, `/es`, `/pt-BR`)
-2. ਭਾਸ਼ਾ ਸਵਿੱਚਿੰਗ ਕੰਪੋਨੈਂਟਸ ਸੈੱਟਅੱਪ ਕਰੇਗਾ
-3. ਆਟੋਮੈਟਿਕ ਲੋਕੇਲ ਖੋਜ ਲਾਗੂ ਕਰੇਗਾ
-4. ਲੋੜੀਂਦੀਆਂ ਕੌਂਫਿਗਰੇਸ਼ਨ ਫਾਈਲਾਂ ਤਿਆਰ ਕਰੇਗਾ
+1. ਲੋਕੇਲ-ਅਧਾਰਿਤ ਰਾਊਟਿੰਗ ਕੌਂਫਿਗਰ ਕਰੋ (ਉਦਾਹਰਨਵਾਂ ਵਾਂਗ `/en`, `/es`, `/pt-BR`)
+2. ਭਾਸ਼ਾ ਸਵਿੱਚਿੰਗ ਕੰਪੋਨੈਂਟਸ ਸੈੱਟਅੱਪ ਕਰੋ
+3. ਆਟੋਮੈਟਿਕ ਲੋਕੇਲ ਡਿਟੈਕਸ਼ਨ ਲਾਗੂ ਕਰੋ
+4. ਲੋੜੀਂਦੀਆਂ ਕੌਂਫਿਗਰੇਸ਼ਨ ਫਾਈਲਾਂ ਤਿਆਰ ਕਰੋ
 
 **ਨੋਟ:** AI-ਸਹਾਇਤਾ ਪ੍ਰਾਪਤ ਕੋਡ ਜਨਰੇਸ਼ਨ ਗੈਰ-ਨਿਰਧਾਰਕ ਹੈ। ਕਮਿਟ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਤਿਆਰ ਕੀਤੇ ਕੋਡ ਦੀ ਸਮੀਖਿਆ ਕਰੋ।
 
@@ -137,14 +137,14 @@ npx lingo.dev@latest run
 
 **ਇਹ ਕਿਵੇਂ ਕੰਮ ਕਰਦਾ ਹੈ:**
 
-1. ਕੌਂਫਿਗਰ ਕੀਤੀਆਂ ਫਾਈਲਾਂ ਤੋਂ ਅਨੁਵਾਦਯੋਗ ਸਮੱਗਰੀ ਕੱਢਦਾ ਹੈ
-2. ਅਨੁਵਾਦ ਲਈ LLM ਪ੍ਰੋਵਾਈਡਰ ਨੂੰ ਸਮੱਗਰੀ ਭੇਜਦਾ ਹੈ
-3. ਅਨੁਵਾਦਿਤ ਸਮੱਗਰੀ ਨੂੰ ਫਾਈਲਸਿਸਟਮ ਵਿੱਚ ਵਾਪਸ ਲਿਖਦਾ ਹੈ
-4. ਪੂਰੇ ਹੋਏ ਅਨੁਵਾਦਾਂ ਨੂੰ ਟਰੈਕ ਕਰਨ ਲਈ `i18n.lock` ਫਾਈਲ ਬਣਾਉਂਦਾ ਹੈ (ਬੇਲੋੜੀ ਪ੍ਰੋਸੈਸਿੰਗ ਤੋਂ ਬਚਦਾ ਹੈ)
+1. ਕੌਂਫਿਗਰ ਕੀਤੀਆਂ ਫਾਈਲਾਂ ਤੋਂ ਅਨੁਵਾਦਯੋਗ ਸਮੱਗਰੀ ਕੱਢੀ ਜਾਂਦੀ ਹੈ
+2. ਅਨੁਵਾਦ ਲਈ ਸਮੱਗਰੀ LLM ਪ੍ਰੋਵਾਈਡਰ ਨੂੰ ਭੇਜੀ ਜਾਂਦੀ ਹੈ
+3. ਅਨੁਵਾਦ ਹੋਈ ਸਮੱਗਰੀ ਫਾਇਲ ਸਿਸਟਮ ਵਿੱਚ ਵਾਪਸ ਲਿਖੀ ਜਾਂਦੀ ਹੈ
+4. `i18n.lock` ਫਾਈਲ ਪੂਰੇ ਹੋਏ ਅਨੁਵਾਦਾਂ ਨੂੰ ਟ੍ਰੈਕ ਕਰਨ ਲਈ ਬਣਾਈ ਜਾਂਦੀ ਹੈ (ਬੇਲੋੜੀ ਪ੍ਰੋਸੈਸਿੰਗ ਤੋਂ ਬਚਾਵ)
 
 **ਕੌਂਫਿਗਰੇਸ਼ਨ:**
 
-`init` ਕਮਾਂਡ ਇੱਕ `i18n.json` ਫਾਈਲ ਬਣਾਉਂਦੀ ਹੈ। ਲੋਕੇਲਾਂ ਅਤੇ ਬਕੇਟਾਂ ਨੂੰ ਕੌਂਫਿਗਰ ਕਰੋ:
+`init` ਕਮਾਂਡ ਇੱਕ `i18n.json` ਫਾਈਲ ਤਿਆਰ ਕਰਦੀ ਹੈ। ਲੋਕੇਲਜ਼ ਅਤੇ ਬਕੇਟਸ ਨੂੰ ਕੌਂਫਿਗਰ ਕਰੋ:
 
 ```json
 {
@@ -162,7 +162,7 @@ npx lingo.dev@latest run
 }
 ```
 
-`provider` ਫੀਲਡ ਵਿਕਲਪਿਕ ਹੈ (ਡਿਫਾਲਟ Lingo.dev Engine ਹੈ)। ਕਸਟਮ LLM ਪ੍ਰੋਵਾਈਡਰਾਂ ਲਈ:
+`provider` ਫੀਲਡ ਵਿਕਲਪਿਕ ਹੈ (ਡਿਫ਼ਾਲਟ Lingo.dev Engine)। ਕਸਟਮ LLM ਪ੍ਰੋਵਾਈਡਰ ਲਈ:
 
 ```json
 {
@@ -224,8 +224,8 @@ jobs:
 
 **ਸੈੱਟਅੱਪ ਲੋੜਾਂ:**
 
-1. ਰਿਪੋਜ਼ਿਟਰੀ ਸੀਕਰੇਟਸ ਵਿੱਚ `LINGODOTDEV_API_KEY` ਸ਼ਾਮਲ ਕਰੋ (Settings > Secrets and variables > Actions)
-2. PR ਵਰਕਫਲੋਜ਼ ਲਈ: Settings > Actions > General ਵਿੱਚ "Allow GitHub Actions to create and approve pull requests" ਨੂੰ ਸਮਰੱਥ ਕਰੋ
+1. `LINGODOTDEV_API_KEY` ਨੂੰ ਰਿਪੋਸਿਟਰੀ ਸੀਕਰੇਟਸ ਵਿੱਚ ਸ਼ਾਮਲ ਕਰੋ (Settings > Secrets and variables > Actions)
+2. PR ਵਰਕਫਲੋਜ਼ ਲਈ: Settings > Actions > General ਵਿੱਚ "Allow GitHub Actions to create and approve pull requests" ਸਮਰੱਥ ਕਰੋ
 
 **ਵਰਕਫਲੋ ਵਿਕਲਪ:**
 
@@ -253,7 +253,7 @@ env:
 | ਇਨਪੁੱਟ               | ਡਿਫਾਲਟ                                         | ਵੇਰਵਾ                          |
 | -------------------- | ---------------------------------------------- | ------------------------------ |
 | `api-key`            | (ਲੋੜੀਂਦਾ)                                      | Lingo.dev API ਕੁੰਜੀ            |
-| `pull-request`       | `false`                                        | ਸਿੱਧੇ ਕਮਿਟ ਕਰਨ ਦੀ ਬਜਾਏ PR ਬਣਾਓ |
+| `pull-request`       | `false`                                        | ਸਿੱਧਾ ਕਮਿਟ ਕਰਨ ਦੀ ਬਜਾਏ PR ਬਣਾਉ |
 | `commit-message`     | `"feat: update translations via @LingoDotDev"` | ਕਸਟਮ ਕਮਿਟ ਸੁਨੇਹਾ               |
 | `pull-request-title` | `"feat: update translations via @LingoDotDev"` | ਕਸਟਮ PR ਸਿਰਲੇਖ                 |
 | `working-directory`  | `"."`                                          | ਚਲਾਉਣ ਲਈ ਡਾਇਰੈਕਟਰੀ             |
@@ -333,7 +333,7 @@ const locale = await lingoDotDev.recognizeLocale("Bonjour le monde");
 
 ### Lingo.dev Compiler
 
-ਰਵਾਇਤੀ i18n ਦਖਲਅੰਦਾਜ਼ੀ ਵਾਲਾ ਹੈ। ਤੁਸੀਂ ਹਰ ਸਟ੍ਰਿੰਗ ਨੂੰ `t()` ਫੰਕਸ਼ਨਾਂ ਵਿੱਚ ਲਪੇਟਦੇ ਹੋ, ਅਨੁਵਾਦ ਕੁੰਜੀਆਂ ਦੀ ਖੋਜ ਕਰਦੇ ਹੋ (`home.hero.title.v2`), ਸਮਾਨਾਂਤਰ JSON ਫਾਈਲਾਂ ਨੂੰ ਸੰਭਾਲਦੇ ਹੋ, ਅਤੇ ਆਪਣੇ ਕੰਪੋਨੈਂਟਸ ਨੂੰ ਸਥਾਨੀਕਰਨ ਬੋਇਲਰਪਲੇਟ ਨਾਲ ਫੁੱਲਦੇ ਦੇਖਦੇ ਹੋ। ਇਹ ਇੰਨਾ ਥਕਾਊ ਹੈ ਕਿ ਟੀਮਾਂ ਅੰਤਰਰਾਸ਼ਟਰੀਕਰਨ ਨੂੰ ਉਦੋਂ ਤੱਕ ਮੁਲਤਵੀ ਕਰ ਦਿੰਦੀਆਂ ਹਨ ਜਦੋਂ ਤੱਕ ਇਹ ਇੱਕ ਵਿਸ਼ਾਲ ਰੀਫੈਕਟਰ ਨਹੀਂ ਬਣ ਜਾਂਦਾ।
+ਪਰੰਪਰागत i18n ਘੁਸ਼ਪੈਠੀਕ ਹੈ। ਤੁਸੀਂ ਹਰ ਸਟ੍ਰਿੰਗ ਨੂੰ `t()` ਫੰਕਸ਼ਨਾਂ ਵਿੱਚ ਲਪੇਟਦੇ ਹੋ, ਅਨੁਵਾਦ ਕੁੰਜੀਆਂ (`home.hero.title.v2`) ਬਣਾਉਂਦੇ ਹੋ, ਸਮਕਾਲੀ JSON ਫਾਈਲਾਂ ਰੱਖਦੇ ਹੋ, ਅਤੇ ਆਪਣੇ ਕੰਪੋਨੈਂਟਸ ਨੂੰ ਲੋਕਲਾਈਜ਼ੇਸ਼ਨ ਬੋਇਲਰਪਲੇਟ ਨਾਲ ਵਧਦਾ ਹੋਇਆ ਵੇਖਦੇ ਹੋ। ਇਹ ਪੂਰੀ ਪ੍ਰਕਿਰਿਆ ਇੰਨੀ ਥਕਾਵਟੀ ਹੈ ਕਿ ਟੀਮਾਂ ਅੰਤਰਰਾਸ਼ਟਰੀਕਰਨ ਨੂੰ ਉਸ ਸਮੇਂ ਤੱਕ ਮੂਲ ਰੂਪ ਤੌਰ ਤੇ ਟਾਲਦੀਆਂ ਹਨ ਜਦ ਤੱਕ ਇਹ ਇੱਕ ਵਿਅਪਕ ਰੀਫੈਕਟਰ ਨਾ ਬਣ ਜਾਵੇ।
 
 Lingo.dev Compiler ਰਸਮੀ ਪ੍ਰਕਿਰਿਆ ਨੂੰ ਖਤਮ ਕਰਦਾ ਹੈ। ਸਾਦੇ ਅੰਗਰੇਜ਼ੀ ਟੈਕਸਟ ਨਾਲ React ਕੰਪੋਨੈਂਟਸ ਲਿਖੋ। Compiler ਬਿਲਡ ਟਾਈਮ 'ਤੇ ਅਨੁਵਾਦਯੋਗ ਸਟ੍ਰਿੰਗਾਂ ਦਾ ਪਤਾ ਲਗਾਉਂਦਾ ਹੈ ਅਤੇ ਸਥਾਨਿਕ ਰੂਪਾਂ ਨੂੰ ਆਪਣੇ-ਆਪ ਜਨਰੇਟ ਕਰਦਾ ਹੈ। ਕੋਈ keys ਨਹੀਂ, ਕੋਈ JSON ਫਾਈਲਾਂ ਨਹੀਂ, ਕੋਈ wrapper functions ਨਹੀਂ - ਸਿਰਫ਼ React ਕੋਡ ਜੋ ਕਈ ਭਾਸ਼ਾਵਾਂ ਵਿੱਚ ਕੰਮ ਕਰਦਾ ਹੈ।
 
@@ -437,20 +437,20 @@ export function LanguageSwitcher() {
 
 **ਮੁੱਖ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ:**
 
-- ਜ਼ੀਰੋ runtime performance cost
-- ਕੋਈ translation keys ਜਾਂ JSON ਫਾਈਲਾਂ ਨਹੀਂ
-- ਕੋਈ `t()` functions ਜਾਂ `<T>` wrapper components ਨਹੀਂ
-- JSX ਵਿੱਚ ਅਨੁਵਾਦਯੋਗ ਟੈਕਸਟ ਦਾ ਆਟੋਮੈਟਿਕ ਪਤਾ ਲਗਾਉਣਾ
+- ਜ਼ੀਰੋ ਰਨਟਾਈਮ ਪਰਫਾਰਮੈਂਸ ਲਾਗਤ
+- ਕੋਈ ਅਨੁਵਾਦ ਕੁੰਜੀਆਂ ਜਾਂ JSON ਫਾਈਲਾਂ ਨਹੀਂ
+- ਕੋਈ `t()` ਫੰਕਸ਼ਨ ਜਾਂ `<T>` ਵ੍ਰੈਪਰ ਕੰਪੋਨैंਟ ਨਹੀਂ
+- JSX ਵਿੱਚ ਅਨੁਵਾਦਯੋਗ ਟੈਕਸਟ ਦੀ ਆਟੋਮੈਟਿਕ ਪਛਾਣ
 - TypeScript ਸਹਾਇਤਾ
 - ਬਹੁਵਚਨਾਂ ਲਈ ICU MessageFormat
-- `data-lingo-override` attribute ਰਾਹੀਂ ਮੈਨੁਅਲ ਓਵਰਰਾਈਡਸ
-- ਬਿਲਟ-ਇਨ translation editor widget
+- `data-lingo-override` attribute ਰਾਹੀਂ ਮੈਨੁਅਲ ਓਵਰਰਾਈਡ
+- ਇਨੇਬਲਡ translation editor widget
 
 **ਬਿਲਡ ਮੋਡਸ:**
 
-- `pseudotranslator`: placeholder translations ਨਾਲ ਡਿਵੈਲਪਮੈਂਟ ਮੋਡ (ਕੋਈ API ਖਰਚੇ ਨਹੀਂ)
-- `real`: LLMs ਵਰਤਦੇ ਹੋਏ ਅਸਲ ਅਨੁਵਾਦ ਜਨਰੇਟ ਕਰੋ
-- `cache-only`: CI ਤੋਂ ਪਹਿਲਾਂ ਤੋਂ ਜਨਰੇਟ ਕੀਤੇ ਅਨੁਵਾਦਾਂ ਦੀ ਵਰਤੋਂ ਕਰਦੇ ਹੋਏ ਪ੍ਰੋਡਕਸ਼ਨ ਮੋਡ (ਕੋਈ API ਕਾਲਾਂ ਨਹੀਂ)
+- `pseudotranslator`: placeholder translations ਨਾਲ ਡਿਵੈਲਪਮੈਂਟ ਮੋਡ (ਕੋਈ API ਖਰਚ ਨਹੀਂ)
+- `real`: LLMs ਦੇ ਨਾਲ ਅਸਲ ਅਨੁਵਾਦ ਜਨਰੇਟ ਕਰੋ
+- `cache-only`: CI ਤੋਂ ਪਹਿਲਾਂ ਤੋਂ ਉਤਪੰਨ ਕੀਤੀਆਂ ਅਨੁਵਾਦਾਂ ਨਾਲ ਪ੍ਰੋਡਕਸ਼ਨ ਮੋਡ (ਕੋਈ API ਕਾਲਾਂ ਨਹੀਂ)
 
 **ਸਮਰਥਿਤ ਫਰੇਮਵਰਕਸ:**
 
@@ -468,11 +468,11 @@ export function LanguageSwitcher() {
 ਯੋਗਦਾਨ ਦਾ ਸਵਾਗਤ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਇਹਨਾਂ ਦਿਸ਼ਾ-ਨਿਰਦੇਸ਼ਾਂ ਦਾ ਪਾਲਣ ਕਰੋ:
 
 1. **ਮੁੱਦੇ:** [ਬੱਗ ਰਿਪੋਰਟ ਕਰੋ ਜਾਂ ਫੀਚਰ ਦੀ ਬੇਨਤੀ ਕਰੋ](https://github.com/lingodotdev/lingo.dev/issues)
-2. **ਪੁੱਲ ਰਿਕੁਐਸਟਾਂ:** [ਤਬਦੀਲੀਆਂ ਸਬਮਿਟ ਕਰੋ](https://github.com/lingodotdev/lingo.dev/pulls)
-   - ਹਰੇਕ PR ਲਈ ਇੱਕ changeset ਦੀ ਲੋੜ ਹੈ: `pnpm new` (ਜਾਂ ਗੈਰ-ਰਿਲੀਜ਼ ਤਬਦੀਲੀਆਂ ਲਈ `pnpm new:empty`)
-   - ਸਬਮਿਟ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਯਕੀਨੀ ਬਣਾਓ ਕਿ ਟੈਸਟ ਪਾਸ ਹੋ ਜਾਣ
-3. **ਡਿਵੈਲਪਮੈਂਟ:** ਇਹ ਇੱਕ pnpm + turborepo monorepo ਹੈ
-   - ਡਿਪੈਂਡੈਂਸੀਆਂ ਇੰਸਟਾਲ ਕਰੋ: `pnpm install`
+2. **ਪੁੱਲ ਰਿਕੁਐਸਟਸ:** [ਤਬਦੀਲੀਆਂ ਸਬਮਿਟ ਕਰੋ](https://github.com/lingodotdev/lingo.dev/pulls)
+   - ਹਰੇਕ PR ਲਈ ਇੱਕ changeset ਦੀ ਲੋੜ ਹੈ: `pnpm new` (ਜਾਂ non-release ਤਬਦੀਲੀਆਂ ਲਈ `pnpm new:empty`)
+   - ਸਬਮਿਟ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਟੈਸਟ ਪਾਸ ਹੋਣ ਯਕੀਨੀ ਬਣਾਓ
+3. **ਡਿਵੈਲਪਮੈਂਟ:** ਇਹ pnpm + turborepo ਮੋਨੋਰੇਪੋ ਹੈ
+   - ਡਿਪੈਂਡੈਂਸੀਜ਼ ਇੰਸਟਾਲ ਕਰੋ: `pnpm install`
    - ਟੈਸਟ ਚਲਾਓ: `pnpm test`
    - ਬਿਲਡ: `pnpm build`
 
@@ -497,11 +497,11 @@ export function LanguageSwitcher() {
 **ਨਵੀਂ ਭਾਸ਼ਾ ਸ਼ਾਮਲ ਕਰਨਾ:**
 
 1. [`i18n.json`](./i18n.json) ਵਿੱਚ [BCP-47 ਫਾਰਮੈਟ](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) ਦੀ ਵਰਤੋਂ ਕਰਦੇ ਹੋਏ ਲੋਕੇਲ ਕੋਡ ਸ਼ਾਮਲ ਕਰੋ
-2. ਇੱਕ ਪੁੱਲ ਰਿਕੁਐਸਟ ਸਬਮਿਟ ਕਰੋ
+2. ਇੱਕ ਪੁੱਲ ਰੀਕੁਐਸਟ ਸਬਮਿਟ ਕਰੋ
 
 **BCP-47 ਲੋਕੇਲ ਫਾਰਮੈਟ:** `language[-Script][-REGION]`
 
-- `language`: ISO 639-1/2/3 (lowercase): `en`, `zh`, `bho`
-- `Script`: ISO 15924 (title case): `Hans`, `Hant`, `Latn`
-- `REGION`: ISO 3166-1 alpha-2 (uppercase): `US`, `CN`, `IN`
+- `language`: ISO 639-1/2/3 (ਛੋਟੇ ਅੱਖਰ): `en`, `zh`, `bho`
+- `Script`: ISO 15924 (ਨਾਵਾਂ ਕੇਸ): `Hans`, `Hant`, `Latn`
+- `REGION`: ISO 3166-1 alpha-2 (ਵੱਡੇ ਅੱਖਰ): `US`, `CN`, `IN`
 - ਉਦਾਹਰਨਾਂ: `en`, `pt-BR`, `zh-Hans`, `sr-Cyrl-RS`

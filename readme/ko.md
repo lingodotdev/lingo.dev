@@ -69,13 +69,13 @@
 
 ## 빠른 시작
 
-| 도구                               | 사용 사례                                   | 빠른 명령어                        |
-| ---------------------------------- | ------------------------------------------- | ---------------------------------- |
-| [**MCP**](#lingodev-mcp)           | React 앱을 위한 AI 지원 i18n 설정           | 프롬프트: `Set up i18n`            |
-| [**CLI**](#lingodev-cli)           | JSON, YAML, 마크다운, CSV, PO 파일 번역     | `npx lingo.dev@latest run`         |
-| [**CI/CD**](#lingodev-cicd)        | GitHub Actions에서 자동화된 번역 파이프라인 | `uses: lingodotdev/lingo.dev@main` |
-| [**SDK**](#lingodev-sdk)           | 동적 콘텐츠를 위한 런타임 번역              | `npm install lingo.dev`            |
-| [**컴파일러**](#lingodev-compiler) | i18n 래퍼 없이 빌드 타임 React 현지화       | `withLingo()` 플러그인             |
+| 도구                               | 사용 사례                                 | 빠른 명령어                        |
+| ---------------------------------- | ----------------------------------------- | ---------------------------------- |
+| [**MCP**](#lingodev-mcp)           | React 앱을 위한 AI 지원 i18n 설정         | 프롬프트: `Set up i18n`            |
+| [**CLI**](#lingodev-cli)           | JSON, YAML, 마크다운, CSV, PO 파일 번역   | `npx lingo.dev@latest run`         |
+| [**CI/CD**](#lingodev-cicd)        | GitHub Actions에서 자동화 번역 파이프라인 | `uses: lingodotdev/lingo.dev@main` |
+| [**SDK**](#lingodev-sdk)           | 동적 콘텐츠를 위한 런타임 번역            | `npm install lingo.dev`            |
+| [**컴파일러**](#lingodev-compiler) | i18n 래퍼 없는 빌드 타임 React 현지화     | `withLingo()` 플러그인             |
 
 ---
 
@@ -139,8 +139,8 @@ npx lingo.dev@latest run
 
 1. 구성된 파일에서 번역 가능한 콘텐츠 추출
 2. 번역을 위해 LLM 제공자에게 콘텐츠 전송
-3. 번역된 콘텐츠를 파일 시스템에 다시 작성
-4. 완료된 번역을 추적하기 위해 `i18n.lock` 파일 생성 (중복 처리 방지)
+3. 번역된 콘텐츠를 파일 시스템에 기록
+4. 완료된 번역 추적용 `i18n.lock` 파일 생성 (중복 처리 방지)
 
 **구성:**
 
@@ -162,7 +162,7 @@ npx lingo.dev@latest run
 }
 ```
 
-`provider` 필드는 선택 사항입니다 (기본값은 Lingo.dev Engine). 사용자 정의 LLM 제공자의 경우:
+`provider` 필드는 선택 사항입니다(기본값은 Lingo.dev Engine). 커스텀 LLM 제공자 사용 시:
 
 ```json
 {
@@ -224,7 +224,7 @@ jobs:
 
 **설정 요구사항:**
 
-1. 리포지토리 시크릿에 `LINGODOTDEV_API_KEY` 추가 (Settings > Secrets and variables > Actions)
+1. `LINGODOTDEV_API_KEY`을(를) 저장소 시크릿(Settings > Secrets and variables > Actions)에 추가하세요
 2. PR 워크플로우의 경우: Settings > Actions > General에서 "Allow GitHub Actions to create and approve pull requests" 활성화
 
 **워크플로우 옵션:**
@@ -250,14 +250,14 @@ env:
 
 **사용 가능한 입력:**
 
-| 입력                 | 기본값                                         | 설명                    |
-| -------------------- | ---------------------------------------------- | ----------------------- |
-| `api-key`            | (필수)                                         | Lingo.dev API 키        |
-| `pull-request`       | `false`                                        | 직접 커밋 대신 PR 생성  |
-| `commit-message`     | `"feat: update translations via @LingoDotDev"` | 사용자 정의 커밋 메시지 |
-| `pull-request-title` | `"feat: update translations via @LingoDotDev"` | 사용자 정의 PR 제목     |
-| `working-directory`  | `"."`                                          | 실행할 디렉토리         |
-| `parallel`           | `false`                                        | 병렬 처리 활성화        |
+| 입력                 | 기본값                                         | 설명                   |
+| -------------------- | ---------------------------------------------- | ---------------------- |
+| `api-key`            | (필수)                                         | Lingo.dev API 키       |
+| `pull-request`       | `false`                                        | 직접 커밋 대신 PR 생성 |
+| `commit-message`     | `"feat: update translations via @LingoDotDev"` | 커스텀 커밋 메시지     |
+| `pull-request-title` | `"feat: update translations via @LingoDotDev"` | 커스텀 PR 제목         |
+| `working-directory`  | `"."`                                          | 실행할 디렉터리        |
+| `parallel`           | `false`                                        | 병렬 처리 활성화       |
 
 [문서 읽기 →](https://lingo.dev/en/ci/github)
 
@@ -333,7 +333,7 @@ const locale = await lingoDotDev.recognizeLocale("Bonjour le monde");
 
 ### Lingo.dev Compiler
 
-기존 i18n은 침습적입니다. 모든 문자열을 `t()` 함수로 래핑하고, 번역 키를 만들고(`home.hero.title.v2`), 병렬 JSON 파일을 유지 관리하며, 현지화 보일러플레이트로 컴포넌트가 비대해지는 것을 지켜봐야 합니다. 너무 지루해서 팀들은 국제화를 대규모 리팩토링이 될 때까지 미루게 됩니다.
+기존 i18n은 침습적입니다. 모든 문자열을 `t()` 함수로 래핑하고, 번역 키(`home.hero.title.v2`)를 만들어야 하며, 병렬 JSON 파일을 관리하면서 현지화 보일러플레이트로 인해 컴포넌트가 비대해지는 것을 목격해야 합니다. 이 과정이 너무 번거로워서 팀들이 국제화를 대규모 리팩터링이 될 때까지 미루게 됩니다.
 
 Lingo.dev Compiler는 복잡한 절차를 제거합니다. 일반 영어 텍스트로 React 컴포넌트를 작성하세요. 컴파일러는 빌드 시점에 번역 가능한 문자열을 감지하고 자동으로 현지화된 변형을 생성합니다. 키도, JSON 파일도, 래퍼 함수도 필요 없습니다 - 그저 여러 언어로 작동하는 React 코드일 뿐입니다.
 
@@ -433,24 +433,24 @@ export function LanguageSwitcher() {
 
 **프로덕션:** `usePseudotranslator: false`를 설정한 후 `next build` 실행
 
-`.lingo/` 디렉토리를 버전 관리에 커밋하세요.
+`.lingo/` 디렉터리를 버전 관리에 커밋하세요.
 
 **주요 기능:**
 
-- 런타임 성능 비용 제로
+- 런타임 성능 비용 없음
 - 번역 키 또는 JSON 파일 불필요
 - `t()` 함수 또는 `<T>` 래퍼 컴포넌트 불필요
-- JSX 내 번역 가능한 텍스트 자동 감지
+- JSX에서 번역 가능한 텍스트 자동 감지
 - TypeScript 지원
 - 복수형을 위한 ICU MessageFormat
-- `data-lingo-override` 속성을 통한 수동 재정의
+- `data-lingo-override` 속성을 통한 수동 오버라이드
 - 내장 번역 편집기 위젯
 
 **빌드 모드:**
 
-- `pseudotranslator`: 플레이스홀더 번역을 사용하는 개발 모드 (API 비용 없음)
-- `real`: LLM을 사용하여 실제 번역 생성
-- `cache-only`: CI에서 사전 생성된 번역을 사용하는 프로덕션 모드 (API 호출 없음)
+- `pseudotranslator`: 플레이스홀더 번역이 적용되는 개발 모드 (API 비용 없음)
+- `real`: LLM을 이용한 실제 번역 생성
+- `cache-only`: CI에서 미리 생성된 번역을 활용하는 프로덕션 모드 (API 호출 없음)
 
 **지원 프레임워크:**
 
@@ -467,10 +467,10 @@ export function LanguageSwitcher() {
 
 기여를 환영합니다. 다음 가이드라인을 따라주세요:
 
-1. **이슈:** [버그 보고 또는 기능 요청](https://github.com/lingodotdev/lingo.dev/issues)
+1. **이슈:** [버그 신고 또는 기능 요청](https://github.com/lingodotdev/lingo.dev/issues)
 2. **풀 리퀘스트:** [변경 사항 제출](https://github.com/lingodotdev/lingo.dev/pulls)
-   - 모든 PR에는 changeset이 필요합니다: `pnpm new` (또는 릴리스하지 않는 변경 사항의 경우 `pnpm new:empty`)
-   - 제출 전에 테스트가 통과하는지 확인하세요
+   - 모든 PR에는 changeset이 필요합니다: `pnpm new` (릴리스가 아닌 변경의 경우 `pnpm new:empty`)
+   - 제출 전 테스트 통과 여부 확인
 3. **개발:** pnpm + turborepo 모노레포입니다
    - 의존성 설치: `pnpm install`
    - 테스트 실행: `pnpm test`

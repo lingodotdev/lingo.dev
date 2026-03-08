@@ -335,7 +335,7 @@ const locale = await lingoDotDev.recognizeLocale("Bonjour le monde");
 
 ### Lingo.dev Compiler
 
-पारंपरिक i18n इनवेसिव है। आप हर स्ट्रिंग को `t()` फंक्शन में रैप करते हैं, ट्रांसलेशन कुंजियां बनाते हैं (`home.hero.title.v2`), पैरेलल JSON फ़ाइलें मेंटेन करते हैं, और अपने कंपोनेंट को लोकलाइज़ेशन बॉयलरप्लेट से भरा हुआ देखते हैं। यह इतना थकाऊ है कि टीमें इंटरनेशनलाइज़ेशन को तब तक टालती हैं जब तक यह एक बड़ा रिफ़ैक्टर नहीं बन जाता।
+पारंपरिक i18n दखल देने वाला है। आप हर स्ट्रिंग को `t()` फंक्शन में लपेटते हैं, ट्रांसलेशन कीज (`home.hero.title.v2`) बनाते हैं, समानांतर JSON फाइलें मेंटेन करते हैं, और अपने कंपोनेंट्स को स्थानीयकरण के boilerplate से भरा पाते हैं। यह इतना थकाऊ है कि टीमें अंतरराष्ट्रीयकरण को तब तक टालती हैं जब तक कि यह एक विशाल पुनर्रचना का कारण न बन जाए।
 
 Lingo.dev Compiler औपचारिकता को समाप्त करता है। सादे अंग्रेजी टेक्स्ट के साथ React components लिखें। Compiler बिल्ड टाइम पर अनुवाद योग्य स्ट्रिंग्स का पता लगाता है और स्वचालित रूप से स्थानीयकृत वेरिएंट जेनरेट करता है। कोई keys नहीं, कोई JSON फ़ाइलें नहीं, कोई wrapper functions नहीं - बस React कोड जो कई भाषाओं में काम करता है।
 
@@ -431,28 +431,28 @@ export function LanguageSwitcher() {
 }
 ```
 
-**Development:** `npm run dev` (pseudotranslator का उपयोग करता है, कोई API कॉल नहीं)
+**डेवलपमेंट:** `npm run dev` (pseudotranslator का उपयोग करता है, कोई API कॉल नहीं)
 
-**Production:** `usePseudotranslator: false` सेट करें, फिर `next build`
+**प्रोडक्शन:** `usePseudotranslator: false` सेट करें, फिर `next build`
 
-`.lingo/` डायरेक्टरी को version control में commit करें।
+`.lingo/` डायरेक्टरी को version control में कमिट करें।
 
 **मुख्य विशेषताएं:**
 
-- शून्य runtime performance cost
-- कोई translation keys या JSON फ़ाइलें नहीं
-- कोई `t()` functions या `<T>` wrapper components नहीं
-- JSX में अनुवाद योग्य टेक्स्ट का स्वचालित पता लगाना
-- TypeScript समर्थन
-- बहुवचन के लिए ICU MessageFormat
-- `data-lingo-override` attribute के माध्यम से मैनुअल overrides
-- बिल्ट-इन translation editor widget
+- शून्य रनटाइम प्रदर्शन लागत
+- कोई ट्रांसलेशन कीज़ या JSON फाइलें नहीं
+- कोई `t()` फंक्शन या `<T>` wrapper कंपोनेंट्स नहीं
+- JSX में ट्रांसलेटेबल टेक्स्ट का स्वचालित पता लगाना
+- TypeScript का समर्थन
+- बहुवचन हेतु ICU MessageFormat
+- `data-lingo-override` एट्रीब्यूट के माध्यम से मैनुअल overrides
+- इनबिल्ट ट्रांसलेशन एडिटर विजेट
 
 **बिल्ड मोड:**
 
-- `pseudotranslator`: प्लेसहोल्डर अनुवादों के साथ development मोड (कोई API लागत नहीं)
-- `real`: LLMs का उपयोग करके वास्तविक अनुवाद जेनरेट करें
-- `cache-only`: CI से पूर्व-जेनरेट किए गए अनुवादों का उपयोग करके production मोड (कोई API कॉल नहीं)
+- `pseudotranslator`: प्लेसहोल्डर अनुवादों के साथ डेवलपमेंट मोड (कोई API लागत नहीं)
+- `real`: LLMs का उपयोग करके वास्तविक अनुवाद उत्पन्न करें
+- `cache-only`: CI से पूर्व-निर्मित अनुवादों के साथ प्रोडक्शन मोड (कोई API कॉल नहीं)
 
 **समर्थित frameworks:**
 
@@ -469,12 +469,12 @@ export function LanguageSwitcher() {
 
 योगदान का स्वागत है। कृपया इन दिशानिर्देशों का पालन करें:
 
-1. **इश्यूज़:** [बग रिपोर्ट करें या फीचर का अनुरोध करें](https://github.com/lingodotdev/lingo.dev/issues)
+1. **इश्यू:** [बग रिपोर्ट करें या फीचर मांगे](https://github.com/lingodotdev/lingo.dev/issues)
 2. **पुल रिक्वेस्ट:** [परिवर्तन सबमिट करें](https://github.com/lingodotdev/lingo.dev/pulls)
-   - प्रत्येक PR के लिए चेंजसेट आवश्यक है: `pnpm new` (या `pnpm new:empty` नॉन-रिलीज़ परिवर्तनों के लिए)
-   - सबमिट करने से पहले सुनिश्चित करें कि टेस्ट पास हो जाएं
+   - हर PR के लिए चेंजसेट अनिवार्य: `pnpm new` (या गैर-रिलीज संशोधन के लिए `pnpm new:empty`)
+   - सबमिट करने से पहले जांचें कि सभी टेस्ट पास हों
 3. **डेवलपमेंट:** यह एक pnpm + turborepo मोनोरेपो है
-   - डिपेंडेंसीज़ इंस्टॉल करें: `pnpm install`
+   - डिपेंडेंसी इंस्टॉल करें: `pnpm install`
    - टेस्ट चलाएं: `pnpm test`
    - बिल्ड करें: `pnpm build`
 
