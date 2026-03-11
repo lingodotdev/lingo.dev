@@ -5,7 +5,7 @@ import readline from "readline";
 import { colors } from "../constants";
 
 export async function renderClear() {
-  console.log("\x1Bc");
+  process.stdout.write("\x1b[2J\x1b[H");
 }
 
 export async function renderSpacer() {
