@@ -503,8 +503,3 @@ export function LanguageSwitcher() {
 ২. একটি পুল রিকোয়েস্ট পাঠান
 
 **BCP-47 লোকেল ফরম্যাট:** `language[-Script][-REGION]`
-
-- `language`: ISO 639-1/2/3 (ছোট হাতের): `en`, `zh`, `bho`
-- `Script`: ISO 15924 (শিরোনাম কেস): `Hans`, `Hant`, `Latn`
-- `REGION`: ISO 3166-1 alpha-2 (বড় হাতের): `US`, `CN`, `IN`
-- উদাহরণ: `en`, `pt-BR`, `zh-Hans`, `sr-Cyrl-RS`
