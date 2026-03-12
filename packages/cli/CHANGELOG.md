@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.133.2
+
+### Patch Changes
+
+- [#2043](https://github.com/lingodotdev/lingo.dev/pull/2043) [`06f4823`](https://github.com/lingodotdev/lingo.dev/commit/06f4823463496ea04e70bfa8aa7c6e076ad739b2) Thanks [@vrcprl](https://github.com/vrcprl)! - fix posthog
+
 ## 0.133.1
 
 ### Patch Changes
