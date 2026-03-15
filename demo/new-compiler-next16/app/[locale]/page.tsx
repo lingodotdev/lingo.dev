@@ -1,6 +1,6 @@
 import { Counter } from "@/components/Counter";
 import { LocaleSwitcher } from "@lingo.dev/compiler/react";
-import Link from "next/link";
+import { Link } from "@/components/LocaleLink";
 import { ServerChild } from "@/components/ServerChild";
 import { ClientChildWrapper } from "@/components/ClientChildWrapper";
 
@@ -22,7 +22,7 @@ export default function Home() {
       <header className="flex justify-between p-10 w-full">
         <span>Lingo.dev compiler Next demo</span>
         <nav>
-          <Link href="/test">Test</Link> 1
+          <Link href="test">Test</Link> 1
         </nav>
         <LocaleSwitcher
           locales={[
