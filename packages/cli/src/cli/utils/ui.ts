@@ -10,7 +10,7 @@ function isCI(): boolean {
 }
 
 export async function renderClear() {
-  console.log("\x1Bc");
+  process.stdout.write("\x1b[2J\x1b[H");
 }
 
 export async function renderSpacer() {
