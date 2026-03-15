@@ -3,28 +3,40 @@
   "locale": {
     "source": "en",
     "targets": [
-      "ru",
-      "he",
-      "fr",
-      "es",
-      "de",
-      "zh-Hans",
-      "ko",
-      "ja",
-      "it",
       "ar",
-      "hi",
-      "pt-BR",
-      "uk-UA",
+      "as-IN",
+      "bho",
       "bn",
+      "de",
+      "es",
       "fa",
+      "fr",
+      "gu-IN",
+      "he",
+      "hi",
+      "it",
+      "ja",
+      "ko",
+      "mr-IN",
+      "or-IN",
+      "pa-IN",
       "pl",
-      "tr"
+      "pt-BR",
+      "ru",
+      "si-LK",
+      "ta-IN",
+      "te-IN",
+      "tr",
+      "uk-UA",
+      "ur",
+      "zh-Hans"
     ]
   },
   "buckets": {
     "mdx": {
-      "include": ["readme/[locale].md"]
+      "include": [
+        "readme/[locale].md"
+      ]
     }
   },
   "$schema": "https://lingo.dev/schema/i18n.json"

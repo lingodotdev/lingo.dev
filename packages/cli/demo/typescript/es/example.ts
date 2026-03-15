@@ -1,7 +1,7 @@
 const messages = {
   navigation: {
     home: "Inicio",
-    about: "Sobre nosotros",
+    about: "Acerca de nosotros",
     contact: "Contacto",
     services: "Nuestros servicios",
   },

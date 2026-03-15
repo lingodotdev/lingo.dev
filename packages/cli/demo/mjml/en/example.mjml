@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mjml>
+  <mj-head>
+    <mj-title>Welcome to Our Service</mj-title>
+    <mj-preview>Get started with your new account today</mj-preview>
+    <mj-attributes>
+      <mj-all font-family="Arial, sans-serif" />
+    </mj-attributes>
+  </mj-head>
+  <mj-body>
+    <mj-section background-color="#f0f0f0">
+      <mj-column>
+        <mj-image
+          src="https://example.com/logo.png"
+          alt="Company Logo"
+          width="150px"
+        />
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#ffffff" padding="20px">
+      <mj-column>
+        <mj-text font-size="24px" color="#333333" font-weight="bold">
+          Welcome to Our Platform!
+        </mj-text>
+        <mj-text font-size="16px" color="#555555" line-height="24px">
+          Thank you for signing up. We're excited to have you on board.
+        </mj-text>
+        <mj-text font-size="16px" color="#555555" line-height="24px">
+          To get started, please verify your email address by clicking the
+          button below.
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#ffffff" padding="20px">
+      <mj-column>
+        <mj-button
+          background-color="#007bff"
+          color="#ffffff"
+          href="https://example.com/verify"
+          title="Verify your email address"
+          aria-label="Verify email"
+        >
+          Verify Email Address!
+        </mj-button>
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#ffffff" padding="20px">
+      <mj-column>
+        <mj-text font-size="14px" color="#666666">
+          If you didn't create an account, you can safely ignore this email.
+        </mj-text>
+        <mj-text font-size="14px" color="#666666">
+          Need help? Contact our support team.
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#f8f9fa" padding="20px">
+      <mj-column>
+        <mj-social mode="horizontal">
+          <mj-social-element
+            name="facebook"
+            href="https://facebook.com/example"
+            title="Follow us on Facebook"
+            alt="Facebook"
+          />
+          <mj-social-element
+            name="twitter"
+            href="https://twitter.com/example"
+            title="Follow us on Twitter"
+            alt="Twitter"
+          />
+          <mj-social-element
+            name="instagram"
+            href="https://instagram.com/example"
+            title="Follow us on Instagram"
+            alt="Instagram"
+          />
+        </mj-social>
+        <mj-text font-size="12px" color="#999999" align="center">
+          © 2024 Example Company. All rights reserved.
+        </mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

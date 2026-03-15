@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import { lingoJsxScopeInjectMutation } from "./jsx-scope-inject";
 import { createPayload, createOutput, defaultParams } from "./_base";
 import * as parser from "@babel/parser";
-import generate from "@babel/generator";
+import { generate } from "./babel-interop";
 
 // Helper function to run mutation and get result
 function runMutation(code: string, rsc = false) {

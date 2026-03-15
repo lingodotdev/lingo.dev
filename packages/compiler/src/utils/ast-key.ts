@@ -1,6 +1,6 @@
-import { NodePath } from "@babel/traverse";
+import { NodePath } from "../babel-interop";
 import * as t from "@babel/types";
-import traverse from "@babel/traverse";
+import { traverse } from "../babel-interop";
 
 export function getAstKey(nodePath: NodePath) {
   const keyChunks: any[] = [];
@@ -60,7 +60,7 @@ function _getProgramNodePath(ast: t.File): NodePath<t.Program> | null {
   let result: NodePath<t.Program> | null = null;
 
   traverse(ast, {
-    Program(nodePath) {
+    Program(nodePath: NodePath<t.Program>) {
       result = nodePath;
       nodePath.stop();
     },

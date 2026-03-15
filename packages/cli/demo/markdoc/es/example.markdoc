@@ -1,28 +1,28 @@
 ---
 title: Introducción a Markdoc
-description: Una demostración completa de las características y sintaxis de Markdoc
-author: Equipo de Documentación
+description: Una demostración completa de las funcionalidades y sintaxis de Markdoc
+author: Equipo de documentación
 ---
 
 # Introducción a Markdoc
 
-Bienvenido a este **documento de demostración de Markdoc** . Este archivo muestra varias características y sintaxis de Markdoc.
+Bienvenido a este documento de **demostración de Markdoc**. Este archivo muestra varias características y sintaxis de Markdoc.
 
 {% callout type="note" %}
-Este es un documento de muestra que demuestra las capacidades de Markdoc.
+Este es un documento de ejemplo que demuestra las capacidades de Markdoc.
 {% /callout %}
 
 ## Formato básico
 
-Markdoc admite funciones estándar de Markdown:
+Markdoc admite características estándar de Markdown:
 
 1. Listas ordenadas
-1. Listas no ordenadas
+1. Listas desordenadas
 1. Formato de texto como *cursiva* y **negrita**
 
 ### Énfasis y código en línea
 
-Puedes enfatizar texto con varios estilos:
+Puedes enfatizar el texto con varios estilos:
 
 - Texto normal
 - *Texto en cursiva*
@@ -33,7 +33,7 @@ Puedes enfatizar texto con varios estilos:
 Recuerda probar tus documentos antes de publicarlos.
 {% /callout %}
 
-## Etiquetas personalizadas {% #tags .section-highlight %}
+## Etiquetas personalizadas{% #tags .section-highlight %}
 
 Markdoc extiende Markdown con etiquetas personalizadas:
 
@@ -48,7 +48,7 @@ Markdoc extiende Markdown con etiquetas personalizadas:
 - Contenido dinámico con {% $variableName %}
 ---
 - Atributos
-- IDs y clases para estilización
+- IDs y clases para estilos
 {% /table %}
 
 ### Ejemplos de código
@@ -83,13 +83,13 @@ Archivo de configuración de ejemplo:
 
 ## Estructura del documento
 
-La buena documentación sigue una organización clara:
+Una buena documentación sigue una organización clara:
 
 {% list %}
-1. **Encabezados claros**: Utiliza estructura jerárquica
-1. **Títulos descriptivos**: Facilita la búsqueda de secciones
-1. **Ejemplos**: Incluye demostraciones prácticas
-1. **Consistencia**: Mantiene un formato uniforme
+1. **Encabezados claros**: usa estructura jerárquica
+1. **Títulos descriptivos**: haz que las secciones sean fáciles de encontrar
+1. **Ejemplos**: incluye demostraciones prácticas
+1. **Consistencia**: mantén un formato uniforme
 {% /list %}
 
 ## Sintaxis avanzada
@@ -100,11 +100,11 @@ Markdoc admite variables para contenido dinámico usando la sintaxis {% $variabl
 {% /tab %}
 
 {% tab title="Conditionals" %}
-Utiliza etiquetas condicionales para mostrar u ocultar contenido basado en variables.
+Usa etiquetas condicionales para mostrar u ocultar contenido según las variables.
 {% /tab %}
 
 {% tab title="Attributes" %}
-Añade IDs y clases a los elementos para estilizar y anclar.
+Añade IDs y clases a los elementos para estilos y anclaje.
 {% /tab %}
 {% /tabs %}
 
@@ -124,17 +124,17 @@ Sí, las etiquetas pueden anidarse dentro de otras etiquetas para crear diseños
 {% /item %}
 {% /accordion %}
 
-## Datos de muestra
+## Datos de ejemplo
 
 {% stats %}
-- **{% $itemCount %}** elementos en colección
+- **{% $itemCount %}** elementos en la colección
 - **{% $pageCount %}** páginas de documentación
 - **{% $updateTime %}** última actualización
 {% /stats %}
 
 ---
 
-*Este es un documento de demostración* que muestra varias {% link href="/docs" %}características de Markdoc{% /link %} en acción.
+*Este es un documento de demostración* que muestra varias {% link href="/docs" %}funcionalidades de Markdoc{% /link %} en acción.
 
 **¿Necesitas ayuda?** Consulta la documentación oficial para información detallada.
 

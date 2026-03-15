@@ -1,193 +1,251 @@
-import { JSDOM } from "jsdom";
+import * as htmlparser2 from "htmlparser2";
+import { DomHandler, Element } from "domhandler";
+import * as domutils from "domutils";
+import * as DomSerializer from "dom-serializer";
 import { ILoader } from "./_types";
 import { createLoader } from "./_utils";
-
-function normalizeTextContent(text: string, isStandalone: boolean): string {
-  // Remove any leading/trailing whitespace for initial comparison
-  const trimmed = text.trim();
-  if (!trimmed) return "";
-
-  // For all text nodes, just return the trimmed content
-  return trimmed;
-}
+import {
+  createElementExtractor,
+  BASE_LOCALIZABLE_ATTRIBUTES,
+} from "../utils/element-extraction";
 
 export default function createHtmlLoader(): ILoader<
   string,
-  Record<string, any>
+  Record<string, string>
 > {
-  const LOCALIZABLE_ATTRIBUTES: Record<string, string[]> = {
-    meta: ["content"],
-    img: ["alt"],
-    input: ["placeholder"],
-    a: ["title"],
-  };
-  const UNLOCALIZABLE_TAGS = ["script", "style"];
-
   return createLoader({
     async pull(locale, input) {
-      const result: Record<string, any> = {};
-      const dom = new JSDOM(input);
-      const document = dom.window.document;
+      const result: Record<string, string> = {};
 
-      const getPath = (node: Node, attribute?: string): string => {
-        const indices: number[] = [];
-        let current = node as ChildNode;
-        let rootParent = "";
+      // Parse HTML with htmlparser2 (preserves structure, no foster parenting)
+      const handler = new DomHandler();
+      const parser = new htmlparser2.Parser(handler, {
+        lowerCaseTags: false,
+        lowerCaseAttributeNames: false,
+      });
+      parser.write(input);
+      parser.end();
 
-        while (current) {
-          const parent = current.parentElement as Element;
-          if (!parent) break;
+      const dom = handler.dom;
 
-          if (parent === document.documentElement) {
-            rootParent = current.nodeName.toLowerCase();
-            break;
+      // Get innerHTML equivalent (serialize children)
+      function getInnerHTML(element: Element): string {
+        return element.children
+          .map((child) =>
+            DomSerializer.default(child, { encodeEntities: false }),
+          )
+          .join("");
+      }
+
+      // Extract localizable attributes from element
+      function extractAttributes(element: Element, path: string): void {
+        const tagName = element.name.toLowerCase();
+        const attrs = BASE_LOCALIZABLE_ATTRIBUTES[tagName];
+        if (!attrs) return;
+
+        for (const attr of attrs) {
+          const value = element.attribs?.[attr];
+          if (value && value.trim()) {
+            result[`${path}#${attr}`] = value.trim();
           }
+        }
+      }
 
-          // Get index among significant siblings (non-empty text nodes and elements)
-          const siblings = Array.from(parent.childNodes).filter(
-            (n) =>
-              n.nodeType === 1 || (n.nodeType === 3 && n.textContent?.trim()),
+      // Recursively extract translation units from element tree
+      const extractFromElement = createElementExtractor(
+        { getInnerHTML, extractAttributes },
+        result,
+      );
+
+      // Find head and body elements
+      const html = domutils.findOne(
+        (elem) => elem.type === "tag" && elem.name.toLowerCase() === "html",
+        dom,
+        true,
+      ) as Element | null;
+
+      if (html) {
+        const head = domutils.findOne(
+          (elem) => elem.type === "tag" && elem.name.toLowerCase() === "head",
+          html.children,
+          true,
+        ) as Element | null;
+
+        const body = domutils.findOne(
+          (elem) => elem.type === "tag" && elem.name.toLowerCase() === "body",
+          html.children,
+          true,
+        ) as Element | null;
+
+        // Process head children
+        if (head) {
+          let headIndex = 0;
+          const headChildren = head.children.filter(
+            (child): child is Element => child.type === "tag",
           );
-          const index = siblings.indexOf(current);
-          if (index !== -1) {
-            indices.unshift(index);
+          for (const child of headChildren) {
+            extractFromElement(child, ["head", headIndex++]);
           }
-          current = parent;
         }
 
-        const basePath = rootParent
-          ? `${rootParent}/${indices.join("/")}`
-          : indices.join("/");
-        return attribute ? `${basePath}#${attribute}` : basePath;
-      };
-
-      const processNode = (node: Node) => {
-        // Check if node is inside an unlocalizable tag
-        let parent = node.parentElement;
-        while (parent) {
-          if (UNLOCALIZABLE_TAGS.includes(parent.tagName.toLowerCase())) {
-            return; // Skip processing this node and its children
+        // Process body children
+        if (body) {
+          let bodyIndex = 0;
+          const bodyChildren = body.children.filter(
+            (child): child is Element => child.type === "tag",
+          );
+          for (const child of bodyChildren) {
+            extractFromElement(child, ["body", bodyIndex++]);
           }
-          parent = parent.parentElement;
         }
-
-        if (node.nodeType === 3) {
-          // Text node
-          const text = node.textContent || "";
-          const normalizedText = normalizeTextContent(text, true);
-          if (normalizedText) {
-            result[getPath(node)] = normalizedText;
-          }
-        } else if (node.nodeType === 1) {
-          // Element node
-          const element = node as Element;
-
-          // Handle localizable attributes
-          const tagName = element.tagName.toLowerCase();
-          const attributes = LOCALIZABLE_ATTRIBUTES[tagName] || [];
-          attributes.forEach((attr) => {
-            const value = element.getAttribute(attr);
-            if (value) {
-              result[getPath(element, attr)] = value;
-            }
-          });
-
-          // Process all child nodes
-          Array.from(element.childNodes)
-            .filter(
-              (n) =>
-                n.nodeType === 1 || (n.nodeType === 3 && n.textContent?.trim()),
-            )
-            .forEach(processNode);
+      } else {
+        // Handle HTML fragments (no <html> element) - process root elements directly
+        let rootIndex = 0;
+        const rootElements = dom.filter(
+          (child): child is Element => child.type === "tag",
+        );
+        for (const child of rootElements) {
+          extractFromElement(child, [rootIndex++]);
         }
-      };
-
-      // Process head and body
-      Array.from(document.head.childNodes)
-        .filter(
-          (n) =>
-            n.nodeType === 1 || (n.nodeType === 3 && n.textContent?.trim()),
-        )
-        .forEach(processNode);
-      Array.from(document.body.childNodes)
-        .filter(
-          (n) =>
-            n.nodeType === 1 || (n.nodeType === 3 && n.textContent?.trim()),
-        )
-        .forEach(processNode);
+      }
 
       return result;
     },
 
     async push(locale, data, originalInput) {
-      const dom = new JSDOM(
+      // Parse original HTML
+      const handler = new DomHandler();
+      const parser = new htmlparser2.Parser(handler, {
+        lowerCaseTags: false,
+        lowerCaseAttributeNames: false,
+      });
+      parser.write(
         originalInput ??
           "<!DOCTYPE html><html><head></head><body></body></html>",
       );
-      const document = dom.window.document;
+      parser.end();
 
-      // Set the HTML lang attribute to the current locale
-      const htmlElement = document.documentElement;
-      htmlElement.setAttribute("lang", locale);
+      const dom = handler.dom;
 
-      // Sort paths to ensure proper order of creation
-      const paths = Object.keys(data).sort((a, b) => {
-        const aDepth = a.split("/").length;
-        const bDepth = b.split("/").length;
-        return aDepth - bDepth;
-      });
+      // Find HTML element and set lang attribute
+      const html = domutils.findOne(
+        (elem) => elem.type === "tag" && elem.name.toLowerCase() === "html",
+        dom,
+        true,
+      ) as Element | null;
 
-      paths.forEach((path) => {
-        const value = data[path];
-        const [nodePath, attribute] = path.split("#");
-        const [rootTag, ...indices] = nodePath.split("/");
+      if (html) {
+        html.attribs = html.attribs || {};
+        html.attribs.lang = locale;
+      }
 
-        let parent: Element =
-          rootTag === "head" ? document.head : document.body;
-        let current: Node | null = parent;
+      // Helper to traverse child elements by numeric indices
+      function traverseByIndices(
+        element: Element | null,
+        indices: string[],
+      ): Element | null {
+        let current = element;
 
-        // Navigate to the target node
-        for (let i = 0; i < indices.length; i++) {
-          const index = parseInt(indices[i]);
-          const siblings = Array.from(parent.childNodes).filter(
-            (n) =>
-              n.nodeType === 1 || (n.nodeType === 3 && n.textContent?.trim()),
+        for (const indexStr of indices) {
+          if (!current) return null;
+
+          const index = parseInt(indexStr, 10);
+          const children: Element[] = current.children.filter(
+            (child): child is Element => child.type === "tag",
           );
 
-          if (index >= siblings.length) {
-            // Create missing nodes
-            if (i === indices.length - 1) {
-              // Last index - create text node
-              const textNode = document.createTextNode("");
-              parent.appendChild(textNode);
-              current = textNode;
-            } else {
-              // Create intermediate element
-              const element = document.createElement("div");
-              parent.appendChild(element);
-              current = element;
-              parent = element;
-            }
-          } else {
-            current = siblings[index];
-            if (current.nodeType === 1) {
-              parent = current as Element;
-            }
+          if (index >= children.length) {
+            return null; // Path doesn't exist
           }
+
+          current = children[index];
         }
 
-        // Set content
-        if (current) {
-          if (attribute) {
-            (current as Element).setAttribute(attribute, value);
+        return current;
+      }
+
+      // Resolve path to element in the DOM
+      function resolvePathToElement(path: string): Element | null {
+        const parts = path.split("/");
+        const [rootTag, ...indices] = parts;
+
+        let current: Element | null = null;
+
+        if (html) {
+          // Full HTML document with <html>, <head>, <body>
+          // Find head or body
+          if (rootTag === "head") {
+            current = domutils.findOne(
+              (elem) =>
+                elem.type === "tag" && elem.name.toLowerCase() === "head",
+              html.children,
+              true,
+            ) as Element | null;
+          } else if (rootTag === "body") {
+            current = domutils.findOne(
+              (elem) =>
+                elem.type === "tag" && elem.name.toLowerCase() === "body",
+              html.children,
+              true,
+            ) as Element | null;
+          }
+
+          if (!current) return null;
+
+          // Traverse by indices
+          return traverseByIndices(current, indices);
+        } else {
+          // HTML fragment - no <html> element
+          // Path is just numeric indices from root
+          const rootElements = dom.filter(
+            (child): child is Element => child.type === "tag",
+          );
+
+          // First part is the root index
+          const rootIndex = parseInt(rootTag, 10);
+          if (rootIndex >= rootElements.length) {
+            return null;
+          }
+
+          current = rootElements[rootIndex];
+
+          // Traverse remaining indices
+          return traverseByIndices(current, indices);
+        }
+      }
+
+      // Apply translations
+      for (const [path, value] of Object.entries(data)) {
+        const [nodePath, attribute] = path.split("#");
+
+        const element = resolvePathToElement(nodePath);
+        if (!element) {
+          console.warn(`Path not found in original HTML: ${nodePath}`);
+          continue;
+        }
+
+        if (attribute) {
+          // Set attribute
+          element.attribs = element.attribs || {};
+          element.attribs[attribute] = value;
+        } else {
+          // Set innerHTML (parse value as HTML and replace children)
+          if (value) {
+            const valueHandler = new DomHandler();
+            const valueParser = new htmlparser2.Parser(valueHandler);
+            valueParser.write(value);
+            valueParser.end();
+
+            element.children = valueHandler.dom;
           } else {
-            current.textContent = value;
+            // If value is empty/null, clear children
+            element.children = [];
           }
         }
-      });
+      }
 
-      // Preserve formatting by using serialize() with pretty print
-      return dom.serialize();
+      // Serialize back to HTML
+      return DomSerializer.default(dom, { encodeEntities: false });
     },
   });
 }

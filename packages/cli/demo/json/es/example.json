@@ -8,20 +8,20 @@
   "empty": "",
   "emoji": "🚀",
   "author": {
-    "name": "Juan Pérez"
+    "name": "John Doe"
   },
   "contributors": [
     {
-      "name": "Alicia"
+      "name": "Alice"
     },
     {
-      "name": "Roberto"
+      "name": "Bob"
     }
   ],
-  "messages": ["Bienvenido a Mi aplicación", "¡Hola, mundo!"],
+  "messages": ["Bienvenido a MyApp", "¡Hola, mundo!"],
   "config": {
     "theme": {
-      "primary": "Tema Azul"
+      "primary": "Tema azul"
     }
   },
   "mixed_array": [
@@ -32,5 +32,9 @@
       "nested_message": "Texto anidado"
     }
   ],
-  "locked_key_1": "This value is locked and should not be changed"
+  "locked_key_1": "This value is locked and should not be changed",
+  "preserved_key_1": "this value is preserved and should not be overwritten",
+  "legal": {
+    "preserved_nested": "this value is preserved and should not be overwritten"
+  }
 }

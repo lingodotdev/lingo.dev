@@ -1,7 +1,7 @@
 <p align="center">
   <a href="https://lingo.dev">
     <img
-      src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.compiler.png"
+      src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.png"
       width="100%"
       alt="Lingo.dev"
     />
@@ -10,177 +10,479 @@
 
 <p align="center">
   <strong>
-    ⚡ Lingo.dev — открытый инструмент i18n с поддержкой ИИ для мгновенной
-    локализации с использованием LLM.
+    Lingo.dev — open-source i18n toolkit для локализации на базе LLM
   </strong>
 </p>
 
 <br />
 
 <p align="center">
-  <a href="https://lingo.dev/compiler">Lingo.dev Compiler</a> •
-  <a href="https://lingo.dev/cli">Lingo.dev CLI</a> •
-  <a href="https://lingo.dev/ci">Lingo.dev CI/CD</a> •
-  <a href="https://lingo.dev/sdk">Lingo.dev SDK</a>
+  <a href="#lingodev-mcp">MCP</a> •<a href="#lingodev-cli">CLI</a> •
+  <a href="#lingodev-cicd">CI/CD</a> •<a href="#lingodev-sdk">SDK</a> •
+  <a href="#lingodev-compiler">Compiler</a>
 </p>
 
 <p align="center">
   <a href="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml">
     <img
       src="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml/badge.svg"
-      alt="Релиз"
+      alt="Release"
     />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md">
     <img
       src="https://img.shields.io/github/license/lingodotdev/lingo.dev"
-      alt="Лицензия"
+      alt="License"
     />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/commits/main">
     <img
       src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev"
-      alt="Последний коммит"
+      alt="Last Commit"
     />
   </a>
   <a href="https://lingo.dev/en">
     <img
-      src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #1 Продукт дня"
+      src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square"
+      alt="Product Hunt #1 DevTool of the Month"
+    />
+  </a>
+  <a href="https://lingo.dev/en">
+    <img
+      src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Week-orange?logo=producthunt&style=flat-square"
+      alt="Product Hunt #1 DevTool of the Week"
+    />
+  </a>
+  <a href="https://lingo.dev/en">
+    <img
+      src="https://img.shields.io/badge/Product%20Hunt-%232%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
+      alt="Product Hunt #2 Product of the Day"
     />
   </a>
   <a href="https://lingo.dev/en">
     <img
       src="https://img.shields.io/badge/GitHub-Trending-blue?logo=github&style=flat-square"
-      alt="Тренды на Github"
+      alt="Github trending"
     />
   </a>
 </p>
 
 ---
 
-## Знакомьтесь: Compiler 🆕
+## Быстрый старт
 
-**Lingo.dev Compiler** — это бесплатное программное обеспечение с открытым исходным кодом, предназначенное для того, чтобы сделать любое React-приложение многоязычным на этапе сборки без необходимости вносить изменения в существующие React-компоненты.
+| Инструмент                         | Сценарий использования                             | Быстрая команда                    |
+| ---------------------------------- | -------------------------------------------------- | ---------------------------------- |
+| [**MCP**](#lingodev-mcp)           | AI-помощь при настройке i18n для React-приложений  | Prompt: `Set up i18n`              |
+| [**CLI**](#lingodev-cli)           | Перевод JSON, YAML, markdown, CSV, PO файлов       | `npx lingo.dev@latest run`         |
+| [**CI/CD**](#lingodev-cicd)        | Автоматизация перевода через GitHub Actions        | `uses: lingodotdev/lingo.dev@main` |
+| [**SDK**](#lingodev-sdk)           | Перевод на лету для динамического контента         | `npm install lingo.dev`            |
+| [**Compiler**](#lingodev-compiler) | Локализация React на этапе сборки без i18n-обёрток | `withLingo()` plugin               |
 
-Установите один раз:
+---
+
+### Lingo.dev MCP
+
+Настроить i18n в React-приложениях — это всегда куча граблей, даже для опытных разработчиков. AI-ассистенты только усугубляют: придумывают несуществующие API, забывают про middleware, ломают роутинг или делают всё наполовину и теряются. Проблема в том, что настройка i18n требует чёткой последовательности изменений в разных файлах (роутинг, middleware, компоненты, конфиги), а LLM-ам сложно держать весь контекст.
+
+Lingo.dev MCP решает это, давая AI-ассистентам структурированный доступ к знаниям по i18n для конкретных фреймворков. Вместо догадок ассистент использует проверенные схемы для Next.js, React Router и TanStack Start.
+
+**Поддерживаемые IDE:**
+
+- Claude Code
+- Cursor
+- GitHub Copilot Agents
+- Codex (OpenAI)
+
+**Поддерживаемые фреймворки:**
+
+- Next.js (App Router и Pages Router v13-16)
+- TanStack Start (v1)
+- React Router (v7)
+
+**Использование:**
+
+После настройки MCP-сервера в своей IDE ([см. быстрый старт](https://lingo.dev/en/mcp)), просто попросите ассистента:
+
+```
+Set up i18n with the following locales: en, es, and pt-BR. The default locale is 'en'.
+```
+
+Ассистент сделает следующее:
+
+1. Настроить роутинг по локалям (например, `/en`, `/es`, `/pt-BR`)
+2. Добавить компоненты для переключения языка
+3. Реализовать автоматическое определение локали
+4. Сгенерировать необходимые конфигурационные файлы
+
+**Важно:** Генерация кода с помощью AI непредсказуема. Проверьте код перед коммитом.
+
+[Читать документацию →](https://lingo.dev/en/mcp)
+
+---
+
+### Lingo.dev CLI
+
+Держать переводы в актуальном состоянии — это боль. Добавил новую строку, забыл перевести — и вот уже сломанный интерфейс для пользователей из других стран. Или отправил JSON-файлы переводчикам, ждал несколько дней, потом вручную сливал их работу. А если языков больше 10, то это уже сотни файлов, которые постоянно расходятся.
+
+Lingo.dev CLI всё автоматизирует. Просто укажи папку с переводами, запусти одну команду — и все локали обновятся. Lockfile отслеживает, что уже переведено, так что платишь только за новое или изменённое. Поддерживаются JSON, YAML, CSV, PO и markdown-файлы.
+
+**Установка:**
+
+```bash
+# Initialize project
+npx lingo.dev@latest init
+
+# Run translations
+npx lingo.dev@latest run
+```
+
+**Как это работает:**
+
+1. Извлекает переводимый контент из настроенных файлов
+2. Отправляет его провайдеру LLM для перевода
+3. Записывает переведённый контент обратно в файловую систему
+4. Создаёт файл `i18n.lock` для отслеживания завершённых переводов (предотвращает избыточную обработку)
+
+**Конфигурация:**
+
+Команда `init` генерирует файл `i18n.json`. Настройте локали и бакеты:
+
+```json
+{
+  "$schema": "https://lingo.dev/schema/i18n.json",
+  "version": "1.10",
+  "locale": {
+    "source": "en",
+    "targets": ["es", "fr", "de"]
+  },
+  "buckets": {
+    "json": {
+      "include": ["locales/[locale].json"]
+    }
+  }
+}
+```
+
+Поле `provider` необязательно (по умолчанию — Lingo.dev Engine). Для индивидуальных LLM-провайдеров:
+
+```json
+{
+  "provider": {
+    "id": "openai",
+    "model": "gpt-4o-mini",
+    "prompt": "Translate from {source} to {target}"
+  }
+}
+```
+
+**Поддерживаемые LLM-провайдеры:**
+
+- Lingo.dev Engine (рекомендуется)
+- OpenAI
+- Anthropic
+- Google
+- Mistral
+- OpenRouter
+- Ollama
+
+[Читать документацию →](https://lingo.dev/en/cli)
+
+---
+
+### Lingo.dev CI/CD
+
+Переводы — это фича, которая всегда "почти готова". Разработчики сливают код, не обновляя локали. QA находит пропущенные переводы на стейджинге — или, что хуже, пользователи ловят их в проде. Корень проблемы: перевод — ручной этап, который легко пропустить под дедлайном.
+
+Lingo.dev CI/CD автоматизирует переводы. Каждый пуш запускает перевод. Пропущенные строки заполняются до попадания кода в прод. Не нужно напрягаться — пайплайн всё сделает.
+
+**Поддерживаемые платформы:**
+
+- GitHub Actions
+- GitLab CI/CD
+- Bitbucket Pipelines
+
+**Настройка GitHub Actions:**
+
+Создайте `.github/workflows/translate.yml`:
+
+```yaml
+name: Translate
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: write
+jobs:
+  translate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Lingo.dev
+        uses: lingodotdev/lingo.dev@main
+        with:
+          api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
+```
+
+**Требования к установке:**
+
+1. Добавьте `LINGODOTDEV_API_KEY` в секреты репозитория (Settings > Secrets and variables > Actions)
+2. Для PR-воркфлоу: включите "Allow GitHub Actions to create and approve pull requests" в Settings > Actions > General
+
+**Опции воркфлоу:**
+
+Коммитить переводы напрямую:
+
+```yaml
+uses: lingodotdev/lingo.dev@main
+with:
+  api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
+```
+
+Создавайте pull request'ы с переводами:
+
+```yaml
+uses: lingodotdev/lingo.dev@main
+with:
+  api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
+  pull-request: true
+env:
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
+**Доступные параметры:**
+
+| Параметр             | По умолчанию                                   | Описание                            |
+| -------------------- | ---------------------------------------------- | ----------------------------------- |
+| `api-key`            | (обязательный)                                 | API-ключ Lingo.dev                  |
+| `pull-request`       | `false`                                        | Создавать PR вместо прямого коммита |
+| `commit-message`     | `"feat: update translations via @LingoDotDev"` | Свой текст коммита                  |
+| `pull-request-title` | `"feat: update translations via @LingoDotDev"` | Свой заголовок PR                   |
+| `working-directory`  | `"."`                                          | Директория для запуска              |
+| `parallel`           | `false`                                        | Включить параллельную обработку     |
+
+[Читать документацию →](https://lingo.dev/en/ci/github)
+
+---
+
+### Lingo.dev SDK
+
+Статические файлы переводов подходят для UI-меток, но что делать с пользовательским контентом? Чаты, описания товаров, обращения в поддержку — всё это появляется уже после сборки и не может быть переведено заранее. В итоге вы показываете текст без перевода или строите свою сложную систему локализации.
+
+Lingo.dev SDK переводит контент на лету. Передайте любой текст, объект или HTML — и получите локализованную версию. Работает для чатов в реальном времени, динамических уведомлений и любого контента, который появляется после деплоя. Доступно для JavaScript, PHP, Python и Ruby.
+
+**Установка:**
 
 ```bash
 npm install lingo.dev
 ```
 
-Активируйте в конфигурации сборки:
-
-```js
-import lingoCompiler from "lingo.dev/compiler";
-
-const existingNextConfig = {};
-
-export default lingoCompiler.next({
-  sourceLocale: "en",
-  targetLocales: ["es", "fr"],
-})(existingNextConfig);
-```
-
-Запустите `next build` и наблюдайте, как появляются пакеты на испанском и французском языках ✨
-
-[Прочитайте документацию →](https://lingo.dev/compiler) для полного руководства и [присоединяйтесь к нашему Discord](https://lingo.dev/go/discord), чтобы получить помощь с настройкой.
-
----
-
-### Что внутри этого репозитория?
-
-| Инструмент   | Краткое описание                                                                                 | Документация                            |
-| ------------ | ------------------------------------------------------------------------------------------------ | --------------------------------------- |
-| **Compiler** | Локализация React на этапе сборки                                                                | [/compiler](https://lingo.dev/compiler) |
-| **CLI**      | Локализация для веб- и мобильных приложений, JSON, YAML, markdown и других                       | [/cli](https://lingo.dev/cli)           |
-| **CI/CD**    | Автоматическое добавление переводов при каждом пуше + создание pull request'ов при необходимости | [/ci](https://lingo.dev/ci)             |
-| **SDK**      | Перевод в реальном времени для пользовательского контента                                        | [/sdk](https://lingo.dev/sdk)           |
-
-Ниже представлены основные моменты для каждого инструмента 👇
-
----
-
-### ⚡️ Lingo.dev CLI
-
-Переводите код и контент прямо из терминала.
-
-```bash
-npx lingo.dev@latest run
-```
-
-Он создает отпечатки для каждой строки, кэширует результаты и переводит только измененные строки.
-
-[Следуйте документации →](https://lingo.dev/cli), чтобы узнать, как настроить.
-
----
-
-### 🔄 Lingo.dev CI/CD
-
-Доставляйте идеальные переводы автоматически.
-
-```yaml
-# .github/workflows/i18n.yml
-name: Lingo.dev i18n
-on: [push]
-
-jobs:
-  i18n:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: lingodotdev/lingo.dev@main
-        with:
-          api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
-```
-
-Поддерживает ваш репозиторий в порядке и делает ваш продукт многоязычным без ручных шагов.
-
-[Прочитайте документацию →](https://lingo.dev/ci)
-
----
-
-### 🧩 Lingo.dev SDK
-
-Мгновенный перевод по запросу для динамического контента.
+**Использование:**
 
 ```ts
 import { LingoDotDevEngine } from "lingo.dev/sdk";
 
 const lingoDotDev = new LingoDotDevEngine({
-  apiKey: "your-api-key-here",
+  apiKey: process.env.LINGODOTDEV_API_KEY,
 });
 
-const content = {
-  greeting: "Hello",
-  farewell: "Goodbye",
-  message: "Welcome to our platform",
-};
+// Translate objects (preserves structure)
+const translated = await lingoDotDev.localizeObject(
+  { greeting: "Hello", farewell: "Goodbye" },
+  { sourceLocale: "en", targetLocale: "es" },
+);
+// { greeting: "Hola", farewell: "Adiós" }
 
-const translated = await lingoDotDev.localizeObject(content, {
+// Translate text
+const text = await lingoDotDev.localizeText("Hello!", {
   sourceLocale: "en",
-  targetLocale: "es",
+  targetLocale: "fr",
 });
-// Returns: { greeting: "Hola", farewell: "Adiós", message: "Bienvenido a nuestra plataforma" }
+
+// Translate to multiple languages at once
+const results = await lingoDotDev.batchLocalizeText("Hello!", {
+  sourceLocale: "en",
+  targetLocales: ["es", "fr", "de"],
+});
+
+// Translate chat (preserves speaker names)
+const chat = await lingoDotDev.localizeChat(
+  [{ name: "Alice", text: "Hello!" }],
+  { sourceLocale: "en", targetLocale: "es" },
+);
+
+// Translate HTML (preserves markup)
+const html = await lingoDotDev.localizeHtml("<h1>Welcome</h1>", {
+  sourceLocale: "en",
+  targetLocale: "de",
+});
+
+// Detect language
+const locale = await lingoDotDev.recognizeLocale("Bonjour le monde");
+// "fr"
 ```
 
-Идеально подходит для чатов, пользовательских комментариев и других потоков в реальном времени.
+**Доступные SDK:**
 
-[Читать документацию →](https://lingo.dev/sdk)
+- [JavaScript SDK](https://lingo.dev/en/sdk/javascript) — веб-приложения, Node.js
+- [PHP SDK](https://lingo.dev/en/sdk/php) — PHP, Laravel
+- [Python SDK](https://lingo.dev/en/sdk/python) — Django, Flask
+- [Ruby SDK](https://lingo.dev/en/sdk/ruby) — Rails
+
+[Читать документацию →](https://lingo.dev/en/sdk)
 
 ---
 
-## 🤝 Сообщество
+### Lingo.dev Compiler
 
-Мы ориентированы на сообщество и рады любым вкладам!
+Классический i18n — это вмешательство везде. Каждую строку нужно оборачивать в функции `t()`, придумывать ключи переводов (`home.hero.title.v2`), держать параллельные JSON-файлы и наблюдать как компоненты обрастают локализационным шлаком. Это настолько муторно, что команды тянут с интернационализацией до огромного рефакторинга.
 
-- Есть идея? [Создайте задачу](https://github.com/lingodotdev/lingo.dev/issues)
-- Хотите что-то исправить? [Отправьте PR](https://github.com/lingodotdev/lingo.dev/pulls)
-- Нужна помощь? [Присоединяйтесь к нашему Discord](https://lingo.dev/go/discord)
+Компилятор Lingo.dev убирает всю рутину. Пиши React-компоненты с обычным английским текстом — компилятор сам находит переводимые строки на этапе сборки и автоматически генерирует локализованные версии. Никаких ключей, JSON-файлов или обёрток — только React-код, который сразу работает на нескольких языках.
 
-## ⭐ История звёзд
+**Установка:**
 
-Если вам нравится то, что мы делаем, поставьте нам ⭐ и помогите нам достичь 4 000 звёзд! 🌟
+```bash
+pnpm install @lingo.dev/compiler
+```
+
+**Аутентификация:**
+
+```bash
+# Recommended: Sign up at lingo.dev and login
+npx lingo.dev@latest login
+
+# Alternative: Add API key to .env
+LINGODOTDEV_API_KEY=your_key_here
+
+# Or use direct LLM providers (Groq, OpenAI, Anthropic, Google)
+GROQ_API_KEY=your_key
+```
+
+**Конфигурация (Next.js):**
+
+```ts
+// next.config.ts
+import type { NextConfig } from "next";
+import { withLingo } from "@lingo.dev/compiler/next";
+
+const nextConfig: NextConfig = {};
+
+export default async function (): Promise<NextConfig> {
+  return await withLingo(nextConfig, {
+    sourceRoot: "./app",
+    sourceLocale: "en",
+    targetLocales: ["es", "fr", "de"],
+    models: "lingo.dev",
+    dev: { usePseudotranslator: true },
+  });
+}
+```
+
+**Конфигурация (Vite):**
+
+```ts
+// vite.config.ts
+import { lingoCompilerPlugin } from "@lingo.dev/compiler/vite";
+
+export default defineConfig({
+  plugins: [
+    lingoCompilerPlugin({
+      sourceRoot: "src",
+      sourceLocale: "en",
+      targetLocales: ["es", "fr", "de"],
+      models: "lingo.dev",
+      dev: { usePseudotranslator: true },
+    }),
+    react(),
+  ],
+});
+```
+
+**Настройка провайдера:**
+
+```tsx
+// app/layout.tsx (Next.js)
+import { LingoProvider } from "@lingo.dev/compiler/react";
+
+export default function RootLayout({ children }) {
+  return (
+    <LingoProvider>
+      <html>
+        <body>{children}</body>
+      </html>
+    </LingoProvider>
+  );
+}
+```
+
+**Переключатель языка:**
+
+```tsx
+import { useLocale, setLocale } from "@lingo.dev/compiler/react";
+
+export function LanguageSwitcher() {
+  const locale = useLocale();
+  return (
+    <select value={locale} onChange={(e) => setLocale(e.target.value)}>
+      <option value="en">English</option>
+      <option value="es">Español</option>
+    </select>
+  );
+}
+```
+
+**Разработка:** `npm run dev` (используется псевдопереводчик, без вызова API)
+
+**Продакшн:** Установите `usePseudotranslator: false`, затем `next build`
+
+Добавьте директорию `.lingo/` в систему контроля версий.
+
+**Ключевые возможности:**
+
+- Нулевая нагрузка на производительность рантайма
+- Нет ключей переводов и JSON-файлов
+- Нет функций `t()` или компонентов-обёрток `<T>`
+- Автоматическое определение переводимых строк в JSX
+- Поддержка TypeScript
+- ICU MessageFormat для плюрализации
+- Ручные правки через атрибут `data-lingo-override`
+- Встроенный редактор переводов
+
+**Режимы сборки:**
+
+- `pseudotranslator`: режим разработки с тестовыми переводами (без затрат на API)
+- `real`: генерация реальных переводов с использованием LLM
+- `cache-only`: продакшн-режим с использованием заранее сгенерированных переводов из CI (без запросов к API)
+
+**Поддерживаемые фреймворки:**
+
+- Next.js (App Router с React Server Components)
+- Vite + React (SPA и SSR)
+
+Планируется поддержка других фреймворков.
+
+[Читать документацию →](https://lingo.dev/en/compiler)
+
+---
+
+## Вклад в проект
+
+Будем рады вашим вкладом! Пожалуйста, следуйте этим рекомендациям:
+
+1. **Issues:** [Сообщить о баге или предложить фичу](https://github.com/lingodotdev/lingo.dev/issues)
+2. **Pull Requests:** [Отправить изменения](https://github.com/lingodotdev/lingo.dev/pulls)
+   - Каждый PR требует changeset: `pnpm new` (или `pnpm new:empty` для нерелизных изменений)
+   - До отправки убедитесь, что все тесты проходят
+3. **Разработка:** Это монорепозиторий pnpm + turborepo
+   - Установить зависимости: `pnpm install`
+   - Запустить тесты: `pnpm test`
+   - Собрать: `pnpm build`
+
+**Поддержка:** [Сообщество в Discord](https://lingo.dev/go/discord)
+
+## История звёзд
+
+Если Lingo.dev оказался полезен, поставьте нам звезду и помогите достичь 10 000 звёзд!
 
 [
 
@@ -188,8 +490,20 @@ const translated = await lingoDotDev.localizeObject(content, {
 
 ](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
 
-## 🌐 Readme на других языках
+## Локализованная документация
 
-[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+**Доступные переводы:**
 
-Не видите своего языка? Добавьте его в [`i18n.json`](./i18n.json) и отправьте PR!
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [Português (Brasil)](/readme/pt-BR.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Polski](/readme/pl.md) • [Türkçe](/readme/tr.md) • [اردو](/readme/ur.md) • [भोजपुरी](/readme/bho.md) • [অসমীয়া](/readme/as-IN.md) • [ગુજરાતી](/readme/gu-IN.md) • [मराठी](/readme/mr-IN.md) • [ଓଡ଼ିଆ](/readme/or-IN.md) • [ਪੰਜਾਬੀ](/readme/pa-IN.md) • [සිංහල](/readme/si-LK.md) • [தமிழ்](/readme/ta-IN.md) • [తెలుగు](/readme/te-IN.md)
+
+**Добавить новый язык:**
+
+1. Добавьте код локали в [`i18n.json`](./i18n.json) в формате [BCP-47](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale)
+2. Оформите pull request
+
+**Формат BCP-47 для локалей:** `language[-Script][-REGION]`
+
+- `language`: ISO 639-1/2/3 (маленькие): `en`, `zh`, `bho`
+- `Script`: ISO 15924 (с заглавной): `Hans`, `Hant`, `Latn`
+- `REGION`: ISO 3166-1 alpha-2 (заглавные): `US`, `CN`, `IN`
+- Примеры: `en`, `pt-BR`, `zh-Hans`, `sr-Cyrl-RS`

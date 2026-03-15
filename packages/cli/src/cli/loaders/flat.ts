@@ -72,10 +72,13 @@ function createDenormalizeLoader(
       });
 
       // Merge preserved objects back (they stay as objects, not flattened)
-      const denormalized: Record<string, any> = {
-        ...flattened,
-        ...preservedObjects,
-      };
+      // BUT: encode their keys too!
+      const denormalized: Record<string, any> = { ...flattened };
+
+      for (const [key, value] of Object.entries(preservedObjects)) {
+        const encodedKey = encodeURIComponent(String(key));
+        denormalized[encodedKey] = value;
+      }
 
       const keysMap = buildDenormalizedKeysMap(denormalized);
       return { denormalized, keysMap };

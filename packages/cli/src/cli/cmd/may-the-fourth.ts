@@ -3,7 +3,6 @@ import * as cp from "node:child_process";
 import figlet from "figlet";
 import chalk from "chalk";
 import { vice } from "gradient-string";
-import { setTimeout } from "node:timers/promises";
 
 export const colors = {
   orange: "#ff6600",

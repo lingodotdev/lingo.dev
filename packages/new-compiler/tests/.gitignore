@@ -1,0 +1,6 @@
+# Playwright artifacts
+playwright-report/
+test-results/
+
+# Prepared fixtures (with node_modules)
+fixtures/

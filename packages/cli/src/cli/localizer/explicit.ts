@@ -7,10 +7,10 @@ import { I18nConfig } from "@lingo.dev/_spec";
 import chalk from "chalk";
 import dedent from "dedent";
 import { ILocalizer, LocalizerData } from "./_types";
-import { LanguageModel, Message, generateText } from "ai";
+import { LanguageModel, ModelMessage, generateText } from "ai";
 import { colors } from "../constants";
 import { jsonrepair } from "jsonrepair";
-import { createOllama } from "ollama-ai-provider";
+import { createOllama } from "ollama-ai-provider-v2";
 
 export default function createExplicitLocalizer(
   provider: NonNullable<I18nConfig["provider"]>,
@@ -26,10 +26,10 @@ export default function createExplicitLocalizer(
           To fix this issue:
           1. Switch to one of the supported providers, or
           2. Remove the ${chalk.italic(
-            "provider",
-          )} node from your i18n.json configuration to switch to ${chalk.hex(
-            colors.green,
-          )("Lingo.dev")}
+          "provider",
+        )} node from your i18n.json configuration to switch to ${chalk.hex(
+          colors.green,
+        )("Lingo.dev")}
 
           ${chalk.hex(colors.blue)("Docs: https://lingo.dev/go/docs")}
         `,
@@ -94,6 +94,24 @@ export default function createExplicitLocalizer(
   }
 }
 
+// Exported for testing
+export function parseModelResponse(
+  text: string,
+): ReturnType<typeof JSON.parse> {
+  const firstBrace = text.indexOf("{");
+  const lastBrace = text.lastIndexOf("}");
+  const extracted =
+    firstBrace !== -1 && lastBrace >= firstBrace
+      ? text.slice(firstBrace, lastBrace + 1)
+      : text;
+
+  try {
+    return JSON.parse(extracted);
+  } catch {
+    return JSON.parse(jsonrepair(extracted));
+  }
+}
+
 function createAiSdkLocalizer(params: {
   factory: (params: { apiKey?: string; baseUrl?: string }) => LanguageModel;
   id: NonNullable<I18nConfig["provider"]>["id"];
@@ -106,24 +124,22 @@ function createAiSdkLocalizer(params: {
   const skipAuth = params.skipAuth === true;
 
   const apiKey = process.env[params?.apiKeyName ?? ""];
-  if ((!skipAuth && !apiKey) || !params.apiKeyName) {
+  if (!skipAuth && (!apiKey || !params.apiKeyName)) {
     throw new Error(
       dedent`
-        You're trying to use raw ${chalk.dim(params.id)} API for translation. ${
-          params.apiKeyName
-            ? `However, ${chalk.dim(
-                params.apiKeyName,
-              )} environment variable is not set.`
-            : "However, that provider is unavailable."
+        You're trying to use raw ${chalk.dim(params.id)} API for translation. ${params.apiKeyName
+          ? `However, ${chalk.dim(
+            params.apiKeyName,
+          )} environment variable is not set.`
+          : "However, that provider is unavailable."
         }
 
         To fix this issue:
-        1. ${
-          params.apiKeyName
-            ? `Set ${chalk.dim(
-                params.apiKeyName,
-              )} in your environment variables`
-            : "Set the environment variable for your provider (if required)"
+        1. ${params.apiKeyName
+          ? `Set ${chalk.dim(
+            params.apiKeyName,
+          )} in your environment variables`
+          : "Set the environment variable for your provider (if required)"
         }, or
         2. Remove the ${chalk.italic(
           "provider",
@@ -188,12 +204,34 @@ function createAiSdkLocalizer(params: {
             },
           },
         ],
+        [
+          {
+            sourceLocale: "en",
+            targetLocale: "es",
+            data: {
+              spring: "Spring",
+            },
+            hints: {
+              spring: ["A source of water"],
+            },
+          },
+          {
+            sourceLocale: "en",
+            targetLocale: "es",
+            data: {
+              spring: "Manantial",
+            },
+          },
+        ],
       ];
+
+      const hasHints = input.hints && Object.keys(input.hints).length > 0;
 
       const payload = {
         sourceLocale: input.sourceLocale,
         targetLocale: input.targetLocale,
         data: input.processableData,
+        ...(hasHints && { hints: input.hints }),
       };
 
       const response = await generateText({
@@ -201,19 +239,18 @@ function createAiSdkLocalizer(params: {
         ...params.settings,
         messages: [
           { role: "system", content: systemPrompt },
-          { role: "user", content: "OK" },
           ...shots.flatMap(
             ([userShot, assistantShot]) =>
               [
                 { role: "user", content: JSON.stringify(userShot) },
                 { role: "assistant", content: JSON.stringify(assistantShot) },
-              ] as Message[],
+              ] as ModelMessage[],
           ),
           { role: "user", content: JSON.stringify(payload) },
         ],
       });
 
-      const result = JSON.parse(response.text);
+      const result = parseModelResponse(response.text);
 
       // Handle both object and string responses
       if (typeof result.data === "object" && result.data !== null) {
@@ -224,10 +261,7 @@ function createAiSdkLocalizer(params: {
       const index = result.data.indexOf("{");
       const lastIndex = result.data.lastIndexOf("}");
       const trimmed = result.data.slice(index, lastIndex + 1);
-      const repaired = jsonrepair(trimmed);
-      const finalResult = JSON.parse(repaired);
-
-      return finalResult.data;
+      return JSON.parse(jsonrepair(trimmed)).data;
     },
   };
 }

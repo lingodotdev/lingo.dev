@@ -1,0 +1,109 @@
+{% set user = app.user %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="description" content="Welcome to our application">
+    <title>Welcome</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/" title="Go to homepage">Home</a>
+            <a href="/about" title="Learn more about us">About</a>
+            <a href="/contact" title="Get in touch">Contact</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Welcome to Our Platform</h1>
+            <p>Hello <strong>{{ user.name }}</strong>, we're glad to have you here!</p>
+            <p>Start exploring our features and discover what makes us <em>unique</em>.</p>
+        </section>
+
+        {% if user.isPremium %}
+        <section class="premium-benefits">
+            <h2>Premium Benefits</h2>
+            <ul>
+                <li>Unlimited access to all features</li>
+                <li>Priority customer support</li>
+                <li>Advanced analytics and reporting</li>
+            </ul>
+        </section>
+        {% endif %}
+
+        <section class="getting-started">
+            <h2>Getting Started</h2>
+            <div>
+                <svg width="400" height="160" xmlns="http://www.w3.org/2000/svg">
+                    <title>Getting Started Guide</title>
+                    <defs>
+                        <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#667eea;stop-opacity:1"/>
+                            <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1"/>
+                        </linearGradient>
+                    </defs>
+                    <rect width="400" height="160" fill="url(#bgGrad)" rx="10"/>
+                    <circle cx="60" cy="60" r="35" fill="rgba(255,255,255,0.2)" stroke="white" stroke-width="3"/>
+                    <path d="M 50 60 L 55 68 L 72 52" stroke="white" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                    <g fill="white">
+                        <text x="115" y="50" font-size="24" font-weight="bold">Welcome,
+                            <tspan font-weight="bold">{{user.name}}</tspan>!</text>
+                        <text x="115" y="75" font-size="14">Ready to explore the platform?</text>
+                    </g>
+                    <rect x="40" y="100" width="270" height="40" fill="rgba(255,255,255,0.15)" rx="8"/>
+                    <text x="175" y="115" text-anchor="middle" fill="white" font-size="13">Step 1 of 3: Create Your Profile</text>
+                    <rect x="50" y="128" width="250" height="6" fill="rgba(255,255,255,0.2)" rx="3"/>
+                    <rect x="50" y="128" width="83" height="6" fill="#10b981" rx="3"/>
+                    <text x="175" y="152" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="11">33% Complete</text>
+                </svg>
+            </div>
+
+            <button>
+                <span>Submit</span>
+                <span>
+                    <svg width="20px" height="20px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="#000000">
+                        <title>Submit icon</title>
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                        <g id="SVGRepo_iconCarrier">
+                            <path fill="none" stroke="#000000" stroke-width="2" d="M6,12.4 L18,12.4 M12.6,7 L18,12.4 L12.6,17.8"></path>
+                        </g>
+                    </svg>
+                </span>
+            </button>
+
+            <p>Follow these simple steps to begin your journey:</p>
+            <ol>
+                <li>Complete your profile</li>
+                <li>Explore the dashboard</li>
+                <li>Invite your team members</li>
+            </ol>
+
+            <form action="/profile/update" method="post">
+                <label for="bio">Tell us about yourself:</label>
+                <textarea id="bio" name="bio" placeholder="Enter your bio here" aria-label="User biography"></textarea>
+
+                <label for="email">Email address:</label>
+                <input type="email" id="email" name="email" placeholder="your@email.com" aria-label="Email address">
+
+                <button type="submit" title="Save your profile changes">Save Profile</button>
+            </form>
+        </section>
+
+        {# This section is for internal notes and won't be displayed #}
+        {% if app.debug %}
+        <section class="debug-info">
+            <h3>Debug Information</h3>
+            <p>User ID: {{ user.id }}</p>
+            <p>Last login: {{ user.lastLogin|date('Y-m-d H:i:s') }}</p>
+        </section>
+        {% endif %}
+    </main>
+
+    <footer>
+        <p>Need help? <a href="/support" title="Visit our support center">Contact Support</a></p>
+        <p>&copy; {{ "now"|date('Y') }} Our Company. All rights reserved.</p>
+    </footer>
+</body>
+</html>

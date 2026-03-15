@@ -47,27 +47,38 @@ export abstract class PlatformKit<
 
   get config() {
     const env = Z.object({
-      LINGODOTDEV_API_KEY: Z.string(),
+      LINGO_API_KEY: Z.string().optional(),
+      LINGODOTDEV_API_KEY: Z.string().optional(),
       LINGODOTDEV_PULL_REQUEST: Z.preprocess(
         (val) => val === "true" || val === true,
         Z.boolean(),
       ),
       LINGODOTDEV_COMMIT_MESSAGE: Z.string().optional(),
       LINGODOTDEV_PULL_REQUEST_TITLE: Z.string().optional(),
+      LINGODOTDEV_COMMIT_AUTHOR_NAME: Z.string().optional(),
+      LINGODOTDEV_COMMIT_AUTHOR_EMAIL: Z.string().optional(),
       LINGODOTDEV_WORKING_DIRECTORY: Z.string().optional(),
       LINGODOTDEV_PROCESS_OWN_COMMITS: Z.preprocess(
+        (val) => val === "true" || val === true,
+        Z.boolean(),
+      ).optional(),
+      LINGODOTDEV_GPG_SIGN: Z.preprocess(
         (val) => val === "true" || val === true,
         Z.boolean(),
       ).optional(),
     }).parse(process.env);
 
     return {
-      replexicaApiKey: env.LINGODOTDEV_API_KEY,
+      replexicaApiKey: env.LINGO_API_KEY || env.LINGODOTDEV_API_KEY || "",
       isPullRequestMode: env.LINGODOTDEV_PULL_REQUEST,
       commitMessage: env.LINGODOTDEV_COMMIT_MESSAGE || defaultMessage,
       pullRequestTitle: env.LINGODOTDEV_PULL_REQUEST_TITLE || defaultMessage,
+      commitAuthorName: env.LINGODOTDEV_COMMIT_AUTHOR_NAME || "Lingo.dev",
+      commitAuthorEmail:
+        env.LINGODOTDEV_COMMIT_AUTHOR_EMAIL || "support@lingo.dev",
       workingDir: env.LINGODOTDEV_WORKING_DIRECTORY || ".",
       processOwnCommits: env.LINGODOTDEV_PROCESS_OWN_COMMITS || false,
+      gpgSign: env.LINGODOTDEV_GPG_SIGN || false,
     };
   }
 }

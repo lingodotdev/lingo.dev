@@ -5,7 +5,7 @@ import {
   formatDisplayValue,
 } from "../../utils/key-matching";
 
-export type KeyFilterType = "lockedKeys" | "ignoredKeys";
+export type KeyFilterType = "lockedKeys" | "ignoredKeys" | "preservedKeys";
 
 export interface KeyCommandOptions {
   bucket?: string;

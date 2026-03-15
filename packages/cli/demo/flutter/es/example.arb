@@ -2,7 +2,7 @@
   "@@locale": "es",
   "@@last_modified": "2024-01-15T10:30:00Z",
   "@@version": "1.0.0",
-  "welcome_message": "Bienvenido a nuestra aplicación Flutter",
+  "welcome_message": "Bienvenido a nuestra app de Flutter",
   "@welcome_message": {
     "description": "The main welcome message shown on the home screen",
     "context": "greeting"
@@ -12,7 +12,7 @@
     "description": "Text for the login button"
   },
   "signup_button": "Registrarse",
-  "error_network": "Conexión de red fallida",
+  "error_network": "Error de conexión de red",
   "@error_network": {
     "description": "Error message displayed when network request fails"
   },

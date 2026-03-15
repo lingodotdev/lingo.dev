@@ -1,20 +1,21 @@
 <p align="center">
   <a href="https://lingo.dev">
-    <img src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.compiler.png" width="100%" alt="Lingo.dev" />
+    <img src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.png" width="100%" alt="Lingo.dev" />
   </a>
 </p>
 
 <p align="center">
-  <strong>⚡ Lingo.dev - open-source, AI-powered i18n toolkit for instant localization with LLMs.</strong>
+  <strong>Lingo.dev - Open-source i18n toolkit for LLM-powered localization</strong>
 </p>
 
 <br />
 
 <p align="center">
-  <a href="https://lingo.dev/compiler">Lingo.dev Compiler</a> •
-  <a href="https://lingo.dev/cli">Lingo.dev CLI</a> •
-  <a href="https://lingo.dev/ci">Lingo.dev CI/CD</a> •
-  <a href="https://lingo.dev/sdk">Lingo.dev SDK</a>
+  <a href="#lingodev-mcp">MCP</a> •
+  <a href="#lingodev-cli">CLI</a> •
+  <a href="#lingodev-cicd">CI/CD</a> •
+  <a href="#lingodev-sdk">SDK</a> •
+  <a href="#lingodev-compiler">Compiler</a>
 </p>
 
 <p align="center">
@@ -43,133 +44,437 @@
 
 ---
 
-## Meet the Compiler 🆕
+## Quick Start
 
-**Lingo.dev Compiler** is a free, open-source compiler middleware, designed to make any React app multilingual at build time without requiring any changes to the existing React components.
+| Tool                               | Use Case                                            | Quick Command                      |
+| ---------------------------------- | --------------------------------------------------- | ---------------------------------- |
+| [**MCP**](#lingodev-mcp)           | AI-assisted i18n setup for React apps               | Prompt: `Set up i18n`              |
+| [**CLI**](#lingodev-cli)           | Translate JSON, YAML, markdown, CSV, PO files       | `npx lingo.dev@latest run`         |
+| [**CI/CD**](#lingodev-cicd)        | Automated translation pipeline in GitHub Actions    | `uses: lingodotdev/lingo.dev@main` |
+| [**SDK**](#lingodev-sdk)           | Runtime translation for dynamic content             | `npm install lingo.dev`            |
+| [**Compiler**](#lingodev-compiler) | Build-time React localization without i18n wrappers | `withLingo()` plugin               |
 
-Install once:
+---
+
+### Lingo.dev MCP
+
+Setting up i18n in React apps is notoriously error-prone - even for experienced developers. AI coding assistants make it worse: they hallucinate non-existent APIs, forget middleware configurations, break routing, or implement half a solution before getting lost. The problem is that i18n setup requires a precise sequence of coordinated changes across multiple files (routing, middleware, components, configuration), and LLMs struggle to maintain that context.
+
+Lingo.dev MCP solves this by giving AI assistants structured access to framework-specific i18n knowledge. Instead of guessing, your assistant follows verified implementation patterns for Next.js, React Router, and TanStack Start.
+
+**Supported IDEs:**
+
+- Claude Code
+- Cursor
+- GitHub Copilot Agents
+- Codex (OpenAI)
+
+**Supported frameworks:**
+
+- Next.js (App Router & Pages Router v13-16)
+- TanStack Start (v1)
+- React Router (v7)
+
+**Usage:**
+
+After configuring the MCP server in your IDE ([see quickstart guides](https://lingo.dev/en/mcp)), prompt your assistant:
+
+```
+Set up i18n with the following locales: en, es, and pt-BR. The default locale is 'en'.
+```
+
+The assistant will:
+
+1. Configure locale-based routing (e.g., `/en`, `/es`, `/pt-BR`)
+2. Set up language switching components
+3. Implement automatic locale detection
+4. Generate necessary configuration files
+
+**Note:** AI-assisted code generation is non-deterministic. Review generated code before committing.
+
+[Read the docs →](https://lingo.dev/en/mcp)
+
+---
+
+### Lingo.dev CLI
+
+Keeping translations in sync is tedious. You add a new string, forget to translate it, ship broken UI to international users. Or you send JSON files to translators, wait days, then manually merge their work back. Scaling to 10+ languages means managing hundreds of files that constantly drift out of sync.
+
+Lingo.dev CLI automates this. Point it at your translation files, run one command, and every locale updates. A lockfile tracks what's already translated, so you only pay for new or changed content. Supports JSON, YAML, CSV, PO files, and markdown.
+
+**Setup:**
+
+```bash
+# Initialize project
+npx lingo.dev@latest init
+
+# Run translations
+npx lingo.dev@latest run
+```
+
+**How it works:**
+
+1. Extracts translatable content from configured files
+2. Sends content to LLM provider for translation
+3. Writes translated content back to filesystem
+4. Creates `i18n.lock` file to track completed translations (avoids redundant processing)
+
+**Configuration:**
+
+The `init` command generates an `i18n.json` file. Configure locales and buckets:
+
+```json
+{
+  "$schema": "https://lingo.dev/schema/i18n.json",
+  "version": "1.10",
+  "locale": {
+    "source": "en",
+    "targets": ["es", "fr", "de"]
+  },
+  "buckets": {
+    "json": {
+      "include": ["locales/[locale].json"]
+    }
+  }
+}
+```
+
+The `provider` field is optional (defaults to Lingo.dev Engine). For custom LLM providers:
+
+```json
+{
+  "provider": {
+    "id": "openai",
+    "model": "gpt-4o-mini",
+    "prompt": "Translate from {source} to {target}"
+  }
+}
+```
+
+**Supported LLM providers:**
+
+- Lingo.dev Engine (recommended)
+- OpenAI
+- Anthropic
+- Google
+- Mistral
+- OpenRouter
+- Ollama
+
+[Read the docs →](https://lingo.dev/en/cli)
+
+---
+
+### Lingo.dev CI/CD
+
+Translations are the feature that's always "almost done." Engineers merge code without updating locales. QA catches missing translations in staging - or worse, users catch them in production. The root cause: translation is a manual step that's easy to skip under deadline pressure.
+
+Lingo.dev CI/CD makes translations automatic. Every push triggers translation. Missing strings get filled before code reaches production. No discipline required - the pipeline handles it.
+
+**Supported platforms:**
+
+- GitHub Actions
+- GitLab CI/CD
+- Bitbucket Pipelines
+
+**GitHub Actions setup:**
+
+Create `.github/workflows/translate.yml`:
+
+```yaml
+name: Translate
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: write
+jobs:
+  translate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Lingo.dev
+        uses: lingodotdev/lingo.dev@main
+        with:
+          api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
+```
+
+**Setup requirements:**
+
+1. Add `LINGODOTDEV_API_KEY` to repository secrets (Settings > Secrets and variables > Actions)
+2. For PR workflows: Enable "Allow GitHub Actions to create and approve pull requests" in Settings > Actions > General
+
+**Workflow options:**
+
+Commit translations directly:
+
+```yaml
+uses: lingodotdev/lingo.dev@main
+with:
+  api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
+```
+
+Create pull requests with translations:
+
+```yaml
+uses: lingodotdev/lingo.dev@main
+with:
+  api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
+  pull-request: true
+env:
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
+**Available inputs:**
+
+| Input                | Default                                        | Description                              |
+| -------------------- | ---------------------------------------------- | ---------------------------------------- |
+| `api-key`            | (required)                                     | Lingo.dev API key                        |
+| `pull-request`       | `false`                                        | Create PR instead of committing directly |
+| `commit-message`     | `"feat: update translations via @LingoDotDev"` | Custom commit message                    |
+| `pull-request-title` | `"feat: update translations via @LingoDotDev"` | Custom PR title                          |
+| `working-directory`  | `"."`                                          | Directory to run in                      |
+| `parallel`           | `false`                                        | Enable parallel processing               |
+
+[Read the docs →](https://lingo.dev/en/ci/github)
+
+---
+
+### Lingo.dev SDK
+
+Static translation files work for UI labels, but what about user-generated content? Chat messages, product descriptions, support tickets - content that doesn't exist at build time can't be pre-translated. You're stuck showing untranslated text or building a custom translation pipeline.
+
+Lingo.dev SDK translates content at runtime. Pass any text, object, or HTML and get back a localized version. Works for real-time chat, dynamic notifications, or any content that arrives after deployment. Available for JavaScript, PHP, Python, and Ruby.
+
+**Installation:**
 
 ```bash
 npm install lingo.dev
 ```
 
-Enable in your build config:
-
-```js
-import lingoCompiler from "lingo.dev/compiler";
-
-const existingNextConfig = {};
-
-export default lingoCompiler.next({
-  sourceLocale: "en",
-  targetLocales: ["es", "fr"],
-})(existingNextConfig);
-```
-
-Run `next build` and watch Spanish and French bundles pop out ✨
-
-[Read the docs →](https://lingo.dev/compiler) for the full guide, and [Join our Discord](https://lingo.dev/go/discord) to get help with your setup.
-
----
-
-### What's inside this repo?
-
-| Tool         | TL;DR                                                                          | Docs                                    |
-| ------------ | ------------------------------------------------------------------------------ | --------------------------------------- |
-| **Compiler** | Build-time React localization                                                  | [/compiler](https://lingo.dev/compiler) |
-| **CLI**      | One-command localization for web and mobile apps, JSON, YAML, markdown, + more | [/cli](https://lingo.dev/cli)           |
-| **CI/CD**    | Auto-commit translations on every push + create pull requests if needed        | [/ci](https://lingo.dev/ci)             |
-| **SDK**      | Realtime translation for user-generated content                                | [/sdk](https://lingo.dev/sdk)           |
-
-Below are the quick hits for each 👇
-
----
-
-### ⚡️ Lingo.dev CLI
-
-Translate code & content straight from your terminal.
-
-```bash
-npx lingo.dev@latest run
-```
-
-It fingerprints every string, caches results, and only re-translates what changed.
-
-[Follow the docs →](https://lingo.dev/cli) to learn how to set it up.
-
----
-
-### 🔄 Lingo.dev CI/CD
-
-Ship perfect translations automatically.
-
-```yaml
-# .github/workflows/i18n.yml
-name: Lingo.dev i18n
-on: [push]
-
-jobs:
-  i18n:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: lingodotdev/lingo.dev@main
-        with:
-          api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
-```
-
-Keeps your repo green and your product multilingual without the manual steps.
-
-[Read the docs →](https://lingo.dev/ci)
-
----
-
-### 🧩 Lingo.dev SDK
-
-Instant per-request translation for dynamic content.
+**Usage:**
 
 ```ts
 import { LingoDotDevEngine } from "lingo.dev/sdk";
 
 const lingoDotDev = new LingoDotDevEngine({
-  apiKey: "your-api-key-here",
+  apiKey: process.env.LINGODOTDEV_API_KEY,
 });
 
-const content = {
-  greeting: "Hello",
-  farewell: "Goodbye",
-  message: "Welcome to our platform",
-};
+// Translate objects (preserves structure)
+const translated = await lingoDotDev.localizeObject(
+  { greeting: "Hello", farewell: "Goodbye" },
+  { sourceLocale: "en", targetLocale: "es" },
+);
+// { greeting: "Hola", farewell: "Adiós" }
 
-const translated = await lingoDotDev.localizeObject(content, {
+// Translate text
+const text = await lingoDotDev.localizeText("Hello!", {
   sourceLocale: "en",
-  targetLocale: "es",
+  targetLocale: "fr",
 });
-// Returns: { greeting: "Hola", farewell: "Adiós", message: "Bienvenido a nuestra plataforma" }
+
+// Translate to multiple languages at once
+const results = await lingoDotDev.batchLocalizeText("Hello!", {
+  sourceLocale: "en",
+  targetLocales: ["es", "fr", "de"],
+});
+
+// Translate chat (preserves speaker names)
+const chat = await lingoDotDev.localizeChat(
+  [{ name: "Alice", text: "Hello!" }],
+  { sourceLocale: "en", targetLocale: "es" },
+);
+
+// Translate HTML (preserves markup)
+const html = await lingoDotDev.localizeHtml("<h1>Welcome</h1>", {
+  sourceLocale: "en",
+  targetLocale: "de",
+});
+
+// Detect language
+const locale = await lingoDotDev.recognizeLocale("Bonjour le monde");
+// "fr"
 ```
 
-Perfect for chat, user comments, and other real-time flows.
+**Available SDKs:**
 
-[Read the docs →](https://lingo.dev/sdk)
+- [JavaScript SDK](https://lingo.dev/en/sdk/javascript) - Web apps, Node.js
+- [PHP SDK](https://lingo.dev/en/sdk/php) - PHP, Laravel
+- [Python SDK](https://lingo.dev/en/sdk/python) - Django, Flask
+- [Ruby SDK](https://lingo.dev/en/sdk/ruby) - Rails
+
+[Read the docs →](https://lingo.dev/en/sdk)
 
 ---
 
-## 🤝 Community
+### Lingo.dev Compiler
 
-We're community-driven and love contributions!
+Traditional i18n is invasive. You wrap every string in `t()` functions, invent translation keys (`home.hero.title.v2`), maintain parallel JSON files, and watch your components bloat with localization boilerplate. It's so tedious that teams delay internationalization until it becomes a massive refactor.
 
-- Got an idea? [Open an issue](https://github.com/lingodotdev/lingo.dev/issues)
-- Want to fix something? [Send a PR](https://github.com/lingodotdev/lingo.dev/pulls)
-- Need help? [Join our Discord](https://lingo.dev/go/discord)
+Lingo.dev Compiler eliminates the ceremony. Write React components with plain English text. The compiler detects translatable strings at build time and generates localized variants automatically. No keys, no JSON files, no wrapper functions - just React code that happens to work in multiple languages.
 
-## ⭐ Star History
+**Installation:**
 
-If you like what we're doing, give us a ⭐ and help us reach 4,000 stars! 🌟
+```bash
+pnpm install @lingo.dev/compiler
+```
+
+**Authentication:**
+
+```bash
+# Recommended: Sign up at lingo.dev and login
+npx lingo.dev@latest login
+
+# Alternative: Add API key to .env
+LINGODOTDEV_API_KEY=your_key_here
+
+# Or use direct LLM providers (Groq, OpenAI, Anthropic, Google)
+GROQ_API_KEY=your_key
+```
+
+**Configuration (Next.js):**
+
+```ts
+// next.config.ts
+import type { NextConfig } from "next";
+import { withLingo } from "@lingo.dev/compiler/next";
+
+const nextConfig: NextConfig = {};
+
+export default async function (): Promise<NextConfig> {
+  return await withLingo(nextConfig, {
+    sourceRoot: "./app",
+    sourceLocale: "en",
+    targetLocales: ["es", "fr", "de"],
+    models: "lingo.dev",
+    dev: { usePseudotranslator: true },
+  });
+}
+```
+
+**Configuration (Vite):**
+
+```ts
+// vite.config.ts
+import { lingoCompilerPlugin } from "@lingo.dev/compiler/vite";
+
+export default defineConfig({
+  plugins: [
+    lingoCompilerPlugin({
+      sourceRoot: "src",
+      sourceLocale: "en",
+      targetLocales: ["es", "fr", "de"],
+      models: "lingo.dev",
+      dev: { usePseudotranslator: true },
+    }),
+    react(),
+  ],
+});
+```
+
+**Provider setup:**
+
+```tsx
+// app/layout.tsx (Next.js)
+import { LingoProvider } from "@lingo.dev/compiler/react";
+
+export default function RootLayout({ children }) {
+  return (
+    <LingoProvider>
+      <html>
+        <body>{children}</body>
+      </html>
+    </LingoProvider>
+  );
+}
+```
+
+**Language switcher:**
+
+```tsx
+import { useLocale, setLocale } from "@lingo.dev/compiler/react";
+
+export function LanguageSwitcher() {
+  const locale = useLocale();
+  return (
+    <select value={locale} onChange={(e) => setLocale(e.target.value)}>
+      <option value="en">English</option>
+      <option value="es">Español</option>
+    </select>
+  );
+}
+```
+
+**Development:** `npm run dev` (uses pseudotranslator, no API calls)
+
+**Production:** Set `usePseudotranslator: false`, then `next build`
+
+Commit the `.lingo/` directory to version control.
+
+**Key features:**
+
+- Zero runtime performance cost
+- No translation keys or JSON files
+- No `t()` functions or `<T>` wrapper components
+- Automatic detection of translatable text in JSX
+- TypeScript support
+- ICU MessageFormat for plurals
+- Manual overrides via `data-lingo-override` attribute
+- Built-in translation editor widget
+
+**Build modes:**
+
+- `pseudotranslator`: Development mode with placeholder translations (no API costs)
+- `real`: Generate actual translations using LLMs
+- `cache-only`: Production mode using pre-generated translations from CI (no API calls)
+
+**Supported frameworks:**
+
+- Next.js (App Router with React Server Components)
+- Vite + React (SPA and SSR)
+
+Additional framework support planned.
+
+[Read the docs →](https://lingo.dev/en/compiler)
+
+---
+
+## Contributing
+
+Contributions welcome. Please follow these guidelines:
+
+1. **Issues:** [Report bugs or request features](https://github.com/lingodotdev/lingo.dev/issues)
+2. **Pull Requests:** [Submit changes](https://github.com/lingodotdev/lingo.dev/pulls)
+   - Every PR requires a changeset: `pnpm new` (or `pnpm new:empty` for non-release changes)
+   - Ensure tests pass before submitting
+3. **Development:** This is a pnpm + turborepo monorepo
+   - Install dependencies: `pnpm install`
+   - Run tests: `pnpm test`
+   - Build: `pnpm build`
+
+**Support:** [Discord community](https://lingo.dev/go/discord)
+
+## Star History
+
+If you find Lingo.dev useful, give us a star and help us reach 10,000 stars!
 
 [![Star History Chart](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
 
-## 🌐 Readme in other languages
+## Localized Documentation
 
-[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md)
+**Available translations:**
 
-Don't see your language? Add it to [`i18n.json`](./i18n.json) and open a PR!
+[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [Português (Brasil)](/readme/pt-BR.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Polski](/readme/pl.md) • [Türkçe](/readme/tr.md) • [اردو](/readme/ur.md) • [भोजपुरी](/readme/bho.md) • [অসমীয়া](/readme/as-IN.md) • [ગુજરાતી](/readme/gu-IN.md) • [मराठी](/readme/mr-IN.md) • [ଓଡ଼ିଆ](/readme/or-IN.md) • [ਪੰਜਾਬੀ](/readme/pa-IN.md) • [සිංහල](/readme/si-LK.md) • [தமிழ்](/readme/ta-IN.md) • [తెలుగు](/readme/te-IN.md)
+
+**Adding a new language:**
+
+1. Add locale code to [`i18n.json`](./i18n.json) using [BCP-47 format](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale)
+2. Submit a pull request
+
+**BCP-47 locale format:** `language[-Script][-REGION]`
+
+- `language`: ISO 639-1/2/3 (lowercase): `en`, `zh`, `bho`
+- `Script`: ISO 15924 (title case): `Hans`, `Hant`, `Latn`
+- `REGION`: ISO 3166-1 alpha-2 (uppercase): `US`, `CN`, `IN`
+- Examples: `en`, `pt-BR`, `zh-Hans`, `sr-Cyrl-RS`

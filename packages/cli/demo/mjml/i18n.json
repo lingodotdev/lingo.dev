@@ -1,0 +1,13 @@
+{
+  "version": "1.10",
+  "locale": {
+    "source": "en",
+    "targets": ["es"]
+  },
+  "buckets": {
+    "mjml": {
+      "include": ["./[locale]/example.mjml"]
+    }
+  },
+  "$schema": "https://lingo.dev/schema/i18n.json"
+}

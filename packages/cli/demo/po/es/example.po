@@ -49,7 +49,7 @@ msgid "Success! Changes saved."
 msgstr "¡Éxito! Cambios guardados."
 
 msgid "Error: Request failed."
-msgstr "Error: La solicitud ha fallado."
+msgstr "Error: la solicitud falló."
 
 msgid "Add to Cart"
 msgstr "Añadir al carrito"

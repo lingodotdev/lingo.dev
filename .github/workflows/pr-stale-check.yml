@@ -1,0 +1,50 @@
+name: PR Stale Check
+
+on:
+  schedule:
+    - cron: "0 0 * * 1" # Every Monday at midnight UTC
+  workflow_dispatch:
+
+jobs:
+  check-stale:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: read
+      pull-requests: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.CLAUDE_CODE_API_KEY }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          show_full_output: true
+          prompt: |
+            EXEMPT USERS: @maxprilutskiy, @vrcprl, @davidturnbull, @monicabe, @sumitsaurabh927, @AleksandrSl
+
+            Check all open pull requests and for each PR:
+
+            1. Analyze the conversation to determine:
+               - Are there unaddressed comments/requests from maintainers?
+               - Has the PR author responded or made updates recently?
+               - Is the ball in the author's court or are they waiting on maintainers?
+               - Has a stale reminder been posted already (look for "still working on this" or similar language in bot comments)?
+
+            2. Decision logic:
+               - If author is waiting on maintainers: SKIP
+               - If author responded recently (within 7 days): SKIP
+               - If PR author is in exempt users list: SKIP
+               - If there are unaddressed maintainer comments AND:
+                 - No stale reminder posted yet: POST REMINDER
+                 - Stale reminder was posted >7 days ago with no response: CLOSE PR
+
+            3. Reminder message template (friendly, concise, no emojis):
+               "Hey @author! Just checking in - are you still working on this PR? We noticed there are some comments that may need addressing. If you need more time, no problem! Just let us know. If we don't hear back within a week, we'll close this to keep the repo tidy, but you can always reopen when ready."
+
+            4. Close message template (friendly, concise, no emojis):
+               "Closing this PR as stale to keep the repo clean. Feel free to reopen or create a new PR once you're ready to continue. Thanks for your contribution!"
+          claude_args: |
+            --allowedTools "Bash,Read,Grep,Glob"

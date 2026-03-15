@@ -63,7 +63,7 @@ const extendConfigDefinition = <
         return safeResult.data;
       }
 
-      const localeErrors = safeResult.error.errors
+      const localeErrors = safeResult.error.issues
         .filter((issue) => issue.message.includes("Invalid locale code"))
         .map((issue) => {
           let unsupportedLocale = "";
@@ -142,7 +142,7 @@ export const configV1Definition = extendConfigDefinition(configV0Definition, {
 export const configV1_1Definition = extendConfigDefinition(configV1Definition, {
   createSchema: (baseSchema) =>
     baseSchema.extend({
-      buckets: Z.record(
+      buckets: Z.partialRecord(
         bucketTypeSchema,
         Z.object({
           include: Z.array(Z.string())
@@ -151,7 +151,6 @@ export const configV1_1Definition = extendConfigDefinition(configV1Definition, {
               "File paths or glob patterns to include for this bucket.",
             ),
           exclude: Z.array(Z.string())
-            .default([])
             .optional()
             .describe(
               "File paths or glob patterns to exclude from this bucket.",
@@ -235,7 +234,6 @@ export const bucketValueSchemaV1_3 = Z.object({
     .default([])
     .describe("Glob patterns or bucket items to include for this bucket."),
   exclude: Z.array(Z.union([Z.string(), bucketItemSchema]))
-    .default([])
     .optional()
     .describe("Glob patterns or bucket items to exclude from this bucket."),
   injectLocale: Z.array(Z.string())
@@ -250,7 +248,10 @@ export const configV1_3Definition = extendConfigDefinition(
   {
     createSchema: (baseSchema) =>
       baseSchema.extend({
-        buckets: Z.record(bucketTypeSchema, bucketValueSchemaV1_3).default({}),
+        buckets: Z.partialRecord(
+          bucketTypeSchema,
+          bucketValueSchemaV1_3,
+        ).default({}),
       }),
     createDefaultValue: (baseDefaultValue) => ({
       ...baseDefaultValue,
@@ -328,7 +329,6 @@ export const configV1_5Definition = extendConfigDefinition(
 // Changes: Add "lockedKeys" string array to bucket config
 export const bucketValueSchemaV1_6 = bucketValueSchemaV1_3.extend({
   lockedKeys: Z.array(Z.string())
-    .default([])
     .optional()
     .describe(
       "Keys that must remain unchanged and should never be overwritten by translations.",
@@ -340,7 +340,10 @@ export const configV1_6Definition = extendConfigDefinition(
   {
     createSchema: (baseSchema) =>
       baseSchema.extend({
-        buckets: Z.record(bucketTypeSchema, bucketValueSchemaV1_6).default({}),
+        buckets: Z.partialRecord(
+          bucketTypeSchema,
+          bucketValueSchemaV1_6,
+        ).default({}),
       }),
     createDefaultValue: (baseDefaultValue) => ({
       ...baseDefaultValue,
@@ -356,7 +359,6 @@ export const configV1_6Definition = extendConfigDefinition(
 // Changes: Add "lockedPatterns" string array of regex patterns to bucket config
 export const bucketValueSchemaV1_7 = bucketValueSchemaV1_6.extend({
   lockedPatterns: Z.array(Z.string())
-    .default([])
     .optional()
     .describe(
       "Regular expression patterns whose matched content should remain locked during translation.",
@@ -368,7 +370,10 @@ export const configV1_7Definition = extendConfigDefinition(
   {
     createSchema: (baseSchema) =>
       baseSchema.extend({
-        buckets: Z.record(bucketTypeSchema, bucketValueSchemaV1_7).default({}),
+        buckets: Z.partialRecord(
+          bucketTypeSchema,
+          bucketValueSchemaV1_7,
+        ).default({}),
       }),
     createDefaultValue: (baseDefaultValue) => ({
       ...baseDefaultValue,
@@ -385,7 +390,6 @@ export const configV1_7Definition = extendConfigDefinition(
 // Changes: Add "ignoredKeys" string array to bucket config
 export const bucketValueSchemaV1_8 = bucketValueSchemaV1_7.extend({
   ignoredKeys: Z.array(Z.string())
-    .default([])
     .optional()
     .describe(
       "Keys that should be completely ignored by translation processes.",
@@ -397,7 +401,10 @@ export const configV1_8Definition = extendConfigDefinition(
   {
     createSchema: (baseSchema) =>
       baseSchema.extend({
-        buckets: Z.record(bucketTypeSchema, bucketValueSchemaV1_8).default({}),
+        buckets: Z.partialRecord(
+          bucketTypeSchema,
+          bucketValueSchemaV1_8,
+        ).default({}),
       }),
     createDefaultValue: (baseDefaultValue) => ({
       ...baseDefaultValue,
@@ -485,8 +492,142 @@ export const configV1_10Definition = extendConfigDefinition(
   },
 );
 
+// v1.10 -> v1.11
+// Changes: Add "vNext" field for Lingo.dev vNext provider
+export const configV1_11Definition = extendConfigDefinition(
+  configV1_10Definition,
+  {
+    createSchema: (baseSchema) =>
+      baseSchema.extend({
+        vNext: Z.string().optional(),
+      }),
+    createDefaultValue: (baseDefaultValue) => ({
+      ...baseDefaultValue,
+      version: "1.11",
+    }),
+    createUpgrader: (oldConfig) => ({
+      ...oldConfig,
+      version: "1.11",
+    }),
+  },
+);
+
+// v1.11 -> v1.12
+// Changes: Add "preservedKeys" string array to bucket config
+export const bucketValueSchemaV1_12 = bucketValueSchemaV1_8.extend({
+  preservedKeys: Z.array(Z.string())
+    .optional()
+    .describe(
+      "Keys that are added to targets using source values as placeholders, but once present, are never overwritten by the CLI.",
+    ),
+});
+
+export const configV1_12Definition = extendConfigDefinition(
+  configV1_11Definition,
+  {
+    createSchema: (baseSchema) =>
+      baseSchema.extend({
+        buckets: Z.partialRecord(
+          bucketTypeSchema,
+          bucketValueSchemaV1_12,
+        ).default({}),
+      }),
+    createDefaultValue: (baseDefaultValue) => ({
+      ...baseDefaultValue,
+      version: "1.12",
+    }),
+    createUpgrader: (oldConfig) => ({
+      ...oldConfig,
+      version: "1.12",
+    }),
+  },
+);
+
+// v1.12 -> v1.13
+// Changes: Add "localizableKeys" string array to bucket config
+export const bucketValueSchemaV1_13 = bucketValueSchemaV1_12.extend({
+  localizableKeys: Z.array(Z.string())
+    .optional()
+    .describe(
+      "Keys whose values should always be sent for translation, even if they would normally be skipped as untranslatable (e.g. pure numbers, URLs, dates). Use this to force-translate values that have custom glossary rules.",
+    ),
+});
+
+export const configV1_13Definition = extendConfigDefinition(
+  configV1_12Definition,
+  {
+    createSchema: (baseSchema) =>
+      baseSchema.extend({
+        buckets: Z.partialRecord(
+          bucketTypeSchema,
+          bucketValueSchemaV1_13,
+        ).default({}),
+      }),
+    createDefaultValue: (baseDefaultValue) => ({
+      ...baseDefaultValue,
+      version: "1.13",
+    }),
+    createUpgrader: (oldConfig) => ({
+      ...oldConfig,
+      version: "1.13",
+    }),
+  },
+);
+
+// v1.13 -> v1.14
+// Changes: Add "dev" field for development-specific settings
+const devSettingsSchema = Z.object({
+  usePseudotranslator: Z.boolean()
+    .optional()
+    .describe(
+      "Use pseudotranslator instead of real translation provider. Useful for testing i18n without API calls.",
+    ),
+}).describe("Development-specific settings.");
+
+export const configV1_14Definition = extendConfigDefinition(
+  configV1_13Definition,
+  {
+    createSchema: (baseSchema) =>
+      baseSchema.extend({
+        dev: devSettingsSchema.optional(),
+      }),
+    createDefaultValue: (baseDefaultValue) => ({
+      ...baseDefaultValue,
+      version: "1.14",
+    }),
+    createUpgrader: (oldConfig) => ({
+      ...oldConfig,
+      version: "1.14",
+    }),
+  },
+);
+
+// v1.14 -> v1.15
+// Changes: Add "engineId" field, deprecate "vNext"
+export const configV1_15Definition = extendConfigDefinition(
+  configV1_14Definition,
+  {
+    createSchema: (baseSchema) =>
+      baseSchema.extend({
+        engineId: Z.string().optional(),
+      }),
+    createDefaultValue: (baseDefaultValue) => ({
+      ...baseDefaultValue,
+      version: "1.15",
+    }),
+    createUpgrader: (oldConfig) => {
+      const { vNext, ...rest } = oldConfig as any;
+      return {
+        ...rest,
+        version: "1.15",
+        ...(vNext && !rest.engineId ? { engineId: vNext } : {}),
+      };
+    },
+  },
+);
+
 // exports
-export const LATEST_CONFIG_DEFINITION = configV1_10Definition;
+export const LATEST_CONFIG_DEFINITION = configV1_15Definition;
 
 export type I18nConfig = Z.infer<(typeof LATEST_CONFIG_DEFINITION)["schema"]>;
 

@@ -1,0 +1,19 @@
+{
+  "version": "1.10",
+  "locale": {
+    "source": "en",
+    "targets": ["es", "hi", "ja", "fr", "de"]
+  },
+  "buckets": {
+    "json": {
+      "include": ["apps/next-app/public/meta-og/[locale].json"]
+    },
+    "vtt": {
+      "include": ["apps/next-app/public/subtitles/emotions.[locale].vtt"]
+    },
+    "markdown": {
+      "include": ["docs/readmes/[locale].md"]
+    }
+  },
+  "$schema": "https://lingo.dev/schema/i18n.json"
+}

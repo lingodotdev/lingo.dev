@@ -219,4 +219,41 @@ describe("jsonc loader", () => {
       },
     });
   });
+
+  it("pullHints should extract comments from arrays", async () => {
+    const loader = createJsoncLoader();
+    loader.setDefaultLocale("en");
+    const jsoncInput = `{
+      "items": [
+        {
+          "value": "First item",
+          "type": "heading"
+        },
+        {
+          // This is a hint for the second item
+          "value": "Second item",
+          "type": "text"
+        },
+        {
+          // This is a hint for the third item
+          "value": "Third item",
+          "type": "text"
+        }
+      ]
+    }`;
+
+    await loader.pull("en", jsoncInput);
+    const comments = await loader.pullHints(jsoncInput);
+
+    expect(comments).toEqual({
+      items: {
+        "1": {
+          value: { hint: "This is a hint for the second item" },
+        },
+        "2": {
+          value: { hint: "This is a hint for the third item" },
+        },
+      },
+    });
+  });
 });

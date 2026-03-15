@@ -1,6 +1,9 @@
 import { describe, it, expect, vi } from "vitest";
 import { getBuckets } from "./buckets";
-import { glob, Path } from "glob";
+import * as pkg from "glob";
+import type { Path } from "glob";
+import { normalizePaths } from "./test-helpers";
+const { glob } = pkg;
 
 vi.mock("glob", () => ({
   glob: {
@@ -31,7 +34,7 @@ describe("getBuckets", () => {
       "src/translations/[locale]/messages.json",
     ]);
     const buckets = getBuckets(i18nConfig);
-    expect(buckets).toEqual([
+    expect(normalizePaths(buckets)).toEqual([
       {
         type: "json",
         paths: [
@@ -76,7 +79,7 @@ describe("getBuckets", () => {
       "src/i18n/data-*-[locale]-*/[locale].*.json",
     ]);
     const buckets = getBuckets(i18nConfig);
-    expect(buckets).toEqual([
+    expect(normalizePaths(buckets)).toEqual([
       {
         type: "json",
         paths: [
@@ -136,7 +139,7 @@ describe("getBuckets", () => {
       { path: "src/i18n/[locale].json", delimiter: "-" },
     ]);
     const buckets = getBuckets(i18nConfig);
-    expect(buckets).toEqual([
+    expect(normalizePaths(buckets)).toEqual([
       {
         type: "json",
         paths: [{ pathPattern: "src/i18n/[locale].json", delimiter: "-" }],
@@ -154,7 +157,7 @@ describe("getBuckets", () => {
       "src/[locale]/translations/[locale]/messages.json",
     ]);
     const buckets = getBuckets(i18nConfig);
-    expect(buckets).toEqual([
+    expect(normalizePaths(buckets)).toEqual([
       {
         type: "json",
         paths: [

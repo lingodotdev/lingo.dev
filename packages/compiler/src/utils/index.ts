@@ -1,8 +1,8 @@
-import traverse from "@babel/traverse";
+import { traverse } from "../babel-interop";
 import * as t from "@babel/types";
 import _ from "lodash";
 
-import { NodePath } from "@babel/traverse";
+import { NodePath } from "../babel-interop";
 import { getJsxAttributeValue, setJsxAttributeValue } from "./jsx-attribute";
 
 // "root" is a JSXElement node that is the root of the JSX tree,
@@ -12,7 +12,7 @@ export function getJsxRoots(node: t.Node) {
 
   // skip traversing the node if it's a root node
   traverse(node, {
-    JSXElement(path) {
+    JSXElement(path: NodePath<t.JSXElement>) {
       result.push(path);
       path.skip();
     },
@@ -65,7 +65,7 @@ function findExistingImport(
   let result: string | null = null;
 
   traverse(ast, {
-    ImportDeclaration(path) {
+    ImportDeclaration(path: NodePath<t.ImportDeclaration>) {
       if (!moduleName.includes(path.node.source.value)) {
         return;
       }
@@ -120,7 +120,7 @@ function generateUniqueImportName(ast: t.Node, baseName: string): string {
 
   // Collect all identifiers in scope
   traverse(ast, {
-    Identifier(path) {
+    Identifier(path: NodePath<t.Identifier>) {
       usedNames.add(path.node.name);
     },
   });
@@ -149,7 +149,7 @@ function createImportDeclaration(
   moduleName: string[],
 ): void {
   traverse(ast, {
-    Program(path) {
+    Program(path: NodePath<t.Program>) {
       // Create the import specifier
       const importSpecifier = t.importSpecifier(
         t.identifier(localName),
@@ -160,7 +160,7 @@ function createImportDeclaration(
       const existingImport = path
         .get("body")
         .find(
-          (nodePath) =>
+          (nodePath: NodePath) =>
             t.isImportDeclaration(nodePath.node) &&
             moduleName.includes(nodePath.node.source.value) &&
             nodePath.node.importKind !== "type",
@@ -202,7 +202,7 @@ function _hasFileDirective(ast: t.Node, directiveValue: string): boolean {
   let hasDirective = false;
 
   traverse(ast, {
-    Directive(path) {
+    Directive(path: NodePath<t.Directive>) {
       if (path.node.value.value === directiveValue) {
         hasDirective = true;
         path.stop(); // Stop traversal as soon as we find the directive

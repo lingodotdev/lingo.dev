@@ -1,0 +1,6 @@
+id,name,description,created,enabled,sort
+1,Welcome,Welcome to our application,2024-01-01,true,1
+2,Save,Save your changes,2024-01-01,true,2
+3,Error,An error occurred,2024-01-01,true,3
+4,Success,Operation completed successfully,2024-01-01,true,4
+5,Loading,Please wait while we load your data,2024-01-01,true,5

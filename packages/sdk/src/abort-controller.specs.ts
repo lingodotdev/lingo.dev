@@ -32,7 +32,7 @@ describe("AbortController Support", () => {
       );
 
       expect(global.fetch).toHaveBeenCalledWith(
-        "https://test.api.com/i18n",
+        "https://test.api.com/process/localize",
         expect.objectContaining({
           signal: controller.signal,
         }),
@@ -71,7 +71,7 @@ describe("AbortController Support", () => {
       );
 
       expect(global.fetch).toHaveBeenCalledWith(
-        "https://test.api.com/i18n",
+        "https://test.api.com/process/localize",
         expect.objectContaining({
           signal: controller.signal,
         }),
@@ -125,7 +125,7 @@ describe("AbortController Support", () => {
       );
 
       expect(global.fetch).toHaveBeenCalledWith(
-        "https://test.api.com/i18n",
+        "https://test.api.com/process/localize",
         expect.objectContaining({
           signal: controller.signal,
         }),
@@ -150,7 +150,7 @@ describe("AbortController Support", () => {
       );
 
       expect(global.fetch).toHaveBeenCalledWith(
-        "https://test.api.com/i18n",
+        "https://test.api.com/process/localize",
         expect.objectContaining({
           signal: controller.signal,
         }),
@@ -178,7 +178,7 @@ describe("AbortController Support", () => {
 
       expect(global.fetch).toHaveBeenCalledTimes(2);
       expect(global.fetch).toHaveBeenCalledWith(
-        "https://test.api.com/i18n",
+        "https://test.api.com/process/localize",
         expect.objectContaining({
           signal: controller.signal,
         }),
@@ -198,7 +198,7 @@ describe("AbortController Support", () => {
       await engine.recognizeLocale("Hello world", controller.signal);
 
       expect(global.fetch).toHaveBeenCalledWith(
-        "https://test.api.com/recognize",
+        "https://test.api.com/process/recognize",
         expect.objectContaining({
           signal: controller.signal,
         }),
@@ -220,7 +220,7 @@ describe("AbortController Support", () => {
       await engine.whoami(controller.signal);
 
       expect(global.fetch).toHaveBeenCalledWith(
-        "https://test.api.com/whoami",
+        "https://test.api.com/users/me",
         expect.objectContaining({
           signal: controller.signal,
         }),

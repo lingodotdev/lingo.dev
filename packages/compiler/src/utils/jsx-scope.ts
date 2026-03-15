@@ -1,13 +1,13 @@
-import { NodePath } from "@babel/traverse";
+import { NodePath } from "../babel-interop";
 import * as t from "@babel/types";
-import traverse from "@babel/traverse";
+import { traverse } from "../babel-interop";
 import { getJsxElementName } from "./jsx-element";
 
 export function collectJsxScopes(ast: t.Node) {
   const jsxScopes: NodePath<t.JSXElement>[] = [];
 
   traverse(ast, {
-    JSXElement: (path) => {
+    JSXElement: (path: NodePath<t.JSXElement>) => {
       if (!hasJsxScopeAttribute(path)) return;
 
       path.skip();
@@ -22,7 +22,7 @@ export function getJsxScopes(node: t.Node) {
   const result: NodePath<t.JSXElement>[] = [];
 
   traverse(node, {
-    JSXElement(path) {
+    JSXElement(path: NodePath<t.JSXElement>) {
       // Skip if the element is LingoProvider
       if (getJsxElementName(path) === "LingoProvider") {
         return;
@@ -32,7 +32,7 @@ export function getJsxScopes(node: t.Node) {
         .getAllPrevSiblings()
         .concat(path.getAllNextSiblings())
         .some(
-          (sibling) =>
+          (sibling: NodePath) =>
             t.isJSXText(sibling.node) && sibling.node.value?.trim() !== "",
         );
 
@@ -44,7 +44,7 @@ export function getJsxScopes(node: t.Node) {
       const hasNonEmptyTextChild = path
         .get("children")
         .some(
-          (child) => t.isJSXText(child.node) && child.node.value?.trim() !== "",
+          (child: NodePath) => t.isJSXText(child.node) && child.node.value?.trim() !== "",
         );
 
       if (hasNonEmptyTextChild) {

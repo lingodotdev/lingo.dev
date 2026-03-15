@@ -1,0 +1,6 @@
+id,name,description,created,enabled,sort
+1,Bienvenida,Bienvenido a nuestra aplicación,2024-01-01,true,1
+2,Guardar,Guarda tus cambios,2024-01-01,true,2
+3,Error,Ha ocurrido un error,2024-01-01,true,3
+4,Éxito,Operación completada con éxito,2024-01-01,true,4
+5,Cargando,Por favor espera mientras cargamos tus datos,2024-01-01,true,5

@@ -28,7 +28,7 @@ function extractLockedPatterns(
       for (const match of matches) {
         const matchedText = match[0];
         const matchHash = md5(matchedText);
-        const placeholder = `---LOCKED-PATTERN-${matchHash}---`;
+        const placeholder = `{/* LOCKED_PATTERN_${matchHash} */}`;
 
         lockedPlaceholders[placeholder] = matchedText;
         finalContent = finalContent.replace(matchedText, placeholder);

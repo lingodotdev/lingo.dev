@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { createPayload } from "../_base";
-import traverse from "@babel/traverse";
+import { traverse } from "../babel-interop";
 import * as t from "@babel/types";
 import { getJsxElementHash, getJsxAttributeValueHash } from "./hash";
 

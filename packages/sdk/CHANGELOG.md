@@ -1,5 +1,153 @@
 # @lingo.dev/\_sdk
 
+## 0.16.0
+
+### Minor Changes
+
+- [#2035](https://github.com/lingodotdev/lingo.dev/pull/2035) [`73a8c73`](https://github.com/lingodotdev/lingo.dev/commit/73a8c731f5af03db9c165000e87ee5e5a1086a48) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Migrate SDK and CLI to unified API endpoints. All requests now use `api.lingo.dev` with `X-API-Key` auth. Added `engineId` config option (auto-migrated from `vNext`)
+
+### Patch Changes
+
+- Updated dependencies [[`73a8c73`](https://github.com/lingodotdev/lingo.dev/commit/73a8c731f5af03db9c165000e87ee5e5a1086a48)]:
+  - @lingo.dev/_spec@0.49.0
+
+## 0.15.3
+
+### Patch Changes
+
+- [#2031](https://github.com/lingodotdev/lingo.dev/pull/2031) [`1cfcf73`](https://github.com/lingodotdev/lingo.dev/commit/1cfcf736b0c6494bf66aa2478b2e7c194bdd5b92) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Add whoami support for vNext API
+
+## 0.15.2
+
+### Patch Changes
+
+- [#2027](https://github.com/lingodotdev/lingo.dev/pull/2027) [`bb3ec79`](https://github.com/lingodotdev/lingo.dev/commit/bb3ec797ad0379d99f84f20731f37ab03f759b00) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Add vNext API support to LingoDotDevEngine. When engineId is provided, the engine routes requests to the vNext API. Refactor vNext localizer to use LingoDotDevEngine from SDK instead of custom inline implementation
+
+## 0.15.1
+
+### Patch Changes
+
+- Updated dependencies [[`e0a1bb3`](https://github.com/lingodotdev/lingo.dev/commit/e0a1bb3cd0e27416c2e5fc60a8fad2161e5736c7)]:
+  - @lingo.dev/_spec@0.48.1
+
+## 0.15.0
+
+### Minor Changes
+
+- [#1999](https://github.com/lingodotdev/lingo.dev/pull/1999) [`8b12cc3`](https://github.com/lingodotdev/lingo.dev/commit/8b12cc3e7cf54a9a4695fe5fd2c986d30be219f3) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Add PostHog usage tracking for SDK method calls
+
+## 0.14.2
+
+### Patch Changes
+
+- Updated dependencies [[`45c9437`](https://github.com/lingodotdev/lingo.dev/commit/45c94372f443cc54eb4ae8885f15caf19b931610)]:
+  - @lingo.dev/_spec@0.48.0
+
+## 0.14.1
+
+### Patch Changes
+
+- Updated dependencies [[`5a4e516`](https://github.com/lingodotdev/lingo.dev/commit/5a4e51618d9b3148358f140f6bcd0fe9aa1c213c)]:
+  - @lingo.dev/_spec@0.47.1
+
+## 0.14.0
+
+### Minor Changes
+
+- [#1950](https://github.com/lingodotdev/lingo.dev/pull/1950) [`ce47cf3`](https://github.com/lingodotdev/lingo.dev/commit/ce47cf34760b9377517b1204e4e84b6f1d908d6c) Thanks [@cherkanovart](https://github.com/cherkanovart)! - add zod to external depth
+
+### Patch Changes
+
+- [#1951](https://github.com/lingodotdev/lingo.dev/pull/1951) [`330ee4e`](https://github.com/lingodotdev/lingo.dev/commit/330ee4e77d3f698b6f038e58e2ac8e5509cc14fe) Thanks [@cherkanovart](https://github.com/cherkanovart)! - chore: add zod to external dependencies
+
+- Updated dependencies [[`330ee4e`](https://github.com/lingodotdev/lingo.dev/commit/330ee4e77d3f698b6f038e58e2ac8e5509cc14fe), [`ce47cf3`](https://github.com/lingodotdev/lingo.dev/commit/ce47cf34760b9377517b1204e4e84b6f1d908d6c)]:
+  - @lingo.dev/_spec@0.47.0
+
+## 0.13.7
+
+### Patch Changes
+
+- [#1749](https://github.com/lingodotdev/lingo.dev/pull/1749) [`5bc0c89`](https://github.com/lingodotdev/lingo.dev/commit/5bc0c8952d1bc01be7a2e7b49506f6a5f8f05a59) Thanks [@sumitsaurabh927](https://github.com/sumitsaurabh927)! - create a new space for community contributions like demo apps etc
+
+- Updated dependencies [[`04c3679`](https://github.com/lingodotdev/lingo.dev/commit/04c3679c69231012f167da1640dc17ac57743d6b), [`5bc0c89`](https://github.com/lingodotdev/lingo.dev/commit/5bc0c8952d1bc01be7a2e7b49506f6a5f8f05a59)]:
+  - @lingo.dev/_spec@0.46.0
+
+## 0.13.6
+
+### Patch Changes
+
+- Updated dependencies [[`18ef68f`](https://github.com/lingodotdev/lingo.dev/commit/18ef68f8d51f0d3208cfe1f1d2167e2e1580fdcc)]:
+  - @lingo.dev/_spec@0.45.0
+
+## 0.13.5
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @lingo.dev/_spec@0.44.5
+
+## 0.13.4
+
+### Patch Changes
+
+- [#1667](https://github.com/lingodotdev/lingo.dev/pull/1667) [`1a857bd`](https://github.com/lingodotdev/lingo.dev/commit/1a857bdf76d50afb3024a2437da5fd60e6721bb9) Thanks [@vrcprl](https://github.com/vrcprl)! - Upd NPM workflows
+
+- Updated dependencies [[`1a857bd`](https://github.com/lingodotdev/lingo.dev/commit/1a857bdf76d50afb3024a2437da5fd60e6721bb9)]:
+  - @lingo.dev/_spec@0.44.4
+
+## 0.13.3
+
+### Patch Changes
+
+- Updated dependencies [[`738bf08`](https://github.com/lingodotdev/lingo.dev/commit/738bf08edfe226392ec4534e05864101bc66c39c)]:
+  - @lingo.dev/_spec@0.44.3
+
+## 0.13.2
+
+### Patch Changes
+
+- Updated dependencies [[`f6352b6`](https://github.com/lingodotdev/lingo.dev/commit/f6352b6222e425d5d184c1591a90b1d13a7effbc)]:
+  - @lingo.dev/_spec@0.44.2
+
+## 0.13.1
+
+### Patch Changes
+
+- Updated dependencies [[`ad646a4`](https://github.com/lingodotdev/lingo.dev/commit/ad646a4f44dc2f0771eb3aa2783872b4d0e55f57)]:
+  - @lingo.dev/_spec@0.44.1
+
+## 0.13.0
+
+### Minor Changes
+
+- [#1634](https://github.com/lingodotdev/lingo.dev/pull/1634) [`48fab66`](https://github.com/lingodotdev/lingo.dev/commit/48fab66b6806455d9faa1dcb169d4c61194e2144) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - Pin all dependencies to exact versions to prevent supply chain attacks. Dependencies no longer use caret (^) or tilde (~) ranges, ensuring full control over version updates and requiring explicit review of all dependency changes.
+
+### Patch Changes
+
+- Updated dependencies [[`48fab66`](https://github.com/lingodotdev/lingo.dev/commit/48fab66b6806455d9faa1dcb169d4c61194e2144)]:
+  - @lingo.dev/_spec@0.44.0
+
+## 0.12.9
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @lingo.dev/_spec@0.43.1
+
+## 0.12.8
+
+### Patch Changes
+
+- Updated dependencies [[`ac38e8e`](https://github.com/lingodotdev/lingo.dev/commit/ac38e8e8dea0d8c4cd3c8b00e6394bfbd8074611)]:
+  - @lingo.dev/_spec@0.43.0
+
+## 0.12.7
+
+### Patch Changes
+
+- Updated dependencies [[`d72c67c`](https://github.com/lingodotdev/lingo.dev/commit/d72c67c78a4d8f01077db8098b5d973ec98a4c1e)]:
+  - @lingo.dev/_spec@0.42.0
+
 ## 0.12.6
 
 ### Patch Changes
@@ -60,7 +208,6 @@
 ### Minor Changes
 
 - [#1049](https://github.com/lingodotdev/lingo.dev/pull/1049) [`85dfc10`](https://github.com/lingodotdev/lingo.dev/commit/85dfc10961b116e31b2bb478f42013756ca49974) Thanks [@VAIBHAVSING](https://github.com/VAIBHAVSING)! - Added new methods to the SDK:
-
   1. `localizeStringArray`: Localizes an array of strings while maintaining their order.
 
   Also added comprehensive tests for these methods using Vitest.

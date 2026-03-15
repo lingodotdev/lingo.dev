@@ -29,7 +29,7 @@ export function composeLoaders(
       }
       return result;
     },
-    pullHints: async (originalInput) => {
+    pullHints: async (originalInput?) => {
       let result: any = originalInput;
       for (let i = 0; i < loaders.length; i++) {
         const subResult = await loaders[i].pullHints?.(result);
@@ -48,8 +48,10 @@ export function createLoader<I, O, C>(
   const state = {
     defaultLocale: undefined as string | undefined,
     originalInput: undefined as I | undefined | null,
-    pullInput: undefined as I | undefined | null,
-    pullOutput: undefined as O | undefined | null,
+    // Store pullInput and pullOutput per-locale to avoid race conditions
+    // when multiple locales are processed concurrently
+    pullInputByLocale: new Map<string, I | null>(),
+    pullOutputByLocale: new Map<string, O | null>(),
     initCtx: undefined as C | undefined,
   };
   return {
@@ -67,8 +69,8 @@ export function createLoader<I, O, C>(
       state.defaultLocale = locale;
       return this;
     },
-    async pullHints() {
-      return lDefinition.pullHints?.(state.originalInput!);
+    async pullHints(originalInput?: I) {
+      return lDefinition.pullHints?.(originalInput || state.originalInput!);
     },
     async pull(locale, input) {
       if (!state.defaultLocale) {
@@ -81,7 +83,7 @@ export function createLoader<I, O, C>(
         state.originalInput = input || null;
       }
 
-      state.pullInput = input;
+      state.pullInputByLocale.set(locale, input || null);
       const result = await lDefinition.pull(
         locale,
         input,
@@ -89,7 +91,7 @@ export function createLoader<I, O, C>(
         state.defaultLocale,
         state.originalInput!,
       );
-      state.pullOutput = result;
+      state.pullOutputByLocale.set(locale, result);
 
       return result;
     },
@@ -101,13 +103,25 @@ export function createLoader<I, O, C>(
         throw new Error("Cannot push data without pulling first");
       }
 
+      // Use locale-specific pullInput/pullOutput if available,
+      // otherwise fall back to the default locale's values for backward compatibility
+      // (some loaders push for locales that were never explicitly pulled)
+      const pullInput =
+        state.pullInputByLocale.get(locale) ??
+        state.pullInputByLocale.get(state.defaultLocale) ??
+        null;
+      const pullOutput =
+        state.pullOutputByLocale.get(locale) ??
+        state.pullOutputByLocale.get(state.defaultLocale) ??
+        null;
+
       const pushResult = await lDefinition.push(
         locale,
         data,
         state.originalInput,
         state.defaultLocale,
-        state.pullInput!,
-        state.pullOutput!,
+        pullInput!,
+        pullOutput!,
       );
       return pushResult;
     },

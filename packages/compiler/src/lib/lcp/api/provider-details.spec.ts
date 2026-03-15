@@ -6,6 +6,8 @@ describe("provider-details", () => {
     expect(Object.keys(providerDetails)).toEqual([
       "groq",
       "google",
+      "openai",
+      "anthropic",
       "openrouter",
       "ollama",
       "mistral",

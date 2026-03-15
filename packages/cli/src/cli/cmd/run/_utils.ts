@@ -1,9 +1,10 @@
 import { CmdRunContext } from "./_types";
 
 /**
- * Determines the authentication ID for tracking purposes
+ * Determines the user's email for tracking purposes.
+ * Returns null if using BYOK mode or if authentication fails.
  */
-export async function determineAuthId(
+export async function determineEmail(
   ctx: CmdRunContext,
 ): Promise<string | null> {
   const isByokMode = !!ctx.config?.provider;

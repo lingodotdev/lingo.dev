@@ -1,4 +1,5 @@
 import Z from "zod";
+import { isValidLocale } from "@lingo.dev/_locales";
 
 const localeMap = {
   // Urdu (Pakistan)
@@ -246,7 +247,11 @@ export const localeCodes = [
 ] as LocaleCode[];
 
 export const localeCodeSchema = Z.string().refine(
-  (value) => localeCodes.includes(value as any),
+  (value) => {
+    // Normalize locale before validation
+    const normalized = normalizeLocale(value);
+    return isValidLocale(normalized);
+  },
   {
     message: "Invalid locale code",
   },

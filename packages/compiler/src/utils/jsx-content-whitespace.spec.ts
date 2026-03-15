@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { extractJsxContent } from "./jsx-content";
 import * as t from "@babel/types";
-import traverse, { NodePath } from "@babel/traverse";
+import { traverse, NodePath } from "../babel-interop";
 import { parse } from "@babel/parser";
 
 describe("Whitespace Issue Test", () => {

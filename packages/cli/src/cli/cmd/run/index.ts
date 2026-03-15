@@ -9,6 +9,7 @@ import execute from "./execute";
 import watch from "./watch";
 import { CmdRunContext, flagsSchema } from "./_types";
 import frozen from "./frozen";
+import { applyRunExitCode } from "./exit-code";
 import {
   renderClear,
   renderSpacer,
@@ -18,7 +19,7 @@ import {
   renderSummary,
 } from "../../utils/ui";
 import trackEvent from "../../utils/observability";
-import { determineAuthId } from "./_utils";
+import { determineEmail } from "./_utils";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -84,7 +85,8 @@ export default new Command()
   .option(
     "--key <key>",
     "Filter keys by prefix matching on dot-separated paths. Example: auth.login to match all keys starting with auth.login. Repeat for multiple patterns",
-    (val: string, prev: string[]) => (prev ? [...prev, val] : [val]),
+    (val: string, prev: string[]) =>
+      prev ? [...prev, encodeURIComponent(val)] : [encodeURIComponent(val)],
   )
   .option(
     "--force",
@@ -117,8 +119,12 @@ export default new Command()
     "--sound",
     "Play audio feedback when translations complete (success or failure sounds)",
   )
+  .option(
+    "--pseudo",
+    "Enable pseudo-localization mode: automatically pseudo-translates all extracted strings with accented characters and visual markers without calling any external API. Useful for testing UI internationalization readiness",
+  )
   .action(async (args) => {
-    let authId: string | null = null;
+    let email: string | null = null;
     try {
       const ctx: CmdRunContext = {
         flags: flagsSchema.parse(args),
@@ -137,9 +143,9 @@ export default new Command()
 
       await setup(ctx);
 
-      authId = await determineAuthId(ctx);
+      email = await determineEmail(ctx);
 
-      await trackEvent(authId, "cmd.run.start", {
+      await trackEvent(email, "cmd.run.start", {
         config: ctx.config,
         flags: ctx.flags,
       });
@@ -158,9 +164,11 @@ export default new Command()
       await renderSummary(ctx.results);
       await renderSpacer();
 
+      const hasErrors = applyRunExitCode(ctx.results);
+
       // Play sound after main tasks complete if sound flag is enabled
       if (ctx.flags.sound) {
-        await playSound("success");
+        await playSound(hasErrors ? "failure" : "success");
       }
 
       // If watch mode is enabled, start watching for changes
@@ -168,12 +176,18 @@ export default new Command()
         await watch(ctx);
       }
 
-      await trackEvent(authId, "cmd.run.success", {
+      await trackEvent(email, "cmd.run.success", {
         config: ctx.config,
         flags: ctx.flags,
       });
+      await new Promise((resolve) => setTimeout(resolve, 50));
     } catch (error: any) {
-      await trackEvent(authId || "unknown", "cmd.run.error", {});
+      await trackEvent(email, "cmd.run.error", {
+        flags: args,
+        error: error.message,
+        authenticated: !!email,
+      });
+      await new Promise((resolve) => setTimeout(resolve, 50));
       // Play sad sound if sound flag is enabled
       if (args.sound) {
         await playSound("failure");

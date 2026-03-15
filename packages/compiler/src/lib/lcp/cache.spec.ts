@@ -1,13 +1,29 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import { resolve } from "path";
 import { LCPCache, LCPCacheParams } from "./cache";
-import * as fs from "fs";
-import * as prettier from "prettier";
 import { LCPSchema } from "./schema";
 import { LCP_DICTIONARY_FILE_NAME } from "../../_const";
 
-vi.mock("fs");
-vi.mock("prettier");
+const { mockExistsSync, mockReadFileSync, mockWriteFileSync, mockPrettierFormat, mockPrettierResolveConfig } = vi.hoisted(() => {
+  return {
+    mockExistsSync: vi.fn(),
+    mockReadFileSync: vi.fn(),
+    mockWriteFileSync: vi.fn(),
+    mockPrettierFormat: vi.fn(),
+    mockPrettierResolveConfig: vi.fn(),
+  };
+});
+
+vi.mock("fs", () => ({
+  existsSync: mockExistsSync,
+  readFileSync: mockReadFileSync,
+  writeFileSync: mockWriteFileSync,
+}));
+
+vi.mock("prettier", () => ({
+  format: mockPrettierFormat,
+  resolveConfig: mockPrettierResolveConfig,
+}));
 
 // cached JSON is stored in JS file, we need to add export default to make it valid JS file
 function toCachedString(cache: any) {
@@ -58,14 +74,14 @@ describe("LCPCache", () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    vi.mocked(prettier.format).mockImplementation(
+    mockPrettierFormat.mockImplementation(
       async (value: string) => value,
     );
   });
 
   describe("readLocaleDictionary", () => {
     it("returns empty dictionary when no cache exists", () => {
-      vi.mocked(fs.existsSync).mockReturnValue(false);
+      mockExistsSync.mockReturnValue(false);
 
       const dictionary = LCPCache.readLocaleDictionary("en", params);
 
@@ -77,8 +93,8 @@ describe("LCPCache", () => {
     });
 
     it("returns empty dictionary when cache exists but has no entries for requested locale", () => {
-      vi.mocked(fs.existsSync).mockReturnValue(true);
-      vi.mocked(fs.readFileSync).mockReturnValue(
+      mockExistsSync.mockReturnValue(true);
+      mockReadFileSync.mockReturnValue(
         toCachedString({
           version: 0.1,
           files: {
@@ -105,8 +121,8 @@ describe("LCPCache", () => {
     });
 
     it("returns dictionary entries with matching hashfor requested locale when cache exists", () => {
-      vi.mocked(fs.existsSync).mockReturnValue(true);
-      vi.mocked(fs.readFileSync).mockReturnValue(
+      mockExistsSync.mockReturnValue(true);
+      mockReadFileSync.mockReturnValue(
         toCachedString({
           version: 0.1,
           files: {
@@ -166,8 +182,8 @@ describe("LCPCache", () => {
 
   describe("writeLocaleDictionary", () => {
     it("creates new cache when no cache exists", async () => {
-      vi.mocked(fs.existsSync).mockReturnValue(false);
-      vi.mocked(fs.writeFileSync);
+      mockExistsSync.mockReturnValue(false);
+      mockWriteFileSync.mockImplementation(() => {});
 
       const dictionary = {
         version: 0.1,
@@ -183,7 +199,7 @@ describe("LCPCache", () => {
 
       await LCPCache.writeLocaleDictionary(dictionary, params);
 
-      expect(fs.writeFileSync).toHaveBeenCalledWith(
+      expect(mockWriteFileSync).toHaveBeenCalledWith(
         cachePath,
         toCachedString({
           version: 0.1,
@@ -204,8 +220,8 @@ describe("LCPCache", () => {
     });
 
     it("adds new locale to existing cache", async () => {
-      vi.mocked(fs.existsSync).mockReturnValue(true);
-      vi.mocked(fs.readFileSync).mockReturnValue(
+      mockExistsSync.mockReturnValue(true);
+      mockReadFileSync.mockReturnValue(
         toCachedString({
           version: 0.1,
           files: {
@@ -222,7 +238,7 @@ describe("LCPCache", () => {
           },
         }),
       );
-      vi.mocked(fs.writeFileSync);
+      mockWriteFileSync.mockImplementation(() => {});
 
       const dictionary = {
         version: 0.1,
@@ -238,7 +254,7 @@ describe("LCPCache", () => {
 
       await LCPCache.writeLocaleDictionary(dictionary, params);
 
-      expect(fs.writeFileSync).toHaveBeenCalledWith(
+      expect(mockWriteFileSync).toHaveBeenCalledWith(
         cachePath,
         toCachedString({
           version: 0.1,
@@ -260,8 +276,8 @@ describe("LCPCache", () => {
     });
 
     it("overrides existing locale entries in cache", async () => {
-      vi.mocked(fs.existsSync).mockReturnValue(true);
-      vi.mocked(fs.readFileSync).mockReturnValue(
+      mockExistsSync.mockReturnValue(true);
+      mockReadFileSync.mockReturnValue(
         toCachedString({
           version: 0.1,
           files: {
@@ -279,7 +295,7 @@ describe("LCPCache", () => {
           },
         }),
       );
-      vi.mocked(fs.writeFileSync);
+      mockWriteFileSync.mockImplementation(() => {});
 
       const dictionary = {
         version: 0.1,
@@ -295,7 +311,7 @@ describe("LCPCache", () => {
 
       await LCPCache.writeLocaleDictionary(dictionary, params);
 
-      expect(fs.writeFileSync).toHaveBeenCalledWith(
+      expect(mockWriteFileSync).toHaveBeenCalledWith(
         cachePath,
         toCachedString({
           version: 0.1,
@@ -317,8 +333,8 @@ describe("LCPCache", () => {
     });
 
     it("handles different files and entries between cache and dictionary", async () => {
-      vi.mocked(fs.existsSync).mockReturnValue(true);
-      vi.mocked(fs.readFileSync).mockReturnValue(
+      mockExistsSync.mockReturnValue(true);
+      mockReadFileSync.mockReturnValue(
         toCachedString({
           version: 0.1,
           files: {
@@ -354,7 +370,7 @@ describe("LCPCache", () => {
           },
         }),
       );
-      vi.mocked(fs.writeFileSync);
+      mockWriteFileSync.mockImplementation(() => {});
 
       const dictionary = {
         version: 0.1,
@@ -376,7 +392,7 @@ describe("LCPCache", () => {
 
       await LCPCache.writeLocaleDictionary(dictionary, params);
 
-      expect(fs.writeFileSync).toHaveBeenCalledWith(
+      expect(mockWriteFileSync).toHaveBeenCalledWith(
         cachePath,
         toCachedString({
           version: 0.1,
@@ -415,8 +431,8 @@ describe("LCPCache", () => {
     });
 
     it("formats the cache with prettier", async () => {
-      vi.mocked(prettier.resolveConfig).mockResolvedValue({});
-      vi.mocked(prettier.format).mockResolvedValue("formatted");
+      mockPrettierResolveConfig.mockResolvedValue({});
+      mockPrettierFormat.mockResolvedValue("formatted");
 
       const dictionary = {
         version: 0.1,
@@ -432,9 +448,9 @@ describe("LCPCache", () => {
 
       await LCPCache.writeLocaleDictionary(dictionary, params);
 
-      expect(prettier.resolveConfig).toHaveBeenCalledTimes(1);
-      expect(prettier.format).toHaveBeenCalledTimes(1);
-      expect(fs.writeFileSync).toHaveBeenCalledWith(cachePath, "formatted");
+      expect(mockPrettierResolveConfig).toHaveBeenCalledTimes(1);
+      expect(mockPrettierFormat).toHaveBeenCalledTimes(1);
+      expect(mockWriteFileSync).toHaveBeenCalledWith(cachePath, "formatted");
     });
   });
 });

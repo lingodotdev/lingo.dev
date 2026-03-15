@@ -1,0 +1,57 @@
+name: 🐛 Bug Report
+description: Report a bug with detailed reproduction steps
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Reproducibility is critical.** Provide exact steps so maintainers can reproduce instantly.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What's happening?
+      placeholder: Describe the bug in 1-2 sentences
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Exact Reproduction Steps
+      description: Copy-pasteable commands only
+      placeholder: |
+        1. Run command
+        2. Change config/file
+        3. Run another command
+        4. See error
+      value: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected
+      placeholder: What should happen
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual
+      placeholder: What actually happens
+    validations:
+      required: true
+
+  - type: textarea
+    id: visuals
+    attributes:
+      label: Screenshots/Videos
+      description: "**REQUIRED** - Visual proof of the issue"
+      placeholder: Drag screenshot/screencast here
+    validations:
+      required: true

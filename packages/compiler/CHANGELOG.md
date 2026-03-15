@@ -1,5 +1,241 @@
 # @lingo.dev/\_compiler
 
+## 0.12.0
+
+### Minor Changes
+
+- [#2035](https://github.com/lingodotdev/lingo.dev/pull/2035) [`73a8c73`](https://github.com/lingodotdev/lingo.dev/commit/73a8c731f5af03db9c165000e87ee5e5a1086a48) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Migrate SDK and CLI to unified API endpoints. All requests now use `api.lingo.dev` with `X-API-Key` auth. Added `engineId` config option (auto-migrated from `vNext`)
+
+### Patch Changes
+
+- Updated dependencies [[`73a8c73`](https://github.com/lingodotdev/lingo.dev/commit/73a8c731f5af03db9c165000e87ee5e5a1086a48)]:
+  - @lingo.dev/_spec@0.49.0
+  - @lingo.dev/_sdk@0.16.0
+
+## 0.11.7
+
+### Patch Changes
+
+- Updated dependencies [[`1cfcf73`](https://github.com/lingodotdev/lingo.dev/commit/1cfcf736b0c6494bf66aa2478b2e7c194bdd5b92)]:
+  - @lingo.dev/_sdk@0.15.3
+
+## 0.11.6
+
+### Patch Changes
+
+- Updated dependencies [[`bb3ec79`](https://github.com/lingodotdev/lingo.dev/commit/bb3ec797ad0379d99f84f20731f37ab03f759b00)]:
+  - @lingo.dev/_sdk@0.15.2
+
+## 0.11.5
+
+### Patch Changes
+
+- Updated dependencies [[`e0a1bb3`](https://github.com/lingodotdev/lingo.dev/commit/e0a1bb3cd0e27416c2e5fc60a8fad2161e5736c7)]:
+  - @lingo.dev/_spec@0.48.1
+  - @lingo.dev/_sdk@0.15.1
+
+## 0.11.4
+
+### Patch Changes
+
+- [#2002](https://github.com/lingodotdev/lingo.dev/pull/2002) [`8dff5c1`](https://github.com/lingodotdev/lingo.dev/commit/8dff5c123d0a8219b984ec5c80042666e1374105) Thanks [@cherkanovart](https://github.com/cherkanovart)! - fix: hash emails before sending as PostHog distinct_id
+
+## 0.11.3
+
+### Patch Changes
+
+- Updated dependencies [[`8b12cc3`](https://github.com/lingodotdev/lingo.dev/commit/8b12cc3e7cf54a9a4695fe5fd2c986d30be219f3)]:
+  - @lingo.dev/_sdk@0.15.0
+
+## 0.11.2
+
+### Patch Changes
+
+- Updated dependencies [[`45c9437`](https://github.com/lingodotdev/lingo.dev/commit/45c94372f443cc54eb4ae8885f15caf19b931610)]:
+  - @lingo.dev/_spec@0.48.0
+  - @lingo.dev/_sdk@0.14.2
+
+## 0.11.1
+
+### Patch Changes
+
+- Updated dependencies [[`5a4e516`](https://github.com/lingodotdev/lingo.dev/commit/5a4e51618d9b3148358f140f6bcd0fe9aa1c213c)]:
+  - @lingo.dev/_spec@0.47.1
+  - @lingo.dev/_sdk@0.14.1
+
+## 0.11.0
+
+### Minor Changes
+
+- [#1950](https://github.com/lingodotdev/lingo.dev/pull/1950) [`ce47cf3`](https://github.com/lingodotdev/lingo.dev/commit/ce47cf34760b9377517b1204e4e84b6f1d908d6c) Thanks [@cherkanovart](https://github.com/cherkanovart)! - add zod to external depth
+
+### Patch Changes
+
+- [#1951](https://github.com/lingodotdev/lingo.dev/pull/1951) [`330ee4e`](https://github.com/lingodotdev/lingo.dev/commit/330ee4e77d3f698b6f038e58e2ac8e5509cc14fe) Thanks [@cherkanovart](https://github.com/cherkanovart)! - chore: add zod to external dependencies
+
+- Updated dependencies [[`330ee4e`](https://github.com/lingodotdev/lingo.dev/commit/330ee4e77d3f698b6f038e58e2ac8e5509cc14fe), [`ce47cf3`](https://github.com/lingodotdev/lingo.dev/commit/ce47cf34760b9377517b1204e4e84b6f1d908d6c)]:
+  - @lingo.dev/_sdk@0.14.0
+  - @lingo.dev/_spec@0.47.0
+
+## 0.10.1
+
+### Patch Changes
+
+- [#1934](https://github.com/lingodotdev/lingo.dev/pull/1934) [`7db90c8`](https://github.com/lingodotdev/lingo.dev/commit/7db90c82b146da10db7c659c02580b3657d0b872) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Add deprecation warnings throughout legacy compiler
+
+  The legacy compiler (`@lingo.dev/_compiler`) now shows deprecation warnings when used.
+  Users are encouraged to migrate to the new compiler (`@lingo.dev/compiler`).
+
+  Changes:
+  - Added runtime deprecation warnings in `next()`, `vite()`, and the Turbopack loader
+  - Added `@deprecated` JSDoc tags to all public APIs
+  - Updated package README with migration guide and examples
+  - The deprecation warning includes information about new compiler features and migration guide link
+
+## 0.10.0
+
+### Minor Changes
+
+- [#1900](https://github.com/lingodotdev/lingo.dev/pull/1900) [`f30b4b3`](https://github.com/lingodotdev/lingo.dev/commit/f30b4b305cde3f02d4af4eafe4d01eb0c3aa336b) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Add support for OpenAI-compatible providers (e.g., Nebius) via OPENAI_BASE_URL environment variable
+
+## 0.9.1
+
+### Patch Changes
+
+- [#1874](https://github.com/lingodotdev/lingo.dev/pull/1874) [`5ca8439`](https://github.com/lingodotdev/lingo.dev/commit/5ca8439aedd2909e359652f8f3a1b33d4ccd9f6a) Thanks [@vrcprl](https://github.com/vrcprl)! - simplify observability
+
+## 0.9.0
+
+### Minor Changes
+
+- [#1559](https://github.com/lingodotdev/lingo.dev/pull/1559) [`e8407e6`](https://github.com/lingodotdev/lingo.dev/commit/e8407e6bb3c951f0fe3d9c2a3b109cb21090e08c) Thanks [@The-Best-Codes](https://github.com/The-Best-Codes)! - Upgrade Compiler and CLI to AI SDK v5.
+
+## 0.8.12
+
+### Patch Changes
+
+- [#1749](https://github.com/lingodotdev/lingo.dev/pull/1749) [`5bc0c89`](https://github.com/lingodotdev/lingo.dev/commit/5bc0c8952d1bc01be7a2e7b49506f6a5f8f05a59) Thanks [@sumitsaurabh927](https://github.com/sumitsaurabh927)! - create a new space for community contributions like demo apps etc
+
+- Updated dependencies [[`04c3679`](https://github.com/lingodotdev/lingo.dev/commit/04c3679c69231012f167da1640dc17ac57743d6b), [`5bc0c89`](https://github.com/lingodotdev/lingo.dev/commit/5bc0c8952d1bc01be7a2e7b49506f6a5f8f05a59)]:
+  - @lingo.dev/_spec@0.46.0
+  - @lingo.dev/_sdk@0.13.7
+
+## 0.8.11
+
+### Patch Changes
+
+- Updated dependencies [[`18ef68f`](https://github.com/lingodotdev/lingo.dev/commit/18ef68f8d51f0d3208cfe1f1d2167e2e1580fdcc)]:
+  - @lingo.dev/_spec@0.45.0
+  - @lingo.dev/_sdk@0.13.6
+
+## 0.8.10
+
+### Patch Changes
+
+- [#1726](https://github.com/lingodotdev/lingo.dev/pull/1726) [`68b8496`](https://github.com/lingodotdev/lingo.dev/commit/68b849602a88b9f9aa3097f37ce2f0ccf97c1ad5) Thanks [@vrcprl](https://github.com/vrcprl)! - Observability improvement
+
+## 0.8.9
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @lingo.dev/_spec@0.44.5
+  - @lingo.dev/_sdk@0.13.5
+
+## 0.8.8
+
+### Patch Changes
+
+- [`3b24647`](https://github.com/lingodotdev/lingo.dev/commit/3b246473f6f4773f00ea13211bc2be59a98e0b7c) Thanks [@vrcprl](https://github.com/vrcprl)! - Update Next.js to 15.3.8 to address security vulnerability
+
+## 0.8.7
+
+### Patch Changes
+
+- [#1672](https://github.com/lingodotdev/lingo.dev/pull/1672) [`29949db`](https://github.com/lingodotdev/lingo.dev/commit/29949db24ff9c8938233ebb42e8189690c3c7813) Thanks [@vrcprl](https://github.com/vrcprl)! - Improve observability
+
+## 0.8.6
+
+### Patch Changes
+
+- [#1667](https://github.com/lingodotdev/lingo.dev/pull/1667) [`1a857bd`](https://github.com/lingodotdev/lingo.dev/commit/1a857bdf76d50afb3024a2437da5fd60e6721bb9) Thanks [@vrcprl](https://github.com/vrcprl)! - Upd NPM workflows
+
+- Updated dependencies [[`1a857bd`](https://github.com/lingodotdev/lingo.dev/commit/1a857bdf76d50afb3024a2437da5fd60e6721bb9)]:
+  - @lingo.dev/_spec@0.44.4
+  - @lingo.dev/_sdk@0.13.4
+
+## 0.8.5
+
+### Patch Changes
+
+- [#1660](https://github.com/lingodotdev/lingo.dev/pull/1660) [`1b2980d`](https://github.com/lingodotdev/lingo.dev/commit/1b2980d9215eca4f2db101af530680d6eb3be8eb) Thanks [@wotschofsky](https://github.com/wotschofsky)! - Upgrade to non-vulnerable Next.js versions (React2Shell)
+
+## 0.8.4
+
+### Patch Changes
+
+- Updated dependencies [[`738bf08`](https://github.com/lingodotdev/lingo.dev/commit/738bf08edfe226392ec4534e05864101bc66c39c)]:
+  - @lingo.dev/_spec@0.44.3
+  - @lingo.dev/_sdk@0.13.3
+
+## 0.8.3
+
+### Patch Changes
+
+- Updated dependencies [[`f6352b6`](https://github.com/lingodotdev/lingo.dev/commit/f6352b6222e425d5d184c1591a90b1d13a7effbc)]:
+  - @lingo.dev/_spec@0.44.2
+  - @lingo.dev/_sdk@0.13.2
+
+## 0.8.2
+
+### Patch Changes
+
+- Updated dependencies [[`ad646a4`](https://github.com/lingodotdev/lingo.dev/commit/ad646a4f44dc2f0771eb3aa2783872b4d0e55f57)]:
+  - @lingo.dev/_spec@0.44.1
+  - @lingo.dev/_sdk@0.13.1
+
+## 0.8.1
+
+### Patch Changes
+
+- [#1637](https://github.com/lingodotdev/lingo.dev/pull/1637) [`ec2f00a`](https://github.com/lingodotdev/lingo.dev/commit/ec2f00a0a1127ff4c5333ce4c6d8d691f89c4b17) Thanks [@AleksandrSl](https://github.com/AleksandrSl)! - fix babel CJS/ESM
+
+## 0.8.0
+
+### Minor Changes
+
+- [#1634](https://github.com/lingodotdev/lingo.dev/pull/1634) [`48fab66`](https://github.com/lingodotdev/lingo.dev/commit/48fab66b6806455d9faa1dcb169d4c61194e2144) Thanks [@maxprilutskiy](https://github.com/maxprilutskiy)! - Pin all dependencies to exact versions to prevent supply chain attacks. Dependencies no longer use caret (^) or tilde (~) ranges, ensuring full control over version updates and requiring explicit review of all dependency changes.
+
+### Patch Changes
+
+- Updated dependencies [[`48fab66`](https://github.com/lingodotdev/lingo.dev/commit/48fab66b6806455d9faa1dcb169d4c61194e2144)]:
+  - @lingo.dev/_sdk@0.13.0
+  - @lingo.dev/_spec@0.44.0
+
+## 0.7.18
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @lingo.dev/_spec@0.43.1
+  - @lingo.dev/_sdk@0.12.9
+
+## 0.7.17
+
+### Patch Changes
+
+- Updated dependencies [[`ac38e8e`](https://github.com/lingodotdev/lingo.dev/commit/ac38e8e8dea0d8c4cd3c8b00e6394bfbd8074611)]:
+  - @lingo.dev/_spec@0.43.0
+  - @lingo.dev/_sdk@0.12.8
+
+## 0.7.16
+
+### Patch Changes
+
+- Updated dependencies [[`d72c67c`](https://github.com/lingodotdev/lingo.dev/commit/d72c67c78a4d8f01077db8098b5d973ec98a4c1e)]:
+  - @lingo.dev/_spec@0.42.0
+  - @lingo.dev/_sdk@0.12.7
+
 ## 0.7.15
 
 ### Patch Changes
@@ -112,7 +348,6 @@
 ### Minor Changes
 
 - [#997](https://github.com/lingodotdev/lingo.dev/pull/997) [`bd9538a`](https://github.com/lingodotdev/lingo.dev/commit/bd9538ac6eba0ffc91ffc1fef5db6366c13e9e06) Thanks [@VAIBHAVSING](https://github.com/VAIBHAVSING)! - ### Whitespace Normalization Fix
-
   - Improved `normalizeJsxWhitespace` logic to preserve leading spaces inside JSX elements while removing unnecessary formatting whitespace and extra lines.
   - Ensured explicit whitespace (e.g., `{" "}`) is handled correctly without introducing double spaces.
   - Added targeted tests (`jsx-content-whitespace.spec.ts`) to verify whitespace handling.
@@ -190,7 +425,6 @@
 ### Minor Changes
 
 - [#958](https://github.com/lingodotdev/lingo.dev/pull/958) [`84fd214`](https://github.com/lingodotdev/lingo.dev/commit/84fd214a21766e7683c5d645fcb8c4c0162eb0b6) Thanks [@chrissiwaffler](https://github.com/chrissiwaffler)! - feat: add Mistral AI as a supported LLM provider
-
   - Added Mistral AI provider support across the entire lingo.dev ecosystem
   - Users can now use Mistral models for localization by setting MISTRAL_API_KEY
   - Supports all Mistral models available through the @ai-sdk/mistral package

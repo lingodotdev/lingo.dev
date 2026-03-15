@@ -14,8 +14,11 @@ interface CIOptions {
   pullRequest?: boolean;
   commitMessage?: string;
   pullRequestTitle?: string;
+  commitAuthorName?: string;
+  commitAuthorEmail?: string;
   workingDirectory?: string;
   processOwnCommits?: boolean;
+  gpgSign?: boolean;
 }
 
 export default new Command()
@@ -45,6 +48,14 @@ export default new Command()
     "Title for the pull request when using --pull-request mode. Defaults to 'feat: update translations via @lingodotdev'",
   )
   .option(
+    "--commit-author-name <name>",
+    "Git commit author name. Defaults to 'Lingo.dev'",
+  )
+  .option(
+    "--commit-author-email <email>",
+    "Git commit author email. Defaults to 'support@lingo.dev'",
+  )
+  .option(
     "--working-directory <dir>",
     "Directory to run localization from (useful for monorepos where localization files are in a subdirectory)",
   )
@@ -53,13 +64,18 @@ export default new Command()
     "Allow processing commits made by this CI user (bypasses infinite loop prevention)",
     parseBooleanArg,
   )
+  .option(
+    "--gpg-sign [boolean]",
+    "Sign commits with GPG. Requires GPG to be configured in the environment",
+    parseBooleanArg,
+  )
   .action(async (options: CIOptions) => {
     const settings = getSettings(options.apiKey);
 
-    console.log(options);
-
     if (!settings.auth.apiKey) {
-      console.error("No API key provided");
+      console.error(
+        "No API key provided. Set LINGO_API_KEY environment variable or use --api-key flag.",
+      );
       return;
     }
 
@@ -67,15 +83,17 @@ export default new Command()
       apiUrl: settings.auth.apiUrl,
       apiKey: settings.auth.apiKey,
     });
-    const auth = await authenticator.whoami();
 
+    const auth = await authenticator.whoami();
     if (!auth) {
       console.error("Not authenticated");
       return;
     }
 
     const env = {
-      LINGODOTDEV_API_KEY: settings.auth.apiKey,
+      ...(settings.auth.apiKey && {
+        LINGO_API_KEY: settings.auth.apiKey,
+      }),
       LINGODOTDEV_PULL_REQUEST: options.pullRequest?.toString() || "false",
       ...(options.commitMessage && {
         LINGODOTDEV_COMMIT_MESSAGE: options.commitMessage,
@@ -83,11 +101,20 @@ export default new Command()
       ...(options.pullRequestTitle && {
         LINGODOTDEV_PULL_REQUEST_TITLE: options.pullRequestTitle,
       }),
+      ...(options.commitAuthorName && {
+        LINGODOTDEV_COMMIT_AUTHOR_NAME: options.commitAuthorName,
+      }),
+      ...(options.commitAuthorEmail && {
+        LINGODOTDEV_COMMIT_AUTHOR_EMAIL: options.commitAuthorEmail,
+      }),
       ...(options.workingDirectory && {
         LINGODOTDEV_WORKING_DIRECTORY: options.workingDirectory,
       }),
       ...(options.processOwnCommits && {
         LINGODOTDEV_PROCESS_OWN_COMMITS: options.processOwnCommits.toString(),
+      }),
+      ...(options.gpgSign && {
+        LINGODOTDEV_GPG_SIGN: options.gpgSign.toString(),
       }),
     };
 

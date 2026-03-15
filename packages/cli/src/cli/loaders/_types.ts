@@ -23,5 +23,5 @@ export interface ILoader<I, O, C = void> extends ILoaderDefinition<I, O, C> {
   init(): Promise<C>;
   pull(locale: string, input: I): Promise<O>;
   push(locale: string, data: O): Promise<I>;
-  pullHints(originalInput: I): Promise<O | undefined>;
+  pullHints(originalInput?: I): Promise<O | undefined>;
 }

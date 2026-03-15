@@ -63,7 +63,7 @@ export default new Command()
   .action(async function (options) {
     const ora = Ora();
     const flags = parseFlags(options);
-    let authId: string | null = null;
+    let email: string | null = null;
 
     try {
       ora.start("Loading configuration...");
@@ -76,7 +76,7 @@ export default new Command()
         ora.start("Checking authentication status...");
         const auth = await tryAuthenticate(settings);
         if (auth) {
-          authId = auth.id;
+          email = auth.email;
           ora.succeed(`Authenticated as ${auth.email}`);
         } else {
           ora.info(
@@ -92,10 +92,11 @@ export default new Command()
       ora.succeed("Localization configuration is valid");
 
       // Track event with or without authentication
-      trackEvent(authId || "status", "cmd.status.start", {
+      trackEvent(email, "cmd.status.start", {
         i18nConfig,
         flags,
       });
+      await new Promise((resolve) => setTimeout(resolve, 50));
 
       let buckets = getBuckets(i18nConfig!);
       if (flags.bucket?.length) {
@@ -202,6 +203,8 @@ export default new Command()
               bucket.lockedKeys,
               bucket.lockedPatterns,
               bucket.ignoredKeys,
+              bucket.preservedKeys,
+              bucket.localizableKeys,
             );
 
             bucketLoader.setDefaultLocale(sourceLocale);
@@ -353,11 +356,10 @@ export default new Command()
                   )} (${completeKeys.length}/${totalKeysInFile} keys)`,
                 );
               } else {
-                const message = `[${sourceLocale} -> ${targetLocale}] ${
-                  parseFloat(completionPercent) > 50
+                const message = `[${sourceLocale} -> ${targetLocale}] ${parseFloat(completionPercent) > 50
                     ? chalk.yellow(`${completionPercent}% complete`)
                     : chalk.red(`${completionPercent}% complete`)
-                } (${completeKeys.length}/${totalKeysInFile} keys)`;
+                  } (${completeKeys.length}/${totalKeysInFile} keys)`;
 
                 bucketOra.succeed(message);
 
@@ -367,8 +369,7 @@ export default new Command()
                       `    ${chalk.red(`Missing:`)} ${missingKeys.length} keys, ~${wordsToTranslate} words`,
                     );
                     console.log(
-                      `    ${chalk.red(`Missing:`)} ${
-                        missingKeys.length
+                      `    ${chalk.red(`Missing:`)} ${missingKeys.length
                       } keys, ~${wordsToTranslate} words`,
                     );
                     console.log(
@@ -381,8 +382,7 @@ export default new Command()
                   }
                   if (updatedKeys.length > 0) {
                     console.log(
-                      `    ${chalk.yellow(`Updated:`)} ${
-                        updatedKeys.length
+                      `    ${chalk.yellow(`Updated:`)} ${updatedKeys.length
                       } keys that changed in source`,
                     );
                   }
@@ -515,7 +515,10 @@ export default new Command()
         console.log(`• Per-language breakdown:`);
         for (const locale of targetLocales) {
           const words = totalWordCount.get(locale) || 0;
-          const percent = ((words / totalWordsToTranslate) * 100).toFixed(1);
+          const percent =
+            totalWordsToTranslate > 0
+              ? ((words / totalWordsToTranslate) * 100).toFixed(1)
+              : "0.0";
           console.log(
             `  - ${locale}: ~${words.toLocaleString()} words (${percent}% of total)`,
           );
@@ -529,13 +532,11 @@ export default new Command()
         Object.entries(fileStats)
           .sort((a, b) => b[1].wordCount - a[1].wordCount) // Sort by word count
           .forEach(([path, stats]) => {
-            // Skip files with no source keys
             if (stats.sourceKeys === 0) return;
 
             console.log(chalk.bold(`\n• ${path}:`));
             console.log(
-              `  ${
-                stats.sourceKeys
+              `  ${stats.sourceKeys
               } source keys, ~${stats.wordCount.toLocaleString()} source words`,
             );
 
@@ -602,16 +603,14 @@ export default new Command()
 
       if (missingLanguages.length > 0) {
         console.log(
-          `• ${chalk.yellow(missingLanguages.join(", "))} ${
-            missingLanguages.length === 1 ? "has" : "have"
+          `• ${chalk.yellow(missingLanguages.join(", "))} ${missingLanguages.length === 1 ? "has" : "have"
           } no translations yet`,
         );
       }
 
       if (completeLanguages.length > 0) {
         console.log(
-          `• ${chalk.green(completeLanguages.join(", "))} ${
-            completeLanguages.length === 1 ? "is" : "are"
+          `• ${chalk.green(completeLanguages.join(", "))} ${completeLanguages.length === 1 ? "is" : "are"
           } completely translated`,
         );
       }
@@ -625,22 +624,24 @@ export default new Command()
       }
 
       // Track successful completion
-      trackEvent(authId || "status", "cmd.status.success", {
+      trackEvent(email, "cmd.status.success", {
         i18nConfig,
         flags,
         totalSourceKeyCount,
         languageStats,
         totalWordsToTranslate,
-        authenticated: !!authId,
+        authenticated: !!email,
       });
+      await new Promise((resolve) => setTimeout(resolve, 50));
       exitGracefully();
     } catch (error: any) {
       ora.fail(error.message);
-      trackEvent(authId || "status", "cmd.status.error", {
+      trackEvent(email, "cmd.status.error", {
         flags,
         error: error.message,
-        authenticated: !!authId,
+        authenticated: !!email,
       });
+      await new Promise((resolve) => setTimeout(resolve, 50));
       process.exit(1);
     }
   });

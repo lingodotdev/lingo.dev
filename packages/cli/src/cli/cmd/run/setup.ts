@@ -50,10 +50,11 @@ export default async function setup(input: CmdRunContext) {
       {
         title: "Selecting localization provider",
         task: async (ctx, task) => {
-          ctx.localizer = createLocalizer(
-            ctx.config?.provider,
-            ctx.flags.apiKey,
-          );
+          const isPseudo =
+            ctx.flags.pseudo || ctx.config?.dev?.usePseudotranslator;
+          const provider = isPseudo ? "pseudo" : ctx.config?.provider;
+          const engineId = ctx.config?.engineId;
+          ctx.localizer = createLocalizer(provider, engineId, ctx.flags.apiKey);
           if (!ctx.localizer) {
             throw new Error(
               "Could not create localization provider. Please check your i18n.json configuration.",
@@ -62,12 +63,17 @@ export default async function setup(input: CmdRunContext) {
           task.title =
             ctx.localizer.id === "Lingo.dev"
               ? `Using ${chalk.hex(colors.green)(ctx.localizer.id)} provider`
-              : `Using raw ${chalk.hex(colors.yellow)(ctx.localizer.id)} API`;
+              : ctx.localizer.id === "pseudo"
+                ? `Using ${chalk.hex(colors.blue)("pseudo")} mode for testing`
+                : `Using raw ${chalk.hex(colors.yellow)(ctx.localizer.id)} API`;
         },
       },
       {
         title: "Checking authentication",
-        enabled: (ctx) => ctx.localizer?.id === "Lingo.dev",
+        enabled: (ctx) =>
+          ctx.localizer?.id === "Lingo.dev" &&
+          !ctx.flags.pseudo &&
+          !ctx.config?.dev?.usePseudotranslator,
         task: async (ctx, task) => {
           const authStatus = await ctx.localizer!.checkAuth();
           if (!authStatus.authenticated) {
@@ -95,6 +101,7 @@ export default async function setup(input: CmdRunContext) {
         title: "Initializing localization provider",
         async task(ctx, task) {
           const isLingoDotDev = ctx.localizer!.id === "Lingo.dev";
+          const isPseudo = ctx.localizer!.id === "pseudo";
 
           const subTasks = isLingoDotDev
             ? [
@@ -103,12 +110,18 @@ export default async function setup(input: CmdRunContext) {
                 "Glossary enabled",
                 "Quality assurance enabled",
               ].map((title) => ({ title, task: () => {} }))
-            : [
-                "Skipping brand voice",
-                "Skipping glossary",
-                "Skipping translation memory",
-                "Skipping quality assurance",
-              ].map((title) => ({ title, task: () => {}, skip: true }));
+            : isPseudo
+              ? [
+                  "Pseudo-localization mode active",
+                  "Character replacement configured",
+                  "No external API calls",
+                ].map((title) => ({ title, task: () => {} }))
+              : [
+                  "Skipping brand voice",
+                  "Skipping glossary",
+                  "Skipping translation memory",
+                  "Skipping quality assurance",
+                ].map((title) => ({ title, task: () => {}, skip: true }));
 
           return task.newListr(subTasks, {
             concurrent: true,

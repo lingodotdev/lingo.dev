@@ -1,5 +1,5 @@
 import { createCodeMutation } from "./_base";
-import traverse from "@babel/traverse";
+import { traverse, NodePath } from "./babel-interop";
 import * as t from "@babel/types";
 import { getOrCreateImport } from "./utils";
 import { CompilerPayload } from "./_base";
@@ -14,7 +14,7 @@ export function jsxFragmentMutation(
   let fragmentImportName: string | null = null;
 
   traverse(ast, {
-    ImportDeclaration(path) {
+    ImportDeclaration(path: NodePath<t.ImportDeclaration>) {
       if (path.node.source.value !== "react") return;
 
       for (const specifier of path.node.specifiers) {
@@ -31,7 +31,7 @@ export function jsxFragmentMutation(
   });
 
   traverse(ast, {
-    JSXFragment(path) {
+    JSXFragment(path: NodePath<t.JSXFragment>) {
       foundFragments = true;
 
       if (!fragmentImportName) {
@@ -62,7 +62,7 @@ export function transformFragmentShorthand(ast: t.Node): boolean {
   let fragmentImportName: string | null = null;
 
   traverse(ast, {
-    ImportDeclaration(path) {
+    ImportDeclaration(path: NodePath<t.ImportDeclaration>) {
       if (path.node.source.value !== "react") return;
 
       for (const specifier of path.node.specifiers) {
@@ -79,7 +79,7 @@ export function transformFragmentShorthand(ast: t.Node): boolean {
   });
 
   traverse(ast, {
-    JSXFragment(path) {
+    JSXFragment(path: NodePath<t.JSXFragment>) {
       transformed = true;
 
       if (!fragmentImportName) {

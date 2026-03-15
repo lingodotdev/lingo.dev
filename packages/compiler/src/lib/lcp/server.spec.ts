@@ -62,6 +62,7 @@ describe("LCPServer", () => {
     it("should correctly extract the source dictionary when source and target locales are the same", async () => {
       // Mock LCPAPI.translate() to ensure it's not called
       const translateSpy = vi.spyOn(LCPAPI, "translate");
+      vi.spyOn(LCPCache, "writeLocaleDictionary").mockResolvedValue(undefined);
 
       const lcp: LCPSchema = {
         version: 0.1,
@@ -137,6 +138,7 @@ describe("LCPServer", () => {
 
     it("should handle overrides in source content", async () => {
       // Mock LCPAPI.translate() to ensure it's not called
+      vi.spyOn(LCPCache, "writeLocaleDictionary").mockResolvedValue(undefined);
       vi.spyOn(LCPAPI, "translate").mockImplementation(() =>
         Promise.resolve({
           version: 0.1,
@@ -265,7 +267,7 @@ describe("LCPServer", () => {
     });
 
     it("should write dictionary to cache", async () => {
-      vi.spyOn(LCPCache, "writeLocaleDictionary");
+      vi.spyOn(LCPCache, "writeLocaleDictionary").mockResolvedValue(undefined);
       vi.spyOn(LCPAPI, "translate").mockReturnValue({
         version: 0.1,
         locale: "fr",
@@ -339,7 +341,7 @@ describe("LCPServer", () => {
           },
         },
       });
-      const writeCacheSpy = vi.spyOn(LCPCache, "writeLocaleDictionary");
+      const writeCacheSpy = vi.spyOn(LCPCache, "writeLocaleDictionary").mockResolvedValue(undefined);
       const translateSpy = vi.spyOn(LCPAPI, "translate").mockResolvedValue({
         version: 0.1,
         locale: "fr",
