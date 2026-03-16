@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.133.3
+
+### Patch Changes
+
+- [#2042](https://github.com/lingodotdev/lingo.dev/pull/2042) [`a759e16`](https://github.com/lingodotdev/lingo.dev/commit/a759e1653ac3adfd93af16302c0bc79138f3aaa3) Thanks [@gmpaliwal07](https://github.com/gmpaliwal07)! - fix(cli): preserve terminal scrollback buffer during run command
+
 ## 0.133.2
 
 ### Patch Changes
