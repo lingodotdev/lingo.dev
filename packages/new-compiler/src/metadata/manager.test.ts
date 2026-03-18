@@ -70,6 +70,13 @@ async function runSaveMetadataWorker(
     child.stderr.on("data", (chunk) => {
       stderr += chunk.toString();
     });
+    child.on("error", (error) => {
+      reject(
+        new Error(
+          `worker ${workerId} failed to spawn: ${error.message}\nstdout:\n${stdout}\nstderr:\n${stderr}`,
+        ),
+      );
+    });
 
     child.on("exit", (code, signal) => {
       if (code === 0) {

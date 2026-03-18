@@ -7,6 +7,8 @@ import { logger } from "../utils/logger";
 
 const METADATA_DIR_DEV = "metadata-dev";
 const METADATA_DIR_BUILD = "metadata-build";
+// Metadata writes require synchronized commits because bundlers can fan out
+// multiple worker processes against the same LMDB path.
 const METADATA_DB_NO_SYNC = false;
 
 /**
@@ -18,11 +20,14 @@ const METADATA_DB_NO_SYNC = false;
  * lmdb is loaded via dynamic import() to prevent bundlers and require hooks
  * from transforming its CJS bundle, which contains syntax they can't handle.
  */
-async function openDatabaseConnection(dbPath: string, noSync: boolean): Promise<RootDatabase> {
+async function openDatabaseConnection(
+  dbPath: string,
+  _noSync: boolean,
+): Promise<RootDatabase> {
   try {
     fs.mkdirSync(dbPath, { recursive: true });
     const { open } = await import("lmdb");
-    const effectiveNoSync = noSync ? METADATA_DB_NO_SYNC : false;
+    const effectiveNoSync = METADATA_DB_NO_SYNC;
     return open({
       path: dbPath,
       compression: true,

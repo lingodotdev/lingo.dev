@@ -4,7 +4,29 @@ import { generateTranslationHash } from "../../utils/hash";
 const dbPath = process.argv[2];
 const workerId = Number(process.argv[3]);
 const iterations = Number(process.argv[4]);
-const noSync = process.argv[5] === "true";
+const noSyncArg = process.argv[5];
+
+if (!dbPath) {
+  console.error("Missing dbPath argument");
+  process.exit(2);
+}
+
+if (Number.isNaN(workerId)) {
+  console.error("Invalid workerId argument");
+  process.exit(2);
+}
+
+if (Number.isNaN(iterations)) {
+  console.error("Invalid iterations argument");
+  process.exit(2);
+}
+
+if (noSyncArg !== "true" && noSyncArg !== "false") {
+  console.error("Invalid noSync argument");
+  process.exit(2);
+}
+
+const noSync = noSyncArg === "true";
 
 function createEntry(i: number) {
   const sourceText = `worker-${workerId}-entry-${i}`;
