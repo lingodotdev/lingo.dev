@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach, afterEach } from "vitest";
 import fs from "fs";
 import path from "path";
 import os from "os";
+import { spawn } from "child_process";
 import {
   loadMetadata,
   saveMetadata,
@@ -27,6 +28,62 @@ function createUniqueDbPath(): string {
     os.tmpdir(),
     `lmdb-test-${Date.now()}-${Math.random().toString(36).slice(2)}`,
   );
+}
+
+async function runSaveMetadataWorker(
+  dbPath: string,
+  workerId: number,
+  iterations: number,
+  noSync: boolean,
+): Promise<void> {
+  const tsxBinary = path.resolve(
+    import.meta.dirname,
+    "../../node_modules/.bin/tsx",
+  );
+  const workerScript = path.resolve(
+    import.meta.dirname,
+    "./fixtures/save-metadata-worker.ts",
+  );
+
+  await new Promise<void>((resolve, reject) => {
+    const child = spawn(
+      tsxBinary,
+      [
+        workerScript,
+        dbPath,
+        String(workerId),
+        String(iterations),
+        String(noSync),
+      ],
+      {
+        cwd: path.resolve(import.meta.dirname, "../.."),
+        stdio: ["ignore", "pipe", "pipe"],
+        env: process.env,
+      },
+    );
+
+    let stdout = "";
+    let stderr = "";
+    child.stdout.on("data", (chunk) => {
+      stdout += chunk.toString();
+    });
+    child.stderr.on("data", (chunk) => {
+      stderr += chunk.toString();
+    });
+
+    child.on("exit", (code, signal) => {
+      if (code === 0) {
+        resolve();
+        return;
+      }
+
+      reject(
+        new Error(
+          `worker ${workerId} failed (code=${code}, signal=${signal})\nstdout:\n${stdout}\nstderr:\n${stderr}`,
+        ),
+      );
+    });
+  });
 }
 
 describe("metadata", () => {
@@ -124,6 +181,26 @@ describe("metadata", () => {
       const final = await loadMetadata(testDbPath);
       expect(Object.keys(final).length).toBe(1000);
     });
+  });
+
+  describe("concurrent access (multi process)", () => {
+    it(
+      "should preserve all entries when multiple processes request noSync writes",
+      async () => {
+        const workers = 6;
+        const iterations = 40;
+
+        await Promise.all(
+          Array.from({ length: workers }, (_, workerId) =>
+            runSaveMetadataWorker(testDbPath, workerId, iterations, true),
+          ),
+        );
+
+        const final = await loadMetadata(testDbPath);
+        expect(Object.keys(final).length).toBe(workers * iterations);
+      },
+      30_000,
+    );
   });
 
   describe("cleanupExistingMetadata", () => {

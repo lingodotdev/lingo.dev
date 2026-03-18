@@ -7,6 +7,7 @@ import { logger } from "../utils/logger";
 
 const METADATA_DIR_DEV = "metadata-dev";
 const METADATA_DIR_BUILD = "metadata-build";
+const METADATA_DB_NO_SYNC = false;
 
 /**
  * Opens an LMDB connection for a single operation.
@@ -21,10 +22,14 @@ async function openDatabaseConnection(dbPath: string, noSync: boolean): Promise<
   try {
     fs.mkdirSync(dbPath, { recursive: true });
     const { open } = await import("lmdb");
+    const effectiveNoSync = noSync ? METADATA_DB_NO_SYNC : false;
     return open({
       path: dbPath,
       compression: true,
-      noSync,
+      // Metadata is written from multiple bundler worker processes to the same LMDB path.
+      // Enabling `noSync` here can abort worker processes or silently drop entries under
+      // concurrent production builds, so metadata always uses fully synchronized commits.
+      noSync: effectiveNoSync,
     });
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
