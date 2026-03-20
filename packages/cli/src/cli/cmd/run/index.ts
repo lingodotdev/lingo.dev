@@ -192,6 +192,6 @@ export default new Command()
       if (args.sound) {
         await playSound("failure");
       }
-      throw error;
+      process.exit(1);
     }
   });

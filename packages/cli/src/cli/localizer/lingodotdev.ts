@@ -39,10 +39,14 @@ export default function createLingoDotDevLocalizer(
     checkAuth: async () => {
       try {
         const response = await engine.whoami();
-        return {
-          authenticated: !!response,
-          username: response?.email,
-        };
+        if (!response) {
+          return {
+            authenticated: false,
+            error:
+              "Invalid API key. Run `lingo.dev login` or check your LINGO_API_KEY.",
+          };
+        }
+        return { authenticated: true, username: response.email };
       } catch (error) {
         const errorMessage =
           error instanceof Error ? error.message : String(error);
