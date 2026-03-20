@@ -1,5 +1,17 @@
 # lingo.dev
 
+## 0.133.4
+
+### Patch Changes
+
+- [#2051](https://github.com/lingodotdev/lingo.dev/pull/2051) [`9991515`](https://github.com/lingodotdev/lingo.dev/commit/9991515adad3773d40791b18f2e6105235145609) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - SDK: Improved API error messages by parsing server JSON responses instead of using HTTP status text. Removed try/catch from whoami so network errors propagate instead of being silently treated as "not authenticated". Deduplicated error handling into shared helpers. Removed unused workflowId parameter.
+
+  CLI: Auth failures now show specific error messages (e.g., "Invalid API key" vs generic "Authentication failed").
+
+- Updated dependencies [[`9991515`](https://github.com/lingodotdev/lingo.dev/commit/9991515adad3773d40791b18f2e6105235145609)]:
+  - @lingo.dev/_sdk@0.16.1
+  - @lingo.dev/_compiler@0.12.1
+
 ## 0.133.3
 
 ### Patch Changes
