@@ -15,7 +15,7 @@
     "@lingo.dev/_spec": "workspace:*",
     "@octokit/rest": "20.1.2",
     "@types/mdast": "4.0.4",
-    "@types/node": "24.0.10",
+    "@types/node": "25.3.0",
     "@vitest/ui": "3.2.4",
     "commander": "12.0.0",
     "remark-stringify": "11.0.0",
