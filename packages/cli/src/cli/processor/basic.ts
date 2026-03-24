@@ -92,16 +92,16 @@ export function createBasicTranslator(
 /**
  * Extract payload chunks based on the ideal chunk size
  * @param payload - The payload to be chunked
- * @param batchSize - Max number of keys per chunk (default: 25)
+ * @param batchSize - Max number of keys per chunk
  * @returns An array of payload chunks
  */
 function extractPayloadChunks(
-  payload: Record<string, string>,
+  payload: Record<string, any>,
   batchSize?: number,
-): Record<string, string>[] {
+): Record<string, any>[] {
   const idealBatchItemSize = 250;
-  const result: Record<string, string>[] = [];
-  let currentChunk: Record<string, string> = {};
+  const result: Record<string, any>[] = [];
+  let currentChunk: Record<string, any> = {};
   let currentChunkItemCount = 0;
 
   const payloadEntries = Object.entries(payload);

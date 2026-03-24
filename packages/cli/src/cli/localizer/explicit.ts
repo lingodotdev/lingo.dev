@@ -284,10 +284,10 @@ function createAiSdkLocalizer(params: {
               ? `${response.text.slice(0, 500)}…`
               : response.text;
           console.error(
-            `Failed to parse response from Lingo.dev. Response snippet: ${snippet}`,
+            `Failed to parse response from ${params.id}. Response snippet: ${snippet}`,
           );
           throw new Error(
-            `Failed to parse response from Lingo.dev: ${e2} (Snippet: ${snippet})`,
+            `Failed to parse response from ${params.id}: ${e2} (Snippet: ${snippet})`,
           );
         }
         let finalResult: Record<string, any> = {};
@@ -313,6 +313,13 @@ function createAiSdkLocalizer(params: {
                 `Failed to parse nested JSON response: ${e} (Snippet: ${result.data.slice(0, 100)}...)`,
               );
             }
+          } else {
+            console.error(
+              `Unexpected response format - no JSON object found. Snippet: ${String(result.data).slice(0, 100)}...`,
+            );
+            throw new Error(
+              `Unexpected response format from ${params.id} - no JSON object found in response`,
+            );
           }
         }
 
@@ -335,12 +342,12 @@ function createAiSdkLocalizer(params: {
  * @returns An array of payload chunks
  */
 function extractPayloadChunks(
-  payload: Record<string, string>,
+  payload: Record<string, any>,
   batchSize?: number,
-): Record<string, string>[] {
+): Record<string, any>[] {
   const idealBatchItemSize = 250;
-  const result: Record<string, string>[] = [];
-  let currentChunk: Record<string, string> = {};
+  const result: Record<string, any>[] = [];
+  let currentChunk: Record<string, any> = {};
   let currentChunkItemCount = 0;
 
   const payloadEntries = Object.entries(payload);
