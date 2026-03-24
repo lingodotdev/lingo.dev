@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.133.5
+
+### Patch Changes
+
+- [#2049](https://github.com/lingodotdev/lingo.dev/pull/2049) [`2aa4145`](https://github.com/lingodotdev/lingo.dev/commit/2aa414565c802db71367ce00b1d062dc0488ef2f) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Fixed a bug where the CI pull request flow would ignore the existing translation branch and start from scratch, which could produce duplicate PRs when the original was merged during a concurrent run.
+
 ## 0.133.4
 
 ### Patch Changes
