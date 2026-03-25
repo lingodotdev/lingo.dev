@@ -99,7 +99,7 @@ export class PullRequestFlow extends InBranchFlow {
 
   private checkoutI18nBranch(i18nBranchName: string) {
     execSync(`git fetch origin ${i18nBranchName}`, { stdio: "inherit" });
-    execSync(`git checkout -b ${i18nBranchName}`, {
+    execSync(`git checkout -b ${i18nBranchName} origin/${i18nBranchName}`, {
       stdio: "inherit",
     });
   }

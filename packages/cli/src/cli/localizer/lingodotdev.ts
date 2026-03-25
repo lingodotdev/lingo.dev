@@ -7,10 +7,11 @@ import { getSettings } from "../utils/settings";
 
 export default function createLingoDotDevLocalizer(
   explicitApiKey?: string,
+  engineId?: string,
 ): ILocalizer {
-  const { auth } = getSettings(explicitApiKey);
+  const settings = getSettings(explicitApiKey);
 
-  if (!auth) {
+  if (!settings.auth.apiKey) {
     throw new Error(
       dedent`
         You're trying to use ${chalk.hex(colors.green)(
@@ -20,14 +21,17 @@ export default function createLingoDotDevLocalizer(
         To fix this issue:
         1. Run ${chalk.dim("lingo.dev login")} to authenticate, or
         2. Use the ${chalk.dim("--api-key")} flag to provide an API key.
-        3. Set ${chalk.dim("LINGODOTDEV_API_KEY")} environment variable.
+        3. Set ${chalk.dim("LINGO_API_KEY")} environment variable.
       `,
     );
   }
 
+  const triggerType = process.env.CI ? "ci" : "cli";
+
   const engine = new LingoDotDevEngine({
-    apiKey: auth.apiKey,
-    apiUrl: auth.apiUrl,
+    apiKey: settings.auth.apiKey,
+    apiUrl: settings.auth.apiUrl,
+    ...(engineId && { engineId }),
   });
 
   return {
@@ -35,10 +39,14 @@ export default function createLingoDotDevLocalizer(
     checkAuth: async () => {
       try {
         const response = await engine.whoami();
-        return {
-          authenticated: !!response,
-          username: response?.email,
-        };
+        if (!response) {
+          return {
+            authenticated: false,
+            error:
+              "Invalid API key. Run `lingo.dev login` or check your LINGO_API_KEY.",
+          };
+        }
+        return { authenticated: true, username: response.email };
       } catch (error) {
         const errorMessage =
           error instanceof Error ? error.message : String(error);
@@ -48,7 +56,7 @@ export default function createLingoDotDevLocalizer(
     localize: async (input: LocalizerData, onProgress) => {
       // Nothing to translate – return the input as-is.
       if (!Object.keys(input.processableData).length) {
-        return input;
+        return input.processableData;
       }
 
       const processedData = await engine.localizeObject(
@@ -61,6 +69,8 @@ export default function createLingoDotDevLocalizer(
             [input.targetLocale]: input.targetData,
           },
           hints: input.hints,
+          filePath: input.filePath,
+          triggerType,
         },
         onProgress,
       );

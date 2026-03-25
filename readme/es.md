@@ -336,7 +336,7 @@ const locale = await lingoDotDev.recognizeLocale("Bonjour le monde");
 
 ### Compilador de Lingo.dev
 
-La i18n tradicional es invasiva. Envuelves cada cadena en funciones `t()`, inventas claves de traducción (`home.hero.title.v2`), mantienes archivos JSON paralelos y ves cómo tus componentes se inflan con código repetitivo de localización. Es tan tedioso que los equipos retrasan la internacionalización hasta que se convierte en una refactorización masiva.
+La i18n tradicional es invasiva. Envuelves cada cadena en funciones `t()`, inventas claves de traducción (`home.hero.title.v2`), mantienes archivos JSON paralelos y tus componentes aumentan de tamaño debido al código repetitivo de localización. Es tan tedioso que los equipos suelen posponer la internacionalización hasta que se convierte en una refactorización masiva.
 
 Lingo.dev Compiler elimina la ceremonia. Escribe componentes de React con texto en inglés simple. El compilador detecta cadenas traducibles en tiempo de compilación y genera variantes localizadas automáticamente. Sin claves, sin archivos JSON, sin funciones envolventes, solo código React que funciona en múltiples idiomas.
 
@@ -434,9 +434,9 @@ export function LanguageSwitcher() {
 
 **Desarrollo:** `npm run dev` (usa pseudotraductor, sin llamadas a la API)
 
-**Producción:** Establece `usePseudotranslator: false`, luego `next build`
+**Producción:** Establece `usePseudotranslator: false` y después `next build`
 
-Confirma el directorio `.lingo/` en el control de versiones.
+Guarda el directorio `.lingo/` en el control de versiones.
 
 **Características principales:**
 
@@ -447,13 +447,13 @@ Confirma el directorio `.lingo/` en el control de versiones.
 - Soporte para TypeScript
 - ICU MessageFormat para plurales
 - Anulaciones manuales mediante el atributo `data-lingo-override`
-- Widget de editor de traducción integrado
+- Editor de traducción integrado
 
 **Modos de compilación:**
 
-- `pseudotranslator`: Modo de desarrollo con traducciones de marcador de posición (sin costos de API)
+- `pseudotranslator`: Modo desarrollo con traducciones de marcador de posición (sin costes de API)
 - `real`: Genera traducciones reales usando LLMs
-- `cache-only`: Modo de producción usando traducciones pregeneradas desde CI (sin llamadas a la API)
+- `cache-only`: Modo producción usando traducciones pregeneradas desde CI (sin llamadas a la API)
 
 **Frameworks compatibles:**
 
@@ -470,13 +470,13 @@ Soporte adicional de frameworks planificado.
 
 Las contribuciones son bienvenidas. Por favor, sigue estas directrices:
 
-1. **Issues:** [Reporta errores o solicita funcionalidades](https://github.com/lingodotdev/lingo.dev/issues)
+1. **Incidencias:** [Reporta errores o solicita funcionalidades](https://github.com/lingodotdev/lingo.dev/issues)
 2. **Pull Requests:** [Envía cambios](https://github.com/lingodotdev/lingo.dev/pulls)
    - Cada PR requiere un changeset: `pnpm new` (o `pnpm new:empty` para cambios que no requieren release)
    - Asegúrate de que las pruebas pasen antes de enviar
-3. **Desarrollo:** Este es un monorepo de pnpm + turborepo
-   - Instala las dependencias: `pnpm install`
-   - Ejecuta las pruebas: `pnpm test`
+3. **Desarrollo:** Este es un monorepo pnpm + turborepo
+   - Instala dependencias: `pnpm install`
+   - Ejecuta tests: `pnpm test`
    - Compila: `pnpm build`
 
 **Soporte:** [Comunidad de Discord](https://lingo.dev/go/discord)
@@ -506,5 +506,5 @@ Si encuentras útil Lingo.dev, danos una estrella y ayúdanos a alcanzar las 10 
 
 - `language`: ISO 639-1/2/3 (minúsculas): `en`, `zh`, `bho`
 - `Script`: ISO 15924 (mayúscula inicial): `Hans`, `Hant`, `Latn`
-- `REGION`: ISO 3166-1 alpha-2 (mayúsculas): `US`, `CN`, `IN`
+- `REGION`: ISO 3166-1 alfa-2 (mayúsculas): `US`, `CN`, `IN`
 - Ejemplos: `en`, `pt-BR`, `zh-Hans`, `sr-Cyrl-RS`

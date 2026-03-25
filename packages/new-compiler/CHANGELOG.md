@@ -1,5 +1,22 @@
 # @lingo.dev/compiler
 
+## 0.4.0
+
+### Minor Changes
+
+- [#2035](https://github.com/lingodotdev/lingo.dev/pull/2035) [`73a8c73`](https://github.com/lingodotdev/lingo.dev/commit/73a8c731f5af03db9c165000e87ee5e5a1086a48) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Migrate SDK and CLI to unified API endpoints. All requests now use `api.lingo.dev` with `X-API-Key` auth. Added `engineId` config option (auto-migrated from `vNext`)
+
+### Patch Changes
+
+- Updated dependencies [[`73a8c73`](https://github.com/lingodotdev/lingo.dev/commit/73a8c731f5af03db9c165000e87ee5e5a1086a48)]:
+  - lingo.dev@0.133.0
+
+## 0.3.12
+
+### Patch Changes
+
+- [#2023](https://github.com/lingodotdev/lingo.dev/pull/2023) [`15f361e`](https://github.com/lingodotdev/lingo.dev/commit/15f361e7335fc4200da25b324894b0f1fd38b7e2) Thanks [@AleksandrSl](https://github.com/AleksandrSl)! - Cleanup stale code in the translation server cli and update docs
+
 ## 0.3.11
 
 ### Patch Changes

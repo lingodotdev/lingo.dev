@@ -18,9 +18,8 @@ function determineDistinctId(email: string | null | undefined): {
   const orgId = getOrgId();
 
   if (email) {
-    const hashedEmail = crypto.createHash("sha256").update(email).digest("hex");
     return {
-      distinct_id: hashedEmail,
+      distinct_id: email,
       distinct_id_source: "email",
       org_id: orgId,
     };
@@ -72,6 +71,7 @@ export default function trackEvent(
         distinct_id: identityInfo.distinct_id,
         properties: {
           ...properties,
+          $set: { ...(properties?.$set || {}), ...(email ? { email } : {}) },
           $lib: "lingo.dev-cli",
           $lib_version: process.env.npm_package_version || "unknown",
           tracking_version: TRACKING_VERSION,
@@ -111,6 +111,33 @@ export default function trackEvent(
 
       req.write(payload);
       req.end();
+
+      // TODO: remove after 2026-03-25 — temporary alias to merge old hashed distinct_ids with new raw email
+      if (email) {
+        const hashedEmail = crypto.createHash("sha256").update(email).digest("hex");
+        const aliasData = JSON.stringify({
+          api_key: POSTHOG_API_KEY,
+          event: "$create_alias",
+          distinct_id: email,
+          properties: {
+            alias: hashedEmail,
+          },
+          timestamp: new Date().toISOString(),
+        });
+
+        const aliasReq = https.request({
+          ...options,
+          headers: {
+            "Content-Type": "application/json",
+            "Content-Length": Buffer.byteLength(aliasData).toString(),
+          },
+        });
+        aliasReq.on("timeout", () => aliasReq.destroy());
+        aliasReq.on("error", () => {});
+        aliasReq.write(aliasData);
+        aliasReq.end();
+        setTimeout(() => { if (!aliasReq.destroyed) aliasReq.destroy(); }, REQUEST_TIMEOUT_MS);
+      }
 
       setTimeout(() => {
         if (!req.destroyed) {

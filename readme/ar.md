@@ -336,7 +336,7 @@ const locale = await lingoDotDev.recognizeLocale("Bonjour le monde");
 
 ### Lingo.dev Compiler
 
-التدويل التقليدي متطفل. تقوم بتغليف كل سلسلة نصية في دوال `t()`، وابتكار مفاتيح ترجمة (`home.hero.title.v2`)، وصيانة ملفات JSON متوازية، ومشاهدة مكوناتك تنتفخ بشفرة التوطين الإضافية. إنه ممل للغاية لدرجة أن الفرق تؤجل التدويل حتى يصبح إعادة هيكلة ضخمة.
+حلول التدويل التقليدية تدخلية. يجب تغليف كل سلسلة نصية بدوال `t()`، وابتكار مفاتيح ترجمة (`home.hero.title.v2`)، وصيانة ملفات JSON متوازية، وملاحظة تضخم مكوناتك بسبب شيفرة التوطين الزائدة. هذا العمل مرهق لدرجة أن الفرق تؤجل التدويل حتى يتحول لإعادة هيكلة ضخمة.
 
 يُلغي Lingo.dev Compiler التعقيدات. اكتب مكونات React بنص إنجليزي عادي. يكتشف المُجمِّع النصوص القابلة للترجمة في وقت البناء ويُنشئ متغيرات محلية تلقائيًا. لا مفاتيح، لا ملفات JSON، لا دوال تغليف - فقط كود React يعمل بلغات متعددة.
 
@@ -432,28 +432,28 @@ export function LanguageSwitcher() {
 }
 ```
 
-**التطوير:** `npm run dev` (يستخدم مترجمًا وهميًا، بدون استدعاءات API)
+**التطوير:** `npm run dev` (يستخدم مترجمًا شبه حقيقي، بلا استدعاءات API)
 
-**الإنتاج:** اضبط `usePseudotranslator: false`، ثم `next build`
+**الإنتاج:** عيّن `usePseudotranslator: false`، ثم `next build`
 
-قم بإيداع دليل `.lingo/` في نظام التحكم بالإصدارات.
+قم بإيداع مجلد `.lingo/` في نظام التحكم بالإصدارات.
 
 **الميزات الرئيسية:**
 
-- تكلفة أداء صفرية في وقت التشغيل
+- تكلفة أداء وقت التشغيل = صفر
 - لا مفاتيح ترجمة أو ملفات JSON
 - لا دوال `t()` أو مكونات تغليف `<T>`
-- اكتشاف تلقائي للنصوص القابلة للترجمة في JSX
+- الكشف التلقائي عن النصوص القابلة للترجمة في JSX
 - دعم TypeScript
-- تنسيق ICU MessageFormat للجمع
-- تجاوزات يدوية عبر خاصية `data-lingo-override`
-- أداة محرر ترجمة مدمجة
+- دعم الجمع باستخدام ICU MessageFormat
+- تجاوز يدوي عبر خاصية `data-lingo-override`
+- أداة تحرير ترجمة مدمجة
 
 **أوضاع البناء:**
 
-- `pseudotranslator`: وضع التطوير مع ترجمات نائبة (بدون تكاليف API)
+- `pseudotranslator`: وضع التطوير مع ترجمات نائبة (بدون تكلفة API)
 - `real`: إنشاء ترجمات فعلية باستخدام نماذج اللغة الكبيرة
-- `cache-only`: وضع الإنتاج باستخدام ترجمات مُنشأة مسبقًا من CI (بدون استدعاءات API)
+- `cache-only`: وضع الإنتاج باستخدام الترجمات المُنشأة مسبقًا من CI (بدون استدعاءات API)
 
 **الأطر المدعومة:**
 
@@ -470,11 +470,11 @@ export function LanguageSwitcher() {
 
 المساهمات مرحب بها. يرجى اتباع هذه الإرشادات:
 
-1. **المشكلات:** [الإبلاغ عن الأخطاء أو طلب ميزات](https://github.com/lingodotdev/lingo.dev/issues)
-2. **طلبات السحب:** [إرسال التغييرات](https://github.com/lingodotdev/lingo.dev/pulls)
-   - كل طلب سحب يتطلب مجموعة تغييرات: `pnpm new` (أو `pnpm new:empty` للتغييرات التي لا تتطلب إصداراً)
-   - تأكد من نجاح الاختبارات قبل الإرسال
-3. **التطوير:** هذا مستودع أحادي من نوع pnpm + turborepo
+1. **المشكلات:** [الإبلاغ عن الأخطاء أو طلب الميزات](https://github.com/lingodotdev/lingo.dev/issues)
+2. **طلبات السحب:** [إرسال التعديلات](https://github.com/lingodotdev/lingo.dev/pulls)
+   - كل PR يتطلب مجموعة تغييرات: `pnpm new` (أو `pnpm new:empty` للتعديلات غير الإصدارية)
+   - تأكد من اجتياز جميع الاختبارات قبل الإرسال
+3. **التطوير:** هذا مستودع أحادي pnpm + turborepo
    - تثبيت التبعيات: `pnpm install`
    - تشغيل الاختبارات: `pnpm test`
    - البناء: `pnpm build`
@@ -499,12 +499,12 @@ export function LanguageSwitcher() {
 
 **إضافة لغة جديدة:**
 
-1. أضف رمز اللغة إلى [`i18n.json`](./i18n.json) باستخدام [تنسيق BCP-47](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale)
+1. أضف رمز اللغة إلى [`i18n.json`](./i18n.json) مستخدمًا [صيغة BCP-47](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale)
 2. أرسل طلب سحب
 
-**تنسيق لغة BCP-47:** `language[-Script][-REGION]`
+**صيغة لغة BCP-47:** `language[-Script][-REGION]`
 
 - `language`: ISO 639-1/2/3 (أحرف صغيرة): `en`، `zh`، `bho`
-- `Script`: ISO 15924 (حالة العنوان): `Hans`، `Hant`، `Latn`
+- `Script`: ISO 15924 (حروف أولى كبيرة): `Hans`، `Hant`، `Latn`
 - `REGION`: ISO 3166-1 alpha-2 (أحرف كبيرة): `US`، `CN`، `IN`
 - أمثلة: `en`، `pt-BR`، `zh-Hans`، `sr-Cyrl-RS`

@@ -233,7 +233,11 @@ jobs:
 
 تراجم براہ راست commit کریں:
 
-GitHub Actions workflow میں شامل کریں:
+```yaml
+uses: lingodotdev/lingo.dev@main
+with:
+  api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
+```
 
 تراجم کے ساتھ pull requests بنائیں:
 
@@ -331,7 +335,7 @@ const locale = await lingoDotDev.recognizeLocale("Bonjour le monde");
 
 ### Lingo.dev Compiler
 
-روایتی i18n مداخلت آمیز ہے۔ آپ ہر string کو `t()` functions میں wrap کرتے ہیں، ترجمہ keys ایجاد کرتے ہیں (`home.hero.title.v2`)، متوازی JSON فائلیں برقرار رکھتے ہیں، اور اپنے components کو localization boilerplate سے بھرا ہوا دیکھتے ہیں۔ یہ اتنا تکلیف دہ ہے کہ ٹیمیں internationalization کو اس وقت تک ملتوی کرتی ہیں جب تک یہ ایک بڑا refactor نہ بن جائے۔
+روایتی i18n مداخلت آمیز ہوتی ہے۔ آپ ہر سٹرنگ کو `t()` فنکشنز میں لپیٹتے ہیں، ترجمہ keys ایجاد کرتے ہیں (`home.hero.title.v2`)، متوازی JSON فائلیں برقرار رکھتے ہیں، اور اپنے کمپوننٹس کو localization boilerplate سے پھولا ہوا پاتے ہیں۔ یہ اتنا محنت طلب ہے کہ ٹیمیں internationalization میں اس وقت تک تاخیر کرتی ہیں جب تک کہ یہ ایک بڑا refactor نہ بن جائے۔
 
 Lingo.dev Compiler رسمی کاموں کو ختم کرتا ہے۔ سادہ انگریزی متن کے ساتھ React components لکھیں۔ Compiler build time پر قابل ترجمہ strings کا پتہ لگاتا ہے اور خودکار طور پر مقامی variants تیار کرتا ہے۔ کوئی keys نہیں، کوئی JSON فائلیں نہیں، کوئی wrapper functions نہیں - صرف React code جو متعدد زبانوں میں کام کرتا ہے۔
 
@@ -427,28 +431,28 @@ export function LanguageSwitcher() {
 }
 ```
 
-**Development:** `npm run dev` (pseudotranslator استعمال کرتا ہے، کوئی API calls نہیں)
+**Development:** `npm run dev` (pseudotranslator استعمال کرتا ہے، کوئی API کالز نہیں)
 
 **Production:** `usePseudotranslator: false` سیٹ کریں، پھر `next build`
 
-`.lingo/` directory کو version control میں commit کریں۔
+`.lingo/` ڈائریکٹری کو ورژن کنٹرول میں commit کریں۔
 
 **اہم خصوصیات:**
 
-- صفر runtime performance cost
-- کوئی translation keys یا JSON فائلیں نہیں
-- کوئی `t()` functions یا `<T>` wrapper components نہیں
+- صفر runtime کارکردگی لاگت
+- کوئی ترجمہ keys یا JSON فائلیں نہیں
+- کوئی `t()` فنکشنز یا `<T>` wrapper کمپوننٹس نہیں
 - JSX میں قابل ترجمہ متن کی خودکار شناخت
 - TypeScript سپورٹ
 - plurals کے لیے ICU MessageFormat
 - `data-lingo-override` attribute کے ذریعے دستی overrides
-- Built-in translation editor widget
+- بلٹ ان ترجمہ ایڈیٹر وجیٹ
 
 **Build modes:**
 
-- `pseudotranslator`: placeholder translations کے ساتھ development mode (کوئی API costs نہیں)
-- `real`: LLMs استعمال کرتے ہوئے حقیقی تراجم تیار کریں
-- `cache-only`: CI سے پہلے سے تیار شدہ تراجم استعمال کرتے ہوئے production mode (کوئی API calls نہیں)
+- `pseudotranslator`: placeholder ترجمہ جات کے ساتھ development mode (کوئی API لاگت نہیں)
+- `real`: LLMs کے ذریعے اصل ترجمے تیار کریں
+- `cache-only`: CI سے پہلے سے تیار شدہ ترجمہ جات کے ساتھ production mode (کوئی API کالز نہیں)
 
 **معاون frameworks:**
 
@@ -465,14 +469,14 @@ export function LanguageSwitcher() {
 
 تعاون کی خوش آمدید۔ براہ کرم ان رہنما خطوط پر عمل کریں:
 
-1. **مسائل:** [bugs کی اطلاع دیں یا features کی درخواست کریں](https://github.com/lingodotdev/lingo.dev/issues)
+1. **مسائل:** [بگز کی رپورٹ دیں یا فیچرز کی درخواست کریں](https://github.com/lingodotdev/lingo.dev/issues)
 2. **Pull Requests:** [تبدیلیاں جمع کروائیں](https://github.com/lingodotdev/lingo.dev/pulls)
-   - ہر PR کے لیے changeset ضروری ہے: `pnpm new` (یا `pnpm new:empty` non-release تبدیلیوں کے لیے)
-   - جمع کروانے سے پہلے یقینی بنائیں کہ tests پاس ہو جائیں
+   - ہر PR کے لیے changeset ضروری ہے: `pnpm new` (یا غیر ریلیز تبدیلیوں کے لیے `pnpm new:empty`)
+   - سبمٹ کرنے سے پہلے یقینی بنائیں کہ تمام ٹیسٹ پاس ہو جائیں
 3. **Development:** یہ pnpm + turborepo monorepo ہے
    - dependencies انسٹال کریں: `pnpm install`
-   - tests چلائیں: `pnpm test`
-   - Build کریں: `pnpm build`
+   - ٹیسٹ چلائیں: `pnpm test`
+   - بلڈ کریں: `pnpm build`
 
 **سپورٹ:** [Discord community](https://lingo.dev/go/discord)
 
@@ -497,9 +501,9 @@ export function LanguageSwitcher() {
 1. [`i18n.json`](./i18n.json) میں [BCP-47 format](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) استعمال کرتے ہوئے locale code شامل کریں
 2. pull request جمع کروائیں
 
-**BCP-47 locale format:** `language[-Script][-REGION]`
+**BCP-47 locale فارمیٹ:** `language[-Script][-REGION]`
 
-- `language`: ISO 639-1/2/3 (lowercase): `en`, `zh`, `bho`
-- `Script`: ISO 15924 (title case): `Hans`, `Hant`, `Latn`
-- `REGION`: ISO 3166-1 alpha-2 (uppercase): `US`, `CN`, `IN`
+- `language`: ISO 639-1/2/3 (چھوٹے حروف): `en`, `zh`, `bho`
+- `Script`: ISO 15924 (کیپیٹل کے ساتھ پہلا حرف): `Hans`, `Hant`, `Latn`
+- `REGION`: ISO 3166-1 alpha-2 (بڑے حروف): `US`, `CN`, `IN`
 - مثالیں: `en`, `pt-BR`, `zh-Hans`, `sr-Cyrl-RS`

@@ -1,5 +1,74 @@
 # lingo.dev
 
+## 0.133.5
+
+### Patch Changes
+
+- [#2049](https://github.com/lingodotdev/lingo.dev/pull/2049) [`2aa4145`](https://github.com/lingodotdev/lingo.dev/commit/2aa414565c802db71367ce00b1d062dc0488ef2f) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Fixed a bug where the CI pull request flow would ignore the existing translation branch and start from scratch, which could produce duplicate PRs when the original was merged during a concurrent run.
+
+## 0.133.4
+
+### Patch Changes
+
+- [#2051](https://github.com/lingodotdev/lingo.dev/pull/2051) [`9991515`](https://github.com/lingodotdev/lingo.dev/commit/9991515adad3773d40791b18f2e6105235145609) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - SDK: Improved API error messages by parsing server JSON responses instead of using HTTP status text. Removed try/catch from whoami so network errors propagate instead of being silently treated as "not authenticated". Deduplicated error handling into shared helpers. Removed unused workflowId parameter.
+
+  CLI: Auth failures now show specific error messages (e.g., "Invalid API key" vs generic "Authentication failed").
+
+- Updated dependencies [[`9991515`](https://github.com/lingodotdev/lingo.dev/commit/9991515adad3773d40791b18f2e6105235145609)]:
+  - @lingo.dev/_sdk@0.16.1
+  - @lingo.dev/_compiler@0.12.1
+
+## 0.133.3
+
+### Patch Changes
+
+- [#2042](https://github.com/lingodotdev/lingo.dev/pull/2042) [`a759e16`](https://github.com/lingodotdev/lingo.dev/commit/a759e1653ac3adfd93af16302c0bc79138f3aaa3) Thanks [@gmpaliwal07](https://github.com/gmpaliwal07)! - fix(cli): preserve terminal scrollback buffer during run command
+
+## 0.133.2
+
+### Patch Changes
+
+- [#2043](https://github.com/lingodotdev/lingo.dev/pull/2043) [`06f4823`](https://github.com/lingodotdev/lingo.dev/commit/06f4823463496ea04e70bfa8aa7c6e076ad739b2) Thanks [@vrcprl](https://github.com/vrcprl)! - fix posthog
+
+## 0.133.1
+
+### Patch Changes
+
+- [#2036](https://github.com/lingodotdev/lingo.dev/pull/2036) [`a73abec`](https://github.com/lingodotdev/lingo.dev/commit/a73abec7040fcc9146907861360c63bbb3223547) Thanks [@tjazsilovsek](https://github.com/tjazsilovsek)! - Bump @biomejs/js-api and @biomejs/wasm-nodejs to latest versions
+
+## 0.133.0
+
+### Minor Changes
+
+- [#2035](https://github.com/lingodotdev/lingo.dev/pull/2035) [`73a8c73`](https://github.com/lingodotdev/lingo.dev/commit/73a8c731f5af03db9c165000e87ee5e5a1086a48) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Migrate SDK and CLI to unified API endpoints. All requests now use `api.lingo.dev` with `X-API-Key` auth. Added `engineId` config option (auto-migrated from `vNext`)
+
+### Patch Changes
+
+- Updated dependencies [[`73a8c73`](https://github.com/lingodotdev/lingo.dev/commit/73a8c731f5af03db9c165000e87ee5e5a1086a48)]:
+  - @lingo.dev/_compiler@0.12.0
+  - @lingo.dev/_spec@0.49.0
+  - @lingo.dev/_sdk@0.16.0
+
+## 0.132.10
+
+### Patch Changes
+
+- Updated dependencies [[`1cfcf73`](https://github.com/lingodotdev/lingo.dev/commit/1cfcf736b0c6494bf66aa2478b2e7c194bdd5b92)]:
+  - @lingo.dev/_sdk@0.15.3
+  - @lingo.dev/_compiler@0.11.7
+
+## 0.132.9
+
+### Patch Changes
+
+- [#2027](https://github.com/lingodotdev/lingo.dev/pull/2027) [`bb3ec79`](https://github.com/lingodotdev/lingo.dev/commit/bb3ec797ad0379d99f84f20731f37ab03f759b00) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Add vNext API support to LingoDotDevEngine. When engineId is provided, the engine routes requests to the vNext API. Refactor vNext localizer to use LingoDotDevEngine from SDK instead of custom inline implementation
+
+- [#2026](https://github.com/lingodotdev/lingo.dev/pull/2026) [`a6aa9f2`](https://github.com/lingodotdev/lingo.dev/commit/a6aa9f2df134de2de706246847dcbeef83b13eec) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Exit with non-zero code when localization tasks fail, so CI/CD pipelines correctly detect partial errors
+
+- Updated dependencies [[`bb3ec79`](https://github.com/lingodotdev/lingo.dev/commit/bb3ec797ad0379d99f84f20731f37ab03f759b00)]:
+  - @lingo.dev/_sdk@0.15.2
+  - @lingo.dev/_compiler@0.11.6
+
 ## 0.132.8
 
 ### Patch Changes

@@ -14,7 +14,7 @@ import { createOllama } from "ollama-ai-provider-v2";
 
 export default function createProcessor(
   provider: I18nConfig["provider"],
-  params: { apiKey?: string; apiUrl: string },
+  params: { apiKey?: string; apiUrl: string; engineId?: string },
 ): LocalizerFn {
   if (!provider) {
     const result = createLingoLocalizer(params);

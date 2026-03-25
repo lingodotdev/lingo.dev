@@ -256,7 +256,7 @@ env:
 | `pull-request`       | `false`                                        | יצירת PR במקום commit ישיר |
 | `commit-message`     | `"feat: update translations via @LingoDotDev"` | הודעת commit מותאמת אישית  |
 | `pull-request-title` | `"feat: update translations via @LingoDotDev"` | כותרת PR מותאמת אישית      |
-| `working-directory`  | `"."`                                          | תיקייה להרצה               |
+| `working-directory`  | `"."`                                          | תיקיה להרצה                |
 | `parallel`           | `false`                                        | הפעלת עיבוד מקבילי         |
 
 [קרא את התיעוד ←](https://lingo.dev/en/ci/github)
@@ -333,7 +333,7 @@ const locale = await lingoDotDev.recognizeLocale("Bonjour le monde");
 
 ### Lingo.dev Compiler
 
-i18n מסורתי הוא פולשני. אתה עוטף כל מחרוזת בפונקציות `t()`, ממציא מפתחות תרגום (`home.hero.title.v2`), מתחזק קבצי JSON מקבילים, וצופה בקומפוננטות שלך מתנפחות עם boilerplate של לוקליזציה. זה כל כך מייגע שצוותים מדחים בינאום עד שזה הופך ל-refactor מסיבי.
+i18n מסורתי הוא פולשני. עוטפים כל מחרוזת בפונקציות `t()`, ממציאים מפתחות תרגום (`home.hero.title.v2`), מתחזקים קבצי JSON מקבילים, וצופים בקומפוננטות מתנפחות עם קוד תשתית לוקליזציה. זה כל כך מתיש שצוותים דוחים בינאום עד שזה הופך ל-refactor מסיבי.
 
 Lingo.dev Compiler מבטל את הטקסיות. כתוב קומפוננטות React עם טקסט באנגלית פשוטה. הקומפיילר מזהה מחרוזות הניתנות לתרגום בזמן build ומייצר גרסאות מתורגמות באופן אוטומטי. ללא מפתחות, ללא קבצי JSON, ללא פונקציות עטיפה - רק קוד React שפשוט עובד במספר שפות.
 
@@ -431,26 +431,26 @@ export function LanguageSwitcher() {
 
 **פיתוח:** `npm run dev` (משתמש ב-pseudotranslator, ללא קריאות API)
 
-**ייצור:** הגדר `usePseudotranslator: false`, ואז `next build`
+**פרודקשן:** יש להגדיר `usePseudotranslator: false`, ואז `next build`
 
-בצע commit לתיקיית `.lingo/` לבקרת גרסאות.
+בצעו commit לתיקיית `.lingo/` אל בקרת הגרסאות.
 
 **תכונות עיקריות:**
 
-- ללא עלות ביצועים בזמן ריצה
-- ללא מפתחות תרגום או קבצי JSON
-- ללא פונקציות `t()` או קומפוננטות עטיפה `<T>`
-- זיהוי אוטומטי של טקסט הניתן לתרגום ב-JSX
+- אין השפעה על ביצועים בזמן ריצה
+- אין מפתחות תרגום או קבצי JSON
+- אין פונקציות `t()` או קומפוננטות עטיפה `<T>`
+- זיהוי אוטומטי של טקסטים שניתנים לתרגום ב-JSX
 - תמיכה ב-TypeScript
 - ICU MessageFormat לריבוי
-- עקיפות ידניות באמצעות תכונת `data-lingo-override`
-- widget מובנה לעורך תרגומים
+- עקיפה ידנית דרך המאפיין `data-lingo-override`
+- עורך תרגומים מובנה
 
 **מצבי build:**
 
-- `pseudotranslator`: מצב פיתוח עם תרגומי placeholder (ללא עלויות API)
+- `pseudotranslator`: מצב פיתוח עם תרגומי placeholder (ללא עלות API)
 - `real`: יצירת תרגומים אמיתיים באמצעות LLMs
-- `cache-only`: מצב ייצור המשתמש בתרגומים שנוצרו מראש מ-CI (ללא קריאות API)
+- `cache-only`: מצב פרודקשן עם תרגומים שהוזנו מראש מ-CI (ללא קריאות API)
 
 **פריימוורקים נתמכים:**
 
@@ -467,11 +467,11 @@ export function LanguageSwitcher() {
 
 תרומות מתקבלות בברכה. אנא עקבו אחר ההנחיות הבאות:
 
-1. **בעיות:** [דיווח על באגים או בקשת תכונות](https://github.com/lingodotdev/lingo.dev/issues)
-2. **Pull Requests:** [שליחת שינויים](https://github.com/lingodotdev/lingo.dev/pulls)
-   - כל PR דורש changeset: `pnpm new` (או `pnpm new:empty` עבור שינויים שאינם לשחרור)
-   - יש לוודא שהבדיקות עוברות לפני השליחה
-3. **פיתוח:** זהו monorepo של pnpm + turborepo
+1. **בעיות:** [דיווח על תקלות או בקשת פיצ'רים](https://github.com/lingodotdev/lingo.dev/issues)
+2. **Pull Requests:** [הגשת שינויים](https://github.com/lingodotdev/lingo.dev/pulls)
+   - כל PR דורש changeset: `pnpm new` (או `pnpm new:empty` עבור שינויים שאינם ב-release)
+   - יש לוודא שכל הבדיקות עוברות לפני שליחה
+3. **פיתוח:** זהו מונו-רפו של pnpm + turborepo
    - התקנת תלויות: `pnpm install`
    - הרצת בדיקות: `pnpm test`
    - בנייה: `pnpm build`
@@ -496,7 +496,7 @@ export function LanguageSwitcher() {
 
 **הוספת שפה חדשה:**
 
-1. הוסיפו קוד locale ל-[`i18n.json`](./i18n.json) באמצעות [פורמט BCP-47](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale)
+1. הוסיפו קוד locale ל-[`i18n.json`](./i18n.json) לפי [פורמט BCP-47](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale)
 2. שלחו pull request
 
 **פורמט locale BCP-47:** `language[-Script][-REGION]`

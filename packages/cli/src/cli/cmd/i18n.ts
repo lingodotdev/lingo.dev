@@ -439,6 +439,7 @@ export default new Command()
                 let processPayload = createProcessor(i18nConfig!.provider, {
                   apiKey: settings.auth.apiKey,
                   apiUrl: settings.auth.apiUrl,
+                  engineId: i18nConfig!.engineId,
                 });
                 processPayload = withExponentialBackoff(
                   processPayload,
@@ -600,6 +601,7 @@ export default new Command()
         await new Promise((resolve) => setTimeout(resolve, 50));
       } else {
         ora.warn("Localization completed with errors.");
+        process.exitCode = 1;
         await trackEvent(email, "cmd.i18n.error", {
           flags,
           ...aggregateErrorAnalytics(

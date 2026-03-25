@@ -6,9 +6,10 @@ import { TRACKING_EVENTS } from "./utils/tracking-events";
 
 const engineParamsSchema = Z.object({
   apiKey: Z.string(),
-  apiUrl: Z.string().url().default("https://engine.lingo.dev"),
+  apiUrl: Z.string().url().default("https://api.lingo.dev"),
   batchSize: Z.number().int().gt(0).lte(250).default(25),
   idealBatchItemSize: Z.number().int().gt(0).lte(2500).default(250),
+  engineId: Z.string().optional(),
 }).passthrough();
 
 const payloadSchema = Z.record(Z.string(), Z.any());
@@ -21,6 +22,8 @@ const localizationParamsSchema = Z.object({
   fast: Z.boolean().optional(),
   reference: referenceSchema.optional(),
   hints: hintsSchema.optional(),
+  filePath: Z.string().optional(),
+  triggerType: Z.enum(["cli", "ci"]).optional(),
 });
 
 /**
@@ -30,6 +33,48 @@ const localizationParamsSchema = Z.object({
  */
 export class LingoDotDevEngine {
   protected config: Z.infer<typeof engineParamsSchema>;
+
+  private readonly sessionId = createId();
+
+  private get headers(): Record<string, string> {
+    return {
+      "Content-Type": "application/json; charset=utf-8",
+      "X-API-Key": this.config.apiKey,
+    };
+  }
+
+  private static async extractErrorMessage(res: Response): Promise<string> {
+    try {
+      const text = await res.text();
+      const parsed = JSON.parse(text);
+      if (parsed && typeof parsed.message === "string") {
+        return parsed.message;
+      }
+      if (parsed?._tag === "NotFoundError") {
+        return `${parsed.entityType} not found: ${parsed.id}`;
+      }
+      return text;
+    } catch {
+      return `Unexpected error (${res.status})`;
+    }
+  }
+
+  private static async throwOnHttpError(
+    res: Response,
+    context?: string,
+  ): Promise<void> {
+    if (res.ok) return;
+    const msg = await LingoDotDevEngine.extractErrorMessage(res);
+    if (res.status >= 500 && res.status < 600) {
+      throw new Error(
+        `Server error (${res.status}): ${msg}. This may be due to temporary service issues.`,
+      );
+    }
+    if (res.status === 400) {
+      throw new Error(`Invalid request: ${msg}`);
+    }
+    throw new Error(context ? `${context}: ${msg}` : msg);
+  }
 
   /**
    * Create a new LingoDotDevEngine instance
@@ -64,7 +109,6 @@ export class LingoDotDevEngine {
     const chunkedPayload = this.extractPayloadChunks(finalPayload);
     const processedPayloadChunks: Record<string, string>[] = [];
 
-    const workflowId = createId();
     for (let i = 0; i < chunkedPayload.length; i++) {
       const chunk = chunkedPayload[i];
       const percentageCompleted = Math.round(
@@ -75,8 +119,9 @@ export class LingoDotDevEngine {
         finalParams.sourceLocale,
         finalParams.targetLocale,
         { data: chunk, reference: params.reference, hints: params.hints },
-        workflowId,
         params.fast || false,
+        params.filePath,
+        params.triggerType,
         signal,
       );
 
@@ -95,8 +140,9 @@ export class LingoDotDevEngine {
    * @param sourceLocale - Source locale
    * @param targetLocale - Target locale
    * @param payload - Payload containing the chunk to be localized
-   * @param workflowId - Workflow ID for tracking
    * @param fast - Whether to use fast mode
+   * @param filePath - Optional file path for metadata
+   * @param triggerType - Optional trigger type
    * @param signal - Optional AbortSignal to cancel the operation
    * @returns Localized chunk
    */
@@ -108,46 +154,34 @@ export class LingoDotDevEngine {
       reference?: Z.infer<typeof referenceSchema>;
       hints?: Z.infer<typeof hintsSchema>;
     },
-    workflowId: string,
     fast: boolean,
+    filePath?: string,
+    triggerType?: "cli" | "ci",
     signal?: AbortSignal,
   ): Promise<Record<string, string>> {
-    const res = await fetch(`${this.config.apiUrl}/i18n`, {
+    const url = `${this.config.apiUrl}/process/localize`;
+
+    const body = {
+      params: { fast },
+      sourceLocale,
+      targetLocale,
+      data: payload.data,
+      reference: payload.reference,
+      hints: payload.hints,
+      sessionId: this.sessionId,
+      triggerType,
+      metadata: filePath ? { filePath } : undefined,
+      ...(this.config.engineId && { engineId: this.config.engineId }),
+    };
+
+    const res = await fetch(url, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-        Authorization: `Bearer ${this.config.apiKey}`,
-      },
-      body: JSON.stringify(
-        {
-          params: { workflowId, fast },
-          locale: {
-            source: sourceLocale,
-            target: targetLocale,
-          },
-          data: payload.data,
-          reference: payload.reference,
-          hints: payload.hints,
-        },
-        null,
-        2,
-      ),
+      headers: this.headers,
+      body: JSON.stringify(body, null, 2),
       signal,
     });
 
-    if (!res.ok) {
-      if (res.status >= 500 && res.status < 600) {
-        const errorText = await res.text();
-        throw new Error(
-          `Server error (${res.status}): ${res.statusText}. ${errorText}. This may be due to temporary service issues.`,
-        );
-      } else if (res.status === 400) {
-        throw new Error(`Invalid request: ${res.statusText}`);
-      } else {
-        const errorText = await res.text();
-        throw new Error(errorText);
-      }
-    }
+    await LingoDotDevEngine.throwOnHttpError(res);
 
     const jsonResponse = await res.json();
 
@@ -455,8 +489,16 @@ export class LingoDotDevEngine {
       trackProps,
     );
     try {
+      const mapped = chat.reduce(
+        (acc, msg, i) => {
+          acc[`chat_${i}`] = msg.text;
+          return acc;
+        },
+        {} as Record<string, string>,
+      );
+
       const localized = await this._localizeRaw(
-        { chat },
+        mapped,
         params,
         progressCallback,
         signal,
@@ -689,24 +731,19 @@ export class LingoDotDevEngine {
       trackProps,
     );
     try {
-      const response = await fetch(`${this.config.apiUrl}/recognize`, {
+      const url = `${this.config.apiUrl}/process/recognize`;
+
+      const response = await fetch(url, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${this.config.apiKey}`,
-        },
+        headers: this.headers,
         body: JSON.stringify({ text }),
         signal,
       });
 
-      if (!response.ok) {
-        if (response.status >= 500 && response.status < 600) {
-          throw new Error(
-            `Server error (${response.status}): ${response.statusText}. This may be due to temporary service issues.`,
-          );
-        }
-        throw new Error(`Error recognizing locale: ${response.statusText}`);
-      }
+      await LingoDotDevEngine.throwOnHttpError(
+        response,
+        "Error recognizing locale",
+      );
 
       const jsonResponse = await response.json();
       trackEvent(
@@ -733,41 +770,34 @@ export class LingoDotDevEngine {
   async whoami(
     signal?: AbortSignal,
   ): Promise<{ email: string; id: string } | null> {
-    try {
-      const res = await fetch(`${this.config.apiUrl}/whoami`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${this.config.apiKey}`,
-          "Content-Type": "application/json",
-        },
-        signal,
-      });
+    const url = `${this.config.apiUrl}/users/me`;
 
-      if (res.ok) {
-        const payload = await res.json();
-        if (!payload?.email) {
-          return null;
-        }
+    const res = await fetch(url, {
+      method: "GET",
+      headers: this.headers,
+      signal,
+    });
 
-        return {
-          email: payload.email,
-          id: payload.id,
-        };
+    if (res.ok) {
+      const payload = await res.json();
+      if (!payload?.email) {
+        return null;
       }
 
-      if (res.status >= 500 && res.status < 600) {
-        throw new Error(
-          `Server error (${res.status}): ${res.statusText}. This may be due to temporary service issues.`,
-        );
-      }
-
-      return null;
-    } catch (error) {
-      if (error instanceof Error && error.message.includes("Server error")) {
-        throw error;
-      }
-      return null;
+      return {
+        email: payload.email,
+        id: payload.id,
+      };
     }
+
+    if (res.status >= 500 && res.status < 600) {
+      const msg = await LingoDotDevEngine.extractErrorMessage(res);
+      throw new Error(
+        `Server error (${res.status}): ${msg}. This may be due to temporary service issues.`,
+      );
+    }
+
+    return null;
   }
 }
 
