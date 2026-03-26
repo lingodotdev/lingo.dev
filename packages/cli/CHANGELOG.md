@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.133.6
+
+### Patch Changes
+
+- [#2057](https://github.com/lingodotdev/lingo.dev/pull/2057) [`abe3d2f`](https://github.com/lingodotdev/lingo.dev/commit/abe3d2fb8b0f3356dc63f8f9d4b861de66be0da6) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Fix VTT parser crash on files with STYLE/REGION blocks
+
 ## 0.133.5
 
 ### Patch Changes
