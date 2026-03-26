@@ -43,18 +43,24 @@ export default function createVttLoader(): ILoader<
       }
     },
     async push(locale, payload, originalInput) {
-      const output = Object.entries(payload).map(([key, text]) => {
-        const [id, timeRange, identifier] = key.split("#");
-        const [startTime, endTime] = timeRange.split("-");
+      const output = Object.entries(payload).reduce(
+        (cues: any[], [key, text]) => {
+          if (!text) return cues;
 
-        return {
-          end: Number(endTime),
-          identifier: identifier,
-          start: Number(startTime),
-          styles: "",
-          text: text,
-        };
-      });
+          const [, timeRange, identifier] = key.split("#");
+          const [startTime, endTime] = timeRange.split("-");
+
+          cues.push({
+            end: Number(endTime),
+            identifier,
+            start: Number(startTime),
+            styles: "",
+            text,
+          });
+          return cues;
+        },
+        [],
+      );
 
       const input = {
         valid: true,
