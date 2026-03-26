@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.133.7
+
+### Patch Changes
+
+- [#2059](https://github.com/lingodotdev/lingo.dev/pull/2059) [`4344399`](https://github.com/lingodotdev/lingo.dev/commit/43443996d4e6b6e4d4979bbe2aa7d5039b672d41) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Skip undefined cues during VTT incremental batch push
+
 ## 0.133.6
 
 ### Patch Changes
