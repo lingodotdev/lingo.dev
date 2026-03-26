@@ -2737,6 +2737,36 @@ Hello world!
 
       expect(data).toEqual({ "0#0-1#": "Hello world!" });
     });
+
+    it("should preserve REGION blocks in push output", async () => {
+      setupFileMocks();
+
+      const input = `
+WEBVTT
+
+REGION
+id:sidebar
+width:30%
+lines:3
+
+00:00:00.000 --> 00:00:01.000
+Hello world!
+      `.trim();
+
+      mockFileOperations(input);
+
+      const vttLoader = createBucketLoader("vtt", "i18n/[locale].vtt", {
+        defaultLocale: "en",
+      });
+      vttLoader.setDefaultLocale("en");
+      await vttLoader.pull("en");
+      await vttLoader.push("es", { "0#0-1#": "¡Hola mundo!" });
+
+      const written = (fs.writeFile as any).mock.calls[0][1] as string;
+      expect(written).toContain("REGION");
+      expect(written).toContain("id:sidebar");
+      expect(written).toContain("¡Hola mundo!");
+    });
   });
 
   describe("XML bucket loader", () => {
