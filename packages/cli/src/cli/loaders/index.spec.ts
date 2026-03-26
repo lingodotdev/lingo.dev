@@ -2645,6 +2645,128 @@ Another cue
       expect(Object.values(data)).toContain("Another cue");
       expect(Object.values(data)).not.toContain("Hello world!");
     });
+
+    it("should handle vtt files with STYLE blocks", async () => {
+      setupFileMocks();
+
+      const input = `
+WEBVTT
+
+STYLE
+::cue(.heading) {
+  font-size: 150%;
+  font-weight: bold;
+}
+
+00:00:00.000 --> 00:00:01.000
+Hello world!
+
+00:00:30.000 --> 00:00:31.000
+Another cue
+      `.trim();
+
+      const expectedOutput = {
+        "0#0-1#": "Hello world!",
+        "1#30-31#": "Another cue",
+      };
+
+      mockFileOperations(input);
+
+      const vttLoader = createBucketLoader("vtt", "i18n/[locale].vtt", {
+        defaultLocale: "en",
+      });
+      vttLoader.setDefaultLocale("en");
+      const data = await vttLoader.pull("en");
+
+      expect(data).toEqual(expectedOutput);
+    });
+
+    it("should preserve STYLE blocks in push output", async () => {
+      setupFileMocks();
+
+      const input = `
+WEBVTT
+
+STYLE
+::cue(.heading) {
+  font-size: 150%;
+  font-weight: bold;
+}
+
+00:00:00.000 --> 00:00:01.000
+Hello world!
+      `.trim();
+
+      mockFileOperations(input);
+
+      const vttLoader = createBucketLoader("vtt", "i18n/[locale].vtt", {
+        defaultLocale: "en",
+      });
+      vttLoader.setDefaultLocale("en");
+      await vttLoader.pull("en");
+      await vttLoader.push("es", { "0#0-1#": "¡Hola mundo!" });
+
+      const written = (fs.writeFile as any).mock.calls[0][1] as string;
+      expect(written).toContain("STYLE");
+      expect(written).toContain("::cue(.heading)");
+      expect(written).toContain("¡Hola mundo!");
+    });
+
+    it("should handle vtt files with REGION blocks", async () => {
+      setupFileMocks();
+
+      const input = `
+WEBVTT
+
+REGION
+id:sidebar
+width:30%
+lines:3
+
+00:00:00.000 --> 00:00:01.000
+Hello world!
+      `.trim();
+
+      mockFileOperations(input);
+
+      const vttLoader = createBucketLoader("vtt", "i18n/[locale].vtt", {
+        defaultLocale: "en",
+      });
+      vttLoader.setDefaultLocale("en");
+      const data = await vttLoader.pull("en");
+
+      expect(data).toEqual({ "0#0-1#": "Hello world!" });
+    });
+
+    it("should preserve REGION blocks in push output", async () => {
+      setupFileMocks();
+
+      const input = `
+WEBVTT
+
+REGION
+id:sidebar
+width:30%
+lines:3
+
+00:00:00.000 --> 00:00:01.000
+Hello world!
+      `.trim();
+
+      mockFileOperations(input);
+
+      const vttLoader = createBucketLoader("vtt", "i18n/[locale].vtt", {
+        defaultLocale: "en",
+      });
+      vttLoader.setDefaultLocale("en");
+      await vttLoader.pull("en");
+      await vttLoader.push("es", { "0#0-1#": "¡Hola mundo!" });
+
+      const written = (fs.writeFile as any).mock.calls[0][1] as string;
+      expect(written).toContain("REGION");
+      expect(written).toContain("id:sidebar");
+      expect(written).toContain("¡Hola mundo!");
+    });
   });
 
   describe("XML bucket loader", () => {
