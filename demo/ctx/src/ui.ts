@@ -39,10 +39,12 @@ export function phase(label: string, sub?: string) {
 // ─── Tool call — compact, no full paths ──────────────────────────────────────
 export function toolCall(name: string, input: Record<string, string>) {
   const arg = input.file_path ?? input.directory ?? Object.values(input)[0] ?? "";
-  // show only the last 2 path segments to keep it readable
-  const short = arg.split("/").slice(-2).join("/");
+  const isPath = arg.startsWith("/") || arg.startsWith("./") || arg.startsWith("../") || /^[a-zA-Z]:[/\\]/.test(arg) || (arg.includes("/") && !/\s/.test(arg));
+  const display = isPath
+    ? arg.split("/").slice(-2).join("/")
+    : arg.length > 60 ? `${arg.slice(0, 57)}…` : arg;
   const color = name === "write_file" ? `${GR}` : `${D}`;
-  console.log(`     ${color}↳  ${name.padEnd(12)}${short}${R}`);
+  console.log(`     ${color}↳  ${name.padEnd(12)}${display}${R}`);
 }
 
 // ─── File item (dry-run / update list) ───────────────────────────────────────
