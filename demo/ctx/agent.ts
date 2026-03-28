@@ -89,7 +89,7 @@ async function run() {
   }
 
   const agent = (system: string, message: string, tools: Anthropic.Tool[], review = false) =>
-    runAgent(client, model, system, message, tools, listFiles, review);
+    runAgent(client, model, system, message, tools, listFiles, targetDir, review);
 
   const printDone = () => fs.existsSync(outPath) ? ok(`Done → ${outPath}`) : warn(`Output file was not created`);
   const modeLabel = isCommitMode ? `last ${commitCount} commit(s)` : "uncommitted";
@@ -154,7 +154,7 @@ You MUST call write_file to write lingo-context.md. Do NOT output the file conte
     dbg(`gitChanged:`, gitChanged);
     const allBucket = resolveBucketFiles();
     dbg(`resolveBucketFiles:`, allBucket);
-    const candidates = [...new Set([...gitChanged.filter(matchesBucket), ...allBucket])];
+    const candidates = [...new Set([...gitChanged.filter(f => matchesBucket(f) || path.basename(f) === 'i18n.json'), ...allBucket])];
     dbg(`candidates:`, candidates);
     earlyChangedFiles = filterNewFiles(candidates, state);
     dbg(`earlyChangedFiles:`, earlyChangedFiles.map(([f]) => f));
@@ -166,9 +166,11 @@ You MUST call write_file to write lingo-context.md. Do NOT output the file conte
 
       const override = values.prompt ?? await textPrompt("What should the full regeneration cover?", "blank for default");
       const regen = override || "Generate a comprehensive lingo-context.md for this project.";
-      clearState(outPath);
+      const prevMtime = fs.existsSync(outPath) ? fs.statSync(outPath).mtimeMs : null;
       await agent(freshSystem, freshMessage(regen), allTools, true);
-      if (!fs.existsSync(outPath)) { warn(SKIPPED_MSG); return; }
+      const newMtime = fs.existsSync(outPath) ? fs.statSync(outPath).mtimeMs : null;
+      if (newMtime === null || newMtime === prevMtime) { warn(SKIPPED_MSG); return; }
+      clearState(outPath);
       phase("JSONC Injection");
       const jsoncEntries1 = await runJsoncInjection(client, model, jsoncSourceFiles, outPath, true);
       phase("Provider Sync");
