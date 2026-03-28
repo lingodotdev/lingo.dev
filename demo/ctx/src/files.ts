@@ -44,7 +44,10 @@ export function getChangedFiles(cwd: string, commits: number | null): string[] {
     output = git(`git diff HEAD~${commits} --name-only`, cwd);
   } else {
     output = git("git status --porcelain", cwd)
-      .split("\n").filter(Boolean).map((l) => l.slice(3).trim()).join("\n");
+      .split("\n").filter(Boolean).map((l) => {
+        const entry = l.slice(3).trim();
+        return entry.includes(" -> ") ? entry.split(" -> ")[1].trim() : entry;
+      }).join("\n");
   }
   const paths = output.split("\n").map((f) => f.trim()).filter(Boolean)
     .map((f) => path.join(cwd, f));
