@@ -24,7 +24,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/built%20with-Bun-f9f1e1?logo=bun&style=flat-square" alt="Built with Bun" />
+  <img src="https://img.shields.io/badge/built%20with-tsx%2FNode.js-339933?logo=nodedotjs&style=flat-square" alt="Built with tsx/Node.js" />
   <img src="https://img.shields.io/badge/powered%20by-Claude-blueviolet?logo=anthropic&style=flat-square" alt="Powered by Claude" />
   <img src="https://img.shields.io/badge/works%20with-lingo.dev-orange?style=flat-square" alt="Works with lingo.dev" />
 </p>
@@ -238,7 +238,7 @@ ctx run
 
 ## Install
 
-**Requirements:** [Bun](https://bun.sh) and an Anthropic API key.
+**Requirements:** [Node.js](https://nodejs.org) (with `tsx`) and an Anthropic API key.
 
 ```bash
 git clone https://github.com/bhavya031/ctx
@@ -353,7 +353,7 @@ Choose **Request changes**, describe what's wrong, and the agent revises with fu
 
 ## Requirements
 
-- [Bun](https://bun.sh) v1.0+
+- [Node.js](https://nodejs.org) v18+ with [tsx](https://github.com/privatenumber/tsx)
 - `ANTHROPIC_API_KEY`
 - A lingo.dev project with `i18n.json`
 
