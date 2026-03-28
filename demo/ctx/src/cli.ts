@@ -63,6 +63,11 @@ export async function selectMenu(question: string, options: string[], defaultInd
   render();
 
   return new Promise((resolve) => {
+    if (!process.stdin.isTTY) {
+      resolve(defaultIndex);
+      return;
+    }
+
     process.stdin.setRawMode(true);
     process.stdin.resume();
     process.stdin.setEncoding("utf-8");
