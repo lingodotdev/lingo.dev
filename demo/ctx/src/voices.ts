@@ -65,8 +65,26 @@ export async function runVoices(
   }
 
   const context = readFile(contextPath);
-  const i18nRaw = fs.readFileSync(i18nPath, "utf-8");
-  const i18n = JSON.parse(i18nRaw);
+  if (context.startsWith("[Error:")) {
+    fail(`Cannot read context file: ${contextPath}`);
+    return;
+  }
+
+  let i18nRaw: string;
+  try {
+    i18nRaw = fs.readFileSync(i18nPath, "utf-8");
+  } catch (e) {
+    fail(`Cannot read i18n file: ${i18nPath}\n${e}`);
+    return;
+  }
+
+  let i18n: Record<string, unknown>;
+  try {
+    i18n = JSON.parse(i18nRaw);
+  } catch (e) {
+    fail(`Malformed JSON in ${i18nPath}: ${e}`);
+    return;
+  }
   const voices: Record<string, string> = { ...(i18n.provider?.voices ?? {}) };
 
   phase("Brand Voices", targetLocales.join("  "));
