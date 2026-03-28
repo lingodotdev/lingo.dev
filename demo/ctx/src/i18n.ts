@@ -58,20 +58,20 @@ export async function updateI18nProvider(i18nPath: string, contextPath: string):
   const i18nRaw = fs.readFileSync(i18nPath, "utf-8");
   const i18n = JSON.parse(i18nRaw);
 
-  const newProvider = {
-    id: "anthropic",
-    model: "claude-haiku-4-5",
-    prompt: `Translate from {source} to {target}.\n\n${context}`,
-    ...(i18n.provider?.voices ? { voices: i18n.provider.voices } : {}),
-  };
-
   if (i18n.provider) {
     info(`provider: ${i18n.provider.id}  ·  ${i18n.provider.model}`);
     const choice = await selectMenu("Overwrite provider with updated context?", ["Update", "Keep existing"], 1);
     if (choice === 1) return;
   }
 
-  i18n.provider = newProvider;
+  const mergedProvider = {
+    ...(i18n.provider ?? {}),
+    id: "anthropic",
+    model: "claude-haiku-4-5",
+    prompt: `Translate from {source} to {target}.\n\n${context}`,
+  };
+
+  i18n.provider = mergedProvider;
   fs.writeFileSync(i18nPath, JSON.stringify(i18n, null, 2), "utf-8");
   info(`updated provider in i18n.json`);
 }
