@@ -1,4 +1,5 @@
 import fs from "fs";
+import os from "os";
 import path from "path";
 import { createHash } from "crypto";
 
@@ -8,7 +9,7 @@ export type FileEntry = [path: string, hash: string];
 let _stateDir: string | undefined;
 function getStateDir(): string {
   if (!_stateDir) {
-    _stateDir = path.join(process.env.HOME!, ".ctx", "state");
+    _stateDir = path.join(os.homedir(), ".ctx", "state");
     fs.mkdirSync(_stateDir, { recursive: true });
   }
   return _stateDir;
