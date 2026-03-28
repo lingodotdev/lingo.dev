@@ -9,9 +9,7 @@
     "agent": "tsx agent.ts"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.78.0"
-  },
-  "devDependencies": {
+    "@anthropic-ai/sdk": "^0.78.0",
     "tsx": "^4.19.3"
   }
 }
