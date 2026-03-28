@@ -1,4 +1,5 @@
 import Anthropic from "@anthropic-ai/sdk";
+import path from "path";
 import { selectMenu, textPrompt } from "./cli.ts";
 import { readFile, listFiles } from "./files.ts";
 import { phase, toolCall, dim } from "./ui.ts";
@@ -93,6 +94,11 @@ export async function runResearchAgent(
       }
     }
 
+    if (response.stop_reason === "pause_turn") {
+      messages.push({ role: "assistant", content: response.content });
+      continue;
+    }
+
     if (response.stop_reason !== "tool_use") break;
 
     const toolUses = response.content.filter((b): b is Anthropic.ToolUseBlock => b.type === "tool_use");
@@ -105,11 +111,25 @@ export async function runResearchAgent(
         toolCall("web_search", { query: input.query });
         toolResults.push({ type: "tool_result", tool_use_id: tool.id, content: "" });
       } else if (tool.name === "list_files") {
-        toolCall("list_files", input);
-        toolResults.push({ type: "tool_result", tool_use_id: tool.id, content: JSON.stringify(listFiles(input.directory)) });
+        const resolvedDir = path.resolve(targetDir, input.directory);
+        const relDir = path.relative(targetDir, resolvedDir);
+        if (relDir.startsWith("..") || path.isAbsolute(relDir)) {
+          toolCall("list_files", { directory: input.directory });
+          toolResults.push({ type: "tool_result", tool_use_id: tool.id, content: "Error: Path outside project root" });
+        } else {
+          toolCall("list_files", { directory: resolvedDir });
+          toolResults.push({ type: "tool_result", tool_use_id: tool.id, content: JSON.stringify(listFiles(resolvedDir)) });
+        }
       } else if (tool.name === "read_file") {
-        toolCall("read_file", input);
-        toolResults.push({ type: "tool_result", tool_use_id: tool.id, content: readFile(input.file_path) });
+        const resolvedFile = path.resolve(targetDir, input.file_path);
+        const relFile = path.relative(targetDir, resolvedFile);
+        if (relFile.startsWith("..") || path.isAbsolute(relFile)) {
+          toolCall("read_file", { file_path: input.file_path });
+          toolResults.push({ type: "tool_result", tool_use_id: tool.id, content: "Error: Path outside project root" });
+        } else {
+          toolCall("read_file", { file_path: resolvedFile });
+          toolResults.push({ type: "tool_result", tool_use_id: tool.id, content: readFile(resolvedFile) });
+        }
       }
     }
 
