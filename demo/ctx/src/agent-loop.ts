@@ -42,12 +42,31 @@ export const allTools: Anthropic.Tool[] = [
 
 export const writeOnlyTools: Anthropic.Tool[] = [allTools[2]];
 
-function executeTool(name: string, input: Record<string, string>, listFilesFn: (dir: string) => string[]): string {
+function resolveSafe(allowedRoot: string, rawPath: string): string | null {
+  const root = path.resolve(allowedRoot);
+  const resolved = path.resolve(root, rawPath);
+  if (resolved !== root && !resolved.startsWith(root + path.sep)) return null;
+  return resolved;
+}
+
+function executeTool(name: string, input: Record<string, string>, listFilesFn: (dir: string) => string[], allowedRoot: string): string {
   switch (name) {
-    case "list_files":  return JSON.stringify(listFilesFn(input.directory));
-    case "read_file":   return readFile(input.file_path);
-    case "write_file":  return writeFile(input.file_path, input.content);
-    default:            return `Unknown tool: ${name}`;
+    case "list_files": {
+      const dir = resolveSafe(allowedRoot, input.directory);
+      if (!dir) return "Error: Path outside project root";
+      return JSON.stringify(listFilesFn(dir));
+    }
+    case "read_file": {
+      const file = resolveSafe(allowedRoot, input.file_path);
+      if (!file) return "Error: Path outside project root";
+      return readFile(file);
+    }
+    case "write_file": {
+      const file = resolveSafe(allowedRoot, input.file_path);
+      if (!file) return "Error: Path outside project root";
+      return writeFile(file, input.content);
+    }
+    default: return `Unknown tool: ${name}`;
   }
 }
 
@@ -67,6 +86,7 @@ export async function runAgent(
   userMessage: string,
   tools: Anthropic.Tool[],
   listFilesFn: (dir: string) => string[],
+  allowedRoot: string,
   review = false,
 ) {
   const messages: Anthropic.MessageParam[] = [{ role: "user", content: userMessage }];
@@ -91,19 +111,24 @@ export async function runAgent(
       const input = tool.input as Record<string, string>;
 
       if (review && tool.name === "write_file") {
-        const label = path.basename(input.file_path);
-        const result = await reviewContent(label, input.content);
-        if (result === "accept") {
-          toolCall("write_file", input);
-          toolResults.push({ type: "tool_result", tool_use_id: tool.id, content: writeFile(input.file_path, input.content) });
-        } else if (result === "skip") {
-          toolResults.push({ type: "tool_result", tool_use_id: tool.id, content: "User skipped this write — do not write this file." });
+        const resolvedPath = resolveSafe(allowedRoot, input.file_path);
+        if (!resolvedPath) {
+          toolResults.push({ type: "tool_result", tool_use_id: tool.id, content: "Error: Path outside project root" });
         } else {
-          toolResults.push({ type: "tool_result", tool_use_id: tool.id, content: `User requested changes: ${result}\nPlease revise and call write_file again with the updated content.` });
+          const label = path.basename(resolvedPath);
+          const result = await reviewContent(label, input.content);
+          if (result === "accept") {
+            toolCall("write_file", input);
+            toolResults.push({ type: "tool_result", tool_use_id: tool.id, content: writeFile(resolvedPath, input.content) });
+          } else if (result === "skip") {
+            toolResults.push({ type: "tool_result", tool_use_id: tool.id, content: "User skipped this write — do not write this file." });
+          } else {
+            toolResults.push({ type: "tool_result", tool_use_id: tool.id, content: `User requested changes: ${result}\nPlease revise and call write_file again with the updated content.` });
+          }
         }
       } else {
         toolCall(tool.name, input);
-        toolResults.push({ type: "tool_result", tool_use_id: tool.id, content: executeTool(tool.name, input, listFilesFn) });
+        toolResults.push({ type: "tool_result", tool_use_id: tool.id, content: executeTool(tool.name, input, listFilesFn, allowedRoot) });
       }
     }
 
