@@ -53,10 +53,10 @@ export function injectJsoncComments(filePath: string, comments: Record<string, s
     if (keyMatch) {
       const indent = keyMatch[1];
       const key = keyMatch[2];
-      if (result.length > 0 && result[result.length - 1].trimStart().startsWith("//")) {
+      if (result.length > 0 && result[result.length - 1].trimStart().startsWith("// CTX:")) {
         result.pop();
       }
-      if (comments[key]) result.push(`${indent}// ${comments[key]}`);
+      if (comments[key]) result.push(`${indent}// CTX: ${comments[key]}`);
     }
     result.push(line);
   }
