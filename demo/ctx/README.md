@@ -241,8 +241,8 @@ ctx run
 **Requirements:** [Node.js](https://nodejs.org) (with `tsx`) and an Anthropic API key.
 
 ```bash
-git clone https://github.com/bhavya031/ctx
-cd ctx
+git clone https://github.com/lingodotdev/lingo.dev
+cd lingo.dev/demo/ctx
 bun install
 bun link
 ```
