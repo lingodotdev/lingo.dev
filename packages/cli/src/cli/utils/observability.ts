@@ -1,7 +1,6 @@
 import pkg from "node-machine-id";
 const { machineIdSync } = pkg;
 import https from "https";
-import crypto from "crypto";
 import { getOrgId } from "./org-id";
 
 const POSTHOG_API_KEY = "phc_eR0iSoQufBxNY36k0f0T15UvHJdTfHlh8rJcxsfhfXk";
@@ -10,17 +9,22 @@ const POSTHOG_PATH = "/i/v0/e/";
 const REQUEST_TIMEOUT_MS = 3000;
 const TRACKING_VERSION = "2.0";
 
-function determineDistinctId(email: string | null | undefined): {
+export type UserIdentity = {
+  email: string;
+  id: string;
+} | null;
+
+function determineDistinctId(user: UserIdentity): {
   distinct_id: string;
   distinct_id_source: string;
   org_id: string | null;
 } {
   const orgId = getOrgId();
 
-  if (email) {
+  if (user) {
     return {
-      distinct_id: email,
-      distinct_id_source: "email",
+      distinct_id: user.id,
+      distinct_id_source: "database_id",
       org_id: orgId,
     };
   }
@@ -47,7 +51,7 @@ function determineDistinctId(email: string | null | undefined): {
 }
 
 export default function trackEvent(
-  email: string | null | undefined,
+  user: UserIdentity,
   event: string,
   properties?: Record<string, any>,
 ): void {
@@ -57,7 +61,7 @@ export default function trackEvent(
 
   setImmediate(() => {
     try {
-      const identityInfo = determineDistinctId(email);
+      const identityInfo = determineDistinctId(user);
 
       if (process.env.DEBUG === "true") {
         console.log(
@@ -71,7 +75,10 @@ export default function trackEvent(
         distinct_id: identityInfo.distinct_id,
         properties: {
           ...properties,
-          $set: { ...(properties?.$set || {}), ...(email ? { email } : {}) },
+          $set: {
+            ...(properties?.$set || {}),
+            ...(user ? { email: user.email } : {}),
+          },
           $lib: "lingo.dev-cli",
           $lib_version: process.env.npm_package_version || "unknown",
           tracking_version: TRACKING_VERSION,
@@ -112,15 +119,14 @@ export default function trackEvent(
       req.write(payload);
       req.end();
 
-      // TODO: remove after 2026-03-25 — temporary alias to merge old hashed distinct_ids with new raw email
-      if (email) {
-        const hashedEmail = crypto.createHash("sha256").update(email).digest("hex");
+      // TODO: remove after 2026-04-30 — temporary alias to merge old email-based distinct_ids with database user ID
+      if (user) {
         const aliasData = JSON.stringify({
           api_key: POSTHOG_API_KEY,
           event: "$create_alias",
-          distinct_id: email,
+          distinct_id: user.id,
           properties: {
-            alias: hashedEmail,
+            alias: user.email,
           },
           timestamp: new Date().toISOString(),
         });
@@ -136,7 +142,9 @@ export default function trackEvent(
         aliasReq.on("error", () => {});
         aliasReq.write(aliasData);
         aliasReq.end();
-        setTimeout(() => { if (!aliasReq.destroyed) aliasReq.destroy(); }, REQUEST_TIMEOUT_MS);
+        setTimeout(() => {
+          if (!aliasReq.destroyed) aliasReq.destroy();
+        }, REQUEST_TIMEOUT_MS);
       }
 
       setTimeout(() => {

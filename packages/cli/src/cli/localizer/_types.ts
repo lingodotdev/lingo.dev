@@ -21,6 +21,7 @@ export interface ILocalizer {
   checkAuth: () => Promise<{
     authenticated: boolean;
     username?: string;
+    userId?: string;
     error?: string;
   }>;
   validateSettings?: () => Promise<{ valid: boolean; error?: string }>;

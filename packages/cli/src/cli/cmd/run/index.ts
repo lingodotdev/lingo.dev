@@ -18,8 +18,8 @@ import {
   pauseIfDebug,
   renderSummary,
 } from "../../utils/ui";
-import trackEvent from "../../utils/observability";
-import { determineEmail } from "./_utils";
+import trackEvent, { UserIdentity } from "../../utils/observability";
+import { determineUserIdentity } from "./_utils";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -124,7 +124,7 @@ export default new Command()
     "Enable pseudo-localization mode: automatically pseudo-translates all extracted strings with accented characters and visual markers without calling any external API. Useful for testing UI internationalization readiness",
   )
   .action(async (args) => {
-    let email: string | null = null;
+    let userIdentity: UserIdentity = null;
     try {
       const ctx: CmdRunContext = {
         flags: flagsSchema.parse(args),
@@ -143,9 +143,9 @@ export default new Command()
 
       await setup(ctx);
 
-      email = await determineEmail(ctx);
+      userIdentity = await determineUserIdentity(ctx);
 
-      await trackEvent(email, "cmd.run.start", {
+      await trackEvent(userIdentity, "cmd.run.start", {
         config: ctx.config,
         flags: ctx.flags,
       });
@@ -176,16 +176,16 @@ export default new Command()
         await watch(ctx);
       }
 
-      await trackEvent(email, "cmd.run.success", {
+      await trackEvent(userIdentity, "cmd.run.success", {
         config: ctx.config,
         flags: ctx.flags,
       });
       await new Promise((resolve) => setTimeout(resolve, 50));
     } catch (error: any) {
-      await trackEvent(email, "cmd.run.error", {
+      await trackEvent(userIdentity, "cmd.run.error", {
         flags: args,
         error: error.message,
-        authenticated: !!email,
+        authenticated: !!userIdentity,
       });
       await new Promise((resolve) => setTimeout(resolve, 50));
       // Play sad sound if sound flag is enabled

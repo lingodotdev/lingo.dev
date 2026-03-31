@@ -9,7 +9,10 @@ type IdentityInfo = {
   distinct_id_source: string;
 };
 
-const identityCache = new Map<string, IdentityInfo>();
+const identityCache = new Map<
+  string,
+  { identity: IdentityInfo; email?: string }
+>();
 
 export function trackEvent(
   apiKey: string,
@@ -36,11 +39,11 @@ async function resolveIdentityAndCapture(
   event: string,
   properties?: Record<string, any>,
 ) {
-  const identityInfo = await getDistinctId(apiKey, apiUrl);
+  const { identity, email } = await getDistinctId(apiKey, apiUrl);
 
   if (process.env.DEBUG === "true") {
     console.log(
-      `[Tracking] Event: ${event}, ID: ${identityInfo.distinct_id}, Source: ${identityInfo.distinct_id_source}`,
+      `[Tracking] Event: ${event}, ID: ${identity.distinct_id}, Source: ${identity.distinct_id_source}`,
     );
   }
 
@@ -51,24 +54,35 @@ async function resolveIdentityAndCapture(
     flushInterval: 0,
   });
 
-  await posthog.capture({
-    distinctId: identityInfo.distinct_id,
-    event,
-    properties: {
-      ...properties,
-      tracking_version: TRACKING_VERSION,
-      sdk_package: SDK_PACKAGE,
-      distinct_id_source: identityInfo.distinct_id_source,
-    },
-  });
+  try {
+    await posthog.capture({
+      distinctId: identity.distinct_id,
+      event,
+      properties: {
+        ...properties,
+        $set: { ...(properties?.$set || {}), ...(email ? { email } : {}) },
+        tracking_version: TRACKING_VERSION,
+        sdk_package: SDK_PACKAGE,
+        distinct_id_source: identity.distinct_id_source,
+      },
+    });
 
-  await posthog.shutdown();
+    // TODO: remove after 2026-04-30 — temporary alias to merge old email-based distinct_ids with database user ID
+    if (email) {
+      await posthog.alias({
+        distinctId: identity.distinct_id,
+        alias: email,
+      });
+    }
+  } finally {
+    await posthog.shutdown();
+  }
 }
 
 async function getDistinctId(
   apiKey: string,
   apiUrl: string,
-): Promise<IdentityInfo> {
+): Promise<{ identity: IdentityInfo; email?: string }> {
   const cached = identityCache.get(apiKey);
   if (cached) return cached;
 
@@ -80,28 +94,33 @@ async function getDistinctId(
         "Content-Type": "application/json",
       },
     });
+
     if (res.ok) {
       const payload = await res.json();
-      if (payload?.email) {
-        const identity: IdentityInfo = {
-          distinct_id: payload.email,
-          distinct_id_source: "email",
+      if (payload?.id) {
+        const result = {
+          identity: {
+            distinct_id: payload.id,
+            distinct_id_source: "database_id",
+          },
+          email: payload.email || undefined,
         };
-        identityCache.set(apiKey, identity);
-        return identity;
+        identityCache.set(apiKey, result);
+        return result;
       }
     }
   } catch {
     // Fall through to API key hash
   }
 
+  // Don't cache the fallback — a transient /users/me failure should not poison the cache for the entire process lifetime
   const hash = createHash("sha256").update(apiKey).digest("hex").slice(0, 16);
-  const identity: IdentityInfo = {
-    distinct_id: `apikey-${hash}`,
-    distinct_id_source: "api_key_hash",
+  return {
+    identity: {
+      distinct_id: `apikey-${hash}`,
+      distinct_id_source: "api_key_hash",
+    },
   };
-  identityCache.set(apiKey, identity);
-  return identity;
 }
 
 export function _resetIdentityCache() {
