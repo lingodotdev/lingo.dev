@@ -54,27 +54,29 @@ async function resolveIdentityAndCapture(
     flushInterval: 0,
   });
 
-  await posthog.capture({
-    distinctId: identity.distinct_id,
-    event,
-    properties: {
-      ...properties,
-      $set: email ? { email } : {},
-      tracking_version: TRACKING_VERSION,
-      sdk_package: SDK_PACKAGE,
-      distinct_id_source: identity.distinct_id_source,
-    },
-  });
-
-  // TODO: remove after 2026-04-30 — temporary alias to merge old email-based distinct_ids with database user ID
-  if (email) {
-    await posthog.alias({
+  try {
+    await posthog.capture({
       distinctId: identity.distinct_id,
-      alias: email,
+      event,
+      properties: {
+        ...properties,
+        $set: { ...(properties?.$set || {}), ...(email ? { email } : {}) },
+        tracking_version: TRACKING_VERSION,
+        sdk_package: SDK_PACKAGE,
+        distinct_id_source: identity.distinct_id_source,
+      },
     });
-  }
 
-  await posthog.shutdown();
+    // TODO: remove after 2026-04-30 — temporary alias to merge old email-based distinct_ids with database user ID
+    if (email) {
+      await posthog.alias({
+        distinctId: identity.distinct_id,
+        alias: email,
+      });
+    }
+  } finally {
+    await posthog.shutdown();
+  }
 }
 
 async function getDistinctId(
