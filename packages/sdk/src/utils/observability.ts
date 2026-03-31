@@ -9,7 +9,10 @@ type IdentityInfo = {
   distinct_id_source: string;
 };
 
-const identityCache = new Map<string, IdentityInfo>();
+const identityCache = new Map<
+  string,
+  { identity: IdentityInfo; email?: string }
+>();
 
 export function trackEvent(
   apiKey: string,
@@ -36,11 +39,11 @@ async function resolveIdentityAndCapture(
   event: string,
   properties?: Record<string, any>,
 ) {
-  const identityInfo = await getDistinctId(apiKey, apiUrl);
+  const { identity, email } = await getDistinctId(apiKey, apiUrl);
 
   if (process.env.DEBUG === "true") {
     console.log(
-      `[Tracking] Event: ${event}, ID: ${identityInfo.distinct_id}, Source: ${identityInfo.distinct_id_source}`,
+      `[Tracking] Event: ${event}, ID: ${identity.distinct_id}, Source: ${identity.distinct_id_source}`,
     );
   }
 
@@ -52,15 +55,24 @@ async function resolveIdentityAndCapture(
   });
 
   await posthog.capture({
-    distinctId: identityInfo.distinct_id,
+    distinctId: identity.distinct_id,
     event,
     properties: {
       ...properties,
+      $set: email ? { email } : {},
       tracking_version: TRACKING_VERSION,
       sdk_package: SDK_PACKAGE,
-      distinct_id_source: identityInfo.distinct_id_source,
+      distinct_id_source: identity.distinct_id_source,
     },
   });
+
+  // TODO: remove after 2026-04-30 — temporary alias to merge old email-based distinct_ids with database user ID
+  if (email) {
+    await posthog.alias({
+      distinctId: identity.distinct_id,
+      alias: email,
+    });
+  }
 
   await posthog.shutdown();
 }
@@ -68,7 +80,7 @@ async function resolveIdentityAndCapture(
 async function getDistinctId(
   apiKey: string,
   apiUrl: string,
-): Promise<IdentityInfo> {
+): Promise<{ identity: IdentityInfo; email?: string }> {
   const cached = identityCache.get(apiKey);
   if (cached) return cached;
 
@@ -80,15 +92,19 @@ async function getDistinctId(
         "Content-Type": "application/json",
       },
     });
+
     if (res.ok) {
       const payload = await res.json();
-      if (payload?.email) {
-        const identity: IdentityInfo = {
-          distinct_id: payload.email,
-          distinct_id_source: "email",
+      if (payload?.id) {
+        const result = {
+          identity: {
+            distinct_id: payload.id,
+            distinct_id_source: "database_id",
+          },
+          email: payload.email || undefined,
         };
-        identityCache.set(apiKey, identity);
-        return identity;
+        identityCache.set(apiKey, result);
+        return result;
       }
     }
   } catch {
@@ -96,12 +112,14 @@ async function getDistinctId(
   }
 
   const hash = createHash("sha256").update(apiKey).digest("hex").slice(0, 16);
-  const identity: IdentityInfo = {
-    distinct_id: `apikey-${hash}`,
-    distinct_id_source: "api_key_hash",
+  const result = {
+    identity: {
+      distinct_id: `apikey-${hash}`,
+      distinct_id_source: "api_key_hash",
+    },
   };
-  identityCache.set(apiKey, identity);
-  return identity;
+  identityCache.set(apiKey, result);
+  return result;
 }
 
 export function _resetIdentityCache() {

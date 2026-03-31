@@ -18,7 +18,7 @@ import { getBuckets } from "../utils/buckets";
 import chalk from "chalk";
 import Table from "cli-table3";
 import { createDeltaProcessor } from "../utils/delta";
-import trackEvent from "../utils/observability";
+import trackEvent, { UserIdentity } from "../utils/observability";
 import { minimatch } from "minimatch";
 import { exitGracefully } from "../utils/exit-gracefully";
 
@@ -63,7 +63,7 @@ export default new Command()
   .action(async function (options) {
     const ora = Ora();
     const flags = parseFlags(options);
-    let email: string | null = null;
+    let userIdentity: UserIdentity = null;
 
     try {
       ora.start("Loading configuration...");
@@ -76,7 +76,7 @@ export default new Command()
         ora.start("Checking authentication status...");
         const auth = await tryAuthenticate(settings);
         if (auth) {
-          email = auth.email;
+          userIdentity = { email: auth.email, id: auth.id };
           ora.succeed(`Authenticated as ${auth.email}`);
         } else {
           ora.info(
@@ -92,7 +92,7 @@ export default new Command()
       ora.succeed("Localization configuration is valid");
 
       // Track event with or without authentication
-      trackEvent(email, "cmd.status.start", {
+      trackEvent(userIdentity, "cmd.status.start", {
         i18nConfig,
         flags,
       });
@@ -356,10 +356,11 @@ export default new Command()
                   )} (${completeKeys.length}/${totalKeysInFile} keys)`,
                 );
               } else {
-                const message = `[${sourceLocale} -> ${targetLocale}] ${parseFloat(completionPercent) > 50
+                const message = `[${sourceLocale} -> ${targetLocale}] ${
+                  parseFloat(completionPercent) > 50
                     ? chalk.yellow(`${completionPercent}% complete`)
                     : chalk.red(`${completionPercent}% complete`)
-                  } (${completeKeys.length}/${totalKeysInFile} keys)`;
+                } (${completeKeys.length}/${totalKeysInFile} keys)`;
 
                 bucketOra.succeed(message);
 
@@ -369,7 +370,8 @@ export default new Command()
                       `    ${chalk.red(`Missing:`)} ${missingKeys.length} keys, ~${wordsToTranslate} words`,
                     );
                     console.log(
-                      `    ${chalk.red(`Missing:`)} ${missingKeys.length
+                      `    ${chalk.red(`Missing:`)} ${
+                        missingKeys.length
                       } keys, ~${wordsToTranslate} words`,
                     );
                     console.log(
@@ -382,7 +384,8 @@ export default new Command()
                   }
                   if (updatedKeys.length > 0) {
                     console.log(
-                      `    ${chalk.yellow(`Updated:`)} ${updatedKeys.length
+                      `    ${chalk.yellow(`Updated:`)} ${
+                        updatedKeys.length
                       } keys that changed in source`,
                     );
                   }
@@ -536,7 +539,8 @@ export default new Command()
 
             console.log(chalk.bold(`\n• ${path}:`));
             console.log(
-              `  ${stats.sourceKeys
+              `  ${
+                stats.sourceKeys
               } source keys, ~${stats.wordCount.toLocaleString()} source words`,
             );
 
@@ -603,14 +607,16 @@ export default new Command()
 
       if (missingLanguages.length > 0) {
         console.log(
-          `• ${chalk.yellow(missingLanguages.join(", "))} ${missingLanguages.length === 1 ? "has" : "have"
+          `• ${chalk.yellow(missingLanguages.join(", "))} ${
+            missingLanguages.length === 1 ? "has" : "have"
           } no translations yet`,
         );
       }
 
       if (completeLanguages.length > 0) {
         console.log(
-          `• ${chalk.green(completeLanguages.join(", "))} ${completeLanguages.length === 1 ? "is" : "are"
+          `• ${chalk.green(completeLanguages.join(", "))} ${
+            completeLanguages.length === 1 ? "is" : "are"
           } completely translated`,
         );
       }
@@ -624,22 +630,22 @@ export default new Command()
       }
 
       // Track successful completion
-      trackEvent(email, "cmd.status.success", {
+      trackEvent(userIdentity, "cmd.status.success", {
         i18nConfig,
         flags,
         totalSourceKeyCount,
         languageStats,
         totalWordsToTranslate,
-        authenticated: !!email,
+        authenticated: !!userIdentity,
       });
       await new Promise((resolve) => setTimeout(resolve, 50));
       exitGracefully();
     } catch (error: any) {
       ora.fail(error.message);
-      trackEvent(email, "cmd.status.error", {
+      trackEvent(userIdentity, "cmd.status.error", {
         flags,
         error: error.message,
-        authenticated: !!email,
+        authenticated: !!userIdentity,
       });
       await new Promise((resolve) => setTimeout(resolve, 50));
       process.exit(1);
