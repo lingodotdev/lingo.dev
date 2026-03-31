@@ -111,15 +111,14 @@ async function getDistinctId(
     // Fall through to API key hash
   }
 
+  // Don't cache the fallback — a transient /users/me failure should not poison the cache for the entire process lifetime
   const hash = createHash("sha256").update(apiKey).digest("hex").slice(0, 16);
-  const result = {
+  return {
     identity: {
       distinct_id: `apikey-${hash}`,
       distinct_id_source: "api_key_hash",
     },
   };
-  identityCache.set(apiKey, result);
-  return result;
 }
 
 export function _resetIdentityCache() {
