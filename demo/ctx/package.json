@@ -1,5 +1,5 @@
 {
-  "name": "lingo-agent",
+  "name": "ctx",
   "version": "1.0.0",
   "type": "module",
   "bin": {
