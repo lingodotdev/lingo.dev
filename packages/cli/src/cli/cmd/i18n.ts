@@ -34,7 +34,7 @@ import externalEditor from "external-editor";
 import updateGitignore from "../utils/update-gitignore";
 import createProcessor from "../processor";
 import { withExponentialBackoff } from "../utils/exp-backoff";
-import trackEvent from "../utils/observability";
+import trackEvent, { UserIdentity } from "../utils/observability";
 import { createDeltaProcessor } from "../utils/delta";
 
 export default new Command()
@@ -135,7 +135,7 @@ export default new Command()
     }
 
     let hasErrors = false;
-    let email: string | null = null;
+    let userIdentity: UserIdentity = null;
     const errorDetails: ErrorDetail[] = [];
     try {
       ora.start("Loading configuration...");
@@ -151,15 +151,15 @@ export default new Command()
       const isByokMode = !!i18nConfig?.provider;
 
       if (isByokMode) {
-        email = null;
+        userIdentity = null;
         ora.succeed("Using external provider (BYOK mode)");
       } else {
         const auth = await validateAuth(settings);
-        email = auth.email;
+        userIdentity = { email: auth.email, id: auth.id };
         ora.succeed(`Authenticated as ${auth.email}`);
       }
 
-      await trackEvent(email, "cmd.i18n.start", {
+      await trackEvent(userIdentity, "cmd.i18n.start", {
         i18nConfig,
         flags,
       });
@@ -587,7 +587,7 @@ export default new Command()
       console.log();
       if (!hasErrors) {
         ora.succeed("Localization completed.");
-        await trackEvent(email, "cmd.i18n.success", {
+        await trackEvent(userIdentity, "cmd.i18n.success", {
           i18nConfig: {
             sourceLocale: i18nConfig!.locale.source,
             targetLocales: i18nConfig!.locale.targets,
@@ -602,7 +602,7 @@ export default new Command()
       } else {
         ora.warn("Localization completed with errors.");
         process.exitCode = 1;
-        await trackEvent(email, "cmd.i18n.error", {
+        await trackEvent(userIdentity, "cmd.i18n.error", {
           flags,
           ...aggregateErrorAnalytics(
             errorDetails,
@@ -634,7 +634,7 @@ export default new Command()
         };
       }
 
-      await trackEvent(email, "cmd.i18n.error", {
+      await trackEvent(userIdentity, "cmd.i18n.error", {
         flags,
         errorType,
         errorName: error.name || "Error",

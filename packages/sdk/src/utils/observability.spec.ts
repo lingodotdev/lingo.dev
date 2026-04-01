@@ -4,7 +4,7 @@ import { trackEvent, _resetIdentityCache } from "./observability";
 const capture = vi.fn(async () => undefined);
 const shutdown = vi.fn(async () => undefined);
 const PostHogMock = vi.fn(function (_key: string, _cfg: any) {
-  return { capture, shutdown };
+  return { alias: vi.fn(), capture, shutdown };
 });
 vi.mock("posthog-node", () => ({ PostHog: PostHogMock }));
 
@@ -29,7 +29,7 @@ describe("trackEvent", () => {
     expect(PostHogMock).not.toHaveBeenCalled();
   });
 
-  it("captures event with email identity when whoami succeeds", async () => {
+  it("captures event with database user ID when whoami succeeds", async () => {
     globalThis.fetch = vi.fn().mockResolvedValue({
       ok: true,
       json: async () => ({ email: "user@test.com", id: "123" }),
@@ -43,11 +43,11 @@ describe("trackEvent", () => {
 
     expect(capture).toHaveBeenCalledWith(
       expect.objectContaining({
-        distinctId: "user@test.com",
+        distinctId: "123",
         event: "sdk.localize.start",
         properties: expect.objectContaining({
           method: "localizeText",
-          distinct_id_source: "email",
+          distinct_id_source: "database_id",
           tracking_version: "1.0",
           sdk_package: "@lingo.dev/_sdk",
         }),
@@ -75,10 +75,10 @@ describe("trackEvent", () => {
     );
   });
 
-  it("falls back to API key hash when whoami returns no email", async () => {
+  it("falls back to API key hash when whoami returns no id", async () => {
     globalThis.fetch = vi.fn().mockResolvedValue({
       ok: true,
-      json: async () => ({}),
+      json: async () => ({ email: "user@test.com" }),
     }) as any;
 
     trackEvent("my-api-key", "https://test.api", "sdk.localize.start", {});

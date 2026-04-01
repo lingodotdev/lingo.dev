@@ -1,5 +1,15 @@
 # lingo.dev
 
+## 0.133.8
+
+### Patch Changes
+
+- [#2062](https://github.com/lingodotdev/lingo.dev/pull/2062) [`10e6364`](https://github.com/lingodotdev/lingo.dev/commit/10e636479046da5d53d059e539497195191a99fc) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Migrate PostHog tracking identity from email to database user ID
+
+- Updated dependencies [[`10e6364`](https://github.com/lingodotdev/lingo.dev/commit/10e636479046da5d53d059e539497195191a99fc)]:
+  - @lingo.dev/_sdk@0.16.2
+  - @lingo.dev/_compiler@0.12.2
+
 ## 0.133.7
 
 ### Patch Changes
