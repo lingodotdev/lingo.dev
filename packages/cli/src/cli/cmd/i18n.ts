@@ -437,7 +437,8 @@ export default new Command()
                 }
 
                 bucketOra.start(
-                  `[${sourceLocale} -> ${targetLocale}] [${Object.keys(processableData).length
+                  `[${sourceLocale} -> ${targetLocale}] [${
+                    Object.keys(processableData).length
                   } entries] (0%) AI localization in progress...`,
                 );
                 let processPayload = createProcessor(i18nConfig!.provider, {
@@ -462,8 +463,9 @@ export default new Command()
                     targetData: flags.force ? {} : targetData,
                   },
                   (progress, sourceChunk, processedChunk) => {
-                    bucketOra.text = `[${sourceLocale} -> ${targetLocale}] [${Object.keys(processableData).length
-                      } entries] (${progress}%) AI localization in progress...`;
+                    bucketOra.text = `[${sourceLocale} -> ${targetLocale}] [${
+                      Object.keys(processableData).length
+                    } entries] (${progress}%) AI localization in progress...`;
                   },
                 );
 
@@ -666,7 +668,7 @@ function parseFlags(options: any) {
     file: Z.array(Z.string()).optional(),
     interactive: Z.boolean().prefault(false),
     debug: Z.boolean().prefault(false),
-    batchSize: Z.number().min(1).optional(),
+    batchSize: Z.number().min(1).max(250).optional(),
   }).parse(options);
 }
 

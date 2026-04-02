@@ -5,4 +5,3 @@ export * from "./component";
 export * from "./locale-switcher";
 export * from "./attribute-component";
 export * from "./locale";
-export { getLocaleFromCookies, setLocaleInCookies } from "./utils";

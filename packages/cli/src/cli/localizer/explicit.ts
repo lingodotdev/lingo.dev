@@ -12,7 +12,7 @@ import { colors } from "../constants";
 import { jsonrepair } from "jsonrepair";
 import { createOllama } from "ollama-ai-provider-v2";
 import _ from "lodash";
-
+import { extractPayloadChunks } from "../utils/chunk";
 export default function createExplicitLocalizer(
   provider: NonNullable<I18nConfig["provider"]>,
   batchSize?: number,
@@ -28,10 +28,10 @@ export default function createExplicitLocalizer(
           To fix this issue:
           1. Switch to one of the supported providers, or
           2. Remove the ${chalk.italic(
-          "provider",
-        )} node from your i18n.json configuration to switch to ${chalk.hex(
-          colors.green,
-        )("Lingo.dev")}
+            "provider",
+          )} node from your i18n.json configuration to switch to ${chalk.hex(
+            colors.green,
+          )("Lingo.dev")}
 
           ${chalk.hex(colors.blue)("Docs: https://lingo.dev/go/docs")}
         `,
@@ -136,19 +136,21 @@ function createAiSdkLocalizer(params: {
   if (!skipAuth && (!apiKey || !params.apiKeyName)) {
     throw new Error(
       dedent`
-        You're trying to use raw ${chalk.dim(params.id)} API for translation. ${params.apiKeyName
-          ? `However, ${chalk.dim(
-            params.apiKeyName,
-          )} environment variable is not set.`
-          : "However, that provider is unavailable."
+        You're trying to use raw ${chalk.dim(params.id)} API for translation. ${
+          params.apiKeyName
+            ? `However, ${chalk.dim(
+                params.apiKeyName,
+              )} environment variable is not set.`
+            : "However, that provider is unavailable."
         }
 
         To fix this issue:
-        1. ${params.apiKeyName
-          ? `Set ${chalk.dim(
-            params.apiKeyName,
-          )} in your environment variables`
-          : "Set the environment variable for your provider (if required)"
+        1. ${
+          params.apiKeyName
+            ? `Set ${chalk.dim(
+                params.apiKeyName,
+              )} in your environment variables`
+            : "Set the environment variable for your provider (if required)"
         }, or
         2. Remove the ${chalk.italic(
           "provider",
@@ -295,30 +297,17 @@ function createAiSdkLocalizer(params: {
         // Handle both object and string responses
         if (typeof result?.data === "object" && result.data !== null) {
           finalResult = result.data;
-        } else if (result?.data) {
-          // Handle string responses - extract and repair JSON
-          const index = result.data.indexOf("{");
-          const lastIndex = result.data.lastIndexOf("}");
-          if (index !== -1 && lastIndex !== -1) {
-            try {
-              const trimmed = result.data.slice(index, lastIndex + 1);
-              const repaired = jsonrepair(trimmed);
-              const parsed = JSON.parse(repaired);
-              finalResult = parsed.data || parsed || {};
-            } catch (e) {
-              console.error(
-                `Failed to parse nested JSON response. Snippet: ${result.data.slice(0, 100)}...`,
-              );
-              throw new Error(
-                `Failed to parse nested JSON response: ${e} (Snippet: ${result.data.slice(0, 100)}...)`,
-              );
-            }
-          } else {
+        } else if (typeof result?.data === "string") {
+          // Handle string responses where the model double-stringified the JSON
+          try {
+            const parsed = parseModelResponse(result.data);
+            finalResult = parsed.data || parsed || {};
+          } catch (e) {
             console.error(
-              `Unexpected response format - no JSON object found. Snippet: ${String(result.data).slice(0, 100)}...`,
+              `Failed to parse nested JSON response. Snippet: ${result.data.slice(0, 100)}...`,
             );
             throw new Error(
-              `Unexpected response format from ${params.id} - no JSON object found in response`,
+              `Failed to parse nested JSON response: ${e} (Snippet: ${result.data.slice(0, 100)}...)`,
             );
           }
         }
@@ -333,64 +322,4 @@ function createAiSdkLocalizer(params: {
       return finalMergedResult;
     },
   };
-}
-
-/**
- * Extract payload chunks based on the ideal chunk size
- * @param payload - The payload to be chunked
- * @param batchSize - Max number of keys per chunk (default: 25)
- * @returns An array of payload chunks
- */
-function extractPayloadChunks(
-  payload: Record<string, any>,
-  batchSize?: number,
-): Record<string, any>[] {
-  const idealBatchItemSize = 250;
-  const result: Record<string, any>[] = [];
-  let currentChunk: Record<string, any> = {};
-  let currentChunkItemCount = 0;
-
-  const payloadEntries = Object.entries(payload);
-  for (let i = 0; i < payloadEntries.length; i++) {
-    const [key, value] = payloadEntries[i];
-    currentChunk[key] = value;
-    currentChunkItemCount++;
-
-    const currentChunkSize = countWordsInRecord(currentChunk);
-    const effectiveBatchSize =
-      batchSize && batchSize > 0 ? batchSize : payloadEntries.length || 1;
-    if (
-      currentChunkSize > idealBatchItemSize ||
-      currentChunkItemCount >= effectiveBatchSize ||
-      i === payloadEntries.length - 1
-    ) {
-      result.push(currentChunk);
-      currentChunk = {};
-      currentChunkItemCount = 0;
-    }
-  }
-
-  return result;
-}
-
-/**
- * Count words in a record or array
- * @param payload - The payload to count words in
- * @returns The total number of words
- */
-function countWordsInRecord(
-  payload: any | Record<string, any> | Array<any>,
-): number {
-  if (Array.isArray(payload)) {
-    return payload.reduce((acc, item) => acc + countWordsInRecord(item), 0);
-  } else if (typeof payload === "object" && payload !== null) {
-    return Object.values(payload).reduce(
-      (acc: number, item) => acc + countWordsInRecord(item),
-      0,
-    );
-  } else if (typeof payload === "string") {
-    return payload.trim().split(/\s+/).filter(Boolean).length;
-  } else {
-    return 0;
-  }
 }
