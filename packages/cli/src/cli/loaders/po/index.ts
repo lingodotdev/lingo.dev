@@ -49,7 +49,6 @@ export function createPoDataLoader(
 
     async push(locale, data, originalInput, originalLocale, pullInput) {
       // Parse each section to maintain structure
-      const currentSections = pullInput?.split("\n\n").filter(Boolean) || [];
       const originalSections =
         originalInput?.split("\n\n").filter(Boolean) || [];
       const result = originalSections
@@ -63,45 +62,40 @@ export function createPoDataLoader(
           const contextKey = _.keys(sectionPo.translations)[0];
           const entries = sectionPo.translations[contextKey];
           const msgid = Object.keys(entries).find((key) => entries[key].msgid);
-          
-          // If the section is empty, try to find it in the current sections
-          const currentSection = currentSections.find((cs) => {
-            const csPo = gettextParser.po.parse(cs);
-            if (Object.keys(csPo.translations).length === 0) {
-              return false;
-            }
-            const csContextKey = _.keys(csPo.translations)[0];
-            const csEntries = csPo.translations[csContextKey];
-            if (!csEntries) {
-              return false;
-            }
-            const csMsgid = Object.keys(csEntries).find(
-              (key) => csEntries[key].msgid,
-            );
-            return csMsgid === msgid;
-          });
 
           if (!msgid) {
-            if (currentSection) {
-              return currentSection;
-            }
-            return section;
+            // If the section is empty, try to find it in the current sections
+            const currentSections =
+              pullInput?.split("\n\n").filter(Boolean) || [];
+            const currentSection = currentSections.find((cs) => {
+              const csPo = gettextParser.po.parse(cs);
+              if (Object.keys(csPo.translations).length === 0) {
+                return false;
+              }
+              const csContextKey = _.keys(csPo.translations)[0];
+              const csEntries = csPo.translations[csContextKey];
+              if (!csEntries) {
+                return false;
+              }
+              const csMsgid = Object.keys(csEntries).find(
+                (key) => csEntries[key].msgid,
+              );
+              return csMsgid === msgid;
+            });
+            return currentSection || section;
           }
-          if (data[msgid]) {
-            // Preserve headers from the target file
-            const headers = currentSection
-              ? gettextParser.po.parse(currentSection).headers
-              : sectionPo.headers;
 
+          const entriesToMerge: Record<string, { msgstr: string[] }> = {};
+          for (const [id, entry] of Object.entries(entries)) {
+            if (entry.msgid && data[id]) {
+              entriesToMerge[id] = { msgstr: data[id].msgstr };
+            }
+          }
+
+          if (Object.keys(entriesToMerge).length > 0) {
             const updatedPo = _.merge({}, sectionPo, {
-              headers,
-              translations: {
-                [contextKey]: {
-                  [msgid]: {
-                    msgstr: data[msgid].msgstr,
-                  },
-                },
-              },
+              headers: resolveTargetHeaders(pullInput, sectionPo),
+              translations: { [contextKey]: entriesToMerge },
             });
             const updatedSection = gettextParser.po
               .compile(updatedPo, { foldLength: params.multiline ? 76 : false })
@@ -172,6 +166,23 @@ export function createPoContentLoader(): ILoader<
       return result;
     },
   });
+}
+
+function resolveTargetHeaders(
+  pullInput: string | null | undefined,
+  sectionPo: GetTextTranslations,
+): Record<string, string> | undefined {
+  // Only needed for embedded headers (header entry + regular entries in the same section)
+  if (!sectionPo.translations[""]?.[""] || !pullInput) {
+    return undefined;
+  }
+  const headerSection = pullInput
+    .split("\n\n")
+    .find((s) => s.includes('msgid ""'));
+  if (!headerSection) {
+    return undefined;
+  }
+  return gettextParser.po.parse(headerSection).headers;
 }
 
 function preserveCommentOrder(section: string, originalSection: string) {

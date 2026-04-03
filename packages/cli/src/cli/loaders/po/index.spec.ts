@@ -464,6 +464,35 @@ msgstr ""`;
     expect(portugueseResult).not.toContain('"Language: en\\n"');
     expect(portugueseResult).toContain('msgstr "Olá"');
   });
+  it("push should translate all entries in multi-entry sections (no blank line between entries)", async () => {
+    const loader = createLoader();
+    const input = `
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\\n"
+
+msgid "Entry A"
+msgstr "Entry A"
+msgid "Entry B"
+msgstr "Entry B"
+msgid "Entry C"
+msgstr "Entry C"
+    `.trim();
+
+    await loader.pull("en", input);
+
+    const updatedData = {
+      "Entry A": { singular: "Entrada A", plural: null },
+      "Entry B": { singular: "Entrada B", plural: null },
+      "Entry C": { singular: "Entrada C", plural: null },
+    };
+
+    const result = await loader.push("en-upd", updatedData);
+
+    expect(result).toContain('msgstr "Entrada A"');
+    expect(result).toContain('msgstr "Entrada B"');
+    expect(result).toContain('msgstr "Entrada C"');
+  });
 });
 
 function createLoader(params: PoLoaderParams = { multiline: false }) {
