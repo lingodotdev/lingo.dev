@@ -14,6 +14,9 @@ export default function createPseudoLocalizer(): ILocalizer {
         authenticated: true,
       };
     },
+    validateSettings: async () => {
+      return { valid: true };
+    },
     localize: async (input: LocalizerData, onProgress) => {
       // Nothing to translate – return the input as-is.
       if (!Object.keys(input.processableData).length) {

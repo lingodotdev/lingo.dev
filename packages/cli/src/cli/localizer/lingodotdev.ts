@@ -46,7 +46,11 @@ export default function createLingoDotDevLocalizer(
               "Invalid API key. Run `lingo.dev login` or check your LINGO_API_KEY.",
           };
         }
-        return { authenticated: true, username: response.email };
+        return {
+          authenticated: true,
+          username: response.email,
+          userId: response.id,
+        };
       } catch (error) {
         const errorMessage =
           error instanceof Error ? error.message : String(error);
