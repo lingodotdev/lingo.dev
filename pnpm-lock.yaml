@@ -60,7 +60,6 @@ importers:
       '@anthropic-ai/sdk':
         specifier: ^0.78.0
         version: 0.78.0(zod@4.1.12)
-    devDependencies:
       tsx:
         specifier: ^4.19.3
         version: 4.21.0
