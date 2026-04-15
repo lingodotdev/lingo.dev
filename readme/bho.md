@@ -3,23 +3,26 @@
     <img
       src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.png"
       width="100%"
-      alt="Lingo.dev"
+      alt="Lingo.dev – स्थानीयकरण इंजीनियरिंग मंच"
     />
   </a>
 </p>
 
 <p align="center">
   <strong>
-    Lingo.dev - LLM-संचालित स्थानीयकरण खातिर ओपन-सोर्स i18n टूलकिट
+    ओपन-सोर्स स्थानीयकरण इंजीनियरिंग औजार। लगातार आ गुणवत्ता वाला अनुवाद खातिर
+    Lingo.dev स्थानीयकरण इंजीनियरिंग मंच से जुड़ल जाव।
   </strong>
 </p>
 
 <br />
 
 <p align="center">
-  <a href="#lingodev-mcp">MCP</a> •<a href="#lingodev-cli">CLI</a> •
-  <a href="#lingodev-cicd">CI/CD</a> •<a href="#lingodev-sdk">SDK</a> •
-  <a href="#lingodev-compiler">Compiler</a>
+  <a href="#lingodev-api">Lingo API</a> •
+  <a href="#lingodev-mcp">Lingo React MCP</a> •
+  <a href="#lingodev-cli">Lingo CLI</a> •
+  <a href="#lingodev-cicd">Lingo GitHub Action</a> •
+  <a href="#lingodev-compiler">React खातिर Lingo Compiler (शुरुआती अल्फा)</a>
 </p>
 
 <p align="center">
@@ -71,167 +74,43 @@
 
 ## तुरंत शुरुआत
 
-| टूल                                | उपयोग केस                                            | त्वरित कमांड                       |
-| ---------------------------------- | ---------------------------------------------------- | ---------------------------------- |
-| [**MCP**](#lingodev-mcp)           | React ऐप्स खातिर AI-सहायता प्राप्त i18n सेटअप        | प्रॉम्प्ट: `Set up i18n`           |
-| [**CLI**](#lingodev-cli)           | JSON, YAML, markdown, CSV, PO फाइल सब के अनुवाद करीं | `npx lingo.dev@latest run`         |
-| [**CI/CD**](#lingodev-cicd)        | GitHub Actions में स्वचालित अनुवाद पाइपलाइन          | `uses: lingodotdev/lingo.dev@main` |
-| [**SDK**](#lingodev-sdk)           | डायनामिक कंटेंट खातिर रनटाइम अनुवाद                  | `npm install lingo.dev`            |
-| [**Compiler**](#lingodev-compiler) | i18n रैपर बिना बिल्ड-टाइम React स्थानीयकरण           | `withLingo()` प्लगइन               |
+| औजार                                               | ई का करेला                                               | झटपट कमांड                         |
+| -------------------------------------------------- | -------------------------------------------------------- | ---------------------------------- |
+| [**Lingo React MCP**](#lingodev-mcp)               | React ऐप्स खातिर AI-सहायता प्राप्त i18n सेटअप            | प्रॉम्प्ट: `Set up i18n`           |
+| [**Lingo CLI**](#lingodev-cli)                     | JSON, YAML, markdown, CSV, PO फाइल सभ के स्थानीयकरण करीं | `npx lingo.dev@latest run`         |
+| [**Lingo GitHub Action**](#lingodev-cicd)          | GitHub Actions में निरंतर स्थानीयकरण                     | `uses: lingodotdev/lingo.dev@main` |
+| [**Lingo Compiler for React**](#lingodev-compiler) | i18n रैपर बिना बिल्ड-टाइम React स्थानीयकरण               | `withLingo()` प्लगइन               |
+
+### स्थानीयकरण इंजन सभ
+
+ई औजार सभ [स्थानीयकरण इंजन सभ](https://lingo.dev) से जुड़ेला – स्टेटफुल अनुवाद APIs जवन रउआ Lingo.dev स्थानीयकरण इंजीनियरिंग मंच प बनावल। हर इंजन हर अनुरोध में शब्दावली, ब्रांड आवाज आ प्रति-लोकेल निर्देश सभ के बनवले रखेला, [शब्दावली त्रुटि सभ के 16.6–44.6% तक कम करेला](https://lingo.dev/research/retrieval-augmented-localization)। या [अपना LLM लावल जाव](#lingodev-cli)।
 
 ---
 
 ### Lingo.dev MCP
 
-React ऐप्स में i18n सेटअप करल बहुत गलती-प्रवण बा - अनुभवी डेवलपर लोग खातिर भी। AI कोडिंग असिस्टेंट एकरा के आउर खराब बना देला: ऊ लोग गैर-मौजूद API के हैलुसिनेट करेला, मिडलवेयर कॉन्फ़िगरेशन भूल जाला, राउटिंग तोड़ देला, या आधा समाधान लागू करे के बाद भटक जाला। समस्या ई बा कि i18n सेटअप खातिर कई फाइलन (राउटिंग, मिडलवेयर, कंपोनेंट, कॉन्फ़िगरेशन) में समन्वित बदलाव के एगो सटीक क्रम के जरूरत होला, आ LLM लोग ओह संदर्भ के बनाए रखे में संघर्ष करेला।
+React ऐप्स में i18n सेटअप करे में त्रुटि होखे के संभावना बा – AI कोडिंग सहायक तक गैर-मौजूद APIs के भ्रम में पड़ जाला आ राउटिंग तोड़ देला। Lingo.dev MCP Next.js, React Router आ TanStack Start खातिर फ्रेमवर्क-विशिष्ट i18n ज्ञान तक AI सहायक सभ के संरचित पहुंच देला। Claude Code, Cursor, GitHub Copilot Agents आ Codex के साथे काम करेला।
 
-Lingo.dev MCP एकरा के हल करेला AI असिस्टेंट के फ्रेमवर्क-विशिष्ट i18n ज्ञान के संरचित पहुंच देके। अनुमान लगावे के बजाय, रउआ के असिस्टेंट Next.js, React Router, आ TanStack Start खातिर सत्यापित कार्यान्वयन पैटर्न के पालन करेला।
-
-**समर्थित IDE:**
-
-- Claude Code
-- Cursor
-- GitHub Copilot Agents
-- Codex (OpenAI)
-
-**समर्थित फ्रेमवर्क:**
-
-- Next.js (App Router & Pages Router v13-16)
-- TanStack Start (v1)
-- React Router (v7)
-
-**उपयोग:**
-
-रउआ के IDE में MCP सर्वर कॉन्फ़िगर करे के बाद ([क्विकस्टार्ट गाइड देखीं](https://lingo.dev/en/mcp)), अपना असिस्टेंट के प्रॉम्प्ट करीं:
-
-```
-Set up i18n with the following locales: en, es, and pt-BR. The default locale is 'en'.
-```
-
-असिस्टेंट करी:
-
-1. लोकेल-आधारित राउटिंग के कॉन्फ़िगर करीं (जइसे, `/en`, `/es`, `/pt-BR`)
-2. भाषा बदले वाला कंपोनेंट सेटअप करीं
-3. ऑटोमैटिक लोकेल डिटेक्शन लागू करीं
-4. जरूरी कॉन्फ़िगरेशन फाइल बनाईं
-
-**नोट:** AI-सहायता प्राप्त कोड जेनरेशन गैर-निर्धारक बा। कमिट करे से पहिले जेनरेट कइल कोड के समीक्षा करीं।
-
-[दस्तावेज़ पढ़ीं →](https://lingo.dev/en/mcp)
+[दस्तावेज पढ़ीं →](https://lingo.dev/en/mcp)
 
 ---
 
 ### Lingo.dev CLI
 
-अनुवाद के सिंक में रखल थकाऊ बा। रउआ एगो नया स्ट्रिंग जोड़ेनी, ओकर अनुवाद करल भूल जानी, अंतरराष्ट्रीय उपयोगकर्ता लोग के टूटल UI भेज देनी। या रउआ अनुवादक लोग के JSON फाइल भेजेनी, दिन भर इंतजार करेनी, फिर मैन्युअल रूप से उनकर काम के वापस मर्ज करेनी। 10+ भाषा में स्केल करे के मतलब बा सैकड़ों फाइल के प्रबंधन करल जे लगातार सिंक से बाहर हो जाला।
-
-Lingo.dev CLI एकरा के ऑटोमेट करेला। एकरा के रउआ के अनुवाद फाइल पर इंगित करीं, एगो कमांड चलाईं, आ हर लोकेल अपडेट हो जाला। एगो लॉकफाइल ट्रैक करेला कि का पहिले से अनुवादित बा, तs रउआ सिर्फ नया या बदलल सामग्री खातिर भुगतान करेनी। JSON, YAML, CSV, PO फाइल, आ markdown के समर्थन करेला।
-
-**सेटअप:**
+एक कमांड में JSON, YAML, markdown, CSV आ PO फाइल सभ के स्थानीयकरण करीं। एगो लॉकफाइल ट्रैक करेला कि का पहिले से स्थानीयकृत बा – बस नया भा बदलल सामग्री के प्रोसेस कइल जाला। Lingo.dev प रउआ स्थानीयकरण इंजन के डिफॉल्ट मानेला, भा अपना LLM लावल जाव (OpenAI, Anthropic, Google, Mistral, OpenRouter, Ollama)।
 
 ```bash
-# Initialize project
 npx lingo.dev@latest init
-
-# Run translations
 npx lingo.dev@latest run
 ```
 
-**ई कइसे काम करेला:**
-
-1. कॉन्फ़िगर कइल फाइल सभ से अनुवाद योग्य सामग्री निकालीं
-2. अनुवाद खातिर कंटेंट के LLM प्रोवाइडर के पास भेजीं
-3. अनुवादित कंटेंट वापस फाइल सिस्टम में लिखीं
-4. पूरा भइल अनुवाद के ट्रैक रखे खातिर `i18n.lock` फाइल बनाई (अनावश्यक प्रोसेसिंग से बचावेला)
-
-**कॉन्फ़िगरेशन:**
-
-`init` कमांड एगो `i18n.json` फाइल जेनरेट करेला। लोकेल आ बकेट के कॉन्फ़िगर करीं:
-
-```json
-{
-  "$schema": "https://lingo.dev/schema/i18n.json",
-  "version": "1.10",
-  "locale": {
-    "source": "en",
-    "targets": ["es", "fr", "de"]
-  },
-  "buckets": {
-    "json": {
-      "include": ["locales/[locale].json"]
-    }
-  }
-}
-```
-
-`provider` फील्ड वैकल्पिक बा (डिफ़ॉल्ट Lingo.dev Engine बा)। कस्टम LLM प्रोवाइडर खातिर:
-
-```json
-{
-  "provider": {
-    "id": "openai",
-    "model": "gpt-4o-mini",
-    "prompt": "Translate from {source} to {target}"
-  }
-}
-```
-
-**समर्थित LLM प्रोवाइडर:**
-
-- Lingo.dev Engine (अनुशंसित)
-- OpenAI
-- Anthropic
-- Google
-- Mistral
-- OpenRouter
-- Ollama
-
-[दस्तावेज़ पढ़ीं →](https://lingo.dev/en/cli)
+[दस्तावेज पढ़ीं →](https://lingo.dev/en/docs/cli)
 
 ---
 
 ### Lingo.dev CI/CD
 
-अनुवाद ऊ फीचर बा जवन हमेशा "लगभग पूरा" होखेला। इंजीनियर लोकेल अपडेट कइले बिना कोड मर्ज कर देला। QA स्टेजिंग में गायब अनुवाद पकड़ेला - या बदतर, यूजर प्रोडक्शन में पकड़ेला। मूल कारण: अनुवाद एगो मैनुअल स्टेप बा जेकरा के डेडलाइन के दबाव में छोड़ल आसान बा।
-
-Lingo.dev CI/CD अनुवाद के ऑटोमैटिक बना देला। हर पुश अनुवाद ट्रिगर करेला। गायब स्ट्रिंग कोड के प्रोडक्शन में पहुँचे से पहिले भर जाला। कवनो अनुशासन के जरूरत नइखे - पाइपलाइन संभाल लेला।
-
-**समर्थित प्लेटफॉर्म:**
-
-- GitHub Actions
-- GitLab CI/CD
-- Bitbucket Pipelines
-
-**GitHub Actions सेटअप:**
-
-`.github/workflows/translate.yml` बनाई:
-
-```yaml
-name: Translate
-on:
-  push:
-    branches: [main]
-permissions:
-  contents: write
-jobs:
-  translate:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Lingo.dev
-        uses: lingodotdev/lingo.dev@main
-        with:
-          api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
-```
-
-**सेटअप आवश्यकता:**
-
-1. रिपॉजिटरी सीक्रेट में `LINGODOTDEV_API_KEY` जोड़ दीं (Settings > Secrets and variables > Actions)
-2. PR वर्कफ्लो खातिर: Settings > Actions > General में "Allow GitHub Actions to create and approve pull requests" सक्षम करीं
-
-**वर्कफ़्लो विकल्प:**
-
-अनुवाद सीधे कमिट करीं:
+रउरा पाइपलाइन में निरंतर स्थानीयकरण। हर पुश से स्थानीयकरण शुरू हो जाला – कोड प्रोडक्शन में पहुँचे से पहिले खाली स्ट्रिंग भर दिहल जाला। GitHub Actions, GitLab CI/CD आ Bitbucket Pipelines के समर्थन करेला।
 
 ```yaml
 uses: lingodotdev/lingo.dev@main
@@ -239,250 +118,44 @@ with:
   api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
 ```
 
-अनुवाद के साथ पुल रिक्वेस्ट बनाईं:
-
-```yaml
-uses: lingodotdev/lingo.dev@main
-with:
-  api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
-  pull-request: true
-env:
-  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-```
-
-**उपलब्ध इनपुट:**
-
-| इनपुट                | डिफ़ॉल्ट                                       | विवरण                          |
-| -------------------- | ---------------------------------------------- | ------------------------------ |
-| `api-key`            | (जरूरी)                                        | Lingo.dev API की               |
-| `pull-request`       | `false`                                        | सीधे कमिट करे के बजाय PR बनाईं |
-| `commit-message`     | `"feat: update translations via @LingoDotDev"` | कस्टम कमिट संदेश               |
-| `pull-request-title` | `"feat: update translations via @LingoDotDev"` | कस्टम PR शीर्षक                |
-| `working-directory`  | `"."`                                          | जवना डायरेक्टरी में चले के बा  |
-| `parallel`           | `false`                                        | समानांतर प्रोसेसिंग सक्षम करीं |
-
-[डॉक्स पढ़ीं →](https://lingo.dev/en/ci/github)
+[दस्तावेज पढ़ीं →](https://lingo.dev/en/docs/integrations)
 
 ---
 
-### Lingo.dev SDK
+### Lingo.dev API
 
-स्टैटिक अनुवाद फाइल UI लेबल खातिर काम करेला, बाकिर यूजर-जेनरेटेड कंटेंट के का होई? चैट संदेश, प्रोडक्ट विवरण, सपोर्ट टिकट - जवन कंटेंट बिल्ड टाइम पर मौजूद नइखे ओकर पहिले से अनुवाद ना हो सकेला। रउआ बिना अनुवाद वाला टेक्स्ट देखावे खातिर मजबूर बानी या कस्टम अनुवाद पाइपलाइन बनावे के पड़ी।
+बैकएंड कोड से सीधे रउरा स्थानीयकरण इंजन के कॉल करीं। Webhook डिलीवरी, प्रति लोकेल विफलता अलगाव आ WebSocket के माध्यम से रियल-टाइम प्रगति के साथे सिंक्रोनस आ async स्थानीयकरण।
 
-Lingo.dev SDK रनटाइम पर कंटेंट के अनुवाद करेला। कवनो टेक्स्ट, ऑब्जेक्ट, या HTML पास करीं आ लोकलाइज्ड वर्जन वापस पाईं। रियल-टाइम चैट, डायनामिक नोटिफिकेशन, या कवनो कंटेंट जवन डिप्लॉयमेंट के बाद आवेला ओकरा खातिर काम करेला। JavaScript, PHP, Python, आ Ruby खातिर उपलब्ध बा।
-
-**इंस्टॉलेशन:**
-
-```bash
-npm install lingo.dev
-```
-
-**उपयोग:**
-
-```ts
-import { LingoDotDevEngine } from "lingo.dev/sdk";
-
-const lingoDotDev = new LingoDotDevEngine({
-  apiKey: process.env.LINGODOTDEV_API_KEY,
-});
-
-// Translate objects (preserves structure)
-const translated = await lingoDotDev.localizeObject(
-  { greeting: "Hello", farewell: "Goodbye" },
-  { sourceLocale: "en", targetLocale: "es" },
-);
-// { greeting: "Hola", farewell: "Adiós" }
-
-// Translate text
-const text = await lingoDotDev.localizeText("Hello!", {
-  sourceLocale: "en",
-  targetLocale: "fr",
-});
-
-// Translate to multiple languages at once
-const results = await lingoDotDev.batchLocalizeText("Hello!", {
-  sourceLocale: "en",
-  targetLocales: ["es", "fr", "de"],
-});
-
-// Translate chat (preserves speaker names)
-const chat = await lingoDotDev.localizeChat(
-  [{ name: "Alice", text: "Hello!" }],
-  { sourceLocale: "en", targetLocale: "es" },
-);
-
-// Translate HTML (preserves markup)
-const html = await lingoDotDev.localizeHtml("<h1>Welcome</h1>", {
-  sourceLocale: "en",
-  targetLocale: "de",
-});
-
-// Detect language
-const locale = await lingoDotDev.recognizeLocale("Bonjour le monde");
-// "fr"
-```
-
-**उपलब्ध SDK:**
-
-- [JavaScript SDK](https://lingo.dev/en/sdk/javascript) - वेब ऐप, Node.js
-- [PHP SDK](https://lingo.dev/en/sdk/php) - PHP, Laravel
-- [Python SDK](https://lingo.dev/en/sdk/python) - Django, Flask
-- [Ruby SDK](https://lingo.dev/en/sdk/ruby) - Rails
-
-[डॉक्स पढ़ीं →](https://lingo.dev/en/sdk)
+[दस्तावेज पढ़ीं →](https://lingo.dev/en/docs/api)
 
 ---
 
-### Lingo.dev Compiler
+### React खातिर Lingo Compiler (शुरुआती अल्फा)
 
-पारंपरिक i18n दखलअंदाज करे वाला बा। हर स्ट्रिंग के रउआ `t()` फंक्शन में लपेटले, अनुवाद कुंजी (`home.hero.title.v2`) गढ़ेनी, समांतर JSON फाइल बनाएनी, आ देखत बानी कि रउआ के कंपोनेंट स्थानीयकरण बायलरप्लेट से फूल गइल बा। ई अतना थकाऊ बा कि टीम इंटरनेशनलाइजेशन के तब तक टारेले जब तक ऊ एगो विशाल रिफैक्टरिंग नइखे बन जाला।
+i18n रैपर के बिना बिल्ड-टाइम React स्थानीयकरण। सादा अंग्रेजी पाठ के साथ कंपोनेंट लिखीं – कंपाइलर अनुवाद योग्य स्ट्रिंग के पहचान के बिल्ड टाइम पर स्थानीयकृत संस्करण बनावेला। ना अनुवाद कुंजी, ना JSON फाइल, ना `t()` फंक्शन। Next.js (App Router) आ Vite + React के समर्थन करेला।
 
-Lingo.dev Compiler औपचारिकता के खत्म क देला। सादा अंग्रेजी टेक्स्ट के साथ React कंपोनेंट लिखीं। कंपाइलर बिल्ड टाइम पर अनुवाद योग्य स्ट्रिंग के पहचान लेला आ स्वचालित रूप से स्थानीयकृत वेरिएंट जेनरेट क देला। ना कुंजी, ना JSON फाइल, ना रैपर फंक्शन - बस React कोड जवन कई भाषा में काम करेला।
-
-**इंस्टॉलेशन:**
-
-```bash
-pnpm install @lingo.dev/compiler
-```
-
-**प्रमाणीकरण:**
-
-```bash
-# Recommended: Sign up at lingo.dev and login
-npx lingo.dev@latest login
-
-# Alternative: Add API key to .env
-LINGODOTDEV_API_KEY=your_key_here
-
-# Or use direct LLM providers (Groq, OpenAI, Anthropic, Google)
-GROQ_API_KEY=your_key
-```
-
-**कॉन्फ़िगरेशन (Next.js):**
-
-```ts
-// next.config.ts
-import type { NextConfig } from "next";
-import { withLingo } from "@lingo.dev/compiler/next";
-
-const nextConfig: NextConfig = {};
-
-export default async function (): Promise<NextConfig> {
-  return await withLingo(nextConfig, {
-    sourceRoot: "./app",
-    sourceLocale: "en",
-    targetLocales: ["es", "fr", "de"],
-    models: "lingo.dev",
-    dev: { usePseudotranslator: true },
-  });
-}
-```
-
-**कॉन्फ़िगरेशन (Vite):**
-
-```ts
-// vite.config.ts
-import { lingoCompilerPlugin } from "@lingo.dev/compiler/vite";
-
-export default defineConfig({
-  plugins: [
-    lingoCompilerPlugin({
-      sourceRoot: "src",
-      sourceLocale: "en",
-      targetLocales: ["es", "fr", "de"],
-      models: "lingo.dev",
-      dev: { usePseudotranslator: true },
-    }),
-    react(),
-  ],
-});
-```
-
-**प्रोवाइडर सेटअप:**
-
-```tsx
-// app/layout.tsx (Next.js)
-import { LingoProvider } from "@lingo.dev/compiler/react";
-
-export default function RootLayout({ children }) {
-  return (
-    <LingoProvider>
-      <html>
-        <body>{children}</body>
-      </html>
-    </LingoProvider>
-  );
-}
-```
-
-**भाषा स्विचर:**
-
-```tsx
-import { useLocale, setLocale } from "@lingo.dev/compiler/react";
-
-export function LanguageSwitcher() {
-  const locale = useLocale();
-  return (
-    <select value={locale} onChange={(e) => setLocale(e.target.value)}>
-      <option value="en">English</option>
-      <option value="es">Español</option>
-    </select>
-  );
-}
-```
-
-**डेवलपमेंट:** `npm run dev` (पस्यूडोट्रांसलेटर के इस्तेमाल, कवनो API कॉल नइखे)
-
-**प्रोडक्शन:** पहिले `usePseudotranslator: false` सेट करीं, फिर `next build`
-
-`.lingo/` डायरेक्टरी के version control में कमिट करीं।
-
-**मुख्य विशेषता:**
-
-- शून्य रनटाइम प्रदर्शन लागत
-- ना अनुवाद कुंजी, ना JSON फाइल
-- ना `t()` फंक्शन या `<T>` रैपर कंपोनेंट
-- JSX में अनुवाद योग्य टेक्स्ट के अपने आप पता करेला
-- TypeScript के समर्थन
-- बहुवचन खातिर ICU MessageFormat
-- `data-lingo-override` एट्रिब्यूट से मैन्युअल ओवरराइड
-- बिल्ट-इन अनुवाद एडिटर विजेट
-
-**बिल्ड मोड:**
-
-- `pseudotranslator`: प्लेसहोल्डर अनुवाद के साथ डेवलपमेंट मोड (कवनो API लागत नइखे)
-- `real`: LLM के इस्तेमाल से असली अनुवाद बनाईं
-- `cache-only`: CI से पहिले से बनल अनुवाद के साथ प्रोडक्शन मोड (कवनो API कॉल नइखे)
-
-**समर्थित फ्रेमवर्क:**
-
-- Next.js (React Server Components के साथ App Router)
-- Vite + React (SPA आ SSR)
-
-अतिरिक्त फ्रेमवर्क समर्थन योजनाबद्ध बा।
-
-[दस्तावेज़ पढ़ीं →](https://lingo.dev/en/compiler)
+[दस्तावेज पढ़ीं →](https://lingo.dev/en/docs/react/compiler)
 
 ---
 
 ## योगदान
 
-योगदान के स्वागत बा। कृपया एह दिशा-निर्देशन के पालन करीं:
+योगदान के स्वागत बा। कृपया एह दिशानिर्देशन के पालन करीं:
 
-1. **समस्या:** [बग रिपोर्ट करीं या फीचर मागीं](https://github.com/lingodotdev/lingo.dev/issues)
-2. **पुल रिक्वेस्ट:** [परिवर्तन सबमिट करीं](https://github.com/lingodotdev/lingo.dev/pulls)
-   - हर PR खातिर एक changeset चाहीं: `pnpm new` (नॉन-रिलीज बदलाव खातिर `pnpm new:empty`)
-   - सबमिट करे से पहिले टेस्ट पास होखे के ध्यान दीं
-3. **डेवलपमेंट:** ई pnpm + turborepo मोनोरेपो ह
-   - डिपेंडेंसी इंस्टॉल करीं: `pnpm install`
+1. **समस्या:** [बग रिपोर्ट करीं भा सुविधा अनुरोध करीं](https://github.com/lingodotdev/lingo.dev/issues)
+2. **पुल अनुरोध:** [बदलाव सबमिट करीं](https://github.com/lingodotdev/lingo.dev/pulls)
+   - हर PR खातिर चेंजसेट जरूरी बा: `pnpm new` (भा गैर-रिलीज बदलाव खातिर `pnpm new:empty`)
+   - सबमिट करे से पहिले सुनिश्चित करीं कि टेस्ट पास हो जाव
+3. **विकास:** ई एगो pnpm + turborepo मोनोरेपो बा
+   - निर्भरता इंस्टॉल करीं: `pnpm install`
    - टेस्ट चलाईं: `pnpm test`
    - बिल्ड करीं: `pnpm build`
 
-**सहायता:** [Discord समुदाय](https://lingo.dev/go/discord)
+**समर्थन:** [Discord समुदाय](https://lingo.dev/go/discord)
 
 ## स्टार इतिहास
 
-अगर Lingo.dev उपयोगी लागे त हमनी के एगो स्टार दीं आ 10,000 स्टार तक पहुँचे में मदद करीं!
+अगर Lingo.dev रउरा काम के लागत बा त हमनी के एगो स्टार दीं आ 10,000 स्टार तक पहुँचे में मदद करीं!
 
 [
 
@@ -490,20 +163,13 @@ export function LanguageSwitcher() {
 
 ](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
 
-## स्थानीयकृत दस्तावेज
+## स्थानीयकृत दस्तावेज़ीकरण
 
 **उपलब्ध अनुवाद:**
 
 [English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [Português (Brasil)](/readme/pt-BR.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Polski](/readme/pl.md) • [Türkçe](/readme/tr.md) • [اردو](/readme/ur.md) • [भोजपुरी](/readme/bho.md) • [অসমীয়া](/readme/as-IN.md) • [ગુજરાતી](/readme/gu-IN.md) • [मराठी](/readme/mr-IN.md) • [ଓଡ଼ିଆ](/readme/or-IN.md) • [ਪੰਜਾਬੀ](/readme/pa-IN.md) • [සිංහල](/readme/si-LK.md) • [தமிழ்](/readme/ta-IN.md) • [తెలుగు](/readme/te-IN.md)
 
-**नया भाषा जोड़ल:**
+\*\*नया भाषा जोड़ल:
 
-1. [`i18n.json`](./i18n.json) में [BCP-47 फॉर्मेट](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) से locale code जोड़ि दीं
-2. एगो pull request सबमिट करीं
-
-**BCP-47 locale फॉर्मेट:** `language[-Script][-REGION]`
-
-- `language`: ISO 639-1/2/3 (छोट अक्षर): `en`, `zh`, `bho`
-- `Script`: ISO 15924 (पहिला अक्षर बड़, बाकी छोट): `Hans`, `Hant`, `Latn`
-- `REGION`: ISO 3166-1 alpha-2 (सगरी बड़ अक्षर): `US`, `CN`, `IN`
-- उदाहरण: `en`, `pt-BR`, `zh-Hans`, `sr-Cyrl-RS`
+1. [BCP-47 फॉर्मेट](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) के इस्तेमाल से [`i18n.json`](./i18n.json) में लोकेल कोड जोड़ीं
+2. पुल रिक्वेस्ट सबमिट करीं
