@@ -15,7 +15,7 @@
   <a href="#lingodev-mcp">Lingo React MCP</a> •
   <a href="#lingodev-cli">Lingo CLI</a> •
   <a href="#lingodev-cicd">Lingo GitHub Action</a> •
-  <a href="#lingodev-compiler">Compiler (Early alpha)</a>
+  <a href="#lingodev-compiler">Lingo Compiler for React (Early alpha)</a>
 </p>
 
 <p align="center">
@@ -46,12 +46,12 @@
 
 ## Quick Start
 
-| Tool                               | What it does                                        | Quick Command                      |
-| ---------------------------------- | --------------------------------------------------- | ---------------------------------- |
-| [**MCP**](#lingodev-mcp)           | AI-assisted i18n setup for React apps               | Prompt: `Set up i18n`              |
-| [**CLI**](#lingodev-cli)           | Localize JSON, YAML, markdown, CSV, PO files        | `npx lingo.dev@latest run`         |
-| [**CI/CD**](#lingodev-cicd)        | Continuous localization in GitHub Actions           | `uses: lingodotdev/lingo.dev@main` |
-| [**Compiler**](#lingodev-compiler) | Build-time React localization without i18n wrappers | `withLingo()` plugin               |
+| Tool                                               | What it does                                        | Quick Command                      |
+| -------------------------------------------------- | --------------------------------------------------- | ---------------------------------- |
+| [**Lingo React MCP**](#lingodev-mcp)               | AI-assisted i18n setup for React apps               | Prompt: `Set up i18n`              |
+| [**Lingo CLI**](#lingodev-cli)                     | Localize JSON, YAML, markdown, CSV, PO files        | `npx lingo.dev@latest run`         |
+| [**Lingo GitHub Action**](#lingodev-cicd)          | Continuous localization in GitHub Actions           | `uses: lingodotdev/lingo.dev@main` |
+| [**Lingo Compiler for React**](#lingodev-compiler) | Build-time React localization without i18n wrappers | `withLingo()` plugin               |
 
 ### Localization engines
 
@@ -102,7 +102,7 @@ Call your localization engine directly from backend code. Synchronous and async 
 
 ---
 
-### Lingo.dev Compiler
+### Lingo Compiler for React (Early alpha)
 
 Build-time React localization without i18n wrappers. Write components with plain English text – the compiler detects translatable strings and generates localized variants at build time. No translation keys, no JSON files, no `t()` functions. Supports Next.js (App Router) and Vite + React.
 
