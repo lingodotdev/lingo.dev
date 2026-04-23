@@ -44,9 +44,10 @@ function _createCsvLoader(
 
   return createLoader({
     async pull(locale, input) {
+      const firstNonEmptyLine =
+        input.split(/\r?\n/).find((line) => line.trim().length > 0) ?? "";
       const keyColumnName =
-        options?.keyColumn ??
-        detectKeyColumnName(input.split("\n").find((l) => l.length)!);
+        options?.keyColumn ?? detectKeyColumnName(firstNonEmptyLine);
       const inputParsed = parse(input, {
         columns: true,
         skip_empty_lines: true,
@@ -54,8 +55,12 @@ function _createCsvLoader(
       }) as Record<string, any>[];
 
       if (!validated) {
-        if (options?.keyColumn && inputParsed.length > 0) {
-          const availableColumns = Object.keys(inputParsed[0]);
+        if (options?.keyColumn) {
+          const [headerRow = []] = parse(input, {
+            to_line: 1,
+            skip_empty_lines: true,
+          }) as string[][];
+          const availableColumns = headerRow.map((col) => String(col));
           if (!availableColumns.includes(options.keyColumn)) {
             throw new Error(
               `CSV key column "${options.keyColumn}" is not present in the file. ` +
