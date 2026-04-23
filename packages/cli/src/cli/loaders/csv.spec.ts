@@ -94,4 +94,106 @@ describe("csv loader", () => {
       "The first pull must be for the default locale",
     );
   });
+
+  describe("key column validation", () => {
+    it("should throw a descriptive error when the key column has duplicate values", async () => {
+      // Mirrors the Salesfloor bug: first column is categorical, not unique,
+      // which previously caused silent row collapse.
+      const dupeCsv = buildCsv([
+        ["type", "en", "es"],
+        ["code", "Hello", ""],
+        ["code", "Bye", ""],
+        ["menu", "Home", ""],
+        ["menu", "Profile", ""],
+      ]);
+
+      const loader = createCsvLoader();
+      loader.setDefaultLocale("en");
+
+      await expect(loader.pull("en", dupeCsv)).rejects.toThrow(
+        /CSV column "type" has duplicate values/,
+      );
+    });
+
+    it("should not throw when the detected key column is unique", async () => {
+      const loader = createCsvLoader();
+      loader.setDefaultLocale("en");
+
+      // sampleCsv has unique `id` values — this should just work.
+      await expect(loader.pull("en", sampleCsv)).resolves.toBeDefined();
+    });
+
+    it("should use the `keyColumn` option instead of the first column", async () => {
+      // First column `type` is repeated; `id` is unique.
+      // With keyColumn: "id", the loader must use `id` and not fail on `type` dupes.
+      const csv = buildCsv([
+        ["type", "id", "en", "es"],
+        ["code", "hello", "Hello", ""],
+        ["code", "bye", "Bye", ""],
+        ["menu", "home", "Home", ""],
+      ]);
+
+      const loader = createCsvLoader({ keyColumn: "id" });
+      loader.setDefaultLocale("en");
+
+      const result = await loader.pull("en", csv);
+      expect(result).toEqual({ hello: "Hello", bye: "Bye", home: "Home" });
+    });
+
+    it("should throw when `keyColumn` points to a column not in the CSV", async () => {
+      const loader = createCsvLoader({ keyColumn: "nonexistent" });
+      loader.setDefaultLocale("en");
+
+      await expect(loader.pull("en", sampleCsv)).rejects.toThrow(
+        /CSV key column "nonexistent" is not present/,
+      );
+    });
+
+    it("should still throw on duplicates when `keyColumn` points at a non-unique column", async () => {
+      const csv = buildCsv([
+        ["id", "group", "en"],
+        ["1", "menu", "Hello"],
+        ["2", "menu", "Bye"],
+      ]);
+
+      const loader = createCsvLoader({ keyColumn: "group" });
+      loader.setDefaultLocale("en");
+
+      await expect(loader.pull("en", csv)).rejects.toThrow(
+        /CSV column "group" has duplicate values/,
+      );
+    });
+
+    it("should correctly push translations when `keyColumn` is not the first column", async () => {
+      // Metadata columns (`type`, `group`) come first; `id` is the key in the middle.
+      // Verifies that push matches translations by id (not row index) and preserves
+      // non-key columns through the round-trip.
+      const csv = buildCsv([
+        ["type", "group", "id", "en"],
+        ["code", "ui", "hello", "Hello"],
+        ["code", "ui", "bye", "Bye"],
+        ["menu", "nav", "home", "Home"],
+      ]);
+
+      const loader = createCsvLoader({ keyColumn: "id" });
+      loader.setDefaultLocale("en");
+      await loader.pull("en", csv);
+
+      const esCsv = await loader.push("es", {
+        hello: "Hola",
+        bye: "Adiós",
+        home: "Inicio",
+      });
+
+      const parsed = parse(esCsv, {
+        columns: true,
+        skip_empty_lines: true,
+      });
+      expect(parsed).toEqual([
+        { type: "code", group: "ui", id: "hello", en: "Hello", es: "Hola" },
+        { type: "code", group: "ui", id: "bye", en: "Bye", es: "Adiós" },
+        { type: "menu", group: "nav", id: "home", en: "Home", es: "Inicio" },
+      ]);
+    });
+  });
 });

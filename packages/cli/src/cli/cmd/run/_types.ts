@@ -1,9 +1,4 @@
-import {
-  bucketTypeSchema,
-  I18nConfig,
-  localeCodeSchema,
-  bucketTypes,
-} from "@lingo.dev/_spec";
+import { bucketTypeSchema, I18nConfig, bucketTypes } from "@lingo.dev/_spec";
 import { z } from "zod";
 import { ILocalizer } from "../../localizer/_types";
 
@@ -36,6 +31,7 @@ export type CmdRunTask = {
   localizableKeys: string[];
   onlyKeys: string[];
   formatter?: "prettier" | "biome";
+  keyColumn?: string;
 };
 
 export const flagsSchema = z.object({

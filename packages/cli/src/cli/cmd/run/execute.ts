@@ -34,9 +34,7 @@ export default async function execute(input: CmdRunContext) {
       {
         title: "Initializing localization engine",
         task: async (ctx, task) => {
-          task.title = `Localization engine ${chalk.hex(colors.green)(
-            "ready",
-          )} (${ctx.localizer!.id})`;
+          task.title = `Localization engine ${chalk.hex(colors.green)("ready")} (${ctx.localizer!.id})`;
         },
       },
       {
@@ -124,9 +122,9 @@ function createWorkerStatusMessage(args: {
     "[locale]",
     args.assignedTask.targetLocale,
   );
-  return `[${chalk.hex(colors.yellow)(
-    `${args.percentage}%`,
-  )}] Processing: ${chalk.dim(displayPath)} (${chalk.hex(colors.yellow)(
+  return `[${chalk.hex(colors.yellow)(`${args.percentage}%`)}] Processing: ${chalk.dim(displayPath)} (${chalk.hex(
+    colors.yellow,
+  )(
     args.assignedTask.sourceLocale,
   )} -> ${chalk.hex(colors.yellow)(args.assignedTask.targetLocale)})`;
 }
@@ -147,9 +145,7 @@ function createExecutionProgressMessage(ctx: CmdRunContext) {
 
   return `Processed ${chalk.green(succeededTasksCount)}/${
     ctx.tasks.length
-  }, Failed ${chalk.red(failedTasksCount)}, Skipped ${chalk.dim(
-    skippedTasksCount,
-  )}`;
+  }, Failed ${chalk.red(failedTasksCount)}, Skipped ${chalk.dim(skippedTasksCount)}`;
 }
 
 function createLoaderForTask(assignedTask: CmdRunTask) {
@@ -160,6 +156,7 @@ function createLoaderForTask(assignedTask: CmdRunTask) {
       defaultLocale: assignedTask.sourceLocale,
       injectLocale: assignedTask.injectLocale,
       formatter: assignedTask.formatter,
+      keyColumn: assignedTask.keyColumn,
     },
     assignedTask.lockedKeys,
     assignedTask.lockedPatterns,

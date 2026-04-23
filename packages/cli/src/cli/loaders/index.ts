@@ -58,6 +58,7 @@ type BucketLoaderOptions = {
   injectLocale?: string[];
   targetLocale?: string;
   formatter?: FormatterType;
+  keyColumn?: string;
 };
 
 /**
@@ -133,7 +134,7 @@ export default function createBucketLoader(
       return composeLoaders(
         createTextFileLoader(bucketPathPattern),
         createLockedPatternsLoader(lockedPatterns),
-        createCsvLoader(),
+        createCsvLoader({ keyColumn: options.keyColumn }),
         createEnsureKeyOrderLoader(),
         createFlatLoader(),
         createLockedKeysLoader(lockedKeys || []),

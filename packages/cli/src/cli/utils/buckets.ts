@@ -12,6 +12,11 @@ import {
 import { bucketTypeSchema } from "@lingo.dev/_spec";
 import Z from "zod";
 
+// Track bucket types we've already warned about for misplaced `keyColumn`,
+// so the warning fires only once per CLI invocation (getBuckets is called
+// from multiple command stages).
+const warnedKeyColumnTypes = new Set<string>();
+
 type BucketConfig = {
   type: Z.infer<typeof bucketTypeSchema>;
   paths: Array<{ pathPattern: string; delimiter?: LocaleDelimiter }>;
@@ -21,6 +26,7 @@ type BucketConfig = {
   ignoredKeys?: string[];
   preservedKeys?: string[];
   localizableKeys?: string[];
+  keyColumn?: string;
 };
 
 export function getBuckets(i18nConfig: I18nConfig) {
@@ -57,6 +63,19 @@ export function getBuckets(i18nConfig: I18nConfig) {
       }
       if (bucketEntry.localizableKeys) {
         config.localizableKeys = bucketEntry.localizableKeys;
+      }
+      if (bucketEntry.keyColumn) {
+        if (bucketType !== "csv") {
+          if (!warnedKeyColumnTypes.has(bucketType)) {
+            warnedKeyColumnTypes.add(bucketType);
+            console.warn(
+              `Warning: "keyColumn" is only supported on "csv" buckets, but was set on "${bucketType}". ` +
+                `The setting will be ignored. Remove it from this bucket's config to silence this warning.`,
+            );
+          }
+        } else {
+          config.keyColumn = bucketEntry.keyColumn;
+        }
       }
       return config;
     },
