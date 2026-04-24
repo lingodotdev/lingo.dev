@@ -147,6 +147,43 @@ describe("getBuckets", () => {
     ]);
   });
 
+  it("should accept `keyColumn` on a csv bucket", () => {
+    mockGlobSync(["src/translations.csv"]);
+    const buckets = getBuckets({
+      $schema: "https://lingo.dev/schema/i18n.json",
+      version: 0,
+      locale: { source: "en", targets: ["es"] },
+      buckets: {
+        csv: {
+          include: ["src/translations.csv"],
+          keyColumn: "id",
+        },
+      },
+    } as any);
+    expect(buckets[0].keyColumn).toBe("id");
+  });
+
+  it("should warn and ignore `keyColumn` when set on a non-csv bucket", () => {
+    mockGlobSync(["src/i18n/en.json"]);
+    const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+    const buckets = getBuckets({
+      $schema: "https://lingo.dev/schema/i18n.json",
+      version: 0,
+      locale: { source: "en", targets: ["es"] },
+      buckets: {
+        json: {
+          include: ["src/i18n/[locale].json"],
+          keyColumn: "id",
+        },
+      },
+    } as any);
+    expect(warnSpy).toHaveBeenCalledWith(
+      expect.stringMatching(/"keyColumn" is only supported on "csv" buckets/),
+    );
+    expect(buckets[0].keyColumn).toBeUndefined();
+    warnSpy.mockRestore();
+  });
+
   it("should return bucket with multiple locale placeholders", () => {
     mockGlobSync(
       ["src/i18n/en/en.json"],

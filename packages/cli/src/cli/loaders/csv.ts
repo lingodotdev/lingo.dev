@@ -15,8 +15,16 @@ export function detectKeyColumnName(csvString: string) {
   return firstColumn || "KEY";
 }
 
-export default function createCsvLoader() {
-  return composeLoaders(_createCsvLoader(), createPullOutputCleaner());
+export type CsvLoaderOptions = {
+  /**
+   * Name of the column to use as the unique row identifier.
+   * If omitted, defaults to the first column in the CSV header.
+   */
+  keyColumn?: string;
+};
+
+export default function createCsvLoader(options?: CsvLoaderOptions) {
+  return composeLoaders(_createCsvLoader(options), createPullOutputCleaner());
 }
 
 type InternalTransferState = {
@@ -25,17 +33,46 @@ type InternalTransferState = {
   items: Record<string, string>;
 };
 
-function _createCsvLoader(): ILoader<string, InternalTransferState> {
+function _createCsvLoader(
+  options?: CsvLoaderOptions,
+): ILoader<string, InternalTransferState> {
+  // Validation runs once per loader instance. The loader is created per file
+  // path, and the same file is pulled once per locale (source + each target) —
+  // re-validating on every pull would do the same O(N) work N+1 times for
+  // identical content, with no possibility of catching new issues.
+  let validated = false;
+
   return createLoader({
     async pull(locale, input) {
-      const keyColumnName = detectKeyColumnName(
-        input.split("\n").find((l) => l.length)!,
-      );
+      const firstNonEmptyLine =
+        input.split(/\r?\n/).find((line) => line.trim().length > 0) ?? "";
+      const keyColumnName =
+        options?.keyColumn ?? detectKeyColumnName(firstNonEmptyLine);
       const inputParsed = parse(input, {
         columns: true,
         skip_empty_lines: true,
         relax_column_count_less: true,
       }) as Record<string, any>[];
+
+      if (!validated) {
+        if (options?.keyColumn) {
+          const [headerRow = []] = parse(input, {
+            to_line: 1,
+            skip_empty_lines: true,
+          }) as string[][];
+          const availableColumns = headerRow.map((col) => String(col));
+          if (!availableColumns.includes(options.keyColumn)) {
+            throw new Error(
+              `CSV key column "${options.keyColumn}" is not present in the file. ` +
+                `Available columns: ${availableColumns.join(", ")}. ` +
+                `Either rename a column to "${options.keyColumn}" or update the "keyColumn" setting in your bucket config.`,
+            );
+          }
+        }
+
+        assertUniqueKeys(inputParsed, keyColumnName);
+        validated = true;
+      }
 
       const items: Record<string, string> = {};
 
@@ -87,6 +124,39 @@ function _createCsvLoader(): ILoader<string, InternalTransferState> {
       });
     },
   });
+}
+
+/**
+ * Validates that the key column has unique values across all rows.
+ * Without this check, rows with repeated key values silently overwrite
+ * each other when building the translation map, causing most source rows
+ * to be dropped and the last row's translation to be broadcast everywhere.
+ */
+function assertUniqueKeys(
+  rows: Record<string, any>[],
+  keyColumnName: string,
+): void {
+  const seen = new Set<string>();
+  const duplicates = new Set<string>();
+  for (const row of rows) {
+    const key = row[keyColumnName];
+    if (key === undefined || key === "") continue;
+    if (seen.has(key)) {
+      duplicates.add(key);
+    } else {
+      seen.add(key);
+    }
+  }
+  if (duplicates.size === 0) return;
+
+  const preview = [...duplicates].slice(0, 3).join(", ");
+  const more = duplicates.size > 3 ? `, and ${duplicates.size - 3} more` : "";
+  throw new Error(
+    `CSV column "${keyColumnName}" has duplicate values (${preview}${more}). ` +
+      `Lingo uses this column as a unique row identifier, so duplicates would cause rows to silently overwrite each other. ` +
+      `Fix: make the first column unique (add an "id" column or move your source-language column first), ` +
+      `or set "keyColumn" in this bucket's config to point at a column with unique values.`,
+  );
 }
 
 /**

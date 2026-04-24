@@ -199,6 +199,7 @@ export default new Command()
                 defaultLocale: sourceLocale,
                 injectLocale: bucket.injectLocale,
                 formatter: i18nConfig!.formatter,
+                keyColumn: bucket.keyColumn,
               },
               bucket.lockedKeys,
               bucket.lockedPatterns,
