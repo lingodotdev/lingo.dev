@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.133.11
+
+### Patch Changes
+
+- [`814ecdf`](https://github.com/lingodotdev/lingo.dev/commit/814ecdf3ffa6beb231ea5ed5176db41734f115e1) Thanks [@cherkanovart](https://github.com/cherkanovart)! - chore: remove stale TODO comment
+
 ## 0.133.10
 
 ### Patch Changes
