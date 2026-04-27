@@ -1,5 +1,16 @@
 # lingo.dev
 
+## 0.133.10
+
+### Patch Changes
+
+- [#2076](https://github.com/lingodotdev/lingo.dev/pull/2076) [`bb295f7`](https://github.com/lingodotdev/lingo.dev/commit/bb295f77c0c7b17f780b0080308bce9b7827a1ba) Thanks [@cherkanovart](https://github.com/cherkanovart)! - feat(cli): add `keyColumn` option for CSV buckets to specify which column is the unique row identifier, and validate key uniqueness to prevent silent data loss from duplicate keys
+
+- Updated dependencies [[`bb295f7`](https://github.com/lingodotdev/lingo.dev/commit/bb295f77c0c7b17f780b0080308bce9b7827a1ba)]:
+  - @lingo.dev/_spec@0.49.1
+  - @lingo.dev/_compiler@0.12.3
+  - @lingo.dev/_sdk@0.16.3
+
 ## 0.133.9
 
 ### Patch Changes
