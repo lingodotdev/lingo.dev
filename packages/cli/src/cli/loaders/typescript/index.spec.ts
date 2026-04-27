@@ -342,5 +342,4 @@ Incluye también "prueba"\`,
     );
   });
 
-  // TODO
 });
