@@ -185,6 +185,10 @@ function expandPlaceholderedGlob(
       // Find the position of the "[locale]" placeholder within the segment
       const pathPatternChunk = pathPatternChunks[localeSegmentIndex];
       const sourcePathChunk = sourcePathChunks[localeSegmentIndex];
+      // Case-insensitive: on Windows, `normalizePath` lowercases the matched
+      // path while `sourceLocale` retains its original casing (e.g. `en-US`),
+      // so a case-sensitive match here would fail and the `[locale]`
+      // placeholder would never be reinserted.
       const regexp = new RegExp(
         "(" +
           pathPatternChunk
@@ -192,6 +196,7 @@ function expandPlaceholderedGlob(
             .replaceAll("*", ".*")
             .replace("[locale]", `)${sourceLocale}(`) +
           ")",
+        "i",
       );
       const match = sourcePathChunk.match(regexp);
       if (match) {
