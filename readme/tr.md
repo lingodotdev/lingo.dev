@@ -3,23 +3,26 @@
     <img
       src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.png"
       width="100%"
-      alt="Lingo.dev"
+      alt="Lingo.dev – yerelleştirme mühendisliği platformu"
     />
   </a>
 </p>
 
 <p align="center">
   <strong>
-    Lingo.dev - LLM destekli yerelleştirme için açık kaynaklı i18n araç seti
+    Açık kaynaklı yerelleştirme mühendisliği araçları. Tutarlı, kaliteli
+    çeviriler için Lingo.dev yerelleştirme mühendisliği platformuna bağlanın.
   </strong>
 </p>
 
 <br />
 
 <p align="center">
-  <a href="#lingodev-mcp">MCP</a> •<a href="#lingodev-cli">CLI</a> •
-  <a href="#lingodev-cicd">CI/CD</a> •<a href="#lingodev-sdk">SDK</a> •
-  <a href="#lingodev-compiler">Compiler</a>
+  <a href="#lingodev-api">Lingo API</a> •
+  <a href="#lingodev-mcp">Lingo React MCP</a> •
+  <a href="#lingodev-cli">Lingo CLI</a> •
+  <a href="#lingodev-cicd">Lingo GitHub Action</a> •
+  <a href="#lingodev-compiler">React için Lingo Compiler (Erken alfa)</a>
 </p>
 
 <p align="center">
@@ -71,167 +74,43 @@
 
 ## Hızlı başlangıç
 
-| Araç                               | Kullanım Alanı                                                 | Hızlı Komut                        |
-| ---------------------------------- | -------------------------------------------------------------- | ---------------------------------- |
-| [**MCP**](#lingodev-mcp)           | React uygulamaları için AI destekli i18n kurulumu              | Prompt: `Set up i18n`              |
-| [**CLI**](#lingodev-cli)           | JSON, YAML, markdown, CSV, PO dosyalarını çevir                | `npx lingo.dev@latest run`         |
-| [**CI/CD**](#lingodev-cicd)        | GitHub Actions'ta otomatik çeviri hattı                        | `uses: lingodotdev/lingo.dev@main` |
-| [**SDK**](#lingodev-sdk)           | Dinamik içerik için çalışma zamanı çevirisi                    | `npm install lingo.dev`            |
-| [**Compiler**](#lingodev-compiler) | i18n wrapper'ları olmadan derleme zamanı React yerelleştirmesi | `withLingo()` eklentisi            |
+| Araç                                               | Ne yapar                                                          | Hızlı Komut                        |
+| -------------------------------------------------- | ----------------------------------------------------------------- | ---------------------------------- |
+| [**Lingo React MCP**](#lingodev-mcp)               | React uygulamaları için AI destekli i18n kurulumu                 | Komut: `Set up i18n`               |
+| [**Lingo CLI**](#lingodev-cli)                     | JSON, YAML, markdown, CSV, PO dosyalarını yerelleştir             | `npx lingo.dev@latest run`         |
+| [**Lingo GitHub Action**](#lingodev-cicd)          | GitHub Actions'ta sürekli yerelleştirme                           | `uses: lingodotdev/lingo.dev@main` |
+| [**Lingo Compiler for React**](#lingodev-compiler) | i18n sarmalayıcıları olmadan derleme zamanı React yerelleştirmesi | `withLingo()` eklentisi            |
+
+### Yerelleştirme motorları
+
+Bu araçlar [yerelleştirme motorlarına](https://lingo.dev) bağlanır – Lingo.dev yerelleştirme mühendisliği platformunda oluşturduğunuz durum bilgili çeviri API'leri. Her motor, sözlükleri, marka sesini ve yerel ayar başına talimatları her istekte kalıcı hale getirerek [terminoloji hatalarını %16,6–44,6 oranında azaltır](https://lingo.dev/research/retrieval-augmented-localization). Ya da [kendi LLM'nizi getirin](#lingodev-cli).
 
 ---
 
 ### Lingo.dev MCP
 
-React uygulamalarında i18n kurulumu, deneyimli geliştiriciler için bile hata yapmaya oldukça müsaittir. AI kodlama asistanları durumu daha da kötüleştirir: var olmayan API'ler hayal ederler, middleware yapılandırmalarını unuturlar, yönlendirmeyi bozarlar veya kaybolmadan önce yarım bir çözüm uygularlar. Sorun şu ki, i18n kurulumu birden fazla dosyada (yönlendirme, middleware, bileşenler, yapılandırma) koordineli değişikliklerin kesin bir sırasını gerektirir ve LLM'ler bu bağlamı korumakta zorlanır.
+React uygulamalarında i18n kurmak hataya açıktır – AI kodlama asistanları bile var olmayan API'leri hayal eder ve yönlendirmeyi bozar. Lingo.dev MCP, AI asistanlarına Next.js, React Router ve TanStack Start için çerçeveye özel i18n bilgisine yapılandırılmış erişim sağlar. Claude Code, Cursor, GitHub Copilot Agents ve Codex ile çalışır.
 
-Lingo.dev MCP, AI asistanlarına framework'e özgü i18n bilgisine yapılandırılmış erişim sağlayarak bu sorunu çözer. Asistanınız tahmin yürütmek yerine Next.js, React Router ve TanStack Start için doğrulanmış uygulama kalıplarını takip eder.
-
-**Desteklenen IDE'ler:**
-
-- Claude Code
-- Cursor
-- GitHub Copilot Agents
-- Codex (OpenAI)
-
-**Desteklenen framework'ler:**
-
-- Next.js (App Router & Pages Router v13-16)
-- TanStack Start (v1)
-- React Router (v7)
-
-**Kullanım:**
-
-MCP sunucusunu IDE'nizde yapılandırdıktan sonra ([hızlı başlangıç kılavuzlarına bakın](https://lingo.dev/en/mcp)), asistanınıza şu şekilde komut verin:
-
-```
-Set up i18n with the following locales: en, es, and pt-BR. The default locale is 'en'.
-```
-
-Asistan şunları yapacaktır:
-
-1. Yerel ayar tabanlı yönlendirmeyi yapılandırır (örn. `/en`, `/es`, `/pt-BR`)
-2. Dil değiştirme bileşenlerini kurar
-3. Otomatik yerel ayar tespiti uygular
-4. Gerekli yapılandırma dosyalarını üretir
-
-**Not:** AI destekli kod üretimi deterministik değildir. Commit etmeden önce oluşturulan kodu gözden geçirin.
-
-[Dokümantasyonu okuyun →](https://lingo.dev/en/mcp)
+[Dokümantasyonu oku →](https://lingo.dev/en/mcp)
 
 ---
 
 ### Lingo.dev CLI
 
-Çevirileri senkronize tutmak zahmetlidir. Yeni bir string eklersiniz, çevirmeyi unutursunuz, uluslararası kullanıcılara bozuk UI gönderirsiniz. Ya da JSON dosyalarını çevirmenlere gönderirsiniz, günlerce beklersiniz, sonra onların çalışmalarını manuel olarak geri birleştirirsiniz. 10+ dile ölçeklenmek, sürekli senkronizasyondan çıkan yüzlerce dosyayı yönetmek anlamına gelir.
-
-Lingo.dev CLI bunu otomatikleştirir. Çeviri dosyalarınıza yönlendirin, bir komut çalıştırın ve her yerel ayar güncellenir. Bir lockfile neyin zaten çevrildiğini takip eder, böylece yalnızca yeni veya değiştirilmiş içerik için ödeme yaparsınız. JSON, YAML, CSV, PO dosyalarını ve markdown'ı destekler.
-
-**Kurulum:**
+JSON, YAML, markdown, CSV ve PO dosyalarını tek komutla yerelleştirin. Bir kilit dosyası neyin zaten yerelleştirildiğini takip eder – yalnızca yeni veya değiştirilmiş içerik işlenir. Varsayılan olarak Lingo.dev'deki yerelleştirme motorunuzu kullanır veya kendi LLM'nizi getirin (OpenAI, Anthropic, Google, Mistral, OpenRouter, Ollama).
 
 ```bash
-# Initialize project
 npx lingo.dev@latest init
-
-# Run translations
 npx lingo.dev@latest run
 ```
 
-**Nasıl çalışır:**
-
-1. Yapılandırılmış dosyalardan çevrilebilir içerik çıkarır
-2. İçeriği çeviri için LLM sağlayıcısına gönderir
-3. Çevrilen içeriği dosya sistemine geri yazar
-4. Tamamlanan çevirileri izlemek için `i18n.lock` dosyası oluşturur (gereksiz işlemleri önler)
-
-**Yapılandırma:**
-
-`init` komutu bir `i18n.json` dosyası oluşturur. Yerel ayarları ve bucket'ları yapılandırın:
-
-```json
-{
-  "$schema": "https://lingo.dev/schema/i18n.json",
-  "version": "1.10",
-  "locale": {
-    "source": "en",
-    "targets": ["es", "fr", "de"]
-  },
-  "buckets": {
-    "json": {
-      "include": ["locales/[locale].json"]
-    }
-  }
-}
-```
-
-`provider` alanı isteğe bağlıdır (varsayılan olarak Lingo.dev Engine kullanılır). Özel LLM sağlayıcıları için:
-
-```json
-{
-  "provider": {
-    "id": "openai",
-    "model": "gpt-4o-mini",
-    "prompt": "Translate from {source} to {target}"
-  }
-}
-```
-
-**Desteklenen LLM sağlayıcıları:**
-
-- Lingo.dev Engine (önerilir)
-- OpenAI
-- Anthropic
-- Google
-- Mistral
-- OpenRouter
-- Ollama
-
-[Dokümantasyonu okuyun →](https://lingo.dev/en/cli)
+[Dokümantasyonu okuyun →](https://lingo.dev/en/docs/cli)
 
 ---
 
 ### Lingo.dev CI/CD
 
-Çeviriler her zaman "neredeyse bitti" durumunda olan özelliktir. Mühendisler yerel ayarları güncellemeden kodu birleştirir. QA, eksik çevirileri staging ortamında yakalar - ya da daha kötüsü, kullanıcılar production ortamında yakalar. Temel neden: çeviri, son teslim tarihi baskısı altında atlanması kolay olan manuel bir adımdır.
-
-Lingo.dev CI/CD çevirileri otomatik hale getirir. Her push çeviriyi tetikler. Eksik string'ler kod production ortamına ulaşmadan doldurulur. Disiplin gerekmez - pipeline bunu halleder.
-
-**Desteklenen platformlar:**
-
-- GitHub Actions
-- GitLab CI/CD
-- Bitbucket Pipelines
-
-**GitHub Actions kurulumu:**
-
-`.github/workflows/translate.yml` dosyasını oluşturun:
-
-```yaml
-name: Translate
-on:
-  push:
-    branches: [main]
-permissions:
-  contents: write
-jobs:
-  translate:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Lingo.dev
-        uses: lingodotdev/lingo.dev@main
-        with:
-          api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
-```
-
-**Kurulum gereksinimleri:**
-
-1. `LINGODOTDEV_API_KEY` değerini repository secret'larına ekleyin (Settings > Secrets and variables > Actions)
-2. PR workflow'ları için: Settings > Actions > General kısmında "Allow GitHub Actions to create and approve pull requests"'i etkinleştirin
-
-**Workflow seçenekleri:**
-
-Çevirileri doğrudan commit edin:
+Pipeline'ınızda sürekli yerelleştirme. Her push yerelleştirmeyi tetikler – eksik metinler kod üretime ulaşmadan doldurulur. GitHub Actions, GitLab CI/CD ve Bitbucket Pipelines desteklenir.
 
 ```yaml
 uses: lingodotdev/lingo.dev@main
@@ -239,239 +118,33 @@ with:
   api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
 ```
 
-Çevirilerle pull request oluşturun:
-
-```yaml
-uses: lingodotdev/lingo.dev@main
-with:
-  api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
-  pull-request: true
-env:
-  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-```
-
-**Kullanılabilir girdiler:**
-
-| Girdi                | Varsayılan                                     | Açıklama                          |
-| -------------------- | ---------------------------------------------- | --------------------------------- |
-| `api-key`            | (gerekli)                                      | Lingo.dev API anahtarı            |
-| `pull-request`       | `false`                                        | Doğrudan commit yerine PR oluştur |
-| `commit-message`     | `"feat: update translations via @LingoDotDev"` | Özel commit mesajı                |
-| `pull-request-title` | `"feat: update translations via @LingoDotDev"` | Özel PR başlığı                   |
-| `working-directory`  | `"."`                                          | Çalışma dizini                    |
-| `parallel`           | `false`                                        | Paralel işlemeyi etkinleştir      |
-
-[Dokümantasyonu okuyun →](https://lingo.dev/en/ci/github)
+[Dokümantasyonu okuyun →](https://lingo.dev/en/docs/integrations)
 
 ---
 
-### Lingo.dev SDK
+### Lingo.dev API
 
-Statik çeviri dosyaları UI etiketleri için işe yarar, ancak kullanıcı tarafından oluşturulan içerik ne olacak? Sohbet mesajları, ürün açıklamaları, destek talepleri - derleme zamanında mevcut olmayan içerik önceden çevrilemez. Çevrilmemiş metin göstermek veya özel bir çeviri pipeline'ı oluşturmak zorunda kalırsınız.
+Yerelleştirme motorunuzu doğrudan backend kodundan çağırın. Webhook teslimi ile senkron ve asenkron yerelleştirme, yerel ayar başına hata izolasyonu ve WebSocket üzerinden gerçek zamanlı ilerleme.
 
-Lingo.dev SDK içeriği çalışma zamanında çevirir. Herhangi bir metin, nesne veya HTML gönderin ve yerelleştirilmiş bir sürüm alın. Gerçek zamanlı sohbet, dinamik bildirimler veya dağıtımdan sonra gelen herhangi bir içerik için çalışır. JavaScript, PHP, Python ve Ruby için kullanılabilir.
-
-**Kurulum:**
-
-```bash
-npm install lingo.dev
-```
-
-**Kullanım:**
-
-```ts
-import { LingoDotDevEngine } from "lingo.dev/sdk";
-
-const lingoDotDev = new LingoDotDevEngine({
-  apiKey: process.env.LINGODOTDEV_API_KEY,
-});
-
-// Translate objects (preserves structure)
-const translated = await lingoDotDev.localizeObject(
-  { greeting: "Hello", farewell: "Goodbye" },
-  { sourceLocale: "en", targetLocale: "es" },
-);
-// { greeting: "Hola", farewell: "Adiós" }
-
-// Translate text
-const text = await lingoDotDev.localizeText("Hello!", {
-  sourceLocale: "en",
-  targetLocale: "fr",
-});
-
-// Translate to multiple languages at once
-const results = await lingoDotDev.batchLocalizeText("Hello!", {
-  sourceLocale: "en",
-  targetLocales: ["es", "fr", "de"],
-});
-
-// Translate chat (preserves speaker names)
-const chat = await lingoDotDev.localizeChat(
-  [{ name: "Alice", text: "Hello!" }],
-  { sourceLocale: "en", targetLocale: "es" },
-);
-
-// Translate HTML (preserves markup)
-const html = await lingoDotDev.localizeHtml("<h1>Welcome</h1>", {
-  sourceLocale: "en",
-  targetLocale: "de",
-});
-
-// Detect language
-const locale = await lingoDotDev.recognizeLocale("Bonjour le monde");
-// "fr"
-```
-
-**Kullanılabilir SDK'lar:**
-
-- [JavaScript SDK](https://lingo.dev/en/sdk/javascript) - Web uygulamaları, Node.js
-- [PHP SDK](https://lingo.dev/en/sdk/php) - PHP, Laravel
-- [Python SDK](https://lingo.dev/en/sdk/python) - Django, Flask
-- [Ruby SDK](https://lingo.dev/en/sdk/ruby) - Rails
-
-[Dokümantasyonu okuyun →](https://lingo.dev/en/sdk)
+[Dokümantasyonu okuyun →](https://lingo.dev/en/docs/api)
 
 ---
 
-### Lingo.dev Compiler
+### React için Lingo Compiler (Erken alfa)
 
-Geleneksel i18n müdahaleci bir yaklaşımdır. Her bir string'i `t()` fonksiyonlarına sararsınız, çeviri anahtarları icat edersiniz (`home.hero.title.v2`), paralel JSON dosyalarını yönetirsiniz ve bileşenlerinizin yerelleştirme şablon kodu ile şişmesini izlersiniz. O kadar zahmetlidir ki ekipler, uluslararasılaştırmayı büyük bir refaktör gerekene kadar erteler.
+i18n sarmalayıcıları olmadan derleme zamanı React yerelleştirmesi. Bileşenleri düz İngilizce metinle yazın – derleyici çevrilebilir metinleri algılar ve derleme zamanında yerelleştirilmiş varyantlar oluşturur. Çeviri anahtarları yok, JSON dosyaları yok, `t()` fonksiyonları yok. Next.js (App Router) ve Vite + React desteklenir.
 
-Lingo.dev Compiler tüm karmaşıklığı ortadan kaldırır. React bileşenlerini düz İngilizce metinle yazın. Derleyici, derleme zamanında çevrilebilir metinleri algılar ve yerelleştirilmiş varyantları otomatik olarak oluşturur. Anahtar yok, JSON dosyası yok, sarmalayıcı fonksiyon yok - sadece birden fazla dilde çalışan React kodu.
-
-**Kurulum:**
-
-```bash
-pnpm install @lingo.dev/compiler
-```
-
-**Kimlik doğrulama:**
-
-```bash
-# Recommended: Sign up at lingo.dev and login
-npx lingo.dev@latest login
-
-# Alternative: Add API key to .env
-LINGODOTDEV_API_KEY=your_key_here
-
-# Or use direct LLM providers (Groq, OpenAI, Anthropic, Google)
-GROQ_API_KEY=your_key
-```
-
-**Yapılandırma (Next.js):**
-
-```ts
-// next.config.ts
-import type { NextConfig } from "next";
-import { withLingo } from "@lingo.dev/compiler/next";
-
-const nextConfig: NextConfig = {};
-
-export default async function (): Promise<NextConfig> {
-  return await withLingo(nextConfig, {
-    sourceRoot: "./app",
-    sourceLocale: "en",
-    targetLocales: ["es", "fr", "de"],
-    models: "lingo.dev",
-    dev: { usePseudotranslator: true },
-  });
-}
-```
-
-**Yapılandırma (Vite):**
-
-```ts
-// vite.config.ts
-import { lingoCompilerPlugin } from "@lingo.dev/compiler/vite";
-
-export default defineConfig({
-  plugins: [
-    lingoCompilerPlugin({
-      sourceRoot: "src",
-      sourceLocale: "en",
-      targetLocales: ["es", "fr", "de"],
-      models: "lingo.dev",
-      dev: { usePseudotranslator: true },
-    }),
-    react(),
-  ],
-});
-```
-
-**Provider kurulumu:**
-
-```tsx
-// app/layout.tsx (Next.js)
-import { LingoProvider } from "@lingo.dev/compiler/react";
-
-export default function RootLayout({ children }) {
-  return (
-    <LingoProvider>
-      <html>
-        <body>{children}</body>
-      </html>
-    </LingoProvider>
-  );
-}
-```
-
-**Dil değiştirici:**
-
-```tsx
-import { useLocale, setLocale } from "@lingo.dev/compiler/react";
-
-export function LanguageSwitcher() {
-  const locale = useLocale();
-  return (
-    <select value={locale} onChange={(e) => setLocale(e.target.value)}>
-      <option value="en">English</option>
-      <option value="es">Español</option>
-    </select>
-  );
-}
-```
-
-**Geliştirme:** `npm run dev` (pseudotranslator kullanır, API çağrısı yoktur)
-
-**Üretim:** `usePseudotranslator: false` ayarlayın, sonra `next build` çalıştırın
-
-`.lingo/` dizinini sürüm kontrolüne ekleyin.
-
-**Temel özellikler:**
-
-- Sıfır çalışma zamanı performans maliyeti
-- Çeviri anahtarı veya JSON dosyası gerekmez
-- `t()` fonksiyonları ya da `<T>` sarmalayıcı bileşen yok
-- JSX içinde çevrilebilir metnin otomatik algılanması
-- TypeScript desteği
-- Çoğullar için ICU MessageFormat
-- `data-lingo-override` özniteliği ile manuel geçersiz kılmalar
-- Dahili çeviri düzenleyici aracı
-
-**Derleme modları:**
-
-- `pseudotranslator`: Yer tutucu çevirilerle geliştirme modu (API maliyeti yok)
-- `real`: LLM'ler ile gerçek çeviriler üret
-- `cache-only`: CI tarafından önceden oluşturulmuş çevirilerle üretim modu (API çağrısı yok)
-
-**Desteklenen framework'ler:**
-
-- Next.js (React Server Components ile App Router)
-- Vite + React (SPA ve SSR)
-
-Ek framework desteği planlanmaktadır.
-
-[Dokümantasyonu okuyun →](https://lingo.dev/en/compiler)
+[Dokümantasyonu okuyun →](https://lingo.dev/en/docs/react/compiler)
 
 ---
 
-## Katkıda bulunma
+## Katkıda Bulunma
 
-Katkılarınızı bekliyoruz. Lütfen şu yönergeleri izleyin:
+Katkılar beklenir. Lütfen şu yönergeleri izleyin:
 
-1. **Sorunlar:** [Hata bildir veya özellik iste](https://github.com/lingodotdev/lingo.dev/issues)
-2. **Pull Request'ler:** [Değişiklik gönder](https://github.com/lingodotdev/lingo.dev/pulls)
-   - Her PR bir changeset gerektirir: `pnpm new` (veya yayın dışı değişiklikler için `pnpm new:empty`)
+1. **Sorunlar:** [Hata bildirin veya özellik isteyin](https://github.com/lingodotdev/lingo.dev/issues)
+2. **Pull Request'ler:** [Değişiklik gönderin](https://github.com/lingodotdev/lingo.dev/pulls)
+   - Her PR bir changeset gerektirir: `pnpm new` (veya sürüm dışı değişiklikler için `pnpm new:empty`)
    - Göndermeden önce testlerin geçtiğinden emin olun
 3. **Geliştirme:** Bu bir pnpm + turborepo monorepo'sudur
    - Bağımlılıkları yükleyin: `pnpm install`
@@ -480,17 +153,17 @@ Katkılarınızı bekliyoruz. Lütfen şu yönergeleri izleyin:
 
 **Destek:** [Discord topluluğu](https://lingo.dev/go/discord)
 
-## Yıldız geçmişi
+## Yıldız Geçmişi
 
-Lingo.dev'i faydalı buluyorsanız, bize bir yıldız verin ve 10.000 yıldıza ulaşmamıza yardımcı olun!
+Lingo.dev'i faydalı buluyorsanız, bize yıldız verin ve 10.000 yıldıza ulaşmamıza yardımcı olun!
 
 [
 
-![Yıldız geçmişi grafiği](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
+![Yıldız Geçmişi Grafiği](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
 
 ](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
 
-## Yerelleştirilmiş dokümantasyon
+## Yerelleştirilmiş Belgeler
 
 **Mevcut çeviriler:**
 
@@ -498,12 +171,5 @@ Lingo.dev'i faydalı buluyorsanız, bize bir yıldız verin ve 10.000 yıldıza 
 
 **Yeni bir dil eklemek için:**
 
-1. [`i18n.json`](./i18n.json) dosyasına [BCP-47 formatında](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) yerel ayar kodunu ekleyin
+1. [BCP-47 formatını](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) kullanarak yerel kod bilgisini [`i18n.json`](./i18n.json) dosyasına ekleyin
 2. Bir pull request gönderin
-
-**BCP-47 yerel ayar formatı:** `language[-Script][-REGION]`
-
-- `language`: ISO 639-1/2/3 (küçük harf): `en`, `zh`, `bho`
-- `Script`: ISO 15924 (baş harfi büyük): `Hans`, `Hant`, `Latn`
-- `REGION`: ISO 3166-1 alpha-2 (büyük harf): `US`, `CN`, `IN`
-- Örnekler: `en`, `pt-BR`, `zh-Hans`, `sr-Cyrl-RS`
