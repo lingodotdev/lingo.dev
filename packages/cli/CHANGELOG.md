@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.133.12
+
+### Patch Changes
+
+- [#2082](https://github.com/lingodotdev/lingo.dev/pull/2082) [`34f5b6f`](https://github.com/lingodotdev/lingo.dev/commit/34f5b6ff6be91c5a463c4e97fc0a923cf8c7743b) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Fix Windows: translations now generate for mixed-case source locales (e.g. `en-US`). The placeholder reinsertion regex in `buckets.ts` was case-sensitive while paths were lowercased on Windows, so `[locale]` was lost from the matched pattern and only the source file was rewritten.
+
 ## 0.133.11
 
 ### Patch Changes
