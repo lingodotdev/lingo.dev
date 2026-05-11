@@ -184,6 +184,49 @@ describe("getBuckets", () => {
     warnSpy.mockRestore();
   });
 
+  it("should reinsert [locale] on Windows when source locale has uppercase letters", () => {
+    // On Windows, `normalizePath` lowercases the path returned from glob to
+    // compensate for case-insensitive filesystems. The placeholder
+    // reinsertion regex must therefore match case-insensitively or the
+    // `[locale]` token is lost — see the customer report where translations
+    // were never generated on Windows for sources like `en-US`.
+    const originalPlatform = Object.getOwnPropertyDescriptor(
+      process,
+      "platform",
+    );
+    Object.defineProperty(process, "platform", {
+      value: "win32",
+      configurable: true,
+    });
+    try {
+      mockGlobSync(["src/assets/locales/en-US/common.json"]);
+      const i18nConfig = {
+        $schema: "https://lingo.dev/schema/i18n.json",
+        version: 0,
+        locale: { source: "en-US", targets: ["de-DE", "pl-PL", "es-ES"] },
+        buckets: {
+          json: { include: ["src/assets/locales/[locale]/*.json"] },
+        },
+      };
+      const buckets = getBuckets(i18nConfig as any);
+      expect(normalizePaths(buckets)).toEqual([
+        {
+          type: "json",
+          paths: [
+            {
+              pathPattern: "src/assets/locales/[locale]/common.json",
+              delimiter: null,
+            },
+          ],
+        },
+      ]);
+    } finally {
+      if (originalPlatform) {
+        Object.defineProperty(process, "platform", originalPlatform);
+      }
+    }
+  });
+
   it("should return bucket with multiple locale placeholders", () => {
     mockGlobSync(
       ["src/i18n/en/en.json"],
