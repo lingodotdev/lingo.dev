@@ -1,5 +1,28 @@
 # lingo.dev
 
+## 0.133.12
+
+### Patch Changes
+
+- [#2082](https://github.com/lingodotdev/lingo.dev/pull/2082) [`34f5b6f`](https://github.com/lingodotdev/lingo.dev/commit/34f5b6ff6be91c5a463c4e97fc0a923cf8c7743b) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Fix Windows: translations now generate for mixed-case source locales (e.g. `en-US`). The placeholder reinsertion regex in `buckets.ts` was case-sensitive while paths were lowercased on Windows, so `[locale]` was lost from the matched pattern and only the source file was rewritten.
+
+## 0.133.11
+
+### Patch Changes
+
+- [`814ecdf`](https://github.com/lingodotdev/lingo.dev/commit/814ecdf3ffa6beb231ea5ed5176db41734f115e1) Thanks [@cherkanovart](https://github.com/cherkanovart)! - chore: remove stale TODO comment
+
+## 0.133.10
+
+### Patch Changes
+
+- [#2076](https://github.com/lingodotdev/lingo.dev/pull/2076) [`bb295f7`](https://github.com/lingodotdev/lingo.dev/commit/bb295f77c0c7b17f780b0080308bce9b7827a1ba) Thanks [@cherkanovart](https://github.com/cherkanovart)! - feat(cli): add `keyColumn` option for CSV buckets to specify which column is the unique row identifier, and validate key uniqueness to prevent silent data loss from duplicate keys
+
+- Updated dependencies [[`bb295f7`](https://github.com/lingodotdev/lingo.dev/commit/bb295f77c0c7b17f780b0080308bce9b7827a1ba)]:
+  - @lingo.dev/_spec@0.49.1
+  - @lingo.dev/_compiler@0.12.3
+  - @lingo.dev/_sdk@0.16.3
+
 ## 0.133.9
 
 ### Patch Changes

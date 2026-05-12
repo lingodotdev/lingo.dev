@@ -39,23 +39,15 @@ export default async function plan(
         task: async (ctx, task) => {
           const bucketCount = buckets.length;
           const bucketFilter = input.flags.bucket
-            ? ` ${chalk.dim(
-                `(filtered by: ${chalk.hex(colors.yellow)(
-                  input.flags.bucket!.join(", "),
-                )})`,
-              )}`
+            ? ` ${chalk.dim(`(filtered by: ${chalk.hex(colors.yellow)(input.flags.bucket!.join(", "))})`)}`
             : "";
-          task.title = `Found ${chalk.hex(colors.yellow)(
-            bucketCount.toString(),
-          )} bucket(s)${bucketFilter}`;
+          task.title = `Found ${chalk.hex(colors.yellow)(bucketCount.toString())} bucket(s)${bucketFilter}`;
         },
       },
       {
         title: "Detecting locales",
         task: async (ctx, task) => {
-          task.title = `Found ${chalk.hex(colors.yellow)(
-            _targetLocales.length.toString(),
-          )} target locale(s)`;
+          task.title = `Found ${chalk.hex(colors.yellow)(_targetLocales.length.toString())} target locale(s)`;
         },
       },
       {
@@ -82,15 +74,9 @@ export default async function plan(
           }
 
           const fileFilter = input.flags.file
-            ? ` ${chalk.dim(
-                `(filtered by: ${chalk.hex(colors.yellow)(
-                  input.flags.file.join(", "),
-                )})`,
-              )}`
+            ? ` ${chalk.dim(`(filtered by: ${chalk.hex(colors.yellow)(input.flags.file.join(", "))})`)}`
             : "";
-          task.title = `Found ${chalk.hex(colors.yellow)(
-            patterns.length.toString(),
-          )} path pattern(s)${fileFilter}`;
+          task.title = `Found ${chalk.hex(colors.yellow)(patterns.length.toString())} path pattern(s)${fileFilter}`;
         },
       },
       {
@@ -137,14 +123,13 @@ export default async function plan(
                   localizableKeys: bucket.localizableKeys || [],
                   onlyKeys: input.flags.key || [],
                   formatter: input.config!.formatter,
+                  keyColumn: bucket.keyColumn,
                 });
               }
             }
           }
 
-          task.title = `Prepared ${chalk.hex(colors.green)(
-            ctx.tasks.length.toString(),
-          )} translation task(s)`;
+          task.title = `Prepared ${chalk.hex(colors.green)(ctx.tasks.length.toString())} translation task(s)`;
         },
       },
     ],

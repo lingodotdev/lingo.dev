@@ -40,7 +40,7 @@ Failing these pre-requisites, your PR stands to be closed.
 
 - Node.js 18+
 - pnpm (`npm install -g pnpm`)
-- AI API key (Groq, Google, or Mistral) - [setup guide](https://lingo.dev/en/cli/quick-start#step-2-authentication)
+- AI API key (Groq, Google, or Mistral) - [setup guide](https://lingo.dev/en/docs/cli/setup)
 
 ### Setup
 

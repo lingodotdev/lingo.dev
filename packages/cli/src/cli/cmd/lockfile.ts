@@ -42,6 +42,7 @@ export default new Command()
             {
               defaultLocale: sourceLocale,
               formatter: i18nConfig!.formatter,
+              keyColumn: bucket.keyColumn,
             },
             bucket.lockedKeys,
             bucket.lockedPatterns,

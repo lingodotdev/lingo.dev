@@ -10,7 +10,8 @@
     "csv": {
       "include": [
         "./example.csv"
-      ]
+      ],
+      "keyColumn": "KEY"
     }
   },
   "$schema": "https://lingo.dev/schema/i18n.json"

@@ -241,6 +241,11 @@ export const bucketValueSchemaV1_3 = Z.object({
     .describe(
       "Keys within files where the current locale should be injected or removed.",
     ),
+  keyColumn: Z.string()
+    .optional()
+    .describe(
+      "CSV buckets only: name of the column to use as the unique row identifier. Defaults to the first column in the CSV header.",
+    ),
 }).describe("Configuration options for a translation bucket.");
 
 export const configV1_3Definition = extendConfigDefinition(
