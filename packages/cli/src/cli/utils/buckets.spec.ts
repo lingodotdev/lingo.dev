@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import { getBuckets } from "./buckets";
 import * as pkg from "glob";
 import type { Path } from "glob";
@@ -12,6 +12,13 @@ vi.mock("glob", () => ({
 }));
 
 describe("getBuckets", () => {
+  // WHY: mockReturnValueOnce queues accumulate across tests if not cleared,
+  // and toHaveBeenCalledWith matches the full call history. Reset both so each
+  // test sees a clean mock.
+  beforeEach(() => {
+    vi.mocked(glob.sync).mockReset();
+  });
+
   const makeI18nConfig = (include: any[], exclude?: any[]) => ({
     $schema: "https://lingo.dev/schema/i18n.json",
     version: 0,
@@ -482,7 +489,8 @@ describe("getBuckets", () => {
       mockGlobSync([]);
       const i18nConfig = makeI18nConfig(["src/**/[locale].json"]);
       getBuckets(i18nConfig);
-      expect(vi.mocked(glob.sync)).toHaveBeenCalledWith(
+      expect(vi.mocked(glob.sync)).toHaveBeenCalledTimes(1);
+      expect(vi.mocked(glob.sync)).toHaveBeenLastCalledWith(
         expect.any(String),
         expect.objectContaining({
           ignore: expect.arrayContaining([
@@ -497,7 +505,8 @@ describe("getBuckets", () => {
       mockGlobSync([]);
       const i18nConfig = makeI18nConfig(["src/*/[locale].json"]);
       getBuckets(i18nConfig);
-      expect(vi.mocked(glob.sync)).toHaveBeenCalledWith(
+      expect(vi.mocked(glob.sync)).toHaveBeenCalledTimes(1);
+      expect(vi.mocked(glob.sync)).toHaveBeenLastCalledWith(
         expect.any(String),
         expect.objectContaining({ ignore: undefined }),
       );
@@ -507,7 +516,8 @@ describe("getBuckets", () => {
       mockGlobSync([]);
       const i18nConfig = makeI18nConfig(["src/**/[locale].json"]);
       getBuckets(i18nConfig);
-      expect(vi.mocked(glob.sync)).toHaveBeenCalledWith(
+      expect(vi.mocked(glob.sync)).toHaveBeenCalledTimes(1);
+      expect(vi.mocked(glob.sync)).toHaveBeenLastCalledWith(
         expect.any(String),
         expect.objectContaining({ follow: false }),
       );
@@ -517,7 +527,8 @@ describe("getBuckets", () => {
       mockGlobSync([]);
       const i18nConfig = makeI18nConfig(["src/[locale].json"]);
       getBuckets(i18nConfig);
-      expect(vi.mocked(glob.sync)).toHaveBeenCalledWith(
+      expect(vi.mocked(glob.sync)).toHaveBeenCalledTimes(1);
+      expect(vi.mocked(glob.sync)).toHaveBeenLastCalledWith(
         expect.any(String),
         expect.objectContaining({ follow: true }),
       );
