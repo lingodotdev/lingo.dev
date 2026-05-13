@@ -182,6 +182,7 @@
     "ink": "4.2.0",
     "ink-progress-bar": "3.0.0",
     "ink-spinner": "5.0.0",
+    "minimatch": "10.1.1",
     "inquirer": "12.6.0",
     "interactive-commander": "0.5.194",
     "is-url": "1.2.4",

@@ -13,6 +13,7 @@ export const docLinks = {
   connectionFailed: "https://lingo.dev/cli",
   invalidType: "https://lingo.dev/cli",
   invalidPathPattern: "https://lingo.dev/cli",
+  ambiguousPathPattern: "https://lingo.dev/cli",
   // corrected key (previously misspelled as "androidResouceError")
   androidResourceError: "https://lingo.dev/cli",
   // legacy alias for backward compatibility
