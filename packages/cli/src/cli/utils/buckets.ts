@@ -359,31 +359,64 @@ function buildLocalePlaceholderSegment(
   fullSource: string,
 ): string {
   const placeholder = "[locale]";
-  const placeholderIndex = patternChunk.indexOf(placeholder);
-  if (placeholderIndex === -1) {
+  if (!patternChunk.includes(placeholder)) {
     return sourceChunk;
   }
 
-  const leftGlob = patternChunk.slice(0, placeholderIndex);
-  const rightGlob = patternChunk.slice(placeholderIndex + placeholder.length);
-  const leftMatches = (value: string) =>
-    leftGlob ? minimatch(value, leftGlob, { dot: true }) : value.length === 0;
-  const rightMatches = (value: string) =>
-    rightGlob ? minimatch(value, rightGlob, { dot: true }) : value.length === 0;
-
-  let position = -1;
-  while ((position = sourceChunk.indexOf(locale, position + 1)) !== -1) {
-    const prefix = sourceChunk.slice(0, position);
-    const suffix = sourceChunk.slice(position + locale.length);
-    if (leftMatches(prefix) && rightMatches(suffix)) {
-      return `${prefix}${placeholder}${suffix}`;
-    }
+  // Recursively restore every [locale] occurrence in the segment. At each
+  // step we consume one literal block (everything up to the next
+  // [locale] token), then locate the locale value in the remaining source,
+  // and recurse on what is left of pattern and source. This supports
+  // patterns like "app-[locale]-[locale].json" against "app-en-en.json".
+  const restored = restoreLocaleInSegment(patternChunk, sourceChunk, locale);
+  if (restored !== null) {
+    return restored;
   }
 
   throw new CLIError({
     message: `Pattern "${fullPattern}" matched file "${fullSource}", but the [locale] position inside segment "${patternChunk}" could not be unambiguously restored from "${sourceChunk}". Adjust the pattern so [locale] is surrounded by literal characters or a unique wildcard.`,
     docUrl: "ambiguousPathPattern",
   });
+}
+
+function restoreLocaleInSegment(
+  pattern: string,
+  source: string,
+  locale: string,
+): string | null {
+  const placeholder = "[locale]";
+  const placeholderIndex = pattern.indexOf(placeholder);
+  if (placeholderIndex === -1) {
+    // No more placeholders — the remaining source must satisfy the
+    // remaining pattern as a literal/glob suffix.
+    if (pattern.length === 0) {
+      return source.length === 0 ? "" : null;
+    }
+    return minimatch(source, pattern, { dot: true }) ? source : null;
+  }
+
+  const leftGlob = pattern.slice(0, placeholderIndex);
+  const remainingPattern = pattern.slice(placeholderIndex + placeholder.length);
+
+  let position = -1;
+  while ((position = source.indexOf(locale, position + 1)) !== -1) {
+    const prefix = source.slice(0, position);
+    const leftOk = leftGlob
+      ? minimatch(prefix, leftGlob, { dot: true })
+      : prefix.length === 0;
+    if (!leftOk) continue;
+    const restSource = source.slice(position + locale.length);
+    const restRestored = restoreLocaleInSegment(
+      remainingPattern,
+      restSource,
+      locale,
+    );
+    if (restRestored !== null) {
+      return `${prefix}${placeholder}${restRestored}`;
+    }
+  }
+
+  return null;
 }
 
 function resolveBucketItem(bucketItem: string | BucketItem): BucketItem {

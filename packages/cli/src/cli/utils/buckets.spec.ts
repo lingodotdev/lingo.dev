@@ -445,6 +445,26 @@ describe("getBuckets", () => {
       );
     });
 
+    it("restores multiple [locale] occurrences in a single segment", () => {
+      // Pattern with two [locale] tokens separated by a literal block.
+      // Previously the function only handled the first occurrence and threw
+      // on a perfectly deterministic input.
+      mockGlobSync(["files/en-fixed-en.json"]);
+      const i18nConfig = makeI18nConfig(["files/[locale]-fixed-[locale].json"]);
+      const buckets = getBuckets(i18nConfig);
+      expect(normalizePaths(buckets)).toEqual([
+        {
+          type: "json",
+          paths: [
+            {
+              pathPattern: "files/[locale]-fixed-[locale].json",
+              delimiter: null,
+            },
+          ],
+        },
+      ]);
+    });
+
     it("throws when ** allows [locale] to map to multiple source positions", () => {
       // Pattern "**/[locale]/**/dummy.txt" against "en/x/en/dummy.txt" admits
       // two valid alignments: [locale] at index 0 (leaving the trailing "en"
