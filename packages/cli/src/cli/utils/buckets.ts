@@ -291,7 +291,7 @@ function alignPatternToSource(
   const isDoubleStar = (segment: string) => segment === "**";
   const segmentMatches = (patternSegment: string, sourceSegment: string) => {
     const concrete = patternSegment.replaceAll("[locale]", locale);
-    return minimatch(sourceSegment, concrete, { dot: true });
+    return minimatch(sourceSegment, concrete, { dot: true, nocase: true });
   };
   const forbid = options?.forbid;
   const key = (i: number, j: number) => `${i}|${j}`;
@@ -392,17 +392,28 @@ function restoreLocaleInSegment(
     if (pattern.length === 0) {
       return source.length === 0 ? "" : null;
     }
-    return minimatch(source, pattern, { dot: true }) ? source : null;
+    return minimatch(source, pattern, { dot: true, nocase: true })
+      ? source
+      : null;
   }
 
   const leftGlob = pattern.slice(0, placeholderIndex);
   const remainingPattern = pattern.slice(placeholderIndex + placeholder.length);
 
+  // WHY: case-insensitive probe. On macOS/Windows the filesystem is
+  // case-insensitive, so glob can return a path whose locale segment differs
+  // in case from the configured `source` (e.g. configured `en-US`, file on
+  // disk `en-us.json`). The pre-`**` implementation used a regex with the /i
+  // flag and tolerated this; preserve that semantic. The returned prefix
+  // keeps the original casing from `source` so the restored path round-trips
+  // exactly to what glob produced.
+  const sourceLower = source.toLowerCase();
+  const localeLower = locale.toLowerCase();
   let position = -1;
-  while ((position = source.indexOf(locale, position + 1)) !== -1) {
+  while ((position = sourceLower.indexOf(localeLower, position + 1)) !== -1) {
     const prefix = source.slice(0, position);
     const leftOk = leftGlob
-      ? minimatch(prefix, leftGlob, { dot: true })
+      ? minimatch(prefix, leftGlob, { dot: true, nocase: true })
       : prefix.length === 0;
     if (!leftOk) continue;
     const restSource = source.slice(position + locale.length);

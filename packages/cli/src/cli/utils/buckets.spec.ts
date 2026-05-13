@@ -235,6 +235,34 @@ describe("getBuckets", () => {
     }
   });
 
+  it("should reinsert [locale] on macOS when on-disk casing differs from configured source locale", () => {
+    // Pre-recursive-glob implementation used a case-insensitive regex, which
+    // tolerated case-insensitive filesystems (macOS/Windows) returning
+    // glob results whose casing differs from the configured `source`.
+    // Regression for: configured `en-US`, file committed as `en-us.json`.
+    mockGlobSync(["src/assets/locales/en-us/common.json"]);
+    const i18nConfig = {
+      $schema: "https://lingo.dev/schema/i18n.json",
+      version: 0,
+      locale: { source: "en-US", targets: ["de-DE"] },
+      buckets: {
+        json: { include: ["src/assets/locales/[locale]/*.json"] },
+      },
+    };
+    const buckets = getBuckets(i18nConfig as any);
+    expect(normalizePaths(buckets)).toEqual([
+      {
+        type: "json",
+        paths: [
+          {
+            pathPattern: "src/assets/locales/[locale]/common.json",
+            delimiter: null,
+          },
+        ],
+      },
+    ]);
+  });
+
   it("should return bucket with multiple locale placeholders", () => {
     mockGlobSync(
       ["src/i18n/en/en.json"],
