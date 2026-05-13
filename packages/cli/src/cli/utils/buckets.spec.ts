@@ -445,6 +445,19 @@ describe("getBuckets", () => {
       );
     });
 
+    it("throws when ** allows [locale] to map to multiple source positions", () => {
+      // Pattern "**/[locale]/**/dummy.txt" against "en/x/en/dummy.txt" admits
+      // two valid alignments: [locale] at index 0 (leaving the trailing "en"
+      // intact) or [locale] at index 2 (leaving the leading "en" intact).
+      // Picking one silently would corrupt target file paths during
+      // translation, so we surface the ambiguity to the user.
+      mockGlobSync(["en/x/en/dummy.txt"]);
+      const i18nConfig = makeI18nConfig(["**/[locale]/**/dummy.txt"]);
+      expect(() => getBuckets(i18nConfig)).toThrow(
+        /can be aligned to multiple positions/,
+      );
+    });
+
     it("applies DEFAULT_GLOB_IGNORE only for ** patterns", () => {
       mockGlobSync([]);
       const i18nConfig = makeI18nConfig(["src/**/[locale].json"]);

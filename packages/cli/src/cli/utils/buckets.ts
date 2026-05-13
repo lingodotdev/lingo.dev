@@ -232,6 +232,10 @@ function expandPlaceholderedGlob(
 // Aligns each pattern segment to a source-path segment, accounting for "**"
 // segments that consume a variable number of source segments. Implemented as
 // DFS with memoization (O(N*M) instead of exponential backtracking).
+//
+// Returns the first valid mapping. To guard against silently picking the wrong
+// [locale] segment when ** admits multiple valid alignments, the caller must
+// validate uniqueness via `hasAmbiguousLocaleMapping` below.
 function mapPatternToSource(
   pattern: string[],
   source: string[],
@@ -239,6 +243,47 @@ function mapPatternToSource(
   fullPattern: string,
   fullSource: string,
 ): { patToSrc: number[] } {
+  const result = alignPatternToSource(pattern, source, locale);
+
+  if (!result) {
+    throw new CLIError({
+      message: `Pattern "${fullPattern}" matched file "${fullSource}" via glob, but pattern segments could not be aligned with source segments. This is usually caused by ambiguous wildcard placement.`,
+      docUrl: "ambiguousPathPattern",
+    });
+  }
+
+  // For every [locale]-bearing pattern segment, verify there is no alternative
+  // alignment that maps it to a different source index. Multiple valid
+  // alignments that agree on [locale] positions (e.g. "**/**" against "a/b")
+  // are fine; alignments that disagree are not, because the downstream
+  // placeholder restoration would produce a different output path.
+  for (let i = 0; i < pattern.length; i += 1) {
+    if (!pattern[i].includes("[locale]")) continue;
+    const chosen = result.patToSrc[i];
+    const alternative = alignPatternToSource(pattern, source, locale, {
+      forbid: { patternIndex: i, sourceIndex: chosen },
+    });
+    if (alternative) {
+      throw new CLIError({
+        message: `Pattern "${fullPattern}" matched file "${fullSource}" via glob, but the [locale] segment "${pattern[i]}" can be aligned to multiple positions in the source path. Anchor the pattern with literal directory names so [locale] has a unique placement.`,
+        docUrl: "ambiguousPathPattern",
+      });
+    }
+  }
+
+  return { patToSrc: result.patToSrc };
+}
+
+// Runs the alignment DFS once and returns the first patToSrc found, or null if
+// none exists. The optional `forbid` constraint disallows assigning a given
+// patternIndex to a given sourceIndex, which lets us probe for alternative
+// [locale] placements.
+function alignPatternToSource(
+  pattern: string[],
+  source: string[],
+  locale: string,
+  options?: { forbid?: { patternIndex: number; sourceIndex: number } },
+): { patToSrc: number[] } | null {
   const patternLength = pattern.length;
   const sourceLength = source.length;
   const memo = new Map<string, boolean>();
@@ -248,6 +293,7 @@ function mapPatternToSource(
     const concrete = patternSegment.replaceAll("[locale]", locale);
     return minimatch(sourceSegment, concrete, { dot: true });
   };
+  const forbid = options?.forbid;
   const key = (i: number, j: number) => `${i}|${j}`;
   const dfs = (i: number, j: number): boolean => {
     const memoKey = key(i, j);
@@ -269,7 +315,9 @@ function mapPatternToSource(
         }
       }
     } else if (j < sourceLength && segmentMatches(pattern[i], source[j])) {
-      if (dfs(i + 1, j + 1)) {
+      const blocked =
+        forbid && forbid.patternIndex === i && forbid.sourceIndex === j;
+      if (!blocked && dfs(i + 1, j + 1)) {
         parent.set(memoKey, { i2: i + 1, j2: j + 1 });
         matched = true;
       }
@@ -279,10 +327,7 @@ function mapPatternToSource(
   };
 
   if (!dfs(0, 0)) {
-    throw new CLIError({
-      message: `Pattern "${fullPattern}" matched file "${fullSource}" via glob, but pattern segments could not be aligned with source segments. This is usually caused by ambiguous wildcard placement.`,
-      docUrl: "ambiguousPathPattern",
-    });
+    return null;
   }
 
   const patToSrc = Array(patternLength).fill(-1) as number[];
