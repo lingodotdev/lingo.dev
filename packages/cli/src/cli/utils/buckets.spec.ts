@@ -12,7 +12,7 @@ vi.mock("glob", () => ({
 }));
 
 describe("getBuckets", () => {
-  const makeI18nConfig = (include: any[]) => ({
+  const makeI18nConfig = (include: any[], exclude?: any[]) => ({
     $schema: "https://lingo.dev/schema/i18n.json",
     version: 0,
     locale: {
@@ -22,6 +22,7 @@ describe("getBuckets", () => {
     buckets: {
       json: {
         include,
+        ...(exclude ? { exclude } : {}),
       },
     },
   });
@@ -249,6 +250,245 @@ describe("getBuckets", () => {
         ],
       },
     ]);
+  });
+
+  describe("recursive globstar patterns", () => {
+    it("restores [locale] when ** precedes the locale segment", () => {
+      mockGlobSync([
+        "src/modules/core/auth/en/strings/messages.json",
+        "src/modules/marketing/en/strings/dashboard.json",
+      ]);
+      const i18nConfig = makeI18nConfig([
+        "src/modules/**/[locale]/strings/*.json",
+      ]);
+      const buckets = getBuckets(i18nConfig);
+      expect(normalizePaths(buckets)).toEqual([
+        {
+          type: "json",
+          paths: [
+            {
+              pathPattern:
+                "src/modules/core/auth/[locale]/strings/messages.json",
+              delimiter: null,
+            },
+            {
+              pathPattern:
+                "src/modules/marketing/[locale]/strings/dashboard.json",
+              delimiter: null,
+            },
+          ],
+        },
+      ]);
+    });
+
+    it("supports ** at the start of the pattern", () => {
+      mockGlobSync([
+        "src/modules/core/en/messages.json",
+        "src/modules/marketing/en/dashboard.json",
+      ]);
+      const i18nConfig = makeI18nConfig(["**/[locale]/*.json"]);
+      const buckets = getBuckets(i18nConfig);
+      expect(normalizePaths(buckets)).toEqual([
+        {
+          type: "json",
+          paths: [
+            {
+              pathPattern: "src/modules/core/[locale]/messages.json",
+              delimiter: null,
+            },
+            {
+              pathPattern: "src/modules/marketing/[locale]/dashboard.json",
+              delimiter: null,
+            },
+          ],
+        },
+      ]);
+    });
+
+    it("supports ** surrounding the [locale] segment", () => {
+      mockGlobSync([
+        "src/modules/core/services/en/api/messages.json",
+        "src/modules/marketing/en/email/templates/messages.json",
+      ]);
+      const i18nConfig = makeI18nConfig([
+        "src/**/[locale]/**/messages.json",
+      ]);
+      const buckets = getBuckets(i18nConfig);
+      expect(normalizePaths(buckets)).toEqual([
+        {
+          type: "json",
+          paths: [
+            {
+              pathPattern:
+                "src/modules/core/services/[locale]/api/messages.json",
+              delimiter: null,
+            },
+            {
+              pathPattern:
+                "src/modules/marketing/[locale]/email/templates/messages.json",
+              delimiter: null,
+            },
+          ],
+        },
+      ]);
+    });
+
+    it("supports ** after the [locale] segment", () => {
+      mockGlobSync(["src/i18n/en/deep/messages.json"]);
+      const i18nConfig = makeI18nConfig([
+        "src/i18n/[locale]/**/messages.json",
+      ]);
+      const buckets = getBuckets(i18nConfig);
+      expect(normalizePaths(buckets)).toEqual([
+        {
+          type: "json",
+          paths: [
+            {
+              pathPattern: "src/i18n/[locale]/deep/messages.json",
+              delimiter: null,
+            },
+          ],
+        },
+      ]);
+    });
+
+    it("supports ** leading directly into the locale file name", () => {
+      mockGlobSync(["src/en.json", "src/translations/en.json"]);
+      const i18nConfig = makeI18nConfig(["**/[locale].json"]);
+      const buckets = getBuckets(i18nConfig);
+      expect(normalizePaths(buckets)).toEqual([
+        {
+          type: "json",
+          paths: [
+            { pathPattern: "src/[locale].json", delimiter: null },
+            {
+              pathPattern: "src/translations/[locale].json",
+              delimiter: null,
+            },
+          ],
+        },
+      ]);
+    });
+
+    it("handles consecutive ** before the locale segment", () => {
+      mockGlobSync(["src/a/b/en/messages.json", "src/en/messages.json"]);
+      const i18nConfig = makeI18nConfig([
+        "src/**/**/[locale]/messages.json",
+      ]);
+      const buckets = getBuckets(i18nConfig);
+      expect(normalizePaths(buckets)).toEqual([
+        {
+          type: "json",
+          paths: [
+            {
+              pathPattern: "src/a/b/[locale]/messages.json",
+              delimiter: null,
+            },
+            { pathPattern: "src/[locale]/messages.json", delimiter: null },
+          ],
+        },
+      ]);
+    });
+
+    it("deduplicates overlapping ** and concrete patterns", () => {
+      mockGlobSync(["src/i18n/en.json"]);
+      mockGlobSync(["src/i18n/en.json"]);
+      const i18nConfig = makeI18nConfig([
+        "src/i18n/**/[locale].json",
+        "src/i18n/[locale].json",
+      ]);
+      const buckets = getBuckets(i18nConfig);
+      expect(normalizePaths(buckets)).toEqual([
+        {
+          type: "json",
+          paths: [{ pathPattern: "src/i18n/[locale].json", delimiter: null }],
+        },
+      ]);
+    });
+
+    it("supports exclude patterns containing **", () => {
+      mockGlobSync(["src/i18n/en.json", "src/i18n/test/en.json"]);
+      mockGlobSync(["src/i18n/test/en.json"]);
+      const i18nConfig = makeI18nConfig(
+        ["src/i18n/**/[locale].json"],
+        ["src/i18n/test/**/[locale].json"],
+      );
+      const buckets = getBuckets(i18nConfig);
+      expect(normalizePaths(buckets)).toEqual([
+        {
+          type: "json",
+          paths: [{ pathPattern: "src/i18n/[locale].json", delimiter: null }],
+        },
+      ]);
+    });
+  });
+
+  describe("ambiguity and edge cases", () => {
+    it("returns empty paths when glob matches nothing", () => {
+      mockGlobSync([]);
+      const i18nConfig = makeI18nConfig(["src/**/[locale].json"]);
+      const buckets = getBuckets(i18nConfig);
+      expect(buckets).toEqual([{ type: "json", paths: [] }]);
+    });
+
+    it("throws a hard error when matched file cannot be mapped back to [locale]", () => {
+      // The mock makes glob return a path that does not actually fit the
+      // pattern with the locale substituted. Previously the algorithm would
+      // silently return malformed results — now it throws so the user sees
+      // the misconfiguration instead of broken translations downstream.
+      mockGlobSync(["src/files/en-en-test.json"]);
+      const i18nConfig = makeI18nConfig([
+        "src/files/[locale]-*-[locale].json",
+      ]);
+      expect(() => getBuckets(i18nConfig)).toThrow(
+        /matched file .* via glob/,
+      );
+    });
+
+    it("applies DEFAULT_GLOB_IGNORE only for ** patterns", () => {
+      mockGlobSync([]);
+      const i18nConfig = makeI18nConfig(["src/**/[locale].json"]);
+      getBuckets(i18nConfig);
+      expect(vi.mocked(glob.sync)).toHaveBeenCalledWith(
+        expect.any(String),
+        expect.objectContaining({
+          ignore: expect.arrayContaining([
+            "**/node_modules/**",
+            "**/.git/**",
+          ]),
+        }),
+      );
+    });
+
+    it("does not pass an ignore list for non-recursive patterns (backcompat)", () => {
+      mockGlobSync([]);
+      const i18nConfig = makeI18nConfig(["src/*/[locale].json"]);
+      getBuckets(i18nConfig);
+      expect(vi.mocked(glob.sync)).toHaveBeenCalledWith(
+        expect.any(String),
+        expect.objectContaining({ ignore: undefined }),
+      );
+    });
+
+    it("disables symlink following when pattern contains **", () => {
+      mockGlobSync([]);
+      const i18nConfig = makeI18nConfig(["src/**/[locale].json"]);
+      getBuckets(i18nConfig);
+      expect(vi.mocked(glob.sync)).toHaveBeenCalledWith(
+        expect.any(String),
+        expect.objectContaining({ follow: false }),
+      );
+    });
+
+    it("keeps follow:true for non-recursive patterns", () => {
+      mockGlobSync([]);
+      const i18nConfig = makeI18nConfig(["src/[locale].json"]);
+      getBuckets(i18nConfig);
+      expect(vi.mocked(glob.sync)).toHaveBeenCalledWith(
+        expect.any(String),
+        expect.objectContaining({ follow: true }),
+      );
+    });
   });
 });
 
