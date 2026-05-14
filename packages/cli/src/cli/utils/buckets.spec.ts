@@ -613,6 +613,29 @@ describe("getBuckets", () => {
         },
       ]);
     });
+
+    it("exclude subtracts include by pathPattern regardless of delimiter mismatch", () => {
+      // Pre-PR `differenceBy` keyed on pathPattern only, so an exclude entry
+      // with a different (or missing) delimiter still cancelled a matching
+      // include. Guard that contract here so a future refactor cannot
+      // silently break customers who mix delimiter shapes between include
+      // and exclude.
+      mockGlobSync(["i18n/en.json"]);
+      mockGlobSync(["i18n/en.json"]);
+      const i18nConfig = {
+        $schema: "https://lingo.dev/schema/i18n.json",
+        version: 0,
+        locale: { source: "en", targets: ["fr", "es"] },
+        buckets: {
+          json: {
+            include: [{ path: "i18n/[locale].json", delimiter: "-" }],
+            exclude: [{ path: "i18n/[locale].json" }],
+          },
+        },
+      };
+      const buckets = getBuckets(i18nConfig as any);
+      expect(buckets).toEqual([{ type: "json", paths: [] }]);
+    });
   });
 });
 

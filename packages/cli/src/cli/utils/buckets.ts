@@ -130,10 +130,16 @@ function extractPathPatterns(
       delimiter: pattern.delimiter,
     })),
   );
+  // WHY: exclude semantics are about path subtraction, not delimiter matching.
+  // Pre-PR `differenceBy` keyed on `item.pathPattern` only, so an exclude entry
+  // with a different (or missing) delimiter still cancelled a matching include.
+  // Keep that contract — only `uniqBy` above needs to distinguish delimiters,
+  // because there a different delimiter means a genuinely different bucket
+  // entry, not a redundant duplicate.
   const result = _.differenceBy(
     includedPatterns,
     excludedPatterns ?? [],
-    uniqKey,
+    (item) => item.pathPattern,
   );
   return result;
 }
