@@ -181,10 +181,13 @@ function expandPlaceholderedGlob(
   );
   const unixStylePattern = sourcePathPattern.replace(/\\/g, "/");
 
-  // WHY: only narrow the search for ** patterns — for single-segment globs
-  // and concrete paths the previous behavior (full traversal, follow symlinks)
-  // is preserved so existing configs do not change matched files.
-  const isRecursive = unixStylePattern.includes("**");
+  // WHY: only narrow the search and use the new mapping algorithm for patterns
+  // that actually contain a `**` *segment*. For everything else (concrete paths,
+  // single-`*` patterns) we keep the pre-PR code path byte-for-byte so existing
+  // customers see zero behavior change. Substring check on `unixStylePattern`
+  // would false-positive on patterns like `foo**bar` (literal `**` inside a
+  // segment), so we test the segment array instead.
+  const isRecursive = pathPatternChunks.includes("**");
   const sourcePaths = glob
     .sync(unixStylePattern, {
       follow: !isRecursive,
@@ -195,6 +198,38 @@ function expandPlaceholderedGlob(
     .filter((file) => file.isFile() || file.isSymbolicLink())
     .map((file) => file.fullpath())
     .map((fullpath) => normalizePath(path.relative(process.cwd(), fullpath)));
+
+  if (!isRecursive) {
+    // Legacy path: derivative of the pre-PR implementation, preserved verbatim
+    // except for the `/i` flag added to keep mixed-case locale support
+    // (configured `en-US` matching on-disk `en-us` on macOS / Windows).
+    return sourcePaths.map((sourcePath) => {
+      const normalizedSourcePath = normalizePath(
+        sourcePath.replace(/\//g, path.sep),
+      );
+      const sourcePathChunks = normalizedSourcePath.split(path.sep);
+      localeSegmentIndexes.forEach((localeSegmentIndex) => {
+        const pathPatternChunk = pathPatternChunks[localeSegmentIndex];
+        const sourcePathChunk = sourcePathChunks[localeSegmentIndex];
+        const regexp = new RegExp(
+          "(" +
+            pathPatternChunk
+              .replaceAll(".", "\\.")
+              .replaceAll("*", ".*")
+              .replace("[locale]", `)${sourceLocale}(`) +
+            ")",
+          "i",
+        );
+        const match = sourcePathChunk.match(regexp);
+        if (match) {
+          const [, prefix, suffix] = match;
+          const placeholderedSegment = prefix + "[locale]" + suffix;
+          sourcePathChunks[localeSegmentIndex] = placeholderedSegment;
+        }
+      });
+      return sourcePathChunks.join(path.sep);
+    });
+  }
 
   const placeholderedPaths = sourcePaths.map((sourcePath) => {
     const normalizedSourcePath = normalizePath(

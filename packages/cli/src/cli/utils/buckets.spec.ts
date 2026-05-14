@@ -466,33 +466,35 @@ describe("getBuckets", () => {
       expect(buckets).toEqual([{ type: "json", paths: [] }]);
     });
 
-    it("throws a hard error when matched file cannot be mapped back to [locale]", () => {
+    it("throws a hard error when matched file cannot be mapped back to [locale] (** patterns)", () => {
       // The mock makes glob return a path that does not actually fit the
-      // pattern with the locale substituted. Previously the algorithm would
-      // silently return malformed results — now it throws so the user sees
-      // the misconfiguration instead of broken translations downstream.
+      // pattern with the locale substituted. The strict mapping algorithm
+      // gates only on `**` patterns — for non-`**` patterns we keep the
+      // pre-PR silent-fallback behavior to avoid surprising existing users.
       mockGlobSync(["src/files/en-en-test.json"]);
       const i18nConfig = makeI18nConfig([
-        "src/files/[locale]-*-[locale].json",
+        "src/**/files/[locale]-*-[locale].json",
       ]);
       expect(() => getBuckets(i18nConfig)).toThrow(
         /matched file .* via glob/,
       );
     });
 
-    it("restores multiple [locale] occurrences in a single segment", () => {
+    it("restores multiple [locale] occurrences in a single segment (** patterns)", () => {
       // Pattern with two [locale] tokens separated by a literal block.
-      // Previously the function only handled the first occurrence and threw
-      // on a perfectly deterministic input.
-      mockGlobSync(["files/en-fixed-en.json"]);
-      const i18nConfig = makeI18nConfig(["files/[locale]-fixed-[locale].json"]);
+      // The recursive-aware restorer handles every occurrence; this exercises
+      // the new code path, which only kicks in for `**` patterns.
+      mockGlobSync(["src/files/en-fixed-en.json"]);
+      const i18nConfig = makeI18nConfig([
+        "src/**/files/[locale]-fixed-[locale].json",
+      ]);
       const buckets = getBuckets(i18nConfig);
       expect(normalizePaths(buckets)).toEqual([
         {
           type: "json",
           paths: [
             {
-              pathPattern: "files/[locale]-fixed-[locale].json",
+              pathPattern: "src/files/[locale]-fixed-[locale].json",
               delimiter: null,
             },
           ],
@@ -560,6 +562,56 @@ describe("getBuckets", () => {
         expect.any(String),
         expect.objectContaining({ follow: true }),
       );
+    });
+
+    it("does not treat literal ** inside a segment as a recursive globstar", () => {
+      // `foo**bar` is a substring match for "**" but not a globstar segment.
+      // The non-recursive code path must be taken, otherwise customers with
+      // exotic patterns would silently switch to the new algorithm and pick
+      // up DEFAULT_GLOB_IGNORE plus `follow: false`.
+      mockGlobSync([]);
+      const i18nConfig = makeI18nConfig(["src/foo**bar/[locale].json"]);
+      getBuckets(i18nConfig);
+      expect(vi.mocked(glob.sync)).toHaveBeenLastCalledWith(
+        expect.any(String),
+        expect.objectContaining({ follow: true, ignore: undefined }),
+      );
+    });
+  });
+
+  describe("backward compatibility (non-** patterns use pre-PR code path)", () => {
+    it("silently leaves the source chunk untouched when [locale] cannot be matched (legacy fallback)", () => {
+      // Pre-PR behavior: if the locale-bearing regex fails to match, the
+      // chunk was returned as-is (no [locale] placeholder, downstream
+      // produced a broken path). The new code throws a hard error, but we
+      // gate that on `**` patterns. A non-`**` pattern that hits this case
+      // must keep the silent-fallback behavior so existing customers don't
+      // suddenly fail.
+      mockGlobSync(["src/files/en-en-test.json"]);
+      const i18nConfig = makeI18nConfig([
+        "src/files/[locale]-*-[locale].json",
+      ]);
+      expect(() => getBuckets(i18nConfig)).not.toThrow();
+    });
+
+    it("leaves source chunk untouched when legacy regex cannot match (multi-[locale] segment)", () => {
+      // Pre-PR regex: `.replace("[locale]", ...)` rewrites only the first
+      // occurrence. The remaining `[locale]` survives into the regex source
+      // verbatim, where `[locale]` is parsed as a character class
+      // (`[a,c,e,l,o]`), so the regex fails to match a real on-disk segment
+      // and the chunk is left untouched. This is the exact behavior we are
+      // preserving — the new strict restorer is gated on `**` only.
+      mockGlobSync(["files/en-fixed-en.json"]);
+      const i18nConfig = makeI18nConfig(["files/[locale]-fixed-[locale].json"]);
+      const buckets = getBuckets(i18nConfig);
+      expect(normalizePaths(buckets)).toEqual([
+        {
+          type: "json",
+          paths: [
+            { pathPattern: "files/en-fixed-en.json", delimiter: null },
+          ],
+        },
+      ]);
     });
   });
 });
