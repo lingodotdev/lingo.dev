@@ -148,12 +148,12 @@ export const configV1_1Definition = extendConfigDefinition(configV1Definition, {
           include: Z.array(Z.string())
             .default([])
             .describe(
-              "File paths or glob patterns to include for this bucket.",
+              "File paths or glob patterns (including ** for recursive matching) to include for this bucket.",
             ),
           exclude: Z.array(Z.string())
             .optional()
             .describe(
-              "File paths or glob patterns to exclude from this bucket.",
+              "File paths or glob patterns (including ** for recursive matching) to exclude from this bucket.",
             ),
         }),
       ).default({}),
@@ -232,10 +232,14 @@ export type BucketItem = Z.infer<typeof bucketItemSchema>;
 export const bucketValueSchemaV1_3 = Z.object({
   include: Z.array(Z.union([Z.string(), bucketItemSchema]))
     .default([])
-    .describe("Glob patterns or bucket items to include for this bucket."),
+    .describe(
+      "Glob patterns or bucket items (supports ** for recursive matching) to include for this bucket.",
+    ),
   exclude: Z.array(Z.union([Z.string(), bucketItemSchema]))
     .optional()
-    .describe("Glob patterns or bucket items to exclude from this bucket."),
+    .describe(
+      "Glob patterns or bucket items (supports ** for recursive matching) to exclude from this bucket.",
+    ),
   injectLocale: Z.array(Z.string())
     .optional()
     .describe(
