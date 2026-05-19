@@ -239,6 +239,17 @@ function createWorkerTask(args: {
               await fileIoLimiter(async () => {
                 // re-push in case some of the unlocalizable / meta data changed
                 await bucketLoader.push(assignedTask.targetLocale, targetData);
+
+                // Persist checksums even when no work was needed, so a
+                // subsequent `--frozen` run has a baseline to validate against.
+                // Without this, an "everything already translated" run leaves
+                // i18n.lock without an entry for this pattern, and --frozen
+                // then reports the source as changed.
+                const checksums =
+                  await deltaProcessor.createChecksums(sourceData);
+                if (!args.ctx.flags.targetLocale?.length) {
+                  await deltaProcessor.saveChecksums(checksums);
+                }
               });
               return {
                 status: "skipped",
