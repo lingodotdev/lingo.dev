@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.135.1
+
+### Patch Changes
+
+- [#2091](https://github.com/lingodotdev/lingo.dev/pull/2091) [`bf06078`](https://github.com/lingodotdev/lingo.dev/commit/bf060783c6824062543780fd957ca4f8fe5fe733) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Fix `--frozen` falsely reporting "Source file has been updated" after a no-op `run`. When `lingo.dev run` finds nothing to translate (source matches target), it now persists source checksums to `i18n.lock` so a subsequent `--frozen` run has a baseline to validate against.
+
 ## 0.135.0
 
 ### Minor Changes
