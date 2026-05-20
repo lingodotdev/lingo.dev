@@ -11,6 +11,12 @@ export function createLockfileHelper() {
       const lockfilePath = _getLockfilePath();
       return fs.existsSync(lockfilePath);
     },
+    hasSourceData: (pathPattern: string): boolean => {
+      const lockfile = _loadLockfile();
+      const sectionKey = MD5(pathPattern);
+      const section = lockfile.checksums[sectionKey];
+      return !!section && Object.keys(section).length > 0;
+    },
     registerSourceData: (
       pathPattern: string,
       sourceData: Record<string, any>,

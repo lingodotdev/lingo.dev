@@ -22,44 +22,74 @@ export default new Command()
     const ora = Ora();
 
     const lockfileHelper = createLockfileHelper();
-    if (lockfileHelper.isLockfileExists() && !flags.force) {
-      ora.warn(
-        `Lockfile won't be created because it already exists. Use --force to overwrite.`,
-      );
-    } else {
-      const i18nConfig = getConfig();
-      const buckets = getBuckets(i18nConfig!);
+    const lockExisted = lockfileHelper.isLockfileExists();
+    const i18nConfig = getConfig();
+    const buckets = getBuckets(i18nConfig!);
 
-      for (const bucket of buckets) {
-        for (const bucketConfig of bucket.paths) {
-          const sourceLocale = resolveOverriddenLocale(
-            i18nConfig!.locale.source,
-            bucketConfig.delimiter,
-          );
-          const bucketLoader = createBucketLoader(
-            bucket.type,
-            bucketConfig.pathPattern,
-            {
-              defaultLocale: sourceLocale,
-              formatter: i18nConfig!.formatter,
-              keyColumn: bucket.keyColumn,
-            },
-            bucket.lockedKeys,
-            bucket.lockedPatterns,
-            bucket.ignoredKeys,
-            bucket.preservedKeys,
-            bucket.localizableKeys,
-          );
-          bucketLoader.setDefaultLocale(sourceLocale);
+    let addedCount = 0;
+    let skippedCount = 0;
+    let replacedCount = 0;
 
-          const sourceData = await bucketLoader.pull(sourceLocale);
-          lockfileHelper.registerSourceData(
-            bucketConfig.pathPattern,
-            sourceData,
-          );
+    for (const bucket of buckets) {
+      for (const bucketConfig of bucket.paths) {
+        const pathPattern = bucketConfig.pathPattern;
+
+        if (!flags.force && lockfileHelper.hasSourceData(pathPattern)) {
+          console.log(`  skipped (already populated): ${pathPattern}`);
+          skippedCount++;
+          continue;
+        }
+
+        const sourceLocale = resolveOverriddenLocale(
+          i18nConfig!.locale.source,
+          bucketConfig.delimiter,
+        );
+        const bucketLoader = createBucketLoader(
+          bucket.type,
+          pathPattern,
+          {
+            defaultLocale: sourceLocale,
+            formatter: i18nConfig!.formatter,
+            keyColumn: bucket.keyColumn,
+          },
+          bucket.lockedKeys,
+          bucket.lockedPatterns,
+          bucket.ignoredKeys,
+          bucket.preservedKeys,
+          bucket.localizableKeys,
+        );
+        bucketLoader.setDefaultLocale(sourceLocale);
+
+        const sourceData = await bucketLoader.pull(sourceLocale);
+        const sectionExisted = lockfileHelper.hasSourceData(pathPattern);
+        lockfileHelper.registerSourceData(pathPattern, sourceData);
+
+        if (sectionExisted) {
+          console.log(`  replaced (--force): ${pathPattern}`);
+          replacedCount++;
+        } else {
+          console.log(`  added: ${pathPattern}`);
+          addedCount++;
         }
       }
-      ora.succeed("Lockfile created");
+    }
+
+    const summary = [
+      addedCount > 0 ? `added ${addedCount}` : null,
+      replacedCount > 0 ? `replaced ${replacedCount}` : null,
+      skippedCount > 0 ? `skipped ${skippedCount}` : null,
+    ]
+      .filter(Boolean)
+      .join(", ");
+
+    if (!lockExisted) {
+      ora.succeed(`Lockfile created (${summary || "no sections"})`);
+    } else if (flags.force) {
+      ora.succeed(`Lockfile rebuilt (${summary || "no sections"})`);
+    } else if (addedCount > 0) {
+      ora.succeed(`Lockfile updated (${summary})`);
+    } else {
+      ora.succeed(`Lockfile is up to date (${summary || "no sections"})`);
     }
   });
 
