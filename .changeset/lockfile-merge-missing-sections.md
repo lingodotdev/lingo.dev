@@ -1,5 +1,5 @@
 ---
-"lingo.dev": patch
+"lingo.dev": minor
 ---
 
 Change the default behavior of `lingo.dev lockfile` so it fills in missing `i18n.lock` sections additively instead of bailing out. Without `--force`, sections that already contain checksums are left untouched (preserving the divergence signal that `--frozen` relies on), and any pathPattern whose section is missing or empty is populated from the current source. `--force` still rebuilds the entire lock as before.

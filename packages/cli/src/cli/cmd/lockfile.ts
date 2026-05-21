@@ -24,7 +24,15 @@ export default new Command()
     const lockfileHelper = createLockfileHelper();
     const lockExisted = lockfileHelper.isLockfileExists();
     const i18nConfig = getConfig();
-    const buckets = getBuckets(i18nConfig!);
+
+    if (!i18nConfig) {
+      ora.warn(
+        "No i18n.json found in the current directory. Create one before running `lingo.dev lockfile`.",
+      );
+      return;
+    }
+
+    const buckets = getBuckets(i18nConfig);
 
     let addedCount = 0;
     let skippedCount = 0;
@@ -41,7 +49,7 @@ export default new Command()
         }
 
         const sourceLocale = resolveOverriddenLocale(
-          i18nConfig!.locale.source,
+          i18nConfig.locale.source,
           bucketConfig.delimiter,
         );
         const bucketLoader = createBucketLoader(
@@ -49,7 +57,7 @@ export default new Command()
           pathPattern,
           {
             defaultLocale: sourceLocale,
-            formatter: i18nConfig!.formatter,
+            formatter: i18nConfig.formatter,
             keyColumn: bucket.keyColumn,
           },
           bucket.lockedKeys,

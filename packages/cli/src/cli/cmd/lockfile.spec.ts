@@ -190,4 +190,17 @@ describe("cmd lockfile (merge-default)", () => {
     expect(lockAfterSecond.checksums[cKey]).toBeDefined();
     expect(lockAfterSecond.checksums[cKey].greeting).toBe(MD5("hello-c"));
   });
+
+  it("exits gracefully when i18n.json is missing (does not crash)", async () => {
+    // Intentionally no i18n.json. A stale lock alone simulates the regression
+    // path from the reviewer: lock exists, config absent. Old code printed a
+    // warning; the merge-default code must not crash via getBuckets(null).
+    writeLock({ version: 1, checksums: {} });
+
+    await expect(runLockfile()).resolves.not.toThrow();
+
+    // Lock file is untouched.
+    const lock = readLock();
+    expect(lock.checksums).toEqual({});
+  });
 });
