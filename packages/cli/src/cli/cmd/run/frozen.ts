@@ -126,7 +126,7 @@ export default async function frozen(input: CmdRunContext) {
               );
               if (Object.keys(updatedSourceData).length > 0) {
                 throw new Error(
-                  `Localization data has changed; please update i18n.lock or run without --frozen. Details: Source file has been updated.`,
+                  `Localization data has changed. Run \`lingo.dev lockfile\` to refresh i18n.lock, or run without --frozen. Details: Source file has been updated.`,
                 );
               }
 
@@ -144,7 +144,7 @@ export default async function frozen(input: CmdRunContext) {
                 );
                 if (missingKeys.length > 0) {
                   throw new Error(
-                    `Localization data has changed; please update i18n.lock or run without --frozen. Details: Target file is missing translations.`,
+                    `Localization data has changed. Run \`lingo.dev lockfile\` to refresh i18n.lock, or run without --frozen. Details: Target file is missing translations.`,
                   );
                 }
 
@@ -154,7 +154,7 @@ export default async function frozen(input: CmdRunContext) {
                 );
                 if (extraKeys.length > 0) {
                   throw new Error(
-                    `Localization data has changed; please update i18n.lock or run without --frozen. Details: Target file has extra translations not present in the source file.`,
+                    `Localization data has changed. Run \`lingo.dev lockfile\` to refresh i18n.lock, or run without --frozen. Details: Target file has extra translations not present in the source file.`,
                   );
                 }
 
@@ -164,7 +164,7 @@ export default async function frozen(input: CmdRunContext) {
                 );
                 if (unlocalizableDataDiff) {
                   throw new Error(
-                    `Localization data has changed; please update i18n.lock or run without --frozen. Details: Unlocalizable data (such as booleans, dates, URLs, etc.) do not match.`,
+                    `Localization data has changed. Run \`lingo.dev lockfile\` to refresh i18n.lock, or run without --frozen. Details: Unlocalizable data (such as booleans, dates, URLs, etc.) do not match.`,
                   );
                 }
               }
