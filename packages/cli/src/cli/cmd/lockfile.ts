@@ -97,7 +97,10 @@ export default new Command()
     } else if (addedCount > 0) {
       ora.succeed(`Lockfile updated (${summary})`);
     } else {
-      ora.succeed(`Lockfile is up to date (${summary || "no sections"})`);
+      ora.succeed(
+        `Nothing to refresh (${summary || "no sections"}). ` +
+          `Run \`lingo.dev run\` if source files have changed, or use --force to overwrite existing checksums.`,
+      );
     }
   });
 
