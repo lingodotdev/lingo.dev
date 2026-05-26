@@ -30,10 +30,24 @@ const throwHelpError = (option: string, value: string) => {
   if (value === "help") {
     openUrl("/go/call");
   }
+
+  // Better error message for invalid locale or bucket format inputs, with instructions to get help for supported formats
   throw new Error(
-    `Invalid ${option}: ${value}\n\nDo you need support for ${value} ${option}? Type "help" and we will.`,
+    `Invalid ${option}: "${value}".\n\n` +
+      `Accepted formats:\n` +
+      `  es,fr\n` +
+      `  es fr\n` +
+      `  'es', 'fr'\n\n` +
+      `If you need support for "${value}" ${option}, type "help" and we will.`,
   );
 };
+
+// Parses comma or space separated list of values, removing extra whitespace and quotes
+const parseListInput = (value: string): string[] =>
+  value
+    .split(/[,\s]+/)
+    .map((v) => v.trim().replace(/^['"]|['"]$/g, ""))
+    .filter(Boolean);
 
 export default new InteractiveCommand()
   .command("init")
@@ -67,10 +81,8 @@ export default new InteractiveCommand()
       "-t --targets <locale...>",
       "Target languages to translate to. Accepts locale codes like 'es', 'fr', 'de-AT' separated by commas or spaces. Defaults to 'es'",
     )
-      .argParser((value) => {
-        const values = (
-          value.includes(",") ? value.split(",") : value.split(" ")
-        ) as LocaleCode[];
+      .argParser((value: string) => {
+        const values = parseListInput(value) as LocaleCode[];
         values.forEach((value) => {
           try {
             resolveLocaleCode(value);
@@ -102,9 +114,7 @@ export default new InteractiveCommand()
     )
       .argParser((value) => {
         if (!value || value.length === 0) return [];
-        const values = value.includes(",")
-          ? value.split(",")
-          : value.split(" ");
+        const values = parseListInput(value);
 
         for (const p of values) {
           try {
@@ -118,7 +128,6 @@ export default new InteractiveCommand()
           }
         }
         return values;
-        
       })
       .prompt(undefined) // make non-interactive
       .default([]),
@@ -191,9 +200,7 @@ export default new InteractiveCommand()
           const customPaths = await input({
             message: "Enter paths to use",
           });
-          selectedPatterns = customPaths.includes(",")
-            ? customPaths.split(",")
-            : customPaths.split(" ");
+          selectedPatterns = parseListInput(customPaths);
         }
 
         newConfig.buckets = {
