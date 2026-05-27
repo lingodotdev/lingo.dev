@@ -1,5 +1,64 @@
 # lingo.dev
 
+## 0.136.0
+
+### Minor Changes
+
+- [#2093](https://github.com/lingodotdev/lingo.dev/pull/2093) [`74c8be0`](https://github.com/lingodotdev/lingo.dev/commit/74c8be053c731315da5288df3097ddb376e526b2) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Change the default behavior of `lingo.dev lockfile` so it fills in missing `i18n.lock` sections additively instead of bailing out. Without `--force`, sections that already contain checksums are left untouched (preserving the divergence signal that `--frozen` relies on), and any pathPattern whose section is missing or empty is populated from the current source. `--force` still rebuilds the entire lock as before.
+
+  Update the `--frozen` validation error to point users at the recovery command: messages now read "Run `lingo.dev lockfile` to refresh i18n.lock, or run without --frozen."
+
+  Together these surface a fix for the false-positive `--frozen` failures that PR #2091 did not cover (new files under `**` globs, new buckets, prior `--target-locale` runs that don't write checksums, and pre-existing empty lock sections).
+
+## 0.135.1
+
+### Patch Changes
+
+- [#2091](https://github.com/lingodotdev/lingo.dev/pull/2091) [`bf06078`](https://github.com/lingodotdev/lingo.dev/commit/bf060783c6824062543780fd957ca4f8fe5fe733) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Fix `--frozen` falsely reporting "Source file has been updated" after a no-op `run`. When `lingo.dev run` finds nothing to translate (source matches target), it now persists source checksums to `i18n.lock` so a subsequent `--frozen` run has a baseline to validate against.
+
+## 0.135.0
+
+### Minor Changes
+
+- [#2089](https://github.com/lingodotdev/lingo.dev/pull/2089) [`0106b48`](https://github.com/lingodotdev/lingo.dev/commit/0106b481866c19c7cc81e70a2c3a305cc03e333a) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Support recursive glob patterns (`**`) in bucket `include`/`exclude`.
+
+  Patterns like `config/locales/**/[locale].yml` or `src/**/[locale]/strings/*.json` now match files at any depth, so you no longer need to enumerate every nesting level. The previous restriction that rejected any pattern containing `**` has been removed.
+
+  Two safety nets ship with this change, both scoped to patterns that actually use `**`:
+  - For `**` patterns only, `node_modules`, `.git`, `dist`, `build`, `.next`, and `.turbo` are excluded by default so a broad pattern like `**/[locale].json` does not descend into vendored or build trees. Existing patterns without `**` keep the previous traversal behavior exactly as before. Add your own `exclude` entries on top as needed.
+  - When a matched file cannot be unambiguously mapped back to the `[locale]` placeholder (for example, a pattern with multiple wildcards around `[locale]` that admits more than one valid restoration), the CLI now throws a clear error instead of silently returning a malformed path.
+
+## 0.134.0
+
+### Minor Changes
+
+- [#2087](https://github.com/lingodotdev/lingo.dev/pull/2087) [`2787e33`](https://github.com/lingodotdev/lingo.dev/commit/2787e33702fdadbee739cfb8e97e1a518ed2dc6d) Thanks [@moygospadin](https://github.com/moygospadin)! - Fix `lingo.dev login` on Safari (and other browsers that block mixed-content requests to `localhost`).
+
+  The login command now uses a polling-based device flow: the CLI registers a session with the API, opens the browser to confirm it, then polls until the user grants access. The previous flow opened a local Express server and asked the web page to `POST` the API key to `http://localhost:<port>`, which Safari blocks because the page is served over HTTPS. The web app continues to support the legacy `?port=` query parameter for one release cycle so CLI versions published before this change keep working in Chrome — Safari users need this upgrade either way. The `express` and `cors` dependencies are no longer needed and have been removed.
+
+## 0.133.12
+
+### Patch Changes
+
+- [#2082](https://github.com/lingodotdev/lingo.dev/pull/2082) [`34f5b6f`](https://github.com/lingodotdev/lingo.dev/commit/34f5b6ff6be91c5a463c4e97fc0a923cf8c7743b) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Fix Windows: translations now generate for mixed-case source locales (e.g. `en-US`). The placeholder reinsertion regex in `buckets.ts` was case-sensitive while paths were lowercased on Windows, so `[locale]` was lost from the matched pattern and only the source file was rewritten.
+
+## 0.133.11
+
+### Patch Changes
+
+- [`814ecdf`](https://github.com/lingodotdev/lingo.dev/commit/814ecdf3ffa6beb231ea5ed5176db41734f115e1) Thanks [@cherkanovart](https://github.com/cherkanovart)! - chore: remove stale TODO comment
+
+## 0.133.10
+
+### Patch Changes
+
+- [#2076](https://github.com/lingodotdev/lingo.dev/pull/2076) [`bb295f7`](https://github.com/lingodotdev/lingo.dev/commit/bb295f77c0c7b17f780b0080308bce9b7827a1ba) Thanks [@cherkanovart](https://github.com/cherkanovart)! - feat(cli): add `keyColumn` option for CSV buckets to specify which column is the unique row identifier, and validate key uniqueness to prevent silent data loss from duplicate keys
+
+- Updated dependencies [[`bb295f7`](https://github.com/lingodotdev/lingo.dev/commit/bb295f77c0c7b17f780b0080308bce9b7827a1ba)]:
+  - @lingo.dev/_spec@0.49.1
+  - @lingo.dev/_compiler@0.12.3
+  - @lingo.dev/_sdk@0.16.3
+
 ## 0.133.9
 
 ### Patch Changes

@@ -1,6 +1,9 @@
-import { describe, it, expect } from "vitest";
-import { deduplicateLockfileYaml } from "./lockfile";
+import { describe, it, expect, beforeEach, afterEach } from "vitest";
+import fs from "fs";
+import path from "path";
+import os from "os";
 import YAML from "yaml";
+import { createLockfileHelper, deduplicateLockfileYaml } from "./lockfile";
 
 describe("deduplicateLockfileYaml", () => {
   it("should return unchanged content when there are no duplicates", () => {
@@ -263,5 +266,55 @@ checksums:
     expect(parsed.checksums.pathHash1["button.submit"]).toBe("jkl345");
     expect(parsed.checksums.pathHash1["button.cancel"]).toBe("mno678");
     expect(Object.keys(parsed.checksums.pathHash1)).toHaveLength(4);
+  });
+});
+
+describe("createLockfileHelper.hasSourceData", () => {
+  let tmpDir: string;
+  let originalCwd: string;
+
+  beforeEach(() => {
+    originalCwd = process.cwd();
+    tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "lingo-lock-helper-"));
+    process.chdir(tmpDir);
+  });
+
+  afterEach(() => {
+    process.chdir(originalCwd);
+    fs.rmSync(tmpDir, { recursive: true, force: true });
+  });
+
+  it("returns false when the lockfile is absent", () => {
+    const helper = createLockfileHelper();
+    expect(helper.hasSourceData("src/[locale].json")).toBe(false);
+  });
+
+  it("returns false when the section is absent", () => {
+    const helper = createLockfileHelper();
+    helper.registerSourceData("src/a/[locale].json", { greeting: "hello" });
+    expect(helper.hasSourceData("src/b/[locale].json")).toBe(false);
+  });
+
+  it("returns false when the section exists but is empty", () => {
+    const lockfileContent = YAML.stringify({
+      version: 1,
+      checksums: {
+        deadbeef: {},
+      },
+    });
+    fs.writeFileSync(path.join(tmpDir, "i18n.lock"), lockfileContent);
+
+    const helper = createLockfileHelper();
+    // The empty-section md5 key won't match this pathPattern, but we also want
+    // to confirm that even for the matching key the empty check holds. Build a
+    // section keyed by the real md5 of the pattern:
+    helper.registerSourceData("src/[locale].json", {});
+    expect(helper.hasSourceData("src/[locale].json")).toBe(false);
+  });
+
+  it("returns true when the section has at least one checksum", () => {
+    const helper = createLockfileHelper();
+    helper.registerSourceData("src/[locale].json", { greeting: "hello" });
+    expect(helper.hasSourceData("src/[locale].json")).toBe(true);
   });
 });

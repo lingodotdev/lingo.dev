@@ -230,7 +230,7 @@ export default new InteractiveCommand()
           message: "It looks like you are not logged into the CLI. Login now?",
         });
         if (doAuth) {
-          const apiKey = await login(settings.auth.webUrl);
+          const apiKey = await login(settings.auth.apiUrl);
           settings.auth.apiKey = apiKey;
           await saveSettings(settings);
 

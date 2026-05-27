@@ -61,6 +61,7 @@ export async function executeKeyCommand(
           {
             defaultLocale: sourceLocale,
             injectLocale: bucket.injectLocale,
+            keyColumn: bucket.keyColumn,
           },
           [], // Don't apply any filtering when reading
           [],
