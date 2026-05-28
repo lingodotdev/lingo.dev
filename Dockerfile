@@ -1,5 +1,9 @@
 FROM node:20.12.2-alpine
 
+# git is required by `lingo.dev ci` (configureGit) and is not included in the
+# node:alpine base image.
+RUN apk add --no-cache git
+
 # Run the Node.js / TypeScript application
 ENTRYPOINT ["sh", "-c", "npx lingo.dev@latest ci \
   --api-key \"$LINGODOTDEV_API_KEY\" \
