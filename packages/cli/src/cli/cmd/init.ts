@@ -43,10 +43,10 @@ const throwHelpError = (option: string, value: string) => {
 };
 
 // Parses comma or space separated list of values, removing extra whitespace and quotes
-const parseListInput = (value: string): string[] =>
+export const parseListInput = (value: string): string[] =>
   value
     .split(/[,\s]+/)
-    .map((v) => v.trim().replace(/^['"]|['"]$/g, ""))
+    .map((v) => v.replace(/^['"]|['"]$/g, ""))
     .filter(Boolean);
 
 export default new InteractiveCommand()
