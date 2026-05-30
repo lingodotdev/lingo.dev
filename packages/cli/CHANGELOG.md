@@ -1,5 +1,13 @@
 # lingo.dev
 
+## 0.136.1
+
+### Patch Changes
+
+- [#2096](https://github.com/lingodotdev/lingo.dev/pull/2096) [`7d803d2`](https://github.com/lingodotdev/lingo.dev/commit/7d803d2527af1ebbcf7d236b4561597adee1c805) Thanks [@louisguitton](https://github.com/louisguitton)! - Install `git` in the `lingodotdev/ci-action` Docker image so `lingo.dev ci` works in runners that do not already provide it (e.g. GitLab CI using the image directly).
+
+- [#2095](https://github.com/lingodotdev/lingo.dev/pull/2095) [`fd11342`](https://github.com/lingodotdev/lingo.dev/commit/fd11342e8478c12f30ceb6fd726e51e4724f46a7) Thanks [@Waqasabid99](https://github.com/Waqasabid99)! - Fix parsing of comma-separated locale inputs with spaces and quotes during init
+
 ## 0.136.0
 
 ### Minor Changes
