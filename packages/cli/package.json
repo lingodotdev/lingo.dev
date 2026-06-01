@@ -221,7 +221,7 @@
     "sax": "1.4.3",
     "srt-parser-2": "1.2.3",
     "unified": "11.0.5",
-    "unist-util-visit": "5.0.0",
+    "unist-util-visit": "5.1.0",
     "vfile": "6.0.3",
     "xliff": "6.2.2",
     "xml2js": "0.6.2",
