@@ -481,4 +481,70 @@ describe("LingoDotDevEngine", () => {
       expect(requestBody.hints).toBeUndefined();
     });
   });
+
+  describe("locale normalization", () => {
+    let mockFetch: ReturnType<typeof vi.fn>;
+
+    beforeEach(() => {
+      mockFetch = vi.fn().mockResolvedValue({
+        ok: true,
+        json: async () => ({ data: { greeting: "Olá" } }),
+      });
+      global.fetch = mockFetch as any;
+    });
+
+    it("normalizes Android `-r` locales to BCP 47 in the request body", async () => {
+      const engine = new LingoDotDevEngine({ apiKey: "test-key" });
+
+      await engine.localizeObject(
+        { greeting: "Hello" },
+        { sourceLocale: "en", targetLocale: "pt-rPT" },
+      );
+
+      const body = JSON.parse(mockFetch.mock.calls[0][1].body);
+      expect(body.targetLocale).toBe("pt-PT");
+      expect(body.sourceLocale).toBe("en");
+    });
+
+    it("normalizes underscore locales to BCP 47 in the request body", async () => {
+      const engine = new LingoDotDevEngine({ apiKey: "test-key" });
+
+      await engine.localizeObject(
+        { greeting: "Hello" },
+        { sourceLocale: "en_US", targetLocale: "pt_PT" },
+      );
+
+      const body = JSON.parse(mockFetch.mock.calls[0][1].body);
+      expect(body.sourceLocale).toBe("en-US");
+      expect(body.targetLocale).toBe("pt-PT");
+    });
+
+    it("normalizes locale codes used as reference keys", async () => {
+      const engine = new LingoDotDevEngine({ apiKey: "test-key" });
+
+      await engine.localizeObject(
+        { greeting: "Hello" },
+        {
+          sourceLocale: "en",
+          targetLocale: "pt-rPT",
+          reference: { "pt-rPT": { greeting: "Olá" } },
+        },
+      );
+
+      const body = JSON.parse(mockFetch.mock.calls[0][1].body);
+      expect(Object.keys(body.reference)).toEqual(["pt-PT"]);
+    });
+
+    it("leaves already-canonical locales unchanged", async () => {
+      const engine = new LingoDotDevEngine({ apiKey: "test-key" });
+
+      await engine.localizeObject(
+        { greeting: "Hello" },
+        { sourceLocale: "en", targetLocale: "pt-PT" },
+      );
+
+      const body = JSON.parse(mockFetch.mock.calls[0][1].body);
+      expect(body.targetLocale).toBe("pt-PT");
+    });
+  });
 });

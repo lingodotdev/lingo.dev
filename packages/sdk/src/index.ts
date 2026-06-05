@@ -1,5 +1,9 @@
 import Z from "zod";
-import { LocaleCode, localeCodeSchema } from "@lingo.dev/_spec";
+import {
+  LocaleCode,
+  localeCodeSchema,
+  normalizeLocale,
+} from "@lingo.dev/_spec";
 import { createId } from "@paralleldrive/cuid2";
 import { trackEvent } from "./utils/observability";
 import { TRACKING_EVENTS } from "./utils/tracking-events";
@@ -12,13 +16,18 @@ const engineParamsSchema = Z.object({
   engineId: Z.string().optional(),
 }).passthrough();
 
+// Locale codes are validated leniently (Android `pt-rPT`, underscore `pt_PT`,
+// etc. all pass) but must reach the API in canonical BCP 47 form. Normalizing
+// here keeps the CLI free to use the original code for file paths.
+const normalizedLocaleCodeSchema = localeCodeSchema.transform(normalizeLocale);
+
 const payloadSchema = Z.record(Z.string(), Z.any());
-const referenceSchema = Z.record(localeCodeSchema, payloadSchema);
+const referenceSchema = Z.record(normalizedLocaleCodeSchema, payloadSchema);
 const hintsSchema = Z.record(Z.string(), Z.array(Z.string()));
 
 const localizationParamsSchema = Z.object({
-  sourceLocale: Z.union([localeCodeSchema, Z.null()]),
-  targetLocale: localeCodeSchema,
+  sourceLocale: Z.union([normalizedLocaleCodeSchema, Z.null()]),
+  targetLocale: normalizedLocaleCodeSchema,
   fast: Z.boolean().optional(),
   reference: referenceSchema.optional(),
   hints: hintsSchema.optional(),
@@ -118,7 +127,7 @@ export class LingoDotDevEngine {
       const processedPayloadChunk = await this.localizeChunk(
         finalParams.sourceLocale,
         finalParams.targetLocale,
-        { data: chunk, reference: params.reference, hints: params.hints },
+        { data: chunk, reference: finalParams.reference, hints: params.hints },
         params.fast || false,
         params.filePath,
         params.triggerType,
