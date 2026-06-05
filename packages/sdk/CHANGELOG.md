@@ -1,5 +1,11 @@
 # @lingo.dev/\_sdk
 
+## 0.16.4
+
+### Patch Changes
+
+- [#2103](https://github.com/lingodotdev/lingo.dev/pull/2103) [`7893f5b`](https://github.com/lingodotdev/lingo.dev/commit/7893f5bbbeeed0826de16cf88f741a2567a54c60) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Android-format (`pt-rPT`) and underscore (`pt_PT`) locales passed config validation but were sent to the API verbatim, which it rejects with a 400. Normalize `sourceLocale`, `targetLocale`, and `reference` keys to canonical BCP 47 on the wire via a schema transform. File paths are unaffected, so the CLI keeps the original code for Android resource directories (e.g. `values-pt-rPT/`)
+
 ## 0.16.3
 
 ### Patch Changes
