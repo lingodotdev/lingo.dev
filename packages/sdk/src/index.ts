@@ -14,6 +14,12 @@ const engineParamsSchema = Z.object({
   batchSize: Z.number().int().gt(0).lte(250).default(25),
   idealBatchItemSize: Z.number().int().gt(0).lte(2500).default(250),
   engineId: Z.string().optional(),
+  // Number of times a localization request is retried after a transient
+  // failure (5xx response or network error). `0` disables retries.
+  maxRetries: Z.number().int().gte(0).default(3),
+  // Base delay (ms) for the exponential backoff between retries. The actual
+  // wait grows as `retryDelayMs * 2 ** attempt` plus a small random jitter.
+  retryDelayMs: Z.number().int().gte(0).default(500),
 }).passthrough();
 
 // Locale codes are validated leniently (Android `pt-rPT`, underscore `pt_PT`,
@@ -83,6 +89,92 @@ export class LingoDotDevEngine {
       throw new Error(`Invalid request: ${msg}`);
     }
     throw new Error(context ? `${context}: ${msg}` : msg);
+  }
+
+  /**
+   * Sleep for `ms` milliseconds, rejecting early if the signal is aborted.
+   */
+  private static sleep(ms: number, signal?: AbortSignal): Promise<void> {
+    return new Promise((resolve, reject) => {
+      if (signal?.aborted) {
+        reject(new Error("Operation was aborted"));
+        return;
+      }
+      const onAbort = () => {
+        clearTimeout(timer);
+        reject(new Error("Operation was aborted"));
+      };
+      const timer = setTimeout(() => {
+        signal?.removeEventListener("abort", onAbort);
+        resolve();
+      }, ms);
+      signal?.addEventListener("abort", onAbort, { once: true });
+    });
+  }
+
+  /**
+   * Exponential backoff with full jitter: a random delay in
+   * `[0, retryDelayMs * 2 ** attempt]`. Jitter spreads out retries from many
+   * clients so a recovering server is not hit by a synchronized wave.
+   */
+  private backoffDelay(attempt: number): number {
+    const ceiling = this.config.retryDelayMs * 2 ** attempt;
+    return Math.round(Math.random() * ceiling);
+  }
+
+  /**
+   * Perform a fetch, retrying on transient failures (5xx responses and
+   * network errors) with exponential backoff. The retry decision is made on
+   * the HTTP status code (>= 500), so non-retryable responses (e.g. 4xx) are
+   * returned immediately for the caller to handle. Aborted requests are never
+   * retried.
+   * @param url - The request URL
+   * @param init - Fetch init options (should include the AbortSignal)
+   * @param signal - Optional AbortSignal used to short-circuit retries
+   * @returns The fetch Response (which may still be a non-retryable error)
+   */
+  private async fetchWithRetry(
+    url: string,
+    init: RequestInit,
+    signal?: AbortSignal,
+  ): Promise<Response> {
+    const { maxRetries } = this.config;
+
+    for (let attempt = 0; attempt <= maxRetries; attempt++) {
+      if (signal?.aborted) {
+        throw new Error("Operation was aborted");
+      }
+
+      try {
+        const res = await fetch(url, init);
+
+        const isServerError = res.status >= 500 && res.status < 600;
+        if (isServerError && attempt < maxRetries) {
+          // Drain the body we are about to discard so the underlying
+          // connection is released back to the pool before we retry.
+          await res.body?.cancel();
+          await LingoDotDevEngine.sleep(this.backoffDelay(attempt), signal);
+          continue;
+        }
+
+        return res;
+      } catch (error) {
+        // Aborts are intentional - never retry them.
+        if (signal?.aborted) {
+          throw error;
+        }
+        // Network/transport error: retry while attempts remain.
+        if (attempt < maxRetries) {
+          await LingoDotDevEngine.sleep(this.backoffDelay(attempt), signal);
+          continue;
+        }
+        throw error;
+      }
+    }
+
+    // The loop always returns or throws on the final attempt; this satisfies
+    // the return type and guards against an unexpected fall-through.
+    throw new Error("Localization request failed after exhausting retries");
   }
 
   /**
@@ -183,12 +275,16 @@ export class LingoDotDevEngine {
       ...(this.config.engineId && { engineId: this.config.engineId }),
     };
 
-    const res = await fetch(url, {
-      method: "POST",
-      headers: this.headers,
-      body: JSON.stringify(body, null, 2),
+    const res = await this.fetchWithRetry(
+      url,
+      {
+        method: "POST",
+        headers: this.headers,
+        body: JSON.stringify(body, null, 2),
+        signal,
+      },
       signal,
-    });
+    );
 
     await LingoDotDevEngine.throwOnHttpError(res);
 

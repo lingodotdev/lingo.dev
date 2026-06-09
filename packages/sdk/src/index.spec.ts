@@ -482,6 +482,148 @@ describe("LingoDotDevEngine", () => {
     });
   });
 
+  describe("retry on 5xx errors", () => {
+    let mockFetch: ReturnType<typeof vi.fn>;
+
+    const okResponse = () => ({
+      ok: true,
+      status: 200,
+      json: async () => ({ data: { greeting: "Hola" } }),
+    });
+
+    const serverErrorResponse = (status = 503) => ({
+      ok: false,
+      status,
+      text: async () => JSON.stringify({ message: "service unavailable" }),
+    });
+
+    beforeEach(() => {
+      mockFetch = vi.fn();
+      global.fetch = mockFetch as any;
+    });
+
+    it("retries the request when the API responds with a 5xx and eventually succeeds", async () => {
+      mockFetch
+        .mockResolvedValueOnce(serverErrorResponse(500))
+        .mockResolvedValueOnce(serverErrorResponse(503))
+        .mockResolvedValueOnce(okResponse());
+
+      const engine = new LingoDotDevEngine({
+        apiKey: "test-key",
+        retryDelayMs: 0,
+      });
+
+      const result = await engine.localizeObject(
+        { greeting: "Hello" },
+        { sourceLocale: "en", targetLocale: "es" },
+      );
+
+      expect(mockFetch).toHaveBeenCalledTimes(3);
+      expect(result).toEqual({ greeting: "Hola" });
+    });
+
+    it("throws after exhausting all retries on persistent 5xx errors", async () => {
+      mockFetch.mockResolvedValue(serverErrorResponse(500));
+
+      const engine = new LingoDotDevEngine({
+        apiKey: "test-key",
+        maxRetries: 2,
+        retryDelayMs: 0,
+      });
+
+      await expect(
+        engine.localizeObject(
+          { greeting: "Hello" },
+          { sourceLocale: "en", targetLocale: "es" },
+        ),
+      ).rejects.toThrow(/Server error \(500\)/);
+
+      // initial attempt + 2 retries
+      expect(mockFetch).toHaveBeenCalledTimes(3);
+    });
+
+    it("does not retry on 4xx errors", async () => {
+      mockFetch.mockResolvedValue({
+        ok: false,
+        status: 400,
+        text: async () => JSON.stringify({ message: "bad request" }),
+      });
+
+      const engine = new LingoDotDevEngine({
+        apiKey: "test-key",
+        retryDelayMs: 0,
+      });
+
+      await expect(
+        engine.localizeObject(
+          { greeting: "Hello" },
+          { sourceLocale: "en", targetLocale: "es" },
+        ),
+      ).rejects.toThrow(/Invalid request/);
+
+      expect(mockFetch).toHaveBeenCalledTimes(1);
+    });
+
+    it("retries on transient network errors", async () => {
+      mockFetch
+        .mockRejectedValueOnce(new TypeError("network failure"))
+        .mockResolvedValueOnce(okResponse());
+
+      const engine = new LingoDotDevEngine({
+        apiKey: "test-key",
+        retryDelayMs: 0,
+      });
+
+      const result = await engine.localizeObject(
+        { greeting: "Hello" },
+        { sourceLocale: "en", targetLocale: "es" },
+      );
+
+      expect(mockFetch).toHaveBeenCalledTimes(2);
+      expect(result).toEqual({ greeting: "Hola" });
+    });
+
+    it("does not retry when maxRetries is 0", async () => {
+      mockFetch.mockResolvedValue(serverErrorResponse(500));
+
+      const engine = new LingoDotDevEngine({
+        apiKey: "test-key",
+        maxRetries: 0,
+        retryDelayMs: 0,
+      });
+
+      await expect(
+        engine.localizeObject(
+          { greeting: "Hello" },
+          { sourceLocale: "en", targetLocale: "es" },
+        ),
+      ).rejects.toThrow(/Server error \(500\)/);
+
+      expect(mockFetch).toHaveBeenCalledTimes(1);
+    });
+
+    it("does not retry an aborted request", async () => {
+      const controller = new AbortController();
+      controller.abort();
+
+      const engine = new LingoDotDevEngine({
+        apiKey: "test-key",
+        retryDelayMs: 0,
+      });
+
+      await expect(
+        engine.localizeObject(
+          { greeting: "Hello" },
+          { sourceLocale: "en", targetLocale: "es" },
+          undefined,
+          controller.signal,
+        ),
+      ).rejects.toThrow(/aborted/i);
+
+      expect(mockFetch).not.toHaveBeenCalled();
+    });
+  });
+
   describe("locale normalization", () => {
     let mockFetch: ReturnType<typeof vi.fn>;
 
