@@ -1,5 +1,11 @@
 # @lingo.dev/\_sdk
 
+## 0.16.5
+
+### Patch Changes
+
+- [#2105](https://github.com/lingodotdev/lingo.dev/pull/2105) [`7925cb1`](https://github.com/lingodotdev/lingo.dev/commit/7925cb1633f3f053cb7b714141b7afeffc79167a) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Retry localization requests on transient failures. `localizeChunk` now retries on 5xx responses and network errors using exponential backoff with full jitter, controlled by the new `maxRetries` (default 3) and `retryDelayMs` (default 500) engine options
+
 ## 0.16.4
 
 ### Patch Changes
