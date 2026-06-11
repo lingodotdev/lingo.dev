@@ -35,7 +35,7 @@
     "@types/node": "22.13.5",
     "tsup": "8.5.1",
     "typescript": "5.9.3",
-    "vitest": "3.2.4"
+    "vitest": "3.2.6"
   },
   "dependencies": {
     "iso-639-3": "3.0.1"
