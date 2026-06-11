@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.136.4
+
+### Patch Changes
+
+- [#2109](https://github.com/lingodotdev/lingo.dev/pull/2109) [`b32d9b2`](https://github.com/lingodotdev/lingo.dev/commit/b32d9b2d1cfbfd2963f55eedab9f9580d7082c28) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Improve BYOK model response parsing and error handling in `run` and `i18n` commands
+
 ## 0.136.3
 
 ### Patch Changes
