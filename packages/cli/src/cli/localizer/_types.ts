@@ -1,4 +1,5 @@
 import { I18nConfig } from "@lingo.dev/_spec";
+import type { CostEstimate } from "@lingo.dev/_sdk";
 
 export type LocalizerData = {
   sourceLocale: string;
@@ -29,4 +30,11 @@ export interface ILocalizer {
     input: LocalizerData,
     onProgress?: LocalizerProgressFn,
   ) => Promise<LocalizerData["processableData"]>;
+  /**
+   * Estimate the cost of pending translations without translating anything.
+   * Only providers with server-side pricing implement this (Lingo.dev).
+   */
+  estimate?: (
+    items: { targetLocale: string; sourceChars: number }[],
+  ) => Promise<CostEstimate>;
 }
