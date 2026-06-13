@@ -69,6 +69,19 @@ const createInvalidLocaleConfig = () => ({
   },
 });
 
+const createLatestConfig = () => ({
+  version: "1.15",
+  locale: {
+    source: "en",
+    targets: ["es"],
+  },
+  buckets: {
+    json: {
+      include: ["locales/[locale].json"],
+    },
+  },
+});
+
 describe("I18n Config Parser", () => {
   it("should upgrade v0 config to latest version", () => {
     const v0Config = createV0Config();
@@ -143,6 +156,76 @@ describe("I18n Config Parser", () => {
     const invalidLocaleConfig = createInvalidLocaleConfig();
     expect(() => parseI18nConfig(invalidLocaleConfig)).toThrow(
       `\nUnsupported locale: ${invalidLocaleConfig.locale.source}\nUnsupported locale: ${invalidLocaleConfig.locale.targets[1]}`,
+    );
+  });
+
+  it("should throw a descriptive error when source locale is missing", () => {
+    const config = {
+      ...createLatestConfig(),
+      locale: {
+        targets: ["es"],
+      },
+    };
+
+    expect(() => parseI18nConfig(config)).toThrow(
+      'Failed to parse config: \nSource locale is required. Add "locale.source" to your i18n.json (e.g. "en").',
+    );
+  });
+
+  it("should throw a descriptive error when target locales are empty", () => {
+    const config = {
+      ...createLatestConfig(),
+      locale: {
+        source: "en",
+        targets: [],
+      },
+    };
+
+    expect(() => parseI18nConfig(config)).toThrow(
+      'Failed to parse config: \nAt least one target locale is required. Add locale targets to your i18n.json (e.g. ["es", "fr"]).',
+    );
+  });
+
+  it("should throw a descriptive error when target locales contain duplicates", () => {
+    const config = {
+      ...createLatestConfig(),
+      locale: {
+        source: "en",
+        targets: ["es", "fr", "es"],
+      },
+    };
+
+    expect(() => parseI18nConfig(config)).toThrow(
+      "Failed to parse config: \nDuplicate target locale(s): es. Remove duplicates from locale.targets.",
+    );
+  });
+
+  it("should throw a descriptive error when no buckets are configured", () => {
+    const config = {
+      ...createLatestConfig(),
+      buckets: {},
+    };
+
+    expect(() => parseI18nConfig(config)).toThrow(
+      'Failed to parse config: \nNo buckets configured. Add at least one bucket to i18n.json under "buckets" (e.g. "json": { "include": ["locales/[locale].json"] }).',
+    );
+  });
+
+  it("should throw a descriptive error for unknown bucket type ids", () => {
+    const config = {
+      ...createLatestConfig(),
+      buckets: {
+        invalid: {
+          include: ["locales/[locale].json"],
+        },
+        "not-a-bucket": {
+          include: ["content/[locale].md"],
+        },
+      },
+    };
+
+    expect(() => parseI18nConfig(config)).toThrow(
+      "Failed to parse config: \nUnknown bucket type(s): invalid, not-a-bucket. Supported types:",
     );
   });
 });
