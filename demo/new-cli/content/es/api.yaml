@@ -1,0 +1,22 @@
+openapi: 3.0.3
+info:
+  title: API de ejemplo
+  version: 1.0.0
+  description: Una especificación OpenAPI pequeña. Los textos visibles para las
+    personas (resúmenes y descripciones) se traducen; las claves y los
+    identificadores se conservan.
+paths:
+  /products:
+    get:
+      summary: Lista todos los productos
+      description: Devuelve una lista paginada de los productos disponibles en el catálogo.
+      responses:
+        "200":
+          description: Una lista de productos.
+  /products/{id}:
+    get:
+      summary: Obtén un producto
+      description: Devuelve el producto con el identificador indicado.
+      responses:
+        "404":
+          description: No se ha podido encontrar el producto.
