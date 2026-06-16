@@ -55,6 +55,8 @@ importers:
         specifier: 2.6.1
         version: 2.6.1
 
+  demo/new-cli: {}
+
   demo/new-compiler-next16:
     dependencies:
       '@lingo.dev/compiler':
