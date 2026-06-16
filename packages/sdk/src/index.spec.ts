@@ -689,4 +689,102 @@ describe("LingoDotDevEngine", () => {
       expect(body.targetLocale).toBe("pt-PT");
     });
   });
+
+  describe("estimate", () => {
+    let mockFetch: ReturnType<typeof vi.fn>;
+
+    beforeEach(() => {
+      mockFetch = vi.fn();
+      global.fetch = mockFetch as any;
+    });
+
+    it("should POST per-locale char counts to /process/estimate and return the estimate", async () => {
+      const serverEstimate = {
+        approximate: true,
+        totals: {
+          sourceChars: 599,
+          estimatedOutputTokens: 150,
+          estimatedLlmCostUsd: 0.0006,
+          estimatedLocalizationCostUsd: 0.0003,
+          estimatedTotalCostUsd: 0.0009,
+        },
+        byLocale: [
+          {
+            targetLocale: "de",
+            sourceChars: 400,
+            estimatedOutputTokens: 100,
+            estimatedCostUsd: 0.0006,
+          },
+          {
+            targetLocale: "fr",
+            sourceChars: 199,
+            estimatedOutputTokens: 50,
+            estimatedCostUsd: 0.0003,
+          },
+        ],
+      };
+      mockFetch.mockResolvedValue({
+        ok: true,
+        json: async () => serverEstimate,
+      });
+
+      const engine = new LingoDotDevEngine({ apiKey: "test-key" });
+      const result = await engine.estimate([
+        { targetLocale: "de", sourceChars: 400 },
+        { targetLocale: "fr", sourceChars: 199 },
+      ]);
+
+      const [url, options] = mockFetch.mock.calls[0];
+      expect(url).toMatch(/\/process\/estimate$/);
+      expect(options.method).toBe("POST");
+      expect(options.headers["X-API-Key"]).toBe("test-key");
+      expect(JSON.parse(options.body)).toEqual({
+        items: [
+          { targetLocale: "de", sourceChars: 400 },
+          { targetLocale: "fr", sourceChars: 199 },
+        ],
+      });
+      expect(result).toEqual(serverEstimate);
+    });
+
+    it("should normalize locale codes before sending", async () => {
+      mockFetch.mockResolvedValue({
+        ok: true,
+        json: async () => ({ approximate: true, totals: {}, byLocale: [] }),
+      });
+
+      const engine = new LingoDotDevEngine({ apiKey: "test-key" });
+      await engine.estimate([{ targetLocale: "pt_BR", sourceChars: 10 }]);
+
+      const body = JSON.parse(mockFetch.mock.calls[0][1].body);
+      expect(body.items[0].targetLocale).toBe("pt-BR");
+    });
+
+    it("should reject an empty items array client-side", async () => {
+      const engine = new LingoDotDevEngine({ apiKey: "test-key" });
+      await expect(engine.estimate([])).rejects.toThrow();
+      expect(mockFetch).not.toHaveBeenCalled();
+    });
+
+    it("should reject negative char counts client-side", async () => {
+      const engine = new LingoDotDevEngine({ apiKey: "test-key" });
+      await expect(
+        engine.estimate([{ targetLocale: "de", sourceChars: -1 }]),
+      ).rejects.toThrow();
+      expect(mockFetch).not.toHaveBeenCalled();
+    });
+
+    it("should surface server validation errors", async () => {
+      mockFetch.mockResolvedValue({
+        ok: false,
+        status: 400,
+        text: async () => JSON.stringify({ message: "bad payload" }),
+      });
+
+      const engine = new LingoDotDevEngine({ apiKey: "test-key" });
+      await expect(
+        engine.estimate([{ targetLocale: "de", sourceChars: 5 }]),
+      ).rejects.toThrow("Invalid request: bad payload");
+    });
+  });
 });

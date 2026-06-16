@@ -81,5 +81,6 @@ export default function createLingoDotDevLocalizer(
 
       return processedData;
     },
+    estimate: async (items) => engine.estimate(items),
   };
 }
