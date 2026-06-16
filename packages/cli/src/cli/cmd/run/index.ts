@@ -6,6 +6,7 @@ import os from "os";
 import setup from "./setup";
 import plan from "./plan";
 import execute from "./execute";
+import estimate from "./estimate";
 import watch from "./watch";
 import { CmdRunContext, flagsSchema } from "./_types";
 import frozen from "./frozen";
@@ -123,6 +124,10 @@ export default new Command()
     "--pseudo",
     "Enable pseudo-localization mode: automatically pseudo-translates all extracted strings with accented characters and visual markers without calling any external API. Useful for testing UI internationalization readiness",
   )
+  .option(
+    "--estimate",
+    "Print the estimated cost of pending translations and exit without translating. Computes the same change delta as a regular run and prices it via the Lingo.dev API; values are estimates, not quotes",
+  )
   .action(async (args) => {
     let userIdentity: UserIdentity = null;
     try {
@@ -133,6 +138,12 @@ export default new Command()
         tasks: [],
         localizer: null,
       };
+
+      if (ctx.flags.estimate && (ctx.flags.watch || ctx.flags.frozen)) {
+        throw new Error(
+          "--estimate cannot be combined with --watch or --frozen. Run it on its own to preview the cost of the next run.",
+        );
+      }
 
       await pauseIfDebug(ctx.flags.debug);
       await renderClear();
@@ -154,6 +165,12 @@ export default new Command()
 
       await plan(ctx);
       await renderSpacer();
+
+      if (ctx.flags.estimate) {
+        await estimate(ctx);
+        await renderSpacer();
+        return;
+      }
 
       await frozen(ctx);
       await renderSpacer();
