@@ -1,0 +1,11 @@
+{
+  "labels": {
+    "theme": "Tema",
+    "language": "Idioma",
+    "notifications": "Notificaciones"
+  },
+  "featureFlags": {
+    "newOnboarding": true,
+    "betaEditor": false
+  }
+}

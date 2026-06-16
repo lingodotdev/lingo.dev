@@ -1,0 +1,22 @@
+openapi: 3.0.3
+info:
+  title: API de démonstration
+  version: 1.0.0
+  description: Une spécification OpenAPI concise. Les chaînes visibles par les
+    utilisateurs (résumés, descriptions) sont traduites ; les clés et les
+    identifiants sont conservés.
+paths:
+  /products:
+    get:
+      summary: Lister tous les produits
+      description: Renvoie une liste paginée des produits disponibles dans le catalogue.
+      responses:
+        "200":
+          description: Une liste de produits.
+  /products/{id}:
+    get:
+      summary: Obtenir un produit
+      description: Renvoie le produit correspondant à l’identifiant fourni.
+      responses:
+        "404":
+          description: Le produit est introuvable.

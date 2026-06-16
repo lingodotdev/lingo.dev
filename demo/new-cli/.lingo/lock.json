@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "files": {
+    "content/de/api.yaml": {
+      "sha256": "a6c044903e798cd1e939f4e791fb1671463d904ef45a8c73a60b85f89793421b"
+    },
+    "content/de/app.json": {
+      "sha256": "5ea4357309b816f767d0e9d8c3ffcaf44e8b9bd4ddc7b34cf5f9300c16d864fe"
+    },
+    "content/de/changelog.mdoc": {
+      "sha256": "364ba7e4fb50c6e739398f2509abd9658fc78dd51d7d42c9ef0a89c7998cf49e"
+    },
+    "content/de/guide.md": {
+      "sha256": "f43b72e2f8c9ff48b02b6b02ebcbae350eeba7a6e255d3bb55a999c8fc402cfe"
+    },
+    "content/de/landing.mdx": {
+      "sha256": "a2ae8ebd1c1e4a2b66ab0382cac285670c146679bc36f8d1f0b4d91c306ff87e"
+    },
+    "content/de/settings.jsonc": {
+      "sha256": "f1532df03ba349fb04f9e2538e988dc0fc9ce18fcca81a30c3528fe0dec933d2"
+    },
+    "content/es/api.yaml": {
+      "sha256": "e655fed0877fb9250d7c4ba3a9d84116282dc212b1933b97a61c7a4b984db6ec"
+    },
+    "content/es/app.json": {
+      "sha256": "6343810f282d97fb68a9be13d3aee8dfcce2b1573b90985e8bdbb26ce617a6c0"
+    },
+    "content/es/changelog.mdoc": {
+      "sha256": "b446a60d5db688ff3f6703e89c6c64c86c3e87055287affea4d6425cc77a8293"
+    },
+    "content/es/guide.md": {
+      "sha256": "2ea3a51a46b3f2f381c7eb17316e1e22b989cba94368184a76f686d0ea86ad49"
+    },
+    "content/es/landing.mdx": {
+      "sha256": "5485f6f0d123d688ab5e8d7e2cf21a42a534a739e2e04ba895d7976ced3435b8"
+    },
+    "content/es/settings.jsonc": {
+      "sha256": "ef8cb32fbdde960c3de8b4ca8186131f07291fd844fa12ece097288db5d43fc1"
+    },
+    "content/fr/api.yaml": {
+      "sha256": "c0e3c1e4b172cc1c5f9770e7bf6fd6ab395fe5f5d2ab19fdb6d7c6304252301f"
+    },
+    "content/fr/app.json": {
+      "sha256": "9296bc0b932bb334d2dbe0b48371abd3a7b4d44c21c15e14526b526cdd00ea3d"
+    },
+    "content/fr/changelog.mdoc": {
+      "sha256": "3f3976fffefa23d45b765ad7c1c9104f1cb35ca4527817235afe2ddf093b42e7"
+    },
+    "content/fr/guide.md": {
+      "sha256": "1972323957345dd0dfff2d18b8146dd091996bed8f471aa5d018cada9c0846cc"
+    },
+    "content/fr/landing.mdx": {
+      "sha256": "4c05452206bc7a75a63f4c277b66512f7b512cd9fe034ed854d460147f4e22e7"
+    },
+    "content/fr/settings.jsonc": {
+      "sha256": "0806fd9d4209761e1dd4136a2bbefeeebb787f45e4f7bb72114e26e94016d083"
+    }
+  }
+}
