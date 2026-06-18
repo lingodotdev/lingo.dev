@@ -66,7 +66,7 @@
     "next": "15.3.8"
   },
   "dependencies": {
-    "js-cookie": "3.0.5",
-    "lodash": "4.17.21"
+    "js-cookie": "3.0.8",
+    "lodash": "4.17.23"
   }
 }
