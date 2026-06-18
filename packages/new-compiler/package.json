@@ -151,14 +151,14 @@
     "tsx": "4.21.0",
     "typescript": "5.9.3",
     "unplugin": "2.3.11",
-    "vitest": "4.1.0"
+    "vitest": "4.1.9"
   },
   "dependencies": {
     "@ai-sdk/google": "3.0.1",
     "@ai-sdk/groq": "3.0.1",
     "@ai-sdk/mistral": "3.0.1",
     "@ai-sdk/openai": "3.0.1",
-    "@babel/core": "7.26.0",
+    "@babel/core": "7.29.6",
     "@babel/generator": "7.28.5",
     "@babel/parser": "7.28.5",
     "@babel/preset-react": "7.26.3",
@@ -178,7 +178,7 @@
     "node-machine-id": "1.1.12",
     "posthog-node": "5.14.0",
     "lmdb": "3.2.6",
-    "ws": "8.18.3"
+    "ws": "8.21.0"
   },
   "peerDependencies": {
     "next": "^15.0.0 || ^16.0.4",
