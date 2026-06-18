@@ -1,0 +1,58 @@
+{
+  "sourceLocale": "en",
+  "targetLocales": [
+    "de",
+    "fr",
+    "es"
+  ],
+  "files": [
+    {
+      "pattern": "content/en/app.json",
+      "injectLocale": true,
+      "lockedKeys": [
+        "meta.version"
+      ]
+    },
+    {
+      "pattern": "content/en/settings.jsonc",
+      "preservedKeys": [
+        "featureFlags"
+      ]
+    },
+    {
+      "pattern": "content/en/guide.md",
+      "translateFrontmatterFields": [
+        "title",
+        "description"
+      ]
+    },
+    {
+      "pattern": "content/en/landing.mdx",
+      "translateFrontmatterFields": [
+        "title"
+      ],
+      "translateComponentProps": [
+        {
+          "component": [
+            "Hero",
+            "Callout"
+          ],
+          "props": [
+            "title",
+            "body"
+          ]
+        }
+      ]
+    },
+    {
+      "pattern": "content/en/changelog.mdoc",
+      "translateFrontmatterFields": [
+        "title"
+      ]
+    },
+    {
+      "pattern": "content/en/api.yaml",
+      "format": "yaml-openapi"
+    }
+  ]
+}

@@ -2,14 +2,12 @@ import chalk from "chalk";
 import { Listr, ListrTask } from "listr2";
 import pLimit, { LimitFunction } from "p-limit";
 import _ from "lodash";
-import { minimatch } from "minimatch";
 
-import { safeDecode } from "../../utils/key-matching";
 import { colors } from "../../constants";
 import { CmdRunContext, CmdRunTask, CmdRunTaskResult } from "./_types";
 import { commonTaskRendererOptions } from "./_const";
-import createBucketLoader from "../../loaders";
 import { createDeltaProcessor, Delta } from "../../utils/delta";
+import { computeProcessableData, createLoaderForTask } from "./_utils";
 
 const WARN_CONCURRENCY_COUNT = 30;
 
@@ -148,27 +146,6 @@ function createExecutionProgressMessage(ctx: CmdRunContext) {
   }, Failed ${chalk.red(failedTasksCount)}, Skipped ${chalk.dim(skippedTasksCount)}`;
 }
 
-function createLoaderForTask(assignedTask: CmdRunTask) {
-  const bucketLoader = createBucketLoader(
-    assignedTask.bucketType,
-    assignedTask.bucketPathPattern,
-    {
-      defaultLocale: assignedTask.sourceLocale,
-      injectLocale: assignedTask.injectLocale,
-      formatter: assignedTask.formatter,
-      keyColumn: assignedTask.keyColumn,
-    },
-    assignedTask.lockedKeys,
-    assignedTask.lockedPatterns,
-    assignedTask.ignoredKeys,
-    assignedTask.preservedKeys,
-    assignedTask.localizableKeys,
-  );
-  bucketLoader.setDefaultLocale(assignedTask.sourceLocale);
-
-  return bucketLoader;
-}
-
 function createWorkerTask(args: {
   ctx: CmdRunContext;
   assignedTasks: CmdRunTask[];
@@ -217,23 +194,12 @@ function createWorkerTask(args: {
               checksums: initialChecksums,
             });
 
-            const processableData = _.chain(sourceData)
-              .entries()
-              .filter(
-                ([key, value]) =>
-                  delta.added.includes(key) ||
-                  delta.updated.includes(key) ||
-                  !!args.ctx.flags.force,
-              )
-              .filter(
-                ([key]) =>
-                  !assignedTask.onlyKeys.length ||
-                  assignedTask.onlyKeys?.some((pattern) =>
-                    minimatch(safeDecode(key), safeDecode(pattern)),
-                  ),
-              )
-              .fromPairs()
-              .value();
+            const processableData = computeProcessableData(
+              sourceData,
+              delta,
+              args.ctx.flags.force,
+              assignedTask.onlyKeys,
+            );
 
             if (!Object.keys(processableData).length) {
               await fileIoLimiter(async () => {

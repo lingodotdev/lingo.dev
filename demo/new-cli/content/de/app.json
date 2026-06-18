@@ -1,0 +1,15 @@
+{
+  "meta": {
+    "version": "1.0.0"
+  },
+  "nav": {
+    "home": "Startseite",
+    "pricing": "Preise",
+    "docs": "Dokumentation"
+  },
+  "cta": {
+    "title": "Veröffentliche deine App in allen Sprachen",
+    "subtitle": "Übersetze dein Produkt, ohne deinen Editor zu verlassen.",
+    "button": "Jetzt loslegen"
+  }
+}
