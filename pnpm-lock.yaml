@@ -55,6 +55,8 @@ importers:
         specifier: 2.6.1
         version: 2.6.1
 
+  demo/new-cli: {}
+
   demo/new-compiler-next16:
     dependencies:
       '@lingo.dev/compiler':
@@ -379,8 +381,8 @@ importers:
         specifier: 8.3.2
         version: 8.3.2
       lodash:
-        specifier: 4.18.0
-        version: 4.18.0
+        specifier: 4.17.23
+        version: 4.17.23
       marked:
         specifier: 15.0.6
         version: 15.0.6
@@ -611,8 +613,8 @@ importers:
         specifier: 5.0.0
         version: 5.0.0
       lodash:
-        specifier: 4.18.0
-        version: 4.18.0
+        specifier: 4.17.23
+        version: 4.17.23
       node-machine-id:
         specifier: 1.1.12
         version: 1.1.12
@@ -773,8 +775,8 @@ importers:
         specifier: 3.2.6
         version: 3.2.6
       lodash:
-        specifier: 4.18.0
-        version: 4.18.0
+        specifier: 4.17.23
+        version: 4.17.23
       node-machine-id:
         specifier: 1.1.12
         version: 1.1.12
@@ -840,11 +842,11 @@ importers:
   packages/react:
     dependencies:
       js-cookie:
-        specifier: 3.0.7
-        version: 3.0.7
+        specifier: 3.0.8
+        version: 3.0.8
       lodash:
-        specifier: 4.18.0
-        version: 4.18.0
+        specifier: 4.17.23
+        version: 4.17.23
     devDependencies:
       '@testing-library/react':
         specifier: 16.3.0
@@ -6683,9 +6685,8 @@ packages:
     resolution: {integrity: sha512-cEiJEAEoIbWfCZYKWhVwFuvPX1gETRYPw6LlaTKoxD3s2AkXzkCjnp6h0V77ozyqj0jakteJ4YqDJT830+lVGw==}
     engines: {node: '>=14'}
 
-  js-cookie@3.0.7:
-    resolution: {integrity: sha512-z/wZZgDrkNV1eA0ULjM/F9/50Ya8fbzgKneSpoPsXSGd0KnpdtHfOZWK+GcwLk+EZbS4F9RBhU+K2RgzuDaItw==}
-    engines: {node: '>=20'}
+  js-cookie@3.0.8:
+    resolution: {integrity: sha512-yeJd4aNAdYZQjaon2bpD/Gb0B/omw7HQOsynXXcOiWVCacbBcPlgn8S/d1X6blFSaHao7ozqtW7NZW19xpCtIw==}
 
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
@@ -6994,9 +6995,8 @@ packages:
   lodash@4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
 
-  lodash@4.18.0:
-    resolution: {integrity: sha512-l1mfj2atMqndAHI3ls7XqPxEjV2J9ZkcNyHpoZA3r2T1LLwDB69jgkMWh71YKwhBbK0G2f4WSn05ahmQXVxupA==}
-    deprecated: Bad release. Please use lodash@4.17.21 instead.
+  lodash@4.17.23:
+    resolution: {integrity: sha512-LgVTMpQtIopCi79SJeDiP0TfWi5CNEc/L/aRdTh3yIvmZXTnheWpKjSZhnvMl8iXbC1tFg9gdHHDMLoV7CnG+w==}
 
   log-symbols@6.0.0:
     resolution: {integrity: sha512-i24m8rpwhmPIS4zscNzK6MSEhk0DUWa/8iYQWxhffV8jkI4Phvs3F+quL5xvS0gdQR0FyTCMMH33Y78dDTzzIw==}
@@ -15992,7 +15992,7 @@ snapshots:
       is-ci: 3.0.1
       is-lower-case: 2.0.2
       is-upper-case: 2.0.2
-      lodash: 4.18.0
+      lodash: 4.17.23
       patch-console: 2.0.0
       react: 19.2.3
       react-reconciler: 0.29.2(react@19.2.3)
@@ -16325,7 +16325,7 @@ snapshots:
 
   js-cookie@3.0.5: {}
 
-  js-cookie@3.0.7: {}
+  js-cookie@3.0.8: {}
 
   js-tokens@4.0.0: {}
 
@@ -16490,7 +16490,7 @@ snapshots:
       get-package-type: 0.1.0
       getopts: 2.3.0
       interpret: 2.2.0
-      lodash: 4.18.0
+      lodash: 4.17.23
       pg-connection-string: 2.6.2
       rechoir: 0.8.0
       resolve-from: 5.0.0
@@ -16757,7 +16757,7 @@ snapshots:
 
   lodash@4.17.21: {}
 
-  lodash@4.18.0: {}
+  lodash@4.17.23: {}
 
   log-symbols@6.0.0:
     dependencies:

@@ -174,7 +174,7 @@
     "ini": "5.0.0",
     "intl-messageformat": "11.0.6",
     "lingo.dev": "workspace:^",
-    "lodash": "4.18.0",
+    "lodash": "4.17.23",
     "node-machine-id": "1.1.12",
     "posthog-node": "5.14.0",
     "lmdb": "3.2.6",
