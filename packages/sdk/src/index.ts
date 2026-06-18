@@ -41,6 +41,35 @@ const localizationParamsSchema = Z.object({
   triggerType: Z.enum(["cli", "ci"]).optional(),
 });
 
+const estimateItemsSchema = Z.array(
+  Z.object({
+    targetLocale: normalizedLocaleCodeSchema,
+    sourceChars: Z.number().int().nonnegative(),
+  }),
+).min(1);
+
+/**
+ * Approximate localization cost returned by `/process/estimate`.
+ * `approximate` is always true — the estimate is a chars→tokens heuristic,
+ * not a quote. Actual cost may differ.
+ */
+export type CostEstimate = {
+  approximate: boolean;
+  totals: {
+    sourceChars: number;
+    estimatedOutputTokens: number;
+    estimatedLlmCostUsd: number;
+    estimatedLocalizationCostUsd: number;
+    estimatedTotalCostUsd: number;
+  };
+  byLocale: {
+    targetLocale: string;
+    sourceChars: number;
+    estimatedOutputTokens: number;
+    estimatedCostUsd: number;
+  }[];
+};
+
 /**
  * LingoDotDevEngine class for interacting with the LingoDotDev API
  * A powerful localization engine that supports various content types including
@@ -870,6 +899,34 @@ export class LingoDotDevEngine {
       );
       throw error;
     }
+  }
+
+  /**
+   * Estimate the cost of localizing content BEFORE submitting it.
+   * Pure computation server-side — nothing is translated, stored, or billed.
+   * @param items - Per-target-locale character counts of translatable source
+   * text (sum of source string lengths, excluding keys and markup). Duplicate
+   * locales are summed by the server.
+   * @param signal - Optional AbortSignal to cancel the operation
+   * @returns Promise resolving to an approximate cost with per-locale breakdown
+   */
+  async estimate(
+    items: { targetLocale: string; sourceChars: number }[],
+    signal?: AbortSignal,
+  ): Promise<CostEstimate> {
+    const parsedItems = estimateItemsSchema.parse(items);
+    const url = `${this.config.apiUrl}/process/estimate`;
+
+    const res = await fetch(url, {
+      method: "POST",
+      headers: this.headers,
+      body: JSON.stringify({ items: parsedItems }),
+      signal,
+    });
+
+    await LingoDotDevEngine.throwOnHttpError(res, "Error estimating cost");
+
+    return res.json();
   }
 
   async whoami(

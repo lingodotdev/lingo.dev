@@ -1,0 +1,13 @@
+{
+  // User-facing labels are translated.
+  "labels": {
+    "theme": "Theme",
+    "language": "Language",
+    "notifications": "Notifications"
+  },
+  // featureFlags are preserved verbatim (see preservedKeys in .lingo/config.json).
+  "featureFlags": {
+    "newOnboarding": true,
+    "betaEditor": false
+  }
+}

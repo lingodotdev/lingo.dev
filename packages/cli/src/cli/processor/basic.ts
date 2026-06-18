@@ -1,6 +1,7 @@
 import { generateText, LanguageModel } from "ai";
 import { LocalizerInput, LocalizerProgressFn } from "./_base";
 import _ from "lodash";
+import { extractLocalizedData } from "../utils/model-response";
 
 type ModelSettings = {
   temperature?: number;
@@ -79,9 +80,7 @@ export function createBasicTranslator(
       ],
     });
 
-    const result = JSON.parse(response.text);
-
-    return result?.data || {};
+    return extractLocalizedData(response.text);
   }
 }
 

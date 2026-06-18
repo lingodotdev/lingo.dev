@@ -1,0 +1,20 @@
+openapi: 3.0.3
+info:
+  title: Demo API
+  version: 1.0.0
+  description: A tiny OpenAPI spec. Human-facing strings (summaries, descriptions) are translated; keys and identifiers are preserved.
+paths:
+  /products:
+    get:
+      summary: List all products
+      description: Returns a paginated list of products available in the catalog.
+      responses:
+        "200":
+          description: A list of products.
+  /products/{id}:
+    get:
+      summary: Get a single product
+      description: Returns the product with the given identifier.
+      responses:
+        "404":
+          description: The product could not be found.

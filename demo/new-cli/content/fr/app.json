@@ -1,0 +1,15 @@
+{
+  "meta": {
+    "version": "1.0.0"
+  },
+  "nav": {
+    "home": "Accueil",
+    "pricing": "Tarifs",
+    "docs": "Documentation"
+  },
+  "cta": {
+    "title": "Lancez votre application dans toutes les langues",
+    "subtitle": "Traduisez votre produit sans quitter votre éditeur.",
+    "button": "Commencer"
+  }
+}

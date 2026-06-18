@@ -1,0 +1,22 @@
+openapi: 3.0.3
+info:
+  title: Demo-API
+  version: 1.0.0
+  description: Eine kompakte OpenAPI-Spezifikation. Für Menschen bestimmte Texte
+    (Zusammenfassungen, Beschreibungen) werden übersetzt; Schlüssel und
+    Bezeichner bleiben unverändert.
+paths:
+  /products:
+    get:
+      summary: Alle Produkte anzeigen
+      description: Gibt eine paginierte Liste der im Katalog verfügbaren Produkte zurück.
+      responses:
+        "200":
+          description: Eine Liste von Produkten.
+  /products/{id}:
+    get:
+      summary: Ein einzelnes Produkt abrufen
+      description: Gibt das Produkt mit der angegebenen Kennung zurück.
+      responses:
+        "404":
+          description: Das Produkt wurde nicht gefunden.
