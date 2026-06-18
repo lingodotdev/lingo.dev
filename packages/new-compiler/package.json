@@ -151,7 +151,7 @@
     "tsx": "4.21.0",
     "typescript": "5.9.3",
     "unplugin": "2.3.11",
-    "vitest": "4.0.16"
+    "vitest": "4.1.0"
   },
   "dependencies": {
     "@ai-sdk/google": "3.0.1",
