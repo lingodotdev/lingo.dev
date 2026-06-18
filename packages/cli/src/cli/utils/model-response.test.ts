@@ -39,6 +39,11 @@ describe("extractLocalizedData", () => {
     expect(extractLocalizedData(input)).toEqual({ hello: "hallo" });
   });
 
+  it("treats a plain object without a data field as translation data", () => {
+    const input = JSON.stringify({ hello: "hallo" });
+    expect(extractLocalizedData(input)).toEqual({ hello: "hallo" });
+  });
+
   it("repairs an envelope with a missing colon", () => {
     // Raw JSON.parse fails with "Expected ':' after property name in JSON"
     const input = `{"sourceLocale": "en", "targetLocale": "de", "data" {"hello": "hallo"}}`;
@@ -58,7 +63,7 @@ describe("extractLocalizedData", () => {
     expect(extractLocalizedData(input)).toEqual({ hello: "hallo" });
   });
 
-  it("throws a clear error when valid JSON has no data object", () => {
+  it("throws a clear error when valid JSON is an assistant message envelope", () => {
     // e.g. the model wraps its answer in a role/content envelope
     const input = JSON.stringify({
       role: "assistant",

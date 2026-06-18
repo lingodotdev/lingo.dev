@@ -33,6 +33,16 @@ export function extractLocalizedData(text: string): Record<string, any> {
     return result.data;
   }
 
+  if (
+    typeof result === "object" &&
+    result !== null &&
+    !Array.isArray(result) &&
+    !("data" in result) &&
+    !("role" in result && "content" in result)
+  ) {
+    return result;
+  }
+
   // Handle string responses - extract and repair JSON
   if (typeof result?.data === "string") {
     const index = result.data.indexOf("{");
