@@ -168,7 +168,7 @@
     "@formatjs/icu-messageformat-parser": "3.1.1",
     "@openrouter/ai-sdk-provider": "1.5.4",
     "ai": "6.0.3",
-    "ai-sdk-ollama": "3.0.0",
+    "ai-sdk-ollama": "3.8.8",
     "dotenv": "17.2.3",
     "fast-xml-parser": "5.7.0",
     "ini": "5.0.0",
