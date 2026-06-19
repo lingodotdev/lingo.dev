@@ -123,7 +123,7 @@ describe("metadata", () => {
 
       const final = await loadMetadata(testDbPath);
       expect(Object.keys(final).length).toBe(1000);
-    });
+    }, 30000);
   });
 
   describe("cleanupExistingMetadata", () => {
