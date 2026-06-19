@@ -83,6 +83,27 @@ describe("getOrgId", () => {
       expect(getOrgId()).toBe("bitbucket:workspace");
     });
 
+    it("should parse GitHub alt-SSH host (ssh.github.com)", () => {
+      vi.mocked(execSync).mockReturnValue(
+        "ssh://git@ssh.github.com:443/owner/repo.git" as any,
+      );
+      expect(getOrgId()).toBe("github:owner");
+    });
+
+    it("should parse GitLab alt-SSH host (altssh.gitlab.com)", () => {
+      vi.mocked(execSync).mockReturnValue(
+        "ssh://git@altssh.gitlab.com:443/namespace/project.git" as any,
+      );
+      expect(getOrgId()).toBe("gitlab:namespace");
+    });
+
+    it("should not treat a look-alike host as the platform", () => {
+      vi.mocked(execSync).mockReturnValue(
+        "https://github.com.evil.com/owner/repo.git" as any,
+      );
+      expect(getOrgId()).toBe("git:owner");
+    });
+
     it("should parse self-hosted git URL with generic prefix", () => {
       vi.mocked(execSync).mockReturnValue(
         "git@custom-git.company.com:team/project.git" as any,
