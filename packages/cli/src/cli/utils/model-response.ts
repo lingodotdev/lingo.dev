@@ -13,8 +13,70 @@ export function parseModelResponse(
   try {
     return JSON.parse(extracted);
   } catch {
-    return JSON.parse(jsonrepair(extracted));
+    try {
+      return JSON.parse(jsonrepair(extracted));
+    } catch {
+      // Models (notably Claude Sonnet) occasionally emit string values
+      // containing unescaped double quotes that jsonrepair can't recover on
+      // its own. Escape those quotes and retry before giving up — this keeps
+      // the response usable instead of triggering a costly fallback retranslation.
+      return JSON.parse(jsonrepair(escapeUnescapedQuotes(extracted)));
+    }
   }
+}
+
+/**
+ * Escape double quotes that appear inside JSON string values but were left
+ * unescaped by the model. A quote is treated as a real string terminator only
+ * when the next non-whitespace character is a structural delimiter (`:`, `,`,
+ * `}`, `]`) or the end of input; any other quote inside a string is escaped.
+ */
+export function escapeUnescapedQuotes(input: string): string {
+  let out = "";
+  let inString = false;
+
+  for (let i = 0; i < input.length; i++) {
+    const ch = input[i];
+
+    if (!inString) {
+      out += ch;
+      if (ch === '"') inString = true;
+      continue;
+    }
+
+    if (ch === "\\") {
+      // Preserve already-escaped sequences verbatim.
+      out += ch;
+      if (i + 1 < input.length) {
+        out += input[i + 1];
+        i++;
+      }
+      continue;
+    }
+
+    if (ch === '"') {
+      let j = i + 1;
+      while (j < input.length && /\s/.test(input[j])) j++;
+      const next = input[j];
+      if (
+        next === undefined ||
+        next === ":" ||
+        next === "," ||
+        next === "}" ||
+        next === "]"
+      ) {
+        out += ch;
+        inString = false;
+      } else {
+        out += '\\"';
+      }
+      continue;
+    }
+
+    out += ch;
+  }
+
+  return out;
 }
 
 export function extractLocalizedData(text: string): Record<string, any> {
