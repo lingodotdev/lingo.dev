@@ -146,7 +146,7 @@
     "@types/react": "19.2.7",
     "@types/react-dom": "19.2.3",
     "@types/ws": "8.18.1",
-    "next": "16.1.0",
+    "next": "16.2.9",
     "tsdown": "0.18.2",
     "tsx": "4.21.0",
     "typescript": "5.9.3",
@@ -174,11 +174,11 @@
     "ini": "5.0.0",
     "intl-messageformat": "11.0.6",
     "lingo.dev": "workspace:^",
-    "lodash": "4.17.23",
+    "lodash": "4.18.1",
     "node-machine-id": "1.1.12",
     "posthog-node": "5.14.0",
     "lmdb": "3.2.6",
-    "ws": "8.18.3"
+    "ws": "8.21.0"
   },
   "peerDependencies": {
     "next": "^15.0.0 || ^16.0.4",
