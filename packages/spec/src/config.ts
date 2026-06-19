@@ -65,31 +65,25 @@ function validateConfigSemantics(rawConfig: unknown): void {
     }
 
     if ("targets" in locale && Array.isArray(locale.targets)) {
-      if (locale.targets.length === 0) {
+      const seen = new Set<string>();
+      const duplicates: string[] = [];
+
+      for (const target of locale.targets) {
+        if (typeof target !== "string") {
+          continue;
+        }
+
+        if (seen.has(target)) {
+          duplicates.push(target);
+        }
+
+        seen.add(target);
+      }
+
+      if (duplicates.length > 0) {
         errors.push(
-          'At least one target locale is required. Add locale targets to your i18n.json (e.g. ["es", "fr"]).',
+          `Duplicate target locale(s): ${[...new Set(duplicates)].join(", ")}. Remove duplicates from locale.targets.`,
         );
-      } else {
-        const seen = new Set<string>();
-        const duplicates: string[] = [];
-
-        for (const target of locale.targets) {
-          if (typeof target !== "string") {
-            continue;
-          }
-
-          if (seen.has(target)) {
-            duplicates.push(target);
-          }
-
-          seen.add(target);
-        }
-
-        if (duplicates.length > 0) {
-          errors.push(
-            `Duplicate target locale(s): ${[...new Set(duplicates)].join(", ")}. Remove duplicates from locale.targets.`,
-          );
-        }
       }
     }
   }
@@ -187,8 +181,19 @@ const extendConfigDefinition = <
       }
 
       const localeErrors = safeResult.error.issues
-        .filter((issue) => issue.message.includes("Invalid locale code"))
+        .filter(
+          (issue) =>
+            issue.message.includes("Invalid locale code") ||
+            (issue.path[0] === "locale" &&
+              issue.path[1] === "targets" &&
+              issue.message ===
+                'At least one target locale is required. Add locale targets to your i18n.json (e.g. ["es", "fr"]).'),
+        )
         .map((issue) => {
+          if (!issue.message.includes("Invalid locale code")) {
+            return issue.message;
+          }
+
           let unsupportedLocale = "";
           const path = issue.path;
 
