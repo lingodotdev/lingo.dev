@@ -4,7 +4,7 @@
 "@lingo.dev/compiler": patch
 ---
 
-Resolve high-severity CodeQL code-scanning findings (security hardening, no behavior change):
+Resolve high-severity CodeQL code-scanning findings (security hardening):
 
-- `org-id` git-remote parsing now extracts the URL host and compares it exactly (`=== "github.com"` etc.) instead of a substring `includes()` check, fixing `js/incomplete-url-substring-sanitization` (cli, compiler, new-compiler). Platform labels are unchanged.
-- XML loader newline stripping uses a global regex (`/\n/g`), fixing `js/incomplete-sanitization` in `xml.ts`.
+- `org-id` git-remote parsing now extracts the URL host and matches the platform by exact host or subdomain suffix (`host === "github.com" || host.endsWith(".github.com")`, etc.) instead of a substring `includes()` check. This fixes `js/incomplete-url-substring-sanitization` (cli, compiler, new-compiler) while still recognizing official alt-SSH hosts like `ssh.github.com` / `altssh.gitlab.com` and rejecting look-alikes like `github.com.evil.com`. Platform labels for all real remote forms are preserved.
+- Removed a dead `.replace("\n", "")` in the XML loader (an earlier `\s+` collapse already strips newlines), which also clears the `js/incomplete-sanitization` finding there.

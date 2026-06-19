@@ -77,11 +77,11 @@ function parseGitUrl(url: string): string | null {
     .toLowerCase();
 
   let platform: string | null = null;
-  if (host === "github.com") {
+  if (host === "github.com" || host.endsWith(".github.com")) {
     platform = "github";
-  } else if (host === "gitlab.com") {
+  } else if (host === "gitlab.com" || host.endsWith(".gitlab.com")) {
     platform = "gitlab";
-  } else if (host === "bitbucket.org") {
+  } else if (host === "bitbucket.org" || host.endsWith(".bitbucket.org")) {
     platform = "bitbucket";
   }
 
