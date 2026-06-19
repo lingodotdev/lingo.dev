@@ -164,7 +164,7 @@
     "csv-stringify": "6.6.0",
     "date-fns": "4.1.0",
     "dedent": "1.7.0",
-    "diff": "7.0.0",
+    "diff": "8.0.3",
     "dom-serializer": "2.0.0",
     "domhandler": "5.0.3",
     "domutils": "3.2.2",
@@ -226,7 +226,7 @@
     "xliff": "6.2.2",
     "xml2js": "0.6.2",
     "xpath": "0.0.34",
-    "yaml": "2.8.1",
+    "yaml": "2.8.3",
     "zod": "4.1.12"
   },
   "devDependencies": {
