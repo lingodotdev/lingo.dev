@@ -58,7 +58,7 @@ function slugifyCommandName(name: string): string {
 }
 
 function formatYamlValue(value: string): string {
-  const escaped = value.replace(/"/g, '\\"');
+  const escaped = value.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
   return `"${escaped}"`;
 }
 

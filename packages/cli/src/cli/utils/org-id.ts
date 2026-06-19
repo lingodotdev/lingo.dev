@@ -70,12 +70,18 @@ function getGitOrgId(): string | null {
 function parseGitUrl(url: string): string | null {
   const cleanUrl = url.replace(/\.git$/, "");
 
+  const host = cleanUrl
+    .replace(/^[a-z][a-z0-9+.-]*:\/\//i, "") // strip scheme://
+    .replace(/^[^@/]+@/, "") // strip user@
+    .split(/[/:]/)[0] // host token, before first / or :
+    .toLowerCase();
+
   let platform: string | null = null;
-  if (cleanUrl.includes("github.com")) {
+  if (host === "github.com") {
     platform = "github";
-  } else if (cleanUrl.includes("gitlab.com")) {
+  } else if (host === "gitlab.com") {
     platform = "gitlab";
-  } else if (cleanUrl.includes("bitbucket.org")) {
+  } else if (host === "bitbucket.org") {
     platform = "bitbucket";
   }
 

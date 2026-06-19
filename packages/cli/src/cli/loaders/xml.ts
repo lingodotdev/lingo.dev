@@ -6,7 +6,7 @@ function normalizeXMLString(xmlString: string): string {
   return xmlString
     .replace(/\s+/g, " ")
     .replace(/>\s+</g, "><")
-    .replace("\n", "")
+    .replace(/\n/g, "")
     .trim();
 }
 
