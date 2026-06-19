@@ -8,3 +8,5 @@ count.txt
 .nitro
 .tanstack
 .wrangler
+package-lock.json
+yarn.lock
