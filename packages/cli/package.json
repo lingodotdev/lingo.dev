@@ -140,7 +140,7 @@
     "@babel/types": "7.28.5",
     "@biomejs/js-api": "4.0.0",
     "@biomejs/wasm-nodejs": "2.4.6",
-    "@datocms/cma-client-node": "4.0.1",
+    "@datocms/cma-client-node": "5.5.3",
     "@gitbeaker/rest": "39.34.3",
     "@inkjs/ui": "2.0.0",
     "@inquirer/prompts": "7.8.0",
@@ -164,7 +164,7 @@
     "csv-stringify": "6.6.0",
     "date-fns": "4.1.0",
     "dedent": "1.7.0",
-    "diff": "7.0.0",
+    "diff": "9.0.0",
     "dom-serializer": "2.0.0",
     "domhandler": "5.0.3",
     "domutils": "3.2.2",
@@ -226,7 +226,7 @@
     "xliff": "6.2.2",
     "xml2js": "0.6.2",
     "xpath": "0.0.34",
-    "yaml": "2.8.1",
+    "yaml": "2.9.0",
     "zod": "4.1.12"
   },
   "devDependencies": {

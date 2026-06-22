@@ -63,7 +63,7 @@
     "vitest": "3.2.6"
   },
   "peerDependencies": {
-    "next": "15.3.8"
+    "next": ">=15.5.19 <16"
   },
   "dependencies": {
     "js-cookie": "3.0.8",
