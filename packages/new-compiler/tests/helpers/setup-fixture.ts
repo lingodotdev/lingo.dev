@@ -361,26 +361,29 @@ async function waitForPort(port: number, timeout = 60000): Promise<void> {
 
   console.log(`Waiting for port ${port} to be ready...`);
 
+  // Probe raw TCP connectivity instead of issuing an HTTP request: a full HTTP
+  // request blocks on the dev server's on-demand compilation, and the previous
+  // `fetch("http://localhost")` was IP-family-fragile. We try both IPv4 and IPv6
+  // loopback because Next dev listens on IPv4 (127.0.0.1) while Vite 7 listens on
+  // IPv6 (::1) — succeed as soon as the server accepts a connection on either.
+  const tryConnect = (host: string) =>
+    new Promise<void>((resolve, reject) => {
+      const socket = net.connect({ port, host });
+      const fail = (err: Error) => {
+        socket.destroy();
+        reject(err);
+      };
+      socket.once("connect", () => {
+        socket.destroy();
+        resolve();
+      });
+      socket.once("error", fail);
+      socket.setTimeout(5000, () => fail(new Error("socket timeout")));
+    });
+
   while (Date.now() - startTime < timeout) {
     try {
-      // Probe raw TCP connectivity on IPv4 instead of issuing an HTTP request.
-      // On Node 22 `fetch("http://localhost")` resolves to IPv6 (::1) while the
-      // dev server listens on IPv4, and a full HTTP request also blocks on Next's
-      // on-demand page compilation — both make the port look unavailable even
-      // though the server is already listening.
-      await new Promise<void>((resolve, reject) => {
-        const socket = net.connect({ port, host: "127.0.0.1" });
-        const fail = (err: Error) => {
-          socket.destroy();
-          reject(err);
-        };
-        socket.once("connect", () => {
-          socket.destroy();
-          resolve();
-        });
-        socket.once("error", fail);
-        socket.setTimeout(5000, () => fail(new Error("socket timeout")));
-      });
+      await Promise.any([tryConnect("127.0.0.1"), tryConnect("::1")]);
 
       console.log(`✅ Port ${port} is accepting connections`);
       return;
