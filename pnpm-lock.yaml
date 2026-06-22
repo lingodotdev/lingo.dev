@@ -344,9 +344,6 @@ importers:
       ejs:
         specifier: 3.1.10
         version: 3.1.10
-      external-editor:
-        specifier: 3.1.0
-        version: 3.1.0
       figlet:
         specifier: 1.9.4
         version: 1.9.4
@@ -362,9 +359,6 @@ importers:
       gradient-string:
         specifier: 3.0.0
         version: 3.0.0
-      gray-matter:
-        specifier: 4.0.3
-        version: 4.0.3
       htmlparser2:
         specifier: 10.0.0
         version: 10.0.0
@@ -561,6 +555,9 @@ importers:
       '@types/xml2js':
         specifier: 0.4.14
         version: 0.4.14
+      gray-matter:
+        specifier: 4.0.3
+        version: 4.0.3
       tsup:
         specifier: 8.5.1
         version: 8.5.1(@swc/core@1.15.3)(jiti@2.6.1)(postcss@8.5.6)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.9.0)
