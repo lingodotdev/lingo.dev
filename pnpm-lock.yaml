@@ -287,9 +287,6 @@ importers:
       '@markdoc/markdoc':
         specifier: 0.5.4
         version: 0.5.4(@types/react@19.2.7)(react@19.2.3)
-      '@modelcontextprotocol/sdk':
-        specifier: '>=1.26.0 <2'
-        version: 1.29.0(zod@4.1.12)
       '@openrouter/ai-sdk-provider':
         specifier: 6.0.0-alpha.1
         version: 6.0.0-alpha.1(zod@4.1.12)
@@ -491,9 +488,6 @@ importers:
       unified:
         specifier: 11.0.5
         version: 11.0.5
-      unist-util-visit:
-        specifier: 5.1.0
-        version: 5.1.0
       vfile:
         specifier: 6.0.3
         version: 6.0.3
@@ -11869,28 +11863,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@modelcontextprotocol/sdk@1.29.0(zod@4.1.12)':
-    dependencies:
-      '@hono/node-server': 1.19.14(hono@4.12.26)
-      ajv: 8.17.1
-      ajv-formats: 3.0.1(ajv@8.17.1)
-      content-type: 1.0.5
-      cors: 2.8.5
-      cross-spawn: 7.0.6
-      eventsource: 3.0.7
-      eventsource-parser: 3.0.6
-      express: 5.2.1
-      express-rate-limit: 8.5.2(express@5.2.1)
-      hono: 4.12.26
-      jose: 6.2.3
-      json-schema-typed: 8.0.2
-      pkce-challenge: 5.0.1
-      raw-body: 3.0.2
-      zod: 4.1.12
-      zod-to-json-schema: 3.25.2(zod@4.1.12)
-    transitivePeerDependencies:
-      - supports-color
-
   '@msgpackr-extract/msgpackr-extract-darwin-arm64@3.0.3':
     optional: true
 
@@ -20047,10 +20019,6 @@ snapshots:
   zod-to-json-schema@3.25.2(zod@3.25.76):
     dependencies:
       zod: 3.25.76
-
-  zod-to-json-schema@3.25.2(zod@4.1.12):
-    dependencies:
-      zod: 4.1.12
 
   zod-validation-error@4.0.2(zod@4.1.12):
     dependencies:
