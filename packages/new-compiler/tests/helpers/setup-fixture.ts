@@ -5,6 +5,7 @@ import { exec, spawn, ChildProcess } from "child_process";
 import { promisify } from "util";
 import { verifyFixtureIntegrity } from "./fixture-integrity.js";
 import * as os from "node:os";
+import * as net from "node:net";
 
 const execAsync = promisify(exec);
 
@@ -21,11 +22,7 @@ function setupGlobalCleanup() {
 
     console.log("\n🧹 Cleaning up all test fixtures...");
     const fixtures = Array.from(activeFixtures);
-    await Promise.all(
-      fixtures.map((fixture) =>
-        fixture.clean().catch((e) => console.error("Cleanup error:", e)),
-      ),
-    );
+    await Promise.all(fixtures.map((fixture) => fixture.clean().catch((e) => console.error("Cleanup error:", e))));
     process.exit(0);
   };
 
@@ -100,38 +97,27 @@ export interface TestFixture {
   build: () => Promise<string>;
   startProduction: () => Promise<ProdServer>;
   clean: () => Promise<void>;
-  updateFile: (
-    filePath: string,
-    updater: (content: string) => string,
-  ) => Promise<void>;
+  updateFile: (filePath: string, updater: (content: string) => string) => Promise<void>;
   createFile: (filePath: string, content: string) => Promise<void>;
   registerCleanup: (callback: CleanupCallback) => void;
   runCleanups: () => Promise<void>;
 }
 
-export async function setupFixture(
-  options: TestFixtureOptions,
-): Promise<TestFixture> {
+export async function setupFixture(options: TestFixtureOptions): Promise<TestFixture> {
   const { framework } = options;
 
   const fixturePath = path.join(process.cwd(), "tests", "fixtures", framework);
   if (!fsSync.existsSync(fixturePath)) {
-    throw new Error(
-      `Fixture for ${framework} not found. Run "pnpm test:e2e:prepare" first.`,
-    );
+    throw new Error(`Fixture for ${framework} not found. Run "pnpm test:e2e:prepare" first.`);
   }
 
   const { valid, errors } = await verifyFixtureIntegrity(fixturePath);
   if (!valid) {
     console.error(`❌ Fixture integrity check failed for ${framework}:`);
     errors.forEach((error) => console.error(`  - ${error}`));
-    throw new Error(
-      `Fixture integrity check failed. Please run "pnpm test:e2e:prepare" to recreate fixtures.`,
-    );
+    throw new Error(`Fixture integrity check failed. Please run "pnpm test:e2e:prepare" to recreate fixtures.`);
   }
-  console.log(
-    `Setting up ${framework} test from prepared fixture at ${fixturePath}`,
-  );
+  console.log(`Setting up ${framework} test from prepared fixture at ${fixturePath}`);
   console.log(`✅ Fixture ready (using prepared node_modules)`);
 
   // Apply custom config if provided
@@ -193,9 +179,7 @@ export async function setupFixture(
       } catch (error) {
         killProcessTree(devProcess);
         if (startupError) {
-          throw new Error(
-            `Dev server failed to start: ${startupError.message}`,
-          );
+          throw new Error(`Dev server failed to start: ${startupError.message}`);
         }
         throw error;
       }
@@ -231,11 +215,7 @@ export async function setupFixture(
         console.log(`✅ Build completed for ${framework}`);
         return result.stdout + result.stderr;
       } catch (error: any) {
-        console.error(
-          `❌ Build failed for ${framework}:`,
-          error.stdout,
-          error.stderr,
-        );
+        console.error(`❌ Build failed for ${framework}:`, error.stdout, error.stderr);
         throw error;
       }
     },
@@ -286,9 +266,7 @@ export async function setupFixture(
       } catch (error) {
         killProcessTree(prodProcess);
         if (startupError) {
-          throw new Error(
-            `Production server failed to start: ${startupError.message}`,
-          );
+          throw new Error(`Production server failed to start: ${startupError.message}`);
         }
         throw error;
       }
@@ -320,10 +298,7 @@ export async function setupFixture(
       activeFixtures.delete(fixture);
     },
 
-    async updateFile(
-      filePath: string,
-      updater: (content: string) => string,
-    ): Promise<void> {
+    async updateFile(filePath: string, updater: (content: string) => string): Promise<void> {
       const fullPath = path.join(fixturePath, filePath);
 
       // Read original content before modifying
@@ -386,38 +361,47 @@ async function waitForPort(port: number, timeout = 60000): Promise<void> {
 
   console.log(`Waiting for port ${port} to be ready...`);
 
+  // Probe raw TCP connectivity instead of issuing an HTTP request: a full HTTP
+  // request blocks on the dev server's on-demand compilation, and the previous
+  // `fetch("http://localhost")` was IP-family-fragile. We try both IPv4 and IPv6
+  // loopback because Next dev listens on IPv4 (127.0.0.1) while Vite 7 listens on
+  // IPv6 (::1) — succeed as soon as the server accepts a connection on either.
+  const tryConnect = (host: string) =>
+    new Promise<void>((resolve, reject) => {
+      const socket = net.connect({ port, host });
+      const fail = (err: Error) => {
+        socket.destroy();
+        reject(err);
+      };
+      socket.once("connect", () => {
+        socket.destroy();
+        resolve();
+      });
+      socket.once("error", fail);
+      socket.setTimeout(5000, () => fail(new Error("socket timeout")));
+    });
+
   while (Date.now() - startTime < timeout) {
     try {
-      const response = await fetch(`http://localhost:${port}`, {
-        signal: AbortSignal.timeout(5000), // 5 second timeout per request
-      });
+      await Promise.any([tryConnect("127.0.0.1"), tryConnect("::1")]);
 
-      // Accept any response (200, 404, etc) as "ready"
-      console.log(`✅ Port ${port} is ready (status: ${response.status})`);
+      console.log(`✅ Port ${port} is accepting connections`);
       return;
     } catch (e: any) {
       lastError = e;
       // Only log occasionally to avoid spam
       if ((Date.now() - startTime) % 5000 < 500) {
-        console.log(
-          `  Still waiting for port ${port}... (${Math.floor((Date.now() - startTime) / 1000)}s)`,
-        );
+        console.log(`  Still waiting for port ${port}... (${Math.floor((Date.now() - startTime) / 1000)}s)`);
       }
     }
 
     await new Promise((resolve) => setTimeout(resolve, 500));
   }
 
-  throw new Error(
-    `Port ${port} did not become available within ${timeout}ms. Last error: ${lastError?.message}`,
-  );
+  throw new Error(`Port ${port} did not become available within ${timeout}ms. Last error: ${lastError?.message}`);
 }
 
-async function updateConfig(
-  tempPath: string,
-  framework: Framework,
-  config: any,
-): Promise<void> {
+async function updateConfig(tempPath: string, framework: Framework, config: any): Promise<void> {
   if (framework === "next") {
     const configPath = path.join(tempPath, "next.config.ts");
     // For now, just log that we would update the config
