@@ -18,9 +18,14 @@ export function openInEditor(initialContent: string): string {
     writeFileSync(file, initialContent, "utf8");
 
     const editor = process.env.VISUAL || process.env.EDITOR || (process.platform === "win32" ? "notepad" : "vi");
-    const [command, ...args] = editor.split(/\s+/).filter(Boolean);
 
-    const result = spawnSync(command, [...args, file], { stdio: "inherit" });
+    // Run through a shell so multi-word/quoted editor commands parse correctly,
+    // e.g. `EDITOR='"/path with spaces/code" --wait'`. Both inputs are trusted:
+    // `editor` is the user's own env var and `file` is our mkdtemp path.
+    const result = spawnSync(`${editor} "${file}"`, {
+      stdio: "inherit",
+      shell: true,
+    });
     if (result.error) {
       throw result.error;
     }
