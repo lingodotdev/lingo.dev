@@ -139,7 +139,7 @@
     "@babel/traverse": "7.28.5",
     "@babel/types": "7.28.5",
     "@biomejs/js-api": "4.0.0",
-    "@biomejs/wasm-nodejs": "2.4.6",
+    "@biomejs/wasm-nodejs": "2.5.0",
     "@datocms/cma-client-node": "5.5.3",
     "@gitbeaker/rest": "39.34.3",
     "@inkjs/ui": "2.0.0",
