@@ -1,6 +1,7 @@
 ---
 "lingo.dev": patch
 "@lingo.dev/_react": patch
+"@lingo.dev/compiler": patch
 ---
 
 fix(deps): reduce npm audit vulnerabilities and update dependencies
@@ -13,3 +14,4 @@ Security (cuts a fresh consumer `npm audit` from 13 → 8, critical 1 → 0, hig
 Dependency maintenance (consolidated from dependabot, build + tests verified):
 
 - `lingo.dev`: removed unused deps `ink`/`@inkjs/ui`/`ink-spinner`/`ink-progress-bar` (avoids ink v7's Node >=22 requirement), `@modelcontextprotocol/sdk`, `unist-util-visit`; bumped `@biomejs/wasm-nodejs` 2.4.6 → 2.5.0.
+- `@lingo.dev/compiler`: bumped `@babel/core` 7.26.0 → 7.29.6, `ai-sdk-ollama` 3.0.0 → 3.8.8.
