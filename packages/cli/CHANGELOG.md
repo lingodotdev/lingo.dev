@@ -1,5 +1,34 @@
 # lingo.dev
 
+## 0.137.5
+
+### Patch Changes
+
+- [#2142](https://github.com/lingodotdev/lingo.dev/pull/2142) [`1e2136d`](https://github.com/lingodotdev/lingo.dev/commit/1e2136de8f9077826391e8abb4cfc8cddc56137f) Thanks [@moygospadin](https://github.com/moygospadin)! - fix(deps): drop external-editor and gray-matter to clear remaining npm audit findings
+
+  These two dependencies were the only remaining source of the high/moderate `tmp` and `js-yaml` advisories in a consumer `npm audit`:
+  - `external-editor` pulled a vulnerable `tmp@^0.0.33` (high, path traversal). Replaced its single use (the interactive editor prompt in the deprecated `i18n` command) with a small `node:fs`/`node:child_process` helper that uses `mkdtempSync` — no `tmp` package, no path-traversal surface.
+  - `gray-matter` pulled `js-yaml@3` (moderate). Both call sites already injected the patched `yaml` package as gray-matter's engine, so its bundled `js-yaml` was dead weight. Replaced with a tiny front-matter helper built on `yaml`; `gray-matter` is kept only as a `devDependency` test oracle that the loader specs assert equivalence against.
+
+  Net effect on a fresh consumer `npm audit`: removes the last `high` (`tmp`) plus the `js-yaml`/`gray-matter`/`external-editor` findings.
+
+## 0.137.4
+
+### Patch Changes
+
+- [#2140](https://github.com/lingodotdev/lingo.dev/pull/2140) [`0d4ebee`](https://github.com/lingodotdev/lingo.dev/commit/0d4ebee8ac613879e57b91dbe1665b232300f998) Thanks [@moygospadin](https://github.com/moygospadin)! - fix(deps): reduce npm audit vulnerabilities and update dependencies
+
+  Security (cuts a fresh consumer `npm audit` from 13 → 8, critical 1 → 0, high 4 → 1):
+  - `@lingo.dev/_react`: widen the `next` peerDependency from the exact vulnerable `15.3.8` to `>=15.5.19 <16`.
+  - `lingo.dev`: `yaml` 2.8.1 → 2.9.0, `diff` 7.0.0 → 9.0.0, `@datocms/cma-client-node` 4.0.1 → 5.5.3 (patched `uuid`).
+
+  Dependency maintenance (consolidated from dependabot, build + tests verified):
+  - `lingo.dev`: removed unused deps `ink`/`@inkjs/ui`/`ink-spinner`/`ink-progress-bar` (avoids ink v7's Node >=22 requirement), `@modelcontextprotocol/sdk`, `unist-util-visit`; bumped `@biomejs/wasm-nodejs` 2.4.6 → 2.5.0.
+  - `@lingo.dev/compiler`: bumped `@babel/core` 7.26.0 → 7.29.6, `ai-sdk-ollama` 3.0.0 → 3.8.8.
+
+- Updated dependencies [[`0d4ebee`](https://github.com/lingodotdev/lingo.dev/commit/0d4ebee8ac613879e57b91dbe1665b232300f998)]:
+  - @lingo.dev/_react@0.7.9
+
 ## 0.137.3
 
 ### Patch Changes
