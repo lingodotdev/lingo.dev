@@ -1,118 +1,31 @@
 import Z from "zod";
 import { localeCodeSchema } from "./locales";
-import { bucketTypeSchema, bucketTypes } from "./formats";
+import { bucketTypeSchema } from "./formats";
 
-const validBucketTypeIds = new Set<string>(bucketTypes);
-
-function isLegacyUpgradeOnly(raw: Record<string, unknown>): boolean {
-  const keys = Object.keys(raw);
-  if (keys.length === 0) {
-    return true;
-  }
-
-  return (
-    keys.length === 1 &&
-    "version" in raw &&
-    (raw.version === 0 || raw.version === "0")
-  );
+/** Check if a Zod issue is a locale validation error */
+function isLocaleError(issue: Z.ZodIssue): boolean {
+  return issue.message.includes("Invalid locale code");
 }
 
-function isV1BucketFormat(buckets: Record<string, unknown>): boolean {
-  return Object.values(buckets).every((value) => typeof value === "string");
-}
-
-function getUnknownBucketTypeIds(
-  buckets: Record<string, unknown>,
-): string[] {
-  if (isV1BucketFormat(buckets)) {
-    return [
-      ...new Set(
-        Object.values(buckets).filter(
-          (value): value is string =>
-            typeof value === "string" && !validBucketTypeIds.has(value),
-        ),
-      ),
-    ];
-  }
-
-  return Object.keys(buckets).filter((id) => !validBucketTypeIds.has(id));
-}
-
-function validateConfigSemantics(rawConfig: unknown): void {
-  if (!rawConfig || typeof rawConfig !== "object") {
-    return;
-  }
-
-  const raw = rawConfig as Record<string, unknown>;
-  if (isLegacyUpgradeOnly(raw)) {
-    return;
-  }
-
-  const errors: string[] = [];
-
-  if (raw.locale && typeof raw.locale === "object") {
-    const locale = raw.locale as Record<string, unknown>;
-
+/** Safely extract a value from a nested object given a path array (supports symbol keys by converting to string) */
+function getValueAtPath(
+  obj: unknown,
+  path: readonly (string | number | symbol)[],
+): unknown {
+  let val: unknown = obj;
+  for (const key of path) {
+    const keyStr = String(key);
     if (
-      !("source" in locale) ||
-      locale.source === undefined ||
-      locale.source === null ||
-      locale.source === ""
+      val &&
+      typeof val === "object" &&
+      keyStr in (val as Record<string, unknown>)
     ) {
-      errors.push(
-        'Source locale is required. Add "locale.source" to your i18n.json (e.g. "en").',
-      );
-    }
-
-    if ("targets" in locale && Array.isArray(locale.targets)) {
-      const seen = new Set<string>();
-      const duplicates: string[] = [];
-
-      for (const target of locale.targets) {
-        if (typeof target !== "string") {
-          continue;
-        }
-
-        if (seen.has(target)) {
-          duplicates.push(target);
-        }
-
-        seen.add(target);
-      }
-
-      if (duplicates.length > 0) {
-        errors.push(
-          `Duplicate target locale(s): ${[...new Set(duplicates)].join(", ")}. Remove duplicates from locale.targets.`,
-        );
-      }
+      val = (val as Record<string, unknown>)[keyStr];
+    } else {
+      return undefined;
     }
   }
-
-  const buckets = raw.buckets;
-  if (
-    !buckets ||
-    typeof buckets !== "object" ||
-    buckets === null ||
-    Object.keys(buckets).length === 0
-  ) {
-    errors.push(
-      'No buckets configured. Add at least one bucket to i18n.json under "buckets" (e.g. "json": { "include": ["locales/[locale].json"] }).',
-    );
-  } else {
-    const unknownBucketIds = getUnknownBucketTypeIds(
-      buckets as Record<string, unknown>,
-    );
-
-    if (unknownBucketIds.length > 0) {
-      errors.push(
-        `Unknown bucket type(s): ${unknownBucketIds.join(", ")}. Supported types: ${bucketTypes.join(", ")}.`,
-      );
-    }
-  }
-
-  if (errors.length > 0) {
-    throw new Error(`\n${errors.join("\n")}`);
-  }
+  return val;
 }
 
 // common
@@ -120,12 +33,9 @@ export const localeSchema = Z.object({
   source: localeCodeSchema.describe(
     "Primary source locale code of your content (e.g. 'en', 'en-US', 'pt_BR', or 'pt-rBR'). Must be one of the supported locale codes – either a short ISO-639 language code or a full locale identifier using '-', '_' or Android '-r' notation.",
   ),
-  targets: Z.array(localeCodeSchema)
-    .min(
-      1,
-      "At least one target locale is required. Add locale targets to your i18n.json (e.g. [\"es\", \"fr\"]).",
-    )
-    .describe("List of target locale codes to translate to."),
+  targets: Z.array(localeCodeSchema).describe(
+    "List of target locale codes to translate to.",
+  ),
 }).describe("Locale configuration block.");
 
 // factories
@@ -176,50 +86,22 @@ const extendConfigDefinition = <
     parse: (rawConfig) => {
       const safeResult = schema.safeParse(rawConfig);
       if (safeResult.success) {
-        validateConfigSemantics(rawConfig);
         return safeResult.data;
       }
 
       const localeErrors = safeResult.error.issues
-        .filter(
-          (issue) =>
-            issue.message.includes("Invalid locale code") ||
-            (issue.path[0] === "locale" &&
-              issue.path[1] === "targets" &&
-              issue.message ===
-                'At least one target locale is required. Add locale targets to your i18n.json (e.g. ["es", "fr"]).'),
-        )
+        .filter(isLocaleError)
         .map((issue) => {
-          if (!issue.message.includes("Invalid locale code")) {
-            return issue.message;
-          }
-
-          let unsupportedLocale = "";
-          const path = issue.path;
-
-          const config = rawConfig as { locale?: { [key: string]: any } };
-
-          if (config.locale) {
-            unsupportedLocale = path.reduce<any>((acc, key) => {
-              if (acc && typeof acc === "object" && key in acc) {
-                return acc[key];
-              }
-              return acc;
-            }, config.locale);
-          }
-
-          return `Unsupported locale: ${unsupportedLocale}`;
+          const value = getValueAtPath(rawConfig, issue.path);
+          return `Unsupported locale: ${typeof value === "string" ? value : ""}`;
         });
 
       if (localeErrors.length > 0) {
         throw new Error(`\n${localeErrors.join("\n")}`);
       }
 
-      validateConfigSemantics(rawConfig);
-
       const baseConfig = definition.parse(rawConfig);
       const result = upgrader(baseConfig);
-      validateConfigSemantics(rawConfig);
       return result;
     },
   });
