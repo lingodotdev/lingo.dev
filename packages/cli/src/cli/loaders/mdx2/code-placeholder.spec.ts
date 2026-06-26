@@ -1051,4 +1051,34 @@ describe("long fences (>=4 backticks) regression", () => {
     const pushed = await loader.push("en", pulled);
     expect(pushed).toBe(md);
   });
+
+  it("does not close on a same-length backtick run inline in the body", async () => {
+    // The terminator must start on its own fence line — an inline run of the
+    // same length mid-line is body content, not a close.
+    const md = dedent`
+      \`\`\`\`markdown
+      prose with \`\`\`\` inline backticks
+      more body
+      \`\`\`\`
+    `;
+    const pulled = await loader.pull("en", md);
+    const placeholders = pulled.match(/CODE_PLACEHOLDER_[a-f0-9]+_END/g) ?? [];
+    expect(placeholders).toHaveLength(1); // one block, not split at the inline run
+    const pushed = await loader.push("en", pulled);
+    expect(pushed).toBe(md);
+  });
+
+  it("does not treat a fence-length run with trailing text as a close", async () => {
+    // CommonMark: a closing fence may be followed only by whitespace, so
+    // "```notAClose" is body, not the terminator.
+    const md = dedent`
+      \`\`\`
+      \`\`\`notAClose
+      real body
+      \`\`\`
+    `;
+    const pulled = await loader.pull("en", md);
+    const pushed = await loader.push("en", pulled);
+    expect(pushed).toBe(md);
+  });
 });
