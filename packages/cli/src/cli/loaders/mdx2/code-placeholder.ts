@@ -3,7 +3,19 @@ import { createLoader } from "../_utils";
 import { md5 } from "../../utils/md5";
 import _ from "lodash";
 
-const fenceRegex = /([ \t]*)(^>\s*)?```([\s\S]*?)```/gm;
+// Match a fenced code block of any fence length (3+ backticks):
+//   • `(`{3,})` captures the opening fence; `\3` requires the close to be the
+//     same length, `` `* `` allows a longer close (CommonMark permits it).
+//   • The close must start on its own line — `\r?\n`, the optional indent /
+//     blockquote prefix, then the fence run, then only trailing whitespace
+//     before the line ends. This stops a same-length backtick run *inside* the
+//     body (inline) from being mistaken for the terminator.
+// The old hard-coded ```` ``` ```` only matched 3-backtick fences: for a
+// ```` ```` ````-length fence it grabbed 3 of the 4 closing backticks and
+// orphaned the 4th, splitting the close into "``` + blank line + stray `" and
+// producing invalid MDX.
+const fenceRegex =
+  /([ \t]*)(^>\s*)?(`{3,})([\s\S]*?)\r?\n[ \t]*>?[ \t]*\3`*[ \t]*(?=\r?\n|$)/gm;
 const inlineCodeRegex = /(?<!`)`([^`\r\n]+?)`(?!`)/g;
 
 // Matches markdown image tags, with optional alt text & parenthesis URL, possibly inside blockquotes
