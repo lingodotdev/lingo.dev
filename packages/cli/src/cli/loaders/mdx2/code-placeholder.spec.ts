@@ -982,3 +982,73 @@ describe("placeholder format edge cases (regression)", () => {
     expect(restored).toBe(mdContent);
   });
 });
+
+describe("long fences (>=4 backticks) regression", () => {
+  const loader = createMdxCodePlaceholderLoader();
+  loader.setDefaultLocale("en");
+
+  it("round-trips a 4-backtick fence inside a JSX component", async () => {
+    // Authors use a 4-backtick fence so the block can safely contain markdown.
+    // The old 3-backtick-only regex captured "````...```" (4 open, 3 close) and
+    // orphaned the 4th closing backtick, splitting the close into
+    // "``` + blank line + stray `" and breaking the surrounding <Accordion>.
+    const md = dedent`
+      <Accordion title="Scribe skill">
+
+      \`\`\`\`markdown
+      skill body line one
+      skill body line two
+      \`\`\`\`
+
+      </Accordion>
+    `;
+    const pulled = await loader.pull("en", md);
+    expect(pulled).not.toMatch(/(^|\n)\s*\`\s*(\n|$)/); // no orphaned lone backtick
+    const pushed = await loader.push("en", pulled);
+    expect(pushed).toBe(md);
+  });
+
+  it("round-trips a 4-backtick fence wrapping a nested 3-backtick fence", async () => {
+    // The whole point of a 4-backtick fence: its body contains a 3-backtick
+    // fence. The closing must match the 4-backtick opening, not stop at the
+    // inner 3-backtick fence.
+    const md = dedent`
+      \`\`\`\`markdown
+      # Example
+
+      \`\`\`js
+      const a = 1;
+      \`\`\`
+      \`\`\`\`
+    `;
+    const pulled = await loader.pull("en", md);
+    const placeholders = pulled.match(/CODE_PLACEHOLDER_[a-f0-9]+_END/g) ?? [];
+    expect(placeholders).toHaveLength(1); // one block, not split at the inner fence
+    const pushed = await loader.push("en", pulled);
+    expect(pushed).toBe(md);
+  });
+
+  it("round-trips a 5-backtick fence", async () => {
+    const md = dedent`
+      \`\`\`\`\`markdown
+      body
+      \`\`\`\`\`
+    `;
+    const pulled = await loader.pull("en", md);
+    const pushed = await loader.push("en", pulled);
+    expect(pushed).toBe(md);
+  });
+
+  it("round-trips a fence whose close is longer than its open (CommonMark-valid)", async () => {
+    // CommonMark: the closing fence may be longer than the opening fence.
+    const md = dedent`
+      \`\`\`\`markdown
+      body
+      \`\`\`\`\`
+    `;
+    const pulled = await loader.pull("en", md);
+    expect(pulled).not.toMatch(/(^|\n)\s*\`\s*(\n|$)/); // no orphaned backtick
+    const pushed = await loader.push("en", pulled);
+    expect(pushed).toBe(md);
+  });
+});
