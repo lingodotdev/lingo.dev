@@ -444,7 +444,7 @@ importers:
         specifier: 3.6.2
         version: 3.6.2
       react:
-        specifier: 19.2.3
+        specifier: '>=18 <20'
         version: 19.2.3
       rehype-stringify:
         specifier: 10.0.1
