@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.137.7
+
+### Patch Changes
+
+- [#2154](https://github.com/lingodotdev/lingo.dev/pull/2154) [`61326c0`](https://github.com/lingodotdev/lingo.dev/commit/61326c0591788c52239a09a72278a49e5a3ee7d8) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Make `react` an optional peer dependency instead of a direct dependency.
+
 ## 0.137.6
 
 ### Patch Changes
