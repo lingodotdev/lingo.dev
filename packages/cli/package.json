@@ -1,6 +1,6 @@
 {
   "name": "lingo.dev",
-  "version": "0.137.6",
+  "version": "0.137.7",
   "description": "Lingo.dev CLI",
   "private": false,
   "repository": {
@@ -201,7 +201,6 @@
     "plist": "3.1.0",
     "posthog-node": "5.14.0",
     "prettier": "3.6.2",
-    "react": "19.2.3",
     "rehype-stringify": "10.0.1",
     "remark-disable-tokenizers": "1.1.1",
     "remark-frontmatter": "5.0.0",
@@ -244,6 +243,14 @@
     "tsup": "8.5.1",
     "typescript": "5.9.3",
     "vitest": "3.2.6"
+  },
+  "peerDependencies": {
+    "react": ">=18 <20"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
   },
   "engines": {
     "node": ">=18"
