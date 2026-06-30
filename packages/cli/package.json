@@ -218,7 +218,7 @@
     "xml2js": "0.6.2",
     "xpath": "0.0.34",
     "yaml": "2.9.0",
-    "zod": "4.1.12"
+    "zod": "4.4.3"
   },
   "devDependencies": {
     "@types/babel__generator": "7.27.0",

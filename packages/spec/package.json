@@ -32,7 +32,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@lingo.dev/_locales": "workspace:*",
-    "zod": "4.1.12"
+    "zod": "4.4.3"
   },
   "devDependencies": {
     "@types/node": "22.13.5",
