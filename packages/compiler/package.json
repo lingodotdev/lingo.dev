@@ -74,7 +74,7 @@
     "ollama-ai-provider-v2": "2.0.0",
     "posthog-node": "5.14.0",
     "unplugin": "2.3.11",
-    "zod": "4.1.12"
+    "zod": "4.4.3"
   },
   "packageManager": "pnpm@9.12.3"
 }

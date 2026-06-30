@@ -232,16 +232,16 @@ importers:
     dependencies:
       '@ai-sdk/anthropic':
         specifier: 3.0.9
-        version: 3.0.9(zod@4.1.12)
+        version: 3.0.9(zod@4.4.3)
       '@ai-sdk/google':
         specifier: 3.0.6
-        version: 3.0.6(zod@4.1.12)
+        version: 3.0.6(zod@4.4.3)
       '@ai-sdk/mistral':
         specifier: 3.0.5
-        version: 3.0.5(zod@4.1.12)
+        version: 3.0.5(zod@4.4.3)
       '@ai-sdk/openai':
         specifier: 3.0.7
-        version: 3.0.7(zod@4.1.12)
+        version: 3.0.7(zod@4.4.3)
       '@babel/generator':
         specifier: 7.28.5
         version: 7.28.5
@@ -289,7 +289,7 @@ importers:
         version: 0.5.4(@types/react@19.2.7)(react@19.2.3)
       '@openrouter/ai-sdk-provider':
         specifier: 6.0.0-alpha.1
-        version: 6.0.0-alpha.1(zod@4.1.12)
+        version: 6.0.0-alpha.1(zod@4.4.3)
       '@paralleldrive/cuid2':
         specifier: 2.2.2
         version: 2.2.2
@@ -298,7 +298,7 @@ importers:
         version: 3.1.5
       ai:
         specifier: 6.0.25
-        version: 6.0.25(zod@4.1.12)
+        version: 6.0.25(zod@4.4.3)
       bitbucket:
         specifier: 2.12.0
         version: 2.12.0(encoding@0.1.13)
@@ -421,7 +421,7 @@ importers:
         version: 4.0.2
       ollama-ai-provider-v2:
         specifier: 2.0.0
-        version: 2.0.0(ai@6.0.25(zod@4.1.12))(zod@4.1.12)
+        version: 2.0.0(ai@6.0.25(zod@4.4.3))(zod@4.4.3)
       open:
         specifier: 10.2.0
         version: 10.2.0
@@ -498,8 +498,8 @@ importers:
         specifier: 2.9.0
         version: 2.9.0
       zod:
-        specifier: 4.1.12
-        version: 4.1.12
+        specifier: 4.4.3
+        version: 4.4.3
     devDependencies:
       '@types/babel__generator':
         specifier: 7.27.0
@@ -572,19 +572,19 @@ importers:
     dependencies:
       '@ai-sdk/anthropic':
         specifier: 3.0.9
-        version: 3.0.9(zod@4.1.12)
+        version: 3.0.9(zod@4.4.3)
       '@ai-sdk/google':
         specifier: 3.0.6
-        version: 3.0.6(zod@4.1.12)
+        version: 3.0.6(zod@4.4.3)
       '@ai-sdk/groq':
         specifier: 3.0.4
-        version: 3.0.4(zod@4.1.12)
+        version: 3.0.4(zod@4.4.3)
       '@ai-sdk/mistral':
         specifier: 3.0.5
-        version: 3.0.5(zod@4.1.12)
+        version: 3.0.5(zod@4.4.3)
       '@ai-sdk/openai':
         specifier: 3.0.7
-        version: 3.0.7(zod@4.1.12)
+        version: 3.0.7(zod@4.4.3)
       '@babel/generator':
         specifier: 7.28.5
         version: 7.28.5
@@ -605,10 +605,10 @@ importers:
         version: link:../spec
       '@openrouter/ai-sdk-provider':
         specifier: 6.0.0-alpha.1
-        version: 6.0.0-alpha.1(zod@4.1.12)
+        version: 6.0.0-alpha.1(zod@4.4.3)
       ai:
         specifier: 6.0.25
-        version: 6.0.25(zod@4.1.12)
+        version: 6.0.25(zod@4.4.3)
       dedent:
         specifier: 1.7.0
         version: 1.7.0
@@ -632,7 +632,7 @@ importers:
         version: 3.0.0
       ollama-ai-provider-v2:
         specifier: 2.0.0
-        version: 2.0.0(ai@6.0.25(zod@4.1.12))(zod@4.1.12)
+        version: 2.0.0(ai@6.0.25(zod@4.4.3))(zod@4.4.3)
       posthog-node:
         specifier: 5.14.0
         version: 5.14.0
@@ -640,8 +640,8 @@ importers:
         specifier: 2.3.11
         version: 2.3.11
       zod:
-        specifier: 4.1.12
-        version: 4.1.12
+        specifier: 4.4.3
+        version: 4.4.3
     devDependencies:
       '@types/babel__generator':
         specifier: 7.27.0
@@ -722,16 +722,16 @@ importers:
     dependencies:
       '@ai-sdk/google':
         specifier: 3.0.1
-        version: 3.0.1(zod@4.1.12)
+        version: 3.0.1(zod@4.4.3)
       '@ai-sdk/groq':
         specifier: 3.0.1
-        version: 3.0.1(zod@4.1.12)
+        version: 3.0.1(zod@4.4.3)
       '@ai-sdk/mistral':
         specifier: 3.0.1
-        version: 3.0.1(zod@4.1.12)
+        version: 3.0.1(zod@4.4.3)
       '@ai-sdk/openai':
         specifier: 3.0.1
-        version: 3.0.1(zod@4.1.12)
+        version: 3.0.1(zod@4.4.3)
       '@babel/core':
         specifier: 7.29.6
         version: 7.29.6
@@ -758,13 +758,13 @@ importers:
         version: 3.1.1
       '@openrouter/ai-sdk-provider':
         specifier: 1.5.4
-        version: 1.5.4(ai@6.0.3(zod@4.1.12))(zod@4.1.12)
+        version: 1.5.4(ai@6.0.3(zod@4.4.3))(zod@4.4.3)
       ai:
         specifier: 6.0.3
-        version: 6.0.3(zod@4.1.12)
+        version: 6.0.3(zod@4.4.3)
       ai-sdk-ollama:
         specifier: 3.8.8
-        version: 3.8.8(ai@6.0.3(zod@4.1.12))(zod@4.1.12)
+        version: 3.8.8(ai@6.0.3(zod@4.4.3))(zod@4.4.3)
       dotenv:
         specifier: 17.2.3
         version: 17.2.3
@@ -915,8 +915,8 @@ importers:
         specifier: 5.14.0
         version: 5.14.0
       zod:
-        specifier: 4.1.12
-        version: 4.1.12
+        specifier: 4.4.3
+        version: 4.4.3
     devDependencies:
       '@types/jsdom':
         specifier: 21.1.7
@@ -937,8 +937,8 @@ importers:
         specifier: workspace:*
         version: link:../locales
       zod:
-        specifier: 4.1.12
-        version: 4.1.12
+        specifier: 4.4.3
+        version: 4.4.3
     devDependencies:
       '@types/node':
         specifier: 22.13.5
@@ -9521,6 +9521,9 @@ packages:
   zod@4.1.12:
     resolution: {integrity: sha512-JInaHOamG8pt5+Ey8kGmdcAcg3OL9reK8ltczgHTAwNhMys/6ThXHityHxVV2p3fkw/c+MAvBHFVYHFZDmjMCQ==}
 
+  zod@4.4.3:
+    resolution: {integrity: sha512-ytENFjIJFl2UwYglde2jchW2Hwm4GJFLDiSXWdTrJQBIN9Fcyp7n4DhxJEiWNAJMV1/BqWfW/kkg71UDcHJyTQ==}
+
   zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
 
@@ -9535,25 +9538,25 @@ snapshots:
       '@ai-sdk/provider-utils': 2.2.8(zod@3.25.76)
       zod: 3.25.76
 
-  '@ai-sdk/anthropic@3.0.9(zod@4.1.12)':
+  '@ai-sdk/anthropic@3.0.9(zod@4.4.3)':
     dependencies:
       '@ai-sdk/provider': 3.0.2
-      '@ai-sdk/provider-utils': 4.0.4(zod@4.1.12)
-      zod: 4.1.12
+      '@ai-sdk/provider-utils': 4.0.4(zod@4.4.3)
+      zod: 4.4.3
 
-  '@ai-sdk/gateway@3.0.10(zod@4.1.12)':
+  '@ai-sdk/gateway@3.0.10(zod@4.4.3)':
     dependencies:
       '@ai-sdk/provider': 3.0.2
-      '@ai-sdk/provider-utils': 4.0.4(zod@4.1.12)
+      '@ai-sdk/provider-utils': 4.0.4(zod@4.4.3)
       '@vercel/oidc': 3.1.0
-      zod: 4.1.12
+      zod: 4.4.3
 
-  '@ai-sdk/gateway@3.0.2(zod@4.1.12)':
+  '@ai-sdk/gateway@3.0.2(zod@4.4.3)':
     dependencies:
       '@ai-sdk/provider': 3.0.0
-      '@ai-sdk/provider-utils': 4.0.1(zod@4.1.12)
+      '@ai-sdk/provider-utils': 4.0.1(zod@4.4.3)
       '@vercel/oidc': 3.0.5
-      zod: 4.1.12
+      zod: 4.4.3
 
   '@ai-sdk/google@1.2.19(zod@3.25.76)':
     dependencies:
@@ -9561,17 +9564,17 @@ snapshots:
       '@ai-sdk/provider-utils': 2.2.8(zod@3.25.76)
       zod: 3.25.76
 
-  '@ai-sdk/google@3.0.1(zod@4.1.12)':
+  '@ai-sdk/google@3.0.1(zod@4.4.3)':
     dependencies:
       '@ai-sdk/provider': 3.0.0
-      '@ai-sdk/provider-utils': 4.0.1(zod@4.1.12)
-      zod: 4.1.12
+      '@ai-sdk/provider-utils': 4.0.1(zod@4.4.3)
+      zod: 4.4.3
 
-  '@ai-sdk/google@3.0.6(zod@4.1.12)':
+  '@ai-sdk/google@3.0.6(zod@4.4.3)':
     dependencies:
       '@ai-sdk/provider': 3.0.2
-      '@ai-sdk/provider-utils': 4.0.4(zod@4.1.12)
-      zod: 4.1.12
+      '@ai-sdk/provider-utils': 4.0.4(zod@4.4.3)
+      zod: 4.4.3
 
   '@ai-sdk/groq@1.2.3(zod@3.25.76)':
     dependencies:
@@ -9579,17 +9582,17 @@ snapshots:
       '@ai-sdk/provider-utils': 2.2.3(zod@3.25.76)
       zod: 3.25.76
 
-  '@ai-sdk/groq@3.0.1(zod@4.1.12)':
+  '@ai-sdk/groq@3.0.1(zod@4.4.3)':
     dependencies:
       '@ai-sdk/provider': 3.0.0
-      '@ai-sdk/provider-utils': 4.0.1(zod@4.1.12)
-      zod: 4.1.12
+      '@ai-sdk/provider-utils': 4.0.1(zod@4.4.3)
+      zod: 4.4.3
 
-  '@ai-sdk/groq@3.0.4(zod@4.1.12)':
+  '@ai-sdk/groq@3.0.4(zod@4.4.3)':
     dependencies:
       '@ai-sdk/provider': 3.0.2
-      '@ai-sdk/provider-utils': 4.0.4(zod@4.1.12)
-      zod: 4.1.12
+      '@ai-sdk/provider-utils': 4.0.4(zod@4.4.3)
+      zod: 4.4.3
 
   '@ai-sdk/mistral@1.2.8(zod@3.25.76)':
     dependencies:
@@ -9597,17 +9600,17 @@ snapshots:
       '@ai-sdk/provider-utils': 2.2.8(zod@3.25.76)
       zod: 3.25.76
 
-  '@ai-sdk/mistral@3.0.1(zod@4.1.12)':
+  '@ai-sdk/mistral@3.0.1(zod@4.4.3)':
     dependencies:
       '@ai-sdk/provider': 3.0.0
-      '@ai-sdk/provider-utils': 4.0.1(zod@4.1.12)
-      zod: 4.1.12
+      '@ai-sdk/provider-utils': 4.0.1(zod@4.4.3)
+      zod: 4.4.3
 
-  '@ai-sdk/mistral@3.0.5(zod@4.1.12)':
+  '@ai-sdk/mistral@3.0.5(zod@4.4.3)':
     dependencies:
       '@ai-sdk/provider': 3.0.2
-      '@ai-sdk/provider-utils': 4.0.4(zod@4.1.12)
-      zod: 4.1.12
+      '@ai-sdk/provider-utils': 4.0.4(zod@4.4.3)
+      zod: 4.4.3
 
   '@ai-sdk/openai@1.3.22(zod@3.25.76)':
     dependencies:
@@ -9615,17 +9618,17 @@ snapshots:
       '@ai-sdk/provider-utils': 2.2.8(zod@3.25.76)
       zod: 3.25.76
 
-  '@ai-sdk/openai@3.0.1(zod@4.1.12)':
+  '@ai-sdk/openai@3.0.1(zod@4.4.3)':
     dependencies:
       '@ai-sdk/provider': 3.0.0
-      '@ai-sdk/provider-utils': 4.0.1(zod@4.1.12)
-      zod: 4.1.12
+      '@ai-sdk/provider-utils': 4.0.1(zod@4.4.3)
+      zod: 4.4.3
 
-  '@ai-sdk/openai@3.0.7(zod@4.1.12)':
+  '@ai-sdk/openai@3.0.7(zod@4.4.3)':
     dependencies:
       '@ai-sdk/provider': 3.0.2
-      '@ai-sdk/provider-utils': 4.0.4(zod@4.1.12)
-      zod: 4.1.12
+      '@ai-sdk/provider-utils': 4.0.4(zod@4.4.3)
+      zod: 4.4.3
 
   '@ai-sdk/provider-utils@2.2.3(zod@3.25.76)':
     dependencies:
@@ -9641,26 +9644,26 @@ snapshots:
       secure-json-parse: 2.7.0
       zod: 3.25.76
 
-  '@ai-sdk/provider-utils@4.0.1(zod@4.1.12)':
+  '@ai-sdk/provider-utils@4.0.1(zod@4.4.3)':
     dependencies:
       '@ai-sdk/provider': 3.0.0
       '@standard-schema/spec': 1.1.0
       eventsource-parser: 3.0.6
-      zod: 4.1.12
+      zod: 4.4.3
 
-  '@ai-sdk/provider-utils@4.0.30(zod@4.1.12)':
+  '@ai-sdk/provider-utils@4.0.30(zod@4.4.3)':
     dependencies:
       '@ai-sdk/provider': 3.0.10
       '@standard-schema/spec': 1.1.0
       eventsource-parser: 3.1.0
-      zod: 4.1.12
+      zod: 4.4.3
 
-  '@ai-sdk/provider-utils@4.0.4(zod@4.1.12)':
+  '@ai-sdk/provider-utils@4.0.4(zod@4.4.3)':
     dependencies:
       '@ai-sdk/provider': 3.0.2
       '@standard-schema/spec': 1.1.0
       eventsource-parser: 3.0.6
-      zod: 4.1.12
+      zod: 4.4.3
 
   '@ai-sdk/provider@1.1.0':
     dependencies:
@@ -12195,26 +12198,26 @@ snapshots:
       ai: 4.3.15(react@19.2.3)(zod@3.25.76)
       zod: 3.25.76
 
-  '@openrouter/ai-sdk-provider@1.5.4(ai@6.0.3(zod@4.1.12))(zod@4.1.12)':
+  '@openrouter/ai-sdk-provider@1.5.4(ai@6.0.3(zod@4.4.3))(zod@4.4.3)':
     dependencies:
       '@openrouter/sdk': 0.1.27
-      ai: 6.0.3(zod@4.1.12)
-      zod: 4.1.12
+      ai: 6.0.3(zod@4.4.3)
+      zod: 4.4.3
 
-  '@openrouter/ai-sdk-provider@6.0.0-alpha.1(zod@4.1.12)':
+  '@openrouter/ai-sdk-provider@6.0.0-alpha.1(zod@4.4.3)':
     dependencies:
       '@ai-sdk/provider': 3.0.0
-      '@ai-sdk/provider-utils': 4.0.1(zod@4.1.12)
+      '@ai-sdk/provider-utils': 4.0.1(zod@4.4.3)
       '@openrouter/sdk': 0.3.15
-      zod: 4.1.12
+      zod: 4.4.3
 
   '@openrouter/sdk@0.1.27':
     dependencies:
-      zod: 4.1.12
+      zod: 4.4.3
 
   '@openrouter/sdk@0.3.15':
     dependencies:
-      zod: 4.1.12
+      zod: 4.4.3
 
   '@opentelemetry/api@1.9.0': {}
 
@@ -13861,11 +13864,11 @@ snapshots:
 
   agent-base@7.1.4: {}
 
-  ai-sdk-ollama@3.8.8(ai@6.0.3(zod@4.1.12))(zod@4.1.12):
+  ai-sdk-ollama@3.8.8(ai@6.0.3(zod@4.4.3))(zod@4.4.3):
     dependencies:
       '@ai-sdk/provider': 3.0.10
-      '@ai-sdk/provider-utils': 4.0.30(zod@4.1.12)
-      ai: 6.0.3(zod@4.1.12)
+      '@ai-sdk/provider-utils': 4.0.30(zod@4.4.3)
+      ai: 6.0.3(zod@4.4.3)
       jsonrepair: 3.14.0
       ollama: 0.6.3
     transitivePeerDependencies:
@@ -13895,21 +13898,21 @@ snapshots:
     optionalDependencies:
       react: 19.2.3
 
-  ai@6.0.25(zod@4.1.12):
+  ai@6.0.25(zod@4.4.3):
     dependencies:
-      '@ai-sdk/gateway': 3.0.10(zod@4.1.12)
+      '@ai-sdk/gateway': 3.0.10(zod@4.4.3)
       '@ai-sdk/provider': 3.0.2
-      '@ai-sdk/provider-utils': 4.0.4(zod@4.1.12)
+      '@ai-sdk/provider-utils': 4.0.4(zod@4.4.3)
       '@opentelemetry/api': 1.9.0
-      zod: 4.1.12
+      zod: 4.4.3
 
-  ai@6.0.3(zod@4.1.12):
+  ai@6.0.3(zod@4.4.3):
     dependencies:
-      '@ai-sdk/gateway': 3.0.2(zod@4.1.12)
+      '@ai-sdk/gateway': 3.0.2(zod@4.4.3)
       '@ai-sdk/provider': 3.0.0
-      '@ai-sdk/provider-utils': 4.0.1(zod@4.1.12)
+      '@ai-sdk/provider-utils': 4.0.1(zod@4.4.3)
       '@opentelemetry/api': 1.9.0
-      zod: 4.1.12
+      zod: 4.4.3
 
   ajv-formats@3.0.1(ajv@8.17.1):
     optionalDependencies:
@@ -15103,8 +15106,8 @@ snapshots:
       '@babel/parser': 7.28.5
       eslint: 9.39.1(jiti@2.6.1)
       hermes-parser: 0.25.1
-      zod: 4.1.12
-      zod-validation-error: 4.0.2(zod@4.1.12)
+      zod: 4.4.3
+      zod-validation-error: 4.0.2(zod@4.4.3)
     transitivePeerDependencies:
       - supports-color
 
@@ -17426,12 +17429,12 @@ snapshots:
       '@octokit/request-error': 6.1.8
       '@octokit/types': 13.10.0
 
-  ollama-ai-provider-v2@2.0.0(ai@6.0.25(zod@4.1.12))(zod@4.1.12):
+  ollama-ai-provider-v2@2.0.0(ai@6.0.25(zod@4.4.3))(zod@4.4.3):
     dependencies:
       '@ai-sdk/provider': 3.0.0
-      '@ai-sdk/provider-utils': 4.0.1(zod@4.1.12)
-      ai: 6.0.25(zod@4.1.12)
-      zod: 4.1.12
+      '@ai-sdk/provider-utils': 4.0.1(zod@4.4.3)
+      ai: 6.0.25(zod@4.4.3)
+      zod: 4.4.3
 
   ollama-ai-provider@1.2.0(zod@3.25.76):
     dependencies:
@@ -20017,12 +20020,14 @@ snapshots:
     dependencies:
       zod: 3.25.76
 
-  zod-validation-error@4.0.2(zod@4.1.12):
+  zod-validation-error@4.0.2(zod@4.4.3):
     dependencies:
-      zod: 4.1.12
+      zod: 4.4.3
 
   zod@3.25.76: {}
 
   zod@4.1.12: {}
+
+  zod@4.4.3: {}
 
   zwitch@2.0.4: {}
