@@ -1,5 +1,9 @@
 import { describe, it, expect } from "vitest";
-import { parseModelResponse, extractLocalizedData } from "./model-response";
+import {
+  parseModelResponse,
+  extractLocalizedData,
+  escapeUnescapedQuotes,
+} from "./model-response";
 
 describe("parseModelResponse", () => {
   it("parses clean JSON", () => {
@@ -26,6 +30,40 @@ describe("parseModelResponse", () => {
     // Trailing comma — invalid JSON but jsonrepair handles it
     const input = `{"data": {"hello": "hola",}}`;
     expect(parseModelResponse(input)).toEqual({ data: { hello: "hola" } });
+  });
+
+  it("repairs a value with multiple unescaped quotes", () => {
+    // jsonrepair alone fails on this; escapeUnescapedQuotes recovers it.
+    const input = `{"data": {"message": "She said "hi" and "bye""}}`;
+    expect(parseModelResponse(input)).toEqual({
+      data: { message: 'She said "hi" and "bye"' },
+    });
+  });
+
+  it("repairs a trailing unescaped quote at the end of a value", () => {
+    const input = `{"data": {"message": "He said "hello""}}`;
+    expect(parseModelResponse(input)).toEqual({
+      data: { message: 'He said "hello"' },
+    });
+  });
+});
+
+describe("escapeUnescapedQuotes", () => {
+  it("escapes quotes inside string values while keeping structure intact", () => {
+    const input = `{"data": {"message": "She said "hi" and "bye""}}`;
+    expect(JSON.parse(escapeUnescapedQuotes(input))).toEqual({
+      data: { message: 'She said "hi" and "bye"' },
+    });
+  });
+
+  it("leaves already-escaped quotes untouched", () => {
+    const input = `{"a": "say \\"hi\\"", "b": "ok"}`;
+    expect(escapeUnescapedQuotes(input)).toBe(input);
+  });
+
+  it("does not alter valid JSON", () => {
+    const input = `{"a": "ok", "b": "valid"}`;
+    expect(escapeUnescapedQuotes(input)).toBe(input);
   });
 });
 
