@@ -63,7 +63,7 @@
     "@lingo.dev/_sdk": "workspace:*",
     "@lingo.dev/_spec": "workspace:*",
     "@openrouter/ai-sdk-provider": "6.0.0-alpha.1",
-    "ai": "6.0.25",
+    "ai": "6.0.4",
     "dedent": "1.7.0",
     "dotenv": "16.4.5",
     "fast-xml-parser": "5.7.0",
