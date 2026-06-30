@@ -195,7 +195,7 @@
     "octokit": "4.0.2",
     "ollama-ai-provider-v2": "2.0.0",
     "open": "10.2.0",
-    "ora": "8.1.1",
+    "ora": "9.4.1",
     "p-limit": "6.2.0",
     "php-array-reader": "2.1.2",
     "plist": "3.1.0",
