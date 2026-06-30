@@ -2,6 +2,32 @@ import Z from "zod";
 import { localeCodeSchema } from "./locales";
 import { bucketTypeSchema } from "./formats";
 
+/** Check if a Zod issue is a locale validation error */
+function isLocaleError(issue: Z.ZodIssue): boolean {
+  return issue.message.includes("Invalid locale code");
+}
+
+/** Safely extract a value from a nested object given a path array (supports symbol keys by converting to string) */
+function getValueAtPath(
+  obj: unknown,
+  path: readonly (string | number | symbol)[],
+): unknown {
+  let val: unknown = obj;
+  for (const key of path) {
+    const keyStr = String(key);
+    if (
+      val &&
+      typeof val === "object" &&
+      keyStr in (val as Record<string, unknown>)
+    ) {
+      val = (val as Record<string, unknown>)[keyStr];
+    } else {
+      return undefined;
+    }
+  }
+  return val;
+}
+
 // common
 export const localeSchema = Z.object({
   source: localeCodeSchema.describe(
@@ -64,23 +90,10 @@ const extendConfigDefinition = <
       }
 
       const localeErrors = safeResult.error.issues
-        .filter((issue) => issue.message.includes("Invalid locale code"))
+        .filter(isLocaleError)
         .map((issue) => {
-          let unsupportedLocale = "";
-          const path = issue.path;
-
-          const config = rawConfig as { locale?: { [key: string]: any } };
-
-          if (config.locale) {
-            unsupportedLocale = path.reduce<any>((acc, key) => {
-              if (acc && typeof acc === "object" && key in acc) {
-                return acc[key];
-              }
-              return acc;
-            }, config.locale);
-          }
-
-          return `Unsupported locale: ${unsupportedLocale}`;
+          const value = getValueAtPath(rawConfig, issue.path);
+          return `Unsupported locale: ${typeof value === "string" ? value : ""}`;
         });
 
       if (localeErrors.length > 0) {

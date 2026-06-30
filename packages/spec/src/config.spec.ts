@@ -69,6 +69,19 @@ const createInvalidLocaleConfig = () => ({
   },
 });
 
+const createLatestConfig = () => ({
+  version: "1.15",
+  locale: {
+    source: "en",
+    targets: ["es"],
+  },
+  buckets: {
+    json: {
+      include: ["locales/[locale].json"],
+    },
+  },
+});
+
 describe("I18n Config Parser", () => {
   it("should upgrade v0 config to latest version", () => {
     const v0Config = createV0Config();
@@ -144,5 +157,26 @@ describe("I18n Config Parser", () => {
     expect(() => parseI18nConfig(invalidLocaleConfig)).toThrow(
       `\nUnsupported locale: ${invalidLocaleConfig.locale.source}\nUnsupported locale: ${invalidLocaleConfig.locale.targets[1]}`,
     );
+  });
+
+  it("should parse the default config without errors", () => {
+    expect(() => parseI18nConfig(defaultConfig)).not.toThrow();
+  });
+
+  it("should parse a v0 config without errors", () => {
+    expect(() => parseI18nConfig({ version: 0 })).not.toThrow();
+  });
+
+  it("should parse a v1 config without errors", () => {
+    const config = { version: 1, locale: { source: "en", targets: ["es"] } };
+    expect(() => parseI18nConfig(config)).not.toThrow();
+  });
+
+  it("should throw for invalid locale codes with clear error", () => {
+    const config = {
+      version: "1.15",
+      locale: { source: "xxxx", targets: ["es"] },
+    };
+    expect(() => parseI18nConfig(config)).toThrow("Unsupported locale: xxxx");
   });
 });
