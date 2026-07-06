@@ -30,46 +30,6 @@
       "import": "./build/spec.mjs",
       "require": "./build/spec.cjs"
     },
-    "./compiler": {
-      "types": "./build/compiler.d.ts",
-      "import": "./build/compiler.mjs",
-      "require": "./build/compiler.cjs"
-    },
-    "./react": {
-      "types": "./build/react.d.ts",
-      "import": "./build/react.mjs",
-      "require": "./build/react.cjs"
-    },
-    "./react-client": {
-      "types": "./build/react/client.d.ts",
-      "import": "./build/react/client.mjs",
-      "require": "./build/react/client.cjs"
-    },
-    "./react/client": {
-      "types": "./build/react/client.d.ts",
-      "import": "./build/react/client.mjs",
-      "require": "./build/react/client.cjs"
-    },
-    "./react-rsc": {
-      "types": "./build/react/rsc.d.ts",
-      "import": "./build/react/rsc.mjs",
-      "require": "./build/react/rsc.cjs"
-    },
-    "./react/rsc": {
-      "types": "./build/react/rsc.d.ts",
-      "import": "./build/react/rsc.mjs",
-      "require": "./build/react/rsc.cjs"
-    },
-    "./react-router": {
-      "types": "./build/react/react-router.d.ts",
-      "import": "./build/react/react-router.mjs",
-      "require": "./build/react/react-router.cjs"
-    },
-    "./react/react-router": {
-      "types": "./build/react/react-router.d.ts",
-      "import": "./build/react/react-router.mjs",
-      "require": "./build/react/react-router.cjs"
-    },
     "./locale-codes": {
       "types": "./build/locale-codes.d.ts",
       "import": "./build/locale-codes.mjs",
@@ -86,21 +46,6 @@
       ],
       "spec": [
         "./build/spec.d.ts"
-      ],
-      "compiler": [
-        "./build/compiler.d.ts"
-      ],
-      "react": [
-        "./build/react.d.ts"
-      ],
-      "react/client": [
-        "./build/react/client.d.ts"
-      ],
-      "react/rsc": [
-        "./build/react/rsc.d.ts"
-      ],
-      "react/react-router": [
-        "./build/react/react-router.d.ts"
       ],
       "locale-codes": [
         "./build/locale-codes.d.ts"
@@ -143,9 +88,7 @@
     "@datocms/cma-client-node": "5.5.3",
     "@gitbeaker/rest": "39.34.3",
     "@inquirer/prompts": "7.8.0",
-    "@lingo.dev/_compiler": "workspace:*",
     "@lingo.dev/_locales": "workspace:*",
-    "@lingo.dev/_react": "workspace:*",
     "@lingo.dev/_sdk": "workspace:*",
     "@lingo.dev/_spec": "workspace:*",
     "@markdoc/markdoc": "0.5.4",
@@ -237,20 +180,11 @@
     "@types/node-gettext": "3.0.6",
     "@types/object-hash": "3.0.6",
     "@types/plist": "3.0.5",
-    "@types/react": "19.2.7",
     "@types/xml2js": "0.4.14",
     "gray-matter": "4.0.3",
     "tsup": "8.5.1",
     "typescript": "5.9.3",
     "vitest": "3.2.6"
-  },
-  "peerDependencies": {
-    "react": ">=18 <20"
-  },
-  "peerDependenciesMeta": {
-    "react": {
-      "optional": true
-    }
   },
   "engines": {
     "node": ">=18"

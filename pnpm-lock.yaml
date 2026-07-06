@@ -269,15 +269,9 @@ importers:
       '@inquirer/prompts':
         specifier: 7.8.0
         version: 7.8.0(@types/node@22.10.2)
-      '@lingo.dev/_compiler':
-        specifier: workspace:*
-        version: link:../compiler
       '@lingo.dev/_locales':
         specifier: workspace:*
         version: link:../locales
-      '@lingo.dev/_react':
-        specifier: workspace:*
-        version: link:../react
       '@lingo.dev/_sdk':
         specifier: workspace:*
         version: link:../sdk
@@ -443,9 +437,6 @@ importers:
       prettier:
         specifier: 3.6.2
         version: 3.6.2
-      react:
-        specifier: '>=18 <20'
-        version: 19.2.3
       rehype-stringify:
         specifier: 10.0.1
         version: 10.0.1
@@ -549,9 +540,6 @@ importers:
       '@types/plist':
         specifier: 3.0.5
         version: 3.0.5
-      '@types/react':
-        specifier: 19.2.7
-        version: 19.2.7
       '@types/xml2js':
         specifier: 0.4.14
         version: 0.4.14
