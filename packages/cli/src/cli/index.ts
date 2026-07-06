@@ -14,12 +14,14 @@ import configCmd from "./cmd/config";
 import i18nCmd from "./cmd/i18n";
 import lockfileCmd from "./cmd/lockfile";
 import cleanupCmd from "./cmd/cleanup";
+import mcpCmd from "./cmd/mcp";
 import ciCmd from "./cmd/ci";
 import statusCmd from "./cmd/status";
 import mayTheFourthCmd from "./cmd/may-the-fourth";
 import packageJson from "../../package.json";
 import run from "./cmd/run";
 import purgeCmd from "./cmd/purge";
+import validateCmd from "./cmd/validate";
 
 export default new InteractiveCommand()
   .name("lingo.dev")
@@ -55,11 +57,13 @@ Star the the repo :) https://github.com/LingoDotDev/lingo.dev
   .addCommand(configCmd)
   .addCommand(lockfileCmd)
   .addCommand(cleanupCmd)
+  .addCommand(mcpCmd)
   .addCommand(ciCmd)
   .addCommand(statusCmd)
   .addCommand(mayTheFourthCmd, { hidden: true })
   .addCommand(run)
   .addCommand(purgeCmd)
+  .addCommand(validateCmd)
   .exitOverride((err) => {
     // Exit with code 0 when help or version is displayed
     if (
