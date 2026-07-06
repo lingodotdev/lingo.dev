@@ -21,6 +21,7 @@ import mayTheFourthCmd from "./cmd/may-the-fourth";
 import packageJson from "../../package.json";
 import run from "./cmd/run";
 import purgeCmd from "./cmd/purge";
+import validateCmd from "./cmd/validate";
 
 export default new InteractiveCommand()
   .name("lingo.dev")
@@ -62,6 +63,7 @@ Star the the repo :) https://github.com/LingoDotDev/lingo.dev
   .addCommand(mayTheFourthCmd, { hidden: true })
   .addCommand(run)
   .addCommand(purgeCmd)
+  .addCommand(validateCmd)
   .exitOverride((err) => {
     // Exit with code 0 when help or version is displayed
     if (
