@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.138.0
+
+### Minor Changes
+
+- [#2162](https://github.com/lingodotdev/lingo.dev/pull/2162) [`62c00b4`](https://github.com/lingodotdev/lingo.dev/commit/62c00b43bfcc3cd8fd65d7d3d3a69d69ed396f1e) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Remove the `./compiler` and `./react*` subpath exports, the `@lingo.dev/_compiler` and `@lingo.dev/_react` dependencies, and the optional `react` peer dependency from the CLI package.
+
 ## 0.137.8
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # @compiler/demo-next
 
+## 0.1.36
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @lingo.dev/compiler@0.4.9
+
 ## 0.1.35
 
 ### Patch Changes

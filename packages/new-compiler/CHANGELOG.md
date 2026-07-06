@@ -1,5 +1,12 @@
 # @lingo.dev/compiler
 
+## 0.4.9
+
+### Patch Changes
+
+- Updated dependencies [[`62c00b4`](https://github.com/lingodotdev/lingo.dev/commit/62c00b43bfcc3cd8fd65d7d3d3a69d69ed396f1e)]:
+  - lingo.dev@0.138.0
+
 ## 0.4.8
 
 ### Patch Changes
