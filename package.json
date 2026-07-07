@@ -12,7 +12,7 @@
     "prebuild": "syncpack lint-semver-ranges --filter '.*' --types prod,dev"
   },
   "devDependencies": {
-    "@babel/generator": "7.28.5",
+    "@babel/generator": "8.0.0",
     "@babel/parser": "7.28.5",
     "@babel/traverse": "7.28.5",
     "@babel/types": "7.28.5",
