@@ -20,7 +20,7 @@
     "tailwindcss": "4.1.18"
   },
   "devDependencies": {
-    "@tanstack/devtools-vite": "0.3.11",
+    "@tanstack/devtools-vite": "0.8.1",
     "@testing-library/dom": "10.4.0",
     "@testing-library/react": "16.2.0",
     "@types/node": "22.10.2",
