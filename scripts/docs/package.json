@@ -25,6 +25,7 @@
     "vitest": "3.2.6"
   },
   "dependencies": {
+    "prettier": "3.6.2",
     "zod": "3.25.76",
     "zod-to-json-schema": "3.25.0"
   }

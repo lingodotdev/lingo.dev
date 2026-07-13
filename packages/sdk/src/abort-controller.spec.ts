@@ -1,5 +1,8 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { LingoDotDevEngine } from "../src/index.js";
+
+vi.mock("./utils/observability");
+
+import { LingoDotDevEngine } from "./index.js";
 
 // Mock fetch globally
 global.fetch = vi.fn();

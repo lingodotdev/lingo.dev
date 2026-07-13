@@ -1,5 +1,40 @@
 # @lingo.dev/compiler
 
+## 0.4.9
+
+### Patch Changes
+
+- Updated dependencies [[`62c00b4`](https://github.com/lingodotdev/lingo.dev/commit/62c00b43bfcc3cd8fd65d7d3d3a69d69ed396f1e)]:
+  - lingo.dev@0.138.0
+
+## 0.4.8
+
+### Patch Changes
+
+- [#2140](https://github.com/lingodotdev/lingo.dev/pull/2140) [`0d4ebee`](https://github.com/lingodotdev/lingo.dev/commit/0d4ebee8ac613879e57b91dbe1665b232300f998) Thanks [@moygospadin](https://github.com/moygospadin)! - fix(deps): reduce npm audit vulnerabilities and update dependencies
+
+  Security (cuts a fresh consumer `npm audit` from 13 → 8, critical 1 → 0, high 4 → 1):
+  - `@lingo.dev/_react`: widen the `next` peerDependency from the exact vulnerable `15.3.8` to `>=15.5.19 <16`.
+  - `lingo.dev`: `yaml` 2.8.1 → 2.9.0, `diff` 7.0.0 → 9.0.0, `@datocms/cma-client-node` 4.0.1 → 5.5.3 (patched `uuid`).
+
+  Dependency maintenance (consolidated from dependabot, build + tests verified):
+  - `lingo.dev`: removed unused deps `ink`/`@inkjs/ui`/`ink-spinner`/`ink-progress-bar` (avoids ink v7's Node >=22 requirement), `@modelcontextprotocol/sdk`, `unist-util-visit`; bumped `@biomejs/wasm-nodejs` 2.4.6 → 2.5.0.
+  - `@lingo.dev/compiler`: bumped `@babel/core` 7.26.0 → 7.29.6, `ai-sdk-ollama` 3.0.0 → 3.8.8.
+
+- Updated dependencies [[`0d4ebee`](https://github.com/lingodotdev/lingo.dev/commit/0d4ebee8ac613879e57b91dbe1665b232300f998)]:
+  - lingo.dev@0.137.4
+
+## 0.4.7
+
+### Patch Changes
+
+- [#2134](https://github.com/lingodotdev/lingo.dev/pull/2134) [`e18811f`](https://github.com/lingodotdev/lingo.dev/commit/e18811febc17473ab3a1c695dff2adf154a7344d) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Resolve high-severity CodeQL code-scanning findings (security hardening):
+  - `org-id` git-remote parsing now extracts the URL host and matches the platform by exact host or subdomain suffix (`host === "github.com" || host.endsWith(".github.com")`, etc.) instead of a substring `includes()` check. This fixes `js/incomplete-url-substring-sanitization` (cli, compiler, new-compiler) while still recognizing official alt-SSH hosts like `ssh.github.com` / `altssh.gitlab.com` and rejecting look-alikes like `github.com.evil.com`. Platform labels for all real remote forms are preserved.
+  - Removed a dead `.replace("\n", "")` in the XML loader (an earlier `\s+` collapse already strips newlines), which also clears the `js/incomplete-sanitization` finding there.
+
+- Updated dependencies [[`e18811f`](https://github.com/lingodotdev/lingo.dev/commit/e18811febc17473ab3a1c695dff2adf154a7344d)]:
+  - lingo.dev@0.137.3
+
 ## 0.4.6
 
 ### Patch Changes

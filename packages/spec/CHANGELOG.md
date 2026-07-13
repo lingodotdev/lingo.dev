@@ -1,5 +1,11 @@
 # @lingo.dev/\_spec
 
+## 0.49.2
+
+### Patch Changes
+
+- [#2156](https://github.com/lingodotdev/lingo.dev/pull/2156) [`38e01c4`](https://github.com/lingodotdev/lingo.dev/commit/38e01c4532d6e2118002a608e1bc16809880121d) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Bump `zod` to `4.4.3` so it satisfies the `zod@^4.3.5` peer requirement of `@openrouter/ai-sdk-provider`. The previously pinned `4.1.12` caused `npm install` to fail with `ERESOLVE` when `strict-peer-deps` was enabled.
+
 ## 0.49.1
 
 ### Patch Changes

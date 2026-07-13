@@ -1,5 +1,82 @@
 # lingo.dev
 
+## 0.138.0
+
+### Minor Changes
+
+- [#2162](https://github.com/lingodotdev/lingo.dev/pull/2162) [`62c00b4`](https://github.com/lingodotdev/lingo.dev/commit/62c00b43bfcc3cd8fd65d7d3d3a69d69ed396f1e) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Remove the `./compiler` and `./react*` subpath exports, the `@lingo.dev/_compiler` and `@lingo.dev/_react` dependencies, and the optional `react` peer dependency from the CLI package.
+
+## 0.137.8
+
+### Patch Changes
+
+- [#2156](https://github.com/lingodotdev/lingo.dev/pull/2156) [`38e01c4`](https://github.com/lingodotdev/lingo.dev/commit/38e01c4532d6e2118002a608e1bc16809880121d) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Bump `zod` to `4.4.3` so it satisfies the `zod@^4.3.5` peer requirement of `@openrouter/ai-sdk-provider`. The previously pinned `4.1.12` caused `npm install` to fail with `ERESOLVE` when `strict-peer-deps` was enabled.
+
+- Updated dependencies [[`38e01c4`](https://github.com/lingodotdev/lingo.dev/commit/38e01c4532d6e2118002a608e1bc16809880121d)]:
+  - @lingo.dev/_compiler@0.12.10
+  - @lingo.dev/_spec@0.49.2
+  - @lingo.dev/_sdk@0.17.1
+
+## 0.137.7
+
+### Patch Changes
+
+- [#2154](https://github.com/lingodotdev/lingo.dev/pull/2154) [`61326c0`](https://github.com/lingodotdev/lingo.dev/commit/61326c0591788c52239a09a72278a49e5a3ee7d8) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Make `react` an optional peer dependency instead of a direct dependency.
+
+## 0.137.6
+
+### Patch Changes
+
+- [#2146](https://github.com/lingodotdev/lingo.dev/pull/2146) [`ea617c0`](https://github.com/lingodotdev/lingo.dev/commit/ea617c0df7125a6f136142bac9b8ae5adf3d57e2) Thanks [@moygospadin](https://github.com/moygospadin)! - fix(mdx): preserve fenced code blocks with 4+ backtick fences
+
+  The MDX code-placeholder loader hard-coded a 3-backtick fence pattern, so a
+  fence of 4 or more backticks had only 3 of its closing backticks matched and
+  the rest orphaned — the close was emitted as ` ` ```+ a blank line + a
+stray lone backtick, producing invalid MDX (e.g. a code block that swallowed
+the following`</Accordion>`). Fences are now matched at their actual length,
+  with the closing fence allowed to be equal to or longer than the opening
+  (per CommonMark).
+
+## 0.137.5
+
+### Patch Changes
+
+- [#2142](https://github.com/lingodotdev/lingo.dev/pull/2142) [`1e2136d`](https://github.com/lingodotdev/lingo.dev/commit/1e2136de8f9077826391e8abb4cfc8cddc56137f) Thanks [@moygospadin](https://github.com/moygospadin)! - fix(deps): drop external-editor and gray-matter to clear remaining npm audit findings
+
+  These two dependencies were the only remaining source of the high/moderate `tmp` and `js-yaml` advisories in a consumer `npm audit`:
+  - `external-editor` pulled a vulnerable `tmp@^0.0.33` (high, path traversal). Replaced its single use (the interactive editor prompt in the deprecated `i18n` command) with a small `node:fs`/`node:child_process` helper that uses `mkdtempSync` — no `tmp` package, no path-traversal surface.
+  - `gray-matter` pulled `js-yaml@3` (moderate). Both call sites already injected the patched `yaml` package as gray-matter's engine, so its bundled `js-yaml` was dead weight. Replaced with a tiny front-matter helper built on `yaml`; `gray-matter` is kept only as a `devDependency` test oracle that the loader specs assert equivalence against.
+
+  Net effect on a fresh consumer `npm audit`: removes the last `high` (`tmp`) plus the `js-yaml`/`gray-matter`/`external-editor` findings.
+
+## 0.137.4
+
+### Patch Changes
+
+- [#2140](https://github.com/lingodotdev/lingo.dev/pull/2140) [`0d4ebee`](https://github.com/lingodotdev/lingo.dev/commit/0d4ebee8ac613879e57b91dbe1665b232300f998) Thanks [@moygospadin](https://github.com/moygospadin)! - fix(deps): reduce npm audit vulnerabilities and update dependencies
+
+  Security (cuts a fresh consumer `npm audit` from 13 → 8, critical 1 → 0, high 4 → 1):
+  - `@lingo.dev/_react`: widen the `next` peerDependency from the exact vulnerable `15.3.8` to `>=15.5.19 <16`.
+  - `lingo.dev`: `yaml` 2.8.1 → 2.9.0, `diff` 7.0.0 → 9.0.0, `@datocms/cma-client-node` 4.0.1 → 5.5.3 (patched `uuid`).
+
+  Dependency maintenance (consolidated from dependabot, build + tests verified):
+  - `lingo.dev`: removed unused deps `ink`/`@inkjs/ui`/`ink-spinner`/`ink-progress-bar` (avoids ink v7's Node >=22 requirement), `@modelcontextprotocol/sdk`, `unist-util-visit`; bumped `@biomejs/wasm-nodejs` 2.4.6 → 2.5.0.
+  - `@lingo.dev/compiler`: bumped `@babel/core` 7.26.0 → 7.29.6, `ai-sdk-ollama` 3.0.0 → 3.8.8.
+
+- Updated dependencies [[`0d4ebee`](https://github.com/lingodotdev/lingo.dev/commit/0d4ebee8ac613879e57b91dbe1665b232300f998)]:
+  - @lingo.dev/_react@0.7.9
+
+## 0.137.3
+
+### Patch Changes
+
+- [#2134](https://github.com/lingodotdev/lingo.dev/pull/2134) [`e18811f`](https://github.com/lingodotdev/lingo.dev/commit/e18811febc17473ab3a1c695dff2adf154a7344d) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Resolve high-severity CodeQL code-scanning findings (security hardening):
+  - `org-id` git-remote parsing now extracts the URL host and matches the platform by exact host or subdomain suffix (`host === "github.com" || host.endsWith(".github.com")`, etc.) instead of a substring `includes()` check. This fixes `js/incomplete-url-substring-sanitization` (cli, compiler, new-compiler) while still recognizing official alt-SSH hosts like `ssh.github.com` / `altssh.gitlab.com` and rejecting look-alikes like `github.com.evil.com`. Platform labels for all real remote forms are preserved.
+  - Removed a dead `.replace("\n", "")` in the XML loader (an earlier `\s+` collapse already strips newlines), which also clears the `js/incomplete-sanitization` finding there.
+
+- Updated dependencies [[`e18811f`](https://github.com/lingodotdev/lingo.dev/commit/e18811febc17473ab3a1c695dff2adf154a7344d)]:
+  - @lingo.dev/_compiler@0.12.9
+
 ## 0.137.2
 
 ### Patch Changes
