@@ -4,6 +4,24 @@
 
 ### Patch Changes
 
+- [#2164](https://github.com/lingodotdev/lingo.dev/pull/2164) [`79b1c8f`](https://github.com/lingodotdev/lingo.dev/commit/79b1c8f67af3bc0db95650dfb09bb71677e79c23) Thanks [@ohmoses](https://github.com/ohmoses)! - Added dependency overrides to patch vulnerabilities:
+  - picomatch@>=4 <4.0.4: 4.0.4
+  - qs@>=6.14.0 <6.14.1: 6.14.1
+  - "@unhead/vue": ">=2.1.15 <3"
+  - postcss@>=8 <8.5.10: 8.5.10
+  - ajv@>=6 <6.14.0: 6.14.0
+  - launch-editor@<2.14.1: 2.14.1
+  - js-yaml@>=3 <3.15.0: 3.15.0
+  - js-yaml@>=4 <4.2.0: 4.2.0
+  - joi@>=18 <18.2.1: 18.2.1
+
+- Updated dependencies [[`79b1c8f`](https://github.com/lingodotdev/lingo.dev/commit/79b1c8f67af3bc0db95650dfb09bb71677e79c23), [`045642b`](https://github.com/lingodotdev/lingo.dev/commit/045642b958a8f8ec61acb0a8e4ed5e67c84968b8), [`aefeb08`](https://github.com/lingodotdev/lingo.dev/commit/aefeb084c2823ced65affcc35f3db6b5119e2434)]:
+  - lingo.dev@0.138.1
+
+## 0.71.2
+
+### Patch Changes
+
 - [#1749](https://github.com/lingodotdev/lingo.dev/pull/1749) [`5bc0c89`](https://github.com/lingodotdev/lingo.dev/commit/5bc0c8952d1bc01be7a2e7b49506f6a5f8f05a59) Thanks [@sumitsaurabh927](https://github.com/sumitsaurabh927)! - create a new space for community contributions like demo apps etc
 
 - Updated dependencies [[`348b2de`](https://github.com/lingodotdev/lingo.dev/commit/348b2de39412101bacb5ed541b0db23f0ca6213d), [`04c3679`](https://github.com/lingodotdev/lingo.dev/commit/04c3679c69231012f167da1640dc17ac57743d6b), [`5bc0c89`](https://github.com/lingodotdev/lingo.dev/commit/5bc0c8952d1bc01be7a2e7b49506f6a5f8f05a59), [`797f913`](https://github.com/lingodotdev/lingo.dev/commit/797f9132b5cf05fe457968b691bca10db1fc37bb)]:

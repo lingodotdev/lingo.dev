@@ -1,5 +1,31 @@
 # lingo.dev
 
+## 0.138.1
+
+### Patch Changes
+
+- [#2164](https://github.com/lingodotdev/lingo.dev/pull/2164) [`79b1c8f`](https://github.com/lingodotdev/lingo.dev/commit/79b1c8f67af3bc0db95650dfb09bb71677e79c23) Thanks [@ohmoses](https://github.com/ohmoses)! - Added dependency overrides to patch vulnerabilities:
+  - picomatch@>=4 <4.0.4: 4.0.4
+  - qs@>=6.14.0 <6.14.1: 6.14.1
+  - "@unhead/vue": ">=2.1.15 <3"
+  - postcss@>=8 <8.5.10: 8.5.10
+  - ajv@>=6 <6.14.0: 6.14.0
+  - launch-editor@<2.14.1: 2.14.1
+  - js-yaml@>=3 <3.15.0: 3.15.0
+  - js-yaml@>=4 <4.2.0: 4.2.0
+  - joi@>=18 <18.2.1: 18.2.1
+
+- [#2166](https://github.com/lingodotdev/lingo.dev/pull/2166) [`045642b`](https://github.com/lingodotdev/lingo.dev/commit/045642b958a8f8ec61acb0a8e4ed5e67c84968b8) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Resolve high-severity CodeQL code-scanning findings (security hardening):
+  - `org-id` git-remote parsing now extracts the URL host and matches the platform by exact host or subdomain suffix (`host === "github.com" || host.endsWith(".github.com")`, etc.) instead of a substring `includes()` check. This fixes `js/incomplete-url-substring-sanitization` (cli, compiler, new-compiler) while still recognizing official alt-SSH hosts like `ssh.github.com` / `altssh.gitlab.com` and rejecting look-alikes like `github.com.evil.com`. Platform labels for all real remote forms are preserved.
+  - Removed a dead `.replace("\n", "")` in the XML loader (an earlier `\s+` collapse already strips newlines), which also clears the `js/incomplete-sanitization` finding there.
+
+- [#2165](https://github.com/lingodotdev/lingo.dev/pull/2165) [`aefeb08`](https://github.com/lingodotdev/lingo.dev/commit/aefeb084c2823ced65affcc35f3db6b5119e2434) Thanks [@ohmoses](https://github.com/ohmoses)! - Overriden the qs dependency to patch a vulnerability
+
+- Updated dependencies [[`79b1c8f`](https://github.com/lingodotdev/lingo.dev/commit/79b1c8f67af3bc0db95650dfb09bb71677e79c23)]:
+  - @lingo.dev/_sdk@0.17.2
+  - @lingo.dev/_locales@0.3.4
+  - @lingo.dev/_spec@0.49.3
+
 ## 0.138.0
 
 ### Minor Changes

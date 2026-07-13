@@ -4,6 +4,24 @@
 
 ### Patch Changes
 
+- [#2164](https://github.com/lingodotdev/lingo.dev/pull/2164) [`79b1c8f`](https://github.com/lingodotdev/lingo.dev/commit/79b1c8f67af3bc0db95650dfb09bb71677e79c23) Thanks [@ohmoses](https://github.com/ohmoses)! - Added dependency overrides to patch vulnerabilities:
+  - picomatch@>=4 <4.0.4: 4.0.4
+  - qs@>=6.14.0 <6.14.1: 6.14.1
+  - "@unhead/vue": ">=2.1.15 <3"
+  - postcss@>=8 <8.5.10: 8.5.10
+  - ajv@>=6 <6.14.0: 6.14.0
+  - launch-editor@<2.14.1: 2.14.1
+  - js-yaml@>=3 <3.15.0: 3.15.0
+  - js-yaml@>=4 <4.2.0: 4.2.0
+  - joi@>=18 <18.2.1: 18.2.1
+
+- Updated dependencies [[`79b1c8f`](https://github.com/lingodotdev/lingo.dev/commit/79b1c8f67af3bc0db95650dfb09bb71677e79c23)]:
+  - @replexica/sdk@0.7.13
+
+## 0.1.11
+
+### Patch Changes
+
 - [#1749](https://github.com/lingodotdev/lingo.dev/pull/1749) [`5bc0c89`](https://github.com/lingodotdev/lingo.dev/commit/5bc0c8952d1bc01be7a2e7b49506f6a5f8f05a59) Thanks [@sumitsaurabh927](https://github.com/sumitsaurabh927)! - create a new space for community contributions like demo apps etc
 
 - Updated dependencies [[`5bc0c89`](https://github.com/lingodotdev/lingo.dev/commit/5bc0c8952d1bc01be7a2e7b49506f6a5f8f05a59)]:
