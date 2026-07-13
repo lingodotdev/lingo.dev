@@ -133,11 +133,16 @@ async function prepareFixture(
   // Install dependencies once during preparation
   console.log(`  Installing dependencies for ${framework}...`);
   try {
-    // Use --ignore-workspace to prevent pnpm from treating this as a workspace package
+    // Use --ignore-workspace to prevent pnpm from treating this as a workspace package.
+    // PNPM_CONFIG_STRICT_DEP_BUILDS=false: --ignore-workspace skips the root
+    // pnpm-workspace.yaml allowBuilds list, so under pnpm 11 ignored native build
+    // scripts (esbuild, sharp, lmdb, ...) become a hard ERR_PNPM_IGNORED_BUILDS
+    // failure. Downgrade back to a warning for this fixture install only; the
+    // prebuilt platform binaries these packages ship are enough for the demo apps.
     await execAsync("pnpm install --no-frozen-lockfile --ignore-workspace", {
       cwd: destPath,
       timeout: 120000,
-      env: { ...process.env, CI: "true" },
+      env: { ...process.env, CI: "true", PNPM_CONFIG_STRICT_DEP_BUILDS: "false" },
     });
     console.log(`  ✅ ${framework} fixture ready with dependencies installed`);
   } catch (error: any) {
