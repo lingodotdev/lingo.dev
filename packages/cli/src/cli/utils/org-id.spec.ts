@@ -9,6 +9,12 @@ describe("getOrgId", () => {
 
   beforeEach(() => {
     process.env = { ...originalEnv };
+    // Drop CI vars getOrgId() reads (org-id.ts:28,33,38) so tests don't
+    // inherit the runner's env — e.g. GitHub Actions sets GITHUB_REPOSITORY,
+    // which would otherwise short-circuit every git-remote case. (ENG-1183)
+    delete process.env.GITHUB_REPOSITORY;
+    delete process.env.CI_PROJECT_PATH;
+    delete process.env.BITBUCKET_REPO_FULL_NAME;
     vi.clearAllMocks();
     clearOrgIdCache(); // Clear cache between tests
   });
