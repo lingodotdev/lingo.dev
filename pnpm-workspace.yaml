@@ -35,7 +35,7 @@ overrides:
   minimatch@>=10 <10.2.3: 10.2.3
   picomatch@<2.3.2: 2.3.2
   picomatch@>=4 <4.0.4: 4.0.4
-  qs@>=6.14.0 <6.14.1: 6.14.1
+  qs@>=6.11.1 <6.15.2: 6.15.2
   "@unhead/vue": ">=2.1.15 <3"
   postcss@>=8 <8.5.10: 8.5.10
   ajv@>=6 <6.14.0: 6.14.0
@@ -54,10 +54,10 @@ allowBuilds:
   unrs-resolver: true
   vue-demi: false
 minimumReleaseAgeExclude:
-  - '@turbo/darwin-64@2.10.4'
-  - '@turbo/darwin-arm64@2.10.4'
-  - '@turbo/linux-64@2.10.4'
-  - '@turbo/linux-arm64@2.10.4'
-  - '@turbo/windows-64@2.10.4'
-  - '@turbo/windows-arm64@2.10.4'
+  - "@turbo/darwin-64@2.10.4"
+  - "@turbo/darwin-arm64@2.10.4"
+  - "@turbo/linux-64@2.10.4"
+  - "@turbo/linux-arm64@2.10.4"
+  - "@turbo/windows-64@2.10.4"
+  - "@turbo/windows-arm64@2.10.4"
   - turbo@2.10.4

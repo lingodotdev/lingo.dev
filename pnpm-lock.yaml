@@ -33,7 +33,7 @@ overrides:
   minimatch@>=10 <10.2.3: 10.2.3
   picomatch@<2.3.2: 2.3.2
   picomatch@>=4 <4.0.4: 4.0.4
-  qs@>=6.14.0 <6.14.1: 6.14.1
+  qs@>=6.11.1 <6.15.2: 6.15.2
   '@unhead/vue': '>=2.1.15 <3'
   postcss@>=8 <8.5.10: 8.5.10
   ajv@>=6 <6.14.0: 6.14.0
@@ -7795,8 +7795,8 @@ packages:
   pure-rand@6.1.0:
     resolution: {integrity: sha512-bVWawvoZoBYpp6yIoQtQXHZjmz35RSVHnUOTefl8Vcjr8snTPY1wnpSPMWekcFwbxI6gtmT7rSYPFvz71ldiOA==}
 
-  qs@6.14.1:
-    resolution: {integrity: sha512-4EK3+xJl8Ts67nLYNwqw/dsFVnCf+qR7RgXSK9jEEm9unao3njwMDdmsdvoKBKHzxd7tCYz5e5M+SnMjdtXGQQ==}
+  qs@6.15.2:
+    resolution: {integrity: sha512-Rzq0KEyX/w/tEybncDgdkZrJgVUsUMk3xjh3t5bv3S1HTAtg+uOYt72+ZfwiQwKdysThkTBdL/rTi6HDmX9Ddw==}
     engines: {node: '>=0.6'}
 
   quansync@0.2.11:
@@ -10804,13 +10804,13 @@ snapshots:
   '@gitbeaker/core@39.34.3':
     dependencies:
       '@gitbeaker/requester-utils': 39.34.3
-      qs: 6.14.1
+      qs: 6.15.2
       xcase: 2.0.1
 
   '@gitbeaker/requester-utils@39.34.3':
     dependencies:
       picomatch-browser: 2.2.6
-      qs: 6.14.1
+      qs: 6.15.2
       rate-limiter-flexible: 4.0.1
       xcase: 2.0.1
 
@@ -16954,7 +16954,7 @@ snapshots:
 
   pure-rand@6.1.0: {}
 
-  qs@6.14.1:
+  qs@6.15.2:
     dependencies:
       side-channel: 1.1.0
 
