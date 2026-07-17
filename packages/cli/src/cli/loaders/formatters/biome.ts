@@ -117,7 +117,7 @@ export async function formatDataWithBiome(
 // biome.jsonc uses newer/CLI-only keys). If the full config is rejected, retry
 // with a formatter-only subset so the project's quote style and other formatter
 // settings are still honored.
-function applyFormatterConfig(
+export function applyFormatterConfig(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   biome: any,
   projectKey: unknown,
@@ -128,7 +128,17 @@ function applyFormatterConfig(
     biome.applyConfiguration(projectKey, config);
   } catch {
     const formatterOnly = pickFormatterConfig(config);
-    biome.applyConfiguration(projectKey, formatterOnly);
+    try {
+      biome.applyConfiguration(projectKey, formatterOnly);
+    } catch {
+      // The formatter-only subset was itself rejected: the problem is in the
+      // formatter settings (e.g. an invalid quoteStyle value), not an unsupported
+      // sibling section. Surface it instead of skipping with an empty message,
+      // so a real config mistake stays actionable for the user.
+      throw new Error(
+        `Invalid Biome configuration in ${path.basename(configPath)}: the bundled Biome rejected the formatter settings. Check values such as quoteStyle and indentStyle.`,
+      );
+    }
     console.log(
       `⚠️  Biome: ${path.basename(configPath)} has a section the bundled Biome can't apply; used formatter-only settings so formatting still runs.`,
     );
@@ -138,7 +148,7 @@ function applyFormatterConfig(
 // The subset of a Biome config that governs formatting output (quotes, indent,
 // etc.). Safe to apply on any Biome version — excludes linter/assist/plugin
 // sections that may carry keys the embedded js-api rejects.
-function pickFormatterConfig(config: Record<string, unknown>): Record<string, unknown> {
+export function pickFormatterConfig(config: Record<string, unknown>): Record<string, unknown> {
   const out: Record<string, unknown> = {};
   for (const key of ["formatter", "javascript", "json", "css", "graphql"] as const) {
     const section = config[key] as Record<string, unknown> | undefined;
@@ -149,6 +159,12 @@ function pickFormatterConfig(config: Record<string, unknown>): Record<string, un
       // Keep only the language's formatter block, drop linter/assist/parser bits.
       out[key] = { formatter: section.formatter };
     }
+  }
+  // Per-glob formatter settings live under `overrides`; keep them so file-specific
+  // quote/indent styles survive the fallback. Any linter/assist keys inside an
+  // override are ignored by the embedded Biome, so keeping the array is safe.
+  if (Array.isArray(config.overrides)) {
+    out.overrides = config.overrides;
   }
   return out;
 }
