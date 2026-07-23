@@ -68,13 +68,13 @@ describe("trackEvent", () => {
 
     trackEvent("test-key", "https://test.api", "sdk.localize.start", {});
 
-    await new Promise((r) => setTimeout(r, 200));
-
-    expect(capture).toHaveBeenCalledWith(
-      expect.objectContaining({
-        distinctId: "123",
-        groups: { organization: "org_abc123" },
-      }),
+    await vi.waitFor(() =>
+      expect(capture).toHaveBeenCalledWith(
+        expect.objectContaining({
+          distinctId: "123",
+          groups: { organization: "org_abc123" },
+        }),
+      ),
     );
   });
 
@@ -86,16 +86,12 @@ describe("trackEvent", () => {
 
     trackEvent("test-key", "https://test.api", "sdk.localize.start", {});
 
-    await new Promise((r) => setTimeout(r, 200));
-
-    expect(capture).toHaveBeenCalledTimes(1);
+    await vi.waitFor(() => expect(capture).toHaveBeenCalledTimes(1));
     expect(capture.mock.calls[0][0]).not.toHaveProperty("groups");
   });
 
   it("falls back to API key hash when whoami fails", async () => {
-    globalThis.fetch = vi
-      .fn()
-      .mockRejectedValue(new Error("Network error")) as any;
+    globalThis.fetch = vi.fn().mockRejectedValue(new Error("Network error")) as any;
 
     trackEvent("my-api-key", "https://test.api", "sdk.localize.start", {});
 
