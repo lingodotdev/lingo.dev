@@ -56,6 +56,42 @@ describe("trackEvent", () => {
     expect(shutdown).toHaveBeenCalledTimes(1);
   });
 
+  it("attaches organization group when whoami returns organizationId", async () => {
+    globalThis.fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        email: "user@test.com",
+        id: "123",
+        organizationId: "org_abc123",
+      }),
+    }) as any;
+
+    trackEvent("test-key", "https://test.api", "sdk.localize.start", {});
+
+    await new Promise((r) => setTimeout(r, 200));
+
+    expect(capture).toHaveBeenCalledWith(
+      expect.objectContaining({
+        distinctId: "123",
+        groups: { organization: "org_abc123" },
+      }),
+    );
+  });
+
+  it("omits groups when whoami returns no organizationId", async () => {
+    globalThis.fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ email: "user@test.com", id: "123" }),
+    }) as any;
+
+    trackEvent("test-key", "https://test.api", "sdk.localize.start", {});
+
+    await new Promise((r) => setTimeout(r, 200));
+
+    expect(capture).toHaveBeenCalledTimes(1);
+    expect(capture.mock.calls[0][0]).not.toHaveProperty("groups");
+  });
+
   it("falls back to API key hash when whoami fails", async () => {
     globalThis.fetch = vi
       .fn()
@@ -73,6 +109,7 @@ describe("trackEvent", () => {
         }),
       }),
     );
+    expect(capture.mock.calls[0][0]).not.toHaveProperty("groups");
   });
 
   it("falls back to API key hash when whoami returns no id", async () => {

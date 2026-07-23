@@ -11,7 +11,7 @@ type IdentityInfo = {
 
 const identityCache = new Map<
   string,
-  { identity: IdentityInfo; email?: string }
+  { identity: IdentityInfo; email?: string; organizationId?: string }
 >();
 
 export function trackEvent(
@@ -39,7 +39,10 @@ async function resolveIdentityAndCapture(
   event: string,
   properties?: Record<string, any>,
 ) {
-  const { identity, email } = await getDistinctId(apiKey, apiUrl);
+  const { identity, email, organizationId } = await getDistinctId(
+    apiKey,
+    apiUrl,
+  );
 
   if (process.env.DEBUG === "true") {
     console.log(
@@ -58,6 +61,7 @@ async function resolveIdentityAndCapture(
     await posthog.capture({
       distinctId: identity.distinct_id,
       event,
+      ...(organizationId ? { groups: { organization: organizationId } } : {}),
       properties: {
         ...properties,
         $set: { ...(properties?.$set || {}), ...(email ? { email } : {}) },
@@ -82,7 +86,11 @@ async function resolveIdentityAndCapture(
 async function getDistinctId(
   apiKey: string,
   apiUrl: string,
-): Promise<{ identity: IdentityInfo; email?: string }> {
+): Promise<{
+  identity: IdentityInfo;
+  email?: string;
+  organizationId?: string;
+}> {
   const cached = identityCache.get(apiKey);
   if (cached) return cached;
 
@@ -104,6 +112,10 @@ async function getDistinctId(
             distinct_id_source: "database_id",
           },
           email: payload.email || undefined,
+          organizationId:
+            typeof payload.organizationId === "string"
+              ? payload.organizationId
+              : undefined,
         };
         identityCache.set(apiKey, result);
         return result;
