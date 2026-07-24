@@ -71,14 +71,10 @@ async function getDistinctId(
   const cached = identityCache.get(apiKey);
   if (cached) return cached;
 
-  // KNOWN GAP (service keys): `/whoami` returns the key's human creator, so a
-  // service-key run is still keyed on a person, not the key. ANALYTICS.md wants a
-  // service key's actor to be the key itself. Closing this needs a server-side
-  // signal (key id / type on `/whoami`) that does not exist yet — tracked as a
-  // follow-up, since it spans the API and this client.
   try {
-    // `/whoami` carries `organizationId` for exactly this purpose (attaching the
-    // `organization` group); `/users/me` never returned it, so org grouping was a no-op.
+    // `/whoami` carries the full telemetry identity: `organizationId` for the group,
+    // `userId` (the human behind a personal key, null for a service key) and `keyId`
+    // (the stable actor a service-key run keys on). `/users/me` returned none of it.
     const res = await fetch(`${apiUrl}/whoami`, {
       method: "POST",
       headers: {
@@ -89,15 +85,32 @@ async function getDistinctId(
 
     if (res.ok) {
       const payload = await res.json();
-      if (payload?.id) {
-        const result = {
-          identity: {
-            distinct_id: payload.id,
-            distinct_id_source: "database_id",
-          },
+      const organizationId = typeof payload?.organizationId === "string" ? payload.organizationId : undefined;
+      let result: { identity: IdentityInfo; email?: string; organizationId?: string } | undefined;
+
+      if (typeof payload?.userId === "string") {
+        // Personal key: the actor is the human; email rides as an identify trait.
+        result = {
+          identity: { distinct_id: payload.userId, distinct_id_source: "database_id" },
           email: payload.email || undefined,
-          organizationId: typeof payload.organizationId === "string" ? payload.organizationId : undefined,
+          organizationId,
         };
+      } else if (typeof payload?.keyId === "string") {
+        // Service key: the actor is the key itself — no human, so no email trait.
+        result = {
+          identity: { distinct_id: payload.keyId, distinct_id_source: "api_key_id" },
+          organizationId,
+        };
+      } else if (payload?.id) {
+        // Back-compat: an older API predating `userId`/`keyId` still returns the user id.
+        result = {
+          identity: { distinct_id: payload.id, distinct_id_source: "database_id" },
+          email: payload.email || undefined,
+          organizationId,
+        };
+      }
+
+      if (result) {
         identityCache.set(apiKey, result);
         return result;
       }
