@@ -1,5 +1,13 @@
 # @lingo.dev/\_sdk
 
+## 0.17.3
+
+### Patch Changes
+
+- [#2172](https://github.com/lingodotdev/lingo.dev/pull/2172) [`8c0393a`](https://github.com/lingodotdev/lingo.dev/commit/8c0393a084204affb58e789ae434e147f2338a61) Thanks [@cherkanovart](https://github.com/cherkanovart)! - SDK PostHog events now attach the `organization` group when the API reports the
+  key's organization, so SDK activity shows up in org-level analytics. No behavior
+  change for API keys whose server does not return an organization id.
+
 ## 0.17.2
 
 ### Patch Changes
