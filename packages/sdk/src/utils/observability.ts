@@ -70,14 +70,6 @@ async function resolveIdentityAndCapture(
         distinct_id_source: identity.distinct_id_source,
       },
     });
-
-    // TODO: remove after 2026-04-30 — temporary alias to merge old email-based distinct_ids with database user ID
-    if (email) {
-      await posthog.alias({
-        distinctId: identity.distinct_id,
-        alias: email,
-      });
-    }
   } finally {
     await posthog.shutdown();
   }
@@ -95,8 +87,10 @@ async function getDistinctId(
   if (cached) return cached;
 
   try {
-    const res = await fetch(`${apiUrl}/users/me`, {
-      method: "GET",
+    // `/whoami` carries `organizationId` for exactly this purpose (attaching the
+    // `organization` group); `/users/me` never returned it, so org grouping was a no-op.
+    const res = await fetch(`${apiUrl}/whoami`, {
+      method: "POST",
       headers: {
         "X-API-Key": apiKey,
         "Content-Type": "application/json",
@@ -125,7 +119,7 @@ async function getDistinctId(
     // Fall through to API key hash
   }
 
-  // Don't cache the fallback — a transient /users/me failure should not poison the cache for the entire process lifetime
+  // Don't cache the fallback — a transient /whoami failure should not poison the cache for the entire process lifetime
   const hash = createHash("sha256").update(apiKey).digest("hex").slice(0, 16);
   return {
     identity: {

@@ -143,7 +143,7 @@ describe("trackEvent", () => {
 
     // whoami fetch should only be called once due to caching
     const whoamiCalls = mockFetch.mock.calls.filter(
-      (call) => typeof call[0] === "string" && call[0].includes("/users/me"),
+      (call) => typeof call[0] === "string" && call[0].includes("/whoami"),
     );
     expect(whoamiCalls).toHaveLength(1);
     expect(capture).toHaveBeenCalledTimes(2);
@@ -163,7 +163,7 @@ describe("trackEvent", () => {
     await new Promise((r) => setTimeout(r, 200));
 
     const whoamiCalls = mockFetch.mock.calls.filter(
-      (call) => typeof call[0] === "string" && call[0].includes("/users/me"),
+      (call) => typeof call[0] === "string" && call[0].includes("/whoami"),
     );
     expect(whoamiCalls).toHaveLength(2);
   });
