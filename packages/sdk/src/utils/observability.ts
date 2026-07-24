@@ -9,28 +9,18 @@ type IdentityInfo = {
   distinct_id_source: string;
 };
 
-const identityCache = new Map<
-  string,
-  { identity: IdentityInfo; email?: string; organizationId?: string }
->();
+const identityCache = new Map<string, { identity: IdentityInfo; email?: string; organizationId?: string }>();
 
-export function trackEvent(
-  apiKey: string,
-  apiUrl: string,
-  event: string,
-  properties?: Record<string, any>,
-): void {
+export function trackEvent(apiKey: string, apiUrl: string, event: string, properties?: Record<string, any>): void {
   if (process.env.DO_NOT_TRACK === "1") {
     return;
   }
 
-  resolveIdentityAndCapture(apiKey, apiUrl, event, properties).catch(
-    (error) => {
-      if (process.env.DEBUG === "true") {
-        console.error("[Tracking] Error:", error);
-      }
-    },
-  );
+  resolveIdentityAndCapture(apiKey, apiUrl, event, properties).catch((error) => {
+    if (process.env.DEBUG === "true") {
+      console.error("[Tracking] Error:", error);
+    }
+  });
 }
 
 async function resolveIdentityAndCapture(
@@ -39,15 +29,10 @@ async function resolveIdentityAndCapture(
   event: string,
   properties?: Record<string, any>,
 ) {
-  const { identity, email, organizationId } = await getDistinctId(
-    apiKey,
-    apiUrl,
-  );
+  const { identity, email, organizationId } = await getDistinctId(apiKey, apiUrl);
 
   if (process.env.DEBUG === "true") {
-    console.log(
-      `[Tracking] Event: ${event}, ID: ${identity.distinct_id}, Source: ${identity.distinct_id_source}`,
-    );
+    console.log(`[Tracking] Event: ${event}, ID: ${identity.distinct_id}, Source: ${identity.distinct_id_source}`);
   }
 
   const { PostHog } = await import("posthog-node");
@@ -86,6 +71,11 @@ async function getDistinctId(
   const cached = identityCache.get(apiKey);
   if (cached) return cached;
 
+  // KNOWN GAP (service keys): `/whoami` returns the key's human creator, so a
+  // service-key run is still keyed on a person, not the key. ANALYTICS.md wants a
+  // service key's actor to be the key itself. Closing this needs a server-side
+  // signal (key id / type on `/whoami`) that does not exist yet — tracked as a
+  // follow-up, since it spans the API and this client.
   try {
     // `/whoami` carries `organizationId` for exactly this purpose (attaching the
     // `organization` group); `/users/me` never returned it, so org grouping was a no-op.
@@ -106,10 +96,7 @@ async function getDistinctId(
             distinct_id_source: "database_id",
           },
           email: payload.email || undefined,
-          organizationId:
-            typeof payload.organizationId === "string"
-              ? payload.organizationId
-              : undefined,
+          organizationId: typeof payload.organizationId === "string" ? payload.organizationId : undefined,
         };
         identityCache.set(apiKey, result);
         return result;

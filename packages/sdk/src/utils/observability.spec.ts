@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { trackEvent, _resetIdentityCache } from "./observability";
 
-const capture = vi.fn(async () => undefined);
+const capture = vi.fn(async (_payload: Record<string, any>) => undefined);
 const shutdown = vi.fn(async () => undefined);
 const PostHogMock = vi.fn(function (_key: string, _cfg: any) {
   return { alias: vi.fn(), capture, shutdown };
@@ -73,6 +73,26 @@ describe("trackEvent", () => {
         expect.objectContaining({
           distinctId: "123",
           groups: { organization: "org_abc123" },
+        }),
+      ),
+    );
+  });
+
+  it("sends email as an identify $set trait, never as the distinct_id", async () => {
+    globalThis.fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ email: "user@test.com", id: "123" }),
+    }) as any;
+
+    trackEvent("test-key", "https://test.api", "sdk.localize.start", {});
+
+    await vi.waitFor(() =>
+      expect(capture).toHaveBeenCalledWith(
+        expect.objectContaining({
+          distinctId: "123",
+          properties: expect.objectContaining({
+            $set: expect.objectContaining({ email: "user@test.com" }),
+          }),
         }),
       ),
     );
