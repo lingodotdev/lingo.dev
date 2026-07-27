@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { trackEvent, _resetIdentityCache } from "./observability";
 
-const capture = vi.fn(async () => undefined);
+const capture = vi.fn(async (_payload: Record<string, any>) => undefined);
 const shutdown = vi.fn(async () => undefined);
 const PostHogMock = vi.fn(function (_key: string, _cfg: any) {
   return { alias: vi.fn(), capture, shutdown };
@@ -56,10 +56,111 @@ describe("trackEvent", () => {
     expect(shutdown).toHaveBeenCalledTimes(1);
   });
 
+  it("attaches organization group when whoami returns organizationId", async () => {
+    globalThis.fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        email: "user@test.com",
+        id: "123",
+        organizationId: "org_abc123",
+      }),
+    }) as any;
+
+    trackEvent("test-key", "https://test.api", "sdk.localize.start", {});
+
+    await vi.waitFor(() =>
+      expect(capture).toHaveBeenCalledWith(
+        expect.objectContaining({
+          distinctId: "123",
+          groups: { organization: "org_abc123" },
+        }),
+      ),
+    );
+  });
+
+  it("keys a personal key on userId, with the email trait", async () => {
+    globalThis.fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ email: "u@test.com", id: "u1", organizationId: "org_1", keyId: "key_1", userId: "u1" }),
+    }) as any;
+
+    trackEvent("test-key", "https://test.api", "sdk.localize.start", {});
+
+    await vi.waitFor(() =>
+      expect(capture).toHaveBeenCalledWith(
+        expect.objectContaining({
+          distinctId: "u1",
+          groups: { organization: "org_1" },
+          properties: expect.objectContaining({
+            distinct_id_source: "database_id",
+            $set: expect.objectContaining({ email: "u@test.com" }),
+          }),
+        }),
+      ),
+    );
+  });
+
+  it("keys a service key on keyId, never the creator, and sends no email", async () => {
+    globalThis.fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        email: "creator@test.com",
+        id: "creator",
+        organizationId: "org_1",
+        keyId: "key_svc",
+        userId: null,
+      }),
+    }) as any;
+
+    trackEvent("test-key", "https://test.api", "sdk.localize.start", {});
+
+    await vi.waitFor(() =>
+      expect(capture).toHaveBeenCalledWith(
+        expect.objectContaining({
+          distinctId: "key_svc",
+          groups: { organization: "org_1" },
+          properties: expect.objectContaining({ distinct_id_source: "api_key_id" }),
+        }),
+      ),
+    );
+    // Automation has no person: the creator's email must not ride along.
+    expect(capture.mock.calls[0][0].properties.$set).not.toHaveProperty("email");
+  });
+
+  it("sends email as an identify $set trait, never as the distinct_id", async () => {
+    globalThis.fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ email: "user@test.com", id: "123" }),
+    }) as any;
+
+    trackEvent("test-key", "https://test.api", "sdk.localize.start", {});
+
+    await vi.waitFor(() =>
+      expect(capture).toHaveBeenCalledWith(
+        expect.objectContaining({
+          distinctId: "123",
+          properties: expect.objectContaining({
+            $set: expect.objectContaining({ email: "user@test.com" }),
+          }),
+        }),
+      ),
+    );
+  });
+
+  it("omits groups when whoami returns no organizationId", async () => {
+    globalThis.fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ email: "user@test.com", id: "123" }),
+    }) as any;
+
+    trackEvent("test-key", "https://test.api", "sdk.localize.start", {});
+
+    await vi.waitFor(() => expect(capture).toHaveBeenCalledTimes(1));
+    expect(capture.mock.calls[0][0]).not.toHaveProperty("groups");
+  });
+
   it("falls back to API key hash when whoami fails", async () => {
-    globalThis.fetch = vi
-      .fn()
-      .mockRejectedValue(new Error("Network error")) as any;
+    globalThis.fetch = vi.fn().mockRejectedValue(new Error("Network error")) as any;
 
     trackEvent("my-api-key", "https://test.api", "sdk.localize.start", {});
 
@@ -73,6 +174,7 @@ describe("trackEvent", () => {
         }),
       }),
     );
+    expect(capture.mock.calls[0][0]).not.toHaveProperty("groups");
   });
 
   it("falls back to API key hash when whoami returns no id", async () => {
@@ -110,7 +212,7 @@ describe("trackEvent", () => {
 
     // whoami fetch should only be called once due to caching
     const whoamiCalls = mockFetch.mock.calls.filter(
-      (call) => typeof call[0] === "string" && call[0].includes("/users/me"),
+      (call) => typeof call[0] === "string" && call[0].includes("/whoami"),
     );
     expect(whoamiCalls).toHaveLength(1);
     expect(capture).toHaveBeenCalledTimes(2);
@@ -130,7 +232,7 @@ describe("trackEvent", () => {
     await new Promise((r) => setTimeout(r, 200));
 
     const whoamiCalls = mockFetch.mock.calls.filter(
-      (call) => typeof call[0] === "string" && call[0].includes("/users/me"),
+      (call) => typeof call[0] === "string" && call[0].includes("/whoami"),
     );
     expect(whoamiCalls).toHaveLength(2);
   });

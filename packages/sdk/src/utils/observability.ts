@@ -9,28 +9,18 @@ type IdentityInfo = {
   distinct_id_source: string;
 };
 
-const identityCache = new Map<
-  string,
-  { identity: IdentityInfo; email?: string }
->();
+const identityCache = new Map<string, { identity: IdentityInfo; email?: string; organizationId?: string }>();
 
-export function trackEvent(
-  apiKey: string,
-  apiUrl: string,
-  event: string,
-  properties?: Record<string, any>,
-): void {
+export function trackEvent(apiKey: string, apiUrl: string, event: string, properties?: Record<string, any>): void {
   if (process.env.DO_NOT_TRACK === "1") {
     return;
   }
 
-  resolveIdentityAndCapture(apiKey, apiUrl, event, properties).catch(
-    (error) => {
-      if (process.env.DEBUG === "true") {
-        console.error("[Tracking] Error:", error);
-      }
-    },
-  );
+  resolveIdentityAndCapture(apiKey, apiUrl, event, properties).catch((error) => {
+    if (process.env.DEBUG === "true") {
+      console.error("[Tracking] Error:", error);
+    }
+  });
 }
 
 async function resolveIdentityAndCapture(
@@ -39,12 +29,10 @@ async function resolveIdentityAndCapture(
   event: string,
   properties?: Record<string, any>,
 ) {
-  const { identity, email } = await getDistinctId(apiKey, apiUrl);
+  const { identity, email, organizationId } = await getDistinctId(apiKey, apiUrl);
 
   if (process.env.DEBUG === "true") {
-    console.log(
-      `[Tracking] Event: ${event}, ID: ${identity.distinct_id}, Source: ${identity.distinct_id_source}`,
-    );
+    console.log(`[Tracking] Event: ${event}, ID: ${identity.distinct_id}, Source: ${identity.distinct_id_source}`);
   }
 
   const { PostHog } = await import("posthog-node");
@@ -58,6 +46,7 @@ async function resolveIdentityAndCapture(
     await posthog.capture({
       distinctId: identity.distinct_id,
       event,
+      ...(organizationId ? { groups: { organization: organizationId } } : {}),
       properties: {
         ...properties,
         $set: { ...(properties?.$set || {}), ...(email ? { email } : {}) },
@@ -66,14 +55,6 @@ async function resolveIdentityAndCapture(
         distinct_id_source: identity.distinct_id_source,
       },
     });
-
-    // TODO: remove after 2026-04-30 — temporary alias to merge old email-based distinct_ids with database user ID
-    if (email) {
-      await posthog.alias({
-        distinctId: identity.distinct_id,
-        alias: email,
-      });
-    }
   } finally {
     await posthog.shutdown();
   }
@@ -82,13 +63,20 @@ async function resolveIdentityAndCapture(
 async function getDistinctId(
   apiKey: string,
   apiUrl: string,
-): Promise<{ identity: IdentityInfo; email?: string }> {
+): Promise<{
+  identity: IdentityInfo;
+  email?: string;
+  organizationId?: string;
+}> {
   const cached = identityCache.get(apiKey);
   if (cached) return cached;
 
   try {
-    const res = await fetch(`${apiUrl}/users/me`, {
-      method: "GET",
+    // `/whoami` carries the full telemetry identity: `organizationId` for the group,
+    // `userId` (the human behind a personal key, null for a service key) and `keyId`
+    // (the stable actor a service-key run keys on). `/users/me` returned none of it.
+    const res = await fetch(`${apiUrl}/whoami`, {
+      method: "POST",
       headers: {
         "X-API-Key": apiKey,
         "Content-Type": "application/json",
@@ -97,14 +85,32 @@ async function getDistinctId(
 
     if (res.ok) {
       const payload = await res.json();
-      if (payload?.id) {
-        const result = {
-          identity: {
-            distinct_id: payload.id,
-            distinct_id_source: "database_id",
-          },
+      const organizationId = typeof payload?.organizationId === "string" ? payload.organizationId : undefined;
+      let result: { identity: IdentityInfo; email?: string; organizationId?: string } | undefined;
+
+      if (typeof payload?.userId === "string") {
+        // Personal key: the actor is the human; email rides as an identify trait.
+        result = {
+          identity: { distinct_id: payload.userId, distinct_id_source: "database_id" },
           email: payload.email || undefined,
+          organizationId,
         };
+      } else if (typeof payload?.keyId === "string") {
+        // Service key: the actor is the key itself — no human, so no email trait.
+        result = {
+          identity: { distinct_id: payload.keyId, distinct_id_source: "api_key_id" },
+          organizationId,
+        };
+      } else if (payload?.id) {
+        // Back-compat: an older API predating `userId`/`keyId` still returns the user id.
+        result = {
+          identity: { distinct_id: payload.id, distinct_id_source: "database_id" },
+          email: payload.email || undefined,
+          organizationId,
+        };
+      }
+
+      if (result) {
         identityCache.set(apiKey, result);
         return result;
       }
@@ -113,7 +119,7 @@ async function getDistinctId(
     // Fall through to API key hash
   }
 
-  // Don't cache the fallback — a transient /users/me failure should not poison the cache for the entire process lifetime
+  // Don't cache the fallback — a transient /whoami failure should not poison the cache for the entire process lifetime
   const hash = createHash("sha256").update(apiKey).digest("hex").slice(0, 16);
   return {
     identity: {

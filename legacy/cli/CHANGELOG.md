@@ -1,5 +1,12 @@
 # replexica
 
+## 0.71.4
+
+### Patch Changes
+
+- Updated dependencies []:
+  - lingo.dev@0.138.3
+
 ## 0.71.3
 
 ### Patch Changes
