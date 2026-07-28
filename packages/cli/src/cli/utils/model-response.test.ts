@@ -80,3 +80,103 @@ describe("extractLocalizedData", () => {
     );
   });
 });
+
+// Models break JSON around a quoted ICU placeholder in two ways: they leave the
+// quotes unescaped (jsonrepair: `Unexpected character "{"`) or they drop the
+// value's opening quote (jsonrepair: `Colon expected`). German is the worst hit:
+// its word order moves the placeholder to the front of the sentence ("„{title}"
+// anhängen?" vs "Attach '{title}'?"), so the quote ends up next to the brace.
+describe("extractLocalizedData — placeholder quoting damage", () => {
+  /** Wraps a raw (deliberately malformed) `data` literal in the response envelope. */
+  const envelope = (rawData: string) =>
+    `{"sourceLocale":"en","targetLocale":"de","data":${rawData}}`;
+
+  it("repairs a value that starts with a straight-quoted placeholder", () => {
+    const input = envelope(
+      `{"confirm_title":""{title}" anhängen?","attach":"Anhängen"}`,
+    );
+    expect(extractLocalizedData(input)).toEqual({
+      confirm_title: '"{title}" anhängen?',
+      attach: "Anhängen",
+    });
+  });
+
+  it("repairs a German low quote closed with a straight quote", () => {
+    const input = envelope(
+      `{"confirm_title":"„{title}" anhängen?","attach":"Anhängen"}`,
+    );
+    expect(extractLocalizedData(input)).toEqual({
+      confirm_title: '„{title}" anhängen?',
+      attach: "Anhängen",
+    });
+  });
+
+  it("repairs stray quotes in the middle of a value", () => {
+    const input = envelope(
+      `{"confirm_title":"Anhängen: "{title}"?","attach":"Anhängen"}`,
+    );
+    expect(extractLocalizedData(input)).toEqual({
+      confirm_title: 'Anhängen: "{title}"?',
+      attach: "Anhängen",
+    });
+  });
+
+  it("repairs the flat-key payload from the field report", () => {
+    const input = `{"sourceLocale":"en","targetLocale":"de","data":{"MeetingNotes/calendar_context/participants_heading":"Teilnehmer","MeetingNotes/auto_attach/confirm_title":""{title}" anhängen?","MeetingNotes/auto_attach/attach":"Anhängen"}}`;
+    expect(extractLocalizedData(input)).toEqual({
+      "MeetingNotes/calendar_context/participants_heading": "Teilnehmer",
+      "MeetingNotes/auto_attach/confirm_title": '"{title}" anhängen?',
+      "MeetingNotes/auto_attach/attach": "Anhängen",
+    });
+  });
+
+  it("repairs a value whose opening quote is missing (Colon expected)", () => {
+    // jsonrepair reads `{title}` as an object, parses `title` as a key and then
+    // finds no colon — this is the "Colon expected at position N" report.
+    const input = envelope(
+      `{"confirm_title":{title}" anhängen?","attach":"Anhängen"}`,
+    );
+    expect(extractLocalizedData(input)).toEqual({
+      confirm_title: '{title}" anhängen?',
+      attach: "Anhängen",
+    });
+  });
+
+  it("ignores a placeholder mentioned in a conversational preamble", () => {
+    // Slicing from the first `{` would start the JSON at the prose placeholder.
+    const input = `Hier ist die Übersetzung für {title}:\n${envelope(`{"attach":"Anhängen"}`)}`;
+    expect(extractLocalizedData(input)).toEqual({ attach: "Anhängen" });
+  });
+
+  it("keeps a real nested object value intact", () => {
+    // Guards the placeholder heuristic against genuine objects after a colon.
+    const input = `{"sourceLocale":"en","targetLocale":"de","data":{"nested":{"attach":"Anhängen"},},}`;
+    expect(extractLocalizedData(input)).toEqual({
+      nested: { attach: "Anhängen" },
+    });
+  });
+
+  it("keeps a colon-and-placeholder inside a value intact", () => {
+    // `Zeit: {time}` must not be mistaken for an unquoted placeholder value.
+    const input = envelope(`{"when":"Zeit: {time}","t":""{title}" anhängen?"}`);
+    expect(extractLocalizedData(input)).toEqual({
+      when: "Zeit: {time}",
+      t: '"{title}" anhängen?',
+    });
+  });
+
+  it("repairs stray quotes inside a stringified data payload", () => {
+    const input = `{"data":"{\\"data\\":{\\"confirm_title\\":\\"\\"{title}\\" anhängen?\\"}}"}`;
+    expect(extractLocalizedData(input)).toEqual({
+      confirm_title: '"{title}" anhängen?',
+    });
+  });
+
+  it("keeps a legitimately empty string empty", () => {
+    const input = `{"sourceLocale":"en","targetLocale":"de","data":{"blank":"","attach":"Anhängen"}}`;
+    expect(extractLocalizedData(input)).toEqual({
+      blank: "",
+      attach: "Anhängen",
+    });
+  });
+});
