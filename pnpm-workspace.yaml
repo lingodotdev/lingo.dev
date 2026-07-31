@@ -8,16 +8,17 @@ packages:
   - "./scripts/*"
 overrides:
   fast-xml-parser: ">=5.5.6 <6"
-  shell-quote: ">=1.8.4 <2"
-  seroval: ">=1.4.1 <2"
+  shell-quote: ">=1.9.0 <2"
+  seroval: ">=1.5.3 <2"
   "@modelcontextprotocol/sdk": ">=1.26.0 <2"
   "@isaacs/brace-expansion": ">=5.0.1 <6"
   effect: ">=3.20.0 <4"
-  fast-uri: ">=3.1.2 <4"
+  fast-uri: ">=3.1.4 <4"
   defu: ">=6.1.5 <7"
   ws: ">=8.21.0 <9"
   js-cookie: ">=3.0.7 <4"
-  svgo: ">=4.0.1 <5"
+  svgo: ">=4.0.2 <5"
+  sharp: ">=0.35.0 <0.36"
   serialize-javascript: ">=7.0.3 <8"
   rollup: ">=4.59.0 <5"
   path-to-regexp: ">=8.4.0 <9"
@@ -30,19 +31,23 @@ overrides:
   flatted: ">=3.4.2 <4"
   tmp: ">=0.2.6 <0.3"
   minimatch@<3.1.4: 3.1.4
-  minimatch@>=4 <5.1.8: 5.1.8
+  minimatch@>=4 <6: 10.2.6
   minimatch@>=6 <9.0.7: 9.0.7
-  minimatch@>=10 <10.2.3: 10.2.3
+  minimatch@>=10 <10.2.6: 10.2.6
+  brace-expansion@<1.1.16: 1.1.16
+  brace-expansion@>=5 <5.0.8: 5.0.8
   picomatch@<2.3.2: 2.3.2
   picomatch@>=4 <4.0.4: 4.0.4
   qs@>=6.11.1 <6.15.2: 6.15.2
   "@unhead/vue": ">=2.1.15 <3"
-  postcss@>=8 <8.5.10: 8.5.10
+  postcss@>=8 <8.5.18: 8.5.18
   ajv@>=6 <6.14.0: 6.14.0
   launch-editor@<2.14.1: 2.14.1
   js-yaml@>=3 <3.15.0: 3.15.0
-  js-yaml@>=4 <4.2.0: 4.2.0
+  js-yaml@>=4 <4.3.0: 4.3.0
   joi@>=18 <18.2.1: 18.2.1
+  diff@>=6 <8.0.3: 8.0.3
+  "@babel/core@<7.29.6": 7.29.6
 engineStrict: true
 allowBuilds:
   "@openrouter/sdk": true
