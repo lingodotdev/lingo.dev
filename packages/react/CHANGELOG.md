@@ -1,5 +1,15 @@
 # @lingo.dev/\_react
 
+## 0.7.11
+
+### Patch Changes
+
+- [#2180](https://github.com/lingodotdev/lingo.dev/pull/2180) [`df5e407`](https://github.com/lingodotdev/lingo.dev/commit/df5e40741682c46e52e54c27018b107352c3479b) Thanks [@moygospadin](https://github.com/moygospadin)! - Bump the `next` devDependency to 16.2.11, closing four high and five medium advisories
+  (middleware/proxy bypass, SSRF in Server Actions and rewrites, Server Action DoS, and the
+  Image Optimization SVG DoS among them).
+
+  Build-time only — no runtime dependency or public API of these packages changes.
+
 ## 0.7.10
 
 ### Patch Changes

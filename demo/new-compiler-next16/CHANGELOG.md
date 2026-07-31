@@ -1,5 +1,12 @@
 # @compiler/demo-next
 
+## 0.1.38
+
+### Patch Changes
+
+- Updated dependencies [[`df5e407`](https://github.com/lingodotdev/lingo.dev/commit/df5e40741682c46e52e54c27018b107352c3479b)]:
+  - @lingo.dev/compiler@0.4.11
+
 ## 0.1.37
 
 ### Patch Changes
