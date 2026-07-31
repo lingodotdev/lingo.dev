@@ -3,7 +3,7 @@ import { LingoDotDevEngine } from "lingo.dev/sdk";
 import { dictionaryFrom, type DictionarySchema, type TranslatableEntry, type Translator, } from "../api";
 import { getSystemPrompt } from "./prompt";
 import { obj2xml, parseXmlFromResponseText } from "../parse-xml";
-import { shots } from "./shots";
+import { getShots } from "./shots";
 import { createAiModel, getLocaleModel, validateAndGetApiKeys, type ValidatedApiKeys, } from "./model-factory";
 import { Logger } from "../../utils/logger";
 import { DEFAULT_TIMEOUTS, withTimeout } from "../../utils/timeout";
@@ -192,7 +192,7 @@ export class LingoTranslator implements Translator<LingoTranslatorConfig> {
               }),
             },
             // Add few-shot examples
-            ...shots.flatMap((shotsTuple) => [
+            ...getShots(targetLocale).flatMap((shotsTuple) => [
               {
                 role: "user" as const,
                 content: obj2xml(shotsTuple[0]),

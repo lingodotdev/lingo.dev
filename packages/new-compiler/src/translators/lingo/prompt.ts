@@ -4,6 +4,18 @@ interface PromptArguments {
   prompt?: string;
 }
 
+function getLanguageName(locale: string): string | undefined {
+  try {
+    const name = new Intl.DisplayNames(["en"], { type: "language" }).of(locale);
+    if (name && name.toLowerCase() !== locale.toLowerCase()) {
+      return name;
+    }
+  } catch {
+    // Malformed locale code — fall back to the code only.
+  }
+  return undefined;
+}
+
 export function getSystemPrompt(args: PromptArguments): string {
   // If user provided custom prompt, use it
   if (args.prompt?.trim()) {
@@ -12,6 +24,9 @@ export function getSystemPrompt(args: PromptArguments): string {
       .replace("{SOURCE_LOCALE}", args.sourceLocale)
       .replace("{TARGET_LOCALE}", args.targetLocale);
   }
+
+  const sourceName = getLanguageName(args.sourceLocale);
+  const targetName = getLanguageName(args.targetLocale);
 
   // Otherwise use built-in prompt
   return `
@@ -24,8 +39,8 @@ You replicate the meaning, intent, style, tone, and purpose of the original data
 
 ## Setup
 
-Source language (locale code): ${args.sourceLocale}
-Target language (locale code): ${args.targetLocale}
+Source language (locale code): ${args.sourceLocale}${sourceName ? ` (${sourceName})` : ""}
+Target language (locale code): ${args.targetLocale}${targetName ? ` (${targetName})` : ""}
 
 ## Guidelines
 
