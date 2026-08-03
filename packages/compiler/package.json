@@ -72,7 +72,7 @@
     "node-machine-id": "1.1.12",
     "object-hash": "3.0.0",
     "ollama-ai-provider-v2": "2.0.0",
-    "posthog-node": "5.14.0",
+    "posthog-node": "5.47.0",
     "prettier": "3.6.2",
     "unplugin": "2.3.11",
     "zod": "4.4.3"
