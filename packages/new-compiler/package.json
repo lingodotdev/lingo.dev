@@ -176,7 +176,7 @@
     "lingo.dev": "workspace:^",
     "lodash": "4.18.1",
     "node-machine-id": "1.1.12",
-    "posthog-node": "5.14.0",
+    "posthog-node": "5.47.0",
     "lmdb": "3.2.6",
     "ws": "8.21.0"
   },
