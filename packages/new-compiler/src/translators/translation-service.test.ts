@@ -1,116 +1,134 @@
 import { describe, expect, it, vi } from "vitest";
-import type { LocaleCode } from "lingo.dev/spec";
 
-import { PartialTranslationError, type TranslatableEntry } from "./api";
+import { PartialTranslationError, type Translator } from "./api";
 import { TranslationService } from "./translation-service";
 import { MemoryTranslationCache } from "./memory-cache";
+import type { TranslationCache } from "./cache";
 import type { MetadataSchema } from "../types";
-import type { Logger } from "../utils/logger";
+import { Logger } from "../utils/logger";
 
-const silentLogger = {
-  debug: vi.fn(),
-  info: vi.fn(),
-  warn: vi.fn(),
-  error: vi.fn(),
-} as unknown as Logger;
-
-type TranslateFn = (locale: LocaleCode, entries: Record<string, TranslatableEntry>) => Promise<Record<string, string>>;
+type TranslateFn = Translator<unknown>["translate"];
 
 function metadataOf(entries: Record<string, string>): MetadataSchema {
   return Object.fromEntries(
-    Object.entries(entries).map(([hash, sourceText]) => [hash, { sourceText, context: {} }]),
+    Object.entries(entries).map(([hash, sourceText]) => [
+      hash,
+      {
+        type: "content",
+        hash,
+        sourceText,
+        context: { filePath: "src/App.tsx" },
+        location: { filePath: "src/App.tsx", line: 1, column: 1 },
+      },
+    ]),
   ) as MetadataSchema;
 }
 
-// The service builds its own translator and cache, so there is no constructor
-// seam. Take the pseudotranslator path, which needs no API keys, then swap both
-// collaborators for controllable ones.
+// TranslationService builds its own translator and cache, so there is no
+// constructor seam. Take the pseudotranslator branch, which needs no API keys,
+// then swap both collaborators. The cast names the members so a rename fails to
+// compile rather than silently leaving the real translator wired in.
 function makeService(translate: TranslateFn) {
   const service = new TranslationService(
     {
-      sourceLocale: "en" as LocaleCode,
-      pluralization: { enabled: false },
+      sourceLocale: "en",
+      sourceRoot: "src",
+      lingoDir: "lingo",
+      cacheType: "local",
+      pluralization: { enabled: false, model: "groq:llama3-8b-8192" },
       models: "lingo.dev",
       environment: "development",
       dev: { usePseudotranslator: true },
-      cacheDir: "/tmp/lingo-test-cache-unused",
-    } as never,
-    silentLogger,
+    },
+    new Logger({ enableConsole: false }),
   );
 
   const cache = new MemoryTranslationCache();
-  Object.assign(service as never, {
-    translator: { config: {}, translate },
-    cache,
-  });
+  Object.assign(
+    service as unknown as {
+      translator: Translator<unknown>;
+      cache: TranslationCache;
+    },
+    { translator: { config: {}, translate }, cache },
+  );
 
   return { service, cache };
 }
 
 describe("TranslationService.translate on a failed run", () => {
-  it("caches the entries the translator finished before it failed, because they were already billed", async () => {
+  it("should cache the entries the translator finished before it failed", async () => {
     const { service, cache } = makeService(async () => {
       throw new PartialTranslationError(
+        "Lingo.dev API translation to de timed out after 60000ms",
         { a: "Alpha-de", b: "Bravo-de" },
-        new Error("Lingo.dev API translation to de timed out after 60000ms"),
+        new Error("timed out"),
       );
     });
 
-    const result = await service.translate("de" as LocaleCode, metadataOf({ a: "Alpha", b: "Bravo", c: "Charlie" }));
+    const result = await service.translate(
+      "de",
+      metadataOf({ a: "Alpha", b: "Bravo", c: "Charlie" }),
+    );
 
-    expect(await cache.get("de" as LocaleCode)).toEqual({
-      a: "Alpha-de",
-      b: "Bravo-de",
-    });
+    expect(await cache.get("de")).toEqual({ a: "Alpha-de", b: "Bravo-de" });
     expect(result.translations).toMatchObject({
       a: "Alpha-de",
       b: "Bravo-de",
     });
   });
 
-  it("still reports the failure so the build does not go green", async () => {
+  it("should still report the failure so the build does not go green", async () => {
     const { service } = makeService(async () => {
-      throw new PartialTranslationError({ a: "Alpha-de" }, new Error("boom"));
+      throw new PartialTranslationError("boom", { a: "Alpha-de" }, undefined);
     });
 
-    const result = await service.translate("de" as LocaleCode, metadataOf({ a: "Alpha", b: "Bravo" }));
+    const result = await service.translate(
+      "de",
+      metadataOf({ a: "Alpha", b: "Bravo" }),
+    );
 
     expect(result.errors).toHaveLength(1);
     expect(result.errors[0]).toMatchObject({ hash: "all" });
     expect(result.stats.failed).toBe(1);
   });
 
-  it("caches nothing when the run fails before any entry completes", async () => {
+  it("should cache nothing when the run fails before any entry completes", async () => {
     const { service, cache } = makeService(async () => {
-      throw new PartialTranslationError({}, new Error("boom"));
+      throw new PartialTranslationError("boom", {}, undefined);
     });
 
-    await service.translate("de" as LocaleCode, metadataOf({ a: "Alpha" }));
+    await service.translate("de", metadataOf({ a: "Alpha" }));
 
-    expect(await cache.get("de" as LocaleCode)).toEqual({});
+    expect(await cache.get("de")).toEqual({});
   });
 
-  it("survives a plain error that carries no partial results", async () => {
+  it("should survive a plain error that carries no partial results", async () => {
     const { service, cache } = makeService(async () => {
       throw new Error("network down");
     });
 
-    const result = await service.translate("de" as LocaleCode, metadataOf({ a: "Alpha" }));
+    const result = await service.translate("de", metadataOf({ a: "Alpha" }));
 
-    expect(await cache.get("de" as LocaleCode)).toEqual({});
+    expect(await cache.get("de")).toEqual({});
     expect(result.errors).toHaveLength(1);
   });
 
-  it("does not re-request what the failed run already cached", async () => {
+  it("should not re-request what the failed run already cached", async () => {
     const translate = vi
       .fn<TranslateFn>()
-      .mockRejectedValueOnce(new PartialTranslationError({ a: "Alpha-de" }, new Error("timeout")))
+      .mockRejectedValueOnce(
+        new PartialTranslationError(
+          "timeout",
+          { a: "Alpha-de" },
+          new Error("timed out"),
+        ),
+      )
       .mockResolvedValueOnce({ b: "Bravo-de" });
     const { service } = makeService(translate);
     const metadata = metadataOf({ a: "Alpha", b: "Bravo" });
 
-    await service.translate("de" as LocaleCode, metadata);
-    await service.translate("de" as LocaleCode, metadata);
+    await service.translate("de", metadata);
+    await service.translate("de", metadata);
 
     expect(Object.keys(translate.mock.calls[1][1])).toEqual(["b"]);
   });

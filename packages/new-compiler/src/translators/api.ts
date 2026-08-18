@@ -12,18 +12,17 @@ export interface Translator<Config> {
 }
 
 /**
- * Thrown when a translation run fails partway through.
- *
- * Carries the entries that already came back so the caller can persist them.
- * Those entries have been paid for; discarding them makes the next build
- * request and pay for identical source text again.
+ * Thrown when a translation run fails partway through, carrying the entries
+ * that already came back. They have been paid for, so discarding them makes the
+ * next build request and pay for identical source text again.
  */
 export class PartialTranslationError extends Error {
   constructor(
-    readonly partialTranslations: Record<string, string>,
-    override readonly cause: unknown,
+    message: string,
+    public readonly partialTranslations: Record<string, string>,
+    cause: unknown,
   ) {
-    super(cause instanceof Error ? cause.message : String(cause));
+    super(message, { cause });
     this.name = "PartialTranslationError";
   }
 }

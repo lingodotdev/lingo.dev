@@ -73,19 +73,15 @@ export class LingoTranslator implements Translator<LingoTranslatorConfig> {
 
     const translatedChunks: DictionarySchema[] = [];
 
-    for (let i = 0; i < chunks.length; i++) {
+    try {
+      for (let i = 0; i < chunks.length; i++) {
       const chunk = chunks[i];
       this.logger.debug(
         `Translating chunk ${i + 1}/${chunks.length} with ${Object.keys(chunk.entries).length} entries`,
       );
       const chunkStartTime = performance.now();
 
-      let translatedChunk: DictionarySchema;
-      try {
-        translatedChunk = await this.translateChunk(chunk, targetLocale);
-      } catch (error) {
-        throw new PartialTranslationError(this.mergeDictionaries(translatedChunks).entries, error);
-      }
+      const translatedChunk = await this.translateChunk(chunk, targetLocale);
 
       const chunkEndTime = performance.now();
       this.logger.debug(
@@ -93,6 +89,13 @@ export class LingoTranslator implements Translator<LingoTranslatorConfig> {
       );
 
       translatedChunks.push(translatedChunk);
+      }
+    } catch (error) {
+      throw new PartialTranslationError(
+        error instanceof Error ? error.message : String(error),
+        this.mergeDictionaries(translatedChunks).entries,
+        error,
+      );
     }
 
     const result = this.mergeDictionaries(translatedChunks);
