@@ -9,7 +9,11 @@
  */
 
 import type { TranslationCache } from "./cache";
-import type { TranslatableEntry, Translator } from "./api";
+import {
+  PartialTranslationError,
+  type TranslatableEntry,
+  type Translator,
+} from "./api";
 import type { LingoEnvironment, MetadataSchema } from "../types";
 import {
   type PluralizationConfig,
@@ -237,6 +241,7 @@ Set the required API keys for real translations.`);
     // Step 8: Translate or return source text
     let newTranslations: Record<string, string> = { ...overriddenTranslations };
     const errors: TranslationError[] = [];
+    let translationFailed = false;
 
     if (locale === this.config.sourceLocale) {
       // For source locale, just return the (possibly pluralized) sourceText
@@ -268,36 +273,35 @@ Set the required API keys for real translations.`);
           this.logger.debug(`Stack trace: ${error.stack}`);
         }
 
-        return {
-          translations: this.pickTranslations(
-            cachedTranslations,
-            workingHashes,
-          ),
-          errors: [
-            {
-              hash: "all",
-              sourceText: "all",
-              error: errorMessage,
-            },
-          ],
-          stats: {
-            total: workingHashes.length,
-            cached: cachedCount,
-            translated: 0,
-            failed: uncachedHashes.length,
-          },
+        // Keep whatever came back before the failure. Those entries were
+        // already generated and billed, so dropping them makes the next build
+        // pay for the same source text again. The error is still reported, so
+        // the build fails exactly as loudly as before.
+        translationFailed = true;
+        newTranslations = {
+          ...overriddenTranslations,
+          ...(error instanceof PartialTranslationError
+            ? error.partialTranslations
+            : {}),
         };
+        errors.push({
+          hash: "all",
+          sourceText: "all",
+          error: errorMessage,
+        });
       }
 
       // Check for partial failures (some hashes didn't get translated)
-      for (const hash of uncachedHashes) {
-        if (!newTranslations[hash]) {
-          const entry = filteredMetadata[hash];
-          errors.push({
-            hash,
-            sourceText: entry?.sourceText || "",
-            error: "Translator doesn't return translation",
-          });
+      if (!translationFailed) {
+        for (const hash of uncachedHashes) {
+          if (!newTranslations[hash]) {
+            const entry = filteredMetadata[hash];
+            errors.push({
+              hash,
+              sourceText: entry?.sourceText || "",
+              error: "Translator doesn't return translation",
+            });
+          }
         }
       }
     }
@@ -328,7 +332,7 @@ Set the required API keys for real translations.`);
         total: workingHashes.length,
         cached: cachedCount,
         translated: Object.keys(newTranslations).length,
-        failed: errors.length,
+        failed: uncachedHashes.filter((hash) => !newTranslations[hash]).length,
       },
     };
   }

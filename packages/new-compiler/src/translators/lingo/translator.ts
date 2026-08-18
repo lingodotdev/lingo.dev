@@ -1,6 +1,6 @@
 import { generateText } from "ai";
 import { LingoDotDevEngine } from "lingo.dev/sdk";
-import { dictionaryFrom, type DictionarySchema, type TranslatableEntry, type Translator, } from "../api";
+import { dictionaryFrom, PartialTranslationError, type DictionarySchema, type TranslatableEntry, type Translator, } from "../api";
 import { getSystemPrompt } from "./prompt";
 import { obj2xml, parseXmlFromResponseText } from "../parse-xml";
 import { shots } from "./shots";
@@ -80,7 +80,12 @@ export class LingoTranslator implements Translator<LingoTranslatorConfig> {
       );
       const chunkStartTime = performance.now();
 
-      const translatedChunk = await this.translateChunk(chunk, targetLocale);
+      let translatedChunk: DictionarySchema;
+      try {
+        translatedChunk = await this.translateChunk(chunk, targetLocale);
+      } catch (error) {
+        throw new PartialTranslationError(this.mergeDictionaries(translatedChunks).entries, error);
+      }
 
       const chunkEndTime = performance.now();
       this.logger.debug(
