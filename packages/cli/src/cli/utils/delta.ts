@@ -100,6 +100,17 @@ export function createDeltaProcessor(fileKey: string) {
         } as const;
       }
 
+      // Fast path: a lockfile the CLI itself wrote always parses directly.
+      // Deduplication costs a full CST parse plus a re-serialization of the
+      // whole file, and it only ever repairs a hand-merged lockfile - exactly
+      // the case `YAML.parse` refuses to parse. So try the cheap parse first
+      // and fall back to the repair path on any failure.
+      try {
+        return LockSchema.parse(YAML.parse(lockfileContent));
+      } catch {
+        // Malformed or hand-merged lockfile - repair it below.
+      }
+
       // Deduplicate using the universal function
       const { deduplicatedContent, duplicatesRemoved } = deduplicateLockfileYaml(lockfileContent);
 

@@ -8,6 +8,7 @@ import { CmdRunContext, CmdRunTask, CmdRunTaskResult } from "./_types";
 import { commonTaskRendererOptions } from "./_const";
 import { createDeltaProcessor, Delta } from "../../utils/delta";
 import { computeProcessableData, createLoaderForTask } from "./_utils";
+import { md5 } from "../../utils/md5";
 
 const WARN_CONCURRENCY_COUNT = 30;
 
@@ -58,7 +59,17 @@ export default async function execute(input: CmdRunContext) {
           }
 
           const i18nLimiter = pLimit(effectiveConcurrency);
+          // Serializes every i18n.lock write. Each write is a read-modify-write
+          // of the whole file, and the per-pattern limiters below cannot guard
+          // it because all patterns share one lockfile.
           const ioLimiter = pLimit(1);
+
+          // Checksum payload last written to i18n.lock per bucket path pattern,
+          // scoped to this run. Every target locale of a pattern derives its
+          // checksums from the same source data, so without this each locale
+          // rewrites the entire lockfile with byte-identical content -
+          // patterns x locales full-file rewrites to persist patterns sections.
+          const lastWrittenChecksums = new Map<string, string>();
 
           const perFileIoLimiters = new Map<string, LimitFunction>();
           const getFileIoLimiter = (
@@ -86,6 +97,7 @@ export default async function execute(input: CmdRunContext) {
                 ioLimiter,
                 i18nLimiter,
                 initialChecksumsMap,
+                lastWrittenChecksums,
                 getFileIoLimiter,
                 onDone() {
                   task.title = createExecutionProgressMessage(ctx);
@@ -146,6 +158,39 @@ function createExecutionProgressMessage(ctx: CmdRunContext) {
   }, Failed ${chalk.red(failedTasksCount)}, Skipped ${chalk.dim(skippedTasksCount)}`;
 }
 
+/**
+ * Persists a pattern's source checksums to i18n.lock, skipping the write when
+ * this run already wrote exactly this payload for this pattern.
+ *
+ * The lockfile section is keyed by the bucket path pattern and holds checksums
+ * of the source data, which is identical for every target locale of that
+ * pattern - so all but the first locale rewrite the whole file with the same
+ * bytes. Keying on the last payload written (rather than on every payload ever
+ * written) keeps the on-disk result identical to writing unconditionally, even
+ * when two bucket entries share one path pattern and produce different source
+ * data, e.g. entries that differ only by locale delimiter.
+ */
+export async function persistChecksums(args: {
+  ctx: CmdRunContext;
+  ioLimiter: LimitFunction;
+  lastWrittenChecksums: Map<string, string>;
+  bucketPathPattern: string;
+  deltaProcessor: ReturnType<typeof createDeltaProcessor>;
+  checksums: Record<string, string>;
+}) {
+  if (args.ctx.flags.targetLocale?.length) {
+    return;
+  }
+
+  const payloadHash = md5(args.checksums);
+  if (args.lastWrittenChecksums.get(args.bucketPathPattern) === payloadHash) {
+    return;
+  }
+
+  await args.ioLimiter(() => args.deltaProcessor.saveChecksums(args.checksums));
+  args.lastWrittenChecksums.set(args.bucketPathPattern, payloadHash);
+}
+
 function createWorkerTask(args: {
   ctx: CmdRunContext;
   assignedTasks: CmdRunTask[];
@@ -153,6 +198,7 @@ function createWorkerTask(args: {
   i18nLimiter: LimitFunction;
   onDone: () => void;
   initialChecksumsMap: Map<string, Record<string, string>>;
+  lastWrittenChecksums: Map<string, string>;
   getFileIoLimiter: (bucketPathPattern: string) => LimitFunction;
 }): ListrTask {
   return {
@@ -213,9 +259,14 @@ function createWorkerTask(args: {
                 // then reports the source as changed.
                 const checksums =
                   await deltaProcessor.createChecksums(sourceData);
-                if (!args.ctx.flags.targetLocale?.length) {
-                  await deltaProcessor.saveChecksums(checksums);
-                }
+                await persistChecksums({
+                  ctx: args.ctx,
+                  ioLimiter: args.ioLimiter,
+                  lastWrittenChecksums: args.lastWrittenChecksums,
+                  bucketPathPattern: assignedTask.bucketPathPattern,
+                  deltaProcessor,
+                  checksums,
+                });
               });
               return {
                 status: "skipped",
@@ -294,9 +345,14 @@ function createWorkerTask(args: {
 
               const checksums =
                 await deltaProcessor.createChecksums(sourceData);
-              if (!args.ctx.flags.targetLocale?.length) {
-                await deltaProcessor.saveChecksums(checksums);
-              }
+              await persistChecksums({
+                ctx: args.ctx,
+                ioLimiter: args.ioLimiter,
+                lastWrittenChecksums: args.lastWrittenChecksums,
+                bucketPathPattern: assignedTask.bucketPathPattern,
+                deltaProcessor,
+                checksums,
+              });
             });
 
             return {
