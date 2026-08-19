@@ -28,7 +28,7 @@ function sourceEntries(count: number) {
 }
 
 describe("the reported failure: a chunk exceeds the 60s API timeout", () => {
-  it("should keep the chunks that finished, and not re-request them next run", async () => {
+  it("should keep the chunks that finished before the timeout", async () => {
     vi.useFakeTimers();
 
     // Chunks 1 and 2 come back; chunk 3 hangs, which is what the 60s
