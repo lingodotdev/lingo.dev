@@ -2,7 +2,7 @@
   "name": "replexica",
   "version": "0.71.6",
   "description": "[DEPRECATED] Replexica CLI (now Lingo.dev) - Please use lingo.dev instead",
-  "private": false,
+  "private": true,
   "type": "module",
   "sideEffects": false,
   "types": "build/index.d.ts",

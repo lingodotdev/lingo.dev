@@ -2,7 +2,7 @@
   "name": "@replexica/sdk",
   "version": "0.7.17",
   "description": "[DEPRECATED] Replexica SDK (now Lingo.dev) - Please use lingo.dev instead",
-  "private": false,
+  "private": true,
   "type": "module",
   "sideEffects": false,
   "types": "index.d.ts",

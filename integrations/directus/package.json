@@ -2,7 +2,7 @@
   "name": "@replexica/integration-directus",
   "version": "0.1.15",
   "description": "Lingo.dev integration for Directus",
-  "private": false,
+  "private": true,
   "sideEffects": false,
   "directus:extension": {
     "type": "operation",
