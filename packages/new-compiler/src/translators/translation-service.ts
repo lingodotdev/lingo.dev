@@ -321,7 +321,9 @@ Set the required API keys for real translations.`);
         total: workingHashes.length,
         cached: cachedCount,
         translated: Object.keys(newTranslations).length,
-        failed: uncachedHashes.filter((hash) => !newTranslations[hash]).length,
+        failed: uncachedHashes.filter(
+          (hash) => filteredMetadata[hash] && !newTranslations[hash],
+        ).length,
       },
     };
   }

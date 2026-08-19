@@ -4,6 +4,14 @@ import { PartialTranslationError, type DictionarySchema } from "../api";
 import { LingoTranslator } from "./translator";
 import { Logger } from "../../utils/logger";
 
+vi.mock("lingo.dev/sdk", () => ({
+  LingoDotDevEngine: class {
+    localizeObject = () => {
+      throw new Error("the SDK must not be reached from this test");
+    };
+  },
+}));
+
 vi.mock("./model-factory", async (importOriginal) => ({
   ...(await importOriginal<typeof import("./model-factory")>()),
   validateAndGetApiKeys: () => ({ "lingo.dev": "test-key" }),
@@ -14,9 +22,6 @@ type TranslateChunkFn = (
   targetLocale: string,
 ) => Promise<DictionarySchema>;
 
-// `translateChunk` is the seam: stubbing it exercises the real chunking and
-// merging without reaching the network. The cast names the member so a rename
-// fails to compile rather than silently calling the real engine.
 function makeTranslator(translateChunk: TranslateChunkFn) {
   const translator = new LingoTranslator(
     { models: "lingo.dev", sourceLocale: "en" },

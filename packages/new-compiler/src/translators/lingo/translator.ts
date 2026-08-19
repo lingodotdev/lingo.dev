@@ -75,20 +75,20 @@ export class LingoTranslator implements Translator<LingoTranslatorConfig> {
 
     try {
       for (let i = 0; i < chunks.length; i++) {
-      const chunk = chunks[i];
-      this.logger.debug(
-        `Translating chunk ${i + 1}/${chunks.length} with ${Object.keys(chunk.entries).length} entries`,
-      );
-      const chunkStartTime = performance.now();
+        const chunk = chunks[i];
+        this.logger.debug(
+          `Translating chunk ${i + 1}/${chunks.length} with ${Object.keys(chunk.entries).length} entries`,
+        );
+        const chunkStartTime = performance.now();
 
-      const translatedChunk = await this.translateChunk(chunk, targetLocale);
+        const translatedChunk = await this.translateChunk(chunk, targetLocale);
 
-      const chunkEndTime = performance.now();
-      this.logger.debug(
-        `Chunk ${i + 1}/${chunks.length} completed in ${(chunkEndTime - chunkStartTime).toFixed(2)}ms`,
-      );
+        const chunkEndTime = performance.now();
+        this.logger.debug(
+          `Chunk ${i + 1}/${chunks.length} completed in ${(chunkEndTime - chunkStartTime).toFixed(2)}ms`,
+        );
 
-      translatedChunks.push(translatedChunk);
+        translatedChunks.push(translatedChunk);
       }
     } catch (error) {
       throw new PartialTranslationError(

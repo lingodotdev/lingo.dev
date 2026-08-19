@@ -24,10 +24,6 @@ function metadataOf(entries: Record<string, string>): MetadataSchema {
   ) as MetadataSchema;
 }
 
-// TranslationService builds its own translator and cache, so there is no
-// constructor seam. Take the pseudotranslator branch, which needs no API keys,
-// then swap both collaborators. The cast names the members so a rename fails to
-// compile rather than silently leaving the real translator wired in.
 function makeService(translate: TranslateFn) {
   const service = new TranslationService(
     {
@@ -77,7 +73,7 @@ describe("TranslationService.translate on a failed run", () => {
     });
   });
 
-  it("should still report the failure so the build does not go green", async () => {
+  it("should count only the hashes still missing a translation", async () => {
     const { service } = makeService(async () => {
       throw new PartialTranslationError("boom", { a: "Alpha-de" }, undefined);
     });
