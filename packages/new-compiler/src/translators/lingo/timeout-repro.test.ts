@@ -27,19 +27,21 @@ function sourceEntries(count: number) {
   );
 }
 
-describe("the reported failure: a chunk exceeds the 60s API timeout", () => {
+const AI_TIMEOUT = 60_000;
+
+describe("the reported failure: a chunk exceeds the API timeout", () => {
   it("should keep the chunks that finished before the timeout", async () => {
     vi.useFakeTimers();
 
-    // Chunks 1 and 2 come back; chunk 3 hangs, which is what the 60s
-    // DEFAULT_TIMEOUTS.AI_API ceiling turns into a TimeoutError.
+    // Chunks 1 and 2 come back; chunk 3 hangs, which the timeout ceiling
+    // turns into a TimeoutError.
     localizeObject
       .mockImplementationOnce(async (dictionary) => translated(dictionary))
       .mockImplementationOnce(async (dictionary) => translated(dictionary))
       .mockImplementationOnce(() => new Promise(() => {}));
 
     const translator = new LingoTranslator(
-      { models: "lingo.dev", sourceLocale: "en" },
+      { models: "lingo.dev", sourceLocale: "en", aiTimeout: AI_TIMEOUT },
       new Logger({ enableConsole: false }),
     );
 
@@ -47,13 +49,15 @@ describe("the reported failure: a chunk exceeds the 60s API timeout", () => {
       .translate("de", sourceEntries(250))
       .catch((caught: unknown) => caught);
 
-    await vi.advanceTimersByTimeAsync(60_000);
+    await vi.advanceTimersByTimeAsync(AI_TIMEOUT);
     const error = await run;
 
     vi.useRealTimers();
 
     expect(error).toBeInstanceOf(PartialTranslationError);
-    expect((error as Error).message).toContain("timed out after 60000ms");
+    expect((error as Error).message).toContain(
+      `timed out after ${AI_TIMEOUT}ms`,
+    );
 
     const partial = (error as PartialTranslationError).partialTranslations;
     expect(Object.keys(partial)).toHaveLength(200);
