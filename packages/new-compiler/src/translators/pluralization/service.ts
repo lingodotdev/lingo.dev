@@ -34,6 +34,7 @@ export class PluralizationService {
   private cache = new Map<string, ICUGenerationResult>();
   private readonly prompt: string;
   private readonly sourceLocale: string;
+  private readonly aiTimeout: number | undefined;
 
   constructor(
     config: PluralizationConfig,
@@ -56,6 +57,7 @@ export class PluralizationService {
 
     this.languageModel = createAiModel(localeModel, validatedKeys);
     this.sourceLocale = config.sourceLocale;
+    this.aiTimeout = config.aiTimeout;
     this.prompt = getSystemPrompt({ sourceLocale: config.sourceLocale });
 
     this.logger.debug(
@@ -165,7 +167,7 @@ export class PluralizationService {
             },
           ],
         }),
-        DEFAULT_TIMEOUTS.AI_API * 2, // Double timeout for batch
+        (this.aiTimeout ?? DEFAULT_TIMEOUTS.AI_API) * 2, // Double timeout for batch
         `Pluralization with ${this.languageModel}`,
       );
 

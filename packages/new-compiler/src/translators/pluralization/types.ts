@@ -21,6 +21,12 @@ export type PluralizationConfig = {
   enabled: boolean;
 
   /**
+   * Milliseconds to wait for a pluralization batch. Defaults to twice the
+   * translation timeout, since a batch asks the model for more at once.
+   */
+  aiTimeout?: number;
+
+  /**
    * LLM provider for pluralization detection
    * Format: "provider:model" (e.g., "groq:llama3-8b-8192")
    * If omitted in user config, the compiler can infer it from translation models.
