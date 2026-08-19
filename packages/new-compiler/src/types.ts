@@ -137,6 +137,18 @@ export type LingoConfig = {
   prompt?: string;
 
   /**
+   * Milliseconds to wait for a single AI translation request before giving up.
+   *
+   * Raise it when builds run somewhere with slow network to the model, such as
+   * CI, or when a chunk carries enough text that the model needs longer. The
+   * request that times out is not cancelled and is still billed, so a value
+   * that is too low costs money as well as build time.
+   *
+   * @default 120000
+   */
+  aiTimeout: number;
+
+  /**
    * Pluralization configuration
    * Automatically detects and converts messages to ICU MessageFormat
    */

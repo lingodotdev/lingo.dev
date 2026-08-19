@@ -35,6 +35,7 @@ export type TranslationServiceConfig = {
   pluralization: Omit<PluralizationConfig, "sourceLocale">;
   models: "lingo.dev" | Record<string, string>;
   prompt?: string;
+  aiTimeout?: number;
   environment: LingoEnvironment;
   dev?: {
     usePseudotranslator?: boolean;
@@ -98,6 +99,7 @@ export class TranslationService {
             models,
             sourceLocale: config.sourceLocale,
             prompt: config.prompt,
+            aiTimeout: config.aiTimeout,
           },
           this.logger,
         );

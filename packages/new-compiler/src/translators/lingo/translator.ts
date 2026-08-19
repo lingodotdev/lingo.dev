@@ -16,6 +16,7 @@ export interface LingoTranslatorConfig {
   models: "lingo.dev" | Record<string, string>;
   sourceLocale: LocaleCode;
   prompt?: string;
+  aiTimeout?: number;
 }
 
 /**
@@ -139,7 +140,7 @@ export class LingoTranslator implements Translator<LingoTranslatorConfig> {
           sourceLocale: this.config.sourceLocale,
           targetLocale: targetLocale,
         }),
-        DEFAULT_TIMEOUTS.AI_API,
+        this.config.aiTimeout ?? DEFAULT_TIMEOUTS.AI_API,
         `Lingo.dev API translation to ${targetLocale}`,
       );
 
@@ -208,7 +209,7 @@ export class LingoTranslator implements Translator<LingoTranslatorConfig> {
             },
           ],
         }),
-        DEFAULT_TIMEOUTS.AI_API,
+        this.config.aiTimeout ?? DEFAULT_TIMEOUTS.AI_API,
         `${localeModel.provider} LLM translation to ${targetLocale}`,
       );
 

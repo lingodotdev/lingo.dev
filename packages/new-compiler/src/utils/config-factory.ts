@@ -26,6 +26,7 @@ export const DEFAULT_CONFIG = {
     },
   },
   models: "lingo.dev",
+  aiTimeout: 120_000,
   pluralization: {
     enabled: false,
     model: "groq:llama-3.1-8b-instant",
