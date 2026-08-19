@@ -187,8 +187,17 @@ export async function persistChecksums(args: {
     return;
   }
 
-  await args.ioLimiter(() => args.deltaProcessor.saveChecksums(args.checksums));
-  args.lastWrittenChecksums.set(args.bucketPathPattern, payloadHash);
+  await args.ioLimiter(async () => {
+    // Re-check under the limiter: callers that reach this concurrently for one
+    // pattern would otherwise all pass the check above before the first write
+    // records the payload, turning one write into several identical ones.
+    if (args.lastWrittenChecksums.get(args.bucketPathPattern) === payloadHash) {
+      return;
+    }
+
+    await args.deltaProcessor.saveChecksums(args.checksums);
+    args.lastWrittenChecksums.set(args.bucketPathPattern, payloadHash);
+  });
 }
 
 function createWorkerTask(args: {

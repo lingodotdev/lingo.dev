@@ -88,6 +88,25 @@ describe("persistChecksums", () => {
     expect(writes).toEqual([{ a: "1" }]);
   });
 
+  it("writes once when a pattern is persisted concurrently", async () => {
+    const { args, writes, deltaProcessor } = setup();
+    deltaProcessor.saveChecksums.mockImplementation(
+      async (checksums: Record<string, string>) => {
+        await new Promise((resolve) => setTimeout(resolve, 5));
+        writes.push({ ...checksums });
+      },
+    );
+    const checksums = { "auth.title": "abc123" };
+
+    await Promise.all(
+      Array.from({ length: 8 }, () =>
+        persistChecksums({ ...args, bucketPathPattern: PATTERN, checksums }),
+      ),
+    );
+
+    expect(writes).toEqual([{ "auth.title": "abc123" }]);
+  });
+
   it("serializes concurrent writes through the shared io limiter", async () => {
     const { args } = setup();
     let inFlight = 0;
