@@ -1,5 +1,41 @@
 # @lingo.dev/compiler
 
+## 0.4.11
+
+### Patch Changes
+
+- [#2192](https://github.com/lingodotdev/lingo.dev/pull/2192) [`b65e5fc`](https://github.com/lingodotdev/lingo.dev/commit/b65e5fcb3170129844b7855b715c0c4876fab017) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Let the AI request timeout be configured, and raise the default to 2 minutes.
+
+  The timeout for a single AI translation request was hardcoded at 60 seconds, which is not
+  enough when the build runs somewhere with slow network to the model, such as CI, or when a
+  chunk carries enough text that the model needs longer. The documented workaround was
+  patching the compiled file inside `node_modules`.
+
+  `aiTimeout` is now a plugin option, and the default is 120000. The request that times out is
+  not cancelled and is still billed, so a value that is too low costs money as well as build
+  time.
+
+- [#2180](https://github.com/lingodotdev/lingo.dev/pull/2180) [`df5e407`](https://github.com/lingodotdev/lingo.dev/commit/df5e40741682c46e52e54c27018b107352c3479b) Thanks [@moygospadin](https://github.com/moygospadin)! - Bump the `next` devDependency to 16.2.11, closing four high and five medium advisories
+  (middleware/proxy bypass, SSRF in Server Actions and rewrites, Server Action DoS, and the
+  Image Optimization SVG DoS among them).
+
+  Build-time only — no runtime dependency or public API of these packages changes.
+
+- [#2190](https://github.com/lingodotdev/lingo.dev/pull/2190) [`b252301`](https://github.com/lingodotdev/lingo.dev/commit/b25230136c7fac8685e6826378e46044aa2d0f74) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Keep translations that completed before a run failed.
+
+  When a translation run threw partway through, every entry that had already come back was
+  discarded: the cache write sits after an early `return` in the `catch`, and the chunk loop
+  had no inner `try`, so a failure on one chunk took the earlier chunks with it. Those entries
+  were already generated and billed, and because the next build derives its work list from
+  what is missing from the cache, the identical strings were submitted and paid for again on
+  every subsequent build.
+
+  Failed runs now persist what completed. The failure is still reported and the build still
+  fails, so the only change in behaviour is that already-paid work survives.
+
+- [#2193](https://github.com/lingodotdev/lingo.dev/pull/2193) [`e5458e6`](https://github.com/lingodotdev/lingo.dev/commit/e5458e6008705990cb4babe334df0c929d7ab24a) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Pin the timeout repro test to its own deadline instead of the package default, so raising the
+  default does not break it.
+
 ## 0.4.10
 
 ### Patch Changes

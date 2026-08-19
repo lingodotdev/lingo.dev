@@ -1,6 +1,6 @@
 {
   "name": "@compiler/demo-next",
-  "version": "0.1.37",
+  "version": "0.1.38",
   "private": true,
   "scripts": {
     "dev": "next dev",
