@@ -214,6 +214,7 @@ export type TranslationMiddlewareConfig = Pick<
   | "sourceLocale"
   | "models"
   | "prompt"
+  | "aiTimeout"
   | "targetLocales"
   | "dev"
   | "pluralization"

@@ -117,6 +117,7 @@ See `demo/new-compiler-next16` for the working example
 | `useDirective` | `boolean` | `false` | Whether to require `'use i18n'` directive |
 | `models` | `string \| Record<string, string>` | `"lingo.dev"` | Model configuration (see below) |
 | `prompt` | `string` | `undefined` | Custom translation prompt |
+| `aiTimeout` | `number` | `120000` | Milliseconds to wait for a single AI translation request. Raise it for slow networks or large chunks |
 | `buildMode` | `"translate" \| "cache-only"` | `"translate"` | Build mode (see below) |
 
 ### Development Configuration

@@ -115,7 +115,7 @@ export class LingoTranslator implements Translator<LingoTranslatorConfig> {
 
   /**
    * Translate using Lingo.dev Engine
-   * Times out after 60 seconds to prevent indefinite hangs
+   * Times out after `aiTimeout` to prevent indefinite hangs
    */
   private async translateWithLingoDotDev(
     sourceDictionary: DictionarySchema,
@@ -155,7 +155,7 @@ export class LingoTranslator implements Translator<LingoTranslatorConfig> {
 
   /**
    * Translate using generic LLM
-   * Times out after 60 seconds to prevent indefinite hangs
+   * Times out after `aiTimeout` to prevent indefinite hangs
    */
   private async translateWithLLM(
     sourceDictionary: DictionarySchema,

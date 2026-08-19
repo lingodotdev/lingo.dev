@@ -109,7 +109,8 @@ export class TranslationService {
             {
               ...this.config.pluralization,
               sourceLocale: this.config.sourceLocale,
-              aiTimeout: config.aiTimeout,
+              aiTimeout:
+                this.config.pluralization.aiTimeout ?? config.aiTimeout,
             },
             this.logger,
           );
