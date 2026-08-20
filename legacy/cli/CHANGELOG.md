@@ -1,5 +1,12 @@
 # replexica
 
+## 0.71.7
+
+### Patch Changes
+
+- Updated dependencies [[`9db8613`](https://github.com/lingodotdev/lingo.dev/commit/9db8613ff86bcb94856b994587ef452aac816125)]:
+  - lingo.dev@0.138.6
+
 ## 0.71.6
 
 ### Patch Changes
