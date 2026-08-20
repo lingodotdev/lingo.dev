@@ -1,5 +1,15 @@
 # @lingo.dev/compiler
 
+## 0.4.12
+
+### Patch Changes
+
+- [#2196](https://github.com/lingodotdev/lingo.dev/pull/2196) [`86dc87f`](https://github.com/lingodotdev/lingo.dev/commit/86dc87f042cbb6a5db53bb227cc0ba6e408bb0d7) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Translate JSX handed to a component through an attribute, such as `actions={<span>Text</span>}` or `renderItem={() => <span>Text</span>}`.
+
+  Strings that were silently untranslated become new translation entries, so translation volume can jump on the next build. Translatable attributes inside prop JSX, such as `alt` on an `<img>`, are picked up too. A function handed to a prop is treated as the callback it is rather than as a component, so its strings are registered against the enclosing component instead of receiving a translation hook of their own.
+
+  Still not covered: JSX in a prop of an element that is itself folded into an ancestor's rich text.
+
 ## 0.4.11
 
 ### Patch Changes
