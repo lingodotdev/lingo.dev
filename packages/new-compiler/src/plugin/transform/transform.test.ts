@@ -2958,11 +2958,11 @@ export function Notice() {
       expect(result.code).toMatchSnapshot();
     });
 
-    // `inferComponentName` accepts any named function expression, so running the
-    // full component visitors here would treat a callback handed to a prop as a
-    // component and give it a `useTranslation` call it never runs as one — a
-    // rules-of-hooks violation. The narrowed set still translates the callback's
-    // JSX; `t` resolves through the closure over the enclosing component.
+    // `inferComponentName` accepts any named function expression, so a callback
+    // handed to a prop would otherwise be treated as a component and given a
+    // `useTranslation` call it never runs as one — a rules-of-hooks violation. Its
+    // JSX is still translated and registered against the enclosing component,
+    // whose `t` it closes over.
     it("should not inject a hook into a named function passed as a prop", () => {
       const code = `
 export function Page() {
@@ -3008,6 +3008,68 @@ export function Page() {
         "Text A",
       ]);
       expect(result.code).not.toContain("lang={locale}");
+      expect(result.code).toMatchSnapshot();
+    });
+
+    // A host with nothing translatable of its own never reaches
+    // `processJSXElement`'s trailing `path.skip()`, so the ambient traversal walks
+    // into its attributes on its own. The guard has to hold on that path too — a
+    // self-closing element carrying only a callback prop is the common shape.
+    it("should keep hooks out of a prop callback on a host with no text of its own", () => {
+      const code = `
+export function Page() {
+  return <FrameHeader actions={function renderIt() { return <span>Text A</span>; }} />;
+}
+`;
+
+      const result = transformComponent({
+        code,
+        filePath: "src/SelfClosing.tsx",
+        config,
+      });
+
+      expect(result.transformed).toBe(true);
+      assert.isDefined(result.newEntries);
+      expect(result.newEntries.map((e) => e.sourceText)).toEqual(["Text A"]);
+      expect(asContent(result.newEntries[0]).context.componentName).toBe("Page");
+      expect(result.code.match(/useTranslation\(/g)).toHaveLength(1);
+      expect(result.code).toMatchSnapshot();
+    });
+
+    it("should translate JSX returned by an arrow render prop", () => {
+      const code = `
+export function Page() {
+  return <List renderItem={() => <span>Hello world</span>} />;
+}
+`;
+
+      const result = transformComponent({
+        code,
+        filePath: "src/RenderProp.tsx",
+        config,
+      });
+
+      expect(result.transformed).toBe(true);
+      assert.isDefined(result.newEntries);
+      expect(result.newEntries.map((e) => e.sourceText)).toEqual(["Hello world"]);
+      expect(asContent(result.newEntries[0]).context.componentName).toBe("Page");
+      expect(result.code).toMatchSnapshot();
+    });
+
+    it("should leave the document root <html> its locale attribute", () => {
+      const code = `
+export default function Layout({ children }) {
+  return <html><body>{children}</body></html>;
+}
+`;
+
+      const result = transformComponent({
+        code,
+        filePath: "src/Layout.tsx",
+        config,
+      });
+
+      expect(result.code).toContain("lang={locale}");
       expect(result.code).toMatchSnapshot();
     });
   });

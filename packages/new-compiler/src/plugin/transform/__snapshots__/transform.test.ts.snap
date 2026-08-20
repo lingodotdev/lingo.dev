@@ -1,5 +1,30 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`transformComponent > JSX passed through attributes > should keep hooks out of a prop callback on a host with no text of its own 1`] = `
+"import { useTranslation } from "@lingo.dev/compiler/react";
+export function Page() {
+  const {
+    t
+  } = useTranslation(["ded0923063da"]);
+  return <FrameHeader actions={function renderIt() {
+    return <span>{t("ded0923063da", "Text A")}</span>;
+  }} />;
+}"
+`;
+
+exports[`transformComponent > JSX passed through attributes > should leave the document root <html> its locale attribute 1`] = `
+"import { useTranslation } from "@lingo.dev/compiler/react";
+export default function Layout({
+  children
+}) {
+  const {
+    t,
+    locale
+  } = useTranslation([]);
+  return <html lang={locale}><body>{children}</body></html>;
+}"
+`;
+
 exports[`transformComponent > JSX passed through attributes > should not inject a hook into a named function passed as a prop 1`] = `
 "import { useTranslation } from "@lingo.dev/compiler/react";
 export function Page() {
@@ -39,6 +64,16 @@ export function Panel() {
     t
   } = useTranslation(["f9b1408ca440", "44b3381ba9de"]);
   return <FrameHeader actions={<span>{t("44b3381ba9de", "Text A")}</span>}>{t("f9b1408ca440", "Text B")}</FrameHeader>;
+}"
+`;
+
+exports[`transformComponent > JSX passed through attributes > should translate JSX returned by an arrow render prop 1`] = `
+"import { useTranslation } from "@lingo.dev/compiler/react";
+export function Page() {
+  const {
+    t
+  } = useTranslation(["20b2cf1823f3"]);
+  return <List renderItem={() => <span>{t("20b2cf1823f3", "Hello world")}</span>} />;
 }"
 `;
 
