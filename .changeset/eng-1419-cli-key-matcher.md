@@ -9,3 +9,5 @@ Fix `run --key`, which matched nothing and could overwrite unrelated lockfile en
 A `--key` run also wrote checksums for every source key, not just the translated subset, which marked untouched keys as translated in `i18n.lock`. `--key` now suppresses the checksum write, as `--target-locale` already did, and no longer computes the discarded checksums at all.
 
 The help text for `--key` documented dot-separated paths and an `auth.login` example, neither of which matched real keys. It now states the `/` separator, that a prefix must end at one, and that a glob does not cross one.
+
+The `--frozen` failure message told the user to run `lingo.dev lockfile`, which does nothing once the lockfile section is populated. It now points at `lingo.dev run`, which localizes what is pending and updates the lockfile.
