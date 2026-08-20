@@ -3070,6 +3070,13 @@ export default function Layout({ children }) {
       });
 
       expect(result.code).toContain("lang={locale}");
+      // transformComponent injects lang={locale} here, but reports
+      // transformed: false (no translation entries), and both consumers —
+      // next-compiler-loader.ts:41 and unplugin.ts:352 — discard result.code on
+      // that flag, so the attribute never ships. Pre-existing, out of scope
+      // here; this assertion pins today's behavior and will fail when the flag
+      // starts tracking locale-only rewrites.
+      expect(result.transformed).toBe(false);
       expect(result.code).toMatchSnapshot();
     });
   });
