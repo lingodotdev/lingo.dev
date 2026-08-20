@@ -29,20 +29,24 @@ describe("countTranslatableChars", () => {
 });
 
 describe("computeProcessableData", () => {
+  // Flat buckets join nesting with "/" and encode each segment, so these are the
+  // keys --key is filtering against.
   const sourceData = {
-    "a.title": "Title",
-    "a.body": "Body",
-    "b.title": "Other",
+    "auth/login/title": "Title",
+    "auth/login/button": "Go",
+    "auth/login_url": "https://example.com",
+    "sign-in": "Sign in",
+    "sign-in-error": "Wrong password",
   };
 
   it("keeps only delta-changed keys", () => {
     const result = computeProcessableData(
       sourceData,
-      delta(["a.title"], ["b.title"]),
+      delta(["auth/login/title"], ["sign-in"]),
       false,
       [],
     );
-    expect(Object.keys(result)).toEqual(["a.title", "b.title"]);
+    expect(Object.keys(result)).toEqual(["auth/login/title", "sign-in"]);
   });
 
   it("keeps everything with force", () => {
@@ -50,51 +54,21 @@ describe("computeProcessableData", () => {
     expect(Object.keys(result)).toEqual(Object.keys(sourceData));
   });
 
-  it("narrows by key patterns", () => {
-    const result = computeProcessableData(sourceData, delta(), true, ["a.*"]);
-    expect(Object.keys(result)).toEqual(["a.title", "a.body"]);
-  });
-
   it("returns empty when nothing changed", () => {
     expect(computeProcessableData(sourceData, delta(), false, [])).toEqual({});
   });
-});
 
-// Flat buckets flatten with "/" and encode each segment, so these are the keys
-// --key is actually filtering against. The dot-separated fixtures above are not.
-describe("computeProcessableData with the keys flat buckets produce", () => {
-  const sourceData = {
-    "auth/login/title": "Sign in",
-    "auth/login/button": "Go",
-    "auth/logout/title": "Sign out",
-    "auth/login_url": "https://example.com",
-  };
-  const encoded = (pattern: string) => encodeURIComponent(pattern);
-
-  it("matches a prefix on the separator the keys actually use", () => {
+  // The CLI encodes each --key value at parse time, so patterns arrive encoded.
+  it.each([
+    ["auth/login", ["auth/login/title", "auth/login/button"]],
+    ["auth", ["auth/login/title", "auth/login/button", "auth/login_url"]],
+    ["auth/login/*", ["auth/login/title", "auth/login/button"]],
+    ["auth/login/title", ["auth/login/title"]],
+    ["sign-in", ["sign-in"]],
+  ])("narrows to %s", (pattern, expected) => {
     const result = computeProcessableData(sourceData, delta(), true, [
-      encoded("auth/login"),
+      encodeURIComponent(pattern),
     ]);
-    expect(Object.keys(result)).toEqual([
-      "auth/login/title",
-      "auth/login/button",
-    ]);
-  });
-
-  it("still honours an explicit glob", () => {
-    const result = computeProcessableData(sourceData, delta(), true, [
-      encoded("auth/login/*"),
-    ]);
-    expect(Object.keys(result)).toEqual([
-      "auth/login/title",
-      "auth/login/button",
-    ]);
-  });
-
-  it("matches an exact key", () => {
-    const result = computeProcessableData(sourceData, delta(), true, [
-      encoded("auth/logout/title"),
-    ]);
-    expect(Object.keys(result)).toEqual(["auth/logout/title"]);
+    expect(Object.keys(result)).toEqual(expected);
   });
 });

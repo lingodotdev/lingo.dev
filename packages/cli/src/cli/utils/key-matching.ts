@@ -28,6 +28,24 @@ export function matchesKeyPattern(key: string, patterns: string[]): boolean {
 }
 
 /**
+ * Like `matchesKeyPattern`, but "/" is the only separator that can bound a
+ * prefix. Flat buckets join nesting with "/" alone, so "." and "-" are ordinary
+ * characters inside a segment there — bounding on them would make `--key
+ * sign-in` also select `sign-in-error` and overwrite its translation.
+ */
+export function matchesFlatKeyPattern(
+  key: string,
+  patterns: string[],
+): boolean {
+  return patterns.some(
+    (pattern) =>
+      key === pattern ||
+      key.startsWith(pattern + "/") ||
+      minimatch(key, pattern),
+  );
+}
+
+/**
  * Filters entries based on key matching patterns
  */
 export function filterEntriesByPattern(

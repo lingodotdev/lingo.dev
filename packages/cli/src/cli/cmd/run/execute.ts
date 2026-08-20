@@ -170,6 +170,16 @@ function createExecutionProgressMessage(ctx: CmdRunContext) {
  * when two bucket entries share one path pattern and produce different source
  * data, e.g. entries that differ only by locale delimiter.
  */
+/**
+ * Flags that make a run deliberately partial. Checksums always cover the whole
+ * source, so recording them afterwards would mark keys that were never sent as
+ * translated. `--key` narrows which keys are sent; `--target-locale` narrows
+ * which locales are written, and a partial-locale run must not record the
+ * source as fully handled either.
+ */
+export const narrowsRun = (flags: CmdRunContext["flags"]) =>
+  !!flags.targetLocale?.length || !!flags.key?.length;
+
 export async function persistChecksums(args: {
   ctx: CmdRunContext;
   ioLimiter: LimitFunction;
@@ -178,10 +188,7 @@ export async function persistChecksums(args: {
   deltaProcessor: ReturnType<typeof createDeltaProcessor>;
   checksums: Record<string, string>;
 }) {
-  // Checksums are computed over every source key, not just the translated
-  // subset, so writing them under a narrowing flag marks untouched keys as
-  // translated.
-  if (args.ctx.flags.targetLocale?.length || args.ctx.flags.key?.length) {
+  if (narrowsRun(args.ctx.flags)) {
     return;
   }
 
@@ -269,16 +276,18 @@ function createWorkerTask(args: {
                 // Without this, an "everything already translated" run leaves
                 // i18n.lock without an entry for this pattern, and --frozen
                 // then reports the source as changed.
-                const checksums =
-                  await deltaProcessor.createChecksums(sourceData);
-                await persistChecksums({
-                  ctx: args.ctx,
-                  ioLimiter: args.ioLimiter,
-                  lastWrittenChecksums: args.lastWrittenChecksums,
-                  bucketPathPattern: assignedTask.bucketPathPattern,
-                  deltaProcessor,
-                  checksums,
-                });
+                if (!narrowsRun(args.ctx.flags)) {
+                  const checksums =
+                    await deltaProcessor.createChecksums(sourceData);
+                  await persistChecksums({
+                    ctx: args.ctx,
+                    ioLimiter: args.ioLimiter,
+                    lastWrittenChecksums: args.lastWrittenChecksums,
+                    bucketPathPattern: assignedTask.bucketPathPattern,
+                    deltaProcessor,
+                    checksums,
+                  });
+                }
               });
               return {
                 status: "skipped",
@@ -355,16 +364,18 @@ function createWorkerTask(args: {
                 finalRenamedTargetData,
               );
 
-              const checksums =
-                await deltaProcessor.createChecksums(sourceData);
-              await persistChecksums({
-                ctx: args.ctx,
-                ioLimiter: args.ioLimiter,
-                lastWrittenChecksums: args.lastWrittenChecksums,
-                bucketPathPattern: assignedTask.bucketPathPattern,
-                deltaProcessor,
-                checksums,
-              });
+              if (!narrowsRun(args.ctx.flags)) {
+                const checksums =
+                  await deltaProcessor.createChecksums(sourceData);
+                await persistChecksums({
+                  ctx: args.ctx,
+                  ioLimiter: args.ioLimiter,
+                  lastWrittenChecksums: args.lastWrittenChecksums,
+                  bucketPathPattern: assignedTask.bucketPathPattern,
+                  deltaProcessor,
+                  checksums,
+                });
+              }
             });
 
             return {

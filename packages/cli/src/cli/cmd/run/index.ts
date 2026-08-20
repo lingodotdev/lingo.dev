@@ -85,7 +85,7 @@ export default new Command()
   )
   .option(
     "--key <key>",
-    "Filter keys by exact match, prefix match, or glob. Prefixes stop at a separator, so auth/login matches auth/login/title but not auth/login_url. Nested keys are joined with / (auth/login), and globs work too (auth/login/*). Repeat for multiple patterns",
+    "Filter keys by exact match, prefix, or glob. Nesting joins with /, and a prefix must end at a /, so auth/login matches auth/login/title but not auth/login_url. A glob does not cross a /, so use auth/login/** to reach every level below. Repeat for multiple patterns",
     (val: string, prev: string[]) =>
       prev ? [...prev, encodeURIComponent(val)] : [encodeURIComponent(val)],
   )

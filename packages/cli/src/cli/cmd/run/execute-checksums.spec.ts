@@ -32,7 +32,11 @@ describe("persistChecksums", () => {
     const checksums = { "auth.title": "abc123" };
 
     for (let locale = 0; locale < 24; locale++) {
-      await persistChecksums({ ...args, bucketPathPattern: PATTERN, checksums });
+      await persistChecksums({
+        ...args,
+        bucketPathPattern: PATTERN,
+        checksums,
+      });
     }
 
     expect(writes).toEqual([{ "auth.title": "abc123" }]);
@@ -48,7 +52,11 @@ describe("persistChecksums", () => {
     const b = { key: "payload-b" };
 
     for (const checksums of [a, b, a]) {
-      await persistChecksums({ ...args, bucketPathPattern: PATTERN, checksums });
+      await persistChecksums({
+        ...args,
+        bucketPathPattern: PATTERN,
+        checksums,
+      });
     }
 
     expect(writes).toEqual([a, b, a]);
@@ -59,46 +67,63 @@ describe("persistChecksums", () => {
     const { args, writes } = setup();
     const other = "src/i18n/locales/[locale]/lab.ts";
 
-    await persistChecksums({ ...args, bucketPathPattern: PATTERN, checksums: { a: "1" } });
-    await persistChecksums({ ...args, bucketPathPattern: other, checksums: { b: "2" } });
-    await persistChecksums({ ...args, bucketPathPattern: PATTERN, checksums: { a: "1" } });
-    await persistChecksums({ ...args, bucketPathPattern: other, checksums: { b: "2" } });
-
-    expect(writes).toEqual([{ a: "1" }, { b: "2" }]);
-  });
-
-  it("writes nothing when --target-locale narrows the run", async () => {
-    const { args, writes } = setup({ targetLocale: ["de-DE"] });
-
-    await persistChecksums({ ...args, bucketPathPattern: PATTERN, checksums: { a: "1" } });
-
-    expect(writes).toEqual([]);
-  });
-
-  // A --key run translates a subset but computes checksums over every source
-  // key, so writing them would mark the untouched majority as translated.
-  it("writes nothing when --key narrows the run", async () => {
-    const { args, writes } = setup({ key: [encodeURIComponent("auth/login")] });
-
     await persistChecksums({
       ...args,
       bucketPathPattern: PATTERN,
       checksums: { a: "1" },
     });
+    await persistChecksums({
+      ...args,
+      bucketPathPattern: other,
+      checksums: { b: "2" },
+    });
+    await persistChecksums({
+      ...args,
+      bucketPathPattern: PATTERN,
+      checksums: { a: "1" },
+    });
+    await persistChecksums({
+      ...args,
+      bucketPathPattern: other,
+      checksums: { b: "2" },
+    });
 
-    expect(writes).toEqual([]);
+    expect(writes).toEqual([{ a: "1" }, { b: "2" }]);
   });
+
+  it.each([{ targetLocale: ["de-DE"] }, { key: ["auth/login"] }])(
+    "writes nothing when %o narrows the run",
+    async (flags) => {
+      const { args, writes } = setup(flags);
+
+      await persistChecksums({
+        ...args,
+        bucketPathPattern: PATTERN,
+        checksums: { a: "1" },
+      });
+
+      expect(writes).toEqual([]);
+    },
+  );
 
   it("does not mark a pattern as written when the write fails", async () => {
     const { args, writes, deltaProcessor } = setup();
     deltaProcessor.saveChecksums.mockRejectedValueOnce(new Error("disk full"));
 
     await expect(
-      persistChecksums({ ...args, bucketPathPattern: PATTERN, checksums: { a: "1" } }),
+      persistChecksums({
+        ...args,
+        bucketPathPattern: PATTERN,
+        checksums: { a: "1" },
+      }),
     ).rejects.toThrow("disk full");
 
     // A later locale of the same pattern must retry rather than assume success.
-    await persistChecksums({ ...args, bucketPathPattern: PATTERN, checksums: { a: "1" } });
+    await persistChecksums({
+      ...args,
+      bucketPathPattern: PATTERN,
+      checksums: { a: "1" },
+    });
     expect(writes).toEqual([{ a: "1" }]);
   });
 

@@ -2,7 +2,7 @@ import _ from "lodash";
 
 import { CmdRunContext, CmdRunTask } from "./_types";
 import { UserIdentity } from "../../utils/observability";
-import { matchesKeyPattern, safeDecode } from "../../utils/key-matching";
+import { matchesFlatKeyPattern, safeDecode } from "../../utils/key-matching";
 import createBucketLoader from "../../loaders";
 import { Delta } from "../../utils/delta";
 
@@ -48,7 +48,8 @@ export function computeProcessableData(
         delta.added.includes(key) || delta.updated.includes(key) || !!force,
     )
     .filter(
-      ([key]) => !patterns.length || matchesKeyPattern(safeDecode(key), patterns),
+      ([key]) =>
+        !patterns.length || matchesFlatKeyPattern(safeDecode(key), patterns),
     )
     .fromPairs()
     .value();
