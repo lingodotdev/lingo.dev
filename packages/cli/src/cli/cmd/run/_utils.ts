@@ -1,9 +1,8 @@
 import _ from "lodash";
-import { minimatch } from "minimatch";
 
 import { CmdRunContext, CmdRunTask } from "./_types";
 import { UserIdentity } from "../../utils/observability";
-import { safeDecode } from "../../utils/key-matching";
+import { matchesKeyPattern, safeDecode } from "../../utils/key-matching";
 import createBucketLoader from "../../loaders";
 import { Delta } from "../../utils/delta";
 
@@ -40,6 +39,8 @@ export function computeProcessableData(
   force: boolean | undefined,
   onlyKeys: string[],
 ): Record<string, any> {
+  const patterns = onlyKeys.map(safeDecode);
+
   return _.chain(sourceData)
     .entries()
     .filter(
@@ -47,11 +48,7 @@ export function computeProcessableData(
         delta.added.includes(key) || delta.updated.includes(key) || !!force,
     )
     .filter(
-      ([key]) =>
-        !onlyKeys.length ||
-        onlyKeys.some((pattern) =>
-          minimatch(safeDecode(key), safeDecode(pattern)),
-        ),
+      ([key]) => !patterns.length || matchesKeyPattern(safeDecode(key), patterns),
     )
     .fromPairs()
     .value();

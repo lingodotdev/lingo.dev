@@ -178,7 +178,10 @@ export async function persistChecksums(args: {
   deltaProcessor: ReturnType<typeof createDeltaProcessor>;
   checksums: Record<string, string>;
 }) {
-  if (args.ctx.flags.targetLocale?.length) {
+  // Checksums are computed over every source key, not just the translated
+  // subset, so writing them under a narrowing flag marks untouched keys as
+  // translated.
+  if (args.ctx.flags.targetLocale?.length || args.ctx.flags.key?.length) {
     return;
   }
 

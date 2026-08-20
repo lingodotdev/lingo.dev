@@ -75,6 +75,20 @@ describe("persistChecksums", () => {
     expect(writes).toEqual([]);
   });
 
+  // A --key run translates a subset but computes checksums over every source
+  // key, so writing them would mark the untouched majority as translated.
+  it("writes nothing when --key narrows the run", async () => {
+    const { args, writes } = setup({ key: [encodeURIComponent("auth/login")] });
+
+    await persistChecksums({
+      ...args,
+      bucketPathPattern: PATTERN,
+      checksums: { a: "1" },
+    });
+
+    expect(writes).toEqual([]);
+  });
+
   it("does not mark a pattern as written when the write fails", async () => {
     const { args, writes, deltaProcessor } = setup();
     deltaProcessor.saveChecksums.mockRejectedValueOnce(new Error("disk full"));
