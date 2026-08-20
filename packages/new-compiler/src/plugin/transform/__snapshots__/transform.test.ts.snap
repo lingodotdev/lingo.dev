@@ -1,5 +1,47 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`transformComponent > JSX passed through attributes > should register each nested prop JSX exactly once 1`] = `
+"import { useTranslation } from "@lingo.dev/compiler/react";
+export function Nested() {
+  const {
+    t
+  } = useTranslation(["a8cac695134e", "32acd7466846", "2f5156f6a49b"]);
+  return <Outer header={<Inner badge={<span>{t("2f5156f6a49b", "Deep")}</span>}>{t("32acd7466846", "Middle")}</Inner>}>{t("a8cac695134e", "Shallow")}</Outer>;
+}"
+`;
+
+exports[`transformComponent > JSX passed through attributes > should translate JSX in a prop of an element that also has text children 1`] = `
+"import { useTranslation } from "@lingo.dev/compiler/react";
+export function Panel() {
+  const {
+    t
+  } = useTranslation(["f9b1408ca440", "44b3381ba9de"]);
+  return <FrameHeader actions={<span>{t("44b3381ba9de", "Text A")}</span>}>{t("f9b1408ca440", "Text B")}</FrameHeader>;
+}"
+`;
+
+exports[`transformComponent > JSX passed through attributes > should translate attributes of JSX passed through a prop 1`] = `
+"import { useTranslation } from "@lingo.dev/compiler/react";
+export function Row() {
+  const {
+    t
+  } = useTranslation(["b0deb282e0b3", "4a2587a16bdd"]);
+  return <Cell icon={<img alt={t("4a2587a16bdd", "Company logo")} src="/logo.png" />}>{t("b0deb282e0b3", "Cell label")}</Cell>;
+}"
+`;
+
+exports[`transformComponent > JSX passed through attributes > should translate prop JSX on a rich-text host 1`] = `
+"import { useTranslation } from "@lingo.dev/compiler/react";
+export function Notice() {
+  const {
+    t
+  } = useTranslation(["97be58bd7333", "dff11b9afb69"]);
+  return <Banner action={<a href="/docs">{t("dff11b9afb69", "Read the docs")}</a>}>{t("97be58bd7333", "Hello <b0>world</b0>", {
+      b0: chunks => <b>{chunks}</b>
+    })}</Banner>;
+}"
+`;
+
 exports[`transformComponent > attributes translation > should not translate attributes with expression values 1`] = `
 "import { useTranslation } from "@lingo.dev/compiler/react";
 export function DynamicButton() {

@@ -2852,4 +2852,87 @@ export function Legal() {
       expect(result.code).toMatchSnapshot();
     });
   });
+
+  describe("JSX passed through attributes", () => {
+    it("should translate JSX in a prop of an element that also has text children", () => {
+      const code = `
+export function Panel() {
+  return <FrameHeader actions={<span>Text A</span>}>Text B</FrameHeader>;
+}
+`;
+
+      const result = transformComponent({
+        code,
+        filePath: "src/Panel.tsx",
+        config,
+      });
+
+      expect(result.transformed).toBe(true);
+      assert.isDefined(result.newEntries);
+      expect(result.newEntries.map((e) => e.sourceText).sort()).toEqual(["Text A", "Text B"]);
+      expect(result.code).toMatchSnapshot();
+    });
+
+    it("should translate attributes of JSX passed through a prop", () => {
+      const code = `
+export function Row() {
+  return <Cell icon={<img alt="Company logo" src="/logo.png" />}>Cell label</Cell>;
+}
+`;
+
+      const result = transformComponent({
+        code,
+        filePath: "src/Row.tsx",
+        config,
+      });
+
+      expect(result.transformed).toBe(true);
+      assert.isDefined(result.newEntries);
+      expect(asAttribute(result.newEntries.find((e) => e.type === "attribute")!).sourceText).toBe("Company logo");
+      expect(result.newEntries.map((e) => e.sourceText).sort()).toEqual(["Cell label", "Company logo"]);
+      expect(result.code).toMatchSnapshot();
+    });
+
+    it("should register each nested prop JSX exactly once", () => {
+      const code = `
+export function Nested() {
+  return (
+    <Outer header={<Inner badge={<span>Deep</span>}>Middle</Inner>}>
+      Shallow
+    </Outer>
+  );
+}
+`;
+
+      const result = transformComponent({
+        code,
+        filePath: "src/Nested.tsx",
+        config,
+      });
+
+      expect(result.transformed).toBe(true);
+      assert.isDefined(result.newEntries);
+      expect(result.newEntries.map((e) => e.sourceText).sort()).toEqual(["Deep", "Middle", "Shallow"]);
+      expect(result.code).toMatchSnapshot();
+    });
+
+    it("should translate prop JSX on a rich-text host", () => {
+      const code = `
+export function Notice() {
+  return <Banner action={<a href="/docs">Read the docs</a>}>Hello <b>world</b></Banner>;
+}
+`;
+
+      const result = transformComponent({
+        code,
+        filePath: "src/Notice.tsx",
+        config,
+      });
+
+      expect(result.transformed).toBe(true);
+      assert.isDefined(result.newEntries);
+      expect(result.newEntries.map((e) => e.sourceText)).toContain("Read the docs");
+      expect(result.code).toMatchSnapshot();
+    });
+  });
 });

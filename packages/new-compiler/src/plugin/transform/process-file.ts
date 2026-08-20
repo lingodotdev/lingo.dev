@@ -506,6 +506,13 @@ function processJSXElement(
   registerEntry(entry, state, component.name);
   rewriteChildren(path, state, scope, entry.hash);
 
+  // `path.skip()` below prunes the whole subtree, `openingElement` included, so JSX
+  // handed to this element through an attribute (`actions={<span>Text</span>}`) would
+  // never be visited. Traverse the opening element first. Fragments have no attributes.
+  if (path.node.type === "JSXElement") {
+    path.get("openingElement").traverse(componentVisitors, { visitorState: state });
+  }
+
   path.skip();
 }
 
