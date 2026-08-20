@@ -1,5 +1,27 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`transformComponent > JSX passed through attributes > should not inject a hook into a named function passed as a prop 1`] = `
+"import { useTranslation } from "@lingo.dev/compiler/react";
+export function Page() {
+  const {
+    t
+  } = useTranslation(["94ae71f36192", "f0bda09b5bf3"]);
+  return <FrameHeader actions={function renderIt() {
+    return <span>{t("f0bda09b5bf3", "Text A")}</span>;
+  }}>{t("94ae71f36192", "Text B")}</FrameHeader>;
+}"
+`;
+
+exports[`transformComponent > JSX passed through attributes > should not inject the locale attribute into an <html> inside a prop 1`] = `
+"import { useTranslation } from "@lingo.dev/compiler/react";
+export function Page() {
+  const {
+    t
+  } = useTranslation(["7fd016755b3d", "80d399983384"]);
+  return <FrameHeader actions={<html><body>{t("80d399983384", "Text A")}</body></html>}>{t("7fd016755b3d", "Text B")}</FrameHeader>;
+}"
+`;
+
 exports[`transformComponent > JSX passed through attributes > should register each nested prop JSX exactly once 1`] = `
 "import { useTranslation } from "@lingo.dev/compiler/react";
 export function Nested() {

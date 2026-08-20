@@ -510,11 +510,36 @@ function processJSXElement(
   // handed to this element through an attribute (`actions={<span>Text</span>}`) would
   // never be visited. Traverse the opening element first. Fragments have no attributes.
   if (path.node.type === "JSXElement") {
-    path.get("openingElement").traverse(componentVisitors, { visitorState: state });
+    path.get("openingElement").traverse(attributeVisitors, { visitorState: state });
   }
 
   path.skip();
 }
+
+/**
+ * Visitors for re-entering an element's own attributes. Deliberately narrower than
+ * `componentVisitors`: a function handed to a prop is a callback, not a component, so
+ * hook injection must not reach it — `inferComponentName` accepts any named function
+ * expression, so `actions={function renderIt() { … }}` would otherwise be given a
+ * `useTranslation` call it never runs as a component, breaking the rules of hooks.
+ * `injectHtmlLangAttribute` is left out for the same reason: an `<html>` inside a prop
+ * is not the document root.
+ */
+const attributeVisitors = {
+  JSXFragment(path: NodePath<t.JSXFragment>) {
+    processJSXElement(path, this.visitorState);
+  },
+
+  JSXElement(path: NodePath<t.JSXElement>) {
+    translateAttributes(path.node, this.visitorState);
+
+    if (shouldSkipTranslationForElement(path.node)) {
+      path.skip();
+      return;
+    }
+    processJSXElement(path, this.visitorState);
+  },
+} satisfies TraverseOptions<{ visitorState: VisitorsInternalState }>;
 
 /**
  * Inject dynamic locale attribute into <html> elements

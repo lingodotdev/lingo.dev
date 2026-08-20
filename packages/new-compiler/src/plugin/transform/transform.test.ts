@@ -2854,6 +2854,9 @@ export function Legal() {
   });
 
   describe("JSX passed through attributes", () => {
+    // Entry order is deterministic and meaningful: an element's own children are
+    // rewritten first, then its opening element is traversed, so host text comes
+    // before prop JSX and outer elements come before inner ones.
     it("should translate JSX in a prop of an element that also has text children", () => {
       const code = `
 export function Panel() {
@@ -2869,7 +2872,11 @@ export function Panel() {
 
       expect(result.transformed).toBe(true);
       assert.isDefined(result.newEntries);
-      expect(result.newEntries.map((e) => e.sourceText).sort()).toEqual(["Text A", "Text B"]);
+      expect(result.newEntries).toHaveLength(2);
+      expect(result.newEntries.map((e) => e.sourceText)).toEqual([
+        "Text B",
+        "Text A",
+      ]);
       expect(result.code).toMatchSnapshot();
     });
 
@@ -2888,8 +2895,15 @@ export function Row() {
 
       expect(result.transformed).toBe(true);
       assert.isDefined(result.newEntries);
-      expect(asAttribute(result.newEntries.find((e) => e.type === "attribute")!).sourceText).toBe("Company logo");
-      expect(result.newEntries.map((e) => e.sourceText).sort()).toEqual(["Cell label", "Company logo"]);
+      expect(result.newEntries).toHaveLength(2);
+      expect(result.newEntries.map((e) => e.sourceText)).toEqual([
+        "Cell label",
+        "Company logo",
+      ]);
+
+      const altEntry = result.newEntries.find((e) => e.type === "attribute");
+      assert.isDefined(altEntry);
+      expect(asAttribute(altEntry).sourceText).toBe("Company logo");
       expect(result.code).toMatchSnapshot();
     });
 
@@ -2912,7 +2926,12 @@ export function Nested() {
 
       expect(result.transformed).toBe(true);
       assert.isDefined(result.newEntries);
-      expect(result.newEntries.map((e) => e.sourceText).sort()).toEqual(["Deep", "Middle", "Shallow"]);
+      expect(result.newEntries).toHaveLength(3);
+      expect(result.newEntries.map((e) => e.sourceText)).toEqual([
+        "Shallow",
+        "Middle",
+        "Deep",
+      ]);
       expect(result.code).toMatchSnapshot();
     });
 
@@ -2931,7 +2950,64 @@ export function Notice() {
 
       expect(result.transformed).toBe(true);
       assert.isDefined(result.newEntries);
-      expect(result.newEntries.map((e) => e.sourceText)).toContain("Read the docs");
+      expect(result.newEntries).toHaveLength(2);
+      expect(result.newEntries.map((e) => e.sourceText)).toEqual([
+        "Hello <b0>world</b0>",
+        "Read the docs",
+      ]);
+      expect(result.code).toMatchSnapshot();
+    });
+
+    // `inferComponentName` accepts any named function expression, so running the
+    // full component visitors here would treat a callback handed to a prop as a
+    // component and give it a `useTranslation` call it never runs as one — a
+    // rules-of-hooks violation. The narrowed set still translates the callback's
+    // JSX; `t` resolves through the closure over the enclosing component.
+    it("should not inject a hook into a named function passed as a prop", () => {
+      const code = `
+export function Page() {
+  return <FrameHeader actions={function renderIt() { return <span>Text A</span>; }}>Text B</FrameHeader>;
+}
+`;
+
+      const result = transformComponent({
+        code,
+        filePath: "src/Page.tsx",
+        config,
+      });
+
+      expect(result.transformed).toBe(true);
+      assert.isDefined(result.newEntries);
+      expect(result.newEntries.map((e) => e.sourceText)).toEqual([
+        "Text B",
+        "Text A",
+      ]);
+      // Once for the import, once for the single call in `Page` — none inside
+      // `renderIt`.
+      expect(result.code.match(/useTranslation/g)).toHaveLength(2);
+      expect(result.code).toMatchSnapshot();
+    });
+
+    it("should not inject the locale attribute into an <html> inside a prop", () => {
+      const code = `
+export function Page() {
+  return <FrameHeader actions={<html><body>Text A</body></html>}>Text B</FrameHeader>;
+}
+`;
+
+      const result = transformComponent({
+        code,
+        filePath: "src/PageHtml.tsx",
+        config,
+      });
+
+      expect(result.transformed).toBe(true);
+      assert.isDefined(result.newEntries);
+      expect(result.newEntries.map((e) => e.sourceText)).toEqual([
+        "Text B",
+        "Text A",
+      ]);
+      expect(result.code).not.toContain("lang={locale}");
       expect(result.code).toMatchSnapshot();
     });
   });
