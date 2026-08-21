@@ -61,7 +61,7 @@ const customTranslator = new lingoTranslator({
   models: {
     "en:es": "google:gemini-2.0-flash",
     "en:fr": "groq:llama3-70b-8192",
-    "*:*": "openrouter:anthropic/claude-3.5-sonnet",
+    "*:*": "orcarouter:orcarouter/auto",
   },
   sourceLocale: "en",
   prompt: "Translate professionally for software UI",
@@ -254,6 +254,7 @@ LINGODOTDEV_API_KEY=your_key_here
 GOOGLE_API_KEY=your_key_here
 GROQ_API_KEY=your_key_here
 OPENROUTER_API_KEY=your_key_here
+ORCAROUTER_API_KEY=your_key_here
 MISTRAL_API_KEY=your_key_here
 ```
 

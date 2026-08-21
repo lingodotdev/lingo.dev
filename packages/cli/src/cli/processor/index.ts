@@ -111,6 +111,17 @@ function getPureModelProvider(provider: I18nConfig["provider"]) {
         baseURL: provider.baseUrl,
       })(provider.model);
     }
+    case "orcarouter": {
+      if (!process.env.ORCAROUTER_API_KEY) {
+        throw new Error(
+          createMissingKeyErrorMessage("OrcaRouter", "ORCAROUTER_API_KEY"),
+        );
+      }
+      return createOpenAI({
+        apiKey: process.env.ORCAROUTER_API_KEY,
+        baseURL: provider.baseUrl || "https://api.orcarouter.ai/v1",
+      })(provider.model);
+    }
     case "ollama": {
       // No API key check needed for Ollama
       return createOllama()(provider.model);

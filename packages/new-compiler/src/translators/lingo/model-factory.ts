@@ -89,6 +89,13 @@ export const providerDetails: Record<string, ProviderConfig> = {
     getKeyLink: "https://openrouter.ai",
     docsLink: "https://openrouter.ai/docs",
   },
+  orcarouter: {
+    name: "OrcaRouter",
+    apiKeyEnvVar: "ORCAROUTER_API_KEY",
+    apiKeyConfigKey: "llm.orcarouterApiKey",
+    getKeyLink: "https://www.orcarouter.ai",
+    docsLink: "https://www.orcarouter.ai/docs",
+  },
   ollama: {
     name: "Ollama",
     apiKeyEnvVar: undefined, // Ollama doesn't require an API key
@@ -258,7 +265,7 @@ export function createAiModel(
   if (providerConfig.apiKeyEnvVar && !apiKey) {
     throw new Error(
       `⚠️  ${providerConfig.name} API key not found. Please set ${providerConfig.apiKeyEnvVar} environment variable.\n\n` +
-      `This should not happen if validateAndGetApiKeys() was called. Please restart the service.`,
+        `This should not happen if validateAndGetApiKeys() was called. Please restart the service.`,
     );
   }
 
@@ -284,6 +291,19 @@ export function createAiModel(
 
     case "openrouter":
       return createOpenRouter({ apiKey: apiKey! })(model.name);
+
+    case "orcarouter": {
+      // OrcaRouter is an OpenAI-compatible smart-routing gateway.
+      // Support a custom base URL override for users who self-host a proxy.
+      const baseURL = getKeyFromEnv("ORCAROUTER_BASE_URL");
+
+      const provider = createOpenAI({
+        apiKey: apiKey!,
+        baseURL: baseURL ?? "https://api.orcarouter.ai/v1",
+      });
+
+      return provider.chat(model.name);
+    }
 
     case "ollama":
       return ollama(model.name);

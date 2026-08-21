@@ -83,6 +83,18 @@ export function getMistralKeyFromEnv() {
   return getKeyFromEnv("MISTRAL_API_KEY");
 }
 
+export function getOrcaRouterKey() {
+  return getOrcaRouterKeyFromEnv() || getOrcaRouterKeyFromRc();
+}
+
+export function getOrcaRouterKeyFromRc() {
+  return getKeyFromRc("llm.orcarouterApiKey");
+}
+
+export function getOrcaRouterKeyFromEnv() {
+  return getKeyFromEnv("ORCAROUTER_API_KEY");
+}
+
 export function getOpenAIKey() {
   return getOpenAIKeyFromEnv() || getOpenAIKeyFromRc();
 }

@@ -22,6 +22,8 @@ import {
   getOpenRouterKeyFromEnv,
   getMistralKey,
   getMistralKeyFromEnv,
+  getOrcaRouterKey,
+  getOrcaRouterKeyFromEnv,
   getOpenAIKey,
   getOpenAIKeyFromEnv,
   getAnthropicKey,
@@ -361,6 +363,29 @@ export class LCPAPI {
         })(modelId);
       }
 
+      case "orcarouter": {
+        // Specific check for CI/CD or Docker missing OrcaRouter key
+        if (isRunningInCIOrDocker()) {
+          const orcaRouterFromEnv = getOrcaRouterKeyFromEnv();
+          if (!orcaRouterFromEnv) {
+            this._failMissingLLMKeyCi(providerId);
+          }
+        }
+        const orcaRouterKey = getOrcaRouterKey();
+        if (!orcaRouterKey) {
+          throw new Error(
+            "⚠️  OrcaRouter API key not found. Please set ORCAROUTER_API_KEY environment variable or configure it user-wide.",
+          );
+        }
+        console.log(
+          `Creating OrcaRouter client for ${targetLocale} using model ${modelId}`,
+        );
+        return createOpenAI({
+          apiKey: orcaRouterKey,
+          baseURL: "https://api.orcarouter.ai/v1",
+        })(modelId);
+      }
+
       case "ollama": {
         // No API key check needed for Ollama
         console.log(
@@ -431,7 +456,7 @@ export class LCPAPI {
 
       default: {
         throw new Error(
-          `⚠️  Provider "${providerId}" for locale "${targetLocale}" is not supported. Only "groq", "google", "openrouter", "ollama", "mistral", "openai", and "anthropic" providers are supported at the moment.`,
+          `⚠️  Provider "${providerId}" for locale "${targetLocale}" is not supported. Only "groq", "google", "openrouter", "orcarouter", "ollama", "mistral", "openai", and "anthropic" providers are supported at the moment.`,
         );
       }
     }

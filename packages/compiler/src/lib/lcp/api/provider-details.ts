@@ -45,6 +45,13 @@ export const providerDetails: Record<
     getKeyLink: "https://openrouter.ai",
     docsLink: "https://openrouter.ai/docs",
   },
+  orcarouter: {
+    name: "OrcaRouter",
+    apiKeyEnvVar: "ORCAROUTER_API_KEY",
+    apiKeyConfigKey: "llm.orcarouterApiKey",
+    getKeyLink: "https://www.orcarouter.ai",
+    docsLink: "https://www.orcarouter.ai/docs",
+  },
   ollama: {
     name: "Ollama",
     apiKeyEnvVar: undefined, // Ollama doesn't require an API key

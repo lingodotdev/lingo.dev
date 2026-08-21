@@ -14,6 +14,8 @@ import {
   getGoogleKeyFromRc,
   getMistralKeyFromEnv,
   getMistralKeyFromRc,
+  getOrcaRouterKeyFromEnv,
+  getOrcaRouterKeyFromRc,
   getLingoDotDevKeyFromEnv,
   getLingoDotDevKeyFromRc,
 } from "./utils/llm-api-key";
@@ -41,6 +43,10 @@ const keyCheckers: Record<
   mistral: {
     checkEnv: getMistralKeyFromEnv,
     checkRc: getMistralKeyFromRc,
+  },
+  orcarouter: {
+    checkEnv: getOrcaRouterKeyFromEnv,
+    checkRc: getOrcaRouterKeyFromRc,
   },
   "lingo.dev": {
     checkEnv: getLingoDotDevKeyFromEnv,

@@ -13,7 +13,7 @@ automatically transforms React components to inject translation calls.
 - **Opt-in or automatic** - Configure whether to require `'use i18n'` directive or transform all files
 - **Multi-bundler support** - Works with Vite, Webpack and Next.js (both Webpack and Turbopack builds)
 - **Translation server** - On-demand translation generation during development
-- **AI-powered translations** - Support for multiple LLM providers (OpenAI, Anthropic, Google Gemini, Groq, Mistral, OpenRouter, Ollama) and Lingo.dev Engine
+- **AI-powered translations** - Support for multiple LLM providers (OpenAI, Anthropic, Google Gemini, Groq, Mistral, OpenRouter, OrcaRouter, Ollama) and Lingo.dev Engine
 - **Manual overrides** - Override AI translations for specific locales using `data-lingo-override` attribute
 - **Custom locale resolvers** - Provide your own locale detection and persistence logic
 - **Automatic pluralization** - Detects and converts messages to ICU MessageFormat
@@ -216,6 +216,7 @@ You can use any supported LLM provider directly. Configure using locale-pair map
 | **Groq** | `groq:llama3-8b-8192` | `GROQ_API_KEY` | [groq.com](https://groq.com) |
 | **Mistral** | `mistral:mistral-large` | `MISTRAL_API_KEY` | [console.mistral.ai](https://console.mistral.ai) |
 | **OpenRouter** | `openrouter:anthropic/claude-3.5-sonnet` | `OPENROUTER_API_KEY` | [openrouter.ai](https://openrouter.ai) |
+| **OrcaRouter** | `orcarouter:orcarouter/auto` | `ORCAROUTER_API_KEY` | [www.orcarouter.ai](https://www.orcarouter.ai) |
 | **Ollama** | `ollama:llama2` | *(none required)* | [ollama.com/download](https://ollama.com/download) |
 
 **Example with multiple providers:**

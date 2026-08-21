@@ -123,6 +123,19 @@ describe("model-factory", () => {
       expect(() => validateAndGetApiKeys(config)).toThrow();
     });
 
+    it("should validate and return OrcaRouter API key", () => {
+      process.env.ORCAROUTER_API_KEY = "test-orcarouter-key";
+
+      const config = {
+        "*:*": "orcarouter:orcarouter/auto",
+      };
+
+      const result = validateAndGetApiKeys(config);
+      expect(result).toEqual({
+        orcarouter: "test-orcarouter-key",
+      });
+    });
+
     it("should validate lingo.dev provider when specified", () => {
       process.env.LINGODOTDEV_API_KEY = "test-lingo-key";
 
@@ -195,6 +208,14 @@ describe("model-factory", () => {
     it("should create OpenRouter model", () => {
       const model = { provider: "openrouter", name: "anthropic/claude-3-opus" };
       const keys = { openrouter: "test-openrouter-key" };
+
+      const result = createAiModel(model, keys);
+      expect(result).toBeDefined();
+    });
+
+    it("should create OrcaRouter model", () => {
+      const model = { provider: "orcarouter", name: "orcarouter/auto" };
+      const keys = { orcarouter: "test-orcarouter-key" };
 
       const result = createAiModel(model, keys);
       expect(result).toBeDefined();

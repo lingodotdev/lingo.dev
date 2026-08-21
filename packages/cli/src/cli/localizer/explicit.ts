@@ -73,6 +73,15 @@ export default function createExplicitLocalizer(
         baseUrl: provider.baseUrl,
         settings,
       });
+    case "orcarouter":
+      return createAiSdkLocalizer({
+        factory: (params) => createOpenAI(params).languageModel(provider.model),
+        id: provider.id,
+        prompt: provider.prompt,
+        apiKeyName: "ORCAROUTER_API_KEY",
+        baseUrl: provider.baseUrl || "https://api.orcarouter.ai/v1",
+        settings,
+      });
     case "ollama":
       return createAiSdkLocalizer({
         factory: (_params) => createOllama().languageModel(provider.model),

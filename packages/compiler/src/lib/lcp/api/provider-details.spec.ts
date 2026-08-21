@@ -9,6 +9,7 @@ describe("provider-details", () => {
       "openai",
       "anthropic",
       "openrouter",
+      "orcarouter",
       "ollama",
       "mistral",
       "lingo.dev",

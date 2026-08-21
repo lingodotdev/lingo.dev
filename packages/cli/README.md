@@ -69,7 +69,7 @@ Setting up i18n in React apps is error-prone – even AI coding assistants hallu
 
 ### Lingo.dev CLI
 
-Localize JSON, YAML, markdown, CSV, and PO files in one command. A lockfile tracks what's already localized – only new or changed content gets processed. Defaults to your localization engine on Lingo.dev, or bring your own LLM (OpenAI, Anthropic, Google, Mistral, OpenRouter, Ollama).
+Localize JSON, YAML, markdown, CSV, and PO files in one command. A lockfile tracks what's already localized – only new or changed content gets processed. Defaults to your localization engine on Lingo.dev, or bring your own LLM (OpenAI, Anthropic, Google, Mistral, OpenRouter, OrcaRouter, Ollama).
 
 ```bash
 npx lingo.dev@latest init
