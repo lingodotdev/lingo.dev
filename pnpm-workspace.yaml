@@ -13,7 +13,7 @@ overrides:
   "@modelcontextprotocol/sdk": ">=1.26.0 <2"
   "@isaacs/brace-expansion": ">=5.0.1 <6"
   effect: ">=3.20.0 <4"
-  fast-uri: ">=3.1.5 <4"
+  fast-uri: ">=3.1.7 <4"
   defu: ">=6.1.5 <7"
   ws: ">=8.21.0 <9"
   js-cookie: ">=3.0.7 <4"
