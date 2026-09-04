@@ -23,6 +23,7 @@ overrides:
   lodash: '>=4.18.0 <5'
   lodash-es: '>=4.18.0 <5'
   axios: '>=1.16.0 <2'
+  browserslist: '>=4.28.8 <5'
   vite: '>=7.3.5 <8'
   '@xmldom/xmldom': '>=0.8.13 <0.9'
   form-data: '>=4.0.6 <5'
@@ -465,9 +466,6 @@ importers:
       remark-mdx:
         specifier: 3.1.1
         version: 3.1.1
-      remark-mdx-frontmatter:
-        specifier: 5.2.0
-        version: 5.2.0
       remark-parse:
         specifier: 11.0.0
         version: 11.0.0
@@ -4472,6 +4470,11 @@ packages:
     engines: {node: '>=6.0.0'}
     hasBin: true
 
+  baseline-browser-mapping@2.11.20:
+    resolution: {integrity: sha512-H0ulySigv6icDJ1F7SjtdCD6PrhTpdYCmP0CactWy1+ekh0AFd0o1Wn5T8b+hnTmdBx19u9yhL6wvCylXMY7zw==}
+    engines: {node: '>=6.0.0'}
+    hasBin: true
+
   before-after-hook@2.2.3:
     resolution: {integrity: sha512-NzUnlZexiaH/46WDhANlyR2bXRopNg4F/zuSA3OpZnllCUgRaOF2znDioDWrmbNVsuZk6l9pMquQB38cfBZwkQ==}
 
@@ -4512,8 +4515,8 @@ packages:
     resolution: {integrity: sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA==}
     engines: {node: '>=8'}
 
-  browserslist@4.28.1:
-    resolution: {integrity: sha512-ZC5Bd0LgJXgwGqUknZY/vkUQ04r8NXnJZ3yYi4vDmSiZmC/pdSN0NbNRPxZpbtO4uAfDUAFffO8IZoM3Gj8IkA==}
+  browserslist@4.28.8:
+    resolution: {integrity: sha512-V2NpofLblG64mfOtSgDhOJESZEGogzDMBv/q+W6oc4LXWP/q75eOXoOaaOu1EOadB9U4Bwx/e0yzbvwKH8zalA==}
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
 
@@ -4562,6 +4565,9 @@ packages:
 
   caniuse-lite@1.0.30001761:
     resolution: {integrity: sha512-JF9ptu1vP2coz98+5051jZ4PwQgd2ni8A+gYSN7EA7dPKIMf0pDlSUxhdmVOaV3/fYK5uWBkgSXJaRLr4+3A6g==}
+
+  caniuse-lite@1.0.30001810:
+    resolution: {integrity: sha512-TITQPUkaz+aVk5GL6NhOdwk1aEaNTSDPsGFWrTuhKGtjTF70jL/Oht2W4c6rXUe5fu7Ie19VIahAXHIIiWWNeg==}
 
   ccount@2.0.1:
     resolution: {integrity: sha512-eyrF0jiFpY+3drT6383f1qhkbGsLSifNAjA61IUjZjmLCWjItY6LB9ft9YhoDgwfmclB2zhu51Lc7+95b8NRAg==}
@@ -5051,8 +5057,8 @@ packages:
     engines: {node: '>=0.10.0'}
     hasBin: true
 
-  electron-to-chromium@1.5.267:
-    resolution: {integrity: sha512-0Drusm6MVRXSOJpGbaSVgcQsuB4hEkMpHXaVstcPmhu5LIedxs1xNK/nIxmQIU/RPC0+1/o0AVZfBTkTNJOdUw==}
+  electron-to-chromium@1.5.420:
+    resolution: {integrity: sha512-2yD6XreGusOfNV+dUcvipJEXc3n/n7fgr7996aszTG+YY5E4mqM4tOq/3uhP129cazL9YHbVWSpc79ePotWtPA==}
 
   emoji-regex@10.6.0:
     resolution: {integrity: sha512-toUI84YS5YmxW219erniWD0CIVOo46xGKColeNQRgOzDorgBi1v4D71/OFzgD9GO2UGKIv1C3Sp8DAn0+j5w7A==}
@@ -5155,12 +5161,6 @@ packages:
 
   estree-util-is-identifier-name@3.0.0:
     resolution: {integrity: sha512-hFtqIDZTIUZ9BXLb8y4pYGyk6+wekIivNVTcmvk8NoOh+VeRn5y6cEHzbURrWbfp1fIqdVipilzj+lfaadNZmg==}
-
-  estree-util-scope@1.0.0:
-    resolution: {integrity: sha512-2CAASclonf+JFWBNJPndcOpA8EMJwa0Q8LUFJEKqXLW6+qBvbFZuF5gItbQOs/umBUkjviCSDCbBwU2cXbmrhQ==}
-
-  estree-util-value-to-estree@3.5.0:
-    resolution: {integrity: sha512-aMV56R27Gv3QmfmF1MY12GWkGzzeAezAX+UplqHVASfjc9wNzI/X6hC0S9oxq61WT4aQesLGslWP9tKk6ghRZQ==}
 
   estree-util-visit@2.0.0:
     resolution: {integrity: sha512-m5KgiH85xAhhW8Wta0vShLcUvOsh3LLPI2YVwcbio1l7E09NTLL1EyMZFM1OyWowoH0skScNbhOPl4kcBgzTww==}
@@ -6370,8 +6370,9 @@ packages:
   node-machine-id@1.1.12:
     resolution: {integrity: sha512-QNABxbrPa3qEIfrE6GOJ7BYIuignnJw7iQ2YPbc3Nla1HzRJjXzZOiikfF8m7eAMfichLt3M4VgLOetqgDmgGQ==}
 
-  node-releases@2.0.27:
-    resolution: {integrity: sha512-nmh3lCkYZ3grZvqcCH+fjmQ7X+H0OeZgP40OierEaAptX4XofMh5kwNbWh7lBduUzCcV/8kZ+NDLCwm2iorIlA==}
+  node-releases@2.0.54:
+    resolution: {integrity: sha512-YHs7BmmcsdAI5Ozuf8JZo6PT0mv2GIWC9vMfvUC3dp65M8hn7Ux8CPL+2oBI7juNuj9d0ndhTcznq2ODBps9cQ==}
+    engines: {node: '>=18'}
 
   node-webvtt@1.9.4:
     resolution: {integrity: sha512-EjrJdKdxSyd8j4LMLW6s2Ah4yNoeVXp18Ob04CQl1In18xcUmKzEE8pcsxxnFVqanTyjbGYph2VnvtwIXR4EjA==}
@@ -7028,9 +7029,6 @@ packages:
   remark-gfm@4.0.1:
     resolution: {integrity: sha512-1quofZ2RQ9EWdeN34S79+KExV1764+wCUGop5CPL1WGdD0ocPpu91lzPGbwWMECpEpd42kJGQwzRfyov9j4yNg==}
 
-  remark-mdx-frontmatter@5.2.0:
-    resolution: {integrity: sha512-U/hjUYTkQqNjjMRYyilJgLXSPF65qbLPdoESOkXyrwz2tVyhAnm4GUKhfXqOOS9W34M3545xEMq+aMpHgVjEeQ==}
-
   remark-mdx@3.1.1:
     resolution: {integrity: sha512-Pjj2IYlUY3+D8x00UJsIOg5BEvfMyeI+2uLPn9VO9Wg4MEtN/VTIq2NEJQfde9PnX15KgtHyl9S0BcTnWrIuWg==}
 
@@ -7579,9 +7577,6 @@ packages:
     resolution: {integrity: sha512-/m8M+2BJUpoJdgAHoG+baCwBT+tf2VraSfkBgl0Y00qIWt41DJ8R5B8nsEw0I58YwF5IZH6z24/2TobDKnqSWw==}
     engines: {node: '>=12'}
 
-  toml@3.0.0:
-    resolution: {integrity: sha512-y/mWCZinnvxjTKYhJ+pYxwD0mRLVvOtdS2Awbgxln6iEnt4rk0yBxeSBHkGJcPucRiG0e55mwWp+g/05rsrd6w==}
-
   totalist@3.0.1:
     resolution: {integrity: sha512-sf4i37nQ2LBx4m3wB74y+ubopq6W/dIzXg0FDGjsYnZHVa1Da8FH853wlL2gtUhg+xJXjfk3kUZS3BRoQeoQBQ==}
     engines: {node: '>=6'}
@@ -7740,9 +7735,6 @@ packages:
   unist-util-is@6.0.1:
     resolution: {integrity: sha512-LsiILbtBETkDz8I9p1dQ0uyRUWuaQzd/cuEeS1hoRSyW5E5XGmTzlwY1OrNzzakGowI9Dr/I8HVaw4hTtnxy8g==}
 
-  unist-util-mdx-define@1.1.2:
-    resolution: {integrity: sha512-9ncH7i7TN5Xn7/tzX5bE3rXgz1X/u877gYVAUB3mLeTKYJmQHmqKTDBi6BTGXV7AeolBCI9ErcVsOt2qryoD0g==}
-
   unist-util-position-from-estree@2.0.0:
     resolution: {integrity: sha512-KaFVRjoqLyF6YXCbVLNad/eS4+OfPQQn2yOd7zF/h5T/CSL2v8NpN6a5TPvtbXthAGw5nG+PuTtq+DdIZr+cRQ==}
 
@@ -7797,11 +7789,11 @@ packages:
     resolution: {integrity: sha512-nwNCjxJTjNuLCgFr42fEak5OcLuB3ecca+9ksPFNvtfYSLpjf+iJqSIaSnIile6ZPbKYxI5k2AfXqeopGudK/g==}
     hasBin: true
 
-  update-browserslist-db@1.2.3:
-    resolution: {integrity: sha512-Js0m9cx+qOgDxo0eMiFGEueWztz+d4+M3rGlmKPT+T4IS/jP4ylw3Nwpu6cpTTP8R1MAC1kF4VbdLt3ARf209w==}
+  update-browserslist-db@1.3.2:
+    resolution: {integrity: sha512-UQ+MSxlhRm1bzjhU+DcuXfjFO1FzNtqhK5+9Yvlp90ItDLk5vT932A0rFu619nf7RVS+Y/VeaUW1jaRDqZ8VJw==}
     hasBin: true
     peerDependencies:
-      browserslist: '>= 4.21.0'
+      browserslist: '>=4.28.8 <5'
 
   url-template@2.0.8:
     resolution: {integrity: sha512-XdVKMF4SJ0nP/O7XIPB0JwAEuT9lDIYnNsK8yGVe43y0AWoKeJNdv3ZNWh7ksJ6KqQFjOO6ox/VEitLnaVNufw==}
@@ -8743,7 +8735,7 @@ snapshots:
     dependencies:
       '@babel/compat-data': 7.29.7
       '@babel/helper-validator-option': 7.29.7
-      browserslist: 4.28.1
+      browserslist: 4.28.8
       lru-cache: 5.1.1
       semver: 6.3.1
 
@@ -12106,7 +12098,7 @@ snapshots:
 
   autoprefixer@10.4.23(postcss@8.5.23):
     dependencies:
-      browserslist: 4.28.1
+      browserslist: 4.28.8
       caniuse-lite: 1.0.30001761
       fraction.js: 5.3.4
       picocolors: 1.1.1
@@ -12139,6 +12131,8 @@ snapshots:
   base64-js@1.5.1: {}
 
   baseline-browser-mapping@2.10.38: {}
+
+  baseline-browser-mapping@2.11.20: {}
 
   before-after-hook@2.2.3: {}
 
@@ -12180,13 +12174,13 @@ snapshots:
     dependencies:
       fill-range: 7.1.1
 
-  browserslist@4.28.1:
+  browserslist@4.28.8:
     dependencies:
-      baseline-browser-mapping: 2.10.38
-      caniuse-lite: 1.0.30001761
-      electron-to-chromium: 1.5.267
-      node-releases: 2.0.27
-      update-browserslist-db: 1.2.3(browserslist@4.28.1)
+      baseline-browser-mapping: 2.11.20
+      caniuse-lite: 1.0.30001810
+      electron-to-chromium: 1.5.420
+      node-releases: 2.0.54
+      update-browserslist-db: 1.3.2(browserslist@4.28.8)
 
   buffer-from@1.1.2: {}
 
@@ -12224,12 +12218,14 @@ snapshots:
 
   caniuse-api@3.0.0:
     dependencies:
-      browserslist: 4.28.1
+      browserslist: 4.28.8
       caniuse-lite: 1.0.30001761
       lodash.memoize: 4.1.2
       lodash.uniq: 4.5.0
 
   caniuse-lite@1.0.30001761: {}
+
+  caniuse-lite@1.0.30001810: {}
 
   ccount@2.0.1: {}
 
@@ -12479,7 +12475,7 @@ snapshots:
 
   cssnano-preset-default@7.0.10(postcss@8.5.23):
     dependencies:
-      browserslist: 4.28.1
+      browserslist: 4.28.8
       css-declaration-sorter: 7.3.0(postcss@8.5.23)
       cssnano-utils: 5.0.1(postcss@8.5.23)
       postcss: 8.5.23
@@ -12672,7 +12668,7 @@ snapshots:
     dependencies:
       jake: 10.9.4
 
-  electron-to-chromium@1.5.267: {}
+  electron-to-chromium@1.5.420: {}
 
   emoji-regex@10.6.0: {}
 
@@ -12798,15 +12794,6 @@ snapshots:
   esprima@4.0.1: {}
 
   estree-util-is-identifier-name@3.0.0: {}
-
-  estree-util-scope@1.0.0:
-    dependencies:
-      '@types/estree': 1.0.8
-      devlop: 1.1.0
-
-  estree-util-value-to-estree@3.5.0:
-    dependencies:
-      '@types/estree': 1.0.8
 
   estree-util-visit@2.0.0:
     dependencies:
@@ -14349,7 +14336,7 @@ snapshots:
 
   node-machine-id@1.1.12: {}
 
-  node-releases@2.0.27: {}
+  node-releases@2.0.54: {}
 
   node-webvtt@1.9.4:
     dependencies:
@@ -14683,7 +14670,7 @@ snapshots:
 
   postcss-colormin@7.0.5(postcss@8.5.23):
     dependencies:
-      browserslist: 4.28.1
+      browserslist: 4.28.8
       caniuse-api: 3.0.0
       colord: 2.9.3
       postcss: 8.5.23
@@ -14691,7 +14678,7 @@ snapshots:
 
   postcss-convert-values@7.0.8(postcss@8.5.23):
     dependencies:
-      browserslist: 4.28.1
+      browserslist: 4.28.8
       postcss: 8.5.23
       postcss-value-parser: 4.2.0
 
@@ -14729,7 +14716,7 @@ snapshots:
 
   postcss-merge-rules@7.0.7(postcss@8.5.23):
     dependencies:
-      browserslist: 4.28.1
+      browserslist: 4.28.8
       caniuse-api: 3.0.0
       cssnano-utils: 5.0.1(postcss@8.5.23)
       postcss: 8.5.23
@@ -14749,7 +14736,7 @@ snapshots:
 
   postcss-minify-params@7.0.5(postcss@8.5.23):
     dependencies:
-      browserslist: 4.28.1
+      browserslist: 4.28.8
       cssnano-utils: 5.0.1(postcss@8.5.23)
       postcss: 8.5.23
       postcss-value-parser: 4.2.0
@@ -14817,7 +14804,7 @@ snapshots:
 
   postcss-normalize-unicode@7.0.5(postcss@8.5.23):
     dependencies:
-      browserslist: 4.28.1
+      browserslist: 4.28.8
       postcss: 8.5.23
       postcss-value-parser: 4.2.0
 
@@ -14839,7 +14826,7 @@ snapshots:
 
   postcss-reduce-initial@7.0.5(postcss@8.5.23):
     dependencies:
-      browserslist: 4.28.1
+      browserslist: 4.28.8
       caniuse-api: 3.0.0
       postcss: 8.5.23
 
@@ -15018,15 +15005,6 @@ snapshots:
       unified: 11.0.5
     transitivePeerDependencies:
       - supports-color
-
-  remark-mdx-frontmatter@5.2.0:
-    dependencies:
-      '@types/mdast': 4.0.4
-      estree-util-value-to-estree: 3.5.0
-      toml: 3.0.0
-      unified: 11.0.5
-      unist-util-mdx-define: 1.1.2
-      yaml: 2.9.0
 
   remark-mdx@3.1.1:
     dependencies:
@@ -15516,7 +15494,7 @@ snapshots:
 
   stylehacks@7.0.7(postcss@8.5.23):
     dependencies:
-      browserslist: 4.28.1
+      browserslist: 4.28.8
       postcss: 8.5.23
       postcss-selector-parser: 7.1.1
 
@@ -15665,8 +15643,6 @@ snapshots:
       is-number: 7.0.0
 
   toad-cache@3.7.0: {}
-
-  toml@3.0.0: {}
 
   totalist@3.0.1: {}
 
@@ -15856,16 +15832,6 @@ snapshots:
     dependencies:
       '@types/unist': 3.0.3
 
-  unist-util-mdx-define@1.1.2:
-    dependencies:
-      '@types/estree': 1.0.8
-      '@types/hast': 3.0.4
-      '@types/mdast': 4.0.4
-      estree-util-is-identifier-name: 3.0.0
-      estree-util-scope: 1.0.0
-      estree-walker: 3.0.3
-      vfile: 6.0.3
-
   unist-util-position-from-estree@2.0.0:
     dependencies:
       '@types/unist': 3.0.3
@@ -15925,9 +15891,9 @@ snapshots:
       knitwork: 1.3.0
       scule: 1.3.0
 
-  update-browserslist-db@1.2.3(browserslist@4.28.1):
+  update-browserslist-db@1.3.2(browserslist@4.28.8):
     dependencies:
-      browserslist: 4.28.1
+      browserslist: 4.28.8
       escalade: 3.2.0
       picocolors: 1.1.1
 

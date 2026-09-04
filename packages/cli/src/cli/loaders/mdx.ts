@@ -4,7 +4,6 @@ import remarkParse from "remark-parse";
 import remarkFrontmatter from "remark-frontmatter";
 import remarkGfm from "remark-gfm";
 import remarkStringify from "remark-stringify";
-import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 import { VFile } from "vfile";
 import { Root, RootContent, RootContentMap } from "mdast";
 import { ILoader } from "./_types";
