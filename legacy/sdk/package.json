@@ -1,6 +1,6 @@
 {
   "name": "@replexica/sdk",
-  "version": "0.7.18",
+  "version": "0.7.19",
   "description": "[DEPRECATED] Replexica SDK (now Lingo.dev) - Please use lingo.dev instead",
   "private": false,
   "type": "module",

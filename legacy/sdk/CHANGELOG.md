@@ -1,5 +1,12 @@
 # @replexica/sdk
 
+## 0.7.19
+
+### Patch Changes
+
+- Updated dependencies [[`ee3fa2e`](https://github.com/lingodotdev/lingo.dev/commit/ee3fa2eb2f8a5c97daefbd998d24f23d185aa80f)]:
+  - lingo.dev@0.138.7
+
 ## 0.7.18
 
 ### Patch Changes

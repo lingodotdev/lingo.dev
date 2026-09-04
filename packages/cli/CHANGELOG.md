@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.138.7
+
+### Patch Changes
+
+- [#2204](https://github.com/lingodotdev/lingo.dev/pull/2204) [`ee3fa2e`](https://github.com/lingodotdev/lingo.dev/commit/ee3fa2eb2f8a5c97daefbd998d24f23d185aa80f) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Remove the unused `remark-mdx-frontmatter` import and dependency from the mdx loader.
+
 ## 0.138.6
 
 ### Patch Changes
