@@ -54,13 +54,13 @@
     "@types/react-dom": "19.2.3",
     "@vitejs/plugin-react": "4.4.1",
     "chokidar-cli": "3.0.0",
-    "next": "16.2.11",
+    "next": "16.3.3",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "tsup": "8.5.1",
     "typescript": "5.9.3",
     "unbuild": "3.6.1",
-    "vitest": "3.2.6"
+    "vitest": "4.1.11"
   },
   "peerDependencies": {
     "next": ">=15.5.19 <16"
