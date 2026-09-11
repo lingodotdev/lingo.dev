@@ -39,12 +39,9 @@ export function createBasicTranslator(
     const response = await generateText({
       model,
       ...settings,
-      system: JSON.stringify({
-        role: "system",
-        content: systemPrompt
-          .replaceAll("{source}", input.sourceLocale)
-          .replaceAll("{target}", input.targetLocale),
-      }),
+      system: systemPrompt
+        .replaceAll("{source}", input.sourceLocale)
+        .replaceAll("{target}", input.targetLocale),
       messages: [
         {
           role: "user",

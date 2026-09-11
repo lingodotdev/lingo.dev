@@ -65,7 +65,7 @@ describe("createBasicTranslator", () => {
 
     const prompt = getPrompt()!;
     expect(prompt[0].role).toBe("system");
-    expect(prompt[0].content).toContain("Translate from en to es");
+    expect(prompt[0].content).toBe("Translate from en to es");
     expect(prompt.slice(1).map((message) => message.role)).not.toContain(
       "system",
     );
