@@ -50,7 +50,6 @@ overrides:
   joi@>=18 <18.2.1: 18.2.1
   diff@>=6 <8.0.3: 8.0.3
   '@babel/core@<7.29.6': 7.29.6
-  '@ai-sdk/provider-utils@>=4 <4.0.33': '>=4.0.33 <5'
 
 importers:
 
