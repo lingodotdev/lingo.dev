@@ -152,8 +152,8 @@ function createAiSdkLocalizer(params: {
         await generateText({
           model,
           ...params.settings,
+          system: "You are an echo server",
           messages: [
-            { role: "system", content: "You are an echo server" },
             { role: "user", content: "OK" },
             { role: "assistant", content: "OK" },
             { role: "user", content: "OK" },
@@ -221,8 +221,8 @@ function createAiSdkLocalizer(params: {
       const response = await generateText({
         model,
         ...params.settings,
+        system: systemPrompt,
         messages: [
-          { role: "system", content: systemPrompt },
           ...shots.flatMap(
             ([userShot, assistantShot]) =>
               [

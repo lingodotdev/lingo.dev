@@ -145,11 +145,8 @@ export class PluralizationService {
       const response = await withTimeout(
         generateText({
           model: this.languageModel,
+          system: this.prompt,
           messages: [
-            {
-              role: "system",
-              content: this.prompt,
-            },
             // Add few-shot examples
             ...shots.flatMap((shotsTuple) => [
               {

@@ -191,15 +191,12 @@ export class LingoTranslator implements Translator<LingoTranslatorConfig> {
       const response = await withTimeout(
         generateText({
           model: aiModel,
+          system: getSystemPrompt({
+            sourceLocale: this.config.sourceLocale,
+            targetLocale,
+            prompt: this.config.prompt,
+          }),
           messages: [
-            {
-              role: "system",
-              content: getSystemPrompt({
-                sourceLocale: this.config.sourceLocale,
-                targetLocale,
-                prompt: this.config.prompt,
-              }),
-            },
             // Add few-shot examples
             ...shots.flatMap((shotsTuple) => [
               {
