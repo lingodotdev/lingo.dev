@@ -237,15 +237,12 @@ export class LCPAPI {
 
         const response = await generateText({
           model: aiModel,
+          system: getSystemPrompt({
+            sourceLocale,
+            targetLocale,
+            prompt: prompt ?? undefined,
+          }),
           messages: [
-            {
-              role: "system",
-              content: getSystemPrompt({
-                sourceLocale,
-                targetLocale,
-                prompt: prompt ?? undefined,
-              }),
-            },
             ...shots.flatMap((shotsTuple) => [
               {
                 role: "user" as const,
