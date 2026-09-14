@@ -104,6 +104,8 @@ importers:
 
   demo/new-cli: {}
 
+  demo/new-cli: {}
+
   demo/new-compiler-next16:
     dependencies:
       '@lingo.dev/compiler':
