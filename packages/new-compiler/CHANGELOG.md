@@ -1,5 +1,11 @@
 # @lingo.dev/compiler
 
+## 0.4.14
+
+### Patch Changes
+
+- [#2213](https://github.com/lingodotdev/lingo.dev/pull/2213) [`d664a88`](https://github.com/lingodotdev/lingo.dev/commit/d664a884aa60c71d7edb2075413f705cc7a63419) Thanks [@ohmoses](https://github.com/ohmoses)! - Updated dependency overrides to patch critical and high severity vulnerabilities.
+
 ## 0.4.13
 
 ### Patch Changes
