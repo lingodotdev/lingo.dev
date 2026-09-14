@@ -172,7 +172,7 @@
     "dotenv": "17.2.3",
     "fast-xml-parser": "5.7.0",
     "ini": "5.0.0",
-    "intl-messageformat": "11.0.6",
+    "intl-messageformat": "11.2.13",
     "lingo.dev": "workspace:^",
     "lodash": "4.18.1",
     "node-machine-id": "1.1.12",
