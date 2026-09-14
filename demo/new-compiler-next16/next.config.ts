@@ -1,9 +1,9 @@
 import type { NextConfig } from "next";
 import { withLingo } from "@lingo.dev/compiler/next";
 
-const nextConfig: NextConfig = {};
+const nextConfig = {} satisfies NextConfig;
 
-export default async function (): Promise<NextConfig> {
+export default async function () {
   return await withLingo(nextConfig, {
     sourceRoot: "./app",
     lingoDir: ".lingo",
