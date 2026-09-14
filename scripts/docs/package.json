@@ -22,7 +22,7 @@
     "tsx": "4.20.6",
     "typescript": "5.9.3",
     "unified": "11.0.5",
-    "vitest": "3.2.6"
+    "vitest": "4.1.11"
   },
   "dependencies": {
     "prettier": "3.6.2",
