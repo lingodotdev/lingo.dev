@@ -10,166 +10,94 @@
 
 <p align="center">
   <strong>
-    Açık kaynaklı yerelleştirme mühendisliği araçları. Tutarlı, kaliteli
-    çeviriler için Lingo.dev yerelleştirme mühendisliği platformuna bağlanın.
+    Lingo.dev, yerelleştirme mühendisliği platformudur: çeviri kalitesini
+    ölçmek, LLM'lerle çeviri yapmak ve anadili konuşanlarla düzeltme yapmak için
+    en iyi yol.
   </strong>
 </p>
 
-<br />
-
 <p align="center">
-  <a href="#lingodev-api">Lingo API</a> •
-  <a href="#lingodev-mcp">Lingo React MCP</a> •
-  <a href="#lingodev-cli">Lingo CLI</a> •
-  <a href="#lingodev-cicd">Lingo GitHub Action</a> •
-  <a href="#lingodev-compiler">React için Lingo Compiler (Erken alfa)</a>
+  <a href="https://lingo.dev/en/docs">Dokümanlar</a> •
+  <a href="https://lingo.dev">Platform</a> •
+  <a href="https://lingo.dev/go/discord">Discord</a>
 </p>
 
 <p align="center">
-  <a href="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml">
+  <a href="https://lingo.dev/en">
     <img
-      src="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml/badge.svg"
-      alt="Release"
+      src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square"
+      alt="Product Hunt Ayın 1 Numaralı Geliştirici Aracı"
     />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md">
     <img
       src="https://img.shields.io/github/license/lingodotdev/lingo.dev"
-      alt="License"
+      alt="Lisans"
     />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/commits/main">
     <img
       src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev"
-      alt="Last Commit"
-    />
-  </a>
-  <a href="https://lingo.dev/en">
-    <img
-      src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #1 DevTool of the Month"
-    />
-  </a>
-  <a href="https://lingo.dev/en">
-    <img
-      src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Week-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #1 DevTool of the Week"
-    />
-  </a>
-  <a href="https://lingo.dev/en">
-    <img
-      src="https://img.shields.io/badge/Product%20Hunt-%232%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #2 Product of the Day"
-    />
-  </a>
-  <a href="https://lingo.dev/en">
-    <img
-      src="https://img.shields.io/badge/GitHub-Trending-blue?logo=github&style=flat-square"
-      alt="Github trending"
+      alt="Son commit"
     />
   </a>
 </p>
 
 ---
 
-## Hızlı başlangıç
+## Ekipler Lingo.dev üzerinde yerelleştirme motorları kurar
 
-| Araç                                               | Ne yapar                                                          | Hızlı Komut                        |
-| -------------------------------------------------- | ----------------------------------------------------------------- | ---------------------------------- |
-| [**Lingo React MCP**](#lingodev-mcp)               | React uygulamaları için AI destekli i18n kurulumu                 | Komut: `Set up i18n`               |
-| [**Lingo CLI**](#lingodev-cli)                     | JSON, YAML, markdown, CSV, PO dosyalarını yerelleştir             | `npx lingo.dev@latest run`         |
-| [**Lingo GitHub Action**](#lingodev-cicd)          | GitHub Actions'ta sürekli yerelleştirme                           | `uses: lingodotdev/lingo.dev@main` |
-| [**Lingo Compiler for React**](#lingodev-compiler) | i18n sarmalayıcıları olmadan derleme zamanı React yerelleştirmesi | `withLingo()` eklentisi            |
+[Yerelleştirme motoru](https://lingo.dev/en/docs/platform/engines), ekibinizin yapılandırdığı ve Lingo.dev'in çalıştırdığı durum bilgili bir çeviri API'sidir. Ürün başına, içerik türü başına veya marka başına bir motor oluşturun. Bir motor üzerinden yapılan her istek, içinde yapılandırdığınız her şeyi sabit bir öncelik sırasına göre uygular:
 
-### Yerelleştirme motorları
+| Katman                                                                       | Yapılandırdığınız şey                                                  | Dokümanlarda                                                         |
+| ---------------------------------------------------------------------------- | ---------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| [LLM modelleri](https://lingo.dev/en/docs/platform/llm-models)               | Her dil çifti için hangi modelin devreye gireceği, sıralı yedeklerle   | 400+ model; yanıt çalışan modeli belirtir                            |
+| [Marka sesi](https://lingo.dev/en/docs/platform/brand-voices)                | Ürününüzün her dilde nasıl konuştuğu, yerel ayar başına bir metin      | Pazar başına ton ve formalite                                        |
+| [Kurallar](https://lingo.dev/en/docs/platform/rules)                         | Genel bir modelin kaçırdığı dilbilimsel kurallar                       | İspanyolca'da sıfat konumu, yüzde işaretinden önce boşluk            |
+| [Sözlük](https://lingo.dev/en/docs/platform/glossaries)                      | Yerel ayar başına kesin terim eşleştirmeleri, anlama göre eşleştirilir | "911" Avrupa pazarları için "112" olur; ürün adları değişmeden geçer |
+| [Yapay zeka inceleyicileri](https://lingo.dev/en/docs/platform/ai-reviewers) | Her çeviriden sonra çalışan puanlama                                   | GEMBA skorları, BERTScore, sözlük uyumu                              |
 
-Bu araçlar [yerelleştirme motorlarına](https://lingo.dev) bağlanır – Lingo.dev yerelleştirme mühendisliği platformunda oluşturduğunuz durum bilgili çeviri API'leri. Her motor, sözlükleri, marka sesini ve yerel ayar başına talimatları her istekte kalıcı hale getirerek [terminoloji hatalarını %16,6–44,6 oranında azaltır](https://lingo.dev/research/retrieval-augmented-localization). Ya da [kendi LLM'nizi getirin](#lingodev-cli).
+Sözlükler, kural kümeleri ve marka sesleri kuruluşunuza aittir ve bir motor bunları ekleme yoluyla uygular. Bir sözlük beş motoru yönetir ve bir düzenleme beşine de ulaşır. Canlıya geçmeden önce [Playground](https://lingo.dev/en/docs/platform/playground)'da bir değişikliği test edin: bir motoru ham bir modelle veya iki motoru yan yana karşılaştırın. Motorlar, yerelleştirme ekibinin yerelleştirme altyapısını çalıştırdığı platformda yapılandırılır.
 
----
+## Motorlarınıza koddan ulaşın
 
-### Lingo.dev MCP
-
-React uygulamalarında i18n kurmak hataya açıktır – AI kodlama asistanları bile var olmayan API'leri hayal eder ve yönlendirmeyi bozar. Lingo.dev MCP, AI asistanlarına Next.js, React Router ve TanStack Start için çerçeveye özel i18n bilgisine yapılandırılmış erişim sağlar. Claude Code, Cursor, GitHub Copilot Agents ve Codex ile çalışır.
-
-[Dokümantasyonu oku →](https://lingo.dev/en/mcp)
-
----
-
-### Lingo.dev CLI
-
-JSON, YAML, markdown, CSV ve PO dosyalarını tek komutla yerelleştirin. Bir kilit dosyası neyin zaten yerelleştirildiğini takip eder – yalnızca yeni veya değiştirilmiş içerik işlenir. Varsayılan olarak Lingo.dev'deki yerelleştirme motorunuzu kullanır veya kendi LLM'nizi getirin (OpenAI, Anthropic, Google, Mistral, OpenRouter, Ollama).
+Bir depodaki içeriği çevirin. `lingo push` dosyaları `.lingo/config.json` içinde adlandırılan motora gönderir ve `lingo pull` çevirileri herhangi bir makineden geri yazar:
 
 ```bash
-npx lingo.dev@latest init
-npx lingo.dev@latest run
+npm install -g @lingo.dev/cli
+lingo init && lingo link
+lingo push
 ```
 
-[Dokümantasyonu okuyun →](https://lingo.dev/en/docs/cli)
+Ya da ID ile adlandırarak bir motoru doğrudan çağırın:
 
----
+```javascript
+const res = await fetch("https://api.lingo.dev/process/localize", {
+  method: "POST",
+  headers: {
+    "X-API-Key": process.env.LINGO_API_KEY,
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    engineId: "eng_abc123",
+    sourceLocale: "en",
+    targetLocale: "de",
+    data: { greeting: "Hello, world!", cta: "Get started" },
+  }),
+});
 
-### Lingo.dev CI/CD
-
-Pipeline'ınızda sürekli yerelleştirme. Her push yerelleştirmeyi tetikler – eksik metinler kod üretime ulaşmadan doldurulur. GitHub Actions, GitLab CI/CD ve Bitbucket Pipelines desteklenir.
-
-```yaml
-uses: lingodotdev/lingo.dev@main
-with:
-  api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
+const { data, model, usage } = await res.json();
+// data:  { greeting: "Hallo, Welt!", cta: "Jetzt starten" }
+// model: "anthropic/claude-sonnet-4.5"
+// usage: { inputTokens: 2789, outputTokens: 861, cost: 0.023012 }
 ```
 
-[Dokümantasyonu okuyun →](https://lingo.dev/en/docs/integrations)
+|                                                                        |                                                                                                                                                                                |
+| ---------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [Lingo.dev MCP](https://lingo.dev/en/docs/mcp)                         | Kodlama asistanınız, sorunun ortaya çıktığı konuşmadan bir motor oluşturur, sözlük terimleri ekler, kuralları ayarlar ve iki motoru karşılaştırır                              |
+| [Lingo.dev CLI](https://lingo.dev/en/docs/cli)                         | Kaynak dosyaları gönderin, çevirileri alın, terminalden veya CI'dan. On sekiz format: JSON, YAML, Markdown, MDX, PO, XLIFF, Flutter ARB, Android ve Xcode strings, SubRip, PHP |
+| [Lingo.dev in CI/CD](https://lingo.dev/en/docs/workflows)              | CLI'ı kurun ve GitHub Actions, GitLab CI/CD, Bitbucket Pipelines veya Node.js 22+ ile herhangi bir runner'da `lingo push`'i bir adım olarak çalıştırın                         |
+| [Lingo.dev GitHub App](https://lingo.dev/en/docs/workflows/github-app) | Bir kez kurun ve varsayılan dala yapılan her gönderim bir çeviri pull request'i açar veya günceller. Runner yok, API anahtarı sırrı yok, yönetilecek lockfile yok              |
+| [Lingo.dev API](https://lingo.dev/en/docs/api)                         | Dil çifti başına bir senkron çağrı veya bir isteği birçok dile yayıp sonuçları geldikçe sunan asenkron bir iş                                                                  |
 
----
-
-### Lingo.dev API
-
-Yerelleştirme motorunuzu doğrudan backend kodundan çağırın. Webhook teslimi ile senkron ve asenkron yerelleştirme, yerel ayar başına hata izolasyonu ve WebSocket üzerinden gerçek zamanlı ilerleme.
-
-[Dokümantasyonu okuyun →](https://lingo.dev/en/docs/api)
-
----
-
-### React için Lingo Compiler (Erken alfa)
-
-i18n sarmalayıcıları olmadan derleme zamanı React yerelleştirmesi. Bileşenleri düz İngilizce metinle yazın – derleyici çevrilebilir metinleri algılar ve derleme zamanında yerelleştirilmiş varyantlar oluşturur. Çeviri anahtarları yok, JSON dosyaları yok, `t()` fonksiyonları yok. Next.js (App Router) ve Vite + React desteklenir.
-
-[Dokümantasyonu okuyun →](https://lingo.dev/en/docs/react/compiler)
-
----
-
-## Katkıda Bulunma
-
-Katkılar beklenir. Lütfen şu yönergeleri izleyin:
-
-1. **Sorunlar:** [Hata bildirin veya özellik isteyin](https://github.com/lingodotdev/lingo.dev/issues)
-2. **Pull Request'ler:** [Değişiklik gönderin](https://github.com/lingodotdev/lingo.dev/pulls)
-   - Her PR bir changeset gerektirir: `pnpm new` (veya sürüm dışı değişiklikler için `pnpm new:empty`)
-   - Göndermeden önce testlerin geçtiğinden emin olun
-3. **Geliştirme:** Bu bir pnpm + turborepo monorepo'sudur
-   - Bağımlılıkları yükleyin: `pnpm install`
-   - Testleri çalıştırın: `pnpm test`
-   - Derleyin: `pnpm build`
-
-**Destek:** [Discord topluluğu](https://lingo.dev/go/discord)
-
-## Yıldız Geçmişi
-
-Lingo.dev'i faydalı buluyorsanız, bize yıldız verin ve 10.000 yıldıza ulaşmamıza yardımcı olun!
-
-[
-
-![Yıldız Geçmişi Grafiği](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
-
-](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
-
-## Yerelleştirilmiş Belgeler
-
-**Mevcut çeviriler:**
-
-[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [Português (Brasil)](/readme/pt-BR.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Polski](/readme/pl.md) • [Türkçe](/readme/tr.md) • [اردو](/readme/ur.md) • [भोजपुरी](/readme/bho.md) • [অসমীয়া](/readme/as-IN.md) • [ગુજરાતી](/readme/gu-IN.md) • [मराठी](/readme/mr-IN.md) • [ଓଡ଼ିଆ](/readme/or-IN.md) • [ਪੰਜਾਬੀ](/readme/pa-IN.md) • [සිංහල](/readme/si-LK.md) • [தமிழ்](/readme/ta-IN.md) • [తెలుగు](/readme/te-IN.md)
-
-**Yeni bir dil eklemek için:**
-
-1. [BCP-47 formatını](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) kullanarak yerel kod bilgisini [`i18n.json`](./i18n.json) dosyasına ekleyin
-2. Bir pull request gönderin
+[İlk yerelleştirme motorunuzu oluşturun →](https://lingo.dev)
