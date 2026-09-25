@@ -93,28 +93,30 @@ describe("AbortController Support", () => {
 
       // Mock JSDOM
       const mockJSDOM = {
-        JSDOM: vi.fn().mockImplementation(() => ({
-          window: {
-            document: {
-              documentElement: {
-                setAttribute: vi.fn(),
-              },
-              head: {
-                childNodes: [],
-              },
-              body: {
-                childNodes: [
-                  {
-                    nodeType: 3,
-                    textContent: "Hello",
-                    parentElement: null,
-                  },
-                ],
+        JSDOM: vi.fn().mockImplementation(function () {
+          return {
+            window: {
+              document: {
+                documentElement: {
+                  setAttribute: vi.fn(),
+                },
+                head: {
+                  childNodes: [],
+                },
+                body: {
+                  childNodes: [
+                    {
+                      nodeType: 3,
+                      textContent: "Hello",
+                      parentElement: null,
+                    },
+                  ],
+                },
               },
             },
-          },
-          serialize: vi.fn().mockReturnValue("<html><body>Hola</body></html>"),
-        })),
+            serialize: vi.fn().mockReturnValue("<html><body>Hola</body></html>"),
+          };
+        }),
       };
 
       // Mock dynamic import
