@@ -35,6 +35,6 @@
     "@unhead/vue": "2.1.15",
     "tsup": "8.5.1",
     "typescript": "5.9.3",
-    "vitest": "4.1.0"
+    "vitest": "4.1.11"
   }
 }
