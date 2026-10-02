@@ -8,6 +8,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
 jobs:
   docker:
     runs-on: ubuntu-latest

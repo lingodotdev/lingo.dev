@@ -12,6 +12,8 @@ jobs:
   check-merge-conflict:
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
+    permissions:
+      pull-requests: read
 
     steps:
       - name: Check for merge conflicts
