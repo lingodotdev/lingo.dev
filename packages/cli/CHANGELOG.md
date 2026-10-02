@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.138.9
+
+### Patch Changes
+
+- [#2220](https://github.com/lingodotdev/lingo.dev/pull/2220) [`81525d1`](https://github.com/lingodotdev/lingo.dev/commit/81525d15e29ce8728e660c200ff502f581fa225f) Thanks [@moygospadin](https://github.com/moygospadin)! - Pass the working directory to `git config safe.directory` as an argument instead of interpolating it into a shell command
+
 ## 0.138.8
 
 ### Patch Changes
