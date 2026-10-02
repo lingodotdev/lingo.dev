@@ -76,6 +76,8 @@ jobs:
     needs: check
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout
         uses: actions/checkout@v4
