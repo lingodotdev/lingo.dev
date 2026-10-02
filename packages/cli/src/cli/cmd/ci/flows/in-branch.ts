@@ -1,4 +1,4 @@
-import { execSync } from "child_process";
+import { execFileSync, execSync } from "child_process";
 import path from "path";
 import {
   getGitConfig,
@@ -97,7 +97,12 @@ export class InBranchFlow extends IntegrationFlow {
     execSync(`pwd`, { stdio: "inherit" });
     execSync(`ls -la`, { stdio: "inherit" });
 
-    execSync(`git config --global safe.directory ${process.cwd()}`);
+    execFileSync("git", [
+      "config",
+      "--global",
+      "safe.directory",
+      process.cwd(),
+    ]);
 
     execSync(`git config user.name "${gitConfig.userName}"`);
     execSync(`git config user.email "${gitConfig.userEmail}"`);
