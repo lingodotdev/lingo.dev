@@ -86,7 +86,7 @@
     "@biomejs/js-api": "4.0.0",
     "@biomejs/wasm-nodejs": "2.5.0",
     "@datocms/cma-client-node": "5.5.3",
-    "@gitbeaker/rest": "39.34.3",
+    "@gitbeaker/rest": "43.8.0",
     "@inquirer/prompts": "7.8.0",
     "@lingo.dev/_locales": "workspace:*",
     "@lingo.dev/_sdk": "workspace:*",
