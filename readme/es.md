@@ -1,178 +1,77 @@
 <p align="center">
   <a href="https://lingo.dev">
-    <img
-      src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.png"
-      width="100%"
-      alt="Lingo.dev – plataforma de ingeniería de localización"
-    />
+    <img src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.png" width="100%" alt="Lingo.dev – plataforma de ingeniería de localización" />
   </a>
 </p>
 
 <p align="center">
-  <strong>
-    Herramientas de ingeniería de localización de código abierto. Conéctese a la
-    plataforma de ingeniería de localización Lingo.dev para obtener traducciones
-    consistentes y de calidad.
-  </strong>
-</p>
-
-<br />
-
-<p align="center">
-  <a href="#lingodev-api">API de Lingo</a> •
-  <a href="#lingodev-mcp">Lingo React MCP</a> •
-  <a href="#lingodev-cli">CLI de Lingo</a> •
-  <a href="#lingodev-cicd">Acción de GitHub de Lingo</a> •
-  <a href="#lingodev-compiler">
-    Compilador de Lingo para React (Alfa temprana)
-  </a>
+  <strong>Lingo.dev es la plataforma de ingeniería de localización: la mejor forma de medir la calidad de las traducciones, traducir con LLM y revisarlas con hablantes nativos.</strong>
 </p>
 
 <p align="center">
-  <a href="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml">
-    <img
-      src="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml/badge.svg"
-      alt="Release"
-    />
-  </a>
-  <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md">
-    <img
-      src="https://img.shields.io/github/license/lingodotdev/lingo.dev"
-      alt="License"
-    />
-  </a>
-  <a href="https://github.com/lingodotdev/lingo.dev/commits/main">
-    <img
-      src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev"
-      alt="Last Commit"
-    />
-  </a>
-  <a href="https://lingo.dev/en">
-    <img
-      src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #1 DevTool of the Month"
-    />
-  </a>
-  <a href="https://lingo.dev/en">
-    <img
-      src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Week-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #1 DevTool of the Week"
-    />
-  </a>
-  <a href="https://lingo.dev/en">
-    <img
-      src="https://img.shields.io/badge/Product%20Hunt-%232%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #2 Product of the Day"
-    />
-  </a>
-  <a href="https://lingo.dev/en">
-    <img
-      src="https://img.shields.io/badge/GitHub-Trending-blue?logo=github&style=flat-square"
-      alt="Github trending"
-    />
-  </a>
+  <a href="https://lingo.dev/en/docs">Documentación</a> •
+  <a href="https://lingo.dev">Plataforma</a> •
+  <a href="https://lingo.dev/go/discord">Discord</a>
+</p>
+
+<p align="center">
+  <a href="https://lingo.dev/en"><img src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square" alt="DevTool n.º 1 del mes en Product Hunt" /></a>
+  <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md"><img src="https://img.shields.io/github/license/lingodotdev/lingo.dev" alt="Licencia" /></a>
+  <a href="https://github.com/lingodotdev/lingo.dev/commits/main"><img src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev" alt="Último commit" /></a>
 </p>
 
 ---
 
-## Inicio rápido
+## Los equipos crean motores de localización en Lingo.dev
 
-| Herramienta                                              | Qué hace                                                         | Comando rápido                     |
-| -------------------------------------------------------- | ---------------------------------------------------------------- | ---------------------------------- |
-| [**Lingo React MCP**](#lingodev-mcp)                     | Configuración de i18n asistida por IA para apps React            | Prompt: `Set up i18n`              |
-| [**CLI de Lingo**](#lingodev-cli)                        | Localiza archivos JSON, YAML, markdown, CSV, PO                  | `npx lingo.dev@latest run`         |
-| [**Acción de GitHub de Lingo**](#lingodev-cicd)          | Localización continua en GitHub Actions                          | `uses: lingodotdev/lingo.dev@main` |
-| [**Compilador de Lingo para React**](#lingodev-compiler) | Localización de React en tiempo de compilación sin wrappers i18n | `withLingo()` plugin               |
+Un [motor de localización](https://lingo.dev/en/docs/platform/engines) es una API de traducción con estado que tu equipo configura y Lingo.dev ejecuta. Crea uno por producto, por tipo de contenido o por marca. Cada solicitud que pasa por un motor aplica todo lo que hayas configurado en él en un orden de prioridad fijo:
 
-### Motores de localización
+| Capa | Qué configuras | Según la documentación |
+| --- | --- | --- |
+| [Modelos LLM](https://lingo.dev/en/docs/platform/llm-models) | Qué modelo gestiona cada par de idiomas, con alternativas de respaldo ordenadas por prioridad | Más de 400 modelos; la respuesta indica qué modelo se ha ejecutado |
+| [Voz de marca](https://lingo.dev/en/docs/platform/brand-voices) | Cómo habla tu producto en cada idioma, con un texto por idioma | Tono y grado de formalidad por mercado |
+| [Reglas](https://lingo.dev/en/docs/platform/rules) | Las convenciones lingüísticas que un modelo genérico pasa por alto | La posición del adjetivo en español, un espacio antes del signo de porcentaje |
+| [Glosario](https://lingo.dev/en/docs/platform/glossaries) | Correspondencias exactas de términos por idioma, según su significado | "911" pasa a ser "112" en los mercados europeos; los nombres de producto se mantienen |
+| [Evaluadores de IA](https://lingo.dev/en/docs/platform/ai-reviewers) | Puntuación que se ejecuta después de cada traducción | Puntuaciones GEMBA, BERTScore y cumplimiento del glosario |
 
-Estas herramientas se conectan a [motores de localización](https://lingo.dev) – APIs de traducción con estado que crea en la plataforma de ingeniería de localización Lingo.dev. Cada motor mantiene glosarios, voz de marca e instrucciones por idioma en cada solicitud, [reduciendo errores de terminología entre 16.6–44.6%](https://lingo.dev/research/retrieval-augmented-localization). O [use su propio LLM](#lingodev-cli).
+Los glosarios, conjuntos de reglas y voces de marca pertenecen a tu organización, y un motor los aplica al vincularlos. Un glosario puede gobernar cinco motores, y una sola edición llega a los cinco. Prueba un cambio en el [Playground](https://lingo.dev/en/docs/platform/playground) antes de ponerlo en producción: compara un motor con un modelo sin ajustar, o dos motores en paralelo. Los motores se configuran en la plataforma, donde el equipo de localización gestiona toda la infraestructura de localización.
 
----
+## Accede a tus motores desde el código
 
-### Lingo.dev MCP
-
-Configurar i18n en aplicaciones React es propenso a errores – incluso los asistentes de código con IA alucinan APIs inexistentes y rompen el enrutamiento. Lingo.dev MCP proporciona a los asistentes de IA acceso estructurado a conocimiento de i18n específico por framework para Next.js, React Router y TanStack Start. Funciona con Claude Code, Cursor, GitHub Copilot Agents y Codex.
-
-[Leer la documentación →](https://lingo.dev/en/mcp)
-
----
-
-### CLI de Lingo.dev
-
-Localice archivos JSON, YAML, markdown, CSV y PO en un solo comando. Un archivo de bloqueo rastrea lo que ya está localizado – solo se procesa el contenido nuevo o modificado. Usa por defecto su motor de localización en Lingo.dev, o traiga su propio LLM (OpenAI, Anthropic, Google, Mistral, OpenRouter, Ollama).
+Traduce el contenido de un repositorio. `lingo push` envía los archivos al motor indicado en `.lingo/config.json`, y `lingo pull` devuelve las traducciones desde cualquier equipo:
 
 ```bash
-npx lingo.dev@latest init
-npx lingo.dev@latest run
+npm install -g @lingo.dev/cli
+lingo init && lingo link
+lingo push
 ```
 
-[Lee la documentación →](https://lingo.dev/en/docs/cli)
+O llama a un motor directamente, indicando su ID:
 
----
+```javascript
+const res = await fetch("https://api.lingo.dev/process/localize", {
+  method: "POST",
+  headers: { "X-API-Key": process.env.LINGO_API_KEY, "Content-Type": "application/json" },
+  body: JSON.stringify({
+    engineId: "eng_abc123",
+    sourceLocale: "en",
+    targetLocale: "de",
+    data: { greeting: "Hello, world!", cta: "Get started" },
+  }),
+});
 
-### Lingo.dev CI/CD
-
-Localización continua en tu pipeline. Cada push activa la localización: las cadenas faltantes se completan antes de que el código llegue a producción. Compatible con GitHub Actions, GitLab CI/CD y Bitbucket Pipelines.
-
-```yaml
-uses: lingodotdev/lingo.dev@main
-with:
-  api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
+const { data, model, usage } = await res.json();
+// data:  { greeting: "Hallo, Welt!", cta: "Jetzt starten" }
+// model: "anthropic/claude-sonnet-4.5"
+// usage: { inputTokens: 2789, outputTokens: 861, cost: 0.023012 }
 ```
 
-[Lee la documentación →](https://lingo.dev/en/docs/integrations)
+|| |
+| --- | --- |
+| [Lingo.dev MCP](https://lingo.dev/en/docs/mcp) | Tu agente de programación crea un motor, añade términos al glosario, ajusta reglas y compara dos motores desde la misma conversación en la que surgió el problema |
+| [Lingo.dev CLI](https://lingo.dev/en/docs/cli) | Envía archivos fuente y recupera traducciones desde un terminal o desde CI. Dieciocho formatos: JSON, YAML, Markdown, MDX, PO, XLIFF, Flutter ARB, cadenas de Android y Xcode, SubRip, PHP |
+| [Lingo.dev en CI/CD](https://lingo.dev/en/docs/workflows) | Instala la CLI y ejecuta `lingo push` como un paso en GitHub Actions, GitLab CI/CD, Bitbucket Pipelines o cualquier runner con Node.js 22+ |
+| [Lingo.dev GitHub App](https://lingo.dev/en/docs/workflows/github-app) | Instálala una vez y cada push a la rama predeterminada abrirá o actualizará una pull request de traducción, o las traducciones llegarán como un commit en la pull request que modificó el original. Sin runner, sin secretos de clave API y sin Lockfile que gestionar |
+| [Lingo.dev API](https://lingo.dev/en/docs/api) | Una llamada síncrona por cada par de idiomas, o un trabajo asíncrono que distribuye una solicitud entre muchos idiomas y entrega los resultados a medida que llegan |
 
----
-
-### API de Lingo.dev
-
-Llama a tu motor de localización directamente desde el código backend. Localización síncrona y asíncrona con entrega por webhook, aislamiento de fallos por idioma y progreso en tiempo real vía WebSocket.
-
-[Lee la documentación →](https://lingo.dev/en/docs/api)
-
----
-
-### Compilador Lingo para React (Alpha temprana)
-
-Localización de React en tiempo de compilación sin wrappers i18n. Escribe componentes con texto en inglés simple: el compilador detecta las cadenas traducibles y genera variantes localizadas en tiempo de compilación. Sin claves de traducción, sin archivos JSON, sin funciones `t()`. Compatible con Next.js (App Router) y Vite + React.
-
-[Lee la documentación →](https://lingo.dev/en/docs/react/compiler)
-
----
-
-## Contribuir
-
-Las contribuciones son bienvenidas. Por favor, sigue estas pautas:
-
-1. **Issues:** [Reporta errores o solicita funcionalidades](https://github.com/lingodotdev/lingo.dev/issues)
-2. **Pull Requests:** [Envía cambios](https://github.com/lingodotdev/lingo.dev/pulls)
-   - Cada PR requiere un changeset: `pnpm new` (o `pnpm new:empty` para cambios sin release)
-   - Asegúrate de que las pruebas pasen antes de enviar
-3. **Desarrollo:** Este es un monorepo pnpm + turborepo
-   - Instala dependencias: `pnpm install`
-   - Ejecuta pruebas: `pnpm test`
-   - Compila: `pnpm build`
-
-**Soporte:** [Comunidad Discord](https://lingo.dev/go/discord)
-
-## Historial de Estrellas
-
-Si encuentras útil Lingo.dev, danos una estrella y ayúdanos a alcanzar las 10,000 estrellas!
-
-[
-
-![Gráfico del Historial de Estrellas](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
-
-](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
-
-## Documentación Localizada
-
-**Traducciones disponibles:**
-
-[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [Português (Brasil)](/readme/pt-BR.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Polski](/readme/pl.md) • [Türkçe](/readme/tr.md) • [اردو](/readme/ur.md) • [भोजपुरी](/readme/bho.md) • [অসমীয়া](/readme/as-IN.md) • [ગુજરાતી](/readme/gu-IN.md) • [मराठी](/readme/mr-IN.md) • [ଓଡ଼ିଆ](/readme/or-IN.md) • [ਪੰਜਾਬੀ](/readme/pa-IN.md) • [සිංහල](/readme/si-LK.md) • [தமிழ்](/readme/ta-IN.md) • [తెలుగు](/readme/te-IN.md)
-
-**Añadir un nuevo idioma:**
-
-1. Añade el código de idioma a [`i18n.json`](./i18n.json) usando el [formato BCP-47](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale)
-2. Envía una solicitud de incorporación de cambios
+[Crea tu primer motor de localización →](https://lingo.dev)

@@ -71,7 +71,7 @@ const { data, model, usage } = await res.json();
 | [Lingo.dev MCP](https://lingo.dev/en/docs/mcp) | Your coding agent creates an engine, adds glossary terms, tunes rules, and compares two engines, from the conversation where the problem surfaced |
 | [Lingo.dev CLI](https://lingo.dev/en/docs/cli) | Push source files, pull translations, from a terminal or from CI. Eighteen formats: JSON, YAML, Markdown, MDX, PO, XLIFF, Flutter ARB, Android and Xcode strings, SubRip, PHP |
 | [Lingo.dev in CI/CD](https://lingo.dev/en/docs/workflows) | Install the CLI and run `lingo push` as a step in GitHub Actions, GitLab CI/CD, Bitbucket Pipelines, or any runner with Node.js 22+ |
-| [Lingo.dev GitHub App](https://lingo.dev/en/docs/workflows/github-app) | Install once and every push to the default branch opens or updates a translation pull request. No runner, no API key secret, no lockfile to manage |
+| [Lingo.dev GitHub App](https://lingo.dev/en/docs/workflows/github-app) | Install once and every push to the default branch opens or updates a translation pull request, or translations land as a commit in the pull request that changed the source. No runner, no API key secret, no lockfile to manage |
 | [Lingo.dev API](https://lingo.dev/en/docs/api) | One synchronous call per language pair, or an async job that fans one request out to many locales and delivers results as they land |
 
 [Build your first localization engine →](https://lingo.dev)

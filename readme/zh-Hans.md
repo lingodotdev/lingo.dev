@@ -1,174 +1,77 @@
 <p align="center">
   <a href="https://lingo.dev">
-    <img
-      src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.png"
-      width="100%"
-      alt="Lingo.dev – 本地化工程平台"
-    />
+    <img src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.png" width="100%" alt="Lingo.dev – 本地化工程平台" />
   </a>
 </p>
 
 <p align="center">
-  <strong>
-    开源本地化工程工具。连接 Lingo.dev 本地化工程平台，获得一致、优质的翻译。
-  </strong>
-</p>
-
-<br />
-
-<p align="center">
-  <a href="#lingodev-api">Lingo API</a> •
-  <a href="#lingodev-mcp">Lingo React MCP</a> •
-  <a href="#lingodev-cli">Lingo CLI</a> •
-  <a href="#lingodev-cicd">Lingo GitHub Action</a> •
-  <a href="#lingodev-compiler">Lingo Compiler for React（早期 Alpha 版）</a>
+  <strong>Lingo.dev 是本地化工程平台：衡量翻译质量、用 LLM 翻译，并由母语者润色校对的最佳方式。</strong>
 </p>
 
 <p align="center">
-  <a href="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml">
-    <img
-      src="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml/badge.svg"
-      alt="Release"
-    />
-  </a>
-  <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md">
-    <img
-      src="https://img.shields.io/github/license/lingodotdev/lingo.dev"
-      alt="License"
-    />
-  </a>
-  <a href="https://github.com/lingodotdev/lingo.dev/commits/main">
-    <img
-      src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev"
-      alt="Last Commit"
-    />
-  </a>
-  <a href="https://lingo.dev/en">
-    <img
-      src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #1 DevTool of the Month"
-    />
-  </a>
-  <a href="https://lingo.dev/en">
-    <img
-      src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Week-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #1 DevTool of the Week"
-    />
-  </a>
-  <a href="https://lingo.dev/en">
-    <img
-      src="https://img.shields.io/badge/Product%20Hunt-%232%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #2 Product of the Day"
-    />
-  </a>
-  <a href="https://lingo.dev/en">
-    <img
-      src="https://img.shields.io/badge/GitHub-Trending-blue?logo=github&style=flat-square"
-      alt="Github trending"
-    />
-  </a>
+  <a href="https://lingo.dev/en/docs">文档</a> •
+  <a href="https://lingo.dev">平台</a> •
+  <a href="https://lingo.dev/go/discord">Discord</a>
+</p>
+
+<p align="center">
+  <a href="https://lingo.dev/en"><img src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square" alt="Product Hunt 月度第 1 开发工具" /></a>
+  <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md"><img src="https://img.shields.io/github/license/lingodotdev/lingo.dev" alt="许可证" /></a>
+  <a href="https://github.com/lingodotdev/lingo.dev/commits/main"><img src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev" alt="最近一次提交" /></a>
 </p>
 
 ---
 
-## 快速开始
+## 团队都在 Lingo.dev 上构建本地化引擎
 
-| 工具                                               | 功能                                      | 快速命令                           |
-| -------------------------------------------------- | ----------------------------------------- | ---------------------------------- |
-| [**Lingo React MCP**](#lingodev-mcp)               | AI 辅助的 React 应用 i18n 配置            | 提示：`Set up i18n`                |
-| [**Lingo CLI**](#lingodev-cli)                     | 本地化 JSON、YAML、Markdown、CSV、PO 文件 | `npx lingo.dev@latest run`         |
-| [**Lingo GitHub Action**](#lingodev-cicd)          | 在 GitHub Actions 中持续本地化            | `uses: lingodotdev/lingo.dev@main` |
-| [**Lingo Compiler for React**](#lingodev-compiler) | 构建时 React 本地化，无需 i18n 包装器     | `withLingo()` 插件                 |
+[本地化引擎](https://lingo.dev/en/docs/platform/engines)是由你的团队配置、由 Lingo.dev 运行的有状态翻译 API。你可以按产品、内容类型或品牌分别构建引擎。所有经过引擎的请求，都会按固定优先级顺序应用你在其中配置的全部内容：
 
-### 本地化引擎
+| 层级 | 你配置的内容 | 文档中的说明 |
+| --- | --- | --- |
+| [LLM 模型](https://lingo.dev/en/docs/platform/llm-models) | 为每个语言对指定处理模型，并设置按优先级排序的回退选项 | 支持 400+ 模型；响应中会标明实际运行的模型 |
+| [品牌语调](https://lingo.dev/en/docs/platform/brand-voices) | 定义产品在每种语言中的表达方式，每个语言区域对应一份文本 | 按不同市场设置语气和正式程度 |
+| [规则](https://lingo.dev/en/docs/platform/rules) | 补足通用模型容易忽略的语言规范 | 例如西班牙语中的形容词位置，或百分号前需要留空格 |
+| [术语表](https://lingo.dev/en/docs/platform/glossaries) | 按语言区域设置精确术语映射，并基于语义进行匹配 | 面向欧洲市场时，“911” 会变成 “112”；产品名称则保持不变 |
+| [AI 评估器](https://lingo.dev/en/docs/platform/ai-reviewers) | 每次翻译完成后都会运行的评分机制 | GEMBA 评分、BERTScore、术语表合规性 |
 
-这些工具连接到[本地化引擎](https://lingo.dev)——您在 Lingo.dev 本地化工程平台上创建的有状态翻译 API。每个引擎在所有请求中持久化术语表、品牌语调和特定语言的指令，[将术语错误减少 16.6–44.6%](https://lingo.dev/research/retrieval-augmented-localization)。或者[使用您自己的 LLM](#lingodev-cli)。
+术语表、规则集和品牌语调都归属于你的组织，引擎通过附加来应用它们。一个术语表可以管理五个引擎，一次修改即可同步到全部五个引擎。正式上线前，先在 [Playground](https://lingo.dev/en/docs/platform/playground) 中测试改动：把引擎和原始模型对比，或将两个引擎并排比较。所有引擎都在平台中完成配置，本地化团队也在这里运行整套本地化基础设施。
 
----
+## 在代码中调用你的引擎
 
-### Lingo.dev MCP
-
-在 React 应用中配置 i18n 容易出错——即使是 AI 编码助手也会幻想出不存在的 API 并破坏路由。Lingo.dev MCP 为 AI 助手提供对 Next.js、React Router 和 TanStack Start 框架特定 i18n 知识的结构化访问。适用于 Claude Code、Cursor、GitHub Copilot Agents 和 Codex。
-
-[阅读文档 →](https://lingo.dev/en/mcp)
-
----
-
-### Lingo.dev CLI
-
-一条命令本地化 JSON、YAML、Markdown、CSV 和 PO 文件。锁定文件跟踪已本地化的内容——仅处理新增或更改的内容。默认使用 Lingo.dev 上的本地化引擎，或使用您自己的 LLM（OpenAI、Anthropic、Google、Mistral、OpenRouter、Ollama）。
+直接翻译代码仓库中的内容。`lingo push` 会把文件发送到 `.lingo/config.json` 中指定的引擎，`lingo pull` 则可在任意机器上将翻译写回：
 
 ```bash
-npx lingo.dev@latest init
-npx lingo.dev@latest run
+npm install -g @lingo.dev/cli
+lingo init && lingo link
+lingo push
 ```
 
-[查看文档 →](https://lingo.dev/en/docs/cli)
+也可以直接调用某个引擎，并通过 ID 指定它：
 
----
+```javascript
+const res = await fetch("https://api.lingo.dev/process/localize", {
+  method: "POST",
+  headers: { "X-API-Key": process.env.LINGO_API_KEY, "Content-Type": "application/json" },
+  body: JSON.stringify({
+    engineId: "eng_abc123",
+    sourceLocale: "en",
+    targetLocale: "de",
+    data: { greeting: "Hello, world!", cta: "Get started" },
+  }),
+});
 
-### Lingo.dev CI/CD
-
-在您的流水线中实现持续本地化。每次推送都会触发本地化——缺失的字符串会在代码发布到生产环境之前自动填充。支持 GitHub Actions、GitLab CI/CD 和 Bitbucket Pipelines。
-
-```yaml
-uses: lingodotdev/lingo.dev@main
-with:
-  api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
+const { data, model, usage } = await res.json();
+// data:  { greeting: "Hallo, Welt!", cta: "Jetzt starten" }
+// model: "anthropic/claude-sonnet-4.5"
+// usage: { inputTokens: 2789, outputTokens: 861, cost: 0.023012 }
 ```
 
-[查看文档 →](https://lingo.dev/en/docs/integrations)
+|| |
+| --- | --- |
+| [Lingo.dev MCP](https://lingo.dev/en/docs/mcp) | 你的编码代理可以在问题出现的对话里直接创建引擎、添加术语表条目、调整规则，并比较两个引擎 |
+| [Lingo.dev CLI](https://lingo.dev/en/docs/cli) | 可在终端或 CI 中推送源文件、拉取翻译。支持 18 种格式：JSON、YAML、Markdown、MDX、PO、XLIFF、Flutter ARB、Android 和 Xcode strings、SubRip、PHP |
+| [Lingo.dev in CI/CD](https://lingo.dev/en/docs/workflows) | 安装 CLI 后，即可在 GitHub Actions、GitLab CI/CD、Bitbucket Pipelines，或任何支持 Node.js 22+ 的运行器中，把 `lingo push` 作为一个步骤运行 |
+| [Lingo.dev GitHub App](https://lingo.dev/en/docs/workflows/github-app) | 只需安装一次，每次推送到默认分支时，都会自动创建或更新翻译拉取请求；或者将翻译作为一次提交，直接写入修改源内容的拉取请求中。无需运行器，无需 API 密钥密文，也无需管理 Lockfile |
+| [Lingo.dev API](https://lingo.dev/en/docs/api) | 每个语言对可发起一次同步调用；也可通过异步任务将一次请求分发到多个语言区域，并在结果就绪后陆续返回 |
 
----
-
-### Lingo.dev API
-
-直接从后端代码调用您的本地化引擎。支持同步和异步本地化，提供 webhook 交付、按语言环境隔离故障以及通过 WebSocket 实时监控进度。
-
-[查看文档 →](https://lingo.dev/en/docs/api)
-
----
-
-### Lingo Compiler for React（早期测试版）
-
-无需 i18n 包装器的构建时 React 本地化。使用纯英文文本编写组件——编译器会检测可翻译字符串并在构建时生成本地化版本。无需翻译键、无需 JSON 文件、无需 `t()` 函数。支持 Next.js（App Router）和 Vite + React。
-
-[查看文档 →](https://lingo.dev/en/docs/react/compiler)
-
----
-
-## 贡献
-
-欢迎贡献。请遵循以下准则：
-
-1. **问题：**[报告错误或请求功能](https://github.com/lingodotdev/lingo.dev/issues)
-2. **拉取请求：**[提交更改](https://github.com/lingodotdev/lingo.dev/pulls)
-   - 每个 PR 都需要一个变更集：`pnpm new`（或使用 `pnpm new:empty` 进行非发布更改）
-   - 提交前确保测试通过
-3. **开发：**这是一个 pnpm + turborepo 单体仓库
-   - 安装依赖：`pnpm install`
-   - 运行测试：`pnpm test`
-   - 构建：`pnpm build`
-
-**支持：**[Discord 社区](https://lingo.dev/go/discord)
-
-## Star 历史
-
-如果您觉得 Lingo.dev 有用，请给我们一个 star，帮助我们达到 10,000 个 star！
-
-[
-
-![Star History Chart](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
-
-](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
-
-## 本地化文档
-
-**可用翻译：**
-
-[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [Português (Brasil)](/readme/pt-BR.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Polski](/readme/pl.md) • [Türkçe](/readme/tr.md) • [اردو](/readme/ur.md) • [भोजपुरी](/readme/bho.md) • [অসমীয়া](/readme/as-IN.md) • [ગુજરાતી](/readme/gu-IN.md) • [मराठी](/readme/mr-IN.md) • [ଓଡ଼ିଆ](/readme/or-IN.md) • [ਪੰਜਾਬੀ](/readme/pa-IN.md) • [සිංහල](/readme/si-LK.md) • [தமிழ்](/readme/ta-IN.md) • [తెలుగు](/readme/te-IN.md)
-
-**添加新语言：**
-
-1. 使用 [BCP-47 格式](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale)将语言代码添加到 [`i18n.json`](./i18n.json)
-2. 提交拉取请求
+[构建你的第一个本地化引擎 →](https://lingo.dev)

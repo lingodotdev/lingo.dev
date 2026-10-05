@@ -1,175 +1,77 @@
 <p align="center">
   <a href="https://lingo.dev">
-    <img
-      src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.png"
-      width="100%"
-      alt="Lingo.dev – פלטפורמת הנדסת לוקליזציה"
-    />
+    <img src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.png" width="100%" alt="Lingo.dev – פלטפורמת הנדסת לוקליזציה" />
   </a>
 </p>
 
 <p align="center">
-  <strong>
-    כלי הנדסת לוקליזציה בקוד פתוח. התחברו לפלטפורמת ההנדסה של Lingo.dev לתרגומים
-    עקביים ואיכוtiים.
-  </strong>
-</p>
-
-<br />
-
-<p align="center">
-  <a href="#lingodev-api">Lingo API</a> •
-  <a href="#lingodev-mcp">Lingo React MCP</a> •
-  <a href="#lingodev-cli">Lingo CLI</a> •
-  <a href="#lingodev-cicd">Lingo GitHub Action</a> •
-  <a href="#lingodev-compiler">Lingo Compiler עבור React (אלפא מוקדמת)</a>
+  <strong>Lingo.dev היא פלטפורמת הנדסת הלוקליזציה: הדרך הטובה ביותר למדוד את איכות התרגום, לתרגם עם LLMs, ולבצע הגהה עם דוברים ילידיים.</strong>
 </p>
 
 <p align="center">
-  <a href="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml">
-    <img
-      src="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml/badge.svg"
-      alt="Release"
-    />
-  </a>
-  <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md">
-    <img
-      src="https://img.shields.io/github/license/lingodotdev/lingo.dev"
-      alt="License"
-    />
-  </a>
-  <a href="https://github.com/lingodotdev/lingo.dev/commits/main">
-    <img
-      src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev"
-      alt="Last Commit"
-    />
-  </a>
-  <a href="https://lingo.dev/en">
-    <img
-      src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #1 DevTool of the Month"
-    />
-  </a>
-  <a href="https://lingo.dev/en">
-    <img
-      src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Week-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #1 DevTool of the Week"
-    />
-  </a>
-  <a href="https://lingo.dev/en">
-    <img
-      src="https://img.shields.io/badge/Product%20Hunt-%232%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #2 Product of the Day"
-    />
-  </a>
-  <a href="https://lingo.dev/en">
-    <img
-      src="https://img.shields.io/badge/GitHub-Trending-blue?logo=github&style=flat-square"
-      alt="Github trending"
-    />
-  </a>
+  <a href="https://lingo.dev/en/docs">Docs</a> •
+  <a href="https://lingo.dev">פלטפורמה</a> •
+  <a href="https://lingo.dev/go/discord">Discord</a>
+</p>
+
+<p align="center">
+  <a href="https://lingo.dev/en"><img src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square" alt="Product Hunt #1 DevTool של החודש" /></a>
+  <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md"><img src="https://img.shields.io/github/license/lingodotdev/lingo.dev" alt="רישיון" /></a>
+  <a href="https://github.com/lingodotdev/lingo.dev/commits/main"><img src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev" alt="הקומיט האחרון" /></a>
 </p>
 
 ---
 
-## התחלה מהירה
+## צוותים בונים מנועי לוקליזציה על גבי Lingo.dev
 
-| כלי                                                 | מה הכלי עושה                                    | פקודה מהירה                        |
-| --------------------------------------------------- | ----------------------------------------------- | ---------------------------------- |
-| [**Lingo React MCP**](#lingodev-mcp)                | הגדרת i18n מונחית AI עבור אפליקציות React       | הנחיה: `Set up i18n`               |
-| [**Lingo CLI**](#lingodev-cli)                      | לוקליזציה של קבצי JSON, YAML, markdown, CSV, PO | `npx lingo.dev@latest run`         |
-| [**Lingo GitHub Action**](#lingodev-cicd)           | לוקליזציה רציפה ב-GitHub Actions                | `uses: lingodotdev/lingo.dev@main` |
-| [**Lingo Compiler עבור React**](#lingodev-compiler) | לוקליזציה של React בזמן build ללא עטיפות i18n   | פלאגין `withLingo()`               |
+[מנוע לוקליזציה](https://lingo.dev/en/docs/platform/engines) הוא API לתרגום עם מצב, שהצוות שלכם מגדיר ו-Lingo.dev מריץ. אפשר לבנות מנוע נפרד לכל מוצר, לכל סוג תוכן או לכל מותג. כל בקשה שעוברת דרך מנוע מחילה את כל מה שהגדרתם בו, לפי סדר קדימויות קבוע:
 
-### מנועי לוקליזציה
+| שכבה | מה מגדירים | מהתיעוד |
+| --- | --- | --- |
+| [מודלי LLM](https://lingo.dev/en/docs/platform/llm-models) | איזה מודל מטפל בכל צמד שפות, עם חלופות מדורגות | 400+ מודלים; התשובה מציינת איזה מודל רץ |
+| [שפת המותג](https://lingo.dev/en/docs/platform/brand-voices) | איך המוצר שלכם מדבר בכל שפה, טקסט אחד לכל לוקאל | טון ורמת רשמיות לכל שוק |
+| [כללים](https://lingo.dev/en/docs/platform/rules) | מוסכמות לשוניות שמודל כללי עלול לפספס | מיקום שם התואר בספרדית, רווח לפני סימן אחוז |
+| [מילון מונחים](https://lingo.dev/en/docs/platform/glossaries) | מיפוי מדויק של מונחים לכל לוקאל, לפי משמעות | "911" הופך ל-"112" בשווקים אירופיים; שמות מוצרים נשארים כפי שהם |
+| [מבקרי AI](https://lingo.dev/en/docs/platform/ai-reviewers) | ניקוד שרץ אחרי כל תרגום | ציוני GEMBA, ‏BERTScore, עמידה במילון המונחים |
 
-כלים אלה מתחברים ל[מנועי לוקליזציה](https://lingo.dev) – APIs תרגום עם מצב שנוצרים בפלטפורמת ההנדסה Lingo.dev. כל מנוע שומר מילונים, קול מותג והנחיות לפי שפה לאורך כל בקשה, [ומפחית שגיאות טרמינולוגיה ב-16.6–44.6%](https://lingo.dev/research/retrieval-augmented-localization). או [הביאו את ה-LLM שלכם](#lingodev-cli).
+מילוני מונחים, מערכי כללים ושפות מותג שייכים לארגון שלכם, ומנוע מחיל אותם דרך שיוך. מילון מונחים אחד יכול לשרת חמישה מנועים, ועריכה אחת מתעדכנת בכולם. בדקו שינוי ב-[Playground](https://lingo.dev/en/docs/platform/playground) לפני שהוא עולה לאוויר: השוו מנוע למודל גולמי, או שני מנועים זה לצד זה. המנועים מוגדרים בפלטפורמה, שבה צוות הלוקליזציה מפעיל את תשתית הלוקליזציה.
 
----
+## גשו למנועים שלכם ישירות מהקוד
 
-### Lingo.dev MCP
-
-הגדרת i18n באפליקציות React רגישה לטעויות – אפילו עוזרי קוד מבוססי AI מזייפים APIs לא קיימים ושוברים ניתוב. Lingo.dev MCP מעניק לעוזרי AI גישה מובנית לידע i18n ספציפי לפריימוורק עבור Next.js, React Router ו-TanStack Start. עובד עם Claude Code, Cursor, GitHub Copilot Agents ו-Codex.
-
-[קראו את התיעוד →](https://lingo.dev/en/mcp)
-
----
-
-### Lingo.dev CLI
-
-לוקליזציה של קבצי JSON, YAML, markdown, CSV ו-PO בפקודה אחת. קובץ נעילה עוקב אחר מה כבר תורגם – רק תוכן חדש או ששונה עובר עיבוד. ברירת המחדל היא מנוע הלוקליזציה שלכם ב-Lingo.dev, או הביאו את ה-LLM שלכם (OpenAI, Anthropic, Google, Mistral, OpenRouter, Ollama).
+תרגמו את התוכן בריפוזיטורי. `lingo push` שולח את הקבצים למנוע שמוגדר ב-`.lingo/config.json`, ו-`lingo pull` כותב את התרגומים בחזרה מכל מכונה:
 
 ```bash
-npx lingo.dev@latest init
-npx lingo.dev@latest run
+npm install -g @lingo.dev/cli
+lingo init && lingo link
+lingo push
 ```
 
-[קרא את התיעוד ←](https://lingo.dev/en/docs/cli)
+או קראו למנוע ישירות, לפי ה-ID שלו:
 
----
+```javascript
+const res = await fetch("https://api.lingo.dev/process/localize", {
+  method: "POST",
+  headers: { "X-API-Key": process.env.LINGO_API_KEY, "Content-Type": "application/json" },
+  body: JSON.stringify({
+    engineId: "eng_abc123",
+    sourceLocale: "en",
+    targetLocale: "de",
+    data: { greeting: "Hello, world!", cta: "Get started" },
+  }),
+});
 
-### Lingo.dev CI/CD
-
-לוקליזציה רציפה בצינור העבודה שלך. כל push מפעיל לוקליזציה – מחרוזות חסרות מתמלאות לפני שהקוד מגיע לייצור. תומך ב-GitHub Actions, GitLab CI/CD ו-Bitbucket Pipelines.
-
-```yaml
-uses: lingodotdev/lingo.dev@main
-with:
-  api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
+const { data, model, usage } = await res.json();
+// data:  { greeting: "Hallo, Welt!", cta: "Jetzt starten" }
+// model: "anthropic/claude-sonnet-4.5"
+// usage: { inputTokens: 2789, outputTokens: 861, cost: 0.023012 }
 ```
 
-[קרא את התיעוד ←](https://lingo.dev/en/docs/integrations)
+|| |
+| --- | --- |
+| [Lingo.dev MCP](https://lingo.dev/en/docs/mcp) | סוכן הקוד שלכם יוצר מנוע, מוסיף מונחים למילון, מכוונן כללים ומשווה בין שני מנועים — ישירות מתוך השיחה שבה הבעיה עלתה |
+| [Lingo.dev CLI](https://lingo.dev/en/docs/cli) | דחפו קובצי מקור ומשכו תרגומים, מהטרמינל או מ-CI. 18 פורמטים: JSON, YAML, Markdown, MDX, PO, XLIFF, Flutter ARB, מחרוזות Android ו-Xcode, SubRip, PHP |
+| [Lingo.dev ב-CI/CD](https://lingo.dev/en/docs/workflows) | התקינו את ה-CLI והריצו `lingo push` כשלב ב-GitHub Actions, GitLab CI/CD, Bitbucket Pipelines, או בכל runner עם Node.js 22+ |
+| [Lingo.dev GitHub App](https://lingo.dev/en/docs/workflows/github-app) | מתקינים פעם אחת, וכל push לענף ברירת המחדל פותח או מעדכן pull request לתרגום, או שהתרגומים נוחתים כקומיט בתוך ה-pull request ששינה את המקור. בלי runner, בלי סוד של מפתח API ובלי Lockfile לניהול |
+| [Lingo.dev API](https://lingo.dev/en/docs/api) | קריאה סינכרונית אחת לכל צמד שפות, או משימה אסינכרונית שמפצלת בקשה אחת להרבה לוקאלים ומחזירה תוצאות ברגע שהן מגיעות |
 
----
-
-### Lingo.dev API
-
-קרא למנוע הלוקליזציה שלך ישירות מקוד backend. לוקליזציה סינכרונית ואסינכרונית עם מסירה ב-webhook, בידוד כשלים לכל locale, והתקדמות בזמן אמת דרך WebSocket.
-
-[קרא את התיעוד ←](https://lingo.dev/en/docs/api)
-
----
-
-### Lingo Compiler עבור React (אלפא מוקדמת)
-
-לוקליזציה של React בזמן build ללא עטיפות i18n. כתוב רכיבים עם טקסט רגיל באנגלית – המהדר מזהה מחרוזות הניתנות לתרגום ומייצר גרסאות מתורגמות בזמן build. ללא מפתחות תרגום, ללא קבצי JSON, ללא פונקציות `t()`. תומך ב-Next.js (App Router) ו-Vite + React.
-
-[קרא את התיעוד ←](https://lingo.dev/en/docs/react/compiler)
-
----
-
-## תרומה
-
-תרומות מתקבלות בברכה. אנא עקוב אחר ההנחיות הבאות:
-
-1. **בעיות:** [דווח על באגים או בקש פיצ'רים](https://github.com/lingodotdev/lingo.dev/issues)
-2. **Pull Requests:** [שלח שינויים](https://github.com/lingodotdev/lingo.dev/pulls)
-   - כל PR דורש changeset: `pnpm new` (או `pnpm new:empty` עבור שינויים שאינם לשחרור)
-   - וודא שהבדיקות עוברות לפני הגשה
-3. **פיתוח:** זהו monorepo של pnpm + turborepo
-   - התקן תלויות: `pnpm install`
-   - הרץ בדיקות: `pnpm test`
-   - בנה: `pnpm build`
-
-**תמיכה:** [קהילת Discord](https://lingo.dev/go/discord)
-
-## היסטוריית כוכבים
-
-אם אתה מוצא את Lingo.dev שימושי, תן לנו כוכב ועזור לנו להגיע ל-10,000 כוכבים!
-
-[
-
-![תרשים היסטוריית כוכבים](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
-
-](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
-
-## תיעוד מתורגם
-
-**תרגומים זמינים:**
-
-[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [Português (Brasil)](/readme/pt-BR.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Polski](/readme/pl.md) • [Türkçe](/readme/tr.md) • [اردو](/readme/ur.md) • [भोजपुरी](/readme/bho.md) • [অসমীয়া](/readme/as-IN.md) • [ગુજરાતી](/readme/gu-IN.md) • [मराठी](/readme/mr-IN.md) • [ଓଡ଼ିଆ](/readme/or-IN.md) • [ਪੰਜਾਬੀ](/readme/pa-IN.md) • [සිංහල](/readme/si-LK.md) • [தமிழ்](/readme/ta-IN.md) • [తెలుగు](/readme/te-IN.md)
-
-**הוספת שפה חדשה:**
-
-1. הוסף קוד שפה ל-[`i18n.json`](./i18n.json) בפורמט [BCP-47](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale)
-2. שלח בקשת משיכה
+[בנו את מנוע הלוקליזציה הראשון שלכם →](https://lingo.dev)

@@ -1,175 +1,77 @@
 <p align="center">
   <a href="https://lingo.dev">
-    <img
-      src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.png"
-      width="100%"
-      alt="Lingo.dev – స్థానికీకరణ ఇంజనీరింగ్ ప్లాట్‌ఫారమ్"
-    />
+    <img src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.png" width="100%" alt="Lingo.dev – లోకలైజేషన్ ఇంజినీరింగ్ ప్లాట్‌ఫారమ్" />
   </a>
 </p>
 
 <p align="center">
-  <strong>
-    ఓపెన్-సోర్స్ స్థానికీకరణ ఇంజనీరింగ్ టూల్స్. నాణ్యమైన, స్థిరమైన అనువాదాల కోసం
-    Lingo.dev స్థానికీకరణ ఇంజనీరింగ్ ప్లాట్‌ఫారమ్‌కు కనెక్ట్ అవ్వండి.
-  </strong>
-</p>
-
-<br />
-
-<p align="center">
-  <a href="#lingodev-api">Lingo API</a> •
-  <a href="#lingodev-mcp">Lingo React MCP</a> •
-  <a href="#lingodev-cli">Lingo CLI</a> •
-  <a href="#lingodev-cicd">Lingo GitHub Action</a> •
-  <a href="#lingodev-compiler">Lingo Compiler for React (ప్రారంభ ఆల్ఫా)</a>
+  <strong>Lingo.dev అనేది లోకలైజేషన్ ఇంజినీరింగ్ ప్లాట్‌ఫారమ్: అనువాద నాణ్యతను కొలవడానికి, LLMs‌తో అనువదించడానికి, స్థానిక భాషా నిపుణులతో ప్రూఫ్‌రీడ్ చేయించడానికి ఉత్తమ మార్గం.</strong>
 </p>
 
 <p align="center">
-  <a href="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml">
-    <img
-      src="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml/badge.svg"
-      alt="Release"
-    />
-  </a>
-  <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md">
-    <img
-      src="https://img.shields.io/github/license/lingodotdev/lingo.dev"
-      alt="License"
-    />
-  </a>
-  <a href="https://github.com/lingodotdev/lingo.dev/commits/main">
-    <img
-      src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev"
-      alt="Last Commit"
-    />
-  </a>
-  <a href="https://lingo.dev/en">
-    <img
-      src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #1 DevTool of the Month"
-    />
-  </a>
-  <a href="https://lingo.dev/en">
-    <img
-      src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Week-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #1 DevTool of the Week"
-    />
-  </a>
-  <a href="https://lingo.dev/en">
-    <img
-      src="https://img.shields.io/badge/Product%20Hunt-%232%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #2 Product of the Day"
-    />
-  </a>
-  <a href="https://lingo.dev/en">
-    <img
-      src="https://img.shields.io/badge/GitHub-Trending-blue?logo=github&style=flat-square"
-      alt="Github trending"
-    />
-  </a>
+  <a href="https://lingo.dev/en/docs">డాక్స్</a> •
+  <a href="https://lingo.dev">ప్లాట్‌ఫారమ్</a> •
+  <a href="https://lingo.dev/go/discord">Discord</a>
+</p>
+
+<p align="center">
+  <a href="https://lingo.dev/en"><img src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square" alt="Product Hunt నెలలో #1 DevTool" /></a>
+  <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md"><img src="https://img.shields.io/github/license/lingodotdev/lingo.dev" alt="లైసెన్స్" /></a>
+  <a href="https://github.com/lingodotdev/lingo.dev/commits/main"><img src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev" alt="ఇటీవలి కమిట్" /></a>
 </p>
 
 ---
 
-## త్వరిత ప్రారంభం
+## టీమ్‌లు Lingo.dev పై లోకలైజేషన్ ఇంజిన్‌లను నిర్మిస్తాయి
 
-| టూల్                                               | ఇది ఏం చేస్తుంది                                       | శీఘ్ర కమాండ్                       |
-| -------------------------------------------------- | ------------------------------------------------------ | ---------------------------------- |
-| [**Lingo React MCP**](#lingodev-mcp)               | React యాప్‌ల కోసం AI-సహాయిత i18n సెటప్                 | ప్రాంప్ట్: `Set up i18n`           |
-| [**Lingo CLI**](#lingodev-cli)                     | JSON, YAML, markdown, CSV, PO ఫైళ్లను స్థానికీకరించండి | `npx lingo.dev@latest run`         |
-| [**Lingo GitHub Action**](#lingodev-cicd)          | GitHub Actions లో నిరంతర స్థానికీకరణ                   | `uses: lingodotdev/lingo.dev@main` |
-| [**Lingo Compiler for React**](#lingodev-compiler) | i18n రాపర్లు లేకుండా బిల్డ్-టైమ్ React స్థానికీకరణ     | `withLingo()` ప్లగిన్              |
+[లోకలైజేషన్ ఇంజిన్](https://lingo.dev/en/docs/platform/engines) అనేది మీ టీమ్ కాన్ఫిగర్ చేసి, Lingo.dev నడిపే స్టేట్‌ఫుల్ అనువాద API. ప్రతి ప్రొడక్ట్‌కు, ప్రతి కంటెంట్ రకానికి, లేదా ప్రతి బ్రాండ్‌కు ఒకదాన్ని నిర్మించండి. ఒక ఇంజిన్ ద్వారా వెళ్లే ప్రతి రిక్వెస్ట్, మీరు అందులో కాన్ఫిగర్ చేసిన ప్రతిదాన్ని నిర్ణీత ప్రాధాన్య క్రమంలో వర్తింపజేస్తుంది:
 
-### స్థానికీకరణ ఇంజన్లు
+| లేయర్ | మీరు కాన్ఫిగర్ చేసేది | డాక్స్‌లో నుంచి |
+| --- | --- | --- |
+| [LLM మోడళ్లు](https://lingo.dev/en/docs/platform/llm-models) | ర్యాంక్ చేసిన fallback‌లతో, ప్రతి భాషా జంటను ఏ మోడల్ నిర్వహించాలో | 400+ మోడళ్లు; ఏ మోడల్ నడిచిందో రిస్పాన్స్‌లో పేరు కనిపిస్తుంది |
+| [బ్రాండ్ వాయిస్](https://lingo.dev/en/docs/platform/brand-voices) | ప్రతి భాషలో మీ ప్రొడక్ట్ ఎలా మాట్లాడాలన్నది, ప్రతి లోకేల్‌కు ఒక టెక్స్ట్ | ప్రతి మార్కెట్‌కు సరిపోయే టోన్, ఫార్మాలిటీ |
+| [నియమాలు](https://lingo.dev/en/docs/platform/rules) | సాధారణ మోడల్ మిస్ చేసే భాషా సంప్రదాయాలు | స్పానిష్‌లో విశేషణ స్థానం, శాతం గుర్తుల ముందు ఖాళీ |
+| [పదకోశం](https://lingo.dev/en/docs/platform/glossaries) | అర్థం ఆధారంగా సరిపోల్చే, ప్రతి లోకేల్‌కు ఖచ్చితమైన పద మ్యాపింగ్‌లు | యూరోపియన్ మార్కెట్లలో "911" ను "112"గా మారుస్తుంది; ప్రొడక్ట్ పేర్లు యథాతథంగా ఉంటాయి |
+| [AI సమీక్షకులు](https://lingo.dev/en/docs/platform/ai-reviewers) | ప్రతి అనువాదం తర్వాత నడిచే స్కోరింగ్ | GEMBA స్కోర్లు, BERTScore, పదకోశ అనుసరణ |
 
-ఈ టూల్స్ [స్థానికీకరణ ఇంజన్లు](https://lingo.dev)కు కనెక్ట్ అవుతాయి – మీరు Lingo.dev స్థానికీకరణ ఇంజనీరింగ్ ప్లాట్‌ఫారమ్‌లో సృష్టించే స్టేట్‌ఫుల్ అనువాద APIలు. ప్రతి ఇంజన్ గ్లాసరీలు, బ్రాండ్ వాయిస్, మరియు లొకేల్-స్పెసిఫిక్ సూచనలను ప్రతి రిక్వెస్ట్‌లో నిలుపుకుంటుంది, [పారిభాషిక దోషాలను 16.6–44.6% తగ్గిస్తుంది](https://lingo.dev/research/retrieval-augmented-localization). లేదా [మీ స్వంత LLMని తీసుకురండి](#lingodev-cli).
+పదకోశాలు, రూల్‌సెట్‌లు, బ్రాండ్ వాయిస్‌లు మీ సంస్థకే చెందుతాయి, మరియు ఇంజిన్ వాటిని అటాచ్‌మెంట్‌ల ద్వారా వర్తింపజేస్తుంది. ఒక పదకోశం ఐదు ఇంజిన్‌లను నియంత్రించగలదు, ఒక ఎడిట్ ఐదింటికీ చేరుతుంది. మార్పు లైవ్‌కు వెళ్లే ముందు [Playground](https://lingo.dev/en/docs/platform/playground)లో దాన్ని పరీక్షించండి: ఒక ఇంజిన్‌ను raw model‌తో పోల్చండి, లేదా రెండు ఇంజిన్‌లను పక్కపక్కన సరిపోల్చండి. ఇంజిన్‌లు ప్లాట్‌ఫారమ్‌లోనే కాన్ఫిగర్ అవుతాయి; లోకలైజేషన్ టీమ్ కూడా అక్కడి నుంచే లోకలైజేషన్ ఇన్‌ఫ్రాస్ట్రక్చర్‌ను నడుపుతుంది.
 
----
+## కోడ్ నుంచే మీ ఇంజిన్‌లను ఉపయోగించండి
 
-### Lingo.dev MCP
-
-React యాప్‌లలో i18n సెటప్ చేయడం దోష-ప్రవణమైనది – AI కోడింగ్ అసిస్టెంట్లు కూడా ఉనికిలో లేని APIలను ఊహించి, రౌటింగ్‌ను భగ్నం చేస్తాయి. Lingo.dev MCP, Next.js, React Router, మరియు TanStack Start కోసం ఫ్రేమ్‌వర్క్-స్పెసిఫిక్ i18n జ్ఞానానికి AI అసిస్టెంట్లకు నిర్మాణాత్మక యాక్సెస్ అందిస్తుంది. Claude Code, Cursor, GitHub Copilot Agents, మరియు Codex తో పనిచేస్తుంది.
-
-[డాక్స్ చదవండి →](https://lingo.dev/en/mcp)
-
----
-
-### Lingo.dev CLI
-
-JSON, YAML, markdown, CSV, మరియు PO ఫైళ్లను ఒకే కమాండ్‌లో స్థానికీకరించండి. ఇప్పటికే స్థానికీకరించబడినవి ట్రాక్ చేసే లాక్‌ఫైల్ – కొత్త లేదా మార్చబడిన కంటెంట్ మాత్రమే ప్రాసెస్ అవుతుంది. Lingo.dev లోని మీ స్థానికీకరణ ఇంజన్‌కు డిఫాల్ట్‌గా ఉంటుంది, లేదా మీ స్వంత LLMని తీసుకురండి (OpenAI, Anthropic, Google, Mistral, OpenRouter, Ollama).
+ఒక repositoryలోని కంటెంట్‌ను అనువదించండి. `.lingo/config.json`లో పేరున్న ఇంజిన్‌కు `lingo push` ఫైళ్లను పంపుతుంది, మరియు `lingo pull` ఏ మెషీన్ నుంచైనా అనువాదాలను తిరిగి రాస్తుంది:
 
 ```bash
-npx lingo.dev@latest init
-npx lingo.dev@latest run
+npm install -g @lingo.dev/cli
+lingo init && lingo link
+lingo push
 ```
 
-[డాక్స్ చదవండి →](https://lingo.dev/en/docs/cli)
+లేదా, ID పేర్కొని నేరుగా ఒక ఇంజిన్‌ను కాల్ చేయండి:
 
----
+```javascript
+const res = await fetch("https://api.lingo.dev/process/localize", {
+  method: "POST",
+  headers: { "X-API-Key": process.env.LINGO_API_KEY, "Content-Type": "application/json" },
+  body: JSON.stringify({
+    engineId: "eng_abc123",
+    sourceLocale: "en",
+    targetLocale: "de",
+    data: { greeting: "Hello, world!", cta: "Get started" },
+  }),
+});
 
-### Lingo.dev CI/CD
-
-మీ పైప్‌లైన్‌లో నిరంతర స్థానికీకరణ. ప్రతి పుష్ స్థానికీకరణను ప్రేరేపిస్తుంది – కోడ్ ప్రొడక్షన్‌కు చేరే ముందు తప్పిపోయిన స్ట్రింగ్‌లు పూరించబడతాయి. GitHub Actions, GitLab CI/CD మరియు Bitbucket Pipelines కి మద్దతు ఇస్తుంది.
-
-```yaml
-uses: lingodotdev/lingo.dev@main
-with:
-  api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
+const { data, model, usage } = await res.json();
+// data:  { greeting: "Hallo, Welt!", cta: "Jetzt starten" }
+// model: "anthropic/claude-sonnet-4.5"
+// usage: { inputTokens: 2789, outputTokens: 861, cost: 0.023012 }
 ```
 
-[డాక్స్ చదవండి →](https://lingo.dev/en/docs/integrations)
+|| |
+| --- | --- |
+| [Lingo.dev MCP](https://lingo.dev/en/docs/mcp) | సమస్య కనిపించిన అదే సంభాషణలోనే, మీ coding agent ఒక ఇంజిన్‌ను సృష్టించగలదు, పదకోశ పదాలను జోడించగలదు, నియమాలను మెరుగుపరచగలదు, రెండు ఇంజిన్‌లను పోల్చగలదు |
+| [Lingo.dev CLI](https://lingo.dev/en/docs/cli) | టెర్మినల్ నుంచీ లేదా CI నుంచీ source ఫైళ్లను push చేయండి, అనువాదాలను pull చేయండి. 18 ఫార్మాట్‌లు: JSON, YAML, Markdown, MDX, PO, XLIFF, Flutter ARB, Android మరియు Xcode strings, SubRip, PHP |
+| [Lingo.dev in CI/CD](https://lingo.dev/en/docs/workflows) | CLIని ఇన్‌స్టాల్ చేసి, GitHub Actions, GitLab CI/CD, Bitbucket Pipelines, లేదా Node.js 22+ ఉన్న ఏ runnerలోనైనా `lingo push`ను ఒక స్టెప్‌గా నడపండి |
+| [Lingo.dev GitHub App](https://lingo.dev/en/docs/workflows/github-app) | ఒక్కసారి ఇన్‌స్టాల్ చేస్తే చాలు. default branch‌కు ప్రతి push ఒక translation pull request‌ను తెరుస్తుంది లేదా అప్‌డేట్ చేస్తుంది. లేదంటే, source మార్చిన అదే pull requestలో అనువాదాలు ఒక commit‌గా చేరతాయి. runner అవసరం లేదు, API key secret అవసరం లేదు, నిర్వహించాల్సిన Lockfile కూడా లేదు |
+| [Lingo.dev API](https://lingo.dev/en/docs/api) | ప్రతి భాషా జంటకు ఒక synchronous call, లేదా ఒకే రిక్వెస్ట్‌ను అనేక లోకేల్‌లకు పంపించి, ఫలితాలు వచ్చిన వెంటనే అందించే async job |
 
----
-
-### Lingo.dev API
-
-బ్యాకెండ్ కోడ్ నుండి నేరుగా మీ స్థానికీకరణ ఇంజిన్‌ను కాల్ చేయండి. వెబ్‌హుక్ డెలివరీ, లొకేల్‌కు వైఫల్యం ఐసొలేషన్ మరియు WebSocket ద్వారా రియల్-టైం ప్రోగ్రెస్‌తో సింక్రోనస్ మరియు అసింక్ స్థానికీకరణ.
-
-[డాక్స్ చదవండి →](https://lingo.dev/en/docs/api)
-
----
-
-### React కోసం Lingo కంపైలర్ (ప్రారంభ ఆల్ఫా)
-
-i18n రాపర్‌లు లేకుండా బిల్డ్-టైమ్ React స్థానికీకరణ. సాదా ఆంగ్ల టెక్స్ట్‌తో కాంపోనెంట్‌లు రాయండి – కంపైలర్ అనువదించదగిన స్ట్రింగ్‌లను గుర్తించి బిల్డ్ టైమ్‌లో స్థానికీకరించిన వేరియంట్‌లను జనరేట్ చేస్తుంది. అనువాద కీలు లేవు, JSON ఫైల్స్ లేవు, `t()` ఫంక్షన్లు లేవు. Next.js (App Router) మరియు Vite + React కి మద్దతు ఇస్తుంది.
-
-[డాక్స్ చదవండి →](https://lingo.dev/en/docs/react/compiler)
-
----
-
-## కంట్రిబ్యూట్ చేయడం
-
-కంట్రిబ్యూషన్‌లను స్వాగతిస్తున్నాము. దయచేసి ఈ మార్గదర్శకాలను అనుసరించండి:
-
-1. **ఇష్యూస్:** [బగ్‌లను రిపోర్ట్ చేయండి లేదా ఫీచర్లను అభ్యర్థించండి](https://github.com/lingodotdev/lingo.dev/issues)
-2. **పుల్ రిక్వెస్ట్‌లు:** [మార్పులను సబ్మిట్ చేయండి](https://github.com/lingodotdev/lingo.dev/pulls)
-   - ప్రతి PR కి చేంజ్‌సెట్ అవసరం: `pnpm new` (లేదా రిలీజ్-యేతర మార్పుల కోసం `pnpm new:empty`)
-   - సబ్మిట్ చేయడానికి ముందు టెస్ట్‌లు పాస్ అవుతున్నట్లు నిర్ధారించండి
-3. **డెవలప్‌మెంట్:** ఇది pnpm + turborepo మోనోరెపో
-   - డిపెండెన్సీలను ఇన్‌స్టాల్ చేయండి: `pnpm install`
-   - టెస్ట్‌లను రన్ చేయండి: `pnpm test`
-   - బిల్డ్ చేయండి: `pnpm build`
-
-**సపోర్ట్:** [Discord కమ్యూనిటీ](https://lingo.dev/go/discord)
-
-## స్టార్ హిస్టరీ
-
-Lingo.dev మీకు ఉపయోగకరంగా అనిపిస్తే, మాకు స్టార్ ఇవ్వండి మరియు 10,000 స్టార్లను చేరుకోవడంలో మాకు సహాయం చేయండి!
-
-[
-
-![స్టార్ హిస్టరీ చార్ట్](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
-
-](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
-
-## స్థానికీకరించిన డాక్యుమెంటేషన్
-
-**అందుబాటులో ఉన్న అనువాదాలు:**
-
-[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [Português (Brasil)](/readme/pt-BR.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Polski](/readme/pl.md) • [Türkçe](/readme/tr.md) • [اردو](/readme/ur.md) • [भोजपुरी](/readme/bho.md) • [অসমীয়া](/readme/as-IN.md) • [ગુજરાતી](/readme/gu-IN.md) • [मराठी](/readme/mr-IN.md) • [ଓଡ଼ିଆ](/readme/or-IN.md) • [ਪੰਜਾਬੀ](/readme/pa-IN.md) • [සිංහල](/readme/si-LK.md) • [தமிழ்](/readme/ta-IN.md) • [తెలుగు](/readme/te-IN.md)
-
-**కొత్త భాషను జోడించడం:**
-
-1. [BCP-47 ఫార్మాట్](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) ఉపయోగించి [`i18n.json`](./i18n.json)కి లొకేల్ కోడ్‌ను జోడించండి
-2. పుల్ రిక్వెస్ట్ సబ్మిట్ చేయండి
+[మీ తొలి లోకలైజేషన్ ఇంజిన్‌ను నిర్మించండి →](https://lingo.dev)

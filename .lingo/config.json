@@ -1,0 +1,47 @@
+{
+  "engineId": "eng_jKQrwU7tvT1UdnvxgGj1",
+  "sourceLocale": "en",
+  "targetLocales": [
+    "ar",
+    "as-IN",
+    "bho",
+    "bn",
+    "de",
+    "es",
+    "fa",
+    "fr",
+    "gu-IN",
+    "he",
+    "hi",
+    "it",
+    "ja",
+    "ko",
+    "mr-IN",
+    "or-IN",
+    "pa-IN",
+    "pl",
+    "pt-BR",
+    "ru",
+    "si-LK",
+    "ta-IN",
+    "te-IN",
+    "tr",
+    "uk-UA",
+    "ur",
+    "zh-Hans"
+  ],
+  "files": [
+    {
+      "pattern": "packages/cli/README.md",
+      "format": "mdx",
+      "translateComponentProps": [{ "component": "img", "props": ["alt"] }],
+      "targetPath": "readme/[locale].md"
+    }
+  ],
+  "github": {
+    "workflows": {
+      "onPullRequest": { "enabled": true },
+      "onPushToDefaultBranch": { "enabled": false }
+    }
+  }
+}
