@@ -1,44 +1,44 @@
 <p align="center">
   <a href="https://lingo.dev">
-    <img src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.png" width="100%" alt="Lingo.dev – localization engineering platform" />
+    <img src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.png" width="100%" alt="Lingo.dev – लोकलाइजेशन इंजीनियरिंग प्लेटफॉर्म" />
   </a>
 </p>
 
 <p align="center">
-  <strong>Lingo.dev is the localization engineering platform: the best way to measure translation quality, translate with LLMs, and proofread with native speakers.</strong>
+  <strong>Lingo.dev लोकलाइजेशन इंजीनियरिंग प्लेटफॉर्म हवे: अनुवाद के गुणवत्ता नापे, LLMs से अनुवाद करे, आ देसी बोलइया लोग से प्रूफरीड करवावे के सबसे बढ़िया तरीका।</strong>
 </p>
 
 <p align="center">
-  <a href="https://lingo.dev/en/docs">Docs</a> •
-  <a href="https://lingo.dev">Platform</a> •
+  <a href="https://lingo.dev/en/docs">डॉक्स</a> •
+  <a href="https://lingo.dev">प्लेटफॉर्म</a> •
   <a href="https://lingo.dev/go/discord">Discord</a>
 </p>
 
 <p align="center">
-  <a href="https://lingo.dev/en"><img src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square" alt="Product Hunt #1 DevTool of the Month" /></a>
-  <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md"><img src="https://img.shields.io/github/license/lingodotdev/lingo.dev" alt="License" /></a>
-  <a href="https://github.com/lingodotdev/lingo.dev/commits/main"><img src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev" alt="Last commit" /></a>
+  <a href="https://lingo.dev/en"><img src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square" alt="Product Hunt के महीना के #1 DevTool" /></a>
+  <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md"><img src="https://img.shields.io/github/license/lingodotdev/lingo.dev" alt="लाइसेंस" /></a>
+  <a href="https://github.com/lingodotdev/lingo.dev/commits/main"><img src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev" alt="आखिरी कमिट" /></a>
 </p>
 
 ---
 
-## टीम Lingo.dev पर लोकलाइजेशन इंजन बनावेली
+## टीम सभ Lingo.dev पर लोकलाइजेशन इंजन बनावेले
 
-[लोकलाइजेशन इंजन](https://lingo.dev/en/docs/platform/engines) एगो stateful translation API ह, जवन रउआ टीम configure करेले आ Lingo.dev चलावेले। एकरा के रउआ हर product, हर content type, चाहे हर brand खातिर अलग-अलग बना सकत बानी। इंजन से जाए वाला हर request पर, ओह में रउआ जे कुछ configure कइले बानी, ऊ सभ तय precedence order में लागू होला:
+[लोकलाइजेशन इंजन](https://lingo.dev/en/docs/platform/engines) एगो स्टेटफुल अनुवाद API हवे, जेकरा के रउरा टीम कॉन्फ़िगर करेले आ Lingo.dev चलावेले। हर प्रोडक्ट, हर कंटेंट टाइप, भा हर ब्रांड खातिर अलग-अलग बनाईं। इंजन से होके जाए वाला हर रिक्वेस्ट पर ओह में कइल सभे कॉन्फ़िगरेशन एगो तय प्राथमिकता क्रम में लागू हो जाला:
 
-| लेयर | रउआ का configure करेनी | डॉक्स से |
+| परत | रउरा का कॉन्फ़िगर करीं | डॉक्स से |
 | --- | --- | --- |
-| [LLM models](https://lingo.dev/en/docs/platform/llm-models) | कवन model हर language pair सँभाले ला, ranked fallbacks के साथ | 400+ models; response में ओह model के नाम होला जे चलल |
-| [Brand voice](https://lingo.dev/en/docs/platform/brand-voices) | हर भाषा में रउआ product कइसे बोलेला, हर locale खातिर एगो text | हर market खातिर tone आ formality |
-| [Rules](https://lingo.dev/en/docs/platform/rules) | ओह linguistic conventions सभ, जवन generic model से छूट जाला | Spanish में adjective के जगह, percentage sign से पहिले एगो space |
-| [Glossary](https://lingo.dev/en/docs/platform/glossaries) | हर locale खातिर exact term mappings, meaning के हिसाब से match कइल | "911" यूरोपीय markets खातिर "112" बन जाला; product names जइसन बा वइसहीं रहेला |
-| [AI reviewers](https://lingo.dev/en/docs/platform/ai-reviewers) | हर translation के बाद चले वाला scoring | GEMBA scores, BERTScore, glossary compliance |
+| [LLM मॉडल](https://lingo.dev/en/docs/platform/llm-models) | हर भाषा जोड़ी खातिर कवन मॉडल काम करी, रैंक कइल फॉलबैक के साथ | 400+ मॉडल; रिस्पॉन्स में चलल मॉडल के नाम बतावल जाला |
+| [ब्रांड के आवाज़](https://lingo.dev/en/docs/platform/brand-voices) | रउरा प्रोडक्ट हर भाषा में कइसे बोलेला, हर लोकेल खातिर एगो टेक्स्ट | हर बाजार खातिर टोन आ औपचारिकता |
+| [नियम](https://lingo.dev/en/docs/platform/rules) | ऊ भाषाई रिवाज जे सामान्य मॉडल अक्सर छोड़ देला | स्पेनी में विशेषण के जगह, प्रतिशत चिन्ह से पहिले खाली जगह |
+| [शब्दावली](https://lingo.dev/en/docs/platform/glossaries) | हर लोकेल खातिर सटीक शब्द मिलान, मतलब के हिसाब से मिलावल गइल | "911" यूरोपीय बाजार खातिर "112" बन जाला; प्रोडक्ट के नाम जइसे के तइसे रहेला |
+| [AI समीक्षक](https://lingo.dev/en/docs/platform/ai-reviewers) | हर अनुवाद के बाद चले वाला स्कोरिंग | GEMBA स्कोर, BERTScore, शब्दावली के पालन |
 
-Glossary, rulesets, आ Brand voice रउआ organization के हिस्सा ह, आ इंजन ओह सभ के attachment के जरिए लागू करे ला। एगो Glossary पाँच गो इंजन सभ के चला सकेला, आ एगो edit सब पाँचो में पहुँच जाला। बदलाव live जाए से पहिले [Playground](https://lingo.dev/en/docs/platform/playground) में test करीं: एगो इंजन के raw model से compare करीं, चाहे दू गो इंजन के side by side। इंजन platform पर configure होलें, जहाँ localization team localization infrastructure चलावेले।
+शब्दावली, नियम-समूह, आ ब्रांड के आवाज़ रउरा संगठन के हिस्सा होले, आ इंजन इनका के अटैच कइला से लागू करेला। एके शब्दावली पाँच गो इंजन पर लागू हो सकेले, आ एके बदलाव पाँचो जगह पहुँच जाला। बदलाव लाइव होखे से पहिले [Playground](https://lingo.dev/en/docs/platform/playground) में जाँच लीं: एगो इंजन के कच्चा मॉडल से तुलना करीं, भा दू गो इंजन के एक-दोसरा के बगल में देखीं। इंजन प्लेटफॉर्म पर कॉन्फ़िगर होला, जहाँ लोकलाइजेशन टीम पूरा लोकलाइजेशन इंफ्रास्ट्रक्चर चलावेले।
 
-## Code से अपना इंजन तक पहुँचीं
+## कोड से अपना इंजन तक पहुँचीं
 
-कवनो repository में मौजूद content के translate करीं। `lingo push` files के `.lingo/config.json` में बतावल इंजन पर भेजेला, आ `lingo pull` कवनो machine से translations वापस लिख देला:
+रिपॉजिटरी में मौजूद कंटेंट के अनुवाद करीं। `lingo push` फाइलन के `.lingo/config.json` में नाम दिहल इंजन तक भेजेला, आ `lingo pull` अनुवाद के कवनो मशीन से वापस लिख देला:
 
 ```bash
 npm install -g @lingo.dev/cli
@@ -46,7 +46,7 @@ lingo init && lingo link
 lingo push
 ```
 
-चाहें इंजन के सीधा call करीं, ID से नाम बताके:
+भा सीधे इंजन के कॉल करीं, ओकर ID के नाँव से:
 
 ```javascript
 const res = await fetch("https://api.lingo.dev/process/localize", {
@@ -66,12 +66,12 @@ const { data, model, usage } = await res.json();
 // usage: { inputTokens: 2789, outputTokens: 861, cost: 0.023012 }
 ```
 
-| | |
+|| |
 | --- | --- |
-| [Lingo.dev MCP](https://lingo.dev/en/docs/mcp) | रउआ coding agent उहे conversation से, जहाँ problem सामने आइल, एगो इंजन बनावे ला, Glossary terms जोड़े ला, rules tune करे ला, आ दू गो इंजन के compare करे ला |
-| [Lingo.dev CLI](https://lingo.dev/en/docs/cli) | Source files push करीं, translations pull करीं—terminal से या CI से। अठारह formats: JSON, YAML, Markdown, MDX, PO, XLIFF, Flutter ARB, Android आ Xcode strings, SubRip, PHP |
-| [Lingo.dev in CI/CD](https://lingo.dev/en/docs/workflows) | CLI install करीं आ `lingo push` के GitHub Actions, GitLab CI/CD, Bitbucket Pipelines, या Node.js 22+ वाला कवनो runner में step के रूप में चलाईं |
-| [Lingo.dev GitHub App](https://lingo.dev/en/docs/workflows/github-app) | एक बेर install करीं, आ default branch पर हर push एगो translation pull request खोलेला या update करे ला, चाहे translations ओही pull request में commit बन के आ जाली जे source बदलले रहे। ना runner, ना API key secret, ना manage करे खातिर Lockfile |
-| [Lingo.dev API](https://lingo.dev/en/docs/api) | हर language pair खातिर एगो synchronous call, चाहे एगो async job, जे एगो request के कई locales में भेज देला आ results आवतहीं पहुँचा देला |
+| [Lingo.dev MCP](https://lingo.dev/en/docs/mcp) | रउरा कोडिंग एजेंट ओही बातचीत से, जहाँ दिक्कत सामने आइल, इंजन बनावेले, शब्दावली के शब्द जोड़ेले, नियम के सँवारेले, आ दू गो इंजन के तुलना करेले |
+| [Lingo.dev CLI](https://lingo.dev/en/docs/cli) | टर्मिनल से भा CI से सोर्स फाइल push करीं, अनुवाद pull करीं। अठारह गो फॉर्मेट: JSON, YAML, Markdown, MDX, PO, XLIFF, Flutter ARB, Android आ Xcode strings, SubRip, PHP |
+| [CI/CD में Lingo.dev](https://lingo.dev/en/docs/workflows) | CLI इंस्टॉल करीं आ GitHub Actions, GitLab CI/CD, Bitbucket Pipelines, भा Node.js 22+ वाला कवनो रनर में `lingo push` के एगो स्टेप के रूप में चलाईं |
+| [Lingo.dev GitHub App](https://lingo.dev/en/docs/workflows/github-app) | एक बेर इंस्टॉल करीं, आ डिफॉल्ट ब्रांच पर हर push अनुवाद वाला pull request खोलेला भा अपडेट करेला, भा अनुवाद ओही pull request में कमिट बनके पहुँच जाला जेह में सोर्स बदलल गइल रहे। ना रनर, ना API key secret, ना सँभाले खातिर Lockfile |
+| [Lingo.dev API](https://lingo.dev/en/docs/api) | हर भाषा जोड़ी खातिर एगो synchronous कॉल, भा एगो async जॉब जे एके रिक्वेस्ट के कई गो लोकेल में बाँट देला आ नतीजा आवते पहुँचा देला |
 
-[अपना पहिला लोकलाइजेशन इंजन बनाईं →](https://lingo.dev)
+[अपना पहिला लोकलाइजेशन इंजन बनाई →](https://lingo.dev)

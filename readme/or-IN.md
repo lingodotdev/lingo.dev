@@ -1,44 +1,44 @@
 <p align="center">
   <a href="https://lingo.dev">
-    <img src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.png" width="100%" alt="Lingo.dev – localization engineering platform" />
+    <img src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.png" width="100%" alt="Lingo.dev – ସ୍ଥାନୀୟକରଣ ଇଞ୍ଜିନିୟରିଂ ପ୍ଲାଟଫର୍ମ" />
   </a>
 </p>
 
 <p align="center">
-  <strong>Lingo.dev is the localization engineering platform: the best way to measure translation quality, translate with LLMs, and proofread with native speakers.</strong>
+  <strong>Lingo.dev ହେଉଛି ସ୍ଥାନୀୟକରଣ ଇଞ୍ଜିନିୟରିଂ ପ୍ଲାଟଫର୍ମ: ଅନୁବାଦର ଗୁଣବତ୍ତା ମାପିବା, LLMs ସହିତ ଅନୁବାଦ କରିବା, ଏବଂ ମାତୃଭାଷୀମାନଙ୍କ ଦ୍ୱାରା ପ୍ରୁଫ୍‌ରିଡ୍ କରାଇବା ପାଇଁ ସର୍ବଶ୍ରେଷ୍ଠ ଉପାୟ।</strong>
 </p>
 
 <p align="center">
-  <a href="https://lingo.dev/en/docs">Docs</a> •
-  <a href="https://lingo.dev">Platform</a> •
+  <a href="https://lingo.dev/en/docs">ଡକ୍ସ</a> •
+  <a href="https://lingo.dev">ପ୍ଲାଟଫର୍ମ</a> •
   <a href="https://lingo.dev/go/discord">Discord</a>
 </p>
 
 <p align="center">
-  <a href="https://lingo.dev/en"><img src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square" alt="Product Hunt #1 DevTool of the Month" /></a>
-  <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md"><img src="https://img.shields.io/github/license/lingodotdev/lingo.dev" alt="License" /></a>
-  <a href="https://github.com/lingodotdev/lingo.dev/commits/main"><img src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev" alt="Last commit" /></a>
+  <a href="https://lingo.dev/en"><img src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square" alt="Product Hunt ର ମାସର #1 DevTool" /></a>
+  <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md"><img src="https://img.shields.io/github/license/lingodotdev/lingo.dev" alt="ଲାଇସେନ୍ସ" /></a>
+  <a href="https://github.com/lingodotdev/lingo.dev/commits/main"><img src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev" alt="ଶେଷ commit" /></a>
 </p>
 
 ---
 
-## ଟିମ୍ମାନେ Lingo.dev ଉପରେ localization engine ତିଆରି କରନ୍ତି
+## ଟିମ୍‌ମାନେ Lingo.dev ଉପରେ ସ୍ଥାନୀୟକରଣ ଇଞ୍ଜିନ ତିଆରି କରନ୍ତି
 
-ଏକ [localization engine](https://lingo.dev/en/docs/platform/engines) ହେଉଛି ଏମିତି ଏକ stateful translation API, ଯାହାକୁ ଆପଣଙ୍କ ଟିମ୍ କନଫିଗର୍ କରେ ଏବଂ Lingo.dev ଚଲାଏ। ପ୍ରତ୍ୟେକ ପ୍ରୋଡକ୍ଟ, ପ୍ରତ୍ୟେକ content type, କିମ୍ବା ପ୍ରତ୍ୟେକ brand ପାଇଁ ଅଲଗା ଇଞ୍ଜିନ ତିଆରି କରିପାରିବେ। ଏକ ଇଞ୍ଜିନ ମାଧ୍ୟମରେ ଯାଇଥିବା ପ୍ରତ୍ୟେକ ଅନୁରୋଧରେ, ସେଥିରେ ଆପଣ କନଫିଗର୍ କରିଥିବା ସବୁକିଛି ନିର୍ଦ୍ଧାରିତ ପ୍ରାଥମିକତା କ୍ରମରେ ଲାଗୁ ହୁଏ:
+ଏକ [ସ୍ଥାନୀୟକରଣ ଇଞ୍ଜିନ](https://lingo.dev/en/docs/platform/engines) ହେଉଛି ଏକ ଅବସ୍ଥାସମ୍ପନ୍ନ ଅନୁବାଦ API, ଯାହାକୁ ଆପଣଙ୍କ ଟିମ୍ ବିନ୍ୟାସ କରେ ଏବଂ Lingo.dev ଚଳାଏ। ପ୍ରତ୍ୟେକ ପ୍ରୋଡକ୍ଟ, ପ୍ରତ୍ୟେକ ବିଷୟବସ୍ତୁ ପ୍ରକାର, କିମ୍ବା ପ୍ରତ୍ୟେକ ବ୍ରାଣ୍ଡ ପାଇଁ ଗୋଟିଏ କରି ତିଆରି କରନ୍ତୁ। ଏକ ଇଞ୍ଜିନ ମାଧ୍ୟମରେ ଯାଇଥିବା ପ୍ରତ୍ୟେକ ଅନୁରୋଧରେ, ଆପଣ ତାହାରେ ବିନ୍ୟାସ କରିଥିବା ସବୁକିଛି ଏକ ନିର୍ଦ୍ଧାରିତ ଅଗ୍ରାଧିକାର କ୍ରମରେ ଲାଗୁ ହୁଏ:
 
-| ସ୍ତର | ଆପଣ କଣ କନଫିଗର୍ କରନ୍ତି | ଡକ୍ସରୁ |
+| ସ୍ତର | ଆପଣ କ'ଣ ବିନ୍ୟାସ କରନ୍ତି | ଡକ୍ସରୁ |
 | --- | --- | --- |
-| [LLM models](https://lingo.dev/en/docs/platform/llm-models) | ର୍ୟାଙ୍କ କରାଯାଇଥିବା fallback ସହିତ, ପ୍ରତ୍ୟେକ ଭାଷା-ଯୁଗଳକୁ କେଉଁ ମଡେଲ୍ ହାଣ୍ଡଲ୍ କରିବ | 400+ ମଡେଲ୍; ରିସ୍ପୋନ୍ସରେ ଚାଲିଥିବା ମଡେଲ୍ର ନାମ ଥାଏ |
-| [Brand voice](https://lingo.dev/en/docs/platform/brand-voices) | ପ୍ରତ୍ୟେକ ଭାଷାରେ ଆପଣଙ୍କ ପ୍ରୋଡକ୍ଟ କିପରି କଥା କହେ, ପ୍ରତ୍ୟେକ locale ପାଇଁ ଗୋଟିଏ ଟେକ୍ସ୍ଟ | ପ୍ରତ୍ୟେକ ବଜାର ପାଇଁ tone ଏବଂ formality |
-| [Rules](https://lingo.dev/en/docs/platform/rules) | ସାଧାରଣ ମଡେଲ୍ ଯେଉଁ ଭାଷାଗତ ପ୍ରଚଳନଗୁଡ଼ିକୁ ଧରିପାରେନି | Spanish ରେ adjective ର ସ୍ଥାନ, percentage sign ପୂର୍ବରୁ ଗୋଟିଏ ଖାଲି ଜାଗା |
-| [Glossary](https://lingo.dev/en/docs/platform/glossaries) | ଅର୍ଥ ଆଧାରରେ ମେଳାଯାଇଥିବା, ପ୍ରତ୍ୟେକ locale ପାଇଁ ସଠିକ୍ term mapping | ୟୁରୋପିୟ ବଜାର ପାଇଁ "911" "112" ହୋଇଯାଏ; ପ୍ରୋଡକ୍ଟ ନାମ ଯଥାବତ୍ ରହେ |
-| [AI reviewers](https://lingo.dev/en/docs/platform/ai-reviewers) | ପ୍ରତ୍ୟେକ ଅନୁବାଦ ପରେ ଚାଲୁଥିବା scoring | GEMBA scores, BERTScore, glossary compliance |
+| [LLM ମଡେଲଗୁଡ଼ିକ](https://lingo.dev/en/docs/platform/llm-models) | କେଉଁ ମଡେଲ୍ ପ୍ରତ୍ୟେକ ଭାଷା-ଯୁଗଳକୁ ସମ୍ଭାଳେ, ଶ୍ରେଣୀକ୍ରମିତ fallback ସହିତ | ୪୦୦+ ମଡେଲ୍; ପ୍ରତିକ୍ରିୟାରେ ଚାଲିଥିବା ମଡେଲର ନାମ ଦିଆଯାଏ |
+| [ବ୍ରାଣ୍ଡ ଭଏସ୍](https://lingo.dev/en/docs/platform/brand-voices) | ପ୍ରତ୍ୟେକ ଭାଷାରେ ଆପଣଙ୍କ ପ୍ରୋଡକ୍ଟ କିପରି କଥା କହେ, ପ୍ରତ୍ୟେକ ଲୋକେଲ୍ ପାଇଁ ଗୋଟିଏ ପାଠ୍ୟ | ପ୍ରତ୍ୟେକ ବଜାର ଅନୁଯାୟୀ ସ୍ୱର ଓ ଔପଚାରିକତା |
+| [ନିୟମଗୁଡ଼ିକ](https://lingo.dev/en/docs/platform/rules) | ସାଧାରଣ ମଡେଲ୍ ଯାହା ଧରିପାରେ ନାହିଁ ସେହି ଭାଷାଗତ ପ୍ରଚଳନଗୁଡ଼ିକ | ସ୍ପାନିଶରେ ବିଶେଷଣର ସ୍ଥାନ; ପ୍ରତିଶତ ଚିହ୍ନ ପୂର୍ବରୁ ଗୋଟିଏ ଖାଲି ସ୍ଥାନ |
+| [ଶବ୍ଦକୋଷ](https://lingo.dev/en/docs/platform/glossaries) | ଅର୍ଥ ଅନୁସାରେ ମେଳିଥିବା, ପ୍ରତ୍ୟେକ ଲୋକେଲ୍ ପାଇଁ ସଠିକ୍ ଶବ୍ଦ ମ୍ୟାପିଂ | "911" ୟୁରୋପୀୟ ବଜାର ପାଇଁ "112" ହୋଇଯାଏ; ପ୍ରୋଡକ୍ଟ ନାମଗୁଡ଼ିକ ଯଥାବତ୍ ରହେ |
+| [AI ସମୀକ୍ଷକମାନେ](https://lingo.dev/en/docs/platform/ai-reviewers) | ପ୍ରତ୍ୟେକ ଅନୁବାଦ ପରେ ଚାଲୁଥିବା ସ୍କୋରିଂ | GEMBA ସ୍କୋର, BERTScore, ଶବ୍ଦକୋଷ ଅନୁସରଣ |
 
-Glossary, ruleset, ଏବଂ Brand voice ଆପଣଙ୍କ organization ର ସମ୍ପତ୍ତି, ଏବଂ ଏକ ଇଞ୍ଜିନ ସେଗୁଡ଼ିକୁ attachment ମାଧ୍ୟମରେ ଲାଗୁ କରେ। ଗୋଟିଏ glossary ପାଞ୍ଚଟି ଇଞ୍ଜିନକୁ ନିୟନ୍ତ୍ରଣ କରିପାରେ, ଏବଂ ଗୋଟିଏ edit ସମସ୍ତ ପାଞ୍ଚଟିକୁ ପହଞ୍ଚିଯାଏ। ପରିବର୍ତ୍ତନ live ହେବା ପୂର୍ବରୁ [Playground](https://lingo.dev/en/docs/platform/playground) ରେ ଟେଷ୍ଟ କରନ୍ତୁ: ଏକ ଇଞ୍ଜିନକୁ raw model ସହିତ, କିମ୍ବା ଦୁଇଟି ଇଞ୍ଜିନକୁ ପାଖାପାଖି ତୁଳନା କରନ୍ତୁ। ଇଞ୍ଜିନଗୁଡ଼ିକ platform ରେ କନଫିଗର୍ ହୁଅନ୍ତି, ଯେଉଁଠାରେ localization team localization infrastructure ଚଲାଏ।
+ଶବ୍ଦକୋଷ, ନିୟମସମୂହ, ଏବଂ ବ୍ରାଣ୍ଡ ଭଏସ୍ ଆପଣଙ୍କ ସଂଗଠନର ଅଂଶ, ଏବଂ ଏକ ଇଞ୍ଜିନ ସେଗୁଡ଼ିକୁ ସଂଲଗ୍ନତା ମାଧ୍ୟମରେ ଲାଗୁ କରେ। ଗୋଟିଏ ଶବ୍ଦକୋଷ ପାଞ୍ଚଟି ଇଞ୍ଜିନକୁ ନିୟନ୍ତ୍ରଣ କରିପାରେ, ଏବଂ ଗୋଟିଏ ସମ୍ପାଦନା ସମସ୍ତ ପାଞ୍ଚଟିକୁ ପହଞ୍ଚିଯାଏ। ପରିବର୍ତ୍ତନଟି live ହେବା ପୂର୍ବରୁ [Playground](https://lingo.dev/en/docs/platform/playground) ରେ ପରୀକ୍ଷା କରନ୍ତୁ: ଏକ ଇଞ୍ଜିନକୁ ଗୋଟିଏ raw model ସହିତ, କିମ୍ବା ଦୁଇଟି ଇଞ୍ଜିନକୁ ପାଶାପାଶି ତୁଳନା କରନ୍ତୁ। ଇଞ୍ଜିନଗୁଡ଼ିକ ପ୍ଲାଟଫର୍ମରେ ବିନ୍ୟାସ ହୁଏ, ଯେଉଁଠାରେ ସ୍ଥାନୀୟକରଣ ଟିମ୍ ସ୍ଥାନୀୟକରଣ ପୂର୍ବାଧାର ଚଳାଏ।
 
-## କୋଡ୍ ଠାରୁ ଆପଣଙ୍କ ଇଞ୍ଜିନଗୁଡ଼ିକୁ ପହଞ୍ଚନ୍ତୁ
+## କୋଡ୍‌ରୁ ଆପଣଙ୍କ ଇଞ୍ଜିନଗୁଡ଼ିକୁ ପହଞ୍ଚନ୍ତୁ
 
-ଏକ repository ଭିତରର content ଅନୁବାଦ କରନ୍ତୁ। `lingo push` `.lingo/config.json` ରେ ନାମିତ ଇଞ୍ଜିନକୁ ଫାଇଲଗୁଡ଼ିକ ପଠାଏ, ଏବଂ `lingo pull` ଯେକୌଣସି machine ରୁ ଅନୁବାଦଗୁଡ଼ିକୁ ପୁନି ଲେଖି ଫେରାଇ ଆଣେ:
+ଏକ ରିପୋଜିଟୋରିରେ ଥିବା ବିଷୟବସ୍ତୁକୁ ଅନୁବାଦ କରନ୍ତୁ। `lingo push` ଫାଇଲଗୁଡ଼ିକୁ `.lingo/config.json` ରେ ନାମିତ ଇଞ୍ଜିନକୁ ପଠାଏ, ଏବଂ `lingo pull` ଯେକୌଣସି ମେସିନରୁ ଅନୁବାଦଗୁଡ଼ିକୁ ପୁଣି ଲେଖେ:
 
 ```bash
 npm install -g @lingo.dev/cli
@@ -46,7 +46,7 @@ lingo init && lingo link
 lingo push
 ```
 
-କିମ୍ବା, ID ଦେଇ ଏକ ଇଞ୍ଜିନକୁ ସିଧାସଳଖ call କରନ୍ତୁ:
+କିମ୍ବା, ID ଦେଇ ଏକ ଇଞ୍ଜିନକୁ ସିଧାସଳଖ ଡାକନ୍ତୁ:
 
 ```javascript
 const res = await fetch("https://api.lingo.dev/process/localize", {
@@ -66,12 +66,12 @@ const { data, model, usage } = await res.json();
 // usage: { inputTokens: 2789, outputTokens: 861, cost: 0.023012 }
 ```
 
-| | |
+|| |
 | --- | --- |
-| [Lingo.dev MCP](https://lingo.dev/en/docs/mcp) | ଯେଉଁ କଥୋପକଥନରେ ସମସ୍ୟା ଦେଖାଦେଇଥିଲା, ସେଠାରୁ ଆପଣଙ୍କ coding agent ଏକ ଇଞ୍ଜିନ ତିଆରି କରେ, glossary term ଯୋଡ଼େ, rules କୁ ସୁର କରେ, ଏବଂ ଦୁଇଟି ଇଞ୍ଜିନକୁ ତୁଳନା କରେ |
-| [Lingo.dev CLI](https://lingo.dev/en/docs/cli) | ଟର୍ମିନାଲ୍ କିମ୍ବା CI ରୁ source file push କରନ୍ତୁ ଏବଂ translation pull କରନ୍ତୁ। 18ଟି format: JSON, YAML, Markdown, MDX, PO, XLIFF, Flutter ARB, Android and Xcode strings, SubRip, PHP |
-| [Lingo.dev in CI/CD](https://lingo.dev/en/docs/workflows) | CLI install କରନ୍ତୁ ଏବଂ GitHub Actions, GitLab CI/CD, Bitbucket Pipelines, କିମ୍ବା Node.js 22+ ଥିବା ଯେକୌଣସି runner ରେ `lingo push` କୁ ଗୋଟିଏ step ଭାବେ ଚଲାନ୍ତୁ |
-| [Lingo.dev GitHub App](https://lingo.dev/en/docs/workflows/github-app) | ଗୋଟେଥର install କରନ୍ତୁ, ତାପରେ default branch କୁ ପ୍ରତ୍ୟେକ push ଏକ translation pull request ଖୋଲେ କିମ୍ବା update କରେ; କିମ୍ବା source ପରିବର୍ତ୍ତନ କରିଥିବା pull request ଭିତରେ translations commit ଭାବେ ପହଞ୍ଚେ। runner ଦରକାର ନାହିଁ, API key secret ଦରକାର ନାହିଁ, manage କରିବା ପାଇଁ Lockfile ମଧ୍ୟ ନାହିଁ |
-| [Lingo.dev API](https://lingo.dev/en/docs/api) | ପ୍ରତ୍ୟେକ ଭାଷା-ଯୁଗଳ ପାଇଁ ଗୋଟିଏ synchronous call, କିମ୍ବା ଏକ async job ଯାହା ଗୋଟିଏ request କୁ ଅନେକ locale କୁ ପ୍ରସାରିତ କରେ ଏବଂ ଫଳାଫଳ ଆସୁଥିବା ସହିତ ଦେଇଯାଏ |
+| [Lingo.dev MCP](https://lingo.dev/en/docs/mcp) | ଆପଣଙ୍କ କୋଡିଂ ଏଜେଣ୍ଟ ଗୋଟିଏ ଇଞ୍ଜିନ ତିଆରି କରେ, ଶବ୍ଦକୋଷ ଶବ୍ଦ ଯୋଡ଼େ, ନିୟମଗୁଡ଼ିକୁ ସୁସମନ୍ୱୟ କରେ, ଏବଂ ସମସ୍ୟା ଯେଉଁ ଆଲୋଚନାରେ ଦେଖାଦେଇଥିଲା ସେଠାରୁ ଦୁଇଟି ଇଞ୍ଜିନକୁ ତୁଳନା କରେ |
+| [Lingo.dev CLI](https://lingo.dev/en/docs/cli) | ଟର୍ମିନାଲରୁ କିମ୍ବା CI ରୁ ଉତ୍ସ ଫାଇଲଗୁଡ଼ିକୁ push କରନ୍ତୁ ଏବଂ ଅନୁବାଦଗୁଡ଼ିକୁ pull କରନ୍ତୁ। ଅଠାରୋଟି ଫର୍ମାଟ୍: JSON, YAML, Markdown, MDX, PO, XLIFF, Flutter ARB, Android ଏବଂ Xcode strings, SubRip, PHP |
+| [Lingo.dev in CI/CD](https://lingo.dev/en/docs/workflows) | CLI ଇନ୍ସ୍ଟଲ୍ କରନ୍ତୁ ଏବଂ GitHub Actions, GitLab CI/CD, Bitbucket Pipelines, କିମ୍ବା Node.js 22+ ସହିତ ଯେକୌଣସି runner ରେ `lingo push` କୁ ଗୋଟିଏ ପଦକ୍ଷେପ ଭାବେ ଚାଲାନ୍ତୁ |
+| [Lingo.dev GitHub App](https://lingo.dev/en/docs/workflows/github-app) | ଗୋଟେଥର ଇନ୍ସ୍ଟଲ୍ କରନ୍ତୁ, ଏବଂ default branch କୁ ପ୍ରତ୍ୟେକ push ଏକ translation pull request ଖୋଲେ କିମ୍ବା ଅଦ୍ୟତନ କରେ, କିମ୍ବା ଅନୁବାଦଗୁଡ଼ିକ ସେହି pull request ରେ ଏକ commit ଭାବେ ପହଞ୍ଚେ ଯାହା ଉତ୍ସକୁ ପରିବର୍ତ୍ତନ କରିଥିଲା। କୌଣସି runner ନାହିଁ, କୌଣସି API key secret ନାହିଁ, ପରିଚାଳନା ପାଇଁ କୌଣସି Lockfile ନାହିଁ |
+| [Lingo.dev API](https://lingo.dev/en/docs/api) | ପ୍ରତ୍ୟେକ ଭାଷା-ଯୁଗଳ ପାଇଁ ଗୋଟିଏ synchronous call, କିମ୍ବା ଗୋଟିଏ async job ଯାହା ଗୋଟିଏ ଅନୁରୋଧକୁ ଅନେକ ଲୋକେଲ୍‌କୁ ପ୍ରସାରଣ କରେ ଏବଂ ଫଳାଫଳ ଆସିବା ସହିତ ପହଞ୍ଚାଏ |
 
-[ଆପଣଙ୍କ ପ୍ରଥମ localization engine ତିଆରି କରନ୍ତୁ →](https://lingo.dev)
+[ଆପଣଙ୍କ ପ୍ରଥମ ସ୍ଥାନୀୟକରଣ ଇଞ୍ଜିନ ତିଆରି କରନ୍ତୁ →](https://lingo.dev)
