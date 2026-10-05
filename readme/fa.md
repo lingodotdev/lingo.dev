@@ -1,175 +1,77 @@
 <p align="center">
   <a href="https://lingo.dev">
-    <img
-      src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.png"
-      width="100%"
-      alt="Lingo.dev – پلتفرم مهندسی بومی‌سازی"
-    />
+    <img src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.png" width="100%" alt="Lingo.dev – localization engineering platform" />
   </a>
 </p>
 
 <p align="center">
-  <strong>
-    ابزارهای متن‌باز مهندسی بومی‌سازی. به پلتفرم مهندسی بومی‌سازی Lingo.dev متصل
-    شوید تا ترجمه‌های باکیفیت و یکپارچه داشته باشید.
-  </strong>
-</p>
-
-<br />
-
-<p align="center">
-  <a href="#lingodev-api">Lingo API</a> •
-  <a href="#lingodev-mcp">Lingo React MCP</a> •
-  <a href="#lingodev-cli">Lingo CLI</a> •
-  <a href="#lingodev-cicd">Lingo GitHub Action</a> •
-  <a href="#lingodev-compiler">کامپایلر Lingo برای React (آلفای اولیه)</a>
+  <strong>Lingo.dev is the localization engineering platform: the best way to measure translation quality, translate with LLMs, and proofread with native speakers.</strong>
 </p>
 
 <p align="center">
-  <a href="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml">
-    <img
-      src="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml/badge.svg"
-      alt="Release"
-    />
-  </a>
-  <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md">
-    <img
-      src="https://img.shields.io/github/license/lingodotdev/lingo.dev"
-      alt="License"
-    />
-  </a>
-  <a href="https://github.com/lingodotdev/lingo.dev/commits/main">
-    <img
-      src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev"
-      alt="Last Commit"
-    />
-  </a>
-  <a href="https://lingo.dev/en">
-    <img
-      src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #1 DevTool of the Month"
-    />
-  </a>
-  <a href="https://lingo.dev/en">
-    <img
-      src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Week-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #1 DevTool of the Week"
-    />
-  </a>
-  <a href="https://lingo.dev/en">
-    <img
-      src="https://img.shields.io/badge/Product%20Hunt-%232%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #2 Product of the Day"
-    />
-  </a>
-  <a href="https://lingo.dev/en">
-    <img
-      src="https://img.shields.io/badge/GitHub-Trending-blue?logo=github&style=flat-square"
-      alt="Github trending"
-    />
-  </a>
+  <a href="https://lingo.dev/en/docs">Docs</a> •
+  <a href="https://lingo.dev">Platform</a> •
+  <a href="https://lingo.dev/go/discord">Discord</a>
+</p>
+
+<p align="center">
+  <a href="https://lingo.dev/en"><img src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square" alt="Product Hunt #1 DevTool of the Month" /></a>
+  <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md"><img src="https://img.shields.io/github/license/lingodotdev/lingo.dev" alt="License" /></a>
+  <a href="https://github.com/lingodotdev/lingo.dev/commits/main"><img src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev" alt="Last commit" /></a>
 </p>
 
 ---
 
-## شروع سریع
+## تیم‌ها موتورهای بومی‌سازی‌شان را روی Lingo.dev می‌سازند
 
-| ابزار                                               | کاربرد                                                     | دستور سریع                         |
-| --------------------------------------------------- | ---------------------------------------------------------- | ---------------------------------- |
-| [**Lingo React MCP**](#lingodev-mcp)                | راه‌اندازی i18n با کمک هوش مصنوعی برای اپلیکیشن‌های React  | پرامپت: `Set up i18n`              |
-| [**Lingo CLI**](#lingodev-cli)                      | بومی‌سازی فایل‌های JSON، YAML، markdown، CSV، PO           | `npx lingo.dev@latest run`         |
-| [**Lingo GitHub Action**](#lingodev-cicd)           | بومی‌سازی مداوم در GitHub Actions                          | `uses: lingodotdev/lingo.dev@main` |
-| [**کامپایلر Lingo برای React**](#lingodev-compiler) | بومی‌سازی React در زمان بیلد بدون نیاز به wrapper های i18n | افزونه `withLingo()`               |
+یک [موتور بومی‌سازی](https://lingo.dev/en/docs/platform/engines) یک API ترجمهٔ حالت‌مند است که تیم شما آن را پیکربندی می‌کند و Lingo.dev اجرايش می‌کند. می‌توانید برای هر محصول، هر نوع محتوا یا هر برند، یک موتور جدا بسازید. هر درخواستی که از یک موتور عبور می‌کند، همهٔ تنظیماتی را که داخل آن تعریف کرده‌اید، با یک ترتیب اولویت ثابت اعمال می‌کند:
 
-### موتورهای بومی‌سازی
+| لایه | چه چیزی را پیکربندی می‌کنید | نمونه‌ای از مستندات |
+| --- | --- | --- |
+| [مدل‌های LLM](https://lingo.dev/en/docs/platform/llm-models) | این‌که برای هر جفت‌زبان کدام مدل استفاده شود، با گزینه‌های جایگزینِ اولویت‌بندی‌شده | بیش از ۴۰۰ مدل؛ پاسخ، نام مدلی را که اجرا شده نشان می‌دهد |
+| [لحن برند](https://lingo.dev/en/docs/platform/brand-voices) | این‌که محصول شما در هر زبان چطور حرف می‌زند، با یک متن برای هر locale | لحن و میزان رسمیت برای هر بازار |
+| [قواعد](https://lingo.dev/en/docs/platform/rules) | قراردادهای زبانی‌ای که مدل‌های عمومی معمولاً از قلم می‌اندازند | جایگاه صفت در زبان اسپانیایی، فاصله قبل از علامت درصد |
+| [واژه‌نامه](https://lingo.dev/en/docs/platform/glossaries) | معادل‌های دقیق اصطلاحات برای هر locale، با تطبیق بر اساس معنا | "911" برای بازارهای اروپایی به "112" تبدیل می‌شود؛ نام محصولات بدون تغییر عبور می‌کنند |
+| [بازبین‌های AI](https://lingo.dev/en/docs/platform/ai-reviewers) | امتیازدهی‌ای که بعد از هر ترجمه اجرا می‌شود | امتیازهای GEMBA، BERTScore، انطباق با واژه‌نامه |
 
-این ابزارها به [موتورهای بومی‌سازی](https://lingo.dev) متصل می‌شوند – APIهای ترجمه‌ای با حافظه که روی پلتفرم مهندسی بومی‌سازی Lingo.dev ایجاد می‌کنید. هر موتور واژه‌نامه‌ها، لحن برند، و دستورالعمل‌های هر زبان را در تمام درخواست‌ها حفظ می‌کند و [خطاهای اصطلاح‌شناسی را ۱۶.۶ تا ۴۴.۶٪ کاهش می‌دهد](https://lingo.dev/research/retrieval-augmented-localization). یا [از LLM خودتان استفاده کنید](#lingodev-cli).
+واژه‌نامه‌ها، مجموعه‌قواعد و لحن‌های برند به سازمان شما تعلق دارند و موتور آن‌ها را از طریق الحاق اعمال می‌کند. یک واژه‌نامه می‌تواند پنج موتور را پوشش دهد و با یک ویرایش، هر پنج موتور به‌روزرسانی می‌شوند. قبل از انتشار، تغییر را در [Playground](https://lingo.dev/en/docs/platform/playground) آزمایش کنید: یک موتور را با یک مدل خام مقایسه کنید یا دو موتور را کنار هم بگذارید. موتورهای بومی‌سازی روی پلتفرم پیکربندی می‌شوند؛ همان‌جایی که تیم بومی‌سازی زیرساخت بومی‌سازی را اجرا می‌کند.
 
----
+## از داخل کد به موتورهای خود دسترسی پیدا کنید
 
-### Lingo.dev MCP
-
-راه‌اندازی i18n در اپلیکیشن‌های React مستعد خطاست – حتی دستیارهای کدنویسی هوش مصنوعی APIهای وجود نداشته را توهم می‌بینند و مسیریابی را خراب می‌کنند. Lingo.dev MCP به دستیارهای هوش مصنوعی دسترسی ساختاریافته به دانش i18n مخصوص فریم‌ورک برای Next.js، React Router و TanStack Start می‌دهد. با Claude Code، Cursor، GitHub Copilot Agents و Codex کار می‌کند.
-
-[مستندات را بخوانید ←](https://lingo.dev/en/mcp)
-
----
-
-### Lingo.dev CLI
-
-فایل‌های JSON، YAML، markdown، CSV و PO را با یک دستور بومی‌سازی کنید. یک lockfile پیگیری می‌کند چه چیزی قبلاً بومی‌سازی شده – فقط محتوای جدید یا تغییریافته پردازش می‌شود. به‌طور پیش‌فرض از موتور بومی‌سازی شما روی Lingo.dev استفاده می‌کند، یا LLM خودتان را بیاورید (OpenAI، Anthropic، Google، Mistral، OpenRouter، Ollama).
+محتوای یک repository را ترجمه کنید. `lingo push` فایل‌ها را به موتوری می‌فرستد که در `.lingo/config.json` نام‌گذاری شده، و `lingo pull` ترجمه‌ها را از هر ماشینی برمی‌گرداند:
 
 ```bash
-npx lingo.dev@latest init
-npx lingo.dev@latest run
+npm install -g @lingo.dev/cli
+lingo init && lingo link
+lingo push
 ```
 
-[مستندات را بخوانید ←](https://lingo.dev/en/docs/cli)
+یا یک موتور را مستقیماً و با شناسهٔ آن فراخوانی کنید:
 
----
+```javascript
+const res = await fetch("https://api.lingo.dev/process/localize", {
+  method: "POST",
+  headers: { "X-API-Key": process.env.LINGO_API_KEY, "Content-Type": "application/json" },
+  body: JSON.stringify({
+    engineId: "eng_abc123",
+    sourceLocale: "en",
+    targetLocale: "de",
+    data: { greeting: "Hello, world!", cta: "Get started" },
+  }),
+});
 
-### Lingo.dev CI/CD
-
-بومی‌سازی مداوم در خط لوله شما. هر push باعث فعال‌سازی بومی‌سازی می‌شود – رشته‌های گم‌شده قبل از رسیدن کد به محیط تولید تکمیل می‌شوند. از GitHub Actions، GitLab CI/CD و Bitbucket Pipelines پشتیبانی می‌کند.
-
-```yaml
-uses: lingodotdev/lingo.dev@main
-with:
-  api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
+const { data, model, usage } = await res.json();
+// data:  { greeting: "Hallo, Welt!", cta: "Jetzt starten" }
+// model: "anthropic/claude-sonnet-4.5"
+// usage: { inputTokens: 2789, outputTokens: 861, cost: 0.023012 }
 ```
 
-[مستندات را بخوانید ←](https://lingo.dev/en/docs/integrations)
+| | |
+| --- | --- |
+| [Lingo.dev MCP](https://lingo.dev/en/docs/mcp) | ایجنت کدنویسی شما از همان گفت‌وگویی که مسئله در آن مطرح شده، یک موتور می‌سازد، اصطلاحات واژه‌نامه را اضافه می‌کند، قواعد را تنظیم می‌کند و دو موتور را با هم مقایسه می‌کند |
+| [Lingo.dev CLI](https://lingo.dev/en/docs/cli) | فایل‌های مبدأ را push کنید و ترجمه‌ها را pull کنید؛ از ترمینال یا از CI. هجده قالب: JSON، YAML، Markdown، MDX، PO، XLIFF، Flutter ARB، رشته‌های Android و Xcode، SubRip، PHP |
+| [Lingo.dev در CI/CD](https://lingo.dev/en/docs/workflows) | CLI را نصب کنید و `lingo push` را به‌عنوان یک مرحله در GitHub Actions، GitLab CI/CD، Bitbucket Pipelines یا هر runner مجهز به Node.js 22+ اجرا کنید |
+| [Lingo.dev GitHub App](https://lingo.dev/en/docs/workflows/github-app) | یک بار نصب کنید و با هر push به شاخهٔ پیش‌فرض، یک pull request ترجمه باز یا به‌روزرسانی می‌شود؛ یا ترجمه‌ها به‌صورت یک commit داخل همان pull requestی ثبت می‌شوند که مبدأ را تغییر داده است. بدون runner، بدون secret برای کلید API، و بدون Lockfile برای مدیریت |
+| [Lingo.dev API](https://lingo.dev/en/docs/api) | برای هر جفت‌زبان، یک فراخوانی همگام داشته باشید؛ یا یک job ناهمگام که یک درخواست را به چندین locale پخش می‌کند و نتیجه‌ها را به‌محض آماده‌شدن تحویل می‌دهد |
 
----
-
-### Lingo.dev API
-
-موتور بومی‌سازی خود را مستقیماً از کد backend فراخوانی کنید. بومی‌سازی همزمان و ناهمزمان با تحویل webhook، جداسازی خطا برای هر locale و پیشرفت لحظه‌ای از طریق WebSocket.
-
-[مستندات را بخوانید ←](https://lingo.dev/en/docs/api)
-
----
-
-### کامپایلر Lingo برای React (آلفای اولیه)
-
-بومی‌سازی React در زمان build بدون نیاز به wrapper های i18n. کامپوننت‌ها را با متن انگلیسی ساده بنویسید – کامپایلر رشته‌های قابل ترجمه را تشخیص داده و نسخه‌های بومی‌شده را در زمان build تولید می‌کند. بدون کلید ترجمه، بدون فایل JSON، بدون تابع `t()`. از Next.js (App Router) و Vite + React پشتیبانی می‌کند.
-
-[مستندات را بخوانید ←](https://lingo.dev/en/docs/react/compiler)
-
----
-
-## مشارکت
-
-مشارکت‌ها پذیرفته می‌شوند. لطفاً این دستورالعمل‌ها را دنبال کنید:
-
-1. **مسائل:** [گزارش باگ یا درخواست ویژگی](https://github.com/lingodotdev/lingo.dev/issues)
-2. **درخواست‌های Pull:** [ارسال تغییرات](https://github.com/lingodotdev/lingo.dev/pulls)
-   - هر PR نیاز به changeset دارد: `pnpm new` (یا `pnpm new:empty` برای تغییرات بدون انتشار)
-   - قبل از ارسال مطمئن شوید تست‌ها موفق هستند
-3. **توسعه:** این یک monorepo مبتنی بر pnpm + turborepo است
-   - نصب وابستگی‌ها: `pnpm install`
-   - اجرای تست‌ها: `pnpm test`
-   - Build: `pnpm build`
-
-**پشتیبانی:** [انجمن Discord](https://lingo.dev/go/discord)
-
-## تاریخچه ستاره‌ها
-
-اگر Lingo.dev را مفید می‌دانید، به ما ستاره دهید و به ما کمک کنید به 10,000 ستاره برسیم!
-
-[
-
-![نمودار تاریخچه ستاره‌ها](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
-
-](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
-
-## مستندات محلی‌سازی شده
-
-**ترجمه‌های موجود:**
-
-[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [Português (Brasil)](/readme/pt-BR.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Polski](/readme/pl.md) • [Türkçe](/readme/tr.md) • [اردو](/readme/ur.md) • [भोजपुरी](/readme/bho.md) • [অসমীয়া](/readme/as-IN.md) • [ગુજરાતી](/readme/gu-IN.md) • [मराठी](/readme/mr-IN.md) • [ଓଡ଼ିଆ](/readme/or-IN.md) • [ਪੰਜਾਬੀ](/readme/pa-IN.md) • [සිංහල](/readme/si-LK.md) • [தமிழ்](/readme/ta-IN.md) • [తెలుగు](/readme/te-IN.md)
-
-**افزودن زبان جدید:**
-
-1. کد زبان را به [`i18n.json`](./i18n.json) با استفاده از [فرمت BCP-47](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) اضافه کنید
-2. یک درخواست pull ارسال کنید
+[اولین موتور بومی‌سازی خود را بسازید ←](https://lingo.dev)

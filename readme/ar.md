@@ -1,175 +1,77 @@
 <p align="center">
   <a href="https://lingo.dev">
-    <img
-      src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.png"
-      width="100%"
-      alt="Lingo.dev – منصة هندسة الترجمة"
-    />
+    <img src="https://raw.githubusercontent.com/lingodotdev/lingo.dev/main/content/banner.png" width="100%" alt="Lingo.dev – localization engineering platform" />
   </a>
 </p>
 
 <p align="center">
-  <strong>
-    أدوات هندسة ترجمة مفتوحة المصدر. اتصل بمنصة Lingo.dev لهندسة الترجمة للحصول
-    على ترجمات متسقة وعالية الجودة.
-  </strong>
-</p>
-
-<br />
-
-<p align="center">
-  <a href="#lingodev-api">Lingo API</a> •
-  <a href="#lingodev-mcp">Lingo React MCP</a> •
-  <a href="#lingodev-cli">Lingo CLI</a> •
-  <a href="#lingodev-cicd">Lingo GitHub Action</a> •
-  <a href="#lingodev-compiler">Lingo Compiler for React (ألفا مبكرة)</a>
+  <strong>Lingo.dev is the localization engineering platform: the best way to measure translation quality, translate with LLMs, and proofread with native speakers.</strong>
 </p>
 
 <p align="center">
-  <a href="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml">
-    <img
-      src="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml/badge.svg"
-      alt="الإصدار"
-    />
-  </a>
-  <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md">
-    <img
-      src="https://img.shields.io/github/license/lingodotdev/lingo.dev"
-      alt="الترخيص"
-    />
-  </a>
-  <a href="https://github.com/lingodotdev/lingo.dev/commits/main">
-    <img
-      src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev"
-      alt="آخر تحديث"
-    />
-  </a>
-  <a href="https://lingo.dev/en">
-    <img
-      src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #1 أداة تطوير للشهر"
-    />
-  </a>
-  <a href="https://lingo.dev/en">
-    <img
-      src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Week-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #1 منتج الأسبوع"
-    />
-  </a>
-  <a href="https://lingo.dev/en">
-    <img
-      src="https://img.shields.io/badge/Product%20Hunt-%232%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #2 منتج اليوم"
-    />
-  </a>
-  <a href="https://lingo.dev/en">
-    <img
-      src="https://img.shields.io/badge/GitHub-Trending-blue?logo=github&style=flat-square"
-      alt="رائج على Github"
-    />
-  </a>
+  <a href="https://lingo.dev/en/docs">Docs</a> •
+  <a href="https://lingo.dev">Platform</a> •
+  <a href="https://lingo.dev/go/discord">Discord</a>
+</p>
+
+<p align="center">
+  <a href="https://lingo.dev/en"><img src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square" alt="Product Hunt #1 DevTool of the Month" /></a>
+  <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md"><img src="https://img.shields.io/github/license/lingodotdev/lingo.dev" alt="License" /></a>
+  <a href="https://github.com/lingodotdev/lingo.dev/commits/main"><img src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev" alt="Last commit" /></a>
 </p>
 
 ---
 
-## البدء السريع
+## تبني الفرق محركات توطين على Lingo.dev
 
-| الأداة                                             | ما تفعله                                           | الأمر السريع                       |
-| -------------------------------------------------- | -------------------------------------------------- | ---------------------------------- |
-| [**Lingo React MCP**](#lingodev-mcp)               | إعداد i18n بمساعدة الذكاء الاصطناعي لتطبيقات React | المطالبة: `Set up i18n`            |
-| [**Lingo CLI**](#lingodev-cli)                     | ترجمة ملفات JSON وYAML وmarkdown وCSV وPO          | `npx lingo.dev@latest run`         |
-| [**Lingo GitHub Action**](#lingodev-cicd)          | ترجمة مستمرة في GitHub Actions                     | `uses: lingodotdev/lingo.dev@main` |
-| [**Lingo Compiler for React**](#lingodev-compiler) | ترجمة React وقت البناء بدون أغلفة i18n             | إضافة `withLingo()`                |
+[محرك التوطين](https://lingo.dev/en/docs/platform/engines) هو واجهة برمجة تطبيقات للترجمة تحتفظ بالحالة، يضبطها فريقك وتُشغّلها Lingo.dev. أنشئ محركًا لكل منتج، أو لكل نوع محتوى، أو لكل علامة تجارية. كل طلب يمر عبر محرك يطبّق كل ما أعددته فيه، وفق ترتيب أولوية ثابت:
 
-### محركات الترجمة
+| الطبقة | ما الذي تضبطه | من الوثائق |
+| --- | --- | --- |
+| [نماذج LLM](https://lingo.dev/en/docs/platform/llm-models) | أي نموذج يتولى كل زوج لغوي، مع بدائل احتياطية مرتبة | أكثر من 400 نموذج؛ وتُسمّي الاستجابة النموذج الذي تم تشغيله |
+| [صوت العلامة التجارية](https://lingo.dev/en/docs/platform/brand-voices) | كيف يتحدث منتجك بكل لغة، مع نص واحد لكل لغة محلية | النبرة ومستوى الرسمية لكل سوق |
+| [القواعد](https://lingo.dev/en/docs/platform/rules) | الاصطلاحات اللغوية التي قد تفوت على نموذج عام | موضع الصفة في الإسبانية، ووضع مسافة قبل علامة النسبة المئوية |
+| [مسرد المصطلحات](https://lingo.dev/en/docs/platform/glossaries) | مطابقات دقيقة للمصطلحات حسب اللغة المحلية، مع مطابقة المعنى | تتحول "911" إلى "112" في الأسواق الأوروبية؛ وتبقى أسماء المنتجات كما هي |
+| [مراجعو AI](https://lingo.dev/en/docs/platform/ai-reviewers) | تقييم يُجرى بعد كل ترجمة | درجات GEMBA وBERTScore والالتزام بمسرد المصطلحات |
 
-تتصل هذه الأدوات بـ [محركات الترجمة](https://lingo.dev) – واجهات برمجة ترجمة ذات حالة تنشئها على منصة Lingo.dev لهندسة الترجمة. يحتفظ كل محرك بالمسارد ونبرة العلامة التجارية والتعليمات الخاصة بكل لغة عبر كل طلب، [مما يقلل أخطاء المصطلحات بنسبة 16.6-44.6%](https://lingo.dev/research/retrieval-augmented-localization). أو [استخدم نموذج اللغة الكبير الخاص بك](#lingodev-cli).
+تعود مسارد المصطلحات ومجموعات القواعد وأصوات العلامة التجارية إلى مؤسستك، ويطبّقها المحرك بمجرد ربطها به. يمكن لمسرد واحد أن يدير خمسة محركات، ويصل تعديل واحد إلى الخمسة جميعًا. اختبر أي تغيير في [Playground](https://lingo.dev/en/docs/platform/playground) قبل اعتماده: قارن بين محرك ونموذج خام، أو بين محركين جنبًا إلى جنب. تُضبط المحركات على المنصة، حيث يدير فريق التوطين البنية التحتية للتوطين.
 
----
+## الوصول إلى محركاتك من خلال الكود
 
-### Lingo.dev MCP
-
-إعداد i18n في تطبيقات React معرض للأخطاء – حتى مساعدو البرمجة بالذكاء الاصطناعي يتخيلون واجهات برمجة غير موجودة ويكسرون التوجيه. يمنح Lingo.dev MCP مساعدي الذكاء الاصطناعي وصولاً منظماً إلى معرفة i18n الخاصة بالإطار لـ Next.js وReact Router وTanStack Start. يعمل مع Claude Code وCursor وGitHub Copilot Agents وCodex.
-
-[اقرأ الوثائق ←](https://lingo.dev/en/mcp)
-
----
-
-### Lingo.dev CLI
-
-ترجم ملفات JSON وYAML وmarkdown وCSV وPO بأمر واحد. يتتبع ملف القفل ما تمت ترجمته بالفعل – يتم معالجة المحتوى الجديد أو المعدل فقط. يستخدم محرك الترجمة الخاص بك على Lingo.dev افتراضياً، أو استخدم نموذج اللغة الكبير الخاص بك (OpenAI وAnthropic وGoogle وMistral وOpenRouter وOllama).
+ترجِم المحتوى داخل مستودع. يرسل `lingo push` الملفات إلى المحرك المسمّى في `.lingo/config.json`، ويعيد `lingo pull` كتابة الترجمات من أي جهاز:
 
 ```bash
-npx lingo.dev@latest init
-npx lingo.dev@latest run
+npm install -g @lingo.dev/cli
+lingo init && lingo link
+lingo push
 ```
 
-[اقرأ المستندات ←](https://lingo.dev/en/docs/cli)
+أو استدعِ محركًا مباشرةً بذكر معرّفه:
 
----
+```javascript
+const res = await fetch("https://api.lingo.dev/process/localize", {
+  method: "POST",
+  headers: { "X-API-Key": process.env.LINGO_API_KEY, "Content-Type": "application/json" },
+  body: JSON.stringify({
+    engineId: "eng_abc123",
+    sourceLocale: "en",
+    targetLocale: "de",
+    data: { greeting: "Hello, world!", cta: "Get started" },
+  }),
+});
 
-### واجهة سطر أوامر Lingo.dev
-
-الترجمة المستمرة في خط العمل. كل دفع يُفعّل الترجمة – تُملأ النصوص الناقصة قبل وصول الكود إلى الإنتاج. يدعم GitHub Actions وGitLab CI/CD وBitbucket Pipelines.
-
-```yaml
-uses: lingodotdev/lingo.dev@main
-with:
-  api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
+const { data, model, usage } = await res.json();
+// data:  { greeting: "Hallo, Welt!", cta: "Jetzt starten" }
+// model: "anthropic/claude-sonnet-4.5"
+// usage: { inputTokens: 2789, outputTokens: 861, cost: 0.023012 }
 ```
 
-[اقرأ المستندات ←](https://lingo.dev/en/docs/integrations)
+| | |
+| --- | --- |
+| [Lingo.dev MCP](https://lingo.dev/en/docs/mcp) | يمكن لوكيل البرمجة لديك إنشاء محرك، وإضافة مصطلحات إلى المسرد، وضبط القواعد، ومقارنة محركين، مباشرةً من المحادثة التي ظهرت فيها المشكلة |
+| [Lingo.dev CLI](https://lingo.dev/en/docs/cli) | ادفع الملفات المصدرية واسحب الترجمات من الطرفية أو من CI. ثمانية عشر تنسيقًا: JSON وYAML وMarkdown وMDX وPO وXLIFF وFlutter ARB وسلاسل Android وXcode وSubRip وPHP |
+| [Lingo.dev في CI/CD](https://lingo.dev/en/docs/workflows) | ثبّت CLI وشغّل `lingo push` كخطوة ضمن GitHub Actions أو GitLab CI/CD أو Bitbucket Pipelines أو أي مشغّل يعمل بـ Node.js 22+ |
+| [تطبيق Lingo.dev على GitHub](https://lingo.dev/en/docs/workflows/github-app) | ثبّته مرة واحدة، وكل push إلى الفرع الافتراضي سيفتح طلب سحب للترجمة أو يحدّثه، أو تصل الترجمات كـ commit داخل طلب السحب الذي غيّر المصدر. بلا مشغّل، وبلا مفتاح API سري، وبلا Lockfile لإدارته |
+| [واجهة API من Lingo.dev](https://lingo.dev/en/docs/api) | استدعاء متزامن واحد لكل زوج لغوي، أو مهمة غير متزامنة توزّع طلبًا واحدًا على عدة لغات محلية وتسلّم النتائج فور وصولها |
 
----
-
-### واجهة برمجة تطبيقات Lingo.dev
-
-استدعِ محرك الترجمة مباشرةً من كود الخادم. ترجمة متزامنة وغير متزامنة مع التسليم عبر webhook، وعزل الأخطاء لكل لغة، وتتبع التقدم في الوقت الفعلي عبر WebSocket.
-
-[اقرأ المستندات ←](https://lingo.dev/en/docs/api)
-
----
-
-### مُترجم Lingo لـ React (نسخة تجريبية مبكرة)
-
-ترجمة React في وقت البناء بدون أغلفة i18n. اكتب المكونات بنصوص إنجليزية عادية – يكتشف المُترجم النصوص القابلة للترجمة ويُنشئ متغيرات مترجمة في وقت البناء. بدون مفاتيح ترجمة، بدون ملفات JSON، بدون دوال `t()`. يدعم Next.js (App Router) وVite + React.
-
-[اقرأ المستندات ←](https://lingo.dev/en/docs/react/compiler)
-
----
-
-## المساهمة
-
-المساهمات مرحب بها. يُرجى اتباع هذه الإرشادات:
-
-1. **المشكلات:** [أبلغ عن الأخطاء أو اطلب ميزات](https://github.com/lingodotdev/lingo.dev/issues)
-2. **طلبات السحب:** [قدّم التغييرات](https://github.com/lingodotdev/lingo.dev/pulls)
-   - كل طلب سحب يتطلب مجموعة تغييرات: `pnpm new` (أو `pnpm new:empty` للتغييرات غير المُصدرة)
-   - تأكد من نجاح الاختبارات قبل التقديم
-3. **التطوير:** هذا مستودع أحادي باستخدام pnpm + turborepo
-   - تثبيت التبعيات: `pnpm install`
-   - تشغيل الاختبارات: `pnpm test`
-   - البناء: `pnpm build`
-
-**الدعم:** [مجتمع Discord](https://lingo.dev/go/discord)
-
-## تاريخ النجوم
-
-إذا وجدت Lingo.dev مفيداً، امنحنا نجمة وساعدنا في الوصول إلى 10,000 نجمة!
-
-[
-
-![مخطط تاريخ النجوم](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
-
-](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
-
-## الوثائق المترجمة
-
-**الترجمات المتاحة:**
-
-[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [Português (Brasil)](/readme/pt-BR.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Polski](/readme/pl.md) • [Türkçe](/readme/tr.md) • [اردو](/readme/ur.md) • [भोजपुरी](/readme/bho.md) • [অসমীয়া](/readme/as-IN.md) • [ગુજરાતી](/readme/gu-IN.md) • [मराठी](/readme/mr-IN.md) • [ଓଡ଼ିଆ](/readme/or-IN.md) • [ਪੰਜਾਬੀ](/readme/pa-IN.md) • [සිංහල](/readme/si-LK.md) • [தமிழ்](/readme/ta-IN.md) • [తెలుగు](/readme/te-IN.md)
-
-**إضافة لغة جديدة:**
-
-1. أضف رمز اللغة إلى [`i18n.json`](./i18n.json) باستخدام [صيغة BCP-47](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale)
-2. قدّم طلب دمج
+[أنشئ أول محرك توطين لك ←](https://lingo.dev)
