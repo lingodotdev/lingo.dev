@@ -10,27 +10,23 @@
 
 <p align="center">
   <strong>
-    திறந்த மூல உள்ளூர்மயமாக்கல் பொறியியல் கருவிகள். நிலையான, தரமான
-    மொழிபெயர்ப்புகளுக்காக Lingo.dev உள்ளூர்மயமாக்கல் பொறியியல் தளத்துடன்
-    இணைக்கவும்.
+    Lingo.dev என்பது உள்ளூர்மயமாக்கல் பொறியியல் தளம்: மொழிபெயர்ப்பு தரத்தை
+    அளவிடவும், LLM களுடன் மொழிபெயர்க்கவும், மற்றும் சொந்த மொழி பேசுபவர்களுடன்
+    சரிபார்க்கவும் சிறந்த வழி.
   </strong>
 </p>
 
-<br />
-
 <p align="center">
-  <a href="#lingodev-api">Lingo API</a> •
-  <a href="#lingodev-mcp">Lingo React MCP</a> •
-  <a href="#lingodev-cli">Lingo CLI</a> •
-  <a href="#lingodev-cicd">Lingo GitHub Action</a> •
-  <a href="#lingodev-compiler">React-க்கான Lingo Compiler (ஆரம்ப ஆல்ஃபா)</a>
+  <a href="https://lingo.dev/en/docs">ஆவணங்கள்</a> •
+  <a href="https://lingo.dev">தளம்</a> •
+  <a href="https://lingo.dev/go/discord">Discord</a>
 </p>
 
 <p align="center">
-  <a href="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml">
+  <a href="https://lingo.dev/en">
     <img
-      src="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml/badge.svg"
-      alt="வெளியீடு"
+      src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square"
+      alt="Product Hunt மாதத்தின் #1 DevTool"
     />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md">
@@ -45,132 +41,63 @@
       alt="கடைசி commit"
     />
   </a>
-  <a href="https://lingo.dev/en">
-    <img
-      src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #1 மாத DevTool"
-    />
-  </a>
-  <a href="https://lingo.dev/en">
-    <img
-      src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Week-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #1 வார தயாரிப்பு"
-    />
-  </a>
-  <a href="https://lingo.dev/en">
-    <img
-      src="https://img.shields.io/badge/Product%20Hunt-%232%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #2 நாள் தயாரிப்பு"
-    />
-  </a>
-  <a href="https://lingo.dev/en">
-    <img
-      src="https://img.shields.io/badge/GitHub-Trending-blue?logo=github&style=flat-square"
-      alt="Github trending"
-    />
-  </a>
 </p>
 
 ---
 
-## விரைவு தொடக்கம்
+## குழுக்கள் Lingo.dev இல் உள்ளூர்மயமாக்கல் இயந்திரங்களை உருவாக்குகின்றன
 
-| கருவி                                              | இது என்ன செய்கிறது                                         | விரைவு கட்டளை                      |
-| -------------------------------------------------- | ---------------------------------------------------------- | ---------------------------------- |
-| [**Lingo React MCP**](#lingodev-mcp)               | React பயன்பாடுகளுக்கான AI உதவியுடன் கூடிய i18n அமைவு       | Prompt: `Set up i18n`              |
-| [**Lingo CLI**](#lingodev-cli)                     | JSON, YAML, markdown, CSV, PO கோப்புகளை உள்ளூர்மயமாக்கவும் | `npx lingo.dev@latest run`         |
-| [**Lingo GitHub Action**](#lingodev-cicd)          | GitHub Actions இல் தொடர்ச்சியான உள்ளூர்மயமாக்கல்           | `uses: lingodotdev/lingo.dev@main` |
-| [**Lingo Compiler for React**](#lingodev-compiler) | i18n wrappers இல்லாமல் build-time React உள்ளூர்மயமாக்கல்   | `withLingo()` plugin               |
+[உள்ளூர்மயமாக்கல் இயந்திரம்](https://lingo.dev/en/docs/platform/engines) என்பது உங்கள் குழு கட்டமைக்கும் மற்றும் Lingo.dev இயக்கும் ஒரு நிலையான மொழிபெயர்ப்பு API ஆகும். ஒவ்வொரு தயாரிப்புக்கும், உள்ளடக்க வகைக்கும் அல்லது பிராண்டுக்கும் ஒன்றை உருவாக்குங்கள். ஒரு இயந்திரம் வழியாக செல்லும் ஒவ்வொரு கோரிக்கையும் நீங்கள் அதில் கட்டமைத்த அனைத்தையும் நிலையான முன்னுரிமை வரிசையில் பயன்படுத்துகிறது:
 
-### உள்ளூர்மயமாக்கல் இயந்திரங்கள்
+| அடுக்கு                                                                 | நீங்கள் கட்டமைப்பது                                                                 | ஆவணங்களிலிருந்து                                                                      |
+| ----------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| [LLM மாதிரிகள்](https://lingo.dev/en/docs/platform/llm-models)          | ஒவ்வொரு மொழி ஜோடியையும் எந்த மாதிரி கையாளுகிறது, தரவரிசைப்படுத்தப்பட்ட மாற்றுகளுடன் | 400+ மாதிரிகள்; பதில் இயங்கிய மாதிரியின் பெயரைக் குறிப்பிடுகிறது                      |
+| [பிராண்ட் குரல்](https://lingo.dev/en/docs/platform/brand-voices)       | ஒவ்வொரு மொழியிலும் உங்கள் தயாரிப்பு எப்படி பேசுகிறது, ஒவ்வொரு இடத்திற்கும் ஒரு உரை  | சந்தைக்கு ஏற்ற தொனியும் முறைமையும்                                                    |
+| [விதிகள்](https://lingo.dev/en/docs/platform/rules)                     | பொதுவான மாதிரி தவறவிடும் மொழியியல் மரபுகள்                                          | ஸ்பானிஷில் பெயரடை நிலை, சதவீதக் குறியீடுகளுக்கு முன் இடைவெளி                          |
+| [சொற்களஞ்சியம்](https://lingo.dev/en/docs/platform/glossaries)          | ஒவ்வொரு இடத்திற்கும் துல்லியமான சொல் மேப்பிங்குகள், பொருளின்படி பொருந்துகிறது       | "911" ஐரோப்பிய சந்தைகளுக்கு "112" ஆக மாறுகிறது; தயாரிப்பு பெயர்கள் மாறாமல் செல்கின்றன |
+| [AI மதிப்பாய்வாளர்கள்](https://lingo.dev/en/docs/platform/ai-reviewers) | ஒவ்வொரு மொழிபெயர்ப்புக்குப் பிறகும் இயங்கும் மதிப்பீடு                              | GEMBA மதிப்பெண்கள், BERTScore, சொற்களஞ்சிய இணக்கம்                                    |
 
-இந்தக் கருவிகள் [உள்ளூர்மயமாக்கல் இயந்திரங்களுடன்](https://lingo.dev) இணைகின்றன – Lingo.dev உள்ளூர்மயமாக்கல் பொறியியல் தளத்தில் நீங்கள் உருவாக்கும் நிலையான மொழிபெயர்ப்பு APIகள். ஒவ்வொரு இயந்திரமும் சொற்களஞ்சியங்கள், பிராண்ட் குரல், மற்றும் ஒவ்வொரு கோரிக்கையிலும் மொழி வாரியான வழிமுறைகளைத் தக்கவைத்துக்கொள்கிறது, [சொற்பிழைகளை 16.6–44.6% குறைக்கிறது](https://lingo.dev/research/retrieval-augmented-localization). அல்லது [உங்கள் சொந்த LLM ஐக் கொண்டுவாருங்கள்](#lingodev-cli).
+சொற்களஞ்சியங்கள், விதிகள் தொகுப்புகள் மற்றும் பிராண்ட் குரல்கள் உங்கள் நிறுவனத்திற்கு சொந்தமானவை, மேலும் ஒரு இயந்திரம் அவற்றை இணைப்பின் மூலம் பயன்படுத்துகிறது. ஒரு சொற்களஞ்சியம் ஐந்து இயந்திரங்களை நிர்வகிக்கிறது, மேலும் ஒரு திருத்தம் ஐந்தையும் சென்றடைகிறது. நேரலையில் செல்வதற்கு முன் [Playground](https://lingo.dev/en/docs/platform/playground) இல் ஒரு மாற்றத்தை சோதித்துப் பாருங்கள்: ஒரு இயந்திரத்தை மூல மாதிரிக்கு எதிராக, அல்லது இரண்டு இயந்திரங்களை அருகருகே ஒப்பிடுங்கள். இயந்திரங்கள் தளத்தில் கட்டமைக்கப்படுகின்றன, அங்கு உள்ளூர்மயமாக்கல் குழு உள்ளூர்மயமாக்கல் உள்கட்டமைப்பை இயக்குகிறது.
 
----
+## குறியீட்டிலிருந்து உங்கள் என்ஜின்களை அணுகவும்
 
-### Lingo.dev MCP
-
-React பயன்பாடுகளில் i18n ஐ அமைப்பது பிழைகளுக்கு இடமளிக்கும் – AI coding உதவியாளர்கள் கூட இல்லாத APIகளை கற்பனை செய்து routing ஐ உடைக்கின்றன. Lingo.dev MCP, Next.js, React Router, மற்றும் TanStack Start ஆகியவற்றிற்கான framework-சார்ந்த i18n அறிவுக்கான கட்டமைக்கப்பட்ட அணுகலை AI உதவியாளர்களுக்கு வழங்குகிறது. Claude Code, Cursor, GitHub Copilot Agents, மற்றும் Codex உடன் செயல்படுகிறது.
-
-[ஆவணங்களைப் படிக்கவும் →](https://lingo.dev/en/mcp)
-
----
-
-### Lingo.dev CLI
-
-JSON, YAML, markdown, CSV, மற்றும் PO கோப்புகளை ஒரே கட்டளையில் உள்ளூர்மயமாக்கவும். lockfile ஏற்கனவே உள்ளூர்மயமாக்கப்பட்டதைக் கண்காணிக்கிறது – புதிய அல்லது மாற்றப்பட்ட உள்ளடக்கம் மட்டுமே செயலாக்கப்படுகிறது. Lingo.dev இல் உங்கள் உள்ளூர்மயமாக்கல் இயந்திரம் இயல்பாக அமைக்கப்பட்டுள்ளது, அல்லது உங்கள் சொந்த LLM ஐக் கொண்டுவாருங்கள் (OpenAI, Anthropic, Google, Mistral, OpenRouter, Ollama).
+களஞ்சியத்தில் உள்ள உள்ளடக்கத்தை மொழிபெயர்க்கவும். `lingo push` கோப்புகளை `.lingo/config.json` இல் குறிப்பிட்ட என்ஜினுக்கு அனுப்புகிறது, மேலும் `lingo pull` எந்த இயந்திரத்திலிருந்தும் மொழிபெயர்ப்புகளை மீண்டும் எழுதுகிறது:
 
 ```bash
-npx lingo.dev@latest init
-npx lingo.dev@latest run
+npm install -g @lingo.dev/cli
+lingo init && lingo link
+lingo push
 ```
 
-[ஆவணங்களைப் படிக்கவும் →](https://lingo.dev/en/docs/cli)
+அல்லது ID மூலம் குறிப்பிட்டு என்ஜினை நேரடியாக அழைக்கவும்:
 
----
+```javascript
+const res = await fetch("https://api.lingo.dev/process/localize", {
+  method: "POST",
+  headers: {
+    "X-API-Key": process.env.LINGO_API_KEY,
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    engineId: "eng_abc123",
+    sourceLocale: "en",
+    targetLocale: "de",
+    data: { greeting: "Hello, world!", cta: "Get started" },
+  }),
+});
 
-### Lingo.dev CI/CD
-
-உங்கள் பைப்லைனில் தொடர்ச்சியான உள்ளூர்மயமாக்கல். ஒவ்வொரு புஷும் உள்ளூர்மயமாக்கலைத் தூண்டுகிறது – குறியீடு உற்பத்தியை அடையும் முன் காணாமல் போன சரங்கள் நிரப்பப்படுகின்றன. GitHub Actions, GitLab CI/CD மற்றும் Bitbucket Pipelines ஆகியவற்றை ஆதரிக்கிறது.
-
-```yaml
-uses: lingodotdev/lingo.dev@main
-with:
-  api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
+const { data, model, usage } = await res.json();
+// data:  { greeting: "Hallo, Welt!", cta: "Jetzt starten" }
+// model: "anthropic/claude-sonnet-4.5"
+// usage: { inputTokens: 2789, outputTokens: 861, cost: 0.023012 }
 ```
 
-[ஆவணங்களைப் படிக்கவும் →](https://lingo.dev/en/docs/integrations)
+|                                                                        |                                                                                                                                                                                                                        |
+| ---------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Lingo.dev MCP](https://lingo.dev/en/docs/mcp)                         | உங்கள் கோடிங் ஏஜென்ட் ஒரு என்ஜினை உருவாக்குகிறது, சொற்களஞ்சிய சொற்களைச் சேர்க்கிறது, விதிகளை டியூன் செய்கிறது, மற்றும் இரண்டு என்ஜின்களை ஒப்பிடுகிறது—பிரச்சனை எழுந்த உரையாடலிலிருந்தே                                 |
+| [Lingo.dev CLI](https://lingo.dev/en/docs/cli)                         | மூல கோப்புகளைப் புஷ் செய்யுங்கள், மொழிபெயர்ப்புகளை புல் செய்யுங்கள், டெர்மினல் அல்லது CI இலிருந்து. பதினெட்டு வடிவங்கள்: JSON, YAML, Markdown, MDX, PO, XLIFF, Flutter ARB, Android மற்றும் Xcode strings, SubRip, PHP |
+| [Lingo.dev in CI/CD](https://lingo.dev/en/docs/workflows)              | CLI ஐ நிறுவவும் மற்றும் `lingo push` ஐ GitHub Actions, GitLab CI/CD, Bitbucket Pipelines அல்லது Node.js 22+ கொண்ட எந்த ரன்னரிலும் ஒரு படியாக இயக்கவும்                                                                 |
+| [Lingo.dev GitHub App](https://lingo.dev/en/docs/workflows/github-app) | ஒருமுறை நிறுவவும், இயல்புநிலை கிளைக்கான ஒவ்வொரு புஷ்ஷும் ஒரு மொழிபெயர்ப்பு புல் கோரிக்கையைத் திறக்கிறது அல்லது புதுப்பிக்கிறது. ரன்னர் இல்லை, API கீ ரகசியம் இல்லை, நிர்வகிக்க லாக்ஃபைல் இல்லை                         |
+| [Lingo.dev API](https://lingo.dev/en/docs/api)                         | ஒரு மொழி ஜோடிக்கு ஒரு ஒத்திசைவான அழைப்பு, அல்லது ஒரு கோரிக்கையை பல மொழிகளுக்கு விரிவுபடுத்தி முடிவுகளை அவை வந்தவுடன் வழங்கும் async வேலை                                                                               |
 
----
-
-### Lingo.dev API
-
-பேக்எண்ட் குறியீட்டிலிருந்து நேரடியாக உங்கள் உள்ளூர்மயமாக்கல் இயந்திரத்தை அழைக்கவும். webhook விநியோகம், மொழிவாரி தோல்வி தனிமைப்படுத்தல் மற்றும் WebSocket வழியாக நேரடி முன்னேற்றம் ஆகியவற்றுடன் ஒத்திசைவான மற்றும் async உள்ளூர்மயமாக்கல்.
-
-[ஆவணங்களைப் படிக்கவும் →](https://lingo.dev/en/docs/api)
-
----
-
-### React க்கான Lingo Compiler (ஆரம்ப ஆல்பா)
-
-i18n ரேப்பர்கள் இல்லாமல் பில்ட்-டைம் React உள்ளூர்மயமாக்கல். எளிய ஆங்கில உரையுடன் கூறுகளை எழுதுங்கள் – கம்பைலர் மொழிபெயர்க்கக்கூடிய சரங்களைக் கண்டறிந்து பில்ட் நேரத்தில் உள்ளூர்மயமாக்கப்பட்ட மாறுபாடுகளை உருவாக்குகிறது. மொழிபெயர்ப்பு விசைகள் இல்லை, JSON கோப்புகள் இல்லை, `t()` செயல்பாடுகள் இல்லை. Next.js (App Router) மற்றும் Vite + React ஐ ஆதரிக்கிறது.
-
-[ஆவணங்களைப் படிக்கவும் →](https://lingo.dev/en/docs/react/compiler)
-
----
-
-## பங்களிப்பு
-
-பங்களிப்புகள் வரவேற்கப்படுகின்றன. தயவுசெய்து இந்த வழிகாட்டுதல்களைப் பின்பற்றவும்:
-
-1. **சிக்கல்கள்:** [பிழைகளைப் புகாரளிக்கவும் அல்லது அம்சங்களைக் கோரவும்](https://github.com/lingodotdev/lingo.dev/issues)
-2. **Pull Requests:** [மாற்றங்களைச் சமர்ப்பிக்கவும்](https://github.com/lingodotdev/lingo.dev/pulls)
-   - ஒவ்வொரு PR க்கும் changeset தேவை: `pnpm new` (அல்லது வெளியீடு அல்லாத மாற்றங்களுக்கு `pnpm new:empty`)
-   - சமர்ப்பிக்கும் முன் சோதனைகள் தேர்ச்சி பெறுவதை உறுதிசெய்யவும்
-3. **மேம்பாடு:** இது ஒரு pnpm + turborepo monorepo
-   - சார்புகளை நிறுவவும்: `pnpm install`
-   - சோதனைகளை இயக்கவும்: `pnpm test`
-   - உருவாக்கவும்: `pnpm build`
-
-**ஆதரவு:** [Discord சமூகம்](https://lingo.dev/go/discord)
-
-## நட்சத்திர வரலாறு
-
-Lingo.dev பயனுள்ளதாக இருந்தால், எங்களுக்கு ஒரு நட்சத்திரம் கொடுத்து 10,000 நட்சத்திரங்களை அடைய எங்களுக்கு உதவவும்!
-
-[
-
-![நட்சத்திர வரலாறு விளக்கப்படம்](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
-
-](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
-
-## உள்ளூர்மயமாக்கப்பட்ட ஆவணங்கள்
-
-**கிடைக்கும் மொழிபெயர்ப்புகள்:**
-
-[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [Português (Brasil)](/readme/pt-BR.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Polski](/readme/pl.md) • [Türkçe](/readme/tr.md) • [اردو](/readme/ur.md) • [भोजपुरी](/readme/bho.md) • [অসমীয়া](/readme/as-IN.md) • [ગુજરાતી](/readme/gu-IN.md) • [मराठी](/readme/mr-IN.md) • [ଓଡ଼ିଆ](/readme/or-IN.md) • [ਪੰਜਾਬੀ](/readme/pa-IN.md) • [සිංහල](/readme/si-LK.md) • [தமிழ்](/readme/ta-IN.md) • [తెలుగు](/readme/te-IN.md)
-
-**புதிய மொழியைச் சேர்ப்பது:**
-
-1. [BCP-47 வடிவமைப்பைப்](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) பயன்படுத்தி [`i18n.json`](./i18n.json) இல் மொழிக் குறியீட்டைச் சேர்க்கவும்
-2. புல் ரிக்வெஸ்டைச் சமர்ப்பிக்கவும்
+[உங்கள் முதல் உள்ளாக்க என்ஜினைக் கட்டமைக்கவும் →](https://lingo.dev)

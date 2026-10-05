@@ -10,27 +10,21 @@
 
 <p align="center">
   <strong>
-    オープンソースのローカライゼーションエンジニアリングツール。Lingo.devローカライゼーションエンジニアリングプラットフォームに接続して、一貫性のある高品質な翻訳を実現します。
+    Lingo.devは、ローカリゼーションエンジニアリングプラットフォームです。翻訳品質の測定、LLMによる翻訳、ネイティブスピーカーによる校正を最適な方法で実現します。
   </strong>
 </p>
 
-<br />
-
 <p align="center">
-  <a href="#lingodev-api">Lingo API</a> •
-  <a href="#lingodev-mcp">Lingo React MCP</a> •
-  <a href="#lingodev-cli">Lingo CLI</a> •
-  <a href="#lingodev-cicd">Lingo GitHub Action</a> •
-  <a href="#lingodev-compiler">
-    Lingo Compiler for React（アーリーアルファ版）
-  </a>
+  <a href="https://lingo.dev/en/docs">ドキュメント</a> •
+  <a href="https://lingo.dev">プラットフォーム</a> •
+  <a href="https://lingo.dev/go/discord">Discord</a>
 </p>
 
 <p align="center">
-  <a href="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml">
+  <a href="https://lingo.dev/en">
     <img
-      src="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml/badge.svg"
-      alt="リリース"
+      src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square"
+      alt="Product Hunt 今月の開発ツール第1位"
     />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md">
@@ -45,132 +39,63 @@
       alt="最終コミット"
     />
   </a>
-  <a href="https://lingo.dev/en">
-    <img
-      src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt 今月の開発ツール第1位"
-    />
-  </a>
-  <a href="https://lingo.dev/en">
-    <img
-      src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Week-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt 今週のプロダクト第1位"
-    />
-  </a>
-  <a href="https://lingo.dev/en">
-    <img
-      src="https://img.shields.io/badge/Product%20Hunt-%232%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt 本日のプロダクト第2位"
-    />
-  </a>
-  <a href="https://lingo.dev/en">
-    <img
-      src="https://img.shields.io/badge/GitHub-Trending-blue?logo=github&style=flat-square"
-      alt="GitHubトレンド"
-    />
-  </a>
 </p>
 
 ---
 
-## クイックスタート
+## チームはLingo.dev上でローカリゼーションエンジンを構築する
 
-| ツール                                             | 機能                                                | クイックコマンド                   |
-| -------------------------------------------------- | --------------------------------------------------- | ---------------------------------- |
-| [**Lingo React MCP**](#lingodev-mcp)               | ReactアプリのAI支援i18nセットアップ                 | プロンプト: `Set up i18n`          |
-| [**Lingo CLI**](#lingodev-cli)                     | JSON、YAML、Markdown、CSV、POファイルをローカライズ | `npx lingo.dev@latest run`         |
-| [**Lingo GitHub Action**](#lingodev-cicd)          | GitHub Actionsでの継続的ローカライゼーション        | `uses: lingodotdev/lingo.dev@main` |
-| [**Lingo Compiler for React**](#lingodev-compiler) | i18nラッパー不要のビルド時Reactローカライゼーション | `withLingo()`プラグイン            |
+[ローカリゼーションエンジン](https://lingo.dev/en/docs/platform/engines)は、チームが設定しLingo.devが実行するステートフルな翻訳APIです。製品ごと、コンテンツタイプごと、ブランドごとに1つ構築します。エンジンを通じたすべてのリクエストは、設定したすべての項目を固定された優先順位で適用します。
 
-### ローカライゼーションエンジン
+| レイヤー                                                          | 設定内容                                                   | ドキュメントより                                            |
+| ----------------------------------------------------------------- | ---------------------------------------------------------- | ----------------------------------------------------------- |
+| [LLMモデル](https://lingo.dev/en/docs/platform/llm-models)        | 各言語ペアを処理するモデルとランク付けされたフォールバック | 400以上のモデル、レスポンスには実行されたモデル名が含まれる |
+| [ブランドボイス](https://lingo.dev/en/docs/platform/brand-voices) | 各言語における製品の語り口、ロケールごとに1つのテキスト    | 市場ごとのトーンとフォーマリティ                            |
+| [ルール](https://lingo.dev/en/docs/platform/rules)                | 汎用モデルが見落とす言語規則                               | スペイン語の形容詞位置、パーセント記号の前のスペース        |
+| [用語集](https://lingo.dev/en/docs/platform/glossaries)           | ロケールごとの正確な用語マッピング、意味で照合             | 「911」は欧州市場では「112」に、製品名はそのまま通す        |
+| [AIレビュアー](https://lingo.dev/en/docs/platform/ai-reviewers)   | すべての翻訳後に実行されるスコアリング                     | GEMBAスコア、BERTScore、用語集コンプライアンス              |
 
-これらのツールは[ローカライゼーションエンジン](https://lingo.dev)に接続します。Lingo.devローカライゼーションエンジニアリングプラットフォーム上で作成するステートフルな翻訳APIです。各エンジンはすべてのリクエストにわたって用語集、ブランドボイス、ロケールごとの指示を保持し、[用語エラーを16.6～44.6%削減](https://lingo.dev/research/retrieval-augmented-localization)します。または[独自のLLMを使用](#lingodev-cli)することも可能です。
+用語集、ルールセット、ブランドボイスは組織に属し、エンジンはそれらをアタッチメントによって適用します。1つの用語集が5つのエンジンを管理し、1回の編集で5つすべてに反映されます。本番環境に反映する前に、[プレイグラウンド](https://lingo.dev/en/docs/platform/playground)で変更をテストできます。エンジンを生のモデルと比較したり、2つのエンジンを並べて比較したりできます。エンジンはプラットフォーム上で設定され、ローカリゼーションチームがローカリゼーションインフラを運用します。
 
----
+## コードからエンジンにアクセスする
 
-### Lingo.dev MCP
-
-ReactアプリでのI18nセットアップはエラーが発生しやすく、AIコーディングアシスタントでさえ存在しないAPIを幻覚し、ルーティングを破壊することがあります。Lingo.dev MCPは、Next.js、React Router、TanStack Start向けのフレームワーク固有のi18n知識へのアクセスをAIアシスタントに提供します。Claude Code、Cursor、GitHub Copilot Agents、Codexで動作します。
-
-[ドキュメントを読む →](https://lingo.dev/en/mcp)
-
----
-
-### Lingo.dev CLI
-
-1つのコマンドでJSON、YAML、Markdown、CSV、POファイルをローカライズ。ロックファイルがすでにローカライズされた内容を追跡し、新規または変更されたコンテンツのみが処理されます。デフォルトではLingo.dev上のローカライゼーションエンジンを使用しますが、独自のLLM（OpenAI、Anthropic、Google、Mistral、OpenRouter、Ollama）も使用可能です。
+リポジトリ内のコンテンツを翻訳します。`lingo push`は、`.lingo/config.json`で指定されたエンジンにファイルを送信し、`lingo pull`は任意のマシンから翻訳を書き戻します：
 
 ```bash
-npx lingo.dev@latest init
-npx lingo.dev@latest run
+npm install -g @lingo.dev/cli
+lingo init && lingo link
+lingo push
 ```
 
-[ドキュメントを読む →](https://lingo.dev/en/docs/cli)
+または、IDを指定してエンジンを直接呼び出します：
 
----
+```javascript
+const res = await fetch("https://api.lingo.dev/process/localize", {
+  method: "POST",
+  headers: {
+    "X-API-Key": process.env.LINGO_API_KEY,
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    engineId: "eng_abc123",
+    sourceLocale: "en",
+    targetLocale: "de",
+    data: { greeting: "Hello, world!", cta: "Get started" },
+  }),
+});
 
-### Lingo.dev CI/CD
-
-パイプラインでの継続的ローカライゼーション。プッシュごとにローカライゼーションが実行され、コードが本番環境に到達する前に未翻訳の文字列が補完されます。GitHub Actions、GitLab CI/CD、Bitbucket Pipelinesに対応しています。
-
-```yaml
-uses: lingodotdev/lingo.dev@main
-with:
-  api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
+const { data, model, usage } = await res.json();
+// data:  { greeting: "Hallo, Welt!", cta: "Jetzt starten" }
+// model: "anthropic/claude-sonnet-4.5"
+// usage: { inputTokens: 2789, outputTokens: 861, cost: 0.023012 }
 ```
 
-[ドキュメントを読む →](https://lingo.dev/en/docs/integrations)
+|                                                                        |                                                                                                                                                                                  |
+| ---------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Lingo.dev MCP](https://lingo.dev/en/docs/mcp)                         | コーディングエージェントが、問題が発生した会話の中で、エンジンの作成、用語集の追加、ルールの調整、2つのエンジンの比較を実行します                                                |
+| [Lingo.dev CLI](https://lingo.dev/en/docs/cli)                         | ターミナルまたはCIからソースファイルをプッシュし、翻訳をプルします。18種類の形式に対応：JSON、YAML、Markdown、MDX、PO、XLIFF、Flutter ARB、AndroidおよびXcode文字列、SubRip、PHP |
+| [Lingo.dev in CI/CD](https://lingo.dev/en/docs/workflows)              | CLIをインストールし、GitHub Actions、GitLab CI/CD、Bitbucket Pipelines、またはNode.js 22以降を搭載した任意のランナーで`lingo push`をステップとして実行します                     |
+| [Lingo.dev GitHub App](https://lingo.dev/en/docs/workflows/github-app) | 一度インストールすれば、デフォルトブランチへのプッシュごとに翻訳プルリクエストが作成または更新されます。ランナー、APIキーシークレット、管理すべきロックファイルは不要です        |
+| [Lingo.dev API](https://lingo.dev/en/docs/api)                         | 言語ペアごとに1つの同期呼び出し、または1つのリクエストを複数のロケールに展開し、結果が得られ次第配信する非同期ジョブ                                                             |
 
----
-
-### Lingo.dev API
-
-バックエンドコードから直接ローカライゼーションエンジンを呼び出せます。Webhook配信による同期・非同期ローカライゼーション、ロケールごとの障害分離、WebSocketによるリアルタイム進捗確認が可能です。
-
-[ドキュメントを読む →](https://lingo.dev/en/docs/api)
-
----
-
-### Lingo Compiler for React（アルファ版）
-
-i18nラッパーなしでビルド時にReactをローカライズ。プレーンな英語テキストでコンポーネントを記述すると、コンパイラが翻訳可能な文字列を検出し、ビルド時にローカライズされたバリアントを生成します。翻訳キー、JSONファイル、`t()`関数は不要です。Next.js（App Router）およびVite + Reactに対応しています。
-
-[ドキュメントを読む →](https://lingo.dev/en/docs/react/compiler)
-
----
-
-## コントリビューション
-
-貢献を歓迎します。以下のガイドラインに従ってください：
-
-1. **Issue：** [バグ報告や機能リクエスト](https://github.com/lingodotdev/lingo.dev/issues)
-2. **プルリクエスト：** [変更を提出](https://github.com/lingodotdev/lingo.dev/pulls)
-   - すべてのPRにはchangesetが必要です：`pnpm new`（リリース対象外の変更の場合は`pnpm new:empty`）
-   - 提出前にテストが通ることを確認してください
-3. **開発：** pnpm + turborepoモノレポです
-   - 依存関係のインストール：`pnpm install`
-   - テスト実行：`pnpm test`
-   - ビルド：`pnpm build`
-
-**サポート：** [Discordコミュニティ](https://lingo.dev/go/discord)
-
-## スター履歴
-
-Lingo.devが役に立ったら、スターをつけて10,000スター達成を支援してください！
-
-[
-
-![Star History Chart](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
-
-](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
-
-## ローカライズされたドキュメント
-
-**利用可能な翻訳:**
-
-[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [Português (Brasil)](/readme/pt-BR.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Polski](/readme/pl.md) • [Türkçe](/readme/tr.md) • [اردو](/readme/ur.md) • [भोजपुरी](/readme/bho.md) • [অসমীয়া](/readme/as-IN.md) • [ગુજરાતી](/readme/gu-IN.md) • [मराठी](/readme/mr-IN.md) • [ଓଡ଼ିଆ](/readme/or-IN.md) • [ਪੰਜਾਬੀ](/readme/pa-IN.md) • [සිංහල](/readme/si-LK.md) • [தமிழ்](/readme/ta-IN.md) • [తెలుగు](/readme/te-IN.md)
-
-**新しい言語を追加する:**
-
-1. [BCP-47形式](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale)を使用して、[`i18n.json`](./i18n.json)にロケールコードを追加
-2. プルリクエストを送信
+[最初のローカライゼーションエンジンを構築する →](https://lingo.dev)

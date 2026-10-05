@@ -10,166 +10,94 @@
 
 <p align="center">
   <strong>
-    মুক্ত উৎসৰ স্থানীয়কৰণ অভিযান্ত্ৰিক সঁজুলি। সুসংগত, মানসম্পন্ন অনুবাদৰ বাবে
-    Lingo.dev স্থানীয়কৰণ অভিযান্ত্ৰিক প্লেটফৰ্মৰ সৈতে সংযোগ কৰক।
+    Lingo.dev হৈছে স্থানীয়কৰণ ইঞ্জিনিয়াৰিং প্লেটফৰ্ম: অনুবাদৰ মান জুখিবলৈ, LLM
+    ৰ সৈতে অনুবাদ কৰিবলৈ, আৰু স্থানীয় ভাষাভাষীসকলৰ সৈতে পৰীক্ষা-নিৰীক্ষা কৰিবলৈ
+    শ্ৰেষ্ঠ উপায়।
   </strong>
 </p>
 
-<br />
-
 <p align="center">
-  <a href="#lingodev-api">Lingo API</a> •
-  <a href="#lingodev-mcp">Lingo React MCP</a> •
-  <a href="#lingodev-cli">Lingo CLI</a> •
-  <a href="#lingodev-cicd">Lingo GitHub Action</a> •
-  <a href="#lingodev-compiler">React-ৰ বাবে Lingo Compiler (আৰম্ভণি আলফা)</a>
+  <a href="https://lingo.dev/en/docs">দস্তাবেজসমূহ</a> •
+  <a href="https://lingo.dev">প্লেটফৰ্ম</a> •
+  <a href="https://lingo.dev/go/discord">Discord</a>
 </p>
 
 <p align="center">
-  <a href="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml">
+  <a href="https://lingo.dev/en">
     <img
-      src="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml/badge.svg"
-      alt="Release"
+      src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square"
+      alt="Product Hunt মাহৰ #১ DevTool"
     />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md">
     <img
       src="https://img.shields.io/github/license/lingodotdev/lingo.dev"
-      alt="License"
+      alt="লাইচেন্স"
     />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/commits/main">
     <img
       src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev"
-      alt="Last Commit"
-    />
-  </a>
-  <a href="https://lingo.dev/en">
-    <img
-      src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #1 DevTool of the Month"
-    />
-  </a>
-  <a href="https://lingo.dev/en">
-    <img
-      src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Week-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #1 DevTool of the Week"
-    />
-  </a>
-  <a href="https://lingo.dev/en">
-    <img
-      src="https://img.shields.io/badge/Product%20Hunt-%232%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #2 Product of the Day"
-    />
-  </a>
-  <a href="https://lingo.dev/en">
-    <img
-      src="https://img.shields.io/badge/GitHub-Trending-blue?logo=github&style=flat-square"
-      alt="Github trending"
+      alt="শেষ প্ৰতিশ্ৰুতি"
     />
   </a>
 </p>
 
 ---
 
-## দ্ৰুত আৰম্ভণি
+## দলসমূহে Lingo.dev ত স্থানীয়কৰণ ইঞ্জিন নিৰ্মাণ কৰে
 
-| সঁজুলি                                             | ই কি কৰে                                           | দ্ৰুত আদেশ                         |
-| -------------------------------------------------- | -------------------------------------------------- | ---------------------------------- |
-| [**Lingo React MCP**](#lingodev-mcp)               | React এপৰ বাবে AI-সহায়িত i18n ছেটআপ               | প্ৰম্পট: `Set up i18n`             |
-| [**Lingo CLI**](#lingodev-cli)                     | JSON, YAML, markdown, CSV, PO ফাইল স্থানীয়কৰণ কৰক | `npx lingo.dev@latest run`         |
-| [**Lingo GitHub Action**](#lingodev-cicd)          | GitHub Actions-ত নিৰন্তৰ স্থানীয়কৰণ               | `uses: lingodotdev/lingo.dev@main` |
-| [**Lingo Compiler for React**](#lingodev-compiler) | i18n ৰেপাৰ নোহোৱাকৈ বিল্ড-টাইম React স্থানীয়কৰণ   | `withLingo()` প্লাগইন              |
+[স্থানীয়কৰণ ইঞ্জিন](https://lingo.dev/en/docs/platform/engines) হৈছে এটা স্থিতিশীল অনুবাদ API যিটো আপোনাৰ দলে কনফিগাৰ কৰে আৰু Lingo.dev য়ে চলায়। প্ৰতিটো সামগ্ৰী, প্ৰতিটো বিষয়বস্তুৰ প্ৰকাৰ বা প্ৰতিটো ব্ৰেণ্ডৰ বাবে এটা নিৰ্মাণ কৰক। ইঞ্জিনৰ জৰিয়তে প্ৰতিটো অনুৰোধে আপুনি ইয়াত কনফিগাৰ কৰা সকলো প্ৰয়োগ কৰে, অগ্ৰাধিকাৰৰ এক নিৰ্দিষ্ট ক্ৰমত:
 
-### স্থানীয়কৰণ ইঞ্জিন
+| স্তৰ                                                                | আপুনি কি কনফিগাৰ কৰে                                                         | দস্তাবেজৰ পৰা                                                        |
+| ------------------------------------------------------------------- | ---------------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| [LLM মডেলসমূহ](https://lingo.dev/en/docs/platform/llm-models)       | কোনটো মডেলে প্ৰতিটো ভাষা যোৰ পৰিচালনা কৰে, ক্ৰমাংকিত ফলবেকৰ সৈতে             | ৪০০+ মডেল; সঁহাৰিয়ে চলা মডেলটো নাম দিয়ে                            |
+| [ব্ৰেণ্ড কণ্ঠ](https://lingo.dev/en/docs/platform/brand-voices)     | প্ৰতিটো ভাষাত আপোনাৰ সামগ্ৰীয়ে কেনেদৰে কথা কয়, প্ৰতিটো অঞ্চলৰ বাবে এটা পাঠ | প্ৰতিটো বজাৰৰ বাবে সুৰ আৰু আনুষ্ঠানিকতা                              |
+| [নিয়মসমূহ](https://lingo.dev/en/docs/platform/rules)               | এটা সাধাৰণ মডেলে হেৰুৱা ভাষিক পৰম্পৰাসমূহ                                    | স্পেনিছত বিশেষণৰ স্থিতি, শতাংশ চিহ্নৰ আগত এক স্থান                   |
+| [শব্দকোষ](https://lingo.dev/en/docs/platform/glossaries)            | প্ৰতিটো অঞ্চলৰ বাবে সঠিক শব্দ মেপিং, অৰ্থৰ দ্বাৰা মিলোৱা                     | "911" য়ে ইউৰোপীয় বজাৰৰ বাবে "112" হৈ পৰে; সামগ্ৰীৰ নামসমূহ পাছ হয় |
+| [AI পৰ্যালোচকসমূহ](https://lingo.dev/en/docs/platform/ai-reviewers) | প্ৰতিটো অনুবাদৰ পিছত চলা স্ক-ৰিং                                             | GEMBA স্ক'ৰ, BERTScore, শব্দকোষ সম্মতি                               |
 
-এই সঁজুলিসমূহে [স্থানীয়কৰণ ইঞ্জিনসমূহৰ](https://lingo.dev) সৈতে সংযোগ কৰে – Lingo.dev স্থানীয়কৰণ অভিযান্ত্ৰিক প্লেটফৰ্মত আপুনি সৃষ্টি কৰা ষ্টেটফুল অনুবাদ APIসমূহ। প্ৰতিটো ইঞ্জিনে প্ৰতিটো অনুৰোধত শব্দকোষ, ব্ৰেণ্ড ভইচ আৰু প্ৰতি-লোকেল নিৰ্দেশনা ধৰি ৰাখে, [পৰিভাষা ত্ৰুটি 16.6–44.6% হ্ৰাস কৰে](https://lingo.dev/research/retrieval-augmented-localization)। অথবা [নিজৰ LLM আনক](#lingodev-cli)।
+শব্দকোষসমূহ, নিয়মছেট আৰু ব্ৰেণ্ড কণ্ঠসমূহ আপোনাৰ সংগঠনৰ, আৰু এটা ইঞ্জিনে সংযুক্তিৰ জৰিয়তে সেইবোৰ প্ৰয়োগ কৰে। এটা শব্দকোষে পাঁচটা ইঞ্জিন নিয়ন্ত্ৰণ কৰে, আৰু এটা সম্পাদনাই সকলো পাঁচটা পায়। লাইভ হোৱাৰ আগতে [Playground](https://lingo.dev/en/docs/platform/playground) ত এটা পৰিৱৰ্তন পৰীক্ষা কৰক: এটা কেঁচা মডেলৰ বিপৰীতে এটা ইঞ্জিন তুলনা কৰক, বা দুটা ইঞ্জিন কাষত কাষত। ইঞ্জিনসমূহ প্লেটফৰ্মত কনফিগাৰ কৰা হয়, য'ত স্থানীয়কৰণ দলে স্থানীয়কৰণ আন্তঃগাঁথনি চলায়।
 
----
+## ক'ডৰ পৰা আপোনাৰ ইঞ্জিনসমূহত প্ৰৱেশ কৰক
 
-### Lingo.dev MCP
-
-React এপত i18n ছেটআপ কৰাটো ত্ৰুটিপূৰ্ণ – AI কোডিং সহায়কসকলেও অস্তিত্বহীন APIসমূহ কল্পনা কৰে আৰু ৰাউটিং ভাঙে। Lingo.dev MCP-এ AI সহায়কসকলক Next.js, React Router আৰু TanStack Start-ৰ বাবে ফ্ৰেমৱৰ্ক-নিৰ্দিষ্ট i18n জ্ঞানত গাঁথনিবদ্ধ প্ৰৱেশাধিকাৰ দিয়ে। Claude Code, Cursor, GitHub Copilot Agents আৰু Codex-ৰ সৈতে কাম কৰে।
-
-[নথিপত্ৰসমূহ পঢ়ক →](https://lingo.dev/en/mcp)
-
----
-
-### Lingo.dev CLI
-
-এটা আদেশত JSON, YAML, markdown, CSV আৰু PO ফাইল স্থানীয়কৰণ কৰক। এটা লকফাইলে কি ইতিমধ্যে স্থানীয়কৃত সেয়া ট্ৰেক কৰে – কেৱল নতুন বা সলনি হোৱা সমলহে প্ৰক্ৰিয়াকৰণ হয়। Lingo.dev-ত আপোনাৰ স্থানীয়কৰণ ইঞ্জিনলৈ ডিফল্ট হয়, অথবা নিজৰ LLM আনক (OpenAI, Anthropic, Google, Mistral, OpenRouter, Ollama)।
+এটা ৰিপ'জিটৰীত থকা সমল অনুবাদ কৰক। `lingo push` এ `.lingo/config.json` ত নামাংকিত ইঞ্জিনলৈ ফাইলসমূহ প্ৰেৰণ কৰে, আৰু `lingo pull` এ যিকোনো মেচিনৰ পৰা অনুবাদসমূহ পুনৰ লিখে:
 
 ```bash
-npx lingo.dev@latest init
-npx lingo.dev@latest run
+npm install -g @lingo.dev/cli
+lingo init && lingo link
+lingo push
 ```
 
-[নথিপত্ৰ পঢ়ক →](https://lingo.dev/en/docs/cli)
+অথবা এটা ইঞ্জিনক ID ৰ দ্বাৰা নামাংকন কৰি পোনপটীয়াকৈ কল কৰক:
 
----
+```javascript
+const res = await fetch("https://api.lingo.dev/process/localize", {
+  method: "POST",
+  headers: {
+    "X-API-Key": process.env.LINGO_API_KEY,
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    engineId: "eng_abc123",
+    sourceLocale: "en",
+    targetLocale: "de",
+    data: { greeting: "Hello, world!", cta: "Get started" },
+  }),
+});
 
-### Lingo.dev CI/CD
-
-আপোনাৰ পাইপলাইনত নিৰন্তৰ স্থানীয়কৰণ। প্ৰতিটো পুশে স্থানীয়কৰণ সক্ৰিয় কৰে – ক'ডে উৎপাদনত উপনীত হোৱাৰ আগতে অনুপস্থিত স্ট্ৰিংবোৰ পূৰণ কৰা হয়। GitHub Actions, GitLab CI/CD, আৰু Bitbucket Pipelines সমৰ্থন কৰে।
-
-```yaml
-uses: lingodotdev/lingo.dev@main
-with:
-  api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
+const { data, model, usage } = await res.json();
+// data:  { greeting: "Hallo, Welt!", cta: "Jetzt starten" }
+// model: "anthropic/claude-sonnet-4.5"
+// usage: { inputTokens: 2789, outputTokens: 861, cost: 0.023012 }
 ```
 
-[নথিপত্ৰ পঢ়ক →](https://lingo.dev/en/docs/integrations)
+|                                                                        |                                                                                                                                                                             |
+| ---------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Lingo.dev MCP](https://lingo.dev/en/docs/mcp)                         | আপোনাৰ ক'ডিং এজেণ্টে এটা ইঞ্জিন সৃষ্টি কৰে, শব্দকোষ পদ যোগ কৰে, নিয়মসমূহ সুসংগত কৰে, আৰু দুটা ইঞ্জিনৰ তুলনা কৰে, সেই কথোপকথনৰ পৰা য'ত সমস্যাটো উত্থাপিত হৈছিল              |
+| [Lingo.dev CLI](https://lingo.dev/en/docs/cli)                         | উৎস ফাইলসমূহ পুশ্ব কৰক, অনুবাদসমূহ পুল কৰক, টাৰ্মিনেল বা CI ৰ পৰা। আঠাৰটা ফৰ্মেট: JSON, YAML, Markdown, MDX, PO, XLIFF, Flutter ARB, Android আৰু Xcode strings, SubRip, PHP |
+| [Lingo.dev in CI/CD](https://lingo.dev/en/docs/workflows)              | CLI ইনষ্টল কৰক আৰু `lingo push` ক GitHub Actions, GitLab CI/CD, Bitbucket Pipelines, বা Node.js 22+ থকা যিকোনো ৰানাৰত এটা পদক্ষেপ হিচাপে চলাওক                              |
+| [Lingo.dev GitHub App](https://lingo.dev/en/docs/workflows/github-app) | এবাৰ ইনষ্টল কৰক আৰু ডিফল্ট ব্ৰাঞ্চলৈ প্ৰতিটো পুশ্বে এটা অনুবাদ পুল ৰিকুৱেষ্ট খোলে বা আপডেট কৰে। কোনো ৰানাৰ নাই, কোনো API কী চিক্ৰেট নাই, পৰিচালনা কৰিবলৈ কোনো লকফাইল নাই    |
+| [Lingo.dev API](https://lingo.dev/en/docs/api)                         | প্ৰতি ভাষা যোৰাৰ বাবে এটা চিঙ্ক্ৰ'নাছ কল, বা এটা এচিঙ্ক জব যিয়ে এটা ৰিকুৱেষ্ট বহুতো লোকেললৈ বিস্তাৰিত কৰে আৰু ফলাফলসমূহ আহি পোৱাৰ লগে লগে প্ৰদান কৰে                       |
 
----
-
-### Lingo.dev API
-
-বেকেণ্ড ক'ডৰ পৰা পোনপটীয়াকৈ আপোনাৰ স্থানীয়কৰণ ইঞ্জিন কল কৰক। ৱেবহুক ডেলিভাৰীৰ সৈতে সিংক্ৰনাছ আৰু এছিংক্ৰনাছ স্থানীয়কৰণ, প্ৰতিটো ল'কেলৰ বাবে বিফলতা বিচ্ছিন্নতা, আৰু WebSocket যোগে ৰিয়েল-টাইম প্ৰগতি।
-
-[নথিপত্ৰ পঢ়ক →](https://lingo.dev/en/docs/api)
-
----
-
-### React ৰ বাবে Lingo Compiler (প্ৰাৰম্ভিক আলফা)
-
-i18n ৰেপাৰ অবিহনে বিল্ড-টাইম React স্থানীয়কৰণ। সৰল ইংৰাজী পাঠৰ সৈতে কম্পোনেণ্ট লিখক – কম্পাইলাৰে অনুবাদযোগ্য স্ট্ৰিং চিনাক্ত কৰে আৰু বিল্ড সময়ত স্থানীয়কৃত ভেৰিয়েণ্ট সৃষ্টি কৰে। কোনো অনুবাদ কী নাই, কোনো JSON ফাইল নাই, কোনো `t()` ফাংচন নাই। Next.js (App Router) আৰু Vite + React সমৰ্থন কৰে।
-
-[নথিপত্ৰ পঢ়ক →](https://lingo.dev/en/docs/react/compiler)
-
----
-
-## অৱদান
-
-অৱদান স্বাগত জনোৱা হয়। অনুগ্ৰহ কৰি এই নিৰ্দেশনাসমূহ অনুসৰণ কৰক:
-
-1. **সমস্যা:** [বাগ ৰিপ'ৰ্ট কৰক বা বৈশিষ্ট্য অনুৰোধ কৰক](https://github.com/lingodotdev/lingo.dev/issues)
-2. **Pull Requests:** [পৰিৱৰ্তন জমা দিয়ক](https://github.com/lingodotdev/lingo.dev/pulls)
-   - প্ৰতিটো PR ৰ বাবে এটা চেঞ্জছেট প্ৰয়োজন: `pnpm new` (বা নন-ৰিলিজ পৰিৱৰ্তনৰ বাবে `pnpm new:empty`)
-   - জমা দিয়াৰ আগতে পৰীক্ষাবোৰ পাছ হয় নে নাই নিশ্চিত কৰক
-3. **ডেভেলপমেণ্ট:** এইটো এটা pnpm + turborepo monorepo
-   - নিৰ্ভৰশীলতা ইনষ্টল কৰক: `pnpm install`
-   - পৰীক্ষা চলাওক: `pnpm test`
-   - বিল্ড কৰক: `pnpm build`
-
-**সমৰ্থন:** [Discord সম্প্ৰদায়](https://lingo.dev/go/discord)
-
-## ষ্টাৰ ইতিহাস
-
-যদি আপুনি Lingo.dev উপযোগী বুলি পায়, আমাক এটা ষ্টাৰ দিয়ক আৰু আমাক 10,000 ষ্টাৰত উপনীত হোৱাত সহায় কৰক!
-
-[
-
-![ষ্টাৰ ইতিহাস চাৰ্ট](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
-
-](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
-
-## স্থানীয়কৃত নথিপত্ৰ
-
-**উপলব্ধ অনুবাদসমূহ:**
-
-[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [Português (Brasil)](/readme/pt-BR.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Polski](/readme/pl.md) • [Türkçe](/readme/tr.md) • [اردو](/readme/ur.md) • [भोजपुरी](/readme/bho.md) • [অসমীয়া](/readme/as-IN.md) • [ગુજરાતી](/readme/gu-IN.md) • [मराठी](/readme/mr-IN.md) • [ଓଡ଼ିଆ](/readme/or-IN.md) • [ਪੰਜਾਬੀ](/readme/pa-IN.md) • [සිංහල](/readme/si-LK.md) • [தமிழ்](/readme/ta-IN.md) • [తెలుగు](/readme/te-IN.md)
-
-**নতুন ভাষা যোগ কৰা:**
-
-1. [BCP-47 ফৰ্মেট](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) ব্যৱহাৰ কৰি [`i18n.json`](./i18n.json)-ত লʼকেল ক'ড যোগ কৰক
-2. এটা পুল ৰিকুৱেষ্ট দাখিল কৰক
+[আপোনাৰ প্ৰথম স্থানীয়কৰণ ইঞ্জিন নিৰ্মাণ কৰক →](https://lingo.dev)

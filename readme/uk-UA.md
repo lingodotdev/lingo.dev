@@ -10,166 +10,94 @@
 
 <p align="center">
   <strong>
-    Інструменти інженерії локалізації з відкритим кодом. Підключайтеся до
-    платформи Lingo.dev для послідовних і якісних перекладів.
+    Lingo.dev — це платформа для локалізаційної інженерії: найкращий спосіб
+    вимірювати якість перекладу, перекладати за допомогою LLM і коригувати з
+    носіями мови.
   </strong>
 </p>
 
-<br />
-
 <p align="center">
-  <a href="#lingodev-api">Lingo API</a> •
-  <a href="#lingodev-mcp">Lingo React MCP</a> •
-  <a href="#lingodev-cli">Lingo CLI</a> •
-  <a href="#lingodev-cicd">Lingo GitHub Action</a> •
-  <a href="#lingodev-compiler">Lingo Compiler для React (Рання альфа)</a>
+  <a href="https://lingo.dev/en/docs">Документація</a> •
+  <a href="https://lingo.dev">Платформа</a> •
+  <a href="https://lingo.dev/go/discord">Discord</a>
 </p>
 
 <p align="center">
-  <a href="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml">
+  <a href="https://lingo.dev/en">
     <img
-      src="https://github.com/lingodotdev/lingo.dev/actions/workflows/release.yml/badge.svg"
-      alt="Release"
+      src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square"
+      alt="Product Hunt — DevTool місяця №1"
     />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/blob/main/LICENSE.md">
     <img
       src="https://img.shields.io/github/license/lingodotdev/lingo.dev"
-      alt="License"
+      alt="Ліцензія"
     />
   </a>
   <a href="https://github.com/lingodotdev/lingo.dev/commits/main">
     <img
       src="https://img.shields.io/github/last-commit/lingodotdev/lingo.dev"
-      alt="Last Commit"
-    />
-  </a>
-  <a href="https://lingo.dev/en">
-    <img
-      src="https://img.shields.io/badge/Product%20Hunt-%231%20DevTool%20of%20the%20Month-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #1 DevTool місяця"
-    />
-  </a>
-  <a href="https://lingo.dev/en">
-    <img
-      src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Week-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #1 DevTool тижня"
-    />
-  </a>
-  <a href="https://lingo.dev/en">
-    <img
-      src="https://img.shields.io/badge/Product%20Hunt-%232%20Product%20of%20the%20Day-orange?logo=producthunt&style=flat-square"
-      alt="Product Hunt #2 продукт дня"
-    />
-  </a>
-  <a href="https://lingo.dev/en">
-    <img
-      src="https://img.shields.io/badge/GitHub-Trending-blue?logo=github&style=flat-square"
-      alt="Github trending"
+      alt="Останній коміт"
     />
   </a>
 </p>
 
 ---
 
-## Швидкий старт
+## Команди будують локалізаційні движки на Lingo.dev
 
-| Інструмент                                         | Що він робить                                      | Швидка команда                     |
-| -------------------------------------------------- | -------------------------------------------------- | ---------------------------------- |
-| [**Lingo React MCP**](#lingodev-mcp)               | Налаштування i18n для React-застосунків з AI       | Запит: `Set up i18n`               |
-| [**Lingo CLI**](#lingodev-cli)                     | Локалізація JSON, YAML, markdown, CSV, PO файлів   | `npx lingo.dev@latest run`         |
-| [**Lingo GitHub Action**](#lingodev-cicd)          | Безперервна локалізація в GitHub Actions           | `uses: lingodotdev/lingo.dev@main` |
-| [**Lingo Compiler для React**](#lingodev-compiler) | Локалізація React під час збірки без i18n-обгорток | Плагін `withLingo()`               |
+[Локалізаційний движок](https://lingo.dev/en/docs/platform/engines) — це API перекладу зі збереженням стану, який налаштовує ваша команда, а Lingo.dev запускає. Створюйте один движок на продукт, на тип контенту або на бренд. Кожен запит через движок застосовує все, що ви в ньому налаштували, у фіксованому порядку пріоритетів:
 
-### Рушії локалізації
+| Рівень                                                           | Що ви налаштовуєте                                                       | З документації                                                                 |
+| ---------------------------------------------------------------- | ------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+| [Моделі LLM](https://lingo.dev/en/docs/platform/llm-models)      | Яка модель обробляє кожну мовну пару з ранжованими резервними варіантами | Понад 400 моделей; відповідь містить назву моделі, що виконала переклад        |
+| [Голос бренду](https://lingo.dev/en/docs/platform/brand-voices)  | Як ваш продукт говорить кожною мовою — один текст на локаль              | Тон і формальність для кожного ринку                                           |
+| [Правила](https://lingo.dev/en/docs/platform/rules)              | Лінгвістичні конвенції, які не враховує загальна модель                  | Позиція прикметників в іспанській, пробіл перед знаком відсотка                |
+| [Глосарій](https://lingo.dev/en/docs/platform/glossaries)        | Точні відповідності термінів для кожної локалі, зіставлені за значенням  | «911» стає «112» для європейських ринків; назви продуктів залишаються без змін |
+| [AI-рецензенти](https://lingo.dev/en/docs/platform/ai-reviewers) | Оцінювання, що виконується після кожного перекладу                       | Оцінки GEMBA, BERTScore, відповідність глосарію                                |
 
-Ці інструменти підключаються до [рушіїв локалізації](https://lingo.dev) – API перекладу зі збереженням стану, які ви створюєте на платформі Lingo.dev. Кожен рушій зберігає глосарії, тон бренду та інструкції для кожної локалі в усіх запитах, [зменшуючи термінологічні помилки на 16,6–44,6%](https://lingo.dev/research/retrieval-augmented-localization). Або [використовуйте власну LLM](#lingodev-cli).
+Глосарії, набори правил і голоси бренду належать вашій організації, і движок застосовує їх через підключення. Один глосарій керує п'ятьма движками, і одна зміна поширюється на всі п'ять. Протестуйте зміну в [Пісочниці](https://lingo.dev/en/docs/platform/playground) перед її впровадженням: порівняйте движок із базовою моделлю або два движки один з одним. Движки налаштовуються на платформі, де локалізаційна команда керує локалізаційною інфраструктурою.
 
----
+## Отримайте доступ до ваших двигунів з коду
 
-### Lingo.dev MCP
-
-Налаштування i18n у React-застосунках часто призводить до помилок – навіть AI-асистенти генерують неіснуючі API та ламають маршрутизацію. Lingo.dev MCP надає AI-асистентам структурований доступ до знань про i18n для Next.js, React Router і TanStack Start. Працює з Claude Code, Cursor, GitHub Copilot Agents і Codex.
-
-[Читати документацію →](https://lingo.dev/en/mcp)
-
----
-
-### Lingo.dev CLI
-
-Локалізуйте JSON, YAML, markdown, CSV і PO файли однією командою. Lockfile відстежує вже локалізований контент – обробляються лише нові або змінені дані. За замовчуванням використовується ваш рушій локалізації на Lingo.dev, або підключіть власну LLM (OpenAI, Anthropic, Google, Mistral, OpenRouter, Ollama).
+Перекладіть вміст репозиторію. `lingo push` надсилає файли двигуну, зазначеному в `.lingo/config.json`, а `lingo pull` записує переклади назад з будь-якої машини:
 
 ```bash
-npx lingo.dev@latest init
-npx lingo.dev@latest run
+npm install -g @lingo.dev/cli
+lingo init && lingo link
+lingo push
 ```
 
-[Читати документацію →](https://lingo.dev/en/docs/cli)
+Або викличте двигун безпосередньо, вказавши його ID:
 
----
+```javascript
+const res = await fetch("https://api.lingo.dev/process/localize", {
+  method: "POST",
+  headers: {
+    "X-API-Key": process.env.LINGO_API_KEY,
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    engineId: "eng_abc123",
+    sourceLocale: "en",
+    targetLocale: "de",
+    data: { greeting: "Hello, world!", cta: "Get started" },
+  }),
+});
 
-### Lingo.dev CI/CD
-
-Безперервна локалізація у вашому конвеєрі. Кожен push запускає локалізацію — відсутні рядки заповнюються до того, як код потрапить у продакшн. Підтримує GitHub Actions, GitLab CI/CD та Bitbucket Pipelines.
-
-```yaml
-uses: lingodotdev/lingo.dev@main
-with:
-  api-key: ${{ secrets.LINGODOTDEV_API_KEY }}
+const { data, model, usage } = await res.json();
+// data:  { greeting: "Hallo, Welt!", cta: "Jetzt starten" }
+// model: "anthropic/claude-sonnet-4.5"
+// usage: { inputTokens: 2789, outputTokens: 861, cost: 0.023012 }
 ```
 
-[Читати документацію →](https://lingo.dev/en/docs/integrations)
+|                                                                        |                                                                                                                                                                                     |
+| ---------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Lingo.dev MCP](https://lingo.dev/en/docs/mcp)                         | Ваш агент кодування створює двигун, додає терміни глосарію, налаштовує правила та порівнює два двигуни безпосередньо з розмови, де виникла проблема                                 |
+| [Lingo.dev CLI](https://lingo.dev/en/docs/cli)                         | Завантажуйте вихідні файли, отримуйте переклади з терміналу або з CI. Вісімнадцять форматів: JSON, YAML, Markdown, MDX, PO, XLIFF, Flutter ARB, рядки Android та Xcode, SubRip, PHP |
+| [Lingo.dev у CI/CD](https://lingo.dev/en/docs/workflows)               | Встановіть CLI і запустіть `lingo push` як крок у GitHub Actions, GitLab CI/CD, Bitbucket Pipelines або будь-якому виконавці з Node.js 22+                                          |
+| [Lingo.dev GitHub App](https://lingo.dev/en/docs/workflows/github-app) | Встановіть один раз, і кожен push до гілки за замовчуванням відкриває або оновлює pull request з перекладом. Без виконавця, без секретного API-ключа, без lockfile для керування    |
+| [Lingo.dev API](https://lingo.dev/en/docs/api)                         | Один синхронний виклик на мовну пару або асинхронна задача, яка розподіляє один запит на багато локалей і надає результати по мірі їх готовності                                    |
 
----
-
-### Lingo.dev API
-
-Викликайте свій механізм локалізації безпосередньо з бекенд-коду. Синхронна та асинхронна локалізація з доставкою через вебхуки, ізоляцією помилок для кожної локалі та моніторингом прогресу в реальному часі через WebSocket.
-
-[Читати документацію →](https://lingo.dev/en/docs/api)
-
----
-
-### Lingo Compiler для React (рання альфа)
-
-Локалізація React на етапі збірки без обгорток i18n. Пишіть компоненти з простим текстом англійською — компілятор виявляє рядки для перекладу та генерує локалізовані варіанти під час збірки. Без ключів перекладу, без JSON-файлів, без функцій `t()`. Підтримує Next.js (App Router) і Vite + React.
-
-[Читати документацію →](https://lingo.dev/en/docs/react/compiler)
-
----
-
-## Долучайтеся
-
-Вітаємо ваш внесок. Будь ласка, дотримуйтесь цих рекомендацій:
-
-1. **Issues:** [Повідомте про баги або запропонуйте функції](https://github.com/lingodotdev/lingo.dev/issues)
-2. **Pull Requests:** [Надішліть зміни](https://github.com/lingodotdev/lingo.dev/pulls)
-   - Кожен PR потребує чейнджсету: `pnpm new` (або `pnpm new:empty` для змін без релізу)
-   - Переконайтеся, що тести проходять перед надсиланням
-3. **Розробка:** Це монорепозиторій на pnpm + turborepo
-   - Встановіть залежності: `pnpm install`
-   - Запустіть тести: `pnpm test`
-   - Зберіть проєкт: `pnpm build`
-
-**Підтримка:** [Спільнота в Discord](https://lingo.dev/go/discord)
-
-## Історія зірок
-
-Якщо Lingo.dev виявився корисним, поставте нам зірку та допоможіть досягти 10 000 зірок!
-
-[
-
-![Графік історії зірок](https://api.star-history.com/svg?repos=lingodotdev/lingo.dev&type=Date)
-
-](https://www.star-history.com/#lingodotdev/lingo.dev&Date)
-
-## Локалізована документація
-
-**Доступні переклади:**
-
-[English](https://github.com/lingodotdev/lingo.dev) • [中文](/readme/zh-Hans.md) • [日本語](/readme/ja.md) • [한국어](/readme/ko.md) • [Español](/readme/es.md) • [Français](/readme/fr.md) • [Русский](/readme/ru.md) • [Українська](/readme/uk-UA.md) • [Deutsch](/readme/de.md) • [Italiano](/readme/it.md) • [العربية](/readme/ar.md) • [עברית](/readme/he.md) • [हिन्दी](/readme/hi.md) • [Português (Brasil)](/readme/pt-BR.md) • [বাংলা](/readme/bn.md) • [فارسی](/readme/fa.md) • [Polski](/readme/pl.md) • [Türkçe](/readme/tr.md) • [اردو](/readme/ur.md) • [भोजपुरी](/readme/bho.md) • [অসমীয়া](/readme/as-IN.md) • [ગુજરાતી](/readme/gu-IN.md) • [मराठी](/readme/mr-IN.md) • [ଓଡ଼ିଆ](/readme/or-IN.md) • [ਪੰਜਾਬੀ](/readme/pa-IN.md) • [සිංහල](/readme/si-LK.md) • [தமிழ்](/readme/ta-IN.md) • [తెలుగు](/readme/te-IN.md)
-
-**Додавання нової мови:**
-
-1. Додайте код локалі до [`i18n.json`](./i18n.json), використовуючи [формат BCP-47](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale)
-2. Надішліть pull request
+[Створіть свій перший двигун локалізації →](https://lingo.dev)
