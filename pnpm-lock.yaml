@@ -357,8 +357,8 @@ importers:
         specifier: 3.1.10
         version: 3.1.10
       figlet:
-        specifier: 1.9.4
-        version: 1.9.4
+        specifier: 1.11.4
+        version: 1.11.4
       flat:
         specifier: 6.0.1
         version: 6.0.1
@@ -5156,8 +5156,8 @@ packages:
   fflate@0.8.3:
     resolution: {integrity: sha512-tbZNuJrLwGUp3zshBtdy4W+ORxZuIh8a5ilyIEQDC5rY1f3U20JMry0Ll3WBzU58EZKsEuJFXhb5gwv8CsPvgA==}
 
-  figlet@1.9.4:
-    resolution: {integrity: sha512-uN6QE+TrzTAHC1IWTyrc4FfGo2KH/82J8Jl1tyKB7+z5DBit/m3D++Iu5lg91qJMnQQ3vpJrj5gxcK/pk4R9tQ==}
+  figlet@1.11.4:
+    resolution: {integrity: sha512-ZU41480OncL+NVLQrT0GVnbO0COL24sLSrzksioDgunmdJNYEUxhJJZ4Y3x1csN8XXqN5OcCZTLG8lKdquNyfQ==}
     engines: {node: '>= 17.0.0'}
     hasBin: true
 
@@ -12623,7 +12623,7 @@ snapshots:
 
   fflate@0.8.3: {}
 
-  figlet@1.9.4:
+  figlet@1.11.4:
     dependencies:
       commander: 14.0.2
 
