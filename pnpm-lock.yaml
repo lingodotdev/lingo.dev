@@ -330,8 +330,8 @@ importers:
         specifier: 7.0.2
         version: 7.0.2
       csv-stringify:
-        specifier: 6.6.0
-        version: 6.6.0
+        specifier: 6.9.0
+        version: 6.9.0
       date-fns:
         specifier: 4.1.0
         version: 4.1.0
@@ -4779,8 +4779,8 @@ packages:
   csv-parse@7.0.2:
     resolution: {integrity: sha512-uKZghv9UmPkMVLYy//KZ9HFAIJsl7wkhoEdIL0+rhuSY9pZQlhaeGEDPIe+/w7eh81MOql8Q/9+inAGWG6ZHYA==}
 
-  csv-stringify@6.6.0:
-    resolution: {integrity: sha512-YW32lKOmIBgbxtu3g5SaiqWNwa/9ISQt2EcgOq0+RAIFufFp9is6tqNnKahqE5kuKvrnYAzs28r+s6pXJR8Vcw==}
+  csv-stringify@6.9.0:
+    resolution: {integrity: sha512-6b3e29CILFfSQ2nDRuZMRROzQOpPuJ+s8zPB5H7eK5ncXBbFOyVuRLU5Sx/zAUmVri3Ly49GyC8NEme4SVSAbA==}
 
   dargs@8.1.0:
     resolution: {integrity: sha512-wAV9QHOsNbwnWdNW2FYvE1P56wtgSbM+3SZcdGiWQILwVjACCXDCI3Ai8QlCjMDB8YK5zySiXZYBiwGmNY3lnw==}
@@ -12274,7 +12274,7 @@ snapshots:
 
   csv-parse@7.0.2: {}
 
-  csv-stringify@6.6.0: {}
+  csv-stringify@6.9.0: {}
 
   dargs@8.1.0: {}
 
