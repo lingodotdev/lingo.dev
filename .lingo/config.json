@@ -30,7 +30,14 @@
     "ur",
     "zh-Hans"
   ],
-  "files": [{ "pattern": "packages/cli/README.md", "format": "md", "targetPath": "readme/[locale].md" }],
+  "files": [
+    {
+      "pattern": "packages/cli/README.md",
+      "format": "mdx",
+      "translateComponentProps": [{ "component": "img", "props": ["alt"] }],
+      "targetPath": "readme/[locale].md"
+    }
+  ],
   "github": {
     "workflows": {
       "onPullRequest": { "enabled": true },
