@@ -1,5 +1,13 @@
 # lingo.dev
 
+## 0.138.10
+
+### Patch Changes
+
+- [#2235](https://github.com/lingodotdev/lingo.dev/pull/2235) [`077c680`](https://github.com/lingodotdev/lingo.dev/commit/077c6801f20c3e829bf8251a7cbfdfb3c28b4f79) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Bump `figlet` from 1.9.4 to 1.11.4.
+
+- [#2230](https://github.com/lingodotdev/lingo.dev/pull/2230) [`2893846`](https://github.com/lingodotdev/lingo.dev/commit/28938466fe569d31e07fdab70146b45fc05c01c8) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Bump `@markdoc/markdoc` from 0.5.4 to 0.5.10 and `csv-stringify` from 6.6.0 to 6.9.0.
+
 ## 0.138.9
 
 ### Patch Changes
