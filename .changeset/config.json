@@ -6,5 +6,6 @@
   "linked": [],
   "access": "public",
   "baseBranch": "main",
-  "updateInternalDependencies": "patch"
+  "updateInternalDependencies": "patch",
+  "ignore": ["replexica", "@replexica/sdk", "@replexica/integration-directus"]
 }
