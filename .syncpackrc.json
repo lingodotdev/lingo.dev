@@ -1,4 +1,10 @@
 {
+  "versionGroups": [
+    {
+      "dependencies": ["**"],
+      "policy": "semverRangeOnly"
+    }
+  ],
   "semverGroups": [
     {
       "dependencies": ["**"],

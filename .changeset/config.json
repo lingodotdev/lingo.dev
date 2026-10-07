@@ -1,5 +1,5 @@
 {
-  "$schema": "https://unpkg.com/@changesets/config@3.0.0/schema.json",
+  "$schema": "https://unpkg.com/@changesets/config@4.0.1/schema.json",
   "changelog": ["@changesets/changelog-github", { "repo": "lingodotdev/lingo.dev" }],
   "commit": false,
   "fixed": [],
@@ -7,5 +7,6 @@
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": ["replexica", "@replexica/sdk", "@replexica/integration-directus"]
+  "ignore": ["replexica", "@replexica/sdk", "@replexica/integration-directus"],
+  "privatePackages": { "version": true, "tag": false }
 }
