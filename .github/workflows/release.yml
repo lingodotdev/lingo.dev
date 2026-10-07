@@ -73,13 +73,12 @@ jobs:
 
       - name: Create Release Pull Request or Publish to npm
         id: changesets
-        uses: changesets/action@v1
+        uses: changesets/action@v2
         with:
-          title: "chore: bump package versions"
-          version: pnpm changeset version
-          publish: pnpm changeset publish
-          commit: "chore: bump package version"
-          setupGitUser: false
+          pr-title: "chore: bump package versions"
+          version-script: pnpm changeset version
+          publish-script: pnpm changeset publish
+          commit-message: "chore: bump package version"
+          push-with-git-cli: true
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_CONFIG_PROVENANCE: true

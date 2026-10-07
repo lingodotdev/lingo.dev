@@ -1,11 +1,11 @@
 packages:
-  - "./packages/*"
-  - "./demo/*"
-  - "./integrations/*"
-  - "./legacy/*"
-  - "./action"
-  - "./php/*"
-  - "./scripts/*"
+  - "packages/*"
+  - "demo/*"
+  - "integrations/*"
+  - "legacy/*"
+  - "action"
+  - "php/*"
+  - "scripts/*"
 overrides:
   fast-xml-parser: ">=5.5.6 <6"
   shell-quote: ">=1.11.0 <2"
@@ -38,7 +38,7 @@ overrides:
   brace-expansion@<1.1.16: 1.1.16
   brace-expansion@>=4 <5.0.12: 5.0.12
   picomatch@<2.3.2: 2.3.2
-  picomatch@>=4 <4.0.4: 4.0.4
+  picomatch@>=4 <4.0.7: 4.0.7
   qs@>=6.11.1 <6.16.0: 6.16.0
   "@unhead/vue": ">=2.1.15 <3"
   postcss@>=8 <8.5.23: 8.5.23
@@ -55,7 +55,7 @@ overrides:
   decode-uri-component@<0.5.0: 0.5.0
   postcss-selector-parser@>=7 <7.1.6: 7.1.6
   diff@>=6 <8.0.3: 8.0.3
-  "@babel/core@<7.29.6": 7.29.6
+  "@babel/core@<7.29.7": 7.29.7
   source-map-js: ">=1.2.2 <2"
   vue: ">=3.5.42 <4"
   argparse@<2: 2.0.1

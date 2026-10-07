@@ -9,7 +9,7 @@
     "test": "turbo test",
     "new": "changeset",
     "new:empty": "changeset --empty",
-    "prebuild": "syncpack lint-semver-ranges --filter '.*' --types prod,dev"
+    "prebuild": "syncpack lint --dependency-types prod,dev"
   },
   "devDependencies": {
     "@babel/generator": "7.28.5",
@@ -21,12 +21,13 @@
     "@types/babel__traverse": "7.28.0",
     "commitlint": "19.8.1",
     "husky": "9.1.7",
-    "syncpack": "13.0.4",
+    "prettier": "3.6.2",
+    "syncpack": "15.3.3",
     "turbo": "2.10.4"
   },
   "dependencies": {
-    "@changesets/changelog-github": "0.5.1",
-    "@changesets/cli": "2.31.0",
+    "@changesets/changelog-github": "1.0.1",
+    "@changesets/cli": "3.0.3",
     "minimatch": "10.2.5",
     "node-machine-id": "1.1.12"
   },
