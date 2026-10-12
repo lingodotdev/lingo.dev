@@ -450,8 +450,8 @@ importers:
         specifier: 6.2.0
         version: 6.2.0
       php-array-reader:
-        specifier: 2.1.2
-        version: 2.1.2
+        specifier: 2.1.4
+        version: 2.1.4
       plist:
         specifier: 3.1.0
         version: 3.1.0
@@ -6224,11 +6224,11 @@ packages:
   pg-connection-string@2.6.2:
     resolution: {integrity: sha512-ch6OwaeaPYcova4kKZ15sbJ2hKb/VP48ZD2gE7i1J+L4MspCtBMAx8nMgz7bksc7IojCIIWuEhHibSMFH8m8oA==}
 
-  php-array-reader@2.1.2:
-    resolution: {integrity: sha512-bev2MQhNmxlGiAQwi41z7J242jAEopCs5bT515Er/d4uiFl1z09SWQcr1VnycRJ0EA9ARlm8zDBvM40/y+l9/Q==}
+  php-array-reader@2.1.4:
+    resolution: {integrity: sha512-zTLdgug+ywWNKVecy1w025Q08Vbhn1miegFBscOnpBdRndwyV5FeXuEPu5EPbRbv4JxAJPswzB0UbB+iMQkKmg==}
 
-  php-parser@3.2.5:
-    resolution: {integrity: sha512-M1ZYlALFFnESbSdmRtTQrBFUHSriHgPhgqtTF/LCbZM4h7swR5PHtUceB2Kzby5CfqcsYwBn7OXTJ0+8Sajwkw==}
+  php-parser@3.7.0:
+    resolution: {integrity: sha512-JRc1t78GZAEa+MuzVC5A5RJS1NDFTS4UnprUEu/NnsN9cyHbGZLUqghO9IQZUSCay62HYQiWd3PxyWAEF45zmA==}
 
   picocolors@1.1.1:
     resolution: {integrity: sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==}
@@ -13670,11 +13670,11 @@ snapshots:
 
   pg-connection-string@2.6.2: {}
 
-  php-array-reader@2.1.2:
+  php-array-reader@2.1.4:
     dependencies:
-      php-parser: 3.2.5
+      php-parser: 3.7.0
 
-  php-parser@3.2.5: {}
+  php-parser@3.7.0: {}
 
   picocolors@1.1.1: {}
 
