@@ -29,6 +29,7 @@ overrides:
   vite: ">=7.3.5 <8"
   "@xmldom/xmldom@>=0.8 <0.8.15": 0.8.15
   form-data: ">=4.0.6 <5"
+  follow-redirects: ">=1.16.1 <2"
   flatted: ">=3.4.2 <4"
   tmp: ">=0.2.6 <0.3"
   minimatch@<3.1.4: 3.1.4
