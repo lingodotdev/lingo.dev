@@ -26,7 +26,7 @@ overrides:
   lodash-es: ">=4.18.0 <5"
   axios: ">=1.20.0 <2"
   browserslist: ">=4.28.8 <5"
-  vite: ">=7.3.5 <8"
+  vite: ">=7.3.7 <8"
   "@xmldom/xmldom@>=0.8 <0.8.15": 0.8.15
   form-data: ">=4.0.6 <5"
   follow-redirects: ">=1.16.1 <2"
@@ -47,7 +47,7 @@ overrides:
   ajv@>=7 <8.18.0: 8.18.0
   nanoid@<3.3.18: 3.3.18
   nanoid@>=4 <5.1.16: 5.1.16
-  launch-editor@<2.14.1: 2.14.1
+  launch-editor@<2.14.2: 2.14.2
   js-yaml@>=3 <3.15.2: 3.15.2
   js-yaml@>=4 <4.3.2: 4.3.2
   joi@>=18 <18.2.9: 18.2.9
