@@ -1,5 +1,11 @@
 # @lingo.dev/\_spec
 
+## 0.49.4
+
+### Patch Changes
+
+- [#2257](https://github.com/lingodotdev/lingo.dev/pull/2257) [`e6f3515`](https://github.com/lingodotdev/lingo.dev/commit/e6f35151470e225932ac48afbe167d4b00dc8b45) Thanks [@cherkanovart](https://github.com/cherkanovart)! - Bump `zod` from 4.4.3 to 4.6.6 (GHSA-mrhx-c7xc-m3w5).
+
 ## 0.49.3
 
 ### Patch Changes
