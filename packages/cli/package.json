@@ -129,7 +129,7 @@
     "listr2": "8.3.2",
     "lodash": "4.18.1",
     "marked": "15.0.6",
-    "mdast-util-from-markdown": "2.0.2",
+    "mdast-util-from-markdown": "2.1.0",
     "mdast-util-gfm": "3.1.0",
     "micromark-extension-gfm": "3.0.0",
     "node-machine-id": "1.1.12",
