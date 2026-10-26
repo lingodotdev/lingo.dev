@@ -58,9 +58,7 @@ overrides:
   source-map-js: '>=1.2.2 <2'
   vue: '>=3.5.42 <4'
   argparse@<2: 2.0.1
-  undici@>=6.23.0 <6.29.1: 6.29.1
   '@directus/extensions>zod': 4.6.6
-  '@tanstack/router-generator>zod': '>=4.6.6 <5'
 
 importers:
 
