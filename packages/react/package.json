@@ -59,7 +59,7 @@
     "tsup": "8.5.1",
     "typescript": "5.9.3",
     "unbuild": "3.6.1",
-    "vitest": "4.1.11"
+    "vitest": "4.1.12"
   },
   "peerDependencies": {
     "next": ">=15.5.19 <16"
