@@ -61,7 +61,7 @@ Having issues? Put LINGO_API_KEY in your .env file instead.
   const session = await createCliSession(apiUrl, verifier);
   createSpinner.succeed("Authentication session started");
 
-  await open(session.verifyUrl, { wait: false });
+  await open(normalizeVerifyUrl(session.verifyUrl), { wait: false });
 
   const pollSpinner = Ora().start("Waiting for browser confirmation");
   try {
@@ -72,6 +72,24 @@ Having issues? Put LINGO_API_KEY in your .env file instead.
     pollSpinner.fail();
     throw error;
   }
+}
+
+const VERIFY_URL_PATTERN = /^https?:\/\/[A-Za-z0-9\-._~:/?#[\]@!&'()*+,;=%]+$/;
+
+export function normalizeVerifyUrl(verifyUrl: unknown): string {
+  let url: URL;
+  try {
+    url = new URL(String(verifyUrl));
+  } catch {
+    throw new Error("Received an invalid verification URL.");
+  }
+  if (url.protocol !== "https:" && url.protocol !== "http:") {
+    throw new Error("Received an invalid verification URL.");
+  }
+  if (!VERIFY_URL_PATTERN.test(url.href)) {
+    throw new Error("Received an invalid verification URL.");
+  }
+  return url.href;
 }
 
 type CreateSessionResponse = {

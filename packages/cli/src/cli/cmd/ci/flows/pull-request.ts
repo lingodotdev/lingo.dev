@@ -1,4 +1,4 @@
-import { execSync } from "child_process";
+import { execFileSync, execSync } from "child_process";
 import { InBranchFlow } from "./in-branch";
 import { IIntegrationFlowOptions } from "./_base";
 
@@ -98,23 +98,32 @@ export class PullRequestFlow extends InBranchFlow {
   }
 
   private checkoutI18nBranch(i18nBranchName: string) {
-    execSync(`git fetch origin ${i18nBranchName}`, { stdio: "inherit" });
-    execSync(`git checkout -b ${i18nBranchName} origin/${i18nBranchName}`, {
+    execFileSync("git", ["fetch", "origin", i18nBranchName], {
       stdio: "inherit",
     });
+    execFileSync(
+      "git",
+      ["checkout", "-b", i18nBranchName, `origin/${i18nBranchName}`],
+      { stdio: "inherit" },
+    );
   }
 
   private createI18nBranch(i18nBranchName: string) {
     try {
-      execSync(
-        `git fetch origin ${this.platformKit.platformConfig.baseBranchName}`,
+      execFileSync(
+        "git",
+        ["fetch", "origin", this.platformKit.platformConfig.baseBranchName],
         { stdio: "inherit" },
       );
-      execSync(
-        `git checkout -b ${i18nBranchName} origin/${this.platformKit.platformConfig.baseBranchName}`,
-        {
-          stdio: "inherit",
-        },
+      execFileSync(
+        "git",
+        [
+          "checkout",
+          "-b",
+          i18nBranchName,
+          `origin/${this.platformKit.platformConfig.baseBranchName}`,
+        ],
+        { stdio: "inherit" },
       );
     } catch (error) {
       const errorMessage =
@@ -138,8 +147,9 @@ export class PullRequestFlow extends InBranchFlow {
     this.ora.start(
       `Fetching latest changes from ${this.platformKit.platformConfig.baseBranchName}`,
     );
-    execSync(
-      `git fetch origin ${this.platformKit.platformConfig.baseBranchName}`,
+    execFileSync(
+      "git",
+      ["fetch", "origin", this.platformKit.platformConfig.baseBranchName],
       { stdio: "inherit" },
     );
     this.ora.succeed(
@@ -148,8 +158,9 @@ export class PullRequestFlow extends InBranchFlow {
 
     try {
       this.ora.start("Attempting to rebase branch");
-      execSync(
-        `git rebase origin/${this.platformKit.platformConfig.baseBranchName}`,
+      execFileSync(
+        "git",
+        ["rebase", `origin/${this.platformKit.platformConfig.baseBranchName}`],
         { stdio: "inherit" },
       );
       this.ora.succeed("Successfully rebased branch");
@@ -167,8 +178,13 @@ export class PullRequestFlow extends InBranchFlow {
       this.ora.start(
         `Resetting to ${this.platformKit.platformConfig.baseBranchName}`,
       );
-      execSync(
-        `git reset --hard origin/${this.platformKit.platformConfig.baseBranchName}`,
+      execFileSync(
+        "git",
+        [
+          "reset",
+          "--hard",
+          `origin/${this.platformKit.platformConfig.baseBranchName}`,
+        ],
         { stdio: "inherit" },
       );
       this.ora.succeed(
@@ -177,18 +193,29 @@ export class PullRequestFlow extends InBranchFlow {
 
       this.ora.start("Restoring target files");
       const targetFiles = ["i18n.lock"];
-      const targetFileNames = execSync(
-        `npx lingo.dev@latest show files --target ${this.platformKit.platformConfig.baseBranchName}`,
+      const targetFileNames = execFileSync(
+        "npx",
+        [
+          "lingo.dev@latest",
+          "show",
+          "files",
+          "--target",
+          this.platformKit.platformConfig.baseBranchName,
+        ],
         { encoding: "utf8" },
       )
         .split("\n")
         .filter(Boolean);
       targetFiles.push(...targetFileNames);
-      execSync(`git fetch origin ${this.i18nBranchName}`, { stdio: "inherit" });
+      execFileSync("git", ["fetch", "origin", this.i18nBranchName], {
+        stdio: "inherit",
+      });
       for (const file of targetFiles) {
         try {
           // bring all files to the i18n branch's state
-          execSync(`git checkout FETCH_HEAD -- ${file}`, { stdio: "inherit" });
+          execFileSync("git", ["checkout", "FETCH_HEAD", "--", file], {
+            stdio: "inherit",
+          });
         } catch (error) {
           // If file doesn't exist in FETCH_HEAD, that's okay - just skip it
           this.ora.warn(`Skipping non-existent file: ${file}`);
@@ -202,12 +229,16 @@ export class PullRequestFlow extends InBranchFlow {
     const hasChanges = this.checkCommitableChanges();
     if (hasChanges) {
       execSync("git add .", { stdio: "inherit" });
-      const signFlag = this.platformKit.config.gpgSign ? "-S " : "";
-      execSync(
-        `git commit ${signFlag}-m "chore: sync with ${this.platformKit.platformConfig.baseBranchName}" --no-verify`,
-        {
-          stdio: "inherit",
-        },
+      execFileSync(
+        "git",
+        [
+          "commit",
+          ...(this.platformKit.config.gpgSign ? ["-S"] : []),
+          "-m",
+          `chore: sync with ${this.platformKit.platformConfig.baseBranchName}`,
+          "--no-verify",
+        ],
+        { stdio: "inherit" },
       );
       this.ora.succeed("Committed additional changes");
     } else {

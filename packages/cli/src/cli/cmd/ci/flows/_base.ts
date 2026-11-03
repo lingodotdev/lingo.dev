@@ -29,7 +29,3 @@ export function getGitConfig(platformKit: PlatformKit) {
     userEmail: platformKit.config.commitAuthorEmail,
   };
 }
-
-export function escapeShellArg(arg: string): string {
-  return `'${arg.replace(/'/g, "'\\''")}'`;
-}

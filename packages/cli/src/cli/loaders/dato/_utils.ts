@@ -10,6 +10,20 @@ type DatoClientParams = {
 
 export type DatoClient = ReturnType<typeof createDatoClient>;
 
+export function formatDatoError(error: unknown): string {
+  if (error instanceof Error) {
+    return error.message;
+  }
+  return JSON.stringify(
+    error,
+    (key, value) =>
+      key === "request" || key.toLowerCase() === "authorization"
+        ? undefined
+        : value,
+    2,
+  );
+}
+
 export default function createDatoClient(params: DatoClientParams) {
   if (!params.apiKey) {
     throw new Error(
@@ -40,7 +54,7 @@ export default function createDatoClient(params: DatoClientParams) {
             `Failed to update field in DatoCMS.`,
             `Field ID: ${fieldId}`,
             `Payload: ${JSON.stringify(payload, null, 2)}`,
-            `Error: ${JSON.stringify(_error, null, 2)}`,
+            `Error: ${formatDatoError(_error)}`,
           ].join("\n\n"),
         );
       }
@@ -57,7 +71,7 @@ export default function createDatoClient(params: DatoClientParams) {
           [
             `Failed to find field in DatoCMS.`,
             `Field ID: ${fieldId}`,
-            `Error: ${JSON.stringify(_error, null, 2)}`,
+            `Error: ${formatDatoError(_error)}`,
           ].join("\n\n"),
         );
       }
@@ -73,7 +87,7 @@ export default function createDatoClient(params: DatoClientParams) {
         throw new Error(
           [
             `Failed to find models in DatoCMS.`,
-            `Error: ${JSON.stringify(_error, null, 2)}`,
+            `Error: ${formatDatoError(_error)}`,
           ].join("\n\n"),
         );
       }
@@ -90,7 +104,7 @@ export default function createDatoClient(params: DatoClientParams) {
           [
             `Failed to find model in DatoCMS.`,
             `Model ID: ${modelId}`,
-            `Error: ${JSON.stringify(_error, null, 2)}`,
+            `Error: ${formatDatoError(_error)}`,
           ].join("\n\n"),
         );
       }
@@ -138,7 +152,7 @@ export default function createDatoClient(params: DatoClientParams) {
           [
             `Failed to find records for model in DatoCMS.`,
             `Model ID: ${modelId}`,
-            `Error: ${JSON.stringify(_error, null, 2)}`,
+            `Error: ${formatDatoError(_error)}`,
           ].join("\n\n"),
         );
       }
@@ -156,7 +170,7 @@ export default function createDatoClient(params: DatoClientParams) {
             [
               `${_error.attributes.details.message}`,
               `Payload: ${JSON.stringify(payload, null, 2)}`,
-              `Error: ${JSON.stringify(_error, null, 2)}`,
+              `Error: ${formatDatoError(_error)}`,
             ].join("\n\n"),
           );
         }
@@ -166,7 +180,7 @@ export default function createDatoClient(params: DatoClientParams) {
             `Failed to update record in DatoCMS.`,
             `Record ID: ${id}`,
             `Payload: ${JSON.stringify(payload, null, 2)}`,
-            `Error: ${JSON.stringify(_error, null, 2)}`,
+            `Error: ${formatDatoError(_error)}`,
           ].join("\n\n"),
         );
       }
@@ -186,7 +200,7 @@ export default function createDatoClient(params: DatoClientParams) {
           throw new Error(
             [
               `Field "${args.fieldId}" not found in model "${args.modelId}".`,
-              `Error: ${JSON.stringify(_error, null, 2)}`,
+              `Error: ${formatDatoError(_error)}`,
             ].join("\n\n"),
           );
         }
@@ -195,7 +209,7 @@ export default function createDatoClient(params: DatoClientParams) {
           throw new Error(
             [
               `${_error.attributes.details.message}`,
-              `Error: ${JSON.stringify(_error, null, 2)}`,
+              `Error: ${formatDatoError(_error)}`,
             ].join("\n\n"),
           );
         }
@@ -205,7 +219,7 @@ export default function createDatoClient(params: DatoClientParams) {
             `Failed to enable field localization in DatoCMS.`,
             `Field ID: ${args.fieldId}`,
             `Model ID: ${args.modelId}`,
-            `Error: ${JSON.stringify(_error, null, 2)}`,
+            `Error: ${formatDatoError(_error)}`,
           ].join("\n\n"),
         );
       }
