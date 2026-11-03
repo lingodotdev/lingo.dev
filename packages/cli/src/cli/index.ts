@@ -1,5 +1,5 @@
-import dotenv from "dotenv";
-dotenv.config();
+import { loadDotenv } from "./utils/env";
+loadDotenv();
 
 import { InteractiveCommand } from "interactive-commander";
 import figlet from "figlet";

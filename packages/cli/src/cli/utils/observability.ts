@@ -50,6 +50,59 @@ function determineDistinctId(user: UserIdentity): {
   };
 }
 
+const REDACTED = "[REDACTED]";
+
+function isSensitiveKey(key: string): boolean {
+  const normalized = key.toLowerCase().replace(/[-_]/g, "");
+  return (
+    normalized.includes("apikey") ||
+    normalized.endsWith("token") ||
+    normalized.includes("secret") ||
+    normalized.includes("password") ||
+    normalized.includes("authorization")
+  );
+}
+
+function redactString(value: string): string {
+  return value.replace(/(Bearer\s+)[A-Za-z0-9._~+/=-]+/gi, `$1${REDACTED}`);
+}
+
+export function sanitizeProperties(
+  value: unknown,
+  ancestors: Set<object> = new Set(),
+): any {
+  if (typeof value === "string") {
+    return redactString(value);
+  }
+  if (!value || typeof value !== "object") {
+    return value;
+  }
+  if (typeof (value as any).toJSON === "function") {
+    return value;
+  }
+  if (ancestors.has(value)) {
+    return undefined;
+  }
+
+  ancestors.add(value);
+  try {
+    if (Array.isArray(value)) {
+      return value.map((item) => sanitizeProperties(item, ancestors));
+    }
+
+    const result: Record<string, any> = {};
+    for (const [key, entry] of Object.entries(value)) {
+      result[key] =
+        isSensitiveKey(key) && entry !== undefined && entry !== null
+          ? REDACTED
+          : sanitizeProperties(entry, ancestors);
+    }
+    return result;
+  } finally {
+    ancestors.delete(value);
+  }
+}
+
 export default function trackEvent(
   user: UserIdentity,
   event: string,
@@ -62,6 +115,7 @@ export default function trackEvent(
   setImmediate(() => {
     try {
       const identityInfo = determineDistinctId(user);
+      const safeProperties = sanitizeProperties(properties ?? {});
 
       if (process.env.DEBUG === "true") {
         console.log(
@@ -74,9 +128,9 @@ export default function trackEvent(
         event,
         distinct_id: identityInfo.distinct_id,
         properties: {
-          ...properties,
+          ...safeProperties,
           $set: {
-            ...(properties?.$set || {}),
+            ...(safeProperties.$set || {}),
             ...(user ? { email: user.email } : {}),
           },
           $lib: "lingo.dev-cli",

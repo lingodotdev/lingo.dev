@@ -11,17 +11,28 @@ runs:
   steps:
     - name: Run
       run: |
-        npx lingo.dev@${{ inputs.version }} ci \
-          --api-key "${{ inputs.api-key }}" \
-          --pull-request "${{ inputs.pull-request }}" \
-          --commit-message "${{ inputs.commit-message }}" \
-          --pull-request-title "${{ inputs.pull-request-title }}" \
-          --commit-author-name "${{ inputs.commit-author-name }}" \
-          --commit-author-email "${{ inputs.commit-author-email }}" \
-          --working-directory "${{ inputs.working-directory }}" \
-          --process-own-commits "${{ inputs.process-own-commits }}" \
-          --parallel ${{ inputs.parallel }}
+        npx "lingo.dev@${LINGO_ACTION_VERSION}" ci \
+          --api-key "${LINGO_ACTION_API_KEY}" \
+          --pull-request "${LINGO_ACTION_PULL_REQUEST}" \
+          --commit-message "${LINGO_ACTION_COMMIT_MESSAGE}" \
+          --pull-request-title "${LINGO_ACTION_PULL_REQUEST_TITLE}" \
+          --commit-author-name "${LINGO_ACTION_COMMIT_AUTHOR_NAME}" \
+          --commit-author-email "${LINGO_ACTION_COMMIT_AUTHOR_EMAIL}" \
+          --working-directory "${LINGO_ACTION_WORKING_DIRECTORY}" \
+          --process-own-commits "${LINGO_ACTION_PROCESS_OWN_COMMITS}" \
+          --parallel "${LINGO_ACTION_PARALLEL}"
       shell: bash
+      env:
+        LINGO_ACTION_VERSION: ${{ inputs.version }}
+        LINGO_ACTION_API_KEY: ${{ inputs.api-key }}
+        LINGO_ACTION_PULL_REQUEST: ${{ inputs.pull-request }}
+        LINGO_ACTION_COMMIT_MESSAGE: ${{ inputs.commit-message }}
+        LINGO_ACTION_PULL_REQUEST_TITLE: ${{ inputs.pull-request-title }}
+        LINGO_ACTION_COMMIT_AUTHOR_NAME: ${{ inputs.commit-author-name }}
+        LINGO_ACTION_COMMIT_AUTHOR_EMAIL: ${{ inputs.commit-author-email }}
+        LINGO_ACTION_WORKING_DIRECTORY: ${{ inputs.working-directory }}
+        LINGO_ACTION_PROCESS_OWN_COMMITS: ${{ inputs.process-own-commits }}
+        LINGO_ACTION_PARALLEL: ${{ inputs.parallel }}
 inputs:
   version:
     description: "Lingo.dev CLI version"

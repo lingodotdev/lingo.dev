@@ -1,11 +1,6 @@
 import { execFileSync, execSync } from "child_process";
 import path from "path";
-import {
-  getGitConfig,
-  IntegrationFlow,
-  escapeShellArg,
-  IIntegrationFlowOptions,
-} from "./_base";
+import { getGitConfig, IntegrationFlow, IIntegrationFlowOptions } from "./_base";
 import i18nCmd from "../../i18n";
 import runCmd from "../../run";
 
@@ -33,25 +28,26 @@ export class InBranchFlow extends IntegrationFlow {
       this.ora.start("Committing changes");
       execSync(`git add .`, { stdio: "inherit" });
       execSync(`git status --porcelain`, { stdio: "inherit" });
-      const signFlag = this.platformKit.config.gpgSign ? "-S " : "";
-      execSync(
-        `git commit ${signFlag}-m ${escapeShellArg(
+      execFileSync(
+        "git",
+        [
+          "commit",
+          ...(this.platformKit.config.gpgSign ? ["-S"] : []),
+          "-m",
           this.platformKit.config.commitMessage,
-        )} --no-verify`,
-        {
-          stdio: "inherit",
-        },
+          "--no-verify",
+        ],
+        { stdio: "inherit" },
       );
       this.ora.succeed("Changes committed");
 
       this.ora.start("Pushing changes to remote");
       const currentBranch =
         this.i18nBranchName ?? this.platformKit.platformConfig.baseBranchName;
-      execSync(
-        `git push origin ${currentBranch} ${options.force ? "--force" : ""}`,
-        {
-          stdio: "inherit",
-        },
+      execFileSync(
+        "git",
+        ["push", "origin", currentBranch, ...(options.force ? ["--force"] : [])],
+        { stdio: "inherit" },
       );
       this.ora.succeed("Changes pushed to remote");
     }
@@ -104,8 +100,8 @@ export class InBranchFlow extends IntegrationFlow {
       process.cwd(),
     ]);
 
-    execSync(`git config user.name "${gitConfig.userName}"`);
-    execSync(`git config user.email "${gitConfig.userEmail}"`);
+    execFileSync("git", ["config", "user.name", gitConfig.userName]);
+    execFileSync("git", ["config", "user.email", gitConfig.userEmail]);
 
     // Configure GPG signing if enabled
     if (this.platformKit.config.gpgSign) {
@@ -130,8 +126,12 @@ export class InBranchFlow extends IntegrationFlow {
     // perform platform-specific configuration before fetching or pushing to the remote
     this.platformKit?.gitConfig();
 
-    execSync(`git fetch origin ${baseBranchName}`, { stdio: "inherit" });
-    execSync(`git checkout ${baseBranchName} --`, { stdio: "inherit" });
+    execFileSync("git", ["fetch", "origin", baseBranchName], {
+      stdio: "inherit",
+    });
+    execFileSync("git", ["checkout", baseBranchName, "--"], {
+      stdio: "inherit",
+    });
 
     if (!processOwnCommits) {
       const currentAuthor = `${gitConfig.userName} <${gitConfig.userEmail}>`;
