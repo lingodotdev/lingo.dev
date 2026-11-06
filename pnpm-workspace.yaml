@@ -9,7 +9,7 @@ packages:
 overrides:
   fast-xml-parser: ">=5.5.6 <6"
   shell-quote: ">=1.11.0 <2"
-  seroval: ">=1.6.3 <2"
+  seroval: ">=1.6.11 <2"
   "@modelcontextprotocol/sdk": ">=1.26.0 <2"
   "@isaacs/brace-expansion": ">=5.0.1 <6"
   effect: ">=3.20.0 <4"
@@ -29,7 +29,7 @@ overrides:
   vite: ">=7.3.7 <8"
   "@xmldom/xmldom@>=0.8 <0.8.15": 0.8.15
   form-data: ">=4.0.6 <5"
-  follow-redirects: ">=1.16.1 <2"
+  follow-redirects: ">=1.16.2 <2"
   flatted: ">=3.4.2 <4"
   tmp: ">=0.2.6 <0.3"
   minimatch@<3.1.4: 3.1.4
