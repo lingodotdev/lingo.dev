@@ -118,7 +118,7 @@
     "gradient-string": "3.0.0",
     "htmlparser2": "10.0.0",
     "ini": "5.0.0",
-    "minimatch": "10.2.5",
+    "minimatch": "11.0.1",
     "inquirer": "12.6.0",
     "interactive-commander": "0.5.194",
     "is-url": "1.2.4",
