@@ -1,5 +1,11 @@
 # lingo.dev
 
+## 0.138.12
+
+### Patch Changes
+
+- [#2259](https://github.com/lingodotdev/lingo.dev/pull/2259) [`0050b48`](https://github.com/lingodotdev/lingo.dev/commit/0050b4858e1cea2b745c8f131fe178a23f643dc7) Thanks [@moygospadin](https://github.com/moygospadin)! - Improve CI flow git command handling and telemetry payloads
+
 ## 0.138.11
 
 ### Patch Changes
