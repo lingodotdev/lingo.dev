@@ -38,7 +38,7 @@ overrides:
   brace-expansion@>=4 <5.0.12: 5.0.12
   picomatch@<2.3.2: 2.3.2
   picomatch@>=4 <4.0.7: 4.0.7
-  qs@>=6.11.1 <6.16.0: 6.16.0
+  qs@>=6.11.1 <6.16.1: 6.16.1
   '@unhead/vue': '>=2.1.15 <3'
   postcss@>=8 <8.5.23: 8.5.23
   ajv@>=6 <6.14.0: 6.14.0
@@ -48,10 +48,10 @@ overrides:
   launch-editor@<2.14.2: 2.14.2
   js-yaml@>=3 <3.15.2: 3.15.2
   js-yaml@>=4 <4.3.2: 4.3.2
-  joi@>=18 <18.2.9: 18.2.9
+  joi@>=18 <18.3.1: 18.3.1
   colord@<2.9.4: 2.9.4
   fflate@>=0.8 <0.8.3: 0.8.3
-  decode-uri-component@<0.5.0: 0.5.0
+  decode-uri-component@<0.5.1: 0.5.1
   postcss-selector-parser@>=7 <7.1.6: 7.1.6
   diff@>=6 <8.0.3: 8.0.3
   '@babel/core@<7.29.7': 7.29.7
@@ -4757,8 +4757,8 @@ packages:
   decode-named-character-reference@1.2.0:
     resolution: {integrity: sha512-c6fcElNV6ShtZXmsgNgFFV5tVX2PaV4g+MOAkb8eXHvn6sryJBrZa9r0zV6+dtTyoCKxtDy5tyQ5ZwQuidtd+Q==}
 
-  decode-uri-component@0.5.0:
-    resolution: {integrity: sha512-1BiQVoK8C9gUbQU6NzAtO/tkz2qOFpEObMWpcFvhx4fYnj4Oc5yzaJN/LD36ihkVUdXyh5ZekzX+yM+ty/SrPg==}
+  decode-uri-component@0.5.1:
+    resolution: {integrity: sha512-vWHQkXgg2cE3BB4rR0c+PYw9BCQzLoNIRMI7AunIkZst74tw/vpPp7VLoYtsR/cy1f55g3XDWUslfeCZjiZJyA==}
     engines: {node: '>=14.16'}
 
   dedent@1.7.0:
@@ -5460,8 +5460,8 @@ packages:
   jju@1.4.0:
     resolution: {integrity: sha512-8wb9Yw966OSxApiCt0K3yNJL8pnNeIv+OEq2YMidz4FKP6nonSRoOXc80iXY4JaN2FC11B9qsNmDsm+ZOfMROA==}
 
-  joi@18.2.9:
-    resolution: {integrity: sha512-2mD929bUVKUhOLQQEVhlf6EZ0Mlo0DeRb5MO7cViR9AXLtBauuccEtB1py9Ocxpo/P7ucnh442iY/iOwrh3IQw==}
+  joi@18.3.1:
+    resolution: {integrity: sha512-mV9M4Llh4va3NT90p7KBtQhoZqjs8xLX7EWYE4y/GG3yLF6REbIBEHSUb0UX1JXRht2w5tiLSsvmpYc5akiqIw==}
     engines: {node: '>= 20'}
 
   joycon@3.1.1:
@@ -6566,8 +6566,8 @@ packages:
     resolution: {integrity: sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==}
     engines: {node: '>=6'}
 
-  qs@6.16.0:
-    resolution: {integrity: sha512-h6fhOIaRrID2CbEY2fqs+7t+UXZo+MLAnU5gRIq85uFtdiUPCdsApMlHhXogKVM4HM2DVbIjGNTTYH2OcmP1vA==}
+  qs@6.16.1:
+    resolution: {integrity: sha512-5Px6J7rfHBAGUhNQ3es4YzcOdBBw0SDcVtThJml4RdnKw4tKs2epA0kPZ+K8X+WiHktT93RHVcQ/3ym5aTCgtg==}
     engines: {node: '>=0.6'}
 
   quansync@1.0.0:
@@ -8934,7 +8934,7 @@ snapshots:
       '@directus/system-data': 3.4.2
       date-fns: 4.1.0
       fs-extra: 11.3.2
-      joi: 18.2.9
+      joi: 18.3.1
       js-yaml: 4.3.2
       lodash-es: 4.18.1
       micromustache: 8.0.3
@@ -9148,13 +9148,13 @@ snapshots:
   '@gitbeaker/core@39.34.3':
     dependencies:
       '@gitbeaker/requester-utils': 39.34.3
-      qs: 6.16.0
+      qs: 6.16.1
       xcase: 2.0.1
 
   '@gitbeaker/requester-utils@39.34.3':
     dependencies:
       picomatch-browser: 2.2.6
-      qs: 6.16.0
+      qs: 6.16.1
       rate-limiter-flexible: 4.0.1
       xcase: 2.0.1
 
@@ -11838,7 +11838,7 @@ snapshots:
     dependencies:
       character-entities: 2.0.2
 
-  decode-uri-component@0.5.0: {}
+  decode-uri-component@0.5.1: {}
 
   dedent@1.7.0: {}
 
@@ -12502,7 +12502,7 @@ snapshots:
 
   jju@1.4.0: {}
 
-  joi@18.2.9:
+  joi@18.3.1:
     dependencies:
       '@hapi/address': 5.1.1
       '@hapi/formula': 3.0.2
@@ -13986,7 +13986,7 @@ snapshots:
 
   punycode@2.3.1: {}
 
-  qs@6.16.0:
+  qs@6.16.1:
     dependencies:
       es-define-property: 1.0.1
       side-channel: 1.1.1
@@ -13995,7 +13995,7 @@ snapshots:
 
   query-string@9.3.1:
     dependencies:
-      decode-uri-component: 0.5.0
+      decode-uri-component: 0.5.1
       filter-obj: 5.1.0
       split-on-first: 3.0.0
 

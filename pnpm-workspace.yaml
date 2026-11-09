@@ -40,7 +40,7 @@ overrides:
   brace-expansion@>=4 <5.0.12: 5.0.12
   picomatch@<2.3.2: 2.3.2
   picomatch@>=4 <4.0.7: 4.0.7
-  qs@>=6.11.1 <6.16.0: 6.16.0
+  qs@>=6.11.1 <6.16.1: 6.16.1
   "@unhead/vue": ">=2.1.15 <3"
   postcss@>=8 <8.5.23: 8.5.23
   ajv@>=6 <6.14.0: 6.14.0
@@ -50,10 +50,10 @@ overrides:
   launch-editor@<2.14.2: 2.14.2
   js-yaml@>=3 <3.15.2: 3.15.2
   js-yaml@>=4 <4.3.2: 4.3.2
-  joi@>=18 <18.2.9: 18.2.9
+  joi@>=18 <18.3.1: 18.3.1
   colord@<2.9.4: 2.9.4
   fflate@>=0.8 <0.8.3: 0.8.3
-  decode-uri-component@<0.5.0: 0.5.0
+  decode-uri-component@<0.5.1: 0.5.1
   postcss-selector-parser@>=7 <7.1.6: 7.1.6
   diff@>=6 <8.0.3: 8.0.3
   "@babel/core@<7.29.7": 7.29.7
