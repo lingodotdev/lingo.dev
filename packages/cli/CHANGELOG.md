@@ -1,5 +1,15 @@
 # lingo.dev
 
+## 0.138.12
+
+### Patch Changes
+
+- [#2264](https://github.com/lingodotdev/lingo.dev/pull/2264) [`8e148d7`](https://github.com/lingodotdev/lingo.dev/commit/8e148d78e8baa8ad054627bfeb571c4aa540072b) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Update the qs dependency override to fix GHSA-6pq8-jhm2-2vcw.
+
+- [#2265](https://github.com/lingodotdev/lingo.dev/pull/2265) [`994f9d2`](https://github.com/lingodotdev/lingo.dev/commit/994f9d204be04193387e3024090c59b47f30836a) Thanks [@AndreyHirsa](https://github.com/AndreyHirsa)! - Update glob and minimatch to fix GHSA-3g3m-2fjr-6pw4 and GHSA-g3hv-75wg-m249.
+
+- [#2259](https://github.com/lingodotdev/lingo.dev/pull/2259) [`0050b48`](https://github.com/lingodotdev/lingo.dev/commit/0050b4858e1cea2b745c8f131fe178a23f643dc7) Thanks [@moygospadin](https://github.com/moygospadin)! - Improve CI flow git command handling and telemetry payloads
+
 ## 0.138.11
 
 ### Patch Changes
