@@ -45,7 +45,7 @@
     "@types/lodash": "4.17.21",
     "@types/object-hash": "3.0.6",
     "@types/react": "19.2.7",
-    "next": "16.4.1",
+    "next": "16.4.5",
     "tsup": "8.5.1",
     "typescript": "5.9.3",
     "vitest": "4.1.12"
@@ -66,7 +66,7 @@
     "ai": "6.0.280",
     "dedent": "1.7.0",
     "dotenv": "16.4.5",
-    "fast-xml-parser": "5.7.0",
+    "fast-xml-parser": "5.12.0",
     "ini": "5.0.0",
     "lodash": "4.18.1",
     "node-machine-id": "1.1.12",
