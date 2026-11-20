@@ -7,7 +7,7 @@ packages:
   - "php/*"
   - "scripts/*"
 overrides:
-  fast-xml-parser: ">=5.5.6 <6"
+  fast-xml-parser: ">=5.12.0 <6"
   shell-quote: ">=1.11.0 <2"
   seroval: ">=1.6.11 <2"
   "@modelcontextprotocol/sdk": ">=1.26.0 <2"
