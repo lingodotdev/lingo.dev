@@ -1,5 +1,11 @@
 # @lingo.dev/compiler
 
+## 0.4.15
+
+### Patch Changes
+
+- [#2269](https://github.com/lingodotdev/lingo.dev/pull/2269) [`b3fba7d`](https://github.com/lingodotdev/lingo.dev/commit/b3fba7d0272d139176064a9162a834bdace0712a) Thanks [@ohmoses](https://github.com/ohmoses)! - Update fast-xml-parser to 5.12.1 and next (dev) to 16.4.6 to fix Dependabot security advisories.
+
 ## 0.4.14
 
 ### Patch Changes
